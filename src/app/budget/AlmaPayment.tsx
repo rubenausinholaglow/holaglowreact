@@ -9,7 +9,7 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
 
   return (
     <section className='bg-white p-8 text-black'>
-      <div className='bg-[url("/images/almaBg.png")] h-[327px] bg-cover pl-[42%]'>
+      <div className='bg-[url("/images/budget/almaBg.png")] h-[327px] bg-cover pl-[42%]'>
         <h3 className='pt-8 text-xl font-semibold'>
           Tu tratamiento desde <span className='text-3xl'>{prices.fourStepsPrice} €</span>
           <br />

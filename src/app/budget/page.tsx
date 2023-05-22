@@ -40,7 +40,7 @@ export default async function Budget({
 
   return (
     <main className='text-hg-500'>
-      {budgetID && products ? (
+      {products && simulations ? (
         <div className='flex flex-col w-[750px] mx-auto'>
           <Header clinicInfo={clinicInfo} />
           <hr className='bg-gradient-to-r from-hg-500  to-[#FC44FB] to-70% h-[4px] border-0' />
@@ -56,7 +56,7 @@ export default async function Budget({
           <Footer clinicInfo={clinicInfo} />
         </div>
       ) : (
-        <p>No data available</p>
+        <p className='p-8'>No data available</p>
       )}
     </main>
   );
