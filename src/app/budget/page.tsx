@@ -7,7 +7,9 @@ import Footer from './Footer';
 
 const fetchBudgetData = async (id: number) => {
   try {
-    const budgetResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/budget?id=${id}`);
+    const budgetResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/budget?id=${id}`, {
+      cache: 'no-store',
+    });
 
     if (!budgetResponse) {
       throw new Error('Network response was not OK');
