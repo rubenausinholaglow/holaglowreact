@@ -56,8 +56,10 @@ export default async function Budget({
           <Footer clinicInfo={clinicInfo} />
         </div>
       ) : (
-        <p className='p-8'>No data available</p>
+        <p className='p-8'>Budget unavailable: some data is missing</p>
       )}
+
+      {JSON.stringify(budgetData)}
     </main>
   );
 }
