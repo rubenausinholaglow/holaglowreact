@@ -19,7 +19,7 @@ export default function Simulation({ simulations }: Array<object>) {
           <img className='block self-center h-[190px]' src={simulations[0].imagesAfter1} alt='simulación' />
         </div>
 
-        <p className='text-hg-200 text-xs mt-8 w-4/5 text-center'>
+        <p className='text-hg-200 text-sm mt-8 w-4/5 text-center'>
           Las simulaciones 3D sirven como herramienta para visualizar los posibles resultados de ciertos procedimientos
           estéticos pero únicamente con fines informativos. Sin embargo, los resultados reales pueden variar
         </p>

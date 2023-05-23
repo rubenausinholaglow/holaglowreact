@@ -31,7 +31,7 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>Hoy</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.twoStepsPrice}</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.threeStepsPrice}</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice}</p>
+            <p className='rounded-md bg-white py-1 px-2 border border-[#F0AD4E]'>{prices.fourStepsPrice}</p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 30 días</p>
@@ -52,7 +52,7 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
             <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice}</p>
           </div>
         </div>
-        <Image className='ml-auto mr-12 mt-4' src='/images/budget/almaLogo.svg' height='20' width='74' alt='Alma' />
+        <Image className='ml-auto mr-12 mt-5' src='/images/budget/almaLogo.svg' height='20' width='74' alt='Alma' />
       </div>
     </section>
   );
