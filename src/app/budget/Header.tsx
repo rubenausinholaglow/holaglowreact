@@ -12,7 +12,7 @@ export default function Header({ clinicInfo }: { clinicInfo: Clinic }) {
       <Image className='mx-auto' src='/images/holaglow.svg' height='40' width='188' alt='Holaglow' />
 
       <Image src='/images/budget/myGlowMyRules.svg' height='180' width='330' alt='My glow my rules' />
-      <ul className='flex flex-col gap-2 mt-4 text-hg-300 text-xs'>
+      <ul className='flex flex-col gap-2 mt-4 text-hg-300 text-sm'>
         <li className='flex flex-row ml-4'>
           <SvgMapMarker className='mr-2' height={15} width={15} fill={HOLAGLOW_COLORS['hg-300']} />
           <p>{clinicInfo.address}</p>

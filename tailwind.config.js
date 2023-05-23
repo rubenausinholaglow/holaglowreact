@@ -7,6 +7,14 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    fontSize: {
+      xs: ['10px'],
+      sm: ['12px'],
+      md: ['14px'],
+      lg: ['16px'],
+      xl: ['21px'],
+      '2xl': ['32px'],
+    },
     extend: {
       colors: {
         hg: {

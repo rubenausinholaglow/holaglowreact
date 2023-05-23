@@ -1,11 +1,11 @@
 export default function PromoCode({ discountCode, discountAmount }: { discountCode: number; discountAmount: number }) {
   return (
     <section className='bg-white p-8 mb-4'>
-      <div className='bg-[url("/images/budget/promoCodeBg.jpg")] h-[435px] bg-cover rounded-2xl flex flex-col ml-16'>
+      <div className='bg-[url("/images/budget/promoCodeBg.jpg")] h-[435px] bg-cover rounded-2xl flex flex-col ml-8'>
         <img className='-ml-8 w-1/4 mt-16' src='/images/budget/shareYourGlow.png' alt='¡Comparte tu glow!' />
         <p className='-ml-8 w-1/3 font-semibold mt-4'>Trae a tus amig@s y gana por cada uno de ellos</p>
 
-        <div className='flex justify-center items-center text-white text-5xl font-bold bg-[url("/images/budget/discountValueBg.png")] bg-cover bg-center -mt-16 ml-16 h-[200px] w-[200px]'>
+        <div className='flex justify-center items-center text-white text-[55px] font-bold bg-[url("/images/budget/discountValueBg.png")] bg-cover bg-center -mt-16 ml-16 h-[200px] w-[200px]'>
           <span>{discountAmount} €</span>
         </div>
 

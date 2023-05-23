@@ -5,15 +5,15 @@ export default function Simulation({ simulations }: Array<object>) {
       <div className='flex flex-col justify-center items-center'>
         <h3 className='text-xl font-semibold'>Antes y después del escáner 3D con imagen real</h3>
 
-        <p className='bg-white rounded-xl py-1 px-4 mt-8 -mb-4 relative z-10 text-xs'>Antes</p>
-        <div className='flex justify-center bg-white rounded-2xl border-b-4 border-hg-100/20 w-full py-4'>
+        <p className='bg-white rounded-xl py-1 px-8 mt-8 -mb-4 relative z-10 text-sm'>Antes</p>
+        <div className='flex justify-center bg-white rounded-2xl border-b-4 border-hg-400/20 w-full py-4'>
           <img className='block self-center h-[190px]' src={simulations[0].imagesPrevious3} alt='simulación' />
           <img className='block self-center h-[190px]' src={simulations[0].imagesPrevious2} alt='simulación' />
           <img className='block self-center h-[190px]' src={simulations[0].imagesPrevious1} alt='simulación' />
         </div>
 
-        <p className='bg-white rounded-xl py-1 px-4 mt-8 -mb-4 relative z-10 text-xs'>Después</p>
-        <div className='flex justify-center bg-white rounded-2xl border-b-4 border-hg-100/20 w-full py-4'>
+        <p className='bg-white rounded-xl py-1 px-8 mt-8 -mb-4 relative z-10 text-sm'>Después</p>
+        <div className='flex justify-center bg-white rounded-2xl border-b-4 border-hg-400/20 w-full py-4'>
           <img className='block self-center h-[190px]' src={simulations[0].imagesAfter3} alt='simulación' />
           <img className='block self-center h-[190px]' src={simulations[0].imagesAfter2} alt='simulación' />
           <img className='block self-center h-[190px]' src={simulations[0].imagesAfter1} alt='simulación' />

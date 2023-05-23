@@ -50,7 +50,6 @@ export default async function Budget({
           {products.length > 0 && (
             <Products products={products} totalPrice={totalPrice} totalPriceWithIVA={totalPriceWithIVA} />
           )}
-          {/* @ts-ignore */}
           <AlmaPayment totalPrice={totalPriceWithIVA} />
           {/* @ts-ignore */}
           {simulations.length > 0 && <Simulation simulations={simulations} />}
@@ -61,7 +60,7 @@ export default async function Budget({
         <p className='p-8'>Budget unavailable: some data is missing</p>
       )}
 
-      {JSON.stringify(budgetData)}
+      {/* {JSON.stringify(budgetData)} */}
     </main>
   );
 }

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
   console.log(totalPrice);
 
@@ -10,12 +12,12 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
   return (
     <section className='bg-white p-8 text-black'>
       <div className='bg-[url("/images/budget/almaBg.png")] h-[327px] bg-cover pl-[42%]'>
-        <h3 className='pt-8 text-xl font-semibold'>
-          Tu tratamiento desde <span className='text-3xl'>{prices.fourStepsPrice} €</span>
+        <h3 className='pt-8 text-xl/tight font-semibold'>
+          Tu tratamiento desde <span className='text-3xl border-b-2 border-[#F0AD4E]'>{prices.fourStepsPrice} €</span>
           <br />
           sin intereses
         </h3>
-        <p className='text-xs pr-8 mb-8 mt-2'>
+        <p className='text-sm pr-8 mb-4 mt-2'>
           Te ofrecemos una experiencia de compra más flexible con el pago en 2, 3 o 4 plazos.
         </p>
         <div className='flex gap-1 text-[11px]'>
@@ -50,6 +52,7 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
             <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice}</p>
           </div>
         </div>
+        <Image className='ml-auto mr-12 mt-4' src='/images/budget/almaLogo.svg' height='20' width='74' alt='Alma' />
       </div>
     </section>
   );

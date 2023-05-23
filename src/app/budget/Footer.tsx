@@ -6,7 +6,7 @@ import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
   return (
-    <section className='bg-white p-8 text-[#717D96]'>
+    <section className='bg-white p-8 text-[#717D96] mb-8'>
       <Image className='mb-8' src='/images/holaglow.svg' height='25' width='120' alt='holaglow' />
 
       <ul className='grid grid-cols-3 gap-8'>
