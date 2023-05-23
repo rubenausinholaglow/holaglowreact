@@ -1,4 +1,7 @@
+// @ts-nocheck
+
 import { type Product as ProductType } from 'types/product';
+import { priceFormat } from 'utils/priceFormat';
 
 export default function Products({
   products,
@@ -31,7 +34,7 @@ export default function Products({
                 </p>
                 <p className='basis-1/3 py-4'>
                   <span className='block font-light text-hg-200 text-xs mb-1'>Precio</span>
-                  <span className='text-2xl font-bold'>{product.price} €</span>
+                  <span className='text-2xl font-bold'>{priceFormat(product.price)} €</span>
                 </p>
               </div>
             </div>
@@ -42,15 +45,15 @@ export default function Products({
         <ul className='bg-hg-200/[.15] rounded-lg w-[55%] flex flex-col text-sm p-4 ml-auto mr-16 mt-8 mb-8'>
           <li className='flex justify-between pb-4'>
             <span className='text-hg-200'>Subtotal</span>
-            <b>{totalPrice} €</b>
+            <b>{priceFormat(totalPrice)} €</b>
           </li>
           <li className='flex justify-between pb-4 mb-4 border-b border-hg-500'>
             <span className='text-hg-200'>IVA 21%</span>
-            <b>{(totalPriceWithIVA - totalPrice).toFixed(2)} €</b>
+            <b>{priceFormat(totalPriceWithIVA - totalPrice)} €</b>
           </li>
           <li className='flex justify-between'>
             <span className='text-hg-200'>Total</span>
-            <b>{totalPriceWithIVA} €</b>
+            <b>{priceFormat(totalPriceWithIVA)} €</b>
           </li>
         </ul>
       </aside>

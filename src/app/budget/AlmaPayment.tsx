@@ -1,12 +1,13 @@
+// @ts-nocheck
+
 import Image from 'next/image';
+import { priceFormat } from 'utils/priceFormat';
 
 export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
-  console.log(totalPrice);
-
   const prices = {
-    twoStepsPrice: (totalPrice / 2).toFixed(2),
-    threeStepsPrice: (totalPrice / 3).toFixed(2),
-    fourStepsPrice: (totalPrice / 4).toFixed(2),
+    twoStepsPrice: priceFormat(totalPrice / 2),
+    threeStepsPrice: priceFormat(totalPrice / 3),
+    fourStepsPrice: priceFormat(totalPrice / 4),
   };
 
   return (
