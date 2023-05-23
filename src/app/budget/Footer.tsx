@@ -9,7 +9,7 @@ export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
     <section className='bg-white p-8 text-[#717D96] mb-8'>
       <Image className='mb-8' src='/images/holaglow.svg' height='25' width='120' alt='holaglow' />
 
-      <ul className='grid grid-cols-3 gap-8'>
+      <ul className='grid grid-cols-3 gap-8 text-sm'>
         <li>
           <p className='mb-4'>My glow, my rules.</p>
           <p>La nueva cara de la medicina estética, sin cirugía</p>
