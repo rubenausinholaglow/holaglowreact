@@ -12,20 +12,17 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
 
   // last term payment must be modified to avoid adding some cents
   const fixLastTermPrice = (number, totalTerms) => {
-    // OJO! esto solo devuelve el total, debería devolver el number - la diferencia entre el total y el totalPrice
-    // ya lo haré yo cuando se solucione la mierda del NaN
-    const test = Number(number);
-    console.log(typeof test, typeof totalTerms);
+    console.log(number, parseFloat(number) * 2, totalTerms);
 
-    console.log(test * totalTerms);
-    return test * totalTerms;
+    return number;
   };
 
   return (
     <section className='bg-white p-8 text-black'>
       <div className='bg-[url("/images/budget/almaBg.png")] h-[327px] bg-cover pl-[42%]'>
         <h3 className='pt-8 text-xl/tight font-semibold'>
-          Tu tratamiento desde <span className='text-3xl border-b-2 border-[#F0AD4E]'>{prices.fourStepsPrice} €</span>
+          Tu tratamiento desde{' '}
+          <span className='text-[24px] border-b-2 border-[#F0AD4E]'>{prices.fourStepsPrice} €</span>
           <br />
           sin intereses
         </h3>
@@ -43,7 +40,9 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>Hoy</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.twoStepsPrice}</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.threeStepsPrice}</p>
-            <p className='rounded-md bg-white py-1 px-2 border border-[#F0AD4E]'>{prices.fourStepsPrice}</p>
+            <p className='rounded-md bg-white py-1 px-2 border border-[#F0AD4E] shadow-[0px_5px_12px_-3px_rgba(240,173,78,1)]'>
+              {prices.fourStepsPrice}
+            </p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 30 días</p>
