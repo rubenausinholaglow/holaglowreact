@@ -10,6 +10,17 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
     fourStepsPrice: priceFormat(totalPrice / 4),
   };
 
+  // last term payment must be modified to avoid adding some cents
+  const fixLastTermPrice = (number, totalTerms) => {
+    // OJO! esto solo devuelve el total, debería devolver el number - la diferencia entre el total y el totalPrice
+    // ya lo haré yo cuando se solucione la mierda del NaN
+    const test = Number(number);
+    console.log(typeof test, typeof totalTerms);
+
+    console.log(test * totalTerms);
+    return test * totalTerms;
+  };
+
   return (
     <section className='bg-white p-8 text-black'>
       <div className='bg-[url("/images/budget/almaBg.png")] h-[327px] bg-cover pl-[42%]'>
@@ -36,21 +47,21 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 30 días</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.twoStepsPrice}</p>
+            <p className='rounded-md bg-white py-1 px-2'>{fixLastTermPrice(prices.twoStepsPrice, 2)}</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.threeStepsPrice}</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice}</p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 60 días</p>
             <p className='py-1 px-2'>&nbsp;</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.threeStepsPrice}</p>
+            <p className='rounded-md bg-white py-1 px-2'>{fixLastTermPrice(prices.threeStepsPrice, 3)}</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice}</p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 90 días</p>
             <p className='py-1 px-2'>&nbsp;</p>
             <p className='py-1 px-2'>&nbsp;</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice}</p>
+            <p className='rounded-md bg-white py-1 px-2'>{fixLastTermPrice(prices.fourStepsPrice, 4)}</p>
           </div>
         </div>
         <Image className='ml-auto mr-12 mt-5' src='/images/budget/almaLogo.svg' height='20' width='74' alt='Alma' />
