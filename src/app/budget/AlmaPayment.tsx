@@ -1,15 +1,7 @@
-// @ts-nocheck
-
 import Image from 'next/image';
 import { priceFormat } from 'utils/priceFormat';
 
 export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
-  /*   const prices = {
-    twoStepsPrice: priceFormat(totalPrice / 2),
-    threeStepsPrice: priceFormat(totalPrice / 3),
-    fourStepsPrice: priceFormat(totalPrice / 4),
-  }; */
-
   const prices = {
     twoStepsPrice: (totalPrice / 2).toFixed(2),
     threeStepsPrice: (totalPrice / 3).toFixed(2),
@@ -17,11 +9,13 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
   };
 
   // last term payment must be modified to avoid adding some cents
-  const lastTermPrice = (number, totalTerms) => {
-    if (number * totalTerms !== totalPrice) {
-      return priceFormat(number - (number * totalTerms - totalPrice).toFixed(2));
+  const lastTermPrice = (number: string, totalTerms: number) => {
+    const normalizedNumber = Number(number);
+
+    if (normalizedNumber * totalTerms !== totalPrice) {
+      return priceFormat(normalizedNumber - Number((normalizedNumber * totalTerms - totalPrice).toFixed(2)));
     }
-    return priceFormat(Number(number));
+    return priceFormat(normalizedNumber);
   };
 
   return (
@@ -53,21 +47,21 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 30 días</p>
-            <p className='rounded-md bg-white py-1 px-2'>{lastTermPrice(prices.twoStepsPrice, 2)} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${lastTermPrice(prices.twoStepsPrice, 2)}`} €</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.threeStepsPrice} €</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice} €</p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 60 días</p>
             <p className='py-1 px-2'>&nbsp;</p>
-            <p className='rounded-md bg-white py-1 px-2'>{lastTermPrice(prices.threeStepsPrice, 3)} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${lastTermPrice(prices.threeStepsPrice, 3)}`} €</p>
             <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice} €</p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 90 días</p>
             <p className='py-1 px-2'>&nbsp;</p>
             <p className='py-1 px-2'>&nbsp;</p>
-            <p className='rounded-md bg-white py-1 px-2'>{lastTermPrice(prices.fourStepsPrice, 4)} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${lastTermPrice(prices.fourStepsPrice, 4)}`} €</p>
           </div>
         </div>
         <Image className='ml-auto mr-10 mt-4' src='/images/budget/almaLogo.svg' height='20' width='74' alt='Alma' />
