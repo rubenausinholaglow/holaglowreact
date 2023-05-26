@@ -26,6 +26,6 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",
-    "@types/node": "^20.2.1"
+    "@types/node": "^20.2.3"
   }
 }

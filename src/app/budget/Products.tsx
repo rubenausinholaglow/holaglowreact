@@ -24,7 +24,7 @@ export default function Products({
     <section className='bg-hg-100 relative'>
       <ul className='flex flex-col gap-8 -mt-6'>
         {products.map(product => {
-          const [imgSrc, setImgSrc] = useState(`/images/product/${product.flowwwId}/${product.flowwwId}.webp`);
+          const [imgSrc, setImgSrc] = useState(`/images/product/${product.flowwwId}/${product.flowwwId}.png`);
 
           return (
             <li key={product.flowwwId} className='flex flex-row justify-center'>
