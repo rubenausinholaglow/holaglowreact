@@ -13,7 +13,8 @@ module.exports = {
       md: ['14px'],
       lg: ['16px'],
       xl: ['21px'],
-      '2xl': ['32px'],
+      '2xl': ['24px'],
+      '3xl': ['32px'],
     },
     extend: {
       colors: {

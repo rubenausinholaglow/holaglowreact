@@ -2,7 +2,6 @@ import Image from 'next/image';
 
 import { Clinic } from 'types/clinic';
 import { SvgPhone, SvgMapMarker, SvgWorldWideWeb, SvgInstagram } from 'icons/Icons';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
   return (
