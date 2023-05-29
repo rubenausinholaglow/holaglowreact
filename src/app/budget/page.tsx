@@ -38,6 +38,8 @@ export default async function Budget({
     simulations = null,
     discountCode = null,
     discountAmount = null,
+    referenceId = null,
+    creationDate = null,
   } = budgetData ? budgetData : {};
 
   return (
@@ -48,10 +50,15 @@ export default async function Budget({
           <hr className='bg-gradient-to-r from-hg-500  to-[#FC44FB] to-70% h-[4px] border-0' />
 
           {products.length > 0 && (
-            <Products products={products} totalPrice={totalPrice} totalPriceWithIVA={totalPriceWithIVA} />
+            <Products
+              products={products}
+              totalPrice={totalPrice}
+              totalPriceWithIVA={totalPriceWithIVA}
+              referenceId={referenceId}
+              creationDate={creationDate}
+            />
           )}
           <AlmaPayment totalPrice={totalPriceWithIVA} />
-          {/* @ts-ignore */}
           {simulations.length > 0 && <Simulation simulations={simulations} />}
           <PromoCode discountCode={discountCode} discountAmount={discountAmount} />
           <Footer clinicInfo={clinicInfo} />
@@ -59,8 +66,6 @@ export default async function Budget({
       ) : (
         <p className='p-8'>Budget unavailable: some data is missing</p>
       )}
-
-      {/* {JSON.stringify(budgetData)} */}
     </main>
   );
 }

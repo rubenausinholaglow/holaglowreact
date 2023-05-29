@@ -1,9 +1,8 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
 
-// @ts-ignore
-import tailwindConfig from '/tailwind.config.js';
+import tailwindConfig from '../../tailwind.config';
 
-const fullTailwindConfig = resolveConfig(tailwindConfig);
+const fullTailwindConfig: any = resolveConfig(tailwindConfig);
 const hgColors = fullTailwindConfig.theme.colors.hg;
 
 export const HOLAGLOW_COLORS: any = {

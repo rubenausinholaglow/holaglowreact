@@ -1,5 +1,4 @@
-// @ts-ignore
-export default function Simulation({ simulations }: Array<object>) {
+export default function Simulation({ simulations }: { simulations: any }) {
   return (
     <section className='bg-hg-100 py-8 px-16'>
       <div className='flex flex-col justify-center items-center'>
