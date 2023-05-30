@@ -28,7 +28,7 @@ export default function Products({
 
           return (
             <li key={product.flowwwId} className='flex flex-row justify-center'>
-              <div className='relative bg-cover bg-center rounded-tl-[70px] rounded-br-[40px] border-8 border-hg-300 border-opacity-10 w-[200px] aspect-square overflow-hidden'>
+              <div className='relative bg-cover bg-center rounded-tl-[70px] rounded-br-[40px] border-8 border-hg-300 border-opacity-10 w-[200px] h-[200px] aspect-square overflow-hidden'>
                 <Image
                   className='object-cover'
                   fill
