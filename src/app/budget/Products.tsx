@@ -18,7 +18,12 @@ export default function Products({
   creationDate: string;
 }) {
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png';
-  const parsedDate = new Date(Date.parse(creationDate)).toLocaleString('es-ES').split(',')[0];
+
+  const date = new Date(creationDate).getDate().toString().padStart(2, '0');
+  const month = (new Date(creationDate).getMonth() + 1).toString().padStart(2, '0');
+  const year = new Date(creationDate).getFullYear();
+
+  const parsedDate = `${date}/${month}/${year}`;
 
   return (
     <section className='bg-hg-100 relative'>
