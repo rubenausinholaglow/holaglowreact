@@ -23,7 +23,9 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
       <div className='bg-[url("/images/budget/almaBg.png")] h-[327px] bg-cover pl-[41%]'>
         <h3 className='pt-8 text-xl/tight font-semibold'>
           Tu tratamiento desde{' '}
-          <span className='text-[24px] border-b-2 border-[#F0AD4E]'>{prices.fourStepsPrice} €</span>
+          <span className='text-[24px] border-b-2 border-[#F0AD4E]'>
+            {`${priceFormat(Number(prices.fourStepsPrice))}`} €
+          </span>
           <br />
           sin intereses
         </h3>
@@ -39,23 +41,23 @@ export default function AlmaPayment({ totalPrice }: { totalPrice: number }) {
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>Hoy</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.twoStepsPrice} €</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.threeStepsPrice} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${priceFormat(Number(prices.twoStepsPrice))}`} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${priceFormat(Number(prices.threeStepsPrice))}`} €</p>
             <p className='rounded-md bg-white py-1 px-2 border border-[#F0AD4E] shadow-[0px_5px_12px_-3px_rgba(240,173,78,1)]'>
-              {prices.fourStepsPrice} €
+              {`${priceFormat(Number(prices.fourStepsPrice))}`} €
             </p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 30 días</p>
             <p className='rounded-md bg-white py-1 px-2'>{`${lastTermPrice(prices.twoStepsPrice, 2)}`} €</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.threeStepsPrice} €</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${priceFormat(Number(prices.threeStepsPrice))}`} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${priceFormat(Number(prices.fourStepsPrice))}`} €</p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 60 días</p>
             <p className='py-1 px-2'>&nbsp;</p>
             <p className='rounded-md bg-white py-1 px-2'>{`${lastTermPrice(prices.threeStepsPrice, 3)}`} €</p>
-            <p className='rounded-md bg-white py-1 px-2'>{prices.fourStepsPrice} €</p>
+            <p className='rounded-md bg-white py-1 px-2'>{`${priceFormat(Number(prices.fourStepsPrice))}`} €</p>
           </div>
           <div className='flex flex-col gap-1'>
             <p className='rounded-md bg-white/50 py-1 px-2 text-[#717D96]'>en 90 días</p>

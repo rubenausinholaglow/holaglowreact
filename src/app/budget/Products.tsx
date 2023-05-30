@@ -18,7 +18,7 @@ export default function Products({
   creationDate: string;
 }) {
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png';
-  const parsedDate = new Date(Date.parse(creationDate)).toLocaleString('es-ES', { dateStyle: 'short' });
+  const parsedDate = new Date(Date.parse(creationDate)).toLocaleString('es-ES').split(',')[0];
 
   return (
     <section className='bg-hg-100 relative'>
@@ -37,14 +37,14 @@ export default function Products({
                   onError={() => setImgSrc(DEFAULT_IMG_SRC)}
                 />
               </div>
-              <div className='flex flex-col mt-8 ml-16 w-1/2'>
+              <div className='flex flex-col mt-8 ml-12 w-1/2'>
                 <h3 className='font-semibold mb-4'>{product.title}</h3>
                 <div className='flex flex-row'>
-                  <p className='basis-2/3 pr-8 py-4 mr-8 border-r border-hg-500'>
+                  <p className='basis-1/2 pr-6 py-4 mr-6 border-r border-hg-500'>
                     <span className='block font-light text-hg-200 text-xs mb-1'>Tratamiento</span>
                     <span>{product.description}</span>
                   </p>
-                  <p className='basis-1/3 py-4'>
+                  <p className='basis-1/2 py-4'>
                     <span className='block font-light text-hg-200 text-xs mb-1'>Precio olakease</span>
                     <span className='text-2xl font-bold'>{`${priceFormat(Number(product.price))}`} €</span>
                   </p>
