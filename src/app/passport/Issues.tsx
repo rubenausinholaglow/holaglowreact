@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { SvgPlusSmall } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
