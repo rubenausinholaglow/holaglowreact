@@ -1,6 +1,7 @@
 import Header from './Header';
 import Treatments from './Treatments';
 import Recomendations from './Recomendations';
+import Issues from './Issues';
 
 /* const fetchBudgetData = async (id: number) => {
   try {
@@ -46,6 +47,7 @@ export default async function Budget({
         <Header />
         <Treatments />
         <Recomendations />
+        <Issues />
       </div>
     </main>
   );
