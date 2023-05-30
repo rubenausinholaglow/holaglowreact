@@ -2,6 +2,8 @@ import Header from './Header';
 import Treatments from './Treatments';
 import Recomendations from './Recomendations';
 import Issues from './Issues';
+import PendingBonus from './PendingBonus';
+import Doubts from './Doubts';
 
 /* const fetchBudgetData = async (id: number) => {
   try {
@@ -48,6 +50,8 @@ export default async function Budget({
         <Treatments />
         <Recomendations />
         <Issues />
+        <PendingBonus />
+        <Doubts />
       </div>
     </main>
   );
