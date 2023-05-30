@@ -4,8 +4,9 @@ import Recomendations from './Recomendations';
 import Issues from './Issues';
 import PendingBonus from './PendingBonus';
 import Doubts from './Doubts';
+import Footer from './Footer';
 
-/* const fetchBudgetData = async (id: number) => {
+const fetchPassportData = async (id: number) => {
   try {
     const budgetResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/budget?id=${id}`, {
       cache: 'no-store',
@@ -15,12 +16,12 @@ import Doubts from './Doubts';
       throw new Error('Network response was not OK');
     }
 
-    const budgetData = await budgetResponse.json();
-    return budgetData;
+    const passportData = await budgetResponse.json();
+    return passportData;
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
   }
-}; */
+};
 
 export default async function Budget({
   searchParams,
@@ -28,8 +29,9 @@ export default async function Budget({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   /* const budgetID: any = searchParams.id;
-  const budgetData = await fetchBudgetData(budgetID); 
-  
+   */
+  const passportData = await fetchPassportData(199);
+
   const {
     clinicInfo = null,
     products = null,
@@ -40,8 +42,7 @@ export default async function Budget({
     discountAmount = null,
     referenceId = null,
     creationDate = null,
-  } = budgetData ? budgetData : {};
-  */
+  } = passportData ? passportData : {};
 
   return (
     <main className='text-hg-500'>
@@ -52,6 +53,7 @@ export default async function Budget({
         <Issues />
         <PendingBonus />
         <Doubts />
+        <Footer clinicInfo={clinicInfo} />
       </div>
     </main>
   );

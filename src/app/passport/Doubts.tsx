@@ -4,7 +4,7 @@ import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Issues() {
   return (
-    <section>
+    <section className='mb-8'>
       <div className='p-16 bg-hg-400 text-white flex flex-col justify-center items-center'>
         <SvgCosmetic3 height={64} width={64} fill='white' className='mb-4' />
         <h3 className='font-semibold mb-4 text-2xl font-semibold'>¿Tienes dudas?</h3>
@@ -27,7 +27,14 @@ export default function Issues() {
           </div>
         </div>
       </div>
-      div
+      <div className='bg-hg-400/50 text-hg-400 flex flex-col items-center py-8 px-24'>
+        <h3 className='text-sm font-semibold mb-4'>Trae tu pasaporte a tu próxima cita</h3>
+        <p className='text-xs text-center'>
+          Holaglow Clinics ofrece una serie de productos técnicos médicos comercializados en la CE con diferentes
+          especificaciones y propiedades. Te recomendamos que siempre consultes con un médico o beauty advisor
+          calificado qué productos son los más adecuados de nuestra selección para tus necesidades particulares.
+        </p>
+      </div>
     </section>
   );
 }
