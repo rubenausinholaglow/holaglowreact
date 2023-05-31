@@ -5,7 +5,7 @@ import { HOLAGLOW_COLORS } from 'utils/colors';
 export default function Recomendations() {
   return (
     <section className=''>
-      <div class='inline-flex justify-center items-center bg-hg-400 rounded-r-xl text-white py-3 px-16'>
+      <div className='inline-flex justify-center items-center bg-hg-400 rounded-r-xl text-white py-3 px-16'>
         <h3 className='text-2xl font-semibold text-white mr-8'>¿Tienes dudas?</h3>
         <div className='flex'>
           <div className='flex justify-center items-center border border-hg-200 rounded-full p4 h-[56px] w-[56px]'>

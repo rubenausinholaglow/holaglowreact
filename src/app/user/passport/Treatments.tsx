@@ -42,7 +42,7 @@ export default function Treatments() {
               </ul>
             </li>
             <li className='p-4'>
-              <ul class='flex flex-col gap-4'>
+              <ul className='flex flex-col gap-4'>
                 <li className='flex content-center'>
                   <SvgCalendar className='mr-2' height={18} width={22} fill='#717D96' />
                   <p className='text-[#717D96]'>Josep Basart</p>
