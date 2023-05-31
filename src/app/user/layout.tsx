@@ -28,7 +28,7 @@ export default async function DashboardLayout({
   return (
     <main className='flex flex-col w-[750px] mx-auto'>
       {children}
-      <Footer clinicInfo={clinicInfo} />
+      {clinicInfo && <Footer clinicInfo={clinicInfo} />}
     </main>
   );
 }
