@@ -27,9 +27,9 @@ export default function Issues() {
           </div>
         </div>
       </div>
-      <div className='bg-hg-400/50 text-hg-400 flex flex-col items-center py-8 px-24'>
-        <h3 className='text-sm font-semibold mb-4'>Trae tu pasaporte a tu próxima cita</h3>
-        <p className='text-xs text-center'>
+      <div className='bg-hg-400/50 text-hg-400 flex flex-col items-center py-6 px-24'>
+        <h3 className='text-sm font-semibold mb-2'>Trae tu pasaporte a tu próxima cita</h3>
+        <p className='text-sm text-center'>
           Holaglow Clinics ofrece una serie de productos técnicos médicos comercializados en la CE con diferentes
           especificaciones y propiedades. Te recomendamos que siempre consultes con un médico o beauty advisor
           calificado qué productos son los más adecuados de nuestra selección para tus necesidades particulares.

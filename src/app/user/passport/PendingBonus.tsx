@@ -2,9 +2,9 @@ import Image from 'next/image';
 
 export default function Issues() {
   return (
-    <section className='p-16 bg-hg-100/50 text-hg-500 text-lg'>
-      <h3 className='font-semibold mb-4'>Bono de tratamientos pendientes</h3>
-      <ul className='flex flex-col gap-3 mb-8'>
+    <section className='p-16 pt-8 bg-hg-100/50 text-hg-500 text-lg'>
+      <h3 className='text-2xl text-hg-500 font-semibold text-center mb-8'>Bono de tratamientos pendientes</h3>
+      <ul className='flex flex-col gap-3'>
         <li className='bg-white p-4 flex justify-between rounded-lg'>
           <p>Vial de ácido hialurónico</p>
           <span className='text-hg-200'>x2</span>
@@ -18,8 +18,7 @@ export default function Issues() {
           <span className='text-hg-200'>x1</span>
         </li>
       </ul>
-
-      <div className='bg-[url("/images/passport/walletGlowBg.png")] bg-cover bg-no-repeat bg-left-bottom text-white h-[283px] w-full px-4'>
+      {/* <div className='bg-[url("/images/passport/walletGlowBg.png")] bg-cover bg-no-repeat bg-left-bottom text-white h-[283px] w-full px-4'>
         <Image
           src='/images/passport/walletGlowProgram.png'
           width={200}
@@ -34,7 +33,7 @@ export default function Issues() {
           </p>
           <p>¡Gracias por confiar en nosotros!</p>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
