@@ -43,7 +43,9 @@ export default function Products({
                 />
               </div>
               <div className='flex flex-col mt-8 ml-12 w-1/2'>
-                <h3 className='font-semibold mb-4'>{product.title}</h3>
+                <h3 className='font-semibold mb-4'>
+                  {product.title} {product.quantity > 1 && `(x${product.quantity})`}
+                </h3>
                 <div className='flex flex-row'>
                   <p className='basis-1/2 pr-6 py-4 mr-6 border-r border-hg-500'>
                     <span className='block font-light text-hg-200 text-xs mb-1'>Tratamiento</span>
