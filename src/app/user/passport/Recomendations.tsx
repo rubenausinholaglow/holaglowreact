@@ -3,7 +3,7 @@ import { SvgCosmetic1, SvgCosmetic2, SvgEnvelopeOpen, SvgPhone } from 'icons/Ico
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Recomendations({ appointment }: { appointment: Object }) {
-  const { treatments } = appointment;
+  const { treatments }: any = appointment;
 
   return (
     <section>
@@ -42,17 +42,20 @@ export default function Recomendations({ appointment }: { appointment: Object })
             <h3 className='text-lg font-semibold mb-4'>Durante las primeras 24 horas</h3>
             <ul className='bg-white text-sm text-[#717D96] rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(220,170,205,.5)]'>
               <li className='text-hg-500 mb-8'>Es recomendable seguir estos consejos</li>
-              {treatments.map((treatment: Object) => {
-                return treatment.postTreatmentInfo.first24hTips.map((info, index) => {
-                  const totalTips = Object.keys(treatment.postTreatmentInfo.first24hTips).length;
+              {treatments.map((item: Object) => {
+                const { treatment }: any = item;
+                return treatment.product.postTreatmentInfo.first24hTips
+                  .sort((a, b) => a.priority - b.priority)
+                  .map((info, index) => {
+                    const totalTips = Object.keys(treatment.product.postTreatmentInfo.first24hTips).length;
 
-                  return (
-                    <>
-                      <li>{info.details}</li>
-                      {index + 1 < totalTips && <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3' />}
-                    </>
-                  );
-                });
+                    return (
+                      <>
+                        <li>{info.details}</li>
+                        {index + 1 < totalTips && <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3' />}
+                      </>
+                    );
+                  });
               })}
             </ul>
           </div>
@@ -61,17 +64,20 @@ export default function Recomendations({ appointment }: { appointment: Object })
             <h3 className='text-lg font-semibold mb-4'>Después de las primeras 24 horas</h3>
             <ul className='text-sm text-[#717D96] rounded-xl p-8 text-center'>
               <li className='text-hg-500 mb-8'>Es recomendable seguir estos consejos</li>
-              {treatments.map((treatment: Object) => {
-                return treatment.postTreatmentInfo.after24hTips.map((info, index) => {
-                  const totalTips = Object.keys(treatment.postTreatmentInfo.after24hTips).length;
+              {treatments.map((item: Object) => {
+                const { treatment }: any = item;
+                return treatment.product.postTreatmentInfo.after24hTips
+                  .sort((a, b) => a.priority - b.priority)
+                  .map((info, index) => {
+                    const totalTips = Object.keys(treatment.product.postTreatmentInfo.after24hTips).length;
 
-                  return (
-                    <>
-                      <li>{info.details}</li>
-                      {index + 1 < totalTips && <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-4' />}
-                    </>
-                  );
-                });
+                    return (
+                      <>
+                        <li>{info.details}</li>
+                        {index + 1 < totalTips && <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3' />}
+                      </>
+                    );
+                  });
               })}
             </ul>
           </div>

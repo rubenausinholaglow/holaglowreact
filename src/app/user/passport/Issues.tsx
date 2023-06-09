@@ -2,15 +2,15 @@ import { SvgPlusSmall } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Issues({ appointment }: { appointment: Object }) {
-  const { treatments } = appointment;
+  const { treatments }: any = appointment;
 
-  const normalIssues = treatments.map((treatment: Object) =>
-    treatment.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 0),
-  )[0];
+  const normalIssues: any = treatments.map((item: Object) =>
+    item.treatment.product.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 0),
+  );
 
-  const unalarmingIssues = treatments.map((treatment: Object) =>
-    treatment.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 1),
-  )[0];
+  const unalarmingIssues: any = treatments.map((item: Object) =>
+    item.treatment.product.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 1),
+  );
 
   const issuesTitle =
     treatments.length > 1
@@ -23,35 +23,35 @@ export default function Issues({ appointment }: { appointment: Object }) {
       <div className='flex gap-16'>
         <div>
           <p className='text-hg-500 mb-4'>Es normal si...</p>
-          <p className='mb-4'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-          </p>
           <ul className='mb-8'>
-            {normalIssues.map((issue: Object) => {
-              return (
-                <li className='flex gap-2 mb-4'>
-                  <div>
-                    <SvgPlusSmall height={16} width={16} fill={HOLAGLOW_COLORS['hg-500']} />
-                  </div>
-                  <p>{issue.details}</p>
-                </li>
-              );
+            {normalIssues.map((issues: Object) => {
+              return issues.map((issue) => {
+                return (
+                  <li className='flex gap-2 mb-4'>
+                    <div>
+                      <SvgPlusSmall height={16} width={16} fill={HOLAGLOW_COLORS['hg-500']} />
+                    </div>
+                    <p>{issue.details}</p>
+                  </li>
+                );
+              });
             })}
           </ul>
         </div>
         <div>
-          <p className='text-hg-500 mb-4'>No te alarmes si...</p>
+          <p className='text-hg-500 mb-4'>Llámanos si...</p>
           <ul className='mb-8'>
-            {unalarmingIssues.map((issue: Object) => {
-              return (
-                <li className='flex gap-2 mb-4'>
-                  <div>
-                    <SvgPlusSmall height={16} width={16} fill={HOLAGLOW_COLORS['hg-500']} />
-                  </div>
-                  <p>{issue.details}</p>
-                </li>
-              );
+            {unalarmingIssues.map((issues: Object) => {
+              return issues.map((issue: Object) => {
+                return (
+                  <li className='flex gap-2 mb-4'>
+                    <div>
+                      <SvgPlusSmall height={16} width={16} fill={HOLAGLOW_COLORS['hg-500']} />
+                    </div>
+                    <p>{issue.details}</p>
+                  </li>
+                );
+              });
             })}
           </ul>
         </div>

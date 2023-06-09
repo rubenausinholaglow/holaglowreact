@@ -1,15 +1,21 @@
 import Image from 'next/image';
 import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
+import { treatment, clinicProfessional, clinic } from './types';
 
 export default function Treatments({
   appointment,
   previousAppointments,
 }: {
-  appointment: Object;
+  appointment: {
+    clinic: clinic;
+    clinicProfessional: clinicProfessional;
+    treatments: treatment;
+  };
   previousAppointments: Object;
 }) {
-  const { treatments } = appointment;
+  console.log();
+  const { treatments }: any = appointment;
 
   return (
     <section className='p-12'>
@@ -17,7 +23,8 @@ export default function Treatments({
         Detalles de tu tratamiento
       </h3>
 
-      {treatments.map((treatment: Object) => {
+      {treatments.map((item: Object) => {
+        const { treatment }: any = item;
         return (
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
@@ -29,36 +36,42 @@ export default function Treatments({
               <ul className='border-l border-hg-400/10 w-3/5 text-sm'>
                 <li className='border-b border-hg-400/10 p-4'>
                   <p className='text-hg-200 text-xs mb-1'>Plan de tratamiento</p>
-                  <p>{treatment.text}</p>
+                  <p>{treatment.product.title}</p>
                 </li>
                 <li className='border-b border-hg-400/10 p-4'>
                   <p className='text-hg-200 text-xs mb-1'>Producto utilizado</p>
-                  <p>{treatment.product}</p>
+                  <p>{treatment.product.description}</p>
                 </li>
-                <li className='border-b border-hg-400/10 p-4'>
-                  <ul className='flex gap-4'>
-                    <li className='w-1/3'>
-                      <SvgMedicine className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
-                      <p className='text-hg-200 text-xs mb-1'>Cantidad</p>
-                      <p>{treatment.quantity} Vial</p>
-                    </li>
-                    {/* <li className='w-1/3'>
-                    <SvgReceipt className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
-                    <p className='text-hg-200 text-xs mb-1'>Número de lote</p>
-                    <p>00000RRR</p>
+                {treatment.quantity > 0 && (
+                  <li className='border-b border-hg-400/10 p-4'>
+                    <ul className='flex gap-4'>
+                      <li className='w-1/3'>
+                        <SvgMedicine className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
+                        <p className='text-hg-200 text-xs mb-1'>Cantidad</p>
+                        <p>{treatment.quantity} Vial</p>
+                      </li>
+                      {treatment.lotReference !== '' && (
+                        <li className='w-1/3'>
+                          <SvgReceipt className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
+                          <p className='text-hg-200 text-xs mb-1'>Número de lote</p>
+                          <p>{treatment.lotReference}</p>
+                        </li>
+                      )}
+                      {treatment.product.durationMin > 0 && (
+                        <li className='w-1/3'>
+                          <SvgCalendar className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
+                          <p className='text-hg-200 text-xs mb-1'>Duración</p>
+                          <p>{`de ${durationMin / 30} a ${durationMax / 30} meses`}</p>
+                        </li>
+                      )}
+                    </ul>
                   </li>
-                  <li className='w-1/3'>
-                    <SvgCalendar className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
-                    <p className='text-hg-200 text-xs mb-1'>Duración</p>
-                    <p>De 6 a 12 meses</p>
-                  </li> */}
-                  </ul>
-                </li>
+                )}
                 <li className='p-4'>
                   <ul className='flex flex-col gap-4'>
                     <li className='flex content-center'>
                       <SvgCalendar className='mr-2' height={18} width={22} fill='#717D96' />
-                      <p className='text-[#717D96]'>{appointment.professional.name}</p>
+                      <p className='text-[#717D96]'>{appointment.clinicProfessional.name}</p>
                     </li>
                     <li className='flex content-center'>
                       <SvgMapMarker className='mr-2' height={18} width={22} fill='#717D96' />
@@ -71,87 +84,37 @@ export default function Treatments({
           </div>
         );
       })}
+      {previousAppointments.length > 0 && (
+        <>
+          <h3 className='mb-4 font-semibold'>Histórico de tratamientos</h3>
 
-      {treatments.map((treatment: Object) => {
-        return (
-          <div className='bg-hg-100/50 rounded-[25px] p-8 mb-12'>
-            <div className='flex'>
-              <div className='flex flex-col mr-4 w-2/5'>
-                <p className='text-hg-200 text-xs'>2023</p>
-                <p className='mb-4'>01 May</p>
-                <Image src='/images/passport/treatmentZones/3.svg' height='196' width='230' alt='Holaglow' />
-              </div>
-              <ul className='border-l border-hg-400/10 w-3/5 text-sm'>
-                <li className='border-b border-hg-400/10 p-4'>
-                  <p className='text-hg-200 text-xs mb-1'>Plan de tratamiento</p>
-                  <p>{treatment.text}</p>
-                </li>
-                <li className='border-b border-hg-400/10 p-4'>
-                  <p className='text-hg-200 text-xs mb-1'>Producto utilizado</p>
-                  <p>{treatment.product}</p>
-                </li>
-                <li className='border-b border-hg-400/10 p-4'>
-                  <ul className='flex gap-4'>
-                    <li className='w-1/3'>
-                      <SvgMedicine className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
-                      <p className='text-hg-200 text-xs mb-1'>Cantidad</p>
-                      <p>{treatment.quantity} Vial</p>
-                    </li>
-                    {/* <li className='w-1/3'>
-                    <SvgReceipt className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
-                    <p className='text-hg-200 text-xs mb-1'>Número de lote</p>
-                    <p>00000RRR</p>
-                  </li>
-                  <li className='w-1/3'>
-                    <SvgCalendar className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
-                    <p className='text-hg-200 text-xs mb-1'>Duración</p>
-                    <p>De 6 a 12 meses</p>
-                  </li> */}
-                  </ul>
-                </li>
-                <li className='p-4'>
-                  <ul className='flex flex-col gap-4'>
-                    <li className='flex content-center'>
-                      <SvgCalendar className='mr-2' height={18} width={22} fill='#717D96' />
-                      <p className='text-[#717D96]'>{appointment.professional.name}</p>
-                    </li>
-                    <li className='flex content-center'>
-                      <SvgMapMarker className='mr-2' height={18} width={22} fill='#717D96' />
-                      <p className='text-[#717D96]'>{appointment.clinic.address}</p>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        );
-      })}
-
-      <h3 className='mb-4 font-semibold'>Histórico de tratamientos</h3>
-
-      <table className='text-[#717D96] text-[11px] mb-12 w-full'>
-        <tr className='text-hg-500 mb-4'>
-          <th className='py-3 pr-6 text-left font-normal'>Fecha / Sesión</th>
-          <th className='py-3 pr-6 text-left font-normal'>Plan de tratamiento</th>
-          <th className='py-3 pr-6 text-left font-normal'>Profesional sanitario</th>
-          <th className='py-3 pr-6 text-left font-normal'>Clínica</th>
-        </tr>
-        {previousAppointments.map((oldAppointment: Object) => {
-          const date = new Date(oldAppointment.date).getDate().toString().padStart(2, '0');
-          const month = (new Date(oldAppointment.date).getMonth() + 1).toString().padStart(2, '0');
-          const year = new Date(oldAppointment.date).getFullYear();
-          const parsedDate = `${date}/${month}/${year}`;
-
-          return (
-            <tr className='mb-4 border-b border-hg-400/10'>
-              <td className='py-3 pr-6'>{parsedDate}</td>
-              <td className='py-3 pr-6'>{appointment.treatments[0].text}</td>
-              <td className='py-3 pr-6'>{appointment.professional.name}</td>
-              <td className='py-3 pr-6'>{appointment.clinic.address}</td>
+          <table className='text-[#717D96] text-[11px] mb-12 w-full'>
+            <tr className='text-hg-500 mb-4'>
+              <th className='py-3 pr-6 text-left font-normal'>Fecha / Sesión</th>
+              <th className='py-3 pr-6 text-left font-normal'>Plan de tratamiento</th>
+              <th className='py-3 pr-6 text-left font-normal'>Profesional sanitario</th>
+              <th className='py-3 pr-6 text-left font-normal'>Clínica</th>
             </tr>
-          );
-        })}
-      </table>
+            {previousAppointments.map((appointment: Object) => {
+              const date = new Date(appointment.date).getDate().toString().padStart(2, '0');
+              const month = (new Date(appointment.date).getMonth() + 1).toString().padStart(2, '0');
+              const year = new Date(appointment.date).getFullYear();
+              const parsedDate = `${date}/${month}/${year}`;
+
+              return (
+                <tr className='mb-4 border-b border-hg-400/10'>
+                  <td className='py-3 pr-6'>{parsedDate}</td>
+                  <td className='py-3 pr-6'>
+                    {appointment.treatments.length > 0 ? appointment.treatments[0].text : ''}
+                  </td>
+                  <td className='py-3 pr-6'>{appointment.clinicProfessional.name}</td>
+                  <td className='py-3 pr-6'>{appointment.clinic.address}</td>
+                </tr>
+              );
+            })}
+          </table>
+        </>
+      )}
 
       <h3 className='mb-4 font-semibold'>
         Notas para tus tratamientos en Holaglow
