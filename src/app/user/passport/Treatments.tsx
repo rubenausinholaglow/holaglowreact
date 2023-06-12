@@ -12,9 +12,8 @@ export default function Treatments({
     clinicProfessional: clinicProfessional;
     treatments: treatment;
   };
-  previousAppointments: Object;
+  previousAppointments: any;
 }) {
-  console.log();
   const { treatments }: any = appointment;
 
   return (
@@ -61,7 +60,9 @@ export default function Treatments({
                         <li className='w-1/3'>
                           <SvgCalendar className='mb-2' height={18} width={22} fill={HOLAGLOW_COLORS['hg-200']} />
                           <p className='text-hg-200 text-xs mb-1'>Duración</p>
-                          <p>{`de ${durationMin / 30} a ${durationMax / 30} meses`}</p>
+                          <p>{`de ${treatment.product.durationMin / 30} a ${
+                            treatment.product.durationMax / 30
+                          } meses`}</p>
                         </li>
                       )}
                     </ul>
@@ -95,7 +96,7 @@ export default function Treatments({
               <th className='py-3 pr-6 text-left font-normal'>Profesional sanitario</th>
               <th className='py-3 pr-6 text-left font-normal'>Clínica</th>
             </tr>
-            {previousAppointments.map((appointment: Object) => {
+            {previousAppointments.map((appointment: any) => {
               const date = new Date(appointment.date).getDate().toString().padStart(2, '0');
               const month = (new Date(appointment.date).getMonth() + 1).toString().padStart(2, '0');
               const year = new Date(appointment.date).getFullYear();

@@ -1,14 +1,15 @@
 import { SvgPlusSmall } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
+import { treatments, issue } from './types';
 
-export default function Issues({ appointment }: { appointment: Object }) {
-  const { treatments }: any = appointment;
+export default function Issues({ appointment }: any) {
+  const { treatments } = appointment;
 
-  const normalIssues: any = treatments.map((item: Object) =>
-    item.treatment.product.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 0),
+  const normalIssues = treatments.map((item: treatments) =>
+    item.treatment.product.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 1),
   );
 
-  const unalarmingIssues: any = treatments.map((item: Object) =>
+  const unalarmingIssues = treatments.map((item: treatments) =>
     item.treatment.product.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 1),
   );
 
@@ -24,8 +25,8 @@ export default function Issues({ appointment }: { appointment: Object }) {
         <div>
           <p className='text-hg-500 mb-4'>Es normal si...</p>
           <ul className='mb-8'>
-            {normalIssues.map((issues: Object) => {
-              return issues.map((issue) => {
+            {normalIssues.map((issues: any) => {
+              return issues.map((issue: issue) => {
                 return (
                   <li className='flex gap-2 mb-4'>
                     <div>
@@ -41,8 +42,8 @@ export default function Issues({ appointment }: { appointment: Object }) {
         <div>
           <p className='text-hg-500 mb-4'>Llámanos si...</p>
           <ul className='mb-8'>
-            {unalarmingIssues.map((issues: Object) => {
-              return issues.map((issue: Object) => {
+            {unalarmingIssues.map((issues: any) => {
+              return issues.map((issue: issue) => {
                 return (
                   <li className='flex gap-2 mb-4'>
                     <div>
