@@ -4,7 +4,6 @@ import AlmaPayment from './AlmaPayment';
 import Simulation from './Simulation';
 import PromoCode from './PromoCode';
 import Legal from './Legal';
-import Footer from './Footer';
 
 const fetchBudgetData = async (id: number) => {
   try {
