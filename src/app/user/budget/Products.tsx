@@ -50,8 +50,8 @@ export default function Products({
                     <span>{product.description}</span>
                   </p>
                   <p className='basis-1/2 py-4'>
-                    <span className='block font-light text-hg-200 text-xs mb-1'>Precio olakease</span>
-                    <span className='text-3xl font-bold'>{`${priceFormat(Number(product.price))}`} €</span>
+                    <span className='block font-light text-hg-200 text-xs mb-1'>Precio</span>
+                    <span className='text-2xl font-bold'>{`${priceFormat(Number(product.price))}`} €</span>
                   </p>
                 </div>
               </div>
