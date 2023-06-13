@@ -5,8 +5,6 @@ import { SvgPhone, SvgMapMarker, SvgDiamond } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Header({ clinicInfo }: { clinicInfo: Clinic }) {
-  console.log(clinicInfo);
-
   return (
     <header className='w-full p-8 pb-12 bg-[url("/images/budget/budgetHeader.jpg")] bg-cover bg-right-bottom'>
       <Image className='mx-auto' src='/images/holaglow.svg' height='40' width='188' alt='Holaglow' />
