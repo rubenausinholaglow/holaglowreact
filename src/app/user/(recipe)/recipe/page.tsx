@@ -1,5 +1,7 @@
 import Image from 'next/image';
-import TaxData from '../TaxData';
+import TaxData from './TaxData';
+import RecipeData from './RecipeData';
+import ThankYou from './ThankYou';
 
 const fetchRecipeData = async (id: number) => {
   try {
@@ -36,6 +38,7 @@ export default async function Passport({
 
         <TaxData />
         <RecipeData />
+        <ThankYou />
       </section>
     </main>
   );

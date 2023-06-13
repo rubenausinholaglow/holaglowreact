@@ -21,19 +21,19 @@ export default function TaxData() {
 
           <table className='text-black'>
             <tr>
-              <td className='font-semibold'>Fact. Número</td>
+              <td className='font-semibold pr-2'>Fact. Número</td>
               <td>0000001S/202</td>
             </tr>
             <tr>
-              <td className='font-semibold'>Cliente</td>
+              <td className='font-semibold pr-2'>Cliente</td>
               <td>HG00001</td>
             </tr>
             <tr>
-              <td className='font-semibold'>Fecha</td>
+              <td className='font-semibold pr-2'>Fecha</td>
               <td>29/05/2023</td>
             </tr>
             <tr>
-              <td className='font-semibold'>Tienda</td>
+              <td className='font-semibold pr-2'>Tienda</td>
               <td>MAD01</td>
             </tr>
           </table>
