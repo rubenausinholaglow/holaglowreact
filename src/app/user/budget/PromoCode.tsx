@@ -1,8 +1,16 @@
 import Image from 'next/image';
 
-export default function PromoCode({ discountCode, discountAmount }: { discountCode: number; discountAmount: number }) {
+export default function PromoCode({
+  discountCode,
+  discountAmount,
+  backGround = '#ffffff',
+}: {
+  discountCode: number;
+  discountAmount: number;
+  backGround: string;
+}) {
   return (
-    <section className='bg-white p-8 mb-4'>
+    <section className={`bg-[${backGround}] p-8 mb-4`}>
       <div className='bg-[url("/images/budget/promoCodeBg.jpg")] h-[435px] bg-cover rounded-[25px] flex flex-col ml-8'>
         <Image
           className='-ml-8 mt-16'

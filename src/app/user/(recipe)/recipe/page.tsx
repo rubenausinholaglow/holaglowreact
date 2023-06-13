@@ -2,10 +2,11 @@ import Image from 'next/image';
 import TaxData from './TaxData';
 import RecipeData from './RecipeData';
 import ThankYou from './ThankYou';
+import PromoCode from 'app/user/budget/PromoCode';
 
 const fetchRecipeData = async (id: number) => {
   try {
-    const recipeResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/BeautyPass?id=${id}`, {
+    const recipeResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/budget?id=${id}`, {
       cache: 'no-store',
     });
 
@@ -29,7 +30,7 @@ export default async function Passport({
   const recipeID: any = searchParams.id;
   const recipeData = await fetchRecipeData(recipeID);
 
-  const { appointment = null, previousAppointments = null, pendingVouchers = null } = recipeData ? recipeData : {};
+  const { discountCode = null, discountAmount = null } = recipeData ? recipeData : {};
 
   return (
     <main className='bg-[#fdf7fc] text-sm'>
@@ -38,6 +39,7 @@ export default async function Passport({
 
         <TaxData />
         <RecipeData />
+        <PromoCode discountCode={discountCode} discountAmount={discountAmount} backGround='#fdf7fc' />
         <ThankYou />
       </section>
     </main>
