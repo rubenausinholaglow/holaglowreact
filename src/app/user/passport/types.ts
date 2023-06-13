@@ -8,26 +8,12 @@ export interface treatment {
     description: string;
     durationMin: number;
     durationMsx: number;
-    postTreatmentInfo: postTreatment;
+    postTreatmentInfo: any;
   };
   quantity: number;
   lotReference: number;
 }
 [];
-
-export interface postTreatment {
-  possibleComplications: complication[];
-  first24hTips: tips[];
-  after24hTips: tips[];
-}
-
-export interface complication {
-  risk: number;
-}
-
-export interface tips {
-  risk: number;
-}
 
 export interface issue {
   details: string;

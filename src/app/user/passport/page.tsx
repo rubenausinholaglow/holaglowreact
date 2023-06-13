@@ -31,18 +31,22 @@ export default async function Passport({
   const passportID: any = searchParams.id;
   const passportData = await fetchPassportData(passportID);
 
-  const { appointment } = passportData;
-  const { previousAppointments } = passportData;
-  const { pendingVouchers } = passportData;
+  const { appointment = null, previousAppointments = null, pendingVouchers = null } = passportData ? passportData : {};
 
   return (
     <main className='flex flex-col w-[750px] mx-auto text-hg-500'>
-      <Header />
-      <Treatments appointment={appointment} previousAppointments={previousAppointments} />
-      <Recomendations appointment={appointment} />
-      <Issues appointment={appointment} />
-      <PendingBonus pendingVouchers={pendingVouchers} />
-      <Doubts />
+      {appointment ? (
+        <>
+          <Header />
+          <Treatments appointment={appointment} previousAppointments={previousAppointments} />
+          <Recomendations appointment={appointment} />
+          <Issues appointment={appointment} />
+          <PendingBonus pendingVouchers={pendingVouchers} />
+          <Doubts />
+        </>
+      ) : (
+        <p className='p-8'>Passport unavailable: some data is missing</p>
+      )}
     </main>
   );
 }
