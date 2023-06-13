@@ -6,11 +6,15 @@ export default function Issues({ appointment }: any) {
   const { treatments } = appointment;
 
   const normalIssues = treatments.map((item: treatments) =>
-    item.treatment.product.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 1),
+    item.treatment.product.postTreatmentInfo.possibleComplications.filter(
+      (complication: any) => complication.risk === 1,
+    ),
   );
 
   const unalarmingIssues = treatments.map((item: treatments) =>
-    item.treatment.product.postTreatmentInfo.possibleComplications.filter(complication => complication.risk === 1),
+    item.treatment.product.postTreatmentInfo.possibleComplications.filter(
+      (complication: any) => complication.risk === 1,
+    ),
   );
 
   const issuesTitle =
