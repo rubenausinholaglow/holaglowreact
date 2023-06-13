@@ -16,7 +16,6 @@ const fetchPassportData = async (id: number) => {
     }
 
     const passPortData = await passportResponse.json();
-    console.log(passPortData);
     return passPortData;
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
