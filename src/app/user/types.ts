@@ -53,6 +53,11 @@ export interface Appointment {
   treatments: Array<Treatment>;
   clinicProfessional: ClinicProfessional;
   clinic: Clinic;
+  appointmentProducts: Array<{
+    product: {
+      title: string;
+    };
+  }>;
 }
 export interface Tip {
   details: string;
