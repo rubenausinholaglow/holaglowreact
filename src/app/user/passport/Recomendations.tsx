@@ -1,8 +1,16 @@
 import { SvgCosmetic1, SvgCosmetic2, SvgEnvelopeOpen, SvgPhone } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import { treatments } from './types';
+import { Clinic, ClinicProfessional, Treatment } from '../types';
 
-export default function Recomendations({ appointment }: any) {
+export default function Recomendations({
+  appointment,
+}: {
+  appointment: {
+    clinic: Clinic;
+    clinicProfessional: ClinicProfessional;
+    treatments: Array<Treatment>;
+  };
+}) {
   const { treatments, treatment }: any = appointment;
 
   return (
@@ -42,7 +50,7 @@ export default function Recomendations({ appointment }: any) {
             <h3 className='text-lg font-semibold mb-4'>Durante las primeras 24 horas</h3>
             <ul className='bg-white text-sm text-[#717D96] rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(220,170,205,.5)]'>
               <li className='text-hg-500 mb-8'>Es recomendable seguir estos consejos</li>
-              {treatments.map((item: treatments) => {
+              {appointment.treatments.map((item: Treatment) => {
                 const { treatment } = item;
                 return treatment.product.postTreatmentInfo.first24hTips
                   .sort((a: any, b: any) => a.priority - b.priority)

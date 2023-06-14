@@ -1,8 +1,10 @@
 import { SvgPlusSmall } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import { issue } from './types';
+import { appointment, issue } from './types';
 
-export default function Issues({ appointment }: any) {
+export default function Issues({ appointment }: { appointment: appointment }) {
+  console.log(appointment);
+
   const { treatments } = appointment;
 
   const normalIssues = treatments

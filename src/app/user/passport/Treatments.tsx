@@ -1,29 +1,27 @@
 import Image from 'next/image';
 import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import { treatment, clinicProfessional, clinic } from './types';
+import { Appointment, Clinic, ClinicProfessional, Treatment } from '../types';
 
 export default function Treatments({
   appointment,
   previousAppointments,
 }: {
   appointment: {
-    clinic: clinic;
-    clinicProfessional: clinicProfessional;
-    treatments: treatment;
+    clinic: Clinic;
+    clinicProfessional: ClinicProfessional;
+    treatments: Array<Treatment>;
   };
-  previousAppointments: any;
+  previousAppointments: Array<Appointment>;
 }) {
-  const { treatments }: any = appointment;
-
   return (
     <section className='p-12'>
       <h3 className='bg-[#fdf6fc] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4'>
         Detalles de tu tratamiento
       </h3>
 
-      {treatments.map((item: Object) => {
-        const { treatment }: any = item;
+      {appointment.treatments.map(item => {
+        const { treatment } = item;
         return (
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
