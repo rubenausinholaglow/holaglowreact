@@ -5,15 +5,9 @@ import { Appointment } from '../types';
 export default function Issues({ appointment }: { appointment: Appointment }) {
   const { treatments } = appointment;
 
-  const normalIssues = treatments
-    .map(item => item.treatment.product.postTreatmentInfo.possibleComplications)
-    .flat()
-    .filter(complication => complication.risk === 0);
-
-  const unalarmingIssues = treatments
-    .map(item => item.treatment.product.postTreatmentInfo.possibleComplications)
-    .flat()
-    .filter(complication => complication.risk === 1);
+  const flattenedIssues = treatments.map(item => item.treatment.product.postTreatmentInfo.possibleComplications).flat();
+  const normalIssues = flattenedIssues.filter(complication => complication.risk === 0);
+  const unalarmingIssues = flattenedIssues.filter(complication => complication.risk === 1);
 
   const issuesTitle =
     treatments.length > 1

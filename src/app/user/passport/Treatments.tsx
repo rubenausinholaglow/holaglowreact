@@ -102,12 +102,15 @@ export default function Treatments({
               const year = new Date(appointment.date).getFullYear();
               const parsedDate = `${date}/${month}/${year}`;
 
+              const appointmentTitle =
+                appointment.treatments.length > 0
+                  ? appointment.treatments[0].treatment.product.title
+                  : appointment.appointmentProducts[0].product.title;
+
               return (
                 <tr className='mb-4 border-b border-hg-400/10'>
                   <td className='py-3 pr-6'>{parsedDate}</td>
-                  <td className='py-3 pr-6'>
-                    {appointment.treatments.length > 0 ? appointment.appointmentProducts[0].product.title : ''}
-                  </td>
+                  <td className='py-3 pr-6'>{appointmentTitle}</td>
                   <td className='py-3 pr-6'>{appointment.clinicProfessional.name}</td>
                   <td className='py-3 pr-6'>{appointment.clinic.address}</td>
                 </tr>
