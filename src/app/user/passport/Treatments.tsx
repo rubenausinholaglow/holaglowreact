@@ -1,17 +1,13 @@
 import Image from 'next/image';
 import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import { Appointment, Clinic, ClinicProfessional, Treatment } from '../types';
+import { Appointment } from '../types';
 
 export default function Treatments({
   appointment,
   previousAppointments,
 }: {
-  appointment: {
-    clinic: Clinic;
-    clinicProfessional: ClinicProfessional;
-    treatments: Array<Treatment>;
-  };
+  appointment: Appointment;
   previousAppointments: Array<Appointment>;
 }) {
   return (
@@ -22,13 +18,19 @@ export default function Treatments({
 
       {appointment.treatments.map(item => {
         const { treatment } = item;
+
         return (
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
               <div className='flex flex-col mr-4 w-2/5'>
                 <p className='text-hg-200 text-xs'>2023</p>
                 <p className='mb-4'>01 May</p>
-                <Image src='/images/passport/treatmentZones/1.svg' height='196' width='230' alt='Holaglow' />
+                <Image
+                  src={`/images/passport/treatmentZones/${treatment.product.zone}.svg`}
+                  height='196'
+                  width='230'
+                  alt='Holaglow'
+                />
               </div>
               <ul className='border-l border-hg-400/10 w-3/5 text-sm'>
                 <li className='border-b border-hg-400/10 p-4'>
@@ -94,18 +96,18 @@ export default function Treatments({
               <th className='py-3 pr-6 text-left font-normal'>Profesional sanitario</th>
               <th className='py-3 pr-6 text-left font-normal'>Clínica</th>
             </tr>
-            {previousAppointments.map((appointment: any) => {
+            {previousAppointments.map(appointment => {
               const date = new Date(appointment.date).getDate().toString().padStart(2, '0');
               const month = (new Date(appointment.date).getMonth() + 1).toString().padStart(2, '0');
               const year = new Date(appointment.date).getFullYear();
               const parsedDate = `${date}/${month}/${year}`;
 
+              console.log(appointment);
+
               return (
                 <tr className='mb-4 border-b border-hg-400/10'>
                   <td className='py-3 pr-6'>{parsedDate}</td>
-                  <td className='py-3 pr-6'>
-                    {appointment.treatments.length > 0 ? appointment.treatments[0].text : ''}
-                  </td>
+                  <td className='py-3 pr-6'>{appointment.treatments.length > 0 ? appointment.product.title : ''}</td>
                   <td className='py-3 pr-6'>{appointment.clinicProfessional.name}</td>
                   <td className='py-3 pr-6'>{appointment.clinic.address}</td>
                 </tr>

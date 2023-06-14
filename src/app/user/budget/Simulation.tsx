@@ -1,8 +1,6 @@
 import { Simulation } from '../types';
 
 export default function Simulation({ simulations }: { simulations: Array<Simulation> }) {
-  console.log(simulations);
-
   return (
     <section className='bg-hg-100 py-8 px-16'>
       <div className='flex flex-col justify-center items-center'>

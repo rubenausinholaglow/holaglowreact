@@ -23,6 +23,14 @@
     "checkJs": true,
     "types": ["node"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "tailwind.config.js",
+    "src/utils/priceFormat.ts",
+    "src/utils/colors.ts"
+  ],
   "exclude": ["node_modules"]
 }

@@ -36,15 +36,42 @@ export interface Treatment {
       description: string;
       durationMin: number;
       durationMax: number;
-      postTreatmentInfo: any;
+      postTreatmentInfo: {
+        first24hTips: Array<Tip>;
+        after24hTips: Array<Tip>;
+        possibleComplications: Array<Issue>;
+      };
+      zone: number;
     };
     quantity: number;
     lotReference: string;
   };
 }
+
 export interface Appointment {
   date: Date;
   treatments: Array<Treatment>;
   clinicProfessional: ClinicProfessional;
   clinic: Clinic;
+}
+export interface Tip {
+  details: string;
+  priority: number;
+  id: string;
+  creationDate: Date;
+}
+
+export interface Issue {
+  risk: number;
+  details: string;
+  priority: Number;
+  id: string;
+  creationDate: Date;
+}
+
+export interface Voucher {
+  name: string;
+  quantity: number;
+  id: string;
+  creationDate: Date;
 }

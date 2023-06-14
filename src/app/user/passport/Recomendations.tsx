@@ -1,18 +1,8 @@
 import { SvgCosmetic1, SvgCosmetic2, SvgEnvelopeOpen, SvgPhone } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import { Clinic, ClinicProfessional, Treatment } from '../types';
+import { Appointment, Tip } from '../types';
 
-export default function Recomendations({
-  appointment,
-}: {
-  appointment: {
-    clinic: Clinic;
-    clinicProfessional: ClinicProfessional;
-    treatments: Array<Treatment>;
-  };
-}) {
-  const { treatments, treatment }: any = appointment;
-
+export default function Recomendations({ appointment }: { appointment: Appointment }) {
   return (
     <section>
       <div className='inline-flex justify-center items-center bg-hg-400 rounded-r-3xl text-white py-3 px-16'>
@@ -50,11 +40,11 @@ export default function Recomendations({
             <h3 className='text-lg font-semibold mb-4'>Durante las primeras 24 horas</h3>
             <ul className='bg-white text-sm text-[#717D96] rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(220,170,205,.5)]'>
               <li className='text-hg-500 mb-8'>Es recomendable seguir estos consejos</li>
-              {appointment.treatments.map((item: Treatment) => {
+              {appointment.treatments.map(item => {
                 const { treatment } = item;
                 return treatment.product.postTreatmentInfo.first24hTips
-                  .sort((a: any, b: any) => a.priority - b.priority)
-                  .map((info: any, index: number) => {
+                  .sort((a, b) => a.priority - b.priority)
+                  .map((info, index: number) => {
                     const totalTips = Object.keys(treatment.product.postTreatmentInfo.first24hTips).length;
 
                     return (
@@ -72,11 +62,11 @@ export default function Recomendations({
             <h3 className='text-lg font-semibold mb-4'>Después de las primeras 24 horas</h3>
             <ul className='text-sm text-[#717D96] rounded-xl p-8 text-center'>
               <li className='text-hg-500 mb-8'>Es recomendable seguir estos consejos</li>
-              {treatments.map((item: treatments) => {
+              {appointment.treatments.map(item => {
                 const { treatment } = item;
                 return treatment.product.postTreatmentInfo.after24hTips
-                  .sort((a: any, b: any) => a.priority - b.priority)
-                  .map((info: any, index: number) => {
+                  .sort((a, b) => a.priority - b.priority)
+                  .map((info, index: number) => {
                     const totalTips = Object.keys(treatment.product.postTreatmentInfo.after24hTips).length;
 
                     return (
