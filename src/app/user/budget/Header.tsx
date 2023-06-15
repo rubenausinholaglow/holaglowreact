@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { Clinic } from 'types/clinic';
+import { Clinic } from '../types';
 import { SvgPhone, SvgMapMarker, SvgDiamond } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 

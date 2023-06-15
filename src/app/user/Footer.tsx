@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { Clinic } from 'types/clinic';
+import { Clinic } from './types';
 import { SvgPhone, SvgMapMarker, SvgWorldWideWeb, SvgInstagram } from 'icons/Icons';
 
 export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
