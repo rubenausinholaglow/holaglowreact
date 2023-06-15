@@ -23,7 +23,7 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
       <h3 className='text-2xl text-hg-500 font-semibold text-center mb-8'>{issuesTitle}</h3>
       <div className='flex gap-16'>
         {normalIssues.length > 0 && (
-          <div>
+          <div className='w-1/2'>
             <p className='text-hg-500 mb-4'>Es normal si...</p>
             <ul className='mb-8'>
               {normalIssues.map(issue => {
@@ -40,10 +40,10 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
           </div>
         )}
         {unalarmingIssues.length > 0 && (
-          <div>
-            <p className='text-hg-500 mb-4'>Es normal si...</p>
+          <div className='w-1/2'>
+            <p className='text-hg-500 mb-4'>No te alarmes si...</p>
             <ul className='mb-8'>
-              {normalIssues.map(issue => {
+              {unalarmingIssues.map(issue => {
                 return (
                   <li className='flex gap-2 mb-4'>
                     <div>
