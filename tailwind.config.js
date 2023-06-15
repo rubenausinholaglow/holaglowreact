@@ -11,9 +11,9 @@ module.exports = {
       xs: ['10px'],
       sm: ['12px'],
       md: ['14px'],
-      lg: ['16px'],
-      xl: ['21px'],
-      '2xl': ['24px'],
+      lg: ['16px', '22px'],
+      xl: ['21px', '26px'],
+      '2xl': ['24px', '32px'],
       '3xl': ['32px'],
     },
     extend: {
