@@ -16,7 +16,6 @@ const fetchPassportData = async (id: number) => {
     }
 
     const passPortData = await passportResponse.json();
-    console.log(passPortData);
     return passPortData;
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
@@ -28,8 +27,8 @@ export default async function Passport({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const passportID: any = searchParams.id;
-  const passportData = await fetchPassportData(passportID);
+  const passportID = searchParams.id;
+  const passportData = await fetchPassportData(Number(passportID));
 
   const { appointment = null, previousAppointments = null, pendingVouchers = null } = passportData ? passportData : {};
 

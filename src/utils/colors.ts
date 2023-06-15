@@ -2,10 +2,11 @@ import resolveConfig from 'tailwindcss/resolveConfig';
 
 import tailwindConfig from '../../tailwind.config';
 
-const fullTailwindConfig: any = resolveConfig(tailwindConfig);
-const hgColors = fullTailwindConfig.theme.colors.hg;
+const fullTailwindConfig = resolveConfig(tailwindConfig);
 
-export const HOLAGLOW_COLORS: any = {
+const hgColors: any = fullTailwindConfig?.theme?.colors?.hg || {};
+
+export const HOLAGLOW_COLORS = {
   'hg-500': hgColors[500],
   'hg-400': hgColors[400],
   'hg-300': hgColors[300],
