@@ -9,6 +9,10 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
   const normalIssues = flattenedIssues.filter(complication => complication.risk === 0);
   const unalarmingIssues = flattenedIssues.filter(complication => complication.risk === 1);
 
+  const filterKey = 'details';
+  const filteredNormalIssues = [...new Map(normalIssues.map(item => [item[filterKey], item])).values()];
+  const filteredUnalarmingIssues = [...new Map(unalarmingIssues.map(item => [item[filterKey], item])).values()];
+
   const issuesTitle =
     treatments.length > 1
       ? 'Posibles complicaciones de tus tratamientos'
@@ -22,11 +26,11 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
     <section className='py-8 px-16 bg-hg-100 text-sm text-[#717D96]'>
       <h3 className='text-2xl text-hg-500 font-semibold text-center mb-8'>{issuesTitle}</h3>
       <div className='flex gap-16'>
-        {normalIssues.length > 0 && (
+        {filteredNormalIssues.length > 0 && (
           <div className='w-1/2'>
             <p className='text-hg-500 mb-4'>Es normal si...</p>
             <ul className='mb-8'>
-              {normalIssues.map(issue => {
+              {filteredNormalIssues.map(issue => {
                 return (
                   <li className='flex gap-2 mb-4'>
                     <div>
@@ -39,11 +43,11 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
             </ul>
           </div>
         )}
-        {unalarmingIssues.length > 0 && (
+        {filteredUnalarmingIssues.length > 0 && (
           <div className='w-1/2'>
             <p className='text-hg-500 mb-4'>No te alarmes si...</p>
             <ul className='mb-8'>
-              {unalarmingIssues.map(issue => {
+              {filteredUnalarmingIssues.map(issue => {
                 return (
                   <li className='flex gap-2 mb-4'>
                     <div>
