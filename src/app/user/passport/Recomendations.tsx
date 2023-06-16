@@ -3,6 +3,24 @@ import { HOLAGLOW_COLORS } from 'utils/colors';
 import { Appointment, Tip } from '../types';
 
 export default function Recomendations({ appointment }: { appointment: Appointment }) {
+  const first24Tips = appointment.treatments
+    .map(item => {
+      const { treatment } = item;
+      return treatment.product.postTreatmentInfo.first24hTips.sort((a, b) => a.priority - b.priority);
+    })
+    .flat();
+
+  const after24hTips = appointment.treatments
+    .map(item => {
+      const { treatment } = item;
+      return treatment.product.postTreatmentInfo.after24hTips.sort((a, b) => a.priority - b.priority);
+    })
+    .flat();
+
+  const filterKey = 'details';
+  const filteredFirst24Tips = [...new Map(first24Tips.map(item => [item[filterKey], item])).values()];
+  const filteredAfter24Tips = [...new Map(after24hTips.map(item => [item[filterKey], item])).values()];
+
   return (
     <section>
       <div className='inline-flex justify-center items-center bg-hg-400 rounded-r-3xl text-white py-3 px-16'>
@@ -20,17 +38,6 @@ export default function Recomendations({ appointment }: { appointment: Appointme
         </div>
         <p className='bg-hg-400 p-1 -ml-3'>my@holaglow.com</p>
       </div>
-      {/* <div className='bg-[url("/images/passport/recomendationsBg.png")] bg-cover bg-left-bottom p-16 -mt-10 text-sm text-hg-400 pl-[40%] pr-[15%]'>
-        <p>
-        Tras la realización de un tratamiento es habitual la aparición de molestias en la zona durante unos días.
-          Normalmente, esta molestia o incomodidad suele desaparecer por completo en unos días y su intensidad suele
-          depender de la dificultad y la complejidad del procedimiento realizado.
-        </p>
-        <p>
-          Para evitar complicaciones en el post tratamiento, es importante respetar las indicaciones del doctor así como
-          la que vienen explicadas en este documento.
-        </p>
-      </div> */}
 
       <div className='bg-hg-100/50 p-16 pb-6 -mt-10'>
         <h3 className='text-2xl font-semibold mt-6 mb-10 text-center'>Consejos y recomendaciones post tratamiento</h3>
@@ -40,20 +47,15 @@ export default function Recomendations({ appointment }: { appointment: Appointme
             <h3 className='text-lg font-semibold mb-4'>Durante las primeras 24 horas</h3>
             <ul className='bg-white text-sm text-[#717D96] rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(220,170,205,.5)]'>
               <li className='text-hg-500 mb-8'>Es recomendable seguir estos consejos</li>
-              {appointment.treatments.map(item => {
-                const { treatment } = item;
-                return treatment.product.postTreatmentInfo.first24hTips
-                  .sort((a, b) => a.priority - b.priority)
-                  .map((info, index: number) => {
-                    const totalTips = Object.keys(treatment.product.postTreatmentInfo.first24hTips).length;
-
-                    return (
-                      <>
-                        <li>{info.details}</li>
-                        {index + 1 < totalTips && <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3' />}
-                      </>
-                    );
-                  });
+              {filteredFirst24Tips.map((tip, index) => {
+                return (
+                  <>
+                    <li>{tip.details}</li>
+                    {index + 1 < filteredFirst24Tips.length && (
+                      <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3' />
+                    )}
+                  </>
+                );
               })}
             </ul>
           </div>
@@ -62,20 +64,15 @@ export default function Recomendations({ appointment }: { appointment: Appointme
             <h3 className='text-lg font-semibold mb-4'>Después de las primeras 24 horas</h3>
             <ul className='text-sm text-[#717D96] rounded-xl p-8 text-center'>
               <li className='text-hg-500 mb-8'>Es recomendable seguir estos consejos</li>
-              {appointment.treatments.map(item => {
-                const { treatment } = item;
-                return treatment.product.postTreatmentInfo.after24hTips
-                  .sort((a, b) => a.priority - b.priority)
-                  .map((info, index: number) => {
-                    const totalTips = Object.keys(treatment.product.postTreatmentInfo.after24hTips).length;
-
-                    return (
-                      <>
-                        <li>{info.details}</li>
-                        {index + 1 < totalTips && <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3' />}
-                      </>
-                    );
-                  });
+              {filteredAfter24Tips.map((tip, index) => {
+                return (
+                  <>
+                    <li>{tip.details}</li>
+                    {index + 1 < filteredAfter24Tips.length && (
+                      <hr className='w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3' />
+                    )}
+                  </>
+                );
               })}
             </ul>
           </div>
