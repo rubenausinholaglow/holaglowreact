@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker } from 'icons/Icons';
+import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker, SvgStethoscope } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 import { Appointment } from '../types';
 
@@ -10,12 +10,15 @@ export default function Treatments({
   appointment: Appointment;
   previousAppointments: Array<Appointment>;
 }) {
+  const date = new Date(appointment.date).getDate().toString().padStart(2, '0');
+  const month = new Date(appointment.date).toLocaleDateString('es-ES', { month: 'long' });
+  const year = new Date(appointment.date).getFullYear();
+
   return (
     <section className='p-12'>
       <h3 className='bg-[#fdf6fc] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4'>
         Detalles de tu tratamiento
       </h3>
-
       {appointment.treatments.map(item => {
         const { treatment } = item;
 
@@ -23,8 +26,10 @@ export default function Treatments({
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
               <div className='flex flex-col mr-4 w-2/5'>
-                <p className='text-hg-200 text-xs'>2023</p>
-                <p className='mb-4'>01 May</p>
+                <p className='text-hg-200 text-xs'>{year}</p>
+                <p className='mb-4'>
+                  {date} {month.charAt(0).toUpperCase() + month.slice(1)}
+                </p>
                 <Image
                   src={`/images/passport/treatmentZones/${treatment.product.zone}.svg`}
                   height='196'
@@ -71,7 +76,7 @@ export default function Treatments({
                 <li className='p-4'>
                   <ul className='flex flex-col gap-4'>
                     <li className='flex content-center'>
-                      <SvgCalendar className='mr-2' height={18} width={22} fill='#717D96' />
+                      <SvgStethoscope className='mr-2' height={18} width={18} fill='#717D96' />
                       <p className='text-[#717D96]'>{appointment.clinicProfessional.name}</p>
                     </li>
                     <li className='flex content-center'>
@@ -119,8 +124,7 @@ export default function Treatments({
           </table>
         </>
       )}
-
-      <h3 className='mb-4 font-semibold'>
+      {/* <h3 className='mb-4 font-semibold'>
         Notas para tus tratamientos en Holaglow
         <p className='text-sm font-normal'>Todo lo que necesitas saber en tu pasaporte de belleza</p>
       </h3>
@@ -132,7 +136,7 @@ export default function Treatments({
         En su pasaporte de belleza, también puede anotar otros tratamientos de belleza en la cara. Será de gran ayuda si
         cambia de médico o enfermera tratante, o pronto volverá a ser el momento, ya que aquí se recopilará toda la
         información.
-      </p>
+      </p> */}
     </section>
   );
 }
