@@ -10,18 +10,17 @@ export default function Treatments({
   appointment: Appointment;
   previousAppointments: Array<Appointment>;
 }) {
+  const date = new Date(appointment.date).getDate().toString().padStart(2, '0');
+  const month = new Date(appointment.date).toLocaleDateString('es-ES', { month: 'long' });
+  const year = new Date(appointment.date).getFullYear();
+
   return (
     <section className='p-12'>
       <h3 className='bg-[#fdf6fc] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4'>
         Detalles de tu tratamiento
       </h3>
-
       {appointment.treatments.map(item => {
         const { treatment } = item;
-
-        const date = new Date(treatment.creationDate).getDate().toString().padStart(2, '0');
-        const month = new Date(treatment.creationDate).toLocaleDateString('es-ES', { month: 'long' });
-        const year = new Date(treatment.creationDate).getFullYear();
 
         return (
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
@@ -125,7 +124,6 @@ export default function Treatments({
           </table>
         </>
       )}
-
       {/* <h3 className='mb-4 font-semibold'>
         Notas para tus tratamientos en Holaglow
         <p className='text-sm font-normal'>Todo lo que necesitas saber en tu pasaporte de belleza</p>
