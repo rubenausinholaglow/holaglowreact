@@ -45,6 +45,7 @@ export interface Treatment {
     };
     quantity: number;
     lotReference: string;
+    creationDate: Date;
   };
 }
 

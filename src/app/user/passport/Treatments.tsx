@@ -19,12 +19,18 @@ export default function Treatments({
       {appointment.treatments.map(item => {
         const { treatment } = item;
 
+        const date = new Date(treatment.creationDate).getDate().toString().padStart(2, '0');
+        const month = new Date(treatment.creationDate).toLocaleDateString('es-ES', { month: 'long' });
+        const year = new Date(treatment.creationDate).getFullYear();
+
         return (
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
               <div className='flex flex-col mr-4 w-2/5'>
-                <p className='text-hg-200 text-xs'>2023</p>
-                <p className='mb-4'>01 May</p>
+                <p className='text-hg-200 text-xs'>{year}</p>
+                <p className='mb-4'>
+                  {date} {month.charAt(0).toUpperCase() + month.slice(1)}
+                </p>
                 <Image
                   src={`/images/passport/treatmentZones/${treatment.product.zone}.svg`}
                   height='196'
