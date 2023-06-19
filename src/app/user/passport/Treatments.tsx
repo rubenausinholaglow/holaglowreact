@@ -22,8 +22,6 @@ export default function Treatments({
       {appointment.treatments.map(item => {
         const { treatment } = item;
 
-        console.log('EACH TREATMENT in appointment.treatments', treatment);
-
         return (
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
@@ -104,8 +102,6 @@ export default function Treatments({
               <th className='py-3 pr-6 text-left font-normal'>Clínica</th>
             </tr>
             {previousAppointments.map(prevAppointment => {
-              console.log('EACH TREATMENT in previousAppointments', prevAppointment);
-
               const date = new Date(prevAppointment.date).getDate().toString().padStart(2, '0');
               const month = (new Date(prevAppointment.date).getMonth() + 1).toString().padStart(2, '0');
               const year = new Date(prevAppointment.date).getFullYear();
