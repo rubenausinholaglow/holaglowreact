@@ -21,6 +21,10 @@ export default function Recomendations({ appointment }: { appointment: Appointme
   const filteredFirst24Tips = [...new Map(first24Tips.map(item => [item[filterKey], item])).values()];
   const filteredAfter24Tips = [...new Map(after24hTips.map(item => [item[filterKey], item])).values()];
 
+  if (filteredFirst24Tips.length === 0 && filteredAfter24Tips.length === 0) {
+    return <></>;
+  }
+
   return (
     <section>
       <div className='inline-flex justify-center items-center bg-hg-400 rounded-r-3xl text-white py-3 px-16'>
