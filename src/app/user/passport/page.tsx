@@ -1,3 +1,5 @@
+'use client';
+
 import Header from './Header';
 import Treatments from './Treatments';
 import Recomendations from './Recomendations';
@@ -7,7 +9,7 @@ import Doubts from './Doubts';
 
 const fetchPassportData = async (id: number) => {
   try {
-    const passportResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/BeautyPass?id=${id}`, {
+    const passportResponse = await fetch(`https://holaglowcontactsapi.azurewebsites.net/BeautyPass?id=${id}`, {
       cache: 'no-store',
     });
 
@@ -16,6 +18,9 @@ const fetchPassportData = async (id: number) => {
     }
 
     const passPortData = await passportResponse.json();
+
+    console.log('FETCH Response', passPortData);
+
     return passPortData;
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
