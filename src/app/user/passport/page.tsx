@@ -7,7 +7,7 @@ import Doubts from './Doubts';
 
 const fetchPassportData = async (id: number) => {
   try {
-    const passportResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/BeautyPass?id=${id}`, {
+    const passportResponse = await fetch(`https://holaglowcontactsapi.azurewebsites.net/BeautyPass?id=${id}`, {
       cache: 'no-store',
     });
 
