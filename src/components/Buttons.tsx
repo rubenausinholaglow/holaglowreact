@@ -12,8 +12,8 @@ export const Button = ({
   children: ReactNode;
   onClick?: () => void;
 }) => {
-  const hoverStyles = 'hover:bg-slate-200/80';
-  const styles = `bg-slate-100 border border-slate-300 rounded-lg py-2 px-3 ${hoverStyles} ${className}`;
+  const hoverStyles = 'hover:bg-[#7516E9]/10';
+  const styles = `bg-[#F7F9FC] rounded-lg py-2 px-3 ${hoverStyles} ${className}`;
 
   if (route) {
     return (

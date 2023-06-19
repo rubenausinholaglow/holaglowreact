@@ -1,23 +1,25 @@
 import { ReactNode } from 'react';
 
 export const Flex = ({
-  layout = 'left-row',
+  layout = 'row-left',
   className = '',
   children,
 }: {
-  layout: 'left-row' | 'center-row' | 'right-row' | 'left-col' | 'center-col' | 'right-col';
+  layout: 'row-left' | 'row-center' | 'row-right' | 'col-left' | 'col-center' | 'col-right';
   className?: string;
   children: ReactNode;
 }) => {
-  const direction = layout.split('-')[1];
+  const direction = layout.split('-')[0];
   const justify =
-    layout.split('-')[0] === 'left'
+    layout.split('-')[1] === 'left'
       ? 'justify-start'
-      : layout.split('-')[0] === 'center'
+      : layout.split('-')[1] === 'center'
       ? 'justify-center'
       : 'justify-end';
 
-  const styles = `flex flex-${direction} ${justify} ${className}`;
+  const alignItems = direction === 'row' ? 'items-center' : 'items-left';
+
+  const styles = `flex flex-${direction} ${justify} ${alignItems} ${className}`;
 
   return <div className={styles}>{children}</div>;
 };

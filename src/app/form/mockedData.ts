@@ -1,26 +1,37 @@
-export const MULTISTEP_DATA = [
+export const MULTISTEP_QUESTIONS: any = [
+  {
+    step: 1,
+    questions: ['Sí, a diario', 'Si, pero sólo a veces', 'No, nunca'],
+  },
+  {
+    step: 2,
+    questions: ['18 - 25 años', '26 - 35 años', '36 - 45 años', '46 - 55 años', '56 - 65 años', '+ 50 años'],
+  },
+];
+
+export const MULTISTEP_TREATMENTS: any = [
   {
     category: 'Tercio Superior',
     treatments: [
       {
         name: 'Líneas de expresión',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Flacidez',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Abrir mirada',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Calidad de la piel',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
     ],
   },
@@ -30,22 +41,22 @@ export const MULTISTEP_DATA = [
       {
         name: 'Líneas de expresión',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Flacidez',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Calidad de la piel',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
       {
         name: 'Ojeras',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
     ],
   },
@@ -55,27 +66,27 @@ export const MULTISTEP_DATA = [
       {
         name: 'Líneas de expresión',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Flacidez',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Aumento de labios',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Sonrisa gingival',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
       {
         name: 'Bruxismo',
         price: 250,
-        landing: 1,
+        landing: 'http://www.holaglow.com/landing-1',
       },
     ],
   },
@@ -85,27 +96,27 @@ export const MULTISTEP_DATA = [
       {
         name: 'Hidratación',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
       {
         name: 'Luminosidad',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
       {
         name: 'Manchas',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
       {
         name: 'Poros',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
       {
         name: 'Acné',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
     ],
   },
@@ -115,17 +126,17 @@ export const MULTISTEP_DATA = [
       {
         name: 'Caída',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
       {
         name: 'Volumen',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
       {
         name: 'Luminosidad',
         price: 250,
-        landing: 2,
+        landing: 'http://www.holaglow.com/landing-2',
       },
     ],
   },
