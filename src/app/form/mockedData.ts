@@ -1,11 +1,26 @@
+import { SvgCream, SvgCreams, SvgDehydration } from 'icons/Icons';
+
 export const MULTISTEP_QUESTIONS: any = [
   {
     step: 1,
-    questions: ['Sí, a diario', 'Si, pero sólo a veces', 'No, nunca'],
+    questions: [
+      {
+        icon: SvgCream,
+        text: 'Sí, a diario',
+      },
+      {
+        icon: SvgCreams,
+        text: 'Si, pero sólo a veces',
+      },
+      {
+        icon: SvgDehydration,
+        text: 'No, nunca',
+      },
+    ],
   },
   {
     step: 2,
-    questions: ['18 - 25 años', '26 - 35 años', '36 - 45 años', '46 - 55 años', '56 - 65 años', '+ 50 años'],
+    questions: ['18 - 25 años', '26 - 35 años', '36 - 45 años', '46 - 55 años', '56 - 65 años', '+ 65 años'],
   },
 ];
 

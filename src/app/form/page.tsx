@@ -6,7 +6,7 @@ import { Title, Text } from 'components/Texts';
 import { Button } from 'components/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 import { Flex } from 'components/Layouts';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import ReactSimplyCarousel from 'react-simply-carousel';
 import { SvgArrowSmallLeft } from 'icons/Icons';
 
@@ -27,49 +27,62 @@ export default function Form() {
     );
   }
 
-  const SelectorItem = (text: string, type: string, index: number) => {
-    if (type === 'question') {
-      return (
-        <Button className='w-full mb-4 bg-[#7516E9]/10' onClick={() => setActiveSlideIndex(activeSlideIndex + 1)}>
-          <Flex layout='col-left'>
-            <Text size='lg' className='py-2'>
-              {text}
-            </Text>
-          </Flex>
-        </Button>
-      );
-    }
-
-    if (type === 'category') {
-      return (
-        <Button
-          className='w-full mb-4 bg-[#7516E9]/10'
-          onClick={() => {
-            setActiveSlideIndex(activeSlideIndex + 1);
-            setTreatments(MULTISTEP_TREATMENTS[index].treatments);
-          }}
-        >
-          <Flex layout='col-left'>
-            <Text size='lg' className='py-2'>
-              {text}
-            </Text>
-          </Flex>
-        </Button>
-      );
-    }
+  function SelectorItem(
+    text: string,
+    icon: ReactElement<any, string | React.JSXElementConstructor<any>> | null,
+    type: string,
+    index: number,
+  ) {
+    const Icon = icon ? icon : null;
 
     return (
-      <Button className='w-full mb-4 bg-[#7516E9]/10'>
-        <Link href={type} className='w-full mb-4 bg-[#7516E9]/10'>
+      <Button
+        className='w-full mb-4 bg-[#F7F9FC]'
+        onClick={() => {
+          setActiveSlideIndex(activeSlideIndex + 1);
+          if (type === 'category') {
+            setTreatments(MULTISTEP_TREATMENTS[index].treatments);
+          }
+        }}
+      >
+        <Flex layout='col-left'>
+          <Text size='lg' className='py-2'>
+            {text}
+          </Text>
+          {Icon && <Icon height={20} width={20} fill='#717D96' />}
+        </Flex>
+      </Button>
+    );
+  }
+
+  {
+    /* <Button
+        className='w-full mb-4 bg-[#F7F9FC]'
+        onClick={() => {
+          setActiveSlideIndex(activeSlideIndex + 1);
+          if (type === 'category') {
+            setTreatments(MULTISTEP_TREATMENTS[index].treatments);
+          }
+        }}
+      >
+        {type === 'question' || type === 'category' ? (
           <Flex layout='col-left'>
             <Text size='lg' className='py-2'>
               {text}
             </Text>
+            {Icon && <Icon height={20} width={20} fill='#717D96' />}
           </Flex>
-        </Link>
-      </Button>
-    );
-  };
+        ) : (
+          <Link href={type} className='w-full mb-4 bg-[#7516E9]/10'>
+            <Flex layout='col-left'>
+              <Text size='lg' className='py-2'>
+                {text}
+              </Text>
+            </Flex>
+          </Link>
+        )}
+      </Button> */
+  }
 
   return (
     <main className='h-[800px] w-[420px] my-16 mx-auto relative pt-8'>
@@ -89,12 +102,7 @@ export default function Form() {
         <Image className='mx-auto' src='/images/holaglow.svg' height='24' width='112' alt='Holaglow' />
       </header>
 
-      <Flex layout='row-center' className='px-4'>
-        <ul className='flex bg-[#7516E9]/10 h-[4px] w-full rounded-full'>{progressBarSteps}</ul>
-        <span className='w-[40px] ml-4 text-[#7516E9]'>
-          {activeSlideIndex + 1} / {STEPS}
-        </span>
-      </Flex>
+      <ul className='flex bg-[#7516E9]/10 h-[4px] w-full rounded-full'>{progressBarSteps}</ul>
 
       <ReactSimplyCarousel
         activeSlideIndex={activeSlideIndex}
@@ -122,7 +130,7 @@ export default function Form() {
           <section>
             <ul>
               {MULTISTEP_QUESTIONS[0].questions.map((question: any, index: number) => {
-                return <li key={question}>{SelectorItem(question, 'question', index)}</li>;
+                return <li key={question}>{SelectorItem(question.text, question.icon, 'skinCare', index)}</li>;
               })}
             </ul>
           </section>
@@ -138,7 +146,7 @@ export default function Form() {
           <section>
             <ul>
               {MULTISTEP_QUESTIONS[1].questions.map((question: any, index: number) => {
-                return <li key={question}>{SelectorItem(question, 'question', index)}</li>;
+                return <li key={question}>{SelectorItem(question, null, 'age', index)}</li>;
               })}
             </ul>
           </section>
@@ -154,7 +162,7 @@ export default function Form() {
           <section>
             <ul>
               {MULTISTEP_TREATMENTS.map((treatment: any, index: number) => (
-                <li key={index}>{SelectorItem(treatment.category, 'category', index)}</li>
+                <li key={index}>{SelectorItem(treatment.category, null, 'category', index)}</li>
               ))}
             </ul>
           </section>
@@ -171,9 +179,7 @@ export default function Form() {
             <ul>
               {treatments.map((treatment: any, index: number) => {
                 console.log(treatment);
-                return (
-                  <li key={index}>{SelectorItem(treatment.name, treatment.landing, index)}</li>
-                );
+                return <li key={index}>{SelectorItem(treatment.name, null, 'landing', index)}</li>;
               })}
             </ul>
           </section>
