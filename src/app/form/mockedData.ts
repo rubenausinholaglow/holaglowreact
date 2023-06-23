@@ -1,4 +1,4 @@
-import { SvgCream, SvgCreams, SvgDehydration } from 'icons/Icons';
+import { SvgCream, SvgCreams, SvgDehydration, SvgHairCare, SvgSkinCare } from 'icons/Icons';
 
 export const MULTISTEP_QUESTIONS: any = [
   {
@@ -20,13 +20,14 @@ export const MULTISTEP_QUESTIONS: any = [
   },
   {
     step: 2,
-    questions: ['18 - 25 años', '26 - 35 años', '36 - 45 años', '46 - 55 años', '56 - 65 años', '+ 65 años'],
+    questions: ['18 - 25', '26 - 35', '36 - 45', '46 - 55', '56 - 65', '+ 65'],
   },
 ];
 
 export const MULTISTEP_TREATMENTS: any = [
   {
     category: 'Tercio Superior',
+    imgSrc: '/images/passport/treatmentZones/2.svg',
     treatments: [
       {
         name: 'Líneas de expresión',
@@ -52,6 +53,7 @@ export const MULTISTEP_TREATMENTS: any = [
   },
   {
     category: 'Tercio medio',
+    imgSrc: '/images/passport/treatmentZones/3.svg',
     treatments: [
       {
         name: 'Líneas de expresión',
@@ -77,6 +79,7 @@ export const MULTISTEP_TREATMENTS: any = [
   },
   {
     category: 'Tercio inferior',
+    imgSrc: '/images/passport/treatmentZones/4.svg',
     treatments: [
       {
         name: 'Líneas de expresión',
@@ -107,6 +110,7 @@ export const MULTISTEP_TREATMENTS: any = [
   },
   {
     category: 'Piel',
+    icon: SvgSkinCare,
     treatments: [
       {
         name: 'Hidratación',
@@ -137,6 +141,7 @@ export const MULTISTEP_TREATMENTS: any = [
   },
   {
     category: 'Pelo',
+    icon: SvgHairCare,
     treatments: [
       {
         name: 'Caída',
