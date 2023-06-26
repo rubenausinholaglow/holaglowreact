@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { Title, Text } from 'components/Texts';
 import { Button } from 'components/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 import { Flex } from 'components/Layouts';
-import { ReactElement, useState, useEffect } from 'react';
+import { useState } from 'react';
 import ReactSimplyCarousel from 'react-simply-carousel';
 import { SvgArrowSmallLeft, SvgCheck, SvgCircle, SvgSkinCare, SvgHairCare } from 'icons/Icons';
 
@@ -17,7 +16,6 @@ export default function Form() {
   const [skincareSelected, setSkincareSelected] = useState<number | undefined>();
   const [ageSelected, setAgeSelected] = useState<number | undefined>();
   const [categorySelected, setCategorySelected] = useState<number | undefined>();
-  const [treatmentSelected, setTreatmentSelected] = useState<number | undefined>();
 
   const STEPS = 4;
   const progressBarSteps: any = [];
@@ -32,62 +30,11 @@ export default function Form() {
     );
   }
 
-  function SelectorItem(
-    text: string,
-    icon: ReactElement<any, string | React.JSXElementConstructor<any>> | null,
-    type: string,
-    index: number,
-  ) {
-    const Icon = icon ? icon : null;
-
-    return (
-      <Button
-        className='w-full mb-4 bg-[#F7F9FC]'
-        onClick={() => {
-          setActiveSlideIndex(activeSlideIndex + 1);
-          if (type === 'category') {
-            setTreatments(MULTISTEP_TREATMENTS[index].treatments);
-          }
-        }}
-      >
-        <Flex layout='col-left'>
-          <Text size='lg' className='py-2'>
-            {text}
-          </Text>
-          {Icon && <Icon height={20} width={20} fill='#717D96' />}
-        </Flex>
-      </Button>
-    );
-  }
-
-  {
-    /* <Button
-        className='w-full mb-4 bg-[#F7F9FC]'
-        onClick={() => {
-          setActiveSlideIndex(activeSlideIndex + 1);
-          if (type === 'category') {
-            setTreatments(MULTISTEP_TREATMENTS[index].treatments);
-          }
-        }}
-      >
-        {type === 'question' || type === 'category' ? (
-          <Flex layout='col-left'>
-            <Text size='lg' className='py-2'>
-              {text}
-            </Text>
-            {Icon && <Icon height={20} width={20} fill='#717D96' />}
-          </Flex>
-        ) : (
-          <Link href={type} className='w-full mb-4 bg-[#7516E9]/10'>
-            <Flex layout='col-left'>
-              <Text size='lg' className='py-2'>
-                {text}
-              </Text>
-            </Flex>
-          </Link>
-        )}
-      </Button> */
-  }
+  const redirectTo = (index: number) => {
+    if (categorySelected) {
+      window.location.assign(MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing);
+    }
+  };
 
   return (
     <main id='multistep' className='w-[390px] my-16 mx-auto relative pt-8'>
@@ -145,7 +92,7 @@ export default function Form() {
 
                 return (
                   <Button
-                    className='w-full mb-4 bg-[#F7F9FC]'
+                    className='w-full mb-4 bg-[#F7F9FC] group'
                     onClick={() => {
                       setActiveSlideIndex(activeSlideIndex + 1);
                       setSkincareSelected(index);
@@ -157,8 +104,14 @@ export default function Form() {
                       ) : (
                         <SvgCircle height={16} width={16} stroke='#1A202C' className='self-end mb-4' />
                       )}
-                      <div className={`${bgIcon} h-[72px] w-[72px] rounded-full flex justify-center items-center`}>
-                        {Icon && <Icon height={40} width={40} fill={iconColor} />}
+                      <div
+                        className={`${bgIcon} group-hover:bg-[#EAE2F9] h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
+                      >
+                        {Icon && (
+                          <div className={`text-[${iconColor}] group-hover:text-[#7516E9] transition-all`}>
+                            <Icon height={40} width={40} />
+                          </div>
+                        )}
                       </div>
                       <div className='grow flex items-center'>
                         <Text size='sm' className='py-2 font-semibold text-center'>
@@ -189,7 +142,7 @@ export default function Form() {
 
                 return (
                   <Button
-                    className={`w-full mb-4 ${bgColor}`}
+                    className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] group`}
                     onClick={() => {
                       setActiveSlideIndex(activeSlideIndex + 1);
                       setAgeSelected(index);
@@ -202,10 +155,16 @@ export default function Form() {
                         <SvgCircle height={16} width={16} stroke='#1A202C' className='self-end mb-2' />
                       )}
 
-                      <Text size='3xl' className={`font-semibold text-center ${textColor}`}>
+                      <Text
+                        size='3xl'
+                        className={`font-semibold text-center ${textColor} group-hover:text-[#7516E9] transition-all`}
+                      >
                         {age}
                       </Text>
-                      <Text size='sm' className={`-mt-3 font-semibold text-center mb-4 ${textColor}`}>
+                      <Text
+                        size='sm'
+                        className={`-mt-3 font-semibold text-center mb-4 ${textColor} group-hover:text-[#7516E9] transition-all`}
+                      >
                         años
                       </Text>
                     </Flex>
@@ -235,7 +194,7 @@ export default function Form() {
 
                 return (
                   <Button
-                    className={`w-full mb-4 ${bgColor}`}
+                    className={`w-full mb-4 ${bgColor} group`}
                     onClick={() => {
                       setActiveSlideIndex(activeSlideIndex + 1);
                       setCategorySelected(index);
@@ -250,15 +209,23 @@ export default function Form() {
                       )}
 
                       {Icon ? (
-                        <div className={`${bgIcon} h-[72px] w-[72px] rounded-full flex justify-center items-center`}>
-                          {Icon && <Icon height={40} width={40} fill={iconColor} />}
+                        <div
+                          className={`${bgIcon} group-hover:bg-[#EAE2F9] h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
+                        >
+                          {Icon && (
+                            <div className={`text-[${iconColor}] group-hover:text-[#7516E9] transition-all`}>
+                              <Icon height={40} width={40} />
+                            </div>
+                          )}
                         </div>
                       ) : (
                         <Image src={item.imgSrc} height='96' width='70' alt={item.category} />
                       )}
-                      <Text size='sm' className={`font-semibold text-center ${textColor}`}>
-                        {item.category}
-                      </Text>
+                      <div className='grow flex items-center'>
+                        <Text size='sm' className={`py-2 font-semibold text-center ${textColor}`}>
+                          {item.category}
+                        </Text>
+                      </div>
                     </Flex>
                   </Button>
                 );
@@ -282,15 +249,18 @@ export default function Form() {
                 const textColor = isActive ? 'text-[#7516E9]' : 'text-[#1A202C]';
 
                 return (
-                  <Button className={`w-full mb-4 ${bgColor} py-4`} onClick={() => setTreatmentSelected(index)}>
-                    <Flex layout='row-left' className='justify-start h-full'>
-                      <Text size='lg' className={`${textColor} mr-auto`}>
+                  <Button
+                    className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] py-4 group transition-all`}
+                    onClick={() => redirectTo(index)}
+                  >
+                    <Flex layout='row-left' className='justify-start items-center h-full'>
+                      <Text size='lg' className={`${textColor} group-hover:text-[#7516E9] mr-auto`}>
                         {treatment.name}
                       </Text>
                       {isActive ? (
-                        <SvgCheck height={16} width={16} fill='#7516E9' className='self-end mb-2' />
+                        <SvgCheck height={16} width={16} fill='#7516E9' className='' />
                       ) : (
-                        <SvgCircle height={16} width={16} stroke='#1A202C' className='self-end mb-2' />
+                        <SvgCircle height={16} width={16} stroke='#1A202C' className='' />
                       )}
                     </Flex>
                   </Button>
