@@ -6,8 +6,8 @@ import { Button } from 'components/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 import { Flex } from 'components/Layouts';
 import { useState } from 'react';
-import ReactSimplyCarousel from 'react-simply-carousel';
-import { SvgArrowSmallLeft, SvgCheck, SvgCircle, SvgSkinCare, SvgHairCare } from 'icons/Icons';
+import Carousel from 'components/Carousel';
+import { SvgArrowSmallLeft, SvgCheck, SvgCircle } from 'icons/Icons';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -37,7 +37,7 @@ export default function Form() {
   };
 
   return (
-    <main id='multistep' className='w-[390px] my-16 mx-auto relative pt-8'>
+    <main id='multistep' className='max-w-3xl my-16 mx-auto relative pt-8 overflow-hidden'>
       <header className='py-4 border-b border-[#EDF0F7] mb-4 relative'>
         {activeSlideIndex > 0 && (
           <div className='w-[32px] absolute left-0 top-3'>
@@ -58,23 +58,16 @@ export default function Form() {
         <ul className='flex bg-[#7516E9]/10 h-[4px] w-full rounded-full'>{progressBarSteps}</ul>
       </div>
 
-      <ReactSimplyCarousel
-        activeSlideIndex={activeSlideIndex}
-        onRequestChange={setActiveSlideIndex}
-        infinite={false}
-        itemsToShow={1}
-        itemsToScroll={1}
-        responsiveProps={[
-          {
-            itemsToShow: 1,
-            itemsToScroll: 1,
-            minWidth: 768,
-          },
-        ]}
-        speed={500}
-        easing='ease-out'
+      <Carousel
+        visibleSlides={1}
+        totalSlides={4}
+        step={1}
+        currentSlide={activeSlideIndex}
+        naturalSlideWidth={100}
+        naturalSlideHeight={125}
+        isIntrinsicHeight={true}
       >
-        <div className={`bg-white py-6 px-4 w-[390px]`}>
+        <div className={`bg-white py-6 px-4`}>
           <section className='mb-6'>
             <Title size='2xl' className='mb-2'>
               ¿Actualmente sigues alguna rutina de cuidado de la piel?
@@ -126,7 +119,7 @@ export default function Form() {
           </section>
         </div>
 
-        <div className={`bg-white py-6 px-4 w-[390px]`}>
+        <div className={`bg-white py-6 px-4`}>
           <section className='mb-6 flex gap-2 items-center'>
             <Title size='2xl' className='mb-2'>
               ¿Qué edad tienes?
@@ -175,7 +168,7 @@ export default function Form() {
           </section>
         </div>
 
-        <div className={`bg-white py-6 px-4 w-[390px]`}>
+        <div className={`bg-white py-6 px-4`}>
           <section className='mb-6 flex gap-2 items-center'>
             <Title size='2xl' className='mb-2'>
               ¿De qué zona de tu cuerpo querrías mejorar tu aspecto?
@@ -245,7 +238,7 @@ export default function Form() {
           </section>
         </div>
 
-        <div className={`bg-white py-6 px-4 w-[390px]`}>
+        <div className={`bg-white py-6 px-4`}>
           <section className='mb-6 flex gap-2 items-center'>
             <Title size='2xl' className='mb-2'>
               ¿Qué aspecto concreto querrías tratarte?
@@ -280,7 +273,8 @@ export default function Form() {
             </ul>
           </section>
         </div>
-      </ReactSimplyCarousel>
+      </Carousel>
+
       {activeSlideIndex > 0 && (
         <Button
           className='text-[#7516E9] border border-[#E2E7F0] rounded-full px-4 mx-4'
