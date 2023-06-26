@@ -219,7 +219,18 @@ export default function Form() {
                           )}
                         </div>
                       ) : (
-                        <Image src={item.imgSrc} height='96' width='70' alt={item.category} />
+                        <div className='relative'>
+                          <Image src={`${item.imgSrc}-bw.png`} height='96' width='70' alt={item.category} />
+                          <Image
+                            className={`transition-opacity opacity-0 group-hover:opacity-100 absolute top-0 left-0 ${
+                              isActive && 'opacity-100'
+                            } `}
+                            src={`${item.imgSrc}.png`}
+                            height='96'
+                            width='70'
+                            alt={item.category}
+                          />
+                        </div>
                       )}
                       <div className='grow flex items-center'>
                         <Text size='sm' className={`py-2 font-semibold text-center ${textColor}`}>
@@ -270,6 +281,17 @@ export default function Form() {
           </section>
         </div>
       </ReactSimplyCarousel>
+      {activeSlideIndex > 0 && (
+        <Button
+          className='text-[#7516E9] border border-[#E2E7F0] rounded-full px-4 mx-4'
+          onClick={() => setActiveSlideIndex(activeSlideIndex - 1)}
+        >
+          <Flex layout='row-left'>
+            <SvgArrowSmallLeft height={20} width={20} />
+            <span className='ml-2'>Atrás</span>
+          </Flex>
+        </Button>
+      )}
     </main>
   );
 }

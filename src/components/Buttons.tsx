@@ -1,3 +1,4 @@
+import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
@@ -15,7 +16,7 @@ export const Button = ({
   rest?: any;
 }) => {
   const hoverStyles = '';
-  const styles = `rounded-lg py-2 px-3 ${hoverStyles} ${className}`;
+  const styles = twMerge(`rounded-lg py-2 px-3 ${hoverStyles} ${className}`);
 
   if (route) {
     return (

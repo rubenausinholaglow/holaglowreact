@@ -26,8 +26,8 @@ export const MULTISTEP_QUESTIONS: any = [
 
 export const MULTISTEP_TREATMENTS: any = [
   {
-    category: 'Tercio Superior',
-    imgSrc: '/images/passport/treatmentZones/2.svg',
+    category: 'Tercio superior',
+    imgSrc: '/images/multistep/tercio-superior',
     treatments: [
       {
         name: 'Líneas de expresión',
@@ -53,7 +53,7 @@ export const MULTISTEP_TREATMENTS: any = [
   },
   {
     category: 'Tercio medio',
-    imgSrc: '/images/passport/treatmentZones/3.svg',
+    imgSrc: '/images/multistep/tercio-medio',
     treatments: [
       {
         name: 'Líneas de expresión',
@@ -79,7 +79,7 @@ export const MULTISTEP_TREATMENTS: any = [
   },
   {
     category: 'Tercio inferior',
-    imgSrc: '/images/passport/treatmentZones/4.svg',
+    imgSrc: '/images/multistep/tercio-inferior',
     treatments: [
       {
         name: 'Líneas de expresión',

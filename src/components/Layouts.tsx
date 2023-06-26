@@ -14,15 +14,15 @@ export const Flex = ({
   const FLEXCONFIG = [
     {
       layout: 'row-left',
-      classes: 'justify-start',
+      classes: 'justify-start items-center',
     },
     {
       layout: 'row-center',
-      classes: 'justify-center',
+      classes: 'justify-center items-center',
     },
     {
       layout: 'row-right',
-      classes: 'justify-end',
+      classes: 'justify-end items-center',
     },
     {
       layout: 'col-left',
