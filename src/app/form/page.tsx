@@ -53,15 +53,7 @@ export default function Form() {
         </ul>
       </div>
 
-      <Carousel
-        visibleSlides={1}
-        totalSlides={4}
-        step={1}
-        currentSlide={activeSlideIndex}
-        naturalSlideWidth={100}
-        naturalSlideHeight={125}
-        isIntrinsicHeight={true}
-      >
+      <Carousel totalSlides={4} currentSlide={activeSlideIndex}>
         <div className={`bg-white py-6 px-4`}>
           <section className='mb-6'>
             <Title size='2xl' className='mb-2'>

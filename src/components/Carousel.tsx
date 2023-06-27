@@ -1,4 +1,4 @@
-import { Children, useState } from 'react';
+import { Children, useState, ReactNode } from 'react';
 import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-react-carousel';
 import { SvgArrowSmallLeft } from 'icons/Icons';
 import 'pure-react-carousel/dist/react-carousel.es.css';
@@ -6,18 +6,29 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 const Carousel = ({
   children,
   hasDots = false,
-  hasControlls = false,
-  controllsPosition = 'top',
-  isLight = true,
-  isActiveWhen = c => c.length > 1,
+  hasControls = false,
+  isIntrinsicHeight = true,
+  naturalSlideHeight = 100,
+  naturalSlideWidth = 100,
+  visibleSlides = 1,
+  totalSlides = 1,
+  step = 1,
+  currentSlide = 1,
   ...props
+}: {
+  children: ReactNode;
+  hasDots?: boolean;
+  hasControls?: boolean;
+  isIntrinsicHeight?: boolean;
+  naturalSlideHeight?: number;
+  naturalSlideWidth?: number;
+  visibleSlides?: number;
+  totalSlides?: number;
+  step?: number;
+  currentSlide?: number;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const childrens = Children.toArray(children);
-
-  if (!isActiveWhen(childrens)) {
-    return children;
-  }
 
   const handleBackButton = () => {
     currentSlideIndex === 0 ? setCurrentSlideIndex(childrens.length - 1) : setCurrentSlideIndex(currentSlideIndex - 1);
@@ -30,15 +41,16 @@ const Carousel = ({
   return (
     <CarouselProvider
       className='relative w-full'
-      isIntrinsicHeight
-      visibleSlides={1}
+      isIntrinsicHeight={isIntrinsicHeight}
+      naturalSlideHeight={naturalSlideHeight}
+      naturalSlideWidth={naturalSlideWidth}
       totalSlides={childrens.length}
-      step={1}
+      currentSlide={currentSlide}
       infinite
       lockOnWindowScroll
       {...props}
     >
-      {hasControlls ? (
+      {hasControls ? (
         <ButtonBack
           onClick={() => {
             handleBackButton();
@@ -48,7 +60,7 @@ const Carousel = ({
         </ButtonBack>
       ) : null}
 
-      {hasControlls ? (
+      {hasControls ? (
         <ButtonNext
           onClick={() => {
             handleNextButton();
@@ -67,11 +79,11 @@ const Carousel = ({
         ))}
       </Slider>
 
-      {hasDots ? (
+      {/*       {hasDots ? (
         <Box paddingTop='m'>
           <DotGroup />
         </Box>
-      ) : null}
+      ) : null} */}
     </CarouselProvider>
   );
 };
