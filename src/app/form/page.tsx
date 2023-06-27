@@ -17,27 +17,17 @@ export default function Form() {
   const [ageSelected, setAgeSelected] = useState<number | undefined>();
   const [categorySelected, setCategorySelected] = useState<number | undefined>();
 
-  const STEPS = 4;
-  const progressBarSteps: any = [];
-  for (let i = 0; i < STEPS; i++) {
-    progressBarSteps.push(
-      <li
-        key={i}
-        className={`h-[4px] rounded-full w-[calc(25%+2px)] -ml-[2px] ${
-          activeSlideIndex >= i ? 'bg-[#7516E9]' : 'bg-[#7516E9]/10'
-        }`}
-      ></li>,
-    );
-  }
-
   const redirectTo = (index: number) => {
     if (categorySelected) {
       window.location.assign(MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing);
     }
   };
 
+  const STEPS = 4;
+  const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
+
   return (
-    <main id='multistep' className='max-w-3xl my-16 mx-auto relative pt-8 overflow-hidden'>
+    <main id='multistep' className='max-w-3xl mx-auto relative overflow-hidden'>
       <header className='py-4 border-b border-[#EDF0F7] mb-4 relative'>
         {activeSlideIndex > 0 && (
           <div className='w-[32px] absolute left-0 top-3'>
@@ -55,7 +45,12 @@ export default function Form() {
       </header>
 
       <div className='px-4'>
-        <ul className='flex bg-[#7516E9]/10 h-[4px] w-full rounded-full'>{progressBarSteps}</ul>
+        <ul className='flex bg-[#7516E9]/10 h-[4px] w-full rounded-full'>
+          <li
+            className='h-[4px] rounded-full bg-[#7516E9] transition-all'
+            style={{ width: `${progressBarWith}%` }}
+          ></li>
+        </ul>
       </div>
 
       <Carousel

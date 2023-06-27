@@ -1,6 +1,7 @@
 import { Children, useState } from 'react';
 import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-react-carousel';
 import { SvgArrowSmallLeft } from 'icons/Icons';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const Carousel = ({
   children,
