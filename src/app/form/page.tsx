@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Title, Text } from 'components/Texts';
-import { Button } from 'components/Buttons';
+import { Button } from 'components/Buttons/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 import { Flex } from 'components/Layouts';
 import { useState } from 'react';
@@ -73,8 +73,8 @@ export default function Form() {
                   const iconColor = isActive ? '#7516E9' : '#CBD2E0';
 
                   return (
-                    <Button
-                      className='w-full mb-4 bg-[#F7F9FC] group'
+                    <div
+                      className='w-full mb-4 bg-[#F7F9FC] group rounded-lg py-2 px-3 cursor-pointer'
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setSkincareSelected(index);
@@ -101,7 +101,7 @@ export default function Form() {
                           </Text>
                         </div>
                       </Flex>
-                    </Button>
+                    </div>
                   );
                 })}
               </ul>
@@ -123,8 +123,8 @@ export default function Form() {
                   const textColor = isActive ? 'text-[#7516E9]' : 'text-[#1A202C]';
 
                   return (
-                    <Button
-                      className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] group`}
+                    <div
+                      className='w-full mb-4 bg-[#F7F9FC] group rounded-lg py-2 px-3 cursor-pointer'
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setAgeSelected(index);
@@ -150,7 +150,7 @@ export default function Form() {
                           años
                         </Text>
                       </Flex>
-                    </Button>
+                    </div>
                   );
                 })}
               </ul>
@@ -175,8 +175,8 @@ export default function Form() {
                   const iconColor = isActive ? '#7516E9' : '#CBD2E0';
 
                   return (
-                    <Button
-                      className={`w-full mb-4 ${bgColor} group`}
+                    <div
+                      className={`w-full mb-4 ${bgColor} group rounded-lg py-2 px-3 cursor-pointer`}
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setCategorySelected(index);
@@ -220,7 +220,7 @@ export default function Form() {
                           </Text>
                         </div>
                       </Flex>
-                    </Button>
+                    </div>
                   );
                 })}
               </ul>
@@ -242,8 +242,8 @@ export default function Form() {
                   const textColor = isActive ? 'text-[#7516E9]' : 'text-[#1A202C]';
 
                   return (
-                    <Button
-                      className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] py-4 group transition-all`}
+                    <div
+                      className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] py-4 group transition-all rounded-lg px-3 cursor-pointer`}
                       onClick={() => redirectTo(index)}
                     >
                       <Flex layout='row-left' className='justify-start items-center h-full'>
@@ -256,7 +256,7 @@ export default function Form() {
                           <SvgCircle height={16} width={16} stroke='#1A202C' className='' />
                         )}
                       </Flex>
-                    </Button>
+                    </div>
                   );
                 })}
               </ul>
@@ -265,16 +265,15 @@ export default function Form() {
         </Carousel>
 
         {activeSlideIndex > 0 && (
-          <Button
-            className='text-[#7516E9] border border-[#E2E7F0] rounded-full px-4 mx-4 mt-16'
-            onClick={() => setActiveSlideIndex(activeSlideIndex - 1)}
-          >
+          <Button className='mt-16' type='inverted' onClick={() => setActiveSlideIndex(activeSlideIndex - 1)}>
             <Flex layout='row-left'>
               <SvgArrowSmallLeft height={20} width={20} />
               <span className='ml-2'>Atrás</span>
             </Flex>
           </Button>
         )}
+
+        <Button type='primary'>Primary</Button>
       </main>
     </>
   );
