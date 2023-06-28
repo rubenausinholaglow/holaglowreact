@@ -33,7 +33,7 @@ export default function Page () {
 		}
 	};
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
