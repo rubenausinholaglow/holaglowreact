@@ -41,7 +41,7 @@ export default function Page () {
 
   return (
     <section className='bg-hg-200 min-h-screen justify-center items-center'>
-      <div className='flex flex-wrap justify-center items-center'>
+      <div className='flex flex-wrap justify-center items-center p-10'>
         
         <div className='w-full'>
           <Image className='mx-auto m-10' src='/images/dashboard/holaglow_white.png' height='200' width='950' alt='Holaglow'/>
