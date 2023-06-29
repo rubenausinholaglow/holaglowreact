@@ -272,8 +272,6 @@ export default function Form() {
             </Flex>
           </Button>
         )}
-
-        <Button type='primary'>Primary</Button>
       </main>
     </>
   );
