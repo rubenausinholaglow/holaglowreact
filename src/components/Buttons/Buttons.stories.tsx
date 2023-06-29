@@ -6,17 +6,29 @@ import { Button } from './Buttons';
 
 const meta: Meta<typeof Button> = {
   component: Button,
+  tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const DefaultButtons: Story = {
-  render: () => (
-    <Flex layout='row-left' className='gap-4'>
-      <Button type='primary'>Primary</Button>
-      <Button type='secondary'>Secondary</Button>
-      <Button type='inverted'>Inverted</Button>
-    </Flex>
-  ),
+export const Primary: Story = {
+  args: {
+    type: 'primary',
+    children: 'Button',
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    type: 'secondary',
+    children: 'Button',
+  },
+};
+
+export const Tertiary: Story = {
+  args: {
+    type: 'tertiary',
+    children: 'Button',
+  },
 };

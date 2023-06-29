@@ -10,7 +10,7 @@ export const Button = ({
   children,
   ...rest
 }: {
-  type: 'primary' | 'secondary' | 'inverted';
+  type: 'primary' | 'secondary' | 'tertiary';
   route?: string;
   className?: string;
   onClick?: () => void;
@@ -19,8 +19,8 @@ export const Button = ({
 }) => {
   const StylesConfig = {
     primary: 'bg-[#7516E9] text-white rounded-full px-4 py-2',
-    secondary: 'text-[#7516E9] border border-[#E2E7F0] rounded-full px-4 py-2',
-    inverted: 'text-[#7516E9] border border-[#E2E7F0] rounded-full px-4 py-2',
+    secondary: 'bg-[#be9ee5] text-white rounded-full px-4 py-2',
+    tertiary: 'text-[#7516E9] border border-[#E2E7F0] rounded-full px-4 py-2',
   };
 
   const styles = twMerge(`${StylesConfig[type]} ${className}`);
