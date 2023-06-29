@@ -1,98 +1,164 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { Client } from './types';
+import RegistrationForm from './RegistrationForm';
+import SearchUser from './SearchUser';
 
-import API_URLS from './config';
+import * as utils from './utils';
+import * as config from './config';
+
+const { API_URL } = config;
 
 export default function Page () {
 
+  const [showPopup, setShowPopup] = useState(false);
   const [error, setError] = useState('');
-  const [email, setEmail] = useState('');
+  const [show, setShow] = useState(false);
+  const [searchUserEmail, setSearchUserEmail] = useState('');
+  const [formData, setFormData] = useState<Client>({
+    email: '',
+    phone: '',
+    name: '',
+    surname: '',
+    secondSurname: '',
+    termsAndConditionsAccepted: false,
+    receiveCommunications: false,
+    page: '',
+    externalReference: '14',
+    analyticsMetrics: {
+      device: 0,
+      locPhysicalMs: '',
+      utmAdgroup: '',
+      utmCampaign: '',
+      utmContent: '',
+      utmMedium: '',
+      utmSource: '',
+      utmTerm: '',
+    },
+    interestedTreatment: '',
+    treatmentPrice: 0,
+  });
+  
 
   useEffect(() => {
-    localStorage.clear(); // Limpiar localStorage al iniciar la app
+    localStorage.clear();
   }, []);
 
   const handleCheckUser = async () => {
 		try {
-			const res = await fetch(`${API_URLS.login}?search=${email}`);
-		  if (res.ok) {
+
+      const isEmailValid = utils.validateEmail(searchUserEmail);
+      
+
+      if (!isEmailValid) {
+        handleRequestError(config.ERROR_EMAIL_NOT_VALID,true);
+        return null;
+      }
+     
+      const res = await fetch(`${API_URL.login}?search=${formData.email}`);
+      if (res.ok) {
+
         const data = await res.json();
         console.log(data);
         setError('');
+
         localStorage.clear();
-        localStorage.setItem('username', data.name)
+        localStorage.setItem('username', data.name);
+
         window.location.href = '/dashboard/welcome';
+
       } else {
-        localStorage.clear();
-        setError('Error autenticación');
+        handleRequestError(config.ERROR_AUTHENTICATION, false);
+        setShow(true);
       }
-		} catch (err) {
-      localStorage.clear();
-      console.log(err);
-      setError('Error autenticación');
-      setEmail('');
-		}
+    } catch (err) {
+      handleRequestError(config.ERROR_AUTHENTICATION, false);
+      setShow(true);
+    }
 	};
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleRegistration = async () => {
+    try {
+      const res = await fetch(API_URL.newuser, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setError('');
+        localStorage.setItem('username', formData.name);
+        window.location.href = '/dashboard/welcome';
+      } else {
+        handleRequestError(config.ERROR_REGISTRATION, false);
+      }
+    } catch (err) {
+      handleRequestError(config.ERROR_REGISTRATION, false);
+    }
+  };
+
+  const handleFieldChange = (event: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [field]: event.target.value,
+    }));
+    setSearchUserEmail(event.target.value);
+  };
+
+  const handleContinue = () => {
+
+    const formValues = Object.values(formData);
+    const isEmailValid = utils.validateEmail(formData.email);
+    const isPhoneValid = utils.validatePhone(formData.phone);
+    const areAllFieldsFilled = formValues.every(value => value !== '');
+    
+    if (areAllFieldsFilled && isEmailValid && isPhoneValid) {
+      handleRegistration();
+    } else {
+      let errorMessage = '';
+      if (!isEmailValid) {
+        errorMessage = config.ERROR_EMAIL_NOT_VALID;
+      } else if (!isPhoneValid) {
+        errorMessage = config.ERROR_PHONE_NOT_VALID;
+      } else {
+        errorMessage = config.ERROR_MISSING_FIELDS;
+      }
+      handleRequestError(errorMessage,true);
+    }
+  };
+
+  const handleRequestError = (error: string, show : boolean) => {
+    localStorage.clear();
+    console.log(error);
+    setError(error);
+    setShowPopup(show);
   };
 
   return (
     <section className='bg-hg-200 min-h-screen justify-center items-center'>
       <div className='flex flex-wrap justify-center items-center p-10'>
-        
+        {showPopup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-4 rounded-lg">
+              <p className="text-red-500">{error}</p>
+              <button
+                className="text-blue-500 mt-4 px-4 py-2 rounded-lg bg-blue-200 hover:bg-blue-300 focus:outline-none"
+                onClick={() => setShowPopup(false)}
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className='w-full'>
           <Image className='mx-auto m-10' src='/images/dashboard/holaglow_white.png' height='200' width='950' alt='Holaglow'/>
         </div>
-
-        <div id="buscar" className='w-3/4'>
-          <div className="bg-gray-50 p-10 rounded-2xl flex">
-            
-            <div className="flex flex-col items-start flex-1">
-                <input onChange={handleInputChange} type="email" value={email} name="email" 
-                className="w-full h-full mt-1 border-2 border-gray rounded-md  text-black"
-                placeholder="Introduce tu teléfono, email o DNI"/>
-            </div>
-            <div className='flex flex-col flex-1'>
-            <button onClick={handleCheckUser} type="submit" className="inline-flex justify-center items-center w-full h-full px-5 py-3 ml-6 text-lg font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false">
-              Buscar</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="Registro" className={`w-3/4 ${error ? '' : 'hidden'}`}>
-          <div className="flex justify-center items-center">
-            <div className="container">
-                <div className="w-full p-8 my-4 md:px-12 rounded-2xl shadow-2xl bg-white">
-                  <div className="flex">
-                      <h1 className="font-bold uppercase text-2xl text-black justify-center">¡Vaya! ¿Todavía no te conocemos?</h1>
-                  </div>
-                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
-                      <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="text" placeholder="Nombre*" />
-                      <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="text" placeholder="Primer Apellido*" />
-                      <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="text" placeholder="Segundo Apellido*" />
-                      <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="email" placeholder="Correo electrónico*" />
-                      <input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="number" placeholder="Número de teléfono*" />
-                      
-                        <button className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 mt-2 rounded-lg w-full 
-                          focus:outline-none focus:shadow-outline">
-                            Continuar
-                        </button>
-                    
-                  </div>
-                
-                </div>
-            </div>
-          </div>
-        </div>
-        
+        <SearchUser email={searchUserEmail} handleFieldChange={handleFieldChange} handleCheckUser={handleCheckUser} />
+        <RegistrationForm formData={formData} handleFieldChange={handleFieldChange} handleContinue={handleContinue} error={error} show={show} />
       </div>
     </section>
  
