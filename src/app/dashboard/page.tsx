@@ -46,39 +46,41 @@ export default function Page () {
   }, []);
 
   const handleCheckUser = async () => {
-		try {
-
-      const isEmailValid = utils.validateEmail(searchUserEmail);
-      
-
-      if (!isEmailValid) {
-        handleRequestError(config.ERROR_EMAIL_NOT_VALID,true);
-        return null;
-      }
-     
-      const res = await fetch(`${API_URL.login}?search=${formData.email}`);
-      if (res.ok) {
-
-        const data = await res.json();
-        console.log(data);
-        setError('');
-
-        localStorage.clear();
-        localStorage.setItem('username', data.name);
-
-        window.location.href = '/dashboard/welcome';
-
-      } else {
-        handleRequestError(config.ERROR_AUTHENTICATION, false);
-        setShow(true);
-      }
-    } catch (err) {
-      handleRequestError(config.ERROR_AUTHENTICATION, false);
-      setShow(true);
-    }
+    await checkUser(searchUserEmail);
 	};
 
+  const checkUser = async (email : string) => {
+    const isEmailValid = utils.validateEmail(email);
+  
+    if (!isEmailValid) {
+      handleRequestError(config.ERROR_EMAIL_NOT_VALID, true);
+      return null;
+    }
+  
+    try {
+      const res = await fetch(`${API_URL.login}?search=${email}`);
+      if (res.ok) {
+        const data = await res.json();
+        redirectPage(data.name);
+      } else {
+        handleSearchError();
+      }
+    } catch (err) {
+      handleSearchError();
+    }
+  };
+
+  const handleSearchError = async () => {
+    handleRequestError(config.ERROR_AUTHENTICATION, false);
+    setSearchUserEmail('');
+    setShow(true);
+  };
+
   const handleRegistration = async () => {
+    await registerUser(formData);
+  };
+
+  const registerUser = async (formData : Client) => {
     try {
       const res = await fetch(API_URL.newuser, {
         method: 'POST',
@@ -88,10 +90,7 @@ export default function Page () {
         body: JSON.stringify(formData),
       });
       if (res.ok) {
-        const data = await res.json();
-        setError('');
-        localStorage.setItem('username', formData.name);
-        window.location.href = '/dashboard/welcome';
+        redirectPage(formData.name);
       } else {
         handleRequestError(config.ERROR_REGISTRATION, false);
       }
@@ -100,21 +99,31 @@ export default function Page () {
     }
   };
 
+  const redirectPage = (name : string) => {
+    localStorage.setItem('username', name);
+    window.location.href = '/dashboard/welcome';
+  }
+
   const handleFieldChange = (event: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [field]: event.target.value,
+      [field]: value,
     }));
+  };
+
+  const handleFieldEmailChange = (event: React.ChangeEvent<HTMLInputElement>, field: string) => {
     setSearchUserEmail(event.target.value);
   };
 
   const handleContinue = () => {
 
-    const formValues = Object.values(formData);
+    const requiredFields = ['email', 'phone', 'name', 'surname', 'secondSurname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const isPhoneValid = utils.validatePhone(formData.phone);
-    const areAllFieldsFilled = formValues.every(value => value !== '');
+    const areAllFieldsFilled = requiredFields.every(field => formData[field] !== '');
     
+
     if (areAllFieldsFilled && isEmailValid && isPhoneValid) {
       handleRegistration();
     } else {
@@ -157,8 +166,8 @@ export default function Page () {
         <div className='w-full'>
           <Image className='mx-auto m-10' src='/images/dashboard/holaglow_white.png' height='200' width='950' alt='Holaglow'/>
         </div>
-        <SearchUser email={searchUserEmail} handleFieldChange={handleFieldChange} handleCheckUser={handleCheckUser} />
-        <RegistrationForm formData={formData} handleFieldChange={handleFieldChange} handleContinue={handleContinue} error={error} show={show} />
+        <SearchUser email={searchUserEmail} handleFieldChange={handleFieldEmailChange} handleCheckUser={handleCheckUser} />
+        <RegistrationForm formData={formData} handleFieldChange={handleFieldChange} handleContinue={handleContinue} show={show} />
       </div>
     </section>
  

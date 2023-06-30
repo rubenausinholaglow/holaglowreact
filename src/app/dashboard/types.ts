@@ -20,8 +20,8 @@ export interface Client {
   };
   interestedTreatment: string;
   treatmentPrice: number;
+  [key: string]: any;
 }
-
 
 export interface TextInputFieldProps {
   label: string;
@@ -39,6 +39,11 @@ export interface RegistrationFormProps {
   formData: Client;
   handleFieldChange: (event: React.ChangeEvent<HTMLInputElement>, field: string) => void;
   handleContinue: () => void;
-  error: string;
   show: boolean;
+}
+
+export interface CheckboxProps {
+  id: string;
+  checked: boolean;
+  onChange: (value: boolean) => void;
 }
