@@ -6,7 +6,7 @@ import { Button } from 'components/Buttons/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 import { Flex } from 'components/Layouts';
 import { useState } from 'react';
-import Carousel from 'components/Carousel';
+import Carousel from 'components/Carousel/Carousel';
 import { SvgArrowSmallLeft, SvgCheck, SvgCircle } from 'icons/Icons';
 
 export default function Form() {
@@ -45,7 +45,7 @@ export default function Form() {
           <Image className='mx-auto sm:ml-4' src='/images/holaglow.svg' height='24' width='112' alt='Holaglow' />
         </div>
       </header>
-      <main id='multistep' className='max-w-[624px] mx-auto relative overflow-hidden'>
+      <main id='multistep' className='max-w-[624px] mx-auto relative overflow-hidden text-[#1A202C]'>
         <div className='px-4 mb-12'>
           <ul className='flex bg-[#7516E9]/10 h-[4px] w-full rounded-full'>
             <li
