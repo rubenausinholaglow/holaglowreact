@@ -1,7 +1,5 @@
 import { Client } from '../interface/client';
 
-//const CONTACTS_API = process.env.CONTACTS_API;
-
 export default class UserService {
   
   static async checkUser(email = '') {
