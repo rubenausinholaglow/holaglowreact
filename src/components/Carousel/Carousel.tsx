@@ -16,6 +16,7 @@ const Carousel = ({
   step = 1,
   currentSlide = 1,
   dragEnabled = false,
+  touchEnabled = false,
   ...props
 }: {
   children: ReactNode;
@@ -29,6 +30,7 @@ const Carousel = ({
   step?: number;
   currentSlide?: number;
   dragEnabled?: boolean;
+  touchEnabled?: boolean;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const childrens = Children.toArray(children);
@@ -52,6 +54,7 @@ const Carousel = ({
       infinite
       lockOnWindowScroll
       dragEnabled={dragEnabled}
+      touchEnabled={touchEnabled}
       {...props}
     >
       {hasControls ? (
