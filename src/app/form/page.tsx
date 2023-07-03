@@ -23,8 +23,7 @@ export default function Form() {
     if (categorySelected) {
       console.log('redirection to', MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing);
 
-      window.parent.postMessage(
-        window.parent.location.assign(MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing),
+      window.parent.postMessage(MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing,
         'https://holaglow.com',
       );
     }
