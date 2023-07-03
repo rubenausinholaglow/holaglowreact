@@ -16,7 +16,7 @@ export interface RegistrationFormProps {
   formData: Client;
   handleFieldChange: (event: React.ChangeEvent<HTMLInputElement>, field: string) => void;
   handleContinue: () => void;
-  show: boolean;
+  isVisible: boolean;
 }
 
 export interface CheckboxProps {

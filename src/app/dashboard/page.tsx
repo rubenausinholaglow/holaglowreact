@@ -154,7 +154,7 @@ export default function Page () {
           <Image className='mx-auto m-10' src='/images/dashboard/holaglow_white.png' height='200' width='950' alt='Holaglow'/>
         </div>
         <SearchUser email={searchUserEmail} handleFieldChange={handleFieldEmailChange} handleCheckUser={handleCheckUser} />
-        <RegistrationForm formData={formData} handleFieldChange={handleFormFieldChange} handleContinue={handleContinue} show={show} />
+        <RegistrationForm formData={formData} handleFieldChange={handleFormFieldChange} handleContinue={handleContinue} isVisible={show} />
       </div>
     </section>
  
