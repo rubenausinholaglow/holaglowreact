@@ -18,7 +18,11 @@ export default function Form() {
   const [categorySelected, setCategorySelected] = useState<number | undefined>();
 
   const redirectTo = (index: number) => {
+    console.log('hola!');
+
     if (categorySelected) {
+      console.log('redirection to', MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing);
+
       window.parent.postMessage(
         window.parent.location.assign(MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing),
         'https://holaglow.com',
