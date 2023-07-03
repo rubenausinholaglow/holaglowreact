@@ -19,7 +19,7 @@ export default function Form() {
 
   const redirectTo = (index: number) => {
     if (categorySelected) {
-      window.location.assign(MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing);
+      window.parent.location.assign(MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing);
     }
   };
 
