@@ -1,11 +1,11 @@
 import React from 'react';
 import { RegistrationFormProps } from './utils/props';
-import TextInputField from './TextInputField';
+import TextInputField from './components/TextInputField';
 import '../globals.css';
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFieldChange, handleContinue, isVisible }) => {
   return (
-    <div>
+    <>
       {isVisible &&
         <div id="Registro" className='w-3/4'>
           <div className="flex justify-center items-center">
@@ -81,7 +81,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFie
           </div>
         </div>
       }
-    </div>
+    </>
   );
 };
 export default RegistrationForm;

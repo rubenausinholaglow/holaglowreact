@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { Client } from './interface/client';
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
-import Auth0 from './utils/auth0';
 import * as utils from './utils/validators';
 import * as config from './utils/textConstants';
+import UserService from './utils/UserService';
 
 export default function Page () {
 
@@ -53,10 +53,9 @@ export default function Page () {
       return null;
     }
 
-    await Auth0.checkUser(searchUserEmail)
+    await UserService.checkUser(searchUserEmail)
       .then(data => {
         if (data && data !== '') {
-          console.log(data);
           redirectPage(data.name);
         } else {
           handleSearchError();
@@ -78,7 +77,7 @@ export default function Page () {
   };
 
   const registerUser = async (formData : Client) => {
-    const isSuccess = await Auth0.registerUser(formData);
+    const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
       redirectPage(formData.name);
     } else {
@@ -87,7 +86,6 @@ export default function Page () {
   };
 
   const redirectPage = (name : string) => {
-    console.log(name);
     localStorage.setItem('username', name);
     router.push('/dashboard/pages/welcome');
   }
@@ -157,6 +155,5 @@ export default function Page () {
         <RegistrationForm formData={formData} handleFieldChange={handleFormFieldChange} handleContinue={handleContinue} isVisible={show} />
       </div>
     </section>
- 
   );
 };

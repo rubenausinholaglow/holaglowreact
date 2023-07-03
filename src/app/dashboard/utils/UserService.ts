@@ -1,13 +1,16 @@
 import { Client } from '../interface/client';
 
-export default class Auth0 {
+//const CONTACTS_API = process.env.CONTACTS_API;
 
+export default class UserService {
+  
   static async checkUser(email = '') {
       try {
-          const url = `${process.env.NEXT_PUBLIC_API_LOGIN}?search=${email}`
+          const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/Search?search=${email}`
           const res = await fetch(url);
           if (res.ok) {
               const data = await res.json();
+              console.log(data);
               return data;
           } else {
               return '';
@@ -17,7 +20,7 @@ export default class Auth0 {
 
   static async registerUser(formData : Client) {
     try {
-          const res = await fetch(process.env.NEXT_PUBLIC_API_NEWUSER!, {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
