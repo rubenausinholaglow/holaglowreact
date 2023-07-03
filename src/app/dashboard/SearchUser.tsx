@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SearchBarProps } from './types';
+import { SearchBarProps } from './utils/props';
 
 const SearchUser: React.FC<SearchBarProps> = ({ email, handleFieldChange, handleCheckUser }) => {
   const [isLoading, setIsLoading] = useState(false);

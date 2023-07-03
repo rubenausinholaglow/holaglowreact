@@ -1,18 +1,15 @@
 'use client';
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Page () {
 
-  const [username, setUserName] = useState("")
+  const [username, setUserName] = useState("");
 
   useEffect(() => {
-    let value
-    // Get the value from local storage if it exists
-    value = localStorage.getItem("username") || ""
-    setUserName(value)
-  }, [])
+    setUserName(localStorage.getItem("username") || "")
+  }, []);
 
   return (
     <section className='bg-hg-200 h-screen flex flex-col justify-center items-center'>
@@ -28,7 +25,7 @@ export default function Page () {
         <p className='text-4xl text-center py-5'>Preparad@ para ver<br/>tu glow?</p>
       </div>
       <br/>
-        <Link href='/dashboard/menu'>menu</Link>
+        <Link href='/dashboard/pages/menu'>menu</Link>
     </section>
   );
 };

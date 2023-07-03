@@ -1,17 +1,17 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Client } from './types';
+import { Client } from './interface/client';
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
-
-import * as utils from './utils';
-import * as config from './config';
-
-const { API_URL } = config;
+import Auth0 from './utils/auth0';
+import * as utils from './utils/validators';
+import * as config from './utils/textConstants';
 
 export default function Page () {
 
+  const router = useRouter()
   const [showPopup, setShowPopup] = useState(false);
   const [error, setError] = useState('');
   const [show, setShow] = useState(false);
@@ -40,35 +40,32 @@ export default function Page () {
     treatmentPrice: 0,
   });
   
-
   useEffect(() => {
-    localStorage.clear();
+    localStorage.removeItem('username'); 
   }, []);
 
   const handleCheckUser = async () => {
-    await checkUser(searchUserEmail);
-	};
 
-  const checkUser = async (email : string) => {
-    const isEmailValid = utils.validateEmail(email);
-  
+    const isEmailValid = utils.validateEmail(searchUserEmail);
+
     if (!isEmailValid) {
       handleRequestError(config.ERROR_EMAIL_NOT_VALID, true);
       return null;
     }
-  
-    try {
-      const res = await fetch(`${API_URL.login}?search=${email}`);
-      if (res.ok) {
-        const data = await res.json();
-        redirectPage(data.name);
-      } else {
+
+    await Auth0.checkUser(searchUserEmail)
+      .then(data => {
+        if (data && data !== '') {
+          console.log(data);
+          redirectPage(data.name);
+        } else {
+          handleSearchError();
+        }
+      })
+      .catch(error => {
         handleSearchError();
-      }
-    } catch (err) {
-      handleSearchError();
-    }
-  };
+      });
+	};
 
   const handleSearchError = async () => {
     handleRequestError(config.ERROR_AUTHENTICATION, false);
@@ -81,30 +78,21 @@ export default function Page () {
   };
 
   const registerUser = async (formData : Client) => {
-    try {
-      const res = await fetch(API_URL.newuser, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      if (res.ok) {
-        redirectPage(formData.name);
-      } else {
-        handleRequestError(config.ERROR_REGISTRATION, false);
-      }
-    } catch (err) {
+    const isSuccess = await Auth0.registerUser(formData);
+    if (isSuccess) {
+      redirectPage(formData.name);
+    } else {
       handleRequestError(config.ERROR_REGISTRATION, false);
     }
   };
 
   const redirectPage = (name : string) => {
+    console.log(name);
     localStorage.setItem('username', name);
-    window.location.href = '/dashboard/welcome';
+    router.push('/dashboard/pages/welcome');
   }
 
-  const handleFieldChange = (event: React.ChangeEvent<HTMLInputElement>, field: string) => {
+  const handleFormFieldChange = (event: React.ChangeEvent<HTMLInputElement>, field: string) => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -118,11 +106,10 @@ export default function Page () {
 
   const handleContinue = () => {
 
-    const requiredFields = ['email', 'phone', 'name', 'surname', 'secondSurname'];
+    const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const isPhoneValid = utils.validatePhone(formData.phone);
     const areAllFieldsFilled = requiredFields.every(field => formData[field] !== '');
-    
 
     if (areAllFieldsFilled && isEmailValid && isPhoneValid) {
       handleRegistration();
@@ -167,7 +154,7 @@ export default function Page () {
           <Image className='mx-auto m-10' src='/images/dashboard/holaglow_white.png' height='200' width='950' alt='Holaglow'/>
         </div>
         <SearchUser email={searchUserEmail} handleFieldChange={handleFieldEmailChange} handleCheckUser={handleCheckUser} />
-        <RegistrationForm formData={formData} handleFieldChange={handleFieldChange} handleContinue={handleContinue} show={show} />
+        <RegistrationForm formData={formData} handleFieldChange={handleFormFieldChange} handleContinue={handleContinue} show={show} />
       </div>
     </section>
  

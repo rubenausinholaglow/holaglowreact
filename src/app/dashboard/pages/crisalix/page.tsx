@@ -17,14 +17,13 @@ const Page = () => {
             </div>
         </div>
         <div className='fixed bottom-0 p-10'>
-            <Link href='/dashboard/menu'>
+            <Link href='/dashboard/pages/menu'>
             <button className="bg-hg-500 hover:bg-hg-400 text-white font-bold py-10 px-7 rounded-full">
                 Volver
             </button>
             </Link>
         </div>
     </section>
- 
   );
 };
 

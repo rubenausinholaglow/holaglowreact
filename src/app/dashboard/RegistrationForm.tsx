@@ -1,5 +1,5 @@
 import React from 'react';
-import { RegistrationFormProps } from './types';
+import { RegistrationFormProps } from './utils/props';
 import TextInputField from './TextInputField';
 import '../globals.css';
 
@@ -21,14 +21,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFie
                 onChange={(event) => handleFieldChange(event, 'name')}
               />
               <TextInputField
-                label="Primer Apellido*"
+                label="Apellidos*"
                 value={formData.surname}
                 onChange={(event) => handleFieldChange(event, 'surname')}
-              />
-              <TextInputField
-                label="Segundo Apellido*"
-                value={formData.secondSurname}
-                onChange={(event) => handleFieldChange(event, 'secondSurname')}
               />
               <TextInputField
                 label="Correo electrónico"
@@ -40,14 +35,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFie
                 value={formData.phone}
                 onChange={(event) => handleFieldChange(event, 'phone')}
               />
-              <button
-                onClick={handleContinue}
-                className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 mt-2 rounded-lg w-full 
-                focus:outline-none focus:shadow-outline"
-              >
-                Continuar
-              </button>
-              
+                        
               <div className="flex flex-col mt-2">
                 <div className="flex items-center mb-2">
                   <label htmlFor="termsAndConditionsAccepted" className="flex items-center cursor-pointer">
@@ -78,6 +66,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFie
                   </label>
                 </div>
               </div>
+              <button
+                onClick={handleContinue}
+                className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 mt-2 rounded-lg w-full 
+                focus:outline-none focus:shadow-outline"
+              >
+                Continuar
+              </button>
             </div>
           </div>
         </div>
