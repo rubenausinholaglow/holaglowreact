@@ -24,7 +24,7 @@ export default function Form() {
   };
 
   const STEPS = 4;
-  const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
+  const progressBarWith: number = activeSlideIndex * (100 / STEPS);
 
   return (
     <>
