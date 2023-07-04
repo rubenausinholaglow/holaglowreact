@@ -87,7 +87,7 @@ export default function Page () {
 
   const redirectPage = (name : string) => {
     localStorage.setItem('username', name);
-    router.push('/dashboard/pages/welcome');
+    router.push('/dashboard/welcome');
   }
 
   const handleFormFieldChange = (event: React.ChangeEvent<HTMLInputElement>, field: string) => {

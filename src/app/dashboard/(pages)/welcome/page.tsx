@@ -25,7 +25,7 @@ export default function Page () {
         <p className='text-4xl text-center py-5'>Preparad@ para ver<br/>tu glow?</p>
       </div>
       <br/>
-        <Link href='/dashboard/pages/menu'>menu</Link>
+        <Link href='/dashboard/menu'>menu</Link>
     </section>
   );
 };
