@@ -169,7 +169,7 @@ export default function Form() {
           <div className='bg-white px-4'>
             <section className='mb-6 flex gap-2 items-center'>
               <Title size='2xl' className='mb-2'>
-                ¿De qué zona de tu cuerpo querrías mejorar tu aspecto?
+                ¿De qué zona de tu cuerpo querrías mejorar su apariencia?
               </Title>
             </section>
 
@@ -246,7 +246,7 @@ export default function Form() {
           <div className='bg-white px-4'>
             <section className='mb-6 flex gap-2 items-center'>
               <Title size='2xl' className='mb-2'>
-                ¿Qué aspecto concreto querrías tratarte?
+                ¿Qué aspecto concreto querrías tratar?
               </Title>
             </section>
 
