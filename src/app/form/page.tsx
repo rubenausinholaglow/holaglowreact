@@ -16,6 +16,7 @@ export default function Form() {
   const [skincareSelected, setSkincareSelected] = useState<number | undefined>();
   const [ageSelected, setAgeSelected] = useState<number | undefined>();
   const [categorySelected, setCategorySelected] = useState<number | undefined>();
+  const [treatmentSelected, setTreatmentSelected] = useState<number | undefined>();
 
   const redirectTo = (index: number) => {
     if (categorySelected !== undefined) {
@@ -29,6 +30,11 @@ export default function Form() {
   const STEPS = 4;
   const progressBarWith: number = activeSlideIndex * (100 / STEPS);
 
+  const goBack = (index: number) => {
+    setActiveSlideIndex(index - 1);
+    setTreatmentSelected(undefined);
+  };
+
   return (
     <>
       <header className='py-4 border-b border-[#EDF0F7] mb-6 relative'>
@@ -40,7 +46,7 @@ export default function Form() {
                 width={32}
                 fill='grey'
                 className='cursor-pointer self-center'
-                onClick={() => setActiveSlideIndex(activeSlideIndex - 1)}
+                onClick={() => goBack(activeSlideIndex)}
               />
             </div>
           )}
@@ -240,14 +246,17 @@ export default function Form() {
             <section>
               <ul>
                 {treatments.map((treatment: any, index: number) => {
-                  const isActive = false;
+                  const isActive = index === treatmentSelected;
                   const bgColor = isActive ? 'bg-[#EAE2F9]' : 'bg-[#F7F9FC]';
                   const textColor = isActive ? 'text-[#7516E9]' : 'text-[#1A202C]';
 
                   return (
                     <div
                       className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] py-4 group transition-all rounded-lg px-3 cursor-pointer`}
-                      onClick={() => redirectTo(index)}
+                      onClick={() => {
+                        setTreatmentSelected(index);
+                        redirectTo(index);
+                      }}
                     >
                       <Flex layout='row-left' className='justify-start items-center h-full'>
                         <Text size='lg' className={`${textColor} group-hover:text-[#7516E9] mr-auto`}>
@@ -268,7 +277,7 @@ export default function Form() {
         </Carousel>
 
         {activeSlideIndex > 0 && (
-          <Button className='mt-16 ml-3' type='inverted' onClick={() => setActiveSlideIndex(activeSlideIndex - 1)}>
+          <Button className='mt-16 ml-3' type='inverted' onClick={() => goBack(activeSlideIndex)}>
             <Flex layout='row-left'>
               <SvgArrowSmallLeft height={20} width={20} />
               <span className='ml-2'>Atrás</span>
