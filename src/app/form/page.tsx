@@ -5,7 +5,7 @@ import { Title, Text } from 'components/Texts';
 import { Button } from 'components/Buttons/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 import { Flex } from 'components/Layouts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Carousel from 'components/Carousel/Carousel';
 import { SvgArrowSmallLeft, SvgCheck, SvgCircle } from 'icons/Icons';
 
@@ -34,6 +34,14 @@ export default function Form() {
     setActiveSlideIndex(index - 1);
     setTreatmentSelected(undefined);
   };
+
+  const sendEventTracking = (index: number) => {
+    window.parent.postMessage('multistep_step_' + index, 'https://holaglow.com');
+  };
+
+  useEffect(() => {
+    sendEventTracking(1);
+  }, []);
 
   return (
     <>
@@ -87,6 +95,7 @@ export default function Form() {
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setSkincareSelected(index);
+                        sendEventTracking(activeSlideIndex + 2);
                       }}
                     >
                       <Flex layout='col-center' className='justify-start h-full'>
@@ -137,6 +146,7 @@ export default function Form() {
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setAgeSelected(index);
+                        sendEventTracking(activeSlideIndex + 2);
                       }}
                     >
                       <Flex layout='col-center' className='justify-start h-full'>
@@ -190,6 +200,7 @@ export default function Form() {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setCategorySelected(index);
                         setTreatments(MULTISTEP_TREATMENTS[index].treatments);
+                        sendEventTracking(activeSlideIndex + 2);
                       }}
                     >
                       <Flex layout='col-center' className='justify-start h-full'>
