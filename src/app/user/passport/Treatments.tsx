@@ -1,36 +1,41 @@
 import Image from 'next/image';
-import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker } from 'icons/Icons';
+import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker, SvgStethoscope } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import { treatment, clinicProfessional, clinic } from './types';
+import { Appointment } from '../types';
 
 export default function Treatments({
   appointment,
   previousAppointments,
 }: {
-  appointment: {
-    clinic: clinic;
-    clinicProfessional: clinicProfessional;
-    treatments: treatment;
-  };
-  previousAppointments: any;
+  appointment: Appointment;
+  previousAppointments: Array<Appointment>;
 }) {
-  const { treatments }: any = appointment;
+  const date = new Date(appointment.date).getDate().toString().padStart(2, '0');
+  const month = new Date(appointment.date).toLocaleDateString('es-ES', { month: 'long' });
+  const year = new Date(appointment.date).getFullYear();
 
   return (
     <section className='p-12'>
       <h3 className='bg-[#fdf6fc] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4'>
         Detalles de tu tratamiento
       </h3>
+      {appointment.treatments.map(item => {
+        const { treatment } = item;
 
-      {treatments.map((item: Object) => {
-        const { treatment }: any = item;
         return (
           <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
               <div className='flex flex-col mr-4 w-2/5'>
-                <p className='text-hg-200 text-xs'>2023</p>
-                <p className='mb-4'>01 May</p>
-                <Image src='/images/passport/treatmentZones/1.svg' height='196' width='230' alt='Holaglow' />
+                <p className='text-hg-200 text-xs'>{year}</p>
+                <p className='mb-4'>
+                  {date} {month.charAt(0).toUpperCase() + month.slice(1)}
+                </p>
+                <Image
+                  src={`/images/passport/treatmentZones/${treatment.product.zone}.svg`}
+                  height='196'
+                  width='230'
+                  alt='Holaglow'
+                />
               </div>
               <ul className='border-l border-hg-400/10 w-3/5 text-sm'>
                 <li className='border-b border-hg-400/10 p-4'>
@@ -71,7 +76,7 @@ export default function Treatments({
                 <li className='p-4'>
                   <ul className='flex flex-col gap-4'>
                     <li className='flex content-center'>
-                      <SvgCalendar className='mr-2' height={18} width={22} fill='#717D96' />
+                      <SvgStethoscope className='mr-2' height={18} width={18} fill='#717D96' />
                       <p className='text-[#717D96]'>{appointment.clinicProfessional.name}</p>
                     </li>
                     <li className='flex content-center'>
@@ -96,18 +101,21 @@ export default function Treatments({
               <th className='py-3 pr-6 text-left font-normal'>Profesional sanitario</th>
               <th className='py-3 pr-6 text-left font-normal'>Clínica</th>
             </tr>
-            {previousAppointments.map((appointment: any) => {
-              const date = new Date(appointment.date).getDate().toString().padStart(2, '0');
-              const month = (new Date(appointment.date).getMonth() + 1).toString().padStart(2, '0');
-              const year = new Date(appointment.date).getFullYear();
+            {previousAppointments.map(prevAppointment => {
+              const date = new Date(prevAppointment.date).getDate().toString().padStart(2, '0');
+              const month = (new Date(prevAppointment.date).getMonth() + 1).toString().padStart(2, '0');
+              const year = new Date(prevAppointment.date).getFullYear();
               const parsedDate = `${date}/${month}/${year}`;
+
+              const appointmentTitle =
+                prevAppointment.treatments.length > 0
+                  ? prevAppointment.treatments[0].treatment.product.title
+                  : prevAppointment.appointmentProducts[0].product.title;
 
               return (
                 <tr className='mb-4 border-b border-hg-400/10'>
                   <td className='py-3 pr-6'>{parsedDate}</td>
-                  <td className='py-3 pr-6'>
-                    {appointment.treatments.length > 0 ? appointment.treatments[0].text : ''}
-                  </td>
+                  <td className='py-3 pr-6'>{appointmentTitle}</td>
                   <td className='py-3 pr-6'>{appointment.clinicProfessional.name}</td>
                   <td className='py-3 pr-6'>{appointment.clinic.address}</td>
                 </tr>
@@ -116,8 +124,7 @@ export default function Treatments({
           </table>
         </>
       )}
-
-      <h3 className='mb-4 font-semibold'>
+      {/* <h3 className='mb-4 font-semibold'>
         Notas para tus tratamientos en Holaglow
         <p className='text-sm font-normal'>Todo lo que necesitas saber en tu pasaporte de belleza</p>
       </h3>
@@ -129,7 +136,7 @@ export default function Treatments({
         En su pasaporte de belleza, también puede anotar otros tratamientos de belleza en la cara. Será de gran ayuda si
         cambia de médico o enfermera tratante, o pronto volverá a ser el momento, ya que aquí se recopilará toda la
         información.
-      </p>
+      </p> */}
     </section>
   );
 }

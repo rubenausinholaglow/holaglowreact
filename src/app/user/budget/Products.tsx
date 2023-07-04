@@ -1,5 +1,5 @@
 'use client';
-import { type Product as ProductType } from 'types/product';
+import { type Product as ProductType } from '../types';
 import { priceFormat } from 'utils/priceFormat';
 import Image from 'next/image';
 import { useState } from 'react';

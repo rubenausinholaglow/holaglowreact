@@ -27,7 +27,7 @@ export default async function Budget({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const budgetID: any = searchParams.id;
+  const budgetID = Number(searchParams.id);
   const budgetData = await fetchBudgetData(budgetID);
 
   const {

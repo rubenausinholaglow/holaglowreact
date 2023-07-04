@@ -1,6 +1,6 @@
-import Image from 'next/image';
+import { Voucher } from '../types';
 
-export default function Issues({ pendingVouchers }: any) {
+export default function Issues({ pendingVouchers }: { pendingVouchers: Array<Voucher> }) {
   if (pendingVouchers.length === 0) {
     return <></>;
   }
@@ -9,7 +9,7 @@ export default function Issues({ pendingVouchers }: any) {
     <section className='p-16 pt-8 bg-hg-100/50 text-hg-500 text-lg'>
       <h3 className='text-2xl text-hg-500 font-semibold text-center mb-8'>Bono de tratamientos pendientes</h3>
       <ul className='flex flex-col gap-3'>
-        {pendingVouchers.map((voucher: any) => {
+        {pendingVouchers.map(voucher => {
           return (
             <li className='bg-white p-4 flex justify-between rounded-lg'>
               <p>{voucher.name}</p>
