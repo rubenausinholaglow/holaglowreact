@@ -34,7 +34,7 @@ export default function Form() {
       <header className='py-4 border-b border-[#EDF0F7] mb-6 relative'>
         <div className='max-w-[624px] mx-auto'>
           {activeSlideIndex > 0 && (
-            <div className='w-[32px] absolute left-0 top-3 sm:hidden'>
+            <div className='w-[32px] absolute left-3 top-3 sm:hidden'>
               <SvgArrowSmallLeft
                 height={32}
                 width={32}
@@ -268,7 +268,7 @@ export default function Form() {
         </Carousel>
 
         {activeSlideIndex > 0 && (
-          <Button className='mt-16' type='inverted' onClick={() => setActiveSlideIndex(activeSlideIndex - 1)}>
+          <Button className='mt-16 ml-3' type='inverted' onClick={() => setActiveSlideIndex(activeSlideIndex - 1)}>
             <Flex layout='row-left'>
               <SvgArrowSmallLeft height={20} width={20} />
               <span className='ml-2'>Atrás</span>
