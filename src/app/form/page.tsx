@@ -44,7 +44,7 @@ export default function Form() {
               <SvgArrowSmallLeft
                 height={32}
                 width={32}
-                fill='grey'
+                fill='#1A202C'
                 className='cursor-pointer self-center'
                 onClick={() => goBack(activeSlideIndex)}
               />
@@ -284,7 +284,7 @@ export default function Form() {
         </Carousel>
 
         {activeSlideIndex > 0 && (
-          <Button className='mt-16 ml-3' type='inverted' onClick={() => goBack(activeSlideIndex)}>
+          <Button className='mt-8 ml-3' type='inverted' onClick={() => goBack(activeSlideIndex)}>
             <Flex layout='row-left'>
               <SvgArrowSmallLeft height={20} width={20} />
               <span className='ml-2'>Atrás</span>
