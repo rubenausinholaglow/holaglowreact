@@ -204,7 +204,7 @@ export default function Form() {
                             )}
                           </div>
                         ) : (
-                          <div className='relative'>
+                          <div className='relative pointer-events-none'>
                             <Image src={`${item.imgSrc}-bw.png`} height='96' width='70' alt={item.category} />
                             <Image
                               className={`transition-opacity opacity-0 group-hover:opacity-100 absolute top-0 left-0 ${
