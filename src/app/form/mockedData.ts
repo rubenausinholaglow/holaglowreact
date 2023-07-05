@@ -32,22 +32,26 @@ export const MULTISTEP_TREATMENTS: any = [
       {
         name: 'Líneas de expresión',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Flacidez',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Abrir mirada',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Calidad de la piel',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
       },
     ],
   },
@@ -58,22 +62,26 @@ export const MULTISTEP_TREATMENTS: any = [
       {
         name: 'Líneas de expresión',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Flacidez',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Calidad de la piel',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
       },
       {
         name: 'Ojeras',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
     ],
   },
@@ -84,27 +92,32 @@ export const MULTISTEP_TREATMENTS: any = [
       {
         name: 'Líneas de expresión',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Flacidez',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Aumento de labios',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Sonrisa gingival',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
       {
         name: 'Bruxismo',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
       },
     ],
   },
@@ -115,27 +128,32 @@ export const MULTISTEP_TREATMENTS: any = [
       {
         name: 'Hidratación',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
       },
       {
         name: 'Luminosidad',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
       },
       {
         name: 'Manchas',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
       },
       {
         name: 'Poros',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
       },
       {
         name: 'Acné',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
       },
     ],
   },
@@ -146,17 +164,20 @@ export const MULTISTEP_TREATMENTS: any = [
       {
         name: 'Caída',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-3/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-3/?treatmentText=Multistep',
       },
       {
         name: 'Volumen',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-3/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-3/?treatmentText=Multistep',
       },
       {
         name: 'Luminosidad',
         price: 250,
-        landing: 'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-3/',
+        landing:
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-3/?treatmentText=Multistep',
       },
     ],
   },
