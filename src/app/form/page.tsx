@@ -36,12 +36,12 @@ export default function Form() {
   };
 
   const sendEventTracking = (index: number) => {
-    window.parent.postMessage('multistep_step_' + index, 'https://holaglow.com');
+    window.parent.postMessage('(googleevent)multistep_step_' + index, 'https://holaglow.com');
   };
 
-  /*   useEffect(() => {
+  useEffect(() => {
     sendEventTracking(1);
-  }, []); */
+  }, []);
 
   return (
     <>
@@ -95,7 +95,7 @@ export default function Form() {
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setSkincareSelected(index);
-                        //sendEventTracking(activeSlideIndex + 2);
+                        sendEventTracking(activeSlideIndex + 2);
                       }}
                     >
                       <Flex layout='col-center' className='justify-start h-full'>
@@ -146,7 +146,7 @@ export default function Form() {
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setAgeSelected(index);
-                        //sendEventTracking(activeSlideIndex + 2);
+                        sendEventTracking(activeSlideIndex + 2);
                       }}
                     >
                       <Flex layout='col-center' className='justify-start h-full'>
@@ -200,7 +200,7 @@ export default function Form() {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setCategorySelected(index);
                         setTreatments(MULTISTEP_TREATMENTS[index].treatments);
-                        //sendEventTracking(activeSlideIndex + 2);
+                        sendEventTracking(activeSlideIndex + 2);
                       }}
                     >
                       <Flex layout='col-center' className='justify-start h-full'>
