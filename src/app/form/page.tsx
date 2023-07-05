@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { Title, Text } from 'components/Texts';
 import { Button } from 'components/Buttons/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
-import { Flex } from 'components/Layouts';
+import { Flex } from 'components/Layouts/Layouts';
 import { useEffect, useState } from 'react';
-import Carousel from 'components/Carousel/Carousel';
+import { Carousel } from 'components/Carousel/Carousel';
 import { SvgArrowSmallLeft, SvgCheck, SvgCircle } from 'icons/Icons';
 
 export default function Form() {
