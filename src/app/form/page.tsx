@@ -36,7 +36,7 @@ export default function Form() {
   };
 
   const sendEventTracking = (index: number) => {
-    window.parent.postMessage('multistep_step_' + index, 'https://holaglow.com');
+    window.parent.postMessage('(googleevent)multistep_step_' + index + '|', 'https://holaglow.com');
   };
 
   useEffect(() => {
