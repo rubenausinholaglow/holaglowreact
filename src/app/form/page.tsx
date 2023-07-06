@@ -295,7 +295,7 @@ export default function Form() {
         </Carousel>
 
         {activeSlideIndex > 0 && (
-          <Button className='mt-8 ml-3' type='inverted' onClick={() => goBack(activeSlideIndex)}>
+          <Button className='mt-8 ml-3' type='tertiary' onClick={() => goBack(activeSlideIndex)}>
             <Flex layout='row-left'>
               <SvgArrowSmallLeft height={20} width={20} />
               <span className='ml-2'>Atrás</span>

@@ -12,7 +12,7 @@ export const Button = ({
   ...rest
 }: {
   type: 'primary' | 'secondary' | 'tertiary';
-  size: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   route?: string;
   className?: string;
   onClick?: () => void;
