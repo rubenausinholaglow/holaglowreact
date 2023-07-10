@@ -4,7 +4,7 @@ import { SvgArrowSmallLeft } from 'icons/Icons';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
-export const Carousel = ({
+const Carousel = ({
   children,
   hasDots = false,
   hasControls = false,
@@ -94,3 +94,5 @@ export const Carousel = ({
     </CarouselProvider>
   );
 };
+
+export default Carousel;
