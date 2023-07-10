@@ -1,9 +1,9 @@
-import Header from './Header';
-import Products from './Products';
 import AlmaPayment from './AlmaPayment';
-import Simulation from './Simulation';
-import PromoCode from './PromoCode';
+import Header from './Header';
 import Legal from './Legal';
+import Products from './Products';
+import PromoCode from './PromoCode';
+import Simulation from './Simulation';
 
 const fetchBudgetData = async (id: number) => {
   try {

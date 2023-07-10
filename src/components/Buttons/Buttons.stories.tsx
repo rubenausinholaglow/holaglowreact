@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
-import { Button } from './Buttons';
 import { Flex } from 'components/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
+
+import { Button } from './Buttons';
 
 const meta: Meta<typeof Button> = {
   component: Button,

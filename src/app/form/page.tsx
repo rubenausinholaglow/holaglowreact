@@ -1,13 +1,14 @@
 'use client';
 
-import Image from 'next/image';
-import { Title, Text } from 'components/Texts';
-import { Button } from 'components/Buttons/Buttons';
-import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
-import { Flex } from 'components/Layouts/Layouts';
 import { useEffect, useState } from 'react';
+import { Button } from 'components/Buttons/Buttons';
 import { Carousel } from 'components/Carousel/Carousel';
+import { Flex } from 'components/Layouts/Layouts';
+import { Text,Title } from 'components/Texts';
 import { SvgArrowSmallLeft, SvgCheck, SvgCircle } from 'icons/Icons';
+import Image from 'next/image';
+
+import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -91,6 +92,7 @@ export default function Form() {
 
                   return (
                     <div
+                      key={index}
                       className='w-full mb-4 bg-[#F7F9FC] group rounded-lg py-2 px-3 cursor-pointer'
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
@@ -142,6 +144,7 @@ export default function Form() {
 
                   return (
                     <div
+                      key={index}
                       className='w-full mb-4 bg-[#F7F9FC] group rounded-lg py-2 px-3 cursor-pointer'
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
@@ -195,6 +198,7 @@ export default function Form() {
 
                   return (
                     <div
+                      key={index}
                       className={`w-full mb-4 ${bgColor} group rounded-lg py-2 px-3 cursor-pointer`}
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
@@ -270,6 +274,7 @@ export default function Form() {
 
                   return (
                     <div
+                      key={index}
                       className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] py-4 group transition-all rounded-lg px-3 cursor-pointer`}
                       onClick={() => {
                         setTreatmentSelected(index);
