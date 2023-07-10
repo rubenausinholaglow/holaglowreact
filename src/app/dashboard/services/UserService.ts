@@ -8,7 +8,6 @@ export default class UserService {
           const res = await fetch(url);
           if (res.ok) {
               const data = await res.json();
-              console.log(data);
               return data;
           } else {
               return '';

@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Client } from './interface/client';
+import { Client } from '@interface/client';
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
-import * as utils from './utils/validators';
-import * as config from './utils/textConstants';
-import UserService from './utils/UserService';
+import * as utils from '@utils/validators';
+import * as config from '@utils/textConstants';
+import UserService from '@services/UserService';
 
 export default function Page () {
 

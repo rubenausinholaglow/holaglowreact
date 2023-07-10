@@ -1,4 +1,5 @@
-import { Client } from '../interface/client';
+import { Client } from '@interface/client';
+import { Product } from '@interface/product';
 
 export interface TextInputFieldProps {
   label: string;
@@ -30,4 +31,27 @@ export interface DashboardMenuItemProps {
   altText: string;
   title: string;
   link: string;
+}
+
+export interface ProductTableProps {
+  products: Product[];
+  selectedFilter : string;
+//  cart: string[];
+//  addToCart: (productId: string) => void;
+}
+
+export interface CustomButtonFilterProps {
+  id: string;
+  tag: string;
+  onClick: (id: string, isSelected : boolean, tag : string) => void;
+  value: string;
+}
+
+export interface FilterPageProps {
+  onClickFilter: (id: string, inputText : string, allow : boolean) => void;
+}
+
+export interface FilterUtilsProps {
+  id: string;
+  products: Product[];
 }
