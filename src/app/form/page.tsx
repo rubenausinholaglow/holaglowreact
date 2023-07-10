@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { Title, Text } from 'components/Texts';
 import { Button } from 'components/Buttons/Buttons';
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'components/Layouts';
 import { useEffect, useState } from 'react';
-import { Carousel } from 'components/Carousel/Carousel';
+import Carousel from 'components/Carousel/Carousel';
 import { SvgArrowSmallLeft, SvgCheck, SvgCircle } from 'icons/Icons';
 
 export default function Form() {
@@ -295,7 +295,7 @@ export default function Form() {
         </Carousel>
 
         {activeSlideIndex > 0 && (
-          <Button className='mt-8 ml-3' type='tertiary' onClick={() => goBack(activeSlideIndex)}>
+          <Button className='mt-8 ml-3' type='inverted' onClick={() => goBack(activeSlideIndex)}>
             <Flex layout='row-left'>
               <SvgArrowSmallLeft height={20} width={20} />
               <span className='ml-2'>Atrás</span>
