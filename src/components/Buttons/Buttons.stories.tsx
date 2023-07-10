@@ -35,27 +35,3 @@ export const ButtonWithIcon: Story = {
     children: buttonWithIconContent(),
   },
 };
-
-/* 
-export const Secondary: Story = {
-  args: {
-    type: 'secondary',
-    children: 'Button',
-  },
-};
-
-export const Tertiary: Story = {
-  args: {
-    type: 'tertiary',
-    children: 'Button',
-  },
-};
-
-export const LargeButton: Story = {
-  args: {
-    type: 'primary',
-    size: 'lg',
-    children: 'Button',
-  },
-};
- */
