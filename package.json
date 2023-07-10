@@ -14,8 +14,6 @@
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
-    "eslint": "8.40.0",
-    "eslint-config-next": "13.4.2",
     "format-money-js": "^1.6.3",
     "next": "13.4.2",
     "postcss": "8.4.23",
@@ -28,6 +26,16 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",
-    "@types/node": "^20.2.3"
+    "@types/node": "^20.2.3",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "^8.36.0",
+    "eslint-config-next": "13.2.4",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "3.5.3",
+    "eslint-import-resolver-webpack": "0.13.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-simple-import-sort": "10.0.0",
+    "prettier": "^3.0.0"
   }
 }

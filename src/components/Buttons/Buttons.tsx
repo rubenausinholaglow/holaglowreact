@@ -1,6 +1,6 @@
-import { twMerge } from 'tailwind-merge';
-import Link from 'next/link';
 import { ReactNode } from 'react';
+import Link from 'next/link';
+import { twMerge } from 'tailwind-merge';
 
 export const Button = ({
   type = 'primary',

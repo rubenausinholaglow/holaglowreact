@@ -2,9 +2,12 @@ import Footer from './Footer';
 
 const fetchClinicData = async (id: number) => {
   try {
-    const clinicResponse = await fetch(`https://holaglowcontactsapidev.azurewebsites.net/budget?id=${id}`, {
-      cache: 'no-store',
-    });
+    const clinicResponse = await fetch(
+      `https://holaglowcontactsapidev.azurewebsites.net/budget?id=${id}`,
+      {
+        cache: 'no-store',
+      }
+    );
 
     if (!clinicResponse) {
       throw new Error('Network response was not OK');
@@ -26,7 +29,7 @@ export default async function DashboardLayout({
   const { clinicInfo = null } = clinicData ? clinicData : {};
 
   return (
-    <main className='flex flex-col w-[750px] mx-auto'>
+    <main className="flex flex-col w-[750px] mx-auto">
       {children}
       {clinicInfo && <Footer clinicInfo={clinicInfo} />}
     </main>

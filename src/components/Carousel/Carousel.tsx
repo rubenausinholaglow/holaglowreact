@@ -1,8 +1,15 @@
-import { Children, useState, ReactNode } from 'react';
-import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-react-carousel';
-import { SvgArrowSmallLeft } from 'icons/Icons';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
+
+import { Children, ReactNode, useState } from 'react';
+import { SvgArrowSmallLeft } from 'icons/Icons';
+import {
+  ButtonBack,
+  ButtonNext,
+  CarouselProvider,
+  Slide,
+  Slider,
+} from 'pure-react-carousel';
 
 const Carousel = ({
   children,
@@ -36,16 +43,20 @@ const Carousel = ({
   const childrens = Children.toArray(children);
 
   const handleBackButton = () => {
-    currentSlideIndex === 0 ? setCurrentSlideIndex(childrens.length - 1) : setCurrentSlideIndex(currentSlideIndex - 1);
+    currentSlideIndex === 0
+      ? setCurrentSlideIndex(childrens.length - 1)
+      : setCurrentSlideIndex(currentSlideIndex - 1);
   };
 
   const handleNextButton = () => {
-    currentSlideIndex === childrens.length - 1 ? setCurrentSlideIndex(0) : setCurrentSlideIndex(currentSlideIndex + 1);
+    currentSlideIndex === childrens.length - 1
+      ? setCurrentSlideIndex(0)
+      : setCurrentSlideIndex(currentSlideIndex + 1);
   };
 
   return (
     <CarouselProvider
-      className='relative w-full'
+      className="relative w-full"
       isIntrinsicHeight={isIntrinsicHeight}
       naturalSlideHeight={naturalSlideHeight}
       naturalSlideWidth={naturalSlideWidth}
@@ -63,7 +74,7 @@ const Carousel = ({
             handleBackButton();
           }}
         >
-          <SvgArrowSmallLeft height={20} width={20} className='rotate-180' />
+          <SvgArrowSmallLeft height={20} width={20} className="rotate-180" />
         </ButtonBack>
       ) : null}
 
