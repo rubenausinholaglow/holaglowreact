@@ -1,6 +1,7 @@
 import { SvgCosmetic1, SvgCosmetic2, SvgEnvelopeOpen, SvgPhone } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import { Appointment, Tip } from '../types';
+
+import { Appointment } from '../types';
 
 export default function Recomendations({ appointment }: { appointment: Appointment }) {
   const first24Tips = appointment.treatments

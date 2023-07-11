@@ -1,4 +1,4 @@
-import { ReactNode, HTMLAttributes } from 'react';
+import { ReactNode } from 'react';
 
 export const Title = ({
   size = 'xl',

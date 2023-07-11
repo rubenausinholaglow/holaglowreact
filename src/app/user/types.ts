@@ -70,7 +70,7 @@ export interface Tip {
 export interface Issue {
   risk: number;
   details: string;
-  priority: Number;
+  priority: number;
   id: string;
   creationDate: Date;
 }

@@ -1,10 +1,11 @@
-import { Children, useState, ReactNode } from 'react';
-import { CarouselProvider, Slider, ButtonBack, ButtonNext, Slide } from 'pure-react-carousel';
-import { SvgArrowSmallLeft } from 'icons/Icons';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
-const Carousel = ({
+import { Children, ReactNode,useState } from 'react';
+import { SvgArrowSmallLeft } from 'icons/Icons';
+import { ButtonBack, ButtonNext, CarouselProvider, Slide,Slider } from 'pure-react-carousel';
+
+export const Carousel = ({
   children,
   hasDots = false,
   hasControls = false,
@@ -31,6 +32,7 @@ const Carousel = ({
   currentSlide?: number;
   dragEnabled?: boolean;
   touchEnabled?: boolean;
+  class?: string;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const childrens = Children.toArray(children);
@@ -94,5 +96,3 @@ const Carousel = ({
     </CarouselProvider>
   );
 };
-
-export default Carousel;
