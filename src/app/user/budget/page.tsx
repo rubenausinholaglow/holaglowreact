@@ -1,24 +1,28 @@
-import AlmaPayment from './AlmaPayment';
-import Header from './Header';
-import Legal from './Legal';
-import Products from './Products';
-import PromoCode from './PromoCode';
-import Simulation from './Simulation';
+import AlmaPayment from "./AlmaPayment";
+import Header from "./Header";
+import Legal from "./Legal";
+import Products from "./Products";
+import PromoCode from "./PromoCode";
+
+import Simulation from "./Simulation";
 
 const fetchBudgetData = async (id: number) => {
   try {
-    const budgetResponse = await fetch(`https://holaglowcontactsapi.azurewebsites.net/budget?id=${id}`, {
-      cache: 'no-store',
-    });
+    const budgetResponse = await fetch(
+      `https://holaglowcontactsapi.azurewebsites.net/budget?id=${id}`,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!budgetResponse) {
-      throw new Error('Network response was not OK');
+      throw new Error("Network response was not OK");
     }
 
     const budgetData = await budgetResponse.json();
     return budgetData;
   } catch (error) {
-    console.error('There has been a problem with your fetch operation:', error);
+    console.error("There has been a problem with your fetch operation:", error);
   }
 };
 
@@ -43,11 +47,11 @@ export default async function Budget({
   } = budgetData ? budgetData : {};
 
   return (
-    <div className='flex flex-col text-hg-500'>
+    <div className="flex flex-col text-hg-500">
       {products && simulations ? (
         <>
           <Header clinicInfo={clinicInfo} />
-          <hr className='bg-gradient-to-r from-hg-500  to-[#FC44FB] to-70% h-[4px] border-0' />
+          <hr className="bg-gradient-to-r from-hg-500  to-[#FC44FB] to-70% h-[4px] border-0" />
 
           {products.length > 0 && (
             <Products
@@ -60,11 +64,14 @@ export default async function Budget({
           )}
           <AlmaPayment totalPrice={totalPriceWithIVA} />
           {simulations.length > 0 && <Simulation simulations={simulations} />}
-          <PromoCode discountCode={discountCode} discountAmount={discountAmount} />
+          <PromoCode
+            discountCode={discountCode}
+            discountAmount={discountAmount}
+          />
           <Legal />
         </>
       ) : (
-        <p className='p-8'>Budget unavailable: some data is missing</p>
+        <p className="p-8">Budget unavailable: some data is missing</p>
       )}
     </div>
   );

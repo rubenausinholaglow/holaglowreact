@@ -25,27 +25,27 @@ export const filterItems = [
       textFilter: "Zona",
       buttons: [
         {
-          id: "TercioInferior",
+          id: "1",
           value: "Tercio Inferior",
           tag: "Body",
         },
         {
-          id: "TercioMedio",
+          id: "2",
           value: "Tercio Medio",
           tag: "Body",
         },
         {
-          id: "TercioSuperior",
+          id: "3",
           value: "Tercio Superior",
           tag: "Body",
         },
         {
-          id: "Piel",
+          id: "4",
           value: "Piel",
           tag: "Body",
         },
         {
-          id: "Pelo",
+          id: "5",
           value: "Pelo",
           tag: "Body",
         },
@@ -56,32 +56,32 @@ export const filterItems = [
       textFilter: "Categoria",
       buttons: [
         {
-          id: "Wrinkles",
+          id: "1",
           value: "Arrugas",
           tag: "Category",
         },
         {
-          id: "SkinQuality",
+          id: "2",
           value: "Calidad Piel",
           tag: "Category",
         },
         {
-          id: "HairLoss",
+          id: "3",
           value: "Pelo",
           tag: "Category",
         },
         {
-          id: "FillerHyaluronicAcid",
+          id: "4",
           value: "Relleno",
           tag: "Category",
         },
         {
-          id: "Lifting",
+          id: "5",
           value: "Lifting",
           tag: "Category",
         },
         {
-          id: "Others",
+          id: "6",
           value: "Otros",
           tag: "Category",
         },
