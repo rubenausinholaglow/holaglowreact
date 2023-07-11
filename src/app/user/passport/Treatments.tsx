@@ -1,6 +1,7 @@
+import { SvgCalendar, SvgMapMarker, SvgMedicine, SvgReceipt, SvgStethoscope } from 'icons/Icons';
 import Image from 'next/image';
-import { SvgMedicine, SvgReceipt, SvgCalendar, SvgMapMarker, SvgStethoscope } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
+
 import { Appointment } from '../types';
 
 export default function Treatments({
@@ -19,11 +20,11 @@ export default function Treatments({
       <h3 className='bg-[#fdf6fc] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4'>
         Detalles de tu tratamiento
       </h3>
-      {appointment.treatments.map(item => {
+      {appointment.treatments.map((item, index) => {
         const { treatment } = item;
 
         return (
-          <div className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
+          <div key={index} className='bg-[#fdf6fc] rounded-[25px] p-8 mb-12'>
             <div className='flex'>
               <div className='flex flex-col mr-4 w-2/5'>
                 <p className='text-hg-200 text-xs'>{year}</p>
@@ -101,7 +102,7 @@ export default function Treatments({
               <th className='py-3 pr-6 text-left font-normal'>Profesional sanitario</th>
               <th className='py-3 pr-6 text-left font-normal'>Clínica</th>
             </tr>
-            {previousAppointments.map(prevAppointment => {
+            {previousAppointments.map((prevAppointment, index) => {
               const date = new Date(prevAppointment.date).getDate().toString().padStart(2, '0');
               const month = (new Date(prevAppointment.date).getMonth() + 1).toString().padStart(2, '0');
               const year = new Date(prevAppointment.date).getFullYear();
@@ -113,7 +114,7 @@ export default function Treatments({
                   : prevAppointment.appointmentProducts[0].product.title;
 
               return (
-                <tr className='mb-4 border-b border-hg-400/10'>
+                <tr key={index} className='mb-4 border-b border-hg-400/10'>
                   <td className='py-3 pr-6'>{parsedDate}</td>
                   <td className='py-3 pr-6'>{appointmentTitle}</td>
                   <td className='py-3 pr-6'>{appointment.clinicProfessional.name}</td>

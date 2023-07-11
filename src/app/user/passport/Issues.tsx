@@ -1,5 +1,6 @@
 import { SvgPlusSmall } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
+
 import { Appointment } from '../types';
 
 export default function Issues({ appointment }: { appointment: Appointment }) {
@@ -30,9 +31,9 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
           <div className='w-1/2'>
             <p className='text-hg-500 mb-4'>Es normal si...</p>
             <ul className='mb-8'>
-              {filteredNormalIssues.map(issue => {
+              {filteredNormalIssues.map((issue, index) => {
                 return (
-                  <li className='flex gap-2 mb-4'>
+                  <li key={index} className='flex gap-2 mb-4'>
                     <div>
                       <SvgPlusSmall height={16} width={16} fill={HOLAGLOW_COLORS['hg-500']} />
                     </div>
@@ -47,9 +48,9 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
           <div className='w-1/2'>
             <p className='text-hg-500 mb-4'>No te alarmes si...</p>
             <ul className='mb-8'>
-              {filteredUnalarmingIssues.map(issue => {
+              {filteredUnalarmingIssues.map((issue, index) => {
                 return (
-                  <li className='flex gap-2 mb-4'>
+                  <li key={index} className='flex gap-2 mb-4'>
                     <div>
                       <SvgPlusSmall height={16} width={16} fill={HOLAGLOW_COLORS['hg-500']} />
                     </div>

@@ -6,6 +6,7 @@ export default function Home() {
       <Link href='/user/budget'>budget</Link>
       <Link href='/user/passport'>passport</Link>
       <Link href='/dashboard' className='text-black'>dashboard</Link>
+      <Link href='/form'>form</Link>
     </main>
   );
 }

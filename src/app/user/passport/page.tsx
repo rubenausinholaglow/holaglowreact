@@ -1,9 +1,9 @@
+import Doubts from './Doubts';
 import Header from './Header';
-import Treatments from './Treatments';
-import Recomendations from './Recomendations';
 import Issues from './Issues';
 import PendingBonus from './PendingBonus';
-import Doubts from './Doubts';
+import Recomendations from './Recomendations';
+import Treatments from './Treatments';
 
 const fetchPassportData = async (id: number) => {
   try {

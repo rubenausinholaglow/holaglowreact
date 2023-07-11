@@ -1,0 +1,4 @@
+/* Avoid black border on sliders */
+.carousel__slide-focus-ring {
+  display: none;
+}
