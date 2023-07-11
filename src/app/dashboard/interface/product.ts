@@ -6,7 +6,7 @@ export interface Product {
     description: string;
     price: number;
     isPack : boolean;
-    zone : string;
-    pain : string;
-    clinic : Clinic;
+    zone : number;
+    pain : number;
+    clinic : Clinic[];
   }

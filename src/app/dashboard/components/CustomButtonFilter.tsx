@@ -6,7 +6,7 @@ export const CustomButtonFilter: React.FC<CustomButtonFilterProps> = ({ id, tag,
 
     const handleClick = () => {
       setIsSelected(prevState => !prevState);
-      onClick(id,!isSelected, tag);
+      onClick(id,tag);
     };
 
     const buttonClass = isSelected
