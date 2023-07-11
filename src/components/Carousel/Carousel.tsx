@@ -32,6 +32,7 @@ export const Carousel = ({
   currentSlide?: number;
   dragEnabled?: boolean;
   touchEnabled?: boolean;
+  class?: string;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const childrens = Children.toArray(children);
