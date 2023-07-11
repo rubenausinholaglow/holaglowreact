@@ -1,5 +1,5 @@
-import { Client } from '@interface/client';
-import { Product } from '@interface/product';
+import { Client } from "@interface/client";
+import { Product } from "@interface/product";
 
 export interface TextInputFieldProps {
   label: string;
@@ -9,13 +9,19 @@ export interface TextInputFieldProps {
 
 export interface SearchBarProps {
   email: string;
-  handleFieldChange: (event: React.ChangeEvent<HTMLInputElement>, field: string) => void;
+  handleFieldChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => void;
   handleCheckUser: () => void;
 }
 
 export interface RegistrationFormProps {
   formData: Client;
-  handleFieldChange: (event: React.ChangeEvent<HTMLInputElement>, field: string) => void;
+  handleFieldChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => void;
   handleContinue: () => void;
   isVisible: boolean;
 }
@@ -35,18 +41,17 @@ export interface DashboardMenuItemProps {
 
 export interface ProductTableProps {
   products: Product[];
-  selectedFilter : string;
 }
 
 export interface CustomButtonFilterProps {
   id: string;
   tag: string;
-  onClick: (id: string, tag : string) => void;
+  onClick: (id: string, tag: string) => void;
   value: string;
 }
 
 export interface FilterPageProps {
-  onClickFilter: (id: string, inputText : string, tag : string) => void;
+  onClickFilter: (id: string, inputText: string, tag: string) => void;
 }
 
 export interface FilterUtilsProps {
@@ -57,6 +62,6 @@ export interface FilterUtilsProps {
 export interface CustomButtonFilter {
   id: string;
   tag: string;
-  onClick: (id: string, isSelected : boolean, tag : string) => void;
+  onClick: (id: string, isSelected: boolean, tag: string) => void;
   value: string;
 }

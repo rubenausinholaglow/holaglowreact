@@ -161,7 +161,7 @@ export default function Page() {
             <Filters onClickFilter={toggleFilter} />
 
             <div id="tablePage" className="bg-white w-full m-1 p-5">
-              <ProductTable products={filteredProducts} selectedFilter="" />
+              <ProductTable products={filteredProducts} />
             </div>
           </div>
         ) : (
