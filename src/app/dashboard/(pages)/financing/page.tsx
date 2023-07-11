@@ -1,12 +1,11 @@
 'use client';
+import React, { useState } from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import Script from 'next/script';
-import React, { useEffect, useState } from 'react';
 
-export default function Page () {
-
-    var script = `
+export default function Page() {
+  const script = `
     const scriptTag = document.createElement("script");
     scriptTag.src = "https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.umd.js";
     scriptTag.async = false;
@@ -39,30 +38,32 @@ export default function Page () {
     });
   `;
   const handleClick = async () => {
-    var data = {
+    const data = {
       amount: 0,
       installments: 1,
-      userId: ''
+      userId: '',
     } as InitializePayment;
     const isSuccess = await FinanceService.initializePayment(data);
     if (isSuccess) {
       console.log(isSuccess);
-    } else {
     }
   };
   return (
-    <section className='bg-hg-200 h-screen flex flex-col justify-center items-center'>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.min.css" />
-      
+    <section className="bg-hg-200 h-screen flex flex-col justify-center items-center">
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.min.css"
+      />
+
       <section id="alma-widget"></section>
       <Script
+        id="almaSplit"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-            __html: script,
+          __html: script,
         }}
-        />
-      <button 
-      onClick={handleClick}>Pagar</button>
+      />
+      <button onClick={handleClick}>Pagar</button>
     </section>
   );
-};
+}

@@ -1,9 +1,13 @@
 'use client';
 import React from 'react';
+
 import { TextInputFieldProps } from '../utils/props';
 
-const TextInputField: React.FC<TextInputFieldProps> = ({ label, value, onChange = () => {} }) => {
-  
+const TextInputField: React.FC<TextInputFieldProps> = ({
+  label,
+  value,
+  onChange = () => {},
+}) => {
   return (
     <div className="flex flex-col">
       <label className="text-gray-700">{label}</label>

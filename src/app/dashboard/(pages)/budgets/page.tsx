@@ -1,18 +1,18 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Filters } from "@components/Filters";
-import { Product } from "@interface/product";
-import ProductService from "@services/ProductService";
+'use client';
+import { useEffect, useState } from 'react';
+import { Filters } from '@components/Filters';
+import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 
-import { ProductTable } from "./treatments/ProductTable";
+import { ProductTable } from './treatments/ProductTable';
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [showPacks, setShowPacks] = useState(false);
   const [filterZones, setFilterZones] = useState<number[]>([]);
   const [filterPain, setFilterPain] = useState<number[]>([]);
-  const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState('');
   const [filterClinic, setFilterClinic] = useState<string[]>([]);
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
@@ -20,41 +20,41 @@ export default function Page() {
 
   useEffect(() => {
     ProductService.getAllProducts()
-      .then((data) => {
+      .then(data => {
         setProducts(data);
       })
-      .catch((error) => setError(error));
+      .catch(error => setError(error));
   }, []);
 
   const toggleFilter = (id: string, inputText: string, tag: string) => {
     switch (tag) {
-      case "Packs":
+      case 'Packs':
         setShowPacks(!showPacks);
         break;
-      case "MoneyFilter":
+      case 'MoneyFilter':
         applyMoneyFilter(id);
         break;
-      case "Body":
-        handleFilterByProperty(parseInt(id), "zone");
+      case 'Body':
+        handleFilterByProperty(parseInt(id), 'zone');
         break;
-      case "Category":
-        handleFilterByProperty(parseInt(id), "pain");
+      case 'Category':
+        handleFilterByProperty(parseInt(id), 'pain');
         break;
-      case "Clinic":
+      case 'Clinic':
         applyClinicFilter(id);
         break;
-      case "input":
+      case 'input':
         setFilterText(inputText);
         break;
     }
   };
 
   const handleFilterByProperty = (id: number, property: keyof Product) => {
-    const filterArray = property === "zone" ? filterZones : filterPain;
+    const filterArray = property === 'zone' ? filterZones : filterPain;
     const updatedFilterArray = filterArray.includes(id)
-      ? filterArray.filter((f) => f !== id)
+      ? filterArray.filter(f => f !== id)
       : [...filterArray, id];
-    if (property === "zone") {
+    if (property === 'zone') {
       setFilterZones(updatedFilterArray);
     } else {
       setFilterPain(updatedFilterArray);
@@ -63,20 +63,20 @@ export default function Page() {
 
   const applyClinicFilter = (id: string) => {
     const updatedFilterClinic = filterClinic.includes(id)
-      ? filterClinic.filter((c) => c !== id)
+      ? filterClinic.filter(c => c !== id)
       : [...filterClinic, id];
     setFilterClinic(updatedFilterClinic);
   };
 
   const applyMoneyFilter = (id: string) => {
     switch (id) {
-      case "0-250":
+      case '0-250':
         togglePriceRange({ min: 0, max: 250 });
         break;
-      case "250-500":
+      case '250-500':
         togglePriceRange({ min: 250, max: 500 });
         break;
-      case "500":
+      case '500':
         togglePriceRange({ min: 500, max: Infinity });
         break;
     }
@@ -84,7 +84,7 @@ export default function Page() {
 
   const togglePriceRange = (range: { min: number; max: number }) => {
     const existingIndex = priceRanges.findIndex(
-      (r) => r.min === range.min && r.max === range.max
+      r => r.min === range.min && r.max === range.max
     );
     const updatedPriceRanges =
       existingIndex !== -1
@@ -94,7 +94,7 @@ export default function Page() {
   };
 
   const filterProducts = () => {
-    return products.filter((product) => {
+    return products.filter(product => {
       if (showPacks && !product.isPack) {
         return false;
       }
@@ -104,7 +104,7 @@ export default function Page() {
       if (
         priceRanges.length > 0 &&
         !priceRanges.some(
-          (range) => range.min <= product.price && product.price <= range.max
+          range => range.min <= product.price && product.price <= range.max
         )
       ) {
         return false;
@@ -120,7 +120,7 @@ export default function Page() {
         return false;
       }
       if (filterClinic.length > 0) {
-        const productClinicIds = product.clinic?.map((clinic) => clinic.city);
+        const productClinicIds = product.clinic?.map(clinic => clinic.city);
         if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
           return false;
         }
@@ -138,12 +138,12 @@ export default function Page() {
   const normalizeString = (str: string) => {
     return str
       .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   };
 
   const hasMatchingClinic = (productClinicIds: (string | undefined)[]) => {
-    return productClinicIds.some((city) => city && filterClinic.includes(city));
+    return productClinicIds.some(city => city && filterClinic.includes(city));
   };
 
   if (error) {

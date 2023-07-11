@@ -1,13 +1,20 @@
-import React from 'react';
-import { RegistrationFormProps } from './utils/props';
-import TextInputField from './components/TextInputField';
 import '../globals.css';
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFieldChange, handleContinue, isVisible }) => {
+import React from 'react';
+
+import TextInputField from './components/TextInputField';
+import { RegistrationFormProps } from './utils/props';
+
+const RegistrationForm: React.FC<RegistrationFormProps> = ({
+  formData,
+  handleFieldChange,
+  handleContinue,
+  isVisible,
+}) => {
   return (
     <>
-      {isVisible &&
-        <div id="Registro" className='w-3/4'>
+      {isVisible && (
+        <div id="Registro" className="w-3/4">
           <div className="flex justify-center items-center">
             <div className="container">
               <div className="w-full p-8 my-4 md:px-12 rounded-2xl shadow-2xl bg-white">
@@ -20,32 +27,40 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFie
                   <TextInputField
                     label="Nombre*"
                     value={formData.name}
-                    onChange={(event) => handleFieldChange(event, 'name')}
+                    onChange={event => handleFieldChange(event, 'name')}
                   />
                   <TextInputField
                     label="Apellidos*"
                     value={formData.surname}
-                    onChange={(event) => handleFieldChange(event, 'surname')}
+                    onChange={event => handleFieldChange(event, 'surname')}
                   />
                   <TextInputField
                     label="Correo electrónico"
                     value={formData.email}
-                    onChange={(event) => handleFieldChange(event, 'email')}
+                    onChange={event => handleFieldChange(event, 'email')}
                   />
                   <TextInputField
                     label="Teléfono"
                     value={formData.phone}
-                    onChange={(event) => handleFieldChange(event, 'phone')}
+                    onChange={event => handleFieldChange(event, 'phone')}
                   />
-                            
+
                   <div className="flex flex-col mt-2">
                     <div className="flex items-center mb-2">
-                      <label htmlFor="termsAndConditionsAccepted" className="flex items-center cursor-pointer">
+                      <label
+                        htmlFor="termsAndConditionsAccepted"
+                        className="flex items-center cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           id="termsAndConditionsAccepted"
                           checked={formData.termsAndConditionsAccepted}
-                          onChange={(event) => handleFieldChange(event, 'termsAndConditionsAccepted')}
+                          onChange={event =>
+                            handleFieldChange(
+                              event,
+                              'termsAndConditionsAccepted'
+                            )
+                          }
                           className="mr-2 checkbox-blue"
                         />
                         <span className="text-sm text-gray-700">
@@ -54,12 +69,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFie
                       </label>
                     </div>
                     <div className="flex items-center">
-                      <label htmlFor="receiveCommunications" className="flex items-center cursor-pointer">
+                      <label
+                        htmlFor="receiveCommunications"
+                        className="flex items-center cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           id="receiveCommunications"
                           checked={formData.receiveCommunications}
-                          onChange={(event) => handleFieldChange(event, 'receiveCommunications')}
+                          onChange={event =>
+                            handleFieldChange(event, 'receiveCommunications')
+                          }
                           className="mr-2 checkbox-blue"
                         />
                         <span className="text-sm text-gray-700">
@@ -80,7 +100,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ formData, handleFie
             </div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };

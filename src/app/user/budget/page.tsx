@@ -1,28 +1,27 @@
-import AlmaPayment from "./AlmaPayment";
-import Header from "./Header";
-import Legal from "./Legal";
-import Products from "./Products";
-import PromoCode from "./PromoCode";
-
-import Simulation from "./Simulation";
+import AlmaPayment from './AlmaPayment';
+import Header from './Header';
+import Legal from './Legal';
+import Products from './Products';
+import PromoCode from './PromoCode';
+import Simulation from './Simulation';
 
 const fetchBudgetData = async (id: number) => {
   try {
     const budgetResponse = await fetch(
       `https://holaglowcontactsapi.azurewebsites.net/budget?id=${id}`,
       {
-        cache: "no-store",
+        cache: 'no-store',
       }
     );
 
     if (!budgetResponse) {
-      throw new Error("Network response was not OK");
+      throw new Error('Network response was not OK');
     }
 
     const budgetData = await budgetResponse.json();
     return budgetData;
   } catch (error) {
-    console.error("There has been a problem with your fetch operation:", error);
+    console.error('There has been a problem with your fetch operation:', error);
   }
 };
 
