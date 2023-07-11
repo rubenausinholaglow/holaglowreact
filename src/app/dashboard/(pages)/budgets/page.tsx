@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
+import Header from '@components/ui/Header';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 
-import { ProductTable } from './treatments/ProductTable';
+import ProductList from './treatments/ProductList';
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -146,6 +147,8 @@ export default function Page() {
     return productClinicIds.some(city => city && filterClinic.includes(city));
   };
 
+  const handleCartIconClick = () => {};
+
   if (error) {
     return <>{error}</>;
   } else {
@@ -161,7 +164,8 @@ export default function Page() {
             <Filters onClickFilter={toggleFilter} />
 
             <div id="tablePage" className="bg-white w-full m-1 p-5">
-              <ProductTable products={filteredProducts} />
+              <Header onCartIconClick={handleCartIconClick} />
+              <ProductList products={filteredProducts} />
             </div>
           </div>
         ) : (

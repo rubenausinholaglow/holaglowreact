@@ -1,12 +1,13 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Product } from "@interface/product";
-import ProductService from "@services/ProductService";
-import { useSearchParams } from "next/navigation";
+'use client';
+import { useEffect, useState } from 'react';
+import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
+import { useSearchParams } from 'next/navigation';
+import { StateCreator } from 'zustand';
 
 const Page = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get("search");
+  const id = searchParams.get('search');
   const [product, setProduct] = useState<Product | null>(null);
   const [cart, setCart] = useState<string[]>([]);
 
@@ -27,7 +28,7 @@ const Page = () => {
 
   const handleAddToCart = (productId: string) => {
     if (product && !cart.includes(product.id)) {
-      setCart((prevCart) => [...prevCart, product.id]);
+      setCart(prevCart => [...prevCart, product.id]);
     }
   };
 
@@ -47,12 +48,12 @@ const Page = () => {
           <button
             className={`${
               cart.includes(product.id)
-                ? "bg-green-500 hover:bg-green-700"
-                : "bg-blue-500 hover:bg-blue-700"
+                ? 'bg-green-500 hover:bg-green-700'
+                : 'bg-blue-500 hover:bg-blue-700'
             } text-white font-bold py-2 px-4 rounded mr-2`}
             onClick={() => handleAddToCart(product.id)}
           >
-            {cart.includes(product.id) ? "Seleccionado" : "Añadir al carrito"}
+            {cart.includes(product.id) ? 'Seleccionado' : 'Añadir al carrito'}
           </button>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
