@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
 export const Button = ({
-  type = 'primary',
+  style = 'primary',
   size = 'md',
   route = '',
   className = '',
@@ -11,7 +11,7 @@ export const Button = ({
   children,
   ...rest
 }: {
-  type: 'primary' | 'secondary' | 'tertiary';
+  style: 'primary' | 'secondary' | 'tertiary';
   size?: 'sm' | 'md' | 'lg';
   route?: string;
   className?: string;
@@ -20,15 +20,17 @@ export const Button = ({
   rest?: any;
 }) => {
   const StylesConfig = {
-    primary: 'bg-[#7516E9] text-white rounded-full px-4 py-2',
-    secondary: 'bg-[#be9ee5] text-white rounded-full px-4 py-2',
-    tertiary: 'text-[#7516E9] border border-[#E2E7F0] rounded-full px-4 py-2',
+    primary: 'bg-[#7516E9] text-white rounded-md px-6 py-2',
+    secondary: 'bg-[#be9ee5] text-white rounded-md px-6 py-2',
+    tertiary: 'text-[#7516E9] border border-[#E2E7F0] rounded-md px-6 py-2',
     sm: 'text-xs',
     md: 'text-base',
     lg: 'text-xl px-6',
   };
 
-  const styles = twMerge(`${StylesConfig[type]} ${StylesConfig[size]} ${className}`);
+  const styles = twMerge(
+    `${StylesConfig[style]} ${StylesConfig[size]} ${className}`
+  );
 
   if (route) {
     return (

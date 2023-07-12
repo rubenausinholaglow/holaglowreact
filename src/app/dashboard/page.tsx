@@ -1,10 +1,11 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
 import * as utils from '@utils/validators';
-import Image from 'next/image';
+import { Container } from 'components/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from './RegistrationForm';
@@ -110,7 +111,6 @@ export default function Page() {
   };
 
   const handleContinue = () => {
-
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const isPhoneValid = utils.validatePhone(formData.phone);
@@ -141,42 +141,31 @@ export default function Page() {
   };
 
   return (
-    <section className="bg-hg-200 min-h-screen justify-center items-center">
-      <div className="flex flex-wrap justify-center items-center p-10">
-        {showPopup && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-4 rounded-lg">
-              <p className="text-red-500">{error}</p>
-              <button
-                className="text-blue-500 mt-4 px-4 py-2 rounded-lg bg-blue-200 hover:bg-blue-300 focus:outline-none"
-                onClick={() => setShowPopup(false)}
-              >
-                Cerrar
-              </button>
-            </div>
+    <>
+      {showPopup && (
+        <div className="">
+          <div className="bg-white p-4 rounded-lg">
+            <p className="text-red-500">{error}</p>
+            <button
+              className="text-blue-500 mt-4 px-4 py-2 rounded-lg bg-blue-200 hover:bg-blue-300 focus:outline-none"
+              onClick={() => setShowPopup(false)}
+            >
+              Cerrar
+            </button>
           </div>
-        )}
-        <div className="w-full">
-          <Image
-            className="mx-auto m-10"
-            src="/images/dashboard/holaglow_white.png"
-            height="200"
-            width="950"
-            alt="Holaglow"
-          />
         </div>
-        <SearchUser
-          email={searchUserEmail}
-          handleFieldChange={handleFieldEmailChange}
-          handleCheckUser={handleCheckUser}
-        />
-        <RegistrationForm
-          formData={formData}
-          handleFieldChange={handleFormFieldChange}
-          handleContinue={handleContinue}
-          isVisible={show}
-        />
-      </div>
-    </section>
+      )}
+      <SearchUser
+        email={searchUserEmail}
+        handleFieldChange={handleFieldEmailChange}
+        handleCheckUser={handleCheckUser}
+      />
+      <RegistrationForm
+        formData={formData}
+        handleFieldChange={handleFormFieldChange}
+        handleContinue={handleContinue}
+        isVisible={show}
+      />
+    </>
   );
 }

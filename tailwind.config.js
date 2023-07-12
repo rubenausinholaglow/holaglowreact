@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx,mdx}', './src/**/*.{js,jsx,ts,tsx,mdx}'],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,jsx,ts,tsx,mdx}',
+  ],
   theme: {
     fontSize: {
       xs: ['10px'],
@@ -22,11 +25,16 @@ module.exports = {
           300: '#B42BAE',
           200: '#DCAACD',
           100: '#FBEEF9',
-          
         },
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+      maxWidth: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
       },
     },
   },
