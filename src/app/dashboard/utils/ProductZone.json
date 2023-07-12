@@ -1,0 +1,9 @@
+{
+    "ProductZone": {
+        "Body": 1,
+        "Face1": 2,
+        "Face2": 3,
+        "Face3": 4,
+        "FaceFull": 5
+    }
+}
