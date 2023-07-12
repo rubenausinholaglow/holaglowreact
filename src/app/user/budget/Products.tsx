@@ -1,8 +1,9 @@
 'use client';
-import { type Product as ProductType } from '../types';
-import { priceFormat } from 'utils/priceFormat';
-import Image from 'next/image';
 import { useState } from 'react';
+import Image from 'next/image';
+import { priceFormat } from 'utils/priceFormat';
+
+import { type Product as ProductType } from '../types';
 
 export default function Products({
   products,
@@ -29,6 +30,7 @@ export default function Products({
     <section className='bg-hg-100 relative'>
       <ul className='flex flex-col gap-8 -mt-6'>
         {products.map(product => {
+          // eslint-disable-next-line react-hooks/rules-of-hooks
           const [imgSrc, setImgSrc] = useState(`/images/product/${product.flowwwId}/${product.flowwwId}.png`);
 
           return (

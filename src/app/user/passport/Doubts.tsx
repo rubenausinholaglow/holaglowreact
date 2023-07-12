@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { SvgCosmetic3, SvgPhone, SvgEnvelopeOpen } from 'icons/Icons';
+import { SvgCosmetic3, SvgEnvelopeOpen,SvgPhone } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Issues() {

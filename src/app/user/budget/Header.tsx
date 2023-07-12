@@ -1,8 +1,8 @@
+import { SvgDiamond,SvgMapMarker, SvgPhone } from 'icons/Icons';
 import Image from 'next/image';
+import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { Clinic } from '../types';
-import { SvgPhone, SvgMapMarker, SvgDiamond } from 'icons/Icons';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Header({ clinicInfo }: { clinicInfo: Clinic }) {
   return (
