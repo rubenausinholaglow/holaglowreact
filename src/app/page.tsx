@@ -6,6 +6,7 @@ export default function Home() {
       <Link href='/user/budget'>budget</Link>
       <Link href='/user/passport'>passport</Link>
       <Link href='/form'>form</Link>
+      <Link href='/test'>test</Link>
     </main>
   );
 }
