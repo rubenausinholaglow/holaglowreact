@@ -5,6 +5,7 @@ import Header from '@components/ui/Header';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 
+import Cart from './minicart/Cart';
 import ProductList from './treatments/ProductList';
 
 export default function Page() {
@@ -166,6 +167,9 @@ export default function Page() {
             <div id="tablePage" className="bg-white w-full m-1 p-5">
               <Header onCartIconClick={handleCartIconClick} />
               <ProductList products={filteredProducts} />
+            </div>
+            <div id="cart" className="bg-white m-1 p-5">
+              <Cart />
             </div>
           </div>
         ) : (
