@@ -39,7 +39,6 @@ export default function Page() {
     interestedTreatment: '',
     treatmentPrice: 0,
   });
-
   useEffect(() => {
     localStorage.removeItem('username');
   }, []);
@@ -111,6 +110,7 @@ export default function Page() {
   };
 
   const handleContinue = () => {
+
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const isPhoneValid = utils.validatePhone(formData.phone);
@@ -156,7 +156,6 @@ export default function Page() {
             </div>
           </div>
         )}
-
         <div className="w-full">
           <Image
             className="mx-auto m-10"
