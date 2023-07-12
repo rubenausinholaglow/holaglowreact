@@ -14,7 +14,6 @@ const SearchUser: React.FC<SearchBarProps> = ({
     await handleCheckUser();
     setIsLoading(false);
   };
-
   return (
     <div id="buscar" className="w-3/4">
       <div className="bg-gray-50 p-10 rounded-2xl flex">

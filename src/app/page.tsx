@@ -7,6 +7,7 @@ export default function Home() {
       <Link href='/user/passport'>passport</Link>
       <Link href='/dashboard' className='text-black'>dashboard</Link>
       <Link href='/form'>form</Link>
+      <Link href='/dashboard' className='text-black'>dashboard</Link>
     </main>
   );
 }
