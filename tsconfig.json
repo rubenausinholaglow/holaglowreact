@@ -21,6 +21,12 @@
       }
     ],
     "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["./app/dashboard/components/*"],
+      "@interface/*": ["./app/dashboard/interface/*"],
+      "@services/*": ["./app/dashboard/services/*"],
+      "@utils/*": ["./app/dashboard/utils/*"]
+    },
     "checkJs": true,
     "types": ["node"]
   },
@@ -32,6 +38,6 @@
     "tailwind.config.js",
     "src/utils/priceFormat.ts",
     "src/utils/colors.ts"
-  ],
+, "src/app/dashboard/(pages)/budgets/filterUtils.js"  ],
   "exclude": ["node_modules"]
 }

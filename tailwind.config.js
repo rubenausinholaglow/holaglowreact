@@ -10,15 +10,19 @@ module.exports = {
       xl: ['21px', '26px'],
       '2xl': ['24px', '32px'],
       '3xl': ['32px'],
+      '4xl': ['56px'],
     },
     extend: {
       colors: {
         hg: {
+          700: '#C295B4',
+          600: '#AE8FBD',
           500: '#4608AE',
           400: '#6B1FE0',
           300: '#B42BAE',
           200: '#DCAACD',
           100: '#FBEEF9',
+          
         },
       },
       backgroundImage: {
