@@ -23,7 +23,7 @@ export default function CartItem({ product }: Props) {
         <div className="flex flex-col">
           <span className="text-black font-bold flex-1">{product.title}</span>
           <span className="text-gray-600 font-bold">${product.price}</span>
-          <span className="text-black">Quantity: {product.quantity}</span>
+          <span className="text-black">Cantidad: {product.quantity}</span>
         </div>
       </div>
       <div>
@@ -32,7 +32,7 @@ export default function CartItem({ product }: Props) {
           className="text-red-500 hover:text-red-600 ml-4"
           onClick={() => removeFromCart(product)}
         >
-          Remove
+          Eliminar
         </button>
       </div>
     </li>

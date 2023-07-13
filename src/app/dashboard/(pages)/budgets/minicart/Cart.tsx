@@ -15,7 +15,7 @@ function Cart() {
 
   return (
     <section>
-      <h3 className="text-black text-2xl font-bold mb-4">Shopping Cart</h3>
+      <h3 className="text-black text-2xl font-bold mb-4">Compra</h3>
       <ul>
         {cart?.map(product => <CartItem key={product.id} product={product} />)}
       </ul>
@@ -24,6 +24,9 @@ function Cart() {
         <span className="text-black text-xl font-bold">
           ${total.toFixed(2)}
         </span>
+      </div>
+      <div className="mt-5">
+        <h3 className="text-black text-2xl font-bold mb-4">Finalizar</h3>
       </div>
     </section>
   );
