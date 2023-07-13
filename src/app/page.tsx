@@ -1,10 +1,5 @@
 import React from 'react';
-import BugsnagPluginReact from '@bugsnag/plugin-react';
 import Link from 'next/link';
-
-import bugsnagClient from '../../bugsnag.config';
-
-bugsnagClient.use(BugsnagPluginReact, React);
 
 export default function Home() {
   return (
