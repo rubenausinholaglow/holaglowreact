@@ -9,5 +9,4 @@ export interface Product {
   zone: number;
   pain: number;
   clinic: Clinic[];
-  quantity?: number;
 }
