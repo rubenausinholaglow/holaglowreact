@@ -1,10 +1,10 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
 import * as utils from '@utils/validators';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from './RegistrationForm';
@@ -12,10 +12,10 @@ import SearchUser from './SearchUser';
 
 export default function Page() {
   const router = useRouter();
-  const [showPopup, setShowPopup] = useState(false);
+
   const [error, setError] = useState('');
-  const [show, setShow] = useState(false);
-  const [searchUserEmail, setSearchUserEmail] = useState('');
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -39,19 +39,20 @@ export default function Page() {
     interestedTreatment: '',
     treatmentPrice: 0,
   });
+
   useEffect(() => {
     localStorage.removeItem('username');
   }, []);
 
   const handleCheckUser = async () => {
-    const isEmailValid = utils.validateEmail(searchUserEmail);
+    const isEmailValid = utils.validateEmail(userEmail);
 
     if (!isEmailValid) {
-      handleRequestError(config.ERROR_EMAIL_NOT_VALID, true);
+      handleRequestError(config.ERROR_EMAIL_NOT_VALID);
       return null;
     }
 
-    await UserService.checkUser(searchUserEmail)
+    await UserService.checkUser(userEmail)
       .then(data => {
         if (data && data !== '') {
           redirectPage(data.name);
@@ -65,9 +66,9 @@ export default function Page() {
   };
 
   const handleSearchError = async () => {
-    handleRequestError(config.ERROR_AUTHENTICATION, false);
-    setSearchUserEmail('');
-    setShow(true);
+    handleRequestError(config.ERROR_AUTHENTICATION);
+    setUserEmail('');
+    setShowRegistration(true);
   };
 
   const handleRegistration = async () => {
@@ -79,7 +80,7 @@ export default function Page() {
     if (isSuccess) {
       redirectPage(formData.name);
     } else {
-      handleRequestError(config.ERROR_REGISTRATION, false);
+      handleRequestError(config.ERROR_REGISTRATION);
     }
   };
 
@@ -106,7 +107,7 @@ export default function Page() {
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    setSearchUserEmail(event.target.value);
+    setUserEmail(event.target.value);
   };
 
   const handleContinue = () => {
@@ -128,54 +129,31 @@ export default function Page() {
       } else {
         errorMessage = config.ERROR_MISSING_FIELDS;
       }
-      handleRequestError(errorMessage, true);
+      handleRequestError(errorMessage);
     }
   };
 
-  const handleRequestError = (error: string, show: boolean) => {
+  const handleRequestError = (error: string) => {
     localStorage.clear();
-    console.log(error);
     setError(error);
-    setShowPopup(show);
   };
 
   return (
-    <section className="bg-hg-200 min-h-screen justify-center items-center">
-      <div className="flex flex-wrap justify-center items-center p-10">
-        {showPopup && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-4 rounded-lg">
-              <p className="text-red-500">{error}</p>
-              <button
-                className="text-blue-500 mt-4 px-4 py-2 rounded-lg bg-blue-200 hover:bg-blue-300 focus:outline-none"
-                onClick={() => setShowPopup(false)}
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        )}
-        <div className="w-full">
-          <Image
-            className="mx-auto m-10"
-            src="/images/dashboard/holaglow_white.png"
-            height="200"
-            width="950"
-            alt="Holaglow"
-          />
-        </div>
-        <SearchUser
-          email={searchUserEmail}
-          handleFieldChange={handleFieldEmailChange}
-          handleCheckUser={handleCheckUser}
-        />
+    <>
+      {showRegistration ? (
         <RegistrationForm
           formData={formData}
           handleFieldChange={handleFormFieldChange}
           handleContinue={handleContinue}
-          isVisible={show}
         />
-      </div>
-    </section>
+      ) : (
+        <SearchUser
+          email={userEmail}
+          handleFieldChange={handleFieldEmailChange}
+          handleCheckUser={handleCheckUser}
+          error={error}
+        />
+      )}
+    </>
   );
 }

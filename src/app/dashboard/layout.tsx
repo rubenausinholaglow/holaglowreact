@@ -7,7 +7,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="h-full">
+    <main className="h-full text-black">
       <header className="border-b py-8">
         <Container>
           <SvgHolaglow height={24} width={98} />
