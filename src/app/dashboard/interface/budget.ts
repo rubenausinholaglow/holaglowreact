@@ -6,8 +6,12 @@ export interface Budget {
   TotalPrice: number;
   ClinicInfoId: string;
   ReferenceId: string;
+  Products: BudgetProduct[];
 }
 
 export interface BudgetProduct {
-  test: string;
+  title: string;
+  description: string;
+  price: number;
+  quantity: number;
 }
