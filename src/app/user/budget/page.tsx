@@ -8,7 +8,7 @@ import Simulation from './Simulation';
 const fetchBudgetData = async (id: number) => {
   try {
     const budgetResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BUDGET_API}budget?id=${id}`,
+      `${process.env.NEXT_PUBLIC_CONTACTS_API}budget?id=${id}`,
       {
         cache: 'no-store',
       }
