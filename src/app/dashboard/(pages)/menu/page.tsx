@@ -6,6 +6,7 @@ import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
 
 const Page = () => {
+  menuItems;
   const [username, setUserName] = useState('');
   const router = useRouter();
 

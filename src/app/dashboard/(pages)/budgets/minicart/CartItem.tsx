@@ -1,10 +1,10 @@
-import { Product } from '@interface/product';
+import { CartItem } from '@interface/product';
 import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
 
 interface Props {
-  product: Product;
+  product: CartItem;
 }
 
 export default function CartItem({ product }: Props) {
@@ -32,7 +32,7 @@ export default function CartItem({ product }: Props) {
           className="text-red-500 hover:text-red-600 ml-4"
           onClick={() => removeFromCart(product)}
         >
-          Eliminar
+          Quitar
         </button>
       </div>
     </li>

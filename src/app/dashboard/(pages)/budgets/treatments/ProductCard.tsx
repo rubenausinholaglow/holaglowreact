@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
-  const addToCart = useCartStore(state => state.addToCart);
+  const addToCart = useCartStore(state => state.addItemToCart);
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl flex flex-col justify-between p-4 ">
       <Image
