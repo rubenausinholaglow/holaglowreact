@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
+import { handleGoBack } from '@utils/utils';
 import { useSearchParams } from 'next/navigation';
-import { StateCreator } from 'zustand';
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -30,10 +30,6 @@ const Page = () => {
     if (product && !cart.includes(product.id)) {
       setCart(prevCart => [...prevCart, product.id]);
     }
-  };
-
-  const handleGoBack = () => {
-    window.history.back();
   };
 
   return (
