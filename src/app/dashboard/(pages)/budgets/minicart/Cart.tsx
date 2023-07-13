@@ -1,4 +1,3 @@
-//import useFromStore from '../hooks/useFromStore';
 import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
 
@@ -15,7 +14,7 @@ function Cart() {
 
   return (
     <section>
-      <h3 className="text-black text-2xl font-bold mb-4">Shopping Cart</h3>
+      <h3 className="text-black text-2xl font-bold mb-4">Compra:</h3>
       <ul>
         {cart?.map(product => <CartItem key={product.id} product={product} />)}
       </ul>

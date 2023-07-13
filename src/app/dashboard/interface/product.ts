@@ -10,3 +10,7 @@ export interface Product {
   pain: number;
   clinic: Clinic[];
 }
+
+export interface CartItem extends Product {
+  quantity?: number;
+}
