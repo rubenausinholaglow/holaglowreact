@@ -4,6 +4,7 @@ import { Filters } from '@components/Filters';
 import Header from '@components/ui/Header';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
+import { normalizeString } from '@utils/validators';
 
 import Cart from './minicart/Cart';
 import ProductList from './treatments/ProductList';
@@ -29,6 +30,7 @@ export default function Page() {
   }, []);
 
   const toggleFilter = (id: string, inputText: string, tag: string) => {
+    console.log(tag);
     switch (tag) {
       case 'Packs':
         setShowPacks(!showPacks);
@@ -97,6 +99,7 @@ export default function Page() {
 
   const filterProducts = () => {
     return products.filter(product => {
+      console.log(showPacks);
       if (showPacks && !product.isPack) {
         return false;
       }
@@ -137,13 +140,6 @@ export default function Page() {
     return textNormalized.includes(filterTextNormalized);
   };
 
-  const normalizeString = (str: string) => {
-    return str
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-  };
-
   const hasMatchingClinic = (productClinicIds: (string | undefined)[]) => {
     return productClinicIds.some(city => city && filterClinic.includes(city));
   };
@@ -154,7 +150,7 @@ export default function Page() {
     return <>{error}</>;
   } else {
     const filteredProducts = filterProducts();
-
+    console.log(filteredProducts);
     return (
       <section className="bg-hg-200 min-h-screen p-10">
         <h1 className="text-3xl font-bold mb-8">
