@@ -1,23 +1,8 @@
+import { Actions, State } from '@interface/cart';
 import { CartItem, Product } from '@interface/product';
+import { INITIAL_STATE } from '@utils/constants';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-interface State {
-  cart: CartItem[];
-  totalItems: number;
-  totalPrice: number;
-}
-
-interface Actions {
-  addItemToCart: (Item: Product) => void;
-  removeFromCart: (Item: Product) => void;
-}
-
-const INITIAL_STATE: State = {
-  cart: [],
-  totalItems: 0,
-  totalPrice: 0,
-};
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   const cartItem = cart.find(item => item.id === product.id);
