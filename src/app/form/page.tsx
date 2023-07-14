@@ -61,7 +61,7 @@ export default function Form() {
 
   return (
     <>
-      <header className="py-4 border-b border-[#EDF0F7] mb-6 relative">
+      <header className="py-4 border-b border-hg-grease mb-6 relative">
         <div className="max-w-[624px] mx-auto px-4">
           {activeSlideIndex > 0 && (
             <div className="w-[32px] absolute left-3 top-3 sm:hidden">
@@ -83,7 +83,7 @@ export default function Form() {
         className="max-w-[624px] mx-auto relative overflow-hidden text-hg-black"
       >
         <div className="px-4 mb-12">
-          <ul className="flex bg-hg-lightMalva/50 h-[4px] w-full rounded-full">
+          <ul className="flex bg-hg-lightMalva/40 h-[4px] w-full rounded-full">
             <li
               className="h-[4px] rounded-full bg-hg-darkMalva transition-all"
               style={{ width: `${progressBarWith}%` }}
@@ -109,7 +109,11 @@ export default function Form() {
                     return (
                       <div
                         key={index}
-                        className="w-full mb-4 bg-hg-grease/50 group rounded-lg py-2 px-3 cursor-pointer"
+                        className={`w-full mb-4 ${
+                          isActive
+                            ? 'bg-hg-lightMalva/25 text-hg-black'
+                            : 'text-hg-darkMalva'
+                        } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
                         onClick={() => {
                           setActiveSlideIndex(activeSlideIndex + 1);
                           setSkincareSelected(index);
@@ -138,9 +142,9 @@ export default function Form() {
                           <div
                             className={`${
                               isActive
-                                ? 'bg-hg-lightMalva/50'
+                                ? 'bg-hg-lightMalva/40'
                                 : 'bg-hg-lightMalva/20'
-                            }  group-hover:bg-hg-lightMalva h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
+                            }  group-hover:bg-hg-lightMalva/60 h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
                           >
                             {Icon && (
                               <div
@@ -183,15 +187,15 @@ export default function Form() {
                 {MULTISTEP_QUESTIONS[1].questions.map(
                   (age: any, index: number) => {
                     const isActive = index === ageSelected;
-                    const bgColor = isActive ? 'bg-[#EAE2F9]' : 'bg-hg-grease';
-                    const textColor = isActive
-                      ? 'text-[#7516E9]'
-                      : 'text-hg-black';
 
                     return (
                       <div
                         key={index}
-                        className="w-full mb-4 bg-hg-grease group rounded-lg py-2 px-3 cursor-pointer"
+                        className={`w-full mb-4 ${
+                          isActive
+                            ? 'text-hg-black bg-hg-lightMalva/25'
+                            : 'text-hg-darkMalva'
+                        } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 group rounded-lg py-2 px-3 cursor-pointer`}
                         onClick={() => {
                           setActiveSlideIndex(activeSlideIndex + 1);
                           setAgeSelected(index);
@@ -206,27 +210,31 @@ export default function Form() {
                             <SvgCheck
                               height={16}
                               width={16}
-                              fill="#7516E9"
-                              className="self-end mb-2"
+                              fill={HOLAGLOW_COLORS['darkMalva']}
+                              className="self-end mb-4"
                             />
                           ) : (
                             <SvgCircle
                               height={16}
                               width={16}
-                              stroke="#1A202C"
-                              className="self-end mb-2"
+                              stroke={HOLAGLOW_COLORS['black']}
+                              className="self-end mb-4"
                             />
                           )}
 
                           <Text
                             size="3xl"
-                            className={`font-semibold text-center ${textColor} group-hover:text-[#7516E9] transition-all`}
+                            className={`font-semibold text-center ${
+                              isActive ? 'text-hg-black' : 'text-hg-darkMalva'
+                            } group-hover:text-hg-black transition-all`}
                           >
                             {age}
                           </Text>
                           <Text
                             size="sm"
-                            className={`-mt-3 font-semibold text-center mb-4 ${textColor} group-hover:text-[#7516E9] transition-all`}
+                            className={`-mt-3 font-semibold text-center mb-4 ${
+                              isActive ? 'text-hg-black' : 'text-hg-darkMalva'
+                            } group-hover:text-hg-black transition-all`}
                           >
                             años
                           </Text>
@@ -250,18 +258,16 @@ export default function Form() {
               <ul className="grid grid-cols-3 gap-4">
                 {MULTISTEP_TREATMENTS.map((item: any, index: number) => {
                   const isActive = index === categorySelected;
-                  const bgColor = isActive ? 'bg-[#EAE2F9]' : 'bg-hg-grease';
-                  const textColor = isActive
-                    ? 'text-[#7516E9]'
-                    : 'text-hg-black';
                   const Icon = item?.icon;
-                  const bgIcon = isActive ? 'bg-[#EAE2F9]' : 'bg-[#EDF0F7]';
-                  const iconColor = isActive ? '#7516E9' : '#CBD2E0';
 
                   return (
                     <div
                       key={index}
-                      className={`w-full mb-4 ${bgColor} group rounded-lg py-2 px-3 cursor-pointer`}
+                      className={`w-full mb-4 ${
+                        isActive
+                          ? 'bg-hg-lightMalva/25 text-hg-black'
+                          : 'text-hg-darkMalva'
+                      } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setCategorySelected(index);
@@ -277,25 +283,33 @@ export default function Form() {
                           <SvgCheck
                             height={16}
                             width={16}
-                            fill="#7516E9"
-                            className="self-end mb-2"
+                            fill={HOLAGLOW_COLORS['darkMalva']}
+                            className="self-end mb-4"
                           />
                         ) : (
                           <SvgCircle
                             height={16}
                             width={16}
-                            stroke="#1A202C"
-                            className="self-end mb-2"
+                            stroke={HOLAGLOW_COLORS['black']}
+                            className="self-end mb-4"
                           />
                         )}
 
                         {Icon ? (
                           <div
-                            className={`${bgIcon} group-hover:bg-[#EAE2F9] h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
+                            className={`${
+                              isActive
+                                ? 'bg-hg-lightMalva/40'
+                                : 'bg-hg-lightMalva/20'
+                            }  group-hover:bg-hg-lightMalva/60 h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
                           >
                             {Icon && (
                               <div
-                                className={`text-[${iconColor}] group-hover:text-[#7516E9] transition-all`}
+                                className={`${
+                                  isActive
+                                    ? 'text-hg-darkMalva'
+                                    : 'text-hg-lightMalva'
+                                } group-hover:text-hg-darkMalva transition-all`}
                               >
                                 <Icon height={40} width={40} />
                               </div>
@@ -325,7 +339,7 @@ export default function Form() {
                         <div className="grow flex items-center">
                           <Text
                             size="sm"
-                            className={`py-2 font-semibold text-center ${textColor}`}
+                            className="py-2 font-semibold text-center"
                           >
                             {item.category}
                           </Text>
@@ -349,15 +363,15 @@ export default function Form() {
               <ul>
                 {treatments.map((treatment: any, index: number) => {
                   const isActive = index === treatmentSelected;
-                  const bgColor = isActive ? 'bg-[#EAE2F9]' : 'bg-hg-grease';
-                  const textColor = isActive
-                    ? 'text-[#7516E9]'
-                    : 'text-hg-black';
 
                   return (
                     <div
                       key={index}
-                      className={`w-full mb-4 ${bgColor} hover:bg-[#EAE2F9] py-4 group transition-all rounded-lg px-3 cursor-pointer`}
+                      className={`w-full mb-4 ${
+                        isActive
+                          ? 'bg-hg-lightMalva/25 text-hg-black'
+                          : 'text-hg-darkMalva'
+                      } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 hover:text-hg-black py-4 group transition-all rounded-lg px-3 cursor-pointer`}
                       onClick={() => {
                         setTreatmentSelected(index);
                         redirectTo(index);
@@ -367,10 +381,7 @@ export default function Form() {
                         layout="row-left"
                         className="justify-start items-center h-full"
                       >
-                        <Text
-                          size="lg"
-                          className={`${textColor} group-hover:text-[#7516E9] mr-auto`}
-                        >
+                        <Text size="lg" className="mr-auto">
                           {treatment.name}
                         </Text>
                         {isActive ? (
