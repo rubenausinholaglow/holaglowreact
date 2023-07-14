@@ -50,16 +50,15 @@ function Cart() {
       <div className="flex justify-between items-center mt-4">
         <span className="text-black text-lg font-bold">Total: </span>
         <span className="text-black text-xl font-bold">
-          {total.toFixed(2)}€
+          {total.toFixed(2)}ï¿½
         </span>
       </div>
       <div>
-        <h3 className="text-black text-2xl font-bold mt-4">Finalizar</h3>
         <button
           onClick={handleFinalize}
           className="text-white bg-blue-500 px-4 py-2 rounded mt-2"
         >
-          Fin
+          Finalizar
         </button>
       </div>
     </section>
