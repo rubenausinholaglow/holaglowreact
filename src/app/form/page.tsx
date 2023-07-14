@@ -10,6 +10,7 @@ import {
   SvgCheck,
   SvgCircle,
   SvgHolaglow,
+  SvgHolaglowHand,
 } from 'icons/Icons';
 import Image from 'next/image';
 import { HOLAGLOW_COLORS } from 'utils/colors';
@@ -62,21 +63,27 @@ export default function Form() {
   return (
     <>
       <header className="py-4 border-b border-hg-grease mb-6 relative">
-        <div className="max-w-[624px] mx-auto px-4">
+        <Flex layout="row-left" className="max-w-[624px] mx-auto px-4">
           {activeSlideIndex > 0 && (
-            <div className="w-[32px] absolute left-3 top-3 sm:hidden">
+            <div className="w-[30px] mr-2 sm:hidden">
               <SvgArrowSmallLeft
-                height={32}
-                width={32}
-                fill={HOLAGLOW_COLORS['black']}
+                height={30}
+                width={30}
+                fill={HOLAGLOW_COLORS['darkMalva']}
                 className="cursor-pointer self-center"
                 onClick={() => goBack(activeSlideIndex)}
               />
             </div>
           )}
 
+          <SvgHolaglowHand
+            width={30}
+            height={30}
+            fill={HOLAGLOW_COLORS['lime']}
+            className="mr-2"
+          />
           <SvgHolaglow width={125} height={30} fill={HOLAGLOW_COLORS['lime']} />
-        </div>
+        </Flex>
       </header>
       <main
         id="multistep"
