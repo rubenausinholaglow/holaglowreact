@@ -13,7 +13,8 @@ import SearchUser from './SearchUser';
 export default function Page() {
   const router = useRouter();
 
-  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState<Client>({
@@ -45,10 +46,12 @@ export default function Page() {
   }, []);
 
   const handleCheckUser = async () => {
+    setIsLoading(true);
     const isEmailValid = utils.validateEmail(userEmail);
 
     if (!isEmailValid) {
-      handleRequestError(config.ERROR_EMAIL_NOT_VALID);
+      handleRequestError([config.ERROR_EMAIL_NOT_VALID]);
+      setIsLoading(false);
       return null;
     }
 
@@ -63,10 +66,12 @@ export default function Page() {
       .catch(error => {
         handleSearchError();
       });
+
+    setIsLoading(false);
   };
 
   const handleSearchError = async () => {
-    handleRequestError(config.ERROR_AUTHENTICATION);
+    handleRequestError([config.ERROR_AUTHENTICATION]);
     setUserEmail('');
     setShowRegistration(true);
   };
@@ -76,11 +81,14 @@ export default function Page() {
   };
 
   const registerUser = async (formData: Client) => {
+    setIsLoading(true);
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
       redirectPage(formData.name);
+      setIsLoading(false);
     } else {
-      handleRequestError(config.ERROR_REGISTRATION);
+      handleRequestError([config.ERROR_REGISTRATION]);
+      setIsLoading(false);
     }
   };
 
@@ -111,31 +119,46 @@ export default function Page() {
   };
 
   const handleContinue = () => {
+    setErrors([]);
+
     const requiredFields = ['email', 'phone', 'name', 'surname'];
+
     const isEmailValid = utils.validateEmail(formData.email);
     const isPhoneValid = utils.validatePhone(formData.phone);
     const areAllFieldsFilled = requiredFields.every(
       field => formData[field] !== ''
     );
 
-    if (areAllFieldsFilled && isEmailValid && isPhoneValid) {
+    if (
+      areAllFieldsFilled &&
+      isEmailValid &&
+      isPhoneValid &&
+      formData.termsAndConditionsAccepted
+    ) {
       handleRegistration();
     } else {
-      let errorMessage = '';
-      if (!isEmailValid) {
-        errorMessage = config.ERROR_EMAIL_NOT_VALID;
-      } else if (!isPhoneValid) {
-        errorMessage = config.ERROR_PHONE_NOT_VALID;
-      } else {
-        errorMessage = config.ERROR_MISSING_FIELDS;
+      const errorMessages = [];
+
+      if (!isEmailValid && formData['email'].length > 0) {
+        errorMessages.push(config.ERROR_EMAIL_NOT_VALID);
       }
-      handleRequestError(errorMessage);
+      if (!isPhoneValid && formData['phone'].length > 0) {
+        errorMessages.push(config.ERROR_PHONE_NOT_VALID);
+      }
+      if (requiredFields.some(field => formData[field] === '')) {
+        errorMessages.push(config.ERROR_MISSING_FIELDS);
+      }
+      if (!formData.termsAndConditionsAccepted) {
+        errorMessages.push(config.ERROR_TERMS_CONDITIONS_UNACCEPTED);
+      }
+
+      handleRequestError(errorMessages);
     }
   };
 
-  const handleRequestError = (error: string) => {
+  const handleRequestError = (errors: Array<string>) => {
     localStorage.clear();
-    setError(error);
+    setErrors(errors);
   };
 
   return (
@@ -145,13 +168,16 @@ export default function Page() {
           formData={formData}
           handleFieldChange={handleFormFieldChange}
           handleContinue={handleContinue}
+          errors={errors}
+          isLoading={isLoading}
         />
       ) : (
         <SearchUser
           email={userEmail}
           handleFieldChange={handleFieldEmailChange}
           handleCheckUser={handleCheckUser}
-          error={error}
+          errors_={errors}
+          isLoading={isLoading}
         />
       )}
     </>

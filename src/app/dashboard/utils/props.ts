@@ -6,6 +6,7 @@ export interface TextInputFieldProps {
   label?: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }
 
 export interface SearchBarProps {
@@ -15,7 +16,8 @@ export interface SearchBarProps {
     field: string
   ) => void;
   handleCheckUser: () => void;
-  error: string;
+  errors_: Array<string>;
+  isLoading: boolean;
 }
 
 export interface RegistrationFormProps {
@@ -25,6 +27,8 @@ export interface RegistrationFormProps {
     field: string
   ) => void;
   handleContinue: () => void;
+  errors: Array<string>;
+  isLoading: boolean;
 }
 
 export interface CheckboxProps {

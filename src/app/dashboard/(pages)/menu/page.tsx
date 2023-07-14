@@ -1,5 +1,7 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
+import { Container, Flex } from 'components/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 import DashboardMenuItem from './DashboardMenuItem';
@@ -22,21 +24,22 @@ const Page = () => {
   return (
     <>
       {username && (
-        <section className="bg-hg-200 w-full flex flex-col p-10 justify-center items-center">
-          <p className="text-3xl"> Hola {username}! </p>
-          <p className="text-3xl">Bienvenid@ a Holaglow</p>
-          <div className="grid grid-cols-3 p-5">
-            {menuItems.map(item => (
-              <DashboardMenuItem
-                key={item.title}
-                iconSrc={item.iconSrc}
-                altText={item.altText}
-                title={item.title}
-                link={item.link}
-              />
-            ))}
-          </div>
-        </section>
+        <Container>
+          <Flex layout="col-center">
+            <p className="font-bold text-2xl mt-12">¿Qué deseas hacer?</p>
+            <div className="grid grid-cols-3">
+              {menuItems.map(item => (
+                <DashboardMenuItem
+                  key={item.title}
+                  iconSrc={item.iconSrc}
+                  altText={item.altText}
+                  title={item.title}
+                  link={item.link}
+                />
+              ))}
+            </div>
+          </Flex>
+        </Container>
       )}
     </>
   );
