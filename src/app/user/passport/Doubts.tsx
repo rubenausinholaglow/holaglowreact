@@ -4,7 +4,7 @@ import { HOLAGLOW_COLORS } from 'utils/colors';
 export default function Issues() {
   return (
     <section className="mb-8">
-      <div className="p-16 bg-hg-lime text-white flex flex-col justify-center items-center">
+      <div className="p-16 bg-hg-darkMalva text-white flex flex-col justify-center items-center">
         <SvgCosmetic3 height={64} width={64} fill="white" className="mb-4" />
         <h3 className="font-semibold mb-4 text-2xl">¿Tienes dudas?</h3>
         <p className="w-1/2 text-lg text-center mb-8">
@@ -18,13 +18,13 @@ export default function Issues() {
             <div className="flex justify-center items-center border border-white rounded-full p4 h-[56px] w-[56px]">
               <SvgPhone height={24} width={24} fill="white" />
             </div>
-            <p className="bg-hg-lime p-1 -ml-3 mr-8">682 417 208</p>
+            <p className="bg-hg-darkMalva p-1 -ml-3 mr-8">682 417 208</p>
           </div>
           <div className="flex items-center">
             <div className="flex justify-center items-center border border-white rounded-full p4 h-[56px] w-[56px]">
               <SvgEnvelopeOpen height={24} width={24} fill="white" />
             </div>
-            <p className="bg-hg-lime p-1 -ml-3">my@holaglow.com</p>
+            <p className="bg-hg-darkMalva p-1 -ml-3">my@holaglow.com</p>
           </div>
         </div>
       </div>
