@@ -34,14 +34,14 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
   }
 
   return (
-    <section className="py-8 px-16 bg-hg-100 text-sm text-[#717D96]">
-      <h3 className="text-2xl text-hg-500 font-semibold text-center mb-8">
+    <section className="py-8 px-16 bg-hg-lime/10 text-sm text-hg-black">
+      <h3 className="text-2xl text-hg-darkMalva font-semibold text-center mb-8">
         {issuesTitle}
       </h3>
       <div className="flex gap-16">
         {filteredNormalIssues.length > 0 && (
           <div className="w-1/2">
-            <p className="text-hg-500 mb-4">Es normal si...</p>
+            <p className="text-hg-darkMalva mb-4">Es normal si...</p>
             <ul className="mb-8">
               {filteredNormalIssues.map((issue, index) => {
                 return (
@@ -50,7 +50,7 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
                       <SvgPlusSmall
                         height={16}
                         width={16}
-                        fill={HOLAGLOW_COLORS['500']}
+                        fill={HOLAGLOW_COLORS['darkMalva']}
                       />
                     </div>
                     <p>{issue.details}</p>
@@ -62,7 +62,7 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
         )}
         {filteredUnalarmingIssues.length > 0 && (
           <div className="w-1/2">
-            <p className="text-hg-500 mb-4">No te alarmes si...</p>
+            <p className="text-hg-darkMalva mb-4">No te alarmes si...</p>
             <ul className="mb-8">
               {filteredUnalarmingIssues.map((issue, index) => {
                 return (
@@ -71,7 +71,7 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
                       <SvgPlusSmall
                         height={16}
                         width={16}
-                        fill={HOLAGLOW_COLORS['500']}
+                        fill={HOLAGLOW_COLORS['darkMalva']}
                       />
                     </div>
                     <p>{issue.details}</p>

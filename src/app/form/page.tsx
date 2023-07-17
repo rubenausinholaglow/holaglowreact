@@ -10,7 +10,6 @@ import {
   SvgCheck,
   SvgCircle,
   SvgHolaglow,
-  SvgHolaglowHand,
 } from 'icons/Icons';
 import Image from 'next/image';
 import { HOLAGLOW_COLORS } from 'utils/colors';
@@ -75,13 +74,6 @@ export default function Form() {
               />
             </div>
           )}
-
-          <SvgHolaglowHand
-            width={30}
-            height={30}
-            fill={HOLAGLOW_COLORS['lime']}
-            className="mr-2"
-          />
           <SvgHolaglow width={125} height={30} fill={HOLAGLOW_COLORS['lime']} />
         </Flex>
       </header>
@@ -395,15 +387,13 @@ export default function Form() {
                           <SvgCheck
                             height={16}
                             width={16}
-                            fill="#7516E9"
-                            className=""
+                            fill={HOLAGLOW_COLORS['darkMalva']}
                           />
                         ) : (
                           <SvgCircle
                             height={16}
                             width={16}
-                            stroke="#1A202C"
-                            className=""
+                            stroke={HOLAGLOW_COLORS['black']}
                           />
                         )}
                       </Flex>

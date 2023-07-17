@@ -24,18 +24,18 @@ export default function Treatments({
   const year = new Date(appointment.date).getFullYear();
 
   return (
-    <section className="p-12">
-      <h3 className="bg-[#fdf6fc] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4">
+    <section className="p-12 text-hg-black">
+      <h3 className="bg-[#F1F4FE] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4">
         Detalles de tu tratamiento
       </h3>
       {appointment.treatments.map((item, index) => {
         const { treatment } = item;
 
         return (
-          <div key={index} className="bg-[#fdf6fc] rounded-[25px] p-8 mb-12">
+          <div key={index} className="bg-[#F1F4FE] rounded-[25px] p-8 mb-12">
             <div className="flex">
               <div className="flex flex-col mr-4 w-2/5">
-                <p className="text-hg-200 text-xs">{year}</p>
+                <p className="text-hg-lightMalva text-xs">{year}</p>
                 <p className="mb-4">
                   {date} {month.charAt(0).toUpperCase() + month.slice(1)}
                 </p>
@@ -48,13 +48,15 @@ export default function Treatments({
               </div>
               <ul className="border-l border-hg-400/10 w-3/5 text-sm">
                 <li className="border-b border-hg-400/10 p-4">
-                  <p className="text-hg-200 text-xs mb-1">
+                  <p className="text-hg-lightMalva text-xs mb-1">
                     Plan de tratamiento
                   </p>
                   <p>{treatment.product.title}</p>
                 </li>
                 <li className="border-b border-hg-400/10 p-4">
-                  <p className="text-hg-200 text-xs mb-1">Producto utilizado</p>
+                  <p className="text-hg-lightMalva text-xs mb-1">
+                    Producto utilizado
+                  </p>
                   <p>{treatment.product.description}</p>
                 </li>
                 {treatment.quantity > 0 && (
@@ -65,9 +67,11 @@ export default function Treatments({
                           className="mb-2"
                           height={18}
                           width={22}
-                          fill={HOLAGLOW_COLORS['200']}
+                          fill={HOLAGLOW_COLORS['lightMalva']}
                         />
-                        <p className="text-hg-200 text-xs mb-1">Cantidad</p>
+                        <p className="text-hg-lightMalva text-xs mb-1">
+                          Cantidad
+                        </p>
                         <p>{treatment.quantity} Vial</p>
                       </li>
                       {treatment.lotReference !== '' && (
@@ -78,7 +82,7 @@ export default function Treatments({
                             width={22}
                             fill={HOLAGLOW_COLORS['200']}
                           />
-                          <p className="text-hg-200 text-xs mb-1">
+                          <p className="text-hg-lightMalva text-xs mb-1">
                             Número de lote
                           </p>
                           <p>{treatment.lotReference}</p>
@@ -92,7 +96,9 @@ export default function Treatments({
                             width={22}
                             fill={HOLAGLOW_COLORS['200']}
                           />
-                          <p className="text-hg-200 text-xs mb-1">Duración</p>
+                          <p className="text-hg-lightMalva text-xs mb-1">
+                            Duración
+                          </p>
                           <p>{`de ${treatment.product.durationMin / 30} a ${
                             treatment.product.durationMax / 30
                           } meses`}</p>
@@ -108,9 +114,9 @@ export default function Treatments({
                         className="mr-2"
                         height={18}
                         width={18}
-                        fill="#717D96"
+                        fill={HOLAGLOW_COLORS['black']}
                       />
-                      <p className="text-[#717D96]">
+                      <p className="text-hg-black">
                         {appointment.clinicProfessional.name}
                       </p>
                     </li>
@@ -119,9 +125,9 @@ export default function Treatments({
                         className="mr-2"
                         height={18}
                         width={22}
-                        fill="#717D96"
+                        fill={HOLAGLOW_COLORS['black']}
                       />
-                      <p className="text-[#717D96]">
+                      <p className="text-hg-black">
                         {appointment.clinic.address}
                       </p>
                     </li>
@@ -136,8 +142,8 @@ export default function Treatments({
         <>
           <h3 className="mb-4 font-semibold">Histórico de tratamientos</h3>
 
-          <table className="text-[#717D96] text-[11px] mb-12 w-full">
-            <tr className="text-hg-500 mb-4">
+          <table className="text-hg-black text-[11px] mb-12 w-full">
+            <tr className="text-hg-lightMalva mb-4">
               <th className="py-3 pr-6 text-left font-normal">
                 Fecha / Sesión
               </th>
@@ -183,11 +189,11 @@ export default function Treatments({
         Notas para tus tratamientos en Holaglow
         <p className='text-sm font-normal'>Todo lo que necesitas saber en tu pasaporte de belleza</p>
       </h3>
-      <p className='text-[#717D96] mb-2 text-[11px]'>
+      <p className='text-hg-black mb-2 text-[11px]'>
         Los productos de Holaglow Clinics tienen diferentes efectos y duraciones. En su pasaporte de belleza, puede
         realizar un seguimiento fácil de qué y cuándo, así como quién realizó el tratamiento.
       </p>
-      <p className='text-[#717D96] text-[11px]'>
+      <p className='text-hg-black text-[11px]'>
         En su pasaporte de belleza, también puede anotar otros tratamientos de belleza en la cara. Será de gran ayuda si
         cambia de médico o enfermera tratante, o pronto volverá a ser el momento, ya que aquí se recopilará toda la
         información.
