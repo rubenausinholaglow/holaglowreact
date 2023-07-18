@@ -176,7 +176,7 @@ export default function Page() {
           email={userEmail}
           handleFieldChange={handleFieldEmailChange}
           handleCheckUser={handleCheckUser}
-          errors_={errors}
+          errors={errors}
           isLoading={isLoading}
         />
       )}

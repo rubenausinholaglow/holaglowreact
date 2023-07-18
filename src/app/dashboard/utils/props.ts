@@ -16,7 +16,7 @@ export interface SearchBarProps {
     field: string
   ) => void;
   handleCheckUser: () => void;
-  errors_: Array<string>;
+  errors: Array<string>;
   isLoading: boolean;
 }
 
