@@ -18,6 +18,11 @@ module.exports = {
     extend: {
       colors: {
         hg: {
+          lime: '#DCE500',
+          darkMalva: '#7A8AC4',
+          lightMalva: '#BBC7FF',
+          grease: '#F2F2F2',
+          black: '#111111',
           700: '#C295B4',
           600: '#AE8FBD',
           500: '#4608AE',
@@ -25,7 +30,6 @@ module.exports = {
           300: '#B42BAE',
           200: '#DCAACD',
           100: '#FBEEF9',
-          
         },
       },
       backgroundImage: {

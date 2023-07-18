@@ -1,36 +1,63 @@
-import { SvgInstagram,SvgMapMarker, SvgPhone, SvgWorldWideWeb } from 'icons/Icons';
-import Image from 'next/image';
+import {
+  SvgHolaglow,
+  SvgInstagram,
+  SvgMapMarker,
+  SvgPhone,
+  SvgWorldWideWeb,
+} from 'icons/Icons';
+import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { Clinic } from './types';
 
 export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
   return (
-    <section className='bg-white p-8 text-[#717D96] mb-8'>
-      <Image className='mb-8' src='/images/holaglow.svg' height='25' width='120' alt='holaglow' />
+    <section className="bg-white p-8 text-hg-darkMalva mb-8">
+      <SvgHolaglow
+        className="mb-8"
+        width={150}
+        height={35}
+        fill={HOLAGLOW_COLORS['lime']}
+      />
 
-      <ul className='grid grid-cols-3 gap-8 text-sm'>
+      <ul className="grid grid-cols-3 gap-8 text-sm">
         <li>
-          <p className='mb-4'>My glow, my rules.</p>
+          <p className="mb-4">My glow, my rules.</p>
           <p>La nueva cara de la medicina estética, sin cirugía</p>
         </li>
         <li>
-          <p className='flex flex-row mb-4'>
-            <SvgMapMarker height={20} width={20} fill='#717D96' />
-            <span className='ml-2'>{clinicInfo.address}</span>
+          <p className="flex flex-row mb-4">
+            <SvgMapMarker
+              height={20}
+              width={20}
+              fill={HOLAGLOW_COLORS['darkMalva']}
+            />
+            <span className="ml-2">{clinicInfo.address}</span>
           </p>
-          <p className='flex flex-row items-center'>
-            <SvgPhone height={15} width={15} fill='#717D96' />
-            <span className='ml-2'>{clinicInfo.phone}</span>
+          <p className="flex flex-row items-center">
+            <SvgPhone
+              height={15}
+              width={15}
+              fill={HOLAGLOW_COLORS['darkMalva']}
+            />
+            <span className="ml-2">{clinicInfo.phone}</span>
           </p>
         </li>
         <li>
-          <p className='flex flex-row items-center mb-4'>
-            <SvgWorldWideWeb height={18} width={22} fill='#717D96' />
-            <span className='ml-2'>holaglow.com</span>
+          <p className="flex flex-row items-center mb-4">
+            <SvgWorldWideWeb
+              height={18}
+              width={22}
+              fill={HOLAGLOW_COLORS['darkMalva']}
+            />
+            <span className="ml-2">holaglow.com</span>
           </p>
-          <p className='flex flex-row items-center ml-1'>
-            <SvgInstagram height={18} width={18} fill='#717D96' />
-            <span className='ml-2'>holaglow.clinics</span>
+          <p className="flex flex-row items-center ml-1">
+            <SvgInstagram
+              height={18}
+              width={18}
+              fill={HOLAGLOW_COLORS['darkMalva']}
+            />
+            <span className="ml-2">holaglow.clinics</span>
           </p>
         </li>
       </ul>

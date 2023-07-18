@@ -9,7 +9,7 @@ export const Button = ({
   className = '',
   onClick = undefined,
   children,
-  type,
+  type = 'button',
   ...rest
 }: {
   style: 'primary' | 'secondary' | 'tertiary';
@@ -18,14 +18,14 @@ export const Button = ({
   className?: string;
   onClick?: () => void;
   children: ReactNode;
-  type: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
   rest?: any;
 }) => {
-  const StylesConfig = {
-    common: 'text-white rounded-md px-6 py-2',
-    primary: 'bg-[#7516E9]',
-    secondary: 'bg-[#be9ee5]',
-    tertiary: 'text-[#7516E9] border border-[#E2E7F0]',
+  const StylesConfig: any = {
+    common: 'rounded-full px-4 py-2 text-white',
+    primary: 'bg-hg-darkMalva',
+    secondary: 'bg-hg-lightMalva',
+    tertiary: 'text-hg-darkMalva border border-hg-darkMalva',
     sm: 'text-xs',
     md: 'text-base',
     lg: 'text-lg px-12 py-4 font-semibold',
@@ -34,7 +34,6 @@ export const Button = ({
   const styles = twMerge(
     `${StylesConfig.common} ${StylesConfig[style]} ${StylesConfig[size]} ${className}`
   );
-
   if (href) {
     return (
       <Link href={href} className={styles} {...rest}>

@@ -7,9 +7,12 @@ import Treatments from './Treatments';
 
 const fetchPassportData = async (id: number) => {
   try {
-    const passportResponse = await fetch(`https://holaglowcontactsapi.azurewebsites.net/BeautyPass?id=${id}`, {
-      cache: 'no-store',
-    });
+    const passportResponse = await fetch(
+      `https://holaglowcontactsapi.azurewebsites.net/BeautyPass?id=${id}`,
+      {
+        cache: 'no-store',
+      }
+    );
 
     if (!passportResponse) {
       throw new Error('Network response was not OK');
@@ -31,21 +34,28 @@ export default async function Passport({
   const passportID = searchParams.id;
   const passportData = await fetchPassportData(Number(passportID));
 
-  const { appointment = null, previousAppointments = null, pendingVouchers = null } = passportData ? passportData : {};
+  const {
+    appointment = null,
+    previousAppointments = null,
+    pendingVouchers = null,
+  } = passportData ? passportData : {};
 
   return (
-    <main className='flex flex-col w-[750px] mx-auto text-hg-500'>
+    <main className="flex flex-col w-[750px] mx-auto text-hg-black">
       {appointment ? (
         <>
           <Header />
-          <Treatments appointment={appointment} previousAppointments={previousAppointments} />
+          <Treatments
+            appointment={appointment}
+            previousAppointments={previousAppointments}
+          />
           <Recomendations appointment={appointment} />
           <Issues appointment={appointment} />
           <PendingBonus pendingVouchers={pendingVouchers} />
           <Doubts />
         </>
       ) : (
-        <p className='p-8'>Passport unavailable: some data is missing</p>
+        <p className="p-8">Passport unavailable: some data is missing</p>
       )}
     </main>
   );
