@@ -80,7 +80,7 @@ export default function Treatments({
                             className="mb-2"
                             height={18}
                             width={22}
-                            fill={HOLAGLOW_COLORS['200']}
+                            fill={HOLAGLOW_COLORS['lightMalva']}
                           />
                           <p className="text-hg-lightMalva text-xs mb-1">
                             Número de lote
@@ -94,7 +94,7 @@ export default function Treatments({
                             className="mb-2"
                             height={18}
                             width={22}
-                            fill={HOLAGLOW_COLORS['200']}
+                            fill={HOLAGLOW_COLORS['lightMalva']}
                           />
                           <p className="text-hg-lightMalva text-xs mb-1">
                             Duración

@@ -69,7 +69,7 @@ export default function Recomendations({
               className="mb-4"
               height={64}
               width={64}
-              fill={HOLAGLOW_COLORS['lime']}
+              fill={HOLAGLOW_COLORS['darkMalva']}
             />
             <h3 className="text-lg font-semibold mb-4">
               Durante las primeras 24 horas
@@ -95,7 +95,7 @@ export default function Recomendations({
               className="mb-4"
               height={64}
               width={64}
-              fill={HOLAGLOW_COLORS['lime']}
+              fill={HOLAGLOW_COLORS['darkMalva']}
             />
             <h3 className="text-lg font-semibold mb-4">
               Después de las primeras 24 horas
