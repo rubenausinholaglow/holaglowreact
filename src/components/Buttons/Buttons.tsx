@@ -22,7 +22,7 @@ export const Button = ({
   rest?: any;
 }) => {
   const StylesConfig: any = {
-    common: 'rounded-full px-4 py-2 text-white',
+    common: 'rounded-full px-8 py-2 text-white',
     primary: 'bg-hg-darkMalva',
     secondary: 'bg-hg-lightMalva',
     tertiary: 'text-hg-darkMalva border border-hg-darkMalva',
