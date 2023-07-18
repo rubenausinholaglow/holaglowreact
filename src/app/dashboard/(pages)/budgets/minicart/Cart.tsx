@@ -12,6 +12,8 @@ function Cart() {
     );
   }
 
+  console.log(cart);
+
   return (
     <section>
       <h3 className="text-black text-2xl font-bold mb-4">Compra:</h3>

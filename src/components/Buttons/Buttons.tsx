@@ -22,11 +22,12 @@ export const Button = ({
   rest?: any;
 }) => {
   const StylesConfig: any = {
-    common: 'rounded-full px-8 py-2 text-white',
-    primary: 'bg-hg-darkMalva',
-    secondary: 'bg-hg-lightMalva',
-    tertiary: 'text-hg-darkMalva border border-hg-darkMalva',
-    sm: 'text-xs',
+    common: 'rounded-full px-8 py-2 text-white transition-all',
+    primary: 'bg-hg-darkMalva border border-hg-darkMalva',
+    secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
+    tertiary:
+      'text-hg-lightMalva border border-hg-lightMalva hover:border-hg-darkMalva hover:text-hg-darkMalva',
+    sm: 'text-sm px-3 py-1',
     md: 'text-base',
     lg: 'text-lg px-12 py-4 font-semibold',
   };

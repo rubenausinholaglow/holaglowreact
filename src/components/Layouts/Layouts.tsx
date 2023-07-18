@@ -67,7 +67,9 @@ export const Flex = ({
     flexLayout => flexLayout.layout === layout
   )[0]?.classes;
 
-  const styles = `flex flex-${direction} ${justify} ${className}`;
-
-  return <div className={styles}>{children}</div>;
+  return (
+    <div className={twMerge(`flex flex-${direction} ${justify} ${className}`)}>
+      {children}
+    </div>
+  );
 };
