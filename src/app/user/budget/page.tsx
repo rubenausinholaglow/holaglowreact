@@ -46,11 +46,11 @@ export default async function Budget({
   } = budgetData ? budgetData : {};
 
   return (
-    <div className="flex flex-col text-hg-500">
+    <div className="flex flex-col text-hg-black">
       {products && simulations ? (
         <>
           <Header clinicInfo={clinicInfo} />
-          <hr className="bg-gradient-to-r from-hg-500  to-[#FC44FB] to-70% h-[4px] border-0" />
+          <hr className="bg-hg-lime h-[4px] border-0" />
 
           {products.length > 0 && (
             <Products
