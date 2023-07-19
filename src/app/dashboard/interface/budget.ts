@@ -10,8 +10,7 @@ export interface Budget {
 }
 
 export interface BudgetProduct {
-  title: string;
-  description: string;
+  id: string;
   price: number;
   quantity: number;
 }

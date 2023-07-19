@@ -26,8 +26,7 @@ function Cart() {
       ReferenceId: '12353',
       StatusBudget: 0,
       Products: cart.map(product => ({
-        title: product.title,
-        description: product.description,
+        id: product.id,
         price: product.price,
         quantity: product.quantity ?? 0,
       })),
@@ -50,7 +49,7 @@ function Cart() {
       <div className="flex justify-between items-center mt-4">
         <span className="text-black text-lg font-bold">Total: </span>
         <span className="text-black text-xl font-bold">
-          {total.toFixed(2)}�
+          {total.toFixed(2)}€
         </span>
       </div>
       <div>
