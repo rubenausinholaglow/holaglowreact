@@ -9,5 +9,8 @@ export interface Product {
   zone: number;
   pain: number;
   clinic: Clinic[];
+}
+
+export interface CartItem extends Product {
   quantity?: number;
 }
