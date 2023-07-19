@@ -5,7 +5,10 @@ import { Client } from '@interface/client';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
 import * as utils from '@utils/validators';
+import { Flex } from 'components/Layouts/Layouts';
+import { SvgHolaglow } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
+import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
@@ -94,7 +97,7 @@ export default function Page() {
 
   const redirectPage = (name: string) => {
     localStorage.setItem('username', name);
-    router.push('/dashboard/welcome');
+    router.push('/dashboard/menu');
   };
 
   const handleFormFieldChange = (

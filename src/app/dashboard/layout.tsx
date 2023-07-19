@@ -1,21 +1,22 @@
-'use client';
-
-import { Container, Flex } from 'components/Layouts/Layouts';
-import { SvgHolaglow, SvgShoppingCart } from 'icons/Icons';
+import { Flex } from 'components/Layouts/Layouts';
+import { SvgHolaglow } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-
-import { useCartStore } from './(pages)/budgets/stores/userCartStore';
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cart = useCartStore(state => state.cart);
-
   return (
-    <main className="h-full text-black text-md">
-      <header className="border-b py-8">
+    <main className="min-h-screen h-100 text-white text-md bg-hg-lightMalva">
+      <Flex
+        layout="col-center"
+        className="min-h-screen h-100 text-white text-md bg-hg-lightMalva"
+      >
+        {children}
+
+        {/*
+       <footer className="border-b py-8">
         <Container>
           <Flex layout="row-left">
             <SvgHolaglow
@@ -41,9 +42,11 @@ export default function DashboardLayout({
             )}
           </Flex>
         </Container>
-      </header>
-
-      {children}
+      </footer> */}
+        <div className="pt-16 pb-8 mt-auto">
+          <SvgHolaglow width={150} height={40} fill={HOLAGLOW_COLORS['lime']} />
+        </div>
+      </Flex>
     </main>
   );
 }

@@ -15,8 +15,8 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
       <Image
         className="mx-auto"
         src={iconSrc}
-        height="50"
-        width="190"
+        height="30"
+        width="150"
         alt={altText}
       />
       <p className="text-center text-lg">{title}</p>
