@@ -5,3 +5,4 @@ export const ERROR_TERMS_CONDITIONS_UNACCEPTED =
   'Debes aceptar los términos y las condiciones';
 export const ERROR_EMAIL_NOT_VALID = 'El correo electrónico no es válido.';
 export const ERROR_PHONE_NOT_VALID = 'El número de teléfono no es válido.';
+export const ERROR_CREATE_BUDGET = 'Error al crear el presupuesto.';

@@ -2,6 +2,7 @@ import { Product } from '@interface/product';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useCartStore } from '../stores/userCartStore';
 
