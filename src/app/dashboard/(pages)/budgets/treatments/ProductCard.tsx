@@ -1,5 +1,6 @@
 import { Product } from '@interface/product';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useCartStore } from '../stores/userCartStore';
 
@@ -11,13 +12,22 @@ export default function ProductCard({ product }: Props) {
   const addToCart = useCartStore(state => state.addItemToCart);
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl flex flex-col justify-between p-4 ">
-      <Image
-        src="/images/budget/promoCodeBg.jpg"
-        alt={product.title}
-        width={100}
-        height={100}
-        className="object-contain w-full h-40"
-      />
+      <Link
+        href={{
+          pathname: '/dashboard/budgets/treatments/detail',
+          query: {
+            search: product.id,
+          },
+        }}
+      >
+        <Image
+          src="/images/budget/promoCodeBg.jpg"
+          alt={product.title}
+          width={100}
+          height={100}
+          className="object-contain w-full h-40"
+        />
+      </Link>
       <div className="flex-1 flex flex-col justify-between">
         <h2 className="text-black text-lg font-semibold">{product.title}</h2>
         <p className="text-gray-600 flex-1">{product.description}</p>

@@ -22,7 +22,7 @@ export default function CartItem({ product }: Props) {
         />
         <div className="flex flex-col">
           <span className="text-black font-bold flex-1">{product.title}</span>
-          <span className="text-gray-600 font-bold">${product.price}</span>
+          <span className="text-gray-600 font-bold">{product.price}€</span>
           <span className="text-black">Cantidad: {product.quantity}</span>
         </div>
       </div>
