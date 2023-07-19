@@ -5,11 +5,17 @@ import Header from '@components/ui/Header';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
+import { Container, Flex } from 'components/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
+import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import Cart from './minicart/Cart';
+import { useCartStore } from './stores/userCartStore';
 import ProductList from './treatments/ProductList';
 
 export default function Page() {
+  const cart = useCartStore(state => state.cart);
+
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
   const [showPacks, setShowPacks] = useState(false);
@@ -149,28 +155,33 @@ export default function Page() {
   } else {
     const filteredProducts = filterProducts();
     return (
-      <section className="bg-hg-200 min-h-screen p-10">
-        <h1 className="text-3xl font-bold mb-8">
+      <Container>
+        {/*         <h1 className="text-3xl font-bold mb-8">
           Tratamientos {filteredProducts.length}
-        </h1>
-        {products.length > 0 ? (
-          <div className="flex flex-row">
-            <Filters onClickFilter={toggleFilter} />
+        </h1> */}
+        <Flex layout="row-center" className="items-start pt-8">
+          {products.length > 0 ? (
+            <>
+              <Filters onClickFilter={toggleFilter} />
 
-            <div id="tablePage" className="bg-white w-full m-1 p-5">
-              <Header onCartIconClick={handleCartIconClick} />
-              <ProductList products={filteredProducts} />
-            </div>
-            <div id="cart" className="bg-white m-1 p-5">
-              <Cart />
-            </div>
-          </div>
-        ) : (
-          <p className="text-gray-500 text-center font-blod">
-            Cargando productos...
-          </p>
-        )}
-      </section>
+              <Flex layout="col-center">
+                {/* <Header onCartIconClick={handleCartIconClick} /> */}
+                <ProductList products={filteredProducts} />
+              </Flex>
+              {cart.length > 0 && <Cart />}
+            </>
+          ) : (
+            <Flex layout="col-center">
+              <p className="mb-4">Cargando productos...</p>
+              <SvgSpinner
+                height={30}
+                width={30}
+                fill={HOLAGLOW_COLORS['lime']}
+              />
+            </Flex>
+          )}
+        </Flex>
+      </Container>
     );
   }
 }
