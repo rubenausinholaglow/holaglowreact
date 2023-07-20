@@ -18,7 +18,6 @@ export default function DashboardLayout({
           <ClinicProfessional />
         </div>
         {children}
-
         {/*
        <footer className="border-b py-8">
         <Container>
