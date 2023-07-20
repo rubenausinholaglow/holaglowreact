@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Professional, ProfessionalType } from '@interface/clinic';
 import clinicService from '@services/ClinicService';

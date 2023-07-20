@@ -26,7 +26,9 @@ const Page = () => {
       {username && (
         <Container>
           <Flex layout="col-center">
-            <p className="font-bold text-2xl mt-12">¿Qué deseas hacer?</p>
+            <p className="font-bold text-2xl mb-8">
+              Hola {username} ¿Qué deseas hacer?
+            </p>
             <div className="grid grid-cols-3">
               {menuItems.map(item => (
                 <DashboardMenuItem
