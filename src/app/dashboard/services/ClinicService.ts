@@ -1,4 +1,4 @@
-import { Clinic, Professional, ProfessionalType } from '@interface/clinic';
+import { Professional, ProfessionalType } from '@interface/clinic';
 
 export default class clinicService {
   static async getProfessionalsByClinic(

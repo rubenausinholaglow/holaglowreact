@@ -20,17 +20,20 @@ function Cart() {
 
   const handleFinalize = async () => {
     const budget: Budget = {
-      UserId: '9CE855BB-319C-4EC1-4CA5-08DB5B93470C',
-      DiscountCode: '',
-      DiscountAmount: '',
-      TotalPrice: total,
-      ClinicInfoId: 'A1C0941E-5DC2-4433-9B03-2E5A9857F2C5',
-      ReferenceId: '12353',
-      StatusBudget: 0,
-      Products: cart.map(product => ({
-        id: product.id,
-        price: product.price,
-        quantity: product.quantity ?? 0,
+      userId: '9CE855BB-319C-4EC1-4CA5-08DB5B93470C',
+      discountCode: '',
+      priceDiscount: '0',
+      percentageDiscount: '0',
+      totalPrice: total,
+      clinicInfoId: 'A1C0941E-5DC2-4433-9B03-2E5A9857F2C5',
+      referenceId: '12353',
+      statusBudget: 0,
+      products: cart.map(CartItem => ({
+        productId: CartItem.id,
+        price: CartItem.price,
+        quantity: CartItem.quantity ?? 0,
+        percentageDiscount: CartItem.percentageDiscount,
+        priceDiscount: CartItem.priceDiscount,
       })),
     };
 

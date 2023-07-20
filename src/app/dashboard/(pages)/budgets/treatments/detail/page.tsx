@@ -14,9 +14,13 @@ const Page = () => {
   const id = searchParams.get('search');
   const [product, setProduct] = useState<Product | null>(null);
 
+  console.log('test');
+
   useEffect(() => {
+    console.log('test2');
     const fetchProduct = async () => {
       try {
+        console.log('test2' + id);
         if (id) {
           const data = await ProductService.getProduct(id);
           setProduct(data);
