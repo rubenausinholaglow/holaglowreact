@@ -14,7 +14,10 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
         : item
     );
   } else {
-    return [...cart, { ...product, quantity: 1 }];
+    return [
+      ...cart,
+      { ...product, quantity: 1, percentageDiscount: '0', priceDiscount: '0' },
+    ];
   }
 }
 

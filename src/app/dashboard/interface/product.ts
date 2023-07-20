@@ -12,5 +12,7 @@ export interface Product {
 }
 
 export interface CartItem extends Product {
+  priceDiscount: string;
+  percentageDiscount: string;
   quantity?: number;
 }

@@ -58,7 +58,7 @@ export default function Page() {
     await UserService.checkUser(userEmail)
       .then(data => {
         if (data && data !== '') {
-          redirectPage(data.name);
+          redirectPage(data.firstName, data.id);
         } else {
           handleSearchError();
         }
@@ -84,7 +84,7 @@ export default function Page() {
     setIsLoading(true);
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
-      redirectPage(formData.name);
+      redirectPage(formData.name, formData.id);
       setIsLoading(false);
     } else {
       handleRequestError([config.ERROR_REGISTRATION]);
@@ -92,8 +92,9 @@ export default function Page() {
     }
   };
 
-  const redirectPage = (name: string) => {
+  const redirectPage = (name: string, id: string) => {
     localStorage.setItem('username', name);
+    localStorage.setItem('id', id);
     router.push('/dashboard/welcome');
   };
 

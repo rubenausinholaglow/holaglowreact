@@ -18,12 +18,21 @@ export default function ProductCard({ product }: Props) {
       className="border border-hg-darkMalva rounded-lg overflow-hidden"
     >
       <div className="w-full aspect-[4/3] relative shrink-0">
-        <Image
-          src="/images/budget/promoCodeBg.jpg"
-          alt={product.title}
-          fill={true}
-          style={{ objectFit: 'cover' }}
-        />
+        <Link
+          href={{
+            pathname: '/dashboard/budgets/treatments/detail',
+            query: {
+              search: product.id,
+            },
+          }}
+        >
+          <Image
+            src="/images/budget/promoCodeBg.jpg"
+            alt={product.title}
+            fill={true}
+            style={{ objectFit: 'cover' }}
+          />
+        </Link>
       </div>
       <Flex
         layout="col-left"
