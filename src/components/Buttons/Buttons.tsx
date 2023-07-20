@@ -25,8 +25,7 @@ export const Button = ({
     common: 'rounded-full px-8 py-2 text-white transition-all',
     primary: 'bg-hg-darkMalva border border-hg-darkMalva',
     secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
-    tertiary:
-      'text-hg-lightMalva border border-hg-lightMalva hover:border-hg-darkMalva hover:text-hg-darkMalva',
+    tertiary: 'text-hg-darkMalva border border-hg-darkMalva bg-white',
     sm: 'text-sm px-3 py-1',
     md: 'text-base',
     lg: 'text-lg px-12 py-4 font-semibold',

@@ -22,7 +22,7 @@ const SearchUser: React.FC<SearchBarProps> = ({
 
   console.log(errors);
   return (
-    <Container className="mt-12">
+    <Container>
       <Flex layout="col-center">
         <div>
           <Flex layout="row-left">
@@ -32,7 +32,7 @@ const SearchUser: React.FC<SearchBarProps> = ({
               value={email}
               name="emailSearch"
               placeholder="Introduce tu teléfono, email o DNI"
-              className="border rounded-lg px-4 py-2 mr-4 min-w-[300px]"
+              className="border rounded-lg px-4 py-2 mr-4 min-w-[300px] text-hg-black"
             />
             <Button type="submit" onClick={handleClick} style="primary">
               {isLoading ? <SvgSpinner height={24} width={24} /> : 'Buscar'}

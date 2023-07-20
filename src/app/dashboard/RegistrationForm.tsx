@@ -20,7 +20,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
   return (
     <Container>
-      <h1 className="font-bold text-2xl mt-12 mb-6">
+      <h1 className="font-bold text-2xl mb-6">
         ¡Vaya! ¿Todavía no te conocemos?
       </h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

@@ -1,7 +1,10 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Professional, ProfessionalType } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
+import { Flex } from 'components/Layouts/Layouts';
 
 export const ClinicProfessional = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -58,39 +61,35 @@ export const ClinicProfessional = () => {
   }
 
   return (
-    <div>
-      <div style={{ display: 'flex' }}>
-        {professionals.map(professional => (
-          <div
-            key={professional.name}
-            onClick={() => handleProfessionalClick(professional)}
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: '#ccc',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: '10px',
-              cursor: 'pointer',
-            }}
-          >
-            {showProfessionalList ? (
-              <p style={{ margin: 0, fontWeight: 'bold' }}>
-                {professional.name}
-              </p>
-            ) : (
-              <p style={{ margin: 0, fontWeight: 'bold' }}>
-                {professional.name.slice(0, 2)}
-              </p>
-            )}
-          </div>
-        ))}
-      </div>
+    <Flex layout="col-center">
+      {professionals.map(professional => (
+        <div
+          key={professional.name}
+          onClick={() => handleProfessionalClick(professional)}
+          style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            backgroundColor: '#ccc',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: '10px',
+            cursor: 'pointer',
+          }}
+        >
+          {showProfessionalList ? (
+            <p style={{ margin: 0, fontWeight: 'bold' }}>{professional.name}</p>
+          ) : (
+            <p style={{ margin: 0, fontWeight: 'bold' }}>
+              {professional.name.slice(0, 2)}
+            </p>
+          )}
+        </div>
+      ))}
       <button onClick={handleToggleProfessionalList}>
         {showProfessionalList}
       </button>
-    </div>
+    </Flex>
   );
 };

@@ -15,32 +15,23 @@ export default function ProductCard({ product }: Props) {
   return (
     <Flex
       layout="col-left"
-      className="border border-hg-darkMalva rounded-lg overflow-hidden"
+      className="border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden"
     >
       <div className="w-full aspect-[4/3] relative shrink-0">
-        <Link
-          href={{
-            pathname: '/dashboard/budgets/treatments/detail',
-            query: {
-              search: product.id,
-            },
-          }}
-        >
-          <Image
-            src="/images/budget/promoCodeBg.jpg"
-            alt={product.title}
-            fill={true}
-            style={{ objectFit: 'cover' }}
-          />
-        </Link>
+        <Image
+          src="/images/budget/promoCodeBg.jpg"
+          alt={product.title}
+          fill={true}
+          className="object-cover"
+        />
       </div>
       <Flex
         layout="col-left"
         className="border-t border-hg-darkMalva p-4 text-left w-full h-full"
       >
         <h2 className="font-semibold">{product.title}</h2>
-        <p className="text-hg-darkMalva text-sm mb-3">{product.description}</p>
-        <p className="text-xl font-semibold mb-3">
+        <p className="text-hg-lightMalva text-sm mb-3">{product.description}</p>
+        <p className="text-xl text-hg-black font-semibold mb-3">
           {product.price.toFixed(2)}€
         </p>
         <Button

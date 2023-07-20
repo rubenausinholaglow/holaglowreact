@@ -1,7 +1,8 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import Header from '@components/ui/Header';
+//import Header from '@components/ui/Header';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
@@ -15,6 +16,9 @@ import ProductList from './treatments/ProductList';
 
 export default function Page() {
   const cart = useCartStore(state => state.cart);
+
+  const [product, setProduct] = useState<Product | null>(null);
+  const [productId, setProductId] = useState<number | null>(null);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
@@ -148,40 +152,58 @@ export default function Page() {
     return productClinicIds.some(city => city && filterClinic.includes(city));
   };
 
-  const handleCartIconClick = () => {};
+  /* const id = searchParams.get('search');
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        if (id) {
+          const data = await ProductService.getProduct(id);
+          setProduct(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]); */
 
   if (error) {
     return <>{error}</>;
   } else {
     const filteredProducts = filterProducts();
     return (
-      <Container>
+      <Flex layout="col-center">
         {/*         <h1 className="text-3xl font-bold mb-8">
           Tratamientos {filteredProducts.length}
         </h1> */}
-        <Flex layout="row-center" className="items-start pt-8">
-          {products.length > 0 ? (
-            <>
-              <Filters onClickFilter={toggleFilter} />
+        {cart.length > 0 && <Cart />}
 
+        <Container>
+          <Flex layout="row-center" className="items-start pt-8">
+            {products.length > 0 ? (
+              <>
+                <Filters onClickFilter={toggleFilter} />
+
+                <Flex layout="col-center">
+                  <ProductList products={filteredProducts} />
+                </Flex>
+              </>
+            ) : (
               <Flex layout="col-center">
-                {/* <Header onCartIconClick={handleCartIconClick} /> */}
-                <ProductList products={filteredProducts} />
+                <p className="mb-4">Cargando productos...</p>
+                <SvgSpinner
+                  height={30}
+                  width={30}
+                  fill={HOLAGLOW_COLORS['lime']}
+                />
               </Flex>
-              {cart.length > 0 && <Cart />}
-            </>
-          ) : (
-            <Flex layout="col-center">
-              <p className="mb-4">Cargando productos...</p>
-              <SvgSpinner
-                height={30}
-                width={30}
-                fill={HOLAGLOW_COLORS['lime']}
-              />
-            </Flex>
-          )}
-        </Flex>
-      </Container>
+            )}
+          </Flex>
+        </Container>
+        {}
+      </Flex>
     );
   }
 }

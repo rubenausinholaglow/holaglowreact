@@ -1,6 +1,8 @@
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
+import { Button } from 'components/Buttons/Buttons';
+import { Container, Flex } from 'components/Layouts/Layouts';
 
 import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
@@ -44,26 +46,29 @@ function Cart() {
   };
 
   return (
-    <section>
-      <h3 className="text-black text-2xl font-bold mb-4">Compra:</h3>
-      <ul>
-        {cart?.map(product => <CartItem key={product.id} product={product} />)}
-      </ul>
-      <div className="flex justify-between items-center mt-4">
-        <span className="text-black text-lg font-bold">Total: </span>
-        <span className="text-black text-xl font-bold">
-          {total.toFixed(2)}€
-        </span>
-      </div>
-      <div>
-        <button
-          onClick={handleFinalize}
-          className="text-white bg-blue-500 px-4 py-2 rounded mt-2"
-        >
-          Finalizar
-        </button>
-      </div>
-    </section>
+    <div className="bg-white w-full text-left p-4">
+      <Container>
+        <Flex layout="row-left">
+          <Flex layout="col-left">
+            <p className="mb-2 text-hg-darkMalva">Productos seleccionados:</p>
+            <ul>
+              {cart?.map(product => (
+                <CartItem key={product.id} product={product} />
+              ))}
+            </ul>
+          </Flex>
+          <Flex layout="col-center" className="ml-auto text-hg-black">
+            <span className=" text-lg font-bold">Total: </span>
+            <span className=" text-xl font-bold">{total.toFixed(2)}€</span>
+            <div>
+              <Button style="primary" onClick={handleFinalize}>
+                Finalizar
+              </Button>
+            </div>
+          </Flex>
+        </Flex>
+      </Container>
+    </div>
   );
 }
 
