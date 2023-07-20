@@ -1,5 +1,6 @@
 'use client';
 
+import { ClinicProfessional } from '@components/ClinicProfessional';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { SvgHolaglow, SvgShoppingCart } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
@@ -39,6 +40,9 @@ export default function DashboardLayout({
                 />
               </Flex>
             )}
+            <Flex layout="row-right" className="ml-auto">
+              <ClinicProfessional />
+            </Flex>
           </Flex>
         </Container>
       </header>
