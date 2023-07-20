@@ -94,12 +94,8 @@ export default function Page() {
 
   const redirectPage = (name: string, id: string) => {
     localStorage.setItem('username', name);
-<<<<<<< HEAD
     localStorage.setItem('id', id);
-    router.push('/dashboard/welcome');
-=======
     router.push('/dashboard/menu');
->>>>>>> bab05b012dc30478a59f8e02240057647cde6e04
   };
 
   const handleFormFieldChange = (
