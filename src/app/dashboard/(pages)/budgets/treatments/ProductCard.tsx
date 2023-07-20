@@ -22,7 +22,7 @@ export default function ProductCard({ product }: Props) {
           src="/images/budget/promoCodeBg.jpg"
           alt={product.title}
           fill={true}
-          style={{ objectFit: 'cover' }}
+          className="object-cover"
         />
       </div>
       <Flex

@@ -162,7 +162,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className="mt-8">
       {showRegistration ? (
         <RegistrationForm
           formData={formData}
@@ -180,6 +180,6 @@ export default function Page() {
           isLoading={isLoading}
         />
       )}
-    </>
+    </div>
   );
 }

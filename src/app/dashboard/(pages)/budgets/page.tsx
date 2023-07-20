@@ -17,6 +17,9 @@ import ProductList from './treatments/ProductList';
 export default function Page() {
   const cart = useCartStore(state => state.cart);
 
+  const [product, setProduct] = useState<Product | null>(null);
+  const [productId, setProductId] = useState<number | null>(null);
+
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
   const [showPacks, setShowPacks] = useState(false);
@@ -149,7 +152,22 @@ export default function Page() {
     return productClinicIds.some(city => city && filterClinic.includes(city));
   };
 
-  const handleCartIconClick = () => {};
+  /* const id = searchParams.get('search');
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        if (id) {
+          const data = await ProductService.getProduct(id);
+          setProduct(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]); */
 
   if (error) {
     return <>{error}</>;
@@ -169,7 +187,6 @@ export default function Page() {
                 <Filters onClickFilter={toggleFilter} />
 
                 <Flex layout="col-center">
-                  {/* <Header onCartIconClick={handleCartIconClick} /> */}
                   <ProductList products={filteredProducts} />
                 </Flex>
               </>
@@ -185,6 +202,7 @@ export default function Page() {
             )}
           </Flex>
         </Container>
+        {}
       </Flex>
     );
   }

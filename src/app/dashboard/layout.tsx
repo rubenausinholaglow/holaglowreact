@@ -14,6 +14,9 @@ export default function DashboardLayout({
         layout="col-center"
         className="min-h-screen h-100 text-white text-md bg-hg-lightMalva"
       >
+        <div className="p-4 self-end">
+          <ClinicProfessional />
+        </div>
         {children}
 
         {/*
@@ -44,7 +47,6 @@ export default function DashboardLayout({
           </Flex>
         </Container>
       </footer> */}
-        <ClinicProfessional />
         <div className="pt-16 pb-8 mt-auto">
           <SvgHolaglow width={150} height={40} fill={HOLAGLOW_COLORS['lime']} />
         </div>
