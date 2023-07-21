@@ -6,6 +6,8 @@ import { Appointment } from '../types';
 export default function Issues({ appointment }: { appointment: Appointment }) {
   const { treatments } = appointment;
 
+  console.log(treatments);
+
   const flattenedIssues = treatments
     .map(item => item.treatment.product.postTreatmentInfo.possibleComplications)
     .flat();
