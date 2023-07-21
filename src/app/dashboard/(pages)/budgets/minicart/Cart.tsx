@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
+import { ERROR_POST } from '@utils/textConstants';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 
@@ -10,11 +11,14 @@ import CartItem from './CartItem';
 
 function Cart() {
   const cart = useCartStore(state => state.cart);
-  const [Guid, SetGuid] = useState('');
+  const [GuidUser, SetGuidUser] = useState('');
+  const [GuidClinic, SetGuidClinic] = useState('');
+  const [GuidProfessional, SetGuidProfessional] = useState('');
 
   useEffect(() => {
-    const guid = localStorage.getItem('id') || '';
-    SetGuid(guid);
+    SetGuidUser(localStorage.getItem('id') || '');
+    SetGuidClinic(localStorage.getItem('ClinicId') || '');
+    SetGuidProfessional(localStorage.getItem('ClinicProfessionalId') || '');
   }, []);
 
   let total = 0;
@@ -27,14 +31,15 @@ function Cart() {
 
   const handleFinalize = async () => {
     const budget: Budget = {
-      userId: Guid,
+      userId: GuidUser,
       discountCode: '',
       priceDiscount: '0',
       percentageDiscount: '0',
       totalPrice: total,
-      clinicInfoId: 'A1C0941E-5DC2-4433-9B03-2E5A9857F2C5',
+      clinicInfoId: GuidClinic,
       referenceId: '',
       statusBudget: 0,
+      professionalId: GuidProfessional,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: CartItem.price,
@@ -43,12 +48,11 @@ function Cart() {
         priceDiscount: CartItem.priceDiscount,
       })),
     };
-
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
     } catch (error) {
-      console.error('Error al enviar la solicitud POST:', error);
+      console.error(ERROR_POST, error);
     }
   };
 

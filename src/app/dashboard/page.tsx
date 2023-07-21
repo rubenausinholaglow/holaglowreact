@@ -5,6 +5,7 @@ import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
+import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import * as utils from '@utils/validators';
 import { useRouter } from 'next/navigation';
 
@@ -44,6 +45,10 @@ export default function Page() {
 
   useEffect(() => {
     localStorage.removeItem('username');
+    localStorage.removeItem('ClinicId');
+    localStorage.removeItem('ClinicProfessionalId');
+    localStorage.removeItem('id');
+    localStorage.removeItem('flowwwToken');
   }, []);
 
   const handleCheckUser = async () => {
@@ -93,12 +98,18 @@ export default function Page() {
     }
   };
 
+  async function someAsyncFunction(flowwwToken: string) {
+    try {
+      const data = await ScheduleService.getClinicSchedule(flowwwToken);
+      localStorage.setItem('ClinicId', data.clinic.id);
+      localStorage.setItem('ClinicProfessionalId', data.clinicProfessional.id);
+    } catch (err) {
+      console.error(ERROR_GETTING_DATA, err);
+    }
+  }
+
   const getScheduleInformation = (flowwwToken: string) => {
-    const data = ScheduleService.getClinicSchedule(flowwwToken);
-    const clinicId = data.clinic.id;
-    const clinicProfessionalId = data.clinicProfessional.id;
-    console.log(clinicId);
-    console.log(clinicProfessionalId);
+    someAsyncFunction(flowwwToken);
   };
 
   const redirectPage = (name: string, id: string, flowwwToken: string) => {

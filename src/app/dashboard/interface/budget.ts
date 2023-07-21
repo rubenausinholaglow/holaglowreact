@@ -7,6 +7,7 @@ export interface Budget {
   totalPrice: number;
   clinicInfoId: string;
   referenceId: string;
+  professionalId: string;
   products: BudgetProduct[];
 }
 

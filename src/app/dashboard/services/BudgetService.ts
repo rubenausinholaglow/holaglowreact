@@ -5,7 +5,7 @@ export const budgetService = {
   createBudget: async (budget: Budget) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BUDGET_API}Budget`,
+        `${process.env.NEXT_PUBLIC_PATIENTS_API}Budget`,
         {
           method: 'POST',
           headers: {
