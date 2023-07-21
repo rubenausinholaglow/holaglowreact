@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
+import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
 import * as utils from '@utils/validators';
@@ -58,7 +59,7 @@ export default function Page() {
     await UserService.checkUser(userEmail)
       .then(data => {
         if (data && data !== '') {
-          redirectPage(data.firstName, data.id);
+          redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           handleSearchError();
         }
@@ -84,7 +85,7 @@ export default function Page() {
     setIsLoading(true);
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
-      redirectPage(formData.name, formData.id);
+      redirectPage(formData.name, formData.id, formData.flowwwToken);
       setIsLoading(false);
     } else {
       handleRequestError([config.ERROR_REGISTRATION]);
@@ -92,9 +93,19 @@ export default function Page() {
     }
   };
 
-  const redirectPage = (name: string, id: string) => {
+  const getScheduleInformation = (flowwwToken: string) => {
+    const data = ScheduleService.getClinicSchedule(flowwwToken);
+    const clinicId = data.clinic.id;
+    const clinicProfessionalId = data.clinicProfessional.id;
+    console.log(clinicId);
+    console.log(clinicProfessionalId);
+  };
+
+  const redirectPage = (name: string, id: string, flowwwToken: string) => {
     localStorage.setItem('username', name);
     localStorage.setItem('id', id);
+    localStorage.setItem('flowwwToken', flowwwToken);
+    getScheduleInformation(flowwwToken);
     router.push('/dashboard/menu');
   };
 

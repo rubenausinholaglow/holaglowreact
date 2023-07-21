@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
@@ -9,6 +10,12 @@ import CartItem from './CartItem';
 
 function Cart() {
   const cart = useCartStore(state => state.cart);
+  const [Guid, SetGuid] = useState('');
+
+  useEffect(() => {
+    const guid = localStorage.getItem('id') || '';
+    SetGuid(guid);
+  }, []);
 
   let total = 0;
   if (cart) {
@@ -20,13 +27,13 @@ function Cart() {
 
   const handleFinalize = async () => {
     const budget: Budget = {
-      userId: '9CE855BB-319C-4EC1-4CA5-08DB5B93470C',
+      userId: Guid,
       discountCode: '',
       priceDiscount: '0',
       percentageDiscount: '0',
       totalPrice: total,
       clinicInfoId: 'A1C0941E-5DC2-4433-9B03-2E5A9857F2C5',
-      referenceId: '12353',
+      referenceId: '',
       statusBudget: 0,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
