@@ -10,6 +10,8 @@ import { HOLAGLOW_COLORS } from 'utils/colors';
 import { Clinic } from './types';
 
 export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
+  console.log(clinicInfo);
+
   return (
     <section className="bg-white p-8 text-hg-darkMalva mb-8">
       <SvgHolaglow
