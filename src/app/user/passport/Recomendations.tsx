@@ -13,8 +13,6 @@ export default function Recomendations({
 }: {
   appointment: Appointment;
 }) {
-  console.log(appointment.treatments);
-
   const filteredTreatments = appointment.treatments.filter(item => {
     const { treatment } = item;
 
@@ -30,8 +28,6 @@ export default function Recomendations({
     }
     return false;
   });
-
-  console.log(filteredTreatments);
 
   const first24Tips = filteredTreatments
     .map(item => {
