@@ -9,3 +9,4 @@ export const ERROR_CREATE_BUDGET = 'Error al crear el presupuesto.';
 export const ERROR_FETCHING_DATA = 'Error fetching data from the API';
 export const ERROR_FETCHING_PROFESSIONALS = 'Error fetching professionals: ';
 export const ERROR_POST = 'Error al enviar la solicitud POST: ';
+export const ERROR_GETTING_DATA = 'Error al obtener los datos:';
