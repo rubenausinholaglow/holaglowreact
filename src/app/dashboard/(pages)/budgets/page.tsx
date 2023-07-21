@@ -22,8 +22,6 @@ export default function Page() {
 
   const [productId, setProductId] = useState(true);
 
-  console.log(productId);
-
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
   const [showPacks, setShowPacks] = useState(false);

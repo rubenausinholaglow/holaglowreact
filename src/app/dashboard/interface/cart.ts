@@ -4,7 +4,6 @@ export interface State {
   cart: CartItem[];
   totalItems: number;
   totalPrice: number;
-  productHighlighted: number;
 }
 
 export interface Actions {
