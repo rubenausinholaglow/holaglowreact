@@ -11,9 +11,7 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const addToCart = useCartStore(state => state.addItemToCart);
-  const setHighlightProduct = useCartStore(
-    state => state.setHighlightProductId
-  );
+  const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
 
   return (
     <Flex
@@ -24,9 +22,8 @@ export default function ProductCard({ product }: Props) {
         <Flex
           layout="row-center"
           className="bg-hg-lime text-hg-darkMalva inset-0 w-[30px] h-[30px] rounded-full m-2 font-semibold text-xl cursor-pointer absolute z-10"
-          onClick={() => setHighlightProduct(1)}
         >
-          +
+          <span onClick={() => setHighlightProduct(product)}>+</span>
         </Flex>
         <Image
           src="/images/budget/promoCodeBg.jpg"

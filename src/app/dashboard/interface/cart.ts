@@ -1,13 +1,14 @@
-import { CartItem, Product } from './product';
+import { CartItem, emptyProduct, Product } from './product';
 
 export interface State {
   cart: CartItem[];
   totalItems: number;
   totalPrice: number;
+  productHighlighted: typeof emptyProduct;
 }
 
 export interface Actions {
   addItemToCart: (Item: Product) => void;
   removeFromCart: (Item: Product) => void;
-  setHighlightProductId: (Id: number) => void;
+  setHighlightProduct: (Item: Product) => void;
 }

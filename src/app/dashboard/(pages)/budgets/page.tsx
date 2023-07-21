@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import { Product } from '@interface/product';
+import { emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 //import Header from '@components/ui/Header';
@@ -19,8 +19,13 @@ import ProductList from './treatments/ProductList';
 
 export default function Page() {
   const cart = useCartStore(state => state.cart);
+  const productHighlighted = useCartStore(state => state.productHighlighted);
 
-  const [productId, setProductId] = useState(true);
+  console.log(productHighlighted);
+
+  const [showProductModal, setShowProductModal] = useState(
+    productHighlighted ? true : false
+  );
 
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
@@ -177,13 +182,16 @@ export default function Page() {
     const filteredProducts = filterProducts();
     return (
       <>
-        <Button style="primary" onClick={() => setProductId(!productId)}>
+        <Button
+          style="primary"
+          onClick={() => setShowProductModal(!showProductModal)}
+        >
           Show/Hide Product Highlight
         </Button>
 
         <div
           className={`text-hg-black transition-all fixed top-0 right-0 bottom-0 w-1/2 bg-white z-20 transform shadow-[0_0_10px_10px_rgba(0,0,0,0.15)] overflow-y-auto ${
-            productId ? 'translate-x-[105%]' : 'translate-x-[0%]'
+            showProductModal ? 'translate-x-[105%]' : 'translate-x-[0%]'
           }`}
         >
           <Flex layout="col-left" className="p-8 text-left relative">
@@ -191,7 +199,7 @@ export default function Page() {
               height={30}
               width={30}
               className="absolute cursor-pointer z-10"
-              onClick={() => setProductId(!productId)}
+              onClick={() => setShowProductModal(!showProductModal)}
             />
             <div className="w-full aspect-[4/3] relative shrink-0 mb-4">
               <Image
@@ -224,7 +232,7 @@ export default function Page() {
               {[...Array(4)].map((_, index) => (
                 <div
                   key={index}
-                  className="h-[200px] aspect-[6/2] rounded-2xl overflow-hidden"
+                  className="w-full aspect-video rounded-2xl overflow-hidden"
                 >
                   <Image
                     src={`/images/fakeImages/${index + 1}.jpg`}
