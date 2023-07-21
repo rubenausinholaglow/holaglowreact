@@ -41,6 +41,9 @@ module.exports = {
         lg: '1024px',
         xl: '1280px',
       },
+      boxShadow: {
+        centered: '0 0 10px 10px rgba(0,0,0,0.15)',
+      },
     },
   },
   plugins: [],

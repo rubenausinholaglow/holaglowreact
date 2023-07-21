@@ -180,26 +180,24 @@ export default function Page() {
         </h1> */}
           {cart.length > 0 && <Cart />}
           <Container>
-            <Flex layout="row-left" className="items-start pt-8">
-              {products.length > 0 ? (
-                <>
-                  <Filters onClickFilter={toggleFilter} />
+            {products.length > 0 ? (
+              <Flex layout="row-left" className="items-start pt-8">
+                <Filters onClickFilter={toggleFilter} />
 
-                  <Flex layout="col-center">
-                    <ProductList products={filteredProducts} />
-                  </Flex>
-                </>
-              ) : (
                 <Flex layout="col-center">
-                  <p className="mb-4">Cargando productos...</p>
-                  <SvgSpinner
-                    height={30}
-                    width={30}
-                    fill={HOLAGLOW_COLORS['lime']}
-                  />
+                  <ProductList products={filteredProducts} />
                 </Flex>
-              )}
-            </Flex>
+              </Flex>
+            ) : (
+              <Flex layout="col-center">
+                <p className="mb-4">Cargando productos...</p>
+                <SvgSpinner
+                  height={30}
+                  width={30}
+                  fill={HOLAGLOW_COLORS['lime']}
+                />
+              </Flex>
+            )}
           </Container>
         </Flex>
       </>

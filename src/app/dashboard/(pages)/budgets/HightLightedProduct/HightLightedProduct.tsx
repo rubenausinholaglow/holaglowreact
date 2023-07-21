@@ -18,11 +18,11 @@ export default function HightLightedProduct({
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
   return (
     <div
-      className={`text-hg-black transition-all fixed top-0 right-0 bottom-0 w-1/2 bg-white z-20 transform shadow-[0_0_10px_10px_rgba(0,0,0,0.15)] overflow-y-auto ${
+      className={`text-hg-black transition-all fixed top-0 right-0 bottom-0 w-1/2 bg-white z-20 transform shadow-centered overflow-y-auto ${
         showProductModal ? 'translate-x-[0%]' : 'translate-x-[105%]'
       }`}
     >
-      <Flex layout="col-left" className="p-8 text-left relative">
+      <Flex layout="col-left" className="p-6 text-left relative">
         <SvgClose
           height={30}
           width={30}

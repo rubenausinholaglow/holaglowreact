@@ -14,7 +14,7 @@ export default function DashboardLayout({
         layout="col-center"
         className="min-h-screen h-100 text-white text-md bg-hg-lightMalva"
       >
-        <div className="p-4 self-end">
+        <div className="pt-4 pr-6 self-end">
           <ClinicProfessional />
         </div>
         {children}

@@ -5,6 +5,8 @@ import { Professional, ProfessionalType } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
 import { Flex } from 'components/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
+import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export const ClinicProfessional = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -53,38 +55,45 @@ export const ClinicProfessional = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <SvgSpinner height={20} width={20} fill={HOLAGLOW_COLORS['lime']} />;
   }
 
   if (error) {
     return <div>{error}</div>;
   }
 
+  console.log(professionals);
+
   return (
-    <Flex layout="col-center">
+    <Flex layout="col-center" className="relative">
       {professionals.map(professional => (
         <div
           key={professional.name}
           onClick={() => handleProfessionalClick(professional)}
-          style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
-            backgroundColor: '#ccc',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: '10px',
-            cursor: 'pointer',
-          }}
         >
-          {showProfessionalList ? (
-            <p style={{ margin: 0, fontWeight: 'bold' }}>{professional.name}</p>
-          ) : (
+          {showProfessionalList && (
+            <Flex
+              layout="row-left"
+              className="absolute top-0 right-0 bg-white text-hg-black p-4 rounded-lg shadow-centered"
+            >
+              <ul>
+                <li>Pepito</li>
+                <li>Juanito</li>
+                <li>Menganito</li>
+                <li>Pulgarcito</li>
+              </ul>
+
+              {/* <p style={{ margin: 0, fontWeight: 'bold' }}>{professional.name}</p> */}
+            </Flex>
+          )}
+          <Flex
+            layout="col-center"
+            className="aspect-square h-[40px] rounded-full bg-hg-lime text-hg-darkMalva cursor-pointer justify-center relative"
+          >
             <p style={{ margin: 0, fontWeight: 'bold' }}>
               {professional.name.slice(0, 2)}
             </p>
-          )}
+          </Flex>
         </div>
       ))}
       <button onClick={handleToggleProfessionalList}>
