@@ -178,7 +178,6 @@ export default function Page() {
           {/*         <h1 className="text-3xl font-bold mb-8">
           Tratamientos {filteredProducts.length}
         </h1> */}
-          {cart.length > 0 && <Cart />}
           <Container>
             {products.length > 0 ? (
               <Flex layout="row-left" className="items-start pt-8">
@@ -199,6 +198,11 @@ export default function Page() {
               </Flex>
             )}
           </Container>
+          {cart.length > 0 && (
+            <div className="fixed bottom-0 z-10 w-full shadow-centered">
+              <Cart />
+            </div>
+          )}
         </Flex>
       </>
     );

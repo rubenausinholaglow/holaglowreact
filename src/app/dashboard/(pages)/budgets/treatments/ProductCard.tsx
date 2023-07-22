@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Product } from '@interface/product';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
@@ -5,11 +6,15 @@ import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
 
+const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
   product: Product;
 }
 
 export default function ProductCard({ product }: Props) {
+  const [imgSrc, setImgSrc] = useState(
+    `/images/product/${product.id}/${product.id}.png`
+  );
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
 
@@ -28,10 +33,11 @@ export default function ProductCard({ product }: Props) {
           </span>
         </Flex>
         <Image
-          src="/images/budget/promoCodeBg.jpg"
+          src={imgSrc}
           alt={product.title}
           fill={true}
           className="object-cover"
+          onError={() => setImgSrc(DEFAULT_IMG_SRC)}
         />
       </div>
       <Flex

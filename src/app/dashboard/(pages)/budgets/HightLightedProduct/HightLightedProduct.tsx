@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { emptyProduct, Product } from '@interface/product';
 import { Button } from 'components/Buttons/Buttons';
 import { Carousel } from 'components/Carousel/Carousel';
@@ -6,6 +7,8 @@ import { SvgClose } from 'icons/Icons';
 import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
+
+const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
 export default function HightLightedProduct({
   showProductModal,
@@ -16,25 +19,37 @@ export default function HightLightedProduct({
 }) {
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
+
+  const [imgSrc, setImgSrc] = useState(
+    `/images/product/${product.id}/${product.id}.png`
+  );
+
   return (
     <div
       className={`text-hg-black transition-all fixed top-0 right-0 bottom-0 w-1/2 bg-white z-20 transform shadow-centered overflow-y-auto ${
         showProductModal ? 'translate-x-[0%]' : 'translate-x-[105%]'
       }`}
     >
-      <Flex layout="col-left" className="p-6 text-left relative">
-        <SvgClose
-          height={30}
-          width={30}
-          className="absolute cursor-pointer z-10"
-          onClick={() => setHighlightProduct(emptyProduct)}
-        />
+      <Flex layout="col-left" className="p-6 text-left ">
+        <Flex
+          layout="col-center"
+          className="justify-center cursor-pointer z-10 absolute bg-white rounded-full p-2 left-2 top-2"
+        >
+          <SvgClose
+            height={30}
+            width={30}
+            className=""
+            onClick={() => setHighlightProduct(emptyProduct)}
+          />
+        </Flex>
+
         <div className="w-full aspect-[4/3] relative shrink-0 mb-4">
           <Image
-            src="/images/budget/promoCodeBg.jpg"
-            alt="nom del producte"
+            src={imgSrc}
+            alt={product.title}
             fill={true}
             className="object-cover"
+            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
           />
         </div>
         <p className="font-semibold text-xl mb-4">{product.title}</p>
