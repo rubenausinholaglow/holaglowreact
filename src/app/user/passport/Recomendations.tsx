@@ -72,7 +72,7 @@ export default function Recomendations({
             <SvgEnvelopeOpen height={24} width={24} fill="white" />
           </div>
         </div>
-        <p className="bg-hg-darkMalva p-1 -ml-3">my@holaglow.com</p>
+        <p className="bg-hg-darkMalva p-1 -ml-3">hola@holaglow.com</p>
       </div>
 
       <div className="bg-hg-lightMalva/20 p-16 pb-6 -mt-10">

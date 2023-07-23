@@ -1,5 +1,4 @@
 import { SvgCosmetic3, SvgEnvelopeOpen, SvgPhone } from 'icons/Icons';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Issues() {
   return (
@@ -24,7 +23,7 @@ export default function Issues() {
             <div className="flex justify-center items-center border border-white rounded-full p4 h-[56px] w-[56px]">
               <SvgEnvelopeOpen height={24} width={24} fill="white" />
             </div>
-            <p className="bg-hg-darkMalva p-1 -ml-3">my@holaglow.com</p>
+            <p className="bg-hg-darkMalva p-1 -ml-3">hola@holaglow.com</p>
           </div>
         </div>
       </div>
