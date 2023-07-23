@@ -1,21 +1,30 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import Header from '@components/ui/Header';
-import { Product } from '@interface/product';
+import { emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
+//import Header from '@components/ui/Header';
+import { Button } from 'components/Buttons/Buttons';
+import { Carousel } from 'components/Carousel/Carousel';
 import { Container, Flex } from 'components/Layouts/Layouts';
-import { SvgSpinner } from 'icons/Icons';
+import { SvgClose, SvgSpinner } from 'icons/Icons';
+import isEmpty from 'lodash/isEmpty';
+import Image from 'next/image';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
+import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import Cart from './minicart/Cart';
 import { useCartStore } from './stores/userCartStore';
 import ProductList from './treatments/ProductList';
 
 export default function Page() {
   const cart = useCartStore(state => state.cart);
+  const productHighlighted = useCartStore(state => state.productHighlighted);
+  const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
 
+  const [showProductModal, setShowProductModal] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
   const [showPacks, setShowPacks] = useState(false);
@@ -33,7 +42,13 @@ export default function Page() {
         setProducts(data);
       })
       .catch(error => setError(error));
+
+    setHighlightProduct(emptyProduct);
   }, []);
+
+  useEffect(() => {
+    setShowProductModal(!isEmpty(productHighlighted));
+  }, [productHighlighted]);
 
   const toggleFilter = (id: string, inputText: string, tag: string) => {
     switch (tag) {
@@ -148,40 +163,48 @@ export default function Page() {
     return productClinicIds.some(city => city && filterClinic.includes(city));
   };
 
-  const handleCartIconClick = () => {};
-
   if (error) {
     return <>{error}</>;
   } else {
     const filteredProducts = filterProducts();
     return (
-      <Container>
-        {/*         <h1 className="text-3xl font-bold mb-8">
+      <>
+        <HightLightedProduct
+          showProductModal={showProductModal}
+          product={productHighlighted}
+        />
+
+        <Flex layout="col-center" className="w-full">
+          {/*         <h1 className="text-3xl font-bold mb-8">
           Tratamientos {filteredProducts.length}
         </h1> */}
-        <Flex layout="row-center" className="items-start pt-8">
-          {products.length > 0 ? (
-            <>
-              <Filters onClickFilter={toggleFilter} />
+          <Container>
+            {products.length > 0 ? (
+              <Flex layout="row-left" className="items-start pt-8">
+                <Filters onClickFilter={toggleFilter} />
 
-              <Flex layout="col-center">
-                {/* <Header onCartIconClick={handleCartIconClick} /> */}
-                <ProductList products={filteredProducts} />
+                <Flex layout="col-center">
+                  <ProductList products={filteredProducts} />
+                </Flex>
               </Flex>
-              {cart.length > 0 && <Cart />}
-            </>
-          ) : (
-            <Flex layout="col-center">
-              <p className="mb-4">Cargando productos...</p>
-              <SvgSpinner
-                height={30}
-                width={30}
-                fill={HOLAGLOW_COLORS['lime']}
-              />
-            </Flex>
+            ) : (
+              <Flex layout="col-center">
+                <p className="mb-4">Cargando productos...</p>
+                <SvgSpinner
+                  height={30}
+                  width={30}
+                  fill={HOLAGLOW_COLORS['lime']}
+                />
+              </Flex>
+            )}
+          </Container>
+          {cart.length > 0 && (
+            <div className="fixed bottom-0 z-10 w-full shadow-centered">
+              <Cart />
+            </div>
           )}
         </Flex>
-      </Container>
+      </>
     );
   }
 }

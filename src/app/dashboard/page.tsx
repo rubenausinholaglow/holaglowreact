@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
+import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
+import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import * as utils from '@utils/validators';
 import { useRouter } from 'next/navigation';
 
@@ -43,6 +45,10 @@ export default function Page() {
 
   useEffect(() => {
     localStorage.removeItem('username');
+    localStorage.removeItem('ClinicId');
+    localStorage.removeItem('ClinicProfessionalId');
+    localStorage.removeItem('id');
+    localStorage.removeItem('flowwwToken');
   }, []);
 
   const handleCheckUser = async () => {
@@ -58,7 +64,7 @@ export default function Page() {
     await UserService.checkUser(userEmail)
       .then(data => {
         if (data && data !== '') {
-          redirectPage(data.name);
+          redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           handleSearchError();
         }
@@ -84,7 +90,7 @@ export default function Page() {
     setIsLoading(true);
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
-      redirectPage(formData.name);
+      redirectPage(formData.name, formData.id, formData.flowwwToken);
       setIsLoading(false);
     } else {
       handleRequestError([config.ERROR_REGISTRATION]);
@@ -92,9 +98,26 @@ export default function Page() {
     }
   };
 
-  const redirectPage = (name: string) => {
+  async function someAsyncFunction(flowwwToken: string) {
+    try {
+      const data = await ScheduleService.getClinicSchedule(flowwwToken);
+      localStorage.setItem('ClinicId', data.clinic.id);
+      localStorage.setItem('ClinicProfessionalId', data.clinicProfessional.id);
+    } catch (err) {
+      console.error(ERROR_GETTING_DATA, err);
+    }
+  }
+
+  const getScheduleInformation = (flowwwToken: string) => {
+    someAsyncFunction(flowwwToken);
+  };
+
+  const redirectPage = (name: string, id: string, flowwwToken: string) => {
     localStorage.setItem('username', name);
-    router.push('/dashboard/welcome');
+    localStorage.setItem('id', id);
+    localStorage.setItem('flowwwToken', flowwwToken);
+    getScheduleInformation(flowwwToken);
+    router.push('/dashboard/menu');
   };
 
   const handleFormFieldChange = (
@@ -162,7 +185,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className="mt-8">
       {showRegistration ? (
         <RegistrationForm
           formData={formData}
@@ -180,6 +203,6 @@ export default function Page() {
           isLoading={isLoading}
         />
       )}
-    </>
+    </div>
   );
 }

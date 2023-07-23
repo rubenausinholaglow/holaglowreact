@@ -11,10 +11,10 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      {label && <label className="text-gray-700 mb-2">{label}</label>}
+      {label && <label className="text-gray-700 mb-2 text-left">{label}</label>}
       <input
         placeholder={placeholder ? placeholder : ''}
-        className="border rounded-lg px-4 py-3 mr-4 w-full"
+        className="border rounded-lg px-4 py-3 mr-4 w-full text-hg-black"
         type="text"
         value={value}
         onChange={onChange}

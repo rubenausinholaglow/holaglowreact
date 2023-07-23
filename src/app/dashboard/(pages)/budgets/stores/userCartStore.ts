@@ -14,7 +14,10 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
         : item
     );
   } else {
-    return [...cart, { ...product, quantity: 1 }];
+    return [
+      ...cart,
+      { ...product, quantity: 1, percentageDiscount: '0', priceDiscount: '0' },
+    ];
   }
 }
 
@@ -24,6 +27,7 @@ export const useCartStore = create(
       cart: INITIAL_STATE.cart,
       totalItems: INITIAL_STATE.totalItems,
       totalPrice: INITIAL_STATE.totalPrice,
+      productHighlighted: INITIAL_STATE.productHighlighted,
       addItemToCart: (product: Product) => {
         const cart = get().cart;
         const updatedCart = calculateUpdatedCart(cart, product);
@@ -38,6 +42,11 @@ export const useCartStore = create(
           cart: state.cart.filter(item => item.id !== product.id),
           totalItems: state.totalItems - 1,
           totalPrice: state.totalPrice - product.price,
+        }));
+      },
+      setHighlightProduct: (product: Product) => {
+        set(() => ({
+          productHighlighted: product,
         }));
       },
     }),

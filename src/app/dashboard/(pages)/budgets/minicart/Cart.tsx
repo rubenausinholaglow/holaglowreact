@@ -1,12 +1,25 @@
+import { useEffect, useState } from 'react';
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
+import { ERROR_POST } from '@utils/textConstants';
+import { Button } from 'components/Buttons/Buttons';
+import { Container, Flex } from 'components/Layouts/Layouts';
 
 import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
 
 function Cart() {
   const cart = useCartStore(state => state.cart);
+  const [GuidUser, SetGuidUser] = useState('');
+  const [GuidClinic, SetGuidClinic] = useState('');
+  const [GuidProfessional, SetGuidProfessional] = useState('');
+
+  useEffect(() => {
+    SetGuidUser(localStorage.getItem('id') || '');
+    SetGuidClinic(localStorage.getItem('ClinicId') || '');
+    SetGuidProfessional(localStorage.getItem('ClinicProfessionalId') || '');
+  }, []);
 
   let total = 0;
   if (cart) {
@@ -18,49 +31,55 @@ function Cart() {
 
   const handleFinalize = async () => {
     const budget: Budget = {
-      UserId: '9CE855BB-319C-4EC1-4CA5-08DB5B93470C',
-      DiscountCode: '',
-      DiscountAmount: '',
-      TotalPrice: total,
-      ClinicInfoId: 'A1C0941E-5DC2-4433-9B03-2E5A9857F2C5',
-      ReferenceId: '12353',
-      StatusBudget: 0,
-      Products: cart.map(product => ({
-        id: product.id,
-        price: product.price,
-        quantity: product.quantity ?? 0,
+      userId: GuidUser,
+      discountCode: '',
+      priceDiscount: '0',
+      percentageDiscount: '0',
+      totalPrice: total,
+      clinicInfoId: GuidClinic,
+      referenceId: '',
+      statusBudget: 0,
+      professionalId: GuidProfessional,
+      products: cart.map(CartItem => ({
+        productId: CartItem.id,
+        price: CartItem.price,
+        quantity: CartItem.quantity ?? 0,
+        percentageDiscount: CartItem.percentageDiscount,
+        priceDiscount: CartItem.priceDiscount,
       })),
     };
-
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
     } catch (error) {
-      console.error('Error al enviar la solicitud POST:', error);
+      console.error(ERROR_POST, error);
     }
   };
 
   return (
-    <section>
-      <h3 className="text-black text-2xl font-bold mb-4">Compra:</h3>
-      <ul>
-        {cart?.map(product => <CartItem key={product.id} product={product} />)}
-      </ul>
-      <div className="flex justify-between items-center mt-4">
-        <span className="text-black text-lg font-bold">Total: </span>
-        <span className="text-black text-xl font-bold">
-          {total.toFixed(2)}€
-        </span>
-      </div>
-      <div>
-        <button
-          onClick={handleFinalize}
-          className="text-white bg-blue-500 px-4 py-2 rounded mt-2"
-        >
-          Finalizar
-        </button>
-      </div>
-    </section>
+    <div className="bg-white w-full text-left p-4">
+      <Container>
+        <Flex layout="row-left">
+          <Flex layout="col-left">
+            <p className="mb-2 text-hg-darkMalva">Productos seleccionados:</p>
+            <ul>
+              {cart?.map(product => (
+                <CartItem key={product.id} product={product} />
+              ))}
+            </ul>
+          </Flex>
+          <Flex layout="col-center" className="ml-auto text-hg-black">
+            <span className=" text-lg font-bold">Total: </span>
+            <span className=" text-xl font-bold">{total.toFixed(2)}€</span>
+            <div>
+              <Button style="primary" onClick={handleFinalize}>
+                Finalizar
+              </Button>
+            </div>
+          </Flex>
+        </Flex>
+      </Container>
+    </div>
   );
 }
 

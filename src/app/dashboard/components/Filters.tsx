@@ -25,7 +25,7 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
       <input
         type="text"
         placeholder="Filtrar por título o descripción"
-        className="border border-gray-400 rounded px-2 py-1 mt-2 text-black w-full mb-6"
+        className="border border-hg-darkMalva rounded px-2 py-1 mt-2 text-black w-full mb-6"
         onChange={handleInputChange}
       />
 

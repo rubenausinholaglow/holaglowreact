@@ -1,16 +1,20 @@
 export interface Budget {
-  UserId: string;
-  StatusBudget: number;
-  DiscountCode: string;
-  DiscountAmount: string;
-  TotalPrice: number;
-  ClinicInfoId: string;
-  ReferenceId: string;
-  Products: BudgetProduct[];
+  userId: string;
+  statusBudget: number;
+  discountCode: string;
+  priceDiscount: string;
+  percentageDiscount: string;
+  totalPrice: number;
+  clinicInfoId: string;
+  referenceId: string;
+  professionalId: string;
+  products: BudgetProduct[];
 }
 
 export interface BudgetProduct {
-  id: string;
+  productId: string;
   price: number;
   quantity: number;
+  priceDiscount: string;
+  percentageDiscount: string;
 }
