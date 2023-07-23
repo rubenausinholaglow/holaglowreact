@@ -4,10 +4,10 @@ import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Header() {
   return (
-    <header className="w-full bg-hg-lime">
-      <div className="m-4 bg-hg-darkMalva p-[1px]">
-        <div className="bg-hg-lime p-4 flex flex-col items-center">
-          <p className="tracking-[10px] mt-32 mb-2 text-hg-darkMalva">BEAUTY</p>
+    <header className="w-full bg-hg-darkMalva">
+      <div className="m-4 bg-hg-lightMalva p-[1px]">
+        <div className="bg-hg-darkMalva p-4 flex flex-col items-center">
+          <p className="tracking-[10px] mt-32 mb-2 text-hg-lime">BEAUTY</p>
           <Image
             className="mb-28"
             src="/images/passport/passport.svg"
@@ -19,7 +19,7 @@ export default function Header() {
             className="mx-auto"
             width={150}
             height={40}
-            fill={HOLAGLOW_COLORS['darkMalva']}
+            fill={HOLAGLOW_COLORS['lime']}
           />
         </div>
       </div>
