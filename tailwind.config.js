@@ -35,6 +35,16 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
+      maxWidth: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+      },
+      boxShadow: {
+        centered: '0 0 10px 10px rgba(0,0,0,0.1)',
+        'centered-sm': '0 0 5px 5px rgba(0,0,0,0.1)',
+      },
     },
   },
   plugins: [],

@@ -1,10 +1,12 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
+import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
+import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import * as utils from '@utils/validators';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from './RegistrationForm';
@@ -12,10 +14,11 @@ import SearchUser from './SearchUser';
 
 export default function Page() {
   const router = useRouter();
-  const [showPopup, setShowPopup] = useState(false);
-  const [error, setError] = useState('');
-  const [show, setShow] = useState(false);
-  const [searchUserEmail, setSearchUserEmail] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Array<string>>([]);
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -39,22 +42,29 @@ export default function Page() {
     interestedTreatment: '',
     treatmentPrice: 0,
   });
+
   useEffect(() => {
     localStorage.removeItem('username');
+    localStorage.removeItem('ClinicId');
+    localStorage.removeItem('ClinicProfessionalId');
+    localStorage.removeItem('id');
+    localStorage.removeItem('flowwwToken');
   }, []);
 
   const handleCheckUser = async () => {
-    const isEmailValid = utils.validateEmail(searchUserEmail);
+    setIsLoading(true);
+    const isEmailValid = utils.validateEmail(userEmail);
 
     if (!isEmailValid) {
-      handleRequestError(config.ERROR_EMAIL_NOT_VALID, true);
+      handleRequestError([config.ERROR_EMAIL_NOT_VALID]);
+      setIsLoading(false);
       return null;
     }
 
-    await UserService.checkUser(searchUserEmail)
+    await UserService.checkUser(userEmail)
       .then(data => {
         if (data && data !== '') {
-          redirectPage(data.name);
+          redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           handleSearchError();
         }
@@ -62,12 +72,14 @@ export default function Page() {
       .catch(error => {
         handleSearchError();
       });
+
+    setIsLoading(false);
   };
 
   const handleSearchError = async () => {
-    handleRequestError(config.ERROR_AUTHENTICATION, false);
-    setSearchUserEmail('');
-    setShow(true);
+    handleRequestError([config.ERROR_AUTHENTICATION]);
+    setUserEmail('');
+    setShowRegistration(true);
   };
 
   const handleRegistration = async () => {
@@ -75,17 +87,37 @@ export default function Page() {
   };
 
   const registerUser = async (formData: Client) => {
+    setIsLoading(true);
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
-      redirectPage(formData.name);
+      redirectPage(formData.name, formData.id, formData.flowwwToken);
+      setIsLoading(false);
     } else {
-      handleRequestError(config.ERROR_REGISTRATION, false);
+      handleRequestError([config.ERROR_REGISTRATION]);
+      setIsLoading(false);
     }
   };
 
-  const redirectPage = (name: string) => {
+  async function someAsyncFunction(flowwwToken: string) {
+    try {
+      const data = await ScheduleService.getClinicSchedule(flowwwToken);
+      localStorage.setItem('ClinicId', data.clinic.id);
+      localStorage.setItem('ClinicProfessionalId', data.clinicProfessional.id);
+    } catch (err) {
+      console.error(ERROR_GETTING_DATA, err);
+    }
+  }
+
+  const getScheduleInformation = (flowwwToken: string) => {
+    someAsyncFunction(flowwwToken);
+  };
+
+  const redirectPage = (name: string, id: string, flowwwToken: string) => {
     localStorage.setItem('username', name);
-    router.push('/dashboard/welcome');
+    localStorage.setItem('id', id);
+    localStorage.setItem('flowwwToken', flowwwToken);
+    getScheduleInformation(flowwwToken);
+    router.push('/dashboard/menu');
   };
 
   const handleFormFieldChange = (
@@ -106,77 +138,71 @@ export default function Page() {
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    setSearchUserEmail(event.target.value);
+    setUserEmail(event.target.value);
   };
 
   const handleContinue = () => {
+    setErrors([]);
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
+
     const isEmailValid = utils.validateEmail(formData.email);
     const isPhoneValid = utils.validatePhone(formData.phone);
     const areAllFieldsFilled = requiredFields.every(
       field => formData[field] !== ''
     );
 
-    if (areAllFieldsFilled && isEmailValid && isPhoneValid) {
+    if (
+      areAllFieldsFilled &&
+      isEmailValid &&
+      isPhoneValid &&
+      formData.termsAndConditionsAccepted
+    ) {
       handleRegistration();
     } else {
-      let errorMessage = '';
-      if (!isEmailValid) {
-        errorMessage = config.ERROR_EMAIL_NOT_VALID;
-      } else if (!isPhoneValid) {
-        errorMessage = config.ERROR_PHONE_NOT_VALID;
-      } else {
-        errorMessage = config.ERROR_MISSING_FIELDS;
+      const errorMessages = [];
+
+      if (!isEmailValid && formData['email'].length > 0) {
+        errorMessages.push(config.ERROR_EMAIL_NOT_VALID);
       }
-      handleRequestError(errorMessage, true);
+      if (!isPhoneValid && formData['phone'].length > 0) {
+        errorMessages.push(config.ERROR_PHONE_NOT_VALID);
+      }
+      if (requiredFields.some(field => formData[field] === '')) {
+        errorMessages.push(config.ERROR_MISSING_FIELDS);
+      }
+      if (!formData.termsAndConditionsAccepted) {
+        errorMessages.push(config.ERROR_TERMS_CONDITIONS_UNACCEPTED);
+      }
+
+      handleRequestError(errorMessages);
     }
   };
 
-  const handleRequestError = (error: string, show: boolean) => {
+  const handleRequestError = (errors: Array<string>) => {
     localStorage.clear();
-    console.log(error);
-    setError(error);
-    setShowPopup(show);
+    setErrors(errors);
   };
 
   return (
-    <section className="bg-hg-200 min-h-screen justify-center items-center">
-      <div className="flex flex-wrap justify-center items-center p-10">
-        {showPopup && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-4 rounded-lg">
-              <p className="text-red-500">{error}</p>
-              <button
-                className="text-blue-500 mt-4 px-4 py-2 rounded-lg bg-blue-200 hover:bg-blue-300 focus:outline-none"
-                onClick={() => setShowPopup(false)}
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        )}
-        <div className="w-full">
-          <Image
-            className="mx-auto m-10"
-            src="/images/dashboard/holaglow_white.png"
-            height="200"
-            width="950"
-            alt="Holaglow"
-          />
-        </div>
-        <SearchUser
-          email={searchUserEmail}
-          handleFieldChange={handleFieldEmailChange}
-          handleCheckUser={handleCheckUser}
-        />
+    <div className="mt-8">
+      {showRegistration ? (
         <RegistrationForm
           formData={formData}
           handleFieldChange={handleFormFieldChange}
           handleContinue={handleContinue}
-          isVisible={show}
+          errors={errors}
+          isLoading={isLoading}
         />
-      </div>
-    </section>
+      ) : (
+        <SearchUser
+          email={userEmail}
+          handleFieldChange={handleFieldEmailChange}
+          handleCheckUser={handleCheckUser}
+          errors={errors}
+          isLoading={isLoading}
+        />
+      )}
+    </div>
   );
 }

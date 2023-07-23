@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { ERROR_EMAIL_NOT_VALID } from '@utils/textConstants';
+import { Button } from 'components/Buttons/Buttons';
+import { Container, Flex } from 'components/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
 
 import { SearchBarProps } from './utils/props';
 
@@ -6,6 +10,7 @@ const SearchUser: React.FC<SearchBarProps> = ({
   email,
   handleFieldChange,
   handleCheckUser,
+  errors,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,34 +19,33 @@ const SearchUser: React.FC<SearchBarProps> = ({
     await handleCheckUser();
     setIsLoading(false);
   };
+
+  console.log(errors);
   return (
-    <div id="buscar" className="w-3/4">
-      <div className="bg-gray-50 p-10 rounded-2xl flex">
-        <div className="flex flex-col items-start flex-1">
-          <input
-            onChange={event => handleFieldChange(event, 'email')}
-            type="email"
-            value={email}
-            name="emailSearch"
-            className="w-full h-full mt-1 border-2 border-gray rounded-md  text-black"
-            placeholder="Introduce tu teléfono, email o DNI"
-          />
+    <Container>
+      <Flex layout="col-center">
+        <div>
+          <Flex layout="row-left">
+            <input
+              onChange={event => handleFieldChange(event, 'email')}
+              type="email"
+              value={email}
+              name="emailSearch"
+              placeholder="Introduce tu teléfono, email o DNI"
+              className="border rounded-lg px-4 py-2 mr-4 min-w-[300px] text-hg-black"
+            />
+            <Button type="submit" onClick={handleClick} style="primary">
+              {isLoading ? <SvgSpinner height={24} width={24} /> : 'Buscar'}
+            </Button>
+          </Flex>
+          {errors.includes(ERROR_EMAIL_NOT_VALID) && (
+            <p className="text-red-500 text-left text-sm ml-2 mt-2">
+              {ERROR_EMAIL_NOT_VALID}
+            </p>
+          )}
         </div>
-        <div className="flex flex-col flex-1">
-          <button
-            onClick={handleClick}
-            type="submit"
-            className="inline-flex justify-center items-center w-full h-full px-5 py-3 ml-6 text-lg font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
-          >
-            {isLoading ? (
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-            ) : (
-              'Buscar'
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
+      </Flex>
+    </Container>
   );
 };
 export default SearchUser;

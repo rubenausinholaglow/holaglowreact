@@ -1,11 +1,36 @@
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
+
+export const Container = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) => {
+  return (
+    <div
+      className={twMerge(
+        `w-full px-6 max-w-xl mx-auto ${className ? className : ''}`
+      )}
+    >
+      {children}
+    </div>
+  );
+};
 
 export const Flex = ({
   layout = 'row-left',
   className = '',
   children,
 }: {
-  layout: 'row-left' | 'row-center' | 'row-right' | 'col-left' | 'col-center' | 'col-right';
+  layout:
+    | 'row-left'
+    | 'row-center'
+    | 'row-right'
+    | 'col-left'
+    | 'col-center'
+    | 'col-right';
   className?: string;
   children: ReactNode;
 }) => {
@@ -38,9 +63,13 @@ export const Flex = ({
     },
   ];
 
-  const justify = FLEXCONFIG.filter(flexLayout => flexLayout.layout === layout)[0]?.classes;
+  const justify = FLEXCONFIG.filter(
+    flexLayout => flexLayout.layout === layout
+  )[0]?.classes;
 
-  const styles = `flex flex-${direction} ${justify} ${className}`;
-
-  return <div className={styles}>{children}</div>;
+  return (
+    <div className={twMerge(`flex flex-${direction} ${justify} ${className}`)}>
+      {children}
+    </div>
+  );
 };

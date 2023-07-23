@@ -1,5 +1,8 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
+import { Button } from 'components/Buttons/Buttons';
+import { Container, Flex } from 'components/Layouts/Layouts';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,31 +14,18 @@ export default function Page() {
   }, []);
 
   return (
-    <section className="bg-hg-200 h-screen flex flex-col justify-center items-center">
-      <div className="grid grid-cols-1 p-5">
-        <p className="text-4xl">¡Hola {username}!</p>
-      </div>
-      <div className="grid grid-cols-1">
-        <p className="text-4xl">
-          Bienvenid@ a
-          <Image
-            className="mx-auto"
-            src="/images/dashboard/holaglow_white.png"
-            height="150"
-            width="190"
-            alt="Holaglow"
-          />
-        </p>
-      </div>
-      <div className="grid grid-cols-1 p-5">
-        <p className="text-4xl text-center py-5">
+    <Container>
+      <Flex layout="col-center">
+        <p className="font-bold text-2xl mt-12 mb-4">¡Hola {username}!</p>
+        <p className="font-bold text-2xl mb-6">
           Preparad@ para ver
           <br />
           tu glow?
         </p>
-      </div>
-      <br />
-      <Link href="/dashboard/menu">menu</Link>
-    </section>
+        <Button href="/dashboard/menu" style="primary" size="lg">
+          Menu
+        </Button>
+      </Flex>
+    </Container>
   );
 }

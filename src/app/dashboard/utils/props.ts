@@ -1,10 +1,12 @@
-import { Client } from "@interface/client";
-import { Product } from "@interface/product";
+import { Client } from '@interface/client';
+import { Product } from '@interface/product';
 
 export interface TextInputFieldProps {
-  label: string;
+  placeholder?: string;
+  label?: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }
 
 export interface SearchBarProps {
@@ -14,6 +16,8 @@ export interface SearchBarProps {
     field: string
   ) => void;
   handleCheckUser: () => void;
+  errors: Array<string>;
+  isLoading: boolean;
 }
 
 export interface RegistrationFormProps {
@@ -23,7 +27,8 @@ export interface RegistrationFormProps {
     field: string
   ) => void;
   handleContinue: () => void;
-  isVisible: boolean;
+  errors: Array<string>;
+  isLoading: boolean;
 }
 
 export interface CheckboxProps {

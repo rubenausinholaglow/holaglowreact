@@ -1,39 +1,63 @@
+import { useState } from 'react';
 import { Product } from '@interface/product';
+import { Button } from 'components/Buttons/Buttons';
+import { Flex } from 'components/Layouts/Layouts';
 import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
 
+const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
   product: Product;
 }
 
 export default function ProductCard({ product }: Props) {
+  const [imgSrc, setImgSrc] = useState(
+    `/images/product/${product.id}/${product.id}.png`
+  );
   const addToCart = useCartStore(state => state.addItemToCart);
+  const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl flex flex-col justify-between p-4 ">
-      <Image
-        src="/images/budget/promoCodeBg.jpg"
-        alt={product.title}
-        width={100}
-        height={100}
-        className="object-contain w-full h-40"
-      />
-      <div className="flex-1 flex flex-col justify-between">
-        <h2 className="text-black text-lg font-semibold">{product.title}</h2>
-        <p className="text-gray-600 flex-1">{product.description}</p>
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-gray-800 font-semibold">
-            {product.price.toFixed(2)}€
-          </span>
-          <button
-            type="button"
-            className="ml-2 bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
-            onClick={() => addToCart(product)}
+    <Flex
+      layout="col-left"
+      className="border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden"
+    >
+      <div className="w-full aspect-[4/3] relative shrink-0">
+        <Flex layout="row-center" className=" cursor-pointer absolute z-10">
+          <span
+            className="bg-hg-lime text-hg-darkMalva inset-0 w-[30px] h-[30px] rounded-full m-2 font-semibold text-xl"
+            onClick={() => setHighlightProduct(product)}
           >
-            Añadir Producto
-          </button>
-        </div>
+            +
+          </span>
+        </Flex>
+        <Image
+          src={imgSrc}
+          alt={product.title}
+          fill={true}
+          className="object-cover"
+          onError={() => setImgSrc(DEFAULT_IMG_SRC)}
+        />
       </div>
-    </div>
+      <Flex
+        layout="col-left"
+        className="border-t border-hg-darkMalva p-4 text-left w-full h-full"
+      >
+        <h2 className="font-semibold">{product.title}</h2>
+        <p className="text-hg-lightMalva text-sm mb-3">{product.description}</p>
+        <p className="text-xl text-hg-black font-semibold mb-3">
+          {product.price.toFixed(2)}€
+        </p>
+        <Button
+          style="primary"
+          type="button"
+          onClick={() => addToCart(product)}
+          className="px-4 w-full mt-auto"
+        >
+          Añadir Producto
+        </Button>
+      </Flex>
+    </Flex>
   );
 }

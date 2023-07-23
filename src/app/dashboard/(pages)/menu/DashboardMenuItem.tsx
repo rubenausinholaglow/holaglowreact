@@ -11,18 +11,16 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   link,
 }) => {
   return (
-    <div className="p-5">
-      <Link href={link}>
-        <Image
-          className="mx-auto"
-          src={iconSrc}
-          height="50"
-          width="190"
-          alt={altText}
-        />
-        <p className="text-center text-lg">{title}</p>
-      </Link>
-    </div>
+    <Link href={link}>
+      <Image
+        className="mx-auto"
+        src={iconSrc}
+        height="30"
+        width="150"
+        alt={altText}
+      />
+      <p className="text-center text-lg">{title}</p>
+    </Link>
   );
 };
 

@@ -3,39 +3,40 @@ import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
 export const Button = ({
-  type = 'primary',
+  style = 'primary',
   size = 'md',
-  route = '',
+  href = '',
   className = '',
   onClick = undefined,
   children,
+  type = 'button',
   ...rest
 }: {
-  type: 'primary' | 'secondary' | 'tertiary';
+  style: 'primary' | 'secondary' | 'tertiary';
   size?: 'sm' | 'md' | 'lg';
-  route?: string;
+  href?: string;
   className?: string;
   onClick?: () => void;
   children: ReactNode;
+  type?: 'button' | 'submit' | 'reset';
   rest?: any;
 }) => {
-  const StylesConfig = {
-    primary: 'bg-hg-darkMalva text-white rounded-full px-4 py-2',
-    secondary: 'bg-hg-lightMalva text-white rounded-full px-4 py-2',
-    tertiary:
-      'text-hg-darkMalva border border-hg-darkMalva rounded-full px-4 py-2',
-    sm: 'text-xs',
+  const StylesConfig: any = {
+    common: 'rounded-full px-8 py-2 text-white transition-all',
+    primary: 'bg-hg-darkMalva border border-hg-darkMalva',
+    secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
+    tertiary: 'text-hg-darkMalva border border-hg-darkMalva bg-white',
+    sm: 'text-sm px-3 py-1',
     md: 'text-base',
-    lg: 'text-xl px-6',
+    lg: 'text-lg px-12 py-4 font-semibold',
   };
 
   const styles = twMerge(
-    `${StylesConfig[type]} ${StylesConfig[size]} ${className}`
+    `${StylesConfig.common} ${StylesConfig[style]} ${StylesConfig[size]} ${className}`
   );
-
-  if (route) {
+  if (href) {
     return (
-      <Link href={route} className={styles} {...rest}>
+      <Link href={href} className={styles} {...rest}>
         {children}
       </Link>
     );
