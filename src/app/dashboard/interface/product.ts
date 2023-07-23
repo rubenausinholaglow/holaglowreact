@@ -7,7 +7,7 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
-  pain: number;
+  pain: Pain[];
   clinic: Clinic[];
 }
 
@@ -17,4 +17,9 @@ export interface CartItem extends Product {
   priceDiscount: string;
   percentageDiscount: string;
   quantity?: number;
+}
+
+export interface Pain {
+  name: string;
+  value: number;
 }

@@ -41,6 +41,7 @@ export default function Page() {
   useEffect(() => {
     ProductService.getAllProducts()
       .then(data => {
+        console.log(data);
         setProducts(data);
       })
       .catch(error => setError(error));
@@ -115,6 +116,9 @@ export default function Page() {
 
   const filterProducts = () => {
     return products.filter(product => {
+      if (product.price <= 0) {
+        return false;
+      }
       if (showPacks && !product.isPack) {
         return false;
       }
@@ -129,9 +133,7 @@ export default function Page() {
       ) {
         return false;
       }
-      if (filterPain.length > 0 && !filterPain.includes(product.pain)) {
-        return false;
-      }
+
       if (
         filterText &&
         !matchesFilterText(product.title) &&
@@ -145,6 +147,19 @@ export default function Page() {
           return false;
         }
       }
+      if (filterPain.length > 0) {
+        if (!product.pain || product.pain.length === 0) {
+          // Si el producto no tiene datos de pain, retornar false
+          return false;
+        }
+        // Si al menos un pain del producto está presente en filterPain, retornar true
+        if (
+          !product.pain.some(painItem => filterPain.includes(painItem.value))
+        ) {
+          return false;
+        }
+      }
+
       return true;
     });
   };
@@ -327,6 +342,11 @@ export default function Page() {
                 </Flex>
               </li>
             </ul>
+
+            <select id="discountTypeSelect">
+              <option value="price">€ (Euros)</option>
+              <option value="amount">% (Porcentaje)</option>
+            </select>
 
             <Button style="primary" size="lg" className="w-full">
               Añadir producto
