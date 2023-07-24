@@ -32,25 +32,30 @@ export default function Products({
     <section className="relative">
       <ul className="flex flex-col gap-8 mt-8">
         {products.map(product => {
+          const productDetails = product.product;
+
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const [imgSrc, setImgSrc] = useState(
-            `/images/product/${product.flowwwId}/${product.flowwwId}.png`
+            `/images/product/${productDetails.flowwwId}/${productDetails.flowwwId}.png`
           );
 
           return (
-            <li key={product.flowwwId} className="flex flex-row justify-center">
+            <li
+              key={productDetails.flowwwId}
+              className="flex flex-row justify-center"
+            >
               <div className="relative bg-cover bg-center rounded-xl w-[200px] h-[200px] border border-hg-black/20 aspect-square overflow-hidden">
                 <Image
                   className="object-cover"
                   fill
                   src={imgSrc}
-                  alt={product.title}
+                  alt={productDetails.title}
                   onError={() => setImgSrc(DEFAULT_IMG_SRC)}
                 />
               </div>
               <div className="flex flex-col mt-8 ml-12 w-1/2">
                 <h3 className="font-semibold mb-4">
-                  {product.title}{' '}
+                  {productDetails.title}{' '}
                   {product.quantity > 1 && `(x${product.quantity})`}
                 </h3>
                 <div className="flex flex-row">
@@ -58,14 +63,16 @@ export default function Products({
                     <span className="block font-light text-hg-black/40 text-xs mb-1">
                       Tratamiento
                     </span>
-                    <span className="text-sm">{product.description}</span>
+                    <span className="text-sm">
+                      {productDetails.description}
+                    </span>
                   </p>
                   <p className="basis-1/2 py-4">
                     <span className="block font-light text-hg-black/40 text-xs mb-1">
                       Precio
                     </span>
                     <span className="text-3xl font-bold">
-                      {`${priceFormat(Number(product.price))}`} €
+                      {`${priceFormat(Number(productDetails.price))}`} €
                     </span>
                   </p>
                 </div>

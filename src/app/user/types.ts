@@ -7,11 +7,13 @@ export interface Clinic {
 
 export interface Product {
   quantity: number;
-  flowwwId: number;
-  title: string;
-  description: string;
-  price: number;
-  imgSrc: string;
+  product: {
+    flowwwId: number;
+    title: string;
+    description: string;
+    price: number;
+    imgSrc: string;
+  };
 }
 
 export interface Simulation {
