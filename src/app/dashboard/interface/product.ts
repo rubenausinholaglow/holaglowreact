@@ -7,7 +7,7 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
-  pain: Pain[];
+  painsCategory: Pain[];
   clinic: Clinic[];
 }
 
