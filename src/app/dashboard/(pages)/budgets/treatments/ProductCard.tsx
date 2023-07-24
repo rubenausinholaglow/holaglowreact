@@ -13,7 +13,7 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const [imgSrc, setImgSrc] = useState(
-    `/images/product/${product.id}/${product.id}.png`
+    `/images/product/${product.flowwwId}/${product.flowwwId}.png`
   );
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
