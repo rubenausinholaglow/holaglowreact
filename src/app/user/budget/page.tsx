@@ -1,3 +1,4 @@
+import Footer from '../Footer';
 import AlmaPayment from './AlmaPayment';
 import Header from './Header';
 import Legal from './Legal';
@@ -68,6 +69,7 @@ export default async function Budget({
             discountAmount={discountAmount}
           />
           <Legal />
+          <Footer clinicInfo={clinicInfo} />
         </>
       ) : (
         <p className="p-8">Budget unavailable: some data is missing</p>

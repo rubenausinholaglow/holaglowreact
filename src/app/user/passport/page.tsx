@@ -1,3 +1,4 @@
+import Footer from '../Footer';
 import Doubts from './Doubts';
 import Header from './Header';
 import Issues from './Issues';
@@ -53,6 +54,7 @@ export default async function Passport({
           <Issues appointment={appointment} />
           <PendingBonus pendingVouchers={pendingVouchers} />
           <Doubts />
+          <Footer clinicInfo={appointment.clinic} />
         </>
       ) : (
         <p className="p-8">Passport unavailable: some data is missing</p>

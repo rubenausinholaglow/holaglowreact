@@ -8,7 +8,7 @@ const emptyProduct: Product = {
   price: 0,
   isPack: false,
   zone: 0,
-  pain: 0,
+  painsCategory: [],
   clinic: [],
 };
 

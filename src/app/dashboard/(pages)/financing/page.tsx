@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import Script from 'next/script';

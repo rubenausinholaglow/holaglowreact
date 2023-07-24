@@ -62,7 +62,7 @@ export default function Page() {
         handleFilterByProperty(parseInt(id), 'zone');
         break;
       case 'Category':
-        handleFilterByProperty(parseInt(id), 'pain');
+        handleFilterByProperty(parseInt(id), 'painsCategory');
         break;
       case 'Clinic':
         applyClinicFilter(id);
@@ -133,8 +133,11 @@ export default function Page() {
       ) {
         return false;
       }
-      if (filterPain.length > 0 && !filterPain.includes(product.pain)) {
-        return false;
+      if (filterPain.length > 0) {
+        const productPains = product.painsCategory?.map(pain => pain.value);
+        if (!productPains || !hasMatchingPain(productPains)) {
+          return false;
+        }
       }
       if (
         filterText &&
@@ -161,6 +164,10 @@ export default function Page() {
 
   const hasMatchingClinic = (productClinicIds: (string | undefined)[]) => {
     return productClinicIds.some(city => city && filterClinic.includes(city));
+  };
+
+  const hasMatchingPain = (productPainIds: (number | undefined)[]) => {
+    return productPainIds.some(pain => pain && filterPain.includes(pain));
   };
 
   if (error) {
