@@ -9,6 +9,7 @@ export interface Product {
   zone: number;
   painsCategory: Pain[];
   clinic: Clinic[];
+  flowwwId: number;
 }
 
 export const emptyProduct: Product = {} as Product;

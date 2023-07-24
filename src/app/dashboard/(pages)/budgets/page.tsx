@@ -119,6 +119,9 @@ export default function Page() {
 
   const filterProducts = () => {
     return products.filter(product => {
+      if (product.price <= 0) {
+        return false;
+      }
       if (showPacks && !product.isPack) {
         return false;
       }

@@ -10,6 +10,7 @@ const emptyProduct: Product = {
   zone: 0,
   painsCategory: [],
   clinic: [],
+  flowwwId: 0,
 };
 
 export const INITIAL_STATE: State = {
