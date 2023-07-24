@@ -224,23 +224,23 @@ export default function Page() {
             </div>
             <p className="font-semibold text-xl mb-4">Nom del producte</p>
             <p className="">
-              Lorem fistrum te va a hasÃ© pupitaa de la pradera a wan condemor
-              ese que llega no te digo trigo por no llamarte Rodrigor estÃ¡ la
+              Lorem fistrum te va a hasé pupitaa de la pradera a wan condemor
+              ese que llega no te digo trigo por no llamarte Rodrigor está la
               cosa muy malar benemeritaar ese que llega. Jarl hasta luego Lucas
               ese pedazo de torpedo hasta luego Lucas no puedor diodeno la
-              caidita. Te va a hasÃ© pupitaa benemeritaar quietooor me cago en
+              caidita. Te va a hasé pupitaa benemeritaar quietooor me cago en
               tus muelas quietooor.
             </p>
             <p className="mb-16">
-              Lorem fistrum te va a hasÃ© pupitaa de la pradera a wan condemor
-              ese que llega no te digo trigo por no llamarte Rodrigor estÃ¡ la
+              Lorem fistrum te va a hasé pupitaa de la pradera a wan condemor
+              ese que llega no te digo trigo por no llamarte Rodrigor está la
               cosa muy malar benemeritaar ese que llega. Jarl hasta luego Lucas
               ese pedazo de torpedo hasta luego Lucas no puedor diodeno la
-              caidita. Te va a hasÃ© pupitaa benemeritaar quietooor me cago en
+              caidita. Te va a hasé pupitaa benemeritaar quietooor me cago en
               tus muelas quietooor.
             </p>
 
-            <p className="font-semibold text-xl mb-4">Antes y despuÃ©s</p>
+            <p className="font-semibold text-xl mb-4">Antes y después</p>
             <Carousel hasControls>
               {[...Array(4)].map((_, index) => (
                 <div
@@ -258,7 +258,7 @@ export default function Page() {
             </Carousel>
 
             <p className="font-semibold text-xl mt-16 mb-4">
-              Nuestro equipo mÃ©dico
+              Nuestro equipo médico
             </p>
             <ul className="mb-16">
               <li className="mb-4">
@@ -273,17 +273,17 @@ export default function Page() {
                   </div>
                   <Flex layout="col-left">
                     <p className="text-lg font-semibold mb-2">
-                      Dra. EspÃ­ -{' '}
+                      Dra. Espí -{' '}
                       <span className="opacity-75 font-normal">
-                        MÃ©dico EstÃ©tico NÂº Col. 505015795
+                        Médico Estético Nº Col. 505015795
                       </span>
                     </p>
                     <p className="opacity-50">
-                      Graduada en Medicina y CirugÃ­a por la Universidad de
-                      Zaragoza. MÃ¡ster en Medicina EstÃ©tica por la UDIMA.
+                      Graduada en Medicina y Cirugía por la Universidad de
+                      Zaragoza. Máster en Medicina Estética por la UDIMA.
                       Especialista en todo tipo de tratamientos inyectables en
-                      Ã¡rea facial y corporal con amplia experiencia en clÃ­nicas
-                      lÃ­deres del sector.
+                      área facial y corporal con amplia experiencia en clínicas
+                      líderes del sector.
                     </p>
                   </Flex>
                 </Flex>
@@ -302,14 +302,14 @@ export default function Page() {
                     <p className="text-lg font-semibold mb-2">
                       Dr. Basart -{' '}
                       <span className="opacity-75 font-normal">
-                        Director MÃ©dico NÂº Col. 080856206
+                        Director Médico Nº Col. 080856206
                       </span>
                     </p>
                     <p className="opacity-50">
-                      Graduado en Medicina y Cirurgia por la UAB, MÃ¡ster en
-                      Medicina EstÃ©tica por la UB y socio de la SEME. Lidera el
-                      equipo mÃ©dico para que los tratamientos cumplan con los
-                      mÃ¡ximos estÃ¡ndares de seguridad y satisfacciÃ³n.
+                      Graduado en Medicina y Cirurgia por la UAB, Máster en
+                      Medicina Estética por la UB y socio de la SEME. Lidera el
+                      equipo médico para que los tratamientos cumplan con los
+                      máximos estándares de seguridad y satisfacción.
                     </p>
                   </Flex>
                 </Flex>
@@ -326,15 +326,15 @@ export default function Page() {
                   </div>
                   <Flex layout="col-left">
                     <p className="text-lg font-semibold mb-2">
-                      MarÃ­a Terroba -{' '}
+                      María Terroba -{' '}
                       <span className="opacity-75 font-normal">
-                        Directora de clÃ­nica
+                        Directora de clínica
                       </span>
                     </p>
                     <p className="opacity-50">
-                      Grado en PsicologÃ­a y MÃ¡ster en PsicologÃ­a JurÃ­dica y
-                      Forense. Grado en Medicina y cursando MÃ¡ster en Medicina
-                      EstÃ©tica.
+                      Grado en Psicología y Máster en Psicología Jurídica y
+                      Forense. Grado en Medicina y cursando Máster en Medicina
+                      Estética.
                     </p>
                   </Flex>
                 </Flex>
@@ -342,12 +342,12 @@ export default function Page() {
             </ul>
 
             <select id="discountTypeSelect">
-              <option value="price">â‚¬ (Euros)</option>
+              <option value="price">€ (Euros)</option>
               <option value="amount">% (Porcentaje)</option>
             </select>
 
             <Button style="primary" size="lg" className="w-full">
-              AÃ±adir producto
+              Añadir producto
             </Button>
           </Flex>
         </div>
