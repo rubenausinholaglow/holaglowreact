@@ -31,6 +31,10 @@ export default function Treatments({
       {appointment.treatments.map((item, index) => {
         const { treatment } = item;
 
+        if (treatment.product.flowwwId === '0') {
+          return <></>;
+        }
+
         return (
           <div key={index} className="bg-[#F1F4FE] rounded-[25px] p-8 mb-12">
             <div className="flex">

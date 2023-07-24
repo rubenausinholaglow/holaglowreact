@@ -32,6 +32,7 @@ export interface ClinicProfessional {
 export interface Treatment {
   treatment: {
     product: {
+      flowwwId: string;
       title: string;
       description: string;
       durationMin: number;
