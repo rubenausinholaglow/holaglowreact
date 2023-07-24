@@ -21,17 +21,10 @@ export default function ProductCard({ product }: Props) {
   return (
     <Flex
       layout="col-left"
-      className="border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden"
+      className="border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden cursor-pointer"
+      onClick={() => setHighlightProduct(product)}
     >
       <div className="w-full aspect-[4/3] relative shrink-0">
-        <Flex layout="row-center" className=" cursor-pointer absolute z-10">
-          <span
-            className="bg-hg-lime text-hg-darkMalva inset-0 w-[30px] h-[30px] rounded-full m-2 font-semibold text-xl"
-            onClick={() => setHighlightProduct(product)}
-          >
-            +
-          </span>
-        </Flex>
         <Image
           src={imgSrc}
           alt={product.title}
@@ -52,7 +45,10 @@ export default function ProductCard({ product }: Props) {
         <Button
           style="primary"
           type="button"
-          onClick={() => addToCart(product)}
+          onClick={e => {
+            e.stopPropagation();
+            addToCart(product);
+          }}
           className="px-4 w-full mt-auto"
         >
           Añadir Producto

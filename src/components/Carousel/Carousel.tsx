@@ -1,9 +1,18 @@
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
-import { Children, ReactNode,useState } from 'react';
+import { Children, ReactNode, useState } from 'react';
+import { Flex } from 'components/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
-import { ButtonBack, ButtonNext, CarouselProvider, Slide,Slider } from 'pure-react-carousel';
+import {
+  ButtonBack,
+  ButtonNext,
+  CarouselProvider,
+  Slide,
+  Slider,
+} from 'pure-react-carousel';
+
+import { CarouselNavigation } from './CarouselNavigation';
 
 export const Carousel = ({
   children,
@@ -15,7 +24,7 @@ export const Carousel = ({
   visibleSlides = 1,
   totalSlides = 1,
   step = 1,
-  currentSlide = 1,
+  currentSlide = 0,
   dragEnabled = false,
   touchEnabled = false,
   ...props
@@ -38,16 +47,20 @@ export const Carousel = ({
   const childrens = Children.toArray(children);
 
   const handleBackButton = () => {
-    currentSlideIndex === 0 ? setCurrentSlideIndex(childrens.length - 1) : setCurrentSlideIndex(currentSlideIndex - 1);
+    currentSlideIndex === 0
+      ? setCurrentSlideIndex(childrens.length - 1)
+      : setCurrentSlideIndex(currentSlideIndex - 1);
   };
 
   const handleNextButton = () => {
-    currentSlideIndex === childrens.length - 1 ? setCurrentSlideIndex(0) : setCurrentSlideIndex(currentSlideIndex + 1);
+    currentSlideIndex === childrens.length - 1
+      ? setCurrentSlideIndex(0)
+      : setCurrentSlideIndex(currentSlideIndex + 1);
   };
 
   return (
     <CarouselProvider
-      className='relative w-full'
+      className="relative w-full"
       isIntrinsicHeight={isIntrinsicHeight}
       naturalSlideHeight={naturalSlideHeight}
       naturalSlideWidth={naturalSlideWidth}
@@ -59,26 +72,6 @@ export const Carousel = ({
       touchEnabled={touchEnabled}
       {...props}
     >
-      {hasControls ? (
-        <ButtonBack
-          onClick={() => {
-            handleBackButton();
-          }}
-        >
-          <SvgArrowSmallLeft height={20} width={20} className='rotate-180' />
-        </ButtonBack>
-      ) : null}
-
-      {hasControls ? (
-        <ButtonNext
-          onClick={() => {
-            handleNextButton();
-          }}
-        >
-          <SvgArrowSmallLeft height={20} width={20} />
-        </ButtonNext>
-      ) : null}
-
       <Slider>
         {childrens.map((children, i) => (
           // eslint-disable-next-line react/no-array-index-key
@@ -87,6 +80,30 @@ export const Carousel = ({
           </Slide>
         ))}
       </Slider>
+
+      {hasControls ? (
+        <CarouselNavigation type="back">
+          <ButtonBack
+            onClick={() => {
+              handleBackButton();
+            }}
+          >
+            <SvgArrowSmallLeft height={30} width={30} />
+          </ButtonBack>
+        </CarouselNavigation>
+      ) : null}
+
+      {hasControls ? (
+        <CarouselNavigation type="next">
+          <ButtonNext
+            onClick={() => {
+              handleNextButton();
+            }}
+          >
+            <SvgArrowSmallLeft height={30} width={30} className="rotate-180" />
+          </ButtonNext>
+        </CarouselNavigation>
+      ) : null}
 
       {/*       {hasDots ? (
         <Box paddingTop='m'>

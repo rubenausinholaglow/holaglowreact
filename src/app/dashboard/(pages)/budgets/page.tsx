@@ -3,15 +3,14 @@
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
 import { emptyProduct, Product } from '@interface/product';
+import * as Dialog from '@radix-ui/react-dialog';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
-//import Header from '@components/ui/Header';
-import { Button } from 'components/Buttons/Buttons';
-import { Carousel } from 'components/Carousel/Carousel';
 import { Container, Flex } from 'components/Layouts/Layouts';
+import { Modal } from 'components/Modals/Modal';
+import { ModalBackground } from 'components/Modals/ModalBackground';
 import { SvgClose, SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
-import Image from 'next/image';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
@@ -35,6 +34,8 @@ export default function Page() {
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
   >([]);
+
+  console.log(productHighlighted, showProductModal);
 
   useEffect(() => {
     ProductService.getAllProducts()
@@ -179,18 +180,17 @@ export default function Page() {
     const filteredProducts = filterProducts();
     return (
       <>
-        <HightLightedProduct
-          showProductModal={showProductModal}
-          product={productHighlighted}
-        />
-
+        <ModalBackground
+          isVisible={showProductModal}
+          onClick={() => setHighlightProduct(emptyProduct)}
+        ></ModalBackground>
+        <Modal isVisible={showProductModal}>
+          <HightLightedProduct product={productHighlighted} />
+        </Modal>
         <Flex layout="col-center" className="w-full">
-          {/*         <h1 className="text-3xl font-bold mb-8">
-          Tratamientos {filteredProducts.length}
-        </h1> */}
           <Container>
             {products.length > 0 ? (
-              <Flex layout="row-left" className="items-start pt-8">
+              <Flex layout="row-left" className="items-start">
                 <Filters onClickFilter={toggleFilter} />
 
                 <Flex layout="col-center">
