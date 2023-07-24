@@ -149,10 +149,8 @@ export default function Page() {
       }
       if (filterPain.length > 0) {
         if (!product.pain || product.pain.length === 0) {
-          // Si el producto no tiene datos de pain, retornar false
           return false;
         }
-        // Si al menos un pain del producto está presente en filterPain, retornar true
         if (
           !product.pain.some(painItem => filterPain.includes(painItem.value))
         ) {
