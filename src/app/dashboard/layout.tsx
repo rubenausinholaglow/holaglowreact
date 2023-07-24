@@ -9,12 +9,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen h-100 text-white text-md bg-hg-lightMalva">
+    <main className="min-h-screen h-100 text-md bg-hg-lightMalva/20">
       <Flex
         layout="col-center"
-        className="min-h-screen h-100 text-white text-md bg-hg-lightMalva"
+        className="min-h-screen h-100 text-hg-black text-md bg-hg-lightMalva/20"
       >
-        <div className="p-4 self-end">
+        <div className="pt-4 pr-6 self-end z-10">
           <ClinicProfessional />
         </div>
         {children}

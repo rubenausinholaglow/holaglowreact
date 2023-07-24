@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Product } from '@interface/product';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
@@ -5,11 +6,15 @@ import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
 
+const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
   product: Product;
 }
 
 export default function ProductCard({ product }: Props) {
+  const [imgSrc, setImgSrc] = useState(
+    `/images/product/${product.id}/${product.id}.png`
+  );
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
 
@@ -19,17 +24,20 @@ export default function ProductCard({ product }: Props) {
       className="border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden"
     >
       <div className="w-full aspect-[4/3] relative shrink-0">
-        <Flex
-          layout="row-center"
-          className="bg-hg-lime text-hg-darkMalva inset-0 w-[30px] h-[30px] rounded-full m-2 font-semibold text-xl cursor-pointer absolute z-10"
-        >
-          <span onClick={() => setHighlightProduct(product)}>+</span>
+        <Flex layout="row-center" className=" cursor-pointer absolute z-10">
+          <span
+            className="bg-hg-lime text-hg-darkMalva inset-0 w-[30px] h-[30px] rounded-full m-2 font-semibold text-xl"
+            onClick={() => setHighlightProduct(product)}
+          >
+            +
+          </span>
         </Flex>
         <Image
-          src="/images/budget/promoCodeBg.jpg"
+          src={imgSrc}
           alt={product.title}
           fill={true}
           className="object-cover"
+          onError={() => setImgSrc(DEFAULT_IMG_SRC)}
         />
       </div>
       <Flex
