@@ -6,7 +6,23 @@ import { Appointment } from '../types';
 export default function Issues({ appointment }: { appointment: Appointment }) {
   const { treatments } = appointment;
 
-  const flattenedIssues = treatments
+  const filteredTreatments = treatments.filter(item => {
+    const { treatment } = item;
+
+    if (
+      treatment.product &&
+      treatment.product.postTreatmentInfo &&
+      Array.isArray(
+        treatment.product.postTreatmentInfo.possibleComplications
+      ) &&
+      treatment.product.postTreatmentInfo.possibleComplications.length > 0
+    ) {
+      return true;
+    }
+    return false;
+  });
+
+  const flattenedIssues = filteredTreatments
     .map(item => item.treatment.product.postTreatmentInfo.possibleComplications)
     .flat();
   const normalIssues = flattenedIssues.filter(
