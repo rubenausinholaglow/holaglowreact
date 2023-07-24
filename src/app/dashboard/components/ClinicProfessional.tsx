@@ -13,14 +13,16 @@ export const ClinicProfessional = () => {
   const [selectedProfessional, setSelectedProfessional] =
     useState<Professional | null>(null);
   const [showProfessionalList, setShowProfessionalList] = useState(false);
+  const [GuidClinic, SetGuidClinic] = useState('');
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    SetGuidClinic(localStorage.getItem('ClinicId') || '');
     const fetchProfessionals = async () => {
       try {
-        const clinicId = 'A1C0941E-5DC2-4433-9B03-2E5A9857F2C5';
+        const clinicId = GuidClinic;
         const professionalType = ProfessionalType.Medical;
         const professionalsData = await clinicService.getProfessionalsByClinic(
           clinicId,
