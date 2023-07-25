@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
 import { emptyProduct, Product } from '@interface/product';
-import * as Dialog from '@radix-ui/react-dialog';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Modal } from 'components/Modals/Modal';
 import { ModalBackground } from 'components/Modals/ModalBackground';
-import { SvgClose, SvgSpinner } from 'icons/Icons';
+import { SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
@@ -34,8 +33,6 @@ export default function Page() {
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
   >([]);
-
-  console.log(productHighlighted, showProductModal);
 
   useEffect(() => {
     ProductService.getAllProducts()
@@ -119,45 +116,47 @@ export default function Page() {
   };
 
   const filterProducts = () => {
-    return products.filter(product => {
-      if (product.price <= 0) {
-        return false;
-      }
-      if (showPacks && !product.isPack) {
-        return false;
-      }
-      if (filterZones.length > 0 && !filterZones.includes(product.zone)) {
-        return false;
-      }
-      if (
-        priceRanges.length > 0 &&
-        !priceRanges.some(
-          range => range.min <= product.price && product.price <= range.max
-        )
-      ) {
-        return false;
-      }
-      if (filterPain.length > 0) {
-        const productPains = product.painsCategory?.map(pain => pain.value);
-        if (!productPains || !hasMatchingPain(productPains)) {
+    if (!isEmpty(products)) {
+      return products.filter(product => {
+        if (product.price <= 0) {
           return false;
         }
-      }
-      if (
-        filterText &&
-        !matchesFilterText(product.title) &&
-        !matchesFilterText(product.description)
-      ) {
-        return false;
-      }
-      if (filterClinic.length > 0) {
-        const productClinicIds = product.clinic?.map(clinic => clinic.city);
-        if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
+        if (showPacks && !product.isPack) {
           return false;
         }
-      }
-      return true;
-    });
+        if (filterZones.length > 0 && !filterZones.includes(product.zone)) {
+          return false;
+        }
+        if (
+          priceRanges.length > 0 &&
+          !priceRanges.some(
+            range => range.min <= product.price && product.price <= range.max
+          )
+        ) {
+          return false;
+        }
+        if (filterPain.length > 0) {
+          const productPains = product.painsCategory?.map(pain => pain.value);
+          if (!productPains || !hasMatchingPain(productPains)) {
+            return false;
+          }
+        }
+        if (
+          filterText &&
+          !matchesFilterText(product.title) &&
+          !matchesFilterText(product.description)
+        ) {
+          return false;
+        }
+        if (filterClinic.length > 0) {
+          const productClinicIds = product.clinic?.map(clinic => clinic.city);
+          if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
   };
 
   const matchesFilterText = (text: string) => {
@@ -185,7 +184,7 @@ export default function Page() {
           onClick={() => setHighlightProduct(emptyProduct)}
         ></ModalBackground>
         <Modal isVisible={showProductModal}>
-          <HightLightedProduct product={productHighlighted} />
+          <HightLightedProduct />
         </Modal>
         <Flex layout="col-center" className="w-full">
           <Container>

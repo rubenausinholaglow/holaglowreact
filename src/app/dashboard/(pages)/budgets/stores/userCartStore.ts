@@ -1,4 +1,5 @@
 import { Actions, State } from '@interface/cart';
+import { Professional } from '@interface/clinic';
 import { CartItem, Product } from '@interface/product';
 import { INITIAL_STATE } from '@utils/constants';
 import { create } from 'zustand';
@@ -28,6 +29,7 @@ export const useCartStore = create(
       totalItems: INITIAL_STATE.totalItems,
       totalPrice: INITIAL_STATE.totalPrice,
       productHighlighted: INITIAL_STATE.productHighlighted,
+      professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: Product) => {
         const cart = get().cart;
         const updatedCart = calculateUpdatedCart(cart, product);
@@ -47,6 +49,11 @@ export const useCartStore = create(
       setHighlightProduct: (product: Product) => {
         set(() => ({
           productHighlighted: product,
+        }));
+      },
+      setProfessionals: (professionals: Professional[]) => {
+        set(() => ({
+          professionals: professionals,
         }));
       },
     }),

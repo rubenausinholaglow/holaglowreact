@@ -51,7 +51,7 @@ export default function ProductCard({ product }: Props) {
           }}
           className="px-4 w-full mt-auto"
         >
-          Añadir Producto
+          Seleccionar
         </Button>
       </Flex>
     </Flex>

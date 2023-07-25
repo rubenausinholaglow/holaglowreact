@@ -1,16 +1,21 @@
 import { State } from '@interface/cart';
+//import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
 
 const emptyProduct: Product = {
   id: '',
   title: '',
   description: '',
+  detail: '',
   price: 0,
   isPack: false,
   zone: 0,
   painsCategory: [],
   clinic: [],
   flowwwId: 0,
+  durationMin: 0,
+  durationMax: 0,
+  beforeAndAfterImages: [],
 };
 
 export const INITIAL_STATE: State = {
@@ -18,4 +23,5 @@ export const INITIAL_STATE: State = {
   totalItems: 0,
   totalPrice: 0,
   productHighlighted: emptyProduct,
+  professionals: [],
 };

@@ -6,9 +6,14 @@ import clinicService from '@services/ClinicService';
 import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
 import { Flex } from 'components/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
+import { isEmpty } from 'lodash';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
+import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
+
 export const ClinicProfessional = () => {
+  const setProfessionalsInStore = useCartStore(state => state.setProfessionals);
+
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [selectedProfessional, setSelectedProfessional] =
     useState<Professional | null>(null);
@@ -23,6 +28,7 @@ export const ClinicProfessional = () => {
     const fetchProfessionals = async () => {
       try {
         const clinicId = GuidClinic;
+
         const professionalType = ProfessionalType.Medical;
         const professionalsData = await clinicService.getProfessionalsByClinic(
           clinicId,
@@ -32,6 +38,7 @@ export const ClinicProfessional = () => {
           setError(professionalsData);
         } else {
           setProfessionals(professionalsData);
+          setProfessionalsInStore(professionalsData);
         }
       } catch (error) {
         setError(ERROR_FETCHING_PROFESSIONALS + (error as Error).message);
@@ -48,8 +55,8 @@ export const ClinicProfessional = () => {
       setShowProfessionalList(prevState => !prevState);
     } else {
       setSelectedProfessional(professional);
-      setShowProfessionalList(true);
     }
+    setShowProfessionalList(false);
   };
 
   const handleToggleProfessionalList = () => {
@@ -64,43 +71,52 @@ export const ClinicProfessional = () => {
     return <div>{error}</div>;
   }
 
-  console.log(professionals);
+  if (isEmpty(professionals[0].name)) {
+    return <></>;
+  }
 
   return (
     <Flex layout="col-center" className="relative">
-      {professionals.map(professional => (
-        <div
-          key={professional.name}
-          onClick={() => handleProfessionalClick(professional)}
-        >
-          <Flex
-            layout="row-left"
-            className={`
-              transition-all opacity-0 pointer-events-none absolute top-[20px] right-[20px] 
-              bg-white text-hg-black p-4 rounded-lg border border-hg-black/20 text-left 
-              ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
-          >
-            <ul className="w-[125px]">
-              <li>Dra. Espí</li>
-              <li>Dr. Basart</li>
-              <li>María Terroba</li>
-            </ul>
-
-            {/* <p style={{ margin: 0, fontWeight: 'bold' }}>{professional.name}</p> */}
-          </Flex>
-          <Flex
-            layout="col-center"
-            className="aspect-square h-[40px] rounded-full bg-hg-lime text-hg-darkMalva cursor-pointer justify-center relative"
-          >
-            <p style={{ margin: 0, fontWeight: 'bold' }}>
-              {professional.name.slice(0, 2)}
-            </p>
-          </Flex>
-        </div>
-      ))}
-      <button onClick={handleToggleProfessionalList}>
-        {showProfessionalList}
-      </button>
+      <Flex
+        layout="row-left"
+        className={`
+            transition-all opacity-0 pointer-events-none absolute top-[20px] right-[20px] 
+            bg-white text-hg-black p-2 rounded-lg border border-hg-black/20 text-left 
+            ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
+      >
+        <ul className="w-[125px]">
+          {professionals.map(professional => (
+            <li
+              onClick={() => handleProfessionalClick(professional)}
+              key={professional.name}
+              className="px-2 py-1 cursor-pointer hover:font-semibold"
+            >
+              {professional.name}
+            </li>
+          ))}
+        </ul>
+      </Flex>
+      <Flex
+        layout="col-center"
+        onClick={() =>
+          professionals.length > 1 && handleToggleProfessionalList()
+        }
+        className={`aspect-square h-[40px] rounded-full bg-hg-lime text-hg-darkMalva justify-center relative ${
+          professionals.length > 1 && 'cursor-pointer'
+        }`}
+      >
+        <p style={{ margin: 0, fontWeight: 'bold' }}>
+          {selectedProfessional
+            ? selectedProfessional.name
+                .split(' ')
+                .map(word => word.charAt(0))
+                .join('')
+            : professionals[0].name
+                .split(' ')
+                .map(word => word.charAt(0))
+                .join('')}
+        </p>
+      </Flex>
     </Flex>
   );
 };

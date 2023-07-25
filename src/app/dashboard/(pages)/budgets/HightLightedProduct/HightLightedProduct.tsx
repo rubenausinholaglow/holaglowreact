@@ -1,154 +1,182 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { emptyProduct, Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 import { Button } from 'components/Buttons/Buttons';
 import { Carousel } from 'components/Carousel/Carousel';
 import { Flex } from 'components/Layouts/Layouts';
-import { SvgClose } from 'icons/Icons';
+import { SvgClose, SvgSpinner } from 'icons/Icons';
+import isEmpty from 'lodash/isEmpty';
 import Image from 'next/image';
+import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { useCartStore } from '../stores/userCartStore';
 
 const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
-export default function HightLightedProduct({ product }: { product: Product }) {
+export default function HightLightedProduct() {
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
+  const productHighlighted = useCartStore(state => state.productHighlighted);
+  const professionals = useCartStore(state => state.professionals);
 
-  const [imgSrc, setImgSrc] = useState(
-    `/images/product/${product.id}/${product.id}.png`
-  );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [imgSrc, setImgSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setProduct(null);
+    setImgSrc(null);
+
+    const fetchProduct = async () => {
+      try {
+        if (productHighlighted.id) {
+          const data = await ProductService.getProduct(productHighlighted.id);
+
+          setProduct(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchProduct();
+  }, [productHighlighted]);
+
+  useEffect(() => {
+    if (isEmpty(product)) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [product]);
+
+  if (isEmpty(product)) {
+    return <></>;
+  }
 
   return (
-    <Flex layout="col-left" className="p-6 text-left ">
+    <>
+      <SvgSpinner
+        height={50}
+        width={50}
+        fill={HOLAGLOW_COLORS['lime']}
+        className={`transition-all delay-1000 opacity-1 absolute top-1/2 left-1/2 -ml-[25px] -mt-[25px] ${
+          !isLoading && 'opacity-0'
+        }`}
+      />
       <Flex
-        layout="col-center"
-        className="justify-center cursor-pointer z-10 absolute bg-white rounded-full p-2 left-2 top-2"
+        layout="col-left"
+        className={`transition-all delay-1000 opacity-0 p-6 text-left ${
+          !isLoading && 'opacity-1'
+        }`}
       >
-        <SvgClose
-          height={30}
-          width={30}
-          className=""
-          onClick={() => setHighlightProduct(emptyProduct)}
-        />
-      </Flex>
+        <Flex
+          layout="col-center"
+          className="transition-all justify-center cursor-pointer z-10 absolute bg-white rounded-full p-2 left-2 top-2 "
+        >
+          <SvgClose
+            height={30}
+            width={30}
+            className=""
+            onClick={() => setHighlightProduct(emptyProduct)}
+          />
+        </Flex>
 
-      <div className="w-full aspect-[4/3] relative shrink-0 mb-4">
-        <Image
-          src={imgSrc}
-          alt={product.title}
-          fill={true}
-          className="object-cover"
-          onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-        />
-      </div>
-      <p className="font-semibold text-xl mb-4">{product.title}</p>
-      <p className="mb-16">{product.description}</p>
+        <div className="w-full aspect-[4/3] relative shrink-0 mb-4">
+          <Image
+            src={
+              imgSrc
+                ? imgSrc
+                : `/images/product/${product.flowwwId}/${product.flowwwId}.png`
+            }
+            alt={product.title}
+            fill={true}
+            className="object-cover"
+            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
+          />
+        </div>
+        <p className="font-semibold text-xl mb-4">
+          {product.title} -{' '}
+          <span className="text-xl text-hg-black font-semibold mb-3">
+            {product.price.toFixed(2)}€
+          </span>
+        </p>
+        <p className="mb-16">
+          {product.description}
+          {product?.detail}
+        </p>
+        {/* {product.durationMin > 0 && (
+          <p className="text-hg-lightMalva text-xs mb-1">
+            Duración
+          </p>
+          <p>{`de ${product.durationMin / 30} a ${
+            product.durationMax / 30
+          } meses`}</p>
+        )}
+        */}
 
-      <p className="font-semibold text-xl mb-4">Antes y después</p>
-      <Carousel hasControls>
-        {[...Array(4)].map((_, index) => (
-          <div
-            key={index}
-            className="w-full aspect-video rounded-2xl overflow-hidden"
-          >
-            <Image
-              src={`/images/fakeImages/${index + 1}.jpg`}
-              alt="nom del producte"
-              fill={true}
-              className="object-cover rounded-2xl"
-            />
+        {product.beforeAndAfterImages.length > 0 && (
+          <div className="mb-16">
+            <p className="font-semibold text-xl mb-4">Antes y después</p>
+            <Carousel hasControls>
+              {product.beforeAndAfterImages.map((image, index) => (
+                <div
+                  key={index}
+                  className="w-full aspect-video rounded-2xl overflow-hidden"
+                >
+                  <Image
+                    src={`/images/fakeImages/${index + 1}.jpg`}
+                    alt="nom del producte"
+                    fill={true}
+                    className="object-cover rounded-2xl"
+                  />
+                </div>
+              ))}
+            </Carousel>
           </div>
-        ))}
-      </Carousel>
+        )}
 
-      <p className="font-semibold text-xl mt-16 mb-4">Nuestro equipo médico</p>
-      <ul className="mb-16">
-        <li className="mb-4">
-          <Flex layout="row-left">
-            <div className="w-[125px] aspect-square overflow-hidden rounded-full relative shrink-0 mr-4">
-              <Image
-                src="/images/fakeImages/1.webp"
-                alt="metge"
-                fill={true}
-                className="object-cover"
-              />
-            </div>
-            <Flex layout="col-left">
-              <p className="text-lg font-semibold mb-2">
-                Dra. Espí -{' '}
-                <span className="opacity-75 font-normal">
-                  Médico Estético Nº Col. 505015795
-                </span>
-              </p>
-              <p className="opacity-50">
-                Graduada en Medicina y Cirugía por la Universidad de Zaragoza.
-                Máster en Medicina Estética por la UDIMA. Especialista en todo
-                tipo de tratamientos inyectables en área facial y corporal con
-                amplia experiencia en clínicas líderes del sector.
-              </p>
-            </Flex>
-          </Flex>
-        </li>
-        <li className="mb-4">
-          <Flex layout="row-left">
-            <div className="w-[125px] aspect-square overflow-hidden rounded-full relative shrink-0 mr-4">
-              <Image
-                src="/images/fakeImages/3.webp"
-                alt="metge"
-                fill={true}
-                className="object-cover"
-              />
-            </div>
-            <Flex layout="col-left">
-              <p className="text-lg font-semibold mb-2">
-                Dr. Basart -{' '}
-                <span className="opacity-75 font-normal">
-                  Director Médico Nº Col. 080856206
-                </span>
-              </p>
-              <p className="opacity-50">
-                Graduado en Medicina y Cirurgia por la UAB, Máster en Medicina
-                Estética por la UB y socio de la SEME. Lidera el equipo médico
-                para que los tratamientos cumplan con los máximos estándares de
-                seguridad y satisfacción.
-              </p>
-            </Flex>
-          </Flex>
-        </li>
-        <li className="mb-4">
-          <Flex layout="row-left">
-            <div className="w-[125px] aspect-square overflow-hidden rounded-full relative shrink-0 mr-4">
-              <Image
-                src="/images/fakeImages/2.webp"
-                alt="metge"
-                fill={true}
-                className="object-cover"
-              />
-            </div>
-            <Flex layout="col-left">
-              <p className="text-lg font-semibold mb-2">
-                María Terroba -{' '}
-                <span className="opacity-75 font-normal">
-                  Directora de clínica
-                </span>
-              </p>
-              <p className="opacity-50">
-                Grado en Psicología y Máster en Psicología Jurídica y Forense.
-                Grado en Medicina y cursando Máster en Medicina Estética.
-              </p>
-            </Flex>
-          </Flex>
-        </li>
-      </ul>
+        <p className="font-semibold text-xl mb-4">Nuestro equipo médico</p>
+        <ul className="mb-16">
+          {professionals.map(professional => {
+            return (
+              <li className="mb-4" key={professional.name}>
+                <Flex layout="row-left">
+                  <div className="w-[125px] aspect-square overflow-hidden rounded-full relative shrink-0 mr-4">
+                    <Image
+                      src={professional.urlPhoto}
+                      alt={professional.name}
+                      fill={true}
+                      className="object-cover"
+                    />
+                  </div>
+                  <Flex layout="col-left">
+                    <p className="text-lg font-semibold mb-2">
+                      {professional.name}
+                      {' - '}
+                      <span className="opacity-75 font-normal">
+                        {professional.title} Nº Col.{' '}
+                        {professional.collegiateNumber}
+                      </span>
+                    </p>
+                    <p className="opacity-50">{professional.description}</p>
+                  </Flex>
+                </Flex>
+              </li>
+            );
+          })}
+        </ul>
 
-      <Button
-        style="primary"
-        size="lg"
-        className="w-full"
-        onClick={() => addToCart(product)}
-      >
-        Añadir producto
-      </Button>
-    </Flex>
+        <Button
+          style="primary"
+          size="lg"
+          className="w-full"
+          onClick={() => addToCart(product)}
+        >
+          Añadir producto
+        </Button>
+      </Flex>
+    </>
   );
 }
