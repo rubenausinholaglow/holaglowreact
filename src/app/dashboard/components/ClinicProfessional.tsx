@@ -18,18 +18,19 @@ export const ClinicProfessional = () => {
   const [selectedProfessional, setSelectedProfessional] =
     useState<Professional | null>(null);
   const [showProfessionalList, setShowProfessionalList] = useState(false);
-  const [GuidClinic, SetGuidClinic] = useState('');
+  const [GuidClinic, SetGuidClinic] = useState(
+    localStorage.getItem('ClinicId') || ''
+  );
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    SetGuidClinic(localStorage.getItem('ClinicId') || '');
     const fetchProfessionals = async () => {
       try {
         const clinicId = GuidClinic;
-
         const professionalType = ProfessionalType.Medical;
+
         const professionalsData = await clinicService.getProfessionalsByClinic(
           clinicId,
           professionalType

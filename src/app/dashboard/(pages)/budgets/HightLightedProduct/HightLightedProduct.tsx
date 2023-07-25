@@ -31,6 +31,7 @@ export default function HightLightedProduct() {
     const fetchProduct = async () => {
       try {
         if (productHighlighted.id) {
+          console.log(productHighlighted.id);
           const data = await ProductService.getProduct(productHighlighted.id);
 
           setProduct(data);
@@ -96,16 +97,16 @@ export default function HightLightedProduct() {
             onError={() => setImgSrc(DEFAULT_IMG_SRC)}
           />
         </div>
-        <p className="font-semibold text-xl mb-4">
-          {product.title} -{' '}
-          <span className="text-xl text-hg-black font-semibold mb-3">
-            {product.price.toFixed(2)}€
-          </span>
-        </p>
-        <p className="mb-16">
-          {product.description}
-          {product?.detail}
-        </p>
+        <Flex layout="col-left" className="mb-16">
+          <p className="font-semibold text-xl">
+            {product.title} -{' '}
+            <span className="text-xl text-hg-black font-semibold mb-3">
+              {product.price.toFixed(2)}€
+            </span>
+          </p>
+          <p className="mb-4 text-hg-darkMalva">{product.description}</p>
+          <p>{product?.detail}</p>
+        </Flex>
         {/* {product.durationMin > 0 && (
           <p className="text-hg-lightMalva text-xs mb-1">
             Duración
@@ -117,7 +118,7 @@ export default function HightLightedProduct() {
         */}
 
         {product.beforeAndAfterImages.length > 0 && (
-          <div className="mb-16">
+          <div className="mb-16 w-full">
             <p className="font-semibold text-xl mb-4">Antes y después</p>
             <Carousel hasControls>
               {product.beforeAndAfterImages.map((image, index) => (
