@@ -6,7 +6,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   label,
   placeholder,
   value,
-  onChange = () => {},
+  onChange = undefined,
   error = '',
 }) => {
   return (

@@ -2,7 +2,6 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useState } from 'react';
-import { Flex } from 'components/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
 import {
   ButtonBack,

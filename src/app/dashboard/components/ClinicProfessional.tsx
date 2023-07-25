@@ -34,6 +34,7 @@ export const ClinicProfessional = () => {
           clinicId,
           professionalType
         );
+
         if (typeof professionalsData === 'string') {
           setError(professionalsData);
         } else {

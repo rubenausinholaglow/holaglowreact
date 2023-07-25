@@ -1,6 +1,5 @@
 import { CartItem } from '@interface/product';
 import { Flex } from 'components/Layouts/Layouts';
-import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
 
