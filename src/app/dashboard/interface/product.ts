@@ -22,6 +22,8 @@ export interface CartItem extends Product {
   priceDiscount: string;
   percentageDiscount: string;
   quantity?: number;
+  hasDiscount?: boolean;
+  uniqueId: string;
 }
 
 export interface Pain {

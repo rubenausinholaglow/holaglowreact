@@ -14,6 +14,8 @@ export default function DashboardLayout({
 }) {
   const pathName = usePathname();
 
+  const backButtonRoutes = ['/dashboard/budgets', '/dashboard/checkout'];
+
   return (
     <main className="min-h-screen h-100 text-md bg-hg-lightMalva/20">
       <Flex
@@ -22,7 +24,7 @@ export default function DashboardLayout({
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
-            {pathName === '/dashboard/budgets' && (
+            {backButtonRoutes.includes(pathName) && (
               <>
                 <Link href="/dashboard/menu">
                   <Flex layout="row-left">

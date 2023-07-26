@@ -12,7 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
-import Cart from './minicart/Cart';
+import { Cart } from './minicart/Cart';
 import { useCartStore } from './stores/userCartStore';
 import ProductList from './treatments/ProductList';
 
