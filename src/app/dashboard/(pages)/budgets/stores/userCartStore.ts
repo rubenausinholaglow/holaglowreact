@@ -2,7 +2,6 @@ import { Actions, State } from '@interface/cart';
 import { Professional } from '@interface/clinic';
 import { CartItem, Product } from '@interface/product';
 import { INITIAL_STATE } from '@utils/constants';
-import { priceFormat } from 'utils/priceFormat';
 import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -37,23 +36,6 @@ function productDiscountedPrice(cartItem, value, discountType) {
   console.log(price);
 
   return price;
-
-  //aplicar descomptes
-
-  /*
-
-  if (cartItem.percentageDiscount !== '0') {
-    price = price - price * (Number(cartItem.percentageDiscount) / 100);
-    console.log(price);
-  }
-
-  if (cartItem.priceDiscount !== '0') {
-    price = price - Number(cartItem.priceDiscount);
-    console.log(price);
-  }
-  
-  console.log(price); 
-  */
 }
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {

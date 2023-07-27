@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { CartItem, Product } from '@interface/product';
+import { CartItem } from '@interface/product';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
 import { Text, Title } from 'components/Texts';
