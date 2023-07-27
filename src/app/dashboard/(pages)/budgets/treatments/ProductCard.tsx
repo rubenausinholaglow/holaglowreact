@@ -61,8 +61,8 @@ export default function ProductCard({ product, isCheckout }: Props) {
       />
 
       <div
-        className={`aspect-[4/3] relative ${
-          isCheckout ? 'w-[300px] mr-8' : 'w-full shrink-0'
+        className={`aspect-square relative ${
+          isCheckout ? 'w-[225px] mr-8' : 'w-full shrink-0'
         } `}
       >
         <Image

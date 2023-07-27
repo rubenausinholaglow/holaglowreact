@@ -7,12 +7,22 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
+function getBackRoute(pathName: string) {
+  const BACK_ROUTES: { [key: string]: string } = {
+    '/dashboard/budgets': '/dashboard/menu',
+    '/dashboard/checkout': '/dashboard/budgets',
+  };
+
+  return BACK_ROUTES[pathName];
+}
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathName = usePathname();
+  console.log(pathName);
 
   const backButtonRoutes = ['/dashboard/budgets', '/dashboard/checkout'];
 
@@ -26,14 +36,14 @@ export default function DashboardLayout({
           <Flex layout="row-left" className="w-full py-8">
             {backButtonRoutes.includes(pathName) && (
               <>
-                <Link href="/dashboard/menu">
+                <Link href={getBackRoute(pathName)}>
                   <Flex layout="row-left">
                     <SvgArrowSmallLeft
                       height={40}
                       width={40}
                       className="pr-2"
                     />
-                    Volver al menu
+                    Volver
                   </Flex>
                 </Link>
 

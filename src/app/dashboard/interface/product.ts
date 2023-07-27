@@ -21,7 +21,6 @@ export const emptyProduct: Product = {} as Product;
 export interface CartItem extends Product {
   priceDiscount: string;
   percentageDiscount: string;
-  quantity?: number;
   uniqueId: string;
   priceWithDiscount: number;
 }

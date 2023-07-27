@@ -2,48 +2,16 @@ import { Actions, State } from '@interface/cart';
 import { Professional } from '@interface/clinic';
 import { CartItem, Product } from '@interface/product';
 import { INITIAL_STATE } from '@utils/constants';
+import { applyDiscountToItem } from '@utils/utils';
 import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-function productDiscountedPrice(cartItem, value, discountType) {
-  console.log(cartItem);
-  console.log(value);
-  console.log(discountType);
-
-  const percentageDiscountValue =
-    discountType === '%' ? value : cartItem.percentageDiscount;
-  const priceDiscountValue =
-    discountType === '€' ? value : cartItem.priceDiscount;
-
-  console.log(percentageDiscountValue);
-  console.log(priceDiscountValue);
-
-  let price = cartItem.price;
-
-  //si value 0 i cartItem.priceWithDiscount === 0
-  if (value === '0' && cartItem.priceWithDiscount === cartItem.price) {
-    console.log('no hi ha cap descompte');
-    return price;
-  }
-
-  // he d'aplicar sempre els dos descomptes, si el valor arriba 0, fotem 0, si no, mirar si hi ha descompte al cartItem
-
-  price = price - price * (Number(percentageDiscountValue) / 100);
-  console.log(price);
-  price = price - Number(priceDiscountValue);
-
-  console.log(price);
-
-  return price;
-}
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   return [
     ...cart,
     {
       ...product,
-      quantity: 1,
       percentageDiscount: '0',
       priceDiscount: '0',
       priceWithDiscount: product.price,
@@ -52,12 +20,13 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   ];
 }
 
-function calculateDiscountedCart(
+function calculateCartItemDiscount(
   cart: CartItem[],
   cartUniqueId: string,
   value: number,
   discountType: string
 ) {
+  console.log(cart);
   console.log(cartUniqueId, value, discountType);
 
   const cartItem = cart.find(item => item.uniqueId === cartUniqueId);
@@ -70,7 +39,7 @@ function calculateDiscountedCart(
 
   const updatedCartItem = {
     ...cartItem,
-    priceWithDiscount: productDiscountedPrice(cartItem, value, discountType),
+    priceWithDiscount: applyDiscountToItem(value, discountType, cartItem),
     [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']: value,
   };
 
@@ -78,30 +47,10 @@ function calculateDiscountedCart(
   console.log(cartItem.priceDiscount);
   console.log(cartItem.percentageDiscount);
 
-  console.log(productDiscountedPrice(cartItem, value, discountType));
+  console.log(applyDiscountToItem(value, discountType, cartItem));
   return cart.map(item =>
     item.uniqueId === cartUniqueId ? updatedCartItem : item
   );
-  /* 
-  return cart;
-
-  console.log(cart);
-  console.log(cartUniqueId);
-  //console.log(cartItem.uniqueId);
-
-
-  const updatedCartItem = {
-    ...cartItem,
-    priceWithDiscount: productDiscountedPrice(cartItem),
-    [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']: value,
-  };
-
-  console.log(updatedCartItem);
-
-  //return cart;
-  return cart.map(item =>
-    item.uniqueId === cartUniqueId ? updatedCartItem : item
-  ); */
 }
 
 export const useCartStore = create(
@@ -110,24 +59,47 @@ export const useCartStore = create(
       cart: INITIAL_STATE.cart,
       totalItems: INITIAL_STATE.totalItems,
       totalPrice: INITIAL_STATE.totalPrice,
+      priceDiscount: INITIAL_STATE.priceDiscount,
+      percentageDiscount: INITIAL_STATE.percentageDiscount,
       productHighlighted: INITIAL_STATE.productHighlighted,
       professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: CartItem) => {
         const cart = get().cart;
+        const totalPrice = get().totalPrice;
+
+        console.log(totalPrice, product.priceWithDiscount);
+
         const updatedCart = calculateUpdatedCart(cart, product);
         set(state => ({
           cart: updatedCart,
           totalItems: state.totalItems + 1,
           totalPrice: state.totalPrice + product.price,
         }));
+
+        console.log(totalPrice);
+      },
+      removeFromCart: (product: CartItem) => {
+        const totalPrice = get().totalPrice;
+
+        console.log(totalPrice, product.priceWithDiscount);
+
+        set(state => ({
+          cart: state.cart.filter(item => item.uniqueId !== product.uniqueId),
+          totalItems: state.totalItems - 1,
+          totalPrice: state.totalPrice - product.priceWithDiscount,
+        }));
+
+        console.log(totalPrice);
       },
       applyItemDiscount: (
         cartUniqueId: string,
         value: number,
         discountType: '%' | '€'
       ) => {
+        console.log(cartUniqueId, value, discountType);
+
         const cart = get().cart;
-        const updatedCart = calculateDiscountedCart(
+        const updatedCart = calculateCartItemDiscount(
           cart,
           cartUniqueId,
           value,
@@ -136,16 +108,21 @@ export const useCartStore = create(
 
         console.log(updatedCart);
 
-        set(state => ({ cart: updatedCart }));
+        set(() => ({ cart: updatedCart }));
       },
-      removeFromCart: (product: CartItem) => {
-        console.log(product);
+      applyCartDiscount: (value: number, discountType: '%' | '€') => {
+        console.log(value, discountType);
+        const priceDiscount = get().priceDiscount;
+        const percentageDiscount = get().percentageDiscount;
 
-        set(state => ({
-          cart: state.cart.filter(item => item.uniqueId !== product.uniqueId),
-          totalItems: state.totalItems - 1,
-          totalPrice: state.totalPrice - product.price,
+        console.log(priceDiscount, percentageDiscount);
+
+        set(() => ({
+          [discountType === '€' ? 'priceDiscount' : 'percentageDiscount']:
+            value,
         }));
+
+        console.log(priceDiscount, percentageDiscount);
       },
       setHighlightProduct: (product: Product) => {
         set(() => ({

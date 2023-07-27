@@ -1,61 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Budget } from '@interface/budget';
-import { budgetService } from '@services/BudgetService';
-import { INITIAL_STATE } from '@utils/constants';
-import { ERROR_POST } from '@utils/textConstants';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
-import router from 'next/router';
 
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
 import ProductCard from '../budgets/treatments/ProductCard';
-import ProductDiscountForm from './components/ProductDiscountForm';
 
 const Page = () => {
   const cart = useCartStore(state => state.cart);
 
-  const [GuidUser, SetGuidUser] = useState('');
-  const [GuidClinic, SetGuidClinic] = useState('');
-  const [GuidProfessional, SetGuidProfessional] = useState('');
-
-  useEffect(() => {
-    SetGuidUser(localStorage.getItem('id') || '');
-    SetGuidClinic(localStorage.getItem('ClinicId') || '');
-    SetGuidProfessional(localStorage.getItem('ClinicProfessionalId') || '');
-  }, []);
-
-  let total = 0;
-  if (cart) {
-    total = cart.reduce(
-      (acc, product) => acc + product.price * (product.quantity as number),
-      0
-    );
-  }
-
-  console.log(cart);
-
   return (
     <Container>
-      <Flex layout="col-left">
-        <Title size="xl" className="text-left mb-4">
-          Resumen
-        </Title>
+      <Title size="2xl" className="text-left mb-4">
+        Resumen
+      </Title>
 
-        <ul className="w-full">
+      <Flex layout="row-left" className="items-start">
+        <ul className="w-3/4 shrink-0">
           {cart?.map(cartItem => (
-            <li key={cartItem.id} className="mb-4">
+            <li key={cartItem.uniqueId} className="mb-4">
               <ProductCard isCheckout product={cartItem} />
             </li>
           ))}
         </ul>
-      </Flex>
-      <Flex layout="col-left">
-        <CartTotal isCheckout />
-        <ProductDiscountForm />
+        <Flex layout="col-left" className="w-1/4 pl-8 shrink-0">
+          <CartTotal isCheckout />
+          <Button
+            className="mt-8 w-full"
+            size="lg"
+            onClick={() => console.log(cart)}
+          >
+            Finalizar
+          </Button>
+        </Flex>
       </Flex>
     </Container>
   );
