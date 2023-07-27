@@ -45,13 +45,13 @@ export default function ProductDiscountForm({
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
   const onSubmit = data => {
+    console.log(data);
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="text-left">
       <Flex layout="row-left">
-        <p>{cartUniqueId}</p>
         {cartUniqueId && (
           <input
             type="hidden"

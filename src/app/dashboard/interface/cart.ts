@@ -12,6 +12,7 @@ export interface State {
 export interface Actions {
   addItemToCart: (Item: Product) => void;
   removeFromCart: (Item: Product) => void;
+  applyItemDiscount: (Item: CartItem) => void;
   setHighlightProduct: (Item: Product) => void;
   setProfessionals: (Item: Professional[]) => void;
 }

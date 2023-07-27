@@ -7,14 +7,6 @@ import CartItem from './CartItem';
 export function Cart() {
   const cart = useCartStore(state => state.cart);
 
-  let total = 0;
-  if (cart) {
-    total = cart.reduce(
-      (acc, product) => acc + product.price * (product.quantity as number),
-      0
-    );
-  }
-
   console.log(cart);
 
   return (
@@ -45,10 +37,14 @@ export function CartTotal() {
   let total = 0;
   if (cart) {
     total = cart.reduce(
-      (acc, product) => acc + product.price * (product.quantity as number),
+      (acc, product) =>
+        acc + product.priceWithDiscount * (product.quantity as number),
       0
     );
   }
+
+  console.log(cart);
+
   return (
     <Flex layout="col-center" className="ml-auto text-hg-black">
       <span className=" text-lg font-bold">Total: </span>

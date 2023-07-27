@@ -46,9 +46,9 @@ const Page = () => {
         </Title>
 
         <ul className="w-full">
-          {cart?.map(product => (
-            <li key={product.id} className="mb-4">
-              <ProductCard isCheckout product={product} />
+          {cart?.map(cartItem => (
+            <li key={cartItem.id} className="mb-4">
+              <ProductCard isCheckout product={cartItem} />
             </li>
           ))}
         </ul>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Product } from '@interface/product';
+import { CartItem, Product } from '@interface/product';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
 import { Text, Title } from 'components/Texts';
@@ -15,7 +15,7 @@ import { useCartStore } from '../stores/userCartStore';
 
 const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
-  product: Product;
+  product: CartItem;
   isCheckout?: boolean;
 }
 
@@ -33,24 +33,16 @@ export default function ProductCard({ product, isCheckout }: Props) {
   console.log(product);
 
   const productCartItem = cart.filter(
-    item => item.id === product.id && item.hasDiscount
+    item =>
+      item.uniqueId === product.uniqueId &&
+      product.priceWithDiscount !== product.price
   )[0];
+
+  console.log(productCartItem);
+
   const productHasDiscount = !isEmpty(productCartItem);
 
-  function productDiscountedPrice(cartItem) {
-    let price = product.price;
-
-    if (cartItem.percentageDiscount !== '0') {
-      price =
-        price - product.price * (Number(cartItem.percentageDiscount) / 100);
-    }
-
-    if (cartItem.PriceDiscount !== '0') {
-      price = price - Number(cartItem.priceDiscount);
-    }
-
-    return price;
-  }
+  console.log(productHasDiscount);
 
   return (
     <Flex
@@ -104,7 +96,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
               size={isCheckout ? '2xl' : 'xl'}
               className="text-hg-black font-semibold mb-3 mr-2"
             >
-              {productDiscountedPrice(productCartItem).toFixed(2)}€
+              {product.priceWithDiscount.toFixed(2)}€
             </Text>
           )}
           <Text
@@ -136,7 +128,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         ) : (
           <>
             <ProductDiscountForm cartUniqueId={product.uniqueId} />
-            {productHasDiscount && isCheckout && (
+            {productHasDiscount && (
               <Flex layout="row-left" className="mt-2">
                 {productCartItem.percentageDiscount !== '0' && (
                   <Text
