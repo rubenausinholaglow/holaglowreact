@@ -2,6 +2,17 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
+type ButtonProps = {
+  style?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  className?: string;
+  onClick?: () => void;
+  children: ReactNode;
+  type?: 'button' | 'submit' | 'reset';
+  rest?: any;
+};
+
 export const Button = ({
   style = 'primary',
   size = 'md',
@@ -11,16 +22,7 @@ export const Button = ({
   children,
   type = 'button',
   ...rest
-}: {
-  style?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'sm' | 'md' | 'lg';
-  href?: string;
-  className?: string;
-  onClick?: () => void;
-  children: ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-  rest?: any;
-}) => {
+}: ButtonProps) => {
   const StylesConfig: any = {
     common: 'rounded-full px-8 py-2 text-white transition-all',
     primary: 'bg-hg-darkMalva border border-hg-darkMalva',
