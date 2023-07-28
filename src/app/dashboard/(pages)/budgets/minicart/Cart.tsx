@@ -3,7 +3,6 @@ import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Text } from 'components/Texts';
 
-import ProductDiscountForm from '../../checkout/components/ProductDiscountForm';
 import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
 

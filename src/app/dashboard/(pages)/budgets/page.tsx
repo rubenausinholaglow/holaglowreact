@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import { CartItem, emptyProduct, Product } from '@interface/product';
+import { emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 import { Container, Flex } from 'components/Layouts/Layouts';

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Budget } from '@interface/budget';
-import { CartItem } from '@interface/product';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
@@ -10,7 +9,6 @@ import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
 import { SvgAlma, SvgPepper } from 'icons/Icons';
-import Link from 'next/link';
 import router from 'next/router';
 
 import { CartTotal } from '../budgets/minicart/Cart';
