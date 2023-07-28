@@ -5,7 +5,7 @@ import ProductService from '@services/ProductService';
 import { handleGoBack } from '@utils/utils';
 import { useSearchParams } from 'next/navigation';
 
-import Cart from '../../minicart/Cart';
+import { Cart } from '../../minicart/Cart';
 import { useCartStore } from '../../stores/userCartStore';
 
 const Page = () => {

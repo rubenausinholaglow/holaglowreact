@@ -1,51 +1,60 @@
+'use client';
+
 import { ClinicProfessional } from '@components/ClinicProfessional';
-import { Flex } from 'components/Layouts/Layouts';
-import { SvgHolaglow } from 'icons/Icons';
+import { Container, Flex } from 'components/Layouts/Layouts';
+import { SvgArrowSmallLeft, SvgHolaglow } from 'icons/Icons';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { HOLAGLOW_COLORS } from 'utils/colors';
+
+function getBackRoute(pathName: string) {
+  const BACK_ROUTES: { [key: string]: string } = {
+    '/dashboard/budgets': '/dashboard/menu',
+    '/dashboard/checkout': '/dashboard/budgets',
+  };
+
+  return BACK_ROUTES[pathName];
+}
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathName = usePathname();
+  console.log(pathName);
+
+  const backButtonRoutes = ['/dashboard/budgets', '/dashboard/checkout'];
+
   return (
     <main className="min-h-screen h-100 text-md bg-hg-lightMalva/20">
       <Flex
         layout="col-center"
-        className="min-h-screen h-100 text-hg-black text-md bg-hg-lightMalva/20"
+        className="min-h-screen h-100 text-hg-black text-md"
       >
-        <div className="pt-4 pr-6 self-end z-10">
-          <ClinicProfessional />
-        </div>
-        {children}
-        {/*
-       <footer className="border-b py-8">
         <Container>
-          <Flex layout="row-left">
-            <SvgHolaglow
-              height={24}
-              width={98}
-              fill={HOLAGLOW_COLORS['lime']}
-            />
+          <Flex layout="row-left" className="w-full py-8">
+            {backButtonRoutes.includes(pathName) && (
+              <>
+                <Link href={getBackRoute(pathName)}>
+                  <Flex layout="row-left">
+                    <SvgArrowSmallLeft
+                      height={40}
+                      width={40}
+                      className="pr-2"
+                    />
+                    Volver
+                  </Flex>
+                </Link>
 
-            {cart.length > 0 && (
-              <Flex layout="row-center" className="ml-auto">
-                <Flex
-                  layout="row-center"
-                  className="bg-hg-lime text-hg-darkMalva rounded-full h-[25px] w-[25px] font-semibold text-sm"
-                >
-                  {cart.length}
-                </Flex>
-                <SvgShoppingCart
-                  height={25}
-                  width={25}
-                  fill={HOLAGLOW_COLORS['darkMalva']}
-                />
-              </Flex>
+                <div className="ml-auto z-10">
+                  <ClinicProfessional />
+                </div>
+              </>
             )}
           </Flex>
         </Container>
-      </footer> */}
+        {children}
         <div className="pt-16 pb-8 mt-auto">
           <SvgHolaglow width={150} height={40} fill={HOLAGLOW_COLORS['lime']} />
         </div>

@@ -5,17 +5,14 @@ import { Filters } from '@components/Filters';
 import { emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
-//import Header from '@components/ui/Header';
-import { Button } from 'components/Buttons/Buttons';
-import { Carousel } from 'components/Carousel/Carousel';
 import { Container, Flex } from 'components/Layouts/Layouts';
-import { SvgClose, SvgSpinner } from 'icons/Icons';
+import { Modal, ModalBackground } from 'components/Modals/Modal';
+import { SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
-import Image from 'next/image';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
-import Cart from './minicart/Cart';
+import { Cart } from './minicart/Cart';
 import { useCartStore } from './stores/userCartStore';
 import ProductList from './treatments/ProductList';
 
@@ -118,45 +115,47 @@ export default function Page() {
   };
 
   const filterProducts = () => {
-    return products.filter(product => {
-      if (product.price <= 0) {
-        return false;
-      }
-      if (showPacks && !product.isPack) {
-        return false;
-      }
-      if (filterZones.length > 0 && !filterZones.includes(product.zone)) {
-        return false;
-      }
-      if (
-        priceRanges.length > 0 &&
-        !priceRanges.some(
-          range => range.min <= product.price && product.price <= range.max
-        )
-      ) {
-        return false;
-      }
-      if (filterPain.length > 0) {
-        const productPains = product.painsCategory?.map(pain => pain.value);
-        if (!productPains || !hasMatchingPain(productPains)) {
+    if (!isEmpty(products)) {
+      return products.filter(product => {
+        if (product.price <= 0) {
           return false;
         }
-      }
-      if (
-        filterText &&
-        !matchesFilterText(product.title) &&
-        !matchesFilterText(product.description)
-      ) {
-        return false;
-      }
-      if (filterClinic.length > 0) {
-        const productClinicIds = product.clinic?.map(clinic => clinic.city);
-        if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
+        if (showPacks && !product.isPack) {
           return false;
         }
-      }
-      return true;
-    });
+        if (filterZones.length > 0 && !filterZones.includes(product.zone)) {
+          return false;
+        }
+        if (
+          priceRanges.length > 0 &&
+          !priceRanges.some(
+            range => range.min <= product.price && product.price <= range.max
+          )
+        ) {
+          return false;
+        }
+        if (filterPain.length > 0) {
+          const productPains = product.painsCategory?.map(pain => pain.value);
+          if (!productPains || !hasMatchingPain(productPains)) {
+            return false;
+          }
+        }
+        if (
+          filterText &&
+          !matchesFilterText(product.title) &&
+          !matchesFilterText(product.description)
+        ) {
+          return false;
+        }
+        if (filterClinic.length > 0) {
+          const productClinicIds = product.clinic?.map(clinic => clinic.city);
+          if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
   };
 
   const matchesFilterText = (text: string) => {
@@ -179,18 +178,17 @@ export default function Page() {
     const filteredProducts = filterProducts();
     return (
       <>
-        <HightLightedProduct
-          showProductModal={showProductModal}
-          product={productHighlighted}
-        />
-
+        <ModalBackground
+          isVisible={showProductModal}
+          onClick={() => setHighlightProduct(emptyProduct)}
+        ></ModalBackground>
+        <Modal isVisible={showProductModal}>
+          <HightLightedProduct />
+        </Modal>
         <Flex layout="col-center" className="w-full">
-          {/*         <h1 className="text-3xl font-bold mb-8">
-          Tratamientos {filteredProducts.length}
-        </h1> */}
           <Container>
             {products.length > 0 ? (
-              <Flex layout="row-left" className="items-start pt-8">
+              <Flex layout="row-left" className="items-start">
                 <Filters onClickFilter={toggleFilter} />
 
                 <Flex layout="col-center">
