@@ -22,16 +22,15 @@ const Page = () => {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
 
-  const [GuidUser] = useState(localStorage.getItem('id') || '');
-  const [GuidClinicId] = useState(localStorage.getItem('ClinicId') || '');
-  const [GuidProfessional] = useState(
-    localStorage.getItem('ClinicProfessionalId') || ''
-  );
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
 
   //console.log(GuidUser, GuidProfessional, totalPrice);
 
   const handleFinalize = async () => {
+    const GuidUser = localStorage.getItem('id') || '';
+    const GuidClinicId = localStorage.getItem('ClinicId') || '';
+    const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
+
     const budget: Budget = {
       userId: GuidUser,
       discountCode: '',
