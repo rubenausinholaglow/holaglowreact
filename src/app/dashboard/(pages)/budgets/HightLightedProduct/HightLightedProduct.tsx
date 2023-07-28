@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { emptyProduct, Product } from '@interface/product';
+import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { Button } from 'components/Buttons/Buttons';
 import { Carousel } from 'components/Carousel/Carousel';
@@ -20,7 +20,7 @@ export default function HightLightedProduct() {
   const professionals = useCartStore(state => state.professionals);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<CartItem | null>(null);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
 
   useEffect(() => {
@@ -106,15 +106,6 @@ export default function HightLightedProduct() {
           <p className="mb-4 text-hg-darkMalva">{product.description}</p>
           <p>{product?.detail}</p>
         </Flex>
-        {/* {product.durationMin > 0 && (
-          <p className="text-hg-lightMalva text-xs mb-1">
-            Duración
-          </p>
-          <p>{`de ${product.durationMin / 30} a ${
-            product.durationMax / 30
-          } meses`}</p>
-        )}
-        */}
 
         {product.beforeAndAfterImages.length > 0 && (
           <div className="mb-16 w-full">

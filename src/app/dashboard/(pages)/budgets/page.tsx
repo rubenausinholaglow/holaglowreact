@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import { emptyProduct, Product } from '@interface/product';
+import { CartItem, emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 import { Container, Flex } from 'components/Layouts/Layouts';
@@ -175,7 +175,7 @@ export default function Page() {
   if (error) {
     return <>{error}</>;
   } else {
-    const filteredProducts = filterProducts();
+    const filteredProducts = filterProducts() || [];
     return (
       <>
         <ModalBackground

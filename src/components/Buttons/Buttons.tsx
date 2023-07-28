@@ -7,9 +7,10 @@ type ButtonProps = {
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   className?: string;
-  onClick?: () => void;
+  onClick?: (...args: any[]) => void;
   children: ReactNode;
   type?: 'button' | 'submit' | 'reset';
+  target?: string;
   rest?: any;
 };
 

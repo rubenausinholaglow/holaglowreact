@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Budget } from '@interface/budget';
+import { CartItem } from '@interface/product';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
@@ -34,7 +35,7 @@ const Page = () => {
 
   const handleFinalize = async () => {
     const budget: Budget = {
-      userId: GuidProfessional,
+      userId: GuidUser,
       discountCode: '',
       priceDiscount: priceDiscount,
       percentageDiscount: percentageDiscount,
@@ -80,7 +81,7 @@ const Page = () => {
               <Button
                 style="tertiary"
                 href="https://dashboard.getalma.eu/login"
-                className="border-[#FA5022] w-full text-center"
+                className="border-[#FA5022] w-full"
                 target="_blank"
               >
                 <SvgAlma height={25} width={75} fill="#FA5022" />
