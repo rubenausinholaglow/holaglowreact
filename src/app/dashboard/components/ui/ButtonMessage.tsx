@@ -13,8 +13,7 @@ export default function ButtonMessage() {
     const webConnection = new HubService(SOCKET_URL);
 
     webConnection.getConnection().on('ReceiveMessage', (recivemessage: any) => {
-      const actionId = recivemessage.actions[0]?.actionId || '';
-      showMessage(actionId);
+      showMessage(recivemessage.actions[0]?.actionId || '');
     });
 
     return () => {
