@@ -38,4 +38,3 @@ class HubService {
 }
 
 export default HubService;
-
