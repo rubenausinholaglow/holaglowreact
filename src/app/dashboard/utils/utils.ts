@@ -22,29 +22,31 @@ export const applyDiscountToItem = (
   discountType: string,
   cartItem: CartItem
 ) => {
-  console.log(cartItem);
-  console.log(value);
-  console.log(discountType);
-
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
-  const priceDiscountValue =
-    discountType === '€' ? value : cartItem.priceDiscount;
 
-  console.log(percentageDiscountValue);
-  console.log(priceDiscountValue);
+  let initialPrice =
+    discountType === '%' ? cartItem.priveWithDiscount : cartItem.price;
 
-  let price = cartItem.price;
+  console.log(cartItem.price);
 
-  //si value 0 i cartItem.priceWithDiscount === 0
-  if (value === 0 && cartItem.priceWithDiscount === cartItem.price) {
-    console.log('no hi ha cap descompte');
-    return price;
-  }
-  price = price - price * (Number(percentageDiscountValue) / 100);
-  price = price - Number(priceDiscountValue);
+  initialPrice = discountType === '€' && value > 0 ? value : cartItem.price;
+
+  let price = initialPrice;
 
   console.log(price);
 
-  return price;
+  /*   //si value 0 i cartItem.priceWithDiscount === 0
+  if (value === 0 && cartItem.priceWithDiscount === cartItem.price) {
+    console.log('no hi ha cap descompte');
+    return price;
+  } */
+
+  if (discountType === '%') {
+    price = price - price * (Number(percentageDiscountValue) / 100);
+  }
+  //price = price - Number(priceDiscountValue);
+
+  console.log(price);
+  return Number(price);
 };

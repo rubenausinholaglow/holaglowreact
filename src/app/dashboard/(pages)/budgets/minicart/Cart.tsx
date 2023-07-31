@@ -50,11 +50,16 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
   const hasDiscount = priceWithDiscount.toFixed(2) !== total.toFixed(2);
 
   return (
-    <Flex layout="col-left" className="ml-auto text-hg-black w-full">
-      <Flex layout="col-left" className={hasDiscount ? 'mb-2' : 'mb-8'}>
-        <Text size="2xl" className="font-bold">
-          Total:
-        </Text>
+    <Flex
+      layout="col-left"
+      className={`ml-auto text-hg-black ${isCheckout && 'w-full'}`}
+    >
+      <Flex
+        layout={isCheckout ? 'col-left' : 'row-left'}
+        //className={hasDiscount ? 'mb-2' : 'mb-8'}
+        className={`mr-4`}
+      >
+        <Text size="2xl" className="font-bold"></Text>
         {hasDiscount && (
           <Text size="3xl" className="text-hg-black font-semibold">
             {priceWithDiscount.toFixed(2)}€

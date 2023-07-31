@@ -4,15 +4,18 @@ import { useForm } from 'react-hook-form';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
 import { SvgAngleDown } from 'icons/Icons';
+import { twMerge } from 'tailwind-merge';
 
 import { useCartStore } from '../../budgets/stores/userCartStore';
 
 export default function ProductDiscountForm({
   cartUniqueId,
   isCheckout,
+  className,
 }: {
   cartUniqueId?: string;
-  isCheckout?: boolean;
+  cartUniqueId?: string;
+  className?: string;
 }) {
   const { register, handleSubmit } = useForm();
 
@@ -31,7 +34,7 @@ export default function ProductDiscountForm({
   return (
     <form
       onSubmit={handleSubmit(cartUniqueId ? cartItemDiscount : cartDiscount)}
-      className="text-left"
+      className={twMerge(`text-left ${className}`)}
     >
       <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
         <Flex layout="row-left">
@@ -43,7 +46,7 @@ export default function ProductDiscountForm({
             />
           )}
           <input
-            className="border rounded-lg px-4 py-3 mr-4 w-[100px] text-hg-black"
+            className="border rounded-lg px-4 py-2 mr-4 w-[100px] text-hg-black"
             type="number"
             placeholder="Valor"
             {...register('Value', { required: true, maxLength: 5 })}
@@ -51,7 +54,7 @@ export default function ProductDiscountForm({
           <div className="relative mr-4">
             <select
               {...register('DiscountType', { required: true })}
-              className="border appearance-none bg-white rounded-lg px-4 py-3 w-[100px] text-hg-black"
+              className="border appearance-none bg-white rounded-lg px-4 py-2 w-[100px] text-hg-black"
             >
               <option value="%">%</option>
               <option value="€">€</option>
@@ -59,7 +62,7 @@ export default function ProductDiscountForm({
             <SvgAngleDown
               height={20}
               width={20}
-              className="absolute top-3 right-2 pointer-events-none"
+              className="absolute top-[9px] right-2 pointer-events-none"
             />
           </div>
         </Flex>

@@ -74,11 +74,11 @@ const Page = () => {
         <Flex layout="col-left" className="w-1/4 pl-8 shrink-0">
           <CartTotal isCheckout />
           {showPaymentButtons ? (
-            <Flex layout="col-center" className="gap-2 w-full">
+            <Flex layout="col-left" className="gap-2 w-full">
               <Button
                 style="tertiary"
                 href="https://dashboard.getalma.eu/login"
-                className="border-[#FA5022] w-full"
+                className="border-[#FA5022]"
                 target="_blank"
               >
                 <SvgAlma height={25} width={75} fill="#FA5022" />
@@ -94,14 +94,24 @@ const Page = () => {
             </Flex>
           ) : (
             <>
-              <ProductDiscountForm isCheckout={true} />
-              <Button
-                className="mt-8 w-full"
-                size="lg"
-                onClick={() => setShowPaymentButtons(!showPaymentButtons)}
-              >
-                Finalizar
-              </Button>
+              <ProductDiscountForm isCheckout={true} className="mt-4" />
+              <Flex layout="col-left" className="gap-2 w-full mt-8">
+                <Button
+                  className="w-full"
+                  size="lg"
+                  onClick={() => setShowPaymentButtons(!showPaymentButtons)}
+                >
+                  Finalizar
+                </Button>
+                <Button
+                  className="w-full"
+                  size="lg"
+                  href="https://agenda.holaglow.com/schedule?mode=dashboard"
+                  style="tertiary"
+                >
+                  Agendar Cita
+                </Button>
+              </Flex>
             </>
           )}
         </Flex>

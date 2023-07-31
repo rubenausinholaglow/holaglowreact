@@ -26,11 +26,7 @@ function calculateCartItemDiscount(
   value: number,
   discountType: string
 ) {
-  console.log(cart);
-  console.log(cartUniqueId, value, discountType);
-
   const cartItem = cart.find(item => item.uniqueId === cartUniqueId);
-  console.log(cartItem);
 
   if (!cartItem) {
     console.log('no hi ha item');
@@ -42,12 +38,6 @@ function calculateCartItemDiscount(
     priceWithDiscount: applyDiscountToItem(value, discountType, cartItem),
     [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']: value,
   };
-
-  console.log(cartItem.price);
-  console.log(cartItem.priceDiscount);
-  console.log(cartItem.percentageDiscount);
-
-  console.log(applyDiscountToItem(value, discountType, cartItem));
   return cart.map(item =>
     item.uniqueId === cartUniqueId ? updatedCartItem : item
   );
