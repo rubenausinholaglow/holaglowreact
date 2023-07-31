@@ -10,17 +10,15 @@ export default function ButtonMessage() {
 
   useEffect(() => {
     const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + '/Slack/Response';
-    const signalRConnection = new HubService(SOCKET_URL);
+    const webConnection = new HubService(SOCKET_URL);
 
-    signalRConnection
-      .getConnection()
-      .on('ReceiveMessage', (recivemessage: any) => {
-        const actionId = recivemessage.actions[0]?.actionId || '';
-        showMessage(actionId);
-      });
+    webConnection.getConnection().on('ReceiveMessage', (recivemessage: any) => {
+      const actionId = recivemessage.actions[0]?.actionId || '';
+      showMessage(actionId);
+    });
 
     return () => {
-      signalRConnection.getConnection().stop();
+      webConnection.getConnection().stop();
     };
   }, []);
 
