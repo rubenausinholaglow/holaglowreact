@@ -23,7 +23,7 @@ export const ClinicProfessional = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const professionalType = ProfessionalType.Medical;
+    const professionalType = ProfessionalType.BeautyAdvisor;
 
     const fetchProfessionals = async () => {
       try {

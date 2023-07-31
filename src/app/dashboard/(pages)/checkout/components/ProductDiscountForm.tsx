@@ -14,20 +14,18 @@ export default function ProductDiscountForm({
   className,
 }: {
   cartUniqueId?: string;
-  cartUniqueId?: string;
+  isCheckout: boolean;
   className?: string;
 }) {
   const { register, handleSubmit } = useForm();
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
-
   const cartItemDiscount = (data: any) => {
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
   const cartDiscount = (data: any) => {
-    console.log(data.Value, data.DiscountType);
     applyCartDiscount(data.Value, data.DiscountType);
   };
 
@@ -58,6 +56,7 @@ export default function ProductDiscountForm({
             >
               <option value="%">%</option>
               <option value="€">€</option>
+              {!cartUniqueId && <option value="total">total</option>}
             </select>
             <SvgAngleDown
               height={20}

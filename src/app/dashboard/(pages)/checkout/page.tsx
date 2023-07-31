@@ -21,10 +21,9 @@ const Page = () => {
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
+  const totalDiscount = useCartStore(state => state.percentageDiscount);
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
-
-  //console.log(GuidUser, GuidProfessional, totalPrice);
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -36,6 +35,7 @@ const Page = () => {
       discountCode: '',
       priceDiscount: priceDiscount,
       percentageDiscount: percentageDiscount,
+      totalDiscount: totalDiscount,
       totalPrice: totalPrice,
       clinicInfoId: GuidClinicId,
       referenceId: '',
@@ -48,13 +48,18 @@ const Page = () => {
         priceDiscount: CartItem.priceDiscount,
       })),
     };
+    console.log(budget);
+
+    /*
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
       router.push('/dashboard/menu');
+
     } catch (error) {
       console.error(ERROR_POST, error);
     }
+    */
   };
 
   return (
@@ -73,6 +78,16 @@ const Page = () => {
         </ul>
         <Flex layout="col-left" className="w-1/4 pl-8 shrink-0">
           <CartTotal isCheckout />
+          <Button
+            className="w-full"
+            size="lg"
+            onClick={() => {
+              handleFinalize();
+              setShowPaymentButtons(!showPaymentButtons);
+            }}
+          >
+            Finalizar
+          </Button>
           {showPaymentButtons ? (
             <Flex layout="col-left" className="gap-2 w-full">
               <Button
@@ -99,7 +114,10 @@ const Page = () => {
                 <Button
                   className="w-full"
                   size="lg"
-                  onClick={() => setShowPaymentButtons(!showPaymentButtons)}
+                  onClick={() => {
+                    handleFinalize();
+                    setShowPaymentButtons(!showPaymentButtons);
+                  }}
                 >
                   Finalizar
                 </Button>

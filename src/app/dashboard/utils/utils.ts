@@ -1,58 +1,57 @@
 import { CartItem } from '@interface/product';
-import { initial } from 'lodash';
 
 export const handleGoBack = () => {
   window.history.back();
 };
 
 export const applyDiscountToCart = (
-  percentageDiscount: string,
-  priceDiscount: string,
+  percentageDiscount: number,
+  priceDiscount: number,
+  totalDiscount: number,
   price: number
 ) => {
   let finalValue = price;
 
-  finalValue = finalValue - Number(priceDiscount);
-  finalValue = finalValue - finalValue * (Number(percentageDiscount) / 100);
+  if (totalDiscount > 0) {
+    finalValue = totalDiscount;
+  }
+
+  finalValue = finalValue - priceDiscount;
+  finalValue = finalValue - finalValue * (percentageDiscount / 100);
 
   return finalValue;
 };
 
 export const applyDiscountToItem = (
-  value: string,
+  value: number,
   discountType: string,
   cartItem: CartItem
 ) => {
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 
-  let initialPrice = Number(cartItem.priceDiscount);
+  let initialPrice = cartItem.priceDiscount;
 
-  if (discountType === '€' && Number(value) === 0) {
+  if (discountType === '€' && value === 0) {
     initialPrice = cartItem.price;
   }
 
-  if (discountType === '€' && Number(value) > 0) {
-    initialPrice = Number(value);
+  if (discountType === '€' && value > 0) {
+    initialPrice = value;
   }
 
-  if (discountType === '%' && Number(value) > 0) {
+  if (discountType === '%' && value > 0) {
     initialPrice =
-      Number(cartItem.priceDiscount) === 0
-        ? Number(cartItem.price)
-        : Number(cartItem.priceDiscount);
+      cartItem.priceDiscount === 0 ? cartItem.price : cartItem.priceDiscount;
   }
 
   let price = initialPrice;
 
-  if (
-    (discountType === '%' && Number(value) > 0) ||
-    Number(cartItem.percentageDiscount) > 0
-  ) {
-    price = price - price * (Number(percentageDiscountValue) / 100);
+  if ((discountType === '%' && value > 0) || cartItem.percentageDiscount > 0) {
+    price = price - (price * percentageDiscountValue) / 100;
   }
 
-  if (price === 0) {
+  if (Number(price) === 0) {
     price = cartItem.price;
   }
 

@@ -12,9 +12,9 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
     ...cart,
     {
       ...product,
-      percentageDiscount: '0',
-      priceDiscount: '0',
-      priceWithDiscount: product.price,
+      percentageDiscount: 0,
+      priceDiscount: 0,
+      priceWithDiscount: Number(product.price),
       uniqueId: createUniqueId(),
     },
   ];
@@ -38,9 +38,13 @@ function calculateCartItemDiscount(
     priceWithDiscount: applyDiscountToItem(value, discountType, cartItem),
     [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']: value,
   };
-  return cart.map(item =>
-    item.uniqueId === cartUniqueId ? updatedCartItem : item
-  );
+
+  console.log(updatedCartItem);
+
+  return cart.map(item => {
+    console.log(item.uniqueId, cartUniqueId);
+    return item.uniqueId === cartUniqueId ? updatedCartItem : item;
+  });
 }
 
 export const useCartStore = create(
@@ -51,6 +55,7 @@ export const useCartStore = create(
       totalPrice: INITIAL_STATE.totalPrice,
       priceDiscount: INITIAL_STATE.priceDiscount,
       percentageDiscount: INITIAL_STATE.percentageDiscount,
+      totalDiscount: INITIAL_STATE.totalDiscount,
       productHighlighted: INITIAL_STATE.productHighlighted,
       professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: CartItem) => {
@@ -60,11 +65,18 @@ export const useCartStore = create(
         console.log(totalPrice, product.priceWithDiscount);
 
         const updatedCart = calculateUpdatedCart(cart, product);
+
+        console.log(updatedCart[0]);
+
+        console.log(cart);
+
         set(state => ({
           cart: updatedCart,
           totalItems: state.totalItems + 1,
           totalPrice: state.totalPrice + product.price,
         }));
+
+        console.log(cart);
 
         console.log(totalPrice);
       },
@@ -84,7 +96,7 @@ export const useCartStore = create(
       applyItemDiscount: (
         cartUniqueId: string,
         value: number,
-        discountType: '%' | '€'
+        discountType: '%' | '€' | 'total'
       ) => {
         console.log(cartUniqueId, value, discountType);
 
@@ -96,23 +108,21 @@ export const useCartStore = create(
           discountType
         );
 
-        console.log(updatedCart);
-
         set(() => ({ cart: updatedCart }));
+
+        console.log(updatedCart);
       },
-      applyCartDiscount: (value: number, discountType: '%' | '€') => {
-        console.log(value, discountType);
-        const priceDiscount = get().priceDiscount;
-        const percentageDiscount = get().percentageDiscount;
+      applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {
+        console.log(typeof value, value);
 
-        console.log(priceDiscount, percentageDiscount);
-
-        set(() => ({
-          [discountType === '€' ? 'priceDiscount' : 'percentageDiscount']:
-            value,
+        set(state => ({
+          priceDiscount:
+            discountType === '€' ? Number(value) : state.priceDiscount,
+          percentageDiscount:
+            discountType === '%' ? Number(value) : state.percentageDiscount,
+          totalDiscount:
+            discountType === 'total' ? Number(value) : state.totalDiscount,
         }));
-
-        console.log(priceDiscount, percentageDiscount);
       },
       setHighlightProduct: (product: Product) => {
         set(() => ({

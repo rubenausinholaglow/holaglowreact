@@ -36,6 +36,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
   const cart = useCartStore(state => state.cart);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
+  const totalDiscount = useCartStore(state => state.totalDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
 
   let productsPriceTotal = 0;
@@ -44,26 +45,25 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
   }
 
   let productsPriceTotalWithDiscounts = 0;
+
   if (cart) {
-    productsPriceTotalWithDiscounts = cart.reduce(
-      (acc, product) => acc + product.priceWithDiscount,
-      0
+    productsPriceTotalWithDiscounts = Number(
+      cart.reduce((acc, product) => acc + product.priceWithDiscount, 0)
     );
   }
 
   const hasProductsDiscount =
-    productsPriceTotal.toFixed(2) !==
-    productsPriceTotalWithDiscounts.toFixed(2);
+    productsPriceTotal !== productsPriceTotalWithDiscounts;
 
-  const hasCartDiscount = percentageDiscount > '0' || priceDiscount > '0';
+  const hasCartDiscount =
+    percentageDiscount > 0 || priceDiscount > 0 || totalDiscount > 0;
 
   const cartTotalWithDiscount = applyDiscountToCart(
     percentageDiscount,
     priceDiscount,
-    Number(productsPriceTotalWithDiscounts.toFixed(2))
+    totalDiscount,
+    productsPriceTotalWithDiscounts
   );
-
-  console.log(percentageDiscount);
 
   return (
     <Flex
@@ -74,9 +74,9 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
         {(hasProductsDiscount || hasCartDiscount) && (
           <Text size="3xl" className="text-hg-black font-semibold">
             {hasCartDiscount ? (
-              <>{cartTotalWithDiscount.toFixed(2)}€</>
+              <>{cartTotalWithDiscount}€</>
             ) : (
-              <>{productsPriceTotalWithDiscounts.toFixed(2)}€</>
+              <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
             )}
           </Text>
         )}
@@ -93,7 +93,17 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
       </Flex>
       {hasCartDiscount && (
         <Flex layout="row-left" className="mt-2 mb-6">
-          {Number(percentageDiscount) !== 0 && (
+          {totalDiscount > 0 && (
+            <Flex
+              layout="row-left"
+              className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+              onClick={() => applyCartDiscount(0, 'total')}
+            >
+              <Text size="sm">total: {totalDiscount}%</Text>
+              <SvgClose height={12} width={12} className="ml-1" />
+            </Flex>
+          )}
+          {percentageDiscount > 0 && (
             <Flex
               layout="row-left"
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
@@ -103,7 +113,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
               <SvgClose height={12} width={12} className="ml-1" />
             </Flex>
           )}
-          {Number(priceDiscount) !== 0 && (
+          {priceDiscount > 0 && (
             <Flex
               layout="row-left"
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"

@@ -22,8 +22,6 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathName = usePathname();
-  console.log(pathName);
-
   const backButtonRoutes = ['/dashboard/budgets', '/dashboard/checkout'];
 
   return (

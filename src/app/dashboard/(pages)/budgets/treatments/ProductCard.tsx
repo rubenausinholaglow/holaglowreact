@@ -39,8 +39,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
   const productHasDiscount = !isEmpty(productCartItem);
 
-  console.log(product);
-
   return (
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
@@ -104,7 +102,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
               size={isCheckout ? '2xl' : 'xl'}
               className="text-hg-black font-semibold  mr-2"
             >
-              {product.priceWithDiscount.toFixed(2)}€
+              {Number(product.priceWithDiscount).toFixed(2)}€
             </Text>
           )}
           <Text
@@ -135,14 +133,20 @@ export default function ProductCard({ product, isCheckout }: Props) {
           </Button>
         )}
 
+        {productHasDiscount && (
+          <>
+            <p>percentageDiscount: {productCartItem.percentageDiscount}</p>
+            <p>priceDiscount: {productCartItem.priceDiscount}</p>
+          </>
+        )}
+
         {showDiscountForm && (
           <>
             <ProductDiscountForm cartUniqueId={product.uniqueId} />
             {productHasDiscount && (
               <Flex layout="row-left" className="mt-2">
-                {Number(productCartItem.priceDiscount) <
-                  Number(productCartItem.price) &&
-                  Number(productCartItem.priceDiscount) !== 0 && (
+                {productCartItem.priceDiscount < productCartItem.price &&
+                  productCartItem.priceDiscount !== 0 && (
                     <Flex
                       layout="row-left"
                       className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
@@ -151,15 +155,12 @@ export default function ProductCard({ product, isCheckout }: Props) {
                       }
                     >
                       <Text size="sm">
-                        -
-                        {Number(productCartItem.price) -
-                          Number(productCartItem.priceDiscount)}
-                        €
+                        total: {productCartItem.priceDiscount}€
                       </Text>
                       <SvgClose height={12} width={12} className="ml-1" />
                     </Flex>
                   )}
-                {productCartItem.percentageDiscount > '0' && (
+                {productCartItem.percentageDiscount > 0 && (
                   <Flex
                     layout="row-left"
                     className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"

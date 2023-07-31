@@ -22,8 +22,9 @@ export const INITIAL_STATE: State = {
   cart: [],
   totalItems: 0,
   totalPrice: 0,
-  priceDiscount: '0',
-  percentageDiscount: '0',
+  priceDiscount: 0,
+  percentageDiscount: 0,
+  totalDiscount: 0,
   productHighlighted: emptyProduct,
   professionals: [],
 };
