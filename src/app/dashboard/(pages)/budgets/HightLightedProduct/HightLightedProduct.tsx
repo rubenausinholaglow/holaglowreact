@@ -45,11 +45,7 @@ export default function HightLightedProduct() {
   }, [productHighlighted]);
 
   useEffect(() => {
-    if (isEmpty(product)) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
+    setIsLoading(isEmpty(product));
   }, [product]);
 
   if (isEmpty(product)) {
