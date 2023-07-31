@@ -10,3 +10,6 @@ export const ERROR_FETCHING_DATA = 'Error fetching data from the API';
 export const ERROR_FETCHING_PROFESSIONALS = 'Error fetching professionals: ';
 export const ERROR_POST = 'Error al enviar la solicitud POST: ';
 export const ERROR_GETTING_DATA = 'Error al obtener los datos:';
+export const ERROR_SEND_MESSAGE = 'Error enviando mensaje:';
+export const ERROR_RESPONSE_MESSAGE = 'Error recibiendo el mensaje:';
+export const ERROR_ACTION_MESSAGE = 'Error acción del mensaje desconocida:';

@@ -16,8 +16,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   errors,
   isLoading,
 }) => {
-  console.log(errors);
-
   return (
     <Container>
       <h1 className="font-bold text-2xl mb-6">

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import Script from 'next/script';
@@ -44,9 +44,6 @@ export default function Page() {
       userId: '',
     } as InitializePayment;
     const isSuccess = await FinanceService.initializePayment(data);
-    if (isSuccess) {
-      console.log(isSuccess);
-    }
   };
   return (
     <section className="bg-hg-200 h-screen flex flex-col justify-center items-center">

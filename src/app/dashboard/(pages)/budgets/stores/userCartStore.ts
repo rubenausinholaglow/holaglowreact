@@ -1,24 +1,46 @@
 import { Actions, State } from '@interface/cart';
+import { Professional } from '@interface/clinic';
 import { CartItem, Product } from '@interface/product';
 import { INITIAL_STATE } from '@utils/constants';
+import { applyDiscountToItem } from '@utils/utils';
+import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
-  const cartItem = cart.find(item => item.id === product.id);
+  return [
+    ...cart,
+    {
+      ...product,
+      percentageDiscount: '0',
+      priceDiscount: '0',
+      priceWithDiscount: product.price,
+      uniqueId: createUniqueId(),
+    },
+  ];
+}
 
-  if (cartItem) {
-    return cart.map(item =>
-      item.id === product.id
-        ? { ...item, quantity: (item.quantity as number) + 1 }
-        : item
-    );
-  } else {
-    return [
-      ...cart,
-      { ...product, quantity: 1, percentageDiscount: '0', priceDiscount: '0' },
-    ];
+function calculateCartItemDiscount(
+  cart: CartItem[],
+  cartUniqueId: string,
+  value: number,
+  discountType: string
+) {
+  const cartItem = cart.find(item => item.uniqueId === cartUniqueId);
+
+  if (!cartItem) {
+    return cart;
   }
+
+  const updatedCartItem = {
+    ...cartItem,
+    priceWithDiscount: applyDiscountToItem(value, discountType, cartItem),
+    [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']: value,
+  };
+
+  return cart.map(item =>
+    item.uniqueId === cartUniqueId ? updatedCartItem : item
+  );
 }
 
 export const useCartStore = create(
@@ -27,9 +49,14 @@ export const useCartStore = create(
       cart: INITIAL_STATE.cart,
       totalItems: INITIAL_STATE.totalItems,
       totalPrice: INITIAL_STATE.totalPrice,
+      priceDiscount: INITIAL_STATE.priceDiscount,
+      percentageDiscount: INITIAL_STATE.percentageDiscount,
       productHighlighted: INITIAL_STATE.productHighlighted,
-      addItemToCart: (product: Product) => {
+      professionals: INITIAL_STATE.professionals,
+      addItemToCart: (product: CartItem) => {
         const cart = get().cart;
+        const totalPrice = get().totalPrice;
+
         const updatedCart = calculateUpdatedCart(cart, product);
         set(state => ({
           cart: updatedCart,
@@ -37,16 +64,42 @@ export const useCartStore = create(
           totalPrice: state.totalPrice + product.price,
         }));
       },
-      removeFromCart: (product: Product) => {
+      removeFromCart: (product: CartItem) => {
         set(state => ({
-          cart: state.cart.filter(item => item.id !== product.id),
+          cart: state.cart.filter(item => item.uniqueId !== product.uniqueId),
           totalItems: state.totalItems - 1,
-          totalPrice: state.totalPrice - product.price,
+          totalPrice: state.totalPrice - product.priceWithDiscount,
+        }));
+      },
+      applyItemDiscount: (
+        cartUniqueId: string,
+        value: number,
+        discountType: '%' | '€'
+      ) => {
+        const cart = get().cart;
+        const updatedCart = calculateCartItemDiscount(
+          cart,
+          cartUniqueId,
+          value,
+          discountType
+        );
+
+        set(() => ({ cart: updatedCart }));
+      },
+      applyCartDiscount: (value: number, discountType: '%' | '€') => {
+        set(() => ({
+          [discountType === '€' ? 'priceDiscount' : 'percentageDiscount']:
+            value,
         }));
       },
       setHighlightProduct: (product: Product) => {
         set(() => ({
           productHighlighted: product,
+        }));
+      },
+      setProfessionals: (professionals: Professional[]) => {
+        set(() => ({
+          professionals: professionals,
         }));
       },
     }),

@@ -6,6 +6,10 @@ export interface Clinic {
 }
 
 export interface Professional {
+  description: string;
+  collegiateNumber: string;
+  title: string;
+  urlPhoto: string;
   name: string;
   professionalType: ProfessionalType;
 }
