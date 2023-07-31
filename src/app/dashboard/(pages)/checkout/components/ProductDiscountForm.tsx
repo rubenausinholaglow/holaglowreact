@@ -19,11 +19,11 @@ export default function ProductDiscountForm({
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
 
-  const cartItemDiscount = data => {
+  const cartItemDiscount = (data: any) => {
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
-  const cartDiscount = data => {
+  const cartDiscount = (data: any) => {
     console.log(data.Value, data.DiscountType);
     applyCartDiscount(data.Value, data.DiscountType);
   };
