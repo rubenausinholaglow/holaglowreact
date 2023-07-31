@@ -18,7 +18,6 @@ export const ClinicProfessional = () => {
   const [selectedProfessional, setSelectedProfessional] =
     useState<Professional | null>(null);
   const [showProfessionalList, setShowProfessionalList] = useState(false);
-  //const [GuidClinic] = useState(localStorage.getItem('ClinicId') || '');
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
