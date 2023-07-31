@@ -1,5 +1,5 @@
 import { ProfessionalType } from '@interface/clinic';
-import { MessageSended } from '@interface/message';
+import { MessageSent } from '@interface/message';
 import {
   ERROR_RESPONSE_MESSAGE,
   ERROR_SEND_MESSAGE,
@@ -10,7 +10,7 @@ export const messageService = {
     professionalId: string,
     professionalType: ProfessionalType
   ) => {
-    const messageSend: MessageSended = {
+    const messageSent: MessageSent = {
       professionalId: professionalId,
       professionalType: professionalType,
     };
@@ -22,7 +22,7 @@ export const messageService = {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(messageSend),
+        body: JSON.stringify(messageSent),
       });
 
       if (!response.ok) {
