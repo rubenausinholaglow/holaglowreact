@@ -11,9 +11,12 @@ export interface Product {
   painsCategory: Pain[];
   clinic: Clinic[];
   flowwwId: number;
+<<<<<<< HEAD
+=======
   durationMin: number;
   durationMax: number;
   beforeAndAfterImages: any;
+>>>>>>> FixesDev
 }
 
 export const emptyProduct: Product = {} as Product;
@@ -23,6 +26,11 @@ export interface CartItem extends Product {
   percentageDiscount: string;
   uniqueId: string;
   priceWithDiscount: number;
+}
+
+export interface Pain {
+  name: string;
+  value: number;
 }
 
 export interface Pain {

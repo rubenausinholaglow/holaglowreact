@@ -115,9 +115,46 @@ export default function Page() {
   };
 
   const filterProducts = () => {
+<<<<<<< HEAD
+    return products.filter(product => {
+      if (product.price <= 0) {
+        return false;
+      }
+      if (showPacks && !product.isPack) {
+        return false;
+      }
+      if (filterZones.length > 0 && !filterZones.includes(product.zone)) {
+        return false;
+      }
+      if (
+        priceRanges.length > 0 &&
+        !priceRanges.some(
+          range => range.min <= product.price && product.price <= range.max
+        )
+      ) {
+        return false;
+      }
+      if (filterPain.length > 0) {
+        const productPains = product.painsCategory?.map(pain => pain.value);
+        if (!productPains || !hasMatchingPain(productPains)) {
+          return false;
+        }
+      }
+      if (
+        filterText &&
+        !matchesFilterText(product.title) &&
+        !matchesFilterText(product.description)
+      ) {
+        return false;
+      }
+      if (filterClinic.length > 0) {
+        const productClinicIds = product.clinic?.map(clinic => clinic.city);
+        if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
+=======
     if (!isEmpty(products)) {
       return products.filter(product => {
         if (product.price <= 0) {
+>>>>>>> FixesDev
           return false;
         }
         if (showPacks && !product.isPack) {

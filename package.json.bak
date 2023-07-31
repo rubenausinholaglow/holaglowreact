@@ -16,7 +16,10 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@microsoft/signalr": "^7.0.9",
+<<<<<<< HEAD
+=======
     "@radix-ui/react-dialog": "^1.0.4",
+>>>>>>> FixesDev
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",

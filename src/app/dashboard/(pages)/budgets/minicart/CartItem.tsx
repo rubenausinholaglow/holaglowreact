@@ -1,6 +1,5 @@
 import { CartItem } from '@interface/product';
 import { Flex } from 'components/Layouts/Layouts';
-import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
 
@@ -23,12 +22,7 @@ export default function CartItem({ product }: Props) {
           />
         </div> */}
 
-        <span className="font-bold flex-1">
-          {product.title}
-          {product.quantity &&
-            product.quantity > 1 &&
-            ` (x${product.quantity})`}
-        </span>
+        <span className="font-bold flex-1">{product.title}</span>
         <span className="font-bold"> - {product.price}€</span>
         <button
           title="Remove Item"

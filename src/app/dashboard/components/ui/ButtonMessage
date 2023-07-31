@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import { ProfessionalType } from '@interface/clinic';
 import HubService from '@services/HubService';
-=======
-import { useState } from 'react';
-import { ProfessionalType } from '@interface/clinic';
-import { setupSocketConnection } from '@services/HubService';
->>>>>>> FixesDev
 import { messageService } from '@services/MessageService';
 import { ERROR_ACTION_MESSAGE } from '@utils/textConstants';
 
@@ -14,7 +8,6 @@ export default function ButtonMessage() {
   const [showButtons, setShowButtons] = useState(false);
   const [clinicProfessionalId, setclinicProfessionalId] = useState('');
 
-<<<<<<< HEAD
   useEffect(() => {
     const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + '/Slack/Response';
     const webConnection = new HubService(SOCKET_URL);
@@ -30,38 +23,18 @@ export default function ButtonMessage() {
     };
   }, []);
 
-=======
->>>>>>> FixesDev
   const toggleButtons = () => {
     setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
     setShowButtons(!showButtons);
   };
 
-<<<<<<< HEAD
   const sendMessageToMedic = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
-=======
-  const openSocket = () => {
-    const connection = setupSocketConnection();
-    connection.on('ReceiveMessage', recivemessage => {
-      const actionId = recivemessage.actions[0]?.actionId || '';
-      showMessage(actionId);
-    });
-  };
-
-  const sendMessageToMedic = () => {
-    messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
-    openSocket();
->>>>>>> FixesDev
     setShowButtons(!showButtons);
   };
 
   const sendMessageToReception = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
-<<<<<<< HEAD
-=======
-    openSocket();
->>>>>>> FixesDev
     setShowButtons(!showButtons);
   };
 
@@ -69,18 +42,10 @@ export default function ButtonMessage() {
     const partsToCompare = actionId.split('/');
     const professionalId = partsToCompare[0];
     const action = partsToCompare[1];
-<<<<<<< HEAD
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
         console.log('Puedo');
       } else if (action === '1') {
-=======
-
-    if (professionalId === clinicProfessionalId) {
-      if (action === 'actionId-0') {
-        console.log('Puedo');
-      } else if (action === 'actionId-1') {
->>>>>>> FixesDev
         console.log('No Puedo');
       } else {
         console.log(ERROR_ACTION_MESSAGE);
@@ -115,3 +80,4 @@ export default function ButtonMessage() {
     </>
   );
 }
+

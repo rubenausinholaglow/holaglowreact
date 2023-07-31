@@ -19,9 +19,16 @@ interface Props {
   isCheckout?: boolean;
 }
 
+<<<<<<< HEAD
+export default function ProductCard({ product }: Props) {
+  const [imgSrc, setImgSrc] = useState(
+    `/images/product/${product.flowwwId}/${product.flowwwId}.png`
+  );
+=======
 export default function ProductCard({ product, isCheckout }: Props) {
   const cart = useCartStore(state => state.cart);
   const removeFromCart = useCartStore(state => state.removeFromCart);
+>>>>>>> FixesDev
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
 
