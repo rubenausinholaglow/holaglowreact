@@ -1,6 +1,6 @@
 import { ProfessionalType } from './clinic';
 
-export interface MessageSended {
+export interface MessageSent {
   professionalId: string;
   professionalType: ProfessionalType;
 }

@@ -12,9 +12,11 @@ export default function ButtonMessage() {
     const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + '/Slack/Response';
     const webConnection = new HubService(SOCKET_URL);
 
-    webConnection.getConnection().on('ReceiveMessage', (recivemessage: any) => {
-      showMessage(recivemessage.actions[0]?.actionId || '');
-    });
+    webConnection
+      .getConnection()
+      .on('ReceivedMessage', (receivedMessage: any) => {
+        showMessage(receivedMessage.actions[0]?.actionId || '');
+      });
 
     return () => {
       webConnection.getConnection().stop();
