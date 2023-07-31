@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProfessionalType } from '@interface/clinic';
-import { setupSocketConnection } from '@services/HubService';
+import HubService from '@services/HubService';
 import { messageService } from '@services/MessageService';
 import { ERROR_ACTION_MESSAGE } from '@utils/textConstants';
 
@@ -8,28 +8,34 @@ export default function ButtonMessage() {
   const [showButtons, setShowButtons] = useState(false);
   const [clinicProfessionalId, setclinicProfessionalId] = useState('');
 
+  useEffect(() => {
+    const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + '/Slack/Response';
+    const signalRConnection = new HubService(SOCKET_URL);
+
+    signalRConnection
+      .getConnection()
+      .on('ReceiveMessage', (recivemessage: any) => {
+        const actionId = recivemessage.actions[0]?.actionId || '';
+        showMessage(actionId);
+      });
+
+    return () => {
+      signalRConnection.getConnection().stop();
+    };
+  }, []);
+
   const toggleButtons = () => {
     setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
     setShowButtons(!showButtons);
   };
 
-  const openSocket = () => {
-    const connection = setupSocketConnection();
-    connection.on('ReceiveMessage', recivemessage => {
-      const actionId = recivemessage.actions[0]?.actionId || '';
-      showMessage(actionId);
-    });
-  };
-
   const sendMessageToMedic = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
-    openSocket();
     setShowButtons(!showButtons);
   };
 
   const sendMessageToReception = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
-    openSocket();
     setShowButtons(!showButtons);
   };
 
@@ -37,7 +43,6 @@ export default function ButtonMessage() {
     const partsToCompare = actionId.split('/');
     const professionalId = partsToCompare[0];
     const action = partsToCompare[1];
-
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
         console.log('Puedo');
