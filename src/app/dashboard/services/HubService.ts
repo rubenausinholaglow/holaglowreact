@@ -1,29 +1,40 @@
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import {
+  HttpTransportType,
+  HubConnection,
+  HubConnectionBuilder,
+  HubConnectionState,
+} from '@microsoft/signalr';
 
-export function setupSocketConnection(): HubConnection {
-  const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + '/Slack/Response';
-  const connection = new HubConnectionBuilder()
-    .withUrl(SOCKET_URL)
-    .withAutomaticReconnect()
-    .build();
+class HubService {
+  private readonly connection: HubConnection;
 
-  connection
-    .start()
-    .then(() => {
-      connection.on('ReceiveMessage', Recivemessage => {
-        connection.stop().then(() => {
-          return null;
-        });
-      });
-    })
-    .catch(e => console.log('Connection failed: ', e));
-  return connection;
-}
+  constructor(socketUrl: string) {
+    this.connection = new HubConnectionBuilder()
+      .withUrl(socketUrl, {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .build();
 
-export function closeSocketConnection(connection: HubConnection) {
-  if (connection && connection.state === 'Connected') {
-    connection.stop().then(() => {
-      return null;
-    });
+    this.startConnection();
+  }
+
+  private async startConnection() {
+    try {
+      await this.connection.start();
+    } catch (error) {
+      console.log('Connection failed: ', error);
+    }
+  }
+
+  public isConnected(): boolean {
+    return this.connection.state === HubConnectionState.Connected;
+  }
+
+  public getConnection(): HubConnection {
+    return this.connection;
   }
 }
+
+export default HubService;
