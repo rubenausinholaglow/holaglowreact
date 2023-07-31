@@ -1,4 +1,5 @@
 import { CartItem } from '@interface/product';
+import { initial } from 'lodash';
 
 export const handleGoBack = () => {
   window.history.back();
@@ -11,42 +12,49 @@ export const applyDiscountToCart = (
 ) => {
   let finalValue = price;
 
-  finalValue = finalValue - finalValue * (Number(percentageDiscount) / 100);
   finalValue = finalValue - Number(priceDiscount);
+  finalValue = finalValue - finalValue * (Number(percentageDiscount) / 100);
 
   return finalValue;
 };
 
 export const applyDiscountToItem = (
-  value: number,
+  value: string,
   discountType: string,
   cartItem: CartItem
 ) => {
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 
-  let initialPrice =
-    discountType === '%' ? cartItem.priveWithDiscount : cartItem.price;
+  let initialPrice = Number(cartItem.priceDiscount);
 
-  console.log(cartItem.price);
+  if (discountType === '€' && Number(value) === 0) {
+    initialPrice = cartItem.price;
+  }
 
-  initialPrice = discountType === '€' && value > 0 ? value : cartItem.price;
+  if (discountType === '€' && Number(value) > 0) {
+    initialPrice = Number(value);
+  }
+
+  if (discountType === '%' && Number(value) > 0) {
+    initialPrice =
+      Number(cartItem.priceDiscount) === 0
+        ? Number(cartItem.price)
+        : Number(cartItem.priceDiscount);
+  }
 
   let price = initialPrice;
 
-  console.log(price);
-
-  /*   //si value 0 i cartItem.priceWithDiscount === 0
-  if (value === 0 && cartItem.priceWithDiscount === cartItem.price) {
-    console.log('no hi ha cap descompte');
-    return price;
-  } */
-
-  if (discountType === '%') {
+  if (
+    (discountType === '%' && Number(value) > 0) ||
+    Number(cartItem.percentageDiscount) > 0
+  ) {
     price = price - price * (Number(percentageDiscountValue) / 100);
   }
-  //price = price - Number(priceDiscountValue);
 
-  console.log(price);
-  return Number(price);
+  if (price === 0) {
+    price = cartItem.price;
+  }
+
+  return price;
 };
