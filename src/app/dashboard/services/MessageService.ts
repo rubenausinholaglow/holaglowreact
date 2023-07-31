@@ -17,9 +17,6 @@ export const messageService = {
 
     try {
       const url = `${process.env.NEXT_PUBLIC_CLINICS_API}Message`;
-      console.log(professionalId);
-      console.log(professionalType);
-      console.log(url);
       const response = await fetch(url, {
         method: 'POST',
         headers: {

@@ -19,11 +19,3 @@ export function setupSocketConnection(): HubConnection {
     .catch(e => console.log('Connection failed: ', e));
   return connection;
 }
-
-export function closeSocketConnection(connection: HubConnection) {
-  if (connection && connection.state === 'Connected') {
-    connection.stop().then(() => {
-      return null;
-    });
-  }
-}
