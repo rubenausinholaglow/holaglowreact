@@ -44,9 +44,6 @@ export default function Page() {
       userId: '',
     } as InitializePayment;
     const isSuccess = await FinanceService.initializePayment(data);
-    if (isSuccess) {
-      console.log(isSuccess);
-    }
   };
   return (
     <section className="bg-hg-200 h-screen flex flex-col justify-center items-center">

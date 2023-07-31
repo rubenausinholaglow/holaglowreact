@@ -1,11 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
+import { CartItem, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { handleGoBack } from '@utils/utils';
 import { useSearchParams } from 'next/navigation';
 
-import Cart from '../../minicart/Cart';
+import { Cart } from '../../minicart/Cart';
 import { useCartStore } from '../../stores/userCartStore';
 
 const Page = () => {
@@ -41,7 +41,7 @@ const Page = () => {
             <p className="text-gray-700">{product.price}</p>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-              onClick={() => addToCart(product)}
+              onClick={() => addToCart(product as CartItem)}
             >
               Añadir al carrito
             </button>

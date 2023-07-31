@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
-import Image from 'next/image';
-import Link from 'next/link';
 
 export default function Page() {
   const [username, setUserName] = useState('');
