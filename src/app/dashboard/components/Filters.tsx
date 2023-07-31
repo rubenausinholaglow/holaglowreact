@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { CustomButtonFilter } from '@components/CustomButtonFilter';
-import Timercomponent from '@components/ui/Timer';
 import { filterItems } from '@utils/filterItems';
 import { FilterPageProps } from '@utils/props';
 import { Flex } from 'components/Layouts/Layouts';
