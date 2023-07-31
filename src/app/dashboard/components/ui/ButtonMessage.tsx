@@ -39,9 +39,9 @@ export default function ButtonMessage() {
     const action = partsToCompare[1];
 
     if (professionalId === clinicProfessionalId) {
-      if (action === 'actionId-0') {
+      if (action === '0') {
         console.log('Puedo');
-      } else if (action === 'actionId-1') {
+      } else if (action === '1') {
         console.log('No Puedo');
       } else {
         console.log(ERROR_ACTION_MESSAGE);
