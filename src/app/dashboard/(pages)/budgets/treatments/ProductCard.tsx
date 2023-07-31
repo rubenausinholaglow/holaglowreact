@@ -142,7 +142,10 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
         {showDiscountForm && (
           <>
-            <ProductDiscountForm cartUniqueId={product.uniqueId} />
+            <ProductDiscountForm
+              cartUniqueId={product.uniqueId}
+              isCheckout={false}
+            />
             {productHasDiscount && (
               <Flex layout="row-left" className="mt-2">
                 {productCartItem.priceDiscount < productCartItem.price &&
