@@ -29,20 +29,13 @@ export default function ProductCard({ product, isCheckout }: Props) {
     `/images/product/${product.flowwwId}/${product.flowwwId}.png`
   );
 
-  console.log(cart);
-  console.log(product);
-
   const productCartItem = cart.filter(
     item =>
       item.uniqueId === product.uniqueId &&
       product.priceWithDiscount !== product.price
   )[0];
 
-  console.log(productCartItem);
-
   const productHasDiscount = !isEmpty(productCartItem);
-
-  console.log(productHasDiscount);
 
   return (
     <Flex

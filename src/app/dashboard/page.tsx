@@ -102,8 +102,6 @@ export default function Page() {
     try {
       const data = await ScheduleService.getClinicSchedule(flowwwToken);
 
-      console.log(flowwwToken, data.clinicProfessional.id);
-
       localStorage.setItem('ClinicId', data.clinic.id);
       localStorage.setItem('ClinicProfessionalId', data.clinicProfessional.id);
     } catch (err) {

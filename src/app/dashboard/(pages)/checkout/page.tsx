@@ -24,8 +24,6 @@ const Page = () => {
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
 
-  //console.log(GuidUser, GuidProfessional, totalPrice);
-
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
     const GuidClinicId = localStorage.getItem('ClinicId') || '';

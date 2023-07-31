@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { Button } from 'components/Buttons/Buttons';
@@ -35,8 +36,8 @@ export default function HightLightedProduct() {
 
           setProduct(data);
         }
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        Bugsnag.notify(error);
       }
     };
 
