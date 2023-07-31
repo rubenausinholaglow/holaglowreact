@@ -175,7 +175,7 @@ export default function Page() {
   if (error) {
     return <>{error}</>;
   } else {
-    const filteredProducts = filterProducts();
+    const filteredProducts = filterProducts() || [];
     return (
       <>
         <ModalBackground

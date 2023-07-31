@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { CustomButtonFilter } from '@components/CustomButtonFilter';
+import Timercomponent from '@components/ui/Timer';
 import { filterItems } from '@utils/filterItems';
 import { FilterPageProps } from '@utils/props';
 import { Flex } from 'components/Layouts/Layouts';
@@ -26,6 +27,7 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
       layout="col-left"
       className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-hg-lightMalva`}
     >
+      <Timercomponent initialColor="green" />
       <SvgDoubleAngleLeft
         height={40}
         width={40}
