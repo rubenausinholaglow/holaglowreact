@@ -57,7 +57,6 @@ export const useCartStore = create(
       professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: CartItem) => {
         const cart = get().cart;
-        const totalPrice = get().totalPrice;
         const updatedCart = calculateUpdatedCart(cart, product);
 
         set(state => ({
@@ -67,8 +66,6 @@ export const useCartStore = create(
         }));
       },
       removeFromCart: (product: CartItem) => {
-        const totalPrice = get().totalPrice;
-
         set(state => ({
           cart: state.cart.filter(item => item.uniqueId !== product.uniqueId),
           totalItems: state.totalItems - 1,
