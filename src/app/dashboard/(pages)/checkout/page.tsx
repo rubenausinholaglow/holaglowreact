@@ -8,7 +8,7 @@ import { ERROR_POST } from '@utils/textConstants';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
-import { SvgAlma, SvgPepper } from 'icons/Icons';
+import { SvgAlma, SvgAngleDown, SvgPepper } from 'icons/Icons';
 import router from 'next/router';
 
 import { CartTotal } from '../budgets/minicart/Cart';
@@ -21,9 +21,10 @@ const Page = () => {
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
-  const totalDiscount = useCartStore(state => state.percentageDiscount);
+  const totalDiscount = useCartStore(state => state.totalDiscount);
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
+  const [showProductDiscount, setShowProductDiscount] = useState(false);
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -50,16 +51,13 @@ const Page = () => {
     };
     console.log(budget);
 
-    /*
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
       router.push('/dashboard/menu');
-
     } catch (error) {
       console.error(ERROR_POST, error);
     }
-    */
   };
 
   return (
@@ -76,20 +74,21 @@ const Page = () => {
             </li>
           ))}
         </ul>
-        <Flex layout="col-left" className="w-1/4 pl-8 shrink-0">
+        <Flex layout="col-left" className="w-1/4 pl-8 shrink-0 relative">
+          {!showPaymentButtons && (
+            <SvgAngleDown
+              height={20}
+              width={20}
+              fill="white"
+              className={`transition-transform bg-slate-400 rounded-full mr-2 absolute top-2 right-2 cursor-pointer ${
+                showProductDiscount ? 'rotate-180' : 'rotate-0'
+              }`}
+              onClick={() => setShowProductDiscount(!showProductDiscount)}
+            />
+          )}
           <CartTotal isCheckout />
-          <Button
-            className="w-full"
-            size="lg"
-            onClick={() => {
-              handleFinalize();
-              setShowPaymentButtons(!showPaymentButtons);
-            }}
-          >
-            Finalizar
-          </Button>
           {showPaymentButtons ? (
-            <Flex layout="col-left" className="gap-2 w-full">
+            <Flex layout="col-left" className="gap-2 w-full mt-4">
               <Button
                 style="tertiary"
                 href="https://dashboard.getalma.eu/login"
@@ -109,7 +108,9 @@ const Page = () => {
             </Flex>
           ) : (
             <>
-              <ProductDiscountForm isCheckout={true} className="mt-4" />
+              {showProductDiscount && (
+                <ProductDiscountForm isCheckout={true} className="mt-4" />
+              )}
               <Flex layout="col-left" className="gap-2 w-full mt-8">
                 <Button
                   className="w-full"

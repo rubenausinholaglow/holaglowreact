@@ -91,7 +91,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
               height={20}
               width={20}
               fill="white"
-              className={`transition-transform bg-slate-400 rounded-full mr-2 ${
+              className={`transition-transform bg-slate-400 rounded-full mr-2 cursor-pointer ${
                 showDiscountForm ? 'rotate-180' : 'rotate-0'
               }`}
               onClick={() => setShowDiscountBlock(!showDiscountForm)}
@@ -131,13 +131,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
           >
             Seleccionar
           </Button>
-        )}
-
-        {productHasDiscount && (
-          <>
-            <p>percentageDiscount: {productCartItem.percentageDiscount}</p>
-            <p>priceDiscount: {productCartItem.priceDiscount}</p>
-          </>
         )}
 
         {showDiscountForm && (

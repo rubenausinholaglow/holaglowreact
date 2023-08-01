@@ -29,20 +29,17 @@ function calculateCartItemDiscount(
   const cartItem = cart.find(item => item.uniqueId === cartUniqueId);
 
   if (!cartItem) {
-    console.log('no hi ha item');
     return cart;
   }
 
   const updatedCartItem = {
     ...cartItem,
     priceWithDiscount: applyDiscountToItem(value, discountType, cartItem),
-    [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']: value,
+    [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']:
+      Number(value),
   };
 
-  console.log(updatedCartItem);
-
   return cart.map(item => {
-    console.log(item.uniqueId, cartUniqueId);
     return item.uniqueId === cartUniqueId ? updatedCartItem : item;
   });
 }
@@ -61,45 +58,28 @@ export const useCartStore = create(
       addItemToCart: (product: CartItem) => {
         const cart = get().cart;
         const totalPrice = get().totalPrice;
-
-        console.log(totalPrice, product.priceWithDiscount);
-
         const updatedCart = calculateUpdatedCart(cart, product);
-
-        console.log(updatedCart[0]);
-
-        console.log(cart);
 
         set(state => ({
           cart: updatedCart,
           totalItems: state.totalItems + 1,
           totalPrice: state.totalPrice + product.price,
         }));
-
-        console.log(cart);
-
-        console.log(totalPrice);
       },
       removeFromCart: (product: CartItem) => {
         const totalPrice = get().totalPrice;
-
-        console.log(totalPrice, product.priceWithDiscount);
 
         set(state => ({
           cart: state.cart.filter(item => item.uniqueId !== product.uniqueId),
           totalItems: state.totalItems - 1,
           totalPrice: state.totalPrice - product.priceWithDiscount,
         }));
-
-        console.log(totalPrice);
       },
       applyItemDiscount: (
         cartUniqueId: string,
         value: number,
         discountType: '%' | '€' | 'total'
       ) => {
-        console.log(cartUniqueId, value, discountType);
-
         const cart = get().cart;
         const updatedCart = calculateCartItemDiscount(
           cart,
@@ -109,12 +89,8 @@ export const useCartStore = create(
         );
 
         set(() => ({ cart: updatedCart }));
-
-        console.log(updatedCart);
       },
       applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {
-        console.log(typeof value, value);
-
         set(state => ({
           priceDiscount:
             discountType === '€' ? Number(value) : state.priceDiscount,

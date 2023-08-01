@@ -91,6 +91,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
           {productsPriceTotal.toFixed(2)}€
         </Text>
       </Flex>
+
       {hasCartDiscount && (
         <Flex layout="row-left" className="mt-2 mb-6">
           {totalDiscount > 0 && (
