@@ -66,14 +66,13 @@ export default function Page() {
         if (data && data !== '') {
           redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
-          setIsLoading(false);
           handleSearchError();
         }
       })
       .catch(error => {
-        setIsLoading(false);
         handleSearchError();
       });
+    setIsLoading(false);
   };
 
   const handleSearchError = async () => {
