@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import { Professional } from '@interface/clinic';
 import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { Button } from 'components/Buttons/Buttons';
@@ -18,7 +19,6 @@ export default function HightLightedProduct() {
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
   const productHighlighted = useCartStore(state => state.productHighlighted);
-  const professionals = useCartStore(state => state.professionals);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<CartItem | null>(null);
@@ -47,6 +47,15 @@ export default function HightLightedProduct() {
   useEffect(() => {
     setIsLoading(isEmpty(product));
   }, [product]);
+
+  let doctors: Professional[] = [];
+
+  if (!isEmpty(product)) {
+    doctors = product.clinic
+      .map(clinic => clinic.professionals)
+      .flat()
+      .filter(professional => professional.professionalType === 1);
+  }
 
   if (isEmpty(product)) {
     return <></>;
@@ -125,36 +134,40 @@ export default function HightLightedProduct() {
           </div>
         )}
 
-        <p className="font-semibold text-xl mb-4">Nuestro equipo médico</p>
-        <ul className="mb-16">
-          {professionals.map(professional => {
-            return (
-              <li className="mb-4" key={professional.name}>
-                <Flex layout="row-left">
-                  <div className="w-[125px] aspect-square overflow-hidden rounded-full relative shrink-0 mr-4">
-                    <Image
-                      src={professional.urlPhoto}
-                      alt={professional.name}
-                      fill={true}
-                      className="object-cover"
-                    />
-                  </div>
-                  <Flex layout="col-left">
-                    <p className="text-lg font-semibold mb-2">
-                      {professional.name}
-                      {' - '}
-                      <span className="opacity-75 font-normal">
-                        {professional.title} Nº Col.{' '}
-                        {professional.collegiateNumber}
-                      </span>
-                    </p>
-                    <p className="opacity-50">{professional.description}</p>
-                  </Flex>
-                </Flex>
-              </li>
-            );
-          })}
-        </ul>
+        {doctors.length > 0 && (
+          <>
+            <p className="font-semibold text-xl mb-4">Nuestro equipo médico</p>
+            <ul className="mb-16">
+              {doctors.map(professional => {
+                return (
+                  <li className="mb-4" key={professional.name}>
+                    <Flex layout="row-left">
+                      <div className="w-[125px] aspect-square overflow-hidden rounded-full relative shrink-0 mr-4">
+                        <Image
+                          src={professional.urlPhoto}
+                          alt={professional.name}
+                          fill={true}
+                          className="object-cover"
+                        />
+                      </div>
+                      <Flex layout="col-left">
+                        <p className="text-lg font-semibold mb-2">
+                          {professional.name}
+                          {' - '}
+                          <span className="opacity-75 font-normal">
+                            {professional.title} Nº Col.{' '}
+                            {professional.collegiateNumber}
+                          </span>
+                        </p>
+                        <p className="opacity-50">{professional.description}</p>
+                      </Flex>
+                    </Flex>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        )}
 
         <Button
           style="primary"
