@@ -8,6 +8,7 @@ export interface Budget {
   clinicInfoId: string;
   referenceId: string;
   professionalId: string;
+  manualPrice: number;
   products: BudgetProduct[];
 }
 
