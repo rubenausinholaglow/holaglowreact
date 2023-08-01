@@ -2,8 +2,8 @@ export interface Budget {
   userId: string;
   statusBudget: number;
   discountCode: string;
-  priceDiscount: string;
-  percentageDiscount: string;
+  priceDiscount: number;
+  percentageDiscount: number;
   totalPrice: number;
   clinicInfoId: string;
   referenceId: string;
@@ -15,6 +15,6 @@ export interface Budget {
 export interface BudgetProduct {
   productId: string;
   price: number;
-  priceDiscount: string;
-  percentageDiscount: string;
+  priceDiscount: number;
+  percentageDiscount: number;
 }

@@ -25,11 +25,10 @@ export const ClinicProfessional = () => {
   useEffect(() => {
     const fetchProfessionals = async () => {
       try {
-        const clinicId = localStorage.getItem('ClinicId') || '';
-        const professionalType = ProfessionalType.Medical;
+        const professionalType = ProfessionalType.BeautyAdvisor;
 
         const professionalsData = await clinicService.getProfessionalsByClinic(
-          clinicId,
+          localStorage.getItem('ClinicId') || '',
           professionalType
         );
 

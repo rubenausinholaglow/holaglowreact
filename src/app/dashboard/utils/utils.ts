@@ -5,14 +5,19 @@ export const handleGoBack = () => {
 };
 
 export const applyDiscountToCart = (
-  percentageDiscount: string,
-  priceDiscount: string,
+  percentageDiscount: number,
+  priceDiscount: number,
+  manualPrice: number,
   price: number
 ) => {
   let finalValue = price;
 
-  finalValue = finalValue - finalValue * (Number(percentageDiscount) / 100);
-  finalValue = finalValue - Number(priceDiscount);
+  if (manualPrice > 0) {
+    finalValue = manualPrice;
+  }
+
+  finalValue = finalValue - priceDiscount;
+  finalValue = finalValue - finalValue * (percentageDiscount / 100);
 
   return finalValue;
 };
@@ -24,17 +29,31 @@ export const applyDiscountToItem = (
 ) => {
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
-  const priceDiscountValue =
-    discountType === '€' ? value : cartItem.priceDiscount;
 
-  let price = cartItem.price;
+  let initialPrice = cartItem.priceDiscount;
 
-  //si value 0 i cartItem.priceWithDiscount === 0
-  if (value === 0 && cartItem.priceWithDiscount === cartItem.price) {
-    return price;
+  if (discountType === '€' && value === 0) {
+    initialPrice = cartItem.price;
   }
-  price = price - price * (Number(percentageDiscountValue) / 100);
-  price = price - Number(priceDiscountValue);
+
+  if (discountType === '€' && value > 0) {
+    initialPrice = value;
+  }
+
+  if (discountType === '%' && value > 0) {
+    initialPrice =
+      cartItem.priceDiscount === 0 ? cartItem.price : cartItem.priceDiscount;
+  }
+
+  let price = initialPrice;
+
+  if ((discountType === '%' && value > 0) || cartItem.percentageDiscount > 0) {
+    price = price - (price * percentageDiscountValue) / 100;
+  }
+
+  if (Number(price) === 0) {
+    price = cartItem.price;
+  }
 
   return price;
 };

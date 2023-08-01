@@ -8,7 +8,7 @@ import { ERROR_POST } from '@utils/textConstants';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
-import { SvgAlma, SvgPepper } from 'icons/Icons';
+import { SvgAlma, SvgAngleDown, SvgPepper } from 'icons/Icons';
 import router from 'next/router';
 
 import { CartTotal } from '../budgets/minicart/Cart';
@@ -21,8 +21,10 @@ const Page = () => {
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
+  const manualPrice = useCartStore(state => state.manualPrice);
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
+  const [showProductDiscount, setShowProductDiscount] = useState(false);
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -34,12 +36,12 @@ const Page = () => {
       discountCode: '',
       priceDiscount: priceDiscount,
       percentageDiscount: percentageDiscount,
+      manualPrice: manualPrice,
       totalPrice: totalPrice,
       clinicInfoId: GuidClinicId,
       referenceId: '',
       statusBudget: 0,
       professionalId: GuidProfessional,
-      manualPrice: 0,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: CartItem.price,
@@ -47,6 +49,8 @@ const Page = () => {
         priceDiscount: CartItem.priceDiscount,
       })),
     };
+    console.log(budget);
+
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
@@ -70,14 +74,25 @@ const Page = () => {
             </li>
           ))}
         </ul>
-        <Flex layout="col-left" className="w-1/4 pl-8 shrink-0">
+        <Flex layout="col-left" className="w-1/4 pl-8 shrink-0 relative">
+          {!showPaymentButtons && (
+            <SvgAngleDown
+              height={20}
+              width={20}
+              fill="white"
+              className={`transition-transform bg-slate-400 rounded-full mr-2 absolute top-2 right-2 cursor-pointer ${
+                showProductDiscount ? 'rotate-180' : 'rotate-0'
+              }`}
+              onClick={() => setShowProductDiscount(!showProductDiscount)}
+            />
+          )}
           <CartTotal isCheckout />
           {showPaymentButtons ? (
-            <Flex layout="col-center" className="gap-2 w-full">
+            <Flex layout="col-left" className="gap-2 w-full mt-4">
               <Button
                 style="tertiary"
                 href="https://dashboard.getalma.eu/login"
-                className="border-[#FA5022] w-full"
+                className="border-[#FA5022]"
                 target="_blank"
               >
                 <SvgAlma height={25} width={75} fill="#FA5022" />
@@ -93,14 +108,29 @@ const Page = () => {
             </Flex>
           ) : (
             <>
-              <ProductDiscountForm isCheckout={true} />
-              <Button
-                className="mt-8 w-full"
-                size="lg"
-                onClick={() => setShowPaymentButtons(!showPaymentButtons)}
-              >
-                Finalizar
-              </Button>
+              {showProductDiscount && (
+                <ProductDiscountForm isCheckout={true} className="mt-4" />
+              )}
+              <Flex layout="col-left" className="gap-2 w-full mt-8">
+                <Button
+                  className="w-full"
+                  size="lg"
+                  onClick={() => {
+                    handleFinalize();
+                    setShowPaymentButtons(!showPaymentButtons);
+                  }}
+                >
+                  Finalizar
+                </Button>
+                <Button
+                  className="w-full"
+                  size="lg"
+                  href="https://agenda.holaglow.com/schedule?mode=dashboard"
+                  style="tertiary"
+                >
+                  Agendar Cita
+                </Button>
+              </Flex>
             </>
           )}
         </Flex>
