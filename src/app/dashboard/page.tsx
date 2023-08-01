@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -109,10 +110,10 @@ export default function Page() {
         saveUserDetails(name, id, flowwwToken);
         router.push('/dashboard/menu');
       } else {
-        console.log('Error');
+        //TODO - Poner un mensaje de Error en UI
       }
     } catch (err) {
-      console.error(ERROR_GETTING_DATA, err);
+      Bugsnag.notify(ERROR_GETTING_DATA + err);
     }
   }
 
