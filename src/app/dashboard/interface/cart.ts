@@ -7,7 +7,7 @@ export interface State {
   totalPrice: number;
   priceDiscount: number;
   percentageDiscount: number;
-  totalDiscount: number;
+  manualPrice: number;
   productHighlighted: typeof emptyProduct;
   professionals: Professional[];
 }

@@ -52,7 +52,7 @@ export const useCartStore = create(
       totalPrice: INITIAL_STATE.totalPrice,
       priceDiscount: INITIAL_STATE.priceDiscount,
       percentageDiscount: INITIAL_STATE.percentageDiscount,
-      totalDiscount: INITIAL_STATE.totalDiscount,
+      manualPrice: INITIAL_STATE.manualPrice,
       productHighlighted: INITIAL_STATE.productHighlighted,
       professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: CartItem) => {
@@ -96,8 +96,8 @@ export const useCartStore = create(
             discountType === '€' ? Number(value) : state.priceDiscount,
           percentageDiscount:
             discountType === '%' ? Number(value) : state.percentageDiscount,
-          totalDiscount:
-            discountType === 'total' ? Number(value) : state.totalDiscount,
+          manualPrice:
+            discountType === 'total' ? Number(value) : state.manualPrice,
         }));
       },
       setHighlightProduct: (product: Product) => {

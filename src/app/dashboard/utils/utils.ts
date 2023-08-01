@@ -7,13 +7,13 @@ export const handleGoBack = () => {
 export const applyDiscountToCart = (
   percentageDiscount: number,
   priceDiscount: number,
-  totalDiscount: number,
+  manualPrice: number,
   price: number
 ) => {
   let finalValue = price;
 
-  if (totalDiscount > 0) {
-    finalValue = totalDiscount;
+  if (manualPrice > 0) {
+    finalValue = manualPrice;
   }
 
   finalValue = finalValue - priceDiscount;

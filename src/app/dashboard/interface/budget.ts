@@ -4,11 +4,11 @@ export interface Budget {
   discountCode: string;
   priceDiscount: number;
   percentageDiscount: number;
-  totalDiscount: number;
   totalPrice: number;
   clinicInfoId: string;
   referenceId: string;
   professionalId: string;
+  manualPrice: number;
   products: BudgetProduct[];
 }
 

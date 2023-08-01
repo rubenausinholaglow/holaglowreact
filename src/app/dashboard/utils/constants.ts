@@ -24,7 +24,7 @@ export const INITIAL_STATE: State = {
   totalPrice: 0,
   priceDiscount: 0,
   percentageDiscount: 0,
-  totalDiscount: 0,
+  manualPrice: 0,
   productHighlighted: emptyProduct,
   professionals: [],
 };

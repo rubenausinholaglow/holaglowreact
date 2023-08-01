@@ -15,15 +15,6 @@ export default function CartItem({ product }: Props) {
   return (
     <li className="text-hg-black">
       <Flex layout="row-left">
-        {/*         <div className="relative h-[40px] w-[40px]">
-          <Image
-            src="/images/budget/promoCodeBg.jpg"
-            alt={product.title}
-            fill={true}
-            className="border border-hg-darkMalva"
-          />
-        </div> */}
-
         <span className="font-bold mr-1">{product.title}</span>
         <span className="font-bold">{`- ${product.price}€`}</span>
         <button title="Remove Item" onClick={() => removeFromCart(product)}>

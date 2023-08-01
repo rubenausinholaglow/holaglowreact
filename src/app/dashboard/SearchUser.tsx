@@ -20,7 +20,6 @@ const SearchUser: React.FC<SearchBarProps> = ({
     setIsLoading(false);
   };
 
-  console.log(errors);
   return (
     <Container>
       <Flex layout="col-center">

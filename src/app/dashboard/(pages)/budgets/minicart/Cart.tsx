@@ -36,7 +36,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
   const cart = useCartStore(state => state.cart);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
-  const totalDiscount = useCartStore(state => state.totalDiscount);
+  const manualPrice = useCartStore(state => state.manualPrice);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
 
   let productsPriceTotal = 0;
@@ -56,12 +56,12 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
     productsPriceTotal !== productsPriceTotalWithDiscounts;
 
   const hasCartDiscount =
-    percentageDiscount > 0 || priceDiscount > 0 || totalDiscount > 0;
+    percentageDiscount > 0 || priceDiscount > 0 || manualPrice > 0;
 
   const cartTotalWithDiscount = applyDiscountToCart(
     percentageDiscount,
     priceDiscount,
-    totalDiscount,
+    manualPrice,
     productsPriceTotalWithDiscounts
   );
 
@@ -94,13 +94,13 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
 
       {hasCartDiscount && (
         <Flex layout="row-left" className="mt-2 mb-6">
-          {totalDiscount > 0 && (
+          {manualPrice > 0 && (
             <Flex
               layout="row-left"
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, 'total')}
             >
-              <Text size="sm">total: {totalDiscount}%</Text>
+              <Text size="sm">total: {manualPrice}%</Text>
               <SvgClose height={12} width={12} className="ml-1" />
             </Flex>
           )}

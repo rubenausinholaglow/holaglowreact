@@ -21,7 +21,7 @@ const Page = () => {
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
-  const totalDiscount = useCartStore(state => state.totalDiscount);
+  const manualPrice = useCartStore(state => state.manualPrice);
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
@@ -36,7 +36,7 @@ const Page = () => {
       discountCode: '',
       priceDiscount: priceDiscount,
       percentageDiscount: percentageDiscount,
-      totalDiscount: totalDiscount,
+      manualPrice: manualPrice,
       totalPrice: totalPrice,
       clinicInfoId: GuidClinicId,
       referenceId: '',
