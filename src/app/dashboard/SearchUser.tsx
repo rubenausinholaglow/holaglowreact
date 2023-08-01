@@ -17,7 +17,7 @@ const SearchUser: React.FC<SearchBarProps> = ({
   const handleClick = async () => {
     setIsLoading(true);
     await handleCheckUser();
-    setIsLoading(false);
+    //setIsLoading(false);
   };
 
   return (

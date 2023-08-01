@@ -66,14 +66,14 @@ export default function Page() {
         if (data && data !== '') {
           redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
+          setIsLoading(false);
           handleSearchError();
         }
       })
       .catch(error => {
+        setIsLoading(false);
         handleSearchError();
       });
-
-    setIsLoading(false);
   };
 
   const handleSearchError = async () => {
@@ -91,35 +91,35 @@ export default function Page() {
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
       redirectPage(formData.name, formData.id, formData.flowwwToken);
-      setIsLoading(false);
     } else {
       handleRequestError([config.ERROR_REGISTRATION]);
-      setIsLoading(false);
     }
   };
 
-  async function someAsyncFunction(flowwwToken: string) {
+  async function redirectPage(name: string, id: string, flowwwToken: string) {
     try {
       const data = await ScheduleService.getClinicSchedule(flowwwToken);
-
-      localStorage.setItem('ClinicId', data.clinic.id);
-      localStorage.setItem('ClinicProfessionalId', data.clinicProfessional.id);
+      if (data != null) {
+        localStorage.setItem('ClinicId', data.clinic.id);
+        localStorage.setItem(
+          'ClinicProfessionalId',
+          data.clinicProfessional.id
+        );
+        saveUserDetails(name, id, flowwwToken);
+        router.push('/dashboard/menu');
+      } else {
+        console.log('Error');
+      }
     } catch (err) {
-      console.error(ERROR_GETTING_DATA, err);
+      console.error('Error redirecting to dashboard:', err);
     }
   }
 
-  const getScheduleInformation = (flowwwToken: string) => {
-    someAsyncFunction(flowwwToken);
-  };
-
-  const redirectPage = (name: string, id: string, flowwwToken: string) => {
+  function saveUserDetails(name: string, id: string, flowwwToken: string) {
     localStorage.setItem('username', name);
     localStorage.setItem('id', id);
     localStorage.setItem('flowwwToken', flowwwToken);
-    getScheduleInformation(flowwwToken);
-    router.push('/dashboard/menu');
-  };
+  }
 
   const handleFormFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
