@@ -89,11 +89,11 @@ export default function Page() {
     setIsLoading(true);
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
-      setIsLoading(false);
       redirectPage(formData.name, formData.id, formData.flowwwToken);
-    } else {
       setIsLoading(false);
+    } else {
       handleRequestError([config.ERROR_REGISTRATION]);
+      setIsLoading(false);
     }
   };
 
