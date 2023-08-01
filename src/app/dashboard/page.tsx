@@ -89,8 +89,10 @@ export default function Page() {
     setIsLoading(true);
     const isSuccess = await UserService.registerUser(formData);
     if (isSuccess) {
+      setIsLoading(false);
       redirectPage(formData.name, formData.id, formData.flowwwToken);
     } else {
+      setIsLoading(false);
       handleRequestError([config.ERROR_REGISTRATION]);
     }
   };
@@ -110,7 +112,7 @@ export default function Page() {
         console.log('Error');
       }
     } catch (err) {
-      console.error('Error redirecting to dashboard:', err);
+      console.error(ERROR_GETTING_DATA, err);
     }
   }
 
