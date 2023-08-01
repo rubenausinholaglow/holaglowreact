@@ -39,6 +39,7 @@ const Page = () => {
       referenceId: '',
       statusBudget: 0,
       professionalId: GuidProfessional,
+      manualPrice: 0,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: CartItem.price,
