@@ -25,7 +25,7 @@ export const Button = ({
   ...rest
 }: ButtonProps) => {
   const StylesConfig: any = {
-    common: 'rounded-full px-8 py-2 text-white transition-all',
+    common: 'rounded-full px-4 py-2 text-white transition-all',
     primary: 'bg-hg-darkMalva border border-hg-darkMalva',
     secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
     tertiary: 'text-hg-darkMalva border border-hg-darkMalva bg-white',

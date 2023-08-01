@@ -2,6 +2,9 @@ import './globals.css';
 
 import { Poppins } from 'next/font/google';
 
+import Footer from './components/Footer';
+import Header from './components/Header';
+
 const poppins = Poppins({ weight: ['400', '600'], subsets: ['latin'] });
 
 export const metadata = {
@@ -16,8 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="max-h-screen h-full">
-      <body className={poppins.className}>{children}</body>
+    <html lang="en" className="max-h-screen h-full bg-white text-hg-black">
+      <body className={poppins.className}>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
