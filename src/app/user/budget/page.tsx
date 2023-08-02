@@ -35,6 +35,8 @@ export default async function Budget({
 }) {
   const budgetID = Number(searchParams.id);
 
+  console.log(budgetID);
+
   let budgetData;
 
   if (budgetID) {

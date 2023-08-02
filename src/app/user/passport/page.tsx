@@ -34,11 +34,13 @@ export default async function Passport({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  debugger;
+
   const passportID = searchParams.id;
 
   let passportData;
 
-  if (passportData) {
+  if (passportID) {
     passportData = await fetchPassportData(Number(passportID));
   }
 
