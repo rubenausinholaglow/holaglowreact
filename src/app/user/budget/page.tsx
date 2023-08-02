@@ -1,3 +1,5 @@
+'use client';
+
 import Footer from '../Footer';
 import AlmaPayment from './AlmaPayment';
 import Header from './Header';
@@ -32,7 +34,12 @@ export default async function Budget({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const budgetID = Number(searchParams.id);
-  const budgetData = await fetchBudgetData(budgetID);
+
+  let budgetData;
+
+  if (budgetID) {
+    budgetData = await fetchBudgetData(budgetID);
+  }
 
   const {
     clinicInfo = null,

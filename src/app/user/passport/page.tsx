@@ -1,3 +1,5 @@
+'use client';
+
 import Footer from '../Footer';
 import Doubts from './Doubts';
 import Header from './Header';
@@ -33,7 +35,12 @@ export default async function Passport({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const passportID = searchParams.id;
-  const passportData = await fetchPassportData(Number(passportID));
+
+  let passportData;
+
+  if (passportData) {
+    passportData = await fetchPassportData(Number(passportID));
+  }
 
   const {
     appointment = null,
