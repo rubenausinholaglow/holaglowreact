@@ -15,6 +15,7 @@ export const ClinicProfessional = () => {
   const setProfessionalsInStore = useCartStore(state => state.setProfessionals);
 
   const [professionals, setProfessionals] = useState<Professional[]>([]);
+  const [beautyAdvisors, setBeautyAdvisors] = useState<Professional[]>([]);
   const [selectedProfessional, setSelectedProfessional] =
     useState<Professional | null>(null);
   const [showProfessionalList, setShowProfessionalList] = useState(false);
@@ -25,7 +26,7 @@ export const ClinicProfessional = () => {
   useEffect(() => {
     const fetchProfessionals = async () => {
       try {
-        const professionalType = ProfessionalType.BeautyAdvisor;
+        const professionalType = ProfessionalType.All;
 
         const professionalsData = await clinicService.getProfessionalsByClinic(
           localStorage.getItem('ClinicId') || '',
@@ -48,6 +49,23 @@ export const ClinicProfessional = () => {
     fetchProfessionals();
   }, []);
 
+  useEffect(() => {
+    if (professionals.length > 0) {
+      setBeautyAdvisors(
+        professionals.filter(
+          professional => professional.professionalType === 2
+        )
+      );
+
+      setSelectedProfessional(
+        professionals.filter(
+          professional =>
+            professional.id === localStorage.getItem('ClinicProfessionalId')
+        )[0]
+      );
+    }
+  }, [professionals]);
+
   const handleProfessionalClick = (professional: Professional) => {
     if (selectedProfessional?.name === professional.name) {
       setShowProfessionalList(prevState => !prevState);
@@ -69,7 +87,7 @@ export const ClinicProfessional = () => {
     return <div>{error}</div>;
   }
 
-  if (isEmpty(professionals[0].name)) {
+  if (isEmpty(selectedProfessional)) {
     return <></>;
   }
 
@@ -83,7 +101,7 @@ export const ClinicProfessional = () => {
             ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
       >
         <ul className="w-[125px]">
-          {professionals.map(professional => (
+          {beautyAdvisors.map(professional => (
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
@@ -97,10 +115,10 @@ export const ClinicProfessional = () => {
       <Flex
         layout="col-center"
         onClick={() =>
-          professionals.length > 1 && handleToggleProfessionalList()
+          beautyAdvisors.length > 1 && handleToggleProfessionalList()
         }
         className={`aspect-square h-[40px] rounded-full bg-hg-lime text-hg-darkMalva justify-center relative ${
-          professionals.length > 1 && 'cursor-pointer'
+          beautyAdvisors.length > 1 && 'cursor-pointer'
         }`}
       >
         <p style={{ margin: 0, fontWeight: 'bold' }}>

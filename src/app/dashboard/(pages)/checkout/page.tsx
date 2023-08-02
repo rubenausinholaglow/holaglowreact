@@ -49,7 +49,6 @@ const Page = () => {
         priceDiscount: CartItem.priceDiscount,
       })),
     };
-    console.log(budget);
 
     try {
       await budgetService.createBudget(budget);
