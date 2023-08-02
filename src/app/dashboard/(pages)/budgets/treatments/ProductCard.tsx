@@ -39,18 +39,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
   const productHasDiscount = !isEmpty(productCartItem);
 
-  const [imgSrc, setImgSrc] = useState(
-    `/images/product/${product.flowwwId}/${product.flowwwId}.png`
-  );
-
-  const productCartItem = cart.filter(
-    item =>
-      item.uniqueId === product.uniqueId &&
-      product.priceWithDiscount !== product.price
-  )[0];
-
-  const productHasDiscount = !isEmpty(productCartItem);
-
   return (
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
