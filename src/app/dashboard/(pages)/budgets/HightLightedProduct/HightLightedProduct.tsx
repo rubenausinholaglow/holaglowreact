@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Professional } from '@interface/clinic';
 import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { Button } from 'components/Buttons/Buttons';

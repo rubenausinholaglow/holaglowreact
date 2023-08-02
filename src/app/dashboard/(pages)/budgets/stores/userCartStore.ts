@@ -57,8 +57,6 @@ export const useCartStore = create(
       professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: CartItem) => {
         const cart = get().cart;
-        const totalPrice = get().totalPrice;
-
         const updatedCart = calculateUpdatedCart(cart, product);
 
         set(state => ({
