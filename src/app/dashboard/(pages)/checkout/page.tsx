@@ -49,7 +49,6 @@ const Page = () => {
         priceDiscount: CartItem.priceDiscount,
       })),
     };
-
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
