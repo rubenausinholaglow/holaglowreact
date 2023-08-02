@@ -47,8 +47,9 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
   let productsPriceTotalWithDiscounts = 0;
 
   if (cart) {
-    productsPriceTotalWithDiscounts = Number(
-      cart.reduce((acc, product) => acc + product.priceWithDiscount, 0)
+    productsPriceTotalWithDiscounts = cart.reduce(
+      (acc, product) => acc + Number(product.priceWithDiscount),
+      0
     );
   }
 
