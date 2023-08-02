@@ -87,7 +87,7 @@ export const ClinicProfessional = () => {
     return <div>{error}</div>;
   }
 
-  if (isEmpty(professionals[0].name)) {
+  if (isEmpty(selectedProfessional)) {
     return <></>;
   }
 
@@ -101,7 +101,7 @@ export const ClinicProfessional = () => {
             ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
       >
         <ul className="w-[125px]">
-          {professionals.map(professional => (
+          {beautyAdvisors.map(professional => (
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
