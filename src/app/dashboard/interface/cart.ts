@@ -5,8 +5,9 @@ export interface State {
   cart: CartItem[];
   totalItems: number;
   totalPrice: number;
-  priceDiscount: string;
-  percentageDiscount: string;
+  priceDiscount: number;
+  percentageDiscount: number;
+  manualPrice: number;
   productHighlighted: typeof emptyProduct;
   professionals: Professional[];
 }
@@ -17,9 +18,9 @@ export interface Actions {
   applyItemDiscount: (
     cartUniqueId: string,
     value: number,
-    discountType: '%' | '€'
+    discountType: '%' | '€' | 'total'
   ) => void;
-  applyCartDiscount: (value: number, discountType: '%' | '€') => void;
+  applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => void;
   setHighlightProduct: (Item: Product) => void;
   setProfessionals: (Item: Professional[]) => void;
 }
