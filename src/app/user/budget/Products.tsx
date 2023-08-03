@@ -72,7 +72,7 @@ export default function Products({
                       Precio
                     </span>
                     <span className="text-3xl font-bold">
-                      {`${priceFormat(Number(productDetails.price))}`} €
+                      {`${priceFormat(Number(product.price))}`} €
                     </span>
                   </p>
                 </div>

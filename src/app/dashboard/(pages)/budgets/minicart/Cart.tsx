@@ -2,6 +2,7 @@ import { applyDiscountToCart } from '@utils/utils';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Text } from 'components/Texts';
+import { SvgClose } from 'icons/Icons';
 
 import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
@@ -35,60 +36,94 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
   const cart = useCartStore(state => state.cart);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
+  const manualPrice = useCartStore(state => state.manualPrice);
+  const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
 
-  let total = 0;
+  let productsPriceTotal = 0;
   if (cart) {
-    total = cart.reduce((acc, product) => acc + product.priceWithDiscount, 0);
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
   }
 
-  const priceWithDiscount = applyDiscountToCart(
+  let productsPriceTotalWithDiscounts = 0;
+
+  if (cart) {
+    productsPriceTotalWithDiscounts = cart.reduce(
+      (acc, product) => acc + Number(product.priceWithDiscount),
+      0
+    );
+  }
+
+  const hasProductsDiscount =
+    productsPriceTotal !== productsPriceTotalWithDiscounts;
+
+  const hasCartDiscount =
+    percentageDiscount > 0 || priceDiscount > 0 || manualPrice > 0;
+
+  const cartTotalWithDiscount = applyDiscountToCart(
     percentageDiscount,
     priceDiscount,
-    Number(total.toFixed(2))
+    manualPrice,
+    productsPriceTotalWithDiscounts
   );
 
-  const hasDiscount = priceWithDiscount.toFixed(2) !== total.toFixed(2);
-
   return (
-    <Flex layout="col-left" className="ml-auto text-hg-black w-full">
-      <Flex layout="col-left" className={hasDiscount ? 'mb-2' : 'mb-8'}>
-        <Text size="2xl" className="font-bold">
-          Total:
-        </Text>
-        {hasDiscount && (
+    <Flex
+      layout="col-left"
+      className={`ml-auto text-hg-black ${isCheckout && 'w-full'}`}
+    >
+      <Flex layout={isCheckout ? 'col-left' : 'row-left'} className={`mr-4`}>
+        {(hasProductsDiscount || hasCartDiscount) && (
           <Text size="3xl" className="text-hg-black font-semibold">
-            {priceWithDiscount.toFixed(2)}€
+            {hasCartDiscount ? (
+              <>{cartTotalWithDiscount}€</>
+            ) : (
+              <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
+            )}
           </Text>
         )}
         <Text
-          size={hasDiscount ? 'xl' : '3xl'}
+          size={hasProductsDiscount || hasCartDiscount ? 'xl' : '3xl'}
           className={
-            hasDiscount
+            hasProductsDiscount || hasCartDiscount
               ? 'text-red-600 text-lg text line-through opacity-50 font-semibold'
               : 'text-hg-black font-semibold'
           }
         >
-          {total.toFixed(2)}€
+          {productsPriceTotal.toFixed(2)}€
         </Text>
       </Flex>
 
-      {hasDiscount && (
-        <Flex layout="row-left" className="mb-6">
-          {percentageDiscount !== '0' && (
-            <Text
+      {hasCartDiscount && (
+        <Flex layout="row-left" className="mt-2 mb-6">
+          {manualPrice > 0 && (
+            <Flex
+              layout="row-left"
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
-              size="sm"
+              onClick={() => applyCartDiscount(0, 'total')}
             >
-              -{percentageDiscount}%
-            </Text>
+              <Text size="sm">total: {manualPrice}%</Text>
+              <SvgClose height={12} width={12} className="ml-1" />
+            </Flex>
           )}
-          {priceDiscount !== '0' && (
-            <Text
+          {percentageDiscount > 0 && (
+            <Flex
+              layout="row-left"
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
-              size="sm"
+              onClick={() => applyCartDiscount(0, '%')}
             >
-              -{priceDiscount}€
-            </Text>
+              <Text size="sm">- {percentageDiscount}%</Text>
+              <SvgClose height={12} width={12} className="ml-1" />
+            </Flex>
+          )}
+          {priceDiscount > 0 && (
+            <Flex
+              layout="row-left"
+              className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+              onClick={() => applyCartDiscount(0, '€')}
+            >
+              <Text size="sm">- {priceDiscount}€</Text>
+              <SvgClose height={12} width={12} className="ml-1" />
+            </Flex>
           )}
         </Flex>
       )}
