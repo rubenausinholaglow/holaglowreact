@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -72,7 +73,6 @@ export default function Page() {
       .catch(error => {
         handleSearchError();
       });
-
     setIsLoading(false);
   };
 
@@ -98,28 +98,30 @@ export default function Page() {
     }
   };
 
-  async function someAsyncFunction(flowwwToken: string) {
+  async function redirectPage(name: string, id: string, flowwwToken: string) {
     try {
       const data = await ScheduleService.getClinicSchedule(flowwwToken);
-
-      localStorage.setItem('ClinicId', data.clinic.id);
-      localStorage.setItem('ClinicProfessionalId', data.clinicProfessional.id);
+      if (data != null) {
+        localStorage.setItem('ClinicId', data.clinic.id);
+        localStorage.setItem(
+          'ClinicProfessionalId',
+          data.clinicProfessional.id
+        );
+        saveUserDetails(name, id, flowwwToken);
+        router.push('/dashboard/menu');
+      } else {
+        //TODO - Poner un mensaje de Error en UI
+      }
     } catch (err) {
-      console.error(ERROR_GETTING_DATA, err);
+      Bugsnag.notify(ERROR_GETTING_DATA + err);
     }
   }
 
-  const getScheduleInformation = (flowwwToken: string) => {
-    someAsyncFunction(flowwwToken);
-  };
-
-  const redirectPage = (name: string, id: string, flowwwToken: string) => {
+  function saveUserDetails(name: string, id: string, flowwwToken: string) {
     localStorage.setItem('username', name);
     localStorage.setItem('id', id);
     localStorage.setItem('flowwwToken', flowwwToken);
-    getScheduleInformation(flowwwToken);
-    router.push('/dashboard/menu');
-  };
+  }
 
   const handleFormFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,

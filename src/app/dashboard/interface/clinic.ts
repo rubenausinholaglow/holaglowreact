@@ -7,6 +7,7 @@ export interface Clinic {
 
 export interface Professional {
   description: string;
+  id: string;
   collegiateNumber: string;
   title: string;
   urlPhoto: string;
@@ -15,7 +16,7 @@ export interface Professional {
 }
 
 export enum ProfessionalType {
-  None = 0,
+  All = 0,
   Medical = 1,
   BeautyAdvisor = 2,
   Others = 3,

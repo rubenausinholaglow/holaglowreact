@@ -19,8 +19,8 @@ export interface Product {
 export const emptyProduct: Product = {} as Product;
 
 export interface CartItem extends Product {
-  priceDiscount: string;
-  percentageDiscount: string;
+  priceDiscount: number;
+  percentageDiscount: number;
   uniqueId: string;
   priceWithDiscount: number;
 }
