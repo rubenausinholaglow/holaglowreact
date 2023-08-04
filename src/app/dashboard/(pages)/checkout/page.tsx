@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { AlmaPayment } from '@components/Alma';
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
@@ -22,9 +23,28 @@ const Page = () => {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
+  const [inputValue, setInputValue] = useState('');
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
+
+  const [showAlma, setShowAlma] = useState(false);
+
+  let productsPriceTotal = 0;
+  if (cart) {
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
+  }
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (
+      value === '' ||
+      (/^\d+(\.\d{0,2})?$/.test(value) &&
+        parseFloat(value) <= productsPriceTotal)
+    ) {
+      setInputValue(value);
+    }
+  };
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -51,8 +71,6 @@ const Page = () => {
     };
     try {
       await budgetService.createBudget(budget);
-      useCartStore.setState(INITIAL_STATE);
-      router.push('/dashboard/menu');
     } catch (error) {
       console.error(ERROR_POST, error);
     }
@@ -87,14 +105,29 @@ const Page = () => {
           <CartTotal isCheckout />
           {showPaymentButtons ? (
             <Flex layout="col-left" className="gap-2 w-full mt-4">
+              <input
+                type="text"
+                pattern="[0-9]*"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Introduce cantidad a financiar"
+                className="border rounded-lg px-4 py-2 mr-4 min-w-[300px] text-hg-black"
+              />
+
               <Button
                 style="tertiary"
-                href="https://dashboard.getalma.eu/login"
                 className="border-[#FA5022]"
                 target="_blank"
+                onClick={() => setShowAlma(!showAlma)}
               >
                 <SvgAlma height={25} width={75} fill="#FA5022" />
               </Button>
+
+              {showAlma ? (
+                <AlmaPayment amountFinance={inputValue}></AlmaPayment>
+              ) : (
+                <></>
+              )}
               <Button
                 style="primary"
                 href="https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470"
@@ -102,6 +135,9 @@ const Page = () => {
                 target="_blank"
               >
                 <SvgPepper height={24} width={88} fill="#ffffff" />
+              </Button>
+              <Button style="primary" className="" target="_blank">
+                Efectivo
               </Button>
             </Flex>
           ) : (
