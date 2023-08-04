@@ -10,7 +10,7 @@ module.exports = {
       sm: ['12px'],
       md: ['14px'],
       lg: ['16px', '22px'],
-      xl: ['21px', '26px'],
+      xl: ['21px', '28px'],
       '2xl': ['24px', '32px'],
       '3xl': ['32px'],
       '4xl': ['56px'],
@@ -18,11 +18,12 @@ module.exports = {
     extend: {
       colors: {
         hg: {
-          lime: '#DCE500',
+          lime: '#EBFF0D',
           darkMalva: '#7A8AC4',
           lightMalva: '#BBC7FF',
           grease: '#F2F2F2',
-          black: '#111111',
+          'gray-200': '#667085',
+          black: '#101828',
           700: '#C295B4',
           600: '#AE8FBD',
           500: '#4608AE',

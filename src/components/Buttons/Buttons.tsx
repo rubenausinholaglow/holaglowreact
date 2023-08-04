@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
 type ButtonProps = {
-  style?: 'primary' | 'secondary' | 'tertiary';
+  style?: 'primary' | 'secondary' | 'tertiary' | 'hero';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   className?: string;
@@ -25,13 +25,14 @@ export const Button = ({
   ...rest
 }: ButtonProps) => {
   const StylesConfig: any = {
-    common: 'rounded-full px-4 py-2 text-white transition-all',
+    common: 'relative rounded-full px-4 py-2 text-white transition-all',
     primary: 'bg-hg-darkMalva border border-hg-darkMalva',
     secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
     tertiary: 'text-hg-darkMalva border border-hg-darkMalva bg-white',
+    hero: 'bg-hg-black border-b-4 border-hg-lime',
     sm: 'text-sm px-3 py-1',
     md: 'text-base',
-    lg: 'text-lg px-12 py-4 font-semibold',
+    lg: 'text-lg px-12 py-5 font-semibold',
   };
 
   const styles = twMerge(
@@ -48,6 +49,9 @@ export const Button = ({
   return (
     <button className={styles} onClick={onClick} {...rest}>
       {children}
+      {style === 'hero' && (
+        <span className="absolute rounded-full top-0 bottom-0 left-[0.5px] right-[0.5px] bg-hg-black -z-10 translate-y-[5px]"></span>
+      )}
     </button>
   );
 };

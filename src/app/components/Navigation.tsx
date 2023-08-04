@@ -9,7 +9,7 @@ export default function Navigation() {
     <nav>
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
-          <li className="text-[14px]" key={navItem.name}>
+          <li className="" key={navItem.name}>
             {navItem.name}
           </li>
         ))}

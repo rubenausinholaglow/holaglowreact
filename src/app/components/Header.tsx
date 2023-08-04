@@ -10,22 +10,25 @@ export default function Header() {
   return (
     <header>
       <Container>
-        <Flex layout="row-center" className="py-6">
+        <Flex layout="row-center" className="py-6 relative">
           <SvgHolaglow
             height={32}
             width={130}
             fill={HOLAGLOW_COLORS['lightMalva']}
-            className="mr-auto"
+            className="absolute left-0"
           />
 
           <Navigation />
 
-          <Flex layout="row-center" className="ml-auto">
+          <Flex layout="row-center" className="absolute right-0">
             <Flex layout="row-center">
-              <SvgUserOctagon height={24} width={24} fill="transparent" />
-              <Text size="sm" className="font-semibold">
-                Mi espacio glow
-              </Text>
+              <SvgUserOctagon
+                height={24}
+                width={24}
+                fill="transparent"
+                className="mr-2"
+              />
+              <Text size="sm">Mi espacio glow</Text>
             </Flex>
             <Button
               style="tertiary"
