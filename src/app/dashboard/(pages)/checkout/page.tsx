@@ -139,6 +139,9 @@ const Page = () => {
               <Button style="primary" className="" target="_blank">
                 Efectivo
               </Button>
+              <Button style="primary" className="" target="_blank">
+                Generar Ticket
+              </Button>
             </Flex>
           ) : (
             <>
