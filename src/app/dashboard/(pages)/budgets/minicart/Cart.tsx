@@ -1,5 +1,6 @@
 'use client';
 
+import { CartItem as CartItemType } from '@interface/product';
 import { applyDiscountToCart } from '@utils/utils';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
@@ -9,7 +10,9 @@ import { SvgClose } from 'icons/Icons';
 import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
 
-export function Cart({ cart }: { cart: (typeof CartItem)[] }) {
+export function Cart({ cart }: { cart: CartItemType[] }) {
+  console.log(cart);
+
   return (
     <div className="bg-white w-full text-left p-4">
       <Container>
@@ -36,7 +39,7 @@ export function CartTotal({
   cart,
   isCheckout,
 }: {
-  cart: (typeof CartItem)[];
+  cart: CartItemType[];
   isCheckout?: boolean;
 }) {
   const priceDiscount = useCartStore(state => state.priceDiscount);
