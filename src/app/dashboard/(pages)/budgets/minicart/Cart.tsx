@@ -10,8 +10,6 @@ import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
 
 export function Cart({ cart }: { cart: (typeof CartItem)[] }) {
-  console.log(cart);
-
   return (
     <div className="bg-white w-full text-left p-4">
       <Container>
