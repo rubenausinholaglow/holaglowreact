@@ -63,9 +63,9 @@ export default function Page() {
     }
 
     await UserService.checkUser(userEmail)
-      .then(data => {
+      .then(async data => {
         if (data && data !== '') {
-          redirectPage(data.firstName, data.id, data.flowwwToken);
+          await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           handleSearchError();
         }
@@ -100,18 +100,19 @@ export default function Page() {
 
   async function redirectPage(name: string, id: string, flowwwToken: string) {
     try {
-      const data = await ScheduleService.getClinicSchedule(flowwwToken);
-      if (data != null) {
-        localStorage.setItem('ClinicId', data.clinic.id);
-        localStorage.setItem(
-          'ClinicProfessionalId',
-          data.clinicProfessional.id
-        );
-        saveUserDetails(name, id, flowwwToken);
-        router.push('/dashboard/menu');
-      } else {
-        //TODO - Poner un mensaje de Error en UI
-      }
+      await ScheduleService.getClinicSchedule(flowwwToken).then(data => {
+        if (data != null) {
+          localStorage.setItem('ClinicId', data.clinic.id);
+          localStorage.setItem(
+            'ClinicProfessionalId',
+            data.clinicProfessional.id
+          );
+          saveUserDetails(name, id, flowwwToken);
+          router.push('/dashboard/menu');
+        } else {
+          //TODO - Poner un mensaje de Error en UI
+        }
+      });
     } catch (err) {
       Bugsnag.notify(ERROR_GETTING_DATA + err);
     }

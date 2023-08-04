@@ -11,11 +11,14 @@ import { AlmaProps } from '../utils/props';
 export const AlmaPayment: React.FC<AlmaProps> = ({ amountFinance }) => {
   const parsedValue = parseFloat(amountFinance);
   let resultValue = '';
-
+  let installments = -1;
   useEffect(() => {
     function handleAlmaModalClosed(event: Event) {
       const data = event;
+      var text = data.srcElement!.getElementsByClassName("alma-eligibility-modal-active-option")[0].innerText;
+      installments = Number(text!.replace("x",""));
       console.log("Datos del evento 'almaModalClosed':", data);
+      console.log(installments);
     }
 
     document.addEventListener('almaModalClosed', handleAlmaModalClosed);
@@ -61,10 +64,14 @@ export const AlmaPayment: React.FC<AlmaProps> = ({ amountFinance }) => {
     if (!isNaN(parsedValue)) {
       resultValue = Math.round(parsedValue * 100).toString();
     }
+    if(installments == -1){
+      var text = document.getElementsByClassName("alma-payment-plans-active-option")[0].textContent;
+      installments = Number(text!.replace("x",""));
+    }
     const GuidUser = localStorage.getItem('id') || '';
     const data = {
       amount: Number(resultValue),
-      installments: 2,
+      installments: installments,
       userId: GuidUser,
     } as InitializePayment;
     const urlPayment = await FinanceService.initializePayment(data);
