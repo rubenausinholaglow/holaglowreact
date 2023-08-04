@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Budget } from '@interface/budget';
+import { CartItem } from '@interface/product';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
@@ -9,6 +10,7 @@ import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
 import { SvgAlma, SvgAngleDown, SvgPepper } from 'icons/Icons';
+import { isEmpty } from 'lodash';
 import router from 'next/router';
 
 import { CartTotal } from '../budgets/minicart/Cart';
@@ -17,14 +19,20 @@ import ProductCard from '../budgets/treatments/ProductCard';
 import ProductDiscountForm from './components/ProductDiscountForm';
 
 const Page = () => {
-  const cart = useCartStore(state => state.cart);
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
 
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
+
+  const cartFromStore = useCartStore(state => state.cart);
+
+  useEffect(() => {
+    setCart(cartFromStore);
+  }, []);
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -58,6 +66,10 @@ const Page = () => {
     }
   };
 
+  if (isEmpty(cart)) {
+    return <></>;
+  }
+
   return (
     <Container>
       <Title size="2xl" className="text-left mb-4">
@@ -84,7 +96,7 @@ const Page = () => {
               onClick={() => setShowProductDiscount(!showProductDiscount)}
             />
           )}
-          <CartTotal isCheckout />
+          <CartTotal isCheckout cart={cart} />
           {showPaymentButtons ? (
             <Flex layout="col-left" className="gap-2 w-full mt-4">
               <Button

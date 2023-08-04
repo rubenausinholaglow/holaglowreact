@@ -1,3 +1,5 @@
+'use client';
+
 import { applyDiscountToCart } from '@utils/utils';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
@@ -7,8 +9,8 @@ import { SvgClose } from 'icons/Icons';
 import { useCartStore } from '../stores/userCartStore';
 import CartItem from './CartItem';
 
-export function Cart() {
-  const cart = useCartStore(state => state.cart);
+export function Cart({ cart }: { cart: (typeof CartItem)[] }) {
+  console.log(cart);
 
   return (
     <div className="bg-white w-full text-left p-4">
@@ -22,7 +24,7 @@ export function Cart() {
               ))}
             </ul>
           </Flex>
-          <CartTotal />
+          <CartTotal cart={cart} />
           <Button style="primary" href="checkout">
             Continuar
           </Button>
@@ -32,8 +34,13 @@ export function Cart() {
   );
 }
 
-export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
-  const cart = useCartStore(state => state.cart);
+export function CartTotal({
+  cart,
+  isCheckout,
+}: {
+  cart: (typeof CartItem)[];
+  isCheckout?: boolean;
+}) {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);

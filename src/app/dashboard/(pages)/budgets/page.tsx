@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import { emptyProduct, Product } from '@interface/product';
+import { CartItem, emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 import { Container, Flex } from 'components/Layouts/Layouts';
@@ -17,11 +17,12 @@ import { useCartStore } from './stores/userCartStore';
 import ProductList from './treatments/ProductList';
 
 export default function Page() {
-  const cart = useCartStore(state => state.cart);
+  const cartFromStore = useCartStore(state => state.cart);
   const productHighlighted = useCartStore(state => state.productHighlighted);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
 
   const [showProductModal, setShowProductModal] = useState(false);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
   const [showPacks, setShowPacks] = useState(false);
@@ -32,6 +33,10 @@ export default function Page() {
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
   >([]);
+
+  useEffect(() => {
+    setCart(cartFromStore);
+  }, []);
 
   useEffect(() => {
     ProductService.getAllProducts()
@@ -208,7 +213,7 @@ export default function Page() {
           </Container>
           {cart.length > 0 && (
             <div className="fixed bottom-0 z-10 w-full shadow-centered">
-              <Cart />
+              <Cart cart={cart} />
             </div>
           )}
         </Flex>
