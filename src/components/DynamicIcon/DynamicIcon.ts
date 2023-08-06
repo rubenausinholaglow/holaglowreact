@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+/* import { SVGProps } from 'react';
 import * as Icons from 'icons/Icons';
 
 interface DynamicIconProps {
@@ -16,7 +16,7 @@ const DynamicIcon: React.FC<DynamicIconProps & SVGProps<SVGSVGElement>> = ({
     return null;
   }
 
-  return <IconComponent {...props} />;
+  return <IconComponent {...props} />
 };
 
-export default DynamicIcon;
+export default DynamicIcon; */

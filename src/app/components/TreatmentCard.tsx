@@ -1,0 +1,52 @@
+'use client';
+
+import { useState } from 'react';
+import { Product } from '@interface/product';
+import { Button } from 'components/Buttons/Buttons';
+import { Flex } from 'components/Layouts/Layouts';
+import { Text, Title } from 'components/Texts';
+import { SvgArrow } from 'icons/Icons';
+import Image from 'next/image';
+
+export default function TreatmentCard({ treatment }: { treatment: Product }) {
+  const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
+
+  const [imgSrc, setImgSrc] = useState(
+    `/images/product/${treatment.flowwwId}/${treatment.flowwwId}.png`
+  );
+
+  return (
+    <div className="flex flex-col overflow-hidden h-full">
+      <Flex layout="col-left" className="w-[260px]">
+        <div className="relative aspect-square w-full">
+          <Image
+            alt="treatment.title"
+            fill
+            src={imgSrc}
+            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
+            className="object-cover rounded-t-2xl"
+          />
+        </div>
+      </Flex>
+      <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
+        <Title size="lg" className="mb-2">
+          {treatment.title}
+        </Title>
+        <Text size="sm" className="text-hg-gray-200 mb-8">
+          {treatment.description}
+        </Text>
+        <Button
+          style="tertiary"
+          className="mt-auto bg-hg-lime border-hg-darkMalva text-hg-darkMalva"
+        >
+          <Flex layout="row-center">
+            <Text size="sm" className="mr-2">
+              Saber más
+            </Text>
+            <SvgArrow height={20} width={20} className="rotate-180" />
+          </Flex>
+        </Button>
+      </Flex>
+    </div>
+  );
+}
