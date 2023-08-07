@@ -51,7 +51,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         width={30}
         height={30}
         fill={HOLAGLOW_COLORS['darkMalva']}
-        className="absolute top-2 right-2"
+        className="absolute top-2 right-2 cursor-pointer"
         onClick={() => removeFromCart(product)}
       />
 
