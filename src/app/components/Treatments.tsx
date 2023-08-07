@@ -7,6 +7,7 @@ import { isEmpty } from 'lodash';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import TreatmentCard from './TreatmentCard';
+import TreatmentCarousel from './TreatmentCarousel';
 
 const TREATMENT_TYPES = [
   {
@@ -44,6 +45,10 @@ export default async function Treatments() {
     filteredTreatments = treatments.slice(0, 6);
   }
 
+  if (isEmpty(treatments)) {
+    return <></>;
+  }
+
   return (
     <div className="bg-[#EFE8E2]/50 overflow-hidden">
       <Container className="py-12">
@@ -73,14 +78,15 @@ export default async function Treatments() {
           })}
         </ul>
 
-        <ul className="flex flex-row gap-10">
-          {!isEmpty(filteredTreatments) &&
-            filteredTreatments.map(treatment => (
-              <li key={treatment.id}>
-                <TreatmentCard treatment={treatment} />
-              </li>
-            ))}
-        </ul>
+        {/*         <ul className="flex flex-row gap-10">
+          {filteredTreatments.map(treatment => (
+            <li key={treatment.id}>
+              <TreatmentCard treatment={treatment} />
+            </li>
+          ))}
+        </ul> */}
+
+        <TreatmentCarousel treatments={filteredTreatments} />
       </Container>
     </div>
   );

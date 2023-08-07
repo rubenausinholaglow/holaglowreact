@@ -8,7 +8,13 @@ import { Text, Title } from 'components/Texts';
 import { SvgArrow } from 'icons/Icons';
 import Image from 'next/image';
 
-export default function TreatmentCard({ treatment }: { treatment: Product }) {
+export default function TreatmentCard({
+  treatment,
+  ...rest
+}: {
+  treatment: Product;
+  [key: string]: any;
+}) {
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
   const [imgSrc, setImgSrc] = useState(
@@ -16,8 +22,8 @@ export default function TreatmentCard({ treatment }: { treatment: Product }) {
   );
 
   return (
-    <div className="flex flex-col overflow-hidden h-full">
-      <Flex layout="col-left" className="w-[260px]">
+    <div className="flex flex-col overflow-hidden h-full" {...rest}>
+      <Flex layout="col-left" className="">
         <div className="relative aspect-square w-full">
           <Image
             alt="treatment.title"
