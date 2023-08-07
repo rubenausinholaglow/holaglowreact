@@ -23,28 +23,14 @@ const Page = () => {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
-  const [inputValue, setInputValue] = useState('');
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
-
-  const [showAlma, setShowAlma] = useState(false);
 
   let productsPriceTotal = 0;
   if (cart) {
     productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
   }
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (
-      value === '' ||
-      (/^\d+(\.\d{0,2})?$/.test(value) &&
-        parseFloat(value) <= productsPriceTotal)
-    ) {
-      setInputValue(value);
-    }
-  };
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';

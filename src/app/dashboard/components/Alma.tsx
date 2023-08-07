@@ -39,8 +39,8 @@ export const AlmaPayment: React.FC<AlmaProps> = ({ amountFinance }) => {
       document.head.appendChild(scriptTag);
       scriptTag.addEventListener('load', function() {
         var widgets = Alma.Widgets.initialize(
-          '11wIdUT6YBVyVEnaAIckfC5eP90vu5wvub',
-          Alma.ApiMode.TEST,
+          '${process.env.NEXT_PUBLIC_ALMA_MERCHANTID}',
+          ${process.env.NEXT_PUBLIC_ALMA_DOMAIN},
         );
         widgets.add(Alma.Widgets.PaymentPlans, {
           container: '#payment-plans',

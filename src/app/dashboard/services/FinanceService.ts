@@ -1,3 +1,4 @@
+import Bugsnag from '@bugsnag/js';
 import { InitializePayment } from '@interface/initializePayment';
 
 export default class FinanceService {
@@ -18,8 +19,8 @@ export default class FinanceService {
       } else {
         return '';
       }
-    } catch (err) {
-      return err;
+    } catch (error: any) {
+      Bugsnag.notify(error);
     }
   }
 }
