@@ -50,14 +50,13 @@ const Page = () => {
       })),
     };
 
-    console.log(budget);
-    /* try {
+    try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
       router.push('/dashboard/menu');
     } catch (error) {
       console.error(ERROR_POST, error);
-    } */
+    }
   };
 
   return (
