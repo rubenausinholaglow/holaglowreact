@@ -15,7 +15,6 @@ export default class FinanceService {
 
       if (res.ok) {
         const data = await res.json();
-        console.log(data.url);
         return data;
       } else {
         return '';
