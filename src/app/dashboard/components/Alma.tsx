@@ -15,10 +15,11 @@ export const AlmaPayment: React.FC<AlmaProps> = ({ amountFinance }) => {
   useEffect(() => {
     function handleAlmaModalClosed(event: Event) {
       const data = event;
-      var text = data.srcElement!.getElementsByClassName("alma-eligibility-modal-active-option")[0].innerText;
-      installments = Number(text!.replace("x",""));
-      console.log("Datos del evento 'almaModalClosed':", data);
-      console.log(installments);
+      const text = (data.srcElement! as any).getElementsByClassName(
+        'alma-eligibility-modal-active-option'
+      )[0].innerText;
+
+      installments = Number(text!.replace('x', ''));
     }
 
     document.addEventListener('almaModalClosed', handleAlmaModalClosed);
@@ -64,9 +65,11 @@ export const AlmaPayment: React.FC<AlmaProps> = ({ amountFinance }) => {
     if (!isNaN(parsedValue)) {
       resultValue = Math.round(parsedValue * 100).toString();
     }
-    if(installments == -1){
-      var text = document.getElementsByClassName("alma-payment-plans-active-option")[0].textContent;
-      installments = Number(text!.replace("x",""));
+    if (installments == -1) {
+      const text = document.getElementsByClassName(
+        'alma-payment-plans-active-option'
+      )[0].textContent;
+      installments = Number(text!.replace('x', ''));
     }
     const GuidUser = localStorage.getItem('id') || '';
     const data = {

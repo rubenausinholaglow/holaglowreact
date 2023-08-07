@@ -4,7 +4,7 @@ export default class FinanceService {
   static async initializePayment(initializePayment: InitializePayment) {
     console.log(initializePayment);
     try {
-      const url = `${process.env.NEXT_PUBLIC_FINANCE_API}/Payment`;
+      const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -12,8 +12,10 @@ export default class FinanceService {
         },
         body: JSON.stringify(initializePayment),
       });
+
       if (res.ok) {
         const data = await res.json();
+        console.log(data.url);
         return data;
       } else {
         return '';

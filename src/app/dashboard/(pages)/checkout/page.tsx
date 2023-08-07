@@ -104,45 +104,7 @@ const Page = () => {
           )}
           <CartTotal isCheckout />
           {showPaymentButtons ? (
-            <Flex layout="col-left" className="gap-2 w-full mt-4">
-              <input
-                type="text"
-                pattern="[0-9]*"
-                value={inputValue}
-                onChange={handleInputChange}
-                placeholder="Introduce cantidad a financiar"
-                className="border rounded-lg px-4 py-2 mr-4 min-w-[300px] text-hg-black"
-              />
-
-              <Button
-                style="tertiary"
-                className="border-[#FA5022]"
-                target="_blank"
-                onClick={() => setShowAlma(!showAlma)}
-              >
-                <SvgAlma height={25} width={75} fill="#FA5022" />
-              </Button>
-
-              {showAlma ? (
-                <AlmaPayment amountFinance={inputValue}></AlmaPayment>
-              ) : (
-                <></>
-              )}
-              <Button
-                style="primary"
-                href="https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470"
-                className="bg-[#FF3333] border-[#FF3333]"
-                target="_blank"
-              >
-                <SvgPepper height={24} width={88} fill="#ffffff" />
-              </Button>
-              <Button style="primary" className="" target="_blank">
-                Efectivo
-              </Button>
-              <Button style="primary" className="" target="_blank">
-                Generar Ticket
-              </Button>
-            </Flex>
+            <></>
           ) : (
             <>
               {showProductDiscount && (
