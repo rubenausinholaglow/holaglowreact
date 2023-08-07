@@ -35,21 +35,22 @@ const Page = () => {
     const budget: Budget = {
       userId: GuidUser,
       discountCode: '',
-      priceDiscount: priceDiscount,
-      percentageDiscount: percentageDiscount,
-      manualPrice: manualPrice,
-      totalPrice: totalPrice,
+      priceDiscount: Number(priceDiscount.toFixed(2)),
+      percentageDiscount: percentageDiscount / 100,
+      manualPrice: Number(manualPrice.toFixed(2)),
+      totalPrice: Number(totalPrice.toFixed(2)),
       clinicInfoId: GuidClinicId,
       referenceId: '',
       statusBudget: 0,
       professionalId: GuidProfessional,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
-        price: CartItem.price,
-        percentageDiscount: CartItem.percentageDiscount,
-        priceDiscount: CartItem.priceDiscount,
+        price: Number(CartItem.price.toFixed(2)),
+        percentageDiscount: CartItem.percentageDiscount / 100,
+        priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
       })),
     };
+
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
