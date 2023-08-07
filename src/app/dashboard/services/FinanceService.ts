@@ -2,7 +2,6 @@ import { InitializePayment } from '@interface/initializePayment';
 
 export default class FinanceService {
   static async initializePayment(initializePayment: InitializePayment) {
-    console.log(initializePayment);
     try {
       const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment`;
       const res = await fetch(url, {
