@@ -93,9 +93,9 @@ export default function Form() {
         <Carousel totalSlides={4} currentSlide={activeSlideIndex}>
           <div className="bg-white px-4">
             <section className="mb-6">
-              <Title size="2xl" className="mb-2">
+              <Text size="xl" className="mb-2 font-semibold">
                 ¿Actualmente sigues alguna rutina de cuidado de la piel?
-              </Title>
+              </Text>
             </section>
 
             <section>
@@ -159,7 +159,7 @@ export default function Form() {
                           </div>
                           <div className="grow flex items-center">
                             <Text
-                              size="sm"
+                              size="xs"
                               className="py-2 font-semibold text-center"
                             >
                               {question.text}
@@ -176,9 +176,9 @@ export default function Form() {
 
           <div className="bg-white px-4">
             <section className="mb-6 flex gap-2 items-center">
-              <Title size="2xl" className="mb-2">
+              <Text size="xl" className="mb-2 font-semibold">
                 ¿Qué edad tienes?
-              </Title>
+              </Text>
             </section>
 
             <section>
@@ -222,15 +222,15 @@ export default function Form() {
                           )}
 
                           <Text
-                            size="3xl"
-                            className={`font-semibold text-center ${
+                            size="xl"
+                            className={`font-semibold text-center text-[32px] ${
                               isActive ? 'text-hg-black' : 'text-hg-darkMalva'
                             } group-hover:text-hg-black transition-all`}
                           >
                             {age}
                           </Text>
                           <Text
-                            size="sm"
+                            size="xs"
                             className={`-mt-3 font-semibold text-center mb-4 ${
                               isActive ? 'text-hg-black' : 'text-hg-darkMalva'
                             } group-hover:text-hg-black transition-all`}
@@ -248,9 +248,9 @@ export default function Form() {
 
           <div className="bg-white px-4">
             <section className="mb-6 flex gap-2 items-center">
-              <Title size="2xl" className="mb-2">
+              <Text size="xl" className="mb-2 font-semibold">
                 ¿Qué te gustaría mejorar?
-              </Title>
+              </Text>
             </section>
 
             <section>
@@ -337,7 +337,7 @@ export default function Form() {
                         )}
                         <div className="grow flex items-center">
                           <Text
-                            size="sm"
+                            size="xs"
                             className="py-2 font-semibold text-center"
                           >
                             {item.category}
@@ -353,9 +353,9 @@ export default function Form() {
 
           <div className="bg-white px-4">
             <section className="mb-6 flex gap-2 items-center">
-              <Title size="2xl" className="mb-2">
+              <Text size="xl" className="mb-2 font-semibold">
                 ¿Qué quieres tratar?
-              </Title>
+              </Text>
             </section>
 
             <section>
@@ -380,7 +380,7 @@ export default function Form() {
                         layout="row-left"
                         className="justify-start items-center h-full"
                       >
-                        <Text size="lg" className="mr-auto">
+                        <Text size="md" className="mr-auto">
                           {treatment.name}
                         </Text>
                         {isActive ? (
