@@ -12,7 +12,7 @@ export default function Header({ clinicInfo }: { clinicInfo: Clinic }) {
         className="mx-auto"
         width={180}
         height={45}
-        fill={HOLAGLOW_COLORS['lime']}
+        fill={HOLAGLOW_COLORS['malva']}
       />
 
       <Image

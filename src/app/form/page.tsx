@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Button } from 'components/Buttons/Buttons';
 import { Carousel } from 'components/Carousel/Carousel';
 import { Flex } from 'components/Layouts/Layouts';
-import { Text, Title } from 'components/Texts';
+import { Text } from 'components/Texts';
 import {
   SvgArrowSmallLeft,
   SvgCheck,
@@ -74,7 +74,11 @@ export default function Form() {
               />
             </div>
           )}
-          <SvgHolaglow width={125} height={30} fill={HOLAGLOW_COLORS['lime']} />
+          <SvgHolaglow
+            width={125}
+            height={30}
+            fill={HOLAGLOW_COLORS['darkMalva']}
+          />
         </Flex>
       </header>
       <main
