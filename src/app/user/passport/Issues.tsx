@@ -50,8 +50,8 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
   }
 
   return (
-    <section className="py-8 px-16 bg-hg-lime/10 text-sm text-hg-black">
-      <h3 className="text-2xl text-hg-darkMalva font-semibold text-center mb-8">
+    <section className="py-8 px-16 bg-hg-lime/10 text-xs text-hg-black">
+      <h3 className="text-xl text-hg-darkMalva font-semibold text-center mb-8">
         {issuesTitle}
       </h3>
       <div className="flex gap-16">

@@ -18,7 +18,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 }) => {
   return (
     <Container>
-      <h1 className="font-bold text-2xl mb-6">
+      <h1 className="font-semibold text-xl mb-6">
         ¡Vaya! ¿Todavía no te conocemos?
       </h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -103,7 +103,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </Flex>
         </Flex>
         <Flex layout="col-left">
-          <Button onClick={handleContinue} style="primary" size="lg">
+          <Button onClick={handleContinue} style="primary">
             {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
           </Button>
           {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (

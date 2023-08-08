@@ -26,19 +26,19 @@ export default function PromoCode({
         </div>
 
         <div className="flex justify-center w-[65%] -ml-8 -mt-8">
-          <p className="bg-hg-darkMalva text-white text-xs/relaxed p-4 rounded-l-xl w-3/5">
+          <p className="bg-hg-darkMalva text-white text-[10px] leading-relaxed p-4 rounded-l-xl w-3/5">
             Una vez realizado tu primer tratamiento, se activará tu código de
             cliente Holaglow y por cada tratamiento que se hagan tus amigos con
             él obtendréis {discountAmount}€ cada uno . Y lo mejor de todo... ¡es
             acumulable!
           </p>
           <div className="bg-white text-hg-black text-xs py-2 px-4 rounded-r-xl w-2/5">
-            <p className="text-lg mb-2 leading-6">
+            <p className="text-md mb-2 leading-6">
               ¡Tenemos ganas
               <br /> de veros!
             </p>
             <p className="text-hg-darkMalva">Código de descuento</p>
-            <p className="text-hg-darkMalva text-[26px] font-bold leading-7">
+            <p className="text-hg-darkMalva text-[26px] font-semibold leading-7">
               {discountCode}
             </p>
           </div>

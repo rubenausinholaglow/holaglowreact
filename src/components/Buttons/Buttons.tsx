@@ -29,8 +29,8 @@ export const Button = ({
     primary: 'bg-hg-darkMalva border border-hg-darkMalva',
     secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
     tertiary: 'text-hg-darkMalva border border-hg-darkMalva bg-white',
-    sm: 'text-sm px-3 py-1',
-    md: 'text-base',
+    sm: 'text-xs px-3 py-1',
+    md: 'text-sm',
     lg: 'text-lg px-12 py-4 font-semibold',
   };
 
