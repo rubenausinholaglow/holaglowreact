@@ -2,6 +2,8 @@ import './globals.css';
 
 import { Poppins } from 'next/font/google';
 
+import Header from './components/Header';
+
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
@@ -19,8 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="max-h-screen h-full">
-      <body className={poppins.className}>{children}</body>
+    <html lang="en" className="max-h-screen h-full bg-white text-hg-black">
+      <body className={poppins.className}>
+        <Header />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }

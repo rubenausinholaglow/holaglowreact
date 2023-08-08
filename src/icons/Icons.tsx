@@ -464,6 +464,7 @@ export const SvgHolaglowHand = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={508}
     height={464}
+    fill="currentColor"
     viewBox="0 0 508 464"
     {...props}
   >
@@ -476,6 +477,7 @@ export const SvgShoppingCart = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={24}
     height={24}
+    fill="currentColor"
     viewBox="0 0 24 24"
     {...props}
   >
@@ -490,6 +492,7 @@ export const SvgClose = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={24}
     height={24}
+    fill="currentColor"
     viewBox="0 0 24 24"
     {...props}
   >
@@ -502,6 +505,7 @@ export const SvgDoubleAngleLeft = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={24}
     height={24}
+    fill="currentColor"
     viewBox="0 0 24 24"
     {...props}
   >
@@ -515,6 +519,7 @@ export const SvgAngleDown = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={24}
     height={24}
+    fill="currentColor"
     viewBox="0 0 24 24"
     {...props}
   >
@@ -527,6 +532,7 @@ export const SvgAlma = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={113}
     height={32}
+    fill="currentColor"
     viewBox="0 0 113 32"
     {...props}
   >
@@ -539,6 +545,7 @@ export const SvgPepper = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={100}
     height={24}
+    fill="currentColor"
     viewBox="0 0 100 24"
     {...props}
   >
@@ -549,3 +556,17 @@ export const SvgPepper = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+/* export const SvgArrow = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height={24}
+    width={24}
+    fill="currentColor"
+    viewBox="0 0 24 24"
+    {...props}
+  >
+    <path d="M19 11H9L12.29 7.71C12.3837 7.61703 12.4581 7.50643 12.5089 7.38457C12.5597 7.26272 12.5858 7.13201 12.5858 7C12.5858 6.86799 12.5597 6.73728 12.5089 6.61542C12.4581 6.49356 12.3837 6.38296 12.29 6.29C12.1026 6.10375 11.8492 5.99921 11.585 5.99921C11.3208 5.99921 11.0674 6.10375 10.88 6.29L6.59 10.59C6.21441 10.9633 6.00223 11.4704 6 12C6.00487 12.5261 6.21684 13.0291 6.59 13.4L10.88 17.7C10.9732 17.7926 11.0838 17.8659 11.2054 17.9157C11.3269 17.9656 11.4571 17.991 11.5885 17.9905C11.7199 17.9901 11.8499 17.9637 11.9712 17.913C12.0924 17.8623 12.2024 17.7882 12.295 17.695C12.3876 17.6017 12.4609 17.4912 12.5107 17.3696C12.5606 17.248 12.586 17.1178 12.5856 16.9864C12.5851 16.8551 12.5588 16.725 12.508 16.6038C12.4573 16.4826 12.3832 16.3726 12.29 16.28L9 13H19C19.2652 13 19.5196 12.8946 19.7071 12.7071C19.8946 12.5196 20 12.2652 20 12C20 11.7348 19.8946 11.4804 19.7071 11.2929C19.5196 11.1054 19.2652 11 19 11Z" />
+  </svg>
+);
+ */

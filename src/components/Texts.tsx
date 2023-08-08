@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 
 export const Title = ({
   size = 'xl',
-  weight = 'bold',
+  weight = 'semibold',
   as = 'h3',
   className = '',
   children,
@@ -21,7 +21,7 @@ export const Title = ({
   };
 
   const HtmlComponent = as;
-  const styles = twMerge(`text-${STYLES[size]} ${weight} ${className}`);
+  const styles = twMerge(`text-${STYLES[size]} font-${weight} ${className}`);
 
   return <HtmlComponent className={styles}>{children}</HtmlComponent>;
 };
@@ -38,7 +38,7 @@ export const Text = ({
   children: ReactNode;
 }) => {
   const HtmlComponent = as;
-  const styles = twMerge(`text-${size} ${className}`);
+  const styles = twMerge(`text-left text-${size} ${className}`);
 
   return <HtmlComponent className={styles}>{children}</HtmlComponent>;
 };
