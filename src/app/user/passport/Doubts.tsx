@@ -5,8 +5,8 @@ export default function Issues() {
     <section className="mb-8">
       <div className="p-16 bg-hg-darkMalva text-white flex flex-col justify-center items-center">
         <SvgCosmetic3 height={64} width={64} fill="white" className="mb-4" />
-        <h3 className="font-semibold mb-4 text-2xl">¿Tienes dudas?</h3>
-        <p className="w-1/2 text-lg text-center mb-8">
+        <h3 className="font-semibold mb-4 text-xl">¿Tienes dudas?</h3>
+        <p className="w-1/2 text-md text-center mb-8">
           Si tienes molestias excesivas, presentas una inflamación que va en
           aumento después del tercer día o te aparece fiebre,{' '}
           <span className="font-semibold">ponte en contacto con nosotros</span>{' '}
@@ -28,10 +28,10 @@ export default function Issues() {
         </div>
       </div>
       <div className="text-hg-darkMalva flex flex-col items-center py-6 px-24">
-        <h3 className="text-sm font-semibold mb-2">
+        <h3 className="text-xs font-semibold mb-2">
           Trae tu pasaporte a tu próxima cita
         </h3>
-        <p className="text-sm text-center">
+        <p className="text-xs text-center">
           Holaglow Clinics ofrece una serie de productos técnicos médicos
           comercializados en la CE con diferentes especificaciones y
           propiedades. Te recomendamos que siempre consultes con un médico o

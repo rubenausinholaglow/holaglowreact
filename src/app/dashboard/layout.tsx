@@ -25,10 +25,10 @@ export default function DashboardLayout({
   const backButtonRoutes = ['/dashboard/budgets', '/dashboard/checkout'];
 
   return (
-    <main className="min-h-screen h-100 text-md bg-hg-lightMalva/20">
+    <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
       <Flex
         layout="col-center"
-        className="min-h-screen h-100 text-hg-black text-md"
+        className="min-h-screen h-100 text-hg-black text-sm"
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
@@ -54,7 +54,11 @@ export default function DashboardLayout({
         </Container>
         {children}
         <div className="pt-16 pb-8 mt-auto">
-          <SvgHolaglow width={150} height={40} fill={HOLAGLOW_COLORS['lime']} />
+          <SvgHolaglow
+            width={150}
+            height={40}
+            fill={HOLAGLOW_COLORS['malva']}
+          />
         </div>
       </Flex>
     </main>

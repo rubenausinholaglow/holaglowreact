@@ -7,7 +7,7 @@ import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
-import { Title } from 'components/Texts';
+import { Text } from 'components/Texts';
 import { SvgAlma, SvgAngleDown, SvgPepper } from 'icons/Icons';
 import router from 'next/router';
 import CheckHydration from 'utils/CheckHydration';
@@ -35,21 +35,22 @@ const Page = () => {
     const budget: Budget = {
       userId: GuidUser,
       discountCode: '',
-      priceDiscount: priceDiscount,
-      percentageDiscount: percentageDiscount,
-      manualPrice: manualPrice,
-      totalPrice: totalPrice,
+      priceDiscount: Number(priceDiscount.toFixed(2)),
+      percentageDiscount: percentageDiscount / 100,
+      manualPrice: Number(manualPrice.toFixed(2)),
+      totalPrice: Number(totalPrice.toFixed(2)),
       clinicInfoId: GuidClinicId,
       referenceId: '',
       statusBudget: 0,
       professionalId: GuidProfessional,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
-        price: CartItem.price,
-        percentageDiscount: CartItem.percentageDiscount,
-        priceDiscount: CartItem.priceDiscount,
+        price: Number(CartItem.price.toFixed(2)),
+        percentageDiscount: CartItem.percentageDiscount / 100,
+        priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
       })),
     };
+
     try {
       await budgetService.createBudget(budget);
       useCartStore.setState(INITIAL_STATE);
@@ -62,9 +63,9 @@ const Page = () => {
   return (
     <CheckHydration>
       <Container>
-        <Title size="2xl" className="text-left mb-4">
+        <Text size="xl" className="text-left font-semibold mb-4">
           Resumen
-        </Title>
+        </Text>
 
         <Flex layout="row-left" className="items-start">
           <ul className="w-3/4 shrink-0">
@@ -114,21 +115,21 @@ const Page = () => {
                 <Flex layout="col-left" className="gap-2 w-full mt-8">
                   <Button
                     className="w-full"
-                    size="lg"
+                    size="md"
                     onClick={() => {
                       handleFinalize();
                       setShowPaymentButtons(!showPaymentButtons);
                     }}
                   >
-                    Finalizar
+                    <span className="font-semibold">Finalizar</span>
                   </Button>
                   <Button
                     className="w-full"
-                    size="lg"
+                    size="md"
                     href="https://agenda.holaglow.com/schedule?mode=dashboard"
                     style="tertiary"
                   >
-                    Agendar Cita
+                    <span className="font-semibold">Agendar Cita</span>
                   </Button>
                 </Flex>
               </>
