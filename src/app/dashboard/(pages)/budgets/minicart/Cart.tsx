@@ -11,7 +11,7 @@ export function Cart() {
   const cart = useCartStore(state => state.cart);
 
   return (
-    <div className="bg-white w-full text-left p-4">
+    <div className="bg-white w-full text-left py-4">
       <Container>
         <Flex layout="row-left">
           <Flex layout="col-left">
