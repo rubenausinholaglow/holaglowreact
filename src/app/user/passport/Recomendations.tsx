@@ -58,7 +58,7 @@ export default function Recomendations({
   return (
     <section>
       <div className="inline-flex justify-center items-center bg-hg-darkMalva rounded-r-3xl text-white py-3 px-16">
-        <h3 className="text-2xl font-semibold text-white mr-8">
+        <h3 className="text-xl font-semibold text-white mr-8">
           ¿Tienes dudas?
         </h3>
         <div className="flex">
@@ -76,7 +76,7 @@ export default function Recomendations({
       </div>
 
       <div className="bg-hg-lightMalva/20 p-16 pb-6 -mt-10">
-        <h3 className="text-2xl font-semibold mt-6 mb-10 text-center">
+        <h3 className="text-xl font-semibold mt-6 mb-10 text-center">
           Consejos y recomendaciones post tratamiento
         </h3>
         <div className="flex">
@@ -87,10 +87,10 @@ export default function Recomendations({
               width={64}
               fill={HOLAGLOW_COLORS['darkMalva']}
             />
-            <h3 className="text-lg font-semibold mb-4">
+            <h3 className="text-md font-semibold mb-4">
               Durante las primeras 24 horas
             </h3>
-            <ul className="bg-white text-sm rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(0,0,0,.1)]">
+            <ul className="bg-white text-xs rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(0,0,0,.1)]">
               <li className="text-hg-darkMalva mb-8">
                 Es recomendable seguir estos consejos
               </li>
@@ -113,10 +113,10 @@ export default function Recomendations({
               width={64}
               fill={HOLAGLOW_COLORS['darkMalva']}
             />
-            <h3 className="text-lg font-semibold mb-4">
+            <h3 className="text-md font-semibold mb-4">
               Después de las primeras 24 horas
             </h3>
-            <ul className="text-sm rounded-xl p-8 text-center">
+            <ul className="text-xs rounded-xl p-8 text-center">
               <li className="text-hg-darkMalva mb-8">
                 Es recomendable seguir estos consejos
               </li>
