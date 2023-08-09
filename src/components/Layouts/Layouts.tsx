@@ -24,6 +24,7 @@ export const Flex = ({
   className = '',
   children,
   onClick = undefined,
+  ...rest
 }: {
   layout:
     | 'row-left'
@@ -36,6 +37,7 @@ export const Flex = ({
   className?: string;
   children: ReactNode;
   onClick?: () => void;
+  [key: string]: any;
 }) => {
   const direction = layout.split('-')[0];
 
@@ -78,6 +80,7 @@ export const Flex = ({
     <div
       className={twMerge(`flex flex-${direction} ${justify} ${className}`)}
       onClick={onClick}
+      {...rest}
     >
       {children}
     </div>

@@ -23,7 +23,7 @@ export function Cart() {
             </ul>
           </Flex>
           <CartTotal />
-          <Button style="primary" href="checkout">
+          <Button type="primary" href="checkout">
             Continuar
           </Button>
         </Flex>

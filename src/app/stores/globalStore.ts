@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface Store {
+interface GlobalPersistStore {
   isMobile: boolean;
 }
 
-interface Actions {
+interface GlobalPersistActions {
   setIsMobile: (value: boolean) => void;
 }
 
-const useGlobalStore = create(
-  persist<Store & Actions>(
+export const useGlobalPersistedStore = create(
+  persist<GlobalPersistStore & GlobalPersistActions>(
     set => ({
       isMobile: true,
       setIsMobile: value => {
@@ -23,4 +23,23 @@ const useGlobalStore = create(
   )
 );
 
-export default useGlobalStore;
+interface GlobalStore {
+  isModalOpen: boolean;
+  isMainScrollEnabled: boolean;
+}
+
+interface GlobalActions {
+  setIsModalOpen: (value: boolean) => void;
+  setIsMainScrollEnabled: (value: boolean) => void;
+}
+
+export const useGlobalStore = create<GlobalStore & GlobalActions>(set => ({
+  isModalOpen: false,
+  isMainScrollEnabled: true,
+  setIsModalOpen: (value: boolean) => {
+    set({ isModalOpen: value, isMainScrollEnabled: !value });
+  },
+  setIsMainScrollEnabled: (value: boolean) => {
+    set({ isMainScrollEnabled: value });
+  },
+}));

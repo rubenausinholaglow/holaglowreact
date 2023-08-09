@@ -1,10 +1,6 @@
 import React from 'react';
-import { Title } from 'components/Texts';
+import { Flex } from 'components/Layouts/Layouts';
 
 export default function Home() {
-  return (
-    <div className="p-[300px] text-center h-[3000px]">
-      <Title size="xl">New Home</Title>
-    </div>
-  );
+  return <Flex layout="col-center" className="text-center h-[1500px]"></Flex>;
 }

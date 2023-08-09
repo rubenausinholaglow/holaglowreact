@@ -165,7 +165,7 @@ export default function HightLightedProduct() {
         )}
 
         <Button
-          style="primary"
+          type="primary"
           size="lg"
           className="w-full"
           onClick={() => addToCart(product)}

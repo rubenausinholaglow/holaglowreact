@@ -1,13 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useGlobalStore from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { SvgArrow, SvgCross, SvgHolaglow, SvgUserOctagon } from 'icons/IconsDs';
-import CheckHydration from 'utils/CheckHydration';
 import { HOLAGLOW_COLORS } from 'utils/colors';
-import IsMobile from 'utils/IsMobile';
+
+import MobileNavigation from './MobileNavigation';
 
 let scrollPos = 0;
 
@@ -32,14 +35,20 @@ function Navigation() {
 }
 
 export default function Header() {
-  const headerHeight = 64;
-  const [isVisible, setIsVisible] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 
-  const isMobile = useGlobalStore(state => state.isMobile);
-  const setIsMobile = useGlobalStore(state => state.setIsMobile);
+  const isMobile = useGlobalPersistedStore(state => state.isMobile);
+  const setIsMainScrollEnabled = useGlobalStore(
+    state => state.setIsMainScrollEnabled
+  );
+
+  const HEADER_HEIGHT = isMobile ? 48 : 72;
 
   const recalculateVisibility = () => {
-    setIsVisible(window.scrollY < headerHeight || scrollPos > window.scrollY);
+    setIsHeaderVisible(
+      window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
+    );
     scrollPos = window.scrollY;
   };
 
@@ -52,26 +61,31 @@ export default function Header() {
     recalculateVisibility();
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    setIsMobile(IsMobile());
   }, []);
 
   return (
-    <CheckHydration>
+    <>
+      <MobileNavigation
+        isVisible={isMobileNavVisible}
+        headerHeight={HEADER_HEIGHT}
+      />
+
       <header
         id="header"
         className={`w-full fixed top-0 transition-transform ${
-          !isVisible && '-translate-y-full'
+          !isHeaderVisible ? '-translate-y-full' : ''
         }`}
       >
         <Container>
           <Flex
             layout={isMobile ? 'row-between' : 'row-center'}
-            className="py-5 relative"
+            className={`py-3 md:py-5 relative h-[48px] ${
+              !isMobile ? `h-${HEADER_HEIGHT}` : ''
+            }`}
           >
             <SvgHolaglow
-              height={32}
-              width={130}
+              height={isMobile ? 24 : 32}
+              width={isMobile ? 98 : 130}
               fill={HOLAGLOW_COLORS['lightMalva']}
               className="md:absolute left-0"
             />
@@ -83,19 +97,30 @@ export default function Header() {
                 href="https://holaglow.com"
                 type="transparent"
                 size="md"
-                className="sm:max-md:px-2"
+                style={{
+                  paddingLeft: isMobile ? '6px' : undefined,
+                  paddingRight: isMobile ? '6px' : undefined,
+                }}
               >
                 <Flex layout="row-center">
                   <SvgUserOctagon
-                    height={isMobile ? 24 : 16}
-                    width={isMobile ? 24 : 16}
+                    height={isMobile ? 28 : 16}
+                    width={isMobile ? 28 : 16}
                     fill="transparent"
                   />
                   <span className="hidden md:block ml-2">Mi espacio glow</span>
                 </Flex>
               </Button>
               {isMobile ? (
-                <SvgCross height={24} width={24} className="ml-2" />
+                <SvgCross
+                  height={24}
+                  width={24}
+                  className="ml-2"
+                  onClick={() => {
+                    setIsMobileNavVisible(!isMobileNavVisible);
+                    setIsMainScrollEnabled(!isMobileNavVisible);
+                  }}
+                />
               ) : (
                 <Button type="tertiary" size="md" className="ml-2">
                   <Flex layout="row-center">
@@ -112,6 +137,6 @@ export default function Header() {
           </Flex>
         </Container>
       </header>
-    </CheckHydration>
+    </>
   );
 }

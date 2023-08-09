@@ -1,9 +1,11 @@
 import './globals.css';
 
 import { Poppins } from 'next/font/google';
+import Head from 'next/head';
 
-//import IsMobile from 'utils/IsMobile';
+import { Breakpoint } from './components/Breakpoint';
 import Header from './components/Header';
+import MainLayout from './components/MainLayout';
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -23,16 +25,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="max-h-screen h-full bg-white text-hg-black">
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </Head>
       <body className={poppins.className}>
-        <Header />
-        <main>{children}</main>
-
-        <p
-          id="breakpoints"
-          className="after:content-['sm'] md:after:content-['md']"
-        >
-          chivato breakpoints
-        </p>
+        <Breakpoint />
+        <MainLayout>
+          <Header />
+          <main>{children}</main>
+        </MainLayout>
       </body>
     </html>
   );
