@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import AlmaPayment from 'app/dashboard/(pages)/checkout/components/payment/paymentMethods/Alma';
 import { Button } from 'components/Buttons/Buttons';
 import { SvgAlma } from 'icons/Icons';
 
@@ -11,6 +10,8 @@ import PaymentItem from './PaymentItem';
 import CashPayment from './paymentMethods/Cash';
 import CreditCardPayment from './paymentMethods/CreditCard';
 import { usePaymentList } from './payments/usePaymentList';
+import AlmaPayment from 'app/user/budget/AlmaPayment';
+import { Alma } from './paymentMethods/Alma';
 
 export const PaymentModule = () => {
   const [showAlma, setShowAlma] = useState(false);
@@ -39,7 +40,7 @@ export const PaymentModule = () => {
       >
         <SvgAlma height={20} width={55} fill="#FA5022" />
       </Button>
-      {showAlma ? <AlmaPayment amountFinance={'10000'}></AlmaPayment> : <></>}
+      {showAlma ? <Alma></Alma> : <></>}
       <Button
         style="tertiary"
         className="border-[#FA5022]"
