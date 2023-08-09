@@ -25,6 +25,13 @@ export default function RootLayout({
       <body className={poppins.className}>
         <Header />
         <main>{children}</main>
+
+        <p
+          id="breakpoints"
+          className="after:content-['sm'] md:after:content-['md']"
+        >
+          chivato breakpoints
+        </p>
       </body>
     </html>
   );

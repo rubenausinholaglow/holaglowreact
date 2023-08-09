@@ -29,6 +29,7 @@ export const Flex = ({
     | 'row-left'
     | 'row-center'
     | 'row-right'
+    | 'row-between'
     | 'col-left'
     | 'col-center'
     | 'col-right';
@@ -50,6 +51,10 @@ export const Flex = ({
     {
       layout: 'row-right',
       classes: 'justify-end items-center',
+    },
+    {
+      layout: 'row-between',
+      classes: 'justify-between items-center',
     },
     {
       layout: 'col-left',

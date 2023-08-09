@@ -3,44 +3,46 @@ import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
 type ButtonProps = {
-  style?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'sm' | 'md' | 'lg';
+  type?: 'primary' | 'secondary' | 'tertiary' | 'transparent';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   href?: string;
   className?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-  target?: string;
-  rest?: any;
+  [key: string]: any;
 };
 
 export const Button = ({
-  style = 'primary',
+  type = 'primary',
   size = 'md',
   href = '',
   className = '',
   onClick = undefined,
   children,
-  type = 'button',
   ...rest
 }: ButtonProps) => {
   const StylesConfig: any = {
-    common: 'rounded-full px-8 py-2 text-white transition-all',
-    primary: 'bg-hg-darkMalva border border-hg-darkMalva',
+    common: 'relative rounded-full px-4 py-2 text-white transition-all',
+    primary: 'bg-hg-black border-b-4 border-hg-lime',
     secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
-    tertiary: 'text-hg-darkMalva border border-hg-darkMalva bg-white',
-    sm: 'text-xs px-3 py-1',
-    md: 'text-sm',
-    lg: 'text-lg px-12 py-4 font-semibold',
+    tertiary: 'text-hg-black border border-hg-black bg-white',
+    transparent: 'text-hg-black bg-white hover:bg-hg-malva300',
+    sm: 'text-xs py-2 px-4',
+    md: 'text-xs py-3 px-4',
+    lg: 'text-md py-3 px-6',
+    xl: 'text-md py-4 px-6',
   };
 
   const styles = twMerge(
-    `${StylesConfig.common} ${StylesConfig[style]} ${StylesConfig[size]} ${className}`
+    `${StylesConfig.common} ${StylesConfig[type]} ${StylesConfig[size]} ${className}`
   );
   if (href) {
     return (
       <Link href={href} className={styles} {...rest}>
         {children}
+        {type === 'primary' && (
+          <span className="absolute rounded-full top-0 bottom-0 left-[0.5px] right-[0.5px] bg-hg-black -z-10 translate-y-[5px]"></span>
+        )}
       </Link>
     );
   }
