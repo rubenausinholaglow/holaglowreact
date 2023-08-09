@@ -22,6 +22,7 @@ export const PaymentModule = () => {
   const totalAmount = usePaymentList(state => state.totalAmount);
 
   const missingAmount = totalPrice - totalAmount;
+  const missingAmountFormatted = missingAmount.toFixed(2);
 
   const createTicket = () => {
     //TODO - CREATE TICKET CALL API
@@ -74,9 +75,7 @@ export const PaymentModule = () => {
       )}
       <span className="font-bold mr-1">Total Pagado {totalAmount}€</span>
       {totalAmount ? (
-        <span className="font-bold mr-1">
-          Faltan {parseFloat(missingAmount).toFixed(2)}€
-        </span>
+        <span className="font-bold mr-1">Faltan {missingAmountFormatted}€</span>
       ) : (
         <></>
       )}
