@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { PaymentBank, PaymentMethod } from '@interface/payment';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
@@ -8,9 +9,7 @@ import { Button } from 'components/Buttons/Buttons';
 import { SvgAlma } from 'icons/Icons';
 
 import PaymentItem from './PaymentItem';
-import { Alma } from './paymentMethods/Alma';
-import CashPayment from './paymentMethods/Cash';
-import CreditCardPayment from './paymentMethods/CreditCard';
+import PaymentClient from './paymentMethods/PaymentClient';
 import { usePaymentList } from './payments/usePaymentList';
 
 export const PaymentModule = () => {
@@ -24,6 +23,12 @@ export const PaymentModule = () => {
 
   const missingAmount = totalPrice - totalAmount;
   const missingAmountFormatted = missingAmount.toFixed(2);
+
+  const handleOnButtonPaymentClick = () => {
+    setShowCreditCard(false);
+    setShowAlma(false);
+    setShowCash(false);
+  };
 
   const createTicket = () => {
     //TODO - CREATE TICKET CALL API
@@ -42,7 +47,15 @@ export const PaymentModule = () => {
       >
         <SvgAlma height={20} width={55} fill="#FA5022" />
       </Button>
-      {showAlma ? <Alma></Alma> : <></>}
+      {showAlma ? (
+        <PaymentClient
+          paymentBank={PaymentBank.Alma}
+          paymentMethod={PaymentMethod.Financing}
+          onPaymentClick={handleOnButtonPaymentClick}
+        ></PaymentClient>
+      ) : (
+        <></>
+      )}
       <Button
         style="tertiary"
         className="border-[#FA5022]"
@@ -51,7 +64,15 @@ export const PaymentModule = () => {
       >
         Efectivo
       </Button>
-      {showCash ? <CashPayment></CashPayment> : <></>}
+      {showCash ? (
+        <PaymentClient
+          paymentBank={PaymentBank.None}
+          paymentMethod={PaymentMethod.Cash}
+          onPaymentClick={handleOnButtonPaymentClick}
+        ></PaymentClient>
+      ) : (
+        <></>
+      )}
       <Button
         style="tertiary"
         className="border-[#FA5022]"
@@ -60,7 +81,15 @@ export const PaymentModule = () => {
       >
         Tarjeta
       </Button>
-      {showCreditCard ? <CreditCardPayment></CreditCardPayment> : <></>}
+      {showCreditCard ? (
+        <PaymentClient
+          paymentBank={PaymentBank.None}
+          paymentMethod={PaymentMethod.CreditCard}
+          onPaymentClick={handleOnButtonPaymentClick}
+        ></PaymentClient>
+      ) : (
+        <></>
+      )}
       {totalAmount ? (
         <div>
           <span className="font-bold">Pagos Realizados:</span>

@@ -10,6 +10,7 @@ import AlmaWidget from './AlmaWidget';
 interface Props {
   paymentMethod: PaymentMethod;
   paymentBank: PaymentBank;
+  onButtonClick: (newValue: boolean) => void;
 }
 
 export default function PaymentInput(props: Props) {
@@ -25,6 +26,7 @@ export default function PaymentInput(props: Props) {
     parseFloat(totalAmount.toFixed(2));
 
   const onSubmit = (data: any) => {
+    setShowAlma(false);
     const amount = parseFloat(data.number);
 
     if (!isNaN(amount) && amount > 0) {
@@ -36,6 +38,7 @@ export default function PaymentInput(props: Props) {
         id: '',
       };
       addPaymentToList(paymentRequest);
+      props.onButtonClick(false);
     }
   };
 
