@@ -28,11 +28,6 @@ const Page = () => {
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
 
-  let productsPriceTotal = 0;
-  if (cart) {
-    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
-  }
-
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
     const GuidClinicId = localStorage.getItem('ClinicId') || '';

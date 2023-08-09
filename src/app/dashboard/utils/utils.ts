@@ -1,3 +1,4 @@
+import { PaymentBank, PaymentMethod } from '@interface/payment';
 import { CartItem } from '@interface/product';
 
 export const handleGoBack = () => {
@@ -57,3 +58,31 @@ export const applyDiscountToItem = (
 
   return price;
 };
+
+export function getPaymentMethodText(method: PaymentMethod): string {
+  switch (method) {
+    case PaymentMethod.Cash:
+      return 'Efectivo';
+    case PaymentMethod.CreditCard:
+      return 'Tarjeta de Crédito';
+    case PaymentMethod.Financing:
+      return 'Financiación';
+    case PaymentMethod.Others:
+      return 'Otros';
+    default:
+      return 'Unknown';
+  }
+}
+
+export function getPaymentBankText(bank: PaymentBank): string {
+  switch (bank) {
+    case PaymentBank.None:
+      return 'Ninguna';
+    case PaymentBank.Alma:
+      return 'Alma';
+    case PaymentBank.Pepper:
+      return 'Pepper';
+    default:
+      return 'Unknown';
+  }
+}

@@ -30,12 +30,6 @@ export const usePaymentList = create(
           totalAmount: state.totalAmount - payment.amount,
         }));
       },
-      cleanPaymentList: () => {
-        set(state => ({
-          paymentRequest: [],
-          totalAmount: INITIAL_STATE_PAYMENT.totalAmount,
-        }));
-      },
     }),
     {
       name: 'paymeny-list',

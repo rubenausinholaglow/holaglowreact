@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import AlmaPayment from 'app/dashboard/(pages)/checkout/components/payment/paymentMethods/Alma';
 import { Button } from 'components/Buttons/Buttons';
-import { stat } from 'fs';
 import { SvgAlma } from 'icons/Icons';
 
 import PaymentItem from './PaymentItem';
@@ -16,13 +16,17 @@ export const PaymentModule = () => {
   const [showAlma, setShowAlma] = useState(false);
   const [showCash, setShowCash] = useState(false);
   const [showCreditCard, setShowCreditCard] = useState(false);
-  const { cleanPaymentList } = usePaymentList();
 
   const paymentList = usePaymentList(state => state.paymentRequest);
   const totalPrice = useCartStore(state => state.totalPrice);
   const totalAmount = usePaymentList(state => state.totalAmount);
 
   const missingAmount = totalPrice - totalAmount;
+
+  const createTicket = () => {
+    //TODO - CREATE TICKET CALL API
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+  };
 
   return (
     <>
@@ -76,7 +80,7 @@ export const PaymentModule = () => {
       ) : (
         <></>
       )}
-      <Button onClick={cleanPaymentList}>Generar Tiquet</Button>
+      <Button onClick={createTicket}>Generar Tiquet</Button>
     </>
   );
 };
