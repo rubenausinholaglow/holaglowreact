@@ -6,7 +6,7 @@ import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
 import Script from 'next/script';
 
-import { AlmaProps } from '../utils/props';
+import { AlmaProps } from '../../../../../utils/props';
 
 export const AlmaPayment: React.FC<AlmaProps> = ({ amountFinance }) => {
   const parsedValue = parseFloat(amountFinance);
@@ -87,7 +87,6 @@ export const AlmaPayment: React.FC<AlmaProps> = ({ amountFinance }) => {
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.min.css"
         />
-
         <section id="payment-plans"></section>
         {resultValue && (
           <Script

@@ -1,11 +1,12 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import { AlmaPayment } from '@components/Alma';
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
+import { AlmaPayment } from 'app/dashboard/(pages)/checkout/components/payment/paymentMethods/Alma';
+import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
@@ -90,7 +91,9 @@ const Page = () => {
           )}
           <CartTotal isCheckout />
           {showPaymentButtons ? (
-            <></>
+            <Flex layout="col-left" className="gap-2 w-full mt-4">
+              <PaymentModule></PaymentModule>
+            </Flex>
           ) : (
             <>
               {showProductDiscount && (
