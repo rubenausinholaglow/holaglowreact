@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import { Button } from 'components/Buttons/Buttons';
