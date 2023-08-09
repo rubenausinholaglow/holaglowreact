@@ -20,7 +20,7 @@ export default function Page() {
           <br />
           tu glow?
         </p>
-        <Button href="/dashboard/menu" style="primary" size="lg">
+        <Button href="/dashboard/menu" type="primary" size="lg">
           Menu
         </Button>
       </Flex>

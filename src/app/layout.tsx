@@ -2,6 +2,7 @@ import './globals.css';
 
 import { Poppins } from 'next/font/google';
 
+//import IsMobile from 'utils/IsMobile';
 import Header from './components/Header';
 
 const poppins = Poppins({

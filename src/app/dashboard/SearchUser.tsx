@@ -33,7 +33,7 @@ const SearchUser: React.FC<SearchBarProps> = ({
               placeholder="Introduce tu teléfono, email o DNI"
               className="border rounded-lg px-4 py-2 mr-4 min-w-[300px] text-hg-black"
             />
-            <Button type="submit" onClick={handleClick} style="primary">
+            <Button isSubmit onClick={handleClick} type="primary">
               {isLoading ? <SvgSpinner height={24} width={24} /> : 'Buscar'}
             </Button>
           </Flex>

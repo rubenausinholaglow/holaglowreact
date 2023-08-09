@@ -119,8 +119,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         {!isCheckout && (
           <Button
             size="sm"
-            style="primary"
-            type="button"
+            type="primary"
             onClick={e => {
               e.stopPropagation();
               addToCart(product);

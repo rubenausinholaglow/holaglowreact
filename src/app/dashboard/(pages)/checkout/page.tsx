@@ -91,7 +91,7 @@ const Page = () => {
             {showPaymentButtons ? (
               <Flex layout="col-left" className="gap-2 w-full mt-4">
                 <Button
-                  style="tertiary"
+                  type="tertiary"
                   href="https://dashboard.getalma.eu/login"
                   className="border-[#FA5022]"
                   target="_blank"
@@ -99,7 +99,7 @@ const Page = () => {
                   <SvgAlma height={25} width={75} fill="#FA5022" />
                 </Button>
                 <Button
-                  style="primary"
+                  type="primary"
                   href="https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470"
                   className="bg-[#FF3333] border-[#FF3333]"
                   target="_blank"
@@ -127,7 +127,7 @@ const Page = () => {
                     className="w-full"
                     size="md"
                     href="https://agenda.holaglow.com/schedule?mode=dashboard"
-                    style="tertiary"
+                    type="tertiary"
                   >
                     <span className="font-semibold">Agendar Cita</span>
                   </Button>

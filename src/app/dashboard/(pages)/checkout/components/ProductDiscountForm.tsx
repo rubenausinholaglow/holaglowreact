@@ -65,11 +65,7 @@ export default function ProductDiscountForm({
             />
           </div>
         </Flex>
-        <Button
-          className={isCheckout ? 'mt-4' : ''}
-          type="submit"
-          style="tertiary"
-        >
+        <Button className={isCheckout ? 'mt-4' : ''} isSubmit type="primary">
           Aplicar
         </Button>
       </Flex>

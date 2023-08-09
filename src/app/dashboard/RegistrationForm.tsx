@@ -103,7 +103,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </Flex>
         </Flex>
         <Flex layout="col-left">
-          <Button onClick={handleContinue} style="primary">
+          <Button onClick={handleContinue} type="primary">
             {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
           </Button>
           {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (

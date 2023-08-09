@@ -22,15 +22,16 @@ export const Button = ({
   ...rest
 }: ButtonProps) => {
   const StylesConfig: any = {
-    common: 'relative rounded-full px-4 py-2 text-white transition-all',
+    common:
+      'relative rounded-full px-4 py-2 text-white transition-all flex flex-row items-center justify-center',
     primary: 'bg-hg-black border-b-4 border-hg-lime',
     secondary: 'bg-hg-lightMalva border border-hg-lightMalva',
     tertiary: 'text-hg-black border border-hg-black bg-white',
     transparent: 'text-hg-black bg-white hover:bg-hg-malva300',
-    sm: 'text-xs py-2 px-4',
-    md: 'text-xs py-3 px-4',
-    lg: 'text-md py-3 px-6',
-    xl: 'text-md py-4 px-6',
+    sm: 'text-xs h-[32px] px-4',
+    md: 'text-xs h-[40px] px-4',
+    lg: 'text-md h-[48px] px-6',
+    xl: 'text-md h-[64px] px-6',
   };
 
   const styles = twMerge(
@@ -48,7 +49,11 @@ export const Button = ({
   }
 
   return (
-    <button className={styles} onClick={onClick} {...rest}>
+    <button
+      className={styles}
+      onClick={onClick}
+      type={rest?.isSubmit ? 'submit' : 'button'}
+    >
       {children}
     </button>
   );

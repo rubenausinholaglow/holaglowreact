@@ -412,7 +412,7 @@ export default function Form() {
         {activeSlideIndex > 0 && (
           <Button
             className="mt-8 ml-3"
-            style="primary"
+            type="primary"
             onClick={() => goBack(activeSlideIndex)}
           >
             <Flex layout="row-left">
