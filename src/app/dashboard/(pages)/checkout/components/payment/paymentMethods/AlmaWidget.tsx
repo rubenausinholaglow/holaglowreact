@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import { Button } from 'components/Buttons/Buttons';
@@ -9,9 +9,11 @@ import Script from 'next/script';
 import { AlmaProps } from '../../../../../utils/props';
 
 export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
+  const [scriptData, setScriptData] = useState<string | null>(null);
   const parsedValue = parseFloat(amountFinance);
   let resultValue = '';
   let installments = -1;
+
   useEffect(() => {
     function handleAlmaModalClosed(event: Event) {
       const data = event;
@@ -22,6 +24,8 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
       installments = Number(text!.replace('x', ''));
     }
 
+    setScriptData(script);
+
     document.addEventListener('almaModalClosed', handleAlmaModalClosed);
 
     return () => {
@@ -31,7 +35,6 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
 
   if (!isNaN(parsedValue)) {
     resultValue = Math.round(parsedValue * 100).toString();
-    console.log(resultValue);
   }
   const script = `
       const scriptTag = document.createElement("script");
@@ -58,8 +61,6 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
         })
       });
     `;
-
-  console.log(script);
 
   const handleClick = async (amountFinance: string) => {
     const parsedValue = parseFloat(amountFinance);
@@ -91,12 +92,12 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
           href="https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.min.css"
         />
         <section id="payment-plans"></section>
-        {resultValue && (
+        {scriptData && (
           <Script
             id="almaSplit"
             strategy="lazyOnload"
             dangerouslySetInnerHTML={{
-              __html: script,
+              __html: scriptData,
             }}
           />
         )}

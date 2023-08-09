@@ -2,16 +2,16 @@
 
 import { useState } from 'react';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
+import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { Button } from 'components/Buttons/Buttons';
 import { SvgAlma } from 'icons/Icons';
 
 import PaymentItem from './PaymentItem';
+import { Alma } from './paymentMethods/Alma';
 import CashPayment from './paymentMethods/Cash';
 import CreditCardPayment from './paymentMethods/CreditCard';
 import { usePaymentList } from './payments/usePaymentList';
-import AlmaPayment from 'app/user/budget/AlmaPayment';
-import { Alma } from './paymentMethods/Alma';
 
 export const PaymentModule = () => {
   const [showAlma, setShowAlma] = useState(false);
@@ -28,6 +28,8 @@ export const PaymentModule = () => {
   const createTicket = () => {
     //TODO - CREATE TICKET CALL API
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
+    //TODO - REDIRECT TO MENU
   };
 
   return (

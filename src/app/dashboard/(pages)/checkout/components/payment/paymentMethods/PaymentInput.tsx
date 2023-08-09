@@ -18,6 +18,7 @@ export default function PaymentInput(props: Props) {
   const totalAmount = usePaymentList(state => state.totalAmount);
   const { addPaymentToList } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const MaxValue =
     parseFloat(productsPriceTotal.toFixed(2)) -
@@ -38,7 +39,7 @@ export default function PaymentInput(props: Props) {
     }
   };
 
-  if (PaymentBank.Alma)
+  if (props.paymentBank == PaymentBank.Alma)
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex layout="row-left" className="items-start">
@@ -52,6 +53,7 @@ export default function PaymentInput(props: Props) {
                 type="number"
                 {...field}
                 onChange={e => {
+                  setInputValue(e.target.value);
                   const newValue = Math.min(
                     parseInt(e.target.value),
                     parseFloat(MaxValue.toFixed(2))
@@ -69,7 +71,14 @@ export default function PaymentInput(props: Props) {
             >
               Ver Financiación
             </button>
-            {showAlma ? <AlmaWidget amountFinance={'200'}></AlmaWidget> : <></>}
+            {showAlma ? (
+              <>
+                <br />
+                <AlmaWidget amountFinance={inputValue}></AlmaWidget>
+              </>
+            ) : (
+              <></>
+            )}
           </Flex>
         </Flex>
       </form>
@@ -98,16 +107,12 @@ export default function PaymentInput(props: Props) {
             )}
           />
           <Flex layout="col-center">
-            {showAlma ? (
-              <AlmaWidget amountFinance={'10000'}></AlmaWidget>
-            ) : (
-              <button
-                className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
-                type="submit"
-              >
-                Pagar
-              </button>
-            )}
+            <button
+              className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
+              type="submit"
+            >
+              Pagar
+            </button>
           </Flex>
         </Flex>
       </form>
