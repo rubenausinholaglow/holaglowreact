@@ -42,7 +42,10 @@ export default function PaymentInput(props: Props) {
     }
   };
 
-  if (props.paymentBank == PaymentBank.Alma)
+  if (
+    props.paymentBank == PaymentBank.Alma ||
+    props.paymentBank == PaymentBank.Pepper
+  )
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex layout="row-left" className="items-start">
@@ -51,7 +54,7 @@ export default function PaymentInput(props: Props) {
             control={control}
             render={({ field, fieldState }) => (
               <input
-                placeholder="Introduce Importe a financiar"
+                placeholder="Introduce importe a financiar"
                 className="border border-hg-darkMalva rounded px-2 py-1 mt-2 text-black w-full mb-6"
                 type="number"
                 {...field}
@@ -95,7 +98,7 @@ export default function PaymentInput(props: Props) {
             control={control}
             render={({ field, fieldState }) => (
               <input
-                placeholder="Introduce Importe"
+                placeholder="Introduce importe"
                 className="border border-hg-darkMalva rounded px-2 py-1 mt-2 text-black w-full mb-6"
                 type="number"
                 {...field}

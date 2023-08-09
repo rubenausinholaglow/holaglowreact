@@ -1,16 +1,15 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
-import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
-import { SvgAlma, SvgAngleDown, SvgPepper } from 'icons/Icons';
-import router from 'next/router';
+import { SvgAngleDown } from 'icons/Icons';
 
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
@@ -53,7 +52,7 @@ const Page = () => {
     try {
       await budgetService.createBudget(budget);
     } catch (error) {
-      console.error(ERROR_POST, error);
+      Bugsnag.notify(ERROR_POST + error);
     }
   };
 
