@@ -25,6 +25,7 @@ export default function PaymentInput(props: Props) {
     parseFloat(productsPriceTotal.toFixed(2)) -
     parseFloat(totalAmount.toFixed(2));
 
+  console.log(MaxValue);
   const onSubmit = (data: any) => {
     setShowAlma(false);
     const amount = parseFloat(data.number);

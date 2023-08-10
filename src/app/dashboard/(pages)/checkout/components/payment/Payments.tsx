@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { PaymentBank, PaymentMethod } from '@interface/payment';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
@@ -10,12 +9,12 @@ import { SvgAlma } from 'icons/Icons';
 
 import PaymentItem from './PaymentItem';
 import PaymentClient from './paymentMethods/PaymentClient';
+import { paymentItems } from './paymentMethods/PaymentItems';
 import { usePaymentList } from './payments/usePaymentList';
 
 export const PaymentModule = () => {
-  const [showAlma, setShowAlma] = useState(false);
-  const [showCash, setShowCash] = useState(false);
-  const [showCreditCard, setShowCreditCard] = useState(false);
+  const [activePaymentMethod, setActivePaymentMethod] = useState('');
+  const [onLoad, setOnLoad] = useState(false);
 
   const paymentList = usePaymentList(state => state.paymentRequest);
   const totalPrice = useCartStore(state => state.totalPrice);
@@ -24,10 +23,14 @@ export const PaymentModule = () => {
   const missingAmount = totalPrice - totalAmount;
   const missingAmountFormatted = missingAmount.toFixed(2);
 
-  const handleOnButtonPaymentClick = () => {
-    setShowCreditCard(false);
-    setShowAlma(false);
-    setShowCash(false);
+  const handleOnButtonPaymentClick = (paymentKey: any) => {
+    setOnLoad(true);
+    if (activePaymentMethod === paymentKey) {
+      setOnLoad(false);
+      setActivePaymentMethod('');
+    } else {
+      setActivePaymentMethod(paymentKey);
+    }
   };
 
   const createTicket = () => {
@@ -39,57 +42,31 @@ export const PaymentModule = () => {
 
   return (
     <>
-      <Button
-        style="tertiary"
-        className="border-[#FA5022]"
-        target="_blank"
-        onClick={() => setShowAlma(!showAlma)}
-      >
-        <SvgAlma height={20} width={55} fill="#FA5022" />
-      </Button>
-      {showAlma ? (
-        <PaymentClient
-          paymentBank={PaymentBank.Alma}
-          paymentMethod={PaymentMethod.Financing}
-          onPaymentClick={handleOnButtonPaymentClick}
-        ></PaymentClient>
-      ) : (
-        <></>
+      {paymentItems.map(method => (
+        <Button
+          key={method.key}
+          style="tertiary"
+          className={`border-[#FA5022] ${
+            onLoad && activePaymentMethod != method.key ? 'hidden' : ''
+          }`}
+          target="_blank"
+          onClick={() => handleOnButtonPaymentClick(method.key)}
+        >
+          {method.label}
+        </Button>
+      ))}
+
+      {paymentItems.map(method =>
+        activePaymentMethod === method.key ? (
+          <PaymentClient
+            key={method.key}
+            paymentBank={method.paymentBank}
+            paymentMethod={method.paymentMethod}
+            onPaymentClick={() => setActivePaymentMethod('')}
+          ></PaymentClient>
+        ) : null
       )}
-      <Button
-        style="tertiary"
-        className="border-[#FA5022]"
-        target="_blank"
-        onClick={() => setShowCash(!showCash)}
-      >
-        Efectivo
-      </Button>
-      {showCash ? (
-        <PaymentClient
-          paymentBank={PaymentBank.None}
-          paymentMethod={PaymentMethod.Cash}
-          onPaymentClick={handleOnButtonPaymentClick}
-        ></PaymentClient>
-      ) : (
-        <></>
-      )}
-      <Button
-        style="tertiary"
-        className="border-[#FA5022]"
-        target="_blank"
-        onClick={() => setShowCreditCard(!showCreditCard)}
-      >
-        Tarjeta
-      </Button>
-      {showCreditCard ? (
-        <PaymentClient
-          paymentBank={PaymentBank.None}
-          paymentMethod={PaymentMethod.CreditCard}
-          onPaymentClick={handleOnButtonPaymentClick}
-        ></PaymentClient>
-      ) : (
-        <></>
-      )}
+
       {totalAmount ? (
         <div>
           <span className="font-bold">Pagos Realizados:</span>

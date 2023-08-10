@@ -36,10 +36,10 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
   if (!isNaN(parsedValue)) {
     resultValue = Math.round(parsedValue * 100).toString();
   }
+
   const script = `
       const scriptTag = document.createElement("script");
-      scriptTag.src = "https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.umd.js";
-      scriptTag.async = true;
+      scriptTag.src ='../scripts/Alma/widget.js';
       document.head.appendChild(scriptTag);
       scriptTag.addEventListener('load', function() {
         var widgets = Alma.Widgets.initialize(
@@ -51,13 +51,13 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
           purchaseAmount: ${resultValue},
           locale: 'es',
           hideIfNotEligible: false,
-            transitionDelay: 1000000,
-            monochrome: true,
-            hideBorder: true,
-            onModalClose: function() {
-              var event = new CustomEvent('almaModalClosed', { detail: event });
-              document.dispatchEvent(event);
-            }
+          transitionDelay: 1000000,
+          monochrome: true,
+          hideBorder: true,
+          onModalClose: function() {
+            var event = new CustomEvent('almaModalClosed', { detail: event });
+            document.dispatchEvent(event);
+          }
         })
       });
     `;
@@ -89,7 +89,8 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
       <Flex layout="row-center">
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.min.css"
+          type="text/css"
+          href="../styles/Alma/widgets.min.css"
         />
         <section id="payment-plans"></section>
         {scriptData && (
