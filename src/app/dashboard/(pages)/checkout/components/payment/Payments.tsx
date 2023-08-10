@@ -26,7 +26,7 @@ export const PaymentModule = () => {
   const handleOnButtonPaymentClick = (paymentKey: any) => {
     setOnLoad(true);
     if (activePaymentMethod === paymentKey) {
-      setOnLoad(false);
+      setOnLoad(true);
       setActivePaymentMethod('');
     } else {
       setActivePaymentMethod(paymentKey);
@@ -62,7 +62,10 @@ export const PaymentModule = () => {
             key={method.key}
             paymentBank={method.paymentBank}
             paymentMethod={method.paymentMethod}
-            onPaymentClick={() => setActivePaymentMethod('')}
+            onPaymentClick={() => {
+              setActivePaymentMethod('');
+              setOnLoad(false);
+            }}
           ></PaymentClient>
         ) : null
       )}
