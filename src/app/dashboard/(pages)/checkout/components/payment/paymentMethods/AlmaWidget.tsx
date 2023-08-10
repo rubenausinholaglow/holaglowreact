@@ -1,10 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
-import Script from 'next/script';
 
 import { AlmaProps } from '../../../../../utils/props';
 import { usePaymentList } from '../payments/usePaymentList';
@@ -26,7 +25,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
       installments = Number(text!.replace('x', ''));
     }
 
-    var toExecute = new Function(script);
+    const toExecute = new Function(script);
     toExecute();
     document.addEventListener('almaModalClosed', handleAlmaModalClosed);
 
@@ -39,7 +38,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
     resultValue = Math.round(parsedValue * 100).toString();
   }
   const script = `
-      var url = 'https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.umd.js';
+      var url = '../scripts/Alma/widget.js';
       var scriptLoaded = false;
       if (!url) url = 'http://xxx.co.uk/xxx/script.js';
       var scripts = document.getElementsByTagName('script');
@@ -119,7 +118,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
         <link
           rel="stylesheet"
           type="text/css"
-          href="https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.min.css"
+          href="../styles/Alma/widgets.min.css"
         />
         <section id="payment-plans"></section>
         <Flex layout="row-left">
