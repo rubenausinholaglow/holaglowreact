@@ -11,7 +11,7 @@ export function Cart() {
   const cart = useCartStore(state => state.cart);
 
   return (
-    <div className="bg-white w-full text-left p-4">
+    <div className="bg-white w-full text-left py-4">
       <Container>
         <Flex layout="row-left">
           <Flex layout="col-left">
@@ -73,7 +73,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
     >
       <Flex layout={isCheckout ? 'col-left' : 'row-left'} className={`mr-4`}>
         {(hasProductsDiscount || hasCartDiscount) && (
-          <Text size="3xl" className="text-hg-black font-semibold">
+          <Text className="text-hg-black font-semibold text-2xl mr-2">
             {hasCartDiscount ? (
               <>{cartTotalWithDiscount}€</>
             ) : (
@@ -82,11 +82,10 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
           </Text>
         )}
         <Text
-          size={hasProductsDiscount || hasCartDiscount ? 'xl' : '3xl'}
           className={
             hasProductsDiscount || hasCartDiscount
-              ? 'text-red-600 text-lg text line-through opacity-50 font-semibold'
-              : 'text-hg-black font-semibold'
+              ? 'text-red-600 text-lg line-through opacity-50 font-semibold'
+              : 'text-hg-black text-2xl font-semibold'
           }
         >
           {productsPriceTotal.toFixed(2)}€
@@ -101,7 +100,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, 'total')}
             >
-              <Text size="sm">total: {manualPrice}%</Text>
+              <Text size="xs">total: {manualPrice}%</Text>
               <SvgClose height={12} width={12} className="ml-1" />
             </Flex>
           )}
@@ -111,7 +110,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, '%')}
             >
-              <Text size="sm">- {percentageDiscount}%</Text>
+              <Text size="xs">- {percentageDiscount}%</Text>
               <SvgClose height={12} width={12} className="ml-1" />
             </Flex>
           )}
@@ -121,7 +120,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, '€')}
             >
-              <Text size="sm">- {priceDiscount}€</Text>
+              <Text size="xs">- {priceDiscount}€</Text>
               <SvgClose height={12} width={12} className="ml-1" />
             </Flex>
           )}

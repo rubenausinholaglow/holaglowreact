@@ -25,9 +25,10 @@ export default function Treatments({
 
   return (
     <section className="p-12 text-hg-black">
-      <h3 className="bg-[#F1F4FE] rounded-t-[25px] py-6 text-2xl font-semibold text-center -mb-4">
+      <h3 className="bg-[#F1F4FE] rounded-t-[25px] py-6 text-xl font-semibold text-center -mb-4">
         Detalles de tu tratamiento
       </h3>
+
       {appointment.treatments.map((item, index) => {
         const { treatment } = item;
 
@@ -142,66 +143,58 @@ export default function Treatments({
           </div>
         );
       })}
+
       {previousAppointments.length > 0 && (
         <>
           <h3 className="mb-4 font-semibold">Histórico de tratamientos</h3>
 
           <table className="text-hg-black text-[11px] mb-12 w-full">
-            <tr className="text-hg-lightMalva mb-4">
-              <th className="py-3 pr-6 text-left font-normal">
-                Fecha / Sesión
-              </th>
-              <th className="py-3 pr-6 text-left font-normal">
-                Plan de tratamiento
-              </th>
-              <th className="py-3 pr-6 text-left font-normal">
-                Profesional sanitario
-              </th>
-              <th className="py-3 pr-6 text-left font-normal">Clínica</th>
-            </tr>
-            {previousAppointments.map((prevAppointment, index) => {
-              const date = new Date(prevAppointment.date)
-                .getDate()
-                .toString()
-                .padStart(2, '0');
-              const month = (new Date(prevAppointment.date).getMonth() + 1)
-                .toString()
-                .padStart(2, '0');
-              const year = new Date(prevAppointment.date).getFullYear();
-              const parsedDate = `${date}/${month}/${year}`;
+            <thead>
+              <tr className="text-hg-lightMalva mb-4">
+                <th className="py-3 pr-6 text-left font-normal">
+                  Fecha / Sesión
+                </th>
+                <th className="py-3 pr-6 text-left font-normal">
+                  Plan de tratamiento
+                </th>
+                <th className="py-3 pr-6 text-left font-normal">
+                  Profesional sanitario
+                </th>
+                <th className="py-3 pr-6 text-left font-normal">Clínica</th>
+              </tr>
+            </thead>
+            <tbody>
+              {previousAppointments.map((prevAppointment, index) => {
+                const date = new Date(prevAppointment.date)
+                  .getDate()
+                  .toString()
+                  .padStart(2, '0');
+                const month = (new Date(prevAppointment.date).getMonth() + 1)
+                  .toString()
+                  .padStart(2, '0');
+                const year = new Date(prevAppointment.date).getFullYear();
+                const parsedDate = `${date}/${month}/${year}`;
 
-              const appointmentTitle =
-                prevAppointment.treatments.length > 0
-                  ? prevAppointment.treatments[0].treatment.product.title
-                  : prevAppointment.appointmentProducts[0].product.title;
+                const appointmentTitle =
+                  prevAppointment.treatments.length > 0
+                    ? prevAppointment.treatments[0].treatment.product.title
+                    : prevAppointment.appointmentProducts[0].product.title;
 
-              return (
-                <tr key={index} className="mb-4 border-b border-hg-400/10">
-                  <td className="py-3 pr-6">{parsedDate}</td>
-                  <td className="py-3 pr-6">{appointmentTitle}</td>
-                  <td className="py-3 pr-6">
-                    {appointment.clinicProfessional.name}
-                  </td>
-                  <td className="py-3 pr-6">{appointment.clinic.address}</td>
-                </tr>
-              );
-            })}
+                return (
+                  <tr key={index} className="mb-4 border-b border-hg-400/10">
+                    <td className="py-3 pr-6">{parsedDate}</td>
+                    <td className="py-3 pr-6">{appointmentTitle}</td>
+                    <td className="py-3 pr-6">
+                      {appointment.clinicProfessional.name}
+                    </td>
+                    <td className="py-3 pr-6">{appointment.clinic.address}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </>
       )}
-      {/* <h3 className='mb-4 font-semibold'>
-        Notas para tus tratamientos en Holaglow
-        <p className='text-sm font-normal'>Todo lo que necesitas saber en tu pasaporte de belleza</p>
-      </h3>
-      <p className='text-hg-black mb-2 text-[11px]'>
-        Los productos de Holaglow Clinics tienen diferentes efectos y duraciones. En su pasaporte de belleza, puede
-        realizar un seguimiento fácil de qué y cuándo, así como quién realizó el tratamiento.
-      </p>
-      <p className='text-hg-black text-[11px]'>
-        En su pasaporte de belleza, también puede anotar otros tratamientos de belleza en la cara. Será de gran ayuda si
-        cambia de médico o enfermera tratante, o pronto volverá a ser el momento, ya que aquí se recopilará toda la
-        información.
-      </p> */}
     </section>
   );
 }

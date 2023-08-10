@@ -16,10 +16,10 @@ export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
         className="mb-8"
         width={150}
         height={35}
-        fill={HOLAGLOW_COLORS['lime']}
+        fill={HOLAGLOW_COLORS['malva']}
       />
 
-      <ul className="grid grid-cols-3 gap-8 text-sm">
+      <ul className="grid grid-cols-3 gap-8 text-xs">
         <li>
           <p className="mb-4">My glow, my rules.</p>
           <p>La nueva cara de la medicina estética, sin cirugía</p>

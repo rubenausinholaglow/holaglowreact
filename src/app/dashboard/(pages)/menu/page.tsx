@@ -26,7 +26,7 @@ const Page = () => {
       {username && (
         <Container>
           <Flex layout="col-center">
-            <p className="font-bold text-2xl mb-8">
+            <p className="font-bold text-xl mb-8">
               Hola {username} ¿Qué deseas hacer?
             </p>
             <div className="grid grid-cols-3">

@@ -9,6 +9,7 @@ import { Container, Flex } from 'components/Layouts/Layouts';
 import { Modal, ModalBackground } from 'components/Modals/Modal';
 import { SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
+import CheckHydration from 'utils/CheckHydration';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
@@ -180,7 +181,7 @@ export default function Page() {
   } else {
     const filteredProducts = filterProducts() || [];
     return (
-      <>
+      <CheckHydration>
         <ModalBackground
           isVisible={showProductModal}
           onClick={() => setHighlightProduct(emptyProduct)}
@@ -215,7 +216,7 @@ export default function Page() {
             </div>
           )}
         </Flex>
-      </>
+      </CheckHydration>
     );
   }
 }

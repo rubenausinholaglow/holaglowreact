@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CartItem } from '@interface/product';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
-import { Text, Title } from 'components/Texts';
+import { Text } from 'components/Texts';
 import { SvgAngleDown, SvgClose } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
@@ -51,7 +51,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         width={30}
         height={30}
         fill={HOLAGLOW_COLORS['darkMalva']}
-        className="absolute top-2 right-2"
+        className="absolute top-2 right-2 cursor-pointer"
         onClick={() => removeFromCart(product)}
       />
 
@@ -76,11 +76,11 @@ export default function ProductCard({ product, isCheckout }: Props) {
             : 'border-t border-hg-darkMalva p-4 text-left w-full h-full'
         }
       >
-        <Title size={isCheckout ? 'xl' : 'lg'} className="font-semibold">
+        <Text size={isCheckout ? 'lg' : 'md'} className="font-semibold">
           {product.title}
-        </Title>
+        </Text>
         <Text
-          size={isCheckout ? 'lg' : 'sm'}
+          size={isCheckout ? 'md' : 'xs'}
           className="text-hg-lightMalva mb-3"
         >
           {product.description}
@@ -98,20 +98,17 @@ export default function ProductCard({ product, isCheckout }: Props) {
             />
           )}
           {productHasDiscount && isCheckout && (
-            <Text
-              size={isCheckout ? '2xl' : 'xl'}
-              className="text-hg-black font-semibold  mr-2"
-            >
+            <Text className="text-hg-black font-semibold text-xl mr-2">
               {Number(product.priceWithDiscount).toFixed(2)}€
             </Text>
           )}
           <Text
-            size={isCheckout ? '2xl' : 'xl'}
+            size={isCheckout ? 'xl' : 'lg'}
             className={`font-semibold text-red
             ${
               productHasDiscount && isCheckout
                 ? 'text-red-600 text-lg text line-through opacity-50'
-                : 'text-hg-black'
+                : 'text-hg-black text-lg'
             }
               `}
           >
@@ -121,6 +118,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
         {!isCheckout && (
           <Button
+            size="sm"
             style="primary"
             type="button"
             onClick={e => {
@@ -150,7 +148,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
                         applyItemDiscount(product.uniqueId, 0, '€')
                       }
                     >
-                      <Text size="sm">
+                      <Text size="xs">
                         total: {productCartItem.priceDiscount}€
                       </Text>
                       <SvgClose height={12} width={12} className="ml-1" />
@@ -162,7 +160,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
                     className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
                     onClick={() => applyItemDiscount(product.uniqueId, 0, '%')}
                   >
-                    <Text size="sm">
+                    <Text size="xs">
                       -{productCartItem.percentageDiscount}%
                     </Text>
                     <SvgClose height={12} width={12} className="ml-1" />

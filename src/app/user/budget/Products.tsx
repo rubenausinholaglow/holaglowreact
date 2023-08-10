@@ -53,7 +53,7 @@ export default function Products({
                   onError={() => setImgSrc(DEFAULT_IMG_SRC)}
                 />
               </div>
-              <div className="flex flex-col mt-8 ml-12 w-1/2">
+              <div className="flex flex-col mt-8 ml-12 w-[55%]">
                 <h3 className="font-semibold mb-4">
                   {productDetails.title}{' '}
                   {product.quantity > 1 && `(x${product.quantity})`}
@@ -63,7 +63,7 @@ export default function Products({
                     <span className="block font-light text-hg-black/40 text-xs mb-1">
                       Tratamiento
                     </span>
-                    <span className="text-sm">
+                    <span className="text-xs">
                       {productDetails.description}
                     </span>
                   </p>
@@ -71,8 +71,8 @@ export default function Products({
                     <span className="block font-light text-hg-black/40 text-xs mb-1">
                       Precio
                     </span>
-                    <span className="text-3xl font-bold">
-                      {`${priceFormat(Number(productDetails.price))}`} €
+                    <span className="text-2xl font-semibold">
+                      {`${priceFormat(Number(product.price))}`} €
                     </span>
                   </p>
                 </div>
@@ -82,18 +82,24 @@ export default function Products({
         })}
       </ul>
       <aside>
-        <ul className="bg-hg-lightMalva/20 rounded-lg w-[55%] flex flex-col text-sm p-4 ml-auto mr-16 mt-8 mb-8">
+        <ul className="bg-hg-lightMalva/20 rounded-lg w-[55%] flex flex-col text-xs p-4 ml-auto mr-16 mt-8 mb-8">
           <li className="flex justify-between pb-4">
             <span>Subtotal</span>
-            <b>{`${priceFormat(totalPrice)}`} €</b>
+            <span className="font-semibold">
+              {`${priceFormat(totalPrice)}`} €
+            </span>
           </li>
           <li className="flex justify-between pb-4 mb-4 border-b border-hg-black">
             <span>IVA 21%</span>
-            <b>{`${priceFormat(totalPriceWithIVA - totalPrice)}`} €</b>
+            <span className="font-semibold">
+              {`${priceFormat(totalPriceWithIVA - totalPrice)}`} €
+            </span>
           </li>
           <li className="flex justify-between">
             <span>Total</span>
-            <b>{`${priceFormat(totalPriceWithIVA)}`} €</b>
+            <span className="font-semibold">
+              {`${priceFormat(totalPriceWithIVA)}`} €
+            </span>
           </li>
         </ul>
       </aside>

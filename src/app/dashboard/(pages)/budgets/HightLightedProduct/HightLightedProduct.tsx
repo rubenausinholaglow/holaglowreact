@@ -94,9 +94,9 @@ export default function HightLightedProduct() {
           />
         </div>
         <Flex layout="col-left" className="mb-16">
-          <p className="font-semibold text-xl">
+          <p className="font-semibold text-lg">
             {product.title} -{' '}
-            <span className="text-xl text-hg-black font-semibold mb-3">
+            <span className="text-lg text-hg-black font-semibold mb-3">
               {product.price.toFixed(2)}€
             </span>
           </p>
@@ -106,7 +106,7 @@ export default function HightLightedProduct() {
 
         {product.beforeAndAfterImages.length > 0 && (
           <div className="mb-16 w-full">
-            <p className="font-semibold text-xl mb-4">Antes y después</p>
+            <p className="font-semibold text-lg mb-4">Antes y después</p>
             <Carousel hasControls>
               {product.beforeAndAfterImages.map((index: number) => (
                 <div
@@ -127,7 +127,7 @@ export default function HightLightedProduct() {
 
         {professionals.length > 0 && (
           <>
-            <p className="font-semibold text-xl mb-4">Nuestro equipo médico</p>
+            <p className="font-semibold text-lg mb-4">Nuestro equipo médico</p>
             <ul className="mb-16">
               {professionals
                 .filter(professional => professional.professionalType === 1)
