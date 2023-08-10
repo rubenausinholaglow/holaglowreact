@@ -7,6 +7,7 @@ import { Flex } from 'components/Layouts/Layouts';
 import Script from 'next/script';
 
 import { AlmaProps } from '../../../../../utils/props';
+import { usePaymentList } from '../payments/usePaymentList';
 
 export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
   const [scriptData, setScriptData] = useState<string | null>(null);
@@ -14,7 +15,9 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
   let resultValue = '';
   let installments = -1;
 
+  const totalAmount = usePaymentList(state => state.totalAmount);
   useEffect(() => {
+    console.log(totalAmount);
     function handleAlmaModalClosed(event: Event) {
       const data = event;
       const text = (data.srcElement! as any).getElementsByClassName(
@@ -39,7 +42,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
 
   const script = `
       const scriptTag = document.createElement("script");
-      scriptTag.src ='../scripts/Alma/widget.js';
+      scriptTag.src ='https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.umd.js';
       document.head.appendChild(scriptTag);
       scriptTag.addEventListener('load', function() {
         var widgets = Alma.Widgets.initialize(
@@ -90,7 +93,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
         <link
           rel="stylesheet"
           type="text/css"
-          href="../styles/Alma/widgets.min.css"
+          href="https://cdn.jsdelivr.net/npm/@alma/widgets@3.x.x/dist/widgets.min.css"
         />
         <section id="payment-plans"></section>
         {scriptData && (

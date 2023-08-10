@@ -26,7 +26,7 @@ export const PaymentModule = () => {
   const handleOnButtonPaymentClick = (paymentKey: any) => {
     setOnLoad(true);
     if (activePaymentMethod === paymentKey) {
-      setOnLoad(true);
+      setOnLoad(false);
       setActivePaymentMethod('');
     } else {
       setActivePaymentMethod(paymentKey);
