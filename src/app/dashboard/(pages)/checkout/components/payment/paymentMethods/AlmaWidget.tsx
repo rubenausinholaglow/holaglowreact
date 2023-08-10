@@ -13,9 +13,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
   let resultValue = '';
   let installments = -1;
 
-  const totalAmount = usePaymentList(state => state.totalAmount);
   useEffect(() => {
-    console.log(totalAmount);
     function handleAlmaModalClosed(event: Event) {
       const data = event;
       const text = (data.srcElement! as any).getElementsByClassName(
@@ -32,7 +30,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
     return () => {
       document.removeEventListener('almaModalClosed', handleAlmaModalClosed);
     };
-  }, [totalAmount]);
+  }, []);
 
   if (!isNaN(parsedValue)) {
     resultValue = Math.round(parsedValue * 100).toString();
