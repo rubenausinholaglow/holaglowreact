@@ -8,6 +8,7 @@ import {
 import { ModalBackground } from 'components/Modals/Modal';
 
 import { IsMobile } from './Breakpoint';
+import Header from './Header';
 
 export default function MainLayout({
   children,
@@ -36,6 +37,7 @@ export default function MainLayout({
           setIsModalOpen(false);
         }}
       />
+      <Header />
       {children}
     </>
   );

@@ -7,7 +7,7 @@ import {
 } from 'app/stores/globalStore';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
-import { SvgArrow, SvgCross, SvgHolaglow, SvgUserOctagon } from 'icons/IconsDs';
+import { SvgCross, SvgHolaglow, SvgMenu, SvgUserOctagon } from 'icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import MobileNavigation from './MobileNavigation';
@@ -111,17 +111,31 @@ export default function Header() {
                   <span className="hidden md:block ml-2">Mi espacio glow</span>
                 </Flex>
               </Button>
-              {isMobile ? (
+              {isMobile && !isMobileNavVisible && (
+                <SvgMenu
+                  height={24}
+                  width={24}
+                  className="ml-2"
+                  onClick={() => {
+                    setIsMobileNavVisible(true);
+                    setIsMainScrollEnabled(false);
+                  }}
+                />
+              )}
+
+              {isMobile && isMobileNavVisible && (
                 <SvgCross
                   height={24}
                   width={24}
                   className="ml-2"
                   onClick={() => {
-                    setIsMobileNavVisible(!isMobileNavVisible);
-                    setIsMainScrollEnabled(!isMobileNavVisible);
+                    setIsMobileNavVisible(false);
+                    setIsMainScrollEnabled(true);
                   }}
                 />
-              ) : (
+              )}
+
+              {!isMobile && (
                 <Button type="tertiary" size="md" className="ml-2">
                   <Flex layout="row-center">
                     <span className="font-semibold">Reserva Cita</span>

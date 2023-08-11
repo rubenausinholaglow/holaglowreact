@@ -37,7 +37,7 @@ export const useGlobalStore = create<GlobalStore & GlobalActions>(set => ({
   isModalOpen: false,
   isMainScrollEnabled: true,
   setIsModalOpen: (value: boolean) => {
-    set({ isModalOpen: value, isMainScrollEnabled: !value });
+    set({ isModalOpen: value });
   },
   setIsMainScrollEnabled: (value: boolean) => {
     set({ isMainScrollEnabled: value });

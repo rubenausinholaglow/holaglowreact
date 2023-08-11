@@ -16,7 +16,7 @@ export default function Html({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`max-h-screen h-full bg-white text-hg-black overflow-hidden ${
+      className={`max-h-screen h-full bg-white text-hg-black ${
         isModalOpen || !isMainScrollEnabled
           ? 'overflow-hidden'
           : 'overflow-auto'

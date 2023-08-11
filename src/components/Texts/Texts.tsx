@@ -21,7 +21,11 @@ export const Title = ({
   };
 
   const HtmlComponent = as;
-  const styles = twMerge(`text-${STYLES[size]} font-${weight} ${className}`);
+  const styles = twMerge(
+    `${STYLES[size]} font-${weight} ${className} olakease`
+  );
+
+  console.log(styles);
 
   return <HtmlComponent className={styles}>{children}</HtmlComponent>;
 };
