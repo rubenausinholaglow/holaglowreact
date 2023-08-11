@@ -6,11 +6,13 @@ import { twMerge } from 'tailwind-merge';
 export default function Accordion({
   trigger,
   triggerStyles,
+  iconSize = 14,
   className,
   children,
 }: {
   trigger: string;
   triggerStyles?: string;
+  iconSize?: number;
   className?: string;
   children: ReactNode;
 }) {
@@ -29,13 +31,11 @@ export default function Accordion({
             )}
           >
             {trigger}
-            <div className="shrink-0">
-              <SvgAdd
-                height={18}
-                width={18}
-                className="shrink-0 transition-transform origin-center rotate-45 group-radix-state-open:rotate-90 group-radix-state-open:duration-200"
-              />
-            </div>
+            <SvgAdd
+              height={iconSize}
+              width={iconSize}
+              className="transition-transform origin-center rotate-45 group-radix-state-open:rotate-90 group-radix-state-open:duration-200 mr-1"
+            />
           </AccordionPrimitive.Trigger>
         </AccordionPrimitive.Header>
         <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">

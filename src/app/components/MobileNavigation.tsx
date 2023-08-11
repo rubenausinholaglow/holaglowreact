@@ -21,7 +21,7 @@ export default function MobileNavigation({
     >
       <Container className="border-b border-hg-black py-8">
         <Flex layout="col-left" className="text-xl font-semibold">
-          <ul className="flex flex-col gap-8 mb-4">
+          <ul className="flex flex-col gap-8 mb-8">
             <li>Labios</li>
             <li>Facial</li>
             <li>Piel</li>
