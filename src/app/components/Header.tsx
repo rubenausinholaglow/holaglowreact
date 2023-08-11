@@ -7,7 +7,13 @@ import {
 } from 'app/stores/globalStore';
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
-import { SvgCross, SvgHolaglow, SvgMenu, SvgUserOctagon } from 'icons/IconsDs';
+import {
+  SvgArrow,
+  SvgCross,
+  SvgHolaglow,
+  SvgMenu,
+  SvgUserOctagon,
+} from 'icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import MobileNavigation from './MobileNavigation';
