@@ -1,7 +1,5 @@
 import './globals.css';
 
-import { Children } from 'react';
-
 import App from './components/App';
 
 export const metadata = {

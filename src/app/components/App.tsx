@@ -1,13 +1,13 @@
 'use client';
 
+import { ReactNode } from 'react';
 import { poppins } from 'app/fonts';
 import { useGlobalStore } from 'app/stores/globalStore';
 import Head from 'next/head';
 
 import { Breakpoint } from './Breakpoint';
-import MainLayout from './MainLayout';
 
-export default function Html({ children }: { children: React.ReactNode }) {
+export default function Html({ children }: { children: ReactNode }) {
   const isModalOpen = useGlobalStore(state => state.isModalOpen);
   const isMainScrollEnabled = useGlobalStore(
     state => state.isMainScrollEnabled
@@ -30,7 +30,7 @@ export default function Html({ children }: { children: React.ReactNode }) {
       </Head>
       <body className={poppins.className}>
         <Breakpoint />
-        <MainLayout>{children}</MainLayout>
+        {children}
       </body>
     </html>
   );

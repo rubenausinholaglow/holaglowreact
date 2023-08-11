@@ -102,7 +102,6 @@ export default function Header() {
               <Button
                 href="https://holaglow.com"
                 type="transparent"
-                size="md"
                 style={{
                   paddingLeft: isMobile ? '6px' : undefined,
                   paddingRight: isMobile ? '6px' : undefined,
@@ -144,12 +143,8 @@ export default function Header() {
               {!isMobile && (
                 <Button type="tertiary" size="md" className="ml-2">
                   <Flex layout="row-center">
-                    <span className="font-semibold">Reserva Cita</span>
-                    <SvgArrow
-                      height={24}
-                      width={24}
-                      className="rotate-180 ml-2"
-                    />
+                    <span className="font-semibold">Reservar Cita</span>
+                    <SvgArrow height={18} width={18} className="ml-2" />
                   </Flex>
                 </Button>
               )}
