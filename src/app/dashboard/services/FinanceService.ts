@@ -25,6 +25,11 @@ export default class FinanceService {
   }
 
   static async createPayment(createPayment: CreatePayment) {
+    const updatedCreatePayment: CreatePayment = {
+      userId: createPayment.userId,
+      paymentMethod: createPayment.paymentMethod,
+      amount: createPayment.amount * 100,
+    };
     try {
       const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment`;
       const res = await fetch(url, {
@@ -32,7 +37,7 @@ export default class FinanceService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(createPayment),
+        body: JSON.stringify(updatedCreatePayment),
       });
 
       if (res.ok) {

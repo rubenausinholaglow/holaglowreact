@@ -92,7 +92,7 @@ export default function PaymentInput(props: Props) {
     const GuidUser = localStorage.getItem('id') || '';
 
     const paymentRequestApi = {
-      amount: amount * 100,
+      amount: amount,
       userId: GuidUser,
       paymentMethod: props.paymentMethod,
     };
@@ -100,7 +100,45 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   };
 
-  if (props.paymentBank == PaymentBank.None)
+  const renderFinance = () => {
+    return (
+      <Flex layout="col-center">
+        <button
+          className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
+          type="button"
+          onClick={() => setShowAlma(!showAlma)}
+        >
+          Ver Financiación
+        </button>
+        {showAlma ? (
+          <>
+            <br />
+            <AlmaWidget
+              amountFinance={inputValue}
+              onUrlPayment={handleUrlPayment}
+            ></AlmaWidget>
+          </>
+        ) : (
+          <></>
+        )}
+      </Flex>
+    );
+  };
+
+  const renderPayment = () => {
+    return (
+      <Flex layout="col-center">
+        <button
+          className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
+          type="submit"
+        >
+          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
+        </button>
+      </Flex>
+    );
+  };
+
+  const renderPaymentForm = () => {
     return (
       <form onSubmit={handleSubmit(handleSubmitForm)}>
         <Flex layout="row-left" className="items-start">
@@ -123,62 +161,13 @@ export default function PaymentInput(props: Props) {
               />
             )}
           />
-          <Flex layout="col-center">
-            <button
-              className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
-              type="submit"
-            >
-              {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
-            </button>
-          </Flex>
+          {props.paymentBank != PaymentBank.None
+            ? renderFinance()
+            : renderPayment()}
         </Flex>
       </form>
     );
-  else
-    return (
-      <form onSubmit={handleSubmit(handleSubmitForm)}>
-        <Flex layout="row-left" className="items-start">
-          <Controller
-            name="number"
-            control={control}
-            render={({ field, fieldState }) => (
-              <input
-                placeholder="Introduce importe a financiar"
-                className="border border-hg-darkMalva rounded px-2 py-1 mt-2 text-black w-full mb-6"
-                type="number"
-                {...field}
-                onChange={e => {
-                  setInputValue(e.target.value);
-                  const newValue = Math.min(
-                    parseInt(e.target.value),
-                    parseFloat(MaxValue.toFixed(2))
-                  );
-                  field.onChange(newValue);
-                }}
-              />
-            )}
-          />
-          <Flex layout="col-center">
-            <button
-              className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
-              type="button"
-              onClick={() => setShowAlma(!showAlma)}
-            >
-              Ver Financiación
-            </button>
-            {showAlma ? (
-              <>
-                <br />
-                <AlmaWidget
-                  amountFinance={inputValue}
-                  onUrlPayment={handleUrlPayment}
-                ></AlmaWidget>
-              </>
-            ) : (
-              <></>
-            )}
-          </Flex>
-        </Flex>
-      </form>
-    );
+  };
+
+  return renderPaymentForm();
 }

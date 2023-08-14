@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function PaymentItem({ paymentRequest }: Props) {
-  const { removePayment } = usePaymentList();
+  // const { removePayment } = usePaymentList();
   return (
     <li className="text-hg-black">
       <Flex layout="row-left">
@@ -24,12 +24,6 @@ export default function PaymentItem({ paymentRequest }: Props) {
           </span>
         ) : null}
         <span className="font-bold">{`- ${paymentRequest.amount}€`}</span>
-        <SvgCircle
-          width={30}
-          height={30}
-          fill={HOLAGLOW_COLORS['darkMalva']}
-          onClick={() => removePayment(paymentRequest)}
-        />
       </Flex>
     </li>
   );

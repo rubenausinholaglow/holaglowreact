@@ -118,9 +118,6 @@ export default function Page() {
   const filterProducts = () => {
     if (!isEmpty(products)) {
       return products.filter(product => {
-        if (product.type == 4) {
-          return false;
-        }
         if (product.price <= 0) {
           return false;
         }
