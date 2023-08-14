@@ -1,15 +1,20 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
 
 import { AlmaProps } from '../../../../../utils/props';
 import { usePaymentList } from '../payments/usePaymentList';
 
-export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
+export const AlmaWidget: React.FC<AlmaProps> = ({
+  amountFinance,
+  onUrlPayment,
+}) => {
   const parsedValue = parseFloat(amountFinance);
+  const [isLoading, setIsLoading] = useState(false);
   let resultValue = '';
   let installments = -1;
 
@@ -89,6 +94,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
     `;
 
   const handleClick = async (amountFinance: string) => {
+    setIsLoading(true);
     const parsedValue = parseFloat(amountFinance);
     let resultValue = '';
 
@@ -108,6 +114,8 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
       userId: GuidUser,
     } as InitializePayment;
     const urlPayment = await FinanceService.initializePayment(data);
+    onUrlPayment(urlPayment.id);
+    setIsLoading(false);
   };
 
   return (
@@ -120,7 +128,9 @@ export const AlmaWidget: React.FC<AlmaProps> = ({ amountFinance }) => {
         />
         <section id="payment-plans"></section>
         <Flex layout="row-left">
-          <Button onClick={() => handleClick(amountFinance)}>Pagar</Button>
+          <Button onClick={async () => await handleClick(amountFinance)}>
+            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
+          </Button>
         </Flex>
       </Flex>
     </Flex>

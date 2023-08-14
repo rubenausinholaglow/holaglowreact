@@ -3,11 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
+import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
+import { INITIAL_STATE } from '@utils/constants';
 import * as config from '@utils/textConstants';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import * as utils from '@utils/validators';
+import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { usePaymentList } from 'app/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from './RegistrationForm';
@@ -50,6 +54,9 @@ export default function Page() {
     localStorage.removeItem('ClinicProfessionalId');
     localStorage.removeItem('id');
     localStorage.removeItem('flowwwToken');
+    localStorage.removeItem('BudgetId');
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
   }, []);
 
   const handleCheckUser = async () => {
@@ -103,6 +110,7 @@ export default function Page() {
       await ScheduleService.getClinicSchedule(flowwwToken).then(data => {
         if (data != null) {
           localStorage.setItem('ClinicId', data.clinic.id);
+          localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
           localStorage.setItem(
             'ClinicProfessionalId',
             data.clinicProfessional.id

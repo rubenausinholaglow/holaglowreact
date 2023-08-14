@@ -26,9 +26,7 @@
       "@interface/*": ["./app/dashboard/interface/*"],
       "@services/*": ["./app/dashboard/services/*"],
       "@utils/*": ["./app/dashboard/utils/*"],
-      "@Alma/*": [
-        "./app/dashboard/pages/checkout/payment/paymentMethods/Alma/*"
-      ]
+      "@payment/*": ["./app/dashboard/(pages)/checkout/payment/*"]
     },
     "checkJs": true,
     "types": ["node"]

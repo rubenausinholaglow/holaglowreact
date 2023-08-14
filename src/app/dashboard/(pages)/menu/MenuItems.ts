@@ -17,10 +17,4 @@ export const menuItems = [
     title: 'Agendar Cita',
     link: '/dashboard/appointments',
   },
-  {
-    iconSrc: '/images/dashboard/menu-icons/3d_simulator.png',
-    altText: 'Volver',
-    title: 'Volver',
-    link: '/dashboard',
-  },
 ];

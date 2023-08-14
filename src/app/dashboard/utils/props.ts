@@ -73,4 +73,5 @@ export interface CustomButtonFilter {
 
 export interface AlmaProps {
   amountFinance: string;
+  onUrlPayment: (url: string) => void;
 }

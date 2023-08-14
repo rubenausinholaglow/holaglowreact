@@ -9,7 +9,7 @@ import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment
 import { Button } from 'components/Buttons/Buttons';
 import { Container, Flex } from 'components/Layouts/Layouts';
 import { Title } from 'components/Texts';
-import { SvgAngleDown } from 'icons/Icons';
+import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
 
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
@@ -22,6 +22,7 @@ const Page = () => {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
@@ -50,7 +51,8 @@ const Page = () => {
       })),
     };
     try {
-      await budgetService.createBudget(budget);
+      const data = await budgetService.createBudget(budget);
+      localStorage.setItem('BudgetId', data.id);
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
     }
@@ -96,12 +98,20 @@ const Page = () => {
                 <Button
                   className="w-full"
                   size="lg"
-                  onClick={() => {
-                    handleFinalize();
+                  onClick={async () => {
+                    setIsLoading(true);
+                    if (!localStorage.getItem('BudgetId') || '') {
+                      await handleFinalize();
+                    }
+                    setIsLoading(false);
                     setShowPaymentButtons(!showPaymentButtons);
                   }}
                 >
-                  Finalizar
+                  {isLoading ? (
+                    <SvgSpinner height={24} width={24} />
+                  ) : (
+                    'Finalizar'
+                  )}
                 </Button>
                 <Button
                   className="w-full"

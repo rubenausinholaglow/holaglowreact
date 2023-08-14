@@ -18,3 +18,8 @@ export interface BudgetProduct {
   priceDiscount: number;
   percentageDiscount: number;
 }
+
+export interface TicketBudget extends Budget {
+  id: string;
+  DiscountAmount: string;
+}

@@ -46,9 +46,7 @@ export const budgetService = {
         Bugsnag.notify(ERROR_CREATE_BUDGET);
         throw new Error(ERROR_CREATE_BUDGET);
       }
-
-      const data = await response.json();
-      return data;
+      return true;
     } catch (error) {
       Bugsnag.notify(error + ERROR_CREATE_BUDGET);
       throw new Error(ERROR_CREATE_BUDGET);
