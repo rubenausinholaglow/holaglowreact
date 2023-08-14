@@ -42,7 +42,7 @@ export default class FinanceService {
         return '';
       }
     } catch (error: any) {
-      console.log(error);
+      Bugsnag.notify(error);
     }
   }
 }

@@ -123,7 +123,6 @@ export const PaymentModule = () => {
     setIsLoading(true);
     try {
       const result = await sendTicket();
-      console.log(result);
       if (result) {
         localStorage.removeItem('BudgetId');
         usePaymentList.setState(INITIAL_STATE_PAYMENT);
