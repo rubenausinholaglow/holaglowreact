@@ -101,7 +101,7 @@ export default function HightLightedProduct() {
             </span>
           </p>
           <p className="mb-4 text-hg-darkMalva">{product.description}</p>
-          <p>{product?.detail}</p>
+          <div dangerouslySetInnerHTML={{ __html: product?.detail }} />
         </Flex>
 
         {product.beforeAndAfterImages.length > 0 && (

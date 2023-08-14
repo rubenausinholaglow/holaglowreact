@@ -70,3 +70,8 @@ export interface CustomButtonFilter {
   onClick: (id: string, isSelected: boolean, tag: string) => void;
   value: string;
 }
+
+export interface AlmaProps {
+  amountFinance: string;
+  onUrlPayment: (url: string) => void;
+}
