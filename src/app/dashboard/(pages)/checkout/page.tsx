@@ -48,7 +48,6 @@ const Page = () => {
         price: CartItem.price,
         percentageDiscount: CartItem.percentageDiscount,
         priceDiscount: CartItem.priceDiscount,
-        quantity: CartItem.quantity,
         name: CartItem.description,
       })),
     };

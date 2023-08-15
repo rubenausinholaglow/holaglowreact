@@ -17,7 +17,6 @@ export interface BudgetProduct {
   price: number;
   priceDiscount: number;
   percentageDiscount: number;
-  quantity: number;
   name: string;
 }
 

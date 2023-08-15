@@ -177,7 +177,6 @@ export default function HightLightedProduct() {
           }}
           quantity={getQuantityOfProduct(product)}
         />
-        aqui
         <Button
           style="primary"
           size="lg"

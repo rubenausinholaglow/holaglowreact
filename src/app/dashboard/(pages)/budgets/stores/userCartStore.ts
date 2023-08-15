@@ -7,11 +7,7 @@ import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-function calculateUpdatedCart(
-  cart: CartItem[],
-  product: Product,
-  qtty: number
-): CartItem[] {
+function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   return [
     ...cart,
     {
@@ -20,7 +16,6 @@ function calculateUpdatedCart(
       priceDiscount: 0,
       priceWithDiscount: Number(product.price),
       uniqueId: createUniqueId(),
-      quantity: qtty,
     },
   ];
 }
@@ -64,11 +59,7 @@ export const useCartStore = create(
       professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: CartItem) => {
         const cart = get().cart;
-        const updatedCart = calculateUpdatedCart(
-          cart,
-          product,
-          product.quantity
-        );
+        const updatedCart = calculateUpdatedCart(cart, product);
 
         set(state => ({
           cart: updatedCart,
@@ -131,26 +122,10 @@ export const useCartStore = create(
       },
       removeSingleProduct: (product: CartItem) => {
         const cart = get().cart;
-        const cartItem = cart.find(item => item.id === product.id);
+        const indexToRemove = cart.findIndex(item => item.id === product.id);
 
-        if (cartItem && cartItem.quantity > 1) {
-          const updatedCart = cart.map(item => {
-            if (item.id === product.id) {
-              return {
-                ...item,
-                quantity: item.quantity - 1,
-              };
-            }
-            return item;
-          });
-
-          set(state => ({
-            cart: updatedCart,
-            totalItems: state.totalItems - 1,
-            totalPrice: state.totalPrice - cartItem.priceWithDiscount,
-          }));
-        } else if (cartItem) {
-          const indexToRemove = cart.findIndex(item => item.id === product.id);
+        if (indexToRemove !== -1) {
+          const cartItem = cart[indexToRemove];
           const updatedCart = [
             ...cart.slice(0, indexToRemove),
             ...cart.slice(indexToRemove + 1),
