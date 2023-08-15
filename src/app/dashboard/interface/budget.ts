@@ -17,6 +17,8 @@ export interface BudgetProduct {
   price: number;
   priceDiscount: number;
   percentageDiscount: number;
+  quantity: number;
+  name: string;
 }
 
 export interface TicketBudget extends Budget {

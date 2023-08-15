@@ -7,7 +7,11 @@ import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
+function calculateUpdatedCart(
+  cart: CartItem[],
+  product: Product,
+  qtty: number
+): CartItem[] {
   return [
     ...cart,
     {
@@ -16,6 +20,7 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
       priceDiscount: 0,
       priceWithDiscount: Number(product.price),
       uniqueId: createUniqueId(),
+      quantity: qtty,
     },
   ];
 }
@@ -44,6 +49,8 @@ function calculateCartItemDiscount(
   });
 }
 
+export type Operation = 'decrease' | 'increase';
+
 export const useCartStore = create(
   persist<State & Actions>(
     (set, get) => ({
@@ -57,7 +64,11 @@ export const useCartStore = create(
       professionals: INITIAL_STATE.professionals,
       addItemToCart: (product: CartItem) => {
         const cart = get().cart;
-        const updatedCart = calculateUpdatedCart(cart, product);
+        const updatedCart = calculateUpdatedCart(
+          cart,
+          product,
+          product.quantity
+        );
 
         set(state => ({
           cart: updatedCart,
@@ -106,6 +117,51 @@ export const useCartStore = create(
         set(() => ({
           professionals: professionals,
         }));
+      },
+      getQuantityOfProduct: (product: Product) => {
+        const cart = get().cart;
+        const productCount = cart.reduce((total, cartItem) => {
+          if (cartItem.id === product.id) {
+            return total + 1;
+          }
+          return total;
+        }, 0);
+
+        return productCount;
+      },
+      removeSingleProduct: (product: CartItem) => {
+        const cart = get().cart;
+        const cartItem = cart.find(item => item.id === product.id);
+
+        if (cartItem && cartItem.quantity > 1) {
+          const updatedCart = cart.map(item => {
+            if (item.id === product.id) {
+              return {
+                ...item,
+                quantity: item.quantity - 1,
+              };
+            }
+            return item;
+          });
+
+          set(state => ({
+            cart: updatedCart,
+            totalItems: state.totalItems - 1,
+            totalPrice: state.totalPrice - cartItem.priceWithDiscount,
+          }));
+        } else if (cartItem) {
+          const indexToRemove = cart.findIndex(item => item.id === product.id);
+          const updatedCart = [
+            ...cart.slice(0, indexToRemove),
+            ...cart.slice(indexToRemove + 1),
+          ];
+
+          set(state => ({
+            cart: updatedCart,
+            totalItems: state.totalItems - 1,
+            totalPrice: state.totalPrice - cartItem.priceWithDiscount,
+          }));
+        }
       },
     }),
     {

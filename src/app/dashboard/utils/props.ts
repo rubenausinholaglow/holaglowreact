@@ -53,6 +53,7 @@ export interface CustomButtonFilterProps {
   tag: string;
   onClick: (id: string, tag: string) => void;
   value: string;
+  selected: boolean;
 }
 
 export interface FilterPageProps {
