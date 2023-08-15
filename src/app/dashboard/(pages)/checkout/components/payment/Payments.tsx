@@ -88,7 +88,7 @@ export const PaymentModule = () => {
       reference: '',
       userId: GuidUser,
       clientFlowwwToken: ClientFlowToken,
-      clinicFlowwwId: '3',
+      clinicFlowwwId: ClinicFlowwwId,
       professional: '',
       budget: finalBudget,
       paymentProductRequest: paymentList.map(payItem => ({
