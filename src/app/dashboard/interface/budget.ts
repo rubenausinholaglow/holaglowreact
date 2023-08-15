@@ -24,3 +24,8 @@ export interface TicketBudget extends Budget {
   id: string;
   DiscountAmount: string;
 }
+
+export interface TicketBudget extends Budget {
+  id: string;
+  DiscountAmount: string;
+}
