@@ -27,12 +27,6 @@ const Page = () => {
     <>
       {username && (
         <Container>
-          <Link href="/dashboard">
-            <Flex layout="row-left">
-              <SvgArrowSmallLeft height={40} width={40} className="pr-2" />
-              Volver
-            </Flex>
-          </Link>
           <Flex layout="col-center">
             <p className="font-bold text-xl mb-8">
               Hola {username} ¿Qué deseas hacer?
