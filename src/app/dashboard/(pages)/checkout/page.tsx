@@ -67,9 +67,9 @@ const Page = () => {
   return (
     <CheckHydration>
       <Container>
-        <Title size="2xl" className="text-left mb-4">
+        <Text size="xl" className="text-left font-semibold mb-4">
           Resumen
-        </Title>
+        </Text>
 
         <Flex layout="row-left" className="items-start">
           <ul className="w-3/4 shrink-0">
@@ -122,7 +122,7 @@ const Page = () => {
                   </Button>
                   <Button
                     className="w-full"
-                    size="lg"
+                    size="md"
                     href="https://agenda.holaglow.com/schedule?mode=dashboard"
                     style="tertiary"
                   >
