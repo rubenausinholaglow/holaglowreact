@@ -6,7 +6,7 @@ import Products from './Products';
 import PromoCode from './PromoCode';
 import Simulation from './Simulation';
 
-const fetchBudgetData = async (id: number) => {
+const fetchBudgetData = async (id: string) => {
   try {
     const budgetResponse = await fetch(
       `${process.env.NEXT_PUBLIC_CONTACTS_API}budget?id=${id}`,
@@ -31,8 +31,13 @@ export default async function Budget({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const budgetID = Number(searchParams.id);
-  const budgetData = await fetchBudgetData(budgetID);
+  const budgetID = searchParams.id;
+
+  let budgetData;
+
+  if (typeof budgetID === 'string') {
+    budgetData = await fetchBudgetData(budgetID);
+  }
 
   const {
     clinicInfo = null,
