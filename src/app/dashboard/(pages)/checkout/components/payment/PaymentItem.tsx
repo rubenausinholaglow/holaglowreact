@@ -1,6 +1,6 @@
 import { PaymentProductRequest } from '@interface/payment';
 import { getPaymentBankText, getPaymentMethodText } from '@utils/utils';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 
 interface Props {
   paymentRequest: PaymentProductRequest;
