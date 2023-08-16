@@ -1,4 +1,5 @@
 import './globals.css';
+import './../../public/styles/Alma/widgets.min.css';
 
 import { Poppins } from 'next/font/google';
 

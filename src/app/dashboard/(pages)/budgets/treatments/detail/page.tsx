@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { CartItem, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { handleGoBack } from '@utils/utils';
@@ -21,8 +22,8 @@ const Page = () => {
           const data = await ProductService.getProduct(id);
           setProduct(data);
         }
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        Bugsnag.notify(error);
       }
     };
 

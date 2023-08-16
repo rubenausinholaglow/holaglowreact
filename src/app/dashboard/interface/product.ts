@@ -14,6 +14,7 @@ export interface Product {
   durationMin: number;
   durationMax: number;
   beforeAndAfterImages: any;
+  type: ProductType;
 }
 
 export const emptyProduct: Product = {} as Product;
@@ -28,4 +29,12 @@ export interface CartItem extends Product {
 export interface Pain {
   name: string;
   value: number;
+}
+
+export enum ProductType {
+  Others,
+  Esthetic,
+  Medical,
+  Product,
+  Voucher,
 }

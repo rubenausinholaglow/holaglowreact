@@ -62,6 +62,7 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
                     onClick={handleButtonClick}
                     value={btn.value}
                     tag={btn.tag}
+                    selected={btn.selected}
                   />
                 ))}
               </Flex>

@@ -1,6 +1,6 @@
 import { State } from '@interface/cart';
 //import { Professional } from '@interface/clinic';
-import { Product } from '@interface/product';
+import { Product, ProductType } from '@interface/product';
 
 const emptyProduct: Product = {
   id: '',
@@ -16,6 +16,7 @@ const emptyProduct: Product = {
   durationMin: 0,
   durationMax: 0,
   beforeAndAfterImages: [],
+  type: ProductType.Others,
 };
 
 export const INITIAL_STATE: State = {

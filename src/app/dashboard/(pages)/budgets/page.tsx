@@ -30,6 +30,7 @@ export default function Page() {
   const [filterPain, setFilterPain] = useState<number[]>([]);
   const [filterText, setFilterText] = useState('');
   const [filterClinic, setFilterClinic] = useState<string[]>([]);
+  const [filterType, setFilterType] = useState<number[]>([2, 3]);
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
   >([]);
@@ -62,6 +63,9 @@ export default function Page() {
       case 'Category':
         handleFilterByProperty(parseInt(id), 'painsCategory');
         break;
+      case 'Type':
+        handleFilterByType(parseInt(id));
+        break;
       case 'Clinic':
         applyClinicFilter(id);
         break;
@@ -69,6 +73,13 @@ export default function Page() {
         setFilterText(inputText);
         break;
     }
+  };
+
+  const handleFilterByType = (id: number) => {
+    const updatedFilterType = filterType.includes(id)
+      ? filterType.filter(t => t !== id)
+      : [...filterType, id];
+    setFilterType(updatedFilterType);
   };
 
   const handleFilterByProperty = (id: number, property: keyof Product) => {
@@ -117,6 +128,17 @@ export default function Page() {
 
   const filterProducts = () => {
     if (!isEmpty(products)) {
+      if (
+        filterZones.length === 0 &&
+        filterPain.length === 0 &&
+        priceRanges.length === 0 &&
+        filterText === '' &&
+        filterClinic.length === 0 &&
+        filterType.length === 0
+      ) {
+        return [];
+      }
+
       return products.filter(product => {
         if (product.price <= 0) {
           return false;
@@ -153,6 +175,13 @@ export default function Page() {
           if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
             return false;
           }
+        }
+        if (
+          filterType.length > 0 &&
+          !filterType.includes(product.type) &&
+          !(filterType.includes(2) && product.type === 1)
+        ) {
+          return false;
         }
         return true;
       });
