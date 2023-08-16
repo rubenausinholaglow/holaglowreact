@@ -30,6 +30,7 @@ export default function PaymentInput(props: Props) {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
 
+
   let productsPriceTotal = 0;
   if (cart) {
     productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
@@ -73,6 +74,7 @@ export default function PaymentInput(props: Props) {
   const handleUrlPayment = async (urlPayment: string) => {
     const amount = parseFloat(inputValue);
     const GuidUser = localStorage.getItem('id') || '';
+
     const paymentRequestApi = {
       amount: amount,
       userId: GuidUser,
