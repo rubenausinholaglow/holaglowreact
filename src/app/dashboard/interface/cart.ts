@@ -1,4 +1,3 @@
-import { Operation } from '../(pages)/budgets/stores/userCartStore';
 import { Professional } from './clinic';
 import { CartItem, emptyProduct, Product } from './product';
 

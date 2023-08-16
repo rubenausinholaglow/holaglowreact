@@ -31,11 +31,6 @@ export default function PaymentInput(props: Props) {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
 
-  let productsPriceTotal = 0;
-  if (cart) {
-    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
-  }
-
   let productsPriceTotalWithDiscounts = 0;
 
   if (cart) {
@@ -74,6 +69,8 @@ export default function PaymentInput(props: Props) {
   const handleUrlPayment = async (urlPayment: string) => {
     const amount = parseFloat(inputValue);
     const GuidUser = localStorage.getItem('id') || '';
+
+    setUrlPayment(urlPayment);
 
     const paymentRequestApi = {
       amount: amount,
@@ -157,6 +154,7 @@ export default function PaymentInput(props: Props) {
                     parseFloat(MaxValue.toFixed(2))
                   );
                   field.onChange(newValue);
+                  setInputValue(newValue.toString());
                 }}
               />
             )}

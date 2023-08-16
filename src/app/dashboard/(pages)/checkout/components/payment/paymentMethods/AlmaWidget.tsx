@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
@@ -7,7 +8,6 @@ import { Flex } from 'components/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
 import { AlmaProps } from '../../../../../utils/props';
-import { usePaymentList } from '../payments/usePaymentList';
 
 export const AlmaWidget: React.FC<AlmaProps> = ({
   amountFinance,
@@ -20,12 +20,16 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
 
   useEffect(() => {
     function handleAlmaModalClosed(event: Event) {
-      const data = event;
-      const text = (data.srcElement! as any).getElementsByClassName(
-        'alma-eligibility-modal-active-option'
-      )[0].innerText;
-
-      installments = Number(text!.replace('x', ''));
+      const target = event.target as HTMLElement | null;
+      if (target) {
+        const almaModal = target.closest(
+          '.alma-eligibility-modal-active-option'
+        ) as HTMLElement;
+        if (almaModal) {
+          const text = almaModal.innerText;
+          installments = Number(text.replace('x', ''));
+        }
+      }
     }
 
     const toExecute = new Function(script);
@@ -95,37 +99,49 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
 
   const handleClick = async (amountFinance: string) => {
     setIsLoading(true);
+
     const parsedValue = parseFloat(amountFinance);
     let resultValue = '';
 
     if (!isNaN(parsedValue)) {
       resultValue = Math.round(parsedValue * 100).toString();
     }
-    if (installments == -1) {
-      const text = document.getElementsByClassName(
+
+    let installmentsValue = installments;
+
+    if (installmentsValue === -1) {
+      const almaPaymentPlans = document.getElementsByClassName(
         'alma-payment-plans-active-option'
-      )[0].textContent;
-      installments = Number(text!.replace('x', ''));
+      )[0];
+      if (almaPaymentPlans) {
+        const text = almaPaymentPlans.textContent;
+        if (text) {
+          installmentsValue = Number(text.replace('x', ''));
+        }
+      }
     }
+
     const GuidUser = localStorage.getItem('id') || '';
-    const data = {
+    const data: InitializePayment = {
       amount: Number(resultValue),
-      installments: installments,
+      installments: installmentsValue,
       userId: GuidUser,
-    } as InitializePayment;
-    const urlPayment = await FinanceService.initializePayment(data);
-    onUrlPayment(urlPayment.id);
-    setIsLoading(false);
+    };
+
+    try {
+      const urlPayment = await FinanceService.initializePayment(data);
+      onUrlPayment(urlPayment.id);
+    } catch (error) {
+      // Handle the error appropriately
+      console.error('Error initializing payment:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Flex layout="col-center" className="relative">
       <Flex layout="row-center">
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="../styles/Alma/widgets.min.css"
-        />
         <section id="payment-plans"></section>
         <Flex layout="row-left">
           <Button onClick={async () => await handleClick(amountFinance)}>
