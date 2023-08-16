@@ -24,12 +24,16 @@ export default function PaymentInput(props: Props) {
   const { addPaymentToList } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [urlPayment, setUrlPayment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
+
+  let productsPriceTotal = 0;
+  if (cart) {
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
+  }
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -58,7 +62,7 @@ export default function PaymentInput(props: Props) {
           amount: paymentRequestApi.amount,
           method: props.paymentMethod,
           bank: props.paymentBank,
-          paymentReference: urlPayment,
+          paymentReference: paymentRequestApi.referenceId,
           id: response,
         };
         addPaymentToList(paymentRequest);
@@ -69,13 +73,11 @@ export default function PaymentInput(props: Props) {
   const handleUrlPayment = async (urlPayment: string) => {
     const amount = parseFloat(inputValue);
     const GuidUser = localStorage.getItem('id') || '';
-
-    setUrlPayment(urlPayment);
-
     const paymentRequestApi = {
       amount: amount,
       userId: GuidUser,
       paymentMethod: props.paymentMethod,
+      referenceId: urlPayment,
     };
     createPayment(paymentRequestApi);
   };
@@ -92,6 +94,7 @@ export default function PaymentInput(props: Props) {
       amount: amount,
       userId: GuidUser,
       paymentMethod: props.paymentMethod,
+      referenceId: '',
     };
     createPayment(paymentRequestApi);
     setIsLoading(false);

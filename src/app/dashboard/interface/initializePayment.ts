@@ -10,4 +10,5 @@ export interface CreatePayment {
   userId: string;
   paymentMethod: PaymentMethod;
   amount: number;
+  referenceId: string;
 }
