@@ -53,6 +53,7 @@ export interface CustomButtonFilterProps {
   tag: string;
   onClick: (id: string, tag: string) => void;
   value: string;
+  selected: boolean;
 }
 
 export interface FilterPageProps {
@@ -69,4 +70,9 @@ export interface CustomButtonFilter {
   tag: string;
   onClick: (id: string, isSelected: boolean, tag: string) => void;
   value: string;
+}
+
+export interface AlmaProps {
+  amountFinance: string;
+  onUrlPayment: (url: string) => void;
 }

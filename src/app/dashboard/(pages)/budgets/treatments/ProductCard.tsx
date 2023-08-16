@@ -129,7 +129,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
             Seleccionar
           </Button>
         )}
-
         {showDiscountForm && (
           <>
             <ProductDiscountForm

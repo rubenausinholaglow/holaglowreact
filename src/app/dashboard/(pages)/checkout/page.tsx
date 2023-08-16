@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
-import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
+import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgAlma, SvgAngleDown, SvgPepper } from 'icons/Icons';
+import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
 import router from 'next/router';
 import CheckHydration from 'utils/CheckHydration';
 
@@ -23,6 +24,7 @@ const Page = () => {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
@@ -48,15 +50,16 @@ const Page = () => {
         price: Number(CartItem.price.toFixed(2)),
         percentageDiscount: CartItem.percentageDiscount / 100,
         priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
+        name: CartItem.description,
       })),
     };
 
     try {
-      await budgetService.createBudget(budget);
-      useCartStore.setState(INITIAL_STATE);
+      const data = await budgetService.createBudget(budget);
+      localStorage.setItem('BudgetId', data.id);
       router.push('/dashboard/menu');
     } catch (error) {
-      console.error(ERROR_POST, error);
+      Bugsnag.notify(ERROR_POST + error);
     }
   };
 
@@ -90,22 +93,7 @@ const Page = () => {
             <CartTotal isCheckout />
             {showPaymentButtons ? (
               <Flex layout="col-left" className="gap-2 w-full mt-4">
-                <Button
-                  type="tertiary"
-                  href="https://dashboard.getalma.eu/login"
-                  customStyles="border-[#FA5022]"
-                  target="_blank"
-                >
-                  <SvgAlma height={25} width={75} fill="#FA5022" />
-                </Button>
-                <Button
-                  type="tertiary"
-                  href="https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470"
-                  customStyles="bg-[#FF3333] border-[#FF3333]"
-                  target="_blank"
-                >
-                  <SvgPepper height={24} width={88} fill="#ffffff" />
-                </Button>
+                <PaymentModule></PaymentModule>
               </Flex>
             ) : (
               <>
@@ -115,13 +103,21 @@ const Page = () => {
                 <Flex layout="col-left" className="gap-2 w-full mt-8">
                   <Button
                     className="w-full"
-                    size="md"
-                    onClick={() => {
-                      handleFinalize();
+                    size="lg"
+                    onClick={async () => {
+                      setIsLoading(true);
+                      if (!localStorage.getItem('BudgetId') || '') {
+                        await handleFinalize();
+                      }
+                      setIsLoading(false);
                       setShowPaymentButtons(!showPaymentButtons);
                     }}
                   >
-                    <span className="font-semibold">Finalizar</span>
+                    {isLoading ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      'Finalizar'
+                    )}
                   </Button>
                   <Button
                     className="w-full"

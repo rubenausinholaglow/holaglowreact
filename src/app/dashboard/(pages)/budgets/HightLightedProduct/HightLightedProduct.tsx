@@ -11,11 +11,16 @@ import Image from 'next/image';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { useCartStore } from '../stores/userCartStore';
+import { Operation, Quantifier } from './Quantifier';
 
 const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
 export default function HightLightedProduct() {
   const addToCart = useCartStore(state => state.addItemToCart);
+  const getQuantityOfProduct = useCartStore(
+    state => state.getQuantityOfProduct
+  );
+  const removeSingleProduct = useCartStore(state => state.removeSingleProduct);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
   const productHighlighted = useCartStore(state => state.productHighlighted);
   const professionals = useCartStore(state => state.professionals);
@@ -79,7 +84,6 @@ export default function HightLightedProduct() {
             onClick={() => setHighlightProduct(emptyProduct)}
           />
         </Flex>
-
         <div className="w-full aspect-[4/3] relative shrink-0 mb-4">
           <Image
             src={
@@ -101,9 +105,8 @@ export default function HightLightedProduct() {
             </span>
           </p>
           <p className="mb-4 text-hg-darkMalva">{product.description}</p>
-          <p>{product?.detail}</p>
+          <div dangerouslySetInnerHTML={{ __html: product?.detail }} />
         </Flex>
-
         {product.beforeAndAfterImages.length > 0 && (
           <div className="mb-16 w-full">
             <p className="font-semibold text-lg mb-4">Antes y después</p>
@@ -124,7 +127,6 @@ export default function HightLightedProduct() {
             </Carousel>
           </div>
         )}
-
         {professionals.length > 0 && (
           <>
             <p className="font-semibold text-lg mb-4">Nuestro equipo médico</p>
@@ -163,7 +165,18 @@ export default function HightLightedProduct() {
             </ul>
           </>
         )}
-
+        <Quantifier
+          handleUpdateQuantity={function handleUpdateQuantity(
+            operation: Operation
+          ): void {
+            if (operation == 'increase') {
+              addToCart(product);
+            } else {
+              removeSingleProduct(product);
+            }
+          }}
+          quantity={getQuantityOfProduct(product)}
+        />
         <Button
           type="primary"
           size="lg"
