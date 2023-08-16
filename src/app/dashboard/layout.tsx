@@ -1,11 +1,11 @@
 'use client';
 
 import { ClinicProfessional } from '@components/ClinicProfessional';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft, SvgHolaglow } from 'icons/Icons';
 import { usePathname } from 'next/navigation';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 function getBackRoute(pathName: string) {
   const BACK_ROUTES: { [key: string]: string } = {

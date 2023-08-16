@@ -1,13 +1,13 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
-import Header from 'app/components/Header';
+import { IsMobile } from 'app/components/common/Breakpoint';
+import Header from 'app/components/common/Header';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/web/stores/globalStore';
 import { ModalBackground } from 'designSystem/Modals/Modal';
-import IsMobile from 'utils/IsMobile';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [isHydrated, setISHydrated] = useState(false);

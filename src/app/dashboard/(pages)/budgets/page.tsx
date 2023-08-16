@@ -5,12 +5,12 @@ import { Filters } from '@components/Filters';
 import { emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal, ModalBackground } from 'designSystem/Modals/Modal';
 import { SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
 import CheckHydration from 'utils/CheckHydration';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { Cart } from './minicart/Cart';

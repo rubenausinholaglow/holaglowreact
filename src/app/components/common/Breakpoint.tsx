@@ -1,6 +1,6 @@
 'use client';
 
-export default function IsMobile() {
+export function IsMobile() {
   const breakpoint = window.document.querySelector('#breakpoint');
 
   if (breakpoint) {
@@ -8,4 +8,13 @@ export default function IsMobile() {
   }
 
   return false;
+}
+
+export function Breakpoint() {
+  return (
+    <div
+      id="breakpoint"
+      className="after:content-['sm'] md:after:content-['md'] hidden"
+    />
+  );
 }

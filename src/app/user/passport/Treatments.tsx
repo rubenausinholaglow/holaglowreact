@@ -1,3 +1,4 @@
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import {
   SvgCalendar,
   SvgMapMarker,
@@ -6,7 +7,6 @@ import {
   SvgStethoscope,
 } from 'icons/Icons';
 import Image from 'next/image';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { Appointment } from '../types';
 

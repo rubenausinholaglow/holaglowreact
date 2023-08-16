@@ -5,6 +5,7 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/web/stores/globalStore';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import {
@@ -14,7 +15,6 @@ import {
   SvgMenu,
   SvgUserOctagon,
 } from 'icons/IconsDs';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import MobileNavigation from './MobileNavigation';
 

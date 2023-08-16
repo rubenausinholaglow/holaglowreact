@@ -85,8 +85,6 @@ const ButtonBody = ({
 
   const isAnimated = type === 'primary' || type === 'secondary';
 
-  //const styles = twMerge()
-
   const styles = twMerge(
     `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
       isAnimated ? STYLES.animations : ''

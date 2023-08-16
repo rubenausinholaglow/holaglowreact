@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { CartItem } from '@interface/product';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgClose } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import ProductDiscountForm from '../../checkout/components/ProductDiscountForm';
 import { useCartStore } from '../stores/userCartStore';
