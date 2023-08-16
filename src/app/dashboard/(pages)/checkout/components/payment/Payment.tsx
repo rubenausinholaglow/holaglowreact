@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { TicketBudget } from '@interface/budget';
@@ -31,11 +32,6 @@ export const PaymentModule = () => {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
 
-  let productsPriceTotal = 0;
-  if (cart) {
-    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
-  }
-
   let productsPriceTotalWithDiscounts = 0;
 
   if (cart) {
@@ -58,7 +54,6 @@ export const PaymentModule = () => {
     const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
     const BudgetId = localStorage.getItem('BudgetId') || '';
-    const ClinicFlowwwId = localStorage.getItem('ClinicFlowwwId') || '';
     const ClientFlowToken = localStorage.getItem('flowwwToken') || '';
 
     const finalBudget: TicketBudget = {
@@ -184,9 +179,9 @@ export const PaymentModule = () => {
       ) : (
         <></>
       )}
-      <span className="font-bold mr-1">Total Pagado {totalAmount}€</span>
+      <span className="font-bold mr-1">Total Pagado {totalAmount}ï¿½</span>
       {totalAmount ? (
-        <span className="font-bold mr-1">Faltan {missingAmountFormatted}€</span>
+        <span className="font-bold mr-1">Faltan {missingAmountFormatted}ï¿½</span>
       ) : (
         <></>
       )}
@@ -197,4 +192,3 @@ export const PaymentModule = () => {
     </>
   );
 };
-

@@ -1,6 +1,5 @@
 'use client';
-import { Flex } from 'components/Layouts/Layouts';
-import { SvgArrowSmallLeft } from 'icons/Icons';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
