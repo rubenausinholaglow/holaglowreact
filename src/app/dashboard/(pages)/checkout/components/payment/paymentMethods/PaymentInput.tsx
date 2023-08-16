@@ -157,6 +157,7 @@ export default function PaymentInput(props: Props) {
                     parseFloat(MaxValue.toFixed(2))
                   );
                   field.onChange(newValue);
+                  setInputValue(newValue.toString());
                 }}
               />
             )}
