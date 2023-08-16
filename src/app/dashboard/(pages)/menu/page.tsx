@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Container, Flex } from 'components/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 import DashboardMenuItem from './DashboardMenuItem';

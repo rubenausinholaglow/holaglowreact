@@ -1,7 +1,7 @@
 'use client';
 
 //import { useEffect, useLayoutEffect, useState } from 'react';
-import { useGlobalStore } from 'app/stores/globalStore';
+import { useGlobalStore } from 'app/web/stores/globalStore';
 
 export default function CustomHtml({
   children,

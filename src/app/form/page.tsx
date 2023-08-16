@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Button } from 'components/Buttons/Buttons';
-import { Carousel } from 'components/Carousel/Carousel';
-import { Flex } from 'components/Layouts/Layouts';
-import { Text } from 'components/Texts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Carousel } from 'designSystem/Carousel/Carousel';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import {
   SvgArrowSmallLeft,
   SvgCheck,

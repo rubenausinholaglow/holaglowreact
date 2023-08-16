@@ -1,8 +1,8 @@
-import Accordion from 'components/Accordion/Accordion';
-import { Button } from 'components/Buttons/Buttons';
-import { Container, Flex } from 'components/Layouts/Layouts';
-import { Modal } from 'components/Modals/Modal';
-import { Text, Title } from 'components/Texts';
+import Accordion from 'designSystem/Accordion/Accordion';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Modal } from 'designSystem/Modals/Modal';
+import { Title } from 'designSystem/Texts/Texts';
 import { SvgArrow } from 'icons/IconsDs';
 
 export default function MobileNavigation({

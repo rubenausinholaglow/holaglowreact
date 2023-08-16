@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ERROR_EMAIL_NOT_VALID } from '@utils/textConstants';
-import { Button } from 'components/Buttons/Buttons';
-import { Container, Flex } from 'components/Layouts/Layouts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
 import { SearchBarProps } from './utils/props';
@@ -33,7 +33,7 @@ const SearchUser: React.FC<SearchBarProps> = ({
               placeholder="Introduce tu teléfono, email o DNI"
               className="border rounded-lg px-4 py-2 mr-4 min-w-[300px] text-hg-black"
             />
-            <Button isSubmit onClick={handleClick} type="primary">
+            <Button isSubmit onClick={handleClick} type="tertiary">
               {isLoading ? <SvgSpinner height={24} width={24} /> : 'Buscar'}
             </Button>
           </Flex>

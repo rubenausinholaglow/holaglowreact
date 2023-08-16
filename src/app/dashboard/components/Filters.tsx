@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CustomButtonFilter } from '@components/CustomButtonFilter';
 import { filterItems } from '@utils/filterItems';
 import { FilterPageProps } from '@utils/props';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgDoubleAngleLeft } from 'icons/Icons';
 import { HOLAGLOW_COLORS } from 'utils/colors';
 

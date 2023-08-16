@@ -1,4 +1,4 @@
-import { Text } from 'components/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgDiamond, SvgHolaglow, SvgMapMarker, SvgPhone } from 'icons/Icons';
 import Image from 'next/image';
 import { HOLAGLOW_COLORS } from 'utils/colors';

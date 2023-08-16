@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useGlobalStore } from 'app/stores/globalStore';
-import { Flex } from 'components/Layouts/Layouts';
+import { useGlobalStore } from 'app/web/stores/globalStore';
+import { Flex } from 'designSystem/Layouts/Layouts';
 
 export default function Home() {
   const isModalOpen = useGlobalStore(state => state.isModalOpen);

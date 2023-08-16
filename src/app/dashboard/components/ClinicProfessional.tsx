@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Professional, ProfessionalType } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import { HOLAGLOW_COLORS } from 'utils/colors';

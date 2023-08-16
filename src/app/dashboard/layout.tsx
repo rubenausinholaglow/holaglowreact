@@ -1,7 +1,7 @@
 'use client';
 
 import { ClinicProfessional } from '@components/ClinicProfessional';
-import { Container, Flex } from 'components/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft, SvgHolaglow } from 'icons/Icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

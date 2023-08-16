@@ -1,8 +1,8 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { Button } from 'components/Buttons/Buttons';
-import { Flex } from 'components/Layouts/Layouts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgAngleDown } from 'icons/Icons';
 import { twMerge } from 'tailwind-merge';
 
@@ -65,7 +65,7 @@ export default function ProductDiscountForm({
             />
           </div>
         </Flex>
-        <Button className={isCheckout ? 'mt-4' : ''} isSubmit type="primary">
+        <Button className={isCheckout ? 'mt-4' : ''} isSubmit type="secondary">
           Aplicar
         </Button>
       </Flex>

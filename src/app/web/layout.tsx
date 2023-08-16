@@ -5,8 +5,8 @@ import Header from 'app/components/Header';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
-} from 'app/stores/globalStore';
-import { ModalBackground } from 'components/Modals/Modal';
+} from 'app/web/stores/globalStore';
+import { ModalBackground } from 'designSystem/Modals/Modal';
 import IsMobile from 'utils/IsMobile';
 
 export default function Layout({ children }: { children: ReactNode }) {

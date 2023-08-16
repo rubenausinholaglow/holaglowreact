@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { CartItem } from '@interface/product';
-import { Button } from 'components/Buttons/Buttons';
-import { Flex } from 'components/Layouts/Layouts';
-import { Text } from 'components/Texts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgClose } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
@@ -118,13 +118,13 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
         {!isCheckout && (
           <Button
-            size="sm"
-            type="primary"
+            size="md"
+            type="secondary"
             onClick={e => {
               e.stopPropagation();
               addToCart(product);
             }}
-            className="px-4 w-full mt-auto"
+            className="w-full mt-auto"
           >
             Seleccionar
           </Button>

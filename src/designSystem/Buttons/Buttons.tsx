@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
+import { twMerge } from 'tailwind-merge';
 
 type ButtonTypes = 'primary' | 'secondary' | 'tertiary' | 'transparent';
 type ButtonSizes = 'sm' | 'md' | 'lg' | 'xl';
@@ -10,6 +11,7 @@ type ButtonProps = {
   size?: ButtonSizes;
   href?: string;
   className?: string;
+  customStyles?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
   [key: string]: any;
@@ -20,6 +22,7 @@ export const Button = ({
   size = 'md',
   href = '',
   className = '',
+  customStyles = '',
   onClick = undefined,
   children,
   ...rest
@@ -33,7 +36,7 @@ export const Button = ({
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
         <ButtonBase type={type} />
-        <ButtonBody type={type} size={size}>
+        <ButtonBody type={type} size={size} customStyles={customStyles}>
           {children}
         </ButtonBody>
       </Link>
@@ -47,7 +50,7 @@ export const Button = ({
       type={rest?.isSubmit ? 'submit' : 'button'}
     >
       <ButtonBase type={type} />
-      <ButtonBody type={type} size={size}>
+      <ButtonBody type={type} size={size} customStyles={customStyles}>
         {children}
       </ButtonBody>
     </button>
@@ -57,10 +60,12 @@ export const Button = ({
 const ButtonBody = ({
   type,
   size,
+  customStyles,
   children,
 }: {
   type: ButtonTypes;
   size: ButtonSizes;
+  customStyles?: string;
   children: ReactNode;
 }) => {
   const STYLES: any = {
@@ -68,7 +73,8 @@ const ButtonBody = ({
     animations: '-translate-y-1 group-active:-translate-y-0',
     primary: 'bg-hg-black text-hg-lime',
     secondary: 'bg-white text-hg-darkMalva border border-hg-black',
-    tertiary: 'bg-white text-hg-black border border-hg-black ',
+    tertiary:
+      'bg-white text-hg-black border border-hg-black hover:bg-hg-malva300 active:bg-hg-malva300',
     transparent:
       'bg-white text-hg-black border border-transparent hover:bg-hg-malva300 hover:border-hg-malva300 active:bg-hg-malva300 active:border-hg-malva300',
     sm: 'text-xs h-[32px] px-4',
@@ -79,9 +85,13 @@ const ButtonBody = ({
 
   const isAnimated = type === 'primary' || type === 'secondary';
 
-  const styles = `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${
-    isAnimated ? STYLES.animations : ''
-  }`;
+  //const styles = twMerge()
+
+  const styles = twMerge(
+    `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
+      isAnimated ? STYLES.animations : ''
+    }`
+  );
 
   return (
     <Flex layout="row-center" className={styles}>
@@ -91,14 +101,14 @@ const ButtonBody = ({
 };
 
 const ButtonBase = ({ type }: { type: ButtonTypes }) => {
+  const BUTTON_TYPES = ['primary', 'secondary'];
+
   const STYLES: any = {
     primary: 'bg-hg-lime border border-hg-black',
     secondary: 'bg-hg-malva border border-hg-black',
   };
 
-  const styles = `${
-    type === 'primary' || type === 'secondary' ? STYLES[type] : ''
-  }`;
+  const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;
 
   return (
     <div

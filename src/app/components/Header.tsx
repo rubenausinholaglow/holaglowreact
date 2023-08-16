@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
-} from 'app/stores/globalStore';
-import { Button } from 'components/Buttons/Buttons';
-import { Container, Flex } from 'components/Layouts/Layouts';
+} from 'app/web/stores/globalStore';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import {
   SvgArrow,
   SvgCross,

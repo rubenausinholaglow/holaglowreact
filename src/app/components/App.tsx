@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { poppins } from 'app/fonts';
-import { useGlobalStore } from 'app/stores/globalStore';
+import { useGlobalStore } from 'app/web/stores/globalStore';
 import Head from 'next/head';
 
 import { Breakpoint } from './Breakpoint';

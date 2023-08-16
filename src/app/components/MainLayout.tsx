@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
-} from 'app/stores/globalStore';
-import { ModalBackground } from 'components/Modals/Modal';
+} from 'app/web/stores/globalStore';
+import { ModalBackground } from 'designSystem/Modals/Modal';
 
 import { IsMobile } from './Breakpoint';
 import Header from './Header';
