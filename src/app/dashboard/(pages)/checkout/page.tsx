@@ -93,15 +93,15 @@ const Page = () => {
                 <Button
                   type="tertiary"
                   href="https://dashboard.getalma.eu/login"
-                  className="border-[#FA5022]"
+                  customStyles="border-[#FA5022]"
                   target="_blank"
                 >
                   <SvgAlma height={25} width={75} fill="#FA5022" />
                 </Button>
                 <Button
-                  type="primary"
+                  type="tertiary"
                   href="https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470"
-                  className="bg-[#FF3333] border-[#FF3333]"
+                  customStyles="bg-[#FF3333] border-[#FF3333]"
                   target="_blank"
                 >
                   <SvgPepper height={24} width={88} fill="#ffffff" />

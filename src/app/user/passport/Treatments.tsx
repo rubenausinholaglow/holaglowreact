@@ -104,9 +104,11 @@ export default function Treatments({
                           <p className="text-hg-lightMalva text-xs mb-1">
                             Duración
                           </p>
-                          <p>{`de ${treatment.product.durationMin / 30} a ${
+                          <p>{`de ${Math.floor(
+                            treatment.product.durationMin / 30
+                          )} a ${Math.floor(
                             treatment.product.durationMax / 30
-                          } meses`}</p>
+                          )} meses`}</p>
                         </li>
                       )}
                     </ul>

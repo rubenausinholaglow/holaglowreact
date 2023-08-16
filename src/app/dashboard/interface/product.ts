@@ -8,7 +8,7 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
-  painsCategory: Pain[];
+  category: Category[];
   clinic: Clinic[];
   flowwwId: number;
   durationMin: number;
@@ -25,7 +25,7 @@ export interface CartItem extends Product {
   priceWithDiscount: number;
 }
 
-export interface Pain {
+export interface Category {
   name: string;
   value: number;
 }

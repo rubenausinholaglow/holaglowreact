@@ -60,7 +60,7 @@ export default function Page() {
         handleFilterByProperty(parseInt(id), 'zone');
         break;
       case 'Category':
-        handleFilterByProperty(parseInt(id), 'painsCategory');
+        handleFilterByProperty(parseInt(id), 'category');
         break;
       case 'Clinic':
         applyClinicFilter(id);
@@ -136,7 +136,7 @@ export default function Page() {
           return false;
         }
         if (filterPain.length > 0) {
-          const productPains = product.painsCategory?.map(pain => pain.value);
+          const productPains = product.category?.map(pain => pain.value);
           if (!productPains || !hasMatchingPain(productPains)) {
             return false;
           }

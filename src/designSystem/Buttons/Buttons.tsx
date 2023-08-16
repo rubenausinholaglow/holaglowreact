@@ -88,9 +88,9 @@ const ButtonBody = ({
   //const styles = twMerge()
 
   const styles = twMerge(
-    `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
-      isAnimated ? STYLES.animations : ''
-    }`
+    `${STYLES.common} ${STYLES[type]} ${
+      STYLES[size]
+    } ola ${customStyles} kease ${isAnimated ? STYLES.animations : ''}`
   );
 
   return (
