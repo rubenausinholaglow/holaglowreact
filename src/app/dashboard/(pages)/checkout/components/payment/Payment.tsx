@@ -88,7 +88,7 @@ export const PaymentModule = () => {
       reference: '',
       userId: GuidUser,
       clientFlowwwToken: ClientFlowToken,
-      clinicFlowwwId: ClinicFlowwwId,
+      clinicFlowwwId: '3',
       professional: '',
       budget: finalBudget,
       paymentProductRequest: paymentList.map(payItem => ({
@@ -184,9 +184,9 @@ export const PaymentModule = () => {
       ) : (
         <></>
       )}
-      <span className="font-bold mr-1">Total Pagado {totalAmount}â‚¬</span>
+      <span className="font-bold mr-1">Total Pagado {totalAmount}€</span>
       {totalAmount ? (
-        <span className="font-bold mr-1">Faltan {missingAmountFormatted}â‚¬</span>
+        <span className="font-bold mr-1">Faltan {missingAmountFormatted}€</span>
       ) : (
         <></>
       )}
@@ -197,3 +197,4 @@ export const PaymentModule = () => {
     </>
   );
 };
+

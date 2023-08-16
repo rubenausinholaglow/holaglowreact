@@ -1,3 +1,4 @@
+import { Operation } from '../(pages)/budgets/stores/userCartStore';
 import { Professional } from './clinic';
 import { CartItem, emptyProduct, Product } from './product';
 
@@ -23,4 +24,6 @@ export interface Actions {
   applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => void;
   setHighlightProduct: (Item: Product) => void;
   setProfessionals: (Item: Professional[]) => void;
+  getQuantityOfProduct: (product: Product) => number;
+  removeSingleProduct: (product: CartItem) => void;
 }

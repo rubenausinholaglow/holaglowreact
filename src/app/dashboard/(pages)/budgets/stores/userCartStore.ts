@@ -44,6 +44,8 @@ function calculateCartItemDiscount(
   });
 }
 
+export type Operation = 'decrease' | 'increase';
+
 export const useCartStore = create(
   persist<State & Actions>(
     (set, get) => ({
@@ -106,6 +108,35 @@ export const useCartStore = create(
         set(() => ({
           professionals: professionals,
         }));
+      },
+      getQuantityOfProduct: (product: Product) => {
+        const cart = get().cart;
+        const productCount = cart.reduce((total, cartItem) => {
+          if (cartItem.id === product.id) {
+            return total + 1;
+          }
+          return total;
+        }, 0);
+
+        return productCount;
+      },
+      removeSingleProduct: (product: CartItem) => {
+        const cart = get().cart;
+        const indexToRemove = cart.findIndex(item => item.id === product.id);
+
+        if (indexToRemove !== -1) {
+          const cartItem = cart[indexToRemove];
+          const updatedCart = [
+            ...cart.slice(0, indexToRemove),
+            ...cart.slice(indexToRemove + 1),
+          ];
+
+          set(state => ({
+            cart: updatedCart,
+            totalItems: state.totalItems - 1,
+            totalPrice: state.totalPrice - cartItem.priceWithDiscount,
+          }));
+        }
       },
     }),
     {
