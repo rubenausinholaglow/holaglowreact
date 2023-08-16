@@ -8,7 +8,7 @@ import { ERROR_POST } from '@utils/textConstants';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
 import router from 'next/router';
 import CheckHydration from 'utils/CheckHydration';
@@ -66,9 +66,9 @@ const Page = () => {
   return (
     <CheckHydration>
       <Container>
-        <Text size="xl" className="text-left font-semibold mb-4">
+        <Title size="2xl" className="text-left mb-4">
           Resumen
-        </Text>
+        </Title>
 
         <Flex layout="row-left" className="items-start">
           <ul className="w-3/4 shrink-0">
@@ -121,7 +121,7 @@ const Page = () => {
                   </Button>
                   <Button
                     className="w-full"
-                    size="md"
+                    size="lg"
                     href="https://agenda.holaglow.com/schedule?mode=dashboard"
                     type="tertiary"
                   >
