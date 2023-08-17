@@ -5,7 +5,7 @@ import ProductService from '@services/ProductService';
 import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgClose, SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
 import Image from 'next/image';
@@ -99,12 +99,13 @@ export default function HightLightedProduct() {
             />
           </div>
           <Flex layout="col-left" className="pt-4 w-full">
-            <Text size="lg" className="font-semibold">
-              {product.title} -{' '}
+            <Title size="xl" className="font-semibold">
+              {product.title}
+              <br />
               <span className="text-lg text-hg-black font-semibold mb-3">
                 {product.price.toFixed(2)}€
               </span>
-            </Text>
+            </Title>
             <p className="mb-4 text-hg-darkMalva">{product.description}</p>
 
             <Flex
