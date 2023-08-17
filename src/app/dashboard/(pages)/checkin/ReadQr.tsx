@@ -14,8 +14,11 @@ function ReadQR() {
           height: 950,
         },
         fps: 5,
+        rememberLastUsedCamera: true,
+        supportedScanTypes: [0],
+        showTorchButtonIfSupported: false,
       },
-      true
+      false
     );
 
     let isScanning = true;
@@ -44,7 +47,7 @@ function ReadQR() {
         </div>
       ) : (
         <div>
-          <div id="reader"></div>
+          <div id="reader" className="width:600px"></div>
         </div>
       )}
     </div>
