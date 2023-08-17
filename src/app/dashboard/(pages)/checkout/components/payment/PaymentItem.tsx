@@ -17,7 +17,7 @@ export default function PaymentItem({ paymentRequest }: Props) {
           <span className="font-bold mr-1">
             {getPaymentBankText(paymentRequest.bank)}
           </span>
-        ) : null}
+        ) : null}{' '}
         <span className="font-bold">{`- ${paymentRequest.amount}€`}</span>
       </Flex>
     </li>
