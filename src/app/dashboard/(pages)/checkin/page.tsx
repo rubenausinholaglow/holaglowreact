@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import QrReader from 'react-qr-reader';
 import { Button } from 'components/Buttons/Buttons';
 import { Flex } from 'components/Layouts/Layouts';
 import { Text, Title } from 'components/Texts';
