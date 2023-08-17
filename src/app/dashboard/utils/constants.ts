@@ -1,5 +1,4 @@
 import { State } from '@interface/cart';
-//import { Professional } from '@interface/clinic';
 import { Product, ProductType } from '@interface/product';
 
 const emptyProduct: Product = {
@@ -10,7 +9,7 @@ const emptyProduct: Product = {
   price: 0,
   isPack: false,
   zone: 0,
-  painsCategory: [],
+  category: [],
   clinic: [],
   flowwwId: 0,
   durationMin: 0,

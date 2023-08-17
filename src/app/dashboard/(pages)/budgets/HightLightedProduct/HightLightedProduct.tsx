@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
-import { Button } from 'components/Buttons/Buttons';
-import { Carousel } from 'components/Carousel/Carousel';
-import { Flex } from 'components/Layouts/Layouts';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Carousel } from 'designSystem/Carousel/Carousel';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgClose, SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
 import Image from 'next/image';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { useCartStore } from '../stores/userCartStore';
 import { Operation, Quantifier } from './Quantifier';
@@ -178,7 +178,7 @@ export default function HightLightedProduct() {
           quantity={getQuantityOfProduct(product)}
         />
         <Button
-          style="primary"
+          type="primary"
           size="lg"
           className="w-full"
           onClick={() => addToCart(product)}

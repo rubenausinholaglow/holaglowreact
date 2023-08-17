@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { CustomButtonFilter } from '@components/CustomButtonFilter';
 import { filterItems } from '@utils/filterItems';
 import { FilterPageProps } from '@utils/props';
-import { Flex } from 'components/Layouts/Layouts';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgDoubleAngleLeft } from 'icons/Icons';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
   const [inputValue, setInputValue] = useState('');

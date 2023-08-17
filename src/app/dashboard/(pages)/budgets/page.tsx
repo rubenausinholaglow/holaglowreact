@@ -5,12 +5,12 @@ import { Filters } from '@components/Filters';
 import { emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
-import { Container, Flex } from 'components/Layouts/Layouts';
-import { Modal, ModalBackground } from 'components/Modals/Modal';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Modal, ModalBackground } from 'designSystem/Modals/Modal';
 import { SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
 import CheckHydration from 'utils/CheckHydration';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { Cart } from './minicart/Cart';
@@ -61,7 +61,7 @@ export default function Page() {
         handleFilterByProperty(parseInt(id), 'zone');
         break;
       case 'Category':
-        handleFilterByProperty(parseInt(id), 'painsCategory');
+        handleFilterByProperty(parseInt(id), 'category');
         break;
       case 'Type':
         handleFilterByType(parseInt(id));
@@ -158,7 +158,7 @@ export default function Page() {
           return false;
         }
         if (filterPain.length > 0) {
-          const productPains = product.painsCategory?.map(pain => pain.value);
+          const productPains = product.category?.map(pain => pain.value);
           if (!productPains || !hasMatchingPain(productPains)) {
             return false;
           }
@@ -212,7 +212,7 @@ export default function Page() {
           isVisible={showProductModal}
           onClick={() => setHighlightProduct(emptyProduct)}
         ></ModalBackground>
-        <Modal isVisible={showProductModal}>
+        <Modal isVisible={showProductModal} width="3/4">
           <HightLightedProduct />
         </Modal>
         <Flex layout="col-center" className="w-full">

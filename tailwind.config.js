@@ -1,4 +1,5 @@
-/** @type {import('tailwindcss').Config} */
+import tailwindcssRadix from 'tailwindcss-radix';
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -20,18 +21,19 @@ module.exports = {
     extend: {
       colors: {
         hg: {
-          lime500: '#EBFF0D/50',
-          lime300: '#EBFF0D/30',
-          lime100: '#EBFF0D/10',
+          lime: '#EBFF0D',
+          lime500: '#F5FF86',
+          lime300: '#F9FFB6',
+          lime100: '#FDFFE7',
           malva: '#BBC7FF',
-          malva50: '#BBC7FF/50',
-          malva30: '#BBC7FF/30',
-          malva10: '#BBC7FF/10',
+          malva500: '#DDE3FF',
+          malva300: '#EBEEFF',
+          malva100: '#F8F9FF',
           darkMalva: '#7A8AC4',
-          darkMalva700: '#7A8AC4/70',
-          darkMalva500: '#7A8AC4/50',
-          darkMalva300: '#7A8AC4/30',
-          darkMalva100: '#7A8AC4/10',
+          darkMalva700: '#A2ADD6',
+          darkMalva500: '#BCC4E1',
+          darkMalva300: '#D7DCED',
+          darkMalva100: '#F2F3F9',
           turquoise: '#3AD5DD',
           magensta: '#D600BF',
           orange: '#FF7514',
@@ -39,13 +41,12 @@ module.exports = {
           green: '#B9DDB6',
           skyblue: '#B7F9F9',
           black: '#101828',
-          black700: '#101828/70',
-          black500: '#101828/50',
-          black400: '#101828/40',
-          black300: '#101828/30',
-          black100: '#101828/10',
-          black50: '#101828/05',
-          lime: '#EBFF0D',
+          black700: '#344054',
+          black500: '#667085',
+          black400: '#98A2B3',
+          black300: '#D0D5DD',
+          black100: '#F2F4F7',
+          black50: '#F9FAFB',
           lightMalva: '#BBC7FF',
           grease: '#F2F2F2',
           'gray-200': '#667085',
@@ -68,7 +69,21 @@ module.exports = {
         centered: '0 0 10px 10px rgba(0,0,0,0.1)',
         'centered-sm': '0 0 5px 5px rgba(0,0,0,0.1)',
       },
+      keyframes: {
+        slideDown: {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        slideUp: {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
+        slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
+      },
     },
   },
-  plugins: [],
+  plugins: [tailwindcssRadix],
 };

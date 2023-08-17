@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
-import { Button } from 'components/Buttons/Buttons';
-import { Flex } from 'components/Layouts/Layouts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
 import { AlmaProps } from '../../../../../utils/props';

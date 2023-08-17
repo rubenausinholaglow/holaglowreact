@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { twMerge } from 'tailwind-merge';
 
 export const CarouselNavigation = ({

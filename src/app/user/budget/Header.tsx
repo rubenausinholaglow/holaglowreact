@@ -1,7 +1,7 @@
-import { Text } from 'components/Texts';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgDiamond, SvgHolaglow, SvgMapMarker, SvgPhone } from 'icons/Icons';
 import Image from 'next/image';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { Clinic } from '../types';
 

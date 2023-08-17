@@ -1,7 +1,7 @@
 import { applyDiscountToCart } from '@utils/utils';
-import { Button } from 'components/Buttons/Buttons';
-import { Container, Flex } from 'components/Layouts/Layouts';
-import { Text } from 'components/Texts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgClose } from 'icons/Icons';
 
 import { useCartStore } from '../stores/userCartStore';
@@ -23,7 +23,7 @@ export function Cart() {
             </ul>
           </Flex>
           <CartTotal />
-          <Button style="primary" href="checkout">
+          <Button type="primary" href="checkout">
             Continuar
           </Button>
         </Flex>

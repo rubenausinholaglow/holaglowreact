@@ -1,6 +1,7 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
 
-import tailwindConfig from '../../tailwind.config';
+// @ts-ignore
+import tailwindConfig from '../../../../tailwind.config';
 
 const fullTailwindConfig = resolveConfig(tailwindConfig);
 

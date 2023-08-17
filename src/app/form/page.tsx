@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Button } from 'components/Buttons/Buttons';
-import { Carousel } from 'components/Carousel/Carousel';
-import { Flex } from 'components/Layouts/Layouts';
-import { Text } from 'components/Texts';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Carousel } from 'designSystem/Carousel/Carousel';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import {
   SvgArrowSmallLeft,
   SvgCheck,
@@ -12,7 +13,6 @@ import {
   SvgHolaglow,
 } from 'icons/Icons';
 import Image from 'next/image';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
 
@@ -412,7 +412,7 @@ export default function Form() {
         {activeSlideIndex > 0 && (
           <Button
             className="mt-8 ml-3"
-            style="primary"
+            type="secondary"
             onClick={() => goBack(activeSlideIndex)}
           >
             <Flex layout="row-left">

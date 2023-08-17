@@ -5,7 +5,7 @@ import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
 import { usePaymentList } from '../payments/usePaymentList';
@@ -29,7 +29,6 @@ export default function PaymentInput(props: Props) {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
-
 
   let productsPriceTotal = 0;
   if (cart) {

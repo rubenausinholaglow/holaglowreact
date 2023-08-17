@@ -1,7 +1,7 @@
 import { CartItem } from '@interface/product';
-import { Flex } from 'components/Layouts/Layouts';
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgClose } from 'icons/Icons';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { useCartStore } from '../stores/userCartStore';
 

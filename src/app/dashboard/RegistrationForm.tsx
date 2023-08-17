@@ -2,8 +2,8 @@ import '../globals.css';
 
 import React from 'react';
 import * as errorsConfig from '@utils/textConstants';
-import { Button } from 'components/Buttons/Buttons';
-import { Container, Flex } from 'components/Layouts/Layouts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
 import TextInputField from './components/TextInputField';
@@ -103,7 +103,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </Flex>
         </Flex>
         <Flex layout="col-left">
-          <Button onClick={handleContinue} style="primary">
+          <Button onClick={handleContinue} type="secondary">
             {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
           </Button>
           {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
