@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrowSmallLeft } from 'icons/Icons';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import DashboardMenuItem from './DashboardMenuItem';

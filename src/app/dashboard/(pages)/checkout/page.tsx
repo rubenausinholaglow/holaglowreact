@@ -6,11 +6,9 @@ import { Budget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { ERROR_POST } from '@utils/textConstants';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
-
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
-
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
 import router from 'next/router';
 import CheckHydration from 'utils/CheckHydration';
