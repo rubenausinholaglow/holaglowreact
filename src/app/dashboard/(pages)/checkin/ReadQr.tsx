@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Text } from 'components/Texts';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import {
+  Html5Qrcode,
+  Html5QrcodeScanner,
+  Html5QrcodeSupportedFormats,
+} from 'html5-qrcode';
 
 function ReadQR() {
   const [scanResult, setScanResult] = useState(null);
@@ -10,8 +14,8 @@ function ReadQR() {
       'reader',
       {
         qrbox: {
-          width: 850,
-          height: 950,
+          width: 250,
+          height: 350,
         },
         fps: 5,
         rememberLastUsedCamera: true,
@@ -23,13 +27,23 @@ function ReadQR() {
 
     let isScanning = true;
 
+    const config = {
+      facingMode: { exact: 'user' },
+    };
+
     scanner.render(success, error);
+
+    setTimeout(function time() {
+      scanner.applyVideoConstraints(config);
+      console.log('as');
+    }, 2000);
 
     function success(result: any) {
       if (isScanning) {
         //TODO - SEND CONFIRMATION
         scanner.clear();
         setScanResult(result);
+
         isScanning = false;
       }
     }
@@ -37,10 +51,33 @@ function ReadQR() {
     function error(err: any) {
       console.warn(err);
     }
+    /*
+    const html5QrCode = new Html5Qrcode('reader', {
+      verbose: false,
+      formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+    });
+    const qrCodeSuccessCallback = (decodedText: any, decodedResult: any) => {
+      setScanResult(decodedResult);
+      console.log('readed');
+    };
+
+    function error(err: any) {
+      console.warn(err);
+    }
+
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+    html5QrCode.start(
+      { facingMode: 'user' },
+      config,
+      qrCodeSuccessCallback,
+      error
+    );
+*/
   }, []);
 
   return (
-    <div className="App">
+    <div>
       {scanResult ? (
         <div>
           <Text>Código escaneado correctamente</Text>
