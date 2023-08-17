@@ -8,54 +8,14 @@ import {
 
 function ReadQR() {
   const [scanResult, setScanResult] = useState(null);
+  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null); // Specify the type explicitly
 
   useEffect(() => {
-    const scanner = new Html5QrcodeScanner(
-      'reader',
-      {
-        qrbox: {
-          width: 250,
-          height: 350,
-        },
-        fps: 5,
-        rememberLastUsedCamera: true,
-        supportedScanTypes: [0],
-        showTorchButtonIfSupported: false,
-      },
-      false
-    );
+    const html5QrCode = new Html5Qrcode('qr-reader');
+    //     verbose: false,
+    //     formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+    //   });
 
-    let isScanning = true;
-
-    const config = {
-      facingMode: { exact: 'user' },
-    };
-
-    scanner.render(success, error);
-
-    setTimeout(function time() {
-      scanner.applyVideoConstraints(config);
-      console.log('as');
-    }, 2000);
-
-    function success(result: any) {
-      if (isScanning) {
-        //TODO - SEND CONFIRMATION
-        scanner.clear();
-        setScanResult(result);
-
-        isScanning = false;
-      }
-    }
-
-    function error(err: any) {
-      console.warn(err);
-    }
-    /*
-    const html5QrCode = new Html5Qrcode('reader', {
-      verbose: false,
-      formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
-    });
     const qrCodeSuccessCallback = (decodedText: any, decodedResult: any) => {
       setScanResult(decodedResult);
       console.log('readed');
@@ -73,7 +33,6 @@ function ReadQR() {
       qrCodeSuccessCallback,
       error
     );
-*/
   }, []);
 
   return (
@@ -84,7 +43,7 @@ function ReadQR() {
         </div>
       ) : (
         <div>
-          <div id="reader" className="width:600px"></div>
+          <div id="qr-reader" style={{ width: '600px' }}></div>
         </div>
       )}
     </div>
