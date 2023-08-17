@@ -46,7 +46,6 @@ export default async function Budget({
     totalPriceWithIVA = null,
     simulations = null,
     discountCode = null,
-    discountAmount = null,
     referenceId = null,
     creationDate = null,
   } = budgetData ? budgetData : {};
@@ -69,10 +68,7 @@ export default async function Budget({
           )}
           <AlmaPayment totalPrice={totalPriceWithIVA} />
           {simulations.length > 0 && <Simulation simulations={simulations} />}
-          <PromoCode
-            discountCode={discountCode}
-            discountAmount={discountAmount}
-          />
+          <PromoCode discountCode={discountCode} discountAmount={50} />
           <Legal />
           <Footer clinicInfo={clinicInfo} />
         </>
