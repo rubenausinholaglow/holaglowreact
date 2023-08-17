@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Container, Flex } from 'components/Layouts/Layouts';
-import { SvgArrowSmallLeft } from 'icons/Icons';
-import Link from 'next/link';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 import DashboardMenuItem from './DashboardMenuItem';
@@ -27,12 +25,6 @@ const Page = () => {
     <>
       {username && (
         <Container>
-          <Link href="/dashboard">
-            <Flex layout="row-left">
-              <SvgArrowSmallLeft height={40} width={40} className="pr-2" />
-              Volver
-            </Flex>
-          </Link>
           <Flex layout="col-center">
             <p className="font-bold text-xl mb-8">
               Hola {username} ¿Qué deseas hacer?

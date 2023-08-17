@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CustomButtonFilterProps } from '@utils/props';
-import { Button } from 'components/Buttons/Buttons';
+import { Button } from 'designSystem/Buttons/Buttons';
 
 export const CustomButtonFilter: React.FC<CustomButtonFilterProps> = ({
   id,
@@ -30,8 +30,13 @@ export const CustomButtonFilter: React.FC<CustomButtonFilterProps> = ({
     <Button
       onClick={handleClick}
       data-tag={tag}
-      style={isSelected ? 'primary' : 'tertiary'}
+      type="tertiary"
       size="sm"
+      customStyles={
+        isSelected
+          ? 'bg-hg-darkMalva text-white border-hg-darkMalva hover:bg-hg-darkMalva hover:text-white hover:border-hg-darkMalva'
+          : ''
+      }
       {...buttonProps}
     >
       {value}

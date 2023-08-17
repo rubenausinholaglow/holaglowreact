@@ -1,6 +1,6 @@
+import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import { SvgHolaglow } from 'icons/Icons';
 import Image from 'next/image';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 export default function Header() {
   return (
