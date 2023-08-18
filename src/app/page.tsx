@@ -1,17 +1,18 @@
-import Link from 'next/link';
+'use client';
+
+import React from 'react';
+import { useGlobalStore } from 'app/stores/globalStore';
+import { Flex } from 'designSystem/Layouts/Layouts';
 
 export default function Home() {
+  const { isModalOpen, isMainScrollEnabled } = useGlobalStore(state => state);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Link prefetch={false} href="/user/budget?id=199">
-        test budget
-      </Link>
-      <Link prefetch={false} href="/user/passport?id=62280">
-        test passport
-      </Link>
-      <Link href="/form">multistep</Link>
-      <Link href="/dashboard">dashboard</Link>
-      <Link href="/web">web</Link>
-    </main>
+    <Flex layout="col-center" className="text-center h-[1500px]">
+      <p className="pt-[500px]">
+        isModalOpen - {isModalOpen ? 'true' : 'false'}
+      </p>
+      <p>isMainScrollEnabled - {isMainScrollEnabled ? 'true' : 'false'}</p>
+    </Flex>
   );
 }

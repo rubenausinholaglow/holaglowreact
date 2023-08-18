@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { CartItem } from '@interface/product';
-import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
