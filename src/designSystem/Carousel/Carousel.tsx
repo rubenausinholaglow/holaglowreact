@@ -21,12 +21,11 @@ export const Carousel = ({
   naturalSlideHeight = 100,
   naturalSlideWidth = 100,
   visibleSlides = 1,
-  totalSlides = 1,
   step = 1,
   currentSlide = 0,
   dragEnabled = false,
   touchEnabled = false,
-  ...props
+  ...rest
 }: {
   children: ReactNode;
   hasDots?: boolean;
@@ -35,12 +34,12 @@ export const Carousel = ({
   naturalSlideHeight?: number;
   naturalSlideWidth?: number;
   visibleSlides?: number;
-  totalSlides?: number;
   step?: number;
   currentSlide?: number;
   dragEnabled?: boolean;
   touchEnabled?: boolean;
-  class?: string;
+  className?: string;
+  [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const childrens = Children.toArray(children);
@@ -61,15 +60,16 @@ export const Carousel = ({
     <CarouselProvider
       className="relative w-full"
       isIntrinsicHeight={isIntrinsicHeight}
-      naturalSlideHeight={naturalSlideHeight}
-      naturalSlideWidth={naturalSlideWidth}
       totalSlides={childrens.length}
       currentSlide={currentSlide}
       infinite
       lockOnWindowScroll
       dragEnabled={dragEnabled}
       touchEnabled={touchEnabled}
-      {...props}
+      naturalSlideHeight={naturalSlideHeight}
+      naturalSlideWidth={naturalSlideWidth}
+      visibleSlides={visibleSlides}
+      {...rest}
     >
       <Slider>
         {childrens.map((children, i) => (

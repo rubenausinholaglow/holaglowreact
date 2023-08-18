@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { twMerge } from 'tailwind-merge';
 
 export const Title = ({
@@ -57,7 +58,7 @@ export const Underlined = ({
   return (
     <HtmlComponent className="relative inline-block">
       <span
-        className={`bg-[${color}] absolute h-[15%] bottom-[10%] left-0 right-0`}
+        className={`bg-[${color}] absolute h-[20%] bottom-[10%] left-0 right-0`}
         style={{ background: color }}
       ></span>
       <span className="relative leading-none">{children}</span>
