@@ -7,6 +7,17 @@ import { usePathname } from 'next/navigation';
 import { IsMobile } from './Breakpoint';
 import Header from './Header';
 
+const HIDE_WEBHEADER_PATHS = ['/user/budget', '/user/passport', '/form'];
+const HIDE_WEBHEADER_PATTERNS = ['/dashboard'];
+
+const showWebHeader = (path: string) => {
+  if (HIDE_WEBHEADER_PATHS.includes(path)) {
+    return false;
+  }
+
+  return !HIDE_WEBHEADER_PATTERNS.some(item => path.startsWith(item));
+};
+
 export default function MainLayout({
   children,
 }: {
@@ -15,13 +26,6 @@ export default function MainLayout({
   const [isHydrated, setISHydrated] = useState(false);
   const setIsMobile = useGlobalPersistedStore(state => state.setIsMobile);
   const pathname = usePathname();
-
-  const HIDE_WEBHEADER_PATHS = [
-    '/dashboard',
-    '/user/budget',
-    '/user/passport',
-    '/form',
-  ];
 
   useEffect(() => {
     setIsMobile(IsMobile());
@@ -34,7 +38,7 @@ export default function MainLayout({
 
   return (
     <>
-      {!HIDE_WEBHEADER_PATHS.includes(pathname) && <Header />}
+      {showWebHeader(pathname) && <Header />}
       {children}
     </>
   );
