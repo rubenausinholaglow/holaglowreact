@@ -38,7 +38,7 @@
     ".next/types/**/*.ts",
     "tailwind.config.js",
     "src/utils/priceFormat.ts",
-    "src/app/web/utils/colors.ts",
+    "src/app/utils/colors.ts",
     "src/app/dashboard/(pages)/budgets/filterUtils.js"
   ],
   "exclude": ["node_modules"]

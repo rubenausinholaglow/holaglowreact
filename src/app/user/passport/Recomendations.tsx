@@ -1,4 +1,4 @@
-import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   SvgCosmetic1,
   SvgCosmetic2,

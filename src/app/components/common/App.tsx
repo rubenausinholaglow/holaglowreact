@@ -2,15 +2,16 @@
 
 import { ReactNode } from 'react';
 import { poppins } from 'app/fonts';
-import { useGlobalStore } from 'app/web/stores/globalStore';
+import { useGlobalStore } from 'app/stores/globalStore';
+import { ModalBackground } from 'designSystem/Modals/Modal';
 import Head from 'next/head';
 
 import { Breakpoint } from './Breakpoint';
+import MainLayout from './MainLayout';
 
 export default function Html({ children }: { children: ReactNode }) {
-  const isModalOpen = useGlobalStore(state => state.isModalOpen);
-  const isMainScrollEnabled = useGlobalStore(
-    state => state.isMainScrollEnabled
+  const { isModalOpen, setIsModalOpen, isMainScrollEnabled } = useGlobalStore(
+    state => state
   );
 
   return (
@@ -29,8 +30,14 @@ export default function Html({ children }: { children: ReactNode }) {
         />
       </Head>
       <body className={poppins.className}>
+        <ModalBackground
+          isVisible={isModalOpen}
+          onClick={() => {
+            setIsModalOpen(false);
+          }}
+        />
         <Breakpoint />
-        {children}
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );
