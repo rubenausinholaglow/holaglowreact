@@ -11,12 +11,14 @@ export function Cart() {
   const cart = useCartStore(state => state.cart);
 
   return (
-    <div className="bg-white w-full text-left py-4">
+    <div className="bg-white w-full text-left py-6">
       <Container>
         <Flex layout="row-left">
           <Flex layout="col-left">
-            <p className="mb-2 text-hg-darkMalva">Productos seleccionados:</p>
-            <ul>
+            <Text size="md" className="font-semibold text-hg-darkMalva mb-2">
+              Productos seleccionados:
+            </Text>
+            <ul className="flex flex-col gap-1">
               {cart?.map(product => (
                 <CartItem key={product.id} product={product} />
               ))}
@@ -73,7 +75,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
     >
       <Flex layout={isCheckout ? 'col-left' : 'row-left'} className={`mr-4`}>
         {(hasProductsDiscount || hasCartDiscount) && (
-          <Text className="text-hg-black font-semibold text-2xl mr-2">
+          <Text size="xl" className="text-hg-black font-semibold mr-2">
             {hasCartDiscount ? (
               <>{cartTotalWithDiscount}€</>
             ) : (
@@ -85,7 +87,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
           className={
             hasProductsDiscount || hasCartDiscount
               ? 'text-red-600 text-lg line-through opacity-50 font-semibold'
-              : 'text-hg-black text-2xl font-semibold'
+              : 'text-hg-black text-xl font-semibold'
           }
         >
           {productsPriceTotal.toFixed(2)}€
