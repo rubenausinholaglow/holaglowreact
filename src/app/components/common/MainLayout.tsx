@@ -1,11 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/web/stores/globalStore';
-import { ModalBackground } from 'designSystem/Modals/Modal';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { usePathname } from 'next/navigation';
 
 import { IsMobile } from './Breakpoint';
 import Header from './Header';
@@ -16,9 +13,15 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const isModalOpen = useGlobalStore(state => state.isModalOpen);
-  const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
   const setIsMobile = useGlobalPersistedStore(state => state.setIsMobile);
+  const pathname = usePathname();
+
+  const HIDE_WEBHEADER_PATHS = [
+    '/dashboard',
+    '/user/budget',
+    '/user/passport',
+    '/form',
+  ];
 
   useEffect(() => {
     setIsMobile(IsMobile());
@@ -31,13 +34,7 @@ export default function MainLayout({
 
   return (
     <>
-      <ModalBackground
-        isVisible={isModalOpen}
-        onClick={() => {
-          setIsModalOpen(false);
-        }}
-      />
-      <Header />
+      {!HIDE_WEBHEADER_PATHS.includes(pathname) && <Header />}
       {children}
     </>
   );

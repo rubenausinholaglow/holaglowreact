@@ -1,7 +1,7 @@
 'use client';
 
 import { ClinicProfessional } from '@components/ClinicProfessional';
-import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft, SvgHolaglow } from 'icons/Icons';
