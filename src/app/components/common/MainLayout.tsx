@@ -16,6 +16,13 @@ export default function MainLayout({
   const setIsMobile = useGlobalPersistedStore(state => state.setIsMobile);
   const pathname = usePathname();
 
+  const HIDE_WEBHEADER_PATHS = [
+    '/dashboard',
+    '/user/budget',
+    '/user/passport',
+    '/form',
+  ];
+
   useEffect(() => {
     setIsMobile(IsMobile());
     setISHydrated(true);
@@ -27,7 +34,7 @@ export default function MainLayout({
 
   return (
     <>
-      {!pathname.startsWith('/dashboard') && <Header />}
+      {!HIDE_WEBHEADER_PATHS.includes(pathname) && <Header />}
       {children}
     </>
   );
