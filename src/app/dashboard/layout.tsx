@@ -1,6 +1,7 @@
 'use client';
 
 import { ClinicProfessional } from '@components/ClinicProfessional';
+import ButtonMessage from '@components/ui/ButtonMessage';
 import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -65,6 +66,7 @@ export default function DashboardLayout({
             fill={HOLAGLOW_COLORS['malva']}
           />
         </div>
+        <ButtonMessage />
       </Flex>
     </main>
   );
