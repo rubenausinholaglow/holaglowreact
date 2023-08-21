@@ -8,17 +8,13 @@ import {
 
 function ReadQR() {
   const [scanResult, setScanResult] = useState(null);
-  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null); // Specify the type explicitly
 
   useEffect(() => {
     const html5QrCode = new Html5Qrcode('qr-reader');
-    //     verbose: false,
-    //     formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
-    //   });
-
     const qrCodeSuccessCallback = (decodedText: any, decodedResult: any) => {
+      html5QrCode.stop();
       setScanResult(decodedResult);
-      console.log('readed');
+      console.log(decodedText);
     };
 
     function error(err: any) {
