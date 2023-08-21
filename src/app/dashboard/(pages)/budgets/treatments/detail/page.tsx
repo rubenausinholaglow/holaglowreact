@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { CartItem, Product } from '@interface/product';

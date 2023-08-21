@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
-import { Button } from 'components/Buttons/Buttons';
-import { Carousel } from 'components/Carousel/Carousel';
-import { Flex } from 'components/Layouts/Layouts';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Carousel } from 'designSystem/Carousel/Carousel';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgClose, SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
 import Image from 'next/image';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { useCartStore } from '../stores/userCartStore';
 import { Operation, Quantifier } from './Quantifier';
@@ -84,29 +84,56 @@ export default function HightLightedProduct() {
             onClick={() => setHighlightProduct(emptyProduct)}
           />
         </Flex>
-        <div className="w-full aspect-[4/3] relative shrink-0 mb-4">
-          <Image
-            src={
-              imgSrc
-                ? imgSrc
-                : `/images/product/${product.flowwwId}/${product.flowwwId}.png`
-            }
-            alt={product.title}
-            fill={true}
-            className="object-cover"
-            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-          />
-        </div>
-        <Flex layout="col-left" className="mb-16">
-          <p className="font-semibold text-lg">
-            {product.title} -{' '}
-            <span className="text-lg text-hg-black font-semibold mb-3">
-              {product.price.toFixed(2)}€
-            </span>
-          </p>
-          <p className="mb-4 text-hg-darkMalva">{product.description}</p>
-          <div dangerouslySetInnerHTML={{ __html: product?.detail }} />
+        <Flex layout="row-left" className="w-full gap-4 items-stretch mb-4">
+          <div className="w-1/2 aspect-[4/3] relative shrink-0">
+            <Image
+              src={
+                imgSrc
+                  ? imgSrc
+                  : `/images/product/${product.flowwwId}/${product.flowwwId}.png`
+              }
+              alt={product.title}
+              fill={true}
+              className="object-cover"
+              onError={() => setImgSrc(DEFAULT_IMG_SRC)}
+            />
+          </div>
+          <Flex layout="col-left" className="pt-4 w-full">
+            <Title size="xl" className="font-semibold">
+              {product.title}
+              <br />
+              <span className="text-lg text-hg-black font-semibold mb-3">
+                {product.price.toFixed(2)}€
+              </span>
+            </Title>
+            <p className="mb-4 text-hg-darkMalva">{product.description}</p>
+
+            <Flex
+              layout="row-center"
+              className="pt-4 w-full rounded-lg py-4 bg-hg-darkMalva100 mt-auto"
+            >
+              <Text size="md" className="font-semibold mr-4">
+                Añadir producto:
+              </Text>
+              <Quantifier
+                handleUpdateQuantity={function handleUpdateQuantity(
+                  operation: Operation
+                ): void {
+                  if (operation == 'increase') {
+                    addToCart(product);
+                  } else {
+                    removeSingleProduct(product);
+                  }
+                }}
+                quantity={getQuantityOfProduct(product)}
+              />
+            </Flex>
+          </Flex>
         </Flex>
+        <p
+          className="mb-16"
+          dangerouslySetInnerHTML={{ __html: product?.detail }}
+        />
         {product.beforeAndAfterImages.length > 0 && (
           <div className="mb-16 w-full">
             <p className="font-semibold text-lg mb-4">Antes y después</p>
@@ -130,7 +157,7 @@ export default function HightLightedProduct() {
         {professionals.length > 0 && (
           <>
             <p className="font-semibold text-lg mb-4">Nuestro equipo médico</p>
-            <ul className="mb-16">
+            <ul>
               {professionals
                 .filter(professional => professional.professionalType === 1)
                 .map(professional => {
@@ -165,26 +192,6 @@ export default function HightLightedProduct() {
             </ul>
           </>
         )}
-        <Quantifier
-          handleUpdateQuantity={function handleUpdateQuantity(
-            operation: Operation
-          ): void {
-            if (operation == 'increase') {
-              addToCart(product);
-            } else {
-              removeSingleProduct(product);
-            }
-          }}
-          quantity={getQuantityOfProduct(product)}
-        />
-        <Button
-          style="primary"
-          size="lg"
-          className="w-full"
-          onClick={() => addToCart(product)}
-        >
-          Añadir producto
-        </Button>
       </Flex>
     </>
   );

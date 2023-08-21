@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Button } from 'components/Buttons/Buttons';
-import { Container, Flex } from 'components/Layouts/Layouts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
 export default function Page() {
   const [username, setUserName] = useState('');
@@ -20,7 +20,7 @@ export default function Page() {
           <br />
           tu glow?
         </p>
-        <Button href="/dashboard/menu" style="primary" size="lg">
+        <Button href="/dashboard/menu" type="primary" size="lg">
           Menu
         </Button>
       </Flex>

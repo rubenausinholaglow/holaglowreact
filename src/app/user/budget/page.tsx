@@ -6,7 +6,7 @@ import Products from './Products';
 import PromoCode from './PromoCode';
 import Simulation from './Simulation';
 
-const fetchBudgetData = async (id: number) => {
+const fetchBudgetData = async (id: string) => {
   try {
     const budgetResponse = await fetch(
       `${process.env.NEXT_PUBLIC_CONTACTS_API}budget?id=${id}`,
@@ -31,8 +31,13 @@ export default async function Budget({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const budgetID = Number(searchParams.id);
-  const budgetData = await fetchBudgetData(budgetID);
+  const budgetID = searchParams.id;
+
+  let budgetData;
+
+  if (typeof budgetID === 'string') {
+    budgetData = await fetchBudgetData(budgetID);
+  }
 
   const {
     clinicInfo = null,
@@ -41,7 +46,6 @@ export default async function Budget({
     totalPriceWithIVA = null,
     simulations = null,
     discountCode = null,
-    discountAmount = null,
     referenceId = null,
     creationDate = null,
   } = budgetData ? budgetData : {};
@@ -64,10 +68,7 @@ export default async function Budget({
           )}
           <AlmaPayment totalPrice={totalPriceWithIVA} />
           {simulations.length > 0 && <Simulation simulations={simulations} />}
-          <PromoCode
-            discountCode={discountCode}
-            discountAmount={discountAmount}
-          />
+          <PromoCode discountCode={discountCode} discountAmount={50} />
           <Legal />
           <Footer clinicInfo={clinicInfo} />
         </>

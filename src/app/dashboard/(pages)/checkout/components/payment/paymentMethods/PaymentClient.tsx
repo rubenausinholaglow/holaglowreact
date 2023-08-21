@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
-import { Flex } from 'components/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 
 import PaymentInput from './PaymentInput';
 

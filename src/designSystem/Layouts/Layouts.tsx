@@ -11,7 +11,7 @@ export const Container = ({
   return (
     <div
       className={twMerge(
-        `w-full px-6 max-w-xl mx-auto ${className ? className : ''}`
+        `w-full px-4 max-w-xl mx-auto ${className ? className : ''}`
       )}
     >
       {children}
@@ -24,17 +24,20 @@ export const Flex = ({
   className = '',
   children,
   onClick = undefined,
+  ...rest
 }: {
   layout:
     | 'row-left'
     | 'row-center'
     | 'row-right'
+    | 'row-between'
     | 'col-left'
     | 'col-center'
     | 'col-right';
   className?: string;
   children: ReactNode;
   onClick?: () => void;
+  [key: string]: any;
 }) => {
   const direction = layout.split('-')[0];
 
@@ -50,6 +53,10 @@ export const Flex = ({
     {
       layout: 'row-right',
       classes: 'justify-end items-center',
+    },
+    {
+      layout: 'row-between',
+      classes: 'justify-between items-center',
     },
     {
       layout: 'col-left',
@@ -73,6 +80,7 @@ export const Flex = ({
     <div
       className={twMerge(`flex flex-${direction} ${justify} ${className}`)}
       onClick={onClick}
+      {...rest}
     >
       {children}
     </div>

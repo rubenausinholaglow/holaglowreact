@@ -1,10 +1,10 @@
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   SvgCosmetic1,
   SvgCosmetic2,
   SvgEnvelopeOpen,
   SvgPhone,
 } from 'icons/Icons';
-import { HOLAGLOW_COLORS } from 'utils/colors';
 
 import { Appointment } from '../types';
 
