@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'components/Texts';
-import {
-  Html5Qrcode,
-  Html5QrcodeScanner,
-  Html5QrcodeSupportedFormats,
-} from 'html5-qrcode';
+import { Text } from 'designSystem/Texts/Texts';
+import { Html5Qrcode } from 'html5-qrcode';
 
 function ReadQR() {
   const [scanResult, setScanResult] = useState(null);

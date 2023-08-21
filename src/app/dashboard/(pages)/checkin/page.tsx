@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { Button } from 'components/Buttons/Buttons';
-import { Flex } from 'components/Layouts/Layouts';
-import { Text, Title } from 'components/Texts';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
@@ -45,7 +45,6 @@ export default function Page() {
             <Button
               size="sm"
               style="primary"
-              type="button"
               onClick={startScan}
               className="px-4 mt-auto"
             >

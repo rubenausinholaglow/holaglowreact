@@ -22,12 +22,14 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     function handleAlmaModalClosed(event: Event) {
       const target = event.target as HTMLElement | null;
       if (target) {
-        const almaModal = target.closest(
-          '.alma-eligibility-modal-active-option'
-        ) as HTMLElement;
-        if (almaModal) {
-          const text = almaModal.innerText;
-          installments = Number(text.replace('x', ''));
+        if (typeof target.closest === 'function') {
+          const almaModal = target.closest(
+            '.alma-eligibility-modal-active-option'
+          ) as HTMLElement;
+          if (almaModal) {
+            const text = almaModal.innerText;
+            installments = Number(text.replace('x', ''));
+          }
         }
       }
     }
@@ -132,7 +134,6 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       const urlPayment = await FinanceService.initializePayment(data);
       onUrlPayment(urlPayment.id);
     } catch (error) {
-      // Handle the error appropriately
       console.error('Error initializing payment:', error);
     } finally {
       setIsLoading(false);
