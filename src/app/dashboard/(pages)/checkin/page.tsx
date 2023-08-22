@@ -27,8 +27,10 @@ export default function Page() {
       setName(props.name);
       setHour(props.hour);
       setProfessional(props.professional);
+      reloadPageAfterDelay(10000);
+    } else {
+      reloadPageAfterDelay(5000);
     }
-    reloadPageAfterDelay();
   };
 
   const {
@@ -45,15 +47,15 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (name || checkIn) {
-      reloadPageAfterDelay();
+    if (name) {
+      reloadPageAfterDelay(10000);
     }
-  }, [name, checkIn]);
+  }, [name]);
 
-  const reloadPageAfterDelay = () => {
+  const reloadPageAfterDelay = (delay: number) => {
     setTimeout(() => {
       window.location.reload();
-    }, SCAN_DELAY);
+    }, delay);
   };
 
   return (
@@ -100,9 +102,11 @@ export default function Page() {
 function WelcomeSection({ name, hour, professional }: any) {
   return (
     <div>
-      <Title>Bienvenid@ {name}</Title>
-      <Text size="lg">Tu cita es a las {hour} para el Probador Virtual.</Text>
-      <Text size="lg">
+      <Title className="align-center">Bienvenid@ {name}</Title>
+      <Text size="lg" className="align-center">
+        Tu cita es a las {hour} para el Probador Virtual.
+      </Text>
+      <Text size="lg" className="align-center">
         Por favor, toma asiento y en breves serás atendid@ por {professional}.
       </Text>
     </div>
@@ -140,7 +144,7 @@ function FormSection({
       <button type="submit" disabled={isLoading}>
         {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
       </button>
-      {checkIn && checkIn}
+      <Text className="text-center">{checkIn && checkIn}</Text>
     </form>
   );
 }

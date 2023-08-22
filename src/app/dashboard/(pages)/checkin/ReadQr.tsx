@@ -15,7 +15,7 @@ interface props {
 
 interface QRScannerProps {
   onScanSuccess: (properties: props) => void;
-  onErrorScan: () => void;
+  onErrorScan: (delay: number) => void;
 }
 
 function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
@@ -48,7 +48,7 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
         onScanSuccess(props);
       } else {
         setError('Usuario no encontrado');
-        onErrorScan();
+        onErrorScan(5000);
       }
       setIsLoading(false);
     };
