@@ -1,4 +1,15 @@
 import { useState } from 'react';
+import Bugsnag from '@bugsnag/js';
+import { PatientStatus } from '@interface/appointment';
+import ScheduleService from '@services/ScheduleService';
+import UserService from '@services/UserService';
+import {
+  CHECK_IN_INCORRECT,
+  EMAIL_REQUIRED,
+  INVALID_EMAIL_FORMAT,
+  INVALID_PHONE_FORMAT,
+  PHONE_REQUIRED,
+} from '@utils/textConstants';
 
 interface FormData {
   email: string;
@@ -10,13 +21,94 @@ interface ValidationErrors {
   phone?: string;
 }
 
-const useFormHook = () => {
-  const [formData, setFormData] = useState<FormData>({
+interface Props {
+  name: string;
+  hour: string;
+  professional: string;
+}
+
+const useFormHook = (onScanSuccess: (props: Props) => void) => {
+  const initialFormData: FormData = {
     email: '',
     phone: '',
-  });
-
+  };
+  const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<ValidationErrors>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [checkIn, setCheckIn] = useState<string | null>(null);
+
+  const validateForm = () => {
+    const newErrors: ValidationErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = EMAIL_REQUIRED;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = INVALID_EMAIL_FORMAT;
+    }
+
+    if (!formData.phone) {
+      newErrors.phone = PHONE_REQUIRED;
+    } else if (!/^\d{9}$/.test(formData.phone)) {
+      newErrors.phone = INVALID_PHONE_FORMAT;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const ValidateUser = async (email: string, phone: string) => {
+    try {
+      const data = await UserService.checkUser(email);
+      if (data && data !== '' && data.phone === phone) {
+        return data;
+      }
+    } catch (error: any) {
+      Bugsnag.notify(error);
+    }
+    return null;
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setCheckIn(null);
+    setIsLoading(true);
+
+    if (!validateForm()) {
+      setIsLoading(false);
+      setCheckIn(CHECK_IN_INCORRECT);
+      return;
+    }
+
+    const user = await ValidateUser(formData.email, formData.phone);
+
+    if (user) {
+      try {
+        const { id, flowwwToken, firstName } = user;
+        const appointmentInfo = await ScheduleService.getClinicSchedule(
+          flowwwToken
+        );
+        await ScheduleService.updatePatientStatusAppointment(
+          id,
+          PatientStatus.Pending
+        );
+
+        const props: Props = {
+          name: firstName,
+          hour: appointmentInfo.startTime,
+          professional: appointmentInfo.clinicProfessional.name,
+        };
+
+        onScanSuccess(props);
+      } catch (error: any) {
+        Bugsnag.notify(error);
+      }
+    } else {
+      setCheckIn(CHECK_IN_INCORRECT);
+    }
+
+    setIsLoading(false);
+    setFormData(initialFormData);
+  };
 
   const handleInputChange = (fieldName: keyof FormData, value: string) => {
     setFormData(prevData => ({
@@ -25,38 +117,11 @@ const useFormHook = () => {
     }));
   };
 
-  const validateForm = () => {
-    const newErrors: ValidationErrors = {};
-
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
-    }
-
-    if (!formData.phone) {
-      newErrors.phone = 'Phone is required';
-    } else if (!/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = 'Invalid phone format (10 digits)';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const isValid = validateForm();
-
-    if (isValid) {
-      // You can perform any further actions here, e.g., sending data to a server
-      console.log('Form submitted:', formData);
-    }
-  };
-
   return {
     formData,
     errors,
+    isLoading,
+    checkIn,
     handleInputChange,
     handleSubmit,
   };

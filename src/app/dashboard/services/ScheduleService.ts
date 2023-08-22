@@ -1,3 +1,5 @@
+import { PatientStatus } from '@interface/appointment';
+
 export default class ScheduleService {
   static async getClinicSchedule(flowwwToken: string) {
     try {
@@ -11,6 +13,36 @@ export default class ScheduleService {
       }
     } catch (err) {
       return err;
+    }
+  }
+
+  static async updatePatientStatusAppointment(
+    id: string,
+    patientStatus: PatientStatus
+  ) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/UpdatePatientStatusAppointment?userId=${id}patientStatus=${patientStatus}`;
+      const requestBody = {
+        userId: id,
+        patientStatus: patientStatus,
+      };
+
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (err) {
+      return '';
     }
   }
 }
