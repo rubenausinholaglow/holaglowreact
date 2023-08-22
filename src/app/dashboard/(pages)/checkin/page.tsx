@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import ScheduleService from '@services/ScheduleService';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -27,7 +28,8 @@ export default function Page() {
       setName(props.name);
       setHour(props.hour);
       setProfessional(props.professional);
-      reloadPageAfterDelay(10000);
+      ScheduleService.notifyDashboardPatientArrived(props);
+      reloadPageAfterDelay(100000);
     } else {
       reloadPageAfterDelay(5000);
     }
@@ -48,7 +50,7 @@ export default function Page() {
 
   useEffect(() => {
     if (name) {
-      reloadPageAfterDelay(10000);
+      reloadPageAfterDelay(100000);
     }
   }, [name]);
 

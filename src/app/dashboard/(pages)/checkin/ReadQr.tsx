@@ -3,6 +3,7 @@ import Bugsnag from '@bugsnag/js';
 import { PatientStatus } from '@interface/appointment';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { Html5Qrcode } from 'html5-qrcode';
 import { SvgSpinner } from 'icons/Icons';
@@ -11,6 +12,8 @@ interface props {
   name: string;
   hour: string;
   professional: string;
+  professionalId: string;
+  userId: string;
 }
 
 interface QRScannerProps {
@@ -36,6 +39,7 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
           user.flowwwToken
         );
         await ScheduleService.updatePatientStatusAppointment(
+          appointmentInfo.id,
           UserId,
           PatientStatus.Pending
         );
@@ -44,6 +48,8 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
           name: user.Name,
           hour: appointmentInfo.startTime,
           professional: appointmentInfo.clinicProfessional.name,
+          professionalId: appointmentInfo.clinicProfessional.id,
+          userId: user.id,
         };
         onScanSuccess(props);
       } else {
@@ -67,6 +73,10 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
     );
   }, [onScanSuccess]);
 
+  function stopScan() {
+    onErrorScan(5);
+  }
+
   return (
     <div>
       {scanResult ? (
@@ -80,6 +90,14 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
       ) : (
         <div>
           <div id="qr-reader" style={{ width: '600px' }}></div>
+          <Button
+            size="sm"
+            style="primary"
+            onClick={stopScan}
+            className="px-4 mt-auto"
+          >
+            Cancelar
+          </Button>
         </div>
       )}
     </div>

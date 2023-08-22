@@ -25,6 +25,8 @@ interface Props {
   name: string;
   hour: string;
   professional: string;
+  professionalId: string;
+  userId: string;
 }
 
 const useFormHook = (onScanSuccess: (props: Props) => void) => {
@@ -88,16 +90,18 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
           flowwwToken
         );
         await ScheduleService.updatePatientStatusAppointment(
+          appointmentInfo.id,
           id,
-          PatientStatus.Pending
+          PatientStatus.Waiting
         );
 
         const props: Props = {
           name: firstName,
           hour: appointmentInfo.startTime,
           professional: appointmentInfo.clinicProfessional.name,
+          professionalId: appointmentInfo.clinicProfessional.id,
+          userId: id,
         };
-
         onScanSuccess(props);
       } catch (error: any) {
         Bugsnag.notify(error);

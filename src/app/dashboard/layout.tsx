@@ -1,6 +1,7 @@
 'use client';
 
 import { ClinicProfessional } from '@components/ClinicProfessional';
+import Timer from '@components/ui/Timer';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -52,6 +53,9 @@ export default function DashboardLayout({
 
                 <div className="ml-auto z-10">
                   <ClinicProfessional />
+                </div>
+                <div className="pl-4 mt-5">
+                  <Timer initialColor="green" />
                 </div>
               </>
             )}

@@ -14,6 +14,7 @@ import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore
 import { usePaymentList } from 'app/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { useRouter } from 'next/navigation';
 
+import AppointmentsListComponent from './Appointments';
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
 
@@ -215,6 +216,7 @@ export default function Page() {
           isLoading={isLoading}
         />
       )}
+      <AppointmentsListComponent clinicId="B745EC86-2E32-4DC9-901F-59C274156B37" />
     </div>
   );
 }
