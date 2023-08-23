@@ -9,12 +9,13 @@ export default function ButtonMessage() {
   const [clinicProfessionalId, setclinicProfessionalId] = useState('');
 
   useEffect(() => {
-    const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + '/Slack/Response';
+    const SOCKET_URL =
+      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
     const webConnection = new HubService(SOCKET_URL);
 
     webConnection
       .getConnection()
-      .on('ReceivedMessage', (receivedMessage: any) => {
+      .on('ReceiveMessage', (receivedMessage: any) => {
         showMessage(receivedMessage.actions[0]?.actionId || '');
       });
 
