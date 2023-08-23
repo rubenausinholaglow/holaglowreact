@@ -20,7 +20,7 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
 
   useEffect(() => {
     const SOCKET_URL =
-      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/PatienteArrieved';
+      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/PatientArrived';
     const newConnection = new HubConnectionBuilder()
       .withUrl(SOCKET_URL, {
         skipNegotiation: true,
