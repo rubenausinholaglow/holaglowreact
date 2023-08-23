@@ -1,4 +1,4 @@
-import { PatientStatus } from '@interface/appointment';
+import { Status } from '@interface/appointment';
 
 export default class ScheduleService {
   static async getClinicSchedule(flowwwToken: string) {
@@ -19,14 +19,14 @@ export default class ScheduleService {
   static async updatePatientStatusAppointment(
     appointmentId: string,
     id: string,
-    patientStatus: PatientStatus
+    status: Status
   ) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/SetPatientStatusAppointment`;
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Status`;
       const requestBody = {
         appointmentId: appointmentId,
         userId: id,
-        patientStatus: patientStatus,
+        status: status,
       };
 
       const res = await fetch(url, {
@@ -47,34 +47,9 @@ export default class ScheduleService {
       return '';
     }
   }
-
-  static async notifyDashboardPatientArrived(props: any) {
+  static async getAppointmentsPerClinic(clinicId: string, boxId: string) {
     try {
-      const message = `[PatientArrived]/${props.userId}/${props.professionalId}`;
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/NotifyDashboardPatientArrived`;
-
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(message),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        return data;
-      } else {
-        return '';
-      }
-    } catch (err) {
-      return '';
-    }
-  }
-
-  static async getAppointmentsPerClinic(clinicId: string) {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/AppointmentsPerClinic?clinicId=${clinicId}`;
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/PerClinic?clinicId=${clinicId}&boxId=${boxId}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();

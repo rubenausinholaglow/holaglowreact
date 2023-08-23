@@ -13,7 +13,7 @@ import { useCartStore } from '../../stores/userCartStore';
 const Page = () => {
   const addToCart = useCartStore(state => state.addItemToCart);
   const searchParams = useSearchParams();
-  const id = searchParams.get('search');
+  const id = searchParams.get('boxI');
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {

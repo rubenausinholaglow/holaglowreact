@@ -1,17 +1,23 @@
+import { ClinicProfessional } from 'app/user/types';
+
 export interface Appointment {
   id: string;
   startTime: string;
   flowwwId: string;
-  patientStatus: PatientStatus;
+  status: Status;
   lead: Lead;
+  clinicProfessional: ClinicProfessional;
 }
 
-export enum PatientStatus {
-  Pending,
-  Waiting,
-  InProgress,
-  Finished,
+export enum Status {
+  Open,
+  Canceled,
   NoShow,
+  Moved,
+  Confirmed,
+  Finished,
+  InProgress,
+  CheckIn,
 }
 
 export interface Lead {

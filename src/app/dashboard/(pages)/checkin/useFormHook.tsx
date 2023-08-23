@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { PatientStatus } from '@interface/appointment';
+import { Status } from '@interface/appointment';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import {
@@ -27,6 +27,8 @@ interface Props {
   professional: string;
   professionalId: string;
   userId: string;
+  boxId: string;
+  clinicId: string;
 }
 
 const useFormHook = (onScanSuccess: (props: Props) => void) => {
@@ -92,15 +94,17 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
         await ScheduleService.updatePatientStatusAppointment(
           appointmentInfo.id,
           id,
-          PatientStatus.Waiting
+          Status.CheckIn
         );
-
+        console.log(appointmentInfo);
         const props: Props = {
           name: firstName,
           hour: appointmentInfo.startTime,
           professional: appointmentInfo.clinicProfessional.name,
           professionalId: appointmentInfo.clinicProfessional.id,
           userId: id,
+          boxId: appointmentInfo.boxId,
+          clinicId: appointmentInfo.clinic.id,
         };
         onScanSuccess(props);
       } catch (error: any) {

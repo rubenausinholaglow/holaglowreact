@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Appointment, PatientStatus } from '@interface/appointment';
+import { Appointment, Status } from '@interface/appointment';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
@@ -8,9 +8,10 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgSpinner } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
-const AppointmentsListComponent: React.FC<{ clinicId: string }> = ({
-  clinicId,
-}) => {
+const AppointmentsListComponent: React.FC<{
+  clinicId: string;
+  boxId: string;
+}> = ({ clinicId, boxId }) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loadingAppointments, setLoadingAppointments] = useState<{
     [id: string]: boolean;
@@ -21,7 +22,10 @@ const AppointmentsListComponent: React.FC<{ clinicId: string }> = ({
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const data = await ScheduleService.getAppointmentsPerClinic(clinicId);
+        const data = await ScheduleService.getAppointmentsPerClinic(
+          clinicId,
+          boxId
+        );
 
         if (Array.isArray(data)) {
           setAppointments(data);
@@ -34,7 +38,7 @@ const AppointmentsListComponent: React.FC<{ clinicId: string }> = ({
     };
 
     fetchAppointments();
-  }, [clinicId]);
+  }, [clinicId, boxId]);
 
   const handleCheckUser = async (email: string, appointmentId: string) => {
     setLoadingAppointments(prevLoadingAppointments => ({
@@ -86,6 +90,21 @@ const AppointmentsListComponent: React.FC<{ clinicId: string }> = ({
     localStorage.setItem('flowwwToken', flowwwToken);
   }
 
+  const statusTranslations = {
+    [Status.Open]: 'Pendiente',
+    [Status.Canceled]: '',
+    [Status.NoShow]: 'No Show',
+    [Status.Moved]: '',
+    [Status.Confirmed]: '',
+    [Status.Finished]: 'Finalizado',
+    [Status.CheckIn]: 'Esperando',
+    [Status.InProgress]: 'En Visita',
+  };
+
+  function translateStatus(status: Status): string {
+    return statusTranslations[status] || 'Unknown Status';
+  }
+
   return (
     <div>
       <h1>Lista de citas</h1>
@@ -95,14 +114,16 @@ const AppointmentsListComponent: React.FC<{ clinicId: string }> = ({
             <th>Hora</th>
             <th>Estado</th>
             <th>Nombre</th>
+            <th>Professional</th>
           </tr>
         </thead>
         <tbody>
           {appointments.map(appointment => (
             <tr key={appointment.id}>
               <td>{appointment.startTime}</td>
-              <td>{PatientStatus[appointment.patientStatus]}</td>
+              <td>{translateStatus(appointment.status)}</td>
               <td>{appointment.lead.user.firstName}</td>
+              <td>{appointment.clinicProfessional.name}</td>
               <td>
                 <Button
                   isSubmit

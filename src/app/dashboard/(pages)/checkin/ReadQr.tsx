@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { PatientStatus } from '@interface/appointment';
+import { Status } from '@interface/appointment';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -14,6 +14,8 @@ interface props {
   professional: string;
   professionalId: string;
   userId: string;
+  boxId: string;
+  clinicId: string;
 }
 
 interface QRScannerProps {
@@ -34,22 +36,24 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
       setIsLoading(true);
       const user = await UserService.getUserById(UserId);
 
-      if (user.Name != null) {
+      if (user.firstName != null) {
         const appointmentInfo = await ScheduleService.getClinicSchedule(
           user.flowwwToken
         );
         await ScheduleService.updatePatientStatusAppointment(
           appointmentInfo.id,
           UserId,
-          PatientStatus.Pending
+          Status.CheckIn
         );
 
         const props = {
-          name: user.Name,
+          name: user.firstName,
           hour: appointmentInfo.startTime,
           professional: appointmentInfo.clinicProfessional.name,
           professionalId: appointmentInfo.clinicProfessional.id,
           userId: user.id,
+          boxId: appointmentInfo.boxId,
+          clinicId: appointmentInfo.clinic.id,
         };
         onScanSuccess(props);
       } else {

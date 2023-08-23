@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ScheduleService from '@services/ScheduleService';
+import clinicService from '@services/ClinicService';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -10,7 +10,6 @@ import CheckHydration from 'utils/CheckHydration';
 import ReadQr from './ReadQr';
 import useFormHook from './useFormHook';
 
-const SCAN_DELAY = 10000;
 const WELCOME_MESSAGE = 'Bienvenid@ a Holaglow!';
 const SCAN_QR_MESSAGE = '¡Escanea el QR que te hemos enviado!';
 const SCAN_QR = 'Escanear QR';
@@ -28,8 +27,8 @@ export default function Page() {
       setName(props.name);
       setHour(props.hour);
       setProfessional(props.professional);
-      ScheduleService.notifyDashboardPatientArrived(props);
-      reloadPageAfterDelay(100000);
+      clinicService.PatientArrived(props);
+      reloadPageAfterDelay(30000);
     } else {
       reloadPageAfterDelay(5000);
     }
@@ -50,7 +49,7 @@ export default function Page() {
 
   useEffect(() => {
     if (name) {
-      reloadPageAfterDelay(100000);
+      reloadPageAfterDelay(30000);
     }
   }, [name]);
 

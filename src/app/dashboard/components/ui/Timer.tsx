@@ -19,8 +19,7 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
   const [patientArrived, setPatientArrived] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const SOCKET_URL =
-      process.env.NEXT_PUBLIC_SCHEDULE_API + 'SendMessageDashboard';
+    const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + 'PatientArrived';
     const newConnection = new HubConnectionBuilder()
       .withUrl(SOCKET_URL, {
         skipNegotiation: true,
@@ -40,8 +39,8 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
           connection.on('ReceiveMessage', message => {
             const finalMessage = message.messageText;
             if (finalMessage.startsWith('[PatientArrived]')) {
-              const [, userId, professionalId] = finalMessage.split('/');
-              updateColor(professionalId);
+              const [, clinicId, boxId] = finalMessage.split('/');
+              updateColor(clinicId, boxId);
             }
           });
         })
@@ -94,9 +93,9 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
     }
   };
 
-  function updateColor(professionalId: string) {
-    const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
-    if (GuidProfessional === professionalId) {
+  function updateColor(clinicId: string, boxId: string) {
+    const GuidClinic = localStorage.getItem('ClinicId') || '';
+    if (GuidClinic === clinicId && boxId == '6') {
       handleStopTimer();
       setPatientArrived(true);
       setColor('red');

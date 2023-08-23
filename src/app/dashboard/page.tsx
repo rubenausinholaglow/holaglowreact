@@ -18,13 +18,22 @@ import AppointmentsListComponent from './Appointments';
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const clinicId = params.get('clinicId');
+  const boxId = params.get('boxId');
+
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -116,6 +125,7 @@ export default function Page() {
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
+          localStorage.setItem('boxId', boxId || '');
           saveUserDetails(name, id, flowwwToken);
           router.push('/dashboard/menu');
         } else {
@@ -216,7 +226,10 @@ export default function Page() {
           isLoading={isLoading}
         />
       )}
-      <AppointmentsListComponent clinicId="B745EC86-2E32-4DC9-901F-59C274156B37" />
+      <AppointmentsListComponent
+        clinicId={clinicId || ''}
+        boxId={boxId || ''}
+      />
     </div>
   );
 }
