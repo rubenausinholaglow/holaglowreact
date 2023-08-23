@@ -50,7 +50,6 @@ const Page = () => {
         price: Number(CartItem.price.toFixed(2)),
         percentageDiscount: CartItem.percentageDiscount / 100,
         priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
-        name: CartItem.description,
       })),
     };
 

@@ -37,4 +37,31 @@ export default class clinicService {
       return err;
     }
   }
+
+  static async PatientArrived(props: any) {
+    const patientArrived: any = {
+      clinicId: props.clinicId,
+      boxId: props.boxId,
+    };
+    try {
+      const url = `${process.env.NEXT_PUBLIC_CLINICS_API}PatientArrived`;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(patientArrived),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (err) {
+      return '';
+    }
+  }
 }

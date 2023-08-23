@@ -7,7 +7,6 @@ export default class UserService {
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
         return data;
       } else {
         return '';
@@ -36,6 +35,21 @@ export default class UserService {
       }
     } catch (err) {
       return false;
+    }
+  }
+
+  static async getUserById(id: string) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/${id}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (err) {
+      return '';
     }
   }
 }

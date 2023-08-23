@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -23,12 +24,14 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       const target = event.target as HTMLElement | null;
 
       if (target) {
-        const almaModal = target.closest(
-          '.alma-eligibility-modal-active-option'
-        ) as HTMLElement;
-        if (almaModal) {
-          const text = almaModal.innerText;
-          installments = Number(text.replace('x', ''));
+        if (typeof target.closest === 'function') {
+          const almaModal = target.closest(
+            '.alma-eligibility-modal-active-option'
+          ) as HTMLElement;
+          if (almaModal) {
+            const text = almaModal.innerText;
+            installments = Number(text.replace('x', ''));
+          }
         }
       }
     }
@@ -132,9 +135,8 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     try {
       const urlPayment = await FinanceService.initializePayment(data);
       onUrlPayment(urlPayment.id);
-    } catch (error) {
-      // Handle the error appropriately
-      console.error('Error initializing payment:', error);
+    } catch (error: any) {
+      Bugsnag.notify('Error initializing payment:', error);
     } finally {
       setIsLoading(false);
     }
