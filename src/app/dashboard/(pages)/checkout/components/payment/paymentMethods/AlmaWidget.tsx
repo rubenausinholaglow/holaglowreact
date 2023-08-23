@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { InitializePayment } from '@interface/initializePayment';
 import FinanceService from '@services/FinanceService';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -133,8 +134,8 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     try {
       const urlPayment = await FinanceService.initializePayment(data);
       onUrlPayment(urlPayment.id);
-    } catch (error) {
-      console.error('Error initializing payment:', error);
+    } catch (error: any) {
+      Bugsnag.notify('Error initializing payment:', error);
     } finally {
       setIsLoading(false);
     }

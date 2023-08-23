@@ -30,10 +30,10 @@ const AppointmentsListComponent: React.FC<{
         if (Array.isArray(data)) {
           setAppointments(data);
         } else {
-          console.error('Received non-array data:', data);
+          Bugsnag.notify('Received non-array data:', data);
         }
-      } catch (error) {
-        console.error('Error fetching appointments:', error);
+      } catch (error: any) {
+        Bugsnag.notify('Error fetching appointments:', error);
       }
     };
 
@@ -51,11 +51,11 @@ const AppointmentsListComponent: React.FC<{
         if (data && data !== '') {
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
-          //handleSearchError();
+          //TODO - MESSAGE ERROR UI
         }
       })
       .catch(error => {
-        //handleSearchError();
+        Bugsnag.notify('Error handleCheckUser:', error);
       });
     setLoadingAppointments(prevLoadingAppointments => ({
       ...prevLoadingAppointments,
