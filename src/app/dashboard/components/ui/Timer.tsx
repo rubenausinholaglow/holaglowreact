@@ -19,7 +19,8 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
   const [patientArrived, setPatientArrived] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const SOCKET_URL = process.env.NEXT_PUBLIC_CLINICS_API + 'PatientArrived';
+    const SOCKET_URL =
+      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/PatienteArrieved';
     const newConnection = new HubConnectionBuilder()
       .withUrl(SOCKET_URL, {
         skipNegotiation: true,
@@ -95,7 +96,8 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
 
   function updateColor(clinicId: string, boxId: string) {
     const GuidClinic = localStorage.getItem('ClinicId') || '';
-    if (GuidClinic === clinicId && boxId == '6') {
+    const boxIdlocal = localStorage.getItem('boxId') || '';
+    if (GuidClinic === clinicId && boxId == boxIdlocal) {
       handleStopTimer();
       setPatientArrived(true);
       setColor('red');
