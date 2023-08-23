@@ -39,7 +39,6 @@ export default class clinicService {
   }
 
   static async PatientArrived(props: any) {
-    console.log(props);
     const patientArrived: any = {
       clinicId: props.clinicId,
       boxId: props.boxId,

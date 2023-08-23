@@ -96,7 +96,6 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
           id,
           Status.CheckIn
         );
-        console.log(appointmentInfo);
         const props: Props = {
           name: firstName,
           hour: appointmentInfo.startTime,
