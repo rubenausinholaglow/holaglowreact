@@ -45,7 +45,7 @@ export const Button = ({
 
   return (
     <button
-      className={`relative group overflow-visible ${className}`}
+      className={`transition-all relative group overflow-visible top-[2px] ${className}`}
       onClick={onClick}
       type={rest?.isSubmit ? 'submit' : 'button'}
     >

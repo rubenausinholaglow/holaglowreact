@@ -5,6 +5,7 @@ import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
@@ -98,53 +99,28 @@ export default function PaymentInput(props: Props) {
 
   const renderFinance = () => {
     return (
-      <Flex layout="col-center">
-        <button
-          className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
-          type="button"
-          onClick={() => setShowAlma(!showAlma)}
-        >
-          Ver Financiación
-        </button>
-        {showAlma ? (
-          <>
-            <br />
-            <AlmaWidget
-              amountFinance={inputValue}
-              onUrlPayment={handleUrlPayment}
-            ></AlmaWidget>
-          </>
-        ) : (
-          <></>
+      <>
+        {showAlma && (
+          <AlmaWidget
+            amountFinance={inputValue}
+            onUrlPayment={handleUrlPayment}
+          ></AlmaWidget>
         )}
-      </Flex>
+      </>
     );
   };
 
-  const renderPayment = () => {
-    return (
-      <Flex layout="col-center">
-        <button
-          className="rounded-full px-8 py-2 text-white transition-all bg-hg-darkMalva border border-hg-darkMalva ml-3 mt-1"
-          type="submit"
-        >
-          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
-        </button>
-      </Flex>
-    );
-  };
-
-  const renderPaymentForm = () => {
-    return (
-      <form onSubmit={handleSubmit(handleSubmitForm)}>
-        <Flex layout="row-left" className="items-start">
-          <Controller
-            name="number"
-            control={control}
-            render={({ field, fieldState }) => (
+  return (
+    <form onSubmit={handleSubmit(handleSubmitForm)}>
+      <Flex layout="col-left" className="items-start">
+        <Controller
+          name="number"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Flex layout="row-left" className="mb-2 content-center">
               <input
                 placeholder="Introduce importe"
-                className="border border-hg-darkMalva rounded px-2 py-1 mt-2 text-black w-full mb-6"
+                className="bg-white border border-hg-darkMalva rounded-md p-2 text-hg-black w-[200px]"
                 type="number"
                 {...field}
                 onChange={e => {
@@ -156,15 +132,24 @@ export default function PaymentInput(props: Props) {
                   setInputValue(newValue.toString());
                 }}
               />
-            )}
-          />
-          {props.paymentBank != PaymentBank.None
-            ? renderFinance()
-            : renderPayment()}
-        </Flex>
-      </form>
-    );
-  };
-
-  return renderPaymentForm();
+              {props.paymentMethod === 2 && (
+                <b
+                  onClick={() => setShowAlma(!showAlma)}
+                  className="font-semibold text-hg-darkMalva ml-2 cursor-pointer hover:underline text-xs"
+                >
+                  Ver Financiación
+                </b>
+              )}
+              {props.paymentMethod !== 2 && (
+                <Button size="sm" type="secondary" isSubmit className="ml-2">
+                  {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
+                </Button>
+              )}
+            </Flex>
+          )}
+        />
+        {props.paymentBank != PaymentBank.None && renderFinance()}
+      </Flex>
+    </form>
+  );
 }

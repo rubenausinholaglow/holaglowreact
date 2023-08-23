@@ -21,6 +21,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
   useEffect(() => {
     function handleAlmaModalClosed(event: Event) {
       const target = event.target as HTMLElement | null;
+
       if (target) {
         const almaModal = target.closest(
           '.alma-eligibility-modal-active-option'
@@ -140,14 +141,15 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
   };
 
   return (
-    <Flex layout="col-center" className="relative">
-      <Flex layout="row-center">
-        <section id="payment-plans"></section>
-        <Flex layout="row-left">
-          <Button onClick={async () => await handleClick(amountFinance)}>
-            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
-          </Button>
-        </Flex>
+    <Flex layout="col-left" className="relative">
+      <section id="payment-plans"></section>
+      <Flex layout="row-left" className="mt-4">
+        <Button
+          type="secondary"
+          onClick={async () => await handleClick(amountFinance)}
+        >
+          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
+        </Button>
       </Flex>
     </Flex>
   );
