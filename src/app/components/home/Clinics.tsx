@@ -5,7 +5,6 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAngle } from 'icons/IconsDs';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const CLINICS = [
