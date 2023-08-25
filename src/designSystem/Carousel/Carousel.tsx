@@ -1,8 +1,10 @@
+'use client';
+
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useState } from 'react';
-import { SvgArrowSmallLeft } from 'icons/Icons';
+import { SvgArrow } from 'icons/IconsDs';
 import {
   ButtonBack,
   ButtonNext,
@@ -83,11 +85,12 @@ export const Carousel = ({
       {hasControls ? (
         <CarouselNavigation type="back">
           <ButtonBack
+            className="transition-opacity bg-hg-darkMalva text-hg-lime rounded-full p-3 disabled:opacity-0 disabled:cursor-default"
             onClick={() => {
               handleBackButton();
             }}
           >
-            <SvgArrowSmallLeft height={30} width={30} />
+            <SvgArrow height={18} width={18} className="rotate-180" />
           </ButtonBack>
         </CarouselNavigation>
       ) : null}
@@ -95,11 +98,12 @@ export const Carousel = ({
       {hasControls ? (
         <CarouselNavigation type="next">
           <ButtonNext
+            className="transition-opacity bg-hg-darkMalva text-hg-lime rounded-full p-3 disabled:opacity-0 disabled:cursor-default"
             onClick={() => {
               handleNextButton();
             }}
           >
-            <SvgArrowSmallLeft height={30} width={30} className="rotate-180" />
+            <SvgArrow height={18} width={18} />
           </ButtonNext>
         </CarouselNavigation>
       ) : null}

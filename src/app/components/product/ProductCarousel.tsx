@@ -30,9 +30,10 @@ export default function TreatmentCarousel({
       <div style={{ width: CarouselWidth }}>
         <Carousel
           hasControls
-          className="relative flex flex-row gap-10"
+          className="relative mb-12"
           isIntrinsicHeight
           visibleSlides={4.25}
+          infinite={false}
         >
           {treatments.map(treatment => (
             <ProductCard

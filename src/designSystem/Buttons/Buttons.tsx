@@ -50,7 +50,7 @@ export const Button = ({
       type={rest?.isSubmit ? 'submit' : 'button'}
     >
       <ButtonBase type={type} />
-      <ButtonBody type={type} size={size} customStyles={customStyles}>
+      <ButtonBody type={type} size={size} customStyles={customStyles} {...rest}>
         {children}
       </ButtonBody>
     </button>
@@ -61,20 +61,29 @@ const ButtonBody = ({
   type,
   size,
   customStyles,
+  color,
+  bgColor,
   children,
 }: {
   type: ButtonTypes;
   size: ButtonSizes;
   customStyles?: string;
+  color?: string;
+  bgColor?: string;
   children: ReactNode;
 }) => {
+  if (bgColor) {
+    console.log(bgColor);
+  }
+
   const STYLES: any = {
     common: 'transition-all relative bottom-[1px] text-center rounded-full ',
     animations: '-translate-y-1 group-active:-translate-y-0',
     primary: 'bg-hg-black text-hg-lime',
     secondary: 'bg-white text-hg-darkMalva border border-hg-black',
-    tertiary:
-      'bg-white text-hg-black border border-hg-black hover:bg-hg-malva300 active:bg-hg-malva300',
+    tertiary: `${
+      bgColor ? '' : 'bg-white hover:bg-hg-malva300 active:bg-hg-malva300'
+    } ${color ? '' : 'text-hg-black border border-hg-black'}`,
     transparent:
       'bg-white text-hg-black border border-transparent hover:bg-hg-malva300 hover:border-hg-malva300 active:bg-hg-malva300 active:border-hg-malva300',
     sm: 'text-xs h-[32px] px-4',
@@ -92,7 +101,15 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles}>
+    <Flex
+      layout="row-center"
+      className={styles}
+      style={{
+        backgroundColor: bgColor,
+        color: color,
+        border: `1px solid ${color}`,
+      }}
+    >
       {children}
     </Flex>
   );

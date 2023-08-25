@@ -48,23 +48,6 @@ export const SvgHolaglow = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-/* export const SvgAdd = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
-    fill="currentColor"
-    viewBox="0 0 24 24"
-    {...props}
-  >
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M8 0C8.37871 0 8.68571 0.307005 8.68571 0.685714V7.31429H15.3143C15.693 7.31429 16 7.62129 16 8C16 8.37871 15.693 8.68571 15.3143 8.68571H8.68571V15.3143C8.68571 15.693 8.37871 16 8 16C7.62129 16 7.31429 15.693 7.31429 15.3143V8.68571H0.685714C0.307005 8.68571 0 8.37871 0 8C0 7.62129 0.307005 7.31429 0.685714 7.31429H7.31429V0.685714C7.31429 0.307005 7.62129 0 8 0Z"
-    />
-  </svg>
-); */
-
 export const SvgArrow = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -79,6 +62,19 @@ export const SvgArrow = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
       d="M15.7535 3.22671C15.4645 2.92998 14.9896 2.92372 14.6929 3.21272C14.3962 3.50172 14.3899 3.97655 14.6789 4.27329L21.4724 11.2484H0.75C0.335786 11.2484 0 11.5842 0 11.9984C0 12.4127 0.335786 12.7484 0.75 12.7484H21.4724L14.6789 19.7236C14.3899 20.0204 14.3962 20.4952 14.6929 20.7842C14.9896 21.0732 15.4645 21.0669 15.7535 20.7702L23.7871 12.5217C24.0707 12.2305 24.0707 11.7664 23.7871 11.4752L15.7535 3.22671Z"
     />
+  </svg>
+);
+
+export const SvgAngle = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    fill="currentColor"
+    viewBox="0 0 24 24"
+    {...props}
+  >
+    <path d="M9.70711 5.29289C9.31658 4.90237 8.68342 4.90237 8.29289 5.29289C7.90237 5.68342 7.90237 6.31658 8.29289 6.70711L13.5858 12L8.29289 17.2929C7.90237 17.6834 7.90237 18.3166 8.29289 18.7071C8.68342 19.0976 9.31658 19.0976 9.70711 18.7071L15.7071 12.7071C16.0976 12.3166 16.0976 11.6834 15.7071 11.2929L9.70711 5.29289Z" />
   </svg>
 );
 
@@ -129,5 +125,18 @@ export const SvgMenu = (props: SVGProps<SVGSVGElement>) => (
   >
     <path d="M1 6H25" strokeWidth="1.5" strokeLinecap="round" />
     <path d="M1 18H25" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+export const SvgHolaGlowStar = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={196}
+    height={196}
+    fill="currentColor"
+    viewBox="0 0 196 196"
+    {...props}
+  >
+    <path d="M97.92 0L108.48 80.7638L176.64 38.9045L121.6 97.6717L196 126.07L116.96 118.683L141.6 196L97.92 127.876L54.4 196L79.04 118.683L0 126.07L74.4 97.6717L19.36 38.9045L87.52 80.7638L97.92 0Z" />
   </svg>
 );

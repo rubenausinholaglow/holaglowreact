@@ -1,6 +1,9 @@
+import Clinics from './components/home/Clinics';
 import Hero from './components/home/Hero';
+import InTheNews from './components/home/InTheNews';
 import Products from './components/home/Products';
 import Professionals from './components/home/Professionals';
+import Testimonials from './components/home/Testimonials';
 import ValuesCarousel from './components/home/ValuesCarousel';
 import ValuesDescription from './components/home/ValuesDescription';
 
@@ -12,6 +15,9 @@ export default function Home() {
       <ValuesDescription />
       <Products />
       <Professionals />
+      <Testimonials />
+      <InTheNews />
+      <Clinics />
     </>
   );
 }

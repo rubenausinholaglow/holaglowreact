@@ -75,15 +75,6 @@ export default async function HomeProducts() {
             );
           })}
         </ul>
-
-        {/*         <ul className="flex flex-row gap-10">
-          {filteredTreatments.map(treatment => (
-            <li key={treatment.id}>
-              <TreatmentCard treatment={treatment} />
-            </li>
-          ))}
-        </ul> */}
-
         <ProductCarousel treatments={filteredTreatments} />
       </Container>
     </div>

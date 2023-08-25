@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Product } from '@interface/product';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -35,21 +36,21 @@ export default function TreatmentCard({
         </div>
       </Flex>
       <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
-        <Title size="xl" className="mb-2">
-          {treatment.title}
-        </Title>
-        <Text size="sm" className="text-hg-gray-200 mb-8">
+        <Text className="mb-2 font-semibold">{treatment.title}</Text>
+        <Text size="xs" className="text-hg-gray-200 mb-8">
           {treatment.description}
         </Text>
         <Button
-          style="tertiary"
-          className="mt-auto bg-hg-lime border-hg-darkMalva text-hg-darkMalva"
+          type="tertiary"
+          className="mt-auto"
+          color={HOLAGLOW_COLORS['black']}
+          bgColor={HOLAGLOW_COLORS['lime']}
         >
           <Flex layout="row-center">
             <Text size="sm" className="mr-2">
               Saber más
             </Text>
-            <SvgArrow height={20} width={20} className="rotate-180" />
+            <SvgArrow height={20} width={20} />
           </Flex>
         </Button>
       </Flex>
