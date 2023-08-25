@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
-} from 'app/web/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+} from 'app/stores/globalStore';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import {

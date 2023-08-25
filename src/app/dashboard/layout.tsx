@@ -2,7 +2,8 @@
 
 import { ClinicProfessional } from '@components/ClinicProfessional';
 import ButtonMessage from '@components/ui/ButtonMessage';
-import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import Timer from '@components/ui/Timer';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft, SvgHolaglow } from 'icons/Icons';
@@ -34,7 +35,7 @@ export default function DashboardLayout({
     <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
       <Flex
         layout="col-center"
-        className="min-h-screen h-100 text-hg-black text-sm"
+        className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
@@ -51,8 +52,13 @@ export default function DashboardLayout({
                   </Flex>
                 </Button>
 
+                {pathName !== '/dashboard' && <ButtonMessage />}
+
                 <div className="ml-auto z-10">
                   <ClinicProfessional />
+                </div>
+                <div className="pl-4 mt-5">
+                  <Timer initialColor="green" />
                 </div>
               </>
             )}
@@ -66,7 +72,6 @@ export default function DashboardLayout({
             fill={HOLAGLOW_COLORS['malva']}
           />
         </div>
-        <ButtonMessage />
       </Flex>
     </main>
   );

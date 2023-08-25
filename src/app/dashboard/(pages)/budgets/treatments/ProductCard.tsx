@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { CartItem } from '@interface/product';
-import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -28,7 +28,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
   const [imgSrc, setImgSrc] = useState(
-    `/images/product/${product.flowwwId}/${product.flowwwId}.png`
+    `https://budgetimages.blob.core.windows.net/images/products/${product.flowwwId}/${product.flowwwId}.jpg`
   );
 
   const productCartItem = cart.filter(

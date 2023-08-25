@@ -1,14 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/web/stores/globalStore';
-import { ModalBackground } from 'designSystem/Modals/Modal';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { usePathname } from 'next/navigation';
 
 import { IsMobile } from './Breakpoint';
 import Header from './Header';
+
+const HIDE_WEBHEADER_PATHS = ['/user/budget', '/user/passport', '/form'];
+const HIDE_WEBHEADER_PATTERNS = ['/dashboard'];
+
+const showWebHeader = (path: string) => {
+  if (HIDE_WEBHEADER_PATHS.includes(path)) {
+    return false;
+  }
+
+  return !HIDE_WEBHEADER_PATTERNS.some(item => path.startsWith(item));
+};
 
 export default function MainLayout({
   children,
@@ -16,9 +24,8 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const isModalOpen = useGlobalStore(state => state.isModalOpen);
-  const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
   const setIsMobile = useGlobalPersistedStore(state => state.setIsMobile);
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsMobile(IsMobile());
@@ -31,13 +38,7 @@ export default function MainLayout({
 
   return (
     <>
-      <ModalBackground
-        isVisible={isModalOpen}
-        onClick={() => {
-          setIsModalOpen(false);
-        }}
-      />
-      <Header />
+      {showWebHeader(pathname) && <Header />}
       {children}
     </>
   );

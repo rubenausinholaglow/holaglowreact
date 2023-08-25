@@ -1,4 +1,4 @@
-import { HOLAGLOW_COLORS } from 'app/web/utils/colors';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { SvgHolaglow } from 'icons/Icons';
 import Image from 'next/image';
 
