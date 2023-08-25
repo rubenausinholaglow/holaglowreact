@@ -94,12 +94,7 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
       ) : (
         <div>
           <div id="qr-reader" style={{ width: '600px' }}></div>
-          <Button
-            size="sm"
-            style="primary"
-            onClick={stopScan}
-            className="px-4 mt-auto"
-          >
+          <Button style="primary" onClick={stopScan} className="mt-8">
             Cancelar
           </Button>
         </div>
