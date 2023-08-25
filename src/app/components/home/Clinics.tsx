@@ -84,14 +84,12 @@ export default function Clinics() {
         </div>
       </Container>
 
-      <div className="absolute bg-slate-400 top-0 bottom-0 right-0 left-1/2">
-        <Image
-          src="/images/home/maps/barcelona.png"
-          alt="clínica"
-          fill
-          className="object-cover rounded-xl"
-        />
-      </div>
+      <div
+        className="absolute bg-slate-400 top-0 bottom-0 right-0 left-1/2"
+        style={{
+          background: `url("/images/home/maps/${selectedClinic.toLowerCase()}.png") center / cover no-repeat`,
+        }}
+      ></div>
     </div>
   );
 }

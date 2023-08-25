@@ -1,4 +1,5 @@
 import Clinics from './components/home/Clinics';
+import GoToTreatments from './components/home/GoToTreatments';
 import Hero from './components/home/Hero';
 import InTheNews from './components/home/InTheNews';
 import Products from './components/home/Products';
@@ -18,6 +19,7 @@ export default function Home() {
       <Testimonials />
       <InTheNews />
       <Clinics />
+      <GoToTreatments />
     </>
   );
 }
