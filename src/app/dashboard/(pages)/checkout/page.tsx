@@ -10,7 +10,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
-import router from 'next/router';
 import CheckHydration from 'utils/CheckHydration';
 
 import { CartTotal } from '../budgets/minicart/Cart';

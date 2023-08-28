@@ -60,7 +60,7 @@ export const PaymentModule = () => {
 
     const finalBudget: TicketBudget = {
       id: BudgetId,
-      DiscountAmount: '',
+      discountAmount: '',
       userId: GuidUser,
       discountCode: '',
       priceDiscount: 0,
@@ -68,6 +68,7 @@ export const PaymentModule = () => {
       manualPrice: 0,
       totalPrice: totalPrice,
       clinicInfoId: GuidClinicId,
+      FlowwwId: '',
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: GuidProfessional,

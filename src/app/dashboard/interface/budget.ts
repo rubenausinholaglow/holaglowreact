@@ -24,7 +24,6 @@ export interface BudgetProduct {
 
 export interface TicketBudget extends Budget {
   id: string;
-  DiscountAmount: string;
 }
 
 export enum StatusBudget {
