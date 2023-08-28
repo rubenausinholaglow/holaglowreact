@@ -77,14 +77,14 @@ const Page = () => {
         </Title>
 
         <Flex layout="row-left" className="items-start">
-          <ul className="w-3/4 shrink-0">
+          <ul className="w-2/3 shrink-0">
             {cart?.map(cartItem => (
               <li key={cartItem.uniqueId} className="mb-4">
                 <ProductCard isCheckout product={cartItem} />
               </li>
             ))}
           </ul>
-          <Flex layout="col-left" className="w-1/4 pl-8 shrink-0 relative">
+          <Flex layout="col-left" className="w-1/3 pl-8 shrink-0 relative">
             {!showPaymentButtons && (
               <SvgAngleDown
                 height={20}

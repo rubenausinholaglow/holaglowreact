@@ -26,7 +26,7 @@ export const Flex = ({
   onClick = undefined,
   ...rest
 }: {
-  layout:
+  layout?:
     | 'row-left'
     | 'row-center'
     | 'row-right'

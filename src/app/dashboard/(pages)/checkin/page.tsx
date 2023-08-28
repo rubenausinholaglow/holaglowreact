@@ -66,25 +66,22 @@ export default function Page() {
           <WelcomeSection name={name} hour={hour} professional={professional} />
         ) : (
           <>
-            <Title size="2xl" className="text-left mb-4">
-              {WELCOME_MESSAGE}
-            </Title>
-            <Text>{SCAN_QR_MESSAGE}</Text>
-            {isScanning ? (
-              <ReadQr
-                onScanSuccess={onScanSuccess}
-                onErrorScan={reloadPageAfterDelay}
-              />
-            ) : (
-              <Button
-                size="sm"
-                style="primary"
-                onClick={startScan}
-                className="px-4 mt-auto"
-              >
-                {SCAN_QR}
-              </Button>
-            )}
+            <Flex layout="col-center" className="gap-4 mb-12">
+              <Title size="xl" className="text-left">
+                {WELCOME_MESSAGE}
+              </Title>
+              <Text className="mb-8">{SCAN_QR_MESSAGE}</Text>
+              {isScanning ? (
+                <ReadQr
+                  onScanSuccess={onScanSuccess}
+                  onErrorScan={reloadPageAfterDelay}
+                />
+              ) : (
+                <Button size="lg" style="primary" onClick={startScan}>
+                  {SCAN_QR}
+                </Button>
+              )}
+            </Flex>
             <FormSection
               formData={formData}
               errors={errors}
@@ -123,29 +120,60 @@ function FormSection({
   checkIn,
 }: any) {
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Correo Electrónico:</label>
-        <input
-          type="email"
-          value={formData.email}
-          onChange={e => handleInputChange('email', e.target.value)}
-        />
-        {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
-      </div>
-      <div>
-        <label>Teléfono:</label>
-        <input
-          type="tel"
-          value={formData.phone}
-          onChange={e => handleInputChange('phone', e.target.value)}
-        />
-        {errors.phone && <span style={{ color: 'red' }}>{errors.phone}</span>}
-      </div>
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
-      </button>
-      <Text className="text-center">{checkIn && checkIn}</Text>
-    </form>
+    <>
+      <Text size="lg" className="font-semibold mb-4">
+        ...o identifícate con tu email y teléfono
+      </Text>
+      <form onSubmit={handleSubmit} className="relative">
+        <Flex
+          layout="col-left"
+          className={`gap-4 px-12 py-8 bg-hg-malva300 relative z-10 ${
+            checkIn ? 'rounded-t-xl' : 'rounded-xl'
+          }`}
+        >
+          <Flex layout="col-left">
+            <label className="mb-2">Correo Electrónico:</label>
+            <input
+              className="py-3 px-2 rounded-md"
+              type="email"
+              value={formData.email}
+              onChange={e => handleInputChange('email', e.target.value)}
+            />
+            {errors.email && (
+              <span style={{ color: 'red' }}>{errors.email}</span>
+            )}
+          </Flex>
+          <Flex layout="col-left">
+            <label className="mb-2">Teléfono:</label>
+            <input
+              className="py-3 px-2 rounded-md"
+              type="tel"
+              value={formData.phone}
+              onChange={e => handleInputChange('phone', e.target.value)}
+            />
+            {errors.phone && (
+              <span style={{ color: 'red' }}>{errors.phone}</span>
+            )}
+          </Flex>
+          <Button
+            type="secondary"
+            isSubmit
+            disabled={isLoading}
+            className="ml-auto"
+          >
+            {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
+          </Button>
+        </Flex>
+        <Text
+          className={`transition-all text-center bg-hg-darkMalva text-white font-semibold w-full p-2 rounded-b-xl ${
+            checkIn
+              ? 'translate-y-0 opacity-100'
+              : '-translate-y-full opacity-0'
+          }`}
+        >
+          {checkIn && checkIn}
+        </Text>
+      </form>
+    </>
   );
 }
