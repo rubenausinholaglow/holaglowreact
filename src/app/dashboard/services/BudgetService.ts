@@ -1,5 +1,5 @@
 import Bugsnag from '@bugsnag/js';
-import { Budget } from '@interface/budget';
+import { Budget, StatusBudget } from '@interface/budget';
 import { Ticket } from '@interface/ticket';
 import { ERROR_CREATE_BUDGET } from '@utils/textConstants';
 
@@ -47,6 +47,54 @@ export const budgetService = {
         throw new Error(ERROR_CREATE_BUDGET);
       }
       return true;
+    } catch (error) {
+      Bugsnag.notify(error + ERROR_CREATE_BUDGET);
+      throw new Error(ERROR_CREATE_BUDGET);
+    }
+  },
+
+  updateStatusBudget: async (budgetId: string, budgetSatus: StatusBudget) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_PATIENTS_API}Budget/${budgetId}/Status?status=${budgetSatus}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (!response.ok) {
+        Bugsnag.notify(ERROR_CREATE_BUDGET);
+        throw new Error(ERROR_CREATE_BUDGET);
+      }
+      return true;
+    } catch (error) {
+      Bugsnag.notify(error + ERROR_CREATE_BUDGET);
+      throw new Error(ERROR_CREATE_BUDGET);
+    }
+  },
+  updateBudget: async (budget: Budget) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_PATIENTS_API}Budget`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(budget),
+        }
+      );
+
+      if (!response.ok) {
+        Bugsnag.notify(ERROR_CREATE_BUDGET);
+        throw new Error(ERROR_CREATE_BUDGET);
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
       Bugsnag.notify(error + ERROR_CREATE_BUDGET);
       throw new Error(ERROR_CREATE_BUDGET);

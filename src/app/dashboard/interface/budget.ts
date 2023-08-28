@@ -1,7 +1,10 @@
 export interface Budget {
+  id?: string;
   userId: string;
-  statusBudget: number;
+  statusBudget: StatusBudget;
   discountCode: string;
+  discountAmount: string;
+  FlowwwId: string;
   priceDiscount: number;
   percentageDiscount: number;
   totalPrice: number;
@@ -21,10 +24,11 @@ export interface BudgetProduct {
 
 export interface TicketBudget extends Budget {
   id: string;
-  DiscountAmount: string;
 }
 
-export interface TicketBudget extends Budget {
-  id: string;
-  DiscountAmount: string;
+export enum StatusBudget {
+  Open = 1,
+  Finish = 2,
+  Rejected = 3,
+  Paid = 4,
 }
