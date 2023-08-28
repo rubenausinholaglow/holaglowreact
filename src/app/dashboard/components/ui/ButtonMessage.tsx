@@ -12,6 +12,7 @@ export default function ButtonMessage() {
   const [clinicProfessionalId, setclinicProfessionalId] = useState('');
 
   useEffect(() => {
+    setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
     const SOCKET_URL =
       process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
     const webConnection = new HubService(SOCKET_URL);
@@ -29,7 +30,6 @@ export default function ButtonMessage() {
   }, []);
 
   const toggleButtons = () => {
-    setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
     setShowButtons(!showButtons);
   };
 
