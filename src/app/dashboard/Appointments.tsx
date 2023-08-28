@@ -92,10 +92,10 @@ const AppointmentsListComponent: React.FC<{
 
   const statusTranslations = {
     [Status.Open]: 'Pendiente',
-    [Status.Canceled]: '',
+    [Status.Canceled]: 'Cancelada',
     [Status.NoShow]: 'No Show',
-    [Status.Moved]: '',
-    [Status.Confirmed]: '',
+    [Status.Moved]: 'Movida',
+    [Status.Confirmed]: 'Confirmada',
     [Status.Finished]: 'Finalizado',
     [Status.CheckIn]: 'Esperando',
     [Status.InProgress]: 'En Visita',

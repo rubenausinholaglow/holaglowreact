@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { TicketBudget } from '@interface/budget';
+import { StatusBudget, TicketBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
 import { budgetService } from '@services/BudgetService';
@@ -60,7 +60,7 @@ export const PaymentModule = () => {
 
     const finalBudget: TicketBudget = {
       id: BudgetId,
-      DiscountAmount: '',
+      discountAmount: '',
       userId: GuidUser,
       discountCode: '',
       priceDiscount: 0,
@@ -68,8 +68,9 @@ export const PaymentModule = () => {
       manualPrice: 0,
       totalPrice: totalPrice,
       clinicInfoId: GuidClinicId,
+      FlowwwId: '',
       referenceId: '',
-      statusBudget: 0,
+      statusBudget: StatusBudget.Open,
       professionalId: GuidProfessional,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
@@ -97,7 +98,15 @@ export const PaymentModule = () => {
       })),
     };
     try {
-      return await budgetService.createTicket(ticket);
+      const updateResponse = await budgetService.updateStatusBudget(
+        BudgetId,
+        StatusBudget.Paid
+      );
+      if (updateResponse) {
+        return await budgetService.createTicket(ticket);
+      } else {
+        return false;
+      }
     } catch (error: any) {
       Bugsnag.notify(error);
     }
