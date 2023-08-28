@@ -35,7 +35,7 @@ export default function DashboardLayout({
     <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
       <Flex
         layout="col-center"
-        className="min-h-screen h-100 text-hg-black text-sm"
+        className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
@@ -51,6 +51,8 @@ export default function DashboardLayout({
                     Volver
                   </Flex>
                 </Button>
+
+                {pathName !== '/dashboard' && <ButtonMessage />}
 
                 <div className="ml-auto z-10">
                   <ClinicProfessional />
