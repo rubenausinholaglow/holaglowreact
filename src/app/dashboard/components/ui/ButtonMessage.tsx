@@ -47,7 +47,7 @@ export default function ButtonMessage() {
     const partsToCompare = actionId.split('/');
     const professionalId = partsToCompare[0];
     const action = partsToCompare[1];
-    var clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
+    const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
         console.log('Puedo');
