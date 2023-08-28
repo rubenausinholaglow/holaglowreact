@@ -98,15 +98,7 @@ export const PaymentModule = () => {
       })),
     };
     try {
-      const updateResponse = await budgetService.updateStatusBudget(
-        BudgetId,
-        StatusBudget.Paid
-      );
-      if (updateResponse) {
-        return await budgetService.createTicket(ticket);
-      } else {
-        return false;
-      }
+      return await budgetService.createTicket(ticket);
     } catch (error: any) {
       Bugsnag.notify(error);
     }
