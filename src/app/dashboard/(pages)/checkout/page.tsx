@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Budget } from '@interface/budget';
+import { Budget, StatusBudget } from '@interface/budget';
 import { budgetService } from '@services/BudgetService';
 import { ERROR_POST } from '@utils/textConstants';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
@@ -29,7 +29,7 @@ const Page = () => {
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
 
-  const handleFinalize = async () => {
+  const handleFinalize = async (createNew: boolean) => {
     const GuidUser = localStorage.getItem('id') || '';
     const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
@@ -37,13 +37,15 @@ const Page = () => {
     const budget: Budget = {
       userId: GuidUser,
       discountCode: '',
+      discountAmount: '',
+      FlowwwId: '',
       priceDiscount: Number(priceDiscount.toFixed(2)),
       percentageDiscount: percentageDiscount / 100,
       manualPrice: Number(manualPrice.toFixed(2)),
       totalPrice: Number(totalPrice.toFixed(2)),
       clinicInfoId: GuidClinicId,
       referenceId: '',
-      statusBudget: 0,
+      statusBudget: StatusBudget.Open,
       professionalId: GuidProfessional,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
@@ -54,9 +56,14 @@ const Page = () => {
     };
 
     try {
-      const data = await budgetService.createBudget(budget);
-      localStorage.setItem('BudgetId', data.id);
-      router.push('/dashboard/menu');
+      if (createNew) {
+        const data = await budgetService.createBudget(budget);
+        localStorage.setItem('BudgetId', data.id);
+      } else {
+        const budgetId = localStorage.getItem('BudgetId') || '';
+        budget.id = budgetId;
+        await budgetService.updateBudget(budget);
+      }
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
     }
@@ -106,7 +113,9 @@ const Page = () => {
                     onClick={async () => {
                       setIsLoading(true);
                       if (!localStorage.getItem('BudgetId') || '') {
-                        await handleFinalize();
+                        await handleFinalize(true);
+                      } else {
+                        await handleFinalize(false);
                       }
                       setIsLoading(false);
                       setShowPaymentButtons(!showPaymentButtons);
