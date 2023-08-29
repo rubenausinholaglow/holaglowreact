@@ -68,7 +68,7 @@ export default class ScheduleService {
     clientToken: string
   ) {
     try {
-      const url = `https://localhost:7104/Appointment/Confirm`;
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Confirm`;
       const requestBody: Appointment = {
         id: appointmentId,
         flowwwId: appointmentflowwwId,
