@@ -3,15 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
-import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
-import { INITIAL_STATE } from '@utils/constants';
 import * as config from '@utils/textConstants';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
+import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import { usePaymentList } from 'app/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { useRouter } from 'next/navigation';
 
 import AppointmentsListComponent from './Appointments';
@@ -59,14 +56,7 @@ export default function Page({
   });
 
   useEffect(() => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('ClinicId');
-    localStorage.removeItem('ClinicProfessionalId');
-    localStorage.removeItem('id');
-    localStorage.removeItem('flowwwToken');
-    localStorage.removeItem('BudgetId');
-    usePaymentList.setState(INITIAL_STATE_PAYMENT);
-    useCartStore.setState(INITIAL_STATE);
+    clearLocalStorage(false);
   }, []);
 
   const handleCheckUser = async () => {
@@ -226,10 +216,6 @@ export default function Page({
           isLoading={isLoading}
         />
       )}
-      <AppointmentsListComponent
-        clinicId={clinicId || ''}
-        boxId={boxId || ''}
-      />
     </div>
   );
 }

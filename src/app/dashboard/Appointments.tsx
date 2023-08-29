@@ -40,15 +40,16 @@ const AppointmentsListComponent: React.FC<{
     fetchAppointments();
   }, [clinicId, boxId]);
 
-  const handleCheckUser = async (email: string, appointmentId: string) => {
+  const handleCheckUser = async (appointment: Appointment) => {
     setLoadingAppointments(prevLoadingAppointments => ({
       ...prevLoadingAppointments,
-      [appointmentId]: true,
+      [appointment.id]: true,
     }));
 
-    await UserService.checkUser(email)
+    await UserService.checkUser(appointment.lead?.user?.email)
       .then(async data => {
         if (data && data !== '') {
+          saveAppointmentInfo(appointment);
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           //TODO - MESSAGE ERROR UI
@@ -59,9 +60,14 @@ const AppointmentsListComponent: React.FC<{
       });
     setLoadingAppointments(prevLoadingAppointments => ({
       ...prevLoadingAppointments,
-      [appointmentId]: false,
+      [appointment.id]: false,
     }));
   };
+
+  function saveAppointmentInfo(appointment: Appointment) {
+    localStorage.setItem('appointmentId', appointment.id);
+    localStorage.setItem('appointmentFlowwwId', appointment.flowwwId ?? '');
+  }
 
   async function redirectPage(name: string, id: string, flowwwToken: string) {
     try {
@@ -73,6 +79,7 @@ const AppointmentsListComponent: React.FC<{
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
+          localStorage.setItem('boxId', boxId || '');
           saveUserDetails(name, id, flowwwToken);
           router.push('/dashboard/menu');
         } else {
@@ -121,15 +128,13 @@ const AppointmentsListComponent: React.FC<{
           {appointments.map(appointment => (
             <tr key={appointment.id}>
               <td>{appointment.startTime}</td>
-              <td>{translateStatus(appointment.status)}</td>
-              <td>{appointment.lead.user.firstName}</td>
-              <td>{appointment.clinicProfessional.name}</td>
+              <td>{translateStatus(appointment.status ?? Status.Open)}</td>
+              <td>{appointment.lead?.user?.firstName}</td>
+              <td>{appointment.clinicProfessional?.name}</td>
               <td>
                 <Button
                   isSubmit
-                  onClick={() =>
-                    handleCheckUser(appointment.lead.user.email, appointment.id)
-                  }
+                  onClick={() => handleCheckUser(appointment)}
                   type="secondary"
                 >
                   {loadingAppointments[appointment.id] ? (

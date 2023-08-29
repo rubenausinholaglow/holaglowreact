@@ -28,7 +28,7 @@ const Page = () => {
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
 
-  const handleFinalize = async (createNew: boolean) => {
+  const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
     const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
@@ -55,14 +55,8 @@ const Page = () => {
     };
 
     try {
-      if (createNew) {
-        const data = await budgetService.createBudget(budget);
-        localStorage.setItem('BudgetId', data.id);
-      } else {
-        const budgetId = localStorage.getItem('BudgetId') || '';
-        budget.id = budgetId;
-        await budgetService.updateBudget(budget);
-      }
+      const data = await budgetService.createBudget(budget);
+      localStorage.setItem('BudgetId', data.id);
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
     }
@@ -111,11 +105,7 @@ const Page = () => {
                     size="lg"
                     onClick={async () => {
                       setIsLoading(true);
-                      if (!localStorage.getItem('BudgetId') || '') {
-                        await handleFinalize(true);
-                      } else {
-                        await handleFinalize(false);
-                      }
+                      await handleFinalize();
                       setIsLoading(false);
                       setShowPaymentButtons(!showPaymentButtons);
                     }}
