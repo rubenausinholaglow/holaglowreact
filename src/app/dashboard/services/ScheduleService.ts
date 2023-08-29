@@ -88,7 +88,7 @@ export default class ScheduleService {
       };
 
       const res = await fetch(url, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -96,8 +96,7 @@ export default class ScheduleService {
       });
 
       if (res.ok) {
-        const data = await res.json();
-        return data;
+        return res.ok;
       } else {
         return '';
       }

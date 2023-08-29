@@ -79,6 +79,7 @@ const AppointmentsListComponent: React.FC<{
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
+          localStorage.setItem('boxId', boxId || '');
           saveUserDetails(name, id, flowwwToken);
           router.push('/dashboard/menu');
         } else {
