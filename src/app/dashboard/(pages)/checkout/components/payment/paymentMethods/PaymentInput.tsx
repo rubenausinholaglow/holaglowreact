@@ -116,6 +116,7 @@ export default function PaymentInput(props: Props) {
         <Controller
           name="number"
           control={control}
+          defaultValue=""
           render={({ field, fieldState }) => (
             <Flex layout="row-left" className="mb-2 content-center">
               <input
@@ -125,7 +126,7 @@ export default function PaymentInput(props: Props) {
                 {...field}
                 onChange={e => {
                   const newValue = Math.min(
-                    parseInt(e.target.value),
+                    parseFloat(e.target.value.replace(',', '.')),
                     parseFloat(MaxValue.toFixed(2))
                   );
                   field.onChange(newValue);
