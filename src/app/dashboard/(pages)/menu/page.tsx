@@ -71,6 +71,11 @@ const Page = () => {
               ))}
             </div>
           </Flex>
+          <Flex layout="col-center" className="mt-8">
+            <Button isSubmit onClick={handleClick} type="secondary">
+              Finalizar Cita
+            </Button>
+          </Flex>
         </Container>
       )}
     </>
