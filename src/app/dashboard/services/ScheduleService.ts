@@ -1,4 +1,4 @@
-import { Status } from '@interface/appointment';
+import { Appointment, Status } from '@interface/appointment';
 
 export default class ScheduleService {
   static async getClinicSchedule(flowwwToken: string) {
@@ -59,6 +59,50 @@ export default class ScheduleService {
       }
     } catch (err) {
       return err;
+    }
+  }
+
+  static async confirm(
+    appointmentId: string,
+    appointmentflowwwId: string,
+    clientToken: string
+  ) {
+    try {
+      const url = `https://localhost:7104/Appointment/Confirm`;
+      const requestBody: Appointment = {
+        id: appointmentId,
+        flowwwId: appointmentflowwwId,
+        clientToken: clientToken,
+        startTime: '',
+        endTime: '',
+        status: Status.Finished,
+        lead: {},
+        clinicProfessional: undefined,
+        box: '',
+        treatment: '',
+        treatmentText: '',
+        isPast: false,
+        isCancelled: false,
+        clinicId: '',
+        professionalName: '',
+      };
+
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (err) {
+      return '';
     }
   }
 }

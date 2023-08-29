@@ -2,11 +2,20 @@ import { ClinicProfessional } from 'app/user/types';
 
 export interface Appointment {
   id: string;
-  startTime: string;
-  flowwwId: string;
-  status: Status;
-  lead: Lead;
-  clinicProfessional: ClinicProfessional;
+  startTime?: string;
+  endTime?: string;
+  flowwwId?: string;
+  status?: Status;
+  lead?: Lead;
+  clinicProfessional?: ClinicProfessional;
+  box?: string;
+  clientToken?: string;
+  treatment?: string;
+  treatmentText?: string;
+  isPast?: boolean;
+  isCancelled?: boolean;
+  clinicId?: string;
+  professionalName?: string;
 }
 
 export enum Status {
@@ -21,7 +30,7 @@ export enum Status {
 }
 
 export interface Lead {
-  user: User;
+  user?: User;
 }
 
 export interface User {

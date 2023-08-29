@@ -1,5 +1,10 @@
 import { PaymentBank, PaymentMethod } from '@interface/payment';
+import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { CartItem } from '@interface/product';
+
+import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
+import { usePaymentList } from '../(pages)/checkout/components/payment/payments/usePaymentList';
+import { INITIAL_STATE } from './constants';
 
 export const handleGoBack = () => {
   window.history.back();
@@ -85,4 +90,20 @@ export function getPaymentBankText(bank: PaymentBank): string {
     default:
       return 'Unknown';
   }
+}
+
+export function clearLocalStorage(allLocalStorage: boolean) {
+  localStorage.removeItem('appointmentFlowwwId');
+  localStorage.removeItem('appointmentId');
+  localStorage.removeItem('ClinicProfessionalId');
+  localStorage.removeItem('username');
+  localStorage.removeItem('flowwwToken');
+  if (allLocalStorage) {
+    localStorage.removeItem('ClinicFlowwwId');
+    localStorage.removeItem('boxId');
+    localStorage.removeItem('ClinicId');
+    localStorage.removeItem('ClinicProfessionalId');
+  }
+  usePaymentList.setState(INITIAL_STATE_PAYMENT);
+  useCartStore.setState(INITIAL_STATE);
 }
