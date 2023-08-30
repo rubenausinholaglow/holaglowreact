@@ -17,12 +17,12 @@ export default function Recomendations({
     const { treatment } = item;
 
     if (
-      treatment.product &&
-      treatment.product.postTreatmentInfo &&
-      Array.isArray(treatment.product.postTreatmentInfo.first24hTips) &&
-      treatment.product.postTreatmentInfo.first24hTips.length > 0 &&
-      Array.isArray(treatment.product.postTreatmentInfo.after24hTips) &&
-      treatment.product.postTreatmentInfo.after24hTips.length > 0
+      (treatment.product &&
+        treatment.product.postTreatmentInfo &&
+        Array.isArray(treatment.product.postTreatmentInfo.first24hTips) &&
+        treatment.product.postTreatmentInfo.first24hTips.length > 0) ||
+      (Array.isArray(treatment.product.postTreatmentInfo.after24hTips) &&
+        treatment.product.postTreatmentInfo.after24hTips.length > 0)
     ) {
       return true;
     }
@@ -80,58 +80,62 @@ export default function Recomendations({
           Consejos y recomendaciones post tratamiento
         </h3>
         <div className="flex">
-          <div className="w-1/2 flex flex-col items-center mr-2">
-            <SvgCosmetic1
-              className="mb-4"
-              height={64}
-              width={64}
-              fill={HOLAGLOW_COLORS['darkMalva']}
-            />
-            <h3 className="text-md font-semibold mb-4">
-              Durante las primeras 24 horas
-            </h3>
-            <ul className="bg-white text-xs rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(0,0,0,.1)]">
-              <li className="text-hg-darkMalva mb-8">
-                Es recomendable seguir estos consejos
-              </li>
-              {filteredFirst24Tips.map((tip, index) => {
-                return (
-                  <>
-                    <li>{tip.details}</li>
-                    {index + 1 < filteredFirst24Tips.length && (
-                      <hr className="w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3" />
-                    )}
-                  </>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="w-1/2 flex flex-col items-center ml-2">
-            <SvgCosmetic2
-              className="mb-4"
-              height={64}
-              width={64}
-              fill={HOLAGLOW_COLORS['darkMalva']}
-            />
-            <h3 className="text-md font-semibold mb-4">
-              Después de las primeras 24 horas
-            </h3>
-            <ul className="text-xs rounded-xl p-8 text-center">
-              <li className="text-hg-darkMalva mb-8">
-                Es recomendable seguir estos consejos
-              </li>
-              {filteredAfter24Tips.map((tip, index) => {
-                return (
-                  <>
-                    <li>{tip.details}</li>
-                    {index + 1 < filteredAfter24Tips.length && (
-                      <hr className="w-1/2 mx-auto h-[1px] bg-hg-lightMalva m-3" />
-                    )}
-                  </>
-                );
-              })}
-            </ul>
-          </div>
+          {filteredFirst24Tips.length > 0 && (
+            <div className="w-1/2 flex flex-col items-center mr-2">
+              <SvgCosmetic1
+                className="mb-4"
+                height={64}
+                width={64}
+                fill={HOLAGLOW_COLORS['darkMalva']}
+              />
+              <h3 className="text-md font-semibold mb-4">
+                Durante las primeras 24 horas
+              </h3>
+              <ul className="bg-white text-xs rounded-xl p-8 text-center shadow-[0px_8px_16px_0px_rgba(0,0,0,.1)]">
+                <li className="text-hg-darkMalva mb-8">
+                  Es recomendable seguir estos consejos
+                </li>
+                {filteredFirst24Tips.map((tip, index) => {
+                  return (
+                    <>
+                      <li>{tip.details}</li>
+                      {index + 1 < filteredFirst24Tips.length && (
+                        <hr className="w-1/2 mx-auto h-[1px] bg-hg-200/30 m-3" />
+                      )}
+                    </>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+          {filteredAfter24Tips.length > 0 && (
+            <div className="w-1/2 flex flex-col items-center ml-2">
+              <SvgCosmetic2
+                className="mb-4"
+                height={64}
+                width={64}
+                fill={HOLAGLOW_COLORS['darkMalva']}
+              />
+              <h3 className="text-md font-semibold mb-4">
+                Después de las primeras 24 horas
+              </h3>
+              <ul className="text-xs rounded-xl p-8 text-center">
+                <li className="text-hg-darkMalva mb-8">
+                  Es recomendable seguir estos consejos
+                </li>
+                {filteredAfter24Tips.map((tip, index) => {
+                  return (
+                    <>
+                      <li>{tip.details}</li>
+                      {index + 1 < filteredAfter24Tips.length && (
+                        <hr className="w-1/2 mx-auto h-[1px] bg-hg-lightMalva m-3" />
+                      )}
+                    </>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </section>
