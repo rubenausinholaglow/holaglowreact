@@ -109,13 +109,15 @@ export default function Page({
     try {
       await ScheduleService.getClinicSchedule(flowwwToken).then(data => {
         if (data != null) {
+          localStorage.setItem('appointmentId', data.id);
+          localStorage.setItem('appointmentFlowwwId', data.flowwwId ?? '');
           localStorage.setItem('ClinicId', data.clinic.id);
           localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
           localStorage.setItem(
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
-          localStorage.setItem('boxId', boxId || '');
+          localStorage.setItem('boxId', boxId || data.boxId);
           saveUserDetails(name, id, flowwwToken);
           router.push('/dashboard/menu');
         } else {

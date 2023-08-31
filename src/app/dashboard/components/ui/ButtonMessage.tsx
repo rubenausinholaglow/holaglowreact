@@ -2,14 +2,21 @@ import { useEffect, useState } from 'react';
 import { ProfessionalType } from '@interface/clinic';
 import HubService from '@services/HubService';
 import { messageService } from '@services/MessageService';
-import { ERROR_ACTION_MESSAGE } from '@utils/textConstants';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgStethoscope } from 'icons/Icons';
 import { SvgCalling, SvgUserSquare } from 'icons/IconsDs';
 
+import Notification from './Notification';
+
 export default function ButtonMessage() {
   const [showButtons, setShowButtons] = useState(false);
   const [clinicProfessionalId, setclinicProfessionalId] = useState('');
+  const [messageNotification, setMessageNotification] = useState<string | null>(
+    null
+  );
+  const [messageTimeout, setMessageTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   useEffect(() => {
     const SOCKET_URL =
@@ -36,11 +43,13 @@ export default function ButtonMessage() {
   const sendMessageToMedic = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
     setShowButtons(!showButtons);
+    startTimeout();
   };
 
   const sendMessageToReception = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
     setShowButtons(!showButtons);
+    startTimeout();
   };
 
   function showMessage(actionId: string) {
@@ -50,14 +59,32 @@ export default function ButtonMessage() {
     const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
-        console.log('Puedo');
+        setMessageNotification('Puedo venir');
       } else if (action === '1') {
-        console.log('No Puedo');
+        setMessageNotification('No puedo venir');
       } else {
-        console.log(ERROR_ACTION_MESSAGE);
+        setMessageNotification('Error recibiendo mensaje');
       }
     }
   }
+
+  const startTimeout = () => {
+    setMessageNotification(null);
+    if (messageTimeout) {
+      clearTimeout(messageTimeout);
+    }
+
+    setMessageTimeout(
+      setTimeout(
+        () => {
+          console.log('timeout!');
+          setMessageNotification('No puedo venir');
+          setMessageTimeout(null);
+        },
+        2 * 60 * 1000
+      )
+    );
+  };
 
   return (
     <Flex layout="row-left" className="gap-2 ml-4 overflow-hidden relative">
@@ -88,6 +115,11 @@ export default function ButtonMessage() {
           <SvgUserSquare height={20} width={20} />
         </div>
       </div>
+      {messageNotification ? (
+        <Notification message={messageNotification} />
+      ) : (
+        <></>
+      )}
     </Flex>
   );
 }

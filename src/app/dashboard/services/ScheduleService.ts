@@ -64,27 +64,15 @@ export default class ScheduleService {
 
   static async confirm(
     appointmentId: string,
-    appointmentflowwwId: string,
-    clientToken: string
+    comments: string,
+    userId: string
   ) {
     try {
       const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Confirm`;
-      const requestBody: Appointment = {
-        id: appointmentId,
-        flowwwId: appointmentflowwwId,
-        clientToken: clientToken,
-        startTime: '',
-        endTime: '',
-        status: Status.Finished,
-        lead: {},
-        clinicProfessional: undefined,
-        box: '',
-        treatment: '',
-        treatmentText: '',
-        isPast: false,
-        isCancelled: false,
-        clinicId: '',
-        professionalName: '',
+      const requestBody = {
+        appointmentId: appointmentId,
+        userId: userId,
+        comments: comments,
       };
 
       const res = await fetch(url, {

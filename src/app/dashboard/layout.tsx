@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
 import ButtonMessage from '@components/ui/ButtonMessage';
 import Timer from '@components/ui/Timer';
@@ -30,6 +31,11 @@ export default function DashboardLayout({
     '/dashboard/checkout',
     '/dashboard/menu',
   ];
+  const [timerColor, setTimerColor] = useState('bg-green-500');
+
+  const handleTimerColorChange = (newColor: string) => {
+    setTimerColor(newColor);
+  };
 
   return (
     <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
@@ -39,29 +45,30 @@ export default function DashboardLayout({
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
-            {backButtonRoutes.includes(pathName) && (
-              <>
-                <Button href={getBackRoute(pathName)} type="tertiary">
-                  <Flex layout="row-left">
-                    <SvgArrowSmallLeft
-                      height={40}
-                      width={40}
-                      className="pr-2"
-                    />
-                    Volver
-                  </Flex>
-                </Button>
+            {backButtonRoutes.includes(pathName) &&
+              pathName !== '/dashboard/checkout' && (
+                <>
+                  <Button href={getBackRoute(pathName)} type="tertiary">
+                    <Flex layout="row-left">
+                      <SvgArrowSmallLeft
+                        height={40}
+                        width={40}
+                        className="pr-2"
+                      />
+                      Volver
+                    </Flex>
+                  </Button>
 
-                {pathName !== '/dashboard' && <ButtonMessage />}
+                  {pathName !== '/dashboard' && <ButtonMessage />}
 
-                <div className="ml-auto z-10">
-                  <ClinicProfessional />
-                </div>
-                <div className="pl-4 mt-5">
-                  <Timer initialColor="green" />
-                </div>
-              </>
-            )}
+                  <div className="ml-auto z-10">
+                    <ClinicProfessional bgColor={timerColor} />
+                  </div>
+                  <div className="pl-4 mt-5">
+                    <Timer onColorChange={handleTimerColorChange} />
+                  </div>
+                </>
+              )}
           </Flex>
         </Container>
         {children}

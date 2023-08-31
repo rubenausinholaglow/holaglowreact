@@ -67,6 +67,7 @@ export const PaymentModule = () => {
       percentageDiscount: 0,
       manualPrice: 0,
       totalPrice: totalPrice,
+      totalPriceWithIva: totalPrice,
       clinicInfoId: GuidClinicId,
       FlowwwId: '',
       referenceId: '',
@@ -105,6 +106,13 @@ export const PaymentModule = () => {
   };
 
   const handleOnButtonPaymentClick = (paymentKey: any) => {
+    if (paymentKey == 'pepper') {
+      window.open(
+        'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
+        '_blank'
+      );
+      return;
+    }
     setOnLoad(true);
     if (activePaymentMethod === paymentKey) {
       setOnLoad(false);
@@ -137,6 +145,13 @@ export const PaymentModule = () => {
     setIsLoading(false);
   };
 
+  function cancelBudget() {
+    localStorage.removeItem('BudgetId');
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
+    router.push('/dashboard/menu');
+  }
+
   return (
     <>
       <Flex className="gap-2">
@@ -159,7 +174,8 @@ export const PaymentModule = () => {
       </Flex>
 
       {paymentItems.map(method =>
-        activePaymentMethod === method.key ? (
+        activePaymentMethod === method.key &&
+        activePaymentMethod != 'pepper' ? (
           <PaymentClient
             key={method.key}
             paymentBank={method.paymentBank}
@@ -195,6 +211,9 @@ export const PaymentModule = () => {
       <Button size="xl" className="w-full mt-4" onClick={createTicket}>
         {' '}
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
+      </Button>
+      <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
+        Cancelar Presupuesto
       </Button>
     </>
   );

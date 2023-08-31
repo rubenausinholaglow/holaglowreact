@@ -8,6 +8,7 @@ export interface Budget {
   priceDiscount: number;
   percentageDiscount: number;
   totalPrice: number;
+  totalPriceWithIva: number;
   clinicInfoId: string;
   referenceId: string;
   professionalId: string;

@@ -134,12 +134,15 @@ export default function PaymentInput(props: Props) {
                 }}
               />
               {props.paymentMethod === 2 && (
-                <b
+                <Button
+                  size="sm"
+                  type="secondary"
+                  isSubmit
+                  className="ml-2"
                   onClick={() => setShowAlma(!showAlma)}
-                  className="font-semibold text-hg-darkMalva ml-2 cursor-pointer hover:underline text-xs"
                 >
                   Ver Financiación
-                </b>
+                </Button>
               )}
               {props.paymentMethod !== 2 && (
                 <Button size="sm" type="secondary" isSubmit className="ml-2">

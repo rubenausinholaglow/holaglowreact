@@ -16,6 +16,8 @@ export interface Appointment {
   isCancelled?: boolean;
   clinicId?: string;
   professionalName?: string;
+  comments?: string;
+  userId?: string;
 }
 
 export enum Status {

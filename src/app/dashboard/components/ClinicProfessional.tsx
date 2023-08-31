@@ -11,7 +11,13 @@ import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
 
-export const ClinicProfessional = () => {
+interface ClinicProfessionalProps {
+  bgColor: string; // Add the prop for background color
+}
+
+export const ClinicProfessional: React.FC<ClinicProfessionalProps> = ({
+  bgColor,
+}) => {
   const setProfessionalsInStore = useCartStore(state => state.setProfessionals);
 
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -117,7 +123,7 @@ export const ClinicProfessional = () => {
         onClick={() =>
           beautyAdvisors.length > 1 && handleToggleProfessionalList()
         }
-        className={`aspect-square h-[40px] rounded-full bg-hg-lime text-hg-darkMalva justify-center relative ${
+        className={`aspect-square h-[40px] rounded-full ${bgColor} text-hg-darkMalva justify-center relative ${
           beautyAdvisors.length > 1 && 'cursor-pointer'
         }`}
       >
