@@ -8,7 +8,6 @@ const Notification: React.FC<NotificationProps> = ({ message }) => {
   const [visible, setVisible] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log('entra');
     setVisible(true);
     const timer = setTimeout(() => {
       setVisible(false);
