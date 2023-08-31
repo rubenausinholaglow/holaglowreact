@@ -8,6 +8,12 @@ export const paymentItems = [
     paymentMethod: PaymentMethod.Financing,
   },
   {
+    key: 'pepper',
+    label: 'Pepper',
+    paymentBank: PaymentBank.Pepper,
+    paymentMethod: PaymentMethod.Financing,
+  },
+  {
     key: 'cash',
     label: 'Efectivo',
     paymentBank: PaymentBank.None,
