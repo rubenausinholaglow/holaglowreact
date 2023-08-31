@@ -135,16 +135,12 @@ const Page = () => {
                   >
                     <span className="font-semibold">Agendar Cita</span>
                   </Button>
-                  <Button
-                    size="xl"
-                    className="w-full mt-4"
-                    onClick={cancelBudget}
-                  >
-                    Cancelar Presupuesto
-                  </Button>
                 </Flex>
               </>
             )}
+            <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
+              Cancelar Presupuesto
+            </Button>
           </Flex>
         </Flex>
       </Container>

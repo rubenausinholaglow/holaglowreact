@@ -31,10 +31,13 @@ export default function DashboardLayout({
     '/dashboard/checkout',
     '/dashboard/menu',
   ];
-  const [timerColor, setTimerColor] = useState('bg-green-500');
-
+  const [timerColor, setTimerColor] = useState(() => {
+    const storedColor = localStorage.getItem('timerColor');
+    return storedColor || 'bg-green-500'; // Use stored color or default
+  });
   const handleTimerColorChange = (newColor: string) => {
     setTimerColor(newColor);
+    localStorage.setItem('timerColor', newColor);
   };
 
   return (

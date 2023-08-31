@@ -28,7 +28,6 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
           const almaModal = target.closest(
             '.alma-eligibility-modal-active-option'
           ) as HTMLElement;
-          console.log(almaModal);
           if (almaModal) {
             const text = almaModal.innerText;
             installments = Number(text.replace('x', ''));

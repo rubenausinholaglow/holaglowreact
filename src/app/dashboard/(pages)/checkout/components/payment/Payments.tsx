@@ -144,14 +144,6 @@ export const PaymentModule = () => {
     }
     setIsLoading(false);
   };
-
-  function cancelBudget() {
-    localStorage.removeItem('BudgetId');
-    usePaymentList.setState(INITIAL_STATE_PAYMENT);
-    useCartStore.setState(INITIAL_STATE);
-    router.push('/dashboard/menu');
-  }
-
   return (
     <>
       <Flex className="gap-2">
@@ -211,9 +203,6 @@ export const PaymentModule = () => {
       <Button size="xl" className="w-full mt-4" onClick={createTicket}>
         {' '}
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
-      </Button>
-      <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
-        Cancelar Presupuesto
       </Button>
     </>
   );

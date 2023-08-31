@@ -56,8 +56,8 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
 
         setCurrentTime(totalTime);
 
-        const fifteenMinutes = 15 * 60 * 1000;
-        const twentyFiveMinutes = 25 * 60 * 1000;
+        const fifteenMinutes = 1 * 60 * 1000;
+        const twentyFiveMinutes = 2 * 60 * 1000;
 
         if (!patientArrived) {
           if (totalTime >= twentyFiveMinutes) {
