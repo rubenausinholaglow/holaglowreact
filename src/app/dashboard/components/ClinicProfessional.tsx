@@ -10,14 +10,9 @@ import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
+import Timer from './ui/Timer';
 
-interface ClinicProfessionalProps {
-  bgColor: string; // Add the prop for background color
-}
-
-export const ClinicProfessional: React.FC<ClinicProfessionalProps> = ({
-  bgColor,
-}) => {
+export const ClinicProfessional = () => {
   const setProfessionalsInStore = useCartStore(state => state.setProfessionals);
 
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -25,6 +20,7 @@ export const ClinicProfessional: React.FC<ClinicProfessionalProps> = ({
   const [selectedProfessional, setSelectedProfessional] =
     useState<Professional | null>(null);
   const [showProfessionalList, setShowProfessionalList] = useState(false);
+  const [color, setColor] = useState('');
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -81,6 +77,9 @@ export const ClinicProfessional: React.FC<ClinicProfessionalProps> = ({
     setShowProfessionalList(false);
   };
 
+  const handleTimerColorChange = (newColor: string) => {
+    setColor(newColor);
+  };
   const handleToggleProfessionalList = () => {
     setShowProfessionalList(prevState => !prevState);
   };
@@ -123,7 +122,7 @@ export const ClinicProfessional: React.FC<ClinicProfessionalProps> = ({
         onClick={() =>
           beautyAdvisors.length > 1 && handleToggleProfessionalList()
         }
-        className={`aspect-square h-[40px] rounded-full ${bgColor} text-hg-darkMalva justify-center relative ${
+        className={`aspect-square h-[40px] rounded-full ${color} text-hg-darkMalva justify-center relative ${
           beautyAdvisors.length > 1 && 'cursor-pointer'
         }`}
       >
@@ -139,6 +138,7 @@ export const ClinicProfessional: React.FC<ClinicProfessionalProps> = ({
                 .join('')}
         </p>
       </Flex>
+      <Timer onColorChange={handleTimerColorChange} />
     </Flex>
   );
 };

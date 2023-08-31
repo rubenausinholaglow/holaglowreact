@@ -16,7 +16,6 @@ function getBackRoute(pathName: string) {
     '/dashboard/checkout': '/dashboard/budgets',
     '/dashboard/menu': '/dashboard',
   };
-
   return BACK_ROUTES[pathName];
 }
 
@@ -31,15 +30,6 @@ export default function DashboardLayout({
     '/dashboard/checkout',
     '/dashboard/menu',
   ];
-  const [timerColor, setTimerColor] = useState(() => {
-    const storedColor = localStorage.getItem('timerColor');
-    return storedColor || 'bg-green-500'; // Use stored color or default
-  });
-  const handleTimerColorChange = (newColor: string) => {
-    setTimerColor(newColor);
-    localStorage.setItem('timerColor', newColor);
-  };
-
   return (
     <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
       <Flex
@@ -65,10 +55,7 @@ export default function DashboardLayout({
                   {pathName !== '/dashboard' && <ButtonMessage />}
 
                   <div className="ml-auto z-10">
-                    <ClinicProfessional bgColor={timerColor} />
-                  </div>
-                  <div className="pl-4 mt-5">
-                    <Timer onColorChange={handleTimerColorChange} />
+                    <ClinicProfessional />
                   </div>
                 </>
               )}
