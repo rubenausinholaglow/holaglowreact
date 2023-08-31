@@ -11,6 +11,7 @@ interface TimerProps {
 }
 
 export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
+  const [color, setColor] = useState('bg-green-500');
   const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -46,6 +47,7 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
         })
         .catch(e => Bugsnag.notify('Connection failed: ', e));
     }
+    onColorChange(color);
   }, [connection]);
 
   useEffect(() => {
