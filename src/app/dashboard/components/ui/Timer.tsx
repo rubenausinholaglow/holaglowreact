@@ -7,11 +7,11 @@ import {
 } from '@microsoft/signalr';
 
 interface TimerProps {
-  initialColor: string;
+  onColorChange: (color: string) => void;
 }
 
-export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
-  const [color, setColor] = useState(initialColor);
+export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
+  const [color, setColor] = useState('bg-green-500');
   const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -47,6 +47,7 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
         })
         .catch(e => Bugsnag.notify('Connection failed: ', e));
     }
+    onColorChange(color);
   }, [connection]);
 
   useEffect(() => {
@@ -62,11 +63,11 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
 
         if (!patientArrived) {
           if (totalTime >= twentyFiveMinutes) {
-            setColor('red');
+            onColorChange('bg-red-500');
           } else if (totalTime >= fifteenMinutes) {
-            setColor('yellow');
+            onColorChange('bg-hg-lime');
           } else {
-            setColor('green');
+            onColorChange('bg-green-500');
           }
         }
       }
@@ -100,7 +101,7 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
     if (GuidClinic === clinicId && boxId == boxIdlocal) {
       handleStopTimer();
       setPatientArrived(true);
-      setColor('red');
+      onColorChange('bg-red-500');
     }
   }
 
@@ -108,18 +109,7 @@ export const TimerComponent: React.FC<TimerProps> = ({ initialColor }) => {
     setIsRunning(false);
   };
 
-  return (
-    <>
-      <div
-        style={{
-          width: '50px',
-          height: '50px',
-          backgroundColor: color,
-          borderRadius: '50% 0 0 0',
-        }}
-      />
-    </>
-  );
+  return <></>;
 };
 
 export default TimerComponent;

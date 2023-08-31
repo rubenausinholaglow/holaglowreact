@@ -112,7 +112,6 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     }
 
     let installmentsValue = installments;
-
     if (installmentsValue === -1) {
       const almaPaymentPlans = document.getElementsByClassName(
         'alma-payment-plans-active-option'
@@ -120,7 +119,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       if (almaPaymentPlans) {
         const text = almaPaymentPlans.textContent;
         if (text) {
-          installmentsValue = Number(text.replace('x', ''));
+          installmentsValue = Number(text.replace(/x|d+/g, ''));
         }
       }
     }

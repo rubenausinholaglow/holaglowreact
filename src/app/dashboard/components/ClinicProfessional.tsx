@@ -10,6 +10,7 @@ import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
+import Timer from './ui/Timer';
 
 export const ClinicProfessional = () => {
   const setProfessionalsInStore = useCartStore(state => state.setProfessionals);
@@ -19,6 +20,7 @@ export const ClinicProfessional = () => {
   const [selectedProfessional, setSelectedProfessional] =
     useState<Professional | null>(null);
   const [showProfessionalList, setShowProfessionalList] = useState(false);
+  const [color, setColor] = useState('');
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -75,6 +77,9 @@ export const ClinicProfessional = () => {
     setShowProfessionalList(false);
   };
 
+  const handleTimerColorChange = (newColor: string) => {
+    setColor(newColor);
+  };
   const handleToggleProfessionalList = () => {
     setShowProfessionalList(prevState => !prevState);
   };
@@ -117,7 +122,7 @@ export const ClinicProfessional = () => {
         onClick={() =>
           beautyAdvisors.length > 1 && handleToggleProfessionalList()
         }
-        className={`aspect-square h-[40px] rounded-full bg-hg-lime text-hg-darkMalva justify-center relative ${
+        className={`aspect-square h-[40px] rounded-full ${color} text-hg-darkMalva justify-center relative ${
           beautyAdvisors.length > 1 && 'cursor-pointer'
         }`}
       >
@@ -133,6 +138,7 @@ export const ClinicProfessional = () => {
                 .join('')}
         </p>
       </Flex>
+      <Timer onColorChange={handleTimerColorChange} />
     </Flex>
   );
 };
