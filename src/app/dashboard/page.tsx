@@ -218,10 +218,6 @@ export default function Page({
           isLoading={isLoading}
         />
       )}
-      <AppointmentsListComponent
-        clinicId={clinicId || ''}
-        boxId={boxId || ''}
-      />
     </div>
   );
 }
