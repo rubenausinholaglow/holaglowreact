@@ -22,9 +22,7 @@ export const Title = ({
   };
 
   const HtmlComponent = as;
-  const styles = twMerge(
-    `text-hg-black ${STYLES[size]} font-${weight} ${className}`
-  );
+  const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
 
   return <HtmlComponent className={styles}>{children}</HtmlComponent>;
 };
@@ -41,7 +39,7 @@ export const Text = ({
   children: ReactNode;
 }) => {
   const HtmlComponent = as;
-  const styles = twMerge(`text-hg-black text-left text-${size} ${className}`);
+  const styles = twMerge(`text-left text-${size} ${className}`);
 
   return <HtmlComponent className={styles}>{children}</HtmlComponent>;
 };

@@ -20,7 +20,7 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: theme('colors.hg.black');
 }
 
 a {
