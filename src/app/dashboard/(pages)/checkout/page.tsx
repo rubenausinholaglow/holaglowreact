@@ -3,14 +3,10 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Budget, StatusBudget } from '@interface/budget';
-import { CreatePayment } from '@interface/initializePayment';
-import { PaymentBank, PaymentMethod } from '@interface/payment';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
-import FinanceService from '@services/FinanceService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
-import { applyDiscountToCart } from '@utils/utils';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
