@@ -48,6 +48,9 @@ export default async function Budget({
     discountCode = null,
     referenceId = null,
     creationDate = null,
+    priceDiscount = null,
+    percentageDiscount = null,
+    manualPrice = null,
   } = budgetData ? budgetData : {};
 
   return (
@@ -64,6 +67,9 @@ export default async function Budget({
               totalPriceWithIVA={totalPriceWithIVA}
               referenceId={referenceId}
               creationDate={creationDate}
+              priceDiscount={priceDiscount}
+              percentageDiscount={percentageDiscount}
+              manualPrice={manualPrice}
             />
           )}
           <AlmaPayment totalPrice={totalPriceWithIVA} />

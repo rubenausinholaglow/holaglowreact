@@ -11,12 +11,18 @@ export default function Products({
   totalPriceWithIVA,
   referenceId,
   creationDate,
+  priceDiscount,
+  percentageDiscount,
+  manualPrice,
 }: {
   products: Array<ProductType>;
   totalPrice: number;
   totalPriceWithIVA: number;
   referenceId: string;
   creationDate: string;
+  priceDiscount: number;
+  percentageDiscount: number;
+  manualPrice: number;
 }) {
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png';
 
@@ -28,10 +34,59 @@ export default function Products({
 
   const parsedDate = `${date}/${month}/${year}`;
 
+  const hasProductDiscount = products.some(
+    product => product.priceDiscount > 0 || product.percentageDiscount > 0
+  );
+
+  const hasBudgetDiscount =
+    priceDiscount > 0 || percentageDiscount > 0 || manualPrice > 0;
+
+  const productsUpdated = products.map(product => {
+    let priceWithDiscount = product.price;
+
+    if (product.priceDiscount > 0) {
+      priceWithDiscount = product.priceDiscount;
+    }
+
+    if (product.percentageDiscount > 0) {
+      priceWithDiscount =
+        priceWithDiscount - priceWithDiscount * product.percentageDiscount;
+    }
+
+    return {
+      ...product,
+      priceWithDiscount: priceWithDiscount,
+    };
+  });
+
+  const totalProductsPrice = productsUpdated.reduce((total, product) => {
+    return product.priceWithDiscount
+      ? total + product.priceWithDiscount
+      : total + product.price;
+  }, 0);
+
+  const totalPriceWithDiscount = () => {
+    let total = totalProductsPrice;
+
+    if (priceDiscount > 0) {
+      total = total - priceDiscount;
+    }
+
+    if (percentageDiscount > 0) {
+      total = total - total * percentageDiscount;
+    }
+
+    if (manualPrice > 0) {
+      total = manualPrice;
+    }
+
+    return hasBudgetDiscount ? `${priceFormat(total)} €` : totalPriceWithIVA;
+  };
+
   return (
     <section className="relative">
       <ul className="flex flex-col gap-8 mt-8">
-        {products.map(product => {
+        {productsUpdated.map(product => {
           const productDetails = product.product;
 
           // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -71,9 +126,21 @@ export default function Products({
                     <span className="block font-light text-hg-black/40 text-xs mb-1">
                       Precio
                     </span>
-                    <span className="text-2xl font-semibold">
-                      {`${priceFormat(Number(product.price))}`} €
-                    </span>
+                    {product.priceWithDiscount !== product.price ? (
+                      <div className="w-full">
+                        <span className="text-2xl font-semibold block">
+                          {`${priceFormat(Number(product.priceWithDiscount))}`}{' '}
+                          €
+                        </span>
+                        <span className="line-through text-hg-black400 block">
+                          {`${priceFormat(Number(product.price))}`} €
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-2xl font-semibold block">
+                        {`${priceFormat(Number(product.price))}`} €
+                      </span>
+                    )}
                   </p>
                 </div>
               </div>
@@ -86,21 +153,52 @@ export default function Products({
           <li className="flex justify-between pb-4">
             <span>Subtotal</span>
             <span className="font-semibold">
-              {`${priceFormat(totalPrice)}`} €
+              {`${priceFormat(totalProductsPrice / 1.21)} €`}
             </span>
           </li>
-          <li className="flex justify-between pb-4 mb-4 border-b border-hg-black">
+          <li className="flex justify-between pb-4">
             <span>IVA 21%</span>
             <span className="font-semibold">
-              {`${priceFormat(totalPriceWithIVA - totalPrice)}`} €
+              {`${priceFormat(
+                totalProductsPrice - totalProductsPrice / 1.21
+              )} €`}
             </span>
           </li>
-          <li className="flex justify-between">
-            <span>Total</span>
-            <span className="font-semibold">
-              {`${priceFormat(totalPriceWithIVA)}`} €
-            </span>
-          </li>
+          {hasBudgetDiscount && (
+            <>
+              <li className="flex justify-between pb-4 mb-4 border-b border-hg-black">
+                <span></span>
+                <span className="font-semibold">
+                  {`${priceFormat(totalPriceWithIVA)} €`}
+                </span>
+              </li>
+              <li className="flex justify-between pb-4">
+                <span>Descuento</span>
+                <span className="font-semibold">
+                  {priceDiscount > 0 && `-${priceDiscount} €`}
+                  {percentageDiscount > 0 && `-${percentageDiscount} %`}
+                  {manualPrice > 0 &&
+                    `-${priceFormat(totalPriceWithIVA - manualPrice)}`}
+                </span>
+              </li>
+              <li className="flex justify-between">
+                <span>Total</span>
+                <span className="font-semibold">
+                  {hasBudgetDiscount
+                    ? totalPriceWithDiscount()
+                    : `${priceFormat(totalPriceWithIVA)} €`}
+                </span>
+              </li>
+            </>
+          )}
+          {!hasBudgetDiscount && (
+            <li className="flex justify-between pt-4 border-t border-hg-black">
+              <span>Total</span>
+              <span className="font-semibold">
+                {`${priceFormat(totalProductsPrice)} €`}
+              </span>
+            </li>
+          )}
         </ul>
       </aside>
       <p
