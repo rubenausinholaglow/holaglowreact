@@ -26,7 +26,6 @@ export default function ButtonMessage() {
     webConnection
       .getConnection()
       .on('ReceiveMessage', (receivedMessage: any) => {
-        console.log(receivedMessage);
         showMessage(receivedMessage.actions[0]?.actionId || '');
       });
 
@@ -77,7 +76,6 @@ export default function ButtonMessage() {
     setMessageTimeout(
       setTimeout(
         () => {
-          console.log('timeout!');
           setMessageNotification('No puedo venir');
           setMessageTimeout(null);
         },
