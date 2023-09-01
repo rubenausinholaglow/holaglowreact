@@ -34,10 +34,6 @@ export default function Products({
 
   const parsedDate = `${date}/${month}/${year}`;
 
-  const hasProductDiscount = products.some(
-    product => product.priceDiscount > 0 || product.percentageDiscount > 0
-  );
-
   const hasBudgetDiscount =
     priceDiscount > 0 || percentageDiscount > 0 || manualPrice > 0;
 
@@ -60,13 +56,15 @@ export default function Products({
   });
 
   const totalProductsPrice = productsUpdated.reduce((total, product) => {
-    return product.priceWithDiscount
-      ? total + product.priceWithDiscount
-      : total + product.price;
+    return total + product.priceWithDiscount;
   }, 0);
 
   const totalPriceWithDiscount = () => {
     let total = totalProductsPrice;
+
+    if (manualPrice > 0) {
+      total = manualPrice;
+    }
 
     if (priceDiscount > 0) {
       total = total - priceDiscount;
@@ -76,11 +74,7 @@ export default function Products({
       total = total - total * percentageDiscount;
     }
 
-    if (manualPrice > 0) {
-      total = manualPrice;
-    }
-
-    return hasBudgetDiscount ? `${priceFormat(total)} €` : totalPriceWithIVA;
+    return total;
   };
 
   return (
@@ -169,24 +163,21 @@ export default function Products({
               <li className="flex justify-between pb-4 mb-4 border-b border-hg-black">
                 <span></span>
                 <span className="font-semibold">
-                  {`${priceFormat(totalPriceWithIVA)} €`}
+                  {`${priceFormat(totalProductsPrice)} €`}
                 </span>
               </li>
               <li className="flex justify-between pb-4">
                 <span>Descuento</span>
                 <span className="font-semibold">
-                  {priceDiscount > 0 && `-${priceDiscount} €`}
-                  {percentageDiscount > 0 && `-${percentageDiscount} %`}
-                  {manualPrice > 0 &&
-                    `-${priceFormat(totalPriceWithIVA - manualPrice)}`}
+                  {`- ${priceFormat(
+                    totalProductsPrice - totalPriceWithDiscount()
+                  )} €`}
                 </span>
               </li>
               <li className="flex justify-between">
                 <span>Total</span>
                 <span className="font-semibold">
-                  {hasBudgetDiscount
-                    ? totalPriceWithDiscount()
-                    : `${priceFormat(totalPriceWithIVA)} €`}
+                  {`${priceFormat(totalPriceWithDiscount())} €`}
                 </span>
               </li>
             </>
