@@ -102,7 +102,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, 'total')}
             >
-              <Text size="xs">total: {manualPrice}%</Text>
+              <Text size="xs">total: {manualPrice}€</Text>
               <SvgClose height={12} width={12} className="ml-1" />
             </Flex>
           )}
