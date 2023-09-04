@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Budget, StatusBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
@@ -31,6 +31,11 @@ const Page = () => {
   const router = useRouter();
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
+  const [clientToken, setClientToken] = useState<string | ''>('');
+
+  useEffect(() => {
+    setClientToken(localStorage.getItem('flowwwToken') || '');
+  }, []);
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -130,7 +135,8 @@ const Page = () => {
                   <Button
                     className="w-full"
                     size="lg"
-                    href="https://agenda.holaglow.com/schedule?mode=dashboard"
+                    target="_blank"
+                    href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
                     type="tertiary"
                   >
                     <span className="font-semibold">Agendar Cita</span>
