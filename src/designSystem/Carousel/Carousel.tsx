@@ -1,10 +1,8 @@
-'use client';
-
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useState } from 'react';
-import { SvgArrow } from 'icons/IconsDs';
+import { SvgArrowSmallLeft } from 'icons/Icons';
 import {
   ButtonBack,
   ButtonNext,
@@ -23,11 +21,12 @@ export const Carousel = ({
   naturalSlideHeight = 100,
   naturalSlideWidth = 100,
   visibleSlides = 1,
+  totalSlides = 1,
   step = 1,
   currentSlide = 0,
   dragEnabled = false,
   touchEnabled = false,
-  ...rest
+  ...props
 }: {
   children: ReactNode;
   hasDots?: boolean;
@@ -36,12 +35,12 @@ export const Carousel = ({
   naturalSlideHeight?: number;
   naturalSlideWidth?: number;
   visibleSlides?: number;
+  totalSlides?: number;
   step?: number;
   currentSlide?: number;
   dragEnabled?: boolean;
   touchEnabled?: boolean;
-  className?: string;
-  [key: string]: any;
+  class?: string;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const childrens = Children.toArray(children);
@@ -62,16 +61,15 @@ export const Carousel = ({
     <CarouselProvider
       className="relative w-full"
       isIntrinsicHeight={isIntrinsicHeight}
+      naturalSlideHeight={naturalSlideHeight}
+      naturalSlideWidth={naturalSlideWidth}
       totalSlides={childrens.length}
       currentSlide={currentSlide}
       infinite
       lockOnWindowScroll
       dragEnabled={dragEnabled}
       touchEnabled={touchEnabled}
-      naturalSlideHeight={naturalSlideHeight}
-      naturalSlideWidth={naturalSlideWidth}
-      visibleSlides={visibleSlides}
-      {...rest}
+      {...props}
     >
       <Slider>
         {childrens.map((children, i) => (
@@ -85,12 +83,11 @@ export const Carousel = ({
       {hasControls ? (
         <CarouselNavigation type="back">
           <ButtonBack
-            className="transition-opacity bg-hg-darkMalva text-hg-lime rounded-full p-3 disabled:opacity-0 disabled:cursor-default"
             onClick={() => {
               handleBackButton();
             }}
           >
-            <SvgArrow height={18} width={18} className="rotate-180" />
+            <SvgArrowSmallLeft height={30} width={30} />
           </ButtonBack>
         </CarouselNavigation>
       ) : null}
@@ -98,12 +95,11 @@ export const Carousel = ({
       {hasControls ? (
         <CarouselNavigation type="next">
           <ButtonNext
-            className="transition-opacity bg-hg-darkMalva text-hg-lime rounded-full p-3 disabled:opacity-0 disabled:cursor-default"
             onClick={() => {
               handleNextButton();
             }}
           >
-            <SvgArrow height={18} width={18} />
+            <SvgArrowSmallLeft height={30} width={30} className="rotate-180" />
           </ButtonNext>
         </CarouselNavigation>
       ) : null}

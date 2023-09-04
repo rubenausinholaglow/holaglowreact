@@ -212,7 +212,7 @@ export default function Page() {
           isVisible={showProductModal}
           onClick={() => setHighlightProduct(emptyProduct)}
         ></ModalBackground>
-        <Modal isVisible={showProductModal} width="w-3/4">
+        <Modal isVisible={showProductModal} width="3/4">
           <HightLightedProduct />
         </Modal>
         <Flex layout="col-center" className="w-full">

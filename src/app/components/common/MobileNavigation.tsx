@@ -15,7 +15,7 @@ export default function MobileNavigation({
   return (
     <Modal
       isVisible={isVisible}
-      width="w-full"
+      width="full"
       className="shadow-none"
       style={{ top: headerHeight }}
     >

@@ -91,7 +91,7 @@ module.exports = {
       animation: {
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
-        horizontalScroll: 'horizontalScroll 50s linear infinite',
+        horizontalScroll: 'horizontalScroll 15s linear infinite',
       },
     },
   },

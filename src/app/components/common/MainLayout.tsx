@@ -5,18 +5,17 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { usePathname } from 'next/navigation';
 
 import { IsMobile } from './Breakpoint';
-import { Footer } from './Footer';
 import Header from './Header';
 
 const HIDE_WEBHEADER_PATHS = ['/user/budget', '/user/passport', '/form'];
 const HIDE_WEBHEADER_PATTERNS = ['/dashboard'];
 
-const hideHeader = (path: string) => {
-  return HIDE_WEBHEADER_PATHS.includes(path);
-};
+const showWebHeader = (path: string) => {
+  if (HIDE_WEBHEADER_PATHS.includes(path)) {
+    return false;
+  }
 
-const isDashboard = (path: string) => {
-  return HIDE_WEBHEADER_PATTERNS.some(item => path.startsWith(item));
+  return !HIDE_WEBHEADER_PATTERNS.some(item => path.startsWith(item));
 };
 
 export default function MainLayout({
@@ -39,9 +38,8 @@ export default function MainLayout({
 
   return (
     <>
-      {hideHeader(pathname) || (!isDashboard(pathname) && <Header />)}
+      {showWebHeader(pathname) && <Header />}
       {children}
-      {!isDashboard(pathname) && <Footer />}
     </>
   );
 }

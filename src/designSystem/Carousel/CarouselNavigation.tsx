@@ -15,7 +15,7 @@ export const CarouselNavigation = ({
     <Flex
       layout="col-center"
       className={twMerge(
-        `justify-center absolute -bottom-14 ${
+        `justify-center absolute top-1/2 -translate-y-[50%] bg-hg-lime text-hg-darkMalva rounded-full p-1 ${
           type === 'back' ? 'left-4' : 'right-4'
         } ${className}`
       )}
