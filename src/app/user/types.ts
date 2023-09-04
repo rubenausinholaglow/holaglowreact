@@ -15,6 +15,9 @@ export interface Product {
     imgSrc: string;
   };
   price: number;
+  priceDiscount: number;
+  percentageDiscount: number;
+  priceWithDiscount?: number;
 }
 
 export interface Simulation {

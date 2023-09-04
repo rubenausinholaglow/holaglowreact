@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { TicketBudget } from '@interface/budget';
+import { StatusBudget, TicketBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
 import { budgetService } from '@services/BudgetService';
@@ -9,6 +9,8 @@ import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
@@ -58,16 +60,18 @@ export const PaymentModule = () => {
 
     const finalBudget: TicketBudget = {
       id: BudgetId,
-      DiscountAmount: '',
+      discountAmount: '',
       userId: GuidUser,
       discountCode: '',
       priceDiscount: 0,
       percentageDiscount: 0,
       manualPrice: 0,
       totalPrice: totalPrice,
+      totalPriceWithIva: totalPrice,
       clinicInfoId: GuidClinicId,
+      FlowwwId: '',
       referenceId: '',
-      statusBudget: 0,
+      statusBudget: StatusBudget.Open,
       professionalId: GuidProfessional,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
@@ -102,6 +106,13 @@ export const PaymentModule = () => {
   };
 
   const handleOnButtonPaymentClick = (paymentKey: any) => {
+    if (paymentKey == 'pepper') {
+      window.open(
+        'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
+        '_blank'
+      );
+      return;
+    }
     setOnLoad(true);
     if (activePaymentMethod === paymentKey) {
       setOnLoad(false);
@@ -133,25 +144,30 @@ export const PaymentModule = () => {
     }
     setIsLoading(false);
   };
-
   return (
     <>
-      {paymentItems.map(method => (
-        <Button
-          key={method.key}
-          style="tertiary"
-          className={`border-[#FA5022] ${
-            onLoad && activePaymentMethod != method.key ? 'hidden' : ''
-          }`}
-          target="_blank"
-          onClick={() => handleOnButtonPaymentClick(method.key)}
-        >
-          {method.label}
-        </Button>
-      ))}
+      <Flex className="gap-2">
+        {paymentItems.map(method => (
+          <Button
+            size="sm"
+            key={method.key}
+            type="tertiary"
+            className={
+              onLoad && activePaymentMethod != method.key
+                ? 'opacity-25'
+                : 'opacity-100'
+            }
+            target="_blank"
+            onClick={() => handleOnButtonPaymentClick(method.key)}
+          >
+            {method.label}
+          </Button>
+        ))}
+      </Flex>
 
       {paymentItems.map(method =>
-        activePaymentMethod === method.key ? (
+        activePaymentMethod === method.key &&
+        activePaymentMethod != 'pepper' ? (
           <PaymentClient
             key={method.key}
             paymentBank={method.paymentBank}
@@ -164,9 +180,8 @@ export const PaymentModule = () => {
         ) : null
       )}
 
-      {totalAmount ? (
-        <div>
-          <span className="font-bold">Pagos Realizados:</span>
+      <Flex layout="col-left" className="bg-white rounded-xl p-4 w-full mt-8">
+        {totalAmount > 0 && (
           <ul>
             {paymentList?.map(paymentRequest => (
               <PaymentItem
@@ -175,17 +190,17 @@ export const PaymentModule = () => {
               />
             ))}
           </ul>
-        </div>
-      ) : (
-        <></>
-      )}
-      <span className="font-bold mr-1">Total Pagado {totalAmount}€</span>
-      {totalAmount ? (
-        <span className="font-bold mr-1">Faltan {missingAmountFormatted}€</span>
-      ) : (
-        <></>
-      )}
-      <Button onClick={createTicket}>
+        )}
+        {totalAmount > 0 && (
+          <Text className="font-bold pt-4 mt-4 border-t border-hg-black300 w-full">
+            Total Pagado: {totalAmount}€
+          </Text>
+        )}
+        <Text size="sm" className="text-hg-black500">
+          Faltan: {missingAmountFormatted}€
+        </Text>
+      </Flex>
+      <Button size="xl" className="w-full mt-4" onClick={createTicket}>
         {' '}
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>

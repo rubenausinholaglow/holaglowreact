@@ -1,21 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Budget } from '@interface/budget';
+import { Budget, StatusBudget } from '@interface/budget';
+import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
+import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 import CheckHydration from 'utils/CheckHydration';
 
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
 import ProductCard from '../budgets/treatments/ProductCard';
+import { usePaymentList } from './components/payment/payments/usePaymentList';
 import ProductDiscountForm from './components/ProductDiscountForm';
 
 const Page = () => {
@@ -25,9 +28,14 @@ const Page = () => {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
+  const [clientToken, setClientToken] = useState<string | ''>('');
+
+  useEffect(() => {
+    setClientToken(localStorage.getItem('flowwwToken') || '');
+  }, []);
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -37,32 +45,39 @@ const Page = () => {
     const budget: Budget = {
       userId: GuidUser,
       discountCode: '',
+      discountAmount: '',
+      FlowwwId: '',
       priceDiscount: Number(priceDiscount.toFixed(2)),
       percentageDiscount: percentageDiscount / 100,
       manualPrice: Number(manualPrice.toFixed(2)),
       totalPrice: Number(totalPrice.toFixed(2)),
+      totalPriceWithIva: Number(totalPrice.toFixed(2)),
       clinicInfoId: GuidClinicId,
       referenceId: '',
-      statusBudget: 0,
+      statusBudget: StatusBudget.Open,
       professionalId: GuidProfessional,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: Number(CartItem.price.toFixed(2)),
         percentageDiscount: CartItem.percentageDiscount / 100,
         priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
-        name: CartItem.description,
       })),
     };
 
     try {
       const data = await budgetService.createBudget(budget);
       localStorage.setItem('BudgetId', data.id);
-      router.push('/dashboard/menu');
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
     }
   };
 
+  function cancelBudget() {
+    localStorage.removeItem('BudgetId');
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
+    router.push('/dashboard/menu');
+  }
   return (
     <CheckHydration>
       <Container>
@@ -71,14 +86,14 @@ const Page = () => {
         </Title>
 
         <Flex layout="row-left" className="items-start">
-          <ul className="w-3/4 shrink-0">
+          <ul className="w-2/3 shrink-0">
             {cart?.map(cartItem => (
               <li key={cartItem.uniqueId} className="mb-4">
                 <ProductCard isCheckout product={cartItem} />
               </li>
             ))}
           </ul>
-          <Flex layout="col-left" className="w-1/4 pl-8 shrink-0 relative">
+          <Flex layout="col-left" className="w-1/3 pl-8 shrink-0 relative">
             {!showPaymentButtons && (
               <SvgAngleDown
                 height={20}
@@ -106,9 +121,7 @@ const Page = () => {
                     size="lg"
                     onClick={async () => {
                       setIsLoading(true);
-                      if (!localStorage.getItem('BudgetId') || '') {
-                        await handleFinalize();
-                      }
+                      await handleFinalize();
                       setIsLoading(false);
                       setShowPaymentButtons(!showPaymentButtons);
                     }}
@@ -122,7 +135,8 @@ const Page = () => {
                   <Button
                     className="w-full"
                     size="lg"
-                    href="https://agenda.holaglow.com/schedule?mode=dashboard"
+                    target="_blank"
+                    href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
                     type="tertiary"
                   >
                     <span className="font-semibold">Agendar Cita</span>
@@ -130,6 +144,9 @@ const Page = () => {
                 </Flex>
               </>
             )}
+            <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
+              Cancelar Presupuesto
+            </Button>
           </Flex>
         </Flex>
       </Container>

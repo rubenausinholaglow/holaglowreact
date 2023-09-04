@@ -32,16 +32,22 @@ export const Text = ({
   as = 'p',
   className = '',
   children,
+  rest,
 }: {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   as?: keyof JSX.IntrinsicElements;
   className?: string;
   children: ReactNode;
+  [key: string]: any;
 }) => {
   const HtmlComponent = as;
   const styles = twMerge(`text-left text-${size} ${className}`);
 
-  return <HtmlComponent className={styles}>{children}</HtmlComponent>;
+  return (
+    <HtmlComponent className={styles} {...rest}>
+      {children}
+    </HtmlComponent>
+  );
 };
 
 export const Underlined = ({

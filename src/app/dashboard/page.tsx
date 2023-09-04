@@ -3,27 +3,34 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
-import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
-import { INITIAL_STATE } from '@utils/constants';
 import * as config from '@utils/textConstants';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
+import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import { usePaymentList } from 'app/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { useRouter } from 'next/navigation';
 
+import AppointmentsListComponent from './Appointments';
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const clinicId = params.get('clinicId');
+  const boxId = params.get('boxId');
+
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -49,14 +56,7 @@ export default function Page() {
   });
 
   useEffect(() => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('ClinicId');
-    localStorage.removeItem('ClinicProfessionalId');
-    localStorage.removeItem('id');
-    localStorage.removeItem('flowwwToken');
-    localStorage.removeItem('BudgetId');
-    usePaymentList.setState(INITIAL_STATE_PAYMENT);
-    useCartStore.setState(INITIAL_STATE);
+    clearLocalStorage(false);
   }, []);
 
   const handleCheckUser = async () => {
@@ -109,12 +109,15 @@ export default function Page() {
     try {
       await ScheduleService.getClinicSchedule(flowwwToken).then(data => {
         if (data != null) {
+          localStorage.setItem('appointmentId', data.id);
+          localStorage.setItem('appointmentFlowwwId', data.flowwwId ?? '');
           localStorage.setItem('ClinicId', data.clinic.id);
           localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
           localStorage.setItem(
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
+          localStorage.setItem('boxId', boxId || data.boxId);
           saveUserDetails(name, id, flowwwToken);
           router.push('/dashboard/menu');
         } else {

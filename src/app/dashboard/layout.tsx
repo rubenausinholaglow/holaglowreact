@@ -1,6 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
+import ButtonMessage from '@components/ui/ButtonMessage';
+import Timer from '@components/ui/Timer';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -13,7 +16,6 @@ function getBackRoute(pathName: string) {
     '/dashboard/checkout': '/dashboard/budgets',
     '/dashboard/menu': '/dashboard',
   };
-
   return BACK_ROUTES[pathName];
 }
 
@@ -28,33 +30,35 @@ export default function DashboardLayout({
     '/dashboard/checkout',
     '/dashboard/menu',
   ];
-
   return (
     <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
       <Flex
         layout="col-center"
-        className="min-h-screen h-100 text-hg-black text-sm"
+        className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
-            {backButtonRoutes.includes(pathName) && (
-              <>
-                <Button href={getBackRoute(pathName)} type="tertiary">
-                  <Flex layout="row-left">
-                    <SvgArrowSmallLeft
-                      height={40}
-                      width={40}
-                      className="pr-2"
-                    />
-                    Volver
-                  </Flex>
-                </Button>
+            {backButtonRoutes.includes(pathName) &&
+              pathName !== '/dashboard/checkout' && (
+                <>
+                  <Button href={getBackRoute(pathName)} type="tertiary">
+                    <Flex layout="row-left">
+                      <SvgArrowSmallLeft
+                        height={40}
+                        width={40}
+                        className="pr-2"
+                      />
+                      Volver
+                    </Flex>
+                  </Button>
 
-                <div className="ml-auto z-10">
-                  <ClinicProfessional />
-                </div>
-              </>
-            )}
+                  {pathName !== '/dashboard' && <ButtonMessage />}
+
+                  <div className="ml-auto z-10">
+                    <ClinicProfessional />
+                  </div>
+                </>
+              )}
           </Flex>
         </Container>
         {children}
