@@ -28,7 +28,7 @@ export const Modal = ({
   ...rest
 }: {
   isVisible: boolean;
-  width: '3/4' | 'full';
+  width: string;
   className?: string;
   children: ReactNode;
   [key: string]: any;
@@ -36,9 +36,10 @@ export const Modal = ({
   return (
     <div
       className={twMerge(
-        `text-hg-black transition-all fixed top-0 right-0 bottom-0 bg-white z-20 shadow-centered overflow-y-auto w-${width} ${
-          isVisible ? 'translate-x-[0%]' : 'translate-x-[105%]'
-        } ${className} `
+        `text-hg-black transition-all fixed top-0 right-0 bottom-0 bg-white z-20 shadow-centered overflow-y-auto
+          ${width ? width : 'w-full'}
+          ${isVisible ? 'translate-x-[0%]' : 'translate-x-[105%]'}
+          ${className ? className : ''}`
       )}
       {...rest}
     >

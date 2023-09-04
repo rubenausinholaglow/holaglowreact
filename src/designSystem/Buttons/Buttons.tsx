@@ -31,6 +31,7 @@ export const Button = ({
     return (
       <Link
         href={href}
+        target={rest?.target}
         className={twMerge(`relative group overflow-visible ${className}`)}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}

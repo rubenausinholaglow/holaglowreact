@@ -11,7 +11,6 @@ import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
 import { useRouter } from 'next/navigation';
 
-import AppointmentsListComponent from './Appointments';
 import RegistrationForm from './RegistrationForm';
 import SearchUser from './SearchUser';
 
@@ -61,13 +60,6 @@ export default function Page({
 
   const handleCheckUser = async () => {
     setIsLoading(true);
-    const isEmailValid = utils.validateEmail(userEmail);
-
-    if (!isEmailValid) {
-      handleRequestError([config.ERROR_EMAIL_NOT_VALID]);
-      setIsLoading(false);
-      return null;
-    }
 
     await UserService.checkUser(userEmail)
       .then(async data => {
