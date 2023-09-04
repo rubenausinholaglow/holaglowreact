@@ -1,5 +1,3 @@
-const flowwwToken = localStorage.getItem('flowwwToken');
-
 export const menuItems = [
   {
     iconSrc: '/images/dashboard/menu-icons/3d_simulator.png',
@@ -19,7 +17,7 @@ export const menuItems = [
     iconSrc: '/images/dashboard/menu-icons/agenda.png',
     altText: 'Agendar Cita',
     title: 'Agendar Cita',
-    link: `https://agenda.holaglow.com/schedule?mode=dashboard&token=${flowwwToken}`,
+    link: 'https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken',
     target: '_blank',
   },
 ];
