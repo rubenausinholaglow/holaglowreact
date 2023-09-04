@@ -81,7 +81,7 @@ const Page = () => {
   return (
     <CheckHydration>
       <Container>
-        <Title size="2xl" className="text-left mb-4">
+        <Title size="xl" className="text-left mb-4">
           Resumen
         </Title>
 

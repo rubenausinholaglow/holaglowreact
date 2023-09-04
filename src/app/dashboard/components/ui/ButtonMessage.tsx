@@ -100,14 +100,14 @@ export default function ButtonMessage() {
         }`}
       >
         <div
-          className="bg-hg-purple100 rounded-full p-3 text-hg-purple cursor-pointer"
+          className="bg-hg-purple300 rounded-full p-3 text-hg-purple cursor-pointer"
           onClick={sendMessageToMedic}
         >
           <SvgStethoscope height={20} width={20} />
         </div>
 
         <div
-          className="bg-hg-purple100 rounded-full p-3 text-hg-purple cursor-pointer"
+          className="bg-hg-purple300 rounded-full p-3 text-hg-purple cursor-pointer"
           onClick={sendMessageToReception}
         >
           <SvgUserSquare height={20} width={20} />

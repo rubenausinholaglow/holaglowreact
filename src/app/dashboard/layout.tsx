@@ -31,7 +31,7 @@ export default function DashboardLayout({
     '/dashboard/menu',
   ];
   return (
-    <main className="min-h-screen h-100 text-sm bg-hg-purple100">
+    <main className="min-h-screen h-100 text-sm bg-white">
       <Flex
         layout="col-center"
         className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"

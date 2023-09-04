@@ -43,7 +43,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
       className={`
-        border border-hg-purple bg-white text-hg-purple rounded-lg overflow-hidden relative
+        border border-hg-black500 bg-white text-hg-purple rounded-xl overflow-hidden relative
         ${!isCheckout && 'cursor-pointer'}`}
       onClick={() => setHighlightProduct(product)}
     >
@@ -73,16 +73,13 @@ export default function ProductCard({ product, isCheckout }: Props) {
         className={
           isCheckout
             ? 'py-4'
-            : 'border-t border-hg-purple p-4 text-left w-full h-full'
+            : 'border-t border-hg-black500 p-4 text-left w-full h-full'
         }
       >
         <Text size={isCheckout ? 'lg' : 'md'} className="font-semibold">
           {product.title}
         </Text>
-        <Text
-          size={isCheckout ? 'md' : 'xs'}
-          className="text-hg-purple300 mb-3"
-        >
+        <Text size={isCheckout ? 'md' : 'xs'} className="text-hg-black400 mb-3">
           {product.description}
         </Text>
         <Flex layout="row-left" className="mb-3">

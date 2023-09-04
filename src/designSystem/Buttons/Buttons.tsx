@@ -80,8 +80,8 @@ const ButtonBody = ({
       'bg-white text-hg-black border border-hg-black hover:bg-hg-purple300 active:bg-hg-purple300',
     transparent:
       'bg-white text-hg-black border border-transparent hover:bg-hg-purple300 hover:border-hg-purple300 active:bg-hg-purple300 active:border-hg-purple300',
-    sm: 'text-xs h-[32px] px-4',
-    md: 'text-xs h-[40px] px-4',
+    sm: 'text-xs h-[32px] px-4 font-medium',
+    md: 'text-xs h-[40px] px-4 font-medium',
     lg: 'text-md font-semibold h-[48px] px-6',
     xl: 'text-md font-semibold h-[64px] px-6',
   };
@@ -106,7 +106,7 @@ const ButtonBase = ({ type }: { type: ButtonTypes }) => {
 
   const STYLES: any = {
     primary: 'bg-hg-lime border border-hg-black',
-    secondary: 'bg-hg-purple100 border border-hg-black',
+    secondary: 'bg-hg-purple300 border border-hg-black',
   };
 
   const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;

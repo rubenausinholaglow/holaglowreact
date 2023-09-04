@@ -24,7 +24,7 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
   return (
     <Flex
       layout="col-left"
-      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-hg-purple100`}
+      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-hg-black300`}
     >
       <SvgDoubleAngleLeft
         height={40}
