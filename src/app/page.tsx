@@ -1,18 +1,25 @@
-'use client';
-
-import React from 'react';
-import { useGlobalStore } from 'app/stores/globalStore';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import Clinics from './components/home/Clinics';
+import GoToTreatments from './components/home/GoToTreatments';
+import Hero from './components/home/Hero';
+import InTheNews from './components/home/InTheNews';
+import Products from './components/home/Products';
+import Professionals from './components/home/Professionals';
+import Testimonials from './components/home/Testimonials';
+import ValuesCarousel from './components/home/ValuesCarousel';
+import ValuesDescription from './components/home/ValuesDescription';
 
 export default function Home() {
-  const { isModalOpen, isMainScrollEnabled } = useGlobalStore(state => state);
-
   return (
-    <Flex layout="col-center" className="text-center h-[1500px]">
-      <p className="pt-[500px]">
-        isModalOpen - {isModalOpen ? 'true' : 'false'}
-      </p>
-      <p>isMainScrollEnabled - {isMainScrollEnabled ? 'true' : 'false'}</p>
-    </Flex>
+    <>
+      <Hero />
+      <ValuesCarousel />
+      <ValuesDescription />
+      <Products />
+      <Professionals />
+      <Testimonials />
+      <InTheNews />
+      <Clinics />
+      <GoToTreatments />
+    </>
   );
 }

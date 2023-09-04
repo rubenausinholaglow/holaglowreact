@@ -78,7 +78,7 @@ export default function Header() {
 
       <header
         id="header"
-        className={`w-full fixed top-0 transition-transform ${
+        className={`z-10 w-full bg-white fixed top-0 transition-transform ${
           !isHeaderVisible ? '-translate-y-full' : ''
         }`}
       >
