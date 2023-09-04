@@ -10,9 +10,10 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   altText,
   title,
   link,
+  target,
 }) => {
   return (
-    <Link href={link}>
+    <Link href={link} target={target}>
       <Image
         className="mx-auto"
         src={iconSrc}

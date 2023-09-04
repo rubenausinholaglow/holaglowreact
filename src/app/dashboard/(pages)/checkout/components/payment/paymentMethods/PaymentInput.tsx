@@ -133,7 +133,7 @@ export default function PaymentInput(props: Props) {
                   setInputValue(newValue.toString());
                 }}
               />
-              {props.paymentMethod === 2 && (
+              {props.paymentBank === 1 && (
                 <Button
                   size="sm"
                   type="secondary"
@@ -144,7 +144,7 @@ export default function PaymentInput(props: Props) {
                   Ver Financiación
                 </Button>
               )}
-              {props.paymentMethod !== 2 && (
+              {props.paymentBank != 1 && (
                 <Button size="sm" type="secondary" isSubmit className="ml-2">
                   {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
                 </Button>
@@ -152,7 +152,7 @@ export default function PaymentInput(props: Props) {
             </Flex>
           )}
         />
-        {props.paymentBank != PaymentBank.None && renderFinance()}
+        {props.paymentBank == PaymentBank.None && renderFinance()}
       </Flex>
     </form>
   );

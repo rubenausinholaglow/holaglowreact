@@ -17,6 +17,7 @@ const Page = () => {
   const [boxId, setBoxId] = useState<string | null>(null);
   const [appointmentId, setAppointmentId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [flowwwToken, setFlowwwToken] = useState('');
 
   const router = useRouter();
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -34,6 +35,7 @@ const Page = () => {
     setClinicId(localStorage.getItem('ClinicId') || '');
     setBoxId(localStorage.getItem('boxId') || '');
     setUserId(localStorage.getItem('id') || '');
+    setFlowwwToken(localStorage.getItem('flowwwToken') || '');
   }, []);
 
   const handleClick = async () => {
@@ -68,7 +70,12 @@ const Page = () => {
                   iconSrc={item.iconSrc}
                   altText={item.altText}
                   title={item.title}
-                  link={item.link}
+                  link={
+                    item.link.includes('flowwwToken')
+                      ? item.link.replace('flowwwToken', flowwwToken)
+                      : item.link
+                  }
+                  target={item.target}
                 />
               ))}
             </div>
