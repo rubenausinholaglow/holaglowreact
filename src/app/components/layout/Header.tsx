@@ -26,9 +26,9 @@ const NAV_ITEMS = [
   { name: 'Sobre nosotros' },
 ];
 
-function Navigation() {
+function Navigation({ className }: { className: string }) {
   return (
-    <nav>
+    <nav className={className}>
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
           <li className="font-medium" key={navItem.name}>
@@ -50,6 +50,7 @@ export default function Header() {
   );
 
   const HEADER_HEIGHT = isMobile ? 48 : 72;
+  const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
   const recalculateVisibility = () => {
     setIsHeaderVisible(
@@ -84,43 +85,36 @@ export default function Header() {
       >
         <Container>
           <Flex
-            layout={isMobile ? 'row-between' : 'row-center'}
-            className={`py-3 md:py-5 relative h-[48px] ${
-              !isMobile ? `h-${HEADER_HEIGHT}` : ''
-            }`}
+            layout="row-between"
+            className={`relative py-3 md:py-5 md:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
             <SvgHolaglow
-              height={isMobile ? 24 : 32}
-              width={isMobile ? 98 : 130}
-              fill={HOLAGLOW_COLORS['lightMalva']}
-              className="md:absolute left-0"
+              fill={HOLAGLOW_COLORS['purple']}
+              className="md:absolute left-0 h-[24px] md:h-[32px] w-[98px] md:w-[130px]"
             />
 
-            {!isMobile && <Navigation />}
+            <Navigation className="hidden md:block" />
 
             <Flex layout="row-center" className="md:absolute right-0">
               <Button
                 href="https://holaglow.com"
                 type="transparent"
-                style={{
-                  paddingLeft: isMobile ? '6px' : undefined,
-                  paddingRight: isMobile ? '6px' : undefined,
-                }}
+                customStyles="px-[6px] md:px-0"
               >
                 <Flex layout="row-center">
                   <SvgUserOctagon
-                    height={isMobile ? 28 : 16}
-                    width={isMobile ? 28 : 16}
                     fill="transparent"
+                    className="h-[28px] w-[28px] md:h-[16px] md:w-[16px]"
                   />
                   <span className="hidden md:block ml-2">Mi espacio glow</span>
                 </Flex>
               </Button>
-              {isMobile && !isMobileNavVisible && (
+
+              {!isMobileNavVisible && (
                 <SvgMenu
                   height={24}
                   width={24}
-                  className="ml-2"
+                  className="ml-2 md:hidden"
                   onClick={() => {
                     setIsMobileNavVisible(true);
                     setIsMainScrollEnabled(false);
@@ -128,11 +122,11 @@ export default function Header() {
                 />
               )}
 
-              {isMobile && isMobileNavVisible && (
+              {isMobileNavVisible && (
                 <SvgCross
                   height={24}
                   width={24}
-                  className="ml-2"
+                  className="ml-2 md:hidden"
                   onClick={() => {
                     setIsMobileNavVisible(false);
                     setIsMainScrollEnabled(true);
@@ -140,14 +134,16 @@ export default function Header() {
                 />
               )}
 
-              {!isMobile && (
-                <Button type="tertiary" size="md" className="ml-2">
-                  <Flex layout="row-center">
-                    <span className="font-semibold">Reservar Cita</span>
-                    <SvgArrow height={18} width={18} className="ml-2" />
-                  </Flex>
-                </Button>
-              )}
+              <Button
+                type="tertiary"
+                size="md"
+                className="ml-2 hidden md:block"
+              >
+                <Flex layout="row-center">
+                  <span className="font-semibold">Reservar Cita</span>
+                  <SvgArrow height={18} width={18} className="ml-2" />
+                </Flex>
+              </Button>
             </Flex>
           </Flex>
         </Container>
