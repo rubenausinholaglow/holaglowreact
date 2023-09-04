@@ -69,6 +69,7 @@ const Page = () => {
                   altText={item.altText}
                   title={item.title}
                   link={item.link}
+                  target={item.target}
                 />
               ))}
             </div>
