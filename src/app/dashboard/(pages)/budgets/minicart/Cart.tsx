@@ -15,7 +15,7 @@ export function Cart() {
       <Container>
         <Flex layout="row-left">
           <Flex layout="col-left">
-            <Text size="md" className="font-semibold text-hg-darkMalva mb-2">
+            <Text size="md" className="font-semibold text-hg-purple mb-2">
               Productos seleccionados:
             </Text>
             <ul className="flex flex-col gap-1">
@@ -99,7 +99,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
           {manualPrice > 0 && (
             <Flex
               layout="row-left"
-              className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+              className="bg-hg-lime text-hg-purple rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, 'total')}
             >
               <Text size="xs">total: {manualPrice}€</Text>
@@ -109,7 +109,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
           {percentageDiscount > 0 && (
             <Flex
               layout="row-left"
-              className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+              className="bg-hg-lime text-hg-purple rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, '%')}
             >
               <Text size="xs">- {percentageDiscount}%</Text>
@@ -119,7 +119,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
           {priceDiscount > 0 && (
             <Flex
               layout="row-left"
-              className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+              className="bg-hg-lime text-hg-purple rounded-full px-2 py-[2px] font-semibold mr-2"
               onClick={() => applyCartDiscount(0, '€')}
             >
               <Text size="xs">- {priceDiscount}€</Text>

@@ -51,13 +51,13 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
 
   return (
     <section className="py-8 px-16 bg-hg-lime/10 text-xs text-hg-black">
-      <h3 className="text-xl text-hg-darkMalva font-semibold text-center mb-8">
+      <h3 className="text-xl text-hg-purple font-semibold text-center mb-8">
         {issuesTitle}
       </h3>
       <div className="flex gap-16">
         {filteredNormalIssues.length > 0 && (
           <div className="w-1/2">
-            <p className="text-hg-darkMalva mb-4">Es normal si...</p>
+            <p className="text-hg-purple mb-4">Es normal si...</p>
             <ul className="mb-8">
               {filteredNormalIssues.map((issue, index) => {
                 return (
@@ -66,7 +66,7 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
                       <SvgPlusSmall
                         height={16}
                         width={16}
-                        fill={HOLAGLOW_COLORS['darkMalva']}
+                        fill={HOLAGLOW_COLORS['purple']}
                       />
                     </div>
                     <p>{issue.details}</p>
@@ -78,7 +78,7 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
         )}
         {filteredUnalarmingIssues.length > 0 && (
           <div className="w-1/2">
-            <p className="text-hg-darkMalva mb-4">No te alarmes si...</p>
+            <p className="text-hg-purple mb-4">No te alarmes si...</p>
             <ul className="mb-8">
               {filteredUnalarmingIssues.map((issue, index) => {
                 return (
@@ -87,7 +87,7 @@ export default function Issues({ appointment }: { appointment: Appointment }) {
                       <SvgPlusSmall
                         height={16}
                         width={16}
-                        fill={HOLAGLOW_COLORS['darkMalva']}
+                        fill={HOLAGLOW_COLORS['purple']}
                       />
                     </div>
                     <p>{issue.details}</p>

@@ -24,16 +24,16 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
   return (
     <Flex
       layout="col-left"
-      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-hg-lightMalva`}
+      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-hg-purple100`}
     >
       <SvgDoubleAngleLeft
         height={40}
         width={40}
-        className={`absolute top-0 -right-[19px] bg-hg-lime text-hg-darkMalva rounded-full p-2 cursor-pointer transition-all ${
+        className={`absolute top-0 -right-[19px] bg-hg-lime text-hg-purple rounded-full p-2 cursor-pointer transition-all ${
           showFilters ? 'rotate-0' : 'rotate-180'
         }`}
         onClick={() => setShowFilters(!showFilters)}
-        fill={HOLAGLOW_COLORS['darkMalva']}
+        fill={HOLAGLOW_COLORS['purple']}
       />
 
       <div
@@ -44,7 +44,7 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
         <input
           type="text"
           placeholder="Filtrar por título o descripción"
-          className="border border-hg-darkMalva rounded px-2 py-1 mt-2 text-black w-full mb-6"
+          className="border border-hg-purple rounded px-2 py-1 mt-2 text-black w-full mb-6"
           onChange={handleInputChange}
         />
 

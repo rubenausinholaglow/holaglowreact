@@ -11,12 +11,12 @@ import { Clinic } from './types';
 
 export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
   return (
-    <section className="bg-white p-8 text-hg-darkMalva mb-8">
+    <section className="bg-white p-8 text-hg-purple mb-8">
       <SvgHolaglow
         className="mb-8"
         width={150}
         height={35}
-        fill={HOLAGLOW_COLORS['malva']}
+        fill={HOLAGLOW_COLORS['purple700']}
       />
 
       <ul className="grid grid-cols-3 gap-8 text-xs">
@@ -29,16 +29,12 @@ export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
             <SvgMapMarker
               height={20}
               width={20}
-              fill={HOLAGLOW_COLORS['darkMalva']}
+              fill={HOLAGLOW_COLORS['purple']}
             />
             <span className="ml-2">{clinicInfo.address}</span>
           </p>
           <p className="flex flex-row items-center">
-            <SvgPhone
-              height={15}
-              width={15}
-              fill={HOLAGLOW_COLORS['darkMalva']}
-            />
+            <SvgPhone height={15} width={15} fill={HOLAGLOW_COLORS['purple']} />
             <span className="ml-2">{clinicInfo.phone}</span>
           </p>
         </li>
@@ -47,7 +43,7 @@ export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
             <SvgWorldWideWeb
               height={18}
               width={22}
-              fill={HOLAGLOW_COLORS['darkMalva']}
+              fill={HOLAGLOW_COLORS['purple']}
             />
             <span className="ml-2">holaglow.com</span>
           </p>
@@ -55,7 +51,7 @@ export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
             <SvgInstagram
               height={18}
               width={18}
-              fill={HOLAGLOW_COLORS['darkMalva']}
+              fill={HOLAGLOW_COLORS['purple']}
             />
             <span className="ml-2">holaglow.clinics</span>
           </p>

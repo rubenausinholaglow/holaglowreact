@@ -122,7 +122,7 @@ export const ClinicProfessional = () => {
         onClick={() =>
           beautyAdvisors.length > 1 && handleToggleProfessionalList()
         }
-        className={`aspect-square h-[40px] rounded-full ${color} text-hg-darkMalva justify-center relative ${
+        className={`aspect-square h-[40px] rounded-full ${color} text-hg-purple justify-center relative ${
           beautyAdvisors.length > 1 && 'cursor-pointer'
         }`}
       >

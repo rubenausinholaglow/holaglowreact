@@ -106,11 +106,11 @@ export default function HightLightedProduct() {
                 {product.price.toFixed(2)}€
               </span>
             </Title>
-            <p className="mb-4 text-hg-darkMalva">{product.description}</p>
+            <p className="mb-4 text-hg-purple">{product.description}</p>
 
             <Flex
               layout="row-center"
-              className="pt-4 w-full rounded-lg py-4 bg-hg-darkMalva100 mt-auto"
+              className="pt-4 w-full rounded-lg py-4 bg-hg-purple100 mt-auto"
             >
               <Text size="md" className="font-semibold mr-4">
                 Añadir producto:

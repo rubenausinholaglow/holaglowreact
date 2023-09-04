@@ -40,7 +40,7 @@ export default function Treatments({
           <div key={index} className="bg-[#F1F4FE] rounded-[25px] p-8 mb-12">
             <div className="flex">
               <div className="flex flex-col mr-4 w-2/5">
-                <p className="text-hg-lightMalva text-xs">{year}</p>
+                <p className="text-hg-purple300 text-xs">{year}</p>
                 <p className="mb-4">
                   {date} {month.charAt(0).toUpperCase() + month.slice(1)}
                 </p>
@@ -53,13 +53,13 @@ export default function Treatments({
               </div>
               <ul className="border-l border-hg-400/10 w-3/5 text-sm">
                 <li className="border-b border-hg-400/10 p-4">
-                  <p className="text-hg-lightMalva text-xs mb-1">
+                  <p className="text-hg-purple300 text-xs mb-1">
                     Plan de tratamiento
                   </p>
                   <p>{treatment.product.title}</p>
                 </li>
                 <li className="border-b border-hg-400/10 p-4">
-                  <p className="text-hg-lightMalva text-xs mb-1">
+                  <p className="text-hg-purple300 text-xs mb-1">
                     Producto utilizado
                   </p>
                   <p>{treatment.product.description}</p>
@@ -72,9 +72,9 @@ export default function Treatments({
                           className="mb-2"
                           height={18}
                           width={22}
-                          fill={HOLAGLOW_COLORS['lightMalva']}
+                          fill={HOLAGLOW_COLORS['purple700']}
                         />
-                        <p className="text-hg-lightMalva text-xs mb-1">
+                        <p className="text-hg-purple300 text-xs mb-1">
                           Cantidad
                         </p>
                         <p>{treatment.quantity} Vial</p>
@@ -85,9 +85,9 @@ export default function Treatments({
                             className="mb-2"
                             height={18}
                             width={22}
-                            fill={HOLAGLOW_COLORS['lightMalva']}
+                            fill={HOLAGLOW_COLORS['purple700']}
                           />
-                          <p className="text-hg-lightMalva text-xs mb-1">
+                          <p className="text-hg-purple300 text-xs mb-1">
                             Número de lote
                           </p>
                           <p>{treatment.lotReference}</p>
@@ -99,9 +99,9 @@ export default function Treatments({
                             className="mb-2"
                             height={18}
                             width={22}
-                            fill={HOLAGLOW_COLORS['lightMalva']}
+                            fill={HOLAGLOW_COLORS['purple700']}
                           />
-                          <p className="text-hg-lightMalva text-xs mb-1">
+                          <p className="text-hg-purple300 text-xs mb-1">
                             Duración
                           </p>
                           <p>{`de ${Math.floor(
@@ -152,7 +152,7 @@ export default function Treatments({
 
           <table className="text-hg-black text-[11px] mb-12 w-full">
             <thead>
-              <tr className="text-hg-lightMalva mb-4">
+              <tr className="text-hg-purple300 mb-4">
                 <th className="py-3 pr-6 text-left font-normal">
                   Fecha / Sesión
                 </th>

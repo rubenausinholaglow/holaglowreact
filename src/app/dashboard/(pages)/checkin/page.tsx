@@ -127,7 +127,7 @@ function FormSection({
       <form onSubmit={handleSubmit} className="relative">
         <Flex
           layout="col-left"
-          className={`gap-4 px-12 py-8 bg-hg-malva300 relative z-10 ${
+          className={`gap-4 px-12 py-8 bg-hg-purple300 relative z-10 ${
             checkIn ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
@@ -165,7 +165,7 @@ function FormSection({
           </Button>
         </Flex>
         <Text
-          className={`transition-all text-center bg-hg-darkMalva text-white font-semibold w-full p-2 rounded-b-xl ${
+          className={`transition-all text-center bg-hg-purple text-white font-semibold w-full p-2 rounded-b-xl ${
             checkIn
               ? 'translate-y-0 opacity-100'
               : '-translate-y-full opacity-0'

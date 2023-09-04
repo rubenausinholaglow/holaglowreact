@@ -75,11 +75,11 @@ const ButtonBody = ({
     common: 'transition-all relative bottom-[1px] text-center rounded-full ',
     animations: '-translate-y-1 group-active:-translate-y-0',
     primary: 'bg-hg-black text-hg-lime',
-    secondary: 'bg-white text-hg-darkMalva border border-hg-black',
+    secondary: 'bg-white text-hg-purple border border-hg-black',
     tertiary:
-      'bg-white text-hg-black border border-hg-black hover:bg-hg-malva300 active:bg-hg-malva300',
+      'bg-white text-hg-black border border-hg-black hover:bg-hg-purple300 active:bg-hg-purple300',
     transparent:
-      'bg-white text-hg-black border border-transparent hover:bg-hg-malva300 hover:border-hg-malva300 active:bg-hg-malva300 active:border-hg-malva300',
+      'bg-white text-hg-black border border-transparent hover:bg-hg-purple300 hover:border-hg-purple300 active:bg-hg-purple300 active:border-hg-purple300',
     sm: 'text-xs h-[32px] px-4',
     md: 'text-xs h-[40px] px-4',
     lg: 'text-md font-semibold h-[48px] px-6',
@@ -106,7 +106,7 @@ const ButtonBase = ({ type }: { type: ButtonTypes }) => {
 
   const STYLES: any = {
     primary: 'bg-hg-lime border border-hg-black',
-    secondary: 'bg-hg-malva border border-hg-black',
+    secondary: 'bg-hg-purple100 border border-hg-black',
   };
 
   const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;

@@ -68,7 +68,7 @@ export default function Form() {
               <SvgArrowSmallLeft
                 height={30}
                 width={30}
-                fill={HOLAGLOW_COLORS['darkMalva']}
+                fill={HOLAGLOW_COLORS['purple']}
                 className="cursor-pointer self-center"
                 onClick={() => goBack(activeSlideIndex)}
               />
@@ -77,7 +77,7 @@ export default function Form() {
           <SvgHolaglow
             width={125}
             height={30}
-            fill={HOLAGLOW_COLORS['darkMalva']}
+            fill={HOLAGLOW_COLORS['purple']}
           />
         </Flex>
       </header>
@@ -86,9 +86,9 @@ export default function Form() {
         className="max-w-[624px] mx-auto relative overflow-hidden text-hg-black"
       >
         <div className="px-4 mb-12">
-          <ul className="flex bg-hg-lightMalva/40 h-[4px] w-full rounded-full">
+          <ul className="flex bg-hg-purple100/40 h-[4px] w-full rounded-full">
             <li
-              className="h-[4px] rounded-full bg-hg-darkMalva transition-all"
+              className="h-[4px] rounded-full bg-hg-purple transition-all"
               style={{ width: `${progressBarWith}%` }}
             ></li>
           </ul>
@@ -114,9 +114,9 @@ export default function Form() {
                         key={index}
                         className={`w-full mb-4 ${
                           isActive
-                            ? 'bg-hg-lightMalva/25 text-hg-black'
-                            : 'text-hg-darkMalva'
-                        } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
+                            ? 'bg-hg-purple100/25 text-hg-black'
+                            : 'text-hg-purple'
+                        } bg-hg-purple100/10 hover:bg-hg-purple100/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
                         onClick={() => {
                           setActiveSlideIndex(activeSlideIndex + 1);
                           setSkincareSelected(index);
@@ -131,7 +131,7 @@ export default function Form() {
                             <SvgCheck
                               height={16}
                               width={16}
-                              fill={HOLAGLOW_COLORS['darkMalva']}
+                              fill={HOLAGLOW_COLORS['purple']}
                               className="self-end mb-4"
                             />
                           ) : (
@@ -145,17 +145,17 @@ export default function Form() {
                           <div
                             className={`${
                               isActive
-                                ? 'bg-hg-lightMalva/40'
-                                : 'bg-hg-lightMalva/20'
-                            }  group-hover:bg-hg-lightMalva/60 h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
+                                ? 'bg-hg-purple100/40'
+                                : 'bg-hg-purple100/20'
+                            }  group-hover:bg-hg-purple100/60 h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
                           >
                             {Icon && (
                               <div
                                 className={`${
                                   isActive
-                                    ? 'text-hg-darkMalva'
-                                    : 'text-hg-lightMalva'
-                                } group-hover:text-hg-darkMalva transition-all`}
+                                    ? 'text-hg-purple'
+                                    : 'text-hg-purple300'
+                                } group-hover:text-hg-purple transition-all`}
                               >
                                 <Icon height={40} width={40} />
                               </div>
@@ -196,9 +196,9 @@ export default function Form() {
                         key={index}
                         className={`w-full mb-4 ${
                           isActive
-                            ? 'text-hg-black bg-hg-lightMalva/25'
-                            : 'text-hg-darkMalva'
-                        } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 group rounded-lg py-2 px-3 cursor-pointer`}
+                            ? 'text-hg-black bg-hg-purple100/25'
+                            : 'text-hg-purple'
+                        } bg-hg-purple100/10 hover:bg-hg-purple100/20 group rounded-lg py-2 px-3 cursor-pointer`}
                         onClick={() => {
                           setActiveSlideIndex(activeSlideIndex + 1);
                           setAgeSelected(index);
@@ -213,7 +213,7 @@ export default function Form() {
                             <SvgCheck
                               height={16}
                               width={16}
-                              fill={HOLAGLOW_COLORS['darkMalva']}
+                              fill={HOLAGLOW_COLORS['purple']}
                               className="self-end mb-4"
                             />
                           ) : (
@@ -228,7 +228,7 @@ export default function Form() {
                           <Text
                             size="xl"
                             className={`font-semibold text-center text-[32px] ${
-                              isActive ? 'text-hg-black' : 'text-hg-darkMalva'
+                              isActive ? 'text-hg-black' : 'text-hg-purple'
                             } group-hover:text-hg-black transition-all`}
                           >
                             {age}
@@ -236,7 +236,7 @@ export default function Form() {
                           <Text
                             size="xs"
                             className={`-mt-3 font-semibold text-center mb-4 ${
-                              isActive ? 'text-hg-black' : 'text-hg-darkMalva'
+                              isActive ? 'text-hg-black' : 'text-hg-purple'
                             } group-hover:text-hg-black transition-all`}
                           >
                             años
@@ -268,9 +268,9 @@ export default function Form() {
                       key={index}
                       className={`w-full mb-4 ${
                         isActive
-                          ? 'bg-hg-lightMalva/25 text-hg-black'
-                          : 'text-hg-darkMalva'
-                      } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
+                          ? 'bg-hg-purple100/25 text-hg-black'
+                          : 'text-hg-purple'
+                      } bg-hg-purple100/10 hover:bg-hg-purple100/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
                       onClick={() => {
                         setActiveSlideIndex(activeSlideIndex + 1);
                         setCategorySelected(index);
@@ -286,7 +286,7 @@ export default function Form() {
                           <SvgCheck
                             height={16}
                             width={16}
-                            fill={HOLAGLOW_COLORS['darkMalva']}
+                            fill={HOLAGLOW_COLORS['purple']}
                             className="self-end mb-4"
                           />
                         ) : (
@@ -302,17 +302,17 @@ export default function Form() {
                           <div
                             className={`${
                               isActive
-                                ? 'bg-hg-lightMalva/40'
-                                : 'bg-hg-lightMalva/20'
-                            }  group-hover:bg-hg-lightMalva/60 h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
+                                ? 'bg-hg-purple100/40'
+                                : 'bg-hg-purple100/20'
+                            }  group-hover:bg-hg-purple100/60 h-[72px] w-[72px] rounded-full flex justify-center items-center transition-all`}
                           >
                             {Icon && (
                               <div
                                 className={`${
                                   isActive
-                                    ? 'text-hg-darkMalva'
-                                    : 'text-hg-lightMalva'
-                                } group-hover:text-hg-darkMalva transition-all`}
+                                    ? 'text-hg-purple'
+                                    : 'text-hg-purple300'
+                                } group-hover:text-hg-purple transition-all`}
                               >
                                 <Icon height={40} width={40} />
                               </div>
@@ -372,9 +372,9 @@ export default function Form() {
                       key={index}
                       className={`w-full mb-4 ${
                         isActive
-                          ? 'bg-hg-lightMalva/25 text-hg-black'
-                          : 'text-hg-darkMalva'
-                      } bg-hg-lightMalva/10 hover:bg-hg-lightMalva/20 hover:text-hg-black py-4 group transition-all rounded-lg px-3 cursor-pointer`}
+                          ? 'bg-hg-purple100/25 text-hg-black'
+                          : 'text-hg-purple'
+                      } bg-hg-purple100/10 hover:bg-hg-purple100/20 hover:text-hg-black py-4 group transition-all rounded-lg px-3 cursor-pointer`}
                       onClick={() => {
                         setTreatmentSelected(index);
                         redirectTo(index);
@@ -391,7 +391,7 @@ export default function Form() {
                           <SvgCheck
                             height={16}
                             width={16}
-                            fill={HOLAGLOW_COLORS['darkMalva']}
+                            fill={HOLAGLOW_COLORS['purple']}
                           />
                         ) : (
                           <SvgCircle

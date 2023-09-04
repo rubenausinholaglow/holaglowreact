@@ -43,14 +43,14 @@ export default function ProductCard({ product, isCheckout }: Props) {
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
       className={`
-        border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden relative
+        border border-hg-purple bg-white text-hg-purple rounded-lg overflow-hidden relative
         ${!isCheckout && 'cursor-pointer'}`}
       onClick={() => setHighlightProduct(product)}
     >
       <SvgClose
         width={30}
         height={30}
-        fill={HOLAGLOW_COLORS['darkMalva']}
+        fill={HOLAGLOW_COLORS['purple']}
         className="absolute top-2 right-2 cursor-pointer"
         onClick={() => removeFromCart(product)}
       />
@@ -73,7 +73,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         className={
           isCheckout
             ? 'py-4'
-            : 'border-t border-hg-darkMalva p-4 text-left w-full h-full'
+            : 'border-t border-hg-purple p-4 text-left w-full h-full'
         }
       >
         <Text size={isCheckout ? 'lg' : 'md'} className="font-semibold">
@@ -81,7 +81,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         </Text>
         <Text
           size={isCheckout ? 'md' : 'xs'}
-          className="text-hg-lightMalva mb-3"
+          className="text-hg-purple300 mb-3"
         >
           {product.description}
         </Text>
@@ -141,7 +141,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
                   productCartItem.priceDiscount !== 0 && (
                     <Flex
                       layout="row-left"
-                      className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+                      className="bg-hg-lime text-hg-purple rounded-full px-2 py-[2px] font-semibold mr-2"
                       onClick={() =>
                         applyItemDiscount(product.uniqueId, 0, '€')
                       }
@@ -155,7 +155,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
                 {productCartItem.percentageDiscount > 0 && (
                   <Flex
                     layout="row-left"
-                    className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+                    className="bg-hg-lime text-hg-purple rounded-full px-2 py-[2px] font-semibold mr-2"
                     onClick={() => applyItemDiscount(product.uniqueId, 0, '%')}
                   >
                     <Text size="xs">

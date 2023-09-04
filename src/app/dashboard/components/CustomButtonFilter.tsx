@@ -34,7 +34,7 @@ export const CustomButtonFilter: React.FC<CustomButtonFilterProps> = ({
       size="sm"
       customStyles={
         isSelected
-          ? 'bg-hg-darkMalva text-white border-hg-darkMalva hover:bg-hg-darkMalva hover:text-white hover:border-hg-darkMalva'
+          ? 'bg-hg-purple text-white border-hg-purple hover:bg-hg-purple hover:text-white hover:border-hg-purple'
           : ''
       }
       {...buttonProps}

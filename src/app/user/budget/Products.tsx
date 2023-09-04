@@ -143,7 +143,7 @@ export default function Products({
         })}
       </ul>
       <aside>
-        <ul className="bg-hg-lightMalva/20 rounded-lg w-[55%] flex flex-col text-xs p-4 ml-auto mr-16 mt-8 mb-8">
+        <ul className="bg-hg-purple100/20 rounded-lg w-[55%] flex flex-col text-xs p-4 ml-auto mr-16 mt-8 mb-8">
           <li className="flex justify-between pb-4">
             <span>Subtotal</span>
             <span className="font-semibold">
@@ -194,7 +194,7 @@ export default function Products({
       </aside>
       <p
         style={{ writingMode: 'vertical-rl' }}
-        className="inline-block rotate-180 absolute bottom-0 right-0 text-xs text-hg-darkMalva pt-8 pl-2"
+        className="inline-block rotate-180 absolute bottom-0 right-0 text-xs text-hg-purple pt-8 pl-2"
       >
         Presupuesto nº {referenceId} - {parsedDate}
       </p>

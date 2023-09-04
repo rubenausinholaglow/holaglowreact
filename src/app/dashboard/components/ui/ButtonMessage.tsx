@@ -87,7 +87,7 @@ export default function ButtonMessage() {
   return (
     <Flex layout="row-left" className="gap-2 ml-4 overflow-hidden relative">
       <div
-        className="bg-hg-darkMalva rounded-full p-3 text-white cursor-pointer relative z-10"
+        className="bg-hg-purple rounded-full p-3 text-white cursor-pointer relative z-10"
         onClick={toggleButtons}
       >
         <SvgCalling height={20} width={20} className="relative z-10" />
@@ -100,14 +100,14 @@ export default function ButtonMessage() {
         }`}
       >
         <div
-          className="bg-hg-malva rounded-full p-3 text-hg-darkMalva cursor-pointer"
+          className="bg-hg-purple100 rounded-full p-3 text-hg-purple cursor-pointer"
           onClick={sendMessageToMedic}
         >
           <SvgStethoscope height={20} width={20} />
         </div>
 
         <div
-          className="bg-hg-malva rounded-full p-3 text-hg-darkMalva cursor-pointer"
+          className="bg-hg-purple100 rounded-full p-3 text-hg-purple cursor-pointer"
           onClick={sendMessageToReception}
         >
           <SvgUserSquare height={20} width={20} />

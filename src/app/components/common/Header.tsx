@@ -92,7 +92,7 @@ export default function Header() {
             <SvgHolaglow
               height={isMobile ? 24 : 32}
               width={isMobile ? 98 : 130}
-              fill={HOLAGLOW_COLORS['lightMalva']}
+              fill={HOLAGLOW_COLORS['purple']}
               className="md:absolute left-0"
             />
 

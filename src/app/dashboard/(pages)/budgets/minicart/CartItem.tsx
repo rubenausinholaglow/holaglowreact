@@ -21,7 +21,7 @@ export default function CartItem({ product }: Props) {
           <SvgClose
             height={20}
             width={20}
-            fill={HOLAGLOW_COLORS['darkMalva']}
+            fill={HOLAGLOW_COLORS['purple']}
             className="ml-2"
           />
         </button>
