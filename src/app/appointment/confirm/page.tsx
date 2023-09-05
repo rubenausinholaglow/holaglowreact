@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import ScheduleService from '@services/ScheduleService';
 
 export default function Page({
