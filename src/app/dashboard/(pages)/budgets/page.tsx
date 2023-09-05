@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import { emptyProduct, Product } from '@interface/product';
+import { Product, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -10,6 +9,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal, ModalBackground } from 'designSystem/Modals/Modal';
 import { SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
+import { useEffect, useState } from 'react';
 import CheckHydration from 'utils/CheckHydration';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
@@ -38,6 +38,7 @@ export default function Page() {
   useEffect(() => {
     ProductService.getAllProducts()
       .then(data => {
+        data.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setProducts(data);
       })
       .catch(error => setError(error));
