@@ -38,27 +38,26 @@ export default function DashboardLayout({
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
-            {backButtonRoutes.includes(pathName) &&
-              pathName !== '/dashboard/checkout' && (
-                <>
-                  <Button href={getBackRoute(pathName)} type="tertiary">
-                    <Flex layout="row-left">
-                      <SvgArrowSmallLeft
-                        height={40}
-                        width={40}
-                        className="pr-2"
-                      />
-                      Volver
-                    </Flex>
-                  </Button>
+            {backButtonRoutes.includes(pathName) && (
+              <>
+                <Button href={getBackRoute(pathName)} type="tertiary">
+                  <Flex layout="row-left">
+                    <SvgArrowSmallLeft
+                      height={40}
+                      width={40}
+                      className="pr-2"
+                    />
+                    Volver
+                  </Flex>
+                </Button>
 
-                  {pathName !== '/dashboard' && <ButtonMessage />}
+                {pathName !== '/dashboard' && <ButtonMessage />}
 
-                  <div className="ml-auto z-10">
-                    <ClinicProfessional />
-                  </div>
-                </>
-              )}
+                <div className="ml-auto z-10">
+                  <ClinicProfessional />
+                </div>
+              </>
+            )}
           </Flex>
         </Container>
         {children}

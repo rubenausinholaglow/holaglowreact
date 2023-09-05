@@ -38,6 +38,7 @@ export default function Page() {
   useEffect(() => {
     ProductService.getAllProducts()
       .then(data => {
+        data.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setProducts(data);
       })
       .catch(error => setError(error));
