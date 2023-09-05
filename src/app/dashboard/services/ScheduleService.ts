@@ -62,17 +62,37 @@ export default class ScheduleService {
     }
   }
 
-  static async confirm(
-    appointmentId: string,
-    comments: string,
-    userId: string
-  ) {
+  static async finish(appointmentId: string, comments: string, userId: string) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Confirm`;
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Finish`;
       const requestBody = {
         appointmentId: appointmentId,
         userId: userId,
         comments: comments,
+      };
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (res.ok) {
+        return res.ok;
+      } else {
+        return '';
+      }
+    } catch (err) {
+      return '';
+    }
+  }
+  static async confirm(appointmentId: string) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Confirm`;
+      const requestBody = {
+        appointmentId: appointmentId,
       };
 
       const res = await fetch(url, {

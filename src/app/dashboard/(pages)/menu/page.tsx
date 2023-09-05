@@ -43,7 +43,7 @@ const Page = () => {
   };
   const handleCommentSubmit = async () => {
     setIsCommentModalOpen(false);
-    const result = await ScheduleService.confirm(
+    const result = await ScheduleService.finish(
       appointmentId ?? '',
       comment ?? '',
       userId || ''
