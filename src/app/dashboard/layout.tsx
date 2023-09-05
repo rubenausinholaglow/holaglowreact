@@ -1,9 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
 import ButtonMessage from '@components/ui/ButtonMessage';
-import Timer from '@components/ui/Timer';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -31,7 +29,7 @@ export default function DashboardLayout({
     '/dashboard/menu',
   ];
   return (
-    <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
+    <main className="min-h-screen h-100 text-sm bg-[url('/images/dashboard/background/main_background.png')] bg-contain">
       <Flex
         layout="col-center"
         className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"
