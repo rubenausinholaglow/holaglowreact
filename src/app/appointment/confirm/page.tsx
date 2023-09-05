@@ -3,6 +3,8 @@
 import { useEffect } from 'react';
 import ScheduleService from '@services/ScheduleService';
 import { SvgSpinner } from 'icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 
 export default function Page({
   searchParams,
@@ -35,7 +37,7 @@ export default function Page({
             date[1] +
             '&endTime=' +
             res.endTime;
-          window.location.href = url;
+          //  window.location.href = url;
         }
       }
     };
@@ -45,7 +47,9 @@ export default function Page({
 
   return (
     <>
-      <SvgSpinner height={24} width={24} />
+      <Flex className="justify-center h-screen">
+        <SvgSpinner fill={HOLAGLOW_COLORS['purple']} height={50} width={50} />
+      </Flex>
     </>
   );
 }
