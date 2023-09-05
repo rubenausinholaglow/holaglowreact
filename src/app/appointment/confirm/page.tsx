@@ -37,7 +37,7 @@ export default function Page({
             date[1] +
             '&endTime=' +
             res.endTime;
-          //  window.location.href = url;
+          window.location.href = url;
         }
       }
     };
