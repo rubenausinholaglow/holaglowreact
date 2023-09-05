@@ -1,4 +1,8 @@
+'use client';
+
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
@@ -34,7 +38,7 @@ const Testimonial = ({
   testimonial: string;
 }) => {
   return (
-    <Flex layout="col-center" className="basis-0 grow">
+    <Flex layout="col-center" className="basis-0 grow mr-10">
       <Image
         src={imgUrl}
         alt="testimonials"
@@ -55,13 +59,35 @@ const Testimonial = ({
 };
 
 export default function Testimonials() {
+  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+
+  const visibleTestimonials = () => {
+    if (deviceSize.isMobile) {
+      return 1;
+    }
+
+    if (deviceSize.isTablet) {
+      return 2;
+    }
+
+    return 3;
+  };
+
   return (
     <Container className="py-12">
       <Title size="2xl" className="font-bold mb-12 max-w-[75%]">
         Tu experiencia es nuestra
         <Underlined color={HOLAGLOW_COLORS['lime']}>obsesión</Underlined>
       </Title>
-      <Flex layout="row-center" className="gap-12 items-start">
+      <Carousel
+        hasControls
+        className="relative mb-12"
+        isIntrinsicHeight
+        visibleSlides={visibleTestimonials()}
+        infinite={false}
+      >
+        {/* <Flex layout="row-center" className="gap-12 items-start">
+        </Flex> */}
         {TESTIMONIALS.map(item => (
           <Testimonial
             key={item.name}
@@ -70,7 +96,7 @@ export default function Testimonials() {
             testimonial={item.testimonial}
           />
         ))}
-      </Flex>
+      </Carousel>
     </Container>
   );
 }

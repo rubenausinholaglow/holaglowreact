@@ -4,16 +4,16 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useState } from 'react';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrow } from 'icons/IconsDs';
 import {
   ButtonBack,
   ButtonNext,
   CarouselProvider,
+  DotGroup,
   Slide,
   Slider,
 } from 'pure-react-carousel';
-
-import { CarouselNavigation } from './CarouselNavigation';
 
 export const Carousel = ({
   children,
@@ -27,6 +27,8 @@ export const Carousel = ({
   currentSlide = 0,
   dragEnabled = false,
   touchEnabled = false,
+  className = '',
+  sliderStyles = {},
   ...rest
 }: {
   children: ReactNode;
@@ -41,9 +43,11 @@ export const Carousel = ({
   dragEnabled?: boolean;
   touchEnabled?: boolean;
   className?: string;
+  sliderStyles?: object;
   [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
   const childrens = Children.toArray(children);
 
   const handleBackButton = () => {
@@ -59,60 +63,63 @@ export const Carousel = ({
   };
 
   return (
-    <CarouselProvider
-      className="relative w-full"
-      isIntrinsicHeight={isIntrinsicHeight}
-      totalSlides={childrens.length}
-      currentSlide={currentSlide}
-      infinite
-      lockOnWindowScroll
-      dragEnabled={dragEnabled}
-      touchEnabled={touchEnabled}
-      naturalSlideHeight={naturalSlideHeight}
-      naturalSlideWidth={naturalSlideWidth}
-      visibleSlides={visibleSlides}
-      {...rest}
-    >
-      <Slider>
-        {childrens.map((children, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Slide index={i} key={i}>
-            {children}
-          </Slide>
-        ))}
-      </Slider>
+    <>
+      <CarouselProvider
+        className={`relative w-full ${className}`}
+        isIntrinsicHeight={isIntrinsicHeight}
+        totalSlides={childrens.length}
+        currentSlide={currentSlide}
+        infinite
+        lockOnWindowScroll
+        dragEnabled={dragEnabled}
+        touchEnabled={touchEnabled}
+        naturalSlideHeight={naturalSlideHeight}
+        naturalSlideWidth={naturalSlideWidth}
+        visibleSlides={visibleSlides}
+        {...rest}
+      >
+        <div style={sliderStyles}>
+          <Slider>
+            {childrens.map((children, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Slide index={i} key={i}>
+                {children}
+              </Slide>
+            ))}
+          </Slider>
+        </div>
 
-      {hasControls ? (
-        <CarouselNavigation type="back">
-          <ButtonBack
-            className="transition-opacity bg-hg-darkMalva text-hg-lime rounded-full p-3 disabled:opacity-0 disabled:cursor-default"
-            onClick={() => {
-              handleBackButton();
-            }}
-          >
-            <SvgArrow height={18} width={18} className="rotate-180" />
-          </ButtonBack>
-        </CarouselNavigation>
-      ) : null}
+        <Flex layout="row-center" className="mt-8 relative items-center">
+          {hasDots && (
+            <ul className="p-2 spacing flex gap-2 text-xs">
+              <li>{currentSlideIndex + 1}</li>
+              <li>/</li>
+              <li>{childrens.length}</li>
+            </ul>
+          )}
 
-      {hasControls ? (
-        <CarouselNavigation type="next">
-          <ButtonNext
-            className="transition-opacity bg-hg-darkMalva text-hg-lime rounded-full p-3 disabled:opacity-0 disabled:cursor-default"
-            onClick={() => {
-              handleNextButton();
-            }}
-          >
-            <SvgArrow height={18} width={18} />
-          </ButtonNext>
-        </CarouselNavigation>
-      ) : null}
-
-      {/*       {hasDots ? (
-        <Box paddingTop='m'>
-          <DotGroup />
-        </Box>
-      ) : null} */}
-    </CarouselProvider>
+          {hasControls && (
+            <Flex layout="row-center" className="gap-6 absolute right-0 top-0">
+              <ButtonBack
+                className="transition-opacity bg-hg-purple text-hg-lime rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                onClick={() => {
+                  handleBackButton();
+                }}
+              >
+                <SvgArrow height={16} width={16} className="rotate-180" />
+              </ButtonBack>
+              <ButtonNext
+                className="transition-opacity bg-hg-purple text-hg-lime rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                onClick={() => {
+                  handleNextButton();
+                }}
+              >
+                <SvgArrow height={16} width={16} />
+              </ButtonNext>
+            </Flex>
+          )}
+        </Flex>
+      </CarouselProvider>
+    </>
   );
 };

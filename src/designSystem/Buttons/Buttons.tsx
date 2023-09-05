@@ -46,7 +46,7 @@ export const Button = ({
   return (
     <button
       className={twMerge(
-        `transition-all relative group overflow-visible top-[2px] ${className}`
+        `transition-all relative group overflow-visible -top-[2px] ${className}`
       )}
       onClick={onClick}
       type={rest?.isSubmit ? 'submit' : 'button'}

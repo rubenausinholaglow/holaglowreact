@@ -16,9 +16,9 @@ export const Title = ({
   children: ReactNode;
 }) => {
   const STYLES = {
-    '3xl': 'text-4xl md:text-6xl',
-    '2xl': 'text-3xl md:text-5xl',
-    xl: 'text-xl md:text-2xl',
+    '3xl': 'text-4xl lg:text-6xl',
+    '2xl': 'text-3xl lg:text-5xl',
+    xl: 'text-xl lg:text-2xl',
   };
 
   const HtmlComponent = as;

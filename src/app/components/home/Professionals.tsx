@@ -11,13 +11,17 @@ export default function Profesionals() {
       <Container className="py-12">
         <Carousel
           hasControls
+          hasDots
           className="relative mb-12"
           isIntrinsicHeight
           visibleSlides={1}
           infinite={false}
         >
-          <Flex layout="row-center" className="gap-16 w-full items-stretch">
-            <div className="relative overflow-hidden w-1/2">
+          <Flex
+            layout="col-left"
+            className="gap-8 lg:gap-16 w-full items-stretch lg:flex-row"
+          >
+            <div className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2">
               <Image
                 src="/images/home/profesionales.png"
                 alt="profesionales"
@@ -25,30 +29,27 @@ export default function Profesionals() {
                 className="object-cover rounded-xl"
               />
             </div>
-            <Flex layout="col-left" className="w-1/2">
-              <Flex layout="row-center" className="w-full gap-16 mb-16">
-                <Image
-                  src="/images/home/profesionales2.png"
-                  alt="profesionales2"
-                  width={200}
-                  height={200}
-                  style={{
-                    width: '50%',
-                    height: 'auto',
-                  }}
-                  className="rounded-xl"
-                />
-                <Image
-                  src="/images/home/profesionales1.png"
-                  alt="profesionales1"
-                  width={200}
-                  height={200}
-                  style={{
-                    width: '50%',
-                    height: 'auto',
-                  }}
-                  className="rounded-xl"
-                />
+            <Flex layout="col-left" className="lg:w-1/2">
+              <Flex
+                layout="row-center"
+                className="w-full gap-8 lg:gap-16 mb-12 lg:mb-16"
+              >
+                <div className="relative w-1/2 aspect-square">
+                  <Image
+                    src="/images/home/profesionales2.png"
+                    alt="profesionales2"
+                    fill
+                    className="object-cover rounded-xl"
+                  />
+                </div>
+                <div className="relative w-1/2 aspect-square">
+                  <Image
+                    src="/images/home/profesionales1.png"
+                    alt="profesionales2"
+                    fill
+                    className="object-cover rounded-xl"
+                  />
+                </div>
               </Flex>
               <Title size="2xl" className="font-bold mb-6">
                 Equipo médico con los mejores{' '}
@@ -65,8 +66,11 @@ export default function Profesionals() {
               </Button>
             </Flex>
           </Flex>
-          <Flex layout="row-center" className="gap-16 w-full items-stretch">
-            <div className="relative overflow-hidden w-1/2">
+          <Flex
+            layout="col-left"
+            className="gap-8 lg:gap-16 w-full items-stretch lg:flex-row"
+          >
+            <div className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2">
               <Image
                 src="/images/home/profesionales.png"
                 alt="profesionales"
@@ -74,30 +78,27 @@ export default function Profesionals() {
                 className="object-cover rounded-xl"
               />
             </div>
-            <Flex layout="col-left" className="w-1/2">
-              <Flex layout="row-center" className="w-full gap-16 mb-16">
-                <Image
-                  src="/images/home/profesionales2.png"
-                  alt="profesionales2"
-                  width={200}
-                  height={200}
-                  style={{
-                    width: '50%',
-                    height: 'auto',
-                  }}
-                  className="rounded-xl"
-                />
-                <Image
-                  src="/images/home/profesionales1.png"
-                  alt="profesionales1"
-                  width={200}
-                  height={200}
-                  style={{
-                    width: '50%',
-                    height: 'auto',
-                  }}
-                  className="rounded-xl"
-                />
+            <Flex layout="col-left" className="lg:w-1/2">
+              <Flex
+                layout="row-center"
+                className="w-full gap-8 lg:gap-16 mb-12 lg:mb-16"
+              >
+                <div className="relative w-1/2 aspect-square">
+                  <Image
+                    src="/images/home/profesionales2.png"
+                    alt="profesionales2"
+                    fill
+                    className="object-cover rounded-xl"
+                  />
+                </div>
+                <div className="relative w-1/2 aspect-square">
+                  <Image
+                    src="/images/home/profesionales1.png"
+                    alt="profesionales2"
+                    fill
+                    className="object-cover rounded-xl"
+                  />
+                </div>
               </Flex>
               <Title size="2xl" className="font-bold mb-6">
                 Equipo médico con los mejores{' '}

@@ -1,3 +1,6 @@
+'use client';
+
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -58,14 +61,32 @@ const NewsExtract = ({
 };
 
 export default function Testimonials() {
+  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+
+  const visibleNews = () => {
+    if (deviceSize.isMobile) {
+      return 1;
+    }
+
+    if (deviceSize.isTablet) {
+      return 2;
+    }
+
+    return 3;
+  };
+
   return (
-    <Container className="pt-20 pb-12">
+    <Container
+      className={`relative pt-20 pb-12 ${
+        deviceSize.isMobile ? 'overflow-hidden' : ''
+      }`}
+    >
+      <div className="absolute top-1/3 -bottom-1/2 -left-1/2 -right-1/2 bg-hg-darkMalva100 rotate-[8deg] md:hidden"></div>
+
       <Title size="2xl" className="font-bold mb-20 relative">
         <SvgHolaGlowStar
-          height={200}
-          width={200}
           fill={HOLAGLOW_COLORS['lime']}
-          className="absolute left-0 top-0 -translate-x-[33%] -translate-y-[33%]"
+          className="absolute left-0 top-0 h-[250px] w-[250px] md:h-[200px] md:w-[200px] translate-x-[33%] md:-translate-x-[33%] -translate-y-[33%]"
         />
         <span className="relative">Glow in the news</span>
       </Title>
@@ -73,29 +94,17 @@ export default function Testimonials() {
         hasControls
         className="relative mb-12"
         isIntrinsicHeight
-        visibleSlides={1}
+        visibleSlides={visibleNews()}
         infinite={false}
       >
-        <Flex layout="row-center" className="gap-16 items-start">
-          {NEWS.map(item => (
-            <NewsExtract
-              key={item.medium}
-              imgUrl={item.imgUrl}
-              medium={item.medium}
-              extract={item.extract}
-            />
-          ))}
-        </Flex>
-        <Flex layout="row-center" className="gap-12 items-start">
-          {NEWS.map(item => (
-            <NewsExtract
-              key={item.medium}
-              imgUrl={item.imgUrl}
-              medium={item.medium}
-              extract={item.extract}
-            />
-          ))}
-        </Flex>
+        {NEWS.map(item => (
+          <NewsExtract
+            key={item.medium}
+            imgUrl={item.imgUrl}
+            medium={item.medium}
+            extract={item.extract}
+          />
+        ))}
       </Carousel>
     </Container>
   );
