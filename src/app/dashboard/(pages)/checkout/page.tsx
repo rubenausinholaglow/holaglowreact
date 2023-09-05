@@ -132,21 +132,24 @@ const Page = () => {
                       'Finalizar'
                     )}
                   </Button>
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    target="_blank"
-                    href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
-                    type="tertiary"
-                  >
-                    <span className="font-semibold">Agendar Cita</span>
-                  </Button>
                 </Flex>
               </>
             )}
-            <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
-              Cancelar Presupuesto
-            </Button>
+
+            <Flex layout="col-left" className="gap-2 w-full mt-8">
+              <Button
+                className="w-full"
+                size="lg"
+                target="_blank"
+                href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
+                type="tertiary"
+              >
+                <span className="font-semibold">Agendar Cita</span>
+              </Button>
+              <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
+                Cancelar Presupuesto
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
       </Container>
