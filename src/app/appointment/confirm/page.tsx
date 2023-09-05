@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import ScheduleService from '@services/ScheduleService';
+import { SvgSpinner } from 'icons/Icons';
 
 export default function Page({
   searchParams,
@@ -34,7 +35,7 @@ export default function Page({
             date[1] +
             '&endTime=' +
             res.endTime;
-          window.location.href = url;
+          //window.location.href = url;
         }
       }
     };
@@ -42,5 +43,9 @@ export default function Page({
     confirmAppointment();
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <SvgSpinner height={24} width={24} />
+    </>
+  );
 }
