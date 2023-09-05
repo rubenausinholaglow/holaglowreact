@@ -7,7 +7,7 @@ import ProductCarousel from 'app/components/product/ProductCarousel';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgDiamond, SvgSpinner } from 'icons/Icons';
+import { SvgDiamond } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 export default function HomeProducts() {
