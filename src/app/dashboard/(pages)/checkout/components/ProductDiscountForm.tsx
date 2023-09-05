@@ -45,7 +45,7 @@ export default function ProductDiscountForm({
           )}
           <input
             className="border rounded-lg px-4 py-2 mr-4 w-[100px] text-hg-black"
-            type="number"
+            type="decimal"
             placeholder="Valor"
             {...register('Value', { required: true, maxLength: 5 })}
           />
