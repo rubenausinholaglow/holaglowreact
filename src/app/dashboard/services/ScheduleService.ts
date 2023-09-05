@@ -104,12 +104,12 @@ export default class ScheduleService {
       });
 
       if (res.ok) {
-        return res.ok;
+        return await res.json();
       } else {
-        return '';
+        return null;
       }
     } catch (err) {
-      return '';
+      return null;
     }
   }
 }

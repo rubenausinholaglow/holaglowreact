@@ -17,7 +17,24 @@ export default function Page({
       if (appointmentId) {
         const res = await ScheduleService.confirm(appointmentId);
         if (res) {
-          window.location.href = 'https://holaglow.com/appointment-confirmed';
+          const clinicUrl: any = {
+            '1': 'madrid',
+            '4': 'barcelona',
+          };
+
+          const BASE_URL = `https://www.holaglow.com/appointment-confirmed/${
+            clinicUrl[res.clinicId]
+          }`;
+          const date = res.startTime.split(' ');
+          const url =
+            BASE_URL +
+            '?date=' +
+            date[0] +
+            '&startTime=' +
+            date[1] +
+            '&endTime=' +
+            res.endTime;
+          window.location.href = url;
         }
       }
     };
