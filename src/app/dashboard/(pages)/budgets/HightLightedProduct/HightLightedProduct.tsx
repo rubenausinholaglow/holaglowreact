@@ -27,12 +27,11 @@ export default function HightLightedProduct() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<CartItem | null>(null);
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
-
+  const [imgSrc, setImgSrc] = useState('');
   useEffect(() => {
     setIsLoading(true);
     setProduct(null);
-    setImgSrc(null);
+    setImgSrc('');
 
     const fetchProduct = async () => {
       try {
@@ -40,6 +39,9 @@ export default function HightLightedProduct() {
           const data = await ProductService.getProduct(productHighlighted.id);
 
           setProduct(data);
+          setImgSrc(
+            `https://budgetimages.blob.core.windows.net/images/products/${data.flowwwId}/${data.flowwwId}.jpg`
+          );
         }
       } catch (error: any) {
         Bugsnag.notify(error);
@@ -87,11 +89,7 @@ export default function HightLightedProduct() {
         <Flex layout="row-left" className="w-full gap-4 items-stretch mb-4">
           <div className="w-1/2 aspect-[4/3] relative shrink-0">
             <Image
-              src={
-                imgSrc
-                  ? imgSrc
-                  : `/images/product/${product.flowwwId}/${product.flowwwId}.png`
-              }
+              src={imgSrc}
               alt={product.title}
               fill={true}
               className="object-cover"

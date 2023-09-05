@@ -45,18 +45,6 @@ export const filterItems = [
         tag: 'Body',
         selected: false,
       },
-      {
-        id: '4',
-        value: 'Piel',
-        tag: 'Body',
-        selected: false,
-      },
-      {
-        id: '5',
-        value: 'Pelo',
-        tag: 'Body',
-        selected: false,
-      },
     ],
   },
   {
@@ -71,19 +59,19 @@ export const filterItems = [
       },
       {
         id: '2',
-        value: 'Calidad Piel',
+        value: 'Calidad de la Piel',
         tag: 'Category',
         selected: false,
       },
       {
         id: '3',
-        value: 'Pelo',
+        value: 'Caida del pelo',
         tag: 'Category',
         selected: false,
       },
       {
         id: '4',
-        value: 'Relleno',
+        value: 'Relleno/Ácido hialurónico',
         tag: 'Category',
         selected: false,
       },
