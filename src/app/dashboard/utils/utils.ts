@@ -57,10 +57,6 @@ export const applyDiscountToItem = (
     price = price - (price * percentageDiscountValue) / 100;
   }
 
-  if (Number(price) === 0) {
-    price = cartItem.price;
-  }
-
   return price;
 };
 
