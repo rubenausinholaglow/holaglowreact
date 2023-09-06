@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react';
 import ScheduleService from '@services/ScheduleService';
-import { SvgSpinner } from 'icons/Icons';
-import { Flex } from 'designSystem/Layouts/Layouts';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
 
 export default function Page({
   searchParams,
