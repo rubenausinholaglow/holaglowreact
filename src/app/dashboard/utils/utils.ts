@@ -27,6 +27,18 @@ export const applyDiscountToCart = (
 
   return finalValue;
 };
+export const removeDiscountToItem = (
+  value: number,
+  discountType: string,
+  cartItem: CartItem
+) => {
+  if (discountType === '€') {
+    cartItem.priceDiscount = 0;
+  }
+  if (discountType === '%') {
+    cartItem.percentageDiscount = 0;
+  }
+};
 
 export const applyDiscountToItem = (
   value: number,

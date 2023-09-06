@@ -20,6 +20,11 @@ export interface Actions {
     value: number,
     discountType: '%' | '€' | 'total'
   ) => void;
+  removeDiscountToItem: (
+    cartUniqueId: string,
+    value: number,
+    discountType: '%' | '€' | 'total'
+  ) => void;
   applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => void;
   setHighlightProduct: (Item: Product) => void;
   setProfessionals: (Item: Professional[]) => void;

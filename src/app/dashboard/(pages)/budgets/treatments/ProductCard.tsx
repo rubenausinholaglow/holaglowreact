@@ -24,7 +24,9 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const removeFromCart = useCartStore(state => state.removeFromCart);
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
-  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const removeDiscountToItem = useCartStore(
+    state => state.removeDiscountToItem
+  );
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
   const [imgSrc, setImgSrc] = useState(
@@ -143,7 +145,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
                       layout="row-left"
                       className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
                       onClick={() =>
-                        applyItemDiscount(product.uniqueId, 0, '€')
+                        removeDiscountToItem(product.uniqueId, 0, '€')
                       }
                     >
                       <Text size="xs">
@@ -156,7 +158,9 @@ export default function ProductCard({ product, isCheckout }: Props) {
                   <Flex
                     layout="row-left"
                     className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
-                    onClick={() => applyItemDiscount(product.uniqueId, 0, '%')}
+                    onClick={() =>
+                      removeDiscountToItem(product.uniqueId, 0, '%')
+                    }
                   >
                     <Text size="xs">
                       -{productCartItem.percentageDiscount}%

@@ -110,7 +110,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
             <Flex
               layout="row-left"
               className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
-              onClick={() => applyCartDiscount(0, '%')}
+              onClick={() => applyCartDiscount(0, '€')}
             >
               <Text size="xs">- {percentageDiscount}%</Text>
               <SvgClose height={12} width={12} className="ml-1" />
