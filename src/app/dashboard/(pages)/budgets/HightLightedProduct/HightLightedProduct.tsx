@@ -137,27 +137,28 @@ export default function HightLightedProduct() {
             <p className="font-semibold text-lg mb-4">Antes y después</p>
             <Carousel hasControls>
               {product.beforeAndAfterImages.map((image, index) => (
-                <div
+                <Flex
                   key={index}
+                  layout="row-center"
                   className="aspect-video rounded-2xl overflow-hidden"
                 >
-                  <Image
-                    src={image.urlBefore || '/images/default-image.jpg'}
-                    alt={`Before Image ${index}`}
-                    width="0"
-                    height="0"
-                    sizes="50vw"
-                    className="object-cover rounded-2xl h-full w-auto"
-                  />
-                  <Image
-                    src={image.urlAfter || '/images/default-image.jpg'}
-                    alt={`Before Image ${index}`}
-                    width="0"
-                    height="0"
-                    sizes="50vw"
-                    className="object-cover rounded-2xl h-full w-auto"
-                  />
-                </div>
+                  <div className="relative w-1/2 h-full">
+                    <Image
+                      src={image.urlBefore || '/images/default-image.jpg'}
+                      alt={`Before Image ${index}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative w-1/2 h-full">
+                    <Image
+                      src={image.urlAfter || '/images/default-image.jpg'}
+                      alt={`Before Image ${index}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </Flex>
               ))}
             </Carousel>
           </div>
