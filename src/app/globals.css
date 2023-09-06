@@ -24,7 +24,7 @@ body {
 }
 
 a {
-  color: theme('colors.hg.darkMalva');
+  color: theme('colors.hg.purple');
 }
 
 .floating-button {
