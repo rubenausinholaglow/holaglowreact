@@ -106,12 +106,11 @@ export const PaymentModule = () => {
   };
 
   const handleOnButtonPaymentClick = (paymentKey: any) => {
-    if (paymentKey == 'pepper') {
+    if (paymentKey == 'pepper' && activePaymentMethod != 'pepper') {
       window.open(
         'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
         '_blank'
       );
-      return;
     }
     setOnLoad(true);
     if (activePaymentMethod === paymentKey) {
@@ -166,8 +165,7 @@ export const PaymentModule = () => {
       </Flex>
 
       {paymentItems.map(method =>
-        activePaymentMethod === method.key &&
-        activePaymentMethod != 'pepper' ? (
+        activePaymentMethod === method.key ? (
           <PaymentClient
             key={method.key}
             paymentBank={method.paymentBank}

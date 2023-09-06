@@ -95,6 +95,7 @@ export function clearLocalStorage(allLocalStorage: boolean) {
   localStorage.removeItem('username');
   localStorage.removeItem('flowwwToken');
   localStorage.removeItem('id');
+  localStorage.removeItem('BudgetId');
   if (allLocalStorage) {
     localStorage.removeItem('ClinicFlowwwId');
     localStorage.removeItem('boxId');

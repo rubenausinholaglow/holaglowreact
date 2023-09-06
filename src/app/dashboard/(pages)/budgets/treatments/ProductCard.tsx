@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -17,9 +17,10 @@ const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
   product: CartItem;
   isCheckout?: boolean;
+  budget: string;
 }
 
-export default function ProductCard({ product, isCheckout }: Props) {
+export default function ProductCard({ product, isCheckout, budget }: Props) {
   const cart = useCartStore(state => state.cart);
   const removeFromCart = useCartStore(state => state.removeFromCart);
   const addToCart = useCartStore(state => state.addItemToCart);
@@ -30,7 +31,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const [imgSrc, setImgSrc] = useState(
     `https://budgetimages.blob.core.windows.net/images/products/${product.flowwwId}/${product.flowwwId}.jpg`
   );
-
   const productCartItem = cart.filter(
     item =>
       item.uniqueId === product.uniqueId &&
@@ -47,14 +47,17 @@ export default function ProductCard({ product, isCheckout }: Props) {
         ${!isCheckout && 'cursor-pointer'}`}
       onClick={() => setHighlightProduct(product)}
     >
-      <SvgClose
-        width={30}
-        height={30}
-        fill={HOLAGLOW_COLORS['darkMalva']}
-        className="absolute top-2 right-2 cursor-pointer"
-        onClick={() => removeFromCart(product)}
-      />
-
+      {!budget ? (
+        <SvgClose
+          width={30}
+          height={30}
+          fill={HOLAGLOW_COLORS['darkMalva']}
+          className="absolute top-2 right-2 cursor-pointer"
+          onClick={() => removeFromCart(product)}
+        />
+      ) : (
+        <></>
+      )}
       <div
         className={`aspect-square relative ${
           isCheckout ? 'w-[225px] mr-8' : 'w-full shrink-0'
@@ -86,7 +89,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
           {product.description}
         </Text>
         <Flex layout="row-left" className="mb-3">
-          {isCheckout && (
+          {isCheckout && !budget && (
             <SvgAngleDown
               height={20}
               width={20}
@@ -129,10 +132,11 @@ export default function ProductCard({ product, isCheckout }: Props) {
             Seleccionar
           </Button>
         )}
-        {showDiscountForm && (
+        {showDiscountForm && !budget && (
           <>
             <ProductDiscountForm
               cartUniqueId={product.uniqueId}
+              productPrice={product.price}
               isCheckout={false}
             />
             {productHasDiscount && (
