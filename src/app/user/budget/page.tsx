@@ -1,7 +1,7 @@
 import Footer from '../Footer';
-import AlmaPayment from './AlmaPayment';
 import Header from './Header';
 import Legal from './Legal';
+import PaymentOptions from './PaymentOptions';
 import Products from './Products';
 import PromoCode from './PromoCode';
 import Simulation from './Simulation';
@@ -72,7 +72,7 @@ export default async function Budget({
               manualPrice={manualPrice}
             />
           )}
-          <AlmaPayment totalPrice={totalPriceWithIVA} />
+          <PaymentOptions totalPrice={totalPriceWithIVA} />
           {simulations.length > 0 && <Simulation simulations={simulations} />}
           <PromoCode discountCode={discountCode} discountAmount={50} />
           <Legal />

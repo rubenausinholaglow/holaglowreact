@@ -1,0 +1,99 @@
+import Image from 'next/image';
+import { priceFormat } from 'utils/priceFormat';
+
+export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
+  const prices = {
+    twoStepsPrice: (totalPrice / 2).toFixed(2),
+    threeStepsPrice: (totalPrice / 3).toFixed(2),
+    fourStepsPrice: (totalPrice / 4).toFixed(2),
+  };
+
+  // last term payment must be modified to avoid adding some cents
+  const lastTermPrice = (number: string, totalTerms: number) => {
+    const normalizedNumber = Number(number);
+
+    if (normalizedNumber * totalTerms !== totalPrice) {
+      return priceFormat(
+        normalizedNumber -
+          Number((normalizedNumber * totalTerms - totalPrice).toFixed(2))
+      );
+    }
+    return priceFormat(normalizedNumber);
+  };
+
+  console.log(totalPrice, (totalPrice * 1.16) / 24);
+
+  return (
+    <section className="bg-white p-8 text-black">
+      <div className='bg-[url("/images/budget/almaBg.png")] bg-cover pl-[55%] rounded-[35px] p-8'>
+        <h3 className="text-xl/tight font-semibold">
+          Tu tratamiento
+          <br />
+          desde{' '}
+          <span className="text-[24px] border-b-2 border-[#F0AD4E]">
+            {`${priceFormat((totalPrice * 1.16) / 24)}`}€
+          </span>{' '}
+          al mes*
+        </h3>
+        <p className="text-sm pr-8 mb-4 mt-2">
+          Te ofrecemos una experiencia de compra más flexible con financiación
+          hasta en 24 meses
+        </p>
+        <div className="flex gap-2 text-[11px] text-center">
+          <div className="flex flex-col gap-1 w-1/2">
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2">
+              Pago aplazado
+            </p>
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+              En 3 cuotas
+            </p>
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+              En 4 cuotas
+            </p>
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+              En 6 cuotas
+            </p>
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+              En 9 cuotas
+            </p>
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+              En 12 cuotas
+            </p>
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+              En 18 cuotas
+            </p>
+            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+              En 24 cuotas
+            </p>
+          </div>
+          <div className="flex flex-col gap-1 w-1/2">
+            <p className="rounded-md bg-white/50 py-1 px-2 text-[#717D96]">
+              Importe mensual
+            </p>
+            <p className="rounded-md bg-white py-1 px-2">
+              {`${priceFormat(totalPrice / 3)}`} €
+            </p>
+            <p className="rounded-md bg-white py-1 px-2">
+              {`${priceFormat(totalPrice / 4)}`} €
+            </p>
+            <p className="rounded-md bg-white py-1 px-2">
+              {`${priceFormat(totalPrice / 6)}`} €
+            </p>
+            <p className="rounded-md bg-white py-1 px-2">
+              {`${priceFormat((totalPrice * 1.055) / 9)}`} €
+            </p>
+            <p className="rounded-md bg-white py-1 px-2">
+              {`${priceFormat((totalPrice * 1.075) / 12)}`} €
+            </p>
+            <p className="rounded-md bg-white py-1 px-2">
+              {`${priceFormat((totalPrice * 1.117) / 18)}`} €
+            </p>
+            <p className="rounded-md bg-white py-1 px-2">
+              {`${priceFormat((totalPrice * 1.16) / 24)}`} €
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
