@@ -8,7 +8,7 @@ import { IsMobile } from './Breakpoint';
 import Header from './Header';
 
 const HIDE_WEBHEADER_PATHS = ['/user/budget', '/user/passport', '/form'];
-const HIDE_WEBHEADER_PATTERNS = ['/dashboard'];
+const HIDE_WEBHEADER_PATTERNS = ['/dashboard', '/appointment'];
 
 const showWebHeader = (path: string) => {
   if (HIDE_WEBHEADER_PATHS.includes(path)) {

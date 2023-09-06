@@ -15,8 +15,8 @@ export const menuItems = [
   },
   {
     iconSrc: '/images/dashboard/menu-icons/agenda.png',
-    altText: 'Agendar Cita',
-    title: 'Agendar Cita',
+    altText: 'Agenda',
+    title: 'Agenda',
     link: 'https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken',
     target: '_blank',
   },
