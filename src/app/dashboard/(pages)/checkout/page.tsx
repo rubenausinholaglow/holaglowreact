@@ -49,7 +49,7 @@ const Page = () => {
 
     const budget: Budget = {
       userId: GuidUser,
-      discountCode: clientToken.substring(0, 4),
+      discountCode: clientToken.substring(0, clientToken.length - 32),
       discountAmount: '',
       FlowwwId: '',
       priceDiscount: Number(priceDiscount.toFixed(2)),
