@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import Notification from '@components/ui/Notification';
 import { CreatePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
@@ -9,7 +10,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
-import Notification from '@components/ui/Notification';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 
