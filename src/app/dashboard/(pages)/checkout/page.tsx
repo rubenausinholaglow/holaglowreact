@@ -35,7 +35,7 @@ const Page = () => {
   const [budgetId, setBudgetId] = useState<string | ''>('');
 
   useEffect(() => {
-    var budgetId = localStorage.getItem('BudgetId');
+    const budgetId = localStorage.getItem('BudgetId');
     setClientToken(localStorage.getItem('flowwwToken') || '');
     setBudgetId(budgetId || '');
     if (budgetId != '') setShowPaymentButtons(true);
