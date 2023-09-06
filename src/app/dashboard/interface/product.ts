@@ -13,8 +13,13 @@ export interface Product {
   flowwwId: number;
   durationMin: number;
   durationMax: number;
-  beforeAndAfterImages: any;
+  beforeAndAfterImages: BeforeAndAfterImages[];
   type: ProductType;
+}
+
+export interface BeforeAndAfterImages {
+  urlAfter?: string;
+  urlBefore?: string;
 }
 
 export const emptyProduct: Product = {} as Product;
