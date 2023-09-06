@@ -9,6 +9,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
+import Notification from '@components/ui/Notification';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 
@@ -26,6 +27,9 @@ export default function PaymentInput(props: Props) {
   const [showAlma, setShowAlma] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [messageNotification, setMessageNotification] = useState<string | null>(
+    null
+  );
 
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
@@ -79,8 +83,18 @@ export default function PaymentInput(props: Props) {
     createPayment(paymentRequestApi);
   };
 
+  const activateAlma = async () => {
+    if (parseFloat(inputValue) >= 50) {
+      setShowAlma(!showAlma);
+      setMessageNotification('');
+    } else {
+      setMessageNotification(
+        'La cifra a financiar por alma debe ser igual o superior a 50€'
+      );
+    }
+  };
   const handleSubmitForm = async (data: any) => {
-    if (showAlma) {
+    if (showAlma || messageNotification != '') {
       return;
     }
     setIsLoading(true);
@@ -111,49 +125,60 @@ export default function PaymentInput(props: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSubmitForm)}>
-      <Flex layout="col-left" className="items-start">
-        <Controller
-          name="number"
-          control={control}
-          defaultValue=""
-          render={({ field, fieldState }) => (
-            <Flex layout="row-left" className="mb-2 content-center">
-              <input
-                placeholder="Introduce importe"
-                className="bg-white border border-hg-darkMalva rounded-md p-2 text-hg-black w-[200px]"
-                type="number"
-                {...field}
-                onChange={e => {
-                  const newValue = Math.min(
-                    parseFloat(e.target.value.replace(',', '.')),
-                    parseFloat(MaxValue.toFixed(2))
-                  );
-                  field.onChange(newValue);
-                  setInputValue(newValue.toString());
-                }}
-              />
-              {props.paymentBank === 1 && (
-                <Button
-                  size="sm"
-                  type="secondary"
-                  isSubmit
-                  className="ml-2"
-                  onClick={() => setShowAlma(!showAlma)}
-                >
-                  Ver Financiación
-                </Button>
-              )}
-              {props.paymentBank != 1 && (
-                <Button size="sm" type="secondary" isSubmit className="ml-2">
-                  {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
-                </Button>
-              )}
-            </Flex>
-          )}
-        />
-        {props.paymentBank == PaymentBank.None && renderFinance()}
-      </Flex>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(handleSubmitForm)}>
+        <Flex layout="col-left" className="items-start">
+          <Controller
+            name="number"
+            control={control}
+            defaultValue=""
+            render={({ field, fieldState }) => (
+              <Flex layout="row-left" className="mb-2 content-center">
+                <input
+                  placeholder="Introduce importe"
+                  className="bg-white border border-hg-darkMalva rounded-md p-2 text-hg-black w-[200px]"
+                  type="number"
+                  {...field}
+                  onChange={e => {
+                    const newValue = Math.min(
+                      parseFloat(e.target.value.replace(',', '.')),
+                      parseFloat(MaxValue.toFixed(2))
+                    );
+                    field.onChange(newValue);
+                    setInputValue(newValue.toString());
+                  }}
+                />
+                {props.paymentBank === PaymentBank.Alma && (
+                  <Button
+                    size="sm"
+                    type="secondary"
+                    isSubmit
+                    className="ml-2"
+                    onClick={() => activateAlma()}
+                  >
+                    Ver Financiación
+                  </Button>
+                )}
+                {props.paymentBank != 1 && (
+                  <Button size="sm" type="secondary" isSubmit className="ml-2">
+                    {isLoading ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      'Pagar'
+                    )}
+                  </Button>
+                )}
+              </Flex>
+            )}
+          />
+          {props.paymentBank == PaymentBank.Alma && renderFinance()}
+        </Flex>
+      </form>
+      {messageNotification ? (
+        <Notification message={messageNotification} />
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
