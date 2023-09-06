@@ -110,7 +110,7 @@ export const ClinicProfessional = () => {
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
-              className="px-2 py-1 cursor-pointer hover:font-semibold"
+              className="px-2 py-1 cursor-pointer hover:font-semibold text-white"
             >
               {professional.name}
             </li>
@@ -122,7 +122,7 @@ export const ClinicProfessional = () => {
         onClick={() =>
           beautyAdvisors.length > 1 && handleToggleProfessionalList()
         }
-        className={`aspect-square h-[40px] rounded-full ${color} text-hg-darkMalva justify-center relative ${
+        className={`aspect-square h-[40px] rounded-full ${color}  text-white justify-center relative ${
           beautyAdvisors.length > 1 && 'cursor-pointer'
         }`}
       >
