@@ -1,17 +1,23 @@
+import Accordion from 'designSystem/Accordion/Accordion';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgHolaglow, SvgInstagram } from 'icons/IconsDs';
+import { SvgHolaglow, SvgInstagram, SvgUserOctagon } from 'icons/IconsDs';
 
 export function Footer() {
   return (
     <Container className="py-16">
       <Flex layout="row-center" className="gap-12 items-start">
-        <Flex layout="col-left" className="basis-1/2">
-          <SvgHolaglow className="text-hg-malva mb-8" height={25} width={100} />
-          <Text size="xs" className="text-hg-darkMalva font-semibold mb-3">
+        <Flex layout="col-left" className="w-1/2">
+          <SvgHolaglow
+            className="text-hg-purple mb-8"
+            height={25}
+            width={100}
+          />
+          <Text size="xs" className="text-hg-purple700 font-semibold mb-3">
             Centro de medicina estética
           </Text>
-          <Text size="xs" className="text-hg-darkMalva mb-12">
+          <Text size="xs" className="text-hg-purple700 mb-12">
             Centro de medicina estética La información de este sitio web,
             incluidos los artículos escritos por profesionales de la salud, es
             solo para fines de información general, no constituye un consejo
@@ -32,44 +38,63 @@ export function Footer() {
             <br />
             <a href="tel:+34 699 999 999">(+34) 699 999 999</a>
           </Text>
-          <SvgInstagram height={24} width={24} />
+          <Flex layout="row-center" className="w-full justify-between">
+            <SvgInstagram height={24} width={24} />
+            <Button type="tertiary" size="sm" className="ml-2 hidden lg:block">
+              <Flex layout="row-center">
+                <SvgUserOctagon
+                  fill="transparent"
+                  height={16}
+                  width={16}
+                  className="mr-2"
+                />
+                <span className="font-semibold">Mi espacio glow</span>
+              </Flex>
+            </Button>
+          </Flex>
         </Flex>
 
-        <Flex layout="col-left" className="basis-1/4">
-          <ul className="flex flex-col gap-3 text-xl font-semibold">
-            <li>Labios</li>
-            <li>Facial</li>
-            <li>Piel</li>
-            <li>Hydrafacial</li>
-            <li>Capilar</li>
-            <li>Otros</li>
-          </ul>
+        <Flex
+          layout="col-left"
+          className="gap-6 basis-1/4 text-xl font-semibold"
+        >
+          <p className="font-semibold">Ver Tratamientos</p>
+
+          <Accordion trigger="Rellenos" isOpen>
+            <ul className="text-md pl-2 pt-2 font-normal flex flex-col gap-2">
+              <li>Aumento de Labios</li>
+              <li>Relleno de ojeras</li>
+              <li>Proyección de pómulos</li>
+              <li>Ver más</li>
+            </ul>
+          </Accordion>
+
+          <Accordion trigger="Arrugas" isOpen>
+            <ul className="text-md pl-2 pt-2 font-normal flex flex-col gap-2">
+              <li>Prevención de arrugas</li>
+              <li>Arrugas frente</li>
+              <li>Ver más</li>
+            </ul>
+          </Accordion>
+
+          <p className="font-semibold">Hydrafacial</p>
+
+          <p className="font-semibold">Packs Glow</p>
         </Flex>
         <Flex layout="col-left" className="basis-1/4">
-          <Text size="xl" className="mb-4 font-semibold">
-            Clínicas
-          </Text>
-          <ul className="leading-6 mb-12 text-xs">
-            <li>Barcelona</li>
-            <li>Madrid</li>
-            <li>Valencia</li>
-          </ul>
-
-          <Text size="xl" className="mb-4 font-semibold">
-            About us
-          </Text>
-          <ul className="leading-6 mb-12 text-xs">
-            <li>Equipo profesional</li>
-            <li>Blog</li>
-          </ul>
-
-          <Text size="xl" className="mb-4 font-semibold">
-            Privacidad
-          </Text>
-          <ul className="leading-6 mb-12 text-xs">
-            <li>Aviso Legal</li>
-            <li>Política de privacidad</li>
-          </ul>
+          <Accordion trigger="Clínicas">
+            <ul className="text-md pl-2 pt-2 font-normal flex flex-col gap-2">
+              <li>Madrid</li>
+              <li>Barcelona</li>
+              <li>Valencia</li>
+            </ul>
+          </Accordion>
+          <Accordion trigger="Sobre nosotros">
+            <p>Bla bla bla sobre nosotros (?)</p>
+          </Accordion>
+          <Accordion trigger="Privacidad">
+            <p>Bla bla bla privacidad (?)</p>
+          </Accordion>
         </Flex>
       </Flex>
     </Container>
