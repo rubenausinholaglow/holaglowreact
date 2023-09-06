@@ -59,13 +59,6 @@ export default function DashboardLayout({
           </Flex>
         </Container>
         {children}
-        <div className="pt-16 pb-8 mt-auto">
-          <SvgHolaglow
-            width={150}
-            height={40}
-            fill={HOLAGLOW_COLORS['malva']}
-          />
-        </div>
       </Flex>
     </main>
   );
