@@ -43,7 +43,7 @@ export default function ProductDiscountForm({
   const cartDiscount = (data: any) => {
     const discountValue = parseFloat(data.Value);
     if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
-      alert('El precio en € no puede ser más grande que el del producto.');
+      alert('El precio en € no puede ser más grande que el del precio final.');
       return;
     }
     if (data.DiscountType === '%' && discountValue > 100) {
