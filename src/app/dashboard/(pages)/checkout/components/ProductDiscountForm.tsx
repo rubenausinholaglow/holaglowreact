@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -10,22 +11,45 @@ import { useCartStore } from '../../budgets/stores/userCartStore';
 
 export default function ProductDiscountForm({
   cartUniqueId,
+  productPrice,
   isCheckout,
   className,
 }: {
   cartUniqueId?: string;
+  productPrice?: number;
   isCheckout: boolean;
   className?: string;
 }) {
   const { register, handleSubmit } = useForm();
+  const valueInputRef = useRef<HTMLInputElement | null>(null);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
   const cartItemDiscount = (data: any) => {
+    const discountValue = parseFloat(data.Value);
+    if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
+      alert('El precio en € no puede ser más grande que el del producto.');
+      return;
+    }
+
+    if (data.DiscountType === '%' && discountValue > 100) {
+      alert('El % no puede ser superior al 100%');
+      return;
+    }
+
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
   const cartDiscount = (data: any) => {
+    const discountValue = parseFloat(data.Value);
+    if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
+      alert('El precio en € no puede ser más grande que el del precio final.');
+      return;
+    }
+    if (data.DiscountType === '%' && discountValue > 100) {
+      alert('El % no puede ser superior al 100%');
+      return;
+    }
     applyCartDiscount(data.Value, data.DiscountType);
   };
 
@@ -48,7 +72,7 @@ export default function ProductDiscountForm({
             type="decimal"
             placeholder="Valor"
             {...register('Value', { required: true, maxLength: 5 })}
-          />
+          />{' '}
           <div className="relative mr-4">
             <select
               {...register('DiscountType', { required: true })}
