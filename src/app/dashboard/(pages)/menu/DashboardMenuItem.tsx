@@ -21,7 +21,7 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
         width="150"
         alt={altText}
       />
-      <p className="text-center text-sm">{title}</p>
+      <p className="text-center text-sm text-white">{title}</p>
     </Link>
   );
 };
