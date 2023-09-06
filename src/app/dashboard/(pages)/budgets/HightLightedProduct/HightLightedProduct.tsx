@@ -139,19 +139,23 @@ export default function HightLightedProduct() {
               {product.beforeAndAfterImages.map((image, index) => (
                 <div
                   key={index}
-                  className="w-full aspect-video rounded-2xl overflow-hidden"
+                  className="aspect-video rounded-2xl overflow-hidden"
                 >
                   <Image
                     src={image.urlBefore || '/images/default-image.jpg'}
                     alt={`Before Image ${index}`}
-                    fill={true}
-                    className="object-cover rounded-2xl"
+                    width="0"
+                    height="0"
+                    sizes="50vw"
+                    className="object-cover rounded-2xl h-full w-auto"
                   />
                   <Image
                     src={image.urlAfter || '/images/default-image.jpg'}
                     alt={`Before Image ${index}`}
-                    fill={true}
-                    className="object-cover rounded-2xl"
+                    width="0"
+                    height="0"
+                    sizes="50vw"
+                    className="object-cover rounded-2xl h-full w-auto"
                   />
                 </div>
               ))}
