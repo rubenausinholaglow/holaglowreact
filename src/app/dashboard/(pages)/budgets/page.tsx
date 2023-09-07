@@ -5,6 +5,7 @@ import { Filters } from '@components/Filters';
 import { emptyProduct, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
+import MainLayout from 'app/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal, ModalBackground } from 'designSystem/Modals/Modal';
@@ -208,11 +209,7 @@ export default function Page() {
   } else {
     const filteredProducts = filterProducts() || [];
     return (
-      <CheckHydration>
-        <ModalBackground
-          isVisible={showProductModal}
-          onClick={() => setHighlightProduct(emptyProduct)}
-        ></ModalBackground>
+      <MainLayout isDashboard>
         <Modal isVisible={showProductModal} width="w-3/4">
           <HightLightedProduct />
         </Modal>
@@ -243,7 +240,7 @@ export default function Page() {
             </div>
           )}
         </Flex>
-      </CheckHydration>
+      </MainLayout>
     );
   }
 }

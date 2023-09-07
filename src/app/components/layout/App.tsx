@@ -7,7 +7,6 @@ import { ModalBackground } from 'designSystem/Modals/Modal';
 import Head from 'next/head';
 
 import { Breakpoint } from './Breakpoint';
-import MainLayout from './MainLayout';
 
 export default function Html({ children }: { children: ReactNode }) {
   const { isModalOpen, setIsModalOpen, isMainScrollEnabled } = useGlobalStore(
@@ -37,7 +36,7 @@ export default function Html({ children }: { children: ReactNode }) {
           }}
         />
         <Breakpoint />
-        <MainLayout>{children}</MainLayout>
+        {children}
       </body>
     </html>
   );

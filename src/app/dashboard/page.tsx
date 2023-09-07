@@ -9,6 +9,7 @@ import * as config from '@utils/textConstants';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
+import MainLayout from 'app/components/layout/MainLayout';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from './RegistrationForm';
@@ -192,24 +193,31 @@ export default function Page({
   };
 
   return (
-    <div className="mt-8">
-      {showRegistration ? (
-        <RegistrationForm
-          formData={formData}
-          handleFieldChange={handleFormFieldChange}
-          handleContinue={handleContinue}
-          errors={errors}
-          isLoading={isLoading}
-        />
-      ) : (
-        <SearchUser
-          email={userEmail}
-          handleFieldChange={handleFieldEmailChange}
-          handleCheckUser={handleCheckUser}
-          errors={errors}
-          isLoading={isLoading}
-        />
-      )}
-    </div>
+    <MainLayout
+      isDashboard
+      hideBackButton
+      hideContactButtons
+      hideProfessionalSelector
+    >
+      <div className="mt-8">
+        {showRegistration ? (
+          <RegistrationForm
+            formData={formData}
+            handleFieldChange={handleFormFieldChange}
+            handleContinue={handleContinue}
+            errors={errors}
+            isLoading={isLoading}
+          />
+        ) : (
+          <SearchUser
+            email={userEmail}
+            handleFieldChange={handleFieldEmailChange}
+            handleCheckUser={handleCheckUser}
+            errors={errors}
+            isLoading={isLoading}
+          />
+        )}
+      </div>
+    </MainLayout>
   );
 }

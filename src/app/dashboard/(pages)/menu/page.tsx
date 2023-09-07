@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ScheduleService from '@services/ScheduleService';
 import { clearLocalStorage } from '@utils/utils';
+import MainLayout from 'app/components/layout/MainLayout';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
@@ -11,7 +12,6 @@ import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
 
 const Page = () => {
-  menuItems;
   const [username, setUserName] = useState('');
   const [clinicId, setClinicId] = useState<string | null>(null);
   const [boxId, setBoxId] = useState<string | null>(null);
@@ -56,7 +56,7 @@ const Page = () => {
     }
   };
   return (
-    <>
+    <MainLayout isDashboard hideTopBar>
       {username && (
         <Container>
           <Flex layout="col-center">
@@ -114,7 +114,7 @@ const Page = () => {
           )}
         </Container>
       )}
-    </>
+    </MainLayout>
   );
 };
 export default Page;
