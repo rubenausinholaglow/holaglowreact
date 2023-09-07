@@ -41,7 +41,7 @@ export default function MainLayout({
     <>
       {hideHeader(pathname) || (!isDashboard(pathname) && <Header />)}
       {children}
-      {!isDashboard(pathname) && <Footer />}
+      {hideHeader(pathname) || (!isDashboard(pathname) && <Footer />)}
     </>
   );
 }
