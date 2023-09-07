@@ -35,7 +35,10 @@ const Page = () => {
   const [budgetId, setBudgetId] = useState<string | ''>('');
 
   useEffect(() => {
+    const budgetId = localStorage.getItem('BudgetId');
     setClientToken(localStorage.getItem('flowwwToken') || '');
+    setBudgetId(budgetId || '');
+    if (budgetId != '') setShowPaymentButtons(true);
   }, []);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const Page = () => {
 
     const budget: Budget = {
       userId: GuidUser,
-      discountCode: clientToken.substring(0, 4),
+      discountCode: clientToken.substring(0, clientToken.length - 32),
       discountAmount: '',
       FlowwwId: '',
       priceDiscount: Number(priceDiscount.toFixed(2)),

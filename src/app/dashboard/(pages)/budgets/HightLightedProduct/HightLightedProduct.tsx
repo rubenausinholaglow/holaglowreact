@@ -137,23 +137,42 @@ export default function HightLightedProduct() {
             <p className="font-semibold text-lg mb-4">Antes y después</p>
             <Carousel hasControls>
               {product.beforeAndAfterImages.map((image, index) => (
-                <div
+                <Flex
                   key={index}
-                  className="w-full aspect-video rounded-2xl overflow-hidden"
+                  layout="row-center"
+                  className="aspect-video rounded-2xl overflow-hidden"
                 >
-                  <Image
-                    src={image.urlBefore || '/images/default-image.jpg'}
-                    alt={`Before Image ${index}`}
-                    fill={true}
-                    className="object-cover rounded-2xl"
-                  />
-                  <Image
-                    src={image.urlAfter || '/images/default-image.jpg'}
-                    alt={`Before Image ${index}`}
-                    fill={true}
-                    className="object-cover rounded-2xl"
-                  />
-                </div>
+                  {image.urlBefore != '' && (
+                    <Flex>
+                      <div className="relative w-1/2 h-full">
+                        <Image
+                          src={image.urlBefore || '/images/default-image.jpg'}
+                          alt={`Before Image ${index}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="relative w-1/2 h-full">
+                        <Image
+                          src={image.urlAfter || '/images/default-image.jpg'}
+                          alt={`Before Image ${index}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </Flex>
+                  )}
+                  {image.urlBefore == '' && (
+                    <Flex>
+                      <Image
+                        src={image.urlAfter || '/images/default-image.jpg'}
+                        alt={`Before Image ${index}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </Flex>
+                  )}
+                </Flex>
               ))}
             </Carousel>
           </div>
