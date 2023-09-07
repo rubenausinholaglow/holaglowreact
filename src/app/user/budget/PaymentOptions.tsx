@@ -4,7 +4,7 @@ import { priceFormat } from 'utils/priceFormat';
 export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
   return (
     <section className="bg-white p-8 text-black">
-      <div className='bg-[url("/images/budget/almaBg.png")] bg-cover pl-[55%] rounded-[35px] p-8'>
+      <div className='bg-[url("/images/budget/paymentOptions.png")] bg-cover pl-[55%] rounded-[35px] p-8'>
         <h3 className="text-xl/tight font-semibold">
           Tu tratamiento
           <br />
