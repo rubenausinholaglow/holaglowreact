@@ -111,8 +111,6 @@ export default async function Budget({
           {products.length > 0 && (
             <Products
               products={products}
-              totalPrice={totalPrice}
-              totalPriceWithIVA={totalPriceWithIVA}
               referenceId={referenceId}
               creationDate={creationDate}
               priceDiscount={priceDiscount}
