@@ -2,7 +2,7 @@ import { Actions, State } from '@interface/cart';
 import { Professional } from '@interface/clinic';
 import { CartItem, Product } from '@interface/product';
 import { INITIAL_STATE } from '@utils/constants';
-import { applyDiscountToItem } from '@utils/utils';
+import { applyDiscountToItem, deleteDiscountToItem } from '@utils/utils';
 import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -20,7 +20,7 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   ];
 }
 
-function calculateCartItemDiscount(
+function recalculateCartItems(
   cart: CartItem[],
   cartUniqueId: string,
   value: number,
@@ -32,9 +32,14 @@ function calculateCartItemDiscount(
     return cart;
   }
 
+  const price = applyDiscountToItem(value, discountType, cartItem);
+
   const updatedCartItem = {
     ...cartItem,
-    priceWithDiscount: applyDiscountToItem(value, discountType, cartItem),
+    priceWithDiscount:
+      value > 0
+        ? applyDiscountToItem(value, discountType, cartItem)
+        : deleteDiscountToItem(value, discountType, cartItem),
     [discountType === '%' ? 'percentageDiscount' : 'priceDiscount']:
       Number(value),
   };
@@ -80,13 +85,12 @@ export const useCartStore = create(
         discountType: '%' | '€' | 'total'
       ) => {
         const cart = get().cart;
-        const updatedCart = calculateCartItemDiscount(
+        const updatedCart = recalculateCartItems(
           cart,
           cartUniqueId,
           value,
           discountType
         );
-
         set(() => ({ cart: updatedCart }));
       },
       applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {
@@ -98,6 +102,16 @@ export const useCartStore = create(
           priceDiscount:
             discountType === 'total' ? Number(value) : state.manualPrice,
         }));
+      },
+      removeItemDiscount: (cartUniqueId: string, discountType: '%' | '€') => {
+        const cart = get().cart;
+        const updatedCart = recalculateCartItems(
+          cart,
+          cartUniqueId,
+          0,
+          discountType
+        );
+        set(() => ({ cart: updatedCart }));
       },
       setHighlightProduct: (product: Product) => {
         set(() => ({

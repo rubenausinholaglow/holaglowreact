@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -16,7 +15,7 @@ export default function ProductDiscountForm({
   className,
 }: {
   cartUniqueId?: string;
-  productPrice?: number;
+  productPrice: number;
   isCheckout: boolean;
   className?: string;
 }) {
@@ -25,11 +24,7 @@ export default function ProductDiscountForm({
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
   const cartItemDiscount = (data: any) => {
-    console.log(data.Value);
     const discountValue = parseFloat(data.Value);
-    if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
-      data.Value = productPrice;
-    }
     if (data.DiscountType === '%' && discountValue > 100) {
       data.Value = 100;
     }
@@ -38,7 +33,6 @@ export default function ProductDiscountForm({
   };
 
   const cartDiscount = (data: any) => {
-    console.log(data.Value);
     const discountValue = parseFloat(data.Value);
     if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
       data.value = productPrice;
