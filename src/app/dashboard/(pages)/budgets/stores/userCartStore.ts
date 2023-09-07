@@ -91,11 +91,11 @@ export const useCartStore = create(
       },
       applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {
         set(state => ({
-          priceDiscount:
+          manualPrice:
             discountType === '€' ? Number(value) : state.priceDiscount,
           percentageDiscount:
             discountType === '%' ? Number(value) : state.percentageDiscount,
-          manualPrice:
+          priceDiscount:
             discountType === 'total' ? Number(value) : state.manualPrice,
         }));
       },

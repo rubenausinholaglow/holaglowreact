@@ -29,44 +29,36 @@ export default function DashboardLayout({
     '/dashboard/menu',
   ];
   return (
-    <main className="min-h-screen h-100 text-sm bg-hg-lightMalva/20">
+    <main className="min-h-screen h-100 text-sm bg-[url('/images/dashboard/background/main_background.png')] bg-[#A96FE7] bg-bottom bg-center bg-contain bg-no-repeat">
       <Flex
         layout="col-center"
         className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"
       >
         <Container>
           <Flex layout="row-left" className="w-full py-8">
-            {backButtonRoutes.includes(pathName) &&
-              pathName !== '/dashboard/checkout' && (
-                <>
-                  <Button href={getBackRoute(pathName)} type="tertiary">
-                    <Flex layout="row-left">
-                      <SvgArrowSmallLeft
-                        height={40}
-                        width={40}
-                        className="pr-2"
-                      />
-                      Volver
-                    </Flex>
-                  </Button>
+            {backButtonRoutes.includes(pathName) && (
+              <>
+                <Button href={getBackRoute(pathName)} type="tertiary">
+                  <Flex layout="row-left">
+                    <SvgArrowSmallLeft
+                      height={40}
+                      width={40}
+                      className="pr-2"
+                    />
+                    Volver
+                  </Flex>
+                </Button>
 
-                  {pathName !== '/dashboard' && <ButtonMessage />}
+                {pathName !== '/dashboard' && <ButtonMessage />}
 
-                  <div className="ml-auto z-10">
-                    <ClinicProfessional />
-                  </div>
-                </>
-              )}
+                <div className="ml-auto z-10">
+                  <ClinicProfessional />
+                </div>
+              </>
+            )}
           </Flex>
         </Container>
         {children}
-        <div className="pt-16 pb-8 mt-auto">
-          <SvgHolaglow
-            width={150}
-            height={40}
-            fill={HOLAGLOW_COLORS['malva']}
-          />
-        </div>
       </Flex>
     </main>
   );

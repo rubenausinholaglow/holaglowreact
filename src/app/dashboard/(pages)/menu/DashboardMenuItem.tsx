@@ -10,9 +10,10 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   altText,
   title,
   link,
+  target,
 }) => {
   return (
-    <Link href={link}>
+    <Link href={link} target={target}>
       <Image
         className="mx-auto"
         src={iconSrc}
@@ -20,7 +21,7 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
         width="150"
         alt={altText}
       />
-      <p className="text-center text-sm">{title}</p>
+      <p className="text-center text-sm text-white">{title}</p>
     </Link>
   );
 };

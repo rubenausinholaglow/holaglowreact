@@ -27,12 +27,11 @@ export default function HightLightedProduct() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<CartItem | null>(null);
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
-
+  const [imgSrc, setImgSrc] = useState('');
   useEffect(() => {
     setIsLoading(true);
     setProduct(null);
-    setImgSrc(null);
+    setImgSrc('');
 
     const fetchProduct = async () => {
       try {
@@ -40,6 +39,9 @@ export default function HightLightedProduct() {
           const data = await ProductService.getProduct(productHighlighted.id);
 
           setProduct(data);
+          setImgSrc(
+            `https://budgetimages.blob.core.windows.net/images/products/${data.flowwwId}/${data.flowwwId}.jpg`
+          );
         }
       } catch (error: any) {
         Bugsnag.notify(error);
@@ -87,11 +89,7 @@ export default function HightLightedProduct() {
         <Flex layout="row-left" className="w-full gap-4 items-stretch mb-4">
           <div className="w-1/2 aspect-[4/3] relative shrink-0">
             <Image
-              src={
-                imgSrc
-                  ? imgSrc
-                  : `/images/product/${product.flowwwId}/${product.flowwwId}.png`
-              }
+              src={imgSrc}
               alt={product.title}
               fill={true}
               className="object-cover"
@@ -138,18 +136,43 @@ export default function HightLightedProduct() {
           <div className="mb-16 w-full">
             <p className="font-semibold text-lg mb-4">Antes y después</p>
             <Carousel hasControls>
-              {product.beforeAndAfterImages.map((index: number) => (
-                <div
+              {product.beforeAndAfterImages.map((image, index) => (
+                <Flex
                   key={index}
-                  className="w-full aspect-video rounded-2xl overflow-hidden"
+                  layout="row-center"
+                  className="aspect-video rounded-2xl overflow-hidden"
                 >
-                  <Image
-                    src={`/images/fakeImages/${index + 1}.jpg`}
-                    alt="nom del producte"
-                    fill={true}
-                    className="object-cover rounded-2xl"
-                  />
-                </div>
+                  {image.urlBefore != '' && (
+                    <Flex>
+                      <div className="relative w-1/2 h-full">
+                        <Image
+                          src={image.urlBefore || '/images/default-image.jpg'}
+                          alt={`Before Image ${index}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="relative w-1/2 h-full">
+                        <Image
+                          src={image.urlAfter || '/images/default-image.jpg'}
+                          alt={`Before Image ${index}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    </Flex>
+                  )}
+                  {image.urlBefore == '' && (
+                    <Flex>
+                      <Image
+                        src={image.urlAfter || '/images/default-image.jpg'}
+                        alt={`Before Image ${index}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </Flex>
+                  )}
+                </Flex>
               ))}
             </Carousel>
           </div>

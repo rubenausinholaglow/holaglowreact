@@ -9,7 +9,7 @@ import { Footer } from './Footer';
 import Header from './Header';
 
 const HIDE_WEBHEADER_PATHS = ['/user/budget', '/user/passport', '/form'];
-const HIDE_WEBHEADER_PATTERNS = ['/dashboard'];
+const HIDE_WEBHEADER_PATTERNS = ['/dashboard', '/appointment'];
 
 const hideHeader = (path: string) => {
   return HIDE_WEBHEADER_PATHS.includes(path);

@@ -42,6 +42,7 @@ export interface DashboardMenuItemProps {
   altText: string;
   title: string;
   link: string;
+  target: string;
 }
 
 export interface ProductTableProps {

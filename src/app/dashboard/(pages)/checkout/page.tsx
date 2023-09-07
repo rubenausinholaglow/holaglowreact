@@ -32,10 +32,18 @@ const Page = () => {
   const [showPaymentButtons, setShowPaymentButtons] = useState(false);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [clientToken, setClientToken] = useState<string | ''>('');
+  const [budgetId, setBudgetId] = useState<string | ''>('');
 
   useEffect(() => {
+    const budgetId = localStorage.getItem('BudgetId');
     setClientToken(localStorage.getItem('flowwwToken') || '');
+    setBudgetId(budgetId || '');
+    if (budgetId && budgetId != '') setShowPaymentButtons(true);
   }, []);
+
+  useEffect(() => {
+    setBudgetId(localStorage.getItem('BudgetId') || '');
+  }, [budgetId]);
 
   const handleFinalize = async () => {
     const GuidUser = localStorage.getItem('id') || '';
@@ -44,7 +52,7 @@ const Page = () => {
 
     const budget: Budget = {
       userId: GuidUser,
-      discountCode: '',
+      discountCode: clientToken.substring(0, clientToken.length - 32),
       discountAmount: '',
       FlowwwId: '',
       priceDiscount: Number(priceDiscount.toFixed(2)),
@@ -67,6 +75,7 @@ const Page = () => {
     try {
       const data = await budgetService.createBudget(budget);
       localStorage.setItem('BudgetId', data.id);
+      setBudgetId(localStorage.getItem('BudgetId') || '');
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
     }
@@ -89,12 +98,12 @@ const Page = () => {
           <ul className="w-2/3 shrink-0">
             {cart?.map(cartItem => (
               <li key={cartItem.uniqueId} className="mb-4">
-                <ProductCard isCheckout product={cartItem} />
+                <ProductCard isCheckout product={cartItem} budget={budgetId} />
               </li>
             ))}
           </ul>
           <Flex layout="col-left" className="w-1/3 pl-8 shrink-0 relative">
-            {!showPaymentButtons && (
+            {!showPaymentButtons && !budgetId && (
               <SvgAngleDown
                 height={20}
                 width={20}
@@ -113,7 +122,11 @@ const Page = () => {
             ) : (
               <>
                 {showProductDiscount && (
-                  <ProductDiscountForm isCheckout={true} className="mt-4" />
+                  <ProductDiscountForm
+                    isCheckout={true}
+                    className="mt-4"
+                    productPrice={totalPrice}
+                  />
                 )}
                 <Flex layout="col-left" className="gap-2 w-full mt-8">
                   <Button
@@ -132,21 +145,23 @@ const Page = () => {
                       'Finalizar'
                     )}
                   </Button>
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    target="_blank"
-                    href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
-                    type="tertiary"
-                  >
-                    <span className="font-semibold">Agendar Cita</span>
-                  </Button>
                 </Flex>
               </>
             )}
-            <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
-              Cancelar Presupuesto
-            </Button>
+            <Flex layout="col-left" className="gap-2 w-full mt-8">
+              <Button
+                className="w-full"
+                size="lg"
+                target="_blank"
+                href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
+                type="tertiary"
+              >
+                <span className="font-semibold">Agendar Cita</span>
+              </Button>
+              <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
+                {!budgetId ? 'Cancelar Presupuesto' : 'Volver al dashboard'}
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
       </Container>

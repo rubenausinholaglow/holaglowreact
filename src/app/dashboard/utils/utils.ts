@@ -57,10 +57,6 @@ export const applyDiscountToItem = (
     price = price - (price * percentageDiscountValue) / 100;
   }
 
-  if (Number(price) === 0) {
-    price = cartItem.price;
-  }
-
   return price;
 };
 
@@ -99,6 +95,7 @@ export function clearLocalStorage(allLocalStorage: boolean) {
   localStorage.removeItem('username');
   localStorage.removeItem('flowwwToken');
   localStorage.removeItem('id');
+  localStorage.removeItem('BudgetId');
   if (allLocalStorage) {
     localStorage.removeItem('ClinicFlowwwId');
     localStorage.removeItem('boxId');

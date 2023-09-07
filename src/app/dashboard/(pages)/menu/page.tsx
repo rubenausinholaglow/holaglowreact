@@ -17,6 +17,7 @@ const Page = () => {
   const [boxId, setBoxId] = useState<string | null>(null);
   const [appointmentId, setAppointmentId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [flowwwToken, setFlowwwToken] = useState('');
 
   const router = useRouter();
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -34,6 +35,7 @@ const Page = () => {
     setClinicId(localStorage.getItem('ClinicId') || '');
     setBoxId(localStorage.getItem('boxId') || '');
     setUserId(localStorage.getItem('id') || '');
+    setFlowwwToken(localStorage.getItem('flowwwToken') || '');
   }, []);
 
   const handleClick = async () => {
@@ -41,7 +43,7 @@ const Page = () => {
   };
   const handleCommentSubmit = async () => {
     setIsCommentModalOpen(false);
-    const result = await ScheduleService.confirm(
+    const result = await ScheduleService.finish(
       appointmentId ?? '',
       comment ?? '',
       userId || ''
@@ -58,9 +60,8 @@ const Page = () => {
       {username && (
         <Container>
           <Flex layout="col-center">
-            <p className="font-bold text-xl mb-8">
-              Hola {username} ¿Qué deseas hacer?
-            </p>
+            <p className="font-bold text-4xl mb-2">¡Hola {username}!</p>
+            <p className="text-4xl mb-8">Tu glow, tus normas</p>
             <div className="grid grid-cols-3">
               {menuItems.map(item => (
                 <DashboardMenuItem
@@ -68,7 +69,12 @@ const Page = () => {
                   iconSrc={item.iconSrc}
                   altText={item.altText}
                   title={item.title}
-                  link={item.link}
+                  link={
+                    item.link.includes('flowwwToken')
+                      ? item.link.replace('flowwwToken', flowwwToken)
+                      : item.link
+                  }
+                  target={item.target}
                 />
               ))}
             </div>
