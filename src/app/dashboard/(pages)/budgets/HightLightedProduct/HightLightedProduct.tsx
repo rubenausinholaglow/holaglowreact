@@ -143,7 +143,7 @@ export default function HightLightedProduct() {
                   className="aspect-video rounded-2xl overflow-hidden"
                 >
                   {image.urlBefore != '' && (
-                    <Flex>
+                    <Flex className="w-full h-full">
                       <div className="relative w-1/2 h-full">
                         <Image
                           src={image.urlBefore || '/images/default-image.jpg'}
