@@ -38,7 +38,7 @@ const Page = () => {
     const budgetId = localStorage.getItem('BudgetId');
     setClientToken(localStorage.getItem('flowwwToken') || '');
     setBudgetId(budgetId || '');
-    if (budgetId != '') setShowPaymentButtons(true);
+    if (budgetId && budgetId != '') setShowPaymentButtons(true);
   }, []);
 
   useEffect(() => {
