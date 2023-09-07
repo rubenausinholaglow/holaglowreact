@@ -1,3 +1,4 @@
+import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { priceFormat } from 'utils/priceFormat';
 
@@ -93,6 +94,9 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
             </p>
           </div>
         </div>
+        <Text size="xs" className="mt-2">
+          * Cálculos aproximados
+        </Text>
       </div>
     </section>
   );
