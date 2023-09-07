@@ -43,28 +43,28 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
         <div className="flex gap-2 text-[11px] text-center">
           <div className="flex flex-col gap-1 w-1/2">
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2">
-              Pago aplazado
+              Pago financiado
             </p>
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 3 cuotas
+              En 3 meses
             </p>
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 4 cuotas
+              En 4 meses
             </p>
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 6 cuotas
+              En 6 meses
             </p>
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 9 cuotas
+              En 9 meses
             </p>
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 12 cuotas
+              En 12 meses
             </p>
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 18 cuotas
+              En 18 meses
             </p>
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 24 cuotas
+              En 24 meses
             </p>
           </div>
           <div className="flex flex-col gap-1 w-1/2">
