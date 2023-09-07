@@ -21,34 +21,30 @@ export default function ProductDiscountForm({
   className?: string;
 }) {
   const { register, handleSubmit } = useForm();
-  const valueInputRef = useRef<HTMLInputElement | null>(null);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
   const cartItemDiscount = (data: any) => {
+    console.log(data.Value);
     const discountValue = parseFloat(data.Value);
     if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
-      alert('El precio en € no puede ser más grande que el del producto.');
-      return;
+      data.Value = productPrice;
     }
-
     if (data.DiscountType === '%' && discountValue > 100) {
-      alert('El % no puede ser superior al 100%');
-      return;
+      data.Value = 100;
     }
 
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
   const cartDiscount = (data: any) => {
+    console.log(data.Value);
     const discountValue = parseFloat(data.Value);
     if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
-      alert('El precio en € no puede ser más grande que el del precio final.');
-      return;
+      data.value = productPrice;
     }
     if (data.DiscountType === '%' && discountValue > 100) {
-      alert('El % no puede ser superior al 100%');
-      return;
+      data.value = 100;
     }
     applyCartDiscount(data.Value, data.DiscountType);
   };
