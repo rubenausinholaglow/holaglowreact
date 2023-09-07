@@ -26,18 +26,22 @@ export default function Accordion({
       defaultValue={isOpen ? 'item' : ''}
     >
       <AccordionPrimitive.Item value="item" className="w-full">
-        <AccordionPrimitive.Trigger
-          className={twMerge(
-            `group flex items-center justify-between w-full ${triggerStyles}`
-          )}
-        >
-          {trigger}
-          <SvgAdd
-            height={iconSize}
-            width={iconSize}
-            className="transition-transform origin-center rotate-45 group-radix-state-open:rotate-90 group-radix-state-open:duration-200 mr-1"
-          />
-        </AccordionPrimitive.Trigger>
+        {!isOpen ? (
+          <AccordionPrimitive.Trigger
+            className={twMerge(
+              `group flex items-center justify-between w-full ${triggerStyles}`
+            )}
+          >
+            {trigger}
+            <SvgAdd
+              height={iconSize}
+              width={iconSize}
+              className="transition-transform origin-center rotate-45 group-radix-state-open:rotate-90 group-radix-state-open:duration-200 mr-1"
+            />
+          </AccordionPrimitive.Trigger>
+        ) : (
+          <>{trigger}</>
+        )}
         <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
           {children}
         </AccordionPrimitive.Content>
