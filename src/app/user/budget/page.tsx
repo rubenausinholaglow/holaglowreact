@@ -1,4 +1,5 @@
 import Footer from '../Footer';
+import { type Product as ProductType } from '../types';
 import Header from './Header';
 import Legal from './Legal';
 import PaymentOptions from './PaymentOptions';
@@ -53,6 +54,53 @@ export default async function Budget({
     manualPrice = null,
   } = budgetData ? budgetData : {};
 
+  const productsWithDiscountPrice = products.map((product: ProductType) => {
+    let priceWithDiscount = product.price;
+
+    if (product.priceDiscount > 0) {
+      priceWithDiscount = product.priceDiscount;
+    }
+
+    if (product.percentageDiscount > 0) {
+      priceWithDiscount =
+        priceWithDiscount - priceWithDiscount * product.percentageDiscount;
+    }
+
+    return {
+      ...product,
+      priceWithDiscount: priceWithDiscount,
+    };
+  });
+
+  const totalProductsPrice = productsWithDiscountPrice.reduce(
+    (total: number, product: ProductType) => {
+      if (product.priceWithDiscount) {
+        return total + product.priceWithDiscount;
+      }
+
+      return total;
+    },
+    0
+  );
+
+  const budgetTotalPriceWithDiscount = () => {
+    let total = totalProductsPrice;
+
+    if (manualPrice > 0) {
+      total = manualPrice;
+    }
+
+    if (priceDiscount > 0) {
+      total = total - priceDiscount;
+    }
+
+    if (percentageDiscount > 0) {
+      total = total - total * percentageDiscount;
+    }
+
+    return total;
+  };
+
   return (
     <div className="flex flex-col text-hg-black">
       {products && simulations ? (
@@ -63,16 +111,17 @@ export default async function Budget({
           {products.length > 0 && (
             <Products
               products={products}
-              totalPrice={totalPrice}
-              totalPriceWithIVA={totalPriceWithIVA}
               referenceId={referenceId}
               creationDate={creationDate}
               priceDiscount={priceDiscount}
               percentageDiscount={percentageDiscount}
               manualPrice={manualPrice}
+              productsWithDiscountPrice={productsWithDiscountPrice}
+              totalProductsPrice={totalProductsPrice}
+              budgetTotalPriceWithDiscount={budgetTotalPriceWithDiscount()}
             />
           )}
-          <PaymentOptions totalPrice={totalPriceWithIVA} />
+          <PaymentOptions totalPrice={budgetTotalPriceWithDiscount()} />
           {simulations.length > 0 && <Simulation simulations={simulations} />}
           <PromoCode discountCode={discountCode} discountAmount={50} />
           <Legal />
