@@ -4,18 +4,19 @@ import { useEffect, useState } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { usePathname } from 'next/navigation';
 
-import { IsMobile } from './Breakpoint';
+import { DeviceSize } from './Breakpoint';
+import { Footer } from './Footer';
 import Header from './Header';
 
 const HIDE_WEBHEADER_PATHS = ['/user/budget', '/user/passport', '/form'];
 const HIDE_WEBHEADER_PATTERNS = ['/dashboard', '/appointment'];
 
-const showWebHeader = (path: string) => {
-  if (HIDE_WEBHEADER_PATHS.includes(path)) {
-    return false;
-  }
+const hideHeader = (path: string) => {
+  return HIDE_WEBHEADER_PATHS.includes(path);
+};
 
-  return !HIDE_WEBHEADER_PATTERNS.some(item => path.startsWith(item));
+const isDashboard = (path: string) => {
+  return HIDE_WEBHEADER_PATTERNS.some(item => path.startsWith(item));
 };
 
 export default function MainLayout({
@@ -24,11 +25,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const setIsMobile = useGlobalPersistedStore(state => state.setIsMobile);
+  const setDeviceSize = useGlobalPersistedStore(state => state.setDeviceSize);
   const pathname = usePathname();
 
   useEffect(() => {
-    setIsMobile(IsMobile());
+    setDeviceSize(DeviceSize());
     setISHydrated(true);
   }, []);
 
@@ -38,8 +39,9 @@ export default function MainLayout({
 
   return (
     <>
-      {showWebHeader(pathname) && <Header />}
+      {hideHeader(pathname) || (!isDashboard(pathname) && <Header />)}
       {children}
+      {!isDashboard(pathname) && <Footer />}
     </>
   );
 }

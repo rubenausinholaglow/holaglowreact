@@ -25,6 +25,11 @@ module.exports = {
           lime500: '#F5FF86',
           lime300: '#F9FFB6',
           lime100: '#FDFFE7',
+          purple: '#A96FE7',
+          purple700: '#c39bee',
+          purple500: '#d4b7f3',
+          purple300: '#e6d4f8',
+          purple100: '#f6f1fd',
           malva: '#BBC7FF',
           malva500: '#DDE3FF',
           malva300: '#EBEEFF',
@@ -58,6 +63,7 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-15deg': 'linear-gradient(-15deg, var(--tw-gradient-stops))',
       },
       maxWidth: {
         sm: '640px',
@@ -78,10 +84,15 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 },
         },
+        horizontalScroll: {
+          from: { transform: 'translateX(0, 0, 0)' },
+          to: { transform: 'translate3d(-50%, 0, 0)' },
+        },
       },
       animation: {
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
+        horizontalScroll: 'horizontalScroll 50s linear infinite',
       },
     },
   },
