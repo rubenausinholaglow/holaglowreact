@@ -84,6 +84,9 @@ export const useCartStore = create(
         value: number,
         discountType: '%' | '€' | 'total'
       ) => {
+        if (discountType === '%' && value > 100) {
+          value = 100;
+        }
         const cart = get().cart;
         const updatedCart = recalculateCartItems(
           cart,

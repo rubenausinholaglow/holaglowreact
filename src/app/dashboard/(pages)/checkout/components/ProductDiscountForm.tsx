@@ -24,22 +24,10 @@ export default function ProductDiscountForm({
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
   const cartItemDiscount = (data: any) => {
-    const discountValue = parseFloat(data.Value);
-    if (data.DiscountType === '%' && discountValue > 100) {
-      data.Value = 100;
-    }
-
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
   const cartDiscount = (data: any) => {
-    const discountValue = parseFloat(data.Value);
-    if (data.DiscountType === '€' && discountValue > (productPrice || 0)) {
-      data.value = productPrice;
-    }
-    if (data.DiscountType === '%' && discountValue > 100) {
-      data.value = 100;
-    }
     applyCartDiscount(data.Value, data.DiscountType);
   };
 
