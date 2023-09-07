@@ -60,6 +60,35 @@ export const applyDiscountToItem = (
   return price;
 };
 
+export const deleteDiscountToItem = (
+  value: number,
+  discountType: string,
+  cartItem: CartItem
+) => {
+  let finalPrice = cartItem.priceWithDiscount;
+
+  switch (discountType) {
+    case '%':
+      cartItem.percentageDiscount = 0;
+      finalPrice =
+        cartItem.price - (cartItem.price * cartItem.percentageDiscount) / 100;
+      break;
+    case '€':
+      finalPrice = cartItem.price;
+      cartItem.priceDiscount = 0;
+      if (cartItem.percentageDiscount > 0) {
+        finalPrice =
+          finalPrice - (finalPrice * cartItem.percentageDiscount) / 100;
+      }
+      break;
+    default:
+      // Handle unexpected discountType (optional)
+      break;
+  }
+
+  return finalPrice;
+};
+
 export function getPaymentMethodText(method: PaymentMethod): string {
   switch (method) {
     case PaymentMethod.Cash:
