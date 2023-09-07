@@ -29,19 +29,37 @@ export const filterItems = [
     buttons: [
       {
         id: '1',
-        value: 'Tercio Inferior',
+        value: 'Cuerpo',
         tag: 'Body',
         selected: false,
       },
       {
         id: '2',
-        value: 'Tercio Medio',
+        value: 'Tercio Inferior',
         tag: 'Body',
         selected: false,
       },
       {
         id: '3',
+        value: 'Tercio Medio',
+        tag: 'Body',
+        selected: false,
+      },
+      {
+        id: '4',
         value: 'Tercio Superior',
+        tag: 'Body',
+        selected: false,
+      },
+      {
+        id: '5',
+        value: 'Piel',
+        tag: 'Body',
+        selected: false,
+      },
+      {
+        id: '6',
+        value: 'Pelo',
         tag: 'Body',
         selected: false,
       },
@@ -71,7 +89,7 @@ export const filterItems = [
       },
       {
         id: '4',
-        value: 'Relleno/Ácido hialurónico',
+        value: 'Relleno',
         tag: 'Category',
         selected: false,
       },
@@ -95,7 +113,7 @@ export const filterItems = [
     buttons: [
       {
         id: 'Packs',
-        value: 'Ver Packs',
+        value: 'Packs',
         tag: 'Packs',
         selected: false,
       },
