@@ -106,12 +106,6 @@ export const PaymentModule = () => {
   };
 
   const handleOnButtonPaymentClick = (paymentKey: any) => {
-    if (paymentKey == 'pepper' && activePaymentMethod != 'pepper') {
-      window.open(
-        'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
-        '_blank'
-      );
-    }
     setOnLoad(true);
     if (activePaymentMethod === paymentKey) {
       setOnLoad(false);
