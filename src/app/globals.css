@@ -20,11 +20,11 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: theme('colors.hg.black');
 }
 
 a {
-  color: theme('colors.hg.darkMalva');
+  color: theme('colors.hg.purple');
 }
 
 .floating-button {

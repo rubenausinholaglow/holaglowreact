@@ -47,13 +47,13 @@ export const Button = ({
   return (
     <button
       className={twMerge(
-        `transition-all relative group overflow-visible top-[2px] ${className}`
+        `transition-all relative group overflow-visible -top-[2px] ${className}`
       )}
       onClick={onClick}
       type={rest?.isSubmit ? 'submit' : 'button'}
     >
       <ButtonBase type={type} />
-      <ButtonBody type={type} size={size} customStyles={customStyles}>
+      <ButtonBody type={type} size={size} customStyles={customStyles} {...rest}>
         {children}
       </ButtonBody>
     </button>
@@ -64,20 +64,25 @@ const ButtonBody = ({
   type,
   size,
   customStyles,
+  color,
+  bgColor,
   children,
 }: {
   type: ButtonTypes;
   size: ButtonSizes;
   customStyles?: string;
+  color?: string;
+  bgColor?: string;
   children: ReactNode;
 }) => {
   const STYLES: any = {
     common: 'transition-all relative bottom-[1px] text-center rounded-full ',
     animations: '-translate-y-1 group-active:-translate-y-0',
     primary: 'bg-hg-black text-hg-lime',
-    secondary: 'bg-white text-hg-darkMalva border border-hg-black',
-    tertiary:
-      'bg-white text-hg-black border border-hg-black hover:bg-hg-malva300 active:bg-hg-malva300',
+    secondary: 'bg-white text-hg-purple border border-hg-black',
+    tertiary: `${
+      bgColor ? '' : 'bg-white hover:bg-hg-malva300 active:bg-hg-malva300'
+    } ${color ? '' : 'text-hg-black border border-hg-black'}`,
     transparent:
       'bg-white text-hg-black border border-transparent hover:bg-hg-malva300 hover:border-hg-malva300 active:bg-hg-malva300 active:border-hg-malva300',
     sm: 'text-xs h-[32px] px-4',
@@ -95,7 +100,15 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles}>
+    <Flex
+      layout="row-center"
+      className={styles}
+      style={{
+        backgroundColor: bgColor,
+        color: color,
+        border: `1px solid ${color}`,
+      }}
+    >
       {children}
     </Flex>
   );
@@ -106,7 +119,7 @@ const ButtonBase = ({ type }: { type: ButtonTypes }) => {
 
   const STYLES: any = {
     primary: 'bg-hg-lime border border-hg-black',
-    secondary: 'bg-hg-malva border border-hg-black',
+    secondary: 'bg-hg-purple border border-hg-black',
   };
 
   const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;
