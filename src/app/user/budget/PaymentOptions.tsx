@@ -1,29 +1,7 @@
 import { Text } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
 import { priceFormat } from 'utils/priceFormat';
 
 export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
-  const prices = {
-    twoStepsPrice: (totalPrice / 2).toFixed(2),
-    threeStepsPrice: (totalPrice / 3).toFixed(2),
-    fourStepsPrice: (totalPrice / 4).toFixed(2),
-  };
-
-  // last term payment must be modified to avoid adding some cents
-  const lastTermPrice = (number: string, totalTerms: number) => {
-    const normalizedNumber = Number(number);
-
-    if (normalizedNumber * totalTerms !== totalPrice) {
-      return priceFormat(
-        normalizedNumber -
-          Number((normalizedNumber * totalTerms - totalPrice).toFixed(2))
-      );
-    }
-    return priceFormat(normalizedNumber);
-  };
-
-  console.log(totalPrice, (totalPrice * 1.16) / 24);
-
   return (
     <section className="bg-white p-8 text-black">
       <div className='bg-[url("/images/budget/almaBg.png")] bg-cover pl-[55%] rounded-[35px] p-8'>
