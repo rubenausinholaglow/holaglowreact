@@ -29,7 +29,6 @@ export const ClinicProfessional = () => {
     const fetchProfessionals = async () => {
       try {
         const professionalType = ProfessionalType.All;
-
         const professionalsData = await clinicService.getProfessionalsByClinic(
           localStorage.getItem('ClinicId') || '',
           professionalType
@@ -55,7 +54,9 @@ export const ClinicProfessional = () => {
     if (professionals.length > 0) {
       setBeautyAdvisors(
         professionals.filter(
-          professional => professional.professionalType === 2
+          professional =>
+            professional.professionalType === 2 ||
+            professional.professionalType === 3
         )
       );
 
@@ -110,7 +111,7 @@ export const ClinicProfessional = () => {
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
-              className="px-2 py-1 cursor-pointer hover:font-semibold text-white"
+              className="px-2 py-1 cursor-pointer hover:font-semibold text-black"
             >
               {professional.name}
             </li>
