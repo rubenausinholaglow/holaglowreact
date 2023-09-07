@@ -94,7 +94,7 @@ export default function PaymentInput(props: Props) {
     }
   };
   const handleSubmitForm = async (data: any) => {
-    if (showAlma || messageNotification != '') {
+    if (showAlma || messageNotification) {
       return;
     }
     setIsLoading(true);
@@ -107,7 +107,7 @@ export default function PaymentInput(props: Props) {
       paymentMethod: props.paymentMethod,
       referenceId: '',
     };
-    createPayment(paymentRequestApi);
+    await createPayment(paymentRequestApi);
     setIsLoading(false);
   };
 
