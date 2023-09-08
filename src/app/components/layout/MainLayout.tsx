@@ -2,31 +2,29 @@
 
 import { useEffect, useState } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { usePathname } from 'next/navigation';
 
 import { DeviceSize } from './Breakpoint';
+import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
 
-const HIDE_WEBHEADER_PATHS = ['/user/budget', '/user/passport', '/form'];
-const HIDE_WEBHEADER_PATTERNS = ['/dashboard', '/appointment'];
-
-const hideHeader = (path: string) => {
-  return HIDE_WEBHEADER_PATHS.includes(path);
-};
-
-const isDashboard = (path: string) => {
-  return HIDE_WEBHEADER_PATTERNS.some(item => path.startsWith(item));
-};
-
 export default function MainLayout({
+  isDashboard = false,
+  hideTopBar = false,
+  hideBackButton = false,
+  hideContactButtons = false,
+  hideProfessionalSelector = false,
   children,
 }: {
+  isDashboard?: boolean;
+  hideBackButton?: boolean;
+  hideTopBar?: boolean;
+  hideContactButtons?: boolean;
+  hideProfessionalSelector?: boolean;
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
   const setDeviceSize = useGlobalPersistedStore(state => state.setDeviceSize);
-  const pathname = usePathname();
 
   useEffect(() => {
     setDeviceSize(DeviceSize());
@@ -39,9 +37,22 @@ export default function MainLayout({
 
   return (
     <>
-      {hideHeader(pathname) || (!isDashboard(pathname) && <Header />)}
-      {children}
-      {hideHeader(pathname) || (!isDashboard(pathname) && <Footer />)}
+      {isDashboard ? (
+        <DashboardLayout
+          hideTopBar={hideTopBar}
+          hideBackButton={hideBackButton}
+          hideContactButtons={hideContactButtons}
+          hideProfessionalSelector={hideProfessionalSelector}
+        >
+          {children}
+        </DashboardLayout>
+      ) : (
+        <>
+          <Header />
+          {children}
+          <Footer />
+        </>
+      )}
     </>
   );
 }
