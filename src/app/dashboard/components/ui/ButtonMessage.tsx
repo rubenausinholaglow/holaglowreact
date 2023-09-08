@@ -53,12 +53,23 @@ export default function ButtonMessage() {
     const partsToCompare = actionId.split('/');
     const professionalId = partsToCompare[0];
     const action = partsToCompare[1];
+    const professionalType = partsToCompare[2];
     const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
-        setMessageNotification('Puedo venir');
+        if (professionalType == 'Medical') {
+          setmedicClassName('bg-hg-green');
+        }
+        if (professionalType == 'Others') {
+          setreceptionClassName('bg-hg-green');
+        }
       } else if (action === '1') {
-        setMessageNotification('No puedo venir');
+        if (professionalType == 'Medical') {
+          setmedicClassName('bg-red-500');
+        }
+        if (professionalType == 'Others') {
+          setreceptionClassName('bg-red-500');
+        }
       } else {
         setMessageNotification('Error recibiendo mensaje');
       }
