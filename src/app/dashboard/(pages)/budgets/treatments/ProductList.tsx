@@ -4,10 +4,17 @@ import { ProductTableProps } from '@utils/props';
 
 import ProductCard from './ProductCard';
 
-export default function ProductList({ products }: ProductTableProps) {
+export default function ProductList({
+  products,
+  showFilters,
+}: ProductTableProps) {
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div
+        className={`grid gap-4 pb-[200px] ${
+          showFilters ? 'grid-cols-2' : 'grid-cols-3'
+        } `}
+      >
         {products?.map(product => (
           <ProductCard
             key={product.id}

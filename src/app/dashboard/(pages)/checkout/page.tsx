@@ -90,19 +90,15 @@ const Page = () => {
   return (
     <MainLayout isDashboard>
       <Container>
-        <Title size="2xl" className="text-left mb-4">
-          Resumen
-        </Title>
-
         <Flex layout="row-left" className="items-start">
-          <ul className="w-2/3 shrink-0">
+          <ul className="w-1/2 shrink-0">
             {cart?.map(cartItem => (
               <li key={cartItem.uniqueId} className="mb-4">
                 <ProductCard isCheckout product={cartItem} budget={budgetId} />
               </li>
             ))}
           </ul>
-          <Flex layout="col-left" className="w-1/3 pl-8 shrink-0 relative">
+          <Flex layout="col-left" className="w-1/2 pl-8 shrink-0 relative">
             {!showPaymentButtons && !budgetId && (
               <SvgAngleDown
                 height={20}
@@ -131,7 +127,7 @@ const Page = () => {
                 <Flex layout="col-left" className="gap-2 w-full mt-8">
                   <Button
                     className="w-full"
-                    size="lg"
+                    size="md"
                     onClick={async () => {
                       setIsLoading(true);
                       await handleFinalize();
@@ -151,14 +147,14 @@ const Page = () => {
             <Flex layout="col-left" className="gap-2 w-full mt-8">
               <Button
                 className="w-full"
-                size="lg"
+                size="md"
                 target="_blank"
                 href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
                 type="tertiary"
               >
                 <span className="font-semibold">Agendar Cita</span>
               </Button>
-              <Button size="xl" className="w-full mt-4" onClick={cancelBudget}>
+              <Button size="md" className="w-full mt-4" onClick={cancelBudget}>
                 {!budgetId ? 'Cancelar Presupuesto' : 'Volver al dashboard'}
               </Button>
             </Flex>
