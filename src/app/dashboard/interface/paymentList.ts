@@ -7,7 +7,7 @@ export interface PaymentList {
 
 export interface PaymentActions {
   addPaymentToList: (Item: PaymentProductRequest) => void;
-  //  removePayment: (Item: PaymentProductRequest) => void;
+  removePayment: (Item: PaymentProductRequest) => void;
 }
 
 export const INITIAL_STATE_PAYMENT: PaymentList = {

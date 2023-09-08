@@ -20,14 +20,14 @@ export const usePaymentList = create(
           totalAmount: state.totalAmount + newPayment.amount,
         }));
       },
-      /*    removePayment: (payment: PaymentProductRequest) => {
+      removePayment: (payment: PaymentProductRequest) => {
         set(state => ({
           paymentRequest: state.paymentRequest.filter(
             item => item.id !== payment.id
           ),
           totalAmount: state.totalAmount - payment.amount,
         }));
-      },*/
+      },
     }),
     {
       name: 'paymeny-list',
