@@ -12,6 +12,7 @@ import { SvgSpinner } from 'icons/Icons';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
+import PepperWidget from './PepperWidget';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -25,6 +26,7 @@ export default function PaymentInput(props: Props) {
   const totalAmount = usePaymentList(state => state.totalAmount);
   const { addPaymentToList } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
+  const [showPepper, setshowPepper] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [messageNotification, setMessageNotification] = useState<string | null>(
@@ -93,12 +95,20 @@ export default function PaymentInput(props: Props) {
       );
     }
   };
-  const handleSubmitForm = async (data: any) => {
-    if (showAlma || messageNotification) {
-      return;
-    }
+
+  const activatePepper = async () => {
+    setshowPepper(true);
+  };
+
+  const openPepper = () => {
+    window.open(
+      'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
+      '_blank'
+    );
+  };
+  async function addPayment(number: any) {
     setIsLoading(true);
-    const amount = parseFloat(data.number);
+    const amount = parseFloat(number);
     const GuidUser = localStorage.getItem('id') || '';
 
     const paymentRequestApi = {
@@ -109,6 +119,16 @@ export default function PaymentInput(props: Props) {
     };
     await createPayment(paymentRequestApi);
     setIsLoading(false);
+  }
+  const handleSubmitForm = async (data: any) => {
+    if (showAlma || messageNotification || showPepper) {
+      return;
+    }
+    await addPayment(data.number);
+  };
+
+  const pay = async () => {
+    await addPayment(inputValue);
   };
 
   const renderFinance = () => {
@@ -119,6 +139,31 @@ export default function PaymentInput(props: Props) {
             amountFinance={inputValue}
             onUrlPayment={handleUrlPayment}
           ></AlmaWidget>
+        )}
+        {showPepper && (
+          <Flex layout="col-left">
+            <PepperWidget totalPrice={Number(inputValue)}></PepperWidget>
+            <Flex className="mt-4">
+              <Button
+                size="sm"
+                type="secondary"
+                isSubmit
+                className="ml-2"
+                onClick={() => openPepper()}
+              >
+                Abrir Pepper
+              </Button>
+              <Button
+                size="sm"
+                type="secondary"
+                isSubmit
+                className="ml-2"
+                onClick={() => pay()}
+              >
+                Pagar
+              </Button>
+            </Flex>
+          </Flex>
         )}
       </>
     );
@@ -156,22 +201,39 @@ export default function PaymentInput(props: Props) {
                     className="ml-2"
                     onClick={() => activateAlma()}
                   >
-                    Ver Financiación
+                    Ver financiación
                   </Button>
                 )}
-                {props.paymentBank != 1 && (
-                  <Button size="sm" type="secondary" isSubmit className="ml-2">
-                    {isLoading ? (
-                      <SvgSpinner height={24} width={24} />
-                    ) : (
-                      'Pagar'
-                    )}
+                {props.paymentBank === PaymentBank.Pepper && (
+                  <Button
+                    size="sm"
+                    type="secondary"
+                    isSubmit
+                    className="ml-2"
+                    onClick={() => activatePepper()}
+                  >
+                    Ver financiación
                   </Button>
                 )}
+                {props.paymentBank != PaymentBank.Alma &&
+                  props.paymentBank != PaymentBank.Pepper && (
+                    <Button
+                      size="sm"
+                      type="secondary"
+                      isSubmit
+                      className="ml-2"
+                    >
+                      {isLoading ? (
+                        <SvgSpinner height={24} width={24} />
+                      ) : (
+                        'Pagar'
+                      )}
+                    </Button>
+                  )}
               </Flex>
             )}
           />
-          {props.paymentBank == PaymentBank.Alma && renderFinance()}
+          {renderFinance()}
         </Flex>
       </form>
       {messageNotification ? (
