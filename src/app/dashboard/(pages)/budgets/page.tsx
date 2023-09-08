@@ -43,6 +43,8 @@ export default function Page() {
       })
       .catch(error => setError(error));
 
+    handleFilterByType(3);
+    setShowPacks(!showPacks);
     setHighlightProduct(emptyProduct);
   }, []);
 
