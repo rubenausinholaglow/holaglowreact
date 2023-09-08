@@ -11,11 +11,11 @@ export default function Page({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const queryString = window.location.search;
-  const params = new URLSearchParams(queryString);
-  const appointmentId = params.get('id');
-
   useEffect(() => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const appointmentId = params.get('id');
+
     const confirmAppointment = async () => {
       if (appointmentId) {
         const res = await ScheduleService.confirm(appointmentId);

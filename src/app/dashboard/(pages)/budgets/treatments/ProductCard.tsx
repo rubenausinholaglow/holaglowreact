@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -25,7 +26,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
   const removeFromCart = useCartStore(state => state.removeFromCart);
   const addToCart = useCartStore(state => state.addItemToCart);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
-  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
   const removeItemDiscount = useCartStore(state => state.removeItemDiscount);
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
@@ -46,9 +47,14 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
       className={`
         border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden relative
         ${!isCheckout && 'cursor-pointer'}`}
-      onClick={() => setHighlightProduct(product)}
+      onClick={() => {
+        setHighlightProduct(product);
+        if (!isCheckout) {
+          setIsModalOpen(true);
+        }
+      }}
     >
-      {!budget ? (
+      {!budget && (
         <SvgClose
           width={30}
           height={30}
@@ -56,8 +62,6 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
           className="absolute top-2 right-2 cursor-pointer"
           onClick={() => removeFromCart(product)}
         />
-      ) : (
-        <></>
       )}
       <div
         className={`aspect-square relative ${

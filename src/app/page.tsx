@@ -7,10 +7,11 @@ import Professionals from './components/home/Professionals';
 import Testimonials from './components/home/Testimonials';
 import ValuesCarousel from './components/home/ValuesCarousel';
 import ValuesDescription from './components/home/ValuesDescription';
+import MainLayout from './components/layout/MainLayout';
 
 export default function Home() {
   return (
-    <>
+    <MainLayout>
       <Hero />
       <ValuesCarousel />
       <ValuesDescription />
@@ -20,6 +21,6 @@ export default function Home() {
       <InTheNews />
       <Clinics />
       <GoToTreatments />
-    </>
+    </MainLayout>
   );
 }

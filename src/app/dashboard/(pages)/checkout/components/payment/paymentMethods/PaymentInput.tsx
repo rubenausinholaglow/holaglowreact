@@ -3,12 +3,12 @@ import { Controller, useForm } from 'react-hook-form';
 import Notification from '@components/ui/Notification';
 import { CreatePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
-import FinanceService from '@services/FinanceService';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
+import { v4 as createUniqueId } from 'uuid';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
@@ -57,20 +57,15 @@ export default function PaymentInput(props: Props) {
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
-    const response = await FinanceService.createPayment(paymentRequestApi);
-    if (response) {
-      if (!isNaN(paymentRequestApi.amount) && paymentRequestApi.amount > 0) {
-        const paymentRequest = {
-          amount: paymentRequestApi.amount,
-          method: props.paymentMethod,
-          bank: props.paymentBank,
-          paymentReference: paymentRequestApi.referenceId,
-          id: response,
-        };
-        addPaymentToList(paymentRequest);
-        props.onButtonClick(false);
-      }
-    }
+    const paymentRequest = {
+      amount: paymentRequestApi.amount,
+      method: props.paymentMethod,
+      bank: props.paymentBank,
+      paymentReference: paymentRequestApi.referenceId,
+      id: createUniqueId(),
+    };
+    addPaymentToList(paymentRequest);
+    props.onButtonClick(false);
   };
   const handleUrlPayment = async (urlPayment: string) => {
     const amount = parseFloat(inputValue);

@@ -1,11 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import Notification from '@components/ui/Notification';
 import { StatusBudget, TicketBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
 import { budgetService } from '@services/BudgetService';
+import FinanceService from '@services/FinanceService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
@@ -37,6 +38,12 @@ export const PaymentModule = () => {
     null
   );
 
+  const [guidUserId, setguidUserId] = useState<string | ''>('');
+
+  useEffect(() => {
+    setguidUserId(localStorage.getItem('id') || '');
+  }, []);
+
   let productsPriceTotalWithDiscounts = 0;
 
   if (cart) {
@@ -55,7 +62,6 @@ export const PaymentModule = () => {
   const missingAmountFormatted = missingAmount.toFixed(2);
 
   const sendTicket = async () => {
-    const GuidUser = localStorage.getItem('id') || '';
     const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
     const BudgetId = localStorage.getItem('BudgetId') || '';
@@ -65,7 +71,7 @@ export const PaymentModule = () => {
     const finalBudget: TicketBudget = {
       id: BudgetId,
       discountAmount: '',
-      userId: GuidUser,
+      userId: guidUserId,
       discountCode: '',
       priceDiscount: 0,
       percentageDiscount: 0,
@@ -89,7 +95,7 @@ export const PaymentModule = () => {
     const ticket: Ticket = {
       promoCode: '',
       reference: '',
-      userId: GuidUser,
+      userId: guidUserId,
       clientFlowwwToken: ClientFlowToken,
       clinicFlowwwId: ClinicFlowwwId,
       professional: '',
@@ -119,6 +125,23 @@ export const PaymentModule = () => {
     }
   };
 
+  const createPayments = async () => {
+    try {
+      for (const paymentRequest of paymentList) {
+        const paymentRequestApi = {
+          amount: paymentRequest.amount,
+          userId: guidUserId,
+          paymentMethod: paymentRequest.method,
+          referenceId: paymentRequest.paymentReference,
+        };
+
+        const response = await FinanceService.createPayment(paymentRequestApi);
+      }
+    } catch (error: any) {
+      Bugsnag.notify(error);
+    }
+  };
+
   const createTicket = async () => {
     if (totalAmount < cartTotalWithDiscount) {
       alert('Hay cantidad pendiente de pagar');
@@ -126,6 +149,7 @@ export const PaymentModule = () => {
     }
     setIsLoading(true);
     try {
+      const resultCreatePayments = await createPayments();
       const result = await sendTicket();
       if (result) {
         localStorage.removeItem('BudgetId');
