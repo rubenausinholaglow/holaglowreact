@@ -102,14 +102,14 @@ export default function ButtonMessage() {
           className={`${medicClassName} rounded-full p-3 text-hg-darkMalva cursor-pointer`}
           onClick={sendMessageToMedic}
         >
-          <SvgStethoscope height={20} width={20} />
+          <SvgStethoscope height={16} width={16} />
         </div>
 
         <div
           className={`${receptionClassName} bg-white rounded-full p-3 text-hg-darkMalva cursor-pointer`}
           onClick={sendMessageToReception}
         >
-          <SvgUserSquare height={20} width={20} />
+          <SvgUserSquare height={16} width={16} />
         </div>
       </div>
       {messageNotification ? (

@@ -46,7 +46,7 @@ export default function ProductDiscountForm({
             />
           )}
           <input
-            className="border rounded-lg px-4 py-2 mr-4 w-[100px] text-hg-black"
+            className="border rounded-lg px-4 py-2 mr-4 w-[75px] text-hg-black"
             type="decimal"
             placeholder="Valor"
             {...register('Value', { required: true, maxLength: 5 })}
@@ -54,7 +54,7 @@ export default function ProductDiscountForm({
           <div className="relative mr-4">
             <select
               {...register('DiscountType', { required: true })}
-              className="border appearance-none bg-white rounded-lg px-4 py-2 w-[100px] text-hg-black"
+              className="border appearance-none bg-white rounded-lg px-4 py-2 w-[75px] text-hg-black"
             >
               <option value="%">%</option>
               {!cartUniqueId && <option value="total">€</option>}

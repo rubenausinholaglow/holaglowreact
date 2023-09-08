@@ -93,7 +93,7 @@ export default function HightLightedProduct() {
           />
         </Flex>
         <Flex layout="row-left" className="w-full gap-4 items-stretch mb-4">
-          <div className="w-1/2 aspect-[4/3] relative shrink-0">
+          <div className="w-1/3 aspect-square relative shrink-0">
             <Image
               src={imgSrc}
               alt={product.title}
@@ -114,7 +114,7 @@ export default function HightLightedProduct() {
 
             <Flex
               layout="row-center"
-              className="pt-4 w-full rounded-lg py-4 bg-hg-darkMalva100 mt-auto"
+              className="pt-4 w-full rounded-lg p-4 bg-hg-darkMalva100 mt-auto"
             >
               <Text size="md" className="font-semibold mr-4">
                 Añadir producto:

@@ -8,10 +8,9 @@ import { normalizeString } from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Modal, ModalBackground } from 'designSystem/Modals/Modal';
+import { Modal } from 'designSystem/Modals/Modal';
 import { SvgSpinner } from 'icons/Icons';
 import isEmpty from 'lodash/isEmpty';
-import CheckHydration from 'utils/CheckHydration';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { Cart } from './minicart/Cart';
@@ -22,6 +21,8 @@ export default function Page() {
   const cart = useCartStore(state => state.cart);
   const productHighlighted = useCartStore(state => state.productHighlighted);
   const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
+
+  const [showFilters, setShowFilters] = useState(true);
 
   const [showProductModal, setShowProductModal] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -219,10 +220,17 @@ export default function Page() {
           <Container>
             {products.length > 0 ? (
               <Flex layout="row-left" className="items-start">
-                <Filters onClickFilter={toggleFilter} />
+                <Filters
+                  onClickFilter={toggleFilter}
+                  showFilters={showFilters}
+                  setShowFilters={setShowFilters}
+                />
 
                 <Flex layout="col-center">
-                  <ProductList products={filteredProducts} />
+                  <ProductList
+                    products={filteredProducts}
+                    showFilters={showFilters}
+                  />
                 </Flex>
               </Flex>
             ) : (

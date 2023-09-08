@@ -15,7 +15,7 @@ export function Cart() {
       <Container>
         <Flex layout="row-left">
           <Flex layout="col-left">
-            <Text size="md" className="font-semibold text-hg-darkMalva mb-2">
+            <Text size="md" className="font-semibold text-hg-purple mb-2">
               Productos seleccionados:
             </Text>
             <ul className="flex flex-col gap-1">

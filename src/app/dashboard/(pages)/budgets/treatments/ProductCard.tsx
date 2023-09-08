@@ -45,7 +45,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
       className={`
-        border border-hg-darkMalva bg-white text-hg-darkMalva rounded-lg overflow-hidden relative
+        bg-white text-hg-purple rounded-lg overflow-hidden relative
         ${!isCheckout && 'cursor-pointer'}`}
       onClick={() => {
         setHighlightProduct(product);
@@ -56,40 +56,38 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
     >
       {!budget && (
         <SvgClose
-          width={30}
-          height={30}
-          fill={HOLAGLOW_COLORS['darkMalva']}
+          width={20}
+          height={20}
+          fill={HOLAGLOW_COLORS['black']}
           className="absolute top-2 right-2 cursor-pointer"
           onClick={() => removeFromCart(product)}
         />
       )}
-      <div
-        className={`aspect-square relative ${
-          isCheckout ? 'w-[225px] mr-8' : 'w-full shrink-0'
-        } `}
-      >
-        <Image
-          src={imgSrc}
-          alt={product.title}
-          fill={true}
-          className="object-cover"
-          onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-        />
-      </div>
+      {!showDiscountForm && (
+        <div
+          className={`aspect-square relative ${
+            isCheckout ? 'w-[125px]' : 'w-full shrink-0'
+          } `}
+        >
+          <Image
+            src={imgSrc}
+            alt={product.title}
+            fill={true}
+            className="object-cover"
+            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
+          />
+        </div>
+      )}
       <Flex
         layout="col-left"
-        className={
-          isCheckout
-            ? 'py-4'
-            : 'border-t border-hg-darkMalva p-4 text-left w-full h-full'
-        }
+        className={isCheckout ? 'p-4' : 'p-4 text-left w-full h-full'}
       >
-        <Text size={isCheckout ? 'lg' : 'md'} className="font-semibold">
+        <Text size={isCheckout ? 'md' : 'sm'} className="font-semibold mb-1">
           {product.title}
         </Text>
         <Text
-          size={isCheckout ? 'md' : 'xs'}
-          className="text-hg-lightMalva mb-3"
+          size={isCheckout ? 'sm' : 'xs'}
+          className="text-hg-darkMalva mb-3"
         >
           {product.description}
         </Text>
@@ -106,16 +104,16 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
             />
           )}
           {productHasDiscount && isCheckout && (
-            <Text className="text-hg-black font-semibold text-xl mr-2">
+            <Text className="text-hg-black font-semibold text-lg mr-2">
               {Number(product.priceWithDiscount).toFixed(2)}€
             </Text>
           )}
           <Text
-            size={isCheckout ? 'xl' : 'lg'}
+            size="lg"
             className={`font-semibold text-red
             ${
               productHasDiscount && isCheckout
-                ? 'text-red-600 text-lg text line-through opacity-50'
+                ? 'text-red-600 text-sm text line-through opacity-50'
                 : 'text-hg-black text-lg'
             }
               `}
@@ -126,7 +124,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
 
         {!isCheckout && (
           <Button
-            size="md"
+            size="sm"
             type="secondary"
             onClick={e => {
               e.stopPropagation();

@@ -142,17 +142,19 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
   };
 
   return (
-    <Flex layout="col-left" className="relative">
-      <section id="payment-plans"></section>
-      <Flex layout="row-left" className="mt-4">
-        <Button
-          type="secondary"
-          onClick={async () => await handleClick(amountFinance)}
-        >
-          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
-        </Button>
+    <>
+      <Flex layout="col-left" className="relative w-full flex-wrap pb-[150px]">
+        <section id="payment-plans" className="absolute inset-0"></section>
+        <div className="absolute bottom-0">
+          <Button
+            type="secondary"
+            onClick={async () => await handleClick(amountFinance)}
+          >
+            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
+          </Button>
+        </div>
       </Flex>
-    </Flex>
+    </>
   );
 };
 export default AlmaWidget;
