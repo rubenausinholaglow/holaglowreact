@@ -82,7 +82,7 @@ const Page = () => {
           {!isCommentModalOpen && (
             <Flex layout="col-center" className="mt-8">
               <Button isSubmit onClick={handleClick} type="secondary">
-                Finalizar Cita
+                Validar Cita
               </Button>
             </Flex>
           )}
@@ -101,7 +101,7 @@ const Page = () => {
                 type="secondary"
                 className="mt-4"
               >
-                Finalizar
+                Validar Cita
               </Button>
               <Button
                 onClick={() => setIsCommentModalOpen(false)}

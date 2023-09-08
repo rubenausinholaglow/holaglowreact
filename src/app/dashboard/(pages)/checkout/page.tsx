@@ -142,7 +142,7 @@ const Page = () => {
                     {isLoading ? (
                       <SvgSpinner height={24} width={24} />
                     ) : (
-                      'Finalizar'
+                      'Finalizar Presupuesto'
                     )}
                   </Button>
                 </Flex>

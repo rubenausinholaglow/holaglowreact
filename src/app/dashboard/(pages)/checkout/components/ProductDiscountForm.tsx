@@ -57,8 +57,8 @@ export default function ProductDiscountForm({
               className="border appearance-none bg-white rounded-lg px-4 py-2 w-[100px] text-hg-black"
             >
               <option value="%">%</option>
-              <option value="€">€</option>
-              {!cartUniqueId && <option value="total">total</option>}
+              {!cartUniqueId && <option value="total">€</option>}
+              <option value="€">total €</option>
             </select>
             <SvgAngleDown
               height={20}
