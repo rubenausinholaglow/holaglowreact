@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 
 interface NotificationProps {
   message: string;
@@ -19,7 +20,7 @@ const Notification: React.FC<NotificationProps> = ({ message }) => {
     };
   }, [message]);
 
-  return (
+  return ReactDOM.createPortal(
     <div
       className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 ${
         visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -27,7 +28,8 @@ const Notification: React.FC<NotificationProps> = ({ message }) => {
       style={{ zIndex: 9999 }}
     >
       <p>{message}</p>
-    </div>
+    </div>,
+    document.body
   );
 };
 

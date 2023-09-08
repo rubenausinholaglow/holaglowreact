@@ -1,6 +1,6 @@
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { priceFormat } from 'utils/priceFormat';
-import { Button } from 'designSystem/Buttons/Buttons';
 
 export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
   return (
