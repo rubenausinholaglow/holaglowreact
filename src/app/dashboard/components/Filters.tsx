@@ -24,12 +24,12 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
   return (
     <Flex
       layout="col-left"
-      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-hg-lightMalva`}
+      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-white/50`}
     >
       <SvgDoubleAngleLeft
-        height={40}
-        width={40}
-        className={`absolute top-0 -right-[19px] bg-hg-lime text-hg-darkMalva rounded-full p-2 cursor-pointer transition-all ${
+        height={34}
+        width={34}
+        className={`absolute top-0 -right-[17px] bg-hg-lime text-hg-darkMalva rounded-full p-1 cursor-pointer transition-all ${
           showFilters ? 'rotate-0' : 'rotate-180'
         }`}
         onClick={() => setShowFilters(!showFilters)}
@@ -38,7 +38,7 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
 
       <div
         className={`transition-all overflow-hidden ${
-          showFilters ? 'w-[260px]' : 'w-0'
+          showFilters ? 'w-[225px]' : 'w-0'
         }`}
       >
         <input

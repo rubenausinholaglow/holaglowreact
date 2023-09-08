@@ -7,13 +7,13 @@ import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
+import MainLayout from 'app/components/layout/MainLayout';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
-import CheckHydration from 'utils/CheckHydration';
 
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
@@ -88,7 +88,7 @@ const Page = () => {
     router.push('/dashboard/menu');
   }
   return (
-    <CheckHydration>
+    <MainLayout isDashboard>
       <Container>
         <Title size="2xl" className="text-left mb-4">
           Resumen
@@ -165,7 +165,7 @@ const Page = () => {
           </Flex>
         </Flex>
       </Container>
-    </CheckHydration>
+    </MainLayout>
   );
 };
 
