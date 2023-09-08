@@ -9,16 +9,19 @@ import { SvgCalling, SvgUserSquare } from 'icons/IconsDs';
 import Notification from './Notification';
 
 export default function ButtonMessage() {
-  const [showButtons, setShowButtons] = useState(false);
   const [clinicProfessionalId, setclinicProfessionalId] = useState('');
+  const [medicClassName, setmedicClassName] = useState('bg-white');
+  const [receptionClassName, setreceptionClassName] = useState('bg-white');
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
+
   const [messageTimeout, setMessageTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
 
   useEffect(() => {
+    setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
     const SOCKET_URL =
       process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
     const webConnection = new HubService(SOCKET_URL);
@@ -34,20 +37,15 @@ export default function ButtonMessage() {
     };
   }, []);
 
-  const toggleButtons = () => {
-    setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
-    setShowButtons(!showButtons);
-  };
-
   const sendMessageToMedic = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
-    setShowButtons(!showButtons);
+    setmedicClassName('bg-hg-malva');
     startTimeout();
   };
 
   const sendMessageToReception = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
-    setShowButtons(!showButtons);
+    setreceptionClassName('bg-hg-malva');
     startTimeout();
   };
 
@@ -55,12 +53,23 @@ export default function ButtonMessage() {
     const partsToCompare = actionId.split('/');
     const professionalId = partsToCompare[0];
     const action = partsToCompare[1];
+    const professionalType = partsToCompare[2];
     const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
-        setMessageNotification('Puedo venir');
+        if (professionalType == 'Medical') {
+          setmedicClassName('bg-hg-green');
+        }
+        if (professionalType == 'Others') {
+          setreceptionClassName('bg-hg-green');
+        }
       } else if (action === '1') {
-        setMessageNotification('No puedo venir');
+        if (professionalType == 'Medical') {
+          setmedicClassName('bg-red-500');
+        }
+        if (professionalType == 'Others') {
+          setreceptionClassName('bg-red-500');
+        }
       } else {
         setMessageNotification('Error recibiendo mensaje');
       }
@@ -87,27 +96,17 @@ export default function ButtonMessage() {
   return (
     <Flex layout="row-left" className="gap-2 ml-4 overflow-hidden relative">
       <div
-        className="bg-hg-darkMalva rounded-full p-3 text-white cursor-pointer relative z-10"
-        onClick={toggleButtons}
-      >
-        <SvgCalling height={20} width={20} className="relative z-10" />
-      </div>
-      <div
-        className={`transition-all flex flex-row gap-2 ${
-          showButtons
-            ? 'translate-x-0  opacity-100'
-            : '-translate-x-[calc(108%)] opacity-0'
-        }`}
+        className={`transition-all flex flex-row gap-2 translate-x-0  opacity-100`}
       >
         <div
-          className="bg-hg-malva rounded-full p-3 text-hg-darkMalva cursor-pointer"
+          className={`${medicClassName} rounded-full p-3 text-hg-darkMalva cursor-pointer`}
           onClick={sendMessageToMedic}
         >
           <SvgStethoscope height={20} width={20} />
         </div>
 
         <div
-          className="bg-hg-malva rounded-full p-3 text-hg-darkMalva cursor-pointer"
+          className={`${receptionClassName} bg-white rounded-full p-3 text-hg-darkMalva cursor-pointer`}
           onClick={sendMessageToReception}
         >
           <SvgUserSquare height={20} width={20} />
