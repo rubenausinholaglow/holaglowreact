@@ -21,7 +21,7 @@ export const Filters: React.FC<FilterPageProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    onClickFilter('input', inputValue, 'input');
+    onClickFilter('input', e.target.value, 'input');
   };
 
   return (

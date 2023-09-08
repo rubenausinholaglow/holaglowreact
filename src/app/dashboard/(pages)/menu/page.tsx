@@ -56,7 +56,7 @@ const Page = () => {
     }
   };
   return (
-    <MainLayout isDashboard hideTopBar>
+    <MainLayout isDashboard>
       {username && (
         <Container>
           <Flex layout="col-center">

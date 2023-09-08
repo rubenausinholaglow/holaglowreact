@@ -60,14 +60,14 @@ export default function ButtonMessage() {
         if (professionalType == 'Medical') {
           setmedicClassName('bg-hg-green');
         }
-        if (professionalType == 'Others') {
+        if (professionalType == 'Other') {
           setreceptionClassName('bg-hg-green');
         }
       } else if (action === '1') {
         if (professionalType == 'Medical') {
           setmedicClassName('bg-red-500');
         }
-        if (professionalType == 'Others') {
+        if (professionalType == 'Other') {
           setreceptionClassName('bg-red-500');
         }
       } else {
@@ -106,7 +106,7 @@ export default function ButtonMessage() {
         </div>
 
         <div
-          className={`${receptionClassName} bg-white rounded-full p-3 text-hg-darkMalva cursor-pointer`}
+          className={`${receptionClassName} rounded-full p-3 text-hg-darkMalva cursor-pointer`}
           onClick={sendMessageToReception}
         >
           <SvgUserSquare height={16} width={16} />

@@ -214,7 +214,7 @@ export const PaymentModule = () => {
         )}
         {totalAmount > 0 && (
           <Text className="font-bold pt-4 mt-4 border-t border-hg-black300 w-full">
-            Total Pagado: {totalAmount}€
+            Total Pagado: {totalAmount.toFixed(2)}€
           </Text>
         )}
         <Text size="sm" className="text-hg-black500">
