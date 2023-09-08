@@ -49,10 +49,12 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
         ${!isCheckout && 'cursor-pointer'}`}
       onClick={() => {
         setHighlightProduct(product);
-        setIsModalOpen(true);
+        if (!isCheckout) {
+          setIsModalOpen(true);
+        }
       }}
     >
-      {!budget ? (
+      {!budget && (
         <SvgClose
           width={30}
           height={30}
@@ -60,8 +62,6 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
           className="absolute top-2 right-2 cursor-pointer"
           onClick={() => removeFromCart(product)}
         />
-      ) : (
-        <></>
       )}
       <div
         className={`aspect-square relative ${

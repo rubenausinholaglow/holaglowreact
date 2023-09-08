@@ -25,11 +25,7 @@ export default function Page({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-
-  const queryString = window.location.search;
-  const params = new URLSearchParams(queryString);
-  const clinicId = params.get('clinicId');
-  const boxId = params.get('boxId');
+  const [boxId, setBoxId] = useState('');
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -57,6 +53,10 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
+
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    setBoxId(params.get('boxId') || '');
   }, []);
 
   const handleCheckUser = async () => {
