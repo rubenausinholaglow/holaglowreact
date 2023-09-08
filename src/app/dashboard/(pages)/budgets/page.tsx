@@ -35,6 +35,7 @@ export default function Page() {
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
   >([]);
+  const [isTypeFilterSelected, setIsTypeFilterSelected] = useState(true);
 
   useEffect(() => {
     ProductService.getAllProducts()
@@ -69,6 +70,7 @@ export default function Page() {
         break;
       case 'Type':
         handleFilterByType(parseInt(id));
+        setIsTypeFilterSelected(true);
         break;
       case 'Clinic':
         applyClinicFilter(id);
@@ -131,6 +133,9 @@ export default function Page() {
   };
 
   const filterProducts = () => {
+    if (!isTypeFilterSelected) {
+      return [];
+    }
     if (!isEmpty(products)) {
       if (
         filterZones.length === 0 &&
@@ -186,6 +191,8 @@ export default function Page() {
           !(filterType.includes(2) && product.type === 1)
         ) {
           return false;
+        } else if (filterType.length <= 0) {
+          setIsTypeFilterSelected(false);
         }
         return true;
       });
