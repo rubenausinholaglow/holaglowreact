@@ -7,22 +7,24 @@ import { type Product as ProductType } from '../types';
 
 export default function Products({
   products,
-  totalPrice,
-  totalPriceWithIVA,
   referenceId,
   creationDate,
   priceDiscount,
   percentageDiscount,
   manualPrice,
+  productsWithDiscountPrice,
+  totalProductsPrice,
+  budgetTotalPriceWithDiscount,
 }: {
   products: Array<ProductType>;
-  totalPrice: number;
-  totalPriceWithIVA: number;
   referenceId: string;
   creationDate: string;
   priceDiscount: number;
   percentageDiscount: number;
   manualPrice: number;
+  productsWithDiscountPrice: Array<ProductType>;
+  totalProductsPrice: number;
+  budgetTotalPriceWithDiscount: number;
 }) {
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png';
 
@@ -37,50 +39,10 @@ export default function Products({
   const hasBudgetDiscount =
     priceDiscount > 0 || percentageDiscount > 0 || manualPrice > 0;
 
-  const productsUpdated = products.map(product => {
-    let priceWithDiscount = product.price;
-
-    if (product.priceDiscount > 0) {
-      priceWithDiscount = product.priceDiscount;
-    }
-
-    if (product.percentageDiscount > 0) {
-      priceWithDiscount =
-        priceWithDiscount - priceWithDiscount * product.percentageDiscount;
-    }
-
-    return {
-      ...product,
-      priceWithDiscount: priceWithDiscount,
-    };
-  });
-
-  const totalProductsPrice = productsUpdated.reduce((total, product) => {
-    return total + product.priceWithDiscount;
-  }, 0);
-
-  const totalPriceWithDiscount = () => {
-    let total = totalProductsPrice;
-
-    if (manualPrice > 0) {
-      total = manualPrice;
-    }
-
-    if (priceDiscount > 0) {
-      total = total - priceDiscount;
-    }
-
-    if (percentageDiscount > 0) {
-      total = total - total * percentageDiscount;
-    }
-
-    return total;
-  };
-
   return (
     <section className="relative">
       <ul className="flex flex-col gap-8 mt-8">
-        {productsUpdated.map(product => {
+        {productsWithDiscountPrice.map(product => {
           const productDetails = product.product;
 
           // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -170,14 +132,14 @@ export default function Products({
                 <span>Descuento</span>
                 <span className="font-semibold">
                   {`- ${priceFormat(
-                    totalProductsPrice - totalPriceWithDiscount()
+                    totalProductsPrice - budgetTotalPriceWithDiscount
                   )} €`}
                 </span>
               </li>
               <li className="flex justify-between">
                 <span>Total</span>
                 <span className="font-semibold">
-                  {`${priceFormat(totalPriceWithDiscount())} €`}
+                  {`${priceFormat(budgetTotalPriceWithDiscount)} €`}
                 </span>
               </li>
             </>
