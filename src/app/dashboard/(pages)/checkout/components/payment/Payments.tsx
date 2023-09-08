@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import Notification from '@components/ui/Notification';
 import { StatusBudget, TicketBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
@@ -32,6 +33,9 @@ export const PaymentModule = () => {
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
+  const [messageNotification, setMessageNotification] = useState<string | null>(
+    null
+  );
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -134,6 +138,7 @@ export const PaymentModule = () => {
         usePaymentList.setState(INITIAL_STATE_PAYMENT);
         useCartStore.setState(INITIAL_STATE);
         router.push('/dashboard/menu');
+        setMessageNotification('Ticket Creado Correctamente');
       } else {
         //TODO - ALERT MESSAGE
       }
@@ -202,6 +207,11 @@ export const PaymentModule = () => {
         {' '}
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>
+      {messageNotification ? (
+        <Notification message={messageNotification} />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

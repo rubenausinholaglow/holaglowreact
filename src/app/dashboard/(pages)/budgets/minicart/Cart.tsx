@@ -77,7 +77,7 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
         {(hasProductsDiscount || hasCartDiscount) && (
           <Text size="xl" className="text-hg-black font-semibold mr-2">
             {hasCartDiscount ? (
-              <>{cartTotalWithDiscount}€</>
+              <>{cartTotalWithDiscount.toFixed(2)}€</>
             ) : (
               <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
             )}

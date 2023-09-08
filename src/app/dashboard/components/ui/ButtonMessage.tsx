@@ -58,9 +58,9 @@ export default function ButtonMessage() {
     const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
-        setMessageNotification('Puedo venir');
+        setMessageNotification('Puedo ir');
       } else if (action === '1') {
-        setMessageNotification('No puedo venir');
+        setMessageNotification('No puedo ir');
       } else {
         setMessageNotification('Error recibiendo mensaje');
       }
