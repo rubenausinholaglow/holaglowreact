@@ -1,4 +1,5 @@
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import {
   SvgCalendar,
   SvgMapMarker,
@@ -127,9 +128,20 @@ export default function Treatments({
                         width={18}
                         fill={HOLAGLOW_COLORS['black']}
                       />
-                      <p className="text-hg-black">
-                        {appointment.clinicProfessional.name}
-                      </p>
+                      <Flex layout="col-left">
+                        <p className="text-hg-black">
+                          {appointment.clinicProfessional.tittleAbbreviation}.{' '}
+                          {appointment.clinicProfessional.name}
+                        </p>
+                        <p className="text-hg-black400 text-xs">
+                          Nº{' '}
+                          {appointment.clinicProfessional.tittleAbbreviation ===
+                          'Dr'
+                            ? 'Colegiado'
+                            : 'Colegiada'}{' '}
+                          {appointment.clinicProfessional.collegiateNumber}
+                        </p>
+                      </Flex>
                     </li>
                     <li className="flex content-center">
                       <SvgMapMarker

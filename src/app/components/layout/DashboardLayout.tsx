@@ -3,6 +3,7 @@ import ButtonMessage from '@components/ui/ButtonMessage';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
+import { useRouter } from 'next/navigation';
 
 export default function DashboardLayout({
   hideTopBar = false,
@@ -17,6 +18,8 @@ export default function DashboardLayout({
   hideProfessionalSelector?: boolean;
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
   return (
     <main className="min-h-screen h-100 pt-4 text-sm bg-[url('/images/dashboard/background/main_background.png')] bg-[#A96FE7] bg-bottom bg-contain bg-no-repeat">
       <Flex
@@ -27,7 +30,7 @@ export default function DashboardLayout({
           <Container>
             <Flex layout="row-left" className="w-full pb-8">
               {!hideBackButton && (
-                <Button href="#" type="tertiary">
+                <Button type="tertiary" onClick={() => router.back()}>
                   <Flex layout="row-left">
                     <SvgArrowSmallLeft
                       height={40}

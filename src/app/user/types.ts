@@ -33,6 +33,8 @@ export interface ClinicProfessional {
   name: string;
   id: string;
   creationDate: string;
+  tittleAbbreviation: string;
+  collegiateNumber: number;
 }
 
 export interface Treatment {
