@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import ProductCarousel from 'app/components/product/ProductCarousel';
-import { useGlobalStore } from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
@@ -12,22 +12,28 @@ import { SvgDiamond } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 export default function HomeProducts() {
-  const stateProducts = useGlobalStore(state => state.products);
-  const setStateProducts = useGlobalStore(state => state.setStateProducts);
+  const stateProducts = useGlobalPersistedStore(state => state.products);
+  const setStateProducts = useGlobalPersistedStore(
+    state => state.setStateProducts
+  );
 
-  const [products] = useState<Product[]>(stateProducts);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(stateProducts);
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-  console.log(stateProducts);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
         const fetchedProducts = await ProductService.getAllProducts();
-        setStateProducts(fetchedProducts);
-        setFilteredProducts(fetchedProducts);
+
+        const productsWithVisibility = fetchedProducts.map(
+          (product: Product) => ({
+            ...product,
+            visibility: true,
+          })
+        );
+
+        setStateProducts(productsWithVisibility);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -37,8 +43,6 @@ export default function HomeProducts() {
       fetchProducts();
     }
   }, []);
-
-  //const memoizedProducts = useMemo(() => stateProducts, [stateProducts]);
 
   useEffect(() => {
     const allCategoryNames: string[] = stateProducts.reduce(
@@ -57,20 +61,23 @@ export default function HomeProducts() {
   }, [stateProducts]);
 
   useEffect(() => {
-    if (selectedCategories.length > 0) {
-      const filteredProducts = stateProducts.filter(product => {
-        return product.category.some(category =>
-          selectedCategories.includes(category.name)
-        );
+    let test = products;
+
+    if (!isEmpty(selectedCategories)) {
+      test = products.map(product => {
+        return {
+          ...product,
+          visibility: product.category.some(category =>
+            selectedCategories.includes(category.name)
+          ),
+        };
       });
-
-      setFilteredProducts(filteredProducts);
     } else {
-      setFilteredProducts(products);
+      test = stateProducts;
     }
-  }, [selectedCategories]);
 
-  console.log(stateProducts);
+    setProducts(test);
+  }, [selectedCategories]);
 
   if (isEmpty(stateProducts)) {
     return <></>;
@@ -90,7 +97,7 @@ export default function HomeProducts() {
             return (
               <li
                 key={category}
-                className={`inline-block rounded-full p-1 pr-4  ${
+                className={`flex rounded-full p-1 pr-4  ${
                   selectedCategories.includes(category) ? 'bg-red' : 'bg-white'
                 }`}
                 onClick={() => {
@@ -119,7 +126,7 @@ export default function HomeProducts() {
         </ul>
       </Container>
       <Container>
-        <ProductCarousel className="pb-8" treatments={filteredProducts} />
+        <ProductCarousel className="pb-8" products={products} />
       </Container>
     </div>
   );
