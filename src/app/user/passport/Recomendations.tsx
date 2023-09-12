@@ -19,10 +19,10 @@ export default function Recomendations({
     if (
       (treatment.product &&
         treatment.product.postTreatmentInfo &&
-        Array.isArray(treatment.product.postTreatmentInfo.first24hTips) &&
-        treatment.product.postTreatmentInfo.first24hTips.length > 0) ||
-      (Array.isArray(treatment.product.postTreatmentInfo.after24hTips) &&
-        treatment.product.postTreatmentInfo.after24hTips.length > 0)
+        Array.isArray(treatment.product.postTreatmentInfo?.first24hTips) &&
+        treatment.product.postTreatmentInfo?.first24hTips.length > 0) ||
+      (Array.isArray(treatment.product.postTreatmentInfo?.after24hTips) &&
+        treatment.product.postTreatmentInfo?.after24hTips.length > 0)
     ) {
       return true;
     }
@@ -32,7 +32,7 @@ export default function Recomendations({
   const first24Tips = filteredTreatments
     .map(item => {
       const { treatment } = item;
-      return treatment.product.postTreatmentInfo.first24hTips.sort(
+      return treatment.product.postTreatmentInfo?.first24hTips.sort(
         (a, b) => a.priority - b.priority
       );
     })
@@ -41,7 +41,7 @@ export default function Recomendations({
   const after24hTips = filteredTreatments
     .map(item => {
       const { treatment } = item;
-      return treatment.product.postTreatmentInfo.after24hTips.sort(
+      return treatment.product.postTreatmentInfo?.after24hTips.sort(
         (a, b) => a.priority - b.priority
       );
     })

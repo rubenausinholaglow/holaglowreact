@@ -23,6 +23,8 @@ export default function Treatments({
   });
   const year = new Date(appointment.date).getFullYear();
 
+  const VALID_TREATMENT_ZONES = [1, 2, 3, 4, 5];
+
   return (
     <section className="p-12 text-hg-black">
       <h3 className="bg-[#F1F4FE] rounded-t-[25px] py-6 text-xl font-semibold text-center -mb-4">
@@ -44,12 +46,14 @@ export default function Treatments({
                 <p className="mb-4">
                   {date} {month.charAt(0).toUpperCase() + month.slice(1)}
                 </p>
-                <Image
-                  src={`/images/passport/treatmentZones/${treatment.product.zone}.svg`}
-                  height="196"
-                  width="230"
-                  alt="Holaglow"
-                />
+                {VALID_TREATMENT_ZONES.includes(treatment.product.zone) && (
+                  <Image
+                    src={`/images/passport/treatmentZones/${treatment.product.zone}.svg`}
+                    height="196"
+                    width="230"
+                    alt="Holaglow"
+                  />
+                )}
               </div>
               <ul className="border-l border-hg-400/10 w-3/5 text-sm">
                 <li className="border-b border-hg-400/10 p-4">
