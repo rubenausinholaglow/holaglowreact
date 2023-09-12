@@ -6,6 +6,10 @@ import {
   useGlobalStore,
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import {
+  HEADER_HEIGHT_DESKTOP,
+  HEADER_HEIGHT_MOBILE,
+} from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import {
@@ -50,7 +54,9 @@ export default function Header() {
     state => state.setIsMainScrollEnabled
   );
 
-  const HEADER_HEIGHT = deviceSize.isMobile ? 48 : 72;
+  const HEADER_HEIGHT = deviceSize.isMobile
+    ? HEADER_HEIGHT_MOBILE
+    : HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
   const recalculateVisibility = () => {

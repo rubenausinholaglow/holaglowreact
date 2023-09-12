@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import ProductCarousel from 'app/components/product/ProductCarousel';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
@@ -11,29 +12,36 @@ import { SvgDiamond } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 export default function HomeProducts() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const stateProducts = useGlobalStore(state => state.products);
+  const setStateProducts = useGlobalStore(state => state.setStateProducts);
+
+  const [products] = useState<Product[]>(stateProducts);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  console.log(stateProducts);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
         const fetchedProducts = await ProductService.getAllProducts();
-        setProducts(fetchedProducts);
+        setStateProducts(fetchedProducts);
         setFilteredProducts(fetchedProducts);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     }
 
-    fetchProducts();
+    if (isEmpty(stateProducts)) {
+      fetchProducts();
+    }
   }, []);
 
-  const memoizedProducts = useMemo(() => products, [products]);
+  //const memoizedProducts = useMemo(() => stateProducts, [stateProducts]);
 
   useEffect(() => {
-    const allCategoryNames: string[] = memoizedProducts.reduce(
+    const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
           category => category.name
@@ -46,11 +54,11 @@ export default function HomeProducts() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, [products]);
+  }, [stateProducts]);
 
   useEffect(() => {
     if (selectedCategories.length > 0) {
-      const filteredProducts = products.filter(product => {
+      const filteredProducts = stateProducts.filter(product => {
         return product.category.some(category =>
           selectedCategories.includes(category.name)
         );
@@ -62,7 +70,9 @@ export default function HomeProducts() {
     }
   }, [selectedCategories]);
 
-  if (isEmpty(products)) {
+  console.log(stateProducts);
+
+  if (isEmpty(stateProducts)) {
     return <></>;
   }
 

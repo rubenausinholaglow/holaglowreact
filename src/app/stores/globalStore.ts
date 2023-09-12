@@ -1,3 +1,4 @@
+import { Product } from '@interface/product';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -41,18 +42,24 @@ export const useGlobalPersistedStore = create(
 );
 
 interface GlobalStore {
+  products: Product[];
   isModalOpen: boolean;
   isMainScrollEnabled: boolean;
 }
 
 interface GlobalActions {
+  setStateProducts: (value: Product[]) => void;
   setIsModalOpen: (value: boolean) => void;
   setIsMainScrollEnabled: (value: boolean) => void;
 }
 
 export const useGlobalStore = create<GlobalStore & GlobalActions>(set => ({
+  products: [],
   isModalOpen: false,
   isMainScrollEnabled: true,
+  setStateProducts: (value: Product[]) => {
+    set({ products: value });
+  },
   setIsModalOpen: (value: boolean) => {
     set({ isModalOpen: value });
   },
