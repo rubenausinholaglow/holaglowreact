@@ -141,7 +141,7 @@ export default function HightLightedProduct() {
         {product.beforeAndAfterImages.length > 0 && (
           <div className="mb-16 w-full">
             <p className="font-semibold text-lg mb-4">Antes y después</p>
-            <Carousel hasControls>
+            <Carousel hasControls={product.beforeAndAfterImages.length > 1}>
               {product.beforeAndAfterImages.map((image, index) => (
                 <Flex
                   key={index}
@@ -155,7 +155,7 @@ export default function HightLightedProduct() {
                           src={image.urlBefore || '/images/default-image.jpg'}
                           alt={`Before Image ${index}`}
                           fill
-                          className="object-cover"
+                          className="object-contain"
                         />
                       </div>
                       <div className="relative w-1/2 h-full">
@@ -163,7 +163,7 @@ export default function HightLightedProduct() {
                           src={image.urlAfter || '/images/default-image.jpg'}
                           alt={`Before Image ${index}`}
                           fill
-                          className="object-cover"
+                          className="object-contain"
                         />
                       </div>
                     </Flex>
@@ -174,7 +174,7 @@ export default function HightLightedProduct() {
                         src={image.urlAfter || '/images/default-image.jpg'}
                         alt={`Before Image ${index}`}
                         fill
-                        className="object-cover"
+                        className="object-contain"
                       />
                     </Flex>
                   )}
