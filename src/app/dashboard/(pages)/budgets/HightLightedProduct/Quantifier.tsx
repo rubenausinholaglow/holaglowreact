@@ -39,9 +39,9 @@ export const Quantifier: FunctionComponent<Props> = ({
         type="primary"
         onClick={reduce}
         className="p-0"
-        customStyles="p-0 h-12 w-12"
+        customStyles="p-0 h-8 w-8"
       >
-        <Text size="xl" className="font-bold">
+        <Text size="md" className="font-bold">
           -
         </Text>
       </Button>
@@ -57,9 +57,9 @@ export const Quantifier: FunctionComponent<Props> = ({
         type="primary"
         onClick={increase}
         className="p-0"
-        customStyles="p-0 h-12 w-12"
+        customStyles="p-0 h-8 w-8"
       >
-        <Text size="xl" className="font-bold">
+        <Text size="md" className="font-bold">
           +
         </Text>
       </Button>

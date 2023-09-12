@@ -175,8 +175,8 @@ export default function PaymentInput(props: Props) {
             render={({ field, fieldState }) => (
               <Flex layout="row-left" className="mb-2 content-center">
                 <input
-                  placeholder="Introduce importe"
-                  className="bg-white border border-hg-darkMalva rounded-md p-2 text-hg-black w-[200px]"
+                  placeholder="Importe"
+                  className="bg-white border border-hg-darkMalva rounded-md p-2 text-hg-black w-1/2"
                   type="number"
                   {...field}
                   onChange={e => {
@@ -193,7 +193,7 @@ export default function PaymentInput(props: Props) {
                     size="sm"
                     type="secondary"
                     isSubmit
-                    className="ml-2"
+                    className="ml-2 w-1/2"
                     onClick={() => activateAlma()}
                   >
                     Ver financiación

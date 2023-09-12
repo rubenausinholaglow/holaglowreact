@@ -47,6 +47,7 @@ export interface DashboardMenuItemProps {
 
 export interface ProductTableProps {
   products: Product[];
+  showFilters: boolean;
 }
 
 export interface CustomButtonFilterProps {
@@ -59,6 +60,8 @@ export interface CustomButtonFilterProps {
 
 export interface FilterPageProps {
   onClickFilter: (id: string, inputText: string, tag: string) => void;
+  showFilters: boolean;
+  setShowFilters: (value: boolean) => void;
 }
 
 export interface FilterUtilsProps {

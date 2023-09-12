@@ -168,7 +168,7 @@ export const PaymentModule = () => {
   };
   return (
     <>
-      <Flex className="gap-2">
+      <Flex className="gap-2 flex-wrap">
         {paymentItems.map(method => (
           <Button
             size="sm"
@@ -221,7 +221,7 @@ export const PaymentModule = () => {
           Faltan: {missingAmountFormatted}€
         </Text>
       </Flex>
-      <Button size="xl" className="w-full mt-4" onClick={createTicket}>
+      <Button size="lg" className="w-full mt-4" onClick={createTicket}>
         {' '}
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>

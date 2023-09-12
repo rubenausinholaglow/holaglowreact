@@ -8,9 +8,12 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgDoubleAngleLeft } from 'icons/Icons';
 
-export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
+export const Filters: React.FC<FilterPageProps> = ({
+  onClickFilter,
+  showFilters,
+  setShowFilters,
+}) => {
   const [inputValue, setInputValue] = useState('');
-  const [showFilters, setShowFilters] = useState(true);
 
   const handleButtonClick = (id: string, tag: string) => {
     onClickFilter(id, inputValue, tag);
@@ -24,7 +27,9 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
   return (
     <Flex
       layout="col-left"
-      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-white/50`}
+      className={`sticky shrink-0 top-[10px] transition-all pr-8 mr-8 border-r border-white/50 ${
+        showFilters ? 'ml-0' : '-ml-[16px]'
+      }`}
     >
       <SvgDoubleAngleLeft
         height={34}
@@ -38,7 +43,7 @@ export const Filters: React.FC<FilterPageProps> = ({ onClickFilter }) => {
 
       <div
         className={`transition-all overflow-hidden ${
-          showFilters ? 'w-[225px]' : 'w-0'
+          showFilters ? 'w-[200px]' : 'w-0'
         }`}
       >
         <input
