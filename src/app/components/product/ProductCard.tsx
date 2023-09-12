@@ -24,17 +24,6 @@ export default function ProductCard({
     `/images/product/${product.flowwwId}/${product.flowwwId}.png`
   );
 
-  /* 
-  "category": [
-    {
-      "name": "\tRelleno\t",
-      "value": 4,
-      "id": "9627ef8b-4c26-4d60-89d8-edfca4b5b345",
-      "creationDate": "2023-08-14T07:08:45.9733333",
-      "active": true
-    }
-  ], */
-
   return (
     <div className="flex flex-col overflow-hidden h-full" {...rest}>
       <Flex layout="col-left" className="">
@@ -50,7 +39,7 @@ export default function ProductCard({
           {!isEmpty(product.category) && (
             <Flex
               layout="row-center"
-              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2"
+              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
             >
               {product.category.map(category => {
                 return (

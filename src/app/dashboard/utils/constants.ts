@@ -16,6 +16,7 @@ const emptyProduct: Product = {
   durationMax: 0,
   beforeAndAfterImages: [],
   type: ProductType.Others,
+  visibility: true,
 };
 
 export const INITIAL_STATE: State = {

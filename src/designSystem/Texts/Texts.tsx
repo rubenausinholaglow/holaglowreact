@@ -41,7 +41,9 @@ export const Text = ({
   [key: string]: any;
 }) => {
   const HtmlComponent = as;
-  const styles = twMerge(`text-left text-${size} ${className}`);
+  const styles = twMerge(
+    `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
+  );
 
   return (
     <HtmlComponent className={styles} {...rest}>

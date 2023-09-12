@@ -84,7 +84,7 @@ export default function HomeProducts() {
   }
 
   return (
-    <div className="bg-[#EFE8E2]/50 overflow-hidden">
+    <div className="bg-[#F3EDE9] overflow-hidden">
       <Container className="pt-12">
         <Title size="2xl" className="font-bold mb-12 lg:max-w-[75%]">
           Resultados irresistibles{' '}
@@ -116,9 +116,13 @@ export default function HomeProducts() {
                     width={35}
                     fill={HOLAGLOW_COLORS['purple']}
                     className="mr-2 border rounded-full p-1"
-                    style={{ borderColor: `${HOLAGLOW_COLORS['purple']}` }}
+                    style={{
+                      borderColor: `${HOLAGLOW_COLORS['purple']}`,
+                    }}
                   />
-                  <Text size="sm">{category}</Text>
+                  <Text size="sm" className="whitespace-nowrap">
+                    {category}
+                  </Text>
                 </Flex>
               </li>
             );
