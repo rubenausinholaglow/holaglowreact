@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import MainLayout from 'app/components/layout/MainLayout';
 import ProductCard from 'app/components/product/ProductCard';
@@ -13,7 +14,7 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
+import { SvgCheck, SvgCircle, SvgDiamond } from 'icons/Icons';
 import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
@@ -29,9 +30,8 @@ type ProductFilters = {
 };
 
 export default function ProductsPage() {
-  const { stateProducts, setStateProducts } = useGlobalPersistedStore(
-    state => state
-  );
+  const { stateProducts, setStateProducts, deviceSize } =
+    useGlobalPersistedStore(state => state);
 
   const [products, setProducts] = useState<Product[]>(stateProducts);
   const [productCategories, setProductCategories] = useState<string[]>([]);
@@ -39,14 +39,9 @@ export default function ProductsPage() {
   const [filtersApplied, setFiltersApplied] = useState<number>(0);
 
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
+  const [showDesktopFilters, setShowDesktopFilters] = useState('false');
 
-  const {
-    isModalOpen,
-    setIsModalOpen,
-    isMainScrollEnabled,
-    setShowModalBackground,
-    showModalBackground,
-  } = useGlobalStore(state => state);
+  const { isModalOpen } = useGlobalStore(state => state);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -109,8 +104,6 @@ export default function ProductsPage() {
     }
   }, [isModalOpen]);
 
-  console.log(isMobileFiltersVisible);
-
   return (
     <MainLayout>
       <MobileFilters isVisible={isMobileFiltersVisible} />
@@ -155,15 +148,53 @@ export default function ProductsPage() {
       </div>
 
       {!isEmpty(products) && (
-        <div className="bg-[#f7f3f0] pt-6">
-          <Container>
+        <div className="bg-[#f7f3f0]">
+          <AccordionPrimitive.Root
+            type="single"
+            className="w-full bg-white"
+            collapsible
+            value={showDesktopFilters}
+            onValueChange={setShowDesktopFilters}
+          >
+            <AccordionPrimitive.Item value={true.toString()} className="w-full">
+              <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                <Container className="py-8">
+                  <Text size="xs" className="font-semibold mb-4">
+                    Ordenar por
+                  </Text>
+                  <ul className="flex flex-col gap-4 text-xs">
+                    <li className="flex flex-row items-center text-xs">
+                      <SvgCheck height={24} width={24} className="mr-2" />
+                      Destacados
+                    </li>
+                    <li className="flex flex-row items-center text-xs">
+                      <SvgCircle height={24} width={24} className="mr-2" />
+                      Más vendidos
+                    </li>
+                    <li className="flex flex-row items-center text-xs">
+                      <SvgCircle height={24} width={24} className="mr-2" />
+                      Precio de menor a mayor
+                    </li>
+                    <li className="flex flex-row items-center text-xs">
+                      <SvgCircle height={24} width={24} className="mr-2" />
+                      Precio de mayor a menor
+                    </li>
+                  </ul>
+                </Container>
+              </AccordionPrimitive.Content>
+            </AccordionPrimitive.Item>
+          </AccordionPrimitive.Root>
+          <Container className="pt-6">
             <Flex layout="row-center" className="justify-between mb-4">
               <Button
                 type="tertiary"
                 size="sm"
                 onClick={() => {
-                  setIsMobileFiltersVisible(true);
-                  setIsModalOpen(true);
+                  deviceSize.isMobile
+                    ? setIsMobileFiltersVisible(true)
+                    : setShowDesktopFilters(
+                        showDesktopFilters === 'true' ? 'false' : 'true'
+                      );
                 }}
               >
                 <SvgFilters className="mr-2" />

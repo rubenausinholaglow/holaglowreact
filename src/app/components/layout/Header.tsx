@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -49,10 +46,6 @@ export default function Header() {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
-
-  const { setIsMainScrollEnabled, setIsModalOpen } = useGlobalStore(
-    state => state
-  );
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -124,8 +117,6 @@ export default function Header() {
                   className="ml-2 lg:hidden"
                   onClick={() => {
                     setIsMobileNavVisible(true);
-                    setIsModalOpen(true);
-                    setIsMainScrollEnabled(false);
                   }}
                 />
               )}
@@ -137,8 +128,6 @@ export default function Header() {
                   className="ml-2 lg:hidden"
                   onClick={() => {
                     setIsMobileNavVisible(false);
-                    setIsModalOpen(false);
-                    setIsMainScrollEnabled(true);
                   }}
                 />
               )}

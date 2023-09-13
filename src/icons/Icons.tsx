@@ -289,6 +289,7 @@ export const SvgCheck = (props: SVGProps<SVGSVGElement>) => (
     width={16}
     fill="currentColor"
     viewBox="0 0 16 16"
+    preserveAspectRatio="xMinYMin meet"
     {...props}
   >
     <rect

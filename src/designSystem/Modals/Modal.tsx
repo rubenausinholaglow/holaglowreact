@@ -25,19 +25,21 @@ export const ModalBackground = ({
 
 export const Modal = ({
   isVisible,
+  setIsVisible,
   width,
   height,
   className,
-  from = 'left',
+  from = 'right',
   hideModalBackground = false,
   children,
   ...rest
 }: {
   isVisible: boolean;
+  setIsVisible?: (value: boolean) => void;
   width?: string;
   height?: string;
   className?: string;
-  from: 'left' | 'bottom';
+  from?: 'right' | 'bottom';
   children: ReactNode;
   [key: string]: any;
 }) => {
@@ -45,27 +47,27 @@ export const Modal = ({
     useGlobalStore(state => state);
 
   useEffect(() => {
-    setShowModalBackground(isVisible);
-  }, [isVisible]);
+    if (!hideModalBackground) {
+      setShowModalBackground(isVisible);
+    }
 
-  useEffect(() => {
-    console.log(isModalOpen);
-  }, [isModalOpen]);
+    setIsModalOpen(isVisible);
+  }, [isVisible]);
 
   const animationStyles =
     isVisible && isModalOpen
-      ? from === 'left'
+      ? from === 'right'
         ? 'translate-x-[0%]'
         : from === 'bottom'
         ? 'translate-y-[0%]'
         : ''
-      : `${from === 'left' ? 'translate-x-[105%]' : 'translate-y-[105%]'}`;
+      : `${from === 'right' ? 'translate-x-[105%]' : 'translate-y-[105%]'}`;
 
   return (
     <div
       className={twMerge(
         `text-hg-black transition-all fixed right-0 bottom-0 bg-white z-20 shadow-centered overflow-y-auto
-          ${from === 'left' ? 'top-0' : ''}
+          ${from === 'right' ? 'top-0' : ''}
           ${width ? width : 'w-full'}
           ${height ? height : 'h-full'}
           ${animationStyles}

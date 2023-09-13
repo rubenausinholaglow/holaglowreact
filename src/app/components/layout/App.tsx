@@ -1,5 +1,6 @@
 'use client';
-import { ReactNode, useEffect } from 'react';
+
+import { ReactNode } from 'react';
 import { poppins } from 'app/fonts';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { ModalBackground } from 'designSystem/Modals/Modal';
