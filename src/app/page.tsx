@@ -1,5 +1,3 @@
-'use client';
-
 import Clinics from './components/home/Clinics';
 import GoToTreatments from './components/home/GoToTreatments';
 import Hero from './components/home/Hero';
