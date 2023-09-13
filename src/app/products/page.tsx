@@ -5,23 +5,48 @@ import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import MainLayout from 'app/components/layout/MainLayout';
 import ProductCard from 'app/components/product/ProductCard';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgDiamond } from 'icons/Icons';
+import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
+import MobileFilters from './components/MobileFilters';
+import {
+  applyFilters,
+  toggleCategory,
+  updateFilterCount,
+} from './utils/filters';
+
+type ProductFilters = {
+  [key: string]: string[];
+};
+
 export default function ProductsPage() {
-  const stateProducts = useGlobalPersistedStore(state => state.products);
-  const setStateProducts = useGlobalPersistedStore(
-    state => state.setStateProducts
+  const { stateProducts, setStateProducts } = useGlobalPersistedStore(
+    state => state
   );
 
   const [products, setProducts] = useState<Product[]>(stateProducts);
   const [productCategories, setProductCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [filters, setFilters] = useState<ProductFilters>({});
+  const [filtersApplied, setFiltersApplied] = useState<number>(0);
+
+  const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
+
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    isMainScrollEnabled,
+    setShowModalBackground,
+    showModalBackground,
+  } = useGlobalStore(state => state);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -47,6 +72,10 @@ export default function ProductsPage() {
   }, []);
 
   useEffect(() => {
+    if (isEmpty(products)) {
+      setProducts(stateProducts);
+    }
+
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
@@ -63,26 +92,29 @@ export default function ProductsPage() {
   }, [stateProducts]);
 
   useEffect(() => {
-    let test = products;
+    setFiltersApplied(updateFilterCount(filters));
 
-    if (!isEmpty(selectedCategories)) {
-      test = products.map(product => {
-        return {
-          ...product,
-          visibility: product.category.some(category =>
-            selectedCategories.includes(category.name)
-          ),
-        };
-      });
-    } else {
-      test = stateProducts;
+    applyFilters({ products, filters, setProducts });
+  }, [filters]);
+
+  useEffect(() => {
+    if (filtersApplied === 0) {
+      setProducts(stateProducts);
     }
+  }, [filtersApplied]);
 
-    setProducts(test);
-  }, [selectedCategories]);
+  useEffect(() => {
+    if (!isModalOpen) {
+      setIsMobileFiltersVisible(false);
+    }
+  }, [isModalOpen]);
+
+  console.log(isMobileFiltersVisible);
 
   return (
     <MainLayout>
+      <MobileFilters isVisible={isMobileFiltersVisible} />
+
       <div className="bg-[#F3EDE9] rounded-t-3xl pt-8 lg:bg-[url('/images/products/productsBg.png')] bg-right-top bg-no-repeat bg-contain">
         <Container>
           <Title size="3xl" className="font-bold mb-12 lg:w-2/5">
@@ -96,20 +128,10 @@ export default function ProductsPage() {
               return (
                 <li
                   key={category}
-                  className={`flex rounded-full p-1 pr-4  ${
-                    selectedCategories.includes(category)
-                      ? 'bg-red'
-                      : 'bg-white'
-                  }`}
-                  onClick={() => {
-                    if (selectedCategories.includes(category)) {
-                      setSelectedCategories(
-                        selectedCategories.filter(item => item !== category)
-                      );
-                    } else {
-                      setSelectedCategories([...selectedCategories, category]);
-                    }
-                  }}
+                  className={`flex rounded-full p-1 pr-4`}
+                  onClick={() =>
+                    toggleCategory({ category, filters, setFilters })
+                  }
                 >
                   <Flex layout="row-left">
                     <SvgDiamond
@@ -132,16 +154,30 @@ export default function ProductsPage() {
         </Container>
       </div>
 
-      {!isEmpty(stateProducts) && (
+      {!isEmpty(products) && (
         <div className="bg-[#f7f3f0] pt-6">
           <Container>
             <Flex layout="row-center" className="justify-between mb-4">
-              <Button type="tertiary" size="sm">
+              <Button
+                type="tertiary"
+                size="sm"
+                onClick={() => {
+                  setIsMobileFiltersVisible(true);
+                  setIsModalOpen(true);
+                }}
+              >
+                <SvgFilters className="mr-2" />
                 <Flex layout="col-center">Filtrar y ordenar</Flex>
               </Button>
 
-              <Text size="sm" className="text-hg-darkMalva underline">
-                Borrar filtros (0)
+              <Text
+                size="sm"
+                className={`transition-opacity text-hg-darkMalva underline cursor-pointer  ${
+                  filtersApplied === 0 ? 'opacity-0' : 'opacity-100'
+                }`}
+                onClick={() => setFilters({})}
+              >
+                Borrar filtros ({filtersApplied})
               </Text>
             </Flex>
 
@@ -149,7 +185,10 @@ export default function ProductsPage() {
               <Text>
                 <b>Ordenar por</b> Destacados
               </Text>
-              <Text>24 productos</Text>
+              <Text>
+                {products.filter(product => product.visibility).length}{' '}
+                productos
+              </Text>
             </Flex>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 pb-6">
               {products.map(product => {

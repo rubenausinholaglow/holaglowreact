@@ -12,7 +12,7 @@ import { SvgDiamond } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 export default function HomeProducts() {
-  const stateProducts = useGlobalPersistedStore(state => state.products);
+  const stateProducts = useGlobalPersistedStore(state => state.stateProducts);
   const setStateProducts = useGlobalPersistedStore(
     state => state.setStateProducts
   );
@@ -45,6 +45,10 @@ export default function HomeProducts() {
   }, []);
 
   useEffect(() => {
+    if (isEmpty(products)) {
+      setProducts(stateProducts);
+    }
+
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
@@ -61,10 +65,10 @@ export default function HomeProducts() {
   }, [stateProducts]);
 
   useEffect(() => {
-    let test = products;
+    let updatedProducts = products;
 
     if (!isEmpty(selectedCategories)) {
-      test = products.map(product => {
+      updatedProducts = products.map(product => {
         return {
           ...product,
           visibility: product.category.some(category =>
@@ -73,15 +77,17 @@ export default function HomeProducts() {
         };
       });
     } else {
-      test = stateProducts;
+      updatedProducts = stateProducts;
     }
 
-    setProducts(test);
+    setProducts(updatedProducts);
   }, [selectedCategories]);
 
   if (isEmpty(stateProducts)) {
     return <></>;
   }
+
+  console.log(products.length);
 
   return (
     <div className="bg-[#F3EDE9] overflow-hidden">

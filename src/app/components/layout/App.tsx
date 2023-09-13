@@ -1,6 +1,5 @@
 'use client';
-
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { poppins } from 'app/fonts';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { ModalBackground } from 'designSystem/Modals/Modal';
@@ -9,9 +8,13 @@ import Head from 'next/head';
 import { Breakpoint } from './Breakpoint';
 
 export default function Html({ children }: { children: ReactNode }) {
-  const { isModalOpen, setIsModalOpen, isMainScrollEnabled } = useGlobalStore(
-    state => state
-  );
+  const {
+    isModalOpen,
+    showModalBackground,
+    setShowModalBackground,
+    setIsModalOpen,
+    isMainScrollEnabled,
+  } = useGlobalStore(state => state);
 
   return (
     <html
@@ -30,8 +33,9 @@ export default function Html({ children }: { children: ReactNode }) {
       </Head>
       <body className={`${poppins.className} overflow-hidden`}>
         <ModalBackground
-          isVisible={isModalOpen}
+          isVisible={showModalBackground}
           onClick={() => {
+            setShowModalBackground(false);
             setIsModalOpen(false);
           }}
         />

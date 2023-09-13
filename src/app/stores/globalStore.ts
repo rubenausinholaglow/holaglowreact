@@ -9,7 +9,7 @@ type DeviceSize = {
   isWideScreen: boolean;
 };
 interface GlobalPersistStore {
-  products: Product[];
+  stateProducts: Product[];
   isMobile: boolean;
   deviceSize: DeviceSize;
 }
@@ -23,7 +23,7 @@ interface GlobalPersistActions {
 export const useGlobalPersistedStore = create(
   persist<GlobalPersistStore & GlobalPersistActions>(
     set => ({
-      products: [],
+      stateProducts: [],
       deviceSize: {
         isMobile: true,
         isTablet: false,
@@ -32,7 +32,7 @@ export const useGlobalPersistedStore = create(
       },
       isMobile: true,
       setStateProducts: (value: Product[]) => {
-        set({ products: value });
+        set({ stateProducts: value });
       },
       setIsMobile: value => {
         set({ isMobile: value });
@@ -49,20 +49,25 @@ export const useGlobalPersistedStore = create(
 
 interface GlobalStore {
   isModalOpen: boolean;
+  showModalBackground: boolean;
   isMainScrollEnabled: boolean;
 }
 
 interface GlobalActions {
   setIsModalOpen: (value: boolean) => void;
+  setShowModalBackground: (value: boolean) => void;
   setIsMainScrollEnabled: (value: boolean) => void;
 }
 
 export const useGlobalStore = create<GlobalStore & GlobalActions>(set => ({
   isModalOpen: false,
+  showModalBackground: false,
   isMainScrollEnabled: true,
-
   setIsModalOpen: (value: boolean) => {
     set({ isModalOpen: value });
+  },
+  setShowModalBackground: (value: boolean) => {
+    set({ showModalBackground: value });
   },
   setIsMainScrollEnabled: (value: boolean) => {
     set({ isMainScrollEnabled: value });

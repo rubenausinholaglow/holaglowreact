@@ -50,8 +50,8 @@ export default function Header() {
 
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
 
-  const setIsMainScrollEnabled = useGlobalStore(
-    state => state.setIsMainScrollEnabled
+  const { setIsMainScrollEnabled, setIsModalOpen } = useGlobalStore(
+    state => state
   );
 
   const HEADER_HEIGHT = deviceSize.isMobile
@@ -124,6 +124,7 @@ export default function Header() {
                   className="ml-2 lg:hidden"
                   onClick={() => {
                     setIsMobileNavVisible(true);
+                    setIsModalOpen(true);
                     setIsMainScrollEnabled(false);
                   }}
                 />
@@ -136,6 +137,7 @@ export default function Header() {
                   className="ml-2 lg:hidden"
                   onClick={() => {
                     setIsMobileNavVisible(false);
+                    setIsModalOpen(false);
                     setIsMainScrollEnabled(true);
                   }}
                 />

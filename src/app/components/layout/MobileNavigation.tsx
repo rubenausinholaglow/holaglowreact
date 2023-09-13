@@ -1,3 +1,4 @@
+import { useGlobalStore } from 'app/stores/globalStore';
 import Accordion from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -12,14 +13,22 @@ export default function MobileNavigation({
   isVisible: boolean;
   headerHeight: number;
 }) {
+  const { isModalOpen, setIsModalOpen, isMainScrollEnabled } = useGlobalStore(
+    state => state
+  );
+
   return (
     <Modal
       isVisible={isVisible}
       width="w-full"
       className="shadow-none"
+      from="left"
       style={{ top: headerHeight }}
     >
       <Container className="border-b border-hg-black py-8">
+        <p>isModalOpen is {isModalOpen.toString()}</p>
+        <p>isMainScrollEnabled is {isMainScrollEnabled.toString()}</p>
+
         <Flex layout="col-left" className="text-xl font-semibold">
           <ul className="flex flex-col gap-8 mb-8">
             <li>Labios</li>

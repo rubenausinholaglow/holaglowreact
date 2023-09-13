@@ -7,6 +7,7 @@ export const Title = ({
   weight = 'semibold',
   as = 'h3',
   className = '',
+  onClick = undefined,
   children,
 }: {
   size?: '3xl' | '2xl' | 'xl';
@@ -14,6 +15,7 @@ export const Title = ({
   as?: keyof JSX.IntrinsicElements;
   className?: string;
   children: ReactNode;
+  onClick?: (...args: any[]) => void;
 }) => {
   const STYLES = {
     '3xl': 'text-4xl lg:text-6xl',
@@ -24,19 +26,25 @@ export const Title = ({
   const HtmlComponent = as;
   const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
 
-  return <HtmlComponent className={styles}>{children}</HtmlComponent>;
+  return (
+    <HtmlComponent className={styles} onClick={onClick}>
+      {children}
+    </HtmlComponent>
+  );
 };
 
 export const Text = ({
   size = 'md',
   as = 'p',
   className = '',
+  onClick = undefined,
   children,
   rest,
 }: {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   as?: keyof JSX.IntrinsicElements;
   className?: string;
+  onClick?: (...args: any[]) => void;
   children: ReactNode;
   [key: string]: any;
 }) => {
@@ -46,7 +54,7 @@ export const Text = ({
   );
 
   return (
-    <HtmlComponent className={styles} {...rest}>
+    <HtmlComponent className={styles} onClick={onClick} {...rest}>
       {children}
     </HtmlComponent>
   );
