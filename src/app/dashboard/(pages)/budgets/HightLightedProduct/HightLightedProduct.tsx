@@ -148,7 +148,7 @@ export default function HightLightedProduct() {
                   layout="row-center"
                   className="aspect-video rounded-2xl overflow-hidden"
                 >
-                  {image.urlBefore != '' && (
+                  {image.urlBefore != '' && image.urlAfter != '' && (
                     <Flex className="w-full h-full">
                       <div className="relative w-1/2 h-full">
                         <Image
@@ -161,7 +161,7 @@ export default function HightLightedProduct() {
                       <div className="relative w-1/2 h-full">
                         <Image
                           src={image.urlAfter || '/images/default-image.jpg'}
-                          alt={`Before Image ${index}`}
+                          alt={`After Image ${index}`}
                           fill
                           className="object-contain"
                         />
@@ -172,6 +172,16 @@ export default function HightLightedProduct() {
                     <Flex>
                       <Image
                         src={image.urlAfter || '/images/default-image.jpg'}
+                        alt={`After Image ${index}`}
+                        fill
+                        className="object-contain"
+                      />
+                    </Flex>
+                  )}
+                  {image.urlAfter == '' && (
+                    <Flex>
+                      <Image
+                        src={image.urlBefore || '/images/default-image.jpg'}
                         alt={`Before Image ${index}`}
                         fill
                         className="object-contain"
