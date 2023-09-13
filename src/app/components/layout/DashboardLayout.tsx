@@ -18,7 +18,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen h-100 pt-4 text-sm ('/images/dashboard/background/main_background.png')] bg-[#A96FE7] bg-bottom bg-contain bg-no-repeat">
+    <main className="min-h-screen h-100 pt-4 text-sm bg-[url('/images/dashboard/background/main_background.png')] bg-[#A96FE7] bg-bottom bg-contain bg-no-repeat">
       <Flex
         layout="col-center"
         className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"
