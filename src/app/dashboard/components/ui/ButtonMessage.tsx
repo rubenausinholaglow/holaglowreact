@@ -39,13 +39,13 @@ export default function ButtonMessage() {
 
   const sendMessageToMedic = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
-    setmedicClassName('bg-hg-malva');
+    setmedicClassName('bg-hg-tertiary');
     startTimeout();
   };
 
   const sendMessageToReception = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
-    setreceptionClassName('bg-hg-malva');
+    setreceptionClassName('bg-hg-tertiary');
     startTimeout();
   };
 

@@ -96,6 +96,7 @@ export default function Testimonials() {
         isIntrinsicHeight
         visibleSlides={visibleNews()}
         infinite={false}
+        sliderStyles="gap-12"
       >
         {NEWS.map(item => (
           <NewsExtract

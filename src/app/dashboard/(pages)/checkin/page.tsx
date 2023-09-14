@@ -127,7 +127,7 @@ function FormSection({
       <form onSubmit={handleSubmit} className="relative">
         <Flex
           layout="col-left"
-          className={`gap-4 px-12 py-8 bg-hg-malva300 relative z-10 ${
+          className={`gap-4 px-12 py-8 bg-hg-tertiary300 relative z-10 ${
             checkIn ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >

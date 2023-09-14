@@ -36,7 +36,7 @@ module.exports = {
           tertiary300: '#D7DCED',
           tertiary100: '#F2F3F9',
           turquoise: '#3AD5DD',
-          magensta: '#D600BF',
+          magenta: '#D600BF',
           orange: '#FF7514',
           pink: '#FFC7C7',
           green: '#B9DDB6',
@@ -59,6 +59,7 @@ module.exports = {
         md: '768px',
         lg: '1024px',
         xl: '1152px',
+        '2xl': '1280px',
       },
       boxShadow: {
         centered: '0 0 10px 10px rgba(0,0,0,0.1)',

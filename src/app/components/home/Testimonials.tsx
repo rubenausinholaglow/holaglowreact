@@ -38,7 +38,7 @@ const Testimonial = ({
   testimonial: string;
 }) => {
   return (
-    <Flex layout="col-center" className="basis-0 grow mr-10">
+    <Flex layout="col-center" className="basis-0 grow">
       <Image
         src={imgUrl}
         alt="testimonials"
@@ -85,9 +85,8 @@ export default function Testimonials() {
         isIntrinsicHeight
         visibleSlides={visibleTestimonials()}
         infinite={false}
+        sliderStyles="gap-12"
       >
-        {/* <Flex layout="row-center" className="gap-12 items-start">
-        </Flex> */}
         {TESTIMONIALS.map(item => (
           <Testimonial
             key={item.name}

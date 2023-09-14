@@ -83,7 +83,7 @@ export default function Header() {
           !isHeaderVisible ? '-translate-y-full' : ''
         }`}
       >
-        <Container>
+        <Container isWider>
           <Flex
             layout="row-between"
             className={`relative py-3 lg:py-5 lg:justify-center ${HEADER_HEIGHT_CLASS}`}
@@ -96,11 +96,7 @@ export default function Header() {
             <Navigation className="hidden lg:block" />
 
             <Flex layout="row-center" className="lg:absolute right-0">
-              <Button
-                href="https://holaglow.com"
-                type="transparent"
-                customStyles="px-[6px] lg:px-0"
-              >
+              <Button href="https://holaglow.com" type="transparent">
                 <Flex layout="row-center">
                   <SvgUserOctagon
                     fill="transparent"

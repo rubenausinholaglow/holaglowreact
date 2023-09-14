@@ -53,7 +53,7 @@ export default function Profesionals() {
               </Flex>
               <Title size="2xl" className="font-bold mb-6">
                 Equipo médico con los mejores{' '}
-                <Underlined color={HOLAGLOW_COLORS['malva']}>
+                <Underlined color={HOLAGLOW_COLORS['tertiary']}>
                   profesionales
                 </Underlined>
               </Title>
@@ -102,7 +102,7 @@ export default function Profesionals() {
               </Flex>
               <Title size="2xl" className="font-bold mb-6">
                 Equipo médico con los mejores{' '}
-                <Underlined color={HOLAGLOW_COLORS['malva']}>
+                <Underlined color={HOLAGLOW_COLORS['tertiary']}>
                   profesionales
                 </Underlined>
               </Title>

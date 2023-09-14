@@ -27,7 +27,8 @@ export const Carousel = ({
   dragEnabled = false,
   touchEnabled = false,
   className = '',
-  sliderStyles = {},
+  sliderWidth = {},
+  sliderStyles = '',
   ...rest
 }: {
   children: ReactNode;
@@ -42,7 +43,8 @@ export const Carousel = ({
   dragEnabled?: boolean;
   touchEnabled?: boolean;
   className?: string;
-  sliderStyles?: object;
+  sliderWidth?: object;
+  sliderStyles?: string;
   [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -77,8 +79,8 @@ export const Carousel = ({
         visibleSlides={visibleSlides}
         {...rest}
       >
-        <div style={sliderStyles}>
-          <Slider>
+        <div style={sliderWidth}>
+          <Slider classNameTray={sliderStyles}>
             {childrens.map((children, i) => (
               // eslint-disable-next-line react/no-array-index-key
               <Slide index={i} key={i}>

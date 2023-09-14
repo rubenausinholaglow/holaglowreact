@@ -50,9 +50,10 @@ export default function ProductCarousel({
       isIntrinsicHeight
       visibleSlides={VISIBLE_SLIDES[activeDeviceSize as SharedKeys]}
       infinite={false}
-      sliderStyles={{
+      sliderWidth={{
         width: CarouselWidth,
       }}
+      sliderStyles="gap-12"
     >
       {products.map(product => {
         if (product.visibility) {
@@ -60,7 +61,7 @@ export default function ProductCarousel({
             <ProductCard
               key={product.id}
               product={product}
-              className="mr-10 h-full flex flex-col"
+              className="h-full flex flex-col"
             />
           );
         }

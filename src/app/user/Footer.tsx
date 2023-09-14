@@ -16,7 +16,7 @@ export default function Footer({ clinicInfo }: { clinicInfo: Clinic }) {
         className="mb-8"
         width={150}
         height={35}
-        fill={HOLAGLOW_COLORS['malva']}
+        fill={HOLAGLOW_COLORS['tertiary']}
       />
 
       <ul className="grid grid-cols-3 gap-8 text-xs">
