@@ -14,7 +14,6 @@ export default function Profesionals() {
           hasDots
           className="relative mb-12"
           isIntrinsicHeight
-          visibleSlides={1}
           infinite={false}
         >
           <Flex
@@ -29,7 +28,7 @@ export default function Profesionals() {
                 className="object-cover rounded-xl"
               />
             </div>
-            <Flex layout="col-left" className="lg:w-1/2">
+            <Flex layout="col-left" className="lg:w-1/2 pb-1">
               <Flex
                 layout="row-center"
                 className="w-full gap-8 lg:gap-16 mb-12 lg:mb-16"
@@ -52,14 +51,15 @@ export default function Profesionals() {
                 </div>
               </Flex>
               <Title size="2xl" className="font-bold mb-6">
-                Equipo médico con los mejores{' '}
-                <Underlined color={HOLAGLOW_COLORS['tertiary']}>
-                  profesionales
+                El mejor equipo para ponerse en tu{' '}
+                <Underlined color={HOLAGLOW_COLORS['secondary500']}>
+                  piel
                 </Underlined>
               </Title>
-              <Text size="lg" className="text-hg-black-500 mb-8">
-                Sed necessitatibus saepe qui tenetur delectus 33 officiis
-                inventore et rerum unde cum officiis repellendus
+              <Text className="text-hg-black500 mb-8 lg:text-lg">
+                Estarás en manos de profesionales con experiencia contrastada
+                para asesorarte y aplicar nuestros tratamientos con la mayor
+                seguridad, eficacia y confianza
               </Text>
               <Button type="secondary" size="xl">
                 Conoce al equipo médico

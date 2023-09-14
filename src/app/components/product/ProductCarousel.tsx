@@ -37,23 +37,26 @@ export default function ProductCarousel({
     CarouselWidth =
       document.body.clientWidth -
       (document.body.clientWidth - (CONTAINER_WIDTH - CONTAINER_PADDING * 2)) /
-        2 +
-      'px';
+        2;
   } else {
-    CarouselWidth = document.body.clientWidth - 16 + 'px';
+    CarouselWidth = document.body.clientWidth - 16;
   }
+
+  const visibleSlides = CarouselWidth / 304;
+
+  console.log(CarouselWidth, visibleSlides);
 
   return (
     <Carousel
       hasControls
       className={`relative mb-12 ${className}`}
       isIntrinsicHeight
-      visibleSlides={VISIBLE_SLIDES[activeDeviceSize as SharedKeys]}
+      visibleSlides={visibleSlides}
       infinite={false}
       sliderWidth={{
-        width: CarouselWidth,
+        width: `${CarouselWidth}px`,
       }}
-      sliderStyles="gap-12"
+      sliderStyles="gap-10"
     >
       {products.map(product => {
         if (product.visibility) {

@@ -39,6 +39,8 @@ module.exports = {
           magenta: '#D600BF',
           orange: '#FF7514',
           pink: '#FFC7C7',
+          cream: '#EFE8E2',
+          cream500: '#f7f3f0',
           green: '#B9DDB6',
           skyblue: '#B7F9F9',
           black: '#101828',

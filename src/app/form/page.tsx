@@ -94,7 +94,12 @@ export default function Form() {
           </ul>
         </div>
 
-        <Carousel totalSlides={4} currentSlide={activeSlideIndex}>
+        <Carousel
+          totalSlides={4}
+          currentSlide={activeSlideIndex}
+          dragEnabled={false}
+          touchEnabled={false}
+        >
           <div className="bg-white px-4">
             <section className="mb-6">
               <Text size="xl" className="mb-2 font-semibold">

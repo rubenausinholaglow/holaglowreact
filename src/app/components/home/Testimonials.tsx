@@ -45,7 +45,7 @@ const Testimonial = ({
         width={100}
         height={100}
         style={{
-          width: '80%',
+          width: '100%',
           height: 'auto',
         }}
         className="rounded-xl mb-4"
@@ -75,9 +75,10 @@ export default function Testimonials() {
 
   return (
     <Container className="py-12">
-      <Title size="2xl" className="font-bold mb-12 max-w-[75%]">
-        Tu experiencia es nuestra
-        <Underlined color={HOLAGLOW_COLORS['primary']}>obsesión</Underlined>
+      <Title size="2xl" className="font-bold mb-12">
+        Si tú estás{' '}
+        <Underlined color={HOLAGLOW_COLORS['primary']}>feliz</Underlined>,
+        nosotros también
       </Title>
       <Carousel
         hasControls
@@ -85,7 +86,6 @@ export default function Testimonials() {
         isIntrinsicHeight
         visibleSlides={visibleTestimonials()}
         infinite={false}
-        sliderStyles="gap-12"
       >
         {TESTIMONIALS.map(item => (
           <Testimonial

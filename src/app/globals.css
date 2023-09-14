@@ -27,47 +27,10 @@ a {
   color: theme('colors.hg.secondary');
 }
 
-.floating-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25d366;
-  color: #fff;
-  font-size: 24px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  z-index: 10;
-}
-
-.medic-button {
-  position: fixed;
-  bottom: 165px;
-  right: 20px;
-  z-index: 11;
-  cursor: pointer;
-  background-color: burlywood;
-  font-size: 24px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.reception-button {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  z-index: 11;
-  background-color: chocolate;
-  font-size: 24px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
 }

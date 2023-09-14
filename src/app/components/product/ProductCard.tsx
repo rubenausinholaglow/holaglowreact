@@ -67,16 +67,9 @@ export default function ProductCard({
         <Text size="xs" className="text-hg-black-500 mb-8">
           {product.description}
         </Text>
-        <Button
-          type="tertiary"
-          className="mt-auto"
-          color={HOLAGLOW_COLORS['black']}
-          bgColor={HOLAGLOW_COLORS['primary']}
-        >
+        <Button type="tertiary" className="mt-auto" bgColor="bg-hg-primary">
           <Flex layout="row-center">
-            <Text size="sm" className="mr-2">
-              Saber más
-            </Text>
+            <p className="mr-2">Saber más</p>
             <SvgArrow height={20} width={20} />
           </Flex>
         </Button>

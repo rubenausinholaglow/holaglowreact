@@ -46,7 +46,7 @@ export function Footer() {
           </Text>
           <Flex layout="row-center" className="w-full justify-between">
             <SvgInstagram height={24} width={24} />
-            <Button type="tertiary" size="sm" className="ml-2">
+            {/* <Button type="tertiary" size="sm" className="ml-2">
               <Flex layout="row-center">
                 <SvgUserOctagon
                   fill="transparent"
@@ -56,7 +56,7 @@ export function Footer() {
                 />
                 <span className="font-semibold">Mi espacio glow</span>
               </Flex>
-            </Button>
+            </Button> */}
           </Flex>
         </Flex>
 
