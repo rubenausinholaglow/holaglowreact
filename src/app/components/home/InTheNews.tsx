@@ -83,12 +83,15 @@ export default function InTheNews() {
     >
       <div className="absolute top-1/3 -bottom-1/2 -left-1/2 -right-1/2 bg-hg-tertiary100 rotate-[8deg] md:hidden"></div>
 
-      <Title size="2xl" className="font-bold mb-44 relative text-center">
+      <Title
+        size="2xl"
+        className="font-bold mb-44 md:mb-20 relative text-center md:text-left"
+      >
         <SvgHolaGlowStar
           fill={HOLAGLOW_COLORS['primary']}
-          className="absolute left-[50%] top-0 h-[250px] w-[250px] md:h-[200px] md:w-[200px] -translate-x-[50%] md:-translate-x-[33%] -translate-y-[33%]"
+          className="absolute top-0 left-[50%] md:left-0 h-[250px] w-[250px] md:h-[200px] md:w-[200px] -translate-x-[50%] md:-translate-x-[80px] -translate-y-[33%] md:-translate-y-[70px]"
         />
-        <span className="relative text-center">Así hablan de Holaglow</span>
+        <span className="relative">Así hablan de Holaglow</span>
       </Title>
       <Carousel
         hasControls

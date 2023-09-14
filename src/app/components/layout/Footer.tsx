@@ -24,11 +24,10 @@ export function Footer() {
             Centro de medicina estética
           </Text>
           <Text size="xs" className="text-hg-secondary700 mb-12">
-            Centro de medicina estética La información de este sitio web,
-            incluidos los artículos escritos por profesionales de la salud, es
-            solo para fines de información general, no constituye un consejo
-            médico y no se debe confiar en ella para un diagnóstico o
-            tratamiento médico
+            La información de este sitio web, incluidos los artículos escritos
+            por profesionales de la salud, es solo para fines de información
+            general, no constituye un consejo médico y no se debe confiar en
+            ella para un diagnóstico o tratamiento médico
           </Text>
           <Text size="xl" className="mb-6 font-semibold">
             Contacto
@@ -67,7 +66,7 @@ export function Footer() {
           <p className="font-semibold">Ver Tratamientos</p>
 
           <Accordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Aumento de Labios</li>
               <li>Relleno de ojeras</li>
               <li>Proyección de pómulos</li>
@@ -76,7 +75,7 @@ export function Footer() {
           </Accordion>
 
           <Accordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Prevención de arrugas</li>
               <li>Arrugas frente</li>
               <li>Ver más</li>
@@ -97,22 +96,22 @@ export function Footer() {
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6"
         >
           <Accordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Barcelona</li>
               <li>Madrid</li>
               <li>Valencia</li>
             </ul>
           </Accordion>
 
-          <Accordion trigger="Sobre nosotros" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+          <Accordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Quiénes somos</li>
               <li>Equipo médico</li>
               <li>Blog</li>
             </ul>
           </Accordion>
           <Accordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Política de privacidad</li>
               <li>Términos y condiciones</li>
             </ul>
