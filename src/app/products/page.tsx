@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { Product } from '@interface/product';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
@@ -14,7 +15,7 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgCheck, SvgCircle, SvgDiamond } from 'icons/Icons';
+import { SvgDiamond } from 'icons/Icons';
 import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
@@ -55,9 +56,13 @@ export default function ProductsPage() {
           })
         );
 
-        setStateProducts(productsWithVisibility);
-      } catch (error) {
-        console.error('Error fetching products:', error);
+        if (isEmpty(fetchedProducts)) {
+          Bugsnag.notify('Received non-array data:', fetchedProducts);
+        } else {
+          setStateProducts(productsWithVisibility);
+        }
+      } catch (error: any) {
+        Bugsnag.notify('Error fetching products:', error);
       }
     }
 
@@ -159,64 +164,42 @@ export default function ProductsPage() {
             <AccordionPrimitive.Item value={true.toString()} className="w-full">
               <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                 <Container className="py-8">
-                  <Text size="xs" className="font-semibold mb-4">
-                    Ordenar por
-                  </Text>
-                  <ul className="flex flex-col gap-4 text-xs">
-                    <li className="flex flex-row items-center text-xs">
-                      <SvgCheck height={24} width={24} className="mr-2" />
-                      Destacados
-                    </li>
-                    <li className="flex flex-row items-center text-xs">
-                      <SvgCircle height={24} width={24} className="mr-2" />
-                      Más vendidos
-                    </li>
-                    <li className="flex flex-row items-center text-xs">
-                      <SvgCircle height={24} width={24} className="mr-2" />
-                      Precio de menor a mayor
-                    </li>
-                    <li className="flex flex-row items-center text-xs">
-                      <SvgCircle height={24} width={24} className="mr-2" />
-                      Precio de mayor a menor
-                    </li>
-                  </ul>
+                  <p>Filters here</p>
                 </Container>
               </AccordionPrimitive.Content>
             </AccordionPrimitive.Item>
           </AccordionPrimitive.Root>
           <Container className="pt-6">
-            <Flex layout="row-center" className="justify-between mb-4">
-              <Button
-                type="tertiary"
-                size="sm"
-                onClick={() => {
-                  deviceSize.isMobile
-                    ? setIsMobileFiltersVisible(true)
-                    : setShowDesktopFilters(
-                        showDesktopFilters === 'true' ? 'false' : 'true'
-                      );
-                }}
-              >
-                <SvgFilters className="mr-2" />
-                <Flex layout="col-center">Filtrar y ordenar</Flex>
-              </Button>
+            <Flex layout="row-left" className="justify-between mb-8">
+              <Flex layout="row-left">
+                <Button
+                  type="tertiary"
+                  size="sm"
+                  className="mr-2"
+                  onClick={() => {
+                    deviceSize.isMobile
+                      ? setIsMobileFiltersVisible(true)
+                      : setShowDesktopFilters(
+                          showDesktopFilters === 'true' ? 'false' : 'true'
+                        );
+                  }}
+                >
+                  <SvgFilters className="mr-2" />
+                  <Flex layout="col-center">Filtrar</Flex>
+                </Button>
 
-              <Text
-                size="sm"
-                className={`transition-opacity text-hg-darkMalva underline cursor-pointer  ${
-                  filtersApplied === 0 ? 'opacity-0' : 'opacity-100'
-                }`}
-                onClick={() => setFilters({})}
-              >
-                Borrar filtros ({filtersApplied})
-              </Text>
-            </Flex>
+                <Text
+                  size="xs"
+                  className={`transition-opacity text-hg-darkMalva underline cursor-pointer  ${
+                    filtersApplied === 0 ? 'opacity-0' : 'opacity-100'
+                  }`}
+                  onClick={() => setFilters({})}
+                >
+                  Borrar filtros ({filtersApplied})
+                </Text>
+              </Flex>
 
-            <Flex layout="row-center" className="justify-between mb-4 text-sm">
-              <Text>
-                <b>Ordenar por</b> Destacados
-              </Text>
-              <Text>
+              <Text size="xs">
                 {products.filter(product => product.visibility).length}{' '}
                 productos
               </Text>

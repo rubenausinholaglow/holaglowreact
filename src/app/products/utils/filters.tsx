@@ -11,10 +11,6 @@ const filterByCategory = ({
 }) => {
   let updatedProducts = products;
 
-  console.log(
-    updatedProducts.filter(product => product.visibility === true).length
-  );
-
   if (has(filters, 'category') && !isEmpty(filters.category)) {
     updatedProducts = products.map(product => {
       return {
@@ -25,10 +21,6 @@ const filterByCategory = ({
       };
     });
   }
-
-  console.log(
-    updatedProducts.filter(product => product.visibility === true).length
-  );
 
   return updatedProducts;
 };
@@ -44,11 +36,7 @@ export const applyFilters = ({
 }) => {
   let updatedProducts = products;
 
-  console.log(filterByCategory({ products, filters }));
-
   updatedProducts = filterByCategory({ products, filters });
-
-  //return updatedProducts;
 
   setProducts(updatedProducts);
 };
@@ -87,8 +75,6 @@ export const toggleCategory = ({
   } else {
     updatedFilters.category.splice(categoryIndex, 1);
   }
-
-  console.log(updatedFilters);
 
   setFilters(updatedFilters);
 };
