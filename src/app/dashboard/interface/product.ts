@@ -15,6 +15,7 @@ export interface Product {
   durationMax: number;
   beforeAndAfterImages: BeforeAndAfterImages[];
   type: ProductType;
+  visibility: boolean;
 }
 
 export interface BeforeAndAfterImages {

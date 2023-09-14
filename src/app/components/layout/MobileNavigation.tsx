@@ -17,7 +17,9 @@ export default function MobileNavigation({
       isVisible={isVisible}
       width="w-full"
       className="shadow-none"
+      from="right"
       style={{ top: headerHeight }}
+      hideModalBackground
     >
       <Container className="border-b border-hg-black py-8">
         <Flex layout="col-left" className="text-xl font-semibold">

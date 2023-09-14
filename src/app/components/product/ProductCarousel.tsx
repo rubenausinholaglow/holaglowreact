@@ -6,12 +6,12 @@ import { Carousel } from 'designSystem/Carousel/Carousel';
 
 import ProductCard from './ProductCard';
 
-export default function TreatmentCarousel({
+export default function ProductCarousel({
   className,
-  treatments,
+  products,
 }: {
   className: string;
-  treatments: Product[];
+  products: Product[];
 }) {
   const CONTAINER_WIDTH = 1280;
   const CONTAINER_PADDING = 16;
@@ -32,7 +32,6 @@ export default function TreatmentCarousel({
   );
 
   let CarouselWidth;
-  //let translateCarousel = 16;
 
   if (document.body.clientWidth > CONTAINER_WIDTH) {
     CarouselWidth =
@@ -40,13 +39,9 @@ export default function TreatmentCarousel({
       (document.body.clientWidth - (CONTAINER_WIDTH - CONTAINER_PADDING * 2)) /
         2 +
       'px';
-
-    //translateCarousel = (document.body.clientWidth - CONTAINER_WIDTH) / 2 + 16;
   } else {
     CarouselWidth = document.body.clientWidth - 16 + 'px';
   }
-
-  console.log(CarouselWidth);
 
   return (
     <Carousel
@@ -59,13 +54,19 @@ export default function TreatmentCarousel({
         width: CarouselWidth,
       }}
     >
-      {treatments.map(treatment => (
-        <ProductCard
-          key={treatment.id}
-          treatment={treatment}
-          className="mr-10 h-full flex flex-col"
-        />
-      ))}
+      {products.map(product => {
+        if (product.visibility) {
+          return (
+            <ProductCard
+              key={product.id}
+              product={product}
+              className="mr-10 h-full flex flex-col"
+            />
+          );
+        }
+
+        return null;
+      })}
     </Carousel>
   );
 }
