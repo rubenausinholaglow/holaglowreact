@@ -12,6 +12,8 @@ export default function MobileNavigation({
   isVisible: boolean;
   headerHeight: number;
 }) {
+  const paddingBottom = headerHeight + 16;
+
   return (
     <Modal
       isVisible={isVisible}
@@ -58,7 +60,11 @@ export default function MobileNavigation({
           </Flex>
         </Button>
       </Container>
-      <Flex layout="col-left" className="bg-hg-primary300 p-4 text-xs gap-4">
+      <Flex
+        layout="col-left"
+        className="bg-hg-primary300 p-4 text-xs gap-4"
+        style={{ paddingBottom: `${paddingBottom}px` }}
+      >
         <Title size="xl">Contacto</Title>
         <p>
           Para dudas y pedidos, escríbenos a{' '}

@@ -39,7 +39,7 @@ const NewsExtract = ({
   medium: string;
 }) => {
   return (
-    <Flex layout="col-center" className="basis-0 grow px-6">
+    <Flex layout="col-center" className="basis-0 grow mb-8">
       <Text size="xl" className="font-semibold mb-8 text-center">
         <span className="italic">&quot; </span>
         {extract}
@@ -60,7 +60,7 @@ const NewsExtract = ({
   );
 };
 
-export default function Testimonials() {
+export default function InTheNews() {
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
 
   const visibleNews = () => {
@@ -92,10 +92,12 @@ export default function Testimonials() {
       </Title>
       <Carousel
         hasControls
-        className="relative mb-12"
+        className="relative"
         isIntrinsicHeight
+        hasDots
         visibleSlides={visibleNews()}
         infinite={false}
+        sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
       >
         {NEWS.map(item => (
           <NewsExtract

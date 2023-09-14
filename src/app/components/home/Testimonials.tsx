@@ -86,6 +86,7 @@ export default function Testimonials() {
         isIntrinsicHeight
         visibleSlides={visibleTestimonials()}
         infinite={false}
+        sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
       >
         {TESTIMONIALS.map(item => (
           <Testimonial

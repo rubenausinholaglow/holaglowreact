@@ -21,7 +21,7 @@ export default function ProductCard({
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
   const [imgSrc, setImgSrc] = useState(
-    `/images/product/${product.flowwwId}/${product.flowwwId}.png`
+    `https://budgetimages.blob.core.windows.net/images/products/${product.flowwwId}/${product.flowwwId}.jpg`
   );
 
   return (
@@ -64,7 +64,7 @@ export default function ProductCard({
       </Flex>
       <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
         <Text className="mb-2 font-semibold">{product.title}</Text>
-        <Text size="xs" className="text-hg-black-500 mb-8">
+        <Text size="xs" className="text-hg-black500 mb-8">
           {product.description}
         </Text>
         <Button type="tertiary" className="mt-auto" bgColor="bg-hg-primary">

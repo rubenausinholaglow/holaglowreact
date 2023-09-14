@@ -18,17 +18,19 @@ export default function GoToTreatments() {
               className="text-hg-secondary mb-6"
             />
             <Title size="2xl" className="font-bold mb-12 text-white">
-              La nueva cara de la medicina{' '}
+              ¿Te ayudamos a encontrar tu{' '}
               <Underlined color={HOLAGLOW_COLORS['tertiary']}>
-                estética
-              </Underlined>
+                tratamiento
+              </Underlined>{' '}
+              ideal?
             </Title>
             <Button
               type="secondary"
               size="xl"
               className="mx-auto md:mx-0 mb-10"
+              href="https://holaglow.com/multistep/"
             >
-              Descubre tu tratamiento
+              Hacer test
               <SvgArrow className="ml-4" height={24} width={24} />
             </Button>
           </Flex>

@@ -36,7 +36,7 @@ export default function HomeProducts() {
   return (
     <div className="bg-hg-cream500 overflow-hidden">
       <Container className="pt-12">
-        <Title size="2xl" className="font-bold mb-12">
+        <Title size="2xl" className="font-bold mb-6 md:mb-12">
           Tratamientos para conseguir resultados{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>
             irresistibles
