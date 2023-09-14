@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import ProductCarousel from 'app/components/product/ProductCarousel';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
@@ -11,8 +12,12 @@ import { SvgDiamond } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 export default function HomeProducts() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const stateProducts = useGlobalPersistedStore(state => state.stateProducts);
+  const setStateProducts = useGlobalPersistedStore(
+    state => state.setStateProducts
+  );
+
+  const [products, setProducts] = useState<Product[]>(stateProducts);
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -20,20 +25,31 @@ export default function HomeProducts() {
     async function fetchProducts() {
       try {
         const fetchedProducts = await ProductService.getAllProducts();
-        setProducts(fetchedProducts);
-        setFilteredProducts(fetchedProducts);
+
+        const productsWithVisibility = fetchedProducts.map(
+          (product: Product) => ({
+            ...product,
+            visibility: true,
+          })
+        );
+
+        setStateProducts(productsWithVisibility);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     }
 
-    fetchProducts();
+    if (isEmpty(stateProducts)) {
+      fetchProducts();
+    }
   }, []);
 
-  const memoizedProducts = useMemo(() => products, [products]);
-
   useEffect(() => {
-    const allCategoryNames: string[] = memoizedProducts.reduce(
+    if (isEmpty(products)) {
+      setProducts(stateProducts);
+    }
+
+    const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
           category => category.name
@@ -46,28 +62,35 @@ export default function HomeProducts() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, [products]);
+  }, [stateProducts]);
 
   useEffect(() => {
-    if (selectedCategories.length > 0) {
-      const filteredProducts = products.filter(product => {
-        return product.category.some(category =>
-          selectedCategories.includes(category.name)
-        );
-      });
+    let updatedProducts = products;
 
-      setFilteredProducts(filteredProducts);
+    if (!isEmpty(selectedCategories)) {
+      updatedProducts = products.map(product => {
+        return {
+          ...product,
+          visibility: product.category.some(category =>
+            selectedCategories.includes(category.name)
+          ),
+        };
+      });
     } else {
-      setFilteredProducts(products);
+      updatedProducts = stateProducts;
     }
+
+    setProducts(updatedProducts);
   }, [selectedCategories]);
 
-  if (isEmpty(products)) {
+  if (isEmpty(stateProducts)) {
     return <></>;
   }
 
+  console.log(products.length);
+
   return (
-    <div className="bg-[#EFE8E2]/50 overflow-hidden">
+    <div className="bg-[#F3EDE9] overflow-hidden">
       <Container className="pt-12">
         <Title size="2xl" className="font-bold mb-12 lg:max-w-[75%]">
           Resultados irresistibles{' '}
@@ -80,7 +103,7 @@ export default function HomeProducts() {
             return (
               <li
                 key={category}
-                className={`inline-block rounded-full p-1 pr-4  ${
+                className={`flex rounded-full p-1 pr-4  ${
                   selectedCategories.includes(category) ? 'bg-red' : 'bg-white'
                 }`}
                 onClick={() => {
@@ -99,9 +122,13 @@ export default function HomeProducts() {
                     width={35}
                     fill={HOLAGLOW_COLORS['purple']}
                     className="mr-2 border rounded-full p-1"
-                    style={{ borderColor: `${HOLAGLOW_COLORS['purple']}` }}
+                    style={{
+                      borderColor: `${HOLAGLOW_COLORS['purple']}`,
+                    }}
                   />
-                  <Text size="sm">{category}</Text>
+                  <Text size="sm" className="whitespace-nowrap">
+                    {category}
+                  </Text>
                 </Flex>
               </li>
             );
@@ -109,7 +136,7 @@ export default function HomeProducts() {
         </ul>
       </Container>
       <Container>
-        <ProductCarousel className="pb-8" treatments={filteredProducts} />
+        <ProductCarousel className="pb-8" products={products} />
       </Container>
     </div>
   );
