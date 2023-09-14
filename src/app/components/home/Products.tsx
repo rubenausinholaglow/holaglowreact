@@ -94,7 +94,9 @@ export default function HomeProducts() {
       <Container className="pt-12">
         <Title size="2xl" className="font-bold mb-12 lg:max-w-[75%]">
           Resultados irresistibles{' '}
-          <Underlined color={HOLAGLOW_COLORS['lime']}>sin cirugía</Underlined>
+          <Underlined color={HOLAGLOW_COLORS['primary']}>
+            sin cirugía
+          </Underlined>
         </Title>
       </Container>
       <Container className="pr-0 md:pr-4">
@@ -120,10 +122,10 @@ export default function HomeProducts() {
                   <SvgDiamond
                     height={35}
                     width={35}
-                    fill={HOLAGLOW_COLORS['purple']}
+                    fill={HOLAGLOW_COLORS['secondary']}
                     className="mr-2 border rounded-full p-1"
                     style={{
-                      borderColor: `${HOLAGLOW_COLORS['purple']}`,
+                      borderColor: `${HOLAGLOW_COLORS['secondary']}`,
                     }}
                   />
                   <Text size="sm" className="whitespace-nowrap">

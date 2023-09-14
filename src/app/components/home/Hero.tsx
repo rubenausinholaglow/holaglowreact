@@ -11,7 +11,7 @@ export default function HomeHero() {
           Medicina estética
         </Text>
         <Title size="3xl" className="font-bold leading-none mb-6 md:mb-12">
-          Tu <Underlined color={HOLAGLOW_COLORS['lime']}>glow</Underlined>,
+          Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
           <br />
           tus normas
         </Title>

@@ -15,7 +15,7 @@ const repeatedValues = Array(2).fill(VALUES).flat();
 
 export default function ValuesCarousel() {
   return (
-    <div className="bg-hg-lime w-full overflow-hidden">
+    <div className="bg-hg-primary w-full overflow-hidden">
       <div className="whitespace-nowrap overflow-hidden inline-block animate-horizontalScroll">
         <ul className="inline-block">
           {repeatedValues.map(value => (

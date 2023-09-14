@@ -45,7 +45,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
       className={`
-        bg-white text-hg-purple rounded-lg overflow-hidden relative
+        bg-white text-hg-secondary rounded-lg overflow-hidden relative
         ${!isCheckout && 'cursor-pointer'}`}
       onClick={() => {
         setHighlightProduct(product);
@@ -85,10 +85,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
         <Text size={isCheckout ? 'md' : 'sm'} className="font-semibold mb-1">
           {product.title}
         </Text>
-        <Text
-          size={isCheckout ? 'sm' : 'xs'}
-          className="text-hg-darkMalva mb-3"
-        >
+        <Text size={isCheckout ? 'sm' : 'xs'} className="text-hg-tertiary mb-3">
           {product.description}
         </Text>
         <Flex layout="row-left" className="mb-3">
@@ -148,7 +145,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
                   productCartItem.priceDiscount !== 0 && (
                     <Flex
                       layout="row-left"
-                      className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+                      className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
                       onClick={() => removeItemDiscount(product.uniqueId, '€')}
                     >
                       <Text size="xs">
@@ -160,7 +157,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
                 {productCartItem.percentageDiscount > 0 && (
                   <Flex
                     layout="row-left"
-                    className="bg-hg-lime text-hg-darkMalva rounded-full px-2 py-[2px] font-semibold mr-2"
+                    className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
                     onClick={() => removeItemDiscount(product.uniqueId, '%')}
                   >
                     <Text size="xs">

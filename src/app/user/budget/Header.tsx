@@ -40,7 +40,7 @@ export default function Header({ clinicInfo }: { clinicInfo: Clinic }) {
           />
           <Text size="xs">{clinicInfo.phone}</Text>
         </li>
-        <li className="self-start flex flex-row mt-2 p-2 text-hg-black bg-hg-lightMalva rounded-md ml-2">
+        <li className="self-start flex flex-row mt-2 p-2 text-hg-black bg-hg-tertiary500 rounded-md ml-2">
           <SvgDiamond
             className="mr-2"
             height={15}

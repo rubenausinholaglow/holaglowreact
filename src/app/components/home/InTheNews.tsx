@@ -81,11 +81,11 @@ export default function Testimonials() {
         deviceSize.isMobile ? 'overflow-hidden' : ''
       }`}
     >
-      <div className="absolute top-1/3 -bottom-1/2 -left-1/2 -right-1/2 bg-hg-darkMalva100 rotate-[8deg] md:hidden"></div>
+      <div className="absolute top-1/3 -bottom-1/2 -left-1/2 -right-1/2 bg-hg-tertiary100 rotate-[8deg] md:hidden"></div>
 
       <Title size="2xl" className="font-bold mb-20 relative">
         <SvgHolaGlowStar
-          fill={HOLAGLOW_COLORS['lime']}
+          fill={HOLAGLOW_COLORS['primary']}
           className="absolute left-0 top-0 h-[250px] w-[250px] md:h-[200px] md:w-[200px] translate-x-[33%] md:-translate-x-[33%] -translate-y-[33%]"
         />
         <span className="relative">Glow in the news</span>

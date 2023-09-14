@@ -16,14 +16,14 @@ export function Footer() {
           className="md:w-1/2 order-3 md:-order-[1] px-4 md:px-0"
         >
           <SvgHolaglow
-            className="text-hg-purple mb-8"
+            className="text-hg-secondary mb-8"
             height={25}
             width={100}
           />
-          <Text size="xs" className="text-hg-purple700 font-semibold mb-3">
+          <Text size="xs" className="text-hg-secondary700 font-semibold mb-3">
             Centro de medicina estética
           </Text>
-          <Text size="xs" className="text-hg-purple700 mb-12">
+          <Text size="xs" className="text-hg-secondary700 mb-12">
             Centro de medicina estética La información de este sitio web,
             incluidos los artículos escritos por profesionales de la salud, es
             solo para fines de información general, no constituye un consejo

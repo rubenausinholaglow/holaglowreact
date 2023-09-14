@@ -78,8 +78,8 @@ const ButtonBody = ({
   const STYLES: any = {
     common: 'transition-all relative bottom-[1px] text-center rounded-full ',
     animations: '-translate-y-1 group-active:-translate-y-0',
-    primary: 'bg-hg-black text-hg-lime',
-    secondary: 'bg-white text-hg-purple border border-hg-black',
+    primary: 'bg-hg-black text-hg-primary',
+    secondary: 'bg-white text-hg-secondary border border-hg-black',
     tertiary: `${
       bgColor ? '' : 'bg-white hover:bg-hg-malva300 active:bg-hg-malva300'
     } ${color ? '' : 'text-hg-black border border-hg-black'}`,
@@ -118,8 +118,8 @@ const ButtonBase = ({ type }: { type: ButtonTypes }) => {
   const BUTTON_TYPES = ['primary', 'secondary'];
 
   const STYLES: any = {
-    primary: 'bg-hg-lime border border-hg-black',
-    secondary: 'bg-hg-purple border border-hg-black',
+    primary: 'bg-hg-primary border border-hg-black',
+    secondary: 'bg-hg-secondary border border-hg-black',
   };
 
   const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;

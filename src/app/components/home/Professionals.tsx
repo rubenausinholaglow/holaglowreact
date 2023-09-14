@@ -57,7 +57,7 @@ export default function Profesionals() {
                   profesionales
                 </Underlined>
               </Title>
-              <Text size="lg" className="text-hg-gray-200 mb-8">
+              <Text size="lg" className="text-hg-black-500 mb-8">
                 Sed necessitatibus saepe qui tenetur delectus 33 officiis
                 inventore et rerum unde cum officiis repellendus
               </Text>
@@ -106,7 +106,7 @@ export default function Profesionals() {
                   profesionales
                 </Underlined>
               </Title>
-              <Text size="lg" className="text-hg-gray-200 mb-8">
+              <Text size="lg" className="text-hg-black-500 mb-8">
                 Sed necessitatibus saepe qui tenetur delectus 33 officiis
                 inventore et rerum unde cum officiis repellendus
               </Text>

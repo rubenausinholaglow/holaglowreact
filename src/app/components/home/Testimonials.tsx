@@ -77,7 +77,7 @@ export default function Testimonials() {
     <Container className="py-12">
       <Title size="2xl" className="font-bold mb-12 max-w-[75%]">
         Tu experiencia es nuestra
-        <Underlined color={HOLAGLOW_COLORS['lime']}>obsesión</Underlined>
+        <Underlined color={HOLAGLOW_COLORS['primary']}>obsesión</Underlined>
       </Title>
       <Carousel
         hasControls

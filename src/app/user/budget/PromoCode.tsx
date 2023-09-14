@@ -9,7 +9,7 @@ export default function PromoCode({
 }) {
   return (
     <section className="bg-white p-8 mb-4">
-      <div className='bg-[url("/images/budget/promoCodeBg.jpg")] bg-hg-lightMalva/20 h-[435px] bg-cover rounded-[25px] flex flex-col ml-8'>
+      <div className='bg-[url("/images/budget/promoCodeBg.jpg")] bg-hg-tertiary500/20 h-[435px] bg-cover rounded-[25px] flex flex-col ml-8'>
         <Image
           className="-ml-8 mt-16"
           width="190"
@@ -21,12 +21,12 @@ export default function PromoCode({
           Trae a tus amig@s y gana por cada uno de ellos
         </p>
 
-        <div className="flex justify-center bg-gradient-radial from-hg-lime to-hg-white to-70% items-center text-white text-[55px] font-bold -mt-16 ml-16 h-[200px] w-[200px]">
+        <div className="flex justify-center bg-gradient-radial from-hg-primary to-hg-white to-70% items-center text-white text-[55px] font-bold -mt-16 ml-16 h-[200px] w-[200px]">
           <span>{discountAmount}€</span>
         </div>
 
         <div className="flex justify-center w-[65%] -ml-8 -mt-8">
-          <p className="bg-hg-darkMalva text-white text-[10px] leading-relaxed p-4 rounded-l-xl w-3/5">
+          <p className="bg-hg-tertiary text-white text-[10px] leading-relaxed p-4 rounded-l-xl w-3/5">
             Una vez realizado tu primer tratamiento, se activará tu código de
             cliente Holaglow y por cada tratamiento que se hagan tus amigos con
             él obtendréis {discountAmount}€ cada uno . Y lo mejor de todo... ¡es
@@ -37,8 +37,8 @@ export default function PromoCode({
               ¡Tenemos ganas
               <br /> de veros!
             </p>
-            <p className="text-hg-darkMalva">Código de descuento</p>
-            <p className="text-hg-darkMalva text-[26px] font-semibold leading-7">
+            <p className="text-hg-tertiary">Código de descuento</p>
+            <p className="text-hg-tertiary text-[26px] font-semibold leading-7">
               {discountCode}
             </p>
           </div>

@@ -100,7 +100,7 @@ export const Carousel = ({
           {hasControls && (
             <Flex layout="row-center" className="gap-6 absolute right-0 top-0">
               <ButtonBack
-                className="transition-opacity bg-hg-purple text-hg-lime rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
                 onClick={() => {
                   handleBackButton();
                 }}
@@ -108,7 +108,7 @@ export const Carousel = ({
                 <SvgArrow height={16} width={16} className="rotate-180" />
               </ButtonBack>
               <ButtonNext
-                className="transition-opacity bg-hg-purple text-hg-lime rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
                 onClick={() => {
                   handleNextButton();
                 }}

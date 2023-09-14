@@ -34,7 +34,7 @@ export default function Clinics() {
       <Container className="py-12">
         <Title size="2xl" className="font-bold mb-8 md:w-1/2">
           Nuestras <br className="hidden md:block" />
-          <Underlined color={HOLAGLOW_COLORS['lime']}>clínicas</Underlined>
+          <Underlined color={HOLAGLOW_COLORS['primary']}>clínicas</Underlined>
         </Title>
 
         {/* mobile clinic selector */}
@@ -61,7 +61,7 @@ export default function Clinics() {
                 layout="row-center"
                 className={`transition-all w-full justify-between bg-hg-black100 p-4 cursor-pointer ${
                   selectedClinic === clinic.city
-                    ? 'bg-hg-lime300'
+                    ? 'bg-hg-primary300'
                     : 'bg-hg-black100'
                 } `}
                 key={clinic.city}
@@ -109,7 +109,7 @@ const Clinic = ({
   return (
     <Accordion.Item
       value={city}
-      className="group w-full bg-hg-black100 data-[state=open]:bg-hg-lime300"
+      className="group w-full bg-hg-black100 data-[state=open]:bg-hg-primary300"
     >
       <Accordion.Header className="w-full">
         <Accordion.Trigger className="w-full">

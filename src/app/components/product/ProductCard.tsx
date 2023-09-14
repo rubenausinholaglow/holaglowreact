@@ -46,14 +46,14 @@ export default function ProductCard({
                   <Flex
                     key={category.name}
                     layout="row-left"
-                    className="flex rounded-full bg-hg-darkMalva300"
+                    className="flex rounded-full bg-hg-tertiary300"
                   >
                     <SvgDiamond
                       height={36}
                       width={36}
-                      fill={HOLAGLOW_COLORS['purple']}
+                      fill={HOLAGLOW_COLORS['secondary']}
                       className="border rounded-full p-1"
-                      style={{ borderColor: `${HOLAGLOW_COLORS['purple']}` }}
+                      style={{ borderColor: `${HOLAGLOW_COLORS['secondary']}` }}
                     />
                   </Flex>
                 );
@@ -64,14 +64,14 @@ export default function ProductCard({
       </Flex>
       <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
         <Text className="mb-2 font-semibold">{product.title}</Text>
-        <Text size="xs" className="text-hg-gray-200 mb-8">
+        <Text size="xs" className="text-hg-black-500 mb-8">
           {product.description}
         </Text>
         <Button
           type="tertiary"
           className="mt-auto"
           color={HOLAGLOW_COLORS['black']}
-          bgColor={HOLAGLOW_COLORS['lime']}
+          bgColor={HOLAGLOW_COLORS['primary']}
         >
           <Flex layout="row-center">
             <Text size="sm" className="mr-2">

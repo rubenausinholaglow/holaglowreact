@@ -8,18 +8,18 @@ import Image from 'next/image';
 
 export default function GoToTreatments() {
   return (
-    <div className="bg-gradient-15deg from-hg-pink to-hg-purple700">
+    <div className="bg-gradient-15deg from-hg-pink to-hg-secondary700">
       <Container className="py-12">
         <Flex layout="col-left" className="gap-4 items-center md:flex-row">
           <Flex layout="col-left" className="md:w-1/2">
             <SvgHolaglowHand
               height={90}
               width={90}
-              className="text-hg-purple mb-6"
+              className="text-hg-secondary mb-6"
             />
             <Title size="2xl" className="font-bold mb-12 text-white">
               La nueva cara de la medicina{' '}
-              <Underlined color={HOLAGLOW_COLORS['darkMalva']}>
+              <Underlined color={HOLAGLOW_COLORS['tertiary']}>
                 estética
               </Underlined>
             </Title>

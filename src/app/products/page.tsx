@@ -117,7 +117,9 @@ export default function ProductsPage() {
         <Container>
           <Title size="3xl" className="font-bold mb-12 lg:w-2/5">
             Loren ipsum{' '}
-            <Underlined color={HOLAGLOW_COLORS['purple700']}>sita</Underlined>
+            <Underlined color={HOLAGLOW_COLORS['secondary700']}>
+              sita
+            </Underlined>
           </Title>
         </Container>
         <Container className="px-0 md:px-4">
@@ -135,10 +137,10 @@ export default function ProductsPage() {
                     <SvgDiamond
                       height={35}
                       width={35}
-                      fill={HOLAGLOW_COLORS['purple']}
+                      fill={HOLAGLOW_COLORS['secondary']}
                       className="mr-2 border rounded-full p-1"
                       style={{
-                        borderColor: `${HOLAGLOW_COLORS['purple']}`,
+                        borderColor: `${HOLAGLOW_COLORS['secondary']}`,
                       }}
                     />
                     <Text size="sm" className="whitespace-nowrap">
@@ -190,7 +192,7 @@ export default function ProductsPage() {
 
                 <Text
                   size="xs"
-                  className={`transition-opacity text-hg-darkMalva underline cursor-pointer  ${
+                  className={`transition-opacity text-hg-tertiary underline cursor-pointer  ${
                     filtersApplied === 0 ? 'opacity-0' : 'opacity-100'
                   }`}
                   onClick={() => setFilters({})}

@@ -99,14 +99,14 @@ export default function ButtonMessage() {
         className={`transition-all flex flex-row gap-2 translate-x-0  opacity-100`}
       >
         <div
-          className={`${medicClassName} rounded-full p-3 text-hg-darkMalva cursor-pointer`}
+          className={`${medicClassName} rounded-full p-3 text-hg-tertiary cursor-pointer`}
           onClick={sendMessageToMedic}
         >
           <SvgStethoscope height={16} width={16} />
         </div>
 
         <div
-          className={`${receptionClassName} rounded-full p-3 text-hg-darkMalva cursor-pointer`}
+          className={`${receptionClassName} rounded-full p-3 text-hg-tertiary cursor-pointer`}
           onClick={sendMessageToReception}
         >
           <SvgUserSquare height={16} width={16} />

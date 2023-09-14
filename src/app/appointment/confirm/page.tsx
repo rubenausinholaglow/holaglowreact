@@ -48,7 +48,11 @@ export default function Page({
   return (
     <>
       <Flex className="justify-center h-screen">
-        <SvgSpinner fill={HOLAGLOW_COLORS['purple']} height={50} width={50} />
+        <SvgSpinner
+          fill={HOLAGLOW_COLORS['secondary']}
+          height={50}
+          width={50}
+        />
       </Flex>
     </>
   );

@@ -89,7 +89,7 @@ export default function Header() {
             className={`relative py-3 lg:py-5 lg:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
             <SvgHolaglow
-              fill={HOLAGLOW_COLORS['purple']}
+              fill={HOLAGLOW_COLORS['secondary']}
               className="lg:absolute left-0 h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
             />
 

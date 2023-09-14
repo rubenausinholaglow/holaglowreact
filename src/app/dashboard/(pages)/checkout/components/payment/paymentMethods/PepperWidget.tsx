@@ -7,28 +7,28 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
     <section className="p-2 text-black">
       <div className="flex gap-2 text-[11px] text-center">
         <div className="flex flex-col gap-1">
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2">
             Pago financiado
           </p>
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 3 meses
           </p>
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 4 meses
           </p>
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 6 meses
           </p>
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 9 meses
           </p>
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 12 meses
           </p>
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 18 meses
           </p>
-          <p className="bg-hg-lime rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
+          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 24 meses
           </p>
         </div>

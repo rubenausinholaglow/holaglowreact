@@ -106,7 +106,7 @@ export default async function Budget({
       {products && simulations ? (
         <>
           <Header clinicInfo={clinicInfo} />
-          <hr className="bg-hg-lime h-[4px] border-0" />
+          <hr className="bg-hg-primary h-[4px] border-0" />
 
           {products.length > 0 && (
             <Products

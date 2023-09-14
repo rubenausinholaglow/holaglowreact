@@ -165,7 +165,7 @@ function FormSection({
           </Button>
         </Flex>
         <Text
-          className={`transition-all text-center bg-hg-darkMalva text-white font-semibold w-full p-2 rounded-b-xl ${
+          className={`transition-all text-center bg-hg-tertiary text-white font-semibold w-full p-2 rounded-b-xl ${
             checkIn
               ? 'translate-y-0 opacity-100'
               : '-translate-y-full opacity-0'
