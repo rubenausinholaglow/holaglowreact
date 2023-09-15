@@ -20,8 +20,6 @@ export default function Clinics() {
   const [googleMapAddress, setGoogleMapAddress] = useState('');
 
   useEffect(() => {
-    console.log(clinics);
-
     async function initClinics() {
       const clinics = await fetchClinics();
 
