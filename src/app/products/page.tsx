@@ -1,11 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Bugsnag from '@bugsnag/js';
 import { Product } from '@interface/product';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import CategorySelector from 'app/components/filters/CategorySelector';
-//import CategorySelector from 'app/components/filters/CategorySelector';
 import MainLayout from 'app/components/layout/MainLayout';
 import ProductCard from 'app/components/product/ProductCard';
 import {
@@ -16,17 +14,12 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
 import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchProducts } from 'utils/fetch';
 
 import MobileFilters from './components/MobileFilters';
-import {
-  applyFilters,
-  toggleCategory,
-  updateFilterCount,
-} from './utils/filters';
+import { applyFilters, updateFilterCount } from './utils/filters';
 
 type ProductFilters = {
   [key: string]: string[];
@@ -37,7 +30,6 @@ export default function ProductsPage() {
     useGlobalPersistedStore(state => state);
 
   const [products, setProducts] = useState<Product[]>(stateProducts);
-  const [productCategories, setProductCategories] = useState<string[]>([]);
   const [filters, setFilters] = useState<ProductFilters>({});
   const [filtersApplied, setFiltersApplied] = useState<number>(0);
 
@@ -59,22 +51,6 @@ export default function ProductsPage() {
     if (isEmpty(products)) {
       setProducts(stateProducts);
     }
-  }, [stateProducts]);
-
-  useEffect(() => {
-    const allCategoryNames: string[] = stateProducts.reduce(
-      (categoryNames: string[], product) => {
-        const productCategories = product.category.map(
-          category => category.name
-        );
-        return [...categoryNames, ...productCategories];
-      },
-      []
-    );
-
-    const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
-
-    setProductCategories(uniqueCategoryNames);
   }, [stateProducts]);
 
   useEffect(() => {
