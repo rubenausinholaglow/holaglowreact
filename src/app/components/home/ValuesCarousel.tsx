@@ -1,13 +1,12 @@
 import { Text } from 'designSystem/Texts/Texts';
 
 const VALUES = [
-  'Tus reglas',
-  'Sin Cirugía',
-  'Resultados Reales',
-  'Tu brillo',
-  'Equipo médico experto',
-  'Tus reglas',
-  'Sin Cirugía',
+  'Sin cirugía',
+  'Belleza empoderadora',
+  'Libre de tabúes',
+  'Tratamientos personalizados',
+  'Resultados irresistibles',
+  'Autocuidado estético',
 ];
 
 // VALUES * 2
@@ -15,7 +14,7 @@ const repeatedValues = Array(2).fill(VALUES).flat();
 
 export default function ValuesCarousel() {
   return (
-    <div className="bg-hg-lime w-full overflow-hidden">
+    <div className="bg-hg-secondary100 w-full overflow-hidden">
       <div className="whitespace-nowrap overflow-hidden inline-block animate-horizontalScroll">
         <ul className="inline-block">
           {repeatedValues.map(value => (

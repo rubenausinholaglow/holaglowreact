@@ -9,26 +9,25 @@ export function Footer() {
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
 
   return (
-    <Container className="py-12 px-0 md:px-4">
+    <Container className="pt-12 pb-28 md:pb-12 px-0 md:px-4">
       <Flex layout="col-left" className="gap-12 md:flex-row">
         <Flex
           layout="col-left"
           className="md:w-1/2 order-3 md:-order-[1] px-4 md:px-0"
         >
           <SvgHolaglow
-            className="text-hg-purple mb-8"
+            className="text-hg-secondary mb-8"
             height={25}
             width={100}
           />
-          <Text size="xs" className="text-hg-purple700 font-semibold mb-3">
+          <Text size="xs" className="text-hg-secondary700 font-semibold mb-3">
             Centro de medicina estética
           </Text>
-          <Text size="xs" className="text-hg-purple700 mb-12">
-            Centro de medicina estética La información de este sitio web,
-            incluidos los artículos escritos por profesionales de la salud, es
-            solo para fines de información general, no constituye un consejo
-            médico y no se debe confiar en ella para un diagnóstico o
-            tratamiento médico
+          <Text size="xs" className="text-hg-secondary700 mb-12">
+            La información de este sitio web, incluidos los artículos escritos
+            por profesionales de la salud, es solo para fines de información
+            general, no constituye un consejo médico y no se debe confiar en
+            ella para un diagnóstico o tratamiento médico
           </Text>
           <Text size="xl" className="mb-6 font-semibold">
             Contacto
@@ -46,7 +45,7 @@ export function Footer() {
           </Text>
           <Flex layout="row-center" className="w-full justify-between">
             <SvgInstagram height={24} width={24} />
-            <Button type="tertiary" size="sm" className="ml-2">
+            {/* <Button type="tertiary" size="sm" className="ml-2">
               <Flex layout="row-center">
                 <SvgUserOctagon
                   fill="transparent"
@@ -56,7 +55,7 @@ export function Footer() {
                 />
                 <span className="font-semibold">Mi espacio glow</span>
               </Flex>
-            </Button>
+            </Button> */}
           </Flex>
         </Flex>
 
@@ -67,7 +66,7 @@ export function Footer() {
           <p className="font-semibold">Ver Tratamientos</p>
 
           <Accordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Aumento de Labios</li>
               <li>Relleno de ojeras</li>
               <li>Proyección de pómulos</li>
@@ -76,7 +75,7 @@ export function Footer() {
           </Accordion>
 
           <Accordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Prevención de arrugas</li>
               <li>Arrugas frente</li>
               <li>Ver más</li>
@@ -97,22 +96,22 @@ export function Footer() {
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6"
         >
           <Accordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Barcelona</li>
               <li>Madrid</li>
               <li>Valencia</li>
             </ul>
           </Accordion>
 
-          <Accordion trigger="Sobre nosotros" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+          <Accordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Quiénes somos</li>
               <li>Equipo médico</li>
               <li>Blog</li>
             </ul>
           </Accordion>
           <Accordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
-            <ul className="text-sm pt-2 font-normal flex flex-col gap-2">
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Política de privacidad</li>
               <li>Términos y condiciones</li>
             </ul>

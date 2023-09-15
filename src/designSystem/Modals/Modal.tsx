@@ -66,7 +66,7 @@ export const Modal = ({
   return (
     <div
       className={twMerge(
-        `text-hg-black transition-all fixed right-0 bottom-0 bg-white z-20 shadow-centered overflow-y-auto
+        `text-hg-black transition-all fixed right-0 bottom-0 bg-white z-50 shadow-centered overflow-y-auto
           ${from === 'right' ? 'top-0' : ''}
           ${width ? width : 'w-full'}
           ${height ? height : 'h-full'}

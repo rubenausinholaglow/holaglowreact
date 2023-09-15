@@ -10,8 +10,8 @@ export default function Issues({
   }
 
   return (
-    <section className="p-16 pt-8 bg-hg-lightMalva/20 text-black text-lg">
-      <h3 className="text-2xl text-hg-darkMalva font-semibold text-center mb-8">
+    <section className="p-16 pt-8 bg-hg-tertiary500/20 text-black text-lg">
+      <h3 className="text-2xl text-hg-tertiary font-semibold text-center mb-8">
         Bono de tratamientos pendientes
       </h3>
       <ul className="flex flex-col gap-3">
@@ -22,7 +22,7 @@ export default function Issues({
               className="bg-white p-4 flex justify-between rounded-lg"
             >
               <p>{voucher.name}</p>
-              <span className="text-hg-lightMalva">x{voucher.quantity}</span>
+              <span className="text-hg-tertiary500">x{voucher.quantity}</span>
             </li>
           );
         })}

@@ -176,7 +176,7 @@ export default function PaymentInput(props: Props) {
               <Flex layout="row-left" className="mb-2 content-center">
                 <input
                   placeholder="Importe"
-                  className="bg-white border border-hg-darkMalva rounded-md p-2 text-hg-black w-1/2"
+                  className="bg-white border border-hg-tertiary rounded-md p-2 text-hg-black w-1/2"
                   type="number"
                   {...field}
                   onChange={e => {

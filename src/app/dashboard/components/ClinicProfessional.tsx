@@ -86,7 +86,9 @@ export const ClinicProfessional = () => {
   };
 
   if (loading) {
-    return <SvgSpinner height={20} width={20} fill={HOLAGLOW_COLORS['lime']} />;
+    return (
+      <SvgSpinner height={20} width={20} fill={HOLAGLOW_COLORS['primary']} />
+    );
   }
 
   if (error) {
