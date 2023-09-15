@@ -43,7 +43,7 @@ export default function Treatments({
           <div key={index} className="bg-[#F1F4FE] rounded-[25px] p-8 mb-12">
             <div className="flex">
               <div className="flex flex-col mr-4 w-2/5">
-                <p className="text-hg-lightMalva text-xs">{year}</p>
+                <p className="text-hg-tertiary500 text-xs">{year}</p>
                 <p className="mb-4">
                   {date} {month.charAt(0).toUpperCase() + month.slice(1)}
                 </p>
@@ -56,30 +56,30 @@ export default function Treatments({
                   />
                 )}
               </div>
-              <ul className="border-l border-hg-400/10 w-3/5 text-sm">
-                <li className="border-b border-hg-400/10 p-4">
-                  <p className="text-hg-lightMalva text-xs mb-1">
+              <ul className="border-l border-hg-secondary/10 w-3/5 text-sm">
+                <li className="border-b border-hg-secondary/10 p-4">
+                  <p className="text-hg-tertiary500 text-xs mb-1">
                     Plan de tratamiento
                   </p>
                   <p>{treatment.product.title}</p>
                 </li>
-                <li className="border-b border-hg-400/10 p-4">
-                  <p className="text-hg-lightMalva text-xs mb-1">
+                <li className="border-b border-hg-secondary/10 p-4">
+                  <p className="text-hg-tertiary500 text-xs mb-1">
                     Producto utilizado
                   </p>
                   <p>{treatment.product.description}</p>
                 </li>
                 {treatment.quantity > 0 && (
-                  <li className="border-b border-hg-400/10 p-4">
+                  <li className="border-b border-hg-secondary/10 p-4">
                     <ul className="flex gap-4">
                       <li className="w-1/3">
                         <SvgMedicine
                           className="mb-2"
                           height={18}
                           width={22}
-                          fill={HOLAGLOW_COLORS['lightMalva']}
+                          fill={HOLAGLOW_COLORS['tertiary500']}
                         />
-                        <p className="text-hg-lightMalva text-xs mb-1">
+                        <p className="text-hg-tertiary500 text-xs mb-1">
                           Cantidad
                         </p>
                         <p>{treatment.quantity} Vial</p>
@@ -90,9 +90,9 @@ export default function Treatments({
                             className="mb-2"
                             height={18}
                             width={22}
-                            fill={HOLAGLOW_COLORS['lightMalva']}
+                            fill={HOLAGLOW_COLORS['tertiary500']}
                           />
-                          <p className="text-hg-lightMalva text-xs mb-1">
+                          <p className="text-hg-tertiary500 text-xs mb-1">
                             Número de lote
                           </p>
                           <p>{treatment.lotReference}</p>
@@ -104,9 +104,9 @@ export default function Treatments({
                             className="mb-2"
                             height={18}
                             width={22}
-                            fill={HOLAGLOW_COLORS['lightMalva']}
+                            fill={HOLAGLOW_COLORS['tertiary500']}
                           />
-                          <p className="text-hg-lightMalva text-xs mb-1">
+                          <p className="text-hg-tertiary500 text-xs mb-1">
                             Duración
                           </p>
                           <p>{`de ${Math.floor(
@@ -168,7 +168,7 @@ export default function Treatments({
 
           <table className="text-hg-black text-[11px] mb-12 w-full">
             <thead>
-              <tr className="text-hg-lightMalva mb-4">
+              <tr className="text-hg-tertiary500 mb-4">
                 <th className="py-3 pr-6 text-left font-normal">
                   Fecha / Sesión
                 </th>
@@ -199,7 +199,10 @@ export default function Treatments({
                     : prevAppointment.appointmentProducts[0].product.title;
 
                 return (
-                  <tr key={index} className="mb-4 border-b border-hg-400/10">
+                  <tr
+                    key={index}
+                    className="mb-4 border-b border-hg-secondary/10"
+                  >
                     <td className="py-3 pr-6">{parsedDate}</td>
                     <td className="py-3 pr-6">{appointmentTitle}</td>
                     <td className="py-3 pr-6">

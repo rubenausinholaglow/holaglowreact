@@ -21,7 +21,7 @@ export default function ProductCard({
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
   const [imgSrc, setImgSrc] = useState(
-    `/images/product/${product.flowwwId}/${product.flowwwId}.png`
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
   );
 
   return (
@@ -46,14 +46,14 @@ export default function ProductCard({
                   <Flex
                     key={category.name}
                     layout="row-left"
-                    className="flex rounded-full bg-hg-darkMalva300"
+                    className="flex rounded-full bg-hg-tertiary300"
                   >
                     <SvgDiamond
                       height={36}
                       width={36}
-                      fill={HOLAGLOW_COLORS['purple']}
+                      fill={HOLAGLOW_COLORS['secondary']}
                       className="border rounded-full p-1"
-                      style={{ borderColor: `${HOLAGLOW_COLORS['purple']}` }}
+                      style={{ borderColor: `${HOLAGLOW_COLORS['secondary']}` }}
                     />
                   </Flex>
                 );
@@ -64,19 +64,12 @@ export default function ProductCard({
       </Flex>
       <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
         <Text className="mb-2 font-semibold">{product.title}</Text>
-        <Text size="xs" className="text-hg-gray-200 mb-8">
+        <Text size="xs" className="text-hg-black500 mb-8">
           {product.description}
         </Text>
-        <Button
-          type="tertiary"
-          className="mt-auto"
-          color={HOLAGLOW_COLORS['black']}
-          bgColor={HOLAGLOW_COLORS['lime']}
-        >
+        <Button type="tertiary" className="mt-auto" bgColor="bg-hg-primary">
           <Flex layout="row-center">
-            <Text size="sm" className="mr-2">
-              Saber más
-            </Text>
+            <p className="mr-2">Saber más</p>
             <SvgArrow height={20} width={20} />
           </Flex>
         </Button>

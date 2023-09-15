@@ -246,7 +246,7 @@ export default function Page() {
                 <SvgSpinner
                   height={30}
                   width={30}
-                  fill={HOLAGLOW_COLORS['lime']}
+                  fill={HOLAGLOW_COLORS['primary']}
                 />
               </Flex>
             )}

@@ -79,28 +79,24 @@ export default function Header() {
 
       <header
         id="header"
-        className={`z-10 w-full bg-white fixed top-0 transition-transform ${
+        className={`z-40 w-full bg-white fixed top-0 transition-transform ${
           !isHeaderVisible ? '-translate-y-full' : ''
         }`}
       >
-        <Container>
+        <Container isWider>
           <Flex
             layout="row-between"
             className={`relative py-3 lg:py-5 lg:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
             <SvgHolaglow
-              fill={HOLAGLOW_COLORS['purple']}
+              fill={HOLAGLOW_COLORS['secondary']}
               className="lg:absolute left-0 h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
             />
 
             <Navigation className="hidden lg:block" />
 
             <Flex layout="row-center" className="lg:absolute right-0">
-              <Button
-                href="https://holaglow.com"
-                type="transparent"
-                customStyles="px-[6px] lg:px-0"
-              >
+              {/* <Button href="https://holaglow.com" type="transparent">
                 <Flex layout="row-center">
                   <SvgUserOctagon
                     fill="transparent"
@@ -108,7 +104,7 @@ export default function Header() {
                   />
                   <span className="hidden lg:block ml-2">Mi espacio glow</span>
                 </Flex>
-              </Button>
+              </Button> */}
 
               {!isMobileNavVisible && (
                 <SvgMenu

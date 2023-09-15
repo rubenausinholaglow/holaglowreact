@@ -34,7 +34,7 @@ export const CustomButtonFilter: React.FC<CustomButtonFilterProps> = ({
       size="sm"
       customStyles={`transition-all py-3 px-2 h-[26px] ${
         isSelected
-          ? 'bg-hg-lime border-hg-lime hover:bg-hg-lime hover:border-hg-lime'
+          ? 'bg-hg-primary border-hg-primary hover:bg-hg-primary hover:border-hg-primary'
           : 'opacity-75 hover:opacity-100'
       }`}
       {...buttonProps}

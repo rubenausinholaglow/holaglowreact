@@ -2,138 +2,58 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import ProductService from '@services/ProductService';
 import ProductCarousel from 'app/components/product/ProductCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
+import { Title, Underlined } from 'designSystem/Texts/Texts';
+import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
+import { FetchProducts } from 'utils/fetch';
+
+import CategorySelector from '../filters/CategorySelector';
 
 export default function HomeProducts() {
-  const stateProducts = useGlobalPersistedStore(state => state.stateProducts);
-  const setStateProducts = useGlobalPersistedStore(
-    state => state.setStateProducts
+  const { stateProducts, setStateProducts } = useGlobalPersistedStore(
+    state => state
   );
 
   const [products, setProducts] = useState<Product[]>(stateProducts);
-  const [productCategories, setProductCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const fetchedProducts = await ProductService.getAllProducts();
-
-        const productsWithVisibility = fetchedProducts.map(
-          (product: Product) => ({
-            ...product,
-            visibility: true,
-          })
-        );
-
-        setStateProducts(productsWithVisibility);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    }
-
     if (isEmpty(stateProducts)) {
-      fetchProducts();
+      FetchProducts(setStateProducts);
     }
-  }, []);
-
-  useEffect(() => {
     if (isEmpty(products)) {
       setProducts(stateProducts);
     }
-
-    const allCategoryNames: string[] = stateProducts.reduce(
-      (categoryNames: string[], product) => {
-        const productCategories = product.category.map(
-          category => category.name
-        );
-        return [...categoryNames, ...productCategories];
-      },
-      []
-    );
-
-    const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
-
-    setProductCategories(uniqueCategoryNames);
   }, [stateProducts]);
-
-  useEffect(() => {
-    let updatedProducts = products;
-
-    if (!isEmpty(selectedCategories)) {
-      updatedProducts = products.map(product => {
-        return {
-          ...product,
-          visibility: product.category.some(category =>
-            selectedCategories.includes(category.name)
-          ),
-        };
-      });
-    } else {
-      updatedProducts = stateProducts;
-    }
-
-    setProducts(updatedProducts);
-  }, [selectedCategories]);
 
   if (isEmpty(stateProducts)) {
     return <></>;
   }
 
-  console.log(products.length);
-
   return (
-    <div className="bg-[#F3EDE9] overflow-hidden">
+    <div className="bg-hg-cream500 overflow-hidden">
       <Container className="pt-12">
-        <Title size="2xl" className="font-bold mb-12 lg:max-w-[75%]">
-          Resultados irresistibles{' '}
-          <Underlined color={HOLAGLOW_COLORS['lime']}>sin cirugía</Underlined>
+        <Title size="2xl" className="font-bold mb-6 md:mb-12">
+          Tratamientos para conseguir resultados{' '}
+          <Underlined color={HOLAGLOW_COLORS['primary']}>
+            irresistibles
+          </Underlined>
+          <span className="inline-block ml-2 lg:ml-4 translate-y-1">
+            <span className="inline-block bg-hg-black rounded-full h-[30px] w-[30px] lg:h-[44px] lg:w-[44px] p-[6px] lg:p-[10px]">
+              <SvgArrow
+                height={24}
+                width={24}
+                className="rotate-45 text-hg-primary h-[16px] w-[16px] lg:h-[24px] lg:w-[24px]"
+              />
+            </span>
+          </span>
         </Title>
       </Container>
       <Container className="pr-0 md:pr-4">
-        <ul className="flex gap-3 mb-12 overflow-scroll md:overflow-auto pr-4 md:pr-0">
-          {productCategories.map(category => {
-            return (
-              <li
-                key={category}
-                className={`flex rounded-full p-1 pr-4  ${
-                  selectedCategories.includes(category) ? 'bg-red' : 'bg-white'
-                }`}
-                onClick={() => {
-                  if (selectedCategories.includes(category)) {
-                    setSelectedCategories(
-                      selectedCategories.filter(item => item !== category)
-                    );
-                  } else {
-                    setSelectedCategories([...selectedCategories, category]);
-                  }
-                }}
-              >
-                <Flex layout="row-left">
-                  <SvgDiamond
-                    height={35}
-                    width={35}
-                    fill={HOLAGLOW_COLORS['purple']}
-                    className="mr-2 border rounded-full p-1"
-                    style={{
-                      borderColor: `${HOLAGLOW_COLORS['purple']}`,
-                    }}
-                  />
-                  <Text size="sm" className="whitespace-nowrap">
-                    {category}
-                  </Text>
-                </Flex>
-              </li>
-            );
-          })}
-        </ul>
+        <CategorySelector products={products} setProducts={setProducts} />
       </Container>
       <Container>
         <ProductCarousel className="pb-8" products={products} />

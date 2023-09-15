@@ -65,9 +65,9 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
           if (totalTime >= twentyFiveMinutes) {
             onColorChange('bg-red-500');
           } else if (totalTime >= fifteenMinutes) {
-            onColorChange('bg-hg-lime');
+            onColorChange('bg-hg-primary');
           } else {
-            onColorChange('bg-hg-darkMalva');
+            onColorChange('bg-hg-tertiary');
           }
         }
       }

@@ -51,7 +51,7 @@ export const Quantifier: FunctionComponent<Props> = ({
         max=""
         value={value}
         onChange={e => setValue(parseInt(e.target.value))}
-        className="border border-hg-malva300 w-16 mx-2 rounded-lg py-4 px-2"
+        className="border border-hg-tertiary300 w-16 mx-2 rounded-lg py-4 px-2"
       />
       <Button
         type="primary"

@@ -34,11 +34,11 @@ export const Filters: React.FC<FilterPageProps> = ({
       <SvgDoubleAngleLeft
         height={34}
         width={34}
-        className={`absolute top-0 -right-[17px] bg-hg-lime text-hg-darkMalva rounded-full p-1 cursor-pointer transition-all ${
+        className={`absolute top-0 -right-[17px] bg-hg-primary text-hg-tertiary rounded-full p-1 cursor-pointer transition-all ${
           showFilters ? 'rotate-0' : 'rotate-180'
         }`}
         onClick={() => setShowFilters(!showFilters)}
-        fill={HOLAGLOW_COLORS['darkMalva']}
+        fill={HOLAGLOW_COLORS['tertiary']}
       />
 
       <div
@@ -49,7 +49,7 @@ export const Filters: React.FC<FilterPageProps> = ({
         <input
           type="text"
           placeholder="Filtrar por título o descripción"
-          className="border border-hg-darkMalva rounded px-2 py-1 mt-2 text-black w-full mb-6"
+          className="border border-hg-tertiary rounded px-2 py-1 mt-2 text-black w-full mb-6"
           onChange={handleInputChange}
         />
 

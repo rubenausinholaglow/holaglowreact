@@ -1,4 +1,5 @@
 import Clinics from './components/home/Clinics';
+import FloatingBottomBar from './components/home/FloatingBottomBar';
 import GoToTreatments from './components/home/GoToTreatments';
 import Hero from './components/home/Hero';
 import InTheNews from './components/home/InTheNews';
@@ -21,6 +22,7 @@ export default function Home() {
       <InTheNews />
       <Clinics />
       <GoToTreatments />
+      <FloatingBottomBar />
     </MainLayout>
   );
 }

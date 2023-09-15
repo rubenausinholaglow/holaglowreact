@@ -24,10 +24,11 @@ export const Carousel = ({
   visibleSlides = 1,
   step = 1,
   currentSlide = 0,
-  dragEnabled = false,
-  touchEnabled = false,
+  dragEnabled = true,
+  touchEnabled = true,
   className = '',
-  sliderStyles = {},
+  sliderWidth = {},
+  sliderStyles = '',
   ...rest
 }: {
   children: ReactNode;
@@ -42,7 +43,8 @@ export const Carousel = ({
   dragEnabled?: boolean;
   touchEnabled?: boolean;
   className?: string;
-  sliderStyles?: object;
+  sliderWidth?: object;
+  sliderStyles?: string;
   [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -77,8 +79,8 @@ export const Carousel = ({
         visibleSlides={visibleSlides}
         {...rest}
       >
-        <div style={sliderStyles}>
-          <Slider>
+        <div style={sliderWidth}>
+          <Slider classNameTray={sliderStyles}>
             {childrens.map((children, i) => (
               // eslint-disable-next-line react/no-array-index-key
               <Slide index={i} key={i}>
@@ -100,7 +102,7 @@ export const Carousel = ({
           {hasControls && (
             <Flex layout="row-center" className="gap-6 absolute right-0 top-0">
               <ButtonBack
-                className="transition-opacity bg-hg-purple text-hg-lime rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
                 onClick={() => {
                   handleBackButton();
                 }}
@@ -108,7 +110,7 @@ export const Carousel = ({
                 <SvgArrow height={16} width={16} className="rotate-180" />
               </ButtonBack>
               <ButtonNext
-                className="transition-opacity bg-hg-purple text-hg-lime rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
                 onClick={() => {
                   handleNextButton();
                 }}
