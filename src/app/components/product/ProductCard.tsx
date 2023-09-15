@@ -21,7 +21,7 @@ export default function ProductCard({
   const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
   const [imgSrc, setImgSrc] = useState(
-    `https://budgetimages.blob.core.windows.net/images/products/${product.flowwwId}/${product.flowwwId}.jpg`
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
   );
 
   return (

@@ -47,7 +47,7 @@ export default function Products({
 
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const [imgSrc, setImgSrc] = useState(
-            `https://budgetimages.blob.core.windows.net/images/products/${productDetails.flowwwId}/${productDetails.flowwwId}.jpg`
+            `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${productDetails.flowwwId}/${productDetails.flowwwId}.jpg`
           );
 
           return (

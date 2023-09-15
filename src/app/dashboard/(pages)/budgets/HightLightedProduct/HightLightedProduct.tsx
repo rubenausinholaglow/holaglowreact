@@ -43,7 +43,7 @@ export default function HightLightedProduct() {
 
           setProduct(data);
           setImgSrc(
-            `https://budgetimages.blob.core.windows.net/images/products/${data.flowwwId}/${data.flowwwId}.jpg`
+            `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${data.flowwwId}/${data.flowwwId}.jpg`
           );
         }
       } catch (error: any) {

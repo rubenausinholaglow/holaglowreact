@@ -31,7 +31,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
   const [imgSrc, setImgSrc] = useState(
-    `https://budgetimages.blob.core.windows.net/images/products/${product.flowwwId}/${product.flowwwId}.jpg`
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
   );
   const productCartItem = cart.filter(
     item =>
