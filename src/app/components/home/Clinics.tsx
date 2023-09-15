@@ -1,49 +1,61 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Clinic } from '@interface/clinic';
 import * as Accordion from '@radix-ui/react-accordion';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAngle } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 import Link from 'next/link';
-
-interface ClinicData {
-  city: string;
-  address: string;
-  link: string;
-  iframeSrc: string;
-}
-
-const CLINICS: ClinicData[] = [
-  {
-    city: 'Madrid',
-    address: 'c. Andrés Mellado 3, 28015',
-    link: 'htpps://www.holaglow.es',
-    iframeSrc:
-      'https://www.google.com/maps/embed/v1/place?q=Holaglow,+Calle+de+Andrés+Mellado,+Madrid,+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8',
-  },
-  {
-    city: 'Barcelona',
-    address: 'Av. Diagonal 299, 08013',
-    link: 'htpps://www.holaglow.es',
-    iframeSrc:
-      'https://www.google.com/maps/embed/v1/place?q=Holaglow,+Avenida+Diagonal,+Barcelona,+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8',
-  },
-];
+import { fetchClinics } from 'utils/fetch';
 
 export default function Clinics() {
-  const [selectedClinic, setSelectedClinic] = useState(CLINICS[0]);
+  const { clinics, setClinics } = useGlobalPersistedStore(state => state);
+
+  const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
+  const [googleMapAddress, setGoogleMapAddress] = useState('');
 
   useEffect(() => {
-    const mapLayer = document.querySelector('#mapLayer');
+    console.log(clinics);
 
-    if (mapLayer) {
-      const mapLayerElement = mapLayer as HTMLElement;
-      setMapHeight(mapLayerElement.offsetHeight);
+    async function initClinics() {
+      const clinics = await fetchClinics();
+
+      setClinics(clinics);
     }
-  }, []);
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
+
+    if (isEmpty(selectedClinic) && !isEmpty(clinics)) {
+      setSelectedClinic(clinics[0]);
+    }
+  }, [clinics]);
+
+  useEffect(() => {
+    if (!isEmpty(selectedClinic)) {
+      const mapLayer = document.querySelector('#mapLayer');
+
+      if (mapLayer) {
+        const mapLayerElement = mapLayer as HTMLElement;
+        setMapHeight(mapLayerElement.offsetHeight);
+      }
+
+      const formattedAddress = selectedClinic.address.replace(/ /g, '+');
+      const formattedCity = selectedClinic.city.replace(/ /g, '+');
+
+      setGoogleMapAddress(`${formattedAddress},${formattedCity}`);
+    }
+  }, [selectedClinic]);
+
+  if (isEmpty(selectedClinic)) {
+    return <></>;
+  }
 
   return (
     <div className="relative bg-white">
@@ -59,13 +71,13 @@ export default function Clinics() {
           collapsible
           className="w-full flex flex-col gap-4 md:hidden"
         >
-          {CLINICS.map(clinic => (
+          {clinics.map(clinic => (
             <Clinic
               key={clinic.city}
               city={clinic.city}
               address={clinic.address}
-              link={clinic.link}
-              selectedClinic={selectedClinic}
+              internalName={clinic.internalName}
+              googleMapAddress={googleMapAddress}
             />
           ))}
         </Accordion.Root>
@@ -73,7 +85,7 @@ export default function Clinics() {
         {/* desktop clinic selector */}
         <div className="hidden md:flex w-1/2">
           <Flex layout="col-left" className="gap-4 mr-24 w-full">
-            {CLINICS.map((clinic, index) => (
+            {clinics.map((clinic, index) => (
               <Flex
                 layout="row-center"
                 className={`transition-all w-full justify-between bg-hg-black100 p-4 cursor-pointer ${
@@ -82,7 +94,7 @@ export default function Clinics() {
                     : 'bg-hg-black100'
                 } `}
                 key={clinic.city}
-                onClick={() => setSelectedClinic(CLINICS[index])}
+                onClick={() => setSelectedClinic(clinics[index])}
               >
                 <Flex layout="col-left">
                   <Text size="lg" className="font-semibold mb-2">
@@ -114,7 +126,7 @@ export default function Clinics() {
             <div id="g-mapdisplay" className="h-full w-full max-w-full">
               <iframe
                 className="h-full w-full border-none"
-                src={selectedClinic.iframeSrc}
+                src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
               ></iframe>
             </div>
           </div>
@@ -127,13 +139,13 @@ export default function Clinics() {
 const Clinic = ({
   city,
   address,
-  link,
-  selectedClinic,
+  internalName,
+  googleMapAddress,
 }: {
   city: string;
   address: string;
-  link: string;
-  selectedClinic: ClinicData;
+  internalName: string;
+  googleMapAddress: string;
 }) => {
   return (
     <Accordion.Item
@@ -151,7 +163,10 @@ const Clinic = ({
                 {city}
               </Text>
               <address className="text-xs not-italic mb-2">{address}</address>
-              <Link className="text-sm underline" href="https://www.google.cat">
+              <Link
+                className="text-sm underline"
+                href={`https://www.holaglow.com/clinicas/${internalName}`}
+              >
                 Más info
               </Link>
             </Flex>
@@ -168,7 +183,7 @@ const Clinic = ({
           <div id="g-mapdisplay" className="h-full w-full max-w-full">
             <iframe
               className="h-full w-full border-none"
-              src={selectedClinic.iframeSrc}
+              src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
             ></iframe>
           </div>
         </div>
