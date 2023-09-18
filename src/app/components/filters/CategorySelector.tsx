@@ -60,7 +60,7 @@ export default function CategorySelector({
         return (
           <li
             key={category}
-            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 hover:bg-hg-primary500 hover:textopacity-80 ${
+            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 ${
               selectedCategories.includes(category)
                 ? 'bg-hg-primary500'
                 : 'bg-white'

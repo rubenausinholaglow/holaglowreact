@@ -62,9 +62,7 @@ export default function HomeProducts() {
       <Container className="pr-0 mb-12 md:pr-4">
         <CategorySelector products={products} setProducts={setProducts} />
       </Container>
-      <Container>
-        <ProductCarousel className="pb-8" products={products} />
-      </Container>
+      <ProductCarousel className="pb-8" products={products} />
     </div>
   );
 }

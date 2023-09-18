@@ -1,3 +1,6 @@
+'use client';
+
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Accordion from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -13,56 +16,81 @@ export default function MobileNavigation({
   headerHeight: number;
 }) {
   const paddingBottom = headerHeight + 16;
+  const { deviceSize } = useGlobalPersistedStore(state => state);
 
   return (
     <Modal
       isVisible={isVisible}
       width="w-full"
-      className="shadow-none"
+      className="shadow-none bg-hg-primary300"
       from="right"
       style={{ top: headerHeight }}
       hideModalBackground
     >
-      <Container className="border-b border-hg-black py-8">
-        <Flex layout="col-left" className="text-xl font-semibold">
-          <ul className="flex flex-col gap-8 mb-8">
-            <li>Labios</li>
-            <li>Facial</li>
-            <li>Piel</li>
-            <li>Hydrafacial</li>
-            <li>Capilar</li>
-            <li>Otros</li>
-          </ul>
-          <Button type="tertiary">Reservar Cita</Button>
+      <div className="bg-white border-b border-hg-black py-8">
+        <Flex
+          layout="col-left"
+          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
+        >
+          <p className="font-semibold">Ver Tratamientos</p>
+
+          <Accordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+              <li>Aumento de Labios</li>
+              <li>Relleno de ojeras</li>
+              <li>Proyección de pómulos</li>
+              <li>Ver más</li>
+            </ul>
+          </Accordion>
+
+          <Accordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+              <li>Prevención de arrugas</li>
+              <li>Arrugas frente</li>
+              <li>Ver más</li>
+            </ul>
+          </Accordion>
+
+          <p className="font-semibold">Hydrafacial ®</p>
+
+          <p className="font-semibold">Packs Glow</p>
+
+          <Button type="tertiary" className="md:hidden">
+            Reservar Cita
+          </Button>
         </Flex>
-      </Container>
-      <Container className="pt-8 pb-12">
-        <Flex layout="col-left" className="text-xl font-semibold mb-12 gap-8">
-          <Accordion trigger="Clínicas">
-            <ul className="text-md pl-2 pt-2 font-normal flex flex-col gap-2">
-              <li>Madrid</li>
+      </div>
+      <div className="bg-white border-b border-hg-black py-8">
+        <Flex
+          layout="col-left"
+          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
+        >
+          <Accordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <li>Barcelona</li>
+              <li>Madrid</li>
               <li>Valencia</li>
             </ul>
           </Accordion>
-          <Accordion trigger="Sobre nosotros">
-            <p>Bla bla bla sobre nosotros (?)</p>
+
+          <Accordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+              <li>Quiénes somos</li>
+              <li>Equipo médico</li>
+              <li>Blog</li>
+            </ul>
           </Accordion>
-          <Accordion trigger="Privacidad">
-            <p>Bla bla bla privacidad (?)</p>
+          <Accordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+              <li>Política de privacidad</li>
+              <li>Términos y condiciones</li>
+            </ul>
           </Accordion>
         </Flex>
-
-        <Button type="secondary" size="xl" className="mx-auto">
-          <Flex layout="row-center">
-            Descubre tu tratamiento
-            <SvgArrow height={24} width={24} className="ml-2" />
-          </Flex>
-        </Button>
-      </Container>
+      </div>
       <Flex
         layout="col-left"
-        className="bg-hg-primary300 p-4 text-xs gap-4"
+        className="p-4 text-xs gap-4"
         style={{ paddingBottom: `${paddingBottom}px` }}
       >
         <Title size="xl">Contacto</Title>
