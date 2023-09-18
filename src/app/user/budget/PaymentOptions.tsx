@@ -16,7 +16,7 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
         </h3>
         <p className="text-sm pr-8 mb-4 mt-2">
           Te ofrecemos una experiencia de compra más flexible con financiación
-          hasta en 24 meses
+          hasta en 18 meses
         </p>
         <div className="flex gap-2 text-[11px] text-center">
           <div className="flex flex-col gap-1 w-1/2">
