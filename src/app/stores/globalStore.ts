@@ -1,3 +1,4 @@
+import { User } from '@interface/appointment';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { create } from 'zustand';
@@ -16,6 +17,7 @@ interface GlobalPersistStore {
   deviceSize: DeviceSize;
   selectedTreatments?: Product[];
   selectedClinic?: Clinic;
+  user?: User;
 }
 
 interface GlobalPersistActions {
@@ -25,6 +27,7 @@ interface GlobalPersistActions {
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
   setSelectedClinic: (value: Clinic) => void;
+  setCurrentUser: (value: User) => void;
 }
 
 export const useGlobalPersistedStore = create(
@@ -41,6 +44,7 @@ export const useGlobalPersistedStore = create(
       isMobile: true,
       selectedTreatment: undefined,
       selectedClinic: undefined,
+      user: undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -58,6 +62,9 @@ export const useGlobalPersistedStore = create(
       },
       setSelectedClinic: value => {
         set({ selectedClinic: value });
+      },
+      setCurrentUser: value => {
+        set({ user: value });
       },
     }),
     {

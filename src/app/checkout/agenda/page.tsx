@@ -24,8 +24,9 @@ export default function Agenda() {
   const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
     state => state
   );
-  const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const { selectedClinic } = useGlobalPersistedStore(state => state);
+  const { user } = useGlobalPersistedStore(state => state);
+  const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   useEffect(() => {
     if (!selectedTreatments) {
@@ -104,7 +105,7 @@ export default function Agenda() {
       id: '0',
       startTime: selectedDay.format(format) + ' ' + selectedSlot.startTime,
       treatment: selectedTreatmentsIds,
-      clientId: '', //TODO: Pending
+      clientId: user?.flowwwToken,
       comment: '', //TODO: Pending
       treatmentText: '', //TODO: Pending
       referralId: '',
