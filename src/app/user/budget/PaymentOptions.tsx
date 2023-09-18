@@ -10,7 +10,7 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
           <br />
           desde{' '}
           <span className="text-[24px] border-b-2 border-[#F0AD4E]">
-            {`${priceFormat((totalPrice * 1.16) / 24)}`}€
+            {`${priceFormat((totalPrice * 1.117) / 18)}`}€
           </span>{' '}
           al mes*
         </h3>
@@ -66,9 +66,6 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
             </p>
             <p className="rounded-md bg-white py-1 px-2">
               {`${priceFormat((totalPrice * 1.117) / 18)}`} €
-            </p>
-            <p className="rounded-md bg-white py-1 px-2">
-              {`${priceFormat((totalPrice * 1.16) / 24)}`} €
             </p>
           </div>
         </div>
