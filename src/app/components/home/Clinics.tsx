@@ -1,33 +1,59 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Clinic } from '@interface/clinic';
 import * as Accordion from '@radix-ui/react-accordion';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAngle } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 import Link from 'next/link';
-
-const CLINICS = [
-  {
-    city: 'Madrid',
-    address: 'c. Andrés Mellado 3, 28015',
-    link: 'htpps://www.holaglow.es',
-  },
-  {
-    city: 'Barcelona',
-    address: 'Av. Diagonal 299, 08013',
-    link: 'htpps://www.holaglow.es',
-  },
-  {
-    city: 'Valencia',
-    address: 'c. Nifru tai dea 356, 07003',
-    link: 'htpps://www.holaglow.es',
-  },
-];
+import { fetchClinics } from 'utils/fetch';
 
 export default function Clinics() {
-  const [selectedClinic, setSelectedClinic] = useState(CLINICS[0].city);
+  const { clinics, setClinics } = useGlobalPersistedStore(state => state);
+
+  const [selectedClinic, setSelectedClinic] = useState<Clinic>();
+  const [mapHeight, setMapHeight] = useState(0);
+  const [googleMapAddress, setGoogleMapAddress] = useState('');
+
+  useEffect(() => {
+    async function initClinics() {
+      const clinics = await fetchClinics();
+
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
+
+    if (isEmpty(selectedClinic) && !isEmpty(clinics)) {
+      setSelectedClinic(clinics[0]);
+    }
+  }, [clinics]);
+
+  useEffect(() => {
+    if (!isEmpty(selectedClinic)) {
+      const mapLayer = document.querySelector('#mapLayer');
+
+      if (mapLayer) {
+        const mapLayerElement = mapLayer as HTMLElement;
+        setMapHeight(mapLayerElement.offsetHeight);
+      }
+
+      const formattedAddress = selectedClinic.address.replace(/ /g, '+');
+      const formattedCity = selectedClinic.city.replace(/ /g, '+');
+
+      setGoogleMapAddress(`${formattedAddress},${formattedCity}`);
+    }
+  }, [selectedClinic]);
+
+  if (isEmpty(selectedClinic)) {
+    return <></>;
+  }
 
   return (
     <div className="relative bg-white">
@@ -43,12 +69,13 @@ export default function Clinics() {
           collapsible
           className="w-full flex flex-col gap-4 md:hidden"
         >
-          {CLINICS.map(clinic => (
+          {clinics.map(clinic => (
             <Clinic
               key={clinic.city}
               city={clinic.city}
               address={clinic.address}
-              link={clinic.link}
+              internalName={clinic.internalName}
+              googleMapAddress={googleMapAddress}
             />
           ))}
         </Accordion.Root>
@@ -56,16 +83,16 @@ export default function Clinics() {
         {/* desktop clinic selector */}
         <div className="hidden md:flex w-1/2">
           <Flex layout="col-left" className="gap-4 mr-24 w-full">
-            {CLINICS.map(clinic => (
+            {clinics.map((clinic, index) => (
               <Flex
                 layout="row-center"
                 className={`transition-all w-full justify-between bg-hg-black100 p-4 cursor-pointer ${
-                  selectedClinic === clinic.city
+                  selectedClinic.city === clinic.city
                     ? 'bg-hg-primary300'
                     : 'bg-hg-black100'
                 } `}
                 key={clinic.city}
-                onClick={() => setSelectedClinic(clinic.city)}
+                onClick={() => setSelectedClinic(clinics[index])}
               >
                 <Flex layout="col-left">
                   <Text size="lg" className="font-semibold mb-2">
@@ -87,11 +114,21 @@ export default function Clinics() {
           </Flex>
         </div>
         <div
+          id="mapLayer"
           className="absolute bg-slate-400 top-0 bottom-0 right-0 left-1/2 hidden md:block"
-          style={{
-            background: `url("/images/home/maps/${selectedClinic.toLowerCase()}.png") center / 100% no-repeat`,
-          }}
-        ></div>
+        >
+          <div
+            className={`overflow-hidden max-w-full w-full`}
+            style={{ height: `${mapHeight}px` }}
+          >
+            <div id="g-mapdisplay" className="h-full w-full max-w-full">
+              <iframe
+                className="h-full w-full border-none"
+                src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
+              ></iframe>
+            </div>
+          </div>
+        </div>
       </Container>
     </div>
   );
@@ -100,11 +137,13 @@ export default function Clinics() {
 const Clinic = ({
   city,
   address,
-  link,
+  internalName,
+  googleMapAddress,
 }: {
   city: string;
   address: string;
-  link: string;
+  internalName: string;
+  googleMapAddress: string;
 }) => {
   return (
     <Accordion.Item
@@ -122,7 +161,10 @@ const Clinic = ({
                 {city}
               </Text>
               <address className="text-xs not-italic mb-2">{address}</address>
-              <Link className="text-sm underline" href="https://www.google.cat">
+              <Link
+                className="text-sm underline"
+                href={`https://www.holaglow.com/clinicas/${internalName}`}
+              >
                 Más info
               </Link>
             </Flex>
@@ -135,12 +177,14 @@ const Clinic = ({
         </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Content className="md:hidden overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-        <div
-          className="aspect-square relative"
-          style={{
-            background: `url("/images/home/maps/${city.toLowerCase()}.png") center / 225% no-repeat`,
-          }}
-        ></div>
+        <div className={`overflow-hidden max-w-full w-full h-[300px]`}>
+          <div id="g-mapdisplay" className="h-full w-full max-w-full">
+            <iframe
+              className="h-full w-full border-none"
+              src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
+            ></iframe>
+          </div>
+        </div>
       </Accordion.Content>
     </Accordion.Item>
   );
