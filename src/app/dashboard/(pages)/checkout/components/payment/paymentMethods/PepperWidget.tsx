@@ -54,9 +54,6 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
           <p className="rounded-md bg-white py-1 px-2">
             {`${priceFormat((totalPrice * 1.117) / 18)}`} €
           </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat((totalPrice * 1.16) / 24)}`} €
-          </p>
         </div>
       </div>
       <Text size="xs" className="mt-2">
