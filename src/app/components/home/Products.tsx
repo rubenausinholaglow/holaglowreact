@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Slider from 'react-slick';
 import { Product } from '@interface/product';
 import ProductCarousel from 'app/components/product/ProductCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -12,6 +13,7 @@ import { isEmpty } from 'lodash';
 import { fetchProducts } from 'utils/fetch';
 
 import CategorySelector from '../filters/CategorySelector';
+import ProductCard from '../product/ProductCard';
 
 export default function HomeProducts() {
   const { stateProducts, setStateProducts } = useGlobalPersistedStore(
@@ -64,6 +66,31 @@ export default function HomeProducts() {
       </Container>
       <Container>
         <ProductCarousel className="pb-8" products={products} />
+      </Container>
+
+      <Container>
+        <Title size="xl" className="font-bold mb-6 md:mb-12">
+          Slick Carousel
+        </Title>
+        <Slider
+          dots={true}
+          infinite={true}
+          speed={500}
+          slidesToShow={3}
+          slidesToScroll={3}
+        >
+          {products.map(product => {
+            if (product.visibility) {
+              return (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  className="h-full flex flex-col mr-10"
+                />
+              );
+            }
+          })}
+        </Slider>
       </Container>
     </div>
   );

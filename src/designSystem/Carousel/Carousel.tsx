@@ -72,7 +72,6 @@ export const Carousel = ({
         currentSlide={currentSlide}
         infinite
         lockOnWindowScroll
-        dragEnabled={dragEnabled}
         touchEnabled={touchEnabled}
         naturalSlideHeight={naturalSlideHeight}
         naturalSlideWidth={naturalSlideWidth}
