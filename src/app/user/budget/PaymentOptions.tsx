@@ -41,9 +41,6 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
               En 18 meses
             </p>
-            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 24 meses
-            </p>
           </div>
           <div className="flex flex-col gap-1 w-1/2">
             <p className="rounded-md bg-white/50 py-1 px-2 text-[#717D96]">
