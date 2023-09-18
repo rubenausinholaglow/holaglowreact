@@ -10,7 +10,7 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
           <br />
           desde{' '}
           <span className="text-[24px] border-b-2 border-[#F0AD4E]">
-            {`${priceFormat((totalPrice * 1.16) / 24)}`}€
+            {`${priceFormat((totalPrice * 1.117) / 18)}`}€
           </span>{' '}
           al mes*
         </h3>
@@ -41,9 +41,6 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
             <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
               En 18 meses
             </p>
-            <p className="rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-              En 24 meses
-            </p>
           </div>
           <div className="flex flex-col gap-1 w-1/2">
             <p className="rounded-md bg-white/50 py-1 px-2 text-[#717D96]">
@@ -66,9 +63,6 @@ export default function PaymentOptions({ totalPrice }: { totalPrice: number }) {
             </p>
             <p className="rounded-md bg-white py-1 px-2">
               {`${priceFormat((totalPrice * 1.117) / 18)}`} €
-            </p>
-            <p className="rounded-md bg-white py-1 px-2">
-              {`${priceFormat((totalPrice * 1.16) / 24)}`} €
             </p>
           </div>
         </div>
