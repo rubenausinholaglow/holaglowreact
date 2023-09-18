@@ -9,8 +9,8 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Slot } from '@interface/slot';
 import { Appointment } from '@interface/appointment';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import 'react-datepicker/dist/react-datepicker.css';
 
 dayjs.locale(spanishConf);
 
@@ -40,7 +40,7 @@ export default function Agenda() {
       selectedTreatmentsIds,
       selectedClinic!.flowwwId
     ).then(data => {
-      var availability = availableDates ?? [];
+      const availability = availableDates ?? [];
       const maxDays = 10;
       const today = dayjs();
       data.forEach((x: any) => {
@@ -76,9 +76,9 @@ export default function Agenda() {
       selectedTreatmentsIds,
       selectedClinic!.flowwwId
     ).then(data => {
-      var hours = Array<Slot>();
-      var morning = Array<Slot>();
-      var afternoon = Array<Slot>();
+      const hours = Array<Slot>();
+      const morning = Array<Slot>();
+      const afternoon = Array<Slot>();
       data.forEach(x => {
         const hour = x.startTime.split(':')[0];
         const minutes = x.startTime.split(':')[1];
@@ -98,7 +98,7 @@ export default function Agenda() {
   };
 
   const confirm = () => {
-    var appointments = [];
+    const appointments = [];
     appointments.push({
       box: selectedSlot.box,
       endTime: selectedDay.format(format) + ' ' + selectedSlot.endTime,
@@ -118,7 +118,7 @@ export default function Agenda() {
       console.log('AGENDADO!'); //Redirect
     });
   };
-  const filterDate = (date: string) => {
+  const filterDate = (date: Date) => {
     const day = dayjs(date);
     return (
       availableDates.find(x => x.date == day.format(format))?.availability ??
@@ -146,10 +146,10 @@ export default function Agenda() {
       <Flex>
         {morningHours && (
           <Flex>
-            "Morning hours"
+            <Flex>Morning hours</Flex>
             {morningHours.map(x => {
               return (
-                <Flex>
+                <Flex key={x.startTime}>
                   <div onClick={() => selectHour(x)}>{x.startTime}</div>
                 </Flex>
               );
@@ -159,10 +159,10 @@ export default function Agenda() {
       </Flex>
       {afternoonHours && (
         <Flex>
-          "Afternoon hours"
+          <Flex>Afternoon hours</Flex>
           {afternoonHours.map(x => {
             return (
-              <Flex>
+              <Flex key={x.startTime}>
                 <div onClick={() => selectHour(x)}>{x.startTime}</div>
               </Flex>
             );
