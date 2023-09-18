@@ -3,38 +3,52 @@ import ScheduleService from '@services/ScheduleService';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { useEffect, useState } from 'react';
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Slot } from '@interface/slot';
 import { Appointment } from '@interface/appointment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+
+dayjs.locale(spanishConf);
 
 export default function Agenda() {
   const [dateToCheck, setDateToCheck] = useState(dayjs());
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
-  const [availableHours, setAvailableHours] = useState(Array<Slot>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
-  const [selectedDay, setSelectedDay] = useState('');
+  const [selectedDay, setSelectedDay] = useState(dayjs(new Date()) as Dayjs);
   const [selectedSlot, setSelcectedSlot] = useState({} as Slot);
+  const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
+    state => state
+  );
+  const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
+  const { selectedClinic } = useGlobalPersistedStore(state => state);
   const format = 'YYYY-MM-DD';
-  var service = '902'; //TODO: Get from global state
-  var clinicId = '1'; //TODO: Get from global state
   useEffect(() => {
+    if (!selectedTreatments) {
+      setSelectedTreatments([]);
+    }
+    setSelectedTreatmentsIds(
+      selectedTreatments!.map(x => x.flowwwId).join(', ')
+    );
     ScheduleService.getMonthAvailability(
       dateToCheck.format(format),
-      service,
-      clinicId
+      selectedTreatmentsIds,
+      selectedClinic!.flowwwId
     ).then(data => {
       var availability = availableDates ?? [];
-      const maxDays = 15;
-      var today = dayjs();
+      const maxDays = 10;
+      const today = dayjs();
       data.forEach((x: any) => {
-        var date = dayjs(x.date);
+        const date = dayjs(x.date);
         if (
           (x.availability && availability.length < maxDays && date >= today) ||
-          (service != '902' && service != '903') //TODO: Change this with some validation for "Probador Virtual"
+          selectedTreatmentsIds.indexOf(
+            process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+          ) != -1
         ) {
           availability.push(x);
         }
@@ -44,7 +58,7 @@ export default function Agenda() {
   }, [dateToCheck]);
 
   const onMonthChange = (x: any) => {
-    var date = dayjs(x);
+    const date = dayjs(x);
     setDateToCheck(date);
     console.log(date);
   };
@@ -54,15 +68,19 @@ export default function Agenda() {
   const selectDate = (x: Date) => {
     setMorningHours([]);
     setAfternoonHours([]);
-    var day = dayjs(x).format(format);
+    const day = dayjs(x);
     setSelectedDay(day);
-    ScheduleService.getSlots(day, service, clinicId).then(data => {
+    ScheduleService.getSlots(
+      day.format(format),
+      selectedTreatmentsIds,
+      selectedClinic!.flowwwId
+    ).then(data => {
       var hours = Array<Slot>();
       var morning = Array<Slot>();
       var afternoon = Array<Slot>();
       data.forEach(x => {
-        var hour = x.startTime.split(':')[0];
-        var minutes = x.startTime.split(':')[1];
+        const hour = x.startTime.split(':')[0];
+        const minutes = x.startTime.split(':')[1];
         if (
           (minutes == '00' || minutes == '30') &&
           !(hour == '10' && minutes == '00')
@@ -73,7 +91,6 @@ export default function Agenda() {
           } else afternoon.push(x);
         }
       });
-      setAvailableHours(hours);
       setMorningHours(morning);
       setAfternoonHours(afternoon);
     });
@@ -83,17 +100,17 @@ export default function Agenda() {
     var appointments = [];
     appointments.push({
       box: selectedSlot.box,
-      endTime: selectedSlot.endTime,
+      endTime: selectedDay.format(format) + ' ' + selectedSlot.endTime,
       id: '0',
-      startTime: selectedSlot.startTime,
-      treatment: service,
+      startTime: selectedDay.format(format) + ' ' + selectedSlot.startTime,
+      treatment: selectedTreatmentsIds,
       clientId: '', //TODO: Pending
       comment: '', //TODO: Pending
       treatmentText: '', //TODO: Pending
       referralId: '',
       externalReference: '', //TODO: Pending
       isPast: false,
-      clinicId: clinicId,
+      clinicId: selectedClinic,
       isCancelled: false,
     } as Appointment);
     ScheduleService.scheduleBulk(appointments).then(x => {
@@ -101,7 +118,7 @@ export default function Agenda() {
     });
   };
   const filterDate = (date: string) => {
-    var day = dayjs(date);
+    const day = dayjs(date);
     return (
       availableDates.find(x => x.date == day.format(format))?.availability ??
       false
@@ -109,6 +126,7 @@ export default function Agenda() {
   };
   return (
     <Flex>
+      {selectedClinic && <Flex>{selectedClinic.address}</Flex>}
       <Flex>
         <DatePicker
           inline
@@ -117,6 +135,13 @@ export default function Agenda() {
           onMonthChange={onMonthChange}
         ></DatePicker>
       </Flex>
+      {selectedDay && (
+        <Flex>
+          {' '}
+          Selecciona hora para el {selectedDay.format('dddd')},{' '}
+          {selectedDay.format('D')} de {selectedDay.format('MMMM')}
+        </Flex>
+      )}
       <Flex>
         {morningHours && (
           <Flex>

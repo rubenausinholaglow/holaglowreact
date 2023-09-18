@@ -14,6 +14,8 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   isMobile: boolean;
   deviceSize: DeviceSize;
+  selectedTreatments?: Product[];
+  selectedClinic?: Clinic;
 }
 
 interface GlobalPersistActions {
@@ -21,6 +23,8 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
+  setSelectedTreatments: (value: Product[]) => void;
+  setSelectedClinic: (value: Clinic) => void;
 }
 
 export const useGlobalPersistedStore = create(
@@ -35,6 +39,8 @@ export const useGlobalPersistedStore = create(
         isWideScreen: false,
       },
       isMobile: true,
+      selectedTreatment: undefined,
+      selectedClinic: undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -46,6 +52,12 @@ export const useGlobalPersistedStore = create(
       },
       setDeviceSize: value => {
         set({ deviceSize: value });
+      },
+      setSelectedTreatments: value => {
+        set({ selectedTreatments: value });
+      },
+      setSelectedClinic: value => {
+        set({ selectedClinic: value });
       },
     }),
     {
