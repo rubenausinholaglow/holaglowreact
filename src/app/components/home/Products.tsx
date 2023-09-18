@@ -5,11 +5,11 @@ import { Product } from '@interface/product';
 import ProductCarousel from 'app/components/product/ProductCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { FetchProducts } from 'utils/fetch';
+import { fetchProducts } from 'utils/fetch';
 
 import CategorySelector from '../filters/CategorySelector';
 
@@ -21,15 +21,22 @@ export default function HomeProducts() {
   const [products, setProducts] = useState<Product[]>(stateProducts);
 
   useEffect(() => {
-    if (isEmpty(stateProducts)) {
-      FetchProducts(setStateProducts);
+    async function initProducts() {
+      const products = await fetchProducts();
+
+      setStateProducts(products);
     }
+
+    if (isEmpty(stateProducts)) {
+      initProducts();
+    }
+
     if (isEmpty(products)) {
       setProducts(stateProducts);
     }
   }, [stateProducts]);
 
-  if (isEmpty(stateProducts)) {
+  if (isEmpty(products)) {
     return <></>;
   }
 
@@ -52,7 +59,7 @@ export default function HomeProducts() {
           </span>
         </Title>
       </Container>
-      <Container className="pr-0 md:pr-4">
+      <Container className="pr-0 mb-12 md:pr-4">
         <CategorySelector products={products} setProducts={setProducts} />
       </Container>
       <Container>

@@ -33,7 +33,7 @@ export default function CategorySelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, []);
+  }, [products]);
 
   useEffect(() => {
     let updatedProducts = products;
@@ -55,7 +55,7 @@ export default function CategorySelector({
   }, [selectedCategories]);
 
   return (
-    <ul className="flex gap-3 mb-12 overflow-scroll md:overflow-auto pr-4 md:pr-0">
+    <ul className="flex gap-3 overflow-scroll md:overflow-auto">
       {productCategories.map(category => {
         return (
           <li

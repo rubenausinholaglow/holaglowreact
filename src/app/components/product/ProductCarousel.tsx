@@ -16,18 +16,19 @@ export default function ProductCarousel({
   const CONTAINER_PADDING = 16;
 
   let CarouselWidth;
+  let isCarouselExpanded = false;
 
   if (document.body.clientWidth > CONTAINER_WIDTH) {
     CarouselWidth =
       document.body.clientWidth -
       (document.body.clientWidth - (CONTAINER_WIDTH - CONTAINER_PADDING * 2)) /
         2;
+    isCarouselExpanded = true;
   } else {
     CarouselWidth = document.body.clientWidth - 16;
   }
 
-  // 304 = productCard desired width + 40px margin right
-  const visibleSlides = (CarouselWidth - 40) / 304;
+  const visibleSlides = (CarouselWidth - (isCarouselExpanded ? 40 : 0)) / 304;
 
   return (
     <Carousel
@@ -38,7 +39,7 @@ export default function ProductCarousel({
       infinite={false}
       sliderWidth={{
         width: `${CarouselWidth}px`,
-        paddingRight: '40px',
+        paddingRight: `${isCarouselExpanded ? '40px' : '0'}`,
       }}
     >
       {products.map(product => {

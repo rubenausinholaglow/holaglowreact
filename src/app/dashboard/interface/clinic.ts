@@ -2,6 +2,7 @@ export interface Clinic {
   id: string;
   city: string;
   address: string;
+  internalName: string;
   professionals: Professional[];
 }
 
