@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import CategorySelector from 'app/components/filters/CategorySelector';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -19,24 +18,22 @@ import { isEmpty } from 'lodash';
 import { fetchProducts } from 'utils/fetch';
 
 import MobileFilters from './components/MobileFilters';
-import { applyFilters, updateFilterCount } from './utils/filters';
-
-type ProductFilters = {
-  [key: string]: string[];
-};
+import { applyFilters, filterCount } from './utils/filters';
 
 export default function ProductsPage() {
   const { stateProducts, setStateProducts, deviceSize } =
     useGlobalPersistedStore(state => state);
 
-  const [products, setProducts] = useState<Product[]>(stateProducts);
-  const [filters, setFilters] = useState<ProductFilters>({});
-  const [filtersApplied, setFiltersApplied] = useState<number>(0);
+  const {
+    filteredProducts,
+    setFilteredProducts,
+    productFilters,
+    setProductFilters,
+    isModalOpen,
+  } = useGlobalStore(state => state);
 
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
-
-  const { isModalOpen } = useGlobalStore(state => state);
 
   useEffect(() => {
     async function initProducts() {
@@ -48,22 +45,18 @@ export default function ProductsPage() {
       initProducts();
     }
 
-    if (isEmpty(products)) {
-      setProducts(stateProducts);
+    if (isEmpty(filteredProducts)) {
+      setStateProducts(stateProducts);
     }
   }, [stateProducts]);
 
   useEffect(() => {
-    setFiltersApplied(updateFilterCount(filters));
+    applyFilters({ products: filteredProducts, filters: productFilters });
 
-    applyFilters({ products, filters, setProducts });
-  }, [filters]);
-
-  useEffect(() => {
-    if (filtersApplied === 0) {
-      setProducts(stateProducts);
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(stateProducts);
     }
-  }, [filtersApplied]);
+  }, [productFilters]);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -85,11 +78,11 @@ export default function ProductsPage() {
           </Title>
         </Container>
         <Container className="px-0 md:px-4">
-          <CategorySelector products={products} setProducts={setProducts} />
+          <CategorySelector />
         </Container>
       </div>
 
-      {!isEmpty(products) && (
+      {!isEmpty(filteredProducts) && (
         <div className="bg-[#f7f3f0]">
           <AccordionPrimitive.Root
             type="single"
@@ -128,21 +121,23 @@ export default function ProductsPage() {
                 <Text
                   size="xs"
                   className={`transition-opacity text-hg-tertiary underline cursor-pointer  ${
-                    filtersApplied === 0 ? 'opacity-0' : 'opacity-100'
+                    filterCount(productFilters) === 0
+                      ? 'opacity-0'
+                      : 'opacity-100'
                   }`}
-                  onClick={() => setFilters({})}
+                  onClick={() => setProductFilters({})}
                 >
-                  Borrar filtros ({filtersApplied})
+                  Borrar filtros ({filterCount(productFilters)})
                 </Text>
               </Flex>
 
               <Text size="xs">
-                {products.filter(product => product.visibility).length}{' '}
+                {filteredProducts.filter(product => product.visibility).length}{' '}
                 productos
               </Text>
             </Flex>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 pb-6">
-              {products.map(product => {
+              {filteredProducts.map(product => {
                 if (product.visibility) {
                   return (
                     <li key={product.id}>

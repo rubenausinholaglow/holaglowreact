@@ -28,20 +28,18 @@ const filterByCategory = ({
 export const applyFilters = ({
   products,
   filters,
-  setProducts,
 }: {
   products: Product[];
   filters: ProductFilters;
-  setProducts: (products: Product[]) => void;
 }) => {
   let updatedProducts = products;
 
   updatedProducts = filterByCategory({ products, filters });
 
-  setProducts(updatedProducts);
+  return updatedProducts;
 };
 
-export const updateFilterCount = (filters: ProductFilters) => {
+export const filterCount = (filters: ProductFilters) => {
   let filterCount = 0;
 
   for (const key in filters) {
@@ -56,12 +54,13 @@ export const updateFilterCount = (filters: ProductFilters) => {
 export const toggleCategory = ({
   category,
   filters,
-  setFilters,
 }: {
   category: string;
   filters: ProductFilters;
-  setFilters: (filters: ProductFilters) => void;
 }) => {
+  console.log(category);
+  console.log(filters);
+
   const updatedFilters: ProductFilters = { ...filters } || {};
 
   if (!updatedFilters.category) {
@@ -76,5 +75,7 @@ export const toggleCategory = ({
     updatedFilters.category.splice(categoryIndex, 1);
   }
 
-  setFilters(updatedFilters);
+  console.log(updatedFilters);
+
+  return updatedFilters;
 };

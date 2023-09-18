@@ -1,26 +1,32 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  applyFilters,
+  filterCount,
+  toggleCategory,
+} from 'app/products/utils/filters';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgDiamond } from 'icons/Icons';
-import { isEmpty } from 'lodash';
 
-export default function CategorySelector({
-  products,
-  setProducts,
-}: {
-  products: Product[];
-  setProducts: (products: Product[]) => void;
-}) {
+export default function CategorySelector() {
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
+  const {
+    filteredProducts,
+    setFilteredProducts,
+    productFilters,
+    setProductFilters,
+  } = useGlobalStore(state => state);
+
   const [productCategories, setProductCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const allCategoryNames: string[] = products.reduce(
+    const allCategoryNames: string[] = filteredProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
           category => category.name
@@ -33,26 +39,17 @@ export default function CategorySelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, [products]);
+  }, [filteredProducts]);
 
   useEffect(() => {
-    let updatedProducts = products;
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
 
-    if (!isEmpty(selectedCategories)) {
-      updatedProducts = products.map(product => {
-        return {
-          ...product,
-          visibility: product.category.some(category =>
-            selectedCategories.includes(category.name)
-          ),
-        };
-      });
-    } else {
-      updatedProducts = stateProducts;
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(stateProducts);
     }
-
-    setProducts(updatedProducts);
-  }, [selectedCategories]);
+  }, [productFilters]);
 
   return (
     <ul className="flex gap-3 overflow-scroll md:overflow-auto">
@@ -61,18 +58,15 @@ export default function CategorySelector({
           <li
             key={category}
             className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 hover:bg-hg-primary500 hover:textopacity-80 ${
-              selectedCategories.includes(category)
+              productFilters.category &&
+              productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
                 : 'bg-white'
             }`}
             onClick={() => {
-              if (selectedCategories.includes(category)) {
-                setSelectedCategories(
-                  selectedCategories.filter(item => item !== category)
-                );
-              } else {
-                setSelectedCategories([...selectedCategories, category]);
-              }
+              setProductFilters(
+                toggleCategory({ category, filters: productFilters })
+              );
             }}
           >
             <Flex layout="row-left">

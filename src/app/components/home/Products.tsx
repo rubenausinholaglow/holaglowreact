@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import ProductCarousel from 'app/components/product/ProductCarousel';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
@@ -18,7 +21,9 @@ export default function HomeProducts() {
     state => state
   );
 
-  const [products, setProducts] = useState<Product[]>(stateProducts);
+  const { filteredProducts, setFilteredProducts } = useGlobalStore(
+    state => state
+  );
 
   useEffect(() => {
     async function initProducts() {
@@ -31,12 +36,12 @@ export default function HomeProducts() {
       initProducts();
     }
 
-    if (isEmpty(products)) {
-      setProducts(stateProducts);
+    if (isEmpty(filteredProducts)) {
+      setFilteredProducts(stateProducts);
     }
   }, [stateProducts]);
 
-  if (isEmpty(products)) {
+  if (isEmpty(filteredProducts)) {
     return <></>;
   }
 
@@ -60,10 +65,10 @@ export default function HomeProducts() {
         </Title>
       </Container>
       <Container className="pr-0 mb-12 md:pr-4">
-        <CategorySelector products={products} setProducts={setProducts} />
+        <CategorySelector />
       </Container>
       <Container>
-        <ProductCarousel className="pb-8" products={products} />
+        <ProductCarousel className="pb-8" products={filteredProducts} />
       </Container>
     </div>
   );
