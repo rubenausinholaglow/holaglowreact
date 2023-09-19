@@ -66,7 +66,7 @@ export const Carousel = ({
   return (
     <>
       <CarouselProvider
-        className={`relative w-full ${className}`}
+        className={`relative w-full  ${className}`}
         isIntrinsicHeight={isIntrinsicHeight}
         totalSlides={childrens.length}
         currentSlide={currentSlide}
