@@ -13,7 +13,13 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgDiamond } from 'icons/Icons';
 
-export default function CategorySelector() {
+export default function CategorySelector({
+  className,
+  isStacked,
+}: {
+  className?: string;
+  isStacked?: boolean;
+}) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
   const {
@@ -26,7 +32,7 @@ export default function CategorySelector() {
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const allCategoryNames: string[] = filteredProducts.reduce(
+    const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
           category => category.name
@@ -39,7 +45,7 @@ export default function CategorySelector() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, [filteredProducts]);
+  }, []);
 
   useEffect(() => {
     setFilteredProducts(
@@ -52,17 +58,26 @@ export default function CategorySelector() {
   }, [productFilters]);
 
   return (
-    <ul className="flex gap-3 overflow-scroll md:overflow-auto">
+    <ul
+      className={`flex gap-3 overfl ow-scroll md:overflow-auto ${
+        className ? className : ' '
+      }
+      ${isStacked ? 'flex-wrap' : ''}
+      `}
+    >
       {productCategories.map(category => {
         return (
           <li
             key={category}
-            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 hover:bg-hg-primary500 hover:textopacity-80 ${
+            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 ${
               productFilters.category &&
               productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
+                : isStacked
+                ? 'bg-hg-black50'
                 : 'bg-white'
-            }`}
+            }
+            `}
             onClick={() => {
               setProductFilters(
                 toggleCategory({ category, filters: productFilters })

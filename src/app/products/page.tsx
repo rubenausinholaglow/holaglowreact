@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import CategorySelector from 'app/components/filters/CategorySelector';
+import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
 import ProductCard from 'app/components/product/ProductCard';
 import {
@@ -13,12 +14,21 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgFilters } from 'icons/IconsDs';
+import {
+  SvgCheckSquare,
+  SvgCheckSquareActive,
+  SvgFilters,
+} from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchProducts } from 'utils/fetch';
 
 import MobileFilters from './components/MobileFilters';
-import { applyFilters, filterCount } from './utils/filters';
+import {
+  applyFilters,
+  filterCount,
+  INITIAL_FILTERS,
+  toggleIsPack,
+} from './utils/filters';
 
 export default function ProductsPage() {
   const { stateProducts, setStateProducts, deviceSize } =
@@ -34,6 +44,8 @@ export default function ProductsPage() {
 
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
+
+  const resetFilters = { ...INITIAL_FILTERS };
 
   useEffect(() => {
     async function initProducts() {
@@ -51,7 +63,9 @@ export default function ProductsPage() {
   }, [stateProducts]);
 
   useEffect(() => {
-    applyFilters({ products: filteredProducts, filters: productFilters });
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
 
     if (filterCount(productFilters) === 0) {
       setFilteredProducts(stateProducts);
@@ -68,7 +82,7 @@ export default function ProductsPage() {
     <MainLayout>
       <MobileFilters isVisible={isMobileFiltersVisible} />
 
-      <div className="bg-[#F3EDE9] rounded-t-3xl py-8 lg:bg-[url('/images/products/productsBg.png')] bg-right-top bg-no-repeat bg-contain">
+      <div className="bg-[#F3EDE9] rounded-t-3xl pt-8 pb-4 lg:bg-[url('/images/products/productsBg.png')] bg-right-top bg-no-repeat bg-contain">
         <Container>
           <Title size="3xl" className="font-bold mb-12 lg:w-2/5">
             Loren ipsum{' '}
@@ -77,8 +91,9 @@ export default function ProductsPage() {
             </Underlined>
           </Title>
         </Container>
-        <Container className="px-0 md:px-4">
-          <CategorySelector />
+        <Container className="pr-0 md:pr-4">
+          <CategorySelector className="mb-4" />
+          <PackTypeFilter />
         </Container>
       </div>
 
@@ -125,7 +140,14 @@ export default function ProductsPage() {
                       ? 'opacity-0'
                       : 'opacity-100'
                   }`}
-                  onClick={() => setProductFilters({})}
+                  onClick={() => {
+                    setProductFilters({
+                      isPack: false,
+                      category: [],
+                      zone: [],
+                      clinic: [],
+                    });
+                  }}
                 >
                   Borrar filtros ({filterCount(productFilters)})
                 </Text>

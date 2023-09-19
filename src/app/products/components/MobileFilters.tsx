@@ -1,3 +1,6 @@
+import CategorySelector from 'app/components/filters/CategorySelector';
+import PackTypeFilter from 'app/components/filters/PackTypeFilter';
+import ZoneFilter from 'app/components/filters/ZoneFilter';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
@@ -26,7 +29,17 @@ export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
           />
         </Flex>
 
-        <p>Filters here</p>
+        <Text size="sm" className="mb-4 font-semibold">
+          Tratamientos
+        </Text>
+        <CategorySelector isStacked className="mb-4" />
+        <PackTypeFilter customStyles="bg-hg-black50" />
+      </Container>
+      <Container className="py-4">
+        <Text size="sm" className="mb-4 font-semibold">
+          Zona de la cara
+        </Text>
+        <ZoneFilter />
       </Container>
     </Modal>
   );

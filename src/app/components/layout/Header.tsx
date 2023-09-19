@@ -132,6 +132,7 @@ export default function Header() {
                 type="tertiary"
                 size="md"
                 className="ml-2 hidden lg:block"
+                customStyles="group-hover:bg-hg-secondary100"
               >
                 <Flex layout="row-center">
                   <span className="font-semibold">Reservar Cita</span>

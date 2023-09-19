@@ -1,5 +1,6 @@
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
+import { INITIAL_FILTERS } from 'app/products/utils/filters';
 import { ProductFilters } from 'types/filters';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -76,7 +77,7 @@ export const useGlobalStore = create<GlobalStore & GlobalActions>(set => ({
   showModalBackground: false,
   isMainScrollEnabled: true,
   filteredProducts: [],
-  productFilters: {},
+  productFilters: INITIAL_FILTERS,
   setIsModalOpen: (value: boolean) => {
     set({ isModalOpen: value });
   },

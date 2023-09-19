@@ -1,28 +1,11 @@
 import { Product } from '@interface/product';
-import { has, isEmpty } from 'lodash';
 import { ProductFilters } from 'types/filters';
 
-const filterByCategory = ({
-  products,
-  filters,
-}: {
-  products: Product[];
-  filters: ProductFilters;
-}) => {
-  let updatedProducts = products;
-
-  if (has(filters, 'category') && !isEmpty(filters.category)) {
-    updatedProducts = products.map(product => {
-      return {
-        ...product,
-        visibility: product.category.some(category =>
-          filters.category.includes(category.name)
-        ),
-      };
-    });
-  }
-
-  return updatedProducts;
+export const INITIAL_FILTERS = {
+  isPack: false,
+  category: [],
+  zone: [],
+  clinic: [],
 };
 
 export const applyFilters = ({
@@ -34,7 +17,23 @@ export const applyFilters = ({
 }) => {
   let updatedProducts = products;
 
-  updatedProducts = filterByCategory({ products, filters });
+  updatedProducts = products.map(product => {
+    const isVisibleByCategory = product.category.some(category =>
+      filters.category.includes(category.name)
+    );
+
+    const isVisibleByPack = product.isPack && filters.isPack;
+
+    const isVisibleByZone = filters.zone.includes(product.zone);
+
+    const productVisibility = [
+      isVisibleByCategory,
+      isVisibleByPack,
+      isVisibleByZone,
+    ].some(value => value === true);
+
+    return { ...product, visibility: productVisibility };
+  });
 
   return updatedProducts;
 };
@@ -42,11 +41,12 @@ export const applyFilters = ({
 export const filterCount = (filters: ProductFilters) => {
   let filterCount = 0;
 
-  for (const key in filters) {
-    if (Array.isArray(filters[key])) {
-      filterCount += filters[key].length;
-    }
+  if (filters.isPack) {
+    filterCount = 1;
   }
+
+  filterCount = filterCount + filters.category.length;
+  filterCount = filterCount + filters.zone.length;
 
   return filterCount;
 };
@@ -58,9 +58,6 @@ export const toggleCategory = ({
   category: string;
   filters: ProductFilters;
 }) => {
-  console.log(category);
-  console.log(filters);
-
   const updatedFilters: ProductFilters = { ...filters } || {};
 
   if (!updatedFilters.category) {
@@ -75,7 +72,38 @@ export const toggleCategory = ({
     updatedFilters.category.splice(categoryIndex, 1);
   }
 
-  console.log(updatedFilters);
+  return updatedFilters;
+};
+
+export const toggleIsPack = (filters: ProductFilters) => {
+  let updatedFilters = filters;
+  updatedFilters = { ...updatedFilters, isPack: !updatedFilters.isPack };
+
+  return updatedFilters;
+};
+
+export const toggleZone = ({
+  zone,
+  filters,
+}: {
+  zone: number;
+  filters: ProductFilters;
+}) => {
+  const updatedFilters: ProductFilters = { ...filters } || {};
+
+  if (!updatedFilters.zone) {
+    updatedFilters.zone = [];
+  }
+
+  console.log(zone);
+
+  const zoneIndex = updatedFilters.zone.indexOf(zone);
+
+  if (zoneIndex === -1) {
+    updatedFilters.zone.push(zone);
+  } else {
+    updatedFilters.zone.splice(zoneIndex, 1);
+  }
 
   return updatedFilters;
 };
