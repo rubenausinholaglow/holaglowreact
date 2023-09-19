@@ -1,4 +1,5 @@
 'use client';
+
 import ScheduleService from '@services/ScheduleService';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { useEffect, useState } from 'react';
@@ -19,7 +20,9 @@ export default function Agenda() {
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
-  const [selectedDay, setSelectedDay] = useState(dayjs(new Date()) as Dayjs);
+  const [selectedDay, setSelectedDay] = useState(
+    undefined as Dayjs | undefined
+  );
   const [selectedSlot, setSelcectedSlot] = useState({} as Slot);
   const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
     state => state
@@ -28,40 +31,53 @@ export default function Agenda() {
   const { user } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  useEffect(() => {
-    if (!selectedTreatments) {
-      setSelectedTreatments([]);
-    }
-    setSelectedTreatmentsIds(
-      selectedTreatments!.map(x => x.flowwwId).join(', ')
-    );
-    ScheduleService.getMonthAvailability(
-      dateToCheck.format(format),
-      selectedTreatmentsIds,
-      selectedClinic!.flowwwId
-    ).then(data => {
-      const availability = availableDates ?? [];
-      const maxDays = 10;
-      const today = dayjs();
-      data.forEach((x: any) => {
-        const date = dayjs(x.date);
-        if (
-          (x.availability && availability.length < maxDays && date >= today) ||
-          selectedTreatmentsIds.indexOf(
-            process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
-          ) != -1
-        ) {
-          availability.push(x);
+  const maxDays = 10;
+
+  function loadMonth() {
+    if (selectedTreatmentsIds && availableDates.length < maxDays) {
+      ScheduleService.getMonthAvailability(
+        dateToCheck.format(format),
+        selectedTreatmentsIds,
+        selectedClinic!.flowwwId
+      ).then(data => {
+        const availability = availableDates ?? [];
+        const today = dayjs();
+        data.forEach((x: any) => {
+          const date = dayjs(x.date);
+          if (
+            (availability.length < maxDays ||
+              selectedTreatmentsIds.indexOf(
+                process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+              ) != -1) &&
+            (date.isAfter(today) || date.isSame(today, 'day')) &&
+            x.availability
+          ) {
+            availability.push(x);
+          }
+        });
+        setAvailableDates(availability);
+        if (!selectedDay) {
+          setSelectedDay(dayjs());
+          selectDate(new Date());
         }
       });
-      setAvailableDates(availability);
-    });
+    }
+  }
+  useEffect(() => {
+    if (selectedTreatments && selectedTreatments.length > 0) {
+      setSelectedTreatments([]);
+      setSelectedTreatmentsIds(
+        selectedTreatments!.map(x => x.flowwwId).join(', ')
+      );
+    } else setSelectedTreatmentsIds('902');
   }, [dateToCheck]);
+  useEffect(() => {
+    loadMonth();
+  }, [selectedTreatmentsIds, dateToCheck]);
 
   const onMonthChange = (x: any) => {
     const date = dayjs(x);
     setDateToCheck(date);
-    console.log(date);
   };
   const selectHour = (x: Slot) => {
     setSelcectedSlot(x);
@@ -101,9 +117,9 @@ export default function Agenda() {
     const appointments = [];
     appointments.push({
       box: selectedSlot.box,
-      endTime: selectedDay.format(format) + ' ' + selectedSlot.endTime,
+      endTime: selectedDay!.format(format) + ' ' + selectedSlot.endTime,
       id: '0',
-      startTime: selectedDay.format(format) + ' ' + selectedSlot.startTime,
+      startTime: selectedDay!.format(format) + ' ' + selectedSlot.startTime,
       treatment: selectedTreatmentsIds,
       clientId: user?.flowwwToken,
       comment: '', //TODO: Pending
@@ -126,7 +142,8 @@ export default function Agenda() {
     );
   };
   return (
-    <Flex>
+    <Flex layout="col-center">
+      <Flex>Selecciona día y hora</Flex>
       {selectedClinic && <Flex>{selectedClinic.address}</Flex>}
       <Flex>
         <DatePicker
@@ -134,6 +151,7 @@ export default function Agenda() {
           onChange={selectDate}
           filterDate={filterDate}
           onMonthChange={onMonthChange}
+          calendarStartDay={1}
         ></DatePicker>
       </Flex>
       {selectedDay && (

@@ -6,11 +6,14 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';
+import { useRouter } from 'next/navigation';
 
 export default function ClinicsCheckout() {
+  const router = useRouter();
   const { clinics, setClinics, selectedClinic, setSelectedClinic } =
     useGlobalPersistedStore(state => state);
 
+  const { selectedTreatments } = useGlobalPersistedStore(state => state);
   useEffect(() => {
     async function initClinics() {
       const clinics = await fetchClinics();
@@ -29,10 +32,19 @@ export default function ClinicsCheckout() {
 
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
+    router.push('/checkout/agenda');
   };
 
   return (
-    <Flex>
+    <Flex layout="col-center">
+      {selectedTreatments?.map(product => (
+        <Flex key={product.id}>
+          {product.title}
+          {product.description}
+          {product.price}
+        </Flex>
+      ))}
+      Selecciona una clínica
       {clinics.map(clinic => (
         <Flex onClick={() => selectClinic(clinic)} key={clinic.internalName}>
           <Flex>{clinic.city}</Flex>
