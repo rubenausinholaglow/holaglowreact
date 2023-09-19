@@ -77,6 +77,9 @@ export const Carousel = ({
         naturalSlideHeight={naturalSlideHeight}
         naturalSlideWidth={naturalSlideWidth}
         visibleSlides={visibleSlides}
+        orientation="horizontal"
+        preventVerticalScrollOnTouch={true}
+        verticalPixelThreshold={1000}
         {...rest}
       >
         <div style={sliderWidth}>
