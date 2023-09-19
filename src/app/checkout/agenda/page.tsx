@@ -12,27 +12,28 @@ import { Appointment } from '@interface/appointment';
 import DatePicker from 'react-datepicker';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useRouter } from 'next/navigation';
 
 dayjs.locale(spanishConf);
 
 export default function Agenda() {
+  const router = useRouter();
   const [dateToCheck, setDateToCheck] = useState(dayjs());
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
-  const [selectedDay, setSelectedDay] = useState(
-    undefined as Dayjs | undefined
+  const { selectedDay, setSelectedDay } = useGlobalPersistedStore(
+    state => state
   );
-  const [selectedSlot, setSelcectedSlot] = useState({} as Slot);
+  const { setSelectedSlot } = useGlobalPersistedStore(state => state);
   const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
     state => state
   );
   const { selectedClinic } = useGlobalPersistedStore(state => state);
-  const { user } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
-
+  const localSelectedDay = dayjs(selectedDay);
   function loadMonth() {
     if (selectedTreatmentsIds && availableDates.length < maxDays) {
       ScheduleService.getMonthAvailability(
@@ -48,7 +49,7 @@ export default function Agenda() {
             (availability.length < maxDays ||
               selectedTreatmentsIds.indexOf(
                 process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
-              ) != -1) &&
+              ) == -1) &&
             (date.isAfter(today) || date.isSame(today, 'day')) &&
             x.availability
           ) {
@@ -63,6 +64,10 @@ export default function Agenda() {
       });
     }
   }
+  useEffect(() => {
+    setSelectedDay(dayjs());
+    console.log(selectedDay);
+  }, []);
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
       setSelectedTreatments([]);
@@ -80,12 +85,14 @@ export default function Agenda() {
     setDateToCheck(date);
   };
   const selectHour = (x: Slot) => {
-    setSelcectedSlot(x);
+    setSelectedSlot(x);
+    router.push('/checkout/contactform');
   };
   const selectDate = (x: Date) => {
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
+    debugger;
     setSelectedDay(day);
     ScheduleService.getSlots(
       day.format(format),
@@ -113,27 +120,6 @@ export default function Agenda() {
     });
   };
 
-  const confirm = () => {
-    const appointments = [];
-    appointments.push({
-      box: selectedSlot.box,
-      endTime: selectedDay!.format(format) + ' ' + selectedSlot.endTime,
-      id: '0',
-      startTime: selectedDay!.format(format) + ' ' + selectedSlot.startTime,
-      treatment: selectedTreatmentsIds,
-      clientId: user?.flowwwToken,
-      comment: '', //TODO: Pending
-      treatmentText: '', //TODO: Pending
-      referralId: '',
-      externalReference: '', //TODO: Pending
-      isPast: false,
-      clinicId: selectedClinic,
-      isCancelled: false,
-    } as Appointment);
-    ScheduleService.scheduleBulk(appointments).then(x => {
-      console.log('AGENDADO!'); //Redirect
-    });
-  };
   const filterDate = (date: Date) => {
     const day = dayjs(date);
     return (
@@ -141,10 +127,19 @@ export default function Agenda() {
       false
     );
   };
+
+  const changeClinic = () => {
+    router.back();
+  };
   return (
     <Flex layout="col-center">
       <Flex>Selecciona día y hora</Flex>
-      {selectedClinic && <Flex>{selectedClinic.address}</Flex>}
+      {selectedClinic && (
+        <Flex>
+          {selectedClinic.address}
+          <Button onClick={changeClinic}>Cambiar</Button>
+        </Flex>
+      )}
       <Flex>
         <DatePicker
           inline
@@ -154,15 +149,15 @@ export default function Agenda() {
           calendarStartDay={1}
         ></DatePicker>
       </Flex>
-      {selectedDay && (
+      {localSelectedDay && (
         <Flex>
           {' '}
-          Selecciona hora para el {selectedDay.format('dddd')},{' '}
-          {selectedDay.format('D')} de {selectedDay.format('MMMM')}
+          Selecciona hora para el {localSelectedDay.format('dddd')},{' '}
+          {localSelectedDay.format('D')} de {localSelectedDay.format('MMMM')}
         </Flex>
       )}
       <Flex>
-        {morningHours && (
+        {morningHours.length > 0 && (
           <Flex>
             <Flex>Morning hours</Flex>
             {morningHours.map(x => {
@@ -175,7 +170,7 @@ export default function Agenda() {
           </Flex>
         )}
       </Flex>
-      {afternoonHours && (
+      {afternoonHours.length > 0 && (
         <Flex>
           <Flex>Afternoon hours</Flex>
           {afternoonHours.map(x => {
@@ -187,7 +182,6 @@ export default function Agenda() {
           })}
         </Flex>
       )}
-      <Button onClick={confirm}>Confirm</Button>
     </Flex>
   );
 }

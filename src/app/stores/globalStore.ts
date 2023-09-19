@@ -1,6 +1,8 @@
 import { User } from '@interface/appointment';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
+import { Slot } from '@interface/slot';
+import dayjs, { Dayjs } from 'dayjs';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -17,7 +19,9 @@ interface GlobalPersistStore {
   deviceSize: DeviceSize;
   selectedTreatments?: Product[];
   selectedClinic?: Clinic;
+  selectedSlot?: Slot;
   user?: User;
+  selectedDay: Dayjs;
 }
 
 interface GlobalPersistActions {
@@ -28,6 +32,8 @@ interface GlobalPersistActions {
   setSelectedTreatments: (value: Product[]) => void;
   setSelectedClinic: (value: Clinic) => void;
   setCurrentUser: (value: User) => void;
+  setSelectedSlot: (slot: Slot) => void;
+  setSelectedDay: (day: Dayjs) => void;
 }
 
 export const useGlobalPersistedStore = create(
@@ -45,6 +51,8 @@ export const useGlobalPersistedStore = create(
       selectedTreatment: undefined,
       selectedClinic: undefined,
       user: undefined,
+      selectedDay: dayjs(),
+      selectedSlot: undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -65,6 +73,12 @@ export const useGlobalPersistedStore = create(
       },
       setCurrentUser: value => {
         set({ user: value });
+      },
+      setSelectedSlot: value => {
+        set({ selectedSlot: value });
+      },
+      setSelectedDay: value => {
+        set({ selectedDay: value });
       },
     }),
     {
