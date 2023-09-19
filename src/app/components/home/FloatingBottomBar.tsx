@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgWhatsapp } from 'icons/IconsDs';
 
 export default function FloatingBottomBar() {
@@ -32,18 +32,24 @@ export default function FloatingBottomBar() {
         showBottomBar ? 'translate-y-[105%]' : 'translate-y-[0%]'
       }`}
     >
-      <div className="p-4 pt-0 mx-w-xl md:mx-w-0">
+      <div className="p-4 mx-w-xl md:mx-w-0 bg-white md:bg-transparent rounded-t-[40px]">
         <Flex layout="row-right" className="w-full">
           <Button
             size="xl"
             type="tertiary"
             bgColor="bg-hg-primary"
             className="grow mr-4 md:hidden"
+            customStyles="border-none"
           >
             Reservar cita
           </Button>
-          <Button type="primary" size="xl" customStyles="p-0 w-[64px]">
-            <SvgWhatsapp />
+          <Button
+            type="tertiary"
+            size="xl"
+            bgColor="bg-hg-black"
+            customStyles="p-0 w-[64px]"
+          >
+            <SvgWhatsapp className="text-hg-primary" />
           </Button>
         </Flex>
       </div>

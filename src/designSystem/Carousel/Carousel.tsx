@@ -71,7 +71,7 @@ export const Carousel = ({
         totalSlides={childrens.length}
         currentSlide={currentSlide}
         infinite
-        lockOnWindowScroll
+        lockOnWindowScroll={true}
         dragEnabled={dragEnabled}
         touchEnabled={touchEnabled}
         naturalSlideHeight={naturalSlideHeight}
