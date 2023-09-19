@@ -62,7 +62,6 @@ export default function ConctactForm() {
     }));
   };
   const handleContinue = () => {
-    router.push('/checkout/confirmation');
     setErrors([]);
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
