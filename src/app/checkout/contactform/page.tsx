@@ -106,7 +106,7 @@ export default function ConctactForm() {
 
   const createAppointment = () => {
     const appointments = [];
-    var ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+    const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
     appointments.push({
       box: selectedSlot!.box,
       endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,

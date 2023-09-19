@@ -91,7 +91,6 @@ export default function Agenda() {
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
-    debugger;
     setSelectedDay(day);
     ScheduleService.getSlots(
       day.format(format),
