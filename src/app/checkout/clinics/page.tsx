@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Clinic } from '@interface/clinic';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';
 import { useRouter } from 'next/navigation';

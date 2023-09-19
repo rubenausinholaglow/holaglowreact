@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 import RegistrationForm from 'app/dashboard/RegistrationForm';
 import { Client } from '@interface/client';

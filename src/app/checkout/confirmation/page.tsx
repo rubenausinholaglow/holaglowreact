@@ -2,7 +2,7 @@
 
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 export default function ConfirmationCheckout() {
@@ -13,7 +13,7 @@ export default function ConfirmationCheckout() {
   const { selectedClinic } = useGlobalPersistedStore(state => state);
 
   const localSelectedDay = dayjs(selectedDay);
-  var selectedTreatmentsNames = '';
+  let selectedTreatmentsNames = '';
   if (selectedTreatments) {
     selectedTreatmentsNames = selectedTreatments!.map(x => x.title).join(' + ');
   }
