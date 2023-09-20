@@ -45,7 +45,7 @@ export default function CategorySelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, []);
+  }, [stateProducts]);
 
   useEffect(() => {
     setFilteredProducts(

@@ -22,6 +22,7 @@ import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
+import { SvgSpinner } from 'icons/Icons';
 
 export default function ProductsPage() {
   const { stateProducts, setStateProducts, deviceSize } =
@@ -50,6 +51,7 @@ export default function ProductsPage() {
 
     if (isEmpty(filteredProducts)) {
       setStateProducts(stateProducts);
+      setFilteredProducts(stateProducts);
     }
   }, [stateProducts]);
 
@@ -89,9 +91,17 @@ export default function ProductsPage() {
           </Flex>
         </Container>
       </div>
-
+      {isEmpty(filteredProducts) && (
+        <Flex layout="row-left" className="justify-center">
+          <SvgSpinner
+            fill={HOLAGLOW_COLORS['secondary']}
+            height={50}
+            width={50}
+          />
+        </Flex>
+      )}
       {!isEmpty(filteredProducts) && (
-        <div className="bg-[#f7f3f0]">
+        <div className="bg-[#f7f3f0] pb-32">
           <Flex
             layout="row-left"
             className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
@@ -116,7 +126,7 @@ export default function ProductsPage() {
 
                 <Text
                   size="xs"
-                  className={`transition-opacity text-hg-tertiary underline cursor-pointer mr-auto ${
+                  className={`text-hg-secondary transition-opacity underline cursor-pointer mr-auto ${
                     filterCount(productFilters) === 0
                       ? 'opacity-0'
                       : 'opacity-100'
