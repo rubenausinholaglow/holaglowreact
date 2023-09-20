@@ -1,5 +1,7 @@
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
+import { INITIAL_FILTERS } from 'app/products/utils/filters';
+import { ProductFilters } from 'types/filters';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -58,18 +60,24 @@ interface GlobalStore {
   isModalOpen: boolean;
   showModalBackground: boolean;
   isMainScrollEnabled: boolean;
+  filteredProducts: Product[];
+  productFilters: ProductFilters;
 }
 
 interface GlobalActions {
   setIsModalOpen: (value: boolean) => void;
   setShowModalBackground: (value: boolean) => void;
   setIsMainScrollEnabled: (value: boolean) => void;
+  setFilteredProducts: (value: Product[]) => void;
+  setProductFilters: (value: ProductFilters) => void;
 }
 
 export const useGlobalStore = create<GlobalStore & GlobalActions>(set => ({
   isModalOpen: false,
   showModalBackground: false,
   isMainScrollEnabled: true,
+  filteredProducts: [],
+  productFilters: INITIAL_FILTERS,
   setIsModalOpen: (value: boolean) => {
     set({ isModalOpen: value });
   },
@@ -78,5 +86,11 @@ export const useGlobalStore = create<GlobalStore & GlobalActions>(set => ({
   },
   setIsMainScrollEnabled: (value: boolean) => {
     set({ isMainScrollEnabled: value });
+  },
+  setFilteredProducts: (value: Product[]) => {
+    set({ filteredProducts: value });
+  },
+  setProductFilters: (value: ProductFilters) => {
+    set({ productFilters: value });
   },
 }));

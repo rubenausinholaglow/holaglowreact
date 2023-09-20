@@ -1,26 +1,38 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/products/utils/filters';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgDiamond } from 'icons/Icons';
-import { isEmpty } from 'lodash';
 
 export default function CategorySelector({
-  products,
-  setProducts,
+  className,
+  isStacked,
 }: {
-  products: Product[];
-  setProducts: (products: Product[]) => void;
+  className?: string;
+  isStacked?: boolean;
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
+  const {
+    filteredProducts,
+    setFilteredProducts,
+    productFilters,
+    setProductFilters,
+  } = useGlobalStore(state => state);
+
   const [productCategories, setProductCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const allCategoryNames: string[] = products.reduce(
+    const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
           category => category.name
@@ -33,59 +45,59 @@ export default function CategorySelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, [products]);
+  }, []);
 
   useEffect(() => {
-    let updatedProducts = products;
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
 
-    if (!isEmpty(selectedCategories)) {
-      updatedProducts = products.map(product => {
-        return {
-          ...product,
-          visibility: product.category.some(category =>
-            selectedCategories.includes(category.name)
-          ),
-        };
-      });
-    } else {
-      updatedProducts = stateProducts;
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(stateProducts);
     }
-
-    setProducts(updatedProducts);
-  }, [selectedCategories]);
+  }, [productFilters]);
 
   return (
-    <ul className="flex gap-3 overflow-scroll md:overflow-auto">
+    <ul
+      className={`flex gap-3 overfl ow-scroll md:overflow-auto ${
+        className ? className : ' '
+      }
+      ${isStacked ? 'flex-wrap' : ''}
+      `}
+    >
       {productCategories.map(category => {
         return (
           <li
             key={category}
             className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 ${
-              selectedCategories.includes(category)
+              productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
+                : isStacked
+                ? 'bg-hg-black50'
                 : 'bg-white'
-            }`}
+            }
+            `}
             onClick={() => {
-              if (selectedCategories.includes(category)) {
-                setSelectedCategories(
-                  selectedCategories.filter(item => item !== category)
-                );
-              } else {
-                setSelectedCategories([...selectedCategories, category]);
-              }
+              setProductFilters(
+                toggleFilter({
+                  filter: 'category',
+                  value: category,
+                  filters: productFilters,
+                })
+              );
             }}
           >
             <Flex layout="row-left">
               <SvgDiamond
-                height={35}
-                width={35}
+                height={32}
+                width={32}
                 fill={HOLAGLOW_COLORS['secondary']}
                 className="mr-2 border rounded-full p-1 bg-white"
                 style={{
                   borderColor: `${HOLAGLOW_COLORS['secondary']}`,
                 }}
               />
-              <Text size="sm" className="whitespace-nowrap">
+              <Text size="xs" className="whitespace-nowrap font-medium">
                 {category}
               </Text>
             </Flex>
