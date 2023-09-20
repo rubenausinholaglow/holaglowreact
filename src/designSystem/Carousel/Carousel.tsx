@@ -8,7 +8,6 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrow } from 'icons/IconsDs';
 import {
   ButtonBack,
-  ButtonFirst,
   ButtonNext,
   CarouselProvider,
   Slide,
@@ -65,9 +64,7 @@ export const Carousel = ({
   };
 
   useEffect(() => {
-    console.log('set current slide', currentSlide);
-    currentSlide = 0;
-    console.log('set current slide', currentSlide);
+    setCurrentSlideIndex(0);
   }, [children]);
 
   return (
@@ -76,7 +73,7 @@ export const Carousel = ({
         className={`relative w-full  ${className}`}
         isIntrinsicHeight={isIntrinsicHeight}
         totalSlides={childrens.length}
-        currentSlide={currentSlide}
+        currentSlide={currentSlideIndex}
         infinite
         lockOnWindowScroll
         dragEnabled={dragEnabled}
@@ -111,14 +108,6 @@ export const Carousel = ({
 
           {hasControls && (
             <Flex layout="row-center" className="gap-6 absolute right-0 top-0">
-              <ButtonFirst
-                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
-                onClick={() => {
-                  handleBackButton();
-                }}
-              >
-                <SvgArrow height={16} width={16} className="rotate-180" />
-              </ButtonFirst>
               <ButtonBack
                 className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
                 onClick={() => {
