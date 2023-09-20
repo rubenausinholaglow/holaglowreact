@@ -70,7 +70,6 @@ export default function CategorySelector({
           <li
             key={category}
             className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 ${
-              productFilters.category &&
               productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
                 : isStacked
