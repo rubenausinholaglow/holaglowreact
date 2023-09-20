@@ -9,8 +9,10 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCross } from 'icons/IconsDs';
 
+import { filterCount } from '../utils/filters';
+
 export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
-  const { setIsModalOpen } = useGlobalStore(state => state);
+  const { setIsModalOpen, filteredProducts } = useGlobalStore(state => state);
 
   return (
     <Modal
@@ -59,45 +61,17 @@ export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
           </div>
         </div>
         <div className="fixed bottom-2 left-0 right-0 p-4">
-          <Button size="xl" type="primary" className="w-full">
-            Mostrar resultados ()
+          <Button
+            size="xl"
+            type="primary"
+            className="w-full"
+            onClick={() => setIsModalOpen(false)}
+          >
+            Mostrar resultados (
+            {filteredProducts.filter(product => product.visibility).length})
           </Button>
         </div>
       </Flex>
-
-      {/* <Flex
-        layout="row-center"
-        className="fixed top-0 left-0 right-0 justify-between mb-6 px-4"
-      >
-        <Text className="font-semibold">Filtrar</Text>
-        <SvgCross
-          height={24}
-          width={24}
-          onClick={() => setIsModalOpen(false)}
-        />
-      </Flex>
-      <Container className="pt-4 pb-8 border-b border-hg-black relative">
-        <div className="w-[72px] h-[6px] rounded-full bg-hg-black100 mx-auto mb-4"></div>
-
-        <Text size="sm" className="mb-4 font-semibold">
-          Tratamientos
-        </Text>
-        <CategorySelector isStacked className="mb-4" />
-        <PackTypeFilter customStyles="bg-hg-black50" />
-      </Container>
-      <Container className="py-4">
-        <Text size="sm" className="mb-4 font-semibold">
-          Zona de la cara
-        </Text>
-        <ZoneFilter className="mb-8" />
-        <Text size="sm" className="mb-4 font-semibold">
-          Clínicas
-        </Text>
-        <ClinicFilter className="mb-8" />
-        <Button size="xl" type="primary">
-          Mostrar resultados ()
-        </Button>
-      </Container> */}
     </Modal>
   );
 }
