@@ -3,7 +3,7 @@
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
-import { Children, ReactNode, useState } from 'react';
+import { Children, ReactNode, useEffect, useState } from 'react';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrow } from 'icons/IconsDs';
 import {
@@ -63,13 +63,17 @@ export const Carousel = ({
       : setCurrentSlideIndex(currentSlideIndex + 1);
   };
 
+  useEffect(() => {
+    setCurrentSlideIndex(0);
+  }, [children]);
+
   return (
     <>
       <CarouselProvider
-        className={`relative w-full ${className}`}
+        className={`relative w-full  ${className}`}
         isIntrinsicHeight={isIntrinsicHeight}
         totalSlides={childrens.length}
-        currentSlide={currentSlide}
+        currentSlide={currentSlideIndex}
         infinite
         lockOnWindowScroll={true}
         dragEnabled={dragEnabled}
@@ -77,6 +81,9 @@ export const Carousel = ({
         naturalSlideHeight={naturalSlideHeight}
         naturalSlideWidth={naturalSlideWidth}
         visibleSlides={visibleSlides}
+        orientation="horizontal"
+        preventVerticalScrollOnTouch={true}
+        verticalPixelThreshold={1000}
         {...rest}
       >
         <div style={sliderWidth}>
