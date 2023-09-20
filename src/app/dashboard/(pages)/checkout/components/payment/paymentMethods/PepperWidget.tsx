@@ -28,9 +28,6 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
           <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
             En 18 meses
           </p>
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-            En 24 meses
-          </p>
         </div>
         <div className="flex flex-col gap-1">
           <p className="rounded-md bg-white py-1 px-2 text-[#717D96]">
@@ -53,9 +50,6 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
           </p>
           <p className="rounded-md bg-white py-1 px-2">
             {`${priceFormat((totalPrice * 1.117) / 18)}`} €
-          </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat((totalPrice * 1.16) / 24)}`} €
           </p>
         </div>
       </div>

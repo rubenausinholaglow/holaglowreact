@@ -2,3 +2,6 @@
 .carousel__slide-focus-ring {
   display: none;
 }
+.carousel__slider {
+  touch-action: pan-y;
+}

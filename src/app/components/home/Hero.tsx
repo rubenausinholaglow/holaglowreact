@@ -5,7 +5,7 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
 export default function HomeHero() {
   return (
-    <Container isWider className=" mb-6 border-b border-hg-black">
+    <Container isWider className="border-b border-hg-black">
       <Flex layout="col-left" className="pt-[250px] pb-10 md:py-36 md:ml-[55%]">
         <Text size="xl" className="mb-2">
           Medicina estética
