@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
+import { useEffect } from 'react';
 import ProductCarousel from 'app/components/product/ProductCarousel';
 import {
   useGlobalPersistedStore,

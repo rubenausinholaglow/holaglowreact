@@ -9,13 +9,7 @@ import {
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import {
-  SvgArrow,
-  SvgCross,
-  SvgHolaglow,
-  SvgMenu,
-  SvgUserOctagon,
-} from 'icons/IconsDs';
+import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 
 import MobileNavigation from './MobileNavigation';
 

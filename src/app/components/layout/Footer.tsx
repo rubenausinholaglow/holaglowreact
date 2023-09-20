@@ -3,7 +3,7 @@ import Accordion from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgHolaglow, SvgInstagram, SvgUserOctagon } from 'icons/IconsDs';
+import { SvgHolaglow, SvgInstagram } from 'icons/IconsDs';
 
 export function Footer() {
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);

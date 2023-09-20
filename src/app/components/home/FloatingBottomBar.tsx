@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgWhatsapp } from 'icons/IconsDs';
 
 export default function FloatingBottomBar() {
