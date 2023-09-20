@@ -14,21 +14,14 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import {
-  SvgCheckSquare,
-  SvgCheckSquareActive,
-  SvgFilters,
-} from 'icons/IconsDs';
+import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchProducts } from 'utils/fetch';
 
+import DesktopFilters from './components/DesktopFilters';
+import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
-import {
-  applyFilters,
-  filterCount,
-  INITIAL_FILTERS,
-  toggleIsPack,
-} from './utils/filters';
+import { applyFilters, filterCount } from './utils/filters';
 
 export default function ProductsPage() {
   const { stateProducts, setStateProducts, deviceSize } =
@@ -44,8 +37,6 @@ export default function ProductsPage() {
 
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
-
-  const resetFilters = { ...INITIAL_FILTERS };
 
   useEffect(() => {
     async function initProducts() {
@@ -92,31 +83,21 @@ export default function ProductsPage() {
           </Title>
         </Container>
         <Container className="pr-0 md:pr-4">
-          <CategorySelector className="mb-4" />
-          <PackTypeFilter />
+          <Flex layout="col-left" className="lg:flex-row lg:justify-between">
+            <CategorySelector className="mb-4" />
+            <PackTypeFilter />
+          </Flex>
         </Container>
       </div>
 
       {!isEmpty(filteredProducts) && (
         <div className="bg-[#f7f3f0]">
-          <AccordionPrimitive.Root
-            type="single"
-            className="w-full bg-white"
-            collapsible
-            value={showDesktopFilters}
-            onValueChange={setShowDesktopFilters}
+          <Flex
+            layout="row-left"
+            className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
           >
-            <AccordionPrimitive.Item value={true.toString()} className="w-full">
-              <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-                <Container className="py-8">
-                  <p>Filters here</p>
-                </Container>
-              </AccordionPrimitive.Content>
-            </AccordionPrimitive.Item>
-          </AccordionPrimitive.Root>
-          <Container className="pt-6">
-            <Flex layout="row-left" className="justify-between mb-8">
-              <Flex layout="row-left">
+            <Container>
+              <Flex layout="row-left" className="w-full justify-between">
                 <Button
                   type="tertiary"
                   size="sm"
@@ -135,7 +116,7 @@ export default function ProductsPage() {
 
                 <Text
                   size="xs"
-                  className={`transition-opacity text-hg-tertiary underline cursor-pointer  ${
+                  className={`transition-opacity text-hg-tertiary underline cursor-pointer mr-auto ${
                     filterCount(productFilters) === 0
                       ? 'opacity-0'
                       : 'opacity-100'
@@ -151,14 +132,42 @@ export default function ProductsPage() {
                 >
                   Borrar filtros ({filterCount(productFilters)})
                 </Text>
+                <Text size="xs">
+                  {
+                    filteredProducts.filter(product => product.visibility)
+                      .length
+                  }{' '}
+                  productos
+                </Text>
               </Flex>
+            </Container>
+          </Flex>
 
-              <Text size="xs">
-                {filteredProducts.filter(product => product.visibility).length}{' '}
-                productos
-              </Text>
-            </Flex>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 pb-6">
+          <AccordionPrimitive.Root
+            type="single"
+            className="w-full bg-white"
+            collapsible
+            value={showDesktopFilters}
+            onValueChange={setShowDesktopFilters}
+          >
+            <AccordionPrimitive.Item value={true.toString()} className="w-full">
+              <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                <Container className="pt-24 px-8 pb-12">
+                  <DesktopFilters
+                    showDesktopFilters={showDesktopFilters}
+                    setShowDesktopFilters={setShowDesktopFilters}
+                  />
+                </Container>
+              </AccordionPrimitive.Content>
+            </AccordionPrimitive.Item>
+          </AccordionPrimitive.Root>
+
+          <Container>
+            <ul
+              className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6  ${
+                showDesktopFilters === true.toString() ? 'md:pt-12' : 'md:pt-24'
+              }   pb-6`}
+            >
               {filteredProducts.map(product => {
                 if (product.visibility) {
                   return (
@@ -175,6 +184,8 @@ export default function ProductsPage() {
           </Container>
         </div>
       )}
+
+      <LookingFor />
     </MainLayout>
   );
 }

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import {
   applyFilters,
   filterCount,
-  toggleZone,
+  toggleFilter,
 } from 'app/products/utils/filters';
 import {
   useGlobalPersistedStore,
@@ -13,7 +13,13 @@ import {
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCheckSquare, SvgCheckSquareActive, SvgCross } from 'icons/IconsDs';
 
-export default function ZoneFilter({ className }: { className?: string }) {
+export default function ZoneFilter({
+  className,
+  isDesktop,
+}: {
+  className?: string;
+  isDesktop?: boolean;
+}) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const {
     productFilters,
@@ -53,13 +59,19 @@ export default function ZoneFilter({ className }: { className?: string }) {
         <li
           key={zone.name}
           className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer ${
+            isDesktop ? 'w-[120px]' : ''
+          } ${
             productFilters.zone.includes(zone.id)
               ? 'bg-hg-primary500'
               : 'bg-hg-black50'
           }`}
           onClick={() =>
             setProductFilters(
-              toggleZone({ zone: zone.id, filters: productFilters })
+              toggleFilter({
+                filter: 'zone',
+                value: zone.id,
+                filters: productFilters,
+              })
             )
           }
         >

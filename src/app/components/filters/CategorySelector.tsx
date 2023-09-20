@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   applyFilters,
   filterCount,
-  toggleCategory,
+  toggleFilter,
 } from 'app/products/utils/filters';
 import {
   useGlobalPersistedStore,
@@ -80,21 +80,25 @@ export default function CategorySelector({
             `}
             onClick={() => {
               setProductFilters(
-                toggleCategory({ category, filters: productFilters })
+                toggleFilter({
+                  filter: 'category',
+                  value: category,
+                  filters: productFilters,
+                })
               );
             }}
           >
             <Flex layout="row-left">
               <SvgDiamond
-                height={35}
-                width={35}
+                height={32}
+                width={32}
                 fill={HOLAGLOW_COLORS['secondary']}
                 className="mr-2 border rounded-full p-1 bg-white"
                 style={{
                   borderColor: `${HOLAGLOW_COLORS['secondary']}`,
                 }}
               />
-              <Text size="sm" className="whitespace-nowrap">
+              <Text size="xs" className="whitespace-nowrap font-medium">
                 {category}
               </Text>
             </Flex>

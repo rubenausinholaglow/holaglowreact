@@ -26,10 +26,13 @@ export const applyFilters = ({
 
     const isVisibleByZone = filters.zone.includes(product.zone);
 
+    const isVisibleByClinic = true;
+
     const productVisibility = [
       isVisibleByCategory,
       isVisibleByPack,
       isVisibleByZone,
+      //isVisibleByClinic,
     ].some(value => value === true);
 
     return { ...product, visibility: productVisibility };
@@ -47,8 +50,16 @@ export const filterCount = (filters: ProductFilters) => {
 
   filterCount = filterCount + filters.category.length;
   filterCount = filterCount + filters.zone.length;
+  filterCount = filterCount + filters.clinic.length;
 
   return filterCount;
+};
+
+export const toggleIsPack = (filters: ProductFilters) => {
+  let updatedFilters = filters;
+  updatedFilters = { ...updatedFilters, isPack: !updatedFilters.isPack };
+
+  return updatedFilters;
 };
 
 export const toggleCategory = ({
@@ -60,10 +71,6 @@ export const toggleCategory = ({
 }) => {
   const updatedFilters: ProductFilters = { ...filters } || {};
 
-  if (!updatedFilters.category) {
-    updatedFilters.category = [];
-  }
-
   const categoryIndex = updatedFilters.category.indexOf(category);
 
   if (categoryIndex === -1) {
@@ -71,13 +78,6 @@ export const toggleCategory = ({
   } else {
     updatedFilters.category.splice(categoryIndex, 1);
   }
-
-  return updatedFilters;
-};
-
-export const toggleIsPack = (filters: ProductFilters) => {
-  let updatedFilters = filters;
-  updatedFilters = { ...updatedFilters, isPack: !updatedFilters.isPack };
 
   return updatedFilters;
 };
@@ -91,10 +91,6 @@ export const toggleZone = ({
 }) => {
   const updatedFilters: ProductFilters = { ...filters } || {};
 
-  if (!updatedFilters.zone) {
-    updatedFilters.zone = [];
-  }
-
   console.log(zone);
 
   const zoneIndex = updatedFilters.zone.indexOf(zone);
@@ -103,6 +99,30 @@ export const toggleZone = ({
     updatedFilters.zone.push(zone);
   } else {
     updatedFilters.zone.splice(zoneIndex, 1);
+  }
+
+  return updatedFilters;
+};
+
+export const toggleFilter = ({
+  filter,
+  value,
+  filters,
+}: {
+  filter: 'category' | 'zone' | 'clinic';
+  value: string | number;
+  filters: ProductFilters;
+}) => {
+  const updatedFilters: ProductFilters = { ...filters } || {};
+
+  const valueIndex = (updatedFilters[filter] as Array<string | number>).indexOf(
+    value
+  );
+
+  if (valueIndex === -1) {
+    (updatedFilters[filter] as Array<string | number>).push(value);
+  } else {
+    updatedFilters[filter].splice(valueIndex, 1);
   }
 
   return updatedFilters;
