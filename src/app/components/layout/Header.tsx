@@ -9,13 +9,7 @@ import {
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import {
-  SvgArrow,
-  SvgCross,
-  SvgHolaglow,
-  SvgMenu,
-  SvgUserOctagon,
-} from 'icons/IconsDs';
+import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 
 import MobileNavigation from './MobileNavigation';
 
@@ -79,7 +73,7 @@ export default function Header() {
 
       <header
         id="header"
-        className={`z-40 w-full bg-white fixed top-0 transition-transform ${
+        className={`z-30 w-full bg-white fixed top-0 transition-transform ${
           !isHeaderVisible ? '-translate-y-full' : ''
         }`}
       >
@@ -132,6 +126,7 @@ export default function Header() {
                 type="tertiary"
                 size="md"
                 className="ml-2 hidden lg:block"
+                customStyles="group-hover:bg-hg-secondary100"
               >
                 <Flex layout="row-center">
                   <span className="font-semibold">Reservar Cita</span>

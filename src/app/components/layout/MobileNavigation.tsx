@@ -15,7 +15,7 @@ export default function MobileNavigation({
   headerHeight: number;
 }) {
   const paddingBottom = headerHeight + 16;
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
 
   return (
     <Modal
@@ -66,9 +66,9 @@ export default function MobileNavigation({
         >
           <Accordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Barcelona</li>
-              <li>Madrid</li>
-              <li>Valencia</li>
+              {clinics.map(clinic => (
+                <li key={clinic.city}>{clinic.city}</li>
+              ))}
             </ul>
           </Accordion>
 

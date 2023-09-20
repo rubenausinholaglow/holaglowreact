@@ -1,3 +1,6 @@
 export interface ProductFilters {
-  [key: string]: string[];
+  isPack: boolean;
+  category: string[];
+  zone: number[];
+  clinic: string[];
 }
