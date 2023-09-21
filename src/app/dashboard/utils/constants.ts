@@ -10,7 +10,7 @@ const emptyProduct: Product = {
   isPack: false,
   zone: 0,
   category: [],
-  clinic: [],
+  clinicDetail: [],
   flowwwId: 0,
   durationMin: 0,
   durationMax: 0,
