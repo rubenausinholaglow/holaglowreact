@@ -14,6 +14,7 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { SvgSpinner } from 'icons/Icons';
 import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchProducts } from 'utils/fetch';
@@ -22,7 +23,6 @@ import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
-import { SvgSpinner } from 'icons/Icons';
 
 export default function ProductsPage() {
   const { stateProducts, setStateProducts, deviceSize } =
