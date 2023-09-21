@@ -34,3 +34,12 @@ select,
 a {
   -webkit-tap-highlight-color: transparent;
 }
+
+#categorySelector::-webkit-scrollbar {
+  display: none;
+}
+
+#categorySelector {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
