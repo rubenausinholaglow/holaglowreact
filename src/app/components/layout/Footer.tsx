@@ -1,15 +1,17 @@
+'use client';
+
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Accordion from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgHolaglow, SvgInstagram, SvgUserOctagon } from 'icons/IconsDs';
+import { SvgHolaglow, SvgInstagram } from 'icons/IconsDs';
 
 export function Footer() {
-  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+  const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
 
   return (
-    <Container className="pt-12 pb-28 md:pb-12 px-0 md:px-4">
+    <Container className="pt-24 pb-28 md:pb-12 px-0 md:px-4">
       <Flex layout="col-left" className="gap-12 md:flex-row">
         <Flex
           layout="col-left"
@@ -45,17 +47,6 @@ export function Footer() {
           </Text>
           <Flex layout="row-center" className="w-full justify-between">
             <SvgInstagram height={24} width={24} />
-            {/* <Button type="tertiary" size="sm" className="ml-2">
-              <Flex layout="row-center">
-                <SvgUserOctagon
-                  fill="transparent"
-                  height={16}
-                  width={16}
-                  className="mr-2"
-                />
-                <span className="font-semibold">Mi espacio glow</span>
-              </Flex>
-            </Button> */}
           </Flex>
         </Flex>
 
@@ -97,9 +88,9 @@ export function Footer() {
         >
           <Accordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Barcelona</li>
-              <li>Madrid</li>
-              <li>Valencia</li>
+              {clinics.map(clinic => (
+                <li key={clinic.city}>{clinic.city}</li>
+              ))}
             </ul>
           </Accordion>
 
