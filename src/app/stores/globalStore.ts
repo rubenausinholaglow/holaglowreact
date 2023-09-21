@@ -1,6 +1,6 @@
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
-import { INITIAL_FILTERS } from 'app/products/utils/filters';
+import { INITIAL_FILTERS } from 'app/productos/utils/filters';
 import { ProductFilters } from 'types/filters';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
