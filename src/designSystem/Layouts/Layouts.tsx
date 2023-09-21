@@ -2,18 +2,18 @@ import { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export const Container = ({
-  isWider = false,
+  isHeader = false,
   className,
   children,
 }: {
-  isWider?: boolean;
+  isHeader?: boolean;
   className?: string;
   children: ReactNode;
 }) => {
   return (
     <div
       className={twMerge(
-        `w-full px-4 mx-auto ${isWider ? 'max-w-2xl' : 'max-w-xl'} ${
+        `w-full px-4 mx-auto ${isHeader ? 'max-w-full' : 'max-w-xl'} ${
           className ? className : ''
         } `
       )}

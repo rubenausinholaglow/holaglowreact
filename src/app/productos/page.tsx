@@ -85,10 +85,10 @@ export default function ProductsPage() {
           </Title>
         </Container>
         <Container className="pr-0 md:pr-4">
-          <Flex layout="col-left" className="lg:flex-row lg:justify-between">
+          <div className="lg:flex lg:flex-row lg:justify-between">
             <CategorySelector className="mb-4" />
-            <PackTypeFilter />
-          </Flex>
+            <PackTypeFilter className="lg:mb-4" />
+          </div>
         </Container>
       </div>
       {isEmpty(filteredProducts) && (
