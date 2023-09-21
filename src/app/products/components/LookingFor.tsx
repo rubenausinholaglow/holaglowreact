@@ -2,7 +2,7 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgPhone } from 'icons/IconsDs';
+import { SvgPhone, SvgWhatsapp } from 'icons/IconsDs';
 
 export default function LookingFor() {
   return (
@@ -26,7 +26,7 @@ export default function LookingFor() {
           </Button>
 
           <Button type="tertiary" bgColor="bg-hg-primary" size="xl">
-            <SvgPhone className="mr-4" />
+            <SvgWhatsapp className="mr-4" />
             Contacta con nosotros
           </Button>
         </Flex>

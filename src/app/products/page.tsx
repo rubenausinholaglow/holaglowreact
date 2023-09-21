@@ -14,6 +14,7 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { SvgSpinner } from 'icons/Icons';
 import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchProducts } from 'utils/fetch';
@@ -50,6 +51,7 @@ export default function ProductsPage() {
 
     if (isEmpty(filteredProducts)) {
       setStateProducts(stateProducts);
+      setFilteredProducts(stateProducts);
     }
   }, [stateProducts]);
 
@@ -89,9 +91,17 @@ export default function ProductsPage() {
           </Flex>
         </Container>
       </div>
-
+      {isEmpty(filteredProducts) && (
+        <Flex layout="row-left" className="justify-center">
+          <SvgSpinner
+            fill={HOLAGLOW_COLORS['secondary']}
+            height={50}
+            width={50}
+          />
+        </Flex>
+      )}
       {!isEmpty(filteredProducts) && (
-        <div className="bg-[#f7f3f0]">
+        <div className="bg-[#f7f3f0] pb-32">
           <Flex
             layout="row-left"
             className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
@@ -102,6 +112,7 @@ export default function ProductsPage() {
                   type="tertiary"
                   size="sm"
                   className="mr-2"
+                  customStyles="group-hover:bg-hg-secondary100"
                   onClick={() => {
                     deviceSize.isMobile
                       ? setIsMobileFiltersVisible(true)
@@ -116,7 +127,7 @@ export default function ProductsPage() {
 
                 <Text
                   size="xs"
-                  className={`transition-opacity text-hg-tertiary underline cursor-pointer mr-auto ${
+                  className={`text-hg-secondary transition-opacity underline cursor-pointer mr-auto ${
                     filterCount(productFilters) === 0
                       ? 'opacity-0'
                       : 'opacity-100'

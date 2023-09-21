@@ -45,7 +45,7 @@ export default function CategorySelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, []);
+  }, [stateProducts]);
 
   useEffect(() => {
     setFilteredProducts(
@@ -74,7 +74,7 @@ export default function CategorySelector({
                 ? 'bg-hg-primary500'
                 : isStacked
                 ? 'bg-hg-black50'
-                : 'bg-white'
+                : 'bg-white hover:bg-hg-secondary100'
             }
             `}
             onClick={() => {
