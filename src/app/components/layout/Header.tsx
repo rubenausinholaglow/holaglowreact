@@ -78,15 +78,22 @@ export default function Header() {
         }`}
       >
         <Container isWider>
+          {!deviceSize.isMobile && (
+            <SvgHolaglow
+              fill={HOLAGLOW_COLORS['secondary']}
+              className={`lg:absolute ml-20 left-0 h-[24px] ${HEADER_HEIGHT_CLASS}`}
+            />
+          )}
           <Flex
             layout="row-between"
             className={`relative py-3 lg:py-5 lg:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
-            <SvgHolaglow
-              fill={HOLAGLOW_COLORS['secondary']}
-              className="lg:absolute left-0 h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
-            />
-
+            {deviceSize.isMobile && (
+              <SvgHolaglow
+                fill={HOLAGLOW_COLORS['secondary']}
+                className="lg:absolute left-0 h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
+              />
+            )}
             <Navigation className="hidden lg:block" />
 
             <Flex layout="row-center" className="lg:absolute right-0">
@@ -121,20 +128,22 @@ export default function Header() {
                   }}
                 />
               )}
-
-              <Button
-                type="tertiary"
-                size="md"
-                className="ml-2 hidden lg:block"
-                customStyles="group-hover:bg-hg-secondary100"
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Reservar Cita</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
             </Flex>
           </Flex>
+
+          {!deviceSize.isMobile && (
+            <Button
+              type="tertiary"
+              size="md"
+              className={`lg:absolute mr-20 right-0 top-0 h-[24px] ${HEADER_HEIGHT_CLASS}`}
+              customStyles="group-hover:bg-hg-secondary100"
+            >
+              <Flex layout="row-center">
+                <span className="font-semibold">Reservar Cita</span>
+                <SvgArrow height={18} width={18} className="ml-2" />
+              </Flex>
+            </Button>
+          )}
         </Container>
       </header>
     </>

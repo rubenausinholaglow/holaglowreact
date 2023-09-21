@@ -74,7 +74,7 @@ export default function CategorySelector({
                 ? 'bg-hg-primary500'
                 : isStacked
                 ? 'bg-hg-black50'
-                : 'bg-white'
+                : 'bg-white hover:bg-hg-secondary100'
             }
             `}
             onClick={() => {

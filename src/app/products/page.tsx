@@ -112,6 +112,7 @@ export default function ProductsPage() {
                   type="tertiary"
                   size="sm"
                   className="mr-2"
+                  customStyles="group-hover:bg-hg-secondary100"
                   onClick={() => {
                     deviceSize.isMobile
                       ? setIsMobileFiltersVisible(true)

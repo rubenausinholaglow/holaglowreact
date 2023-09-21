@@ -30,6 +30,7 @@ export default function DesktopFilters({
 
       <Button
         type="tertiary"
+        customStyles="group-hover:bg-hg-secondary100"
         onClick={() =>
           setShowDesktopFilters(
             showDesktopFilters === 'true' ? 'false' : 'true'

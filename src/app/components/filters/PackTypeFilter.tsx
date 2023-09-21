@@ -21,9 +21,9 @@ export default function PackTypeFilter({
       type="tertiary"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
       customStyles={twMerge(
-        `border-none ${customStyles ? customStyles : ''} ${
-          productFilters.isPack ? 'bg-hg-primary500' : ''
-        }`
+        `border-none group-hover:bg-hg-secondary100 ${
+          customStyles ? customStyles : ''
+        } ${productFilters.isPack ? 'bg-hg-primary500' : ''}`
       )}
     >
       {productFilters.isPack ? (
