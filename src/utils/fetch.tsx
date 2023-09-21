@@ -10,9 +10,10 @@ export async function fetchProducts() {
 
   try {
     const fetchedProducts = await ProductService.getAllProducts();
-
-    const filteredProducts = fetchedProducts.filter((product: Product) =>
-      allowedProductType.includes(product.type)
+    console.log(fetchedProducts);
+    const filteredProducts = fetchedProducts.filter(
+      (product: Product) =>
+        allowedProductType.includes(product.type) && product.price > 0
     );
 
     const products = filteredProducts.map((product: Product) => ({
