@@ -11,7 +11,7 @@ export function Footer() {
   const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
 
   return (
-    <Container className="pt-12 pb-28 md:pb-12 px-0 md:px-4">
+    <Container className="pt-24 pb-28 md:pb-12 px-0 md:px-4">
       <Flex layout="col-left" className="gap-12 md:flex-row">
         <Flex
           layout="col-left"

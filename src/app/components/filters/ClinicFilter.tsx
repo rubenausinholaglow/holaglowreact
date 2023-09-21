@@ -53,7 +53,7 @@ export default function ClinicFilter({ className }: { className?: string }) {
       {clinics.map(clinic => (
         <li
           key={clinic.city}
-          className={`transition-all flex p-2 items-center rounded-xl cursor-pointer ${
+          className={`transition-all flex p-2 mb-2 items-center rounded-xl cursor-pointer ${
             productFilters.clinic.includes(clinic.internalName)
               ? 'bg-hg-primary500'
               : ''

@@ -18,7 +18,7 @@ export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
     <Modal
       isVisible={isVisible}
       width="w-full"
-      height="h-4/5"
+      height="h-5/6"
       className="shadow-none rounded-t-3xl"
       from="bottom"
     >
@@ -57,19 +57,18 @@ export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
                 Clínicas
               </Text>
               <ClinicFilter className="mb-8" />
+
+              <Button
+                size="xl"
+                type="primary"
+                className="w-full"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Mostrar resultados (
+                {filteredProducts.filter(product => product.visibility).length})
+              </Button>
             </Container>
           </div>
-        </div>
-        <div className="fixed bottom-2 left-0 right-0 p-4">
-          <Button
-            size="xl"
-            type="primary"
-            className="w-full"
-            onClick={() => setIsModalOpen(false)}
-          >
-            Mostrar resultados (
-            {filteredProducts.filter(product => product.visibility).length})
-          </Button>
         </div>
       </Flex>
     </Modal>

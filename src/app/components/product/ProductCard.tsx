@@ -67,7 +67,12 @@ export default function ProductCard({
         <Text size="xs" className="text-hg-black500 mb-8">
           {product.description}
         </Text>
-        <Button type="tertiary" className="mt-auto" bgColor="bg-hg-primary">
+        <Button
+          type="tertiary"
+          className="mt-auto"
+          bgColor="bg-hg-primary"
+          customStyles="hover:bg-hg-secondary100"
+        >
           <Flex layout="row-center">
             <p className="mr-2">Saber más</p>
             <SvgArrow height={20} width={20} />
