@@ -6,12 +6,18 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgHolaglow, SvgInstagram } from 'icons/IconsDs';
+import { usePathname } from 'next/navigation';
 
 export function Footer() {
   const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
+  const isHome = usePathname() === '/';
 
   return (
-    <Container className="pt-24 pb-28 md:pb-12 px-0 md:px-4">
+    <Container
+      className={`${
+        isHome ? 'pb-28' : 'pb-12'
+      } pt-12 md:pt-16 md:pb-16 px-0 md:px-4`}
+    >
       <Flex layout="col-left" className="gap-12 md:flex-row">
         <Flex
           layout="col-left"

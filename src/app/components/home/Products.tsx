@@ -11,30 +11,16 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { fetchProducts } from 'utils/fetch';
 
 import CategorySelector from '../filters/CategorySelector';
 
 export default function HomeProducts() {
-  const { stateProducts, setStateProducts } = useGlobalPersistedStore(
-    state => state
-  );
-
+  const { stateProducts } = useGlobalPersistedStore(state => state);
   const { filteredProducts, setFilteredProducts } = useGlobalStore(
     state => state
   );
 
   useEffect(() => {
-    async function initProducts() {
-      const products = await fetchProducts();
-
-      setStateProducts(products);
-    }
-
-    if (isEmpty(stateProducts)) {
-      initProducts();
-    }
-
     if (isEmpty(filteredProducts)) {
       setFilteredProducts(stateProducts);
     }

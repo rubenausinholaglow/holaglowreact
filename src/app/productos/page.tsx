@@ -40,17 +40,7 @@ export default function ProductsPage() {
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
 
   useEffect(() => {
-    async function initProducts() {
-      const products = await fetchProducts();
-      setStateProducts(products);
-    }
-
-    if (isEmpty(stateProducts)) {
-      initProducts();
-    }
-
     if (isEmpty(filteredProducts)) {
-      setStateProducts(stateProducts);
       setFilteredProducts(stateProducts);
     }
   }, [stateProducts]);
