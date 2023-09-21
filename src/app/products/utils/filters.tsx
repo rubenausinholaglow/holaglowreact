@@ -19,8 +19,8 @@ export const applyFilters = ({
   let updatedProducts = products;
 
   const hasArrayFilters =
-    filters.category.length > 0 &&
-    filters.zone.length > 0 &&
+    filters.category.length > 0 ||
+    filters.zone.length > 0 ||
     filters.clinic.length > 0;
 
   updatedProducts = products.map(product => {
@@ -44,8 +44,6 @@ export const applyFilters = ({
 
     const isVisibleByPack =
       (product.isPack && filters.isPack) || !filters.isPack;
-
-    //console.log(isVisibleByPack, product.title);
 
     if (!hasArrayFilters) {
       productVisibility = true;
