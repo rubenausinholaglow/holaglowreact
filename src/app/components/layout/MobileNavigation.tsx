@@ -1,11 +1,14 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Accordion from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
+import { fetchClinics } from 'utils/fetch';
 
 export default function MobileNavigation({
   isVisible,
@@ -15,7 +18,21 @@ export default function MobileNavigation({
   headerHeight: number;
 }) {
   const paddingBottom = headerHeight + 16;
-  const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
+  const { deviceSize, clinics, setClinics } = useGlobalPersistedStore(
+    state => state
+  );
+
+  useEffect(() => {
+    async function initClinics() {
+      const clinics = await fetchClinics();
+
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
+  }, [clinics]);
 
   return (
     <Modal
