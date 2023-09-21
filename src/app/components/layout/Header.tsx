@@ -110,18 +110,18 @@ export default function Header() {
                   }}
                 />
               )}
+              <Button
+                type="tertiary"
+                size="md"
+                className={`hidden lg:block ${HEADER_HEIGHT_CLASS} 2xl:mr-20`}
+                customStyles="group-hover:bg-hg-secondary100"
+              >
+                <Flex layout="row-center">
+                  <span className="font-semibold">Reservar Cita</span>
+                  <SvgArrow height={18} width={18} className="ml-2" />
+                </Flex>
+              </Button>
             </Flex>
-            <Button
-              type="tertiary"
-              size="md"
-              className={`hidden lg:absolute right-0 top-0 h-[24px] ${HEADER_HEIGHT_CLASS} 2xl:mr-20`}
-              customStyles="group-hover:bg-hg-secondary100"
-            >
-              <Flex layout="row-center">
-                <span className="font-semibold">Reservar Cita</span>
-                <SvgArrow height={18} width={18} className="ml-2" />
-              </Flex>
-            </Button>
           </Flex>
         </Container>
       </header>
