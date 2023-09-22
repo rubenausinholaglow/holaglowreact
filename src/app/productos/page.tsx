@@ -77,17 +77,17 @@ export default function ProductsPage() {
 
       <div className="bg-[#F3EDE9] rounded-t-3xl pt-8 pb-4 lg:bg-[url('/images/products/productsBg.png')] bg-right-top bg-no-repeat bg-contain">
         <Container>
-          <Title size="3xl" className="font-bold mb-12 lg:w-2/5">
+          <Title size="3xl" className="font-bold mb-6 lg:mb-12 lg:w-2/5">
             Loren ipsum{' '}
             <Underlined color={HOLAGLOW_COLORS['secondary700']}>
               sita
             </Underlined>
           </Title>
         </Container>
-        <Container className="pr-0 md:pr-4">
+        <Container className="pr-0 pl-0">
           <div className="lg:flex lg:flex-row lg:justify-between">
             <CategorySelector className="mb-4" />
-            <PackTypeFilter className="lg:mb-4" />
+            <PackTypeFilter className="lg:mb-4 md:pr-4 pl-4" />
           </div>
         </Container>
       </div>
