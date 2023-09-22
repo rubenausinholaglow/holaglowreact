@@ -6,10 +6,10 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgDiamond } from 'icons/Icons';
 import Image from 'next/image';
 
-export default function ProductIntro({ product }: { product: Product }) {
+export default function ProductHeader({ product }: { product: Product }) {
   return (
-    <Container className="p-0 md:px-4 md:flex gap-16 justify-between">
-      <Container className="md:w-auto md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
+    <Container className="p-0 md:px-4 md:flex gap-16 justify-between md:mb-16">
+      <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
         <Title size="2xl" className="font-bold mb-4 md:mt-8">
           {product.title}
         </Title>
@@ -37,14 +37,16 @@ export default function ProductIntro({ product }: { product: Product }) {
           </Button>
         ))}
       </Container>
-      <div className="relative aspect-[3/2] bg-hg-secondary700 rounded-t-2xl md:w-1/2 md:rounded-2xl md:mt-8">
-        <Image
-          src="/images/product/fakeProduct.png"
-          alt="fakeImg"
-          fill
-          objectFit="contain"
-          className="scale-[110%] -translate-y-[5%]"
-        />
+      <div className="md:w-1/2">
+        <div className="relative aspect-[3/2] bg-hg-secondary700 rounded-t-2xl md:rounded-2xl md:mt-8">
+          <Image
+            src="/images/product/fakeProduct.png"
+            alt="fakeImg"
+            fill
+            objectFit="contain"
+            className="scale-[110%] -translate-y-[5%]"
+          />
+        </div>
       </div>
     </Container>
   );
