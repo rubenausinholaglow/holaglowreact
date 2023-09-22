@@ -77,7 +77,7 @@ export default function CategorySelector({
                 ? 'bg-hg-black50'
                 : 'bg-white hover:bg-hg-secondary100'
             } ${isStacked ? ' mb-2' : ''}
-            ${i == 0 ? ' ml-4' : ''}
+            ${i == 0 && !isStacked ? ' ml-4' : ''}
             `}
             onClick={() => {
               setProductFilters(
