@@ -1,9 +1,5 @@
-import { Product } from '@interface/product';
 import { PaymentTable } from 'app/user/budget/PaymentOptions';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
 
 export default function ProductPaymentOptions({
   totalPrice,

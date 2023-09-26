@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
-import { Product } from '@interface/product';
 import ProductCarousel from 'app/components/product/ProductCarousel';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';

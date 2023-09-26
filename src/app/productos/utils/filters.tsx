@@ -1,4 +1,4 @@
-import { Clinic, ProductClinics } from '@interface/clinic';
+import { ProductClinics } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { ProductFilters } from 'types/filters';
 

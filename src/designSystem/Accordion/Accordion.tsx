@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgAdd } from 'icons/IconsDs';
 import { twMerge } from 'tailwind-merge';
 

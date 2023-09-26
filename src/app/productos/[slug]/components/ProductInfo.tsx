@@ -1,8 +1,7 @@
 import { Product } from '@interface/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar } from 'icons/Icons';
 import { SvgInjection, SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import Image from 'next/image';

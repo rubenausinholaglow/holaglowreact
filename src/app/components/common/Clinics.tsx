@@ -14,7 +14,6 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAngle } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
-import { fetchClinics } from 'utils/fetch';
 
 export default function Clinics() {
   const { deviceSize, clinics } = useGlobalPersistedStore(state => state);

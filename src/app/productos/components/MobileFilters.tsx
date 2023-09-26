@@ -9,8 +9,6 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCross } from 'icons/IconsDs';
 
-import { filterCount } from '../utils/filters';
-
 export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
   const { setIsModalOpen, filteredProducts } = useGlobalStore(state => state);
 

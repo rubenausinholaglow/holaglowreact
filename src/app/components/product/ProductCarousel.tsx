@@ -3,7 +3,6 @@
 import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Carousel } from 'designSystem/Carousel/Carousel';
-import { Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 
 import ProfessionalCard from '../common/ProfessionalCard';
@@ -40,8 +39,6 @@ export default function ProductCarousel({
     return <></>;
   }
 
-  console.log(items);
-
   return (
     <Carousel
       hasControls
@@ -56,7 +53,7 @@ export default function ProductCarousel({
     >
       {type === 'products' &&
         items &&
-        items.map((product: Product) => {
+        items.map((product: Product | any) => {
           if (product.visibility) {
             return (
               <ProductCard
@@ -72,7 +69,7 @@ export default function ProductCarousel({
 
       {type === 'professionals' &&
         items &&
-        items.map((professional: Professional) => {
+        items.map((professional: Professional | any) => {
           return (
             <ProfessionalCard
               key={professional.name}
