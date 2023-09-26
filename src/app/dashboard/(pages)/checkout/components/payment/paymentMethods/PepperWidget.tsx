@@ -1,8 +1,46 @@
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { priceFormat } from 'utils/priceFormat';
+import React, { useEffect, useState } from 'react';
 
 export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
+  useEffect(() => {
+    debugger;
+    const toExecute = new Function(script);
+    toExecute();
+  }, []);
+
+  const script = `
+  debugger;
+      var url = '../scripts/Pepper/pepper.js';
+      var scriptLoaded = false;
+      if (!url) url = 'http://xxx.co.uk1/xxx/script.js';
+      var scripts = document.getElementsByTagName('script');
+      for (var i = scripts.length; i--; ) {
+        if (scripts[i].src == url && !scriptLoaded) scriptLoaded = true;
+      }
+      var environment = 'PRD';
+      var language = 'ES';
+      var currency = 'EUR';
+      var apiKey = 'qh4hwfJqyGYcK2o0lDCpNfVhiXiCKZq2';
+      var publicKey = '0a64c825821bf9bc38c182671fa85786';
+      if(!scriptLoaded){
+        const scriptTag = document.createElement("script");
+        scriptTag.src = url;
+        document.head.appendChild(scriptTag);
+        scriptTag.addEventListener('load', function() {
+            PEPPER.config.init( environment, language, currency, apiKey, publicKey );
+           
+        });
+      }
+      else {
+        document.addEventListener("DOMContentLoaded", function(event) {
+          PEPPER.config.init( environment, language, currency, apiKey, publicKey );
+         });
+         
+      }
+    `;
+
   return (
     <section className="p-2 text-black">
       <div className="flex gap-2 text-[11px] text-center">

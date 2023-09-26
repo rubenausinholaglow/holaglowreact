@@ -29,7 +29,7 @@ const Page = () => {
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const [showPaymentButtons, setShowPaymentButtons] = useState(false);
+  const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [clientToken, setClientToken] = useState<string | ''>('');
   const [budgetId, setBudgetId] = useState<string | ''>('');
