@@ -49,6 +49,18 @@ export default function ProductResults({ product }: { product: Product }) {
             />
           </div>
         </Carousel>
+
+        <Carousel
+          hasControls
+          dragEnabled={false}
+          hasDots
+          className="px-4 md:px-0 rounded-xl"
+        >
+          <div className="p-[200px] border border-hg-secondary">test 1</div>
+          <div className="p-[200px] border border-hg-secondary">test 2</div>
+          <div className="p-[200px] border border-hg-secondary">test 3</div>
+          <div className="p-[200px] border border-hg-secondary">test 4</div>
+        </Carousel>
       </div>
     </Container>
   );
