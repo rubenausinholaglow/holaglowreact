@@ -2,7 +2,7 @@ import ReactCompareImage from 'react-compare-image';
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
 export default function ProductResults({ product }: { product: Product }) {
@@ -27,6 +27,7 @@ export default function ProductResults({ product }: { product: Product }) {
         <Carousel
           hasControls
           dragEnabled={false}
+          touchEnabled={false}
           hasDots
           className="px-4 md:px-0 rounded-xl"
         >
@@ -48,18 +49,6 @@ export default function ProductResults({ product }: { product: Product }) {
               rightImage="/images/product/fakeProductExample1.png"
             />
           </div>
-        </Carousel>
-
-        <Carousel
-          hasControls
-          dragEnabled={false}
-          hasDots
-          className="px-4 md:px-0 rounded-xl"
-        >
-          <div className="p-[200px] border border-hg-secondary">test 1</div>
-          <div className="p-[200px] border border-hg-secondary">test 2</div>
-          <div className="p-[200px] border border-hg-secondary">test 3</div>
-          <div className="p-[200px] border border-hg-secondary">test 4</div>
         </Carousel>
       </div>
     </Container>

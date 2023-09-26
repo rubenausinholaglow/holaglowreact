@@ -31,8 +31,8 @@ export default function HomeProducts() {
   }
 
   return (
-    <div className="bg-hg-cream500 overflow-hidden">
-      <Container className="pt-12">
+    <div className="bg-hg-cream500 overflow-hidden py-12">
+      <Container>
         <Title size="2xl" className="font-bold mb-6 md:mb-12">
           Tratamientos para conseguir resultados{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>
@@ -53,7 +53,11 @@ export default function HomeProducts() {
         <CategorySelector />
       </Container>
       <Container>
-        <ProductCarousel className="pb-8" products={filteredProducts} />
+        <ProductCarousel
+          className="pb-8"
+          type="products"
+          items={filteredProducts}
+        />
       </Container>
     </div>
   );

@@ -1,16 +1,22 @@
 'use client';
 
+import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Carousel } from 'designSystem/Carousel/Carousel';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { isEmpty } from 'lodash';
 
+import ProfessionalCard from '../common/ProfessionalCard';
 import ProductCard from './ProductCard';
 
 export default function ProductCarousel({
+  type = 'products',
   className,
-  products,
+  items,
 }: {
-  className: string;
-  products: Product[];
+  type: 'products' | 'professionals';
+  className?: string;
+  items: Product[] | Professional[] | null;
 }) {
   const CONTAINER_WIDTH = 1280;
   const CONTAINER_PADDING = 16;
@@ -30,10 +36,16 @@ export default function ProductCarousel({
 
   const visibleSlides = (CarouselWidth - (isCarouselExpanded ? 40 : 0)) / 304;
 
+  if (isEmpty(items)) {
+    return <></>;
+  }
+
+  console.log(items);
+
   return (
     <Carousel
       hasControls
-      className={`relative mb-12 ${className}`}
+      className={`relative ${className}`}
       isIntrinsicHeight
       visibleSlides={visibleSlides}
       infinite={false}
@@ -42,19 +54,33 @@ export default function ProductCarousel({
         paddingRight: `${isCarouselExpanded ? '40px' : '0'}`,
       }}
     >
-      {products.map(product => {
-        if (product.visibility) {
+      {type === 'products' &&
+        items &&
+        items.map((product: Product) => {
+          if (product.visibility) {
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+                className="h-full flex flex-col mr-10"
+              />
+            );
+          }
+
+          return null;
+        })}
+
+      {type === 'professionals' &&
+        items &&
+        items.map((professional: Professional) => {
           return (
-            <ProductCard
-              key={product.id}
-              product={product}
+            <ProfessionalCard
+              key={professional.name}
+              professional={professional}
               className="h-full flex flex-col mr-10"
             />
           );
-        }
-
-        return null;
-      })}
+        })}
     </Carousel>
   );
 }

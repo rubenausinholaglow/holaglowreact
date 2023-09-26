@@ -7,7 +7,7 @@ import {
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
 import { isEmpty } from 'lodash';
-import { fetchProducts } from 'utils/fetch';
+import { fetchClinics, fetchProducts } from 'utils/fetch';
 
 import { DeviceSize } from './Breakpoint';
 import DashboardLayout from './DashboardLayout';
@@ -32,21 +32,20 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const { deviceSize, setDeviceSize, stateProducts, setStateProducts } =
-    useGlobalPersistedStore(state => state);
+
+  const {
+    deviceSize,
+    setDeviceSize,
+    stateProducts,
+    setStateProducts,
+    clinics,
+    setClinics,
+  } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
-    setDeviceSize(DeviceSize());
     setISHydrated(true);
+    setDeviceSize(DeviceSize());
   }, []);
-
-  const mainLayoutTopPadding = () => {
-    return `${
-      deviceSize.isMobile || deviceSize.isTablet
-        ? HEADER_HEIGHT_MOBILE
-        : HEADER_HEIGHT_DESKTOP
-    }px`;
-  };
 
   useEffect(() => {
     async function initProducts() {
@@ -58,6 +57,25 @@ export default function MainLayout({
       initProducts();
     }
   }, [stateProducts]);
+
+  useEffect(() => {
+    async function initClinics() {
+      const clinics = await fetchClinics();
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
+  }, [clinics]);
+
+  const mainLayoutTopPadding = () => {
+    return `${
+      deviceSize.isMobile || deviceSize.isTablet
+        ? HEADER_HEIGHT_MOBILE
+        : HEADER_HEIGHT_DESKTOP
+    }px`;
+  };
 
   if (!isHydrated) {
     return <></>;

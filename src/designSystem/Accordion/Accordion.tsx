@@ -1,12 +1,14 @@
 import { ReactNode } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgAdd } from 'icons/IconsDs';
 import { twMerge } from 'tailwind-merge';
 
-export default function Accordion({
+export function SimpleAccordion({
   trigger,
   triggerStyles,
   iconSize = 14,
+  iconStyles,
   className,
   children,
   isOpen = false,
@@ -14,6 +16,7 @@ export default function Accordion({
   trigger: string;
   triggerStyles?: string;
   iconSize?: number;
+  iconStyles?: string;
   className?: string;
   children: ReactNode;
   isOpen?: boolean;
@@ -36,7 +39,7 @@ export default function Accordion({
             <SvgAdd
               height={iconSize}
               width={iconSize}
-              className="transition-transform origin-center rotate-45 group-radix-state-open:rotate-90 group-radix-state-open:duration-200 mr-1"
+              className={`transition-transform origin-center rotate-45 group-radix-state-open:rotate-90 group-radix-state-open:duration-200 mr-1 ${iconStyles}`}
             />
           </AccordionPrimitive.Trigger>
         ) : (
@@ -47,5 +50,62 @@ export default function Accordion({
         </AccordionPrimitive.Content>
       </AccordionPrimitive.Item>
     </AccordionPrimitive.Root>
+  );
+}
+
+export function Accordion({
+  className = '',
+  isOpen = false,
+  children,
+}: {
+  className?: string;
+  isOpen?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <AccordionPrimitive.Root
+      type="single"
+      className={twMerge(`w-full ${className}`)}
+      collapsible
+      defaultValue={isOpen ? 'item' : ''}
+    >
+      <AccordionPrimitive.Item value="item" className="w-full">
+        {children}
+      </AccordionPrimitive.Item>
+    </AccordionPrimitive.Root>
+  );
+}
+
+export function AccordionTrigger({
+  className = '',
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <AccordionPrimitive.Trigger className={`group ${className}`}>
+      {children}
+    </AccordionPrimitive.Trigger>
+  );
+}
+
+export function AccordionContent({
+  className,
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <AccordionPrimitive.Content
+      className={twMerge(
+        `overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp ${
+          className ? className : ''
+        }`
+      )}
+    >
+      {children}
+    </AccordionPrimitive.Content>
   );
 }

@@ -18,6 +18,7 @@ export interface Professional {
   urlPhoto: string;
   name: string;
   professionalType: ProfessionalType;
+  city?: string;
 }
 
 export enum ProfessionalType {
