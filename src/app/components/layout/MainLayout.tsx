@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
 import { Analytics } from '@vercel/analytics/react';
+import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -35,8 +35,6 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const setDeviceSize = useGlobalPersistedStore(state => state.setDeviceSize);
-  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
   const {
     deviceSize,
     setDeviceSize,
@@ -73,7 +71,6 @@ export default function MainLayout({
     }
   }, [clinics]);
 
-
   if (!isHydrated) {
     return <></>;
   }
@@ -86,7 +83,7 @@ export default function MainLayout({
     }px`;
   };
 
-    if (isDashboard) {
+  if (isDashboard) {
     return (
       <DashboardLayout
         hideTopBar={hideTopBar}
