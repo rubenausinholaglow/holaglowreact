@@ -2,11 +2,15 @@
 
 import { useEffect } from 'react';
 import { Clinic } from '@interface/clinic';
+import Clinics from 'app/components/home/Clinics';
+import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
+import { SvgCheck } from 'icons/Icons';
 import { isEmpty } from 'lodash';
-import { fetchClinics } from 'utils/fetch';
 import { useRouter } from 'next/navigation';
+import { fetchClinics } from 'utils/fetch';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
@@ -36,21 +40,43 @@ export default function ClinicsCheckout() {
   };
 
   return (
-    <Flex layout="col-center">
-      {selectedTreatments?.map(product => (
-        <Flex key={product.id}>
-          {product.title}
-          {product.description}
-          {product.price}
+    <MainLayout isCheckout>
+      <Container>
+        <Flex
+          layout="col-right"
+          className="bg-hg-tertiary100 p-3 gap-3 rounded-xl"
+        >
+          <Flex layout="row-between" className="items-start">
+            <div>
+              <Text className="font-semibold">
+                Arrugas expresión: Frente, entrecejo y patas de gallo
+              </Text>
+              <Text size="sm">1 vial ácido hialurónico</Text>
+            </div>
+            <SvgCheck className="mt-[2px]" height={24} width={24} />
+          </Flex>
         </Flex>
-      ))}
-      Selecciona una clínica
-      {clinics.map(clinic => (
-        <Flex onClick={() => selectClinic(clinic)} key={clinic.internalName}>
-          <Flex>{clinic.city}</Flex>
-          <Flex>{clinic.address}</Flex>
-        </Flex>
-      ))}
-    </Flex>
+
+        <Title className="font-semibold">Selecciona tu clínica</Title>
+      </Container>
+      <Clinics />
+
+      <Flex layout="col-center">
+        {selectedTreatments?.map(product => (
+          <Flex key={product.id}>
+            {product.title}
+            {product.description}
+            {product.price}
+          </Flex>
+        ))}
+        Selecciona una clínica
+        {clinics.map(clinic => (
+          <Flex onClick={() => selectClinic(clinic)} key={clinic.internalName}>
+            <Flex>{clinic.city}</Flex>
+            <Flex>{clinic.address}</Flex>
+          </Flex>
+        ))}
+      </Flex>
+    </MainLayout>
   );
 }
