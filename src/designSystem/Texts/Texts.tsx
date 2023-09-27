@@ -63,16 +63,20 @@ export const Text = ({
 export const Underlined = ({
   color = HOLAGLOW_COLORS['black'],
   as = 'span',
+  className,
   children,
 }: {
   color?: string;
   as?: keyof JSX.IntrinsicElements;
+  className?: string;
   children: ReactNode;
 }) => {
   const HtmlComponent = as;
 
   return (
-    <HtmlComponent className="relative inline-block">
+    <HtmlComponent
+      className={`relative inline-block ${className ? className : ''}`}
+    >
       <span
         className={`bg-[${color}] absolute h-[20%] bottom-[10%] left-0 right-0`}
         style={{ background: color }}

@@ -55,6 +55,7 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-15deg': 'linear-gradient(-15deg, var(--tw-gradient-stops))',
+        gradient: 'linear-gradient(var(--tw-gradient-stops))',
       },
       maxWidth: {
         sm: '640px',

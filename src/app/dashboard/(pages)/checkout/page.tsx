@@ -11,7 +11,6 @@ import MainLayout from 'app/components/layout/MainLayout';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Title } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
