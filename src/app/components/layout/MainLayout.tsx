@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -98,6 +99,7 @@ export default function MainLayout({
         <main style={{ paddingTop: mainLayoutTopPadding() }}>
           <Header />
           {children}
+          <Analytics />
           <Footer />
         </main>
       )}
