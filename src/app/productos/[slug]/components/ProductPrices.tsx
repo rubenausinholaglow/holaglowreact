@@ -1,3 +1,4 @@
+import Select from 'react-select';
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
@@ -18,6 +19,13 @@ import {
 
 export default function ProductPrices({ product }: { product: Product }) {
   console.log(product);
+
+  const selectOptions = [
+    { value: 'codigo-de-barras', label: 'Código de barras' },
+    { value: 'labios', label: 'Labios' },
+    { value: 'menton', label: 'Mentón' },
+    { value: 'ojeras', label: 'Ojeras' },
+  ];
 
   return (
     <div className="bg-gradient from-hg-secondary500 to-hg-primary300">
@@ -295,6 +303,119 @@ export default function ProductPrices({ product }: { product: Product }) {
                     <Text size="sm">6 sesiones</Text>
                   </Flex>
                 </Flex>
+              </Flex>
+            </Flex>
+          </Flex>
+
+          <Flex layout="col-left" className="w-full gap-4 mb-12">
+            <Flex
+              layout="col-left"
+              className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
+            >
+              <Flex layout="row-between" className="w-full p-2 mb-4">
+                <Text size="xl" className="font-semibold text-hg-secondary">
+                  1.299 €
+                </Text>
+                <Text
+                  size="xs"
+                  className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                >
+                  Upgrade
+                </Text>
+              </Flex>
+
+              <Flex
+                layout="col-left"
+                className="bg-hg-black50 p-3 gap-2 rounded-xl w-full"
+              >
+                <Flex layout="row-left">
+                  <SvgInjection
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2"
+                  />
+                  {product.description}
+                </Flex>
+
+                <Select
+                  options={selectOptions}
+                  className="w-full mb-2"
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                      borderRadius: '12px',
+                      background: state.hasValue
+                        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
+                        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+                      borderColor: state.isFocused
+                        ? `${HOLAGLOW_COLORS['secondary']}`
+                        : `${HOLAGLOW_COLORS['black']}`,
+                    }),
+                    singleValue: (baseStyles, state) => ({
+                      ...baseStyles,
+                      color: state.hasValue
+                        ? `${HOLAGLOW_COLORS['secondary']}`
+                        : `${HOLAGLOW_COLORS['black300']}`,
+                    }),
+                    indicatorSeparator: () => ({ display: 'none' }),
+                    indicatorsContainer: () => ({ display: 'none' }),
+                  }}
+                />
+
+                <Flex layout="row-left">
+                  <SvgInjection
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2"
+                  />
+                  {product.description}
+                </Flex>
+
+                <Select
+                  options={selectOptions}
+                  className="w-full mb-2"
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      background: state.hasValue
+                        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
+                        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+                      borderColor: state.isFocused
+                        ? `${HOLAGLOW_COLORS['secondary']}`
+                        : `${HOLAGLOW_COLORS['black']}`,
+                    }),
+                    indicatorSeparator: () => ({ display: 'none' }),
+                    indicatorsContainer: () => ({ display: 'none' }),
+                  }}
+                />
+                <Flex layout="row-left">
+                  <SvgInjection
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2"
+                  />
+                  {product.description}
+                </Flex>
+
+                <Select
+                  options={selectOptions}
+                  className="w-full mb-2"
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      background: state.hasValue
+                        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
+                        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+                      borderColor: state.isFocused
+                        ? `${HOLAGLOW_COLORS['secondary']}`
+                        : `${HOLAGLOW_COLORS['black']}`,
+                    }),
+                    indicatorSeparator: () => ({ display: 'none' }),
+                    indicatorsContainer: () => ({ display: 'none' }),
+                  }}
+                />
               </Flex>
             </Flex>
           </Flex>

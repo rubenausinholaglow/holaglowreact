@@ -15,8 +15,6 @@ import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
 
-isEmpty;
-
 export default function MainLayout({
   isDashboard = false,
   hideTopBar = false,
@@ -32,8 +30,6 @@ export default function MainLayout({
   hideProfessionalSelector?: boolean;
   children: React.ReactNode;
 }) {
-  console.log('entering MainLayout');
-
   const [isHydrated, setISHydrated] = useState(false);
 
   const {
