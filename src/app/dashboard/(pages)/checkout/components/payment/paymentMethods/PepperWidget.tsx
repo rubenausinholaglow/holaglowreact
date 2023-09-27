@@ -5,13 +5,11 @@ import React, { useEffect, useState } from 'react';
 
 export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
   useEffect(() => {
-    debugger;
     const toExecute = new Function(script);
     toExecute();
   }, []);
 
   const script = `
-  debugger;
       var url = '../scripts/Pepper/pepper.js';
       var scriptLoaded = false;
       if (!url) url = 'http://xxx.co.uk1/xxx/script.js';
@@ -19,7 +17,7 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
       for (var i = scripts.length; i--; ) {
         if (scripts[i].src == url && !scriptLoaded) scriptLoaded = true;
       }
-      var environment = 'PRD';
+      var environment = 'TST';
       var language = 'ES';
       var currency = 'EUR';
       var apiKey = 'qh4hwfJqyGYcK2o0lDCpNfVhiXiCKZq2';
@@ -30,12 +28,14 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
         document.head.appendChild(scriptTag);
         scriptTag.addEventListener('load', function() {
             PEPPER.config.init( environment, language, currency, apiKey, publicKey );
+            PEPPER.widgets.DrawWidget(${totalPrice}, 'STD', 'pepperWidget', 'in');
            
         });
       }
       else {
         document.addEventListener("DOMContentLoaded", function(event) {
           PEPPER.config.init( environment, language, currency, apiKey, publicKey );
+          PEPPER.widgets.DrawWidget(${totalPrice}, 'STD', 'pepperWidget', 'in');
          });
          
       }
@@ -43,6 +43,7 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
 
   return (
     <section className="p-2 text-black">
+      <div className="pepperWidget"></div>
       <div className="flex gap-2 text-[11px] text-center">
         <div className="flex flex-col gap-1">
           <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2">
