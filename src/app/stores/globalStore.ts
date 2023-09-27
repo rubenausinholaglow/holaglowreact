@@ -1,8 +1,8 @@
 import { User } from '@interface/appointment';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
-import { INITIAL_FILTERS } from 'app/productos/utils/filters';
 import { Slot } from '@interface/slot';
+import { INITIAL_FILTERS } from 'app/productos/utils/filters';
 import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
 import { create } from 'zustand';
