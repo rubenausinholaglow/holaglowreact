@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { priceFormat } from 'utils/priceFormat';
-import React, { useEffect, useState } from 'react';
 
 export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
   useEffect(() => {
