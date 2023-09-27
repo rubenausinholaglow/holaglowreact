@@ -1,3 +1,4 @@
+import { Clinic, ProductClinics } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { ProductFilters } from 'types/filters';
 
@@ -17,23 +18,38 @@ export const applyFilters = ({
 }) => {
   let updatedProducts = products;
 
+  const hasArrayFilters =
+    filters.category.length > 0 ||
+    filters.zone.length > 0 ||
+    filters.clinic.length > 0;
+
   updatedProducts = products.map(product => {
     const isVisibleByCategory = product.category.some(category =>
       filters.category.includes(category.name)
     );
-
-    const isVisibleByPack = product.isPack && filters.isPack;
-
     const isVisibleByZone = filters.zone.includes(product.zone);
 
-    const isVisibleByClinic = true;
+    const productClinics: Array<string> = product.clinicDetail.map(
+      (item: ProductClinics) => item.clinic.internalName
+    );
+    const isVisibleByClinic = filters.clinic.some(clinic =>
+      productClinics.includes(clinic)
+    );
 
-    const productVisibility = [
+    let productVisibility = [
       isVisibleByCategory,
-      isVisibleByPack,
       isVisibleByZone,
-      //isVisibleByClinic,
+      isVisibleByClinic,
     ].some(value => value === true);
+
+    const isVisibleByPack =
+      (product.isPack && filters.isPack) || !filters.isPack;
+
+    if (!hasArrayFilters) {
+      productVisibility = true;
+    }
+
+    productVisibility = productVisibility && isVisibleByPack;
 
     return { ...product, visibility: productVisibility };
   });

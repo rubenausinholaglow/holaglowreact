@@ -1,3 +1,7 @@
+export interface ProductClinics {
+  clinic: Clinic;
+}
+
 export interface Clinic {
   id: string;
   city: string;

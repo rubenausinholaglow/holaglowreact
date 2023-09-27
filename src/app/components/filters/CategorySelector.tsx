@@ -3,7 +3,7 @@ import {
   applyFilters,
   filterCount,
   toggleFilter,
-} from 'app/products/utils/filters';
+} from 'app/productos/utils/filters';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -59,23 +59,25 @@ export default function CategorySelector({
 
   return (
     <ul
-      className={`flex gap-3 overfl ow-scroll md:overflow-auto ${
+      id="categorySelector"
+      className={`flex overflow-scroll md:overflow-auto ${
         className ? className : ' '
       }
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
-      {productCategories.map(category => {
+      {productCategories.map((category, i) => {
         return (
           <li
             key={category}
-            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 ${
+            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
                 : isStacked
                 ? 'bg-hg-black50'
                 : 'bg-white hover:bg-hg-secondary100'
-            }
+            } ${isStacked ? ' mb-2' : ''}
+            ${i == 0 && !isStacked ? ' ml-4' : ''}
             `}
             onClick={() => {
               setProductFilters(
