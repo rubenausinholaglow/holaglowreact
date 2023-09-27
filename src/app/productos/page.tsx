@@ -17,7 +17,6 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
 import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { fetchProducts } from 'utils/fetch';
 
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
@@ -25,8 +24,7 @@ import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
 
 export default function ProductsPage() {
-  const { stateProducts, setStateProducts, deviceSize } =
-    useGlobalPersistedStore(state => state);
+  const { stateProducts, deviceSize } = useGlobalPersistedStore(state => state);
 
   const {
     filteredProducts,
@@ -40,17 +38,7 @@ export default function ProductsPage() {
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
 
   useEffect(() => {
-    async function initProducts() {
-      const products = await fetchProducts();
-      setStateProducts(products);
-    }
-
-    if (isEmpty(stateProducts)) {
-      initProducts();
-    }
-
     if (isEmpty(filteredProducts)) {
-      setStateProducts(stateProducts);
       setFilteredProducts(stateProducts);
     }
   }, [stateProducts]);

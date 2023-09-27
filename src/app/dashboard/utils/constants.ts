@@ -15,8 +15,10 @@ const emptyProduct: Product = {
   durationMin: 0,
   durationMax: 0,
   beforeAndAfterImages: [],
+  applicationTimeMinutes: 0,
   type: ProductType.Others,
   visibility: true,
+  sessions: 0,
 };
 
 export const INITIAL_STATE: State = {
