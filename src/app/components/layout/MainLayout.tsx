@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -13,7 +14,6 @@ import { DeviceSize } from './Breakpoint';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
-import { Analytics } from '@vercel/analytics/react';
 
 isEmpty;
 
