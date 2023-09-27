@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
   useEffect(() => {
-    const toExecute = new Function(script);
-    toExecute();
+    //const toExecute = new Function(script);
+    //toExecute();
   }, []);
 
   const script = `
@@ -27,15 +27,14 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
         scriptTag.src = url;
         document.head.appendChild(scriptTag);
         scriptTag.addEventListener('load', function() {
-            PEPPER.config.init( environment, language, currency, apiKey, publicKey );
-            PEPPER.widgets.DrawWidget(${totalPrice}, 'STD', 'pepperWidget', 'in');
-           
+          debugger;
+          PEPPER.config.initDraw( environment, language, currency, apiKey, publicKey, ${totalPrice}, 'STD', '.pepperWidget', 'in');
         });
       }
       else {
         document.addEventListener("DOMContentLoaded", function(event) {
-          PEPPER.config.init( environment, language, currency, apiKey, publicKey );
-          PEPPER.widgets.DrawWidget(${totalPrice}, 'STD', 'pepperWidget', 'in');
+          debugger;
+          PEPPER.config.initDraw( environment, language, currency, apiKey, publicKey, ${totalPrice}, 'STD', '.pepperWidget', 'in');
          });
          
       }
