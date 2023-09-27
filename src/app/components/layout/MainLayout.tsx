@@ -13,6 +13,7 @@ import { DeviceSize } from './Breakpoint';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
+import { Analytics } from '@vercel/analytics/react';
 
 isEmpty;
 
@@ -96,6 +97,7 @@ export default function MainLayout({
         <main style={{ paddingTop: mainLayoutTopPadding() }}>
           <Header />
           {children}
+          <Analytics />
           <Footer />
         </main>
       )}
