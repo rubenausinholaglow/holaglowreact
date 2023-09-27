@@ -25,6 +25,10 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const [slug, setSlug] = useState(params.slug);
 
   useEffect(() => {
+    console.log(stateProducts);
+  }, [stateProducts]);
+
+  useEffect(() => {
     setSlug(params.slug);
 
     setProduct(
@@ -37,6 +41,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   if (isEmpty(product)) {
     return <></>;
   }
+
+  console.log(product);
 
   return (
     <MainLayout>

@@ -31,6 +31,8 @@ export default function MainLayout({
   hideProfessionalSelector?: boolean;
   children: React.ReactNode;
 }) {
+  console.log('entering MainLayout');
+
   const [isHydrated, setISHydrated] = useState(false);
 
   const {
