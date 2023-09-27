@@ -32,10 +32,14 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         product => product.flowwwId.toString() === params.slug
       )[0]
     );
-  }, [slug]);
+  }, [slug, stateProducts]);
 
   if (isEmpty(product)) {
-    return <></>;
+    return (
+      <MainLayout>
+        <div></div>
+      </MainLayout>
+    );
   }
 
   return (
