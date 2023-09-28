@@ -10,6 +10,7 @@ import { SvgDiamond } from 'icons/Icons';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProductCard({
   product,
@@ -73,10 +74,12 @@ export default function ProductCard({
           bgColor="bg-hg-primary"
           customStyles="hover:bg-hg-secondary100"
         >
-          <Flex layout="row-center">
-            <p className="mr-2">Saber más</p>
-            <SvgArrow height={20} width={20} />
-          </Flex>
+          <Link href={`/productos/${product.slug}`} className="text-inherit">
+            <Flex layout="row-center">
+              <p className="mr-2">Saber más</p>
+              <SvgArrow height={20} width={20} />
+            </Flex>
+          </Link>
         </Button>
       </Flex>
     </div>

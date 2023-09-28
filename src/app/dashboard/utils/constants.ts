@@ -3,6 +3,7 @@ import { Product, ProductType } from '@interface/product';
 
 const emptyProduct: Product = {
   id: '',
+  slug: '',
   title: '',
   description: '',
   detail: '',
@@ -10,13 +11,15 @@ const emptyProduct: Product = {
   isPack: false,
   zone: 0,
   category: [],
-  clinic: [],
+  clinicDetail: [],
   flowwwId: 0,
   durationMin: 0,
   durationMax: 0,
   beforeAndAfterImages: [],
+  applicationTimeMinutes: 0,
   type: ProductType.Others,
   visibility: true,
+  sessions: 0,
 };
 
 export const INITIAL_STATE: State = {

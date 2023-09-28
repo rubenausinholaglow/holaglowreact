@@ -181,7 +181,9 @@ export default function Page() {
           return false;
         }
         if (filterClinic.length > 0) {
-          const productClinicIds = product.clinic?.map(clinic => clinic.city);
+          const productClinicIds = product.clinicDetail?.map(
+            clinic => clinic.clinic.city
+          );
           if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
             return false;
           }
@@ -252,7 +254,7 @@ export default function Page() {
             )}
           </Container>
           {cart.length > 0 && (
-            <div className="fixed bottom-0 z-10 w-full shadow-centered">
+            <div className="fixed bottom-0 z-10 w-full shadow-centered-black">
               <Cart />
             </div>
           )}

@@ -9,8 +9,6 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCross } from 'icons/IconsDs';
 
-import { filterCount } from '../utils/filters';
-
 export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
   const { setIsModalOpen, filteredProducts } = useGlobalStore(state => state);
 
@@ -48,7 +46,7 @@ export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
                 <PackTypeFilter customStyles="bg-hg-black50" />
               </Container>
             </div>
-            <Container className="py-4 pb-28">
+            <Container className="py-4 pb-12">
               <Text size="sm" className="mb-4 font-semibold">
                 Zona de la cara
               </Text>
@@ -56,7 +54,7 @@ export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
               <Text size="sm" className="mb-4 font-semibold">
                 Clínicas
               </Text>
-              <ClinicFilter className="mb-8" />
+              <ClinicFilter className="mb-6" />
 
               <Button
                 size="xl"

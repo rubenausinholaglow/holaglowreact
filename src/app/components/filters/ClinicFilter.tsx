@@ -5,7 +5,7 @@ import {
   applyFilters,
   filterCount,
   toggleFilter,
-} from 'app/products/utils/filters';
+} from 'app/productos/utils/filters';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -49,7 +49,7 @@ export default function ClinicFilter({ className }: { className?: string }) {
   }, [productFilters]);
 
   return (
-    <ul className={`flex flex-col w-full${className ? className : ''}`}>
+    <ul className={`flex flex-col ${className ? className : ''}`}>
       {clinics.map(clinic => (
         <li
           key={clinic.city}
