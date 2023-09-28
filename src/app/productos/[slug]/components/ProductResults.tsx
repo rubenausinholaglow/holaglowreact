@@ -36,10 +36,10 @@ export default function ProductResults({ product }: { product: Product }) {
               leftImage="/images/product/fakeProduct.png"
               rightImage="/images/product/fakeProductExample1.png"
             />
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4">
+            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
               Antes
             </span>
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4">
+            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
               Después
             </span>
           </div>

@@ -16,9 +16,10 @@ import {
   SvgMinus,
   SvgTimeLeft,
 } from 'icons/IconsDs';
+import { useRouter } from 'next/navigation';
 
 export default function ProductPrices({ product }: { product: Product }) {
-  console.log(product);
+  const router = useRouter();
 
   const selectOptions = [
     { value: 'codigo-de-barras', label: 'Código de barras' },
@@ -85,10 +86,16 @@ export default function ProductPrices({ product }: { product: Product }) {
                           width={16}
                           className="text-hg-secondary mr-2"
                         />
-                        {product.description}
+                        <Text size="sm">{product.description}</Text>
                       </Flex>
 
-                      <Button type="tertiary" customStyles="bg-hg-primary">
+                      <Button
+                        type="tertiary"
+                        customStyles="bg-hg-primary"
+                        onClick={() => {
+                          router.push(`/checkout/clinic`);
+                        }}
+                      >
                         Reservar cita
                         <SvgArrow height={16} width={16} className="ml-2" />
                       </Button>
@@ -145,7 +152,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                           width={16}
                           className="text-hg-secondary mr-2"
                         />
-                        {product.description}
+                        <Text className="font-semibold">{product.title}</Text>
                       </Flex>
 
                       <Button type="tertiary" customStyles="bg-hg-primary">
@@ -207,7 +214,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                           width={16}
                           className="text-hg-secondary mr-2"
                         />
-                        {product.description}
+                        <Text className="font-semibold">{product.title}</Text>
                       </Flex>
 
                       <Button type="tertiary" customStyles="bg-hg-primary">
@@ -334,7 +341,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                     width={16}
                     className="text-hg-secondary mr-2"
                   />
-                  {product.description}
+                  <Text className="font-semibold">{product.title}</Text>
                 </Flex>
 
                 <Select
@@ -370,7 +377,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                     width={16}
                     className="text-hg-secondary mr-2"
                   />
-                  {product.description}
+                  <Text className="font-semibold">{product.title}</Text>
                 </Flex>
 
                 <Select
@@ -396,7 +403,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                     width={16}
                     className="text-hg-secondary mr-2"
                   />
-                  {product.description}
+                  <Text className="font-semibold">{product.title}</Text>
                 </Flex>
 
                 <Select

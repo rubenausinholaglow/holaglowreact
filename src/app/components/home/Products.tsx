@@ -49,16 +49,14 @@ export default function HomeProducts() {
           </span>
         </Title>
       </Container>
-      <Container className="pr-0 mb-12 md:pr-4">
+      <Container className="px-0 mb-12 md:px-4">
         <CategorySelector />
       </Container>
-      <Container>
-        <ProductCarousel
-          className="pb-8"
-          type="products"
-          items={filteredProducts}
-        />
-      </Container>
+      <ProductCarousel
+        className="pb-8"
+        type="products"
+        items={filteredProducts}
+      />
     </div>
   );
 }

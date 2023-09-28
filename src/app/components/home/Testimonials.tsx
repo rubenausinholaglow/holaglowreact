@@ -26,6 +26,12 @@ const TESTIMONIALS = [
     testimonial:
       'Hac habitasse platea dictumst quisque sagittis purus sit amet. Turpis tincidunt id aliquet risus feugiat. Massa enim nec dui nunc mattis enim ut tellus. Velit dignissim sodales ut eu sem integer vitae justo eget.',
   },
+  {
+    imgUrl: '/images/home/testimonial1.png',
+    name: 'Luisa',
+    testimonial:
+      'Aliquam faucibus purus in massa tempor nec feugiat nisl pretium. Lectus urna duis convallis convallis. Proin sagittis nisl rhoncus mattis rhoncus urna.',
+  },
 ];
 
 const Testimonial = ({
@@ -75,11 +81,15 @@ export default function Testimonials() {
 
   return (
     <Container className="py-12">
-      <Title size="2xl" className="font-bold mb-12">
+      <Title size="2xl" className="font-bold mb-6 md:mb-8">
         Si tú estás{' '}
         <Underlined color={HOLAGLOW_COLORS['primary']}>feliz</Underlined>,
         nosotros también
       </Title>
+      <Text className="text-hg-black500 mb-6 md:mb-12">
+        Sabemos que nada transmite más confianza que una historia real. Te
+        presentamos a las personas que ya han confiado en Holaglow.
+      </Text>
       <Carousel
         hasControls
         className="relative mb-12"

@@ -17,67 +17,69 @@ export default function ProductCarousel({
   className?: string;
   items: Product[] | Professional[] | null;
 }) {
-  const CONTAINER_WIDTH = 1280;
+  const CONTAINER_WIDTH = 1152;
   const CONTAINER_PADDING = 16;
-
-  let CarouselWidth;
-  let isCarouselExpanded = false;
+  let firstItemLeftMargin = 0;
 
   if (document.body.clientWidth > CONTAINER_WIDTH) {
-    CarouselWidth =
-      document.body.clientWidth -
-      (document.body.clientWidth - (CONTAINER_WIDTH - CONTAINER_PADDING * 2)) /
-        2;
-    isCarouselExpanded = true;
+    firstItemLeftMargin =
+      (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
   } else {
-    CarouselWidth = document.body.clientWidth - 16;
+    firstItemLeftMargin = 16;
   }
 
-  const visibleSlides = (CarouselWidth - (isCarouselExpanded ? 40 : 0)) / 304;
+  const visibleSlides = (document.body.clientWidth - firstItemLeftMargin) / 304;
 
   if (isEmpty(items)) {
     return <></>;
   }
 
   return (
-    <Carousel
-      hasControls
-      className={`relative ${className}`}
-      isIntrinsicHeight
-      visibleSlides={visibleSlides}
-      infinite={false}
-      sliderWidth={{
-        width: `${CarouselWidth}px`,
-        paddingRight: `${isCarouselExpanded ? '40px' : '0'}`,
-      }}
-    >
-      {type === 'products' &&
-        items &&
-        items.map((product: Product | any) => {
-          if (product.visibility) {
+    <>
+      <style>
+        {`
+          #productCarousel [aria-label="slider"] {
+            padding-left: ${firstItemLeftMargin}px;
+          }
+        `}
+      </style>
+      <Carousel
+        id="productCarousel"
+        hasControls
+        className={`relative ${className}`}
+        isIntrinsicHeight
+        visibleSlides={visibleSlides}
+        infinite={false}
+        isFullWidth
+      >
+        {type === 'products' &&
+          items &&
+          items.map((product: Product | any, index) => {
+            if (product.visibility) {
+              return (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  className="h-full flex flex-col mr-10"
+                />
+              );
+            }
+
+            return null;
+          })}
+
+        {type === 'professionals' &&
+          items &&
+          items.map((professional: Professional | any, index) => {
             return (
-              <ProductCard
-                key={product.id}
-                product={product}
+              <ProfessionalCard
+                key={professional.name}
+                professional={professional}
                 className="h-full flex flex-col mr-10"
               />
             );
-          }
-
-          return null;
-        })}
-
-      {type === 'professionals' &&
-        items &&
-        items.map((professional: Professional | any) => {
-          return (
-            <ProfessionalCard
-              key={professional.name}
-              professional={professional}
-              className="h-full flex flex-col mr-10"
-            />
-          );
-        })}
-    </Carousel>
+          })}
+      </Carousel>
+    </>
   );
 }
