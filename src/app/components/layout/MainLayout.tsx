@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
+import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -17,6 +18,7 @@ import Header from './Header';
 
 export default function MainLayout({
   isDashboard = false,
+  isCheckout = false,
   hideTopBar = false,
   hideBackButton = false,
   hideContactButtons = false,
@@ -24,6 +26,7 @@ export default function MainLayout({
   children,
 }: {
   isDashboard?: boolean;
+  isCheckout?: boolean;
   hideBackButton?: boolean;
   hideTopBar?: boolean;
   hideContactButtons?: boolean;
@@ -31,7 +34,6 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-
   const {
     deviceSize,
     setDeviceSize,
@@ -68,6 +70,10 @@ export default function MainLayout({
     }
   }, [clinics]);
 
+  if (!isHydrated) {
+    return <></>;
+  }
+
   const mainLayoutTopPadding = () => {
     return `${
       deviceSize.isMobile || deviceSize.isTablet
@@ -76,29 +82,33 @@ export default function MainLayout({
     }px`;
   };
 
-  if (!isHydrated) {
-    return <></>;
+  if (isDashboard) {
+    return (
+      <DashboardLayout
+        hideTopBar={hideTopBar}
+        hideBackButton={hideBackButton}
+        hideContactButtons={hideContactButtons}
+        hideProfessionalSelector={hideProfessionalSelector}
+      >
+        {children}
+      </DashboardLayout>
+    );
+  }
+
+  if (isCheckout) {
+    return (
+      <>
+        <CheckoutHeader />
+        {children}
+      </>
+    );
   }
 
   return (
-    <>
-      {isDashboard ? (
-        <DashboardLayout
-          hideTopBar={hideTopBar}
-          hideBackButton={hideBackButton}
-          hideContactButtons={hideContactButtons}
-          hideProfessionalSelector={hideProfessionalSelector}
-        >
-          {children}
-        </DashboardLayout>
-      ) : (
-        <main style={{ paddingTop: mainLayoutTopPadding() }}>
-          <Header />
-          {children}
-          <Analytics />
-          <Footer />
-        </main>
-      )}
-    </>
+    <main style={{ paddingTop: mainLayoutTopPadding() }}>
+      <Header />
+      {children}
+      <Footer />
+    </main>
   );
 }

@@ -1,4 +1,7 @@
+import Bugsnag from '@bugsnag/js';
 import { Appointment, Status } from '@interface/appointment';
+import { DayAvailability } from '@interface/dayAvailability';
+import { Slot } from '@interface/slot';
 
 export default class ScheduleService {
   static async getClinicSchedule(flowwwToken: string) {
@@ -110,6 +113,82 @@ export default class ScheduleService {
       }
     } catch (err) {
       return null;
+    }
+  }
+
+  static async getMonthAvailability(
+    date: string,
+    treatment: string,
+    clinicId: string
+  ): Promise<Array<DayAvailability>> {
+    try {
+      const url =
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/MonthAvailability?date=` +
+        date +
+        `&treatment=` +
+        treatment +
+        `&clinicId=` +
+        clinicId;
+
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error getting monthavailability', err);
+      return [];
+    }
+  }
+
+  static async getSlots(
+    date: string,
+    treatment: string,
+    clinicId: string
+  ): Promise<Array<Slot>> {
+    try {
+      const url =
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Slots?date=` +
+        date +
+        `&treatment=` +
+        treatment +
+        `&clinicId=` +
+        clinicId;
+
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error getting slots', err);
+      return [];
+    }
+  }
+
+  static async scheduleBulk(appointments: Appointment[]) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Bulk`;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(appointments),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (err) {
+      return err;
     }
   }
 }
