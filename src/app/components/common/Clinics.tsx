@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   Accordion,
@@ -60,7 +59,11 @@ export default function Clinics() {
         <Accordion className={`w-full flex flex-col gap-4`}>
           {deviceSize.isMobile &&
             clinics.map((clinic, index) => (
-              <AccordionItem className="w-full" value={index.toString()}>
+              <AccordionItem
+                className="w-full"
+                key={index}
+                value={index.toString()}
+              >
                 <AccordionTrigger className="w-full">
                   <div
                     key="clinic.city"

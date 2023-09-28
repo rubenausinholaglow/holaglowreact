@@ -18,7 +18,7 @@ import ProductPaymentOptions from './components/ProductPaymentOptions';
 import ProductPrices from './components/ProductPrices';
 import ProductResults from './components/ProductResults';
 import ProductSuggestions from './components/ProductSuggestions';
-import ProductsPage from '../page';
+import PsrpPage from '../psrp';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
@@ -67,6 +67,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       </MainLayout>
     );
   } else {
-    return <ProductsPage slug={slug}></ProductsPage>;
+    return <PsrpPage slug={slug}></PsrpPage>;
   }
 }
