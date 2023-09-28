@@ -1,6 +1,6 @@
 'use client';
 
-import { toggleIsPack } from 'app/products/utils/filters';
+import { toggleIsPack } from 'app/productos/utils/filters';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';

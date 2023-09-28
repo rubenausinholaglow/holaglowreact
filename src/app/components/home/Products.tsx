@@ -11,30 +11,16 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { fetchProducts } from 'utils/fetch';
 
 import CategorySelector from '../filters/CategorySelector';
 
 export default function HomeProducts() {
-  const { stateProducts, setStateProducts } = useGlobalPersistedStore(
-    state => state
-  );
-
+  const { stateProducts } = useGlobalPersistedStore(state => state);
   const { filteredProducts, setFilteredProducts } = useGlobalStore(
     state => state
   );
 
   useEffect(() => {
-    async function initProducts() {
-      const products = await fetchProducts();
-
-      setStateProducts(products);
-    }
-
-    if (isEmpty(stateProducts)) {
-      initProducts();
-    }
-
     if (isEmpty(filteredProducts)) {
       setFilteredProducts(stateProducts);
     }
@@ -45,8 +31,8 @@ export default function HomeProducts() {
   }
 
   return (
-    <div className="bg-hg-cream500 overflow-hidden">
-      <Container className="pt-12">
+    <div className="bg-hg-cream500 overflow-hidden py-12">
+      <Container>
         <Title size="2xl" className="font-bold mb-6 md:mb-12">
           Tratamientos para conseguir resultados{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>
@@ -67,7 +53,11 @@ export default function HomeProducts() {
         <CategorySelector />
       </Container>
       <Container>
-        <ProductCarousel className="pb-8" products={filteredProducts} />
+        <ProductCarousel
+          className="pb-8"
+          type="products"
+          items={filteredProducts}
+        />
       </Container>
     </div>
   );

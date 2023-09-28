@@ -1,4 +1,4 @@
-import { Clinic } from './clinic';
+import { ProductClinics } from './clinic';
 
 export interface Product {
   id: string;
@@ -9,13 +9,15 @@ export interface Product {
   isPack: boolean;
   zone: number;
   category: Category[];
-  clinic: Clinic[];
+  clinicDetail: ProductClinics[];
   flowwwId: number;
   durationMin: number;
   durationMax: number;
   beforeAndAfterImages: BeforeAndAfterImages[];
+  applicationTimeMinutes: number;
   type: ProductType;
   visibility: boolean;
+  sessions: number;
 }
 
 export interface BeforeAndAfterImages {

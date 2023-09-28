@@ -1,3 +1,7 @@
+export interface ProductClinics {
+  clinic: Clinic;
+}
+
 export interface Clinic {
   id: string;
   city: string;
@@ -16,6 +20,7 @@ export interface Professional {
   name: string;
   professionalType: ProfessionalType;
   flowwwId: string;
+  city?: string;  
 }
 
 export enum ProfessionalType {

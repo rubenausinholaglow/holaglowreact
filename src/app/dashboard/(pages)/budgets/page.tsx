@@ -181,7 +181,9 @@ export default function Page() {
           return false;
         }
         if (filterClinic.length > 0) {
-          const productClinicIds = product.clinic?.map(clinic => clinic.city);
+          const productClinicIds = product.clinicDetail?.map(
+            clinic => clinic.clinic.city
+          );
           if (!productClinicIds || !hasMatchingClinic(productClinicIds)) {
             return false;
           }
