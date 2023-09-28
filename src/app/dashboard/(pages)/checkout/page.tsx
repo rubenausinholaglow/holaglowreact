@@ -1,5 +1,4 @@
 'use client';
-import { applyDiscountToCart } from '@utils/utils';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Budget, StatusBudget } from '@interface/budget';
@@ -7,6 +6,7 @@ import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
+import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -18,9 +18,9 @@ import { useRouter } from 'next/navigation';
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
 import ProductCard from '../budgets/treatments/ProductCard';
+import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { usePaymentList } from './components/payment/payments/usePaymentList';
 import ProductDiscountForm from './components/ProductDiscountForm';
-import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 
 const Page = () => {
   const cart = useCartStore(state => state.cart);
