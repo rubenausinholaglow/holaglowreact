@@ -2,18 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
-import * as Accordion from '@radix-ui/react-accordion';
-import Clinics from 'app/components/home/Clinics';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCheck } from 'icons/Icons';
-import { SvgAngle, SvgCar, SvgRadioChecked } from 'icons/IconsDs';
+import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { fetchClinics } from 'utils/fetch';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
@@ -22,18 +18,6 @@ export default function ClinicsCheckout() {
   const { selectedTreatments } = useGlobalPersistedStore(state => state);
   const [googleMapAddress, setGoogleMapAddress] = useState('');
   const [mapHeight, setMapHeight] = useState(550);
-
-  useEffect(() => {
-    async function initClinics() {
-      const clinics = await fetchClinics();
-
-      setClinics(clinics);
-    }
-
-    if (isEmpty(clinics)) {
-      initClinics();
-    }
-  }, [clinics]);
 
   useEffect(() => {
     if (!isEmpty(selectedClinic)) {
@@ -56,38 +40,39 @@ export default function ClinicsCheckout() {
     router.push('/checkout/agenda');
   };
 
-  console.log(selectedClinic);
-
   return (
     <MainLayout isCheckout>
       <div className="relative mt-9 md:mt-16">
         <Container className="md:pr-32">
-          <Flex
-            layout="col-left"
-            className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
-          >
-            <Flex layout="row-between" className="items-start w-full">
-              <div>
-                <Text className="font-semibold text-left mb-2">
-                  Arrugas expresión: Frente, entrecejo y patas de gallo
-                </Text>
-                <Text className="text-left" size="xs">
-                  1 vial ácido hialurónico
-                </Text>
-              </div>
-              <SvgRadioChecked
-                className="mt-[2px] shrink-0"
-                height={24}
-                width={24}
-              />
-            </Flex>
-            <Text
-              size="xl"
-              className="text-hg-secondary font-semibold w-full text-right"
+          {selectedTreatments?.map(product => (
+            <Flex
+              layout="col-left"
+              className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
+              key={product.id}
             >
-              289€
-            </Text>
-          </Flex>
+              <Flex layout="row-between" className="items-start w-full">
+                <div>
+                  <Text className="font-semibold text-left mb-2">
+                    {product.title}
+                  </Text>
+                  <Text className="text-left" size="xs">
+                    {product.description}
+                  </Text>
+                </div>
+                <SvgRadioChecked
+                  className="mt-[2px] shrink-0"
+                  height={24}
+                  width={24}
+                />
+              </Flex>
+              <Text
+                size="xl"
+                className="text-hg-secondary font-semibold w-full text-right"
+              >
+                {product.price}€
+              </Text>
+            </Flex>
+          ))}
 
           <Title className="font-semibold mb-6">Selecciona tu clínica</Title>
 
@@ -137,9 +122,6 @@ export default function ClinicsCheckout() {
                 Te pagamos el parking para que tú disfrutes al máximo de la
                 experiencia
               </Text>
-              <Link className="text-xs underline" href="https://www.google.cat">
-                Más info
-              </Link>
             </div>
           </Flex>
         </Container>
@@ -161,16 +143,6 @@ export default function ClinicsCheckout() {
           </div>
         </div>
       </div>
-
-      <Flex layout="col-center">
-        {selectedTreatments?.map(product => (
-          <Flex key={product.id}>
-            {product.title}
-            {product.description}
-            {product.price}
-          </Flex>
-        ))}
-      </Flex>
     </MainLayout>
   );
 }
