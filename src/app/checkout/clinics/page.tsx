@@ -10,7 +10,6 @@ import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { fetchClinics } from 'utils/fetch';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
@@ -123,9 +122,6 @@ export default function ClinicsCheckout() {
                 Te pagamos el parking para que tú disfrutes al máximo de la
                 experiencia
               </Text>
-              <Link className="text-xs underline" href="https://www.google.cat">
-                Más info
-              </Link>
             </div>
           </Flex>
         </Container>
