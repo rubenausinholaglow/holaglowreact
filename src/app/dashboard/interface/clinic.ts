@@ -8,6 +8,7 @@ export interface Clinic {
   address: string;
   internalName: string;
   professionals: Professional[];
+  flowwwId: string;
 }
 
 export interface Professional {
@@ -18,6 +19,8 @@ export interface Professional {
   urlPhoto: string;
   name: string;
   professionalType: ProfessionalType;
+  flowwwId: string;
+  city?: string;  
 }
 
 export enum ProfessionalType {

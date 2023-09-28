@@ -1,19 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
+import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
+import { isEmpty } from 'lodash';
+import { fetchClinics, fetchProducts } from 'utils/fetch';
 
 import { DeviceSize } from './Breakpoint';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
 
+isEmpty;
 export default function MainLayout({
   isDashboard = false,
+  isCheckout = false,
   hideTopBar = false,
   hideBackButton = false,
   hideContactButtons = false,
@@ -21,6 +27,7 @@ export default function MainLayout({
   children,
 }: {
   isDashboard?: boolean;
+  isCheckout?: boolean;
   hideBackButton?: boolean;
   hideTopBar?: boolean;
   hideContactButtons?: boolean;
@@ -28,13 +35,41 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const setDeviceSize = useGlobalPersistedStore(state => state.setDeviceSize);
-  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+  const {
+    deviceSize,
+    setDeviceSize,
+    stateProducts,
+    setStateProducts,
+    clinics,
+    setClinics,
+  } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
-    setDeviceSize(DeviceSize());
     setISHydrated(true);
+    setDeviceSize(DeviceSize());
   }, []);
+
+  useEffect(() => {
+    async function initProducts() {
+      const products = await fetchProducts();
+      setStateProducts(products);
+    }
+
+    if (isEmpty(stateProducts)) {
+      initProducts();
+    }
+  }, [stateProducts]);
+
+  useEffect(() => {
+    async function initClinics() {
+      const clinics = await fetchClinics();
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
+  }, [clinics]);
 
   if (!isHydrated) {
     return <></>;
@@ -48,24 +83,33 @@ export default function MainLayout({
     }px`;
   };
 
+  if (isDashboard) {
+    return (
+      <DashboardLayout
+        hideTopBar={hideTopBar}
+        hideBackButton={hideBackButton}
+        hideContactButtons={hideContactButtons}
+        hideProfessionalSelector={hideProfessionalSelector}
+      >
+        {children}
+      </DashboardLayout>
+    );
+  }
+
+  if (isCheckout) {
+    return (
+      <>
+        <CheckoutHeader />
+        {children}
+      </>
+    );
+  }
+
   return (
-    <>
-      {isDashboard ? (
-        <DashboardLayout
-          hideTopBar={hideTopBar}
-          hideBackButton={hideBackButton}
-          hideContactButtons={hideContactButtons}
-          hideProfessionalSelector={hideProfessionalSelector}
-        >
-          {children}
-        </DashboardLayout>
-      ) : (
-        <main style={{ paddingTop: mainLayoutTopPadding() }}>
-          <Header />
-          {children}
-          <Footer />
-        </main>
-      )}
-    </>
+    <main style={{ paddingTop: mainLayoutTopPadding() }}>
+      <Header />
+      {children}
+      <Footer />
+    </main>
   );
 }

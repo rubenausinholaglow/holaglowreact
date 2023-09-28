@@ -14,8 +14,10 @@ export interface Product {
   durationMin: number;
   durationMax: number;
   beforeAndAfterImages: BeforeAndAfterImages[];
+  applicationTimeMinutes: number;
   type: ProductType;
   visibility: boolean;
+  sessions: number;
 }
 
 export interface BeforeAndAfterImages {

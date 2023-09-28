@@ -43,8 +43,6 @@ export default async function Budget({
   const {
     clinicInfo = null,
     products = null,
-    totalPrice = null,
-    totalPriceWithIVA = null,
     simulations = null,
     discountCode = null,
     referenceId = null,

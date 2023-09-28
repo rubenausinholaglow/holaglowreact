@@ -1,6 +1,9 @@
+import { User } from '@interface/appointment';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
+import { Slot } from '@interface/slot';
 import { INITIAL_FILTERS } from 'app/productos/utils/filters';
+import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -16,6 +19,11 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   isMobile: boolean;
   deviceSize: DeviceSize;
+  selectedTreatments?: Product[];
+  selectedClinic?: Clinic;
+  selectedSlot?: Slot;
+  user?: User;
+  selectedDay: Dayjs;
 }
 
 interface GlobalPersistActions {
@@ -23,6 +31,11 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
+  setSelectedTreatments: (value: Product[]) => void;
+  setSelectedClinic: (value: Clinic) => void;
+  setCurrentUser: (value: User) => void;
+  setSelectedSlot: (slot: Slot) => void;
+  setSelectedDay: (day: Dayjs) => void;
 }
 
 export const useGlobalPersistedStore = create(
@@ -37,6 +50,11 @@ export const useGlobalPersistedStore = create(
         isWideScreen: false,
       },
       isMobile: true,
+      selectedTreatment: undefined,
+      selectedClinic: undefined,
+      user: undefined,
+      selectedDay: dayjs(),
+      selectedSlot: undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -48,6 +66,21 @@ export const useGlobalPersistedStore = create(
       },
       setDeviceSize: value => {
         set({ deviceSize: value });
+      },
+      setSelectedTreatments: value => {
+        set({ selectedTreatments: value });
+      },
+      setSelectedClinic: value => {
+        set({ selectedClinic: value });
+      },
+      setCurrentUser: value => {
+        set({ user: value });
+      },
+      setSelectedSlot: value => {
+        set({ selectedSlot: value });
+      },
+      setSelectedDay: value => {
+        set({ selectedDay: value });
       },
     }),
     {
