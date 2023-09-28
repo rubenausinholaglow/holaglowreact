@@ -43,3 +43,11 @@ a {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+#datepickerWrapper > div {
+  width: 100%;
+}
+
+#datepickerWrapper .react-datepicker {
+  width: 100%;
+}

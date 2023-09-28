@@ -14,6 +14,8 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgHour, SvgLocation } from 'icons/Icons';
+import { SvgCheck, SvgPhone } from 'icons/IconsDs';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
@@ -162,12 +164,12 @@ export default function Agenda() {
   return (
     <MainLayout isCheckout>
       <div className="relative mt-9 md:mt-16">
-        <Container className="md:pr-32">
-          <Text size="xl" className="font-semibold mb-6">
+        <Container>
+          <Title size="xl" className="font-semibold mb-6">
             Selecciona día y hora
-          </Text>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div>
+          </Title>
+          <Flex layout="row-between" className="gap-16 items-start">
+            <div className="w-1/2">
               <Text size="sm" className="w-full text-left to-hg-black500 mb-4">
                 Agenda cita para{' '}
                 <span className="font-semibold">
@@ -182,14 +184,14 @@ export default function Agenda() {
                     <SvgLocation />
                   </span>
                   <Text
-                    size="sm"
+                    size="xs"
                     className="font-semibold w-full text-left pl-2"
                   >
                     {selectedClinic.address}, {selectedClinic.city}
                   </Text>
-                  <div onClick={changeClinic}>
-                    <a>Cambiar</a>
-                  </div>
+                  <Link href="/checkout/clinics" className="text-xs">
+                    Cambiar
+                  </Link>
                 </Flex>
               )}
               <Flex className="mb-4">
@@ -212,7 +214,7 @@ export default function Agenda() {
                     </Flex>
                   ))}
               </Flex>
-              <Flex className="w-full">
+              <Flex className="w-full" id="datepickerWrapper">
                 <DatePicker
                   inline
                   onChange={selectDate}
@@ -224,7 +226,7 @@ export default function Agenda() {
                 ></DatePicker>
               </Flex>
             </div>
-            <div className="w-full">
+            <div className="w-1/2">
               <Text size="sm" className="w-full text-left to-hg-black500 mb-12">
                 Selecciona hora para el {dateFromatted.toString()}
               </Text>
@@ -254,26 +256,33 @@ export default function Agenda() {
                   {afternoonHours.map(x => {
                     return (
                       <Flex key={x.startTime}>
-                        <div onClick={() => selectHour(x)} style={divStyle}>
+                        <Flex onClick={() => selectHour(x)} style={divStyle}>
+                          <SvgCheck className="mr-2" />
                           {x.startTime} h
-                        </div>
+                        </Flex>
                       </Flex>
                     );
                   })}
                 </Flex>
               )}
               <Flex
-                layout="row-left"
+                layout="col-left"
                 className="bg-hg-primary300 p-3 gap-3 fixed bottom-0 left-0 right-0 md:relative"
               >
                 <Text>¿La cita que necesitas no está disponible?</Text>
-                <Button>Llamanos al 999-999-999</Button>
+                <Button size="xl" type="tertiary">
+                  <SvgPhone className="mr-2" />
+                  <div>
+                    <Text size="xs">Llamanos</Text>
+                    <Text>al 999-999-999</Text>
+                  </div>
+                </Button>
                 <Text className="text-sm">
                   Te ayudaremos a agendar tu tratamiento
                 </Text>
               </Flex>
             </div>
-          </div>
+          </Flex>
         </Container>
       </div>
     </MainLayout>
