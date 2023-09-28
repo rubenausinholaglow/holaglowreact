@@ -4,6 +4,7 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   Accordion,
   AccordionContent,
+  AccordionItem,
   AccordionTrigger,
 } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -42,188 +43,194 @@ export default function ProductPrices({ product }: { product: Product }) {
           <Flex layout="col-left" className="w-full gap-4 mb-12">
             <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
               <Accordion isOpen>
-                <AccordionTrigger>
-                  <Flex layout="col-left" className="p-3">
-                    <Flex layout="row-between" className="w-full">
-                      <Text
-                        size="xl"
-                        className="text-hg-secondary font-semibold"
-                      >
-                        {product.price} €
-                      </Text>
-                      <Flex layout="row-right">
+                <AccordionItem value="1">
+                  <AccordionTrigger>
+                    <Flex layout="col-left" className="p-3">
+                      <Flex layout="row-between" className="w-full">
                         <Text
-                          size="xs"
-                          className="py-1 px-2 bg-hg-pink/20 text-hg-pink rounded-md"
+                          size="xl"
+                          className="text-hg-secondary font-semibold"
                         >
-                          Básico
+                          {product.price} €
                         </Text>
+                        <Flex layout="row-right">
+                          <Text
+                            size="xs"
+                            className="py-1 px-2 bg-hg-pink/20 text-hg-pink rounded-md"
+                          >
+                            Básico
+                          </Text>
 
-                        <SvgAdd
-                          height={24}
-                          width={24}
-                          className="ml-4 group-radix-state-open:hidden"
-                        />
-                        <SvgMinus
-                          height={24}
-                          width={24}
-                          className="ml-4 hidden group-radix-state-open:block"
-                        />
+                          <SvgAdd
+                            height={24}
+                            width={24}
+                            className="ml-4 group-radix-state-open:hidden"
+                          />
+                          <SvgMinus
+                            height={24}
+                            width={24}
+                            className="ml-4 hidden group-radix-state-open:block"
+                          />
+                        </Flex>
                       </Flex>
+                      <Text className="font-semibold">{product.title}</Text>
                     </Flex>
-                    <Text className="font-semibold">{product.title}</Text>
-                  </Flex>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="pt-2">
-                    <Flex
-                      layout="col-left"
-                      className="bg-hg-black50 p-3 gap-4 rounded-xl"
-                    >
-                      <Flex layout="row-left">
-                        <SvgInjection
-                          height={16}
-                          width={16}
-                          className="text-hg-secondary mr-2"
-                        />
-                        <Text size="sm">{product.description}</Text>
-                      </Flex>
-
-                      <Button
-                        type="tertiary"
-                        customStyles="bg-hg-primary"
-                        onClick={() => {
-                          router.push(`/checkout/clinic`);
-                        }}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pt-2">
+                      <Flex
+                        layout="col-left"
+                        className="bg-hg-black50 p-3 gap-4 rounded-xl"
                       >
-                        Reservar cita
-                        <SvgArrow height={16} width={16} className="ml-2" />
-                      </Button>
-                    </Flex>
-                  </div>
-                </AccordionContent>
+                        <Flex layout="row-left">
+                          <SvgInjection
+                            height={16}
+                            width={16}
+                            className="text-hg-secondary mr-2"
+                          />
+                          <Text size="sm">{product.description}</Text>
+                        </Flex>
+
+                        <Button
+                          type="tertiary"
+                          customStyles="bg-hg-primary"
+                          onClick={() => {
+                            router.push(`/checkout/clinic`);
+                          }}
+                        >
+                          Reservar cita
+                          <SvgArrow height={16} width={16} className="ml-2" />
+                        </Button>
+                      </Flex>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
             </Flex>
 
             <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
               <Accordion>
-                <AccordionTrigger>
-                  <Flex layout="col-left" className="p-3">
-                    <Flex layout="row-between" className="w-full">
-                      <Text
-                        size="xl"
-                        className="text-hg-secondary font-semibold"
-                      >
-                        359 €
-                      </Text>
-                      <Flex layout="row-right">
+                <AccordionItem value="2">
+                  <AccordionTrigger>
+                    <Flex layout="col-left" className="p-3">
+                      <Flex layout="row-between" className="w-full">
                         <Text
-                          size="xs"
-                          className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                          size="xl"
+                          className="text-hg-secondary font-semibold"
                         >
-                          Upgrade
+                          359 €
                         </Text>
-                        <SvgAdd
-                          height={24}
-                          width={24}
-                          className="ml-4 group-radix-state-open:hidden"
-                        />
-                        <SvgMinus
-                          height={24}
-                          width={24}
-                          className="ml-4 hidden group-radix-state-open:block"
-                        />
+                        <Flex layout="row-right">
+                          <Text
+                            size="xs"
+                            className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                          >
+                            Upgrade
+                          </Text>
+                          <SvgAdd
+                            height={24}
+                            width={24}
+                            className="ml-4 group-radix-state-open:hidden"
+                          />
+                          <SvgMinus
+                            height={24}
+                            width={24}
+                            className="ml-4 hidden group-radix-state-open:block"
+                          />
+                        </Flex>
                       </Flex>
+                      <Text className="font-semibold">
+                        Aumento de labios + mesoterapia
+                      </Text>
                     </Flex>
-                    <Text className="font-semibold">
-                      Aumento de labios + mesoterapia
-                    </Text>
-                  </Flex>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="pt-2">
-                    <Flex
-                      layout="col-left"
-                      className="bg-hg-black50 p-3 gap-4 rounded-xl"
-                    >
-                      <Flex layout="row-left">
-                        <SvgInjection
-                          height={16}
-                          width={16}
-                          className="text-hg-secondary mr-2"
-                        />
-                        <Text className="font-semibold">{product.title}</Text>
-                      </Flex>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pt-2">
+                      <Flex
+                        layout="col-left"
+                        className="bg-hg-black50 p-3 gap-4 rounded-xl"
+                      >
+                        <Flex layout="row-left">
+                          <SvgInjection
+                            height={16}
+                            width={16}
+                            className="text-hg-secondary mr-2"
+                          />
+                          <Text className="font-semibold">{product.title}</Text>
+                        </Flex>
 
-                      <Button type="tertiary" customStyles="bg-hg-primary">
-                        Reservar cita
-                        <SvgArrow height={16} width={16} className="ml-2" />
-                      </Button>
-                    </Flex>
-                  </div>
-                </AccordionContent>
+                        <Button type="tertiary" customStyles="bg-hg-primary">
+                          Reservar cita
+                          <SvgArrow height={16} width={16} className="ml-2" />
+                        </Button>
+                      </Flex>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
             </Flex>
 
             <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
               <Accordion>
-                <AccordionTrigger>
-                  <Flex layout="col-left" className="p-3">
-                    <Flex layout="row-between" className="w-full">
-                      <Text
-                        size="xl"
-                        className="text-hg-secondary font-semibold"
-                      >
-                        439 €
-                      </Text>
-                      <Flex layout="row-right">
+                <AccordionItem value="3">
+                  <AccordionTrigger>
+                    <Flex layout="col-left" className="p-3">
+                      <Flex layout="row-between" className="w-full">
                         <Text
-                          size="xs"
-                          className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                          size="xl"
+                          className="text-hg-secondary font-semibold"
                         >
-                          Oferta especial
+                          439 €
                         </Text>
-                        <SvgAdd
-                          height={24}
-                          width={24}
-                          className="ml-4 group-radix-state-open:hidden"
-                        />
-                        <SvgMinus
-                          height={24}
-                          width={24}
-                          className="ml-4 hidden group-radix-state-open:block"
-                        />
+                        <Flex layout="row-right">
+                          <Text
+                            size="xs"
+                            className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                          >
+                            Oferta especial
+                          </Text>
+                          <SvgAdd
+                            height={24}
+                            width={24}
+                            className="ml-4 group-radix-state-open:hidden"
+                          />
+                          <SvgMinus
+                            height={24}
+                            width={24}
+                            className="ml-4 hidden group-radix-state-open:block"
+                          />
+                        </Flex>
                       </Flex>
+                      <Text className="font-semibold">
+                        Pack prevención
+                        <br />
+                        ¡Tú eliges la zona!
+                      </Text>
                     </Flex>
-                    <Text className="font-semibold">
-                      Pack prevención
-                      <br />
-                      ¡Tú eliges la zona!
-                    </Text>
-                  </Flex>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="pt-2">
-                    <Flex
-                      layout="col-left"
-                      className="bg-hg-black50 p-3 gap-4 rounded-xl"
-                    >
-                      <Flex layout="row-left">
-                        <SvgInjection
-                          height={16}
-                          width={16}
-                          className="text-hg-secondary mr-2"
-                        />
-                        <Text className="font-semibold">{product.title}</Text>
-                      </Flex>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pt-2">
+                      <Flex
+                        layout="col-left"
+                        className="bg-hg-black50 p-3 gap-4 rounded-xl"
+                      >
+                        <Flex layout="row-left">
+                          <SvgInjection
+                            height={16}
+                            width={16}
+                            className="text-hg-secondary mr-2"
+                          />
+                          <Text className="font-semibold">{product.title}</Text>
+                        </Flex>
 
-                      <Button type="tertiary" customStyles="bg-hg-primary">
-                        Reservar cita
-                        <SvgArrow height={16} width={16} className="ml-2" />
-                      </Button>
-                    </Flex>
-                  </div>
-                </AccordionContent>
+                        <Button type="tertiary" customStyles="bg-hg-primary">
+                          Reservar cita
+                          <SvgArrow height={16} width={16} className="ml-2" />
+                        </Button>
+                      </Flex>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
             </Flex>
           </Flex>

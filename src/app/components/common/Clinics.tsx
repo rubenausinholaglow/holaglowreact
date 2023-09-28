@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   Accordion,
   AccordionContent,
+  AccordionItem,
   AccordionTrigger,
 } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -55,45 +57,45 @@ export default function Clinics() {
           Nuestras <br className="hidden md:block" />
           <Underlined color={HOLAGLOW_COLORS['primary']}>clínicas</Underlined>
         </Title>
-        {deviceSize.isMobile &&
-          clinics.map((clinic, index) => (
-            <div
-              key="clinic.city"
-              className="mb-4"
-              onClick={() => setSelectedClinic(clinics[index])}
-            >
-              <Accordion
-                className={`w-full flex flex-col gap-4 ${
-                  selectedClinic.city === clinic.city
-                    ? 'bg-hg-primary300'
-                    : 'bg-hg-black100'
-                } `}
-              >
+        <Accordion className={`w-full flex flex-col gap-4`}>
+          {deviceSize.isMobile &&
+            clinics.map((clinic, index) => (
+              <AccordionItem className="w-full" value={index.toString()}>
                 <AccordionTrigger className="w-full">
-                  <Flex
-                    layout="row-center"
-                    className="w-full text-xs transition-all justify-between cursor-pointer p-3 "
+                  <div
+                    key="clinic.city"
+                    className={`mb-4 ${
+                      selectedClinic.city === clinic.city
+                        ? 'bg-hg-primary300'
+                        : 'bg-hg-black100'
+                    } `}
+                    onClick={() => setSelectedClinic(clinics[index])}
                   >
-                    <Flex layout="col-left">
-                      <Text size="lg" className="font-semibold mb-2">
-                        {clinic.city}
-                      </Text>
-                      <address className="text-xs not-italic mb-2">
-                        {clinic.address}
-                      </address>
-                      <Link
-                        className="text-sm underline"
-                        href={`https://www.holaglow.com/clinicas/${clinic.internalName}`}
-                      >
-                        Más info
-                      </Link>
+                    <Flex
+                      layout="row-center"
+                      className="w-full text-xs transition-all justify-between cursor-pointer p-3 "
+                    >
+                      <Flex layout="col-left">
+                        <Text size="lg" className="font-semibold mb-2">
+                          {clinic.city}
+                        </Text>
+                        <address className="text-xs not-italic mb-2">
+                          {clinic.address}
+                        </address>
+                        <Link
+                          className="text-sm underline"
+                          href={`https://www.holaglow.com/clinicas/${clinic.internalName}`}
+                        >
+                          Más info
+                        </Link>
+                      </Flex>
+                      <SvgAngle
+                        height={24}
+                        width={24}
+                        className="rotate-90 md:rotate-0"
+                      />
                     </Flex>
-                    <SvgAngle
-                      height={24}
-                      width={24}
-                      className="rotate-90 md:rotate-0"
-                    />
-                  </Flex>
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                   <div
@@ -107,9 +109,9 @@ export default function Clinics() {
                     </div>
                   </div>
                 </AccordionContent>
-              </Accordion>
-            </div>
-          ))}
+              </AccordionItem>
+            ))}
+        </Accordion>
 
         {/* desktop clinic selector */}
         {!deviceSize.isMobile && (
