@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash';
 import ProfessionalCard from '../common/ProfessionalCard';
 import ProductCard from './ProductCard';
 
-export default function ProductCarousel({
+export default function FullWidthCarousel({
   type = 'products',
   className,
   items,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
-import ProductCarousel from 'app/components/product/ProductCarousel';
+import ProductCarousel from 'app/components/product/fullWidthCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
