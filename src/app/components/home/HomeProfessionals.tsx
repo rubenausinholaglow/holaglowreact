@@ -9,13 +9,7 @@ export default function Profesionals() {
   return (
     <div className="bg-hg-skyblue/20 overflow-hidden">
       <Container className="py-12">
-        <Carousel
-          hasControls
-          hasDots
-          className="relative"
-          isIntrinsicHeight
-          infinite={false}
-        >
+        <Carousel className="relative" isIntrinsicHeight infinite={false}>
           <Flex
             layout="col-left"
             className="gap-8 lg:gap-16 w-full items-stretch lg:flex-row"
@@ -62,56 +56,6 @@ export default function Profesionals() {
                 seguridad, eficacia y confianza
               </Text>
               <Button type="secondary" size="xl" className="mx-auto lg:mx-0">
-                Conoce al equipo
-              </Button>
-            </Flex>
-          </Flex>
-          <Flex
-            layout="col-left"
-            className="gap-8 lg:gap-16 w-full items-stretch lg:flex-row"
-          >
-            <div className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2">
-              <Image
-                src="/images/home/profesionales.png"
-                alt="profesionales"
-                fill
-                className="object-cover rounded-xl"
-              />
-            </div>
-            <Flex layout="col-left" className="lg:w-1/2 pb-1">
-              <Flex
-                layout="row-center"
-                className="w-full gap-8 lg:gap-16 mb-12 lg:mb-16"
-              >
-                <div className="relative w-1/2 aspect-square">
-                  <Image
-                    src="/images/home/profesionales2.png"
-                    alt="profesionales2"
-                    fill
-                    className="object-cover rounded-xl"
-                  />
-                </div>
-                <div className="relative w-1/2 aspect-square">
-                  <Image
-                    src="/images/home/profesionales1.png"
-                    alt="profesionales2"
-                    fill
-                    className="object-cover rounded-xl"
-                  />
-                </div>
-              </Flex>
-              <Title size="2xl" className="font-bold mb-6">
-                El mejor equipo para ponerse en tu{' '}
-                <Underlined color={HOLAGLOW_COLORS['secondary500']}>
-                  piel
-                </Underlined>
-              </Title>
-              <Text className="text-hg-black500 mb-8 lg:text-lg">
-                Estarás en manos de profesionales con experiencia contrastada
-                para asesorarte y aplicar nuestros tratamientos con la mayor
-                seguridad, eficacia y confianza
-              </Text>
-              <Button type="secondary" size="xl" className="mx-auto">
                 Conoce al equipo
               </Button>
             </Flex>
