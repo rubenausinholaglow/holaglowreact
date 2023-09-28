@@ -3,8 +3,9 @@
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import { Slot } from '@interface/slot';
+import es from 'date-fns/locale/es';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -21,7 +22,7 @@ import { useRouter } from 'next/navigation';
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
 dayjs.locale(spanishConf);
-
+registerLocale('es', es);
 export default function Agenda() {
   const router = useRouter();
   const [dateToCheck, setDateToCheck] = useState(dayjs());
