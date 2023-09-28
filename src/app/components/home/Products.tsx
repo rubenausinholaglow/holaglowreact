@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import ProductCarousel from 'app/components/product/ProductCarousel';
+import FullWidthCarousel from 'app/components/product/fullWidthCarousel';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -49,16 +49,14 @@ export default function HomeProducts() {
           </span>
         </Title>
       </Container>
-      <Container className="pr-0 mb-12 md:pr-4">
+      <Container className="px-0 mb-12 md:px-4">
         <CategorySelector />
       </Container>
-      <Container>
-        <ProductCarousel
-          className="pb-8"
-          type="products"
-          items={filteredProducts}
-        />
-      </Container>
+      <FullWidthCarousel
+        className="pb-8"
+        type="products"
+        items={filteredProducts}
+      />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useEffect, useState } from 'react';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrow } from 'icons/IconsDs';
 import {
   ButtonBack,
@@ -29,6 +29,7 @@ export const Carousel = ({
   className = '',
   sliderWidth = {},
   sliderStyles = '',
+  isFullWidth = false,
   ...rest
 }: {
   children: ReactNode;
@@ -45,6 +46,7 @@ export const Carousel = ({
   className?: string;
   sliderWidth?: object;
   sliderStyles?: string;
+  isFullWidth?: boolean;
   [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -99,7 +101,7 @@ export const Carousel = ({
 
         <Flex layout="row-center" className="mt-8 relative items-center">
           {hasDots && (
-            <ul className="p-2 spacing flex gap-2 text-xs">
+            <ul className="p-2 spacing flex gap-2 text-xs absolute">
               <li>{currentSlideIndex + 1}</li>
               <li>/</li>
               <li>{childrens.length}</li>
@@ -107,24 +109,26 @@ export const Carousel = ({
           )}
 
           {hasControls && (
-            <Flex layout="row-center" className="gap-6 absolute right-0 top-0">
-              <ButtonBack
-                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
-                onClick={() => {
-                  handleBackButton();
-                }}
-              >
-                <SvgArrow height={16} width={16} className="rotate-180" />
-              </ButtonBack>
-              <ButtonNext
-                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
-                onClick={() => {
-                  handleNextButton();
-                }}
-              >
-                <SvgArrow height={16} width={16} />
-              </ButtonNext>
-            </Flex>
+            <Container className={`${isFullWidth ? '' : 'px-0'}`}>
+              <Flex layout="row-right" className="gap-6">
+                <ButtonBack
+                  className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                  onClick={() => {
+                    handleBackButton();
+                  }}
+                >
+                  <SvgArrow height={16} width={16} className="rotate-180" />
+                </ButtonBack>
+                <ButtonNext
+                  className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+                  onClick={() => {
+                    handleNextButton();
+                  }}
+                >
+                  <SvgArrow height={16} width={16} />
+                </ButtonNext>
+              </Flex>
+            </Container>
           )}
         </Flex>
       </CarouselProvider>

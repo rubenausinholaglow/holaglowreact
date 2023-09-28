@@ -3,6 +3,7 @@ import { Product, ProductType } from '@interface/product';
 
 const emptyProduct: Product = {
   id: '',
+  slug: '',
   title: '',
   description: '',
   detail: '',

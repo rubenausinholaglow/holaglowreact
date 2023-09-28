@@ -61,7 +61,7 @@ export default function CategorySelector({
     <ul
       id="categorySelector"
       className={`flex overflow-scroll md:overflow-auto ${
-        className ? className : ' '
+        className ? className : ''
       }
       ${isStacked ? 'flex-wrap' : ''}
       `}
@@ -77,7 +77,7 @@ export default function CategorySelector({
                 ? 'bg-hg-black50'
                 : 'bg-white hover:bg-hg-secondary100'
             } ${isStacked ? ' mb-2' : ''}
-            ${i == 0 && !isStacked ? ' ml-4' : ''}
+            ${i == 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
             `}
             onClick={() => {
               setProductFilters(

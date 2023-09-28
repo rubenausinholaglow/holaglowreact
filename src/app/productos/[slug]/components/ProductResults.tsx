@@ -10,7 +10,7 @@ export default function ProductResults({ product }: { product: Product }) {
     <Container className="p-0 pt-8 md:px-4 md:flex gap-16 justify-between mb-12 md:mb-16">
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
         <div className="md:flex-row">
-          <Title size="2xl" className="font-bold mb-6">
+          <Title size="2xl" className="font-bold mb-6 mt-8">
             Consigue el{' '}
             <Underlined color={HOLAGLOW_COLORS['primary']}>
               resultado
@@ -31,23 +31,17 @@ export default function ProductResults({ product }: { product: Product }) {
           hasDots
           className="px-4 md:px-0 rounded-xl"
         >
-          <div className="overflow-hidden rounded-xl">
+          <div className="overflow-hidden rounded-xl relative">
             <ReactCompareImage
               leftImage="/images/product/fakeProduct.png"
               rightImage="/images/product/fakeProductExample1.png"
             />
-          </div>
-          <div className="overflow-hidden rounded-xl">
-            <ReactCompareImage
-              leftImage="/images/product/fakeProduct.png"
-              rightImage="/images/product/fakeProductExample1.png"
-            />
-          </div>
-          <div className="overflow-hidden rounded-xl">
-            <ReactCompareImage
-              leftImage="/images/product/fakeProduct.png"
-              rightImage="/images/product/fakeProductExample1.png"
-            />
+            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
+              Antes
+            </span>
+            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
+              Después
+            </span>
           </div>
         </Carousel>
       </div>

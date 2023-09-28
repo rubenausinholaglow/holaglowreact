@@ -33,12 +33,24 @@ export function PaymentTable({
           <p className="rounded-md bg-hg-primary/30 py-1 px-2 opacity-50">
             Pago financiado
           </p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2">En 3 meses</p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2">En 4 meses</p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2">En 6 meses</p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2">En 9 meses</p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2">En 12 meses</p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2">En 18 meses</p>
+          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
+            En 3 meses
+          </p>
+          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
+            En 4 meses
+          </p>
+          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
+            En 6 meses
+          </p>
+          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
+            En 9 meses
+          </p>
+          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
+            En 12 meses
+          </p>
+          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
+            En 18 meses
+          </p>
         </div>
         <div className="flex flex-col gap-1 w-1/2">
           <p className="rounded-md bg-white/50 py-1 px-2 text-[#717D96]">

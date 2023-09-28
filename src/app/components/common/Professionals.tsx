@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
-import ProductCarousel from 'app/components/product/ProductCarousel';
+import ProductCarousel from 'app/components/product/fullWidthCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
@@ -14,10 +14,14 @@ export default function Professionals() {
 
   useEffect(() => {
     const professionalsWithCity = clinics.flatMap(clinic =>
-      clinic.professionals.map(professional => ({
-        ...professional,
-        city: clinic.city,
-      }))
+      clinic.professionals.filter(professional => {
+        if (professional.professionalType != 2) {
+          return {
+            ...professional,
+            city: clinic.city,
+          };
+        }
+      })
     );
 
     setProfessionals(professionalsWithCity);

@@ -63,7 +63,26 @@ export default function ProductSuggestions({ product }: { product: Product }) {
         infinite={false}
         sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
       >
-        <Flex layout="col-center" className="bg-white/30 p-8 rounded-2xl">
+        <Flex
+          layout="col-center"
+          className="bg-white/30 p-8 rounded-2xl h-full"
+        >
+          <SvgCalendar
+            height={48}
+            width={48}
+            className="text-hg-secondary mb-6"
+          />
+          <Text className="text-center">
+            Se recomienda evitar medicamentos AINE (aspirina, ibuprofeno,
+            naproxeno...) durante 3 días antes del tratamiento. Se recomienda
+            evitar medicamentos AINE (aspirina, ibuprofeno, naproxeno...)
+            durante 3 días antes del tratamiento.
+          </Text>
+        </Flex>
+        <Flex
+          layout="col-center"
+          className="bg-white/30 p-8 rounded-2xl h-full"
+        >
           <SvgCalendar
             height={48}
             width={48}
@@ -74,7 +93,40 @@ export default function ProductSuggestions({ product }: { product: Product }) {
             naproxeno...) durante 3 días antes del tratamiento.
           </Text>
         </Flex>
-        <Flex layout="col-center" className="bg-white/30 p-8 rounded-2xl">
+        <Flex
+          layout="col-center"
+          className="bg-white/30 p-8 rounded-2xl h-full"
+        >
+          <SvgCalendar
+            height={48}
+            width={48}
+            className="text-hg-secondary mb-6"
+          />
+          <Text className="text-center">
+            Se recomienda evitar medicamentos AINE (aspirina, ibuprofeno,
+            naproxeno...) durante 3 días antes del tratamiento. Se recomienda
+            evitar medicamentos AINE (aspirina, ibuprofeno, naproxeno...)
+            durante 3 días antes del tratamiento.
+          </Text>
+        </Flex>
+        <Flex
+          layout="col-center"
+          className="bg-white/30 p-8 rounded-2xl h-full"
+        >
+          <SvgCalendar
+            height={48}
+            width={48}
+            className="text-hg-secondary mb-6"
+          />
+          <Text className="text-center">
+            Se recomienda evitar medicamentos AINE (aspirina, ibuprofeno,
+            naproxeno...) durante 3 días antes del tratamiento.
+          </Text>
+        </Flex>
+        {/* <Flex
+          layout="col-center"
+          className="bg-white/30 p-8 rounded-2xl m-5 height"
+        >
           <SvgCalendar
             height={48}
             width={48}
@@ -86,7 +138,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
             impedimento.
           </Text>
         </Flex>
-        <Flex layout="col-center" className="bg-white/30 p-8 rounded-2xl">
+        <Flex layout="col-center" className="bg-white/30 p-8 rounded-2xl m-5">
           <SvgCalendar
             height={48}
             width={48}
@@ -97,7 +149,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
             tratamiento.
           </Text>
         </Flex>
-        <Flex layout="col-center" className="bg-white/30 p-8 rounded-2xl">
+        <Flex layout="col-center" className="bg-white/30 p-8 rounded-2xl m-5">
           <SvgCalendar
             height={48}
             width={48}
@@ -107,7 +159,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
             Se recomienda evitar medicamentos AINE (aspirina, ibuprofeno,
             naproxeno...) durante 3 días antes del tratamiento.
           </Text>
-        </Flex>
+        </Flex> */}
       </Carousel>
     </Container>
   );
