@@ -11,6 +11,10 @@ export interface Product {
   zone: number;
   category: Category[];
   clinicDetail: ProductClinics[];
+  extraInformation: {
+    slug: string;
+    resultDescription: string;
+  };
   flowwwId: number;
   durationMin: number;
   durationMax: number;

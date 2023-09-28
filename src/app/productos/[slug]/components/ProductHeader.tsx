@@ -14,9 +14,7 @@ export default function ProductHeader({ product }: { product: Product }) {
           {product.title}
         </Title>
         <Text className="text-hg-black500 mb-4">
-          El relleno o aumento de labios con ácido hialurónico es un tratamiento
-          estético que se adapta a tus deseos: aumentar, perfilar, hidratar o
-          difuminar las líneas de expresión en tu sonrisa.
+          {product.extraInformation.resultDescription}
         </Text>
         {product.category.map(category => (
           <Button

@@ -8,6 +8,7 @@ import Testimonials from 'app/components/home/Testimonials';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { isEmpty } from 'lodash';
+import { fetchProduct } from 'utils/fetch';
 
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
@@ -22,21 +23,20 @@ import ProductSuggestions from './components/ProductSuggestions';
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
-  const [slug, setSlug] = useState(params.slug);
 
   useEffect(() => {
-    console.log(stateProducts);
-  }, [stateProducts]);
+    const productId = stateProducts.filter(
+      product => product?.extraInformation?.slug === params.slug
+    )[0].id;
 
-  useEffect(() => {
-    setSlug(params.slug);
+    async function initProduct(productId: string) {
+      const product = await fetchProduct(productId);
 
-    setProduct(
-      stateProducts.filter(
-        product => product.flowwwId.toString() === params.slug
-      )[0]
-    );
-  }, [slug, stateProducts]);
+      setProduct(isEmpty(product) ? null : product);
+    }
+
+    initProduct(productId);
+  }, []);
 
   if (isEmpty(product)) {
     return (
@@ -45,8 +45,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       </MainLayout>
     );
   }
-
-  console.log(product);
 
   return (
     <MainLayout>
