@@ -23,9 +23,8 @@ import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
 
-export default function ProductsPage() {
+export default function ProductsPage({ slug }: { slug: string }) {
   const { stateProducts, deviceSize } = useGlobalPersistedStore(state => state);
-
   const {
     filteredProducts,
     setFilteredProducts,
@@ -38,15 +37,52 @@ export default function ProductsPage() {
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
 
   useEffect(() => {
+    if (slug) {
+      if (slug != 'packs') {
+        var filterToApply = '';
+        switch (slug) {
+          case 'piel':
+            filterToApply = 'Calidad Piel';
+            break;
+          case 'pelo':
+            filterToApply = 'Caida del pelo';
+            break;
+          default:
+            filterToApply =
+              slug[0].toUpperCase() + slug.substr(1).toLowerCase();
+            break;
+        }
+        if (
+          filterToApply &&
+          productFilters.category.indexOf(filterToApply) == -1
+        ) {
+          productFilters.category.push(filterToApply);
+        }
+      } else {
+        productFilters.isPack = true;
+      }
+      setProductFilters(productFilters);
+      console.log(productFilters);
+    }
+  }, [slug]);
+
+  useEffect(() => {
     if (isEmpty(filteredProducts)) {
       setFilteredProducts(stateProducts);
     }
   }, [stateProducts]);
 
   useEffect(() => {
-    setFilteredProducts(
-      applyFilters({ products: filteredProducts, filters: productFilters })
-    );
+    if (isEmpty(filteredProducts)) {
+      setFilteredProducts(stateProducts);
+      setFilteredProducts(
+        applyFilters({ products: stateProducts, filters: productFilters })
+      );
+    } else {
+      setFilteredProducts(
+        applyFilters({ products: filteredProducts, filters: productFilters })
+      );
+    }
 
     if (filterCount(productFilters) === 0) {
       setFilteredProducts(stateProducts);

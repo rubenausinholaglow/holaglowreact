@@ -18,6 +18,7 @@ import ProductPaymentOptions from './components/ProductPaymentOptions';
 import ProductPrices from './components/ProductPrices';
 import ProductResults from './components/ProductResults';
 import ProductSuggestions from './components/ProductSuggestions';
+import ProductsPage from '../page';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
@@ -38,40 +39,34 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     );
   }, [slug, stateProducts]);
 
-  if (isEmpty(product)) {
+  if (!isEmpty(product)) {
     return (
       <MainLayout>
-        <div></div>
+        <div className="bg-hg-cream500 rounded-t-3xl pt-8">
+          <ProductHeader product={product} />
+          <ProductInfo product={product} />
+        </div>
+        <ProductResults product={product} />
+        <ProductPrices product={product} />
+        <ProductExplanation product={product} />
+        <ProductPaymentOptions totalPrice={product.price} />
+        <div className="bg-hg-black50 md:mt-16">
+          <Testimonials />
+        </div>
+        <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
+          <ProductSuggestions product={product} />
+        </div>
+        <ProductFaqs />
+        <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
+          <ProductCrosselling product={product} />
+        </div>
+        <Clinics />
+        <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
+          <Professionals />
+        </div>
       </MainLayout>
     );
+  } else {
+    return <ProductsPage slug={slug}></ProductsPage>;
   }
-
-  console.log(product);
-
-  return (
-    <MainLayout>
-      <div className="bg-hg-cream500 rounded-t-3xl pt-8">
-        <ProductHeader product={product} />
-        <ProductInfo product={product} />
-      </div>
-      <ProductResults product={product} />
-      <ProductPrices product={product} />
-      <ProductExplanation product={product} />
-      <ProductPaymentOptions totalPrice={product.price} />
-      <div className="bg-hg-black50 md:mt-16">
-        <Testimonials />
-      </div>
-      <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
-        <ProductSuggestions product={product} />
-      </div>
-      <ProductFaqs />
-      <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
-        <ProductCrosselling product={product} />
-      </div>
-      <Clinics />
-      <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
-        <Professionals />
-      </div>
-    </MainLayout>
-  );
 }
