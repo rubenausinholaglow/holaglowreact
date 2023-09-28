@@ -13,6 +13,7 @@ import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import { SvgHour, SvgLocation } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
@@ -25,6 +26,7 @@ export default function Agenda() {
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
+  const [dateFromatted, setDateFormatted] = useState('');
   const { selectedDay, setSelectedDay } = useGlobalPersistedStore(
     state => state
   );
@@ -37,6 +39,12 @@ export default function Agenda() {
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
   const localSelectedDay = dayjs(selectedDay);
+  const [clicked, setClicked] = useState(false);
+
+  const toggleClicked = () => {
+    setClicked(!clicked); // Step 2: Toggle the state on click
+  };
+
   function loadMonth() {
     if (selectedTreatmentsIds && availableDates.length < maxDays) {
       ScheduleService.getMonthAvailability(
@@ -67,18 +75,22 @@ export default function Agenda() {
       });
     }
   }
+
   useEffect(() => {
     setSelectedDay(dayjs());
-    console.log(selectedDay);
   }, []);
+
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
       setSelectedTreatments([]);
       setSelectedTreatmentsIds(
         selectedTreatments!.map(x => x.flowwwId).join(', ')
       );
-    } else setSelectedTreatmentsIds('902');
+    } else setSelectedTreatmentsIds('674');
+
+    console.log('here');
   }, [dateToCheck]);
+
   useEffect(() => {
     loadMonth();
   }, [selectedTreatmentsIds, dateToCheck]);
@@ -88,6 +100,7 @@ export default function Agenda() {
     setDateToCheck(date);
   };
   const selectHour = (x: Slot) => {
+    toggleClicked();
     setSelectedSlot(x);
     router.push('/checkout/contactform');
   };
@@ -95,6 +108,8 @@ export default function Agenda() {
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
+    const formattedDate = day.format('dddd, D [de] MMMM');
+    setDateFormatted(formattedDate);
     setSelectedDay(day);
     ScheduleService.getSlots(
       day.format(format),
@@ -133,72 +148,130 @@ export default function Agenda() {
   const changeClinic = () => {
     router.back();
   };
+
+  const divStyle = {
+    border: '1px solid #344054',
+    borderRadius: '8px',
+    paddingRight: '10px',
+    paddingLeft: '10px',
+    marginRight: '10px',
+    backgroundColor: clicked ? '#YourSelectedColor' : 'transparent', // Step 3: Conditional background color
+    cursor: 'pointer', // Add a pointer cursor to indicate it's clickable
+  };
+
   return (
     <MainLayout isCheckout>
       <div className="relative mt-9 md:mt-16">
         <Container className="md:pr-32">
-          <Title className="font-semibold mb-6">Selecciona día u hora</Title>
+          <Text size="xl" className="font-semibold mb-6">
+            Selecciona día y hora
+          </Text>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <div>
-              <Text size="sm" className="w-full text-left to-hg-black500">
+              <Text size="sm" className="w-full text-left to-hg-black500 mb-4">
                 Agenda cita para{' '}
-                <Text size="sm" className="font-semibold">
+                <span className="font-semibold">
                   Arrugas expresión: Frente, entrecejo y patas de gallo
-                </Text>
+                </span>
                 , en tu clínica preferida
               </Text>
-              <Text size="sm" className="font-semibold w-full text-left">
-                C. de Andrés Mellado 3, 28015, Madrid
-              </Text>
+
               {selectedClinic && (
-                <Flex>
-                  {selectedClinic.address}
-                  <Button onClick={changeClinic}>Cambiar</Button>
+                <Flex className="mb-4">
+                  <span>
+                    <SvgLocation />
+                  </span>
+                  <Text
+                    size="sm"
+                    className="font-semibold w-full text-left pl-2"
+                  >
+                    {selectedClinic.address}, {selectedClinic.city}
+                  </Text>
+                  <div onClick={changeClinic}>
+                    <a>Cambiar</a>
+                  </div>
                 </Flex>
               )}
-              <Flex>
+              <Flex className="mb-4">
+                <SvgHour />
+                {selectedTreatments &&
+                  Array.isArray(selectedTreatments) &&
+                  selectedTreatments.map(product => (
+                    <Flex
+                      layout="col-left"
+                      className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
+                      key={product.id}
+                    >
+                      <Flex layout="row-between" className="items-start w-full">
+                        <div>
+                          <Text className="font-semibold text-left mb-2">
+                            {product.applicationTimeMinutes}
+                          </Text>
+                        </div>
+                      </Flex>
+                    </Flex>
+                  ))}
+              </Flex>
+              <Flex className="w-full">
                 <DatePicker
                   inline
                   onChange={selectDate}
                   filterDate={filterDate}
                   onMonthChange={onMonthChange}
                   calendarStartDay={1}
+                  locale="es"
+                  className="w-full bg-gray-600"
                 ></DatePicker>
               </Flex>
             </div>
-            <div>
+            <div className="w-full">
               <Text size="sm" className="w-full text-left to-hg-black500 mb-12">
-                Selecciona hora para el viernes, 9 de Junio
+                Selecciona hora para el {dateFromatted.toString()}
               </Text>
-              <Text size="sm" className="font-semibold">
+              <Text size="sm" className="font-semibold mb-4">
                 Horario de mañana
               </Text>
-              <Flex>
+              <Flex className="mb-12">
                 {morningHours.length > 0 && (
                   <Flex>
-                    <Flex>Morning hours</Flex>
                     {morningHours.map(x => {
                       return (
                         <Flex key={x.startTime}>
-                          <div onClick={() => selectHour(x)}>{x.startTime}</div>
+                          <div onClick={() => selectHour(x)} style={divStyle}>
+                            {x.startTime} h
+                          </div>
                         </Flex>
                       );
                     })}
                   </Flex>
                 )}
               </Flex>
+              <Text size="sm" className="font-semibold mb-4">
+                Horario de tarde
+              </Text>
               {afternoonHours.length > 0 && (
-                <Flex>
-                  <Flex>Afternoon hours</Flex>
+                <Flex className="mb-8">
                   {afternoonHours.map(x => {
                     return (
                       <Flex key={x.startTime}>
-                        <div onClick={() => selectHour(x)}>{x.startTime}</div>
+                        <div onClick={() => selectHour(x)} style={divStyle}>
+                          {x.startTime} h
+                        </div>
                       </Flex>
                     );
                   })}
                 </Flex>
               )}
+              <Flex
+                layout="row-left"
+                className="bg-hg-primary300 p-3 gap-3 fixed bottom-0 left-0 right-0 md:relative"
+              >
+                <Text>¿La cita que necesitas no está disponible?</Text>
+                <Button>Llamanos al 999-999-999</Button>
+                <Text className="text-sm">
+                  Te ayudaremos a agendar tu tratamiento
+                </Text>
+              </Flex>
             </div>
           </div>
         </Container>
