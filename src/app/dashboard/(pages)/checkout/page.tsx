@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Budget, StatusBudget } from '@interface/budget';
@@ -7,6 +6,7 @@ import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
+import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
 import ProductCard from '../budgets/treatments/ProductCard';
+import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { usePaymentList } from './components/payment/payments/usePaymentList';
 import ProductDiscountForm from './components/ProductDiscountForm';
 
@@ -32,6 +33,7 @@ const Page = () => {
   const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [clientToken, setClientToken] = useState<string | ''>('');
   const [budgetId, setBudgetId] = useState<string | ''>('');
+  const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
 
   useEffect(() => {
     const budgetId = localStorage.getItem('BudgetId');
@@ -39,6 +41,10 @@ const Page = () => {
     setBudgetId(budgetId || '');
     if (budgetId && budgetId != '') setShowPaymentButtons(true);
   }, []);
+
+  useEffect(() => {
+    setTotalPriceToShow(cartTotalPrice());
+  }, [cart, totalPrice, priceDiscount, percentageDiscount, manualPrice]);
 
   useEffect(() => {
     setBudgetId(localStorage.getItem('BudgetId') || '');
@@ -86,6 +92,25 @@ const Page = () => {
     useCartStore.setState(INITIAL_STATE);
     router.push('/dashboard/menu');
   }
+  function cartTotalPrice() {
+    let productsPriceTotalWithDiscounts = 0;
+
+    if (cart) {
+      productsPriceTotalWithDiscounts = cart.reduce(
+        (acc, product) => acc + Number(product.priceWithDiscount),
+        0
+      );
+    }
+
+    const cartTotalWithDiscount = applyDiscountToCart(
+      percentageDiscount,
+      priceDiscount,
+      manualPrice,
+      productsPriceTotalWithDiscounts
+    );
+    return cartTotalWithDiscount;
+  }
+
   return (
     <MainLayout isDashboard>
       <Container>
@@ -156,6 +181,11 @@ const Page = () => {
               <Button size="md" className="w-full mt-4" onClick={cancelBudget}>
                 {!budgetId ? 'Cancelar Presupuesto' : 'Volver al dashboard'}
               </Button>
+              {!budgetId && (
+                <PepperWidget
+                  totalPrice={Number(totalPriceToShow)}
+                ></PepperWidget>
+              )}
             </Flex>
           </Flex>
         </Flex>
