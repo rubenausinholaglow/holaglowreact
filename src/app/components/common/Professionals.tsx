@@ -14,10 +14,14 @@ export default function Professionals() {
 
   useEffect(() => {
     const professionalsWithCity = clinics.flatMap(clinic =>
-      clinic.professionals.map(professional => ({
-        ...professional,
-        city: clinic.city,
-      }))
+      clinic.professionals.filter(professional => {
+        if (professional.professionalType != 2) {
+          return {
+            ...professional,
+            city: clinic.city,
+          };
+        }
+      })
     );
 
     setProfessionals(professionalsWithCity);
