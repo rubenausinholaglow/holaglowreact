@@ -69,8 +69,6 @@ export const Carousel = ({
     setCurrentSlideIndex(0);
   }, [children]);
 
-  console.log(isFullWidth);
-
   return (
     <>
       <CarouselProvider

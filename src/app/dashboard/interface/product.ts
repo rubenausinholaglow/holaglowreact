@@ -2,6 +2,7 @@ import { ProductClinics } from './clinic';
 
 export interface Product {
   id: string;
+  slug: string;
   title: string;
   description: string;
   detail: string;
