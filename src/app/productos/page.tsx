@@ -72,10 +72,10 @@ export default function ProductsPage() {
             </Underlined>
           </Title>
         </Container>
-        <Container className="pr-0 pl-0">
+        <Container className="px-0 md:px-4 lg:pb-4">
           <div className="lg:flex lg:flex-row lg:justify-between">
-            <CategorySelector className="mb-4" />
-            <PackTypeFilter className="lg:mb-4 md:pr-4 pl-4" />
+            <CategorySelector className="mb-4 lg:mb-0" />
+            <PackTypeFilter className="ml-4 md:ml-0" />
           </div>
         </Container>
       </div>

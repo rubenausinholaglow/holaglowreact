@@ -16,7 +16,6 @@ import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
 
-isEmpty;
 export default function MainLayout({
   isDashboard = false,
   isCheckout = false,

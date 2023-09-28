@@ -254,7 +254,7 @@ export default function Page() {
             )}
           </Container>
           {cart.length > 0 && (
-            <div className="fixed bottom-0 z-10 w-full shadow-centered">
+            <div className="fixed bottom-0 z-10 w-full shadow-centered-black">
               <Cart />
             </div>
           )}

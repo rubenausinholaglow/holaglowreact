@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Product } from '@interface/product';
-import ProductCarousel from 'app/components/product/ProductCarousel';
+import ProductCarousel from 'app/components/product/fullWidthCarousel';
 import {
   useGlobalPersistedStore,
   useGlobalStore,

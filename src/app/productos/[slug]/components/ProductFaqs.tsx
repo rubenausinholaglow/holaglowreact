@@ -17,7 +17,6 @@ export default function ProductFaqs() {
             className="border-b border-hg-black pb-4"
             trigger="¿Podré ver los resultados de manera instantánea?"
             triggerStyles="text-left items-start font-semibold"
-            iconStyles="mt-1"
           >
             <Text size="sm" className="text-hg-black500 py-4">
               En Holaglow defendemos una medicina estética que cuida y, para
@@ -30,7 +29,6 @@ export default function ProductFaqs() {
             className="border-b border-hg-black pb-4"
             trigger="¿Cuánto tiempo duran los resultados del ácido hialurónico?"
             triggerStyles="text-left items-start font-semibold"
-            iconStyles="mt-1"
           >
             <Text size="sm" className="text-hg-black500 py-4">
               En Holaglow defendemos una medicina estética que cuida y, para
@@ -45,7 +43,6 @@ export default function ProductFaqs() {
             className="border-b border-hg-black pb-4"
             trigger="¿La aplicación de ácido hialurónico es dolorosa?"
             triggerStyles="text-left items-start font-semibold"
-            iconStyles="mt-1"
           >
             <Text size="sm" className="text-hg-black500 py-4">
               En Holaglow defendemos una medicina estética que cuida y, para
@@ -58,7 +55,6 @@ export default function ProductFaqs() {
             className="border-b border-hg-black pb-4"
             trigger="¿Qué efectos secundarios puede tener el ácido hialurónico?"
             triggerStyles="text-left items-start font-semibold"
-            iconStyles="mt-1"
           >
             <Text size="sm" className="text-hg-black500 py-4">
               En Holaglow defendemos una medicina estética que cuida y, para

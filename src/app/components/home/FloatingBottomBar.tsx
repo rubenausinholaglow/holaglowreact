@@ -28,7 +28,7 @@ export default function FloatingBottomBar() {
 
   return (
     <div
-      className={`transition-all fixed bottom-0 left-0 right-0 z-40 ${
+      className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none ${
         showBottomBar ? 'translate-y-[105%]' : 'translate-y-[0%]'
       }`}
     >
@@ -38,7 +38,7 @@ export default function FloatingBottomBar() {
             size="xl"
             type="tertiary"
             bgColor="bg-hg-primary"
-            className="grow mr-4 md:hidden"
+            className="grow mr-4 md:hidden pointer-events-auto"
             customStyles="border-none"
           >
             Reservar cita
@@ -46,6 +46,7 @@ export default function FloatingBottomBar() {
           <Button
             type="tertiary"
             size="xl"
+            className="pointer-events-auto"
             bgColor="bg-hg-black"
             customStyles="p-0 w-[64px]"
           >

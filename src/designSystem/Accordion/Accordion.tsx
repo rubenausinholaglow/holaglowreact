@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 export function SimpleAccordion({
   trigger,
   triggerStyles,
-  iconSize = 14,
+  iconSize = 24,
   iconStyles,
   className,
   children,
@@ -38,7 +38,7 @@ export function SimpleAccordion({
             <SvgAdd
               height={iconSize}
               width={iconSize}
-              className={`transition-transform origin-center rotate-45 group-radix-state-open:rotate-90 group-radix-state-open:duration-200 mr-1 ${iconStyles}`}
+              className={`transition-transform origin-center group-radix-state-open:rotate-45 group-radix-state-open:duration-200 shrink-0 ${iconStyles}`}
             />
           </AccordionPrimitive.Trigger>
         ) : (
@@ -83,7 +83,7 @@ export function AccordionTrigger({
   children: ReactNode;
 }) {
   return (
-    <AccordionPrimitive.Trigger className={`group ${className}`}>
+    <AccordionPrimitive.Trigger className={`w-full group ${className}`}>
       {children}
     </AccordionPrimitive.Trigger>
   );
