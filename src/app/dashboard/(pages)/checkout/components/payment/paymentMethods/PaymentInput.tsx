@@ -137,7 +137,6 @@ export default function PaymentInput(props: Props) {
         )}
         {showPepper && (
           <Flex layout="col-left">
-            <PepperWidget totalPrice={Number(inputValue)}></PepperWidget>
             <Flex className="mt-4">
               <Button
                 size="sm"
