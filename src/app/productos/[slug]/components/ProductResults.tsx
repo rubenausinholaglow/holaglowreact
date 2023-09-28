@@ -31,23 +31,17 @@ export default function ProductResults({ product }: { product: Product }) {
           hasDots
           className="px-4 md:px-0 rounded-xl"
         >
-          <div className="overflow-hidden rounded-xl">
+          <div className="overflow-hidden rounded-xl relative">
             <ReactCompareImage
               leftImage="/images/product/fakeProduct.png"
               rightImage="/images/product/fakeProductExample1.png"
             />
-          </div>
-          <div className="overflow-hidden rounded-xl">
-            <ReactCompareImage
-              leftImage="/images/product/fakeProduct.png"
-              rightImage="/images/product/fakeProductExample1.png"
-            />
-          </div>
-          <div className="overflow-hidden rounded-xl">
-            <ReactCompareImage
-              leftImage="/images/product/fakeProduct.png"
-              rightImage="/images/product/fakeProductExample1.png"
-            />
+            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4">
+              Antes
+            </span>
+            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4">
+              Después
+            </span>
           </div>
         </Carousel>
       </div>
