@@ -9,6 +9,7 @@ import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { isEmpty } from 'lodash';
 
+import PsrpPage from '../psrp';
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
 import ProductFaqs from './components/ProductFaqs';
@@ -18,7 +19,6 @@ import ProductPaymentOptions from './components/ProductPaymentOptions';
 import ProductPrices from './components/ProductPrices';
 import ProductResults from './components/ProductResults';
 import ProductSuggestions from './components/ProductSuggestions';
-import PsrpPage from '../psrp';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
