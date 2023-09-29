@@ -50,7 +50,7 @@ a {
 
 #datepickerWrapper .react-datepicker {
   width: 100%;
-  background-color: #a96fe71a;
+  background-color: #a96fe7;
   border: none;
 }
 
@@ -63,7 +63,7 @@ a {
 }
 
 #datepickerWrapper .react-datepicker__header {
-  background-color: #a96fe71a;
+  background-color: #a96fe7;
   border: none;
   width: 100%;
 }
