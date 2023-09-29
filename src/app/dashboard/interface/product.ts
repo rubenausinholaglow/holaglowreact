@@ -9,7 +9,7 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
-  upgrades: [];
+  upgrades: Product[];
   category: Category[];
   clinicDetail: ProductClinics[];
   extraInformation: ExtraInformation;

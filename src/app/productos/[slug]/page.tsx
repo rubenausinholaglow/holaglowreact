@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import Clinics from 'app/components/common/Clinics';
 import Professionals from 'app/components/common/Professionals';
+import FloatingBottomBar from 'app/components/home/FloatingBottomBar';
 import Testimonials from 'app/components/home/Testimonials';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -71,6 +72,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
         <Professionals />
       </div>
+      <FloatingBottomBar product={product} />
     </MainLayout>
   );
 }
