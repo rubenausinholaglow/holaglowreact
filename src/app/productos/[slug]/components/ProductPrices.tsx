@@ -16,6 +16,7 @@ import {
   SvgMinus,
   SvgTimeLeft,
 } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function ProductPrices({ product }: { product: Product }) {
@@ -105,127 +106,149 @@ export default function ProductPrices({ product }: { product: Product }) {
               </Accordion>
             </Flex>
 
-            <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
-              <Accordion>
-                <AccordionTrigger>
-                  <Flex layout="col-left" className="p-3">
-                    <Flex layout="row-between" className="w-full">
-                      <Text
-                        size="xl"
-                        className="text-hg-secondary font-semibold"
-                      >
-                        359 €
-                      </Text>
-                      <Flex layout="row-right">
-                        <Text
-                          size="xs"
-                          className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
-                        >
-                          Upgrade
-                        </Text>
-                        <SvgAdd
-                          height={24}
-                          width={24}
-                          className="ml-4 group-radix-state-open:hidden"
-                        />
-                        <SvgMinus
-                          height={24}
-                          width={24}
-                          className="ml-4 hidden group-radix-state-open:block"
-                        />
-                      </Flex>
-                    </Flex>
-                    <Text className="font-semibold">
-                      Aumento de labios + mesoterapia
-                    </Text>
+            {!isEmpty(product.upgrades) &&
+              product.upgrades.map(upgrade => (
+                <>
+                  <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
+                    <Accordion>
+                      <AccordionTrigger>
+                        <Flex layout="col-left" className="p-3">
+                          <Flex layout="row-between" className="w-full">
+                            <Text
+                              size="xl"
+                              className="text-hg-secondary font-semibold"
+                            >
+                              359 €
+                            </Text>
+                            <Flex layout="row-right">
+                              <Text
+                                size="xs"
+                                className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                              >
+                                Upgrade
+                              </Text>
+                              <SvgAdd
+                                height={24}
+                                width={24}
+                                className="ml-4 group-radix-state-open:hidden"
+                              />
+                              <SvgMinus
+                                height={24}
+                                width={24}
+                                className="ml-4 hidden group-radix-state-open:block"
+                              />
+                            </Flex>
+                          </Flex>
+                          <Text className="font-semibold">
+                            Aumento de labios + mesoterapia
+                          </Text>
+                        </Flex>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="pt-2">
+                          <Flex
+                            layout="col-left"
+                            className="bg-hg-black50 p-3 gap-4 rounded-xl"
+                          >
+                            <Flex layout="row-left">
+                              <SvgInjection
+                                height={16}
+                                width={16}
+                                className="text-hg-secondary mr-2"
+                              />
+                              <Text className="font-semibold">
+                                {product.title}
+                              </Text>
+                            </Flex>
+
+                            <Button
+                              type="tertiary"
+                              customStyles="bg-hg-primary"
+                            >
+                              Reservar cita
+                              <SvgArrow
+                                height={16}
+                                width={16}
+                                className="ml-2"
+                              />
+                            </Button>
+                          </Flex>
+                        </div>
+                      </AccordionContent>
+                    </Accordion>
                   </Flex>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="pt-2">
-                    <Flex
-                      layout="col-left"
-                      className="bg-hg-black50 p-3 gap-4 rounded-xl"
-                    >
-                      <Flex layout="row-left">
-                        <SvgInjection
-                          height={16}
-                          width={16}
-                          className="text-hg-secondary mr-2"
-                        />
-                        <Text className="font-semibold">{product.title}</Text>
-                      </Flex>
+                  <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
+                    <Accordion>
+                      <AccordionTrigger>
+                        <Flex layout="col-left" className="p-3">
+                          <Flex layout="row-between" className="w-full">
+                            <Text
+                              size="xl"
+                              className="text-hg-secondary font-semibold"
+                            >
+                              439 €
+                            </Text>
+                            <Flex layout="row-right">
+                              <Text
+                                size="xs"
+                                className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                              >
+                                Oferta especial
+                              </Text>
+                              <SvgAdd
+                                height={24}
+                                width={24}
+                                className="ml-4 group-radix-state-open:hidden"
+                              />
+                              <SvgMinus
+                                height={24}
+                                width={24}
+                                className="ml-4 hidden group-radix-state-open:block"
+                              />
+                            </Flex>
+                          </Flex>
+                          <Text className="font-semibold">
+                            Pack prevención
+                            <br />
+                            ¡Tú eliges la zona!
+                          </Text>
+                        </Flex>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="pt-2">
+                          <Flex
+                            layout="col-left"
+                            className="bg-hg-black50 p-3 gap-4 rounded-xl"
+                          >
+                            <Flex layout="row-left">
+                              <SvgInjection
+                                height={16}
+                                width={16}
+                                className="text-hg-secondary mr-2"
+                              />
+                              <Text className="font-semibold">
+                                {product.title}
+                              </Text>
+                            </Flex>
 
-                      <Button type="tertiary" customStyles="bg-hg-primary">
-                        Reservar cita
-                        <SvgArrow height={16} width={16} className="ml-2" />
-                      </Button>
-                    </Flex>
-                  </div>
-                </AccordionContent>
-              </Accordion>
-            </Flex>
-
-            <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
-              <Accordion>
-                <AccordionTrigger>
-                  <Flex layout="col-left" className="p-3">
-                    <Flex layout="row-between" className="w-full">
-                      <Text
-                        size="xl"
-                        className="text-hg-secondary font-semibold"
-                      >
-                        439 €
-                      </Text>
-                      <Flex layout="row-right">
-                        <Text
-                          size="xs"
-                          className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
-                        >
-                          Oferta especial
-                        </Text>
-                        <SvgAdd
-                          height={24}
-                          width={24}
-                          className="ml-4 group-radix-state-open:hidden"
-                        />
-                        <SvgMinus
-                          height={24}
-                          width={24}
-                          className="ml-4 hidden group-radix-state-open:block"
-                        />
-                      </Flex>
-                    </Flex>
-                    <Text className="font-semibold">
-                      Pack prevención
-                      <br />
-                      ¡Tú eliges la zona!
-                    </Text>
+                            <Button
+                              type="tertiary"
+                              customStyles="bg-hg-primary"
+                            >
+                              Reservar cita
+                              <SvgArrow
+                                height={16}
+                                width={16}
+                                className="ml-2"
+                              />
+                            </Button>
+                          </Flex>
+                        </div>
+                      </AccordionContent>
+                    </Accordion>
                   </Flex>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="pt-2">
-                    <Flex
-                      layout="col-left"
-                      className="bg-hg-black50 p-3 gap-4 rounded-xl"
-                    >
-                      <Flex layout="row-left">
-                        <SvgInjection
-                          height={16}
-                          width={16}
-                          className="text-hg-secondary mr-2"
-                        />
-                        <Text className="font-semibold">{product.title}</Text>
-                      </Flex>
-
-                      <Button type="tertiary" customStyles="bg-hg-primary">
-                        Reservar cita
-                        <SvgArrow height={16} width={16} className="ml-2" />
-                      </Button>
-                    </Flex>
-                  </div>
-                </AccordionContent>
-              </Accordion>
-            </Flex>
+                </>
+              ))()}
           </Flex>
 
           <Flex layout="col-left" className="w-full gap-4 mb-12">
@@ -314,118 +337,120 @@ export default function ProductPrices({ product }: { product: Product }) {
             </Flex>
           </Flex>
 
-          <Flex layout="col-left" className="w-full gap-4 mb-12">
-            <Flex
-              layout="col-left"
-              className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
-            >
-              <Flex layout="row-between" className="w-full p-2 mb-4">
-                <Text size="xl" className="font-semibold text-hg-secondary">
-                  1.299 €
-                </Text>
-                <Text
-                  size="xs"
-                  className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
-                >
-                  Upgrade
-                </Text>
-              </Flex>
-
+          {product.isPack && (
+            <Flex layout="col-left" className="w-full gap-4 mb-12">
               <Flex
                 layout="col-left"
-                className="bg-hg-black50 p-3 gap-2 rounded-xl w-full"
+                className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
               >
-                <Flex layout="row-left">
-                  <SvgInjection
-                    height={16}
-                    width={16}
-                    className="text-hg-secondary mr-2"
-                  />
-                  <Text className="font-semibold">{product.title}</Text>
+                <Flex layout="row-between" className="w-full p-2 mb-4">
+                  <Text size="xl" className="font-semibold text-hg-secondary">
+                    1.299 €
+                  </Text>
+                  <Text
+                    size="xs"
+                    className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                  >
+                    Upgrade
+                  </Text>
                 </Flex>
 
-                <Select
-                  options={selectOptions}
-                  className="w-full mb-2"
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      paddingTop: '5px',
-                      paddingBottom: '5px',
-                      borderRadius: '12px',
-                      background: state.hasValue
-                        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
-                        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
-                      borderColor: state.isFocused
-                        ? `${HOLAGLOW_COLORS['secondary']}`
-                        : `${HOLAGLOW_COLORS['black']}`,
-                    }),
-                    singleValue: (baseStyles, state) => ({
-                      ...baseStyles,
-                      color: state.hasValue
-                        ? `${HOLAGLOW_COLORS['secondary']}`
-                        : `${HOLAGLOW_COLORS['black300']}`,
-                    }),
-                    indicatorSeparator: () => ({ display: 'none' }),
-                    indicatorsContainer: () => ({ display: 'none' }),
-                  }}
-                />
+                <Flex
+                  layout="col-left"
+                  className="bg-hg-black50 p-3 gap-2 rounded-xl w-full"
+                >
+                  <Flex layout="row-left">
+                    <SvgInjection
+                      height={16}
+                      width={16}
+                      className="text-hg-secondary mr-2"
+                    />
+                    <Text className="font-semibold">{product.title}</Text>
+                  </Flex>
 
-                <Flex layout="row-left">
-                  <SvgInjection
-                    height={16}
-                    width={16}
-                    className="text-hg-secondary mr-2"
+                  <Select
+                    options={selectOptions}
+                    className="w-full mb-2"
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        paddingTop: '5px',
+                        paddingBottom: '5px',
+                        borderRadius: '12px',
+                        background: state.hasValue
+                          ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
+                          : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+                        borderColor: state.isFocused
+                          ? `${HOLAGLOW_COLORS['secondary']}`
+                          : `${HOLAGLOW_COLORS['black']}`,
+                      }),
+                      singleValue: (baseStyles, state) => ({
+                        ...baseStyles,
+                        color: state.hasValue
+                          ? `${HOLAGLOW_COLORS['secondary']}`
+                          : `${HOLAGLOW_COLORS['black300']}`,
+                      }),
+                      indicatorSeparator: () => ({ display: 'none' }),
+                      indicatorsContainer: () => ({ display: 'none' }),
+                    }}
                   />
-                  <Text className="font-semibold">{product.title}</Text>
-                </Flex>
 
-                <Select
-                  options={selectOptions}
-                  className="w-full mb-2"
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      background: state.hasValue
-                        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
-                        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
-                      borderColor: state.isFocused
-                        ? `${HOLAGLOW_COLORS['secondary']}`
-                        : `${HOLAGLOW_COLORS['black']}`,
-                    }),
-                    indicatorSeparator: () => ({ display: 'none' }),
-                    indicatorsContainer: () => ({ display: 'none' }),
-                  }}
-                />
-                <Flex layout="row-left">
-                  <SvgInjection
-                    height={16}
-                    width={16}
-                    className="text-hg-secondary mr-2"
+                  <Flex layout="row-left">
+                    <SvgInjection
+                      height={16}
+                      width={16}
+                      className="text-hg-secondary mr-2"
+                    />
+                    <Text className="font-semibold">{product.title}</Text>
+                  </Flex>
+
+                  <Select
+                    options={selectOptions}
+                    className="w-full mb-2"
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        background: state.hasValue
+                          ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
+                          : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+                        borderColor: state.isFocused
+                          ? `${HOLAGLOW_COLORS['secondary']}`
+                          : `${HOLAGLOW_COLORS['black']}`,
+                      }),
+                      indicatorSeparator: () => ({ display: 'none' }),
+                      indicatorsContainer: () => ({ display: 'none' }),
+                    }}
                   />
-                  <Text className="font-semibold">{product.title}</Text>
-                </Flex>
+                  <Flex layout="row-left">
+                    <SvgInjection
+                      height={16}
+                      width={16}
+                      className="text-hg-secondary mr-2"
+                    />
+                    <Text className="font-semibold">{product.title}</Text>
+                  </Flex>
 
-                <Select
-                  options={selectOptions}
-                  className="w-full mb-2"
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      background: state.hasValue
-                        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
-                        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
-                      borderColor: state.isFocused
-                        ? `${HOLAGLOW_COLORS['secondary']}`
-                        : `${HOLAGLOW_COLORS['black']}`,
-                    }),
-                    indicatorSeparator: () => ({ display: 'none' }),
-                    indicatorsContainer: () => ({ display: 'none' }),
-                  }}
-                />
+                  <Select
+                    options={selectOptions}
+                    className="w-full mb-2"
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        background: state.hasValue
+                          ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
+                          : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+                        borderColor: state.isFocused
+                          ? `${HOLAGLOW_COLORS['secondary']}`
+                          : `${HOLAGLOW_COLORS['black']}`,
+                      }),
+                      indicatorSeparator: () => ({ display: 'none' }),
+                      indicatorsContainer: () => ({ display: 'none' }),
+                    }}
+                  />
+                </Flex>
               </Flex>
             </Flex>
-          </Flex>
+          )}
         </Flex>
       </Container>
     </div>

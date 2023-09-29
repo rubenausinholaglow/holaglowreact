@@ -39,11 +39,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }, []);
 
   if (isEmpty(product)) {
-    return (
-      <MainLayout>
-        <div></div>
-      </MainLayout>
-    );
+    return <></>;
   }
 
   return (

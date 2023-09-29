@@ -9,12 +9,10 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
+  upgrades: [];
   category: Category[];
   clinicDetail: ProductClinics[];
-  extraInformation: {
-    slug: string;
-    resultDescription: string;
-  };
+  extraInformation: ExtraInformation;
   flowwwId: number;
   durationMin: number;
   durationMax: number;
@@ -26,8 +24,35 @@ export interface Product {
 }
 
 export interface BeforeAndAfterImages {
+  id?: string;
   urlAfter?: string;
   urlBefore?: string;
+}
+
+export interface ExtraInformation {
+  slug: string;
+  resultDescription: string;
+  procedimentDescription: string;
+  benefitsInformation: {
+    description: string;
+    benefitDetails: BenefitDetails[];
+  };
+  applicationZoneInfo: {
+    description: string;
+    applicationZoneDetail: ApplicationZoneDetail[];
+  };
+}
+export interface BenefitDetails {
+  title: string;
+  order: number;
+  id: string;
+}
+
+export interface ApplicationZoneDetail {
+  title: string;
+  description: string;
+  order: number;
+  id: string;
 }
 
 export const emptyProduct: Product = {} as Product;

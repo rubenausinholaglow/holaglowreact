@@ -29,20 +29,23 @@ export default function ProductResults({ product }: { product: Product }) {
           dragEnabled={false}
           touchEnabled={false}
           hasDots
-          className="px-4 md:px-0 rounded-xl"
+          className="px-4 md:px-0 rounded-xl aspect-square"
         >
-          <div className="overflow-hidden rounded-xl relative">
-            <ReactCompareImage
-              leftImage="/images/product/fakeProduct.png"
-              rightImage="/images/product/fakeProductExample1.png"
-            />
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
-              Antes
-            </span>
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
-              Después
-            </span>
-          </div>
+          {product.beforeAndAfterImages.map(item => (
+            <div key={item.id} className="overflow-hidden rounded-xl relative">
+              <ReactCompareImage
+                aspectRatio="wider"
+                leftImage={item.urlBefore as string}
+                rightImage={item.urlAfter as string}
+              />
+              <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
+                Antes
+              </span>
+              <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
+                Después
+              </span>
+            </div>
+          ))}
         </Carousel>
       </div>
     </Container>
