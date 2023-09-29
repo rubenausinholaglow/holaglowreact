@@ -105,3 +105,23 @@ a {
   background-color: #a96fe7;
   color: #ffffff;
 }
+
+#hourDate {
+  width: 80px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #101828;
+  padding: 8px, 18px, 8px, 16px;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  font-weight: 400;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #a96fe7;
+  color: white;
+}

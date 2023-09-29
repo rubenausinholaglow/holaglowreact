@@ -5,10 +5,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { Slot } from '@interface/slot';
-import es from 'date-fns/locale/es';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -23,6 +23,7 @@ import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
 dayjs.locale(spanishConf);
 registerLocale('es', es);
+
 export default function Agenda() {
   const router = useRouter();
   const [dateToCheck, setDateToCheck] = useState(dayjs());
@@ -43,6 +44,7 @@ export default function Agenda() {
   const maxDays = 10;
   const localSelectedDay = dayjs(selectedDay);
   const [clicked, setClicked] = useState(false);
+  const [clickedHour, setClickedHour] = useState<string | null>(null);
 
   const toggleClicked = () => {
     setClicked(!clicked); // Step 2: Toggle the state on click
@@ -80,6 +82,7 @@ export default function Agenda() {
   }
 
   useEffect(() => {
+    setSelectedTreatmentsIds('674');
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
   }, []);
@@ -104,16 +107,14 @@ export default function Agenda() {
   const selectHour = (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
-    router.push('/checkout/contactform');
+    //router.push('/checkout/contactform');
   };
 
   const selectDate = (x: Date) => {
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
-    console.log(day);
     const formattedDate = day.format('dddd, D [de] MMMM');
-    console.log(selectedClinic);
     setDateFormatted(formattedDate);
     setSelectedDay(day);
     ScheduleService.getSlots(
@@ -154,16 +155,6 @@ export default function Agenda() {
     router.back();
   };
 
-  const divStyle = {
-    border: '1px solid #344054',
-    borderRadius: '8px',
-    paddingRight: '10px',
-    paddingLeft: '10px',
-    marginRight: '10px',
-    backgroundColor: clicked ? '#YourSelectedColor' : 'transparent', // Step 3: Conditional background color
-    cursor: 'pointer', // Add a pointer cursor to indicate it's clickable
-  };
-
   return (
     <MainLayout isCheckout>
       <div className="relative mt-9 md:mt-16">
@@ -179,7 +170,17 @@ export default function Agenda() {
               <Text size="sm" className="w-full text-left to-hg-black500 mb-4">
                 Agenda cita para{' '}
                 <span className="font-semibold">
-                  Arrugas expresión: Frente, entrecejo y patas de gallo
+                  {selectedTreatments &&
+                    Array.isArray(selectedTreatments) &&
+                    selectedTreatments.map(product => (
+                      <Flex
+                        layout="col-left"
+                        className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
+                        key={product.id}
+                      >
+                        {product.description}
+                      </Flex>
+                    ))}
                 </span>
                 , en tu clínica preferida
               </Text>
@@ -245,9 +246,29 @@ export default function Agenda() {
                     {morningHours.map(x => {
                       return (
                         <Flex key={x.startTime}>
-                          <div onClick={() => selectHour(x)} style={divStyle}>
+                          <Flex
+                            onClick={() => {
+                              selectHour(x);
+                              setClickedHour(x.startTime);
+                            }}
+                            id="hourDate"
+                            className={
+                              clickedHour === x.startTime ? 'selected' : ''
+                            }
+                          >
+                            {clickedHour === x.startTime && (
+                              <SvgCheck
+                                style={{
+                                  fill: '#EBFF0D',
+                                  width: '10.67px',
+                                  height: '8px',
+                                  top: '4px',
+                                  left: '2.67px',
+                                }}
+                              />
+                            )}
                             {x.startTime} h
-                          </div>
+                          </Flex>
                         </Flex>
                       );
                     })}
@@ -262,8 +283,27 @@ export default function Agenda() {
                   {afternoonHours.map(x => {
                     return (
                       <Flex key={x.startTime}>
-                        <Flex onClick={() => selectHour(x)} style={divStyle}>
-                          <SvgCheck className="mr-2" />
+                        <Flex
+                          onClick={() => {
+                            selectHour(x);
+                            setClickedHour(x.startTime);
+                          }}
+                          id="hourDate"
+                          className={
+                            clickedHour === x.startTime ? 'selected' : ''
+                          }
+                        >
+                          {clickedHour === x.startTime && (
+                            <SvgCheck
+                              style={{
+                                fill: '#EBFF0D',
+                                width: '10.67px',
+                                height: '8px',
+                                top: '4px',
+                                left: '2.67px',
+                              }}
+                            />
+                          )}
                           {x.startTime} h
                         </Flex>
                       </Flex>
@@ -291,7 +331,10 @@ export default function Agenda() {
                       </div>
                     )}
                   </Button>
-                  <Flex layout="col-left">
+                  <Flex
+                    layout="col-left"
+                    className="items-center justify-center"
+                  >
                     <Text size="xs">
                       Te ayudaremos a agendar tu tratamiento
                     </Text>
