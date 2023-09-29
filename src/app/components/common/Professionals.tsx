@@ -3,12 +3,15 @@ import { Professional } from '@interface/clinic';
 import ProductCarousel from 'app/components/product/fullWidthCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import ProfessionalCard from './ProfessionalCard';
+
 export default function Professionals() {
-  const { clinics } = useGlobalPersistedStore(state => state);
+  const { clinics, deviceSize } = useGlobalPersistedStore(state => state);
 
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 
@@ -27,7 +30,7 @@ export default function Professionals() {
     setProfessionals(professionalsWithCity);
   }, [clinics]);
 
-  if (isEmpty(clinics)) {
+  if (isEmpty(professionals)) {
     return <></>;
   }
 
@@ -46,7 +49,27 @@ export default function Professionals() {
         </Text>
       </Container>
       <div className="px-4 md:w-1/2">
-        <ProductCarousel type="professionals" items={professionals} />
+        {deviceSize.isMobile && (
+          <ProductCarousel type="professionals" items={professionals} />
+        )}
+        {!deviceSize.isMobile && (
+          <Carousel
+            hasControls
+            className="relative"
+            isIntrinsicHeight
+            visibleSlides={2}
+            infinite={false}
+            sliderStyles="gap-8"
+          >
+            {professionals?.map(professional => (
+              <ProfessionalCard
+                key={professional.name}
+                professional={professional}
+                className="h-full flex flex-col"
+              />
+            ))}
+          </Carousel>
+        )}
       </div>
     </Container>
   );

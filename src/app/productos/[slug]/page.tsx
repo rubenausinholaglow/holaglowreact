@@ -42,6 +42,11 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     return <></>;
   }
 
+  const relatedProducts = product.relatedProducts.map(obj => ({
+    ...obj.product,
+    visibility: true,
+  }));
+
   return (
     <MainLayout>
       <div className="bg-hg-cream500 rounded-t-3xl pt-8">
@@ -58,9 +63,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
         <ProductSuggestions product={product} />
       </div>
-      <ProductFaqs />
+      <ProductFaqs product={product} />
       <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
-        <ProductCrosselling product={product} />
+        <ProductCrosselling products={relatedProducts} />
       </div>
       <Clinics />
       <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">

@@ -20,7 +20,7 @@ export default function ProductExplanation({ product }: { product: Product }) {
         </Text>
 
         <Text size="xl" className="mb-4 font-semibold">
-          Beneficios del tratamiento
+          {product.extraInformation.benefitsInformation.title}
         </Text>
         <Text className="text-hg-black500 mb-6">
           {product.extraInformation.benefitsInformation.description}

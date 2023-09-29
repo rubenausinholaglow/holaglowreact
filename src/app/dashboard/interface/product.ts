@@ -36,6 +36,7 @@ export interface ExtraInformation {
   resultDescription: string;
   procedimentDescription: string;
   benefitsInformation: {
+    title: string;
     description: string;
     benefitDetails: BenefitDetails[];
   };
