@@ -1,9 +1,9 @@
-import ReactCompareImage from 'react-compare-image';
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { ImgComparisonSlider } from '@img-comparison-slider/react';
 
 export default function ProductResults({ product }: { product: Product }) {
   return (
@@ -32,16 +32,23 @@ export default function ProductResults({ product }: { product: Product }) {
           className="px-4 md:px-0 rounded-xl"
         >
           <div className="overflow-hidden rounded-xl relative">
-            <ReactCompareImage
-              leftImage="/images/product/fakeProduct.png"
-              rightImage="/images/product/fakeProductExample1.png"
-            />
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
-              Antes
-            </span>
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
-              Después
-            </span>
+            <ImgComparisonSlider className="outline-none w-full">
+              <figure slot="first" className="before">
+                <img width="100%" src="/images/product/fakeProduct.png"></img>
+                <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
+                  Antes
+                </span>
+              </figure>
+              <figure slot="second" className="after">
+                <img
+                  width="100%"
+                  src="/images/product/fakeProductExample1.png"
+                ></img>
+                <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
+                  Despues
+                </span>
+              </figure>
+            </ImgComparisonSlider>
           </div>
         </Carousel>
       </div>
