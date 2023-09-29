@@ -106,7 +106,7 @@ export default function ProductPrices({ product }: { product: Product }) {
               </Accordion>
             </Flex>
 
-            {!isEmpty(product.upgrades) &&
+            {/* {!isEmpty(product.upgrades) &&
               product.upgrades.map(upgrade => (
                 <>
                   <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
@@ -248,7 +248,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                     </Accordion>
                   </Flex>
                 </>
-              ))()}
+              ))()} */}
           </Flex>
 
           <Flex layout="col-left" className="w-full gap-4 mb-12">

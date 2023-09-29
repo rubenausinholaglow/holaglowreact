@@ -13,6 +13,8 @@ export interface Product {
   category: Category[];
   clinicDetail: ProductClinics[];
   extraInformation: ExtraInformation;
+  preTreatmentInfo: PreTips;
+  postTreatmentInfo: PostTips;
   flowwwId: number;
   durationMin: number;
   durationMax: number;
@@ -53,6 +55,25 @@ export interface ApplicationZoneDetail {
   description: string;
   order: number;
   id: string;
+}
+
+export interface PreTips {
+  info: string;
+  icon: string;
+  tips: TipsDetails[];
+}
+export interface PostTips {
+  info: string;
+  icon: string;
+  first24hTips: TipsDetails[];
+  after24hTips: TipsDetails[];
+  possibleComplications: TipsDetails[];
+  postTreatmentTips?: TipsDetails[];
+}
+export interface TipsDetails {
+  details: string;
+  priority: number;
+  icon?: string;
 }
 
 export const emptyProduct: Product = {} as Product;
