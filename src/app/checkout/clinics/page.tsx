@@ -42,7 +42,7 @@ export default function ClinicsCheckout() {
 
   console.log(selectedTreatments);
 
-  if (isEmpty(selectedTreatments)) return <></>;
+  //if (isEmpty(selectedTreatments)) return <></>;
 
   return (
     <MainLayout isCheckout>
