@@ -79,7 +79,8 @@ export default function Agenda() {
   }
 
   useEffect(() => {
-    setSelectedDay(dayjs());
+    setSelectedDay(dayjs(new Date()));
+    selectDate(new Date());
   }, []);
 
   useEffect(() => {
@@ -89,8 +90,6 @@ export default function Agenda() {
         selectedTreatments!.map(x => x.flowwwId).join(', ')
       );
     } else setSelectedTreatmentsIds('674');
-
-    console.log('here');
   }, [dateToCheck]);
 
   useEffect(() => {
@@ -106,11 +105,14 @@ export default function Agenda() {
     setSelectedSlot(x);
     router.push('/checkout/contactform');
   };
+
   const selectDate = (x: Date) => {
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
+    console.log(day);
     const formattedDate = day.format('dddd, D [de] MMMM');
+    console.log(selectedClinic);
     setDateFormatted(formattedDate);
     setSelectedDay(day);
     ScheduleService.getSlots(
@@ -168,8 +170,11 @@ export default function Agenda() {
           <Title size="xl" className="font-semibold mb-6">
             Selecciona día y hora
           </Title>
-          <Flex layout="row-between" className="gap-16 items-start">
-            <div className="w-1/2">
+          <Flex
+            layout="row-between"
+            className="block gap-16 items-start md:flex"
+          >
+            <div className="md:w-1/2">
               <Text size="sm" className="w-full text-left to-hg-black500 mb-4">
                 Agenda cita para{' '}
                 <span className="font-semibold">
@@ -207,7 +212,7 @@ export default function Agenda() {
                       <Flex layout="row-between" className="items-start w-full">
                         <div>
                           <Text className="font-semibold text-left mb-2">
-                            {product.applicationTimeMinutes}
+                            {product.applicationTimeMinutes} test
                           </Text>
                         </div>
                       </Flex>
@@ -222,11 +227,11 @@ export default function Agenda() {
                   onMonthChange={onMonthChange}
                   calendarStartDay={1}
                   locale="es"
-                  className="w-full bg-gray-600"
+                  className="w-full"
                 ></DatePicker>
               </Flex>
             </div>
-            <div className="w-1/2">
+            <div className="md:w-1/2">
               <Text size="sm" className="w-full text-left to-hg-black500 mb-12">
                 Selecciona hora para el {dateFromatted.toString()}
               </Text>
@@ -267,19 +272,30 @@ export default function Agenda() {
               )}
               <Flex
                 layout="col-left"
-                className="bg-hg-primary300 p-3 gap-3 fixed bottom-0 left-0 right-0 md:relative"
+                className="bg-hg-primary300 p-3 gap-3 md:relative w-full"
               >
-                <Text>¿La cita que necesitas no está disponible?</Text>
-                <Button size="xl" type="tertiary">
-                  <SvgPhone className="mr-2" />
-                  <div>
-                    <Text size="xs">Llamanos</Text>
-                    <Text>al 999-999-999</Text>
-                  </div>
-                </Button>
-                <Text className="text-sm">
-                  Te ayudaremos a agendar tu tratamiento
+                <Text size="sm" className="font-semibold">
+                  ¿La cita que necesitas no está disponible?
                 </Text>
+                <Flex
+                  layout="row-between"
+                  className="block gap-16 items-start md:flex"
+                >
+                  <Button size="xl" type="tertiary">
+                    <SvgPhone className="mr-2" />
+                    {selectedClinic && (
+                      <div>
+                        <Text size="xs">Llamanos al</Text>
+                        <Text>{selectedClinic.phone}</Text>
+                      </div>
+                    )}
+                  </Button>
+                  <Flex layout="col-left">
+                    <Text size="xs">
+                      Te ayudaremos a agendar tu tratamiento
+                    </Text>
+                  </Flex>
+                </Flex>
               </Flex>
             </div>
           </Flex>

@@ -50,4 +50,58 @@ a {
 
 #datepickerWrapper .react-datepicker {
   width: 100%;
+  background-color: #a96fe71a;
+  border: none;
+}
+
+#datepickerWrapper .react-datepicker__month-container {
+  width: 100%;
+}
+
+#datepickerWrapper .react-datepicker__current-month {
+  font-size: 18px;
+}
+
+#datepickerWrapper .react-datepicker__header {
+  background-color: #a96fe71a;
+  border: none;
+  width: 100%;
+}
+
+#datepickerWrapper .react-datepicker__day-names {
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Day Week */
+#datepickerWrapper .react-datepicker__day-name {
+  width: 14.285%;
+  margin: 0;
+}
+
+/* Box Month */
+#datepickerWrapper .react-datepicker__month {
+  margin: 0 0 0 0;
+  width: 100%;
+  padding: 0;
+}
+
+/* All days*/
+#datepickerWrapper .react-datepicker__day,
+.react-datepicker__time-name {
+  width: 14.285%;
+  margin: 0;
+}
+
+/* Today */
+#datepickerWrapper .react-datepicker__day--today {
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+/* Day Selected */
+#datepickerWrapper .react-datepicker__day--keyboard-selected {
+  border-radius: 50%;
+  background-color: #a96fe7;
+  color: #ffffff;
 }
