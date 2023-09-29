@@ -49,8 +49,9 @@ a {
 }
 
 #datepickerWrapper .react-datepicker {
+  padding: 12px;
   width: 100%;
-  background-color: #a96fe71a;
+  background-color: theme('colors.hg.secondary100');
   border: none;
 }
 
@@ -63,20 +64,20 @@ a {
 }
 
 #datepickerWrapper .react-datepicker__header {
-  background-color: #a96fe71a;
+  background-color: theme('colors.hg.secondary100');
   border: none;
   width: 100%;
 }
 
 #datepickerWrapper .react-datepicker__day-names {
-  margin: 0px;
-  padding: 0px;
+  display: flex;
+  justify-content: space-around;
 }
 
 /* Day Week */
 #datepickerWrapper .react-datepicker__day-name {
-  width: 14.285%;
-  margin: 0;
+  /*   width: auto;
+  margin: 0; */
 }
 
 /* Box Month */
@@ -86,11 +87,17 @@ a {
   padding: 0;
 }
 
+/* Week row */
+#datepickerWrapper .react-datepicker__week {
+  display: flex;
+  justify-content: space-around;
+}
+
 /* All days*/
 #datepickerWrapper .react-datepicker__day,
 .react-datepicker__time-name {
-  width: 14.285%;
-  margin: 0;
+  /*   width: auto;
+  margin: 0; */
 }
 
 /* Today */
