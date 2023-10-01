@@ -1,5 +1,5 @@
 import { Professional } from './clinic';
-import { CartItem, emptyProduct, Product } from './product';
+import { CartItem, Product } from './product';
 
 export interface State {
   cart: CartItem[];
@@ -8,7 +8,7 @@ export interface State {
   priceDiscount: number;
   percentageDiscount: number;
   manualPrice: number;
-  productHighlighted: typeof emptyProduct;
+  productHighlighted: null | Product;
   professionals: Professional[];
 }
 
@@ -21,7 +21,7 @@ export interface Actions {
     discountType: '%' | '€' | 'total'
   ) => void;
   applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => void;
-  setHighlightProduct: (Item: Product) => void;
+  setHighlightProduct: (Item: null | Product) => void;
   setProfessionals: (Item: Professional[]) => void;
   getQuantityOfProduct: (product: Product) => number;
   removeSingleProduct: (product: CartItem) => void;

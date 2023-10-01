@@ -14,7 +14,7 @@ export default function ProductHeader({ product }: { product: Product }) {
           {product.title}
         </Title>
         <Text className="text-hg-black500 mb-4">
-          {product.extraInformation.resultDescription}
+          {product.extraInformation?.resultDescription}
         </Text>
         {product.category.map(category => (
           <Button

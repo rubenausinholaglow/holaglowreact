@@ -25,6 +25,8 @@ export default function ProductCard({
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
   );
 
+  console.log(product);
+
   return (
     <div className="flex flex-col overflow-hidden h-full" {...rest}>
       <Flex layout="col-left" className="">

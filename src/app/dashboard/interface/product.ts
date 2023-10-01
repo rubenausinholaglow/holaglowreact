@@ -9,12 +9,15 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
-  upgrades: Product[];
+  upgrades: Upgrade[];
   category: Category[];
   clinicDetail: ProductClinics[];
   extraInformation: ExtraInformation;
   preTreatmentInfo: PreTips;
   postTreatmentInfo: PostTips;
+  packUnities: [];
+  packMoreInformation: string;
+  relatedProducts: RelatedProduct[];
   flowwwId: number;
   durationMin: number;
   durationMax: number;
@@ -75,6 +78,13 @@ export interface TipsDetails {
   details: string;
   priority: number;
   icon?: string;
+}
+export interface Upgrade {
+  product: Product;
+}
+
+export interface RelatedProduct {
+  product: Product;
 }
 
 export const emptyProduct: Product = {} as Product;

@@ -26,9 +26,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
+    /*
     const productId = stateProducts.filter(
       product => product?.extraInformation?.slug === params.slug
     )[0].id;
+
+    */
+    const productId = '7f2e85f1-ff32-4f2b-8d48-4117e9e5b4c7';
 
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);

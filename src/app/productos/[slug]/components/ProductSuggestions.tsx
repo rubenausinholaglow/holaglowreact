@@ -31,7 +31,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
   );
 
   if (
-    isEmpty(product.preTreatmentInfo.tips) &&
+    isEmpty(product.preTreatmentInfo?.tips) &&
     isEmpty(product.postTreatmentInfo.postTreatmentTips)
   ) {
     return <></>;
@@ -76,9 +76,9 @@ export default function ProductSuggestions({ product }: { product: Product }) {
         infinite={false}
         sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
       >
-        {product.preTreatmentInfo.tips &&
+        {product.preTreatmentInfo?.tips &&
           activeSlider === 'pre' &&
-          product.preTreatmentInfo.tips
+          product.preTreatmentInfo?.tips
             .sort((a, b) => a.priority - b.priority)
             .map(tip => {
               const iconComponentName = `Svg${tip.icon}`;
