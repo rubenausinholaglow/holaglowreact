@@ -113,7 +113,6 @@ export default function Agenda() {
   };
 
   const selectDate = (x: Date) => {
-    console.log(x);
     setLoading(true);
     setMorningHours([]);
     setAfternoonHours([]);
