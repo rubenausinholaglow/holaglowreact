@@ -10,6 +10,7 @@ import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
@@ -173,195 +174,206 @@ export default function Agenda() {
 
   return (
     <MainLayout isCheckout>
-      <div className="relative mt-9 md:mt-16">
-        <Container>
-          <Title size="xl" className="font-semibold mb-6">
-            Selecciona día y hora
-          </Title>
-          <Flex
-            layout="row-between"
-            className="block gap-16 items-start md:flex"
-          >
-            <div className="md:w-1/2">
-              {selectedTreatments &&
-                Array.isArray(selectedTreatments) &&
-                selectedTreatments.map(product => (
-                  <div key={product.id}>
+      <Container className="px-0">
+        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row">
+          <div className="md:w-1/2">
+            <Container className="pb-4">
+              <Title size="xl" className="font-semibold mb-6">
+                Selecciona día y hora
+              </Title>
+              <Flex
+                layout="row-between"
+                className="block gap-16 items-start md:flex"
+              >
+                <div className="">
+                  {selectedTreatments &&
+                    Array.isArray(selectedTreatments) &&
+                    selectedTreatments.map(product => (
+                      <div key={product.id}>
+                        <Text
+                          size="sm"
+                          className="w-full text-left to-hg-black500 mb-4"
+                        >
+                          Agenda cita para{' '}
+                          <span className="font-semibold w-full">
+                            {product.title}
+                          </span>
+                          , en tu clínica preferida
+                        </Text>
+                      </div>
+                    ))}
+
+                  {selectedClinic && (
+                    <Flex className="mb-4">
+                      <span>
+                        <SvgLocation />
+                      </span>
+                      <Text size="xs" className="w-full text-left pl-2">
+                        {selectedClinic.address}, {selectedClinic.city}
+                      </Text>
+                      <Link href="/checkout/clinics" className="text-xs">
+                        Cambiar
+                      </Link>
+                    </Flex>
+                  )}
+                  <Flex>
+                    <SvgHour />
+                    {selectedTreatments &&
+                      Array.isArray(selectedTreatments) &&
+                      selectedTreatments.map(product => (
+                        <Flex key={product.id}>
+                          <Flex
+                            layout="row-between"
+                            className="items-start w-full"
+                          >
+                            <div>
+                              <Text size="xs" className="-full text-left pl-2">
+                                30 minutos + 30 minutos (Crema anestéstica)
+                              </Text>
+                            </div>
+                          </Flex>
+                        </Flex>
+                      ))}
+                  </Flex>
+                </div>
+              </Flex>
+            </Container>
+            <Container className="px-0 md:px-4">
+              <div className="">
+                <Flex className="w-full mb-6" id="datepickerWrapper">
+                  <DatePicker
+                    inline
+                    onChange={selectDate}
+                    filterDate={filterDate}
+                    onMonthChange={onMonthChange}
+                    useWeekdaysShort
+                    calendarStartDay={1}
+                    locale="es"
+                    className="w-full"
+                  ></DatePicker>
+                </Flex>
+              </div>
+            </Container>
+          </div>
+          <div className="md:w-1/2">
+            <Container>
+              <Flex layout="col-left" className="items-start w-full">
+                {afternoonHours.length > 0 || morningHours.length > 0 ? (
+                  <>
                     <Text
                       size="sm"
-                      className="w-full text-left to-hg-black500 mb-4"
+                      className="w-full text-left to-hg-black500 mb-6"
                     >
-                      Agenda cita para{' '}
-                      <span className="font-semibold w-full">
-                        {product.title}
+                      Selecciona hora para el{' '}
+                      <span className="font-semibold">
+                        {dateFromatted.toString()}
                       </span>
-                      , en tu clínica preferida
                     </Text>
-                  </div>
-                ))}
-
-              {selectedClinic && (
-                <Flex className="mb-4">
-                  <span>
-                    <SvgLocation />
-                  </span>
-                  <Text size="xs" className="w-full text-left pl-2">
-                    {selectedClinic.address}, {selectedClinic.city}
-                  </Text>
-                  <Link href="/checkout/clinics" className="text-xs">
-                    Cambiar
-                  </Link>
-                </Flex>
-              )}
-              <Flex className="mb-4">
-                <SvgHour />
-                {selectedTreatments &&
-                  Array.isArray(selectedTreatments) &&
-                  selectedTreatments.map(product => (
-                    <Flex key={product.id}>
-                      <Flex layout="row-between" className="items-start w-full">
-                        <div>
-                          <Text size="xs" className="-full text-left pl-2">
-                            30 minutos + 30 minutos (Crema anestéstica)
-                          </Text>
-                        </div>
-                      </Flex>
-                    </Flex>
-                  ))}
-              </Flex>
-              <Flex className="w-full mb-6" id="datepickerWrapper">
-                <DatePicker
-                  inline
-                  onChange={selectDate}
-                  filterDate={filterDate}
-                  onMonthChange={onMonthChange}
-                  useWeekdaysShort
-                  calendarStartDay={1}
-                  locale="es"
-                  className="w-full"
-                ></DatePicker>
-              </Flex>
-            </div>
-            <div className="md:w-1/2">
-              {afternoonHours.length > 0 || morningHours.length > 0 ? (
-                <>
-                  <Text
-                    size="sm"
-                    className="w-full text-left to-hg-black500 mb-6"
-                  >
-                    Selecciona hora para el{' '}
-                    <span className="font-semibold">
-                      {dateFromatted.toString()}
-                    </span>
-                  </Text>
-                  {morningHours.length > 0 && (
-                    <Text size="sm" className="font-semibold mb-4">
-                      Horario de mañana
-                    </Text>
-                  )}
-                  {morningHours.length > 0 && (
-                    <Flex className="flex-wrap mb-6">
-                      {morningHours.map(x => {
-                        return (
-                          <Flex key={x.startTime}>
-                            <Flex
-                              onClick={() => {
-                                selectHour(x);
-                                setClickedHour(x.startTime);
-                              }}
-                              id="hourDate"
-                              className={
-                                clickedHour === x.startTime ? 'selected' : ''
-                              }
-                            >
-                              {clickedHour === x.startTime && (
-                                <SvgCheck id="CheckDate" />
-                              )}
-                              {x.startTime} h
-                            </Flex>
-                          </Flex>
-                        );
-                      })}
-                    </Flex>
-                  )}
-                  {afternoonHours.length > 0 && (
-                    <Text size="sm" className="font-semibold mb-4">
-                      Horario de tarde
-                    </Text>
-                  )}
-                  {afternoonHours.length > 0 && (
-                    <Flex className="flex-wrap mb-6">
-                      {afternoonHours.map(x => {
-                        return (
-                          <Flex key={x.startTime}>
-                            <Flex
-                              onClick={() => {
-                                selectHour(x);
-                                setClickedHour(x.startTime);
-                              }}
-                              id="hourDate"
-                              className={
-                                clickedHour === x.startTime ? 'selected' : ''
-                              }
-                            >
-                              {clickedHour === x.startTime && <SvgCheck />}
-                              {x.startTime} h
-                            </Flex>
-                          </Flex>
-                        );
-                      })}
-                    </Flex>
-                  )}
-                </>
-              ) : (
-                <Flex className="w-full flex-col mb-16 md:mb-7">
-                  <SvgSadIcon className="mb-5 text-hg-secondary" />
-                  <Title size="xl" className="font-semibold">
-                    ¡Lo sentimos!
-                  </Title>
-                  <Text size="sm" className="font-semibold mb-4">
-                    No hay citas para el dia seleccionado
-                  </Text>
-                  <Text size="xs">
-                    Selecciona otro día para ver la disponibilidad
-                  </Text>
-                </Flex>
-              )}
-
-              <Flex
-                layout="col-left"
-                className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
-              >
-                <Text size="sm" className="font-semibold">
-                  ¿La cita que necesitas no está disponible?
-                </Text>
-                <Flex
-                  layout="row-between"
-                  className="block gap-16 items-start md:flex"
-                >
-                  <Button size="xl" type="tertiary">
-                    <SvgPhone className="mr-2" />
-                    {selectedClinic && (
-                      <div>
-                        <Text size="xs">Llamanos al</Text>
-                        <Text>{selectedClinic.phone}</Text>
-                      </div>
+                    {morningHours.length > 0 && (
+                      <Text size="sm" className="font-semibold mb-4">
+                        Horario de mañana
+                      </Text>
                     )}
-                  </Button>
-                  <Flex
-                    layout="col-left"
-                    className="items-center justify-center"
-                  >
+                    {morningHours.length > 0 && (
+                      <Flex className="flex-wrap mb-6 ">
+                        {morningHours.map(x => {
+                          return (
+                            <Flex key={x.startTime} className="gap-2">
+                              <Flex
+                                onClick={() => {
+                                  selectHour(x);
+                                  setClickedHour(x.startTime);
+                                }}
+                                id="hourDate"
+                                className={`border border-hg-black py-2 px-4 text-xs ${
+                                  clickedHour === x.startTime ? 'selected' : ''
+                                }`}
+                              >
+                                {clickedHour === x.startTime && (
+                                  <SvgCheck
+                                    id="CheckDate"
+                                    className="text-hg-primary"
+                                  />
+                                )}
+                                {x.startTime} h
+                              </Flex>
+                            </Flex>
+                          );
+                        })}
+                      </Flex>
+                    )}
+                    {afternoonHours.length > 0 && (
+                      <Text size="sm" className="font-semibold mb-4">
+                        Horario de tarde
+                      </Text>
+                    )}
+                    {afternoonHours.length > 0 && (
+                      <Flex className="flex-wrap mb-6">
+                        {afternoonHours.map(x => {
+                          return (
+                            <Flex key={x.startTime}>
+                              <Flex
+                                onClick={() => {
+                                  selectHour(x);
+                                  setClickedHour(x.startTime);
+                                }}
+                                id="hourDate"
+                                className={
+                                  clickedHour === x.startTime ? 'selected' : ''
+                                }
+                              >
+                                {clickedHour === x.startTime && <SvgCheck />}
+                                {x.startTime} h
+                              </Flex>
+                            </Flex>
+                          );
+                        })}
+                      </Flex>
+                    )}
+                  </>
+                ) : (
+                  <Flex className="w-full flex-col mb-16 md:mb-7">
+                    <SvgSadIcon className="mb-5 text-hg-secondary" />
+                    <Title size="xl" className="font-semibold">
+                      ¡Lo sentimos!
+                    </Title>
+                    <Text size="sm" className="font-semibold mb-4">
+                      No hay citas para el dia seleccionado
+                    </Text>
                     <Text size="xs">
-                      Te ayudaremos a agendar tu tratamiento
+                      Selecciona otro día para ver la disponibilidad
                     </Text>
                   </Flex>
-                </Flex>
+                )}
               </Flex>
-            </div>
-          </Flex>
-        </Container>
-      </div>
+            </Container>
+            <Flex
+              layout="col-left"
+              className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
+            >
+              <Text size="sm" className="font-semibold">
+                ¿La cita que necesitas no está disponible?
+              </Text>
+              <Flex layout="row-left" className="gap-4 items-center w-full">
+                <Button size="xl" type="tertiary">
+                  <SvgPhone className="mr-2" />
+                  {selectedClinic && (
+                    <div>
+                      <Text size="xs" className="whitespace-nowrap">
+                        Llamanos al
+                      </Text>
+                      <Text className="whitespace-nowrap">
+                        {selectedClinic.phone}
+                      </Text>
+                    </div>
+                  )}
+                </Button>
+                <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+              </Flex>
+            </Flex>
+          </div>
+        </Flex>
+      </Container>
     </MainLayout>
   );
 }
