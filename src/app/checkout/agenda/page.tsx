@@ -19,6 +19,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -175,7 +176,10 @@ export default function Agenda() {
   return (
     <MainLayout isCheckout>
       <Container className="px-0">
-        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
+        <Flex
+          layout="col-left"
+          className="mt-9 md:mt-16 md:flex-row items-stretch"
+        >
           <div className="w-full md:w-1/2">
             <Container className="pb-4">
               <Title size="xl" className="font-semibold mb-6">
@@ -261,7 +265,7 @@ export default function Agenda() {
                 layout="col-left"
                 className="items-start w-full mb-6 md:mb-0"
               >
-                {afternoonHours.length > 0 || morningHours.length > 0 ? (
+                {(afternoonHours.length > 0 || morningHours.length > 0) && (
                   <>
                     <Text
                       size="sm"
@@ -343,46 +347,50 @@ export default function Agenda() {
                       </Flex>
                     )}
                   </>
-                ) : (
-                  <Flex className="w-full flex-col mb-16 md:mb-7">
-                    <SvgSadIcon className="mb-5 text-hg-secondary" />
-                    <Title size="xl" className="font-semibold">
-                      ¡Lo sentimos!
-                    </Title>
-                    <Text size="sm" className="font-semibold mb-4">
-                      No hay citas para el dia seleccionado
-                    </Text>
-                    <Text size="xs">
-                      Selecciona otro día para ver la disponibilidad
-                    </Text>
-                  </Flex>
                 )}
               </Flex>
             </Container>
-            <Flex
-              layout="col-left"
-              className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
-            >
-              <Text size="sm" className="font-semibold">
-                ¿La cita que necesitas no está disponible?
-              </Text>
-              <Flex layout="row-left" className="gap-4 items-center w-full">
-                <Button size="xl" type="tertiary">
-                  <SvgPhone className="mr-2" />
-                  {selectedClinic && (
-                    <div>
-                      <Text size="xs" className="whitespace-nowrap">
-                        Llamanos al
-                      </Text>
-                      <Text className="whitespace-nowrap">
-                        {selectedClinic.phone}
-                      </Text>
-                    </div>
-                  )}
-                </Button>
-                <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+
+            <div className="mt-auto">
+              {isEmpty(afternoonHours) && isEmpty(morningHours) && (
+                <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+                  <SvgSadIcon className="mb-5 text-hg-secondary" />
+                  <Title size="xl" className="font-semibold">
+                    ¡Lo sentimos!
+                  </Title>
+                  <Text size="sm" className="font-semibold mb-4 text-center">
+                    No hay citas para el dia seleccionado
+                  </Text>
+                  <Text size="xs" className="text-center">
+                    Selecciona otro día para ver la disponibilidad
+                  </Text>
+                </Flex>
+              )}
+              <Flex
+                layout="col-left"
+                className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
+              >
+                <Text size="sm" className="font-semibold">
+                  ¿La cita que necesitas no está disponible?
+                </Text>
+                <Flex layout="row-left" className="gap-4 items-center w-full">
+                  <Button size="xl" type="tertiary">
+                    <SvgPhone className="mr-2" />
+                    {selectedClinic && (
+                      <div>
+                        <Text size="xs" className="whitespace-nowrap">
+                          Llamanos al
+                        </Text>
+                        <Text className="whitespace-nowrap">
+                          {selectedClinic.phone}
+                        </Text>
+                      </div>
+                    )}
+                  </Button>
+                  <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+                </Flex>
               </Flex>
-            </Flex>
+            </div>
           </div>
         </Flex>
       </Container>
