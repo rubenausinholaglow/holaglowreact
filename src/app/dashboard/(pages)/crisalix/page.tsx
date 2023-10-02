@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import UserService from '@services/UserService';
-import { Button } from 'designSystem/Buttons/Buttons';
 import MainLayout from 'app/components/layout/MainLayout';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
 const Page = () => {
