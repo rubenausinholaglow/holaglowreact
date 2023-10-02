@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { filterItems } from '@utils/filterItems';
 import CategorySelector from 'app/components/filters/CategorySelector';
 import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -22,7 +23,6 @@ import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
-import { filterItems } from '@utils/filterItems';
 
 export default function PsrpPage({ slug }: { slug: string }) {
   const { stateProducts, deviceSize } = useGlobalPersistedStore(state => state);
@@ -53,8 +53,8 @@ export default function PsrpPage({ slug }: { slug: string }) {
               slug[0].toUpperCase() + slug.substr(1).toLowerCase();
             break;
         }
-        var categoryExists = filterItems.some(x => {
-          var exists = x.buttons.some(y => {
+        const categoryExists = filterItems.some(x => {
+          const exists = x.buttons.some(y => {
             if (y.value == filterToApply) return true;
           });
           return exists;
