@@ -1,9 +1,10 @@
-import ReactCompareImage from 'react-compare-image';
+import { ImgComparisonSlider } from '@img-comparison-slider/react';
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import Image from 'next/image';
 
 export default function ProductResults({ product }: { product: Product }) {
   return (
@@ -29,20 +30,40 @@ export default function ProductResults({ product }: { product: Product }) {
           dragEnabled={false}
           touchEnabled={false}
           hasDots
-          className="px-4 md:px-0 rounded-xl"
+          className="px-4 md:px-0 rounded-xl aspect-square"
         >
-          <div className="overflow-hidden rounded-xl relative">
-            <ReactCompareImage
-              leftImage="/images/product/fakeProduct.png"
-              rightImage="/images/product/fakeProductExample1.png"
-            />
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
-              Antes
-            </span>
-            <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
-              Después
-            </span>
-          </div>
+          {product.beforeAndAfterImages.map(item => (
+            <div key={item.id} className="overflow-hidden relative">
+              <ImgComparisonSlider className="outline-none w-full">
+                <figure slot="first" className="before">
+                  <div className="relative aspect-square">
+                    <Image
+                      src={item.urlBefore || ''}
+                      alt={product.title}
+                      fill
+                      className="object-cover rounded-3xl"
+                    />
+                  </div>
+                  <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
+                    Antes
+                  </span>
+                </figure>
+                <figure slot="second" className="after">
+                  <div className="relative aspect-square">
+                    <Image
+                      src={item.urlAfter || ''}
+                      alt={product.title}
+                      fill
+                      className="object-cover rounded-3xl"
+                    />
+                  </div>
+                  <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
+                    Despues
+                  </span>
+                </figure>
+              </ImgComparisonSlider>
+            </div>
+          ))}
         </Carousel>
       </div>
     </Container>

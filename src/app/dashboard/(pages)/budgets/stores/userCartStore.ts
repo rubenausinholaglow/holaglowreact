@@ -116,7 +116,7 @@ export const useCartStore = create(
         );
         set(() => ({ cart: updatedCart }));
       },
-      setHighlightProduct: (product: Product) => {
+      setHighlightProduct: (product: null | Product) => {
         set(() => ({
           productHighlighted: product,
         }));

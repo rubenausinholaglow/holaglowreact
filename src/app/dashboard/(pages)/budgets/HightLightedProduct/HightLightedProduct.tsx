@@ -38,7 +38,7 @@ export default function HightLightedProduct() {
 
     const fetchProduct = async () => {
       try {
-        if (productHighlighted.id) {
+        if (productHighlighted?.id) {
           const data = await ProductService.getProduct(productHighlighted.id);
 
           setProduct(data);
