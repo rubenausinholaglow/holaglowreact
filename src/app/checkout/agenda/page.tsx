@@ -4,13 +4,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
-import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
@@ -50,7 +47,7 @@ export default function Agenda() {
   const [clickedHour, setClickedHour] = useState<string | null>(null);
 
   const toggleClicked = () => {
-    setClicked(!clicked); // Step 2: Toggle the state on click
+    setClicked(!clicked);
   };
 
   function loadMonth() {
@@ -85,22 +82,9 @@ export default function Agenda() {
   }
 
   useEffect(() => {
-    fetchProduct();
-    setSelectedTreatmentsIds('674');
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
   }, []);
-
-  const fetchProduct = async () => {
-    const product = await ProductService.getProduct(
-      '336c88de-c8b9-4379-9d6c-08db48dc8444'
-    );
-
-    console.log(product);
-    const productsArray: Product[] = [product];
-    console.log(productsArray);
-    setSelectedTreatments(productsArray);
-  };
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
@@ -122,7 +106,7 @@ export default function Agenda() {
   const selectHour = (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
-    //router.push('/checkout/contactform');
+    router.push('/checkout/contactform');
   };
 
   const selectDate = (x: Date) => {
@@ -166,19 +150,10 @@ export default function Agenda() {
     );
   };
 
-  const changeClinic = () => {
-    router.back();
-  };
-
-  console.log(selectedTreatments);
-
   return (
     <MainLayout isCheckout>
       <Container className="px-0">
-        <Flex
-          layout="col-left"
-          className="mt-9 md:mt-16 md:flex-row items-stretch"
-        >
+        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
           <div className="w-full md:w-1/2">
             <Container className="pb-4">
               <Title size="xl" className="font-semibold mb-6">
@@ -231,7 +206,7 @@ export default function Agenda() {
                           >
                             <div>
                               <Text size="xs" className="-full text-left pl-2">
-                                30 minutos + 30 minutos (Crema anestéstica)
+                                {product.applicationTimeMinutes} minutos
                               </Text>
                             </div>
                           </Flex>
