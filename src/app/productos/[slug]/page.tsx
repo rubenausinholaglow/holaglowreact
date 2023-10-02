@@ -31,11 +31,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       product => product?.extraInformation?.slug === params.slug
     )[0].id;
 
-    /*
-    //temp session product id
-    const productId = '7f2e85f1-ff32-4f2b-8d48-4117e9e5b4c7';
-    */
-
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);
 
