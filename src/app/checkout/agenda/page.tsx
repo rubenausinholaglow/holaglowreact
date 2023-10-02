@@ -175,7 +175,7 @@ export default function Agenda() {
   return (
     <MainLayout isCheckout>
       <Container className="px-0">
-        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row">
+        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
           <div className="md:w-1/2">
             <Container className="pb-4">
               <Title size="xl" className="font-semibold mb-6">
@@ -240,7 +240,7 @@ export default function Agenda() {
             </Container>
             <Container className="px-0 md:px-4">
               <div className="">
-                <Flex className="w-full mb-6" id="datepickerWrapper">
+                <Flex className="w-full mb-6 md:mb-0" id="datepickerWrapper">
                   <DatePicker
                     inline
                     onChange={selectDate}
@@ -255,9 +255,12 @@ export default function Agenda() {
               </div>
             </Container>
           </div>
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 flex flex-col justify-between">
             <Container>
-              <Flex layout="col-left" className="items-start w-full">
+              <Flex
+                layout="col-left"
+                className="items-start w-full mb-6 md:mb-0"
+              >
                 {afternoonHours.length > 0 || morningHours.length > 0 ? (
                   <>
                     <Text
@@ -275,28 +278,30 @@ export default function Agenda() {
                       </Text>
                     )}
                     {morningHours.length > 0 && (
-                      <Flex className="flex-wrap mb-6 ">
+                      <Flex className="flex-wrap  mb-3 md:mb-0">
                         {morningHours.map(x => {
                           return (
-                            <Flex key={x.startTime} className="gap-2">
-                              <Flex
+                            <Flex
+                              key={x.startTime}
+                              layout="row-between"
+                              className={`gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                clickedHour === x.startTime
+                                  ? 'bg-hg-secondary text-white'
+                                  : ''
+                              }`}
+                            >
+                              <div
+                                className="w-full align-center text-center cursor-pointer"
                                 onClick={() => {
                                   selectHour(x);
                                   setClickedHour(x.startTime);
                                 }}
-                                id="hourDate"
-                                className={`border border-hg-black py-2 px-4 text-xs ${
-                                  clickedHour === x.startTime ? 'selected' : ''
-                                }`}
                               >
                                 {clickedHour === x.startTime && (
-                                  <SvgCheck
-                                    id="CheckDate"
-                                    className="text-hg-primary"
-                                  />
+                                  <SvgCheck className="absolute text-hg-primary ml-1" />
                                 )}
                                 {x.startTime} h
-                              </Flex>
+                              </div>
                             </Flex>
                           );
                         })}
@@ -308,23 +313,30 @@ export default function Agenda() {
                       </Text>
                     )}
                     {afternoonHours.length > 0 && (
-                      <Flex className="flex-wrap mb-6">
+                      <Flex className="flex-wrap mb-6 md:mb-0">
                         {afternoonHours.map(x => {
                           return (
-                            <Flex key={x.startTime}>
-                              <Flex
+                            <Flex
+                              key={x.startTime}
+                              layout="row-between"
+                              className={`gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                clickedHour === x.startTime
+                                  ? 'bg-hg-secondary text-white'
+                                  : ''
+                              }`}
+                            >
+                              <div
+                                className="w-full align-center text-center cursor-pointer"
                                 onClick={() => {
                                   selectHour(x);
                                   setClickedHour(x.startTime);
                                 }}
-                                id="hourDate"
-                                className={
-                                  clickedHour === x.startTime ? 'selected' : ''
-                                }
                               >
-                                {clickedHour === x.startTime && <SvgCheck />}
+                                {clickedHour === x.startTime && (
+                                  <SvgCheck className="absolute text-hg-primary ml-1" />
+                                )}
                                 {x.startTime} h
-                              </Flex>
+                              </div>
                             </Flex>
                           );
                         })}
