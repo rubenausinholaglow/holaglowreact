@@ -38,7 +38,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     const product = stateProducts.filter(
       product => product?.extraInformation?.slug === params.slug
     )[0];
-    const productId = product.id ?? '';
+    const productId = product?.id ?? '';
     setProductId(productId);
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);
