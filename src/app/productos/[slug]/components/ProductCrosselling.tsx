@@ -5,7 +5,7 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 
 export default function ProductCrosselling({ product }: { product: Product }) {
-  const relatedProducts = product?.relatedProducts.map(obj => ({
+  const relatedProducts = product?.relatedProducts?.map(obj => ({
     ...obj.product,
     visibility: true,
   }));

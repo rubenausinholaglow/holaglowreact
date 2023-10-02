@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { filterItems } from '@utils/filterItems';
 import CategorySelector from 'app/components/filters/CategorySelector';
 import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -52,9 +53,16 @@ export default function PsrpPage({ slug }: { slug: string }) {
               slug[0].toUpperCase() + slug.substr(1).toLowerCase();
             break;
         }
+        const categoryExists = filterItems.some(x => {
+          const exists = x.buttons.some(y => {
+            if (y.value == filterToApply) return true;
+          });
+          return exists;
+        });
         if (
           filterToApply &&
-          productFilters.category.indexOf(filterToApply) == -1
+          productFilters.category.indexOf(filterToApply) == -1 &&
+          categoryExists
         ) {
           productFilters.category.push(filterToApply);
         }

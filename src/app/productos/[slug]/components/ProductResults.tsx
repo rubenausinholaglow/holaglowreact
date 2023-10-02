@@ -32,7 +32,7 @@ export default function ProductResults({ product }: { product: Product }) {
           hasDots
           className="px-4 md:px-0 rounded-xl aspect-square"
         >
-          {product.beforeAndAfterImages.map(item => (
+          {product.beforeAndAfterImages?.map(item => (
             <div key={item.id} className="overflow-hidden relative">
               <ImgComparisonSlider className="outline-none w-full">
                 <figure slot="first" className="before">
