@@ -24,6 +24,11 @@ const Page = () => {
   const [comment, setComment] = useState('');
 
   useEffect(() => {
+    const newCrisalix = localStorage.getItem('newCrisalix');
+    if (newCrisalix) {
+      menuItems[0].link = '/dashboard/crisalix';
+      menuItems[0].target = '';
+    }
     const storedUsername = localStorage.getItem('username') || '';
     setUserName(storedUsername);
 
