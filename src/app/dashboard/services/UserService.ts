@@ -16,6 +16,24 @@ export default class UserService {
     }
   }
 
+  static async getSimulationReady(id: string, clinicId: string) {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_CONTACTS_API}Crisalix/SimulationReady?id=${id}&clinic=${clinicId}`,
+        {
+          method: 'GET',
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return null;
+      }
+    } catch (err) {
+      return false;
+    }
+  }
   static async createCrisalixUser(
     userId: string,
     appointmentId: string,
