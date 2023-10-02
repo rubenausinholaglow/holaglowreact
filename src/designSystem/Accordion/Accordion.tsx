@@ -54,11 +54,11 @@ export function SimpleAccordion({
 
 export function Accordion({
   className = '',
-  isOpen = false,
+  value = '',
   children,
 }: {
   className?: string;
-  isOpen?: boolean;
+  value?: string;
   children: ReactNode;
 }) {
   return (
@@ -66,7 +66,7 @@ export function Accordion({
       type="single"
       className={twMerge(`w-full ${className}`)}
       collapsible
-      defaultValue={isOpen ? 'item' : ''}
+      defaultValue={value ? value : ''}
     >
       {children}
     </AccordionPrimitive.Root>
@@ -76,11 +76,11 @@ export function Accordion({
 export function AccordionItem({
   className = '',
   children,
-  value,
+  value = 'value',
 }: {
   className?: string;
   children: ReactNode;
-  value: string;
+  value?: string;
 }) {
   return (
     <AccordionPrimitive.Item

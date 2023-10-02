@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import Select from 'react-select';
 import { Product } from '@interface/product';
+import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
@@ -49,25 +51,10 @@ const UPGRADE_TYPES: Record<
   },
 };
 
-function upgradeItem(item: any) {
-  const iconComponentName = `Svg${UPGRADE_TYPES[item.type.toString()].icon}`;
-  const IconComponent = (icon as any)[iconComponentName] || null;
-
-  return (
-    <Flex layout="row-left">
-      <IconComponent
-        height={16}
-        width={16}
-        className="text-hg-secondary mr-2"
-      />
-      <Text>{UPGRADE_TYPES[item.type.toString()].title}</Text>
-    </Flex>
-  );
-}
-
 export default function ProductPrices({ product }: { product: Product }) {
   const router = useRouter();
   const { deviceSize } = useGlobalPersistedStore(state => state);
+  const [showDropdowns, setShowDropdowns] = useState(true);
 
   const selectOptions = [
     { value: 'codigo-de-barras', label: 'Código de barras' },
@@ -75,6 +62,28 @@ export default function ProductPrices({ product }: { product: Product }) {
     { value: 'menton', label: 'Mentón' },
     { value: 'ojeras', label: 'Ojeras' },
   ];
+
+  function upgradeItem(item: any) {
+    const iconComponentName = `Svg${UPGRADE_TYPES[item.type.toString()].icon}`;
+    const IconComponent = (icon as any)[iconComponentName] || null;
+
+    return (
+      <Flex layout="col-left" className="w-full">
+        <Flex layout="row-left">
+          <IconComponent
+            height={16}
+            width={16}
+            className="text-hg-secondary mr-2"
+          />
+          <Text>{UPGRADE_TYPES[item.type.toString()].title}</Text>
+        </Flex>
+
+        {showDropdowns && (
+          <Dropdown className="mt-2 w-full mb-4" options={selectOptions} />
+        )}
+      </Flex>
+    );
+  }
 
   const isSessionProduct = product.upgrades?.every(upgrade => {
     const regex = / x /;
@@ -95,12 +104,16 @@ export default function ProductPrices({ product }: { product: Product }) {
         </Title>
 
         <Flex layout="col-left" className="md:flex-row mb-8 gap-8">
-          {!isSessionProduct && !product.isPack && (
+          {!isSessionProduct && (
             <>
               <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
-                <Accordion isOpen>
+                <Accordion value="accordion">
                   <AccordionItem value="accordion">
-                    <AccordionTrigger>
+                    <AccordionTrigger
+                      className={`${
+                        !deviceSize.isMobile ? 'pointer-events-none' : ''
+                      }`}
+                    >
                       <Flex layout="col-left" className="p-3">
                         <Flex layout="row-between" className="w-full">
                           <Text
@@ -117,16 +130,20 @@ export default function ProductPrices({ product }: { product: Product }) {
                               Básico
                             </Text>
 
-                            <SvgAdd
-                              height={24}
-                              width={24}
-                              className="ml-4 group-radix-state-open:hidden"
-                            />
-                            <SvgMinus
-                              height={24}
-                              width={24}
-                              className="ml-4 hidden group-radix-state-open:block"
-                            />
+                            {deviceSize.isMobile && (
+                              <>
+                                <SvgAdd
+                                  height={24}
+                                  width={24}
+                                  className="ml-4 group-radix-state-open:hidden"
+                                />
+                                <SvgMinus
+                                  height={24}
+                                  width={24}
+                                  className="ml-4 hidden group-radix-state-open:block"
+                                />
+                              </>
+                            )}
                           </Flex>
                         </Flex>
                         <Text className="font-semibold">{product.title}</Text>
@@ -165,94 +182,139 @@ export default function ProductPrices({ product }: { product: Product }) {
                 </Accordion>
               </Flex>
 
-              {product.upgrades?.map((upgrade: any) => {
-                const { product }: { product: Product } = upgrade;
+              {product.upgrades
+                ?.sort((a, b) => a.product.order - b.product.order)
+                ?.map((upgrade: any, index) => {
+                  const { product }: { product: Product } = upgrade;
 
-                return (
-                  <Flex
-                    key={product.id}
-                    className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
-                  >
-                    <Accordion>
-                      <AccordionItem value="accordion">
-                        <AccordionTrigger>
-                          <Flex layout="col-left" className="p-3">
-                            <Flex layout="row-between" className="w-full">
-                              <Text
-                                size="xl"
-                                className="text-hg-secondary font-semibold"
-                              >
-                                {product.price} €
-                              </Text>
-                              <Flex layout="row-right">
+                  return (
+                    <Flex
+                      key={product.id}
+                      className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
+                    >
+                      <Accordion value={`accordion${index}`}>
+                        <AccordionItem value={`accordion${index}`}>
+                          <AccordionTrigger
+                            className={`${
+                              !deviceSize.isMobile ? 'pointer-events-none' : ''
+                            }`}
+                          >
+                            <Flex layout="col-left" className="p-3">
+                              <Flex layout="row-between" className="w-full">
                                 <Text
-                                  size="xs"
-                                  className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                                  size="xl"
+                                  className="text-hg-secondary font-semibold"
                                 >
-                                  Upgrade
+                                  {product.price} €
                                 </Text>
-                                <SvgAdd
-                                  height={24}
-                                  width={24}
-                                  className="ml-4 group-radix-state-open:hidden"
-                                />
-                                <SvgMinus
-                                  height={24}
-                                  width={24}
-                                  className="ml-4 hidden group-radix-state-open:block"
-                                />
+                                <Flex layout="row-right">
+                                  {product.isPack ? (
+                                    <>
+                                      <Text
+                                        size="xs"
+                                        className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                                      >
+                                        Oferta especial
+                                      </Text>
+                                      <SvgAdd
+                                        height={24}
+                                        width={24}
+                                        className="ml-4 group-radix-state-open:hidden"
+                                      />
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Text
+                                        size="xs"
+                                        className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                                      >
+                                        Upgrade
+                                      </Text>
+                                      <SvgAdd
+                                        height={24}
+                                        width={24}
+                                        className="ml-4 group-radix-state-open:hidden"
+                                      />
+                                    </>
+                                  )}
+                                  {deviceSize.isMobile && (
+                                    <>
+                                      <SvgAdd
+                                        height={24}
+                                        width={24}
+                                        className="ml-4 group-radix-state-open:hidden"
+                                      />
+                                      <SvgMinus
+                                        height={24}
+                                        width={24}
+                                        className="ml-4 hidden group-radix-state-open:block"
+                                      />
+                                    </>
+                                  )}
+                                </Flex>
                               </Flex>
+                              <Text className="font-semibold">
+                                {product.title}
+                              </Text>
                             </Flex>
-                            <Text className="font-semibold">
-                              {product.title}
-                            </Text>
-                          </Flex>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="pt-2">
-                            <Flex
-                              layout="col-left"
-                              className="bg-hg-black50 p-3 gap-2 rounded-xl"
-                            >
-                              {product.packUnities.map(item =>
-                                upgradeItem(item)
-                              )}
-
-                              <Accordion>
-                                <AccordionItem value="accordion">
-                                  <AccordionContent>
-                                    <p className="pl-5 pt-3 pb-0">
-                                      {product?.packMoreInformation}
-                                    </p>
-                                  </AccordionContent>
-                                  <AccordionTrigger>
-                                    <span className="text-hg-secondary underline block text-left pt-3 pl-5">
-                                      + info
-                                    </span>
-                                  </AccordionTrigger>
-                                </AccordionItem>
-                              </Accordion>
-
-                              <Button
-                                type="tertiary"
-                                customStyles="bg-hg-primary"
-                                className="mt-4"
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="pt-2">
+                              <Flex
+                                layout="col-left"
+                                className="bg-hg-black50 p-3 gap-2 rounded-xl"
                               >
-                                Reservar cita
-                                <SvgArrow
-                                  height={16}
-                                  width={16}
-                                  className="ml-2"
-                                />
-                              </Button>
-                            </Flex>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </Flex>
-                );
-              })}
+                                {product.packUnities.map(item =>
+                                  upgradeItem(item)
+                                )}
+
+                                <Accordion>
+                                  <AccordionItem value="accordion">
+                                    <AccordionContent>
+                                      <p className="pl-5 pt-3 pb-0">
+                                        {product?.packMoreInformation}
+                                      </p>
+                                    </AccordionContent>
+                                    <AccordionTrigger>
+                                      <span className="text-hg-secondary underline block text-left pt-3 pl-5">
+                                        + info
+                                      </span>
+                                    </AccordionTrigger>
+                                  </AccordionItem>
+                                </Accordion>
+
+                                {product.isPack ? (
+                                  <Button
+                                    type="tertiary"
+                                    className="mt-4"
+                                    onClick={() =>
+                                      setShowDropdowns(!showDropdowns)
+                                    }
+                                  >
+                                    Seleccionar viales
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    type="tertiary"
+                                    customStyles="bg-hg-primary"
+                                    className="mt-4"
+                                  >
+                                    Reservar cita
+                                    <SvgArrow
+                                      height={16}
+                                      width={16}
+                                      className="ml-2"
+                                    />
+                                  </Button>
+                                )}
+                              </Flex>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    </Flex>
+                  );
+                })}
             </>
           )}
 
@@ -388,60 +450,62 @@ export default function ProductPrices({ product }: { product: Product }) {
                 </Flex>
               </Flex>
 
-              {product.upgrades?.map((upgrade, index) => {
-                return (
-                  <Flex
-                    key={`session-${index + 1}`}
-                    layout="col-left"
-                    className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
-                  >
-                    <Text className="font-semibold p-3">
-                      {product.title.slice(0, -4)}
-                    </Text>
+              {product.upgrades
+                ?.sort((a, b) => a.product.order - b.product.order)
+                .map((upgrade, index) => {
+                  return (
+                    <Flex
+                      key={`session-${index + 1}`}
+                      layout="col-left"
+                      className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
+                    >
+                      <Text className="font-semibold p-3">
+                        {product.title.slice(0, -4)}
+                      </Text>
 
-                    <Flex layout="col-left" className="pt-2 gap-4 w-full">
-                      <Flex
-                        layout="row-between"
-                        className="items-start bg-hg-black50 p-3 gap-4 rounded-xl w-full"
-                      >
-                        <div>
-                          <Text
-                            size="xl"
-                            className="text-hg-secondary font-semibold mb-2"
-                          >
-                            {upgrade.product.price} €
-                          </Text>
-                          <Flex className="text-sm">
-                            <icon.SvgTimeLeft
-                              className="text-hg-secondary mr-2"
-                              height={16}
-                              width={16}
-                            />
-                            {upgrade.product.sessions}{' '}
-                            {upgrade.product.sessions === 1
-                              ? 'sesión'
-                              : 'sesiones'}
-                          </Flex>
-                        </div>
-                        <Button
-                          type="tertiary"
-                          customStyles="bg-hg-primary"
-                          onClick={() => {
-                            router.push(`/checkout/clinic`);
-                          }}
+                      <Flex layout="col-left" className="pt-2 gap-4 w-full">
+                        <Flex
+                          layout="row-between"
+                          className="items-start bg-hg-black50 p-3 gap-4 rounded-xl w-full"
                         >
-                          Reservar cita
-                          <SvgArrow height={16} width={16} className="ml-2" />
-                        </Button>
+                          <div>
+                            <Text
+                              size="xl"
+                              className="text-hg-secondary font-semibold mb-2"
+                            >
+                              {upgrade.product.price} €
+                            </Text>
+                            <Flex className="text-sm">
+                              <icon.SvgTimeLeft
+                                className="text-hg-secondary mr-2"
+                                height={16}
+                                width={16}
+                              />
+                              {upgrade.product.sessions}{' '}
+                              {upgrade.product.sessions === 1
+                                ? 'sesión'
+                                : 'sesiones'}
+                            </Flex>
+                          </div>
+                          <Button
+                            type="tertiary"
+                            customStyles="bg-hg-primary"
+                            onClick={() => {
+                              router.push(`/checkout/clinic`);
+                            }}
+                          >
+                            Reservar cita
+                            <SvgArrow height={16} width={16} className="ml-2" />
+                          </Button>
+                        </Flex>
                       </Flex>
                     </Flex>
-                  </Flex>
-                );
-              })}
+                  );
+                })}
             </>
           )}
 
-          {product.isPack && (
+          {/* {product.isPack && (
             <Flex layout="col-left" className="w-full gap-4">
               <Flex
                 layout="col-left"
@@ -554,7 +618,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                 </Flex>
               </Flex>
             </Flex>
-          )}
+          )} */}
         </Flex>
 
         <Flex className="bg-white/30 md:bg-transparent p-4 rounded-xl w-full md:w-auto gap-8 justify-center">
