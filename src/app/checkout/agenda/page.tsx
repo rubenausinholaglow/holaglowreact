@@ -176,7 +176,7 @@ export default function Agenda() {
     <MainLayout isCheckout>
       <Container className="px-0">
         <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
-          <div className="md:w-1/2">
+          <div className="w-full md:w-1/2">
             <Container className="pb-4">
               <Title size="xl" className="font-semibold mb-6">
                 Selecciona día y hora
@@ -255,7 +255,7 @@ export default function Agenda() {
               </div>
             </Container>
           </div>
-          <div className="md:w-1/2 flex flex-col justify-between">
+          <div className="w-full md:w-1/2 flex flex-col justify-between">
             <Container>
               <Flex
                 layout="col-left"
@@ -284,21 +284,21 @@ export default function Agenda() {
                             <Flex
                               key={x.startTime}
                               layout="row-between"
-                              className={`gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
+                              className={`transition-all gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
                                 clickedHour === x.startTime
                                   ? 'bg-hg-secondary text-white'
                                   : ''
                               }`}
                             >
                               <div
-                                className="w-full align-center text-center cursor-pointer"
+                                className="w-full cursor-pointer flex justify-center"
                                 onClick={() => {
                                   selectHour(x);
                                   setClickedHour(x.startTime);
                                 }}
                               >
                                 {clickedHour === x.startTime && (
-                                  <SvgCheck className="absolute text-hg-primary ml-1" />
+                                  <SvgCheck className="text-hg-primary mr-1" />
                                 )}
                                 {x.startTime} h
                               </div>
@@ -319,21 +319,21 @@ export default function Agenda() {
                             <Flex
                               key={x.startTime}
                               layout="row-between"
-                              className={`gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
+                              className={`transition-all gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
                                 clickedHour === x.startTime
                                   ? 'bg-hg-secondary text-white'
-                                  : ''
+                                  : 'bg-white'
                               }`}
                             >
                               <div
-                                className="w-full align-center text-center cursor-pointer"
+                                className="w-full cursor-pointer flex justify-center"
                                 onClick={() => {
                                   selectHour(x);
                                   setClickedHour(x.startTime);
                                 }}
                               >
                                 {clickedHour === x.startTime && (
-                                  <SvgCheck className="absolute text-hg-primary ml-1" />
+                                  <SvgCheck className="text-hg-primary mr-1" />
                                 )}
                                 {x.startTime} h
                               </div>
