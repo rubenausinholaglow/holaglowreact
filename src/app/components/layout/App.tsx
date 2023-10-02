@@ -1,12 +1,17 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { poppins } from 'app/fonts';
-import { useGlobalStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { ModalBackground } from 'designSystem/Modals/Modal';
+import { isEmpty } from 'lodash';
 import Head from 'next/head';
+import { fetchClinics, fetchProducts } from 'utils/fetch';
 
-import { Breakpoint } from './Breakpoint';
+import { Breakpoint, DeviceSize } from './Breakpoint';
 
 export default function Html({ children }: { children: ReactNode }) {
   const {
@@ -16,6 +21,40 @@ export default function Html({ children }: { children: ReactNode }) {
     setIsModalOpen,
     isMainScrollEnabled,
   } = useGlobalStore(state => state);
+
+  const {
+    setDeviceSize,
+    stateProducts,
+    setStateProducts,
+    clinics,
+    setClinics,
+  } = useGlobalPersistedStore(state => state);
+
+  useEffect(() => {
+    setDeviceSize(DeviceSize());
+  }, []);
+
+  useEffect(() => {
+    async function initProducts() {
+      const products = await fetchProducts();
+      setStateProducts(products);
+    }
+
+    if (isEmpty(stateProducts)) {
+      initProducts();
+    }
+  }, [stateProducts]);
+
+  useEffect(() => {
+    async function initClinics() {
+      const clinics = await fetchClinics();
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
+  }, [clinics]);
 
   return (
     <html

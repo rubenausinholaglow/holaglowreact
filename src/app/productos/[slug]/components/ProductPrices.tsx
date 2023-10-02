@@ -76,7 +76,7 @@ export default function ProductPrices({ product }: { product: Product }) {
     { value: 'ojeras', label: 'Ojeras' },
   ];
 
-  const isSessionProduct = product.upgrades.every(upgrade => {
+  const isSessionProduct = product.upgrades?.every(upgrade => {
     const regex = / x /;
     return regex.test(upgrade.product.title);
   });
@@ -299,7 +299,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                   </Button>
                 </Flex>
 
-                {product.upgrades.map((upgrade, index) => {
+                {product.upgrades?.map((upgrade, index) => {
                   return (
                     <Flex
                       key={`session-${index + 1}`}
@@ -388,7 +388,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                 </Flex>
               </Flex>
 
-              {product.upgrades.map((upgrade, index) => {
+              {product.upgrades?.map((upgrade, index) => {
                 return (
                   <Flex
                     key={`session-${index + 1}`}
