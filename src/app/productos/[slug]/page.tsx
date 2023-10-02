@@ -26,28 +26,29 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
+  const [productId, setProductId] = useState('0');
 
   useEffect(() => {
-    console.log(stateProducts.length);
-
     if (!isEmpty(stateProducts)) {
       setProductsAreLoaded(true);
     }
   }, [stateProducts]);
 
   useEffect(() => {
-    const productId = stateProducts.filter(
-      product => product?.extraInformation?.slug === params.slug
-    )[0]?.id;
-
+    const productId =
+      stateProducts.filter(
+        product => product?.extraInformation?.slug === params.slug
+      )[0]?.id ?? '';
+    setProductId(productId);
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);
 
       setProduct(isEmpty(product) ? null : product);
     }
-
-    if (productsAreLoaded) {
-      initProduct(productId);
+    if (productId != '') {
+      if (productsAreLoaded) {
+        initProduct(productId);
+      }
     }
   }, [productsAreLoaded]);
 
@@ -55,7 +56,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     return <></>;
   }
 
-  if (!isEmpty(product)) {
+  if (product != undefined && !isEmpty(product)) {
     return (
       <MainLayout>
         <div className="bg-hg-cream500 rounded-t-3xl pt-8">
@@ -82,7 +83,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         </div>
       </MainLayout>
     );
-  } else {
+  } else if (productId == '') {
     return <PsrpPage slug={params.slug} />;
   }
 }

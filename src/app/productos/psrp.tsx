@@ -22,6 +22,7 @@ import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
+import { filterItems } from '@utils/filterItems';
 
 export default function PsrpPage({ slug }: { slug: string }) {
   const { stateProducts, deviceSize } = useGlobalPersistedStore(state => state);
@@ -52,9 +53,16 @@ export default function PsrpPage({ slug }: { slug: string }) {
               slug[0].toUpperCase() + slug.substr(1).toLowerCase();
             break;
         }
+        var categoryExists = filterItems.some(x => {
+          var exists = x.buttons.some(y => {
+            if (y.value == filterToApply) return true;
+          });
+          return exists;
+        });
         if (
           filterToApply &&
-          productFilters.category.indexOf(filterToApply) == -1
+          productFilters.category.indexOf(filterToApply) == -1 &&
+          categoryExists
         ) {
           productFilters.category.push(filterToApply);
         }
