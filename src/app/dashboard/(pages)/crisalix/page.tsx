@@ -75,7 +75,7 @@ const Page = () => {
               player_id: '${playerId}'
             };
             options['locale'] = 'es';
-            player.render('patient', options);
+            player.render('surgeon', options);
           });
         }
         else {
@@ -87,7 +87,7 @@ const Page = () => {
             player_id: '${playerId}'
           };
           options['locale'] = 'es';
-          player.render('patient', options);
+          player.render('surgeon', options);
         }
       `;
     const toExecute = new Function(script);
@@ -103,15 +103,17 @@ const Page = () => {
       {username && (
         <Container>
           <Flex layout="col-center">
-            <p className="font-bold text-4xl mb-2">
-              {username}, estamos generando tu 3D/Avatar...
-            </p>
-            {almostReady && (
+            {!simulationReady && !loadPlayer && (
+              <p className="font-bold text-4xl mb-2">
+                {username}, estamos generando tu 3D/Avatar...
+              </p>
+            )}
+            {!simulationReady && !loadPlayer && almostReady && (
               <p className="font-bold text-4xl mb-2">
                 {username}, en breves podrás ver tu 3D
               </p>
             )}
-            {simulationReady && (
+            {simulationReady && !loadPlayer && (
               <div>
                 <p className="font-bold text-4xl mb-2">
                   {username}, ¿Listo para ver tu 3D?
@@ -122,7 +124,9 @@ const Page = () => {
                 </Button>
               </div>
             )}
-            {simulationReady && loadPlayer && <div id="player"></div>}
+            {simulationReady && loadPlayer && (
+              <div id="player" className="w-full h-[1000px]"></div>
+            )}
           </Flex>
         </Container>
       )}
