@@ -5,6 +5,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar } from 'icons/Icons';
 import { SvgInjection, SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProductInfo({ product }: { product: Product }) {
   return (
@@ -52,20 +53,22 @@ export default function ProductInfo({ product }: { product: Product }) {
                 <Text>Tiempo de aplicación</Text>
               </div>
             </li>
-            <li className="pb-4 flex">
-              <SvgCalendar
-                height={24}
-                width={24}
-                className="text-hg-secondary mr-3 mt-1"
-              />
-              <div>
-                <Text size="lg" className="font-semibold mb-4">
-                  {(product.durationMin / 30).toString()} -{' '}
-                  {(product.durationMax / 30).toString()} meses
-                </Text>
-                <Text>Duración del tratamiento</Text>
-              </div>
-            </li>
+            {product.durationMin !== 0 && (
+              <li className="pb-4 flex">
+                <SvgCalendar
+                  height={24}
+                  width={24}
+                  className="text-hg-secondary mr-3 mt-1"
+                />
+                <div>
+                  <Text size="lg" className="font-semibold mb-4">
+                    {(product.durationMin / 30).toString()} -{' '}
+                    {(product.durationMax / 30).toString()} meses
+                  </Text>
+                  <Text>Duración del tratamiento</Text>
+                </div>
+              </li>
+            )}
           </ul>
 
           <Button
@@ -74,10 +77,12 @@ export default function ProductInfo({ product }: { product: Product }) {
             bgColor="bg-hg-primary"
             className="hidden md:block md:mt-auto"
           >
-            Reserva cita desde{' '}
-            <span className="inline-block text-xl font-bold underline ml-2">
-              {product.price} €
-            </span>
+            <Link href={`/checkout/clinics`} className="text-inherit">
+              Reserva cita desde{' '}
+              <span className="inline-block text-xl font-bold underline ml-2">
+                {product.price} €
+              </span>
+            </Link>
           </Button>
         </Container>
         <div className="md:w-1/2">

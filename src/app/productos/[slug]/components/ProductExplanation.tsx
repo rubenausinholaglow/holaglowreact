@@ -2,6 +2,7 @@ import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { SvgCheckCircle } from 'icons/IconsDs';
 import Image from 'next/image';
 
 export default function ProductExplanation({ product }: { product: Product }) {
@@ -15,28 +16,26 @@ export default function ProductExplanation({ product }: { product: Product }) {
           con ácido hialurónico
         </Title>
         <Text className="text-hg-black500 mb-6">
-          El ácido hialurónico es una sustancia presente de forma natural en
-          nuestro organismo clave para el buen funcionamiento de nuestra piel.
-          Su función es atraer y retener las moléculas de agua. De esta manera,
-          cuando inyectamos ácido hialurónico en los labios, logramos aumentar
-          el volumen y la hidratación de la zona. Al tratarse de una sustancia
-          natural, el ácido hialurónico es reabsorbible, por tanto, sus efectos
-          son reversibles y disminuyen gradualmente con el paso del tiempo,
-          hasta los doce meses posteriores de su aplicación. El relleno de
-          labios con ácido hialurónico es un tratamiento estético sencillo,
-          rápido y no invasivo, es decir, los efectos secundarios son muy leves
-          y no requiere tiempo de recuperación.
+          {product.extraInformation?.procedimentDescription}
         </Text>
 
         <Text size="xl" className="mb-4 font-semibold">
-          Beneficios del relleno de labios
+          {product.extraInformation?.benefitsInformation.title}
         </Text>
         <Text className="text-hg-black500 mb-6">
-          Dicen que una sonrisa puede cambiar el mundo, por eso, queremos
-          ayudarte a que nunca dejes de presumir de la tuya. El relleno de
-          labios con ácido hialurónico es una solución eficaz y segura para
-          conseguir:
+          {product.extraInformation?.benefitsInformation.description}
         </Text>
+
+        <ul className="flex flex-col gap-4 mb-6">
+          {product.extraInformation?.benefitsInformation.benefitDetails
+            .sort((a, b) => a.order - b.order)
+            .map(benefit => (
+              <li key={benefit.id} className="flex">
+                <SvgCheckCircle className="mt-1 mr-2 shrink-0 text-hg-secondary" />
+                {benefit.title}
+              </li>
+            ))}
+        </ul>
       </Container>
       <div className="md:w-1/2">
         <Container className="md:px-0">
@@ -58,30 +57,24 @@ export default function ProductExplanation({ product }: { product: Product }) {
             />
           </div>
           <ul className="flex flex-col mb-4 w-full">
-            <li className="mb-6 pb-6 border-b border-hg-black flex">
-              <div className="flex border border-hg-secondary rounded-full h-10 w-10 items-center justify-center text-hg-secondary mr-4 shrink-0">
-                1
-              </div>
-              <div>
-                <Text className="font-semibold mb-4">Labio superior</Text>
-                <Text>
-                  Se inyectan hilos de gel de ácido hialurónico con una aguja
-                  muy fina en las capas superficiales del labio.
-                </Text>
-              </div>
-            </li>
-            <li className="flex">
-              <div className="flex border border-hg-secondary rounded-full h-10 w-10 items-center justify-center text-hg-secondary mr-4 shrink-0">
-                2
-              </div>
-              <div>
-                <Text className="font-semibold mb-4">Labio inferior</Text>
-                <Text>
-                  Su aplicación se lleva a cabo de forma sutil y paulatina para
-                  poder valorar el resultado.
-                </Text>
-              </div>
-            </li>
+            {product.extraInformation?.applicationZoneInfo.applicationZoneDetail
+              .sort((a, b) => a.order - b.order)
+              .map((applicationZoneDetail, index) => (
+                <li
+                  key={applicationZoneDetail.id}
+                  className="mb-6 pb-6 border-b border-hg-black flex"
+                >
+                  <div className="flex border border-hg-secondary rounded-full h-10 w-10 items-center justify-center text-hg-secondary mr-4 shrink-0">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <Text className="font-semibold mb-4">
+                      {applicationZoneDetail.title}
+                    </Text>
+                    <Text>{applicationZoneDetail.description}</Text>
+                  </div>
+                </li>
+              ))}
           </ul>
         </Container>
       </div>

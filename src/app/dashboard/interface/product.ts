@@ -9,8 +9,15 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
+  upgrades: Upgrade[];
   category: Category[];
   clinicDetail: ProductClinics[];
+  extraInformation: ExtraInformation;
+  preTreatmentInfo: PreTips;
+  postTreatmentInfo: PostTips;
+  packUnities: [];
+  packMoreInformation: string;
+  relatedProducts: RelatedProduct[];
   flowwwId: number;
   durationMin: number;
   durationMax: number;
@@ -22,8 +29,62 @@ export interface Product {
 }
 
 export interface BeforeAndAfterImages {
+  id?: string;
   urlAfter?: string;
   urlBefore?: string;
+}
+
+export interface ExtraInformation {
+  slug: string;
+  resultDescription: string;
+  procedimentDescription: string;
+  benefitsInformation: {
+    title: string;
+    description: string;
+    benefitDetails: BenefitDetails[];
+  };
+  applicationZoneInfo: {
+    description: string;
+    applicationZoneDetail: ApplicationZoneDetail[];
+  };
+}
+export interface BenefitDetails {
+  title: string;
+  order: number;
+  id: string;
+}
+
+export interface ApplicationZoneDetail {
+  title: string;
+  description: string;
+  order: number;
+  id: string;
+}
+
+export interface PreTips {
+  info: string;
+  icon: string;
+  tips: TipsDetails[];
+}
+export interface PostTips {
+  info: string;
+  icon: string;
+  first24hTips: TipsDetails[];
+  after24hTips: TipsDetails[];
+  possibleComplications: TipsDetails[];
+  postTreatmentTips?: TipsDetails[];
+}
+export interface TipsDetails {
+  details: string;
+  priority: number;
+  icon?: string;
+}
+export interface Upgrade {
+  product: Product;
+}
+
+export interface RelatedProduct {
+  product: Product;
 }
 
 export const emptyProduct: Product = {} as Product;

@@ -10,7 +10,6 @@ export async function fetchProducts() {
 
   try {
     const fetchedProducts = await ProductService.getAllProducts();
-    console.log(fetchedProducts);
     const filteredProducts = fetchedProducts.filter(
       (product: Product) =>
         allowedProductType.includes(product.type) && product.price > 0
@@ -26,7 +25,19 @@ export async function fetchProducts() {
     Bugsnag.notify('Error fetching products:', error);
   }
 
-  return [];
+  return [] as Product[];
+}
+
+export async function fetchProduct(id: string) {
+  try {
+    const product: Product = await ProductService.getProduct(id);
+
+    return product;
+  } catch (error: any) {
+    Bugsnag.notify('Error fetching product:', error);
+  }
+
+  return {} as Product;
 }
 
 export async function fetchClinics() {
@@ -38,5 +49,5 @@ export async function fetchClinics() {
     Bugsnag.notify('Error fetching clinics:', error);
   }
 
-  return [];
+  return [] as Clinic[];
 }

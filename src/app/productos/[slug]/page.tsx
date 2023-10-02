@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import Clinics from 'app/components/common/Clinics';
 import Professionals from 'app/components/common/Professionals';
+import FloatingBottomBar from 'app/components/home/FloatingBottomBar';
 import Testimonials from 'app/components/home/Testimonials';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { isEmpty } from 'lodash';
+import { fetchProduct } from 'utils/fetch';
 
 import PsrpPage from '../psrp';
 import ProductCrosselling from './components/ProductCrosselling';
@@ -23,21 +25,20 @@ import ProductSuggestions from './components/ProductSuggestions';
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
-  const [slug, setSlug] = useState(params.slug);
 
   useEffect(() => {
-    console.log(stateProducts);
-  }, [stateProducts]);
+    const productId = stateProducts.filter(
+      product => product?.extraInformation?.slug === params.slug
+    )[0].id;
 
-  useEffect(() => {
-    setSlug(params.slug);
+    async function initProduct(productId: string) {
+      const product = await fetchProduct(productId);
 
-    setProduct(
-      stateProducts.filter(
-        product => product.flowwwId.toString() === params.slug
-      )[0]
-    );
-  }, [slug, stateProducts]);
+      setProduct(isEmpty(product) ? null : product);
+    }
+
+    initProduct(productId);
+  }, []);
 
   if (!isEmpty(product)) {
     return (
@@ -56,7 +57,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
           <ProductSuggestions product={product} />
         </div>
-        <ProductFaqs />
+        <ProductFaqs product={product} />
         <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
           <ProductCrosselling product={product} />
         </div>
@@ -67,6 +68,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       </MainLayout>
     );
   } else {
-    return <PsrpPage slug={slug}></PsrpPage>;
+    return <PsrpPage slug={params.slug}></PsrpPage>;
   }
 }

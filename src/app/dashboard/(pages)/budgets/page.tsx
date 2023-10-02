@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Filters } from '@components/Filters';
-import { emptyProduct, Product } from '@interface/product';
+import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -19,8 +19,9 @@ import ProductList from './treatments/ProductList';
 
 export default function Page() {
   const cart = useCartStore(state => state.cart);
-  const productHighlighted = useCartStore(state => state.productHighlighted);
-  const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
+  const { productHighlighted, setHighlightProduct } = useCartStore(
+    state => state
+  );
 
   const [showFilters, setShowFilters] = useState(true);
 
@@ -48,7 +49,7 @@ export default function Page() {
 
     handleFilterByType(3);
     setShowPacks(!showPacks);
-    setHighlightProduct(emptyProduct);
+    setHighlightProduct(null);
   }, []);
 
   useEffect(() => {
