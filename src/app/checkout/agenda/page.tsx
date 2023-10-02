@@ -16,6 +16,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -45,6 +46,7 @@ export default function Agenda() {
   const localSelectedDay = dayjs(selectedDay);
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -89,6 +91,7 @@ export default function Agenda() {
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
       setSelectedTreatments([]);
+
       setSelectedTreatmentsIds(
         selectedTreatments!.map(x => x.flowwwId).join(', ')
       );
@@ -110,6 +113,7 @@ export default function Agenda() {
   };
 
   const selectDate = (x: Date) => {
+    setLoading(true);
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
@@ -120,26 +124,30 @@ export default function Agenda() {
       day.format(format),
       selectedTreatmentsIds,
       selectedClinic!.flowwwId
-    ).then(data => {
-      const hours = Array<Slot>();
-      const morning = Array<Slot>();
-      const afternoon = Array<Slot>();
-      data.forEach(x => {
-        const hour = x.startTime.split(':')[0];
-        const minutes = x.startTime.split(':')[1];
-        if (
-          (minutes == '00' || minutes == '30') &&
-          !(hour == '10' && minutes == '00')
-        ) {
-          hours.push(x);
-          if (parseInt(hour) < 16) {
-            morning.push(x);
-          } else afternoon.push(x);
-        }
+    )
+      .then(data => {
+        const hours = Array<Slot>();
+        const morning = Array<Slot>();
+        const afternoon = Array<Slot>();
+        data.forEach(x => {
+          const hour = x.startTime.split(':')[0];
+          const minutes = x.startTime.split(':')[1];
+          if (
+            (minutes == '00' || minutes == '30') &&
+            !(hour == '10' && minutes == '00')
+          ) {
+            hours.push(x);
+            if (parseInt(hour) < 16) {
+              morning.push(x);
+            } else afternoon.push(x);
+          }
+        });
+        setMorningHours(morning);
+        setAfternoonHours(afternoon);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-      setMorningHours(morning);
-      setAfternoonHours(afternoon);
-    });
   };
 
   const filterDate = (date: Date) => {
@@ -153,7 +161,10 @@ export default function Agenda() {
   return (
     <MainLayout isCheckout>
       <Container className="px-0">
-        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
+        <Flex
+          layout="col-left"
+          className="mt-9 md:mt-16 md:flex-row items-stretch"
+        >
           <div className="w-full md:w-1/2">
             <Container className="pb-4">
               <Title size="xl" className="font-semibold mb-6">
@@ -239,7 +250,7 @@ export default function Agenda() {
                 layout="col-left"
                 className="items-start w-full mb-6 md:mb-0"
               >
-                {afternoonHours.length > 0 || morningHours.length > 0 ? (
+                {(afternoonHours.length > 0 || morningHours.length > 0) && (
                   <>
                     <Text
                       size="sm"
@@ -321,46 +332,50 @@ export default function Agenda() {
                       </Flex>
                     )}
                   </>
-                ) : (
-                  <Flex className="w-full flex-col mb-16 md:mb-7">
-                    <SvgSadIcon className="mb-5 text-hg-secondary" />
-                    <Title size="xl" className="font-semibold">
-                      ¡Lo sentimos!
-                    </Title>
-                    <Text size="sm" className="font-semibold mb-4">
-                      No hay citas para el dia seleccionado
-                    </Text>
-                    <Text size="xs">
-                      Selecciona otro día para ver la disponibilidad
-                    </Text>
-                  </Flex>
                 )}
               </Flex>
             </Container>
-            <Flex
-              layout="col-left"
-              className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
-            >
-              <Text size="sm" className="font-semibold">
-                ¿La cita que necesitas no está disponible?
-              </Text>
-              <Flex layout="row-left" className="gap-4 items-center w-full">
-                <Button size="xl" type="tertiary">
-                  <SvgPhone className="mr-2" />
-                  {selectedClinic && (
-                    <div>
-                      <Text size="xs" className="whitespace-nowrap">
-                        Llamanos al
-                      </Text>
-                      <Text className="whitespace-nowrap">
-                        {selectedClinic.phone}
-                      </Text>
-                    </div>
-                  )}
-                </Button>
-                <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+
+            <div className="mt-auto">
+              {isEmpty(afternoonHours) && isEmpty(morningHours) && !loading && (
+                <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+                  <SvgSadIcon className="mb-5 text-hg-secondary" />
+                  <Title size="xl" className="font-semibold">
+                    ¡Lo sentimos!
+                  </Title>
+                  <Text size="sm" className="font-semibold mb-4 text-center">
+                    No hay citas para el dia seleccionado
+                  </Text>
+                  <Text size="xs" className="text-center">
+                    Selecciona otro día para ver la disponibilidad
+                  </Text>
+                </Flex>
+              )}
+              <Flex
+                layout="col-left"
+                className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
+              >
+                <Text size="sm" className="font-semibold">
+                  ¿La cita que necesitas no está disponible?
+                </Text>
+                <Flex layout="row-left" className="gap-4 items-center w-full">
+                  <Button size="xl" type="tertiary">
+                    <SvgPhone className="mr-2" />
+                    {selectedClinic && (
+                      <div>
+                        <Text size="xs" className="whitespace-nowrap">
+                          Llamanos al
+                        </Text>
+                        <Text className="whitespace-nowrap">
+                          {selectedClinic.phone}
+                        </Text>
+                      </div>
+                    )}
+                  </Button>
+                  <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+                </Flex>
               </Flex>
-            </Flex>
+            </div>
           </div>
         </Flex>
       </Container>
