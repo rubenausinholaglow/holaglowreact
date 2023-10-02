@@ -44,35 +44,37 @@ export default function ClinicsCheckout() {
     <MainLayout isCheckout>
       <div className="relative mt-9 md:mt-16">
         <Container className="md:pr-32">
-          {selectedTreatments?.map(product => (
-            <Flex
-              layout="col-left"
-              className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
-              key={product.id}
-            >
-              <Flex layout="row-between" className="items-start w-full">
-                <div>
-                  <Text className="font-semibold text-left mb-2">
-                    {product.title}
-                  </Text>
-                  <Text className="text-left" size="xs">
-                    {product.description}
-                  </Text>
-                </div>
-                <SvgRadioChecked
-                  className="mt-[2px] shrink-0"
-                  height={24}
-                  width={24}
-                />
-              </Flex>
-              <Text
-                size="xl"
-                className="text-hg-secondary font-semibold w-full text-right"
+          {selectedTreatments &&
+            Array.isArray(selectedTreatments) &&
+            selectedTreatments.map(product => (
+              <Flex
+                layout="col-left"
+                className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
+                key={product.id}
               >
-                {product.price}€
-              </Text>
-            </Flex>
-          ))}
+                <Flex layout="row-between" className="items-start w-full">
+                  <div>
+                    <Text className="font-semibold text-left mb-2">
+                      {product.title}
+                    </Text>
+                    <Text className="text-left" size="xs">
+                      {product.description}
+                    </Text>
+                  </div>
+                  <SvgRadioChecked
+                    className="mt-[2px] shrink-0"
+                    height={24}
+                    width={24}
+                  />
+                </Flex>
+                <Text
+                  size="xl"
+                  className="text-hg-secondary font-semibold w-full text-right"
+                >
+                  {product.price}€
+                </Text>
+              </Flex>
+            ))}
 
           <Title className="font-semibold mb-6">Selecciona tu clínica</Title>
 
