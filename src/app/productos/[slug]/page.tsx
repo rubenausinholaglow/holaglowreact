@@ -35,20 +35,18 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }, [stateProducts]);
 
   useEffect(() => {
-    const productId =
-      stateProducts.filter(
-        product => product?.extraInformation?.slug === params.slug
-      )[0]?.id ?? '';
+    const product = stateProducts.filter(
+      product => product?.extraInformation?.slug === params.slug
+    )[0];
+    const productId = product.id ?? '';
     setProductId(productId);
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);
-
       setProduct(isEmpty(product) ? null : product);
     }
-    if (productId != '') {
-      if (productsAreLoaded) {
-        initProduct(productId);
-      }
+    if (productId != '' && productsAreLoaded) {
+      initProduct(productId);
+      setProduct(isEmpty(product) ? null : product);
     }
   }, [productsAreLoaded]);
 

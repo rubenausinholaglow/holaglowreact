@@ -26,13 +26,13 @@ export default function ProductSuggestions({ product }: { product: Product }) {
     return 3;
   };
 
-  const postTreatmentTips = product.postTreatmentInfo.first24hTips.concat(
+  const postTreatmentTips = product.postTreatmentInfo?.first24hTips?.concat(
     product.postTreatmentInfo.after24hTips
   );
 
   if (
     isEmpty(product.preTreatmentInfo?.tips) &&
-    isEmpty(product.postTreatmentInfo.postTreatmentTips)
+    isEmpty(product.postTreatmentInfo?.postTreatmentTips)
   ) {
     return <></>;
   }
