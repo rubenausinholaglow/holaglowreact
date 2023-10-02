@@ -40,10 +40,6 @@ export default function ClinicsCheckout() {
     router.push('/checkout/agenda');
   };
 
-  console.log(selectedTreatments);
-
-  //if (isEmpty(selectedTreatments)) return <></>;
-
   return (
     <MainLayout isCheckout>
       <div className="relative mt-9 md:mt-16">

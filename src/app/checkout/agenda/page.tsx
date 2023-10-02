@@ -4,7 +4,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
+import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -15,7 +17,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgHour, SvgLocation } from 'icons/Icons';
-import { SvgCheck, SvgPhone } from 'icons/IconsDs';
+import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -82,10 +84,22 @@ export default function Agenda() {
   }
 
   useEffect(() => {
+    fetchProduct();
     setSelectedTreatmentsIds('674');
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
   }, []);
+
+  const fetchProduct = async () => {
+    const product = await ProductService.getProduct(
+      '336c88de-c8b9-4379-9d6c-08db48dc8444'
+    );
+
+    console.log(product);
+    const productsArray: Product[] = [product];
+    console.log(productsArray);
+    setSelectedTreatments(productsArray);
+  };
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
@@ -155,6 +169,8 @@ export default function Agenda() {
     router.back();
   };
 
+  console.log(selectedTreatments);
+
   return (
     <MainLayout isCheckout>
       <div className="relative mt-9 md:mt-16">
@@ -167,33 +183,29 @@ export default function Agenda() {
             className="block gap-16 items-start md:flex"
           >
             <div className="md:w-1/2">
-              <Text size="sm" className="w-full text-left to-hg-black500 mb-4">
-                Agenda cita para{' '}
-                <span className="font-semibold">
-                  {selectedTreatments &&
-                    Array.isArray(selectedTreatments) &&
-                    selectedTreatments.map(product => (
-                      <Flex
-                        layout="col-left"
-                        className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
-                        key={product.id}
-                      >
-                        {product.description}
-                      </Flex>
-                    ))}
-                </span>
-                , en tu clínica preferida
-              </Text>
+              {selectedTreatments &&
+                Array.isArray(selectedTreatments) &&
+                selectedTreatments.map(product => (
+                  <div key={product.id}>
+                    <Text
+                      size="sm"
+                      className="w-full text-left to-hg-black500 mb-4"
+                    >
+                      Agenda cita para{' '}
+                      <span className="font-semibold w-full">
+                        {product.title}
+                      </span>
+                      , en tu clínica preferida
+                    </Text>
+                  </div>
+                ))}
 
               {selectedClinic && (
                 <Flex className="mb-4">
                   <span>
                     <SvgLocation />
                   </span>
-                  <Text
-                    size="xs"
-                    className="font-semibold w-full text-left pl-2"
-                  >
+                  <Text size="xs" className="w-full text-left pl-2">
                     {selectedClinic.address}, {selectedClinic.city}
                   </Text>
                   <Link href="/checkout/clinics" className="text-xs">
@@ -206,27 +218,24 @@ export default function Agenda() {
                 {selectedTreatments &&
                   Array.isArray(selectedTreatments) &&
                   selectedTreatments.map(product => (
-                    <Flex
-                      layout="col-left"
-                      className="bg-hg-tertiary100 p-3 gap-3 rounded-xl md:w-1/2 mb-12"
-                      key={product.id}
-                    >
+                    <Flex key={product.id}>
                       <Flex layout="row-between" className="items-start w-full">
                         <div>
-                          <Text className="font-semibold text-left mb-2">
-                            {product.applicationTimeMinutes} test
+                          <Text size="xs" className="-full text-left pl-2">
+                            30 minutos + 30 minutos (Crema anestéstica)
                           </Text>
                         </div>
                       </Flex>
                     </Flex>
                   ))}
               </Flex>
-              <Flex className="w-full" id="datepickerWrapper">
+              <Flex className="w-full mb-6" id="datepickerWrapper">
                 <DatePicker
                   inline
                   onChange={selectDate}
                   filterDate={filterDate}
                   onMonthChange={onMonthChange}
+                  useWeekdaysShort
                   calendarStartDay={1}
                   locale="es"
                   className="w-full"
@@ -234,86 +243,94 @@ export default function Agenda() {
               </Flex>
             </div>
             <div className="md:w-1/2">
-              <Text size="sm" className="w-full text-left to-hg-black500 mb-12">
-                Selecciona hora para el {dateFromatted.toString()}
-              </Text>
-              <Text size="sm" className="font-semibold mb-4">
-                Horario de mañana
-              </Text>
-              <Flex className="mb-12">
-                {morningHours.length > 0 && (
-                  <Flex>
-                    {morningHours.map(x => {
-                      return (
-                        <Flex key={x.startTime}>
-                          <Flex
-                            onClick={() => {
-                              selectHour(x);
-                              setClickedHour(x.startTime);
-                            }}
-                            id="hourDate"
-                            className={
-                              clickedHour === x.startTime ? 'selected' : ''
-                            }
-                          >
-                            {clickedHour === x.startTime && (
-                              <SvgCheck
-                                style={{
-                                  fill: '#EBFF0D',
-                                  width: '10.67px',
-                                  height: '8px',
-                                  top: '4px',
-                                  left: '2.67px',
-                                }}
-                              />
-                            )}
-                            {x.startTime} h
-                          </Flex>
-                        </Flex>
-                      );
-                    })}
-                  </Flex>
-                )}
-              </Flex>
-              <Text size="sm" className="font-semibold mb-4">
-                Horario de tarde
-              </Text>
-              {afternoonHours.length > 0 && (
-                <Flex className="mb-8">
-                  {afternoonHours.map(x => {
-                    return (
-                      <Flex key={x.startTime}>
-                        <Flex
-                          onClick={() => {
-                            selectHour(x);
-                            setClickedHour(x.startTime);
-                          }}
-                          id="hourDate"
-                          className={
-                            clickedHour === x.startTime ? 'selected' : ''
-                          }
-                        >
-                          {clickedHour === x.startTime && (
-                            <SvgCheck
-                              style={{
-                                fill: '#EBFF0D',
-                                width: '10.67px',
-                                height: '8px',
-                                top: '4px',
-                                left: '2.67px',
+              {afternoonHours.length > 0 || morningHours.length > 0 ? (
+                <>
+                  <Text
+                    size="sm"
+                    className="w-full text-left to-hg-black500 mb-6"
+                  >
+                    Selecciona hora para el{' '}
+                    <span className="font-semibold">
+                      {dateFromatted.toString()}
+                    </span>
+                  </Text>
+                  {morningHours.length > 0 && (
+                    <Text size="sm" className="font-semibold mb-4">
+                      Horario de mañana
+                    </Text>
+                  )}
+                  {morningHours.length > 0 && (
+                    <Flex className="flex-wrap mb-6">
+                      {morningHours.map(x => {
+                        return (
+                          <Flex key={x.startTime}>
+                            <Flex
+                              onClick={() => {
+                                selectHour(x);
+                                setClickedHour(x.startTime);
                               }}
-                            />
-                          )}
-                          {x.startTime} h
-                        </Flex>
-                      </Flex>
-                    );
-                  })}
+                              id="hourDate"
+                              className={
+                                clickedHour === x.startTime ? 'selected' : ''
+                              }
+                            >
+                              {clickedHour === x.startTime && (
+                                <SvgCheck id="CheckDate" />
+                              )}
+                              {x.startTime} h
+                            </Flex>
+                          </Flex>
+                        );
+                      })}
+                    </Flex>
+                  )}
+                  {afternoonHours.length > 0 && (
+                    <Text size="sm" className="font-semibold mb-4">
+                      Horario de tarde
+                    </Text>
+                  )}
+                  {afternoonHours.length > 0 && (
+                    <Flex className="flex-wrap mb-6">
+                      {afternoonHours.map(x => {
+                        return (
+                          <Flex key={x.startTime}>
+                            <Flex
+                              onClick={() => {
+                                selectHour(x);
+                                setClickedHour(x.startTime);
+                              }}
+                              id="hourDate"
+                              className={
+                                clickedHour === x.startTime ? 'selected' : ''
+                              }
+                            >
+                              {clickedHour === x.startTime && <SvgCheck />}
+                              {x.startTime} h
+                            </Flex>
+                          </Flex>
+                        );
+                      })}
+                    </Flex>
+                  )}
+                </>
+              ) : (
+                <Flex className="w-full flex-col mb-16 md:mb-7">
+                  <SvgSadIcon className="mb-5 text-hg-secondary" />
+                  <Title size="xl" className="font-semibold">
+                    ¡Lo sentimos!
+                  </Title>
+                  <Text size="sm" className="font-semibold mb-4">
+                    No hay citas para el dia seleccionado
+                  </Text>
+                  <Text size="xs">
+                    Selecciona otro día para ver la disponibilidad
+                  </Text>
                 </Flex>
               )}
+
               <Flex
                 layout="col-left"
-                className="bg-hg-primary300 p-3 gap-3 md:relative w-full"
+                className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
               >
                 <Text size="sm" className="font-semibold">
                   ¿La cita que necesitas no está disponible?

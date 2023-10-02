@@ -49,6 +49,7 @@ a {
 }
 
 #datepickerWrapper .react-datepicker {
+  font-family: 'Poppins', sans-serif;
   padding: 12px;
   width: 100%;
   background-color: theme('colors.hg.secondary100');
@@ -56,11 +57,14 @@ a {
 }
 
 #datepickerWrapper .react-datepicker__month-container {
+  text-transform: capitalize;
   width: 100%;
 }
 
 #datepickerWrapper .react-datepicker__current-month {
+  text-transform: capitalize;
   font-size: 18px;
+  margin-bottom: 6px;
 }
 
 #datepickerWrapper .react-datepicker__header {
@@ -72,12 +76,7 @@ a {
 #datepickerWrapper .react-datepicker__day-names {
   display: flex;
   justify-content: space-around;
-}
-
-/* Day Week */
-#datepickerWrapper .react-datepicker__day-name {
-  /*   width: auto;
-  margin: 0; */
+  margin-bottom: 6px;
 }
 
 /* Box Month */
@@ -89,15 +88,25 @@ a {
 
 /* Week row */
 #datepickerWrapper .react-datepicker__week {
+  font-family: 'Poppins', sans-serif;
   display: flex;
   justify-content: space-around;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: center;
 }
 
-/* All days*/
-#datepickerWrapper .react-datepicker__day,
-.react-datepicker__time-name {
-  /*   width: auto;
-  margin: 0; */
+#datepickerWrapper .react-datepicker__navigation {
+  margin-top: 18px;
+}
+
+#datepickerWrapper .react-datepicker__navigation-icon--next::before {
+  border-color: #101828;
+}
+#datepickerWrapper .react-datepicker__navigation-icon--previous::before {
+  border-color: #101828;
 }
 
 /* Today */
@@ -107,7 +116,10 @@ a {
 }
 
 /* Day Selected */
-#datepickerWrapper .react-datepicker__day--keyboard-selected {
+#datepickerWrapper .react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
   border-radius: 50%;
   background-color: #a96fe7;
   color: #ffffff;
@@ -125,10 +137,17 @@ a {
   text-align: center;
   font-weight: 400;
   margin-right: 12px;
+  margin-bottom: 12px;
   cursor: pointer;
+  justify-content: center;
 }
 
 .selected {
   background-color: #a96fe7;
   color: white;
+}
+
+#CheckDate {
+  fill: #ebff0d;
+  margin-left: 6px;
 }
