@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Product } from '@interface/product';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgWhatsapp } from 'icons/IconsDs';
+import Link from 'next/link';
 
-export default function FloatingBottomBar() {
+export default function FloatingBottomBar({ product }: { product?: Product }) {
   const scrollPos = useRef(0);
 
   const [showBottomBar, setShowBottomBar] = useState(false);
@@ -39,16 +41,26 @@ export default function FloatingBottomBar() {
             type="tertiary"
             bgColor="bg-hg-primary"
             className="grow mr-4 md:hidden pointer-events-auto"
-            customStyles="border-none"
           >
-            Reservar cita
+            <Link href="#prices" className="text-inherit">
+              {product ? (
+                <span>
+                  Reservar cita desde{' '}
+                  <span className="underline text-xl font-semibold">
+                    {product.price}
+                  </span>
+                </span>
+              ) : (
+                'Reservar cita'
+              )}
+            </Link>
           </Button>
           <Button
-            type="tertiary"
+            type="primary"
             size="xl"
             className="pointer-events-auto"
             bgColor="bg-hg-black"
-            customStyles="p-0 w-[64px]"
+            customStyles="h-[64px] p-0 w-[64px]"
           >
             <SvgWhatsapp className="text-hg-primary" />
           </Button>

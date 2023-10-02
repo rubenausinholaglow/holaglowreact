@@ -1,9 +1,10 @@
+import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
-export default function ProductFaqs() {
+export default function ProductFaqs({ product }: { product: Product }) {
   return (
     <Container className="py-12">
       <Title size="2xl" className="font-bold mb-8 md:mb-12">
