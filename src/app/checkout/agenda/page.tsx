@@ -175,7 +175,10 @@ export default function Agenda() {
   return (
     <MainLayout isCheckout>
       <Container className="px-0">
-        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
+        <Flex
+          layout="col-left"
+          className="mt-9 md:mt-16 md:flex-row items-stretch"
+        >
           <div className="w-full md:w-1/2">
             <Container className="pb-4">
               <Title size="xl" className="font-semibold mb-6">
