@@ -68,10 +68,27 @@ export function Accordion({
       collapsible
       defaultValue={isOpen ? 'item' : ''}
     >
-      <AccordionPrimitive.Item value="item" className="w-full">
-        {children}
-      </AccordionPrimitive.Item>
+      {children}
     </AccordionPrimitive.Root>
+  );
+}
+
+export function AccordionItem({
+  className = '',
+  children,
+  value,
+}: {
+  className?: string;
+  children: ReactNode;
+  value: string;
+}) {
+  return (
+    <AccordionPrimitive.Item
+      className={`w-full group ${className}`}
+      value={value}
+    >
+      {children}
+    </AccordionPrimitive.Item>
   );
 }
 

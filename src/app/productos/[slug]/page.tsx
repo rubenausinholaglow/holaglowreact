@@ -11,6 +11,7 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { isEmpty } from 'lodash';
 import { fetchProduct } from 'utils/fetch';
 
+import PsrpPage from '../psrp';
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
 import ProductFaqs from './components/ProductFaqs';
@@ -26,13 +27,14 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    /*
     const productId = stateProducts.filter(
       product => product?.extraInformation?.slug === params.slug
     )[0].id;
 
-    */
+    /*
+    //temp session product id
     const productId = '7f2e85f1-ff32-4f2b-8d48-4117e9e5b4c7';
+    */
 
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);
@@ -43,40 +45,34 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     initProduct(productId);
   }, []);
 
-  if (isEmpty(product)) {
-    return <></>;
+  if (!isEmpty(product)) {
+    return (
+      <MainLayout>
+        <div className="bg-hg-cream500 rounded-t-3xl pt-8">
+          <ProductHeader product={product} />
+          <ProductInfo product={product} />
+        </div>
+        <ProductResults product={product} />
+        <ProductPrices product={product} />
+        <ProductExplanation product={product} />
+        <ProductPaymentOptions totalPrice={product.price} />
+        <div className="bg-hg-black50 md:mt-16">
+          <Testimonials />
+        </div>
+        <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
+          <ProductSuggestions product={product} />
+        </div>
+        <ProductFaqs product={product} />
+        <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
+          <ProductCrosselling product={product} />
+        </div>
+        <Clinics />
+        <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
+          <Professionals />
+        </div>
+      </MainLayout>
+    );
+  } else {
+    return <PsrpPage slug={params.slug}></PsrpPage>;
   }
-
-  const relatedProducts = product.relatedProducts.map(obj => ({
-    ...obj.product,
-    visibility: true,
-  }));
-
-  return (
-    <MainLayout>
-      <div className="bg-hg-cream500 rounded-t-3xl pt-8">
-        <ProductHeader product={product} />
-        <ProductInfo product={product} />
-      </div>
-      <ProductResults product={product} />
-      <ProductPrices product={product} />
-      <ProductExplanation product={product} />
-      <ProductPaymentOptions totalPrice={product.price} />
-      <div className="bg-hg-black50 md:mt-16">
-        <Testimonials />
-      </div>
-      <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
-        <ProductSuggestions product={product} />
-      </div>
-      <ProductFaqs product={product} />
-      <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
-        <ProductCrosselling products={relatedProducts} />
-      </div>
-      <Clinics />
-      <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
-        <Professionals />
-      </div>
-      <FloatingBottomBar product={product} />
-    </MainLayout>
-  );
 }

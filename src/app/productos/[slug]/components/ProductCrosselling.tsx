@@ -4,11 +4,12 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 
-export default function ProductCrosselling({
-  products,
-}: {
-  products: Product[];
-}) {
+export default function ProductCrosselling({ product }: { product: Product }) {
+  const relatedProducts = product?.relatedProducts.map(obj => ({
+    ...obj.product,
+    visibility: true,
+  }));
+
   return (
     <>
       <Container>
@@ -19,7 +20,7 @@ export default function ProductCrosselling({
           </Underlined>
         </Title>
       </Container>
-      <FullWidthCarousel type="products" items={products} />
+      <FullWidthCarousel type="products" items={relatedProducts} />
     </>
   );
 }
