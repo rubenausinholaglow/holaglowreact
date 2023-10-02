@@ -24,12 +24,21 @@ import ProductSuggestions from './components/ProductSuggestions';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
+  const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    console.log(stateProducts.length);
+
+    if (!isEmpty(stateProducts)) {
+      setProductsAreLoaded(true);
+    }
+  }, [stateProducts]);
 
   useEffect(() => {
     const productId = stateProducts.filter(
       product => product?.extraInformation?.slug === params.slug
-    )[0].id;
+    )[0]?.id;
 
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);
@@ -37,8 +46,14 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       setProduct(isEmpty(product) ? null : product);
     }
 
-    initProduct(productId);
-  }, []);
+    if (productsAreLoaded) {
+      initProduct(productId);
+    }
+  }, [productsAreLoaded]);
+
+  if (!productsAreLoaded) {
+    return <></>;
+  }
 
   if (!isEmpty(product)) {
     return (
@@ -68,6 +83,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       </MainLayout>
     );
   } else {
-    return <PsrpPage slug={params.slug}></PsrpPage>;
+    return <PsrpPage slug={params.slug} />;
   }
 }
