@@ -48,9 +48,7 @@ const Page = () => {
     });
   };
   useEffect(() => {
-    setTimeout(() => {
-      checksimulationReady();
-    }, 15 * 1000);
+    checksimulationReady();
   }, [playerId, playerToken]);
 
   useEffect(() => {
