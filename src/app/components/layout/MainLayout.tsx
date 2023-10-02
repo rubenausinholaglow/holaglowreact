@@ -34,45 +34,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const {
-    deviceSize,
-    setDeviceSize,
-    stateProducts,
-    setStateProducts,
-    clinics,
-    setClinics,
-  } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     setISHydrated(true);
-    setDeviceSize(DeviceSize());
   }, []);
-
-  useEffect(() => {
-    async function initProducts() {
-      const products = await fetchProducts();
-      setStateProducts(products);
-    }
-
-    if (isEmpty(stateProducts)) {
-      initProducts();
-    }
-  }, [stateProducts]);
-
-  useEffect(() => {
-    async function initClinics() {
-      const clinics = await fetchClinics();
-      setClinics(clinics);
-    }
-
-    if (isEmpty(clinics)) {
-      initClinics();
-    }
-  }, [clinics]);
-
-  if (!isHydrated) {
-    return <></>;
-  }
 
   const mainLayoutTopPadding = () => {
     return `${
@@ -81,6 +47,10 @@ export default function MainLayout({
         : HEADER_HEIGHT_DESKTOP
     }px`;
   };
+
+  if (!isHydrated) {
+    return <></>;
+  }
 
   if (isDashboard) {
     return (
