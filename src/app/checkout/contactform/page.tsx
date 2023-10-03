@@ -79,7 +79,7 @@ export default function ConctactForm() {
 
   return (
     <MainLayout isCheckout>
-      <Container>
+      <Container className="p-0 md:px-4">
         <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
           <div className="w-full md:w-1/2 bg-hg-black50 p-8 rounded-xl ">
             <Flex layout="col-left" className="gap-6">

@@ -8,6 +8,7 @@ import { poppins } from 'app/fonts';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 
 import TextInputField from './components/TextInputField';
 import { RegistrationFormProps } from './utils/props';
@@ -43,6 +44,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         }
       />
       <PhoneInput
+        inputClass={`${poppins.className}`}
         inputStyle={{
           borderColor: 'white',
           width: '100%',
@@ -50,7 +52,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           paddingLeft: '65px',
           fontSize: '12px',
           lineHeight: '16px',
-          fontFamily: 'poppins',
           fontStyle: 'normal',
           fontWeight: '400',
         }}
@@ -95,8 +96,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               onChange={event =>
                 handleFieldChange(event, 'termsAndConditionsAccepted')
               }
-              className="mr-2 w-4 h-4 appearance-none border border-#101828 rounded focus:outline-none focus:bg-slate-600"
+              className="hidden"
             />
+            {formData.termsAndConditionsAccepted ? (
+              <SvgCheckSquareActive className="mr-2" />
+            ) : (
+              <SvgCheckSquare className="mr-2" />
+            )}
             <span className="text-sm text-gray-700">
               Acepto términos y condiciones
             </span>
@@ -127,8 +133,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </label>
         </Flex>
       </Flex>
-      <Flex layout="col-left">
-        <Button onClick={handleContinue} type="secondary">
+      <Flex layout="col-left" className="w-full">
+        <Button
+          onClick={handleContinue}
+          type="primary"
+          size="xl"
+          className="w-full"
+        >
           {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
         </Button>
         {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
