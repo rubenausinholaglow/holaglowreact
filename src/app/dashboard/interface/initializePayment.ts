@@ -4,6 +4,7 @@ export interface InitializePayment {
   userId: string;
   installments: number;
   amount: number;
+  paymentBank: number;
 }
 
 export interface CreatePayment {

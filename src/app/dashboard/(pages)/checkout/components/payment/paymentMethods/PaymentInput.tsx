@@ -147,17 +147,16 @@ export default function PaymentInput(props: Props) {
       ['id']: GuidUser,
     }));
     UserService.updateUser(formData).then(async x => {
-      console.log('DONE');
       setShowPepperModal(false);
 
       const data: InitializePayment = {
         amount: Number(inputValue),
         installments: 1,
         userId: GuidUser,
+        paymentBank: 2,
       };
 
       await FinanceService.initializePayment(data).then(x => {
-        debugger;
         window.open(x.url, '_blank');
       });
     });
