@@ -6,13 +6,16 @@ import { PaymentBank, PaymentMethod } from '@interface/payment';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 import { v4 as createUniqueId } from 'uuid';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 import PepperWidget from './PepperWidget';
+import HolaglowModal from 'app/components/common/Modal';
+import { createPortal } from 'react-dom';
+import TextInputField from '@components/TextInputField';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -32,7 +35,16 @@ export default function PaymentInput(props: Props) {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
+  const [showPepperModal, setShowPepperModal] = useState(false);
 
+  const [formData, setFormData] = useState<any>({
+    dni: '',
+    address: '',
+    city: '',
+    province: '',
+    postalCode: '',
+    birthday: '',
+  });
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
@@ -96,10 +108,11 @@ export default function PaymentInput(props: Props) {
   };
 
   const openPepper = () => {
-    window.open(
+    /*window.open(
       'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
       '_blank'
-    );
+    );*/
+    setShowPepperModal(true);
   };
   async function addPayment(number: any) {
     setIsLoading(true);
@@ -126,9 +139,95 @@ export default function PaymentInput(props: Props) {
     await addPayment(inputValue);
   };
 
+  const initializePepper = async () => {
+    console.log('initialize');
+  };
+
+  const handleFormFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    const value =
+      event.target.type === 'checkbox'
+        ? event.target.checked
+        : event.target.value;
+    setFormData((prevFormData: any) => ({
+      ...prevFormData,
+      [field]: value,
+    }));
+  };
   const renderFinance = () => {
     return (
       <>
+        {showPepperModal &&
+          createPortal(
+            <HolaglowModal
+              onClose={() => setShowPepperModal(false)}
+              children={
+                <Container>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div>Tipo de producto: Tratamiento facial</div>
+                    <div>Importe: {inputValue}</div>
+                    <TextInputField
+                      label="Fecha nacimiento"
+                      placeholder="Fecha nacimiento"
+                      value={formData.birthday}
+                      onChange={event =>
+                        handleFormFieldChange(event, 'birthday')
+                      }
+                    />
+                    <TextInputField
+                      label="DNI"
+                      placeholder="DNI"
+                      value={formData.dni}
+                      onChange={event => handleFormFieldChange(event, 'dni')}
+                    />
+                    <TextInputField
+                      label="Dirección"
+                      placeholder="Dirección"
+                      value={formData.address}
+                      onChange={event =>
+                        handleFormFieldChange(event, 'address')
+                      }
+                    />
+                    <TextInputField
+                      label="Código Postal"
+                      placeholder="Código Postal"
+                      value={formData.postalCode}
+                      onChange={event =>
+                        handleFormFieldChange(event, 'postalCode')
+                      }
+                    />
+                    <TextInputField
+                      label="Provincia"
+                      placeholder="Provincia"
+                      value={formData.province}
+                      onChange={event =>
+                        handleFormFieldChange(event, 'province')
+                      }
+                    />
+                    <TextInputField
+                      label="Ciudad"
+                      placeholder="Ciudad"
+                      value={formData.city}
+                      onChange={event => handleFormFieldChange(event, 'city')}
+                    />
+
+                    <Button
+                      size="sm"
+                      type="secondary"
+                      isSubmit
+                      className="ml-2"
+                      onClick={initializePepper}
+                    >
+                      Pagar
+                    </Button>
+                  </div>
+                </Container>
+              }
+            />,
+            document.body
+          )}
         {showAlma && (
           <AlmaWidget
             amountFinance={inputValue}
