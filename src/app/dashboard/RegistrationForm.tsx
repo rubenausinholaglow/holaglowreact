@@ -1,7 +1,10 @@
 import '../globals.css';
+import 'react-phone-input-2/lib/style.css';
 
 import React from 'react';
+import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
+import { poppins } from 'app/fonts';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -16,104 +19,125 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   errors,
   isLoading,
 }) => {
+  function phone() {}
   return (
-    <Container>
-      <h1 className="font-semibold text-xl mb-6">
-        ¡Vaya! ¿Todavía no te conocemos?
-      </h1>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <TextInputField
-          label="Nombre*"
-          placeholder="Nombre"
-          value={formData.name}
-          onChange={event => handleFieldChange(event, 'name')}
-        />
-        <TextInputField
-          label="Apellidos*"
-          placeholder="Apellidos"
-          value={formData.surname}
-          onChange={event => handleFieldChange(event, 'surname')}
-        />
-        <TextInputField
-          label="Correo electrónico*"
-          placeholder="Correo electrónico"
-          value={formData.email}
-          onChange={event => handleFieldChange(event, 'email')}
-          error={
-            errors.includes(errorsConfig.ERROR_EMAIL_NOT_VALID)
-              ? errorsConfig.ERROR_EMAIL_NOT_VALID
-              : ''
-          }
-        />
-        <TextInputField
-          label="Teléfono*"
-          placeholder="Teléfono"
-          value={formData.phone}
-          onChange={event => handleFieldChange(event, 'phone')}
-          error={
-            errors.includes(errorsConfig.ERROR_PHONE_NOT_VALID)
-              ? errorsConfig.ERROR_PHONE_NOT_VALID
-              : ''
-          }
-        />
+    <div className="grid grid-cols-1 gap-4 w-full">
+      <TextInputField
+        placeholder="Nombre"
+        value={formData.name}
+        onChange={event => handleFieldChange(event, 'name')}
+      />
+      <TextInputField
+        placeholder="Apellidos"
+        value={formData.surname}
+        onChange={event => handleFieldChange(event, 'surname')}
+      />
+      <TextInputField
+        placeholder="Correo electrónico"
+        value={formData.email}
+        onChange={event => handleFieldChange(event, 'email')}
+        error={
+          errors.includes(errorsConfig.ERROR_EMAIL_NOT_VALID)
+            ? errorsConfig.ERROR_EMAIL_NOT_VALID
+            : ''
+        }
+      />
+      <PhoneInput
+        inputStyle={{
+          borderColor: 'white',
+          width: '100%',
+          height: '44px',
+          paddingLeft: '65px',
+          fontSize: '12px',
+          lineHeight: '16px',
+          fontFamily: 'poppins',
+          fontStyle: 'normal',
+          fontWeight: '400',
+        }}
+        containerStyle={{
+          background: 'white',
+          border: '1px solid',
+          borderColor: '#e5e7eb',
+          borderRadius: '1rem',
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          paddingBottom: '8px',
+          paddingTop: '8px',
+          height: '60px',
+        }}
+        placeholder="Número de teléfono"
+        country={'es'}
+        value={formData.phone}
+        onChange={phone}
+      />
 
-        <Flex layout="col-left" className="my-2">
-          <Flex layout="row-left">
-            <label
-              htmlFor="termsAndConditionsAccepted"
-              className="flex items-center cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                id="termsAndConditionsAccepted"
-                checked={formData.termsAndConditionsAccepted}
-                onChange={event =>
-                  handleFieldChange(event, 'termsAndConditionsAccepted')
-                }
-                className="mr-2 checkbox-blue"
-              />
-              <span className="text-sm text-gray-700">
-                Acepto términos y condiciones
-              </span>
-            </label>
-          </Flex>
-          {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) && (
-            <p className="text-red-500 text-left text-sm mt-1">
-              {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
-            </p>
-          )}
-          <Flex layout="row-left" className="mt-2">
-            <label
-              htmlFor="receiveCommunications"
-              className="flex items-center cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                id="receiveCommunications"
-                checked={formData.receiveCommunications}
-                onChange={event =>
-                  handleFieldChange(event, 'receiveCommunications')
-                }
-                className="mr-2 checkbox-blue"
-              />
-              <span className="text-sm text-gray-700">
-                Quiero que me informéis de vuestras ofertas
-              </span>
-            </label>
-          </Flex>
+      <TextInputField
+        placeholder="Teléfono"
+        value={formData.phone}
+        onChange={event => handleFieldChange(event, 'phone')}
+        error={
+          errors.includes(errorsConfig.ERROR_PHONE_NOT_VALID)
+            ? errorsConfig.ERROR_PHONE_NOT_VALID
+            : ''
+        }
+      />
+
+      <Flex layout="col-left" className="my-2">
+        <Flex layout="row-left">
+          <label
+            htmlFor="termsAndConditionsAccepted"
+            className="flex items-center cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              id="termsAndConditionsAccepted"
+              checked={formData.termsAndConditionsAccepted}
+              onChange={event =>
+                handleFieldChange(event, 'termsAndConditionsAccepted')
+              }
+              className="mr-2 w-4 h-4 appearance-none border border-#101828 rounded focus:outline-none focus:bg-slate-600"
+            />
+            <span className="text-sm text-gray-700">
+              Acepto términos y condiciones
+            </span>
+          </label>
         </Flex>
-        <Flex layout="col-left">
-          <Button onClick={handleContinue} type="secondary">
-            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
-          </Button>
-          {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
-            <p className="text-red-500 text-left text-sm mt-2">
-              {errorsConfig.ERROR_MISSING_FIELDS}
-            </p>
-          )}
+        {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) && (
+          <p className="text-red-500 text-left text-sm mt-1">
+            {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
+          </p>
+        )}
+        <Flex layout="row-left" className="mt-2">
+          <label
+            htmlFor="receiveCommunications"
+            className="flex items-center cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              id="receiveCommunications"
+              checked={formData.receiveCommunications}
+              onChange={event =>
+                handleFieldChange(event, 'receiveCommunications')
+              }
+              className="mr-2 w-4 h-4 appearance-none border border-#101828 rounded focus:outline-none focus:bg-slate-600"
+            />
+            <span className="text-sm text-gray-700">
+              Quiero que me informéis de vuestras ofertas
+            </span>
+          </label>
         </Flex>
-      </div>
-    </Container>
+      </Flex>
+      <Flex layout="col-left">
+        <Button onClick={handleContinue} type="secondary">
+          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
+        </Button>
+        {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
+          <p className="text-red-500 text-left text-sm mt-2">
+            {errorsConfig.ERROR_MISSING_FIELDS}
+          </p>
+        )}
+      </Flex>
+    </div>
   );
 };
 export default RegistrationForm;
