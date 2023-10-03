@@ -1,4 +1,4 @@
-import { Client } from '../interface/client';
+import { Client, ClientUpdate } from '../interface/client';
 
 export default class UserService {
   static async checkUser(email = '') {
@@ -66,6 +66,27 @@ export default class UserService {
         `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`,
         {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (res.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      return false;
+    }
+  }
+  static async updateUser(formData: ClientUpdate) {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`,
+        {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },

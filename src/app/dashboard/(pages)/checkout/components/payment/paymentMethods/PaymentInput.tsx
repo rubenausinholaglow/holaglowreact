@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Notification from '@components/ui/Notification';
-import { CreatePayment } from '@interface/initializePayment';
+import { CreatePayment, InitializePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
@@ -16,6 +16,9 @@ import PepperWidget from './PepperWidget';
 import HolaglowModal from 'app/components/common/Modal';
 import { createPortal } from 'react-dom';
 import TextInputField from '@components/TextInputField';
+import { ClientUpdate } from '@interface/client';
+import UserService from '@services/UserService';
+import FinanceService from '@services/FinanceService';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -37,13 +40,15 @@ export default function PaymentInput(props: Props) {
   );
   const [showPepperModal, setShowPepperModal] = useState(false);
 
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<ClientUpdate>({
     dni: '',
     address: '',
     city: '',
     province: '',
     postalCode: '',
     birthday: '',
+    id: '',
+    country: '',
   });
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
@@ -108,10 +113,6 @@ export default function PaymentInput(props: Props) {
   };
 
   const openPepper = () => {
-    /*window.open(
-      'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
-      '_blank'
-    );*/
     setShowPepperModal(true);
   };
   async function addPayment(number: any) {
@@ -140,7 +141,26 @@ export default function PaymentInput(props: Props) {
   };
 
   const initializePepper = async () => {
-    console.log('initialize');
+    const GuidUser = localStorage.getItem('id') || '';
+    setFormData((prevFormData: any) => ({
+      ...prevFormData,
+      ['id']: GuidUser,
+    }));
+    UserService.updateUser(formData).then(async x => {
+      console.log('DONE');
+      setShowPepperModal(false);
+
+      const data: InitializePayment = {
+        amount: Number(inputValue),
+        installments: 1,
+        userId: GuidUser,
+      };
+
+      await FinanceService.initializePayment(data).then(x => {
+        debugger;
+        window.open(x.url, '_blank');
+      });
+    });
   };
 
   const handleFormFieldChange = (
