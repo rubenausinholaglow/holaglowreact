@@ -146,6 +146,7 @@ export default function PaymentInput(props: Props) {
       ...prevFormData,
       ['id']: GuidUser,
     }));
+    debugger;
     UserService.updateUser(formData).then(async x => {
       setShowPepperModal(false);
 
@@ -180,71 +181,62 @@ export default function PaymentInput(props: Props) {
       <>
         {showPepperModal &&
           createPortal(
-            <HolaglowModal
-              onClose={() => setShowPepperModal(false)}
-              children={
-                <Container>
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div>Tipo de producto: Tratamiento facial</div>
-                    <div>Importe: {inputValue}</div>
-                    <TextInputField
-                      label="Fecha nacimiento"
-                      placeholder="Fecha nacimiento"
-                      value={formData.birthday}
-                      onChange={event =>
-                        handleFormFieldChange(event, 'birthday')
-                      }
-                    />
-                    <TextInputField
-                      label="DNI"
-                      placeholder="DNI"
-                      value={formData.dni}
-                      onChange={event => handleFormFieldChange(event, 'dni')}
-                    />
-                    <TextInputField
-                      label="Dirección"
-                      placeholder="Dirección"
-                      value={formData.address}
-                      onChange={event =>
-                        handleFormFieldChange(event, 'address')
-                      }
-                    />
-                    <TextInputField
-                      label="Código Postal"
-                      placeholder="Código Postal"
-                      value={formData.postalCode}
-                      onChange={event =>
-                        handleFormFieldChange(event, 'postalCode')
-                      }
-                    />
-                    <TextInputField
-                      label="Provincia"
-                      placeholder="Provincia"
-                      value={formData.province}
-                      onChange={event =>
-                        handleFormFieldChange(event, 'province')
-                      }
-                    />
-                    <TextInputField
-                      label="Ciudad"
-                      placeholder="Ciudad"
-                      value={formData.city}
-                      onChange={event => handleFormFieldChange(event, 'city')}
-                    />
+            <HolaglowModal onClose={() => setShowPepperModal(false)}>
+              <Container>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div>Tipo de producto: Tratamiento facial</div>
+                  <div>Importe: {inputValue}</div>
+                  <TextInputField
+                    label="Fecha nacimiento"
+                    placeholder="Fecha nacimiento"
+                    value={formData.birthday}
+                    onChange={event => handleFormFieldChange(event, 'birthday')}
+                  />
+                  <TextInputField
+                    label="DNI"
+                    placeholder="DNI"
+                    value={formData.dni}
+                    onChange={event => handleFormFieldChange(event, 'dni')}
+                  />
+                  <TextInputField
+                    label="Dirección"
+                    placeholder="Dirección"
+                    value={formData.address}
+                    onChange={event => handleFormFieldChange(event, 'address')}
+                  />
+                  <TextInputField
+                    label="Código Postal"
+                    placeholder="Código Postal"
+                    value={formData.postalCode}
+                    onChange={event =>
+                      handleFormFieldChange(event, 'postalCode')
+                    }
+                  />
+                  <TextInputField
+                    label="Provincia"
+                    placeholder="Provincia"
+                    value={formData.province}
+                    onChange={event => handleFormFieldChange(event, 'province')}
+                  />
+                  <TextInputField
+                    label="Ciudad"
+                    placeholder="Ciudad"
+                    value={formData.city}
+                    onChange={event => handleFormFieldChange(event, 'city')}
+                  />
 
-                    <Button
-                      size="sm"
-                      type="secondary"
-                      isSubmit
-                      className="ml-2"
-                      onClick={initializePepper}
-                    >
-                      Pagar
-                    </Button>
-                  </div>
-                </Container>
-              }
-            />,
+                  <Button
+                    size="sm"
+                    type="secondary"
+                    isSubmit
+                    className="ml-2"
+                    onClick={initializePepper}
+                  >
+                    Pagar
+                  </Button>
+                </div>
+              </Container>
+            </HolaglowModal>,
             document.body
           )}
         {showAlma && (
