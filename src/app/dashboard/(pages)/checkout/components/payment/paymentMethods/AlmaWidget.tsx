@@ -129,6 +129,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       amount: Number(resultValue),
       installments: installmentsValue,
       userId: GuidUser,
+      paymentBank: 1,
     };
 
     try {
