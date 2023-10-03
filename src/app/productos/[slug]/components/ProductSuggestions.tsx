@@ -6,7 +6,6 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCalendar } from 'icons/Icons';
 import * as icon from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 

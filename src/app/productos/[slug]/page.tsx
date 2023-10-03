@@ -38,13 +38,15 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     const product = stateProducts.filter(
       product => product?.extraInformation?.slug === params.slug
     )[0];
+
     const productId = product?.id ?? '';
+
     setProductId(productId);
     async function initProduct(productId: string) {
       const product = await fetchProduct(productId);
       setProduct(isEmpty(product) ? null : product);
     }
-    if (productId != '' && productsAreLoaded) {
+    if (productId !== '' && productsAreLoaded) {
       initProduct(productId);
       setProduct(isEmpty(product) ? null : product);
     }
@@ -79,6 +81,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
           <Professionals />
         </div>
+        <FloatingBottomBar product={product} />
       </MainLayout>
     );
   } else if (productId == '') {
