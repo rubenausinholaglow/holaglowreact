@@ -1,5 +1,7 @@
 'use client';
 
+import './style.css';
+
 import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
 import { Client } from '@interface/client';
@@ -21,10 +23,8 @@ dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
   const router = useRouter();
-  const { selectedTreatments } = useGlobalPersistedStore(state => state);
-  const { selectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedDay } = useGlobalPersistedStore(state => state);
-  const { selectedClinic } = useGlobalPersistedStore(state => state);
+  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
+    useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
