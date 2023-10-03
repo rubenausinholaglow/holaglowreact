@@ -1,6 +1,6 @@
 'use client';
 
-import './style.css';
+import './phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
@@ -9,8 +9,8 @@ import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
 import * as utils from '@utils/validators';
+import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';
-import RegistrationForm from 'app/dashboard/RegistrationForm';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';

@@ -1,4 +1,3 @@
-import '../globals.css';
 import 'react-phone-input-2/lib/style.css';
 
 import React from 'react';
@@ -10,8 +9,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 
-import TextInputField from './components/TextInputField';
-import { RegistrationFormProps } from './utils/props';
+import TextInputField from '../../dashboard/components/TextInputField';
+import { RegistrationFormProps } from '../../dashboard/utils/props';
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   formData,
