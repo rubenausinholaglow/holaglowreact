@@ -10,7 +10,7 @@ export default function Dropdown({
   [key: string]: any;
 }) {
   const dropdownStyles = {
-    control: (baseStyles, state) => ({
+    control: (baseStyles: any, state: any) => ({
       ...baseStyles,
       paddingTop: '5px',
       paddingBottom: '5px',
@@ -22,7 +22,7 @@ export default function Dropdown({
         ? `${HOLAGLOW_COLORS['secondary']}`
         : `${HOLAGLOW_COLORS['black']}`,
     }),
-    singleValue: (baseStyles, state) => ({
+    singleValue: (baseStyles: any, state: any) => ({
       ...baseStyles,
       color: state.hasValue
         ? `${HOLAGLOW_COLORS['secondary']}`

@@ -82,6 +82,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
           <Professionals />
         </div>
+        <FloatingBottomBar product={product} />
       </MainLayout>
     );
   } else if (productId == '') {

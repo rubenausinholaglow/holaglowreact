@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import Select from 'react-select';
 import { Product } from '@interface/product';
 import Dropdown from 'app/components/forms/Dropdown';
-import { DeviceSize } from 'app/components/layout/Breakpoint';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
