@@ -189,4 +189,47 @@ export default class ScheduleService {
       return err;
     }
   }
+  static async next(token: string): Promise<Appointment[]> {
+    try {
+      const url =
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Next?token?` +
+        token;
+
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err) {
+      return [];
+    }
+  }
+  static async cancel(appointment: Appointment) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment`;
+
+      const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(appointment),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err) {
+      return [];
+    }
+  }
 }
