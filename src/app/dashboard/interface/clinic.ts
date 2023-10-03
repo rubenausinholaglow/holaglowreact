@@ -9,6 +9,7 @@ export interface Clinic {
   internalName: string;
   professionals: Professional[];
   flowwwId: string;
+  phone: string;
 }
 
 export interface Professional {
@@ -20,7 +21,7 @@ export interface Professional {
   name: string;
   professionalType: ProfessionalType;
   flowwwId: string;
-  city?: string;  
+  city?: string;
 }
 
 export enum ProfessionalType {

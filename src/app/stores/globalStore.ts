@@ -50,7 +50,7 @@ export const useGlobalPersistedStore = create(
         isWideScreen: false,
       },
       isMobile: true,
-      selectedTreatment: undefined,
+      selectedTreatment: [''],
       selectedClinic: undefined,
       user: undefined,
       selectedDay: dayjs(),
