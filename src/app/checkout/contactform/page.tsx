@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
@@ -11,10 +11,13 @@ import MainLayout from 'app/components/layout/MainLayout';
 import RegistrationForm from 'app/dashboard/RegistrationForm';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgLocation } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
+
+dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
   const router = useRouter();
@@ -51,6 +54,15 @@ export default function ConctactForm() {
     treatmentPrice: 0,
   });
   const localSelectedDay = dayjs(selectedDay);
+
+  useEffect(() => {
+    if (selectedTreatments && selectedTreatments.length > 0) {
+      setSelectedTreatmentsNames(
+        selectedTreatments!.map(x => x.title).join(' + ')
+      );
+    }
+  }, []);
+
   const handleFormFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
@@ -65,16 +77,80 @@ export default function ConctactForm() {
     }));
   };
   const handleContinue = () => {
-    const requiredFields = ['name', 'surname', 'email', 'phone'];
-    const isAllFieldsFilled = requiredFields.every(field => formData[field]);
+    setErrors([]);
 
-    if (isAllFieldsFilled) {
-      // Call your continue logic here
-      console.log('Continue clicked');
+    const requiredFields = ['email', 'phone', 'name', 'surname'];
+
+    const isEmailValid = utils.validateEmail(formData.email);
+    const areAllFieldsFilled = requiredFields.every(
+      field => formData[field] !== ''
+    );
+
+    if (
+      areAllFieldsFilled &&
+      isEmailValid &&
+      formData.termsAndConditionsAccepted
+    ) {
+      handleRegistration();
     } else {
-      // Set an error or show a message about missing fields
-      console.error('Please fill in all required fields');
+      const errorMessages = [];
+
+      if (!isEmailValid && formData['email'].length > 0) {
+        errorMessages.push(config.ERROR_EMAIL_NOT_VALID);
+      }
+      if (requiredFields.some(field => formData[field] === '')) {
+        errorMessages.push(config.ERROR_MISSING_FIELDS);
+      }
+      if (!formData.termsAndConditionsAccepted) {
+        errorMessages.push(config.ERROR_TERMS_CONDITIONS_UNACCEPTED);
+      }
+
+      handleRequestError(errorMessages);
     }
+  };
+
+  const handleRegistration = async () => {
+    await registerUser(formData);
+  };
+
+  const createAppointment = () => {
+    const appointments = [];
+    const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+    appointments.push({
+      box: selectedSlot!.box,
+      endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+      id: '0',
+      startTime: selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+      treatment: ids,
+      clientId: user?.flowwwToken,
+      comment: '', //TODO: Pending
+      treatmentText: '', //TODO: Pending
+      referralId: '',
+      externalReference: '', //TODO: Pending
+      isPast: false,
+      clinicId: selectedClinic,
+      isCancelled: false,
+    } as Appointment);
+    ScheduleService.scheduleBulk(appointments).then(x => {
+      router.push('/checkout/confirmation');
+    });
+  };
+
+  const registerUser = async (formData: Client) => {
+    setIsLoading(true);
+    const isSuccess = await UserService.registerUser(formData);
+    if (isSuccess) {
+      createAppointment();
+      setIsLoading(false);
+    } else {
+      handleRequestError([config.ERROR_REGISTRATION]);
+      setIsLoading(false);
+    }
+  };
+
+  const handleRequestError = (errors: Array<string>) => {
+    localStorage.clear();
+    setErrors(errors);
   };
 
   return (
@@ -108,7 +184,10 @@ export default function ConctactForm() {
                     <span>
                       <SvgCalendar />
                     </span>
-                    <Text size="xs" className="w-full text-left pl-2">
+                    <Text
+                      size="xs"
+                      className="w-full text-left pl-2 capitalize"
+                    >
                       {localSelectedDay.format('dddd')},{' '}
                       {localSelectedDay.format('D')} de{' '}
                       {localSelectedDay.format('MMMM')}{' '}

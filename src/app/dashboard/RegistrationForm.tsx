@@ -69,17 +69,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         placeholder="Número de teléfono"
         country={'es'}
         value={formData.phone}
-        onChange={phone}
-      />
-
-      <TextInputField
-        placeholder="Teléfono"
-        value={formData.phone}
-        onChange={event => handleFieldChange(event, 'phone')}
-        error={
-          errors.includes(errorsConfig.ERROR_PHONE_NOT_VALID)
-            ? errorsConfig.ERROR_PHONE_NOT_VALID
-            : ''
+        onChange={(value, data, event, formattedValue) =>
+          handleFieldChange(event, 'phone')
         }
       />
 
@@ -125,8 +116,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               onChange={event =>
                 handleFieldChange(event, 'receiveCommunications')
               }
-              className="mr-2 w-4 h-4 appearance-none border border-#101828 rounded focus:outline-none focus:bg-slate-600"
+              className="hidden"
             />
+            {formData.receiveCommunications ? (
+              <SvgCheckSquareActive className="mr-2" />
+            ) : (
+              <SvgCheckSquare className="mr-2" />
+            )}
             <span className="text-sm text-gray-700">
               Quiero que me informéis de vuestras ofertas
             </span>

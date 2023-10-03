@@ -130,13 +130,6 @@ a {
   color: #ffffff;
 }
 
-/*
-.react-tel-input .flag-dropdown:hover,
-.react-tel-input .flag-dropdown:focus {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}*/
-
 .react-tel-input .flag-dropdown {
   padding-top: 18px;
   padding-bottom: 18px;
@@ -149,10 +142,3 @@ a {
 .react-tel-input {
   padding-left: 12px !important;
 }
-/*
-.react-tel-input .selected-flag .arrow {
-  border-left: 13px solid transparent !important;
-  border-right: 13px solid transparent !important;
-  border-top: 14px solid #555 !important;
-}
-*/
