@@ -87,22 +87,9 @@ export default function Agenda() {
   }
 
   useEffect(() => {
-    fetchProduct();
-    setSelectedTreatmentsIds('674');
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
   }, []);
-
-  const fetchProduct = async () => {
-    const product = await ProductService.getProduct(
-      '336c88de-c8b9-4379-9d6c-08db48dc8444'
-    );
-
-    console.log(product);
-    const productsArray: Product[] = [product];
-    console.log(productsArray);
-    setSelectedTreatments(productsArray);
-  };
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
@@ -143,7 +130,7 @@ export default function Agenda() {
     setSelectedDay(day);
     ScheduleService.getSlots(
       day.format(format),
-      selectedTreatmentsIds,
+      selectedTreatments!.map(x => x.flowwwId).join(', '),
       selectedClinic!.flowwwId
     )
       .then(data => {
