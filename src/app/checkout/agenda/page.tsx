@@ -1,10 +1,13 @@
 'use client';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
+import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -84,9 +87,22 @@ export default function Agenda() {
   }
 
   useEffect(() => {
+    fetchProduct();
+    setSelectedTreatmentsIds('674');
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
   }, []);
+
+  const fetchProduct = async () => {
+    const product = await ProductService.getProduct(
+      '336c88de-c8b9-4379-9d6c-08db48dc8444'
+    );
+
+    console.log(product);
+    const productsArray: Product[] = [product];
+    console.log(productsArray);
+    setSelectedTreatments(productsArray);
+  };
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
