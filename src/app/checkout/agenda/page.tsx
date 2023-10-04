@@ -5,12 +5,11 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
-import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { debug } from 'console';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
@@ -39,9 +38,7 @@ export default function Agenda() {
     state => state
   );
   const { setSelectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const { selectedTreatments } = useGlobalPersistedStore(state => state);
   const { selectedClinic } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
@@ -56,7 +53,7 @@ export default function Agenda() {
   };
 
   function loadMonth() {
-    if (selectedTreatmentsIds && availableDates.length < maxDays) {
+    if (selectedTreatmentsIds) {
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
@@ -93,8 +90,6 @@ export default function Agenda() {
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatments([]);
-
       setSelectedTreatmentsIds(
         selectedTreatments!.map(x => x.flowwwId).join(', ')
       );
@@ -123,6 +118,7 @@ export default function Agenda() {
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
     setSelectedDay(day);
+    console.log(selectedTreatments);
     ScheduleService.getSlots(
       day.format(format),
       selectedTreatments!.map(x => x.flowwwId).join(', '),
@@ -155,10 +151,27 @@ export default function Agenda() {
 
   const filterDate = (date: Date) => {
     const day = dayjs(date);
+
+    const availabilityForMonth = availableDates.find(x =>
+      day.isSame(x.date, 'month')
+    );
+
+    if (!availabilityForMonth) {
+      fetchData(day);
+    }
     return (
       availableDates.find(x => x.date == day.format(format))?.availability ??
       false
     );
+  };
+
+  const fetchData = async (day: any) => {
+    const data = await ScheduleService.getMonthAvailability(
+      day.format(format),
+      selectedTreatmentsIds,
+      selectedClinic!.flowwwId
+    );
+    setAvailableDates(prevDates => [...prevDates, ...data]);
   };
 
   return (
