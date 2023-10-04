@@ -20,8 +20,13 @@ export default function Page({
   const [appointments, setAppointments] = useState([] as Appointment[]);
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState(false);
-  const { clinics, setCurrentUser, setSelectedTreatments, stateProducts } =
-    useGlobalPersistedStore(state => state);
+  const {
+    clinics,
+    setCurrentUser,
+    setSelectedTreatments,
+    stateProducts,
+    setPreviousAppointment,
+  } = useGlobalPersistedStore(state => state);
   let showPast = false;
   let token = '';
   useEffect(() => {
@@ -59,6 +64,7 @@ export default function Page({
       );
     });
     setSelectedTreatments(products);
+    setPreviousAppointment(x);
     router.push('/checkout/agenda');
   };
 

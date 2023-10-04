@@ -114,7 +114,7 @@ export default function ConctactForm() {
   };
 
   const createAppointment = () => {
-    const appointments = [];
+    const appointments: Appointment[] = [];
     const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
     appointments.push({
       box: selectedSlot!.box,
@@ -128,7 +128,7 @@ export default function ConctactForm() {
       referralId: '',
       externalReference: '', //TODO: Pending
       isPast: false,
-      clinicId: selectedClinic,
+      clinicId: selectedClinic?.flowwwId,
       isCancelled: false,
     } as Appointment);
     ScheduleService.scheduleBulk(appointments).then(x => {

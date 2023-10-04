@@ -1,5 +1,9 @@
 import Bugsnag from '@bugsnag/js';
-import { Appointment, Status } from '@interface/appointment';
+import {
+  Appointment,
+  RescheduleAppointmentRequest,
+  Status,
+} from '@interface/appointment';
 import { DayAvailability } from '@interface/dayAvailability';
 import { Slot } from '@interface/slot';
 
@@ -228,6 +232,28 @@ export default class ScheduleService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(appointment),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error cancel', err);
+      return [];
+    }
+  }
+  static async reschedule(reschedule: RescheduleAppointmentRequest) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Reschedule`;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reschedule),
       });
       if (res.ok) {
         const data = await res.json();

@@ -38,7 +38,8 @@ export default function Agenda() {
   const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
     state => state
   );
-  const { setSelectedSlot } = useGlobalPersistedStore(state => state);
+  const { setSelectedSlot, selectedSlot, previousAppointment } =
+    useGlobalPersistedStore(state => state);
   const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
     state => state
   );
@@ -113,8 +114,28 @@ export default function Agenda() {
     toggleClicked();
     setSelectedSlot(x);
     if (user?.flowwwToken) {
-      //DO REAGENDA
-      router.push('/checkout/confirmation');
+      const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+      ScheduleService.reschedule({
+        next: {
+          box: selectedSlot!.box,
+          endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+          id: '0',
+          startTime:
+            selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+          treatment: ids,
+          clientId: user?.flowwwToken,
+          comment: '', //TODO: Pending
+          treatmentText: '', //TODO: Pending
+          referralId: '',
+          externalReference: '', //TODO: Pending
+          isPast: false,
+          clinicId: selectedClinic?.flowwwId,
+          isCancelled: false,
+        },
+        previous: previousAppointment,
+      }).then(x => {
+        router.push('/checkout/confirmation');
+      });
     } else {
       router.push('/checkout/contactform');
     }
