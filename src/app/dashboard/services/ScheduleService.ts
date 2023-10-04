@@ -14,7 +14,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error getClinicSchedule', err);
       return err;
     }
   }
@@ -46,7 +47,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error updatePatientStatusAppointment', err);
       return '';
     }
   }
@@ -60,7 +62,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error getAppointmentsPerClinic', err);
       return err;
     }
   }
@@ -87,7 +90,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error finishing appointment', err);
       return '';
     }
   }
@@ -111,7 +115,8 @@ export default class ScheduleService {
       } else {
         return null;
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error confirming appointment', err);
       return null;
     }
   }
@@ -185,14 +190,15 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error scheduleBulk', err);
       return err;
     }
   }
   static async next(token: string): Promise<Appointment[]> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Next?token?` +
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Next?token=` +
         token;
 
       const res = await fetch(url, {
@@ -207,7 +213,8 @@ export default class ScheduleService {
       } else {
         return [];
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error next', err);
       return [];
     }
   }
@@ -228,7 +235,8 @@ export default class ScheduleService {
       } else {
         return [];
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error cancel', err);
       return [];
     }
   }
