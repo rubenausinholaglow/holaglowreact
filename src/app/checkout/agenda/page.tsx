@@ -176,16 +176,15 @@ export default function Agenda() {
 
   return (
     <MainLayout isCheckout>
+      <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
+        <Title size="xl" className="font-semibold">
+          Selecciona día y hora
+        </Title>
+      </Container>
       <Container className="px-0">
-        <Flex
-          layout="col-left"
-          className="mt-9 md:mt-16 md:flex-row items-stretch"
-        >
-          <div className="w-full md:w-1/2">
+        <Flex layout="col-left" className="md:gap-16 md:flex-row items-stretch">
+          <div className="md:w-1/2">
             <Container className="pb-4">
-              <Title size="xl" className="font-semibold mb-6">
-                Selecciona día y hora
-              </Title>
               <Flex
                 layout="row-between"
                 className="block gap-16 items-start md:flex"
@@ -210,10 +209,12 @@ export default function Agenda() {
 
                   {selectedClinic && (
                     <Flex className="mb-4">
-                      <span>
-                        <SvgLocation />
-                      </span>
-                      <Text size="xs" className="w-full text-left pl-2">
+                      <SvgLocation
+                        height={16}
+                        width={16}
+                        className="shrink-0 mr-2"
+                      />
+                      <Text size="xs" className="w-full text-left">
                         {selectedClinic.address}, {selectedClinic.city}
                       </Text>
                       <Link href="/checkout/clinics" className="text-xs">
@@ -222,7 +223,7 @@ export default function Agenda() {
                     </Flex>
                   )}
                   <Flex>
-                    <SvgHour />
+                    <SvgHour height={16} width={16} className="mr-2" />
                     {selectedTreatments &&
                       Array.isArray(selectedTreatments) &&
                       selectedTreatments.map(product => (
@@ -232,7 +233,7 @@ export default function Agenda() {
                             className="items-start w-full"
                           >
                             <div>
-                              <Text size="xs" className="-full text-left pl-2">
+                              <Text size="xs" className="w-full text-left">
                                 {product.applicationTimeMinutes} minutos
                               </Text>
                             </div>
@@ -260,6 +261,7 @@ export default function Agenda() {
               </div>
             </Container>
           </div>
+
           <div className="w-full md:w-1/2 flex flex-col justify-between">
             <Container>
               <Flex
@@ -369,9 +371,9 @@ export default function Agenda() {
               )}
               <Flex
                 layout="col-left"
-                className="bg-hg-primary300 p-3 gap-3 md:relative w-full rounded-xl md:rounded-none"
+                className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"
               >
-                <Text size="sm" className="font-semibold">
+                <Text className="font-semibold">
                   ¿La cita que necesitas no está disponible?
                 </Text>
                 <Flex layout="row-left" className="gap-4 items-center w-full">
@@ -382,7 +384,7 @@ export default function Agenda() {
                         <Text size="xs" className="whitespace-nowrap">
                           Llamanos al
                         </Text>
-                        <Text className="whitespace-nowrap">
+                        <Text size="lg" className="whitespace-nowrap">
                           {selectedClinic.phone}
                         </Text>
                       </div>

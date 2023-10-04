@@ -155,10 +155,10 @@ export default function ConctactForm() {
 
   return (
     <MainLayout isCheckout>
-      <Container className="p-0 md:px-4">
-        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
-          <div className="w-full md:w-1/2 bg-hg-black50 p-8 rounded-xl ">
-            <Flex layout="col-left" className="gap-6">
+      <Container className="px-0 mt-6 md:mt-16">
+        <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+          <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
+            <Flex layout="col-left" className="gap-4 mb-8">
               <Title size="xl" className="font-semibold">
                 Reserva tu cita
               </Title>
@@ -196,14 +196,15 @@ export default function ConctactForm() {
                   </Flex>
                 </>
               )}
-              <RegistrationForm
-                formData={formData}
-                handleFieldChange={handleFormFieldChange}
-                handleContinue={handleContinue}
-                errors={errors}
-                isLoading={isLoading}
-              ></RegistrationForm>
             </Flex>
+
+            <RegistrationForm
+              formData={formData}
+              handleFieldChange={handleFormFieldChange}
+              handleContinue={handleContinue}
+              errors={errors}
+              isLoading={isLoading}
+            />
           </div>
           <div className="w-full md:w-1/2"></div>
         </Flex>
