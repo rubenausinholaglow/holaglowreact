@@ -1,39 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
-import { isEmpty } from 'lodash';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
-  const { clinics, setClinics, selectedClinic, setSelectedClinic } =
+  const { clinics, selectedClinic, setSelectedClinic } =
     useGlobalPersistedStore(state => state);
   const { selectedTreatments } = useGlobalPersistedStore(state => state);
-  const [googleMapAddress, setGoogleMapAddress] = useState('');
-  const [mapHeight, setMapHeight] = useState(550);
-
-  useEffect(() => {
-    if (!isEmpty(selectedClinic)) {
-      const mapLayer = document.querySelector('#mapLayer');
-
-      if (mapLayer) {
-        const mapLayerElement = mapLayer as HTMLElement;
-        setMapHeight(mapLayerElement.offsetHeight);
-      }
-
-      const formattedAddress = selectedClinic.address.replace(/ /g, '+');
-      const formattedCity = selectedClinic.city.replace(/ /g, '+');
-
-      setGoogleMapAddress(`${formattedAddress},${formattedCity}`);
-    }
-  }, [selectedClinic]);
 
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);

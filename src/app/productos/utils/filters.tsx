@@ -106,9 +106,6 @@ export const toggleZone = ({
   filters: ProductFilters;
 }) => {
   const updatedFilters: ProductFilters = { ...filters } || {};
-
-  console.log(zone);
-
   const zoneIndex = updatedFilters.zone.indexOf(zone);
 
   if (zoneIndex === -1) {

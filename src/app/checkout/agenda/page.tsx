@@ -176,7 +176,7 @@ export default function Agenda() {
                 layout="row-between"
                 className="block gap-16 items-start md:flex"
               >
-                <div className="">
+                <div className="w-full">
                   {selectedTreatments &&
                     Array.isArray(selectedTreatments) &&
                     selectedTreatments.map(product => (

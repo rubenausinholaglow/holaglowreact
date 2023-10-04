@@ -2,32 +2,32 @@
 
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
-import {
-  SvgArrow,
-  SvgCheck,
-  SvgCheckCircle,
-  SvgRadioChecked,
-} from 'icons/IconsDs';
-import { useRouter } from 'next/navigation';
+import { SvgArrow, SvgCheck } from 'icons/IconsDs';
 
 export default function ConfirmationCheckout() {
-  const router = useRouter();
-  const { selectedTreatments } = useGlobalPersistedStore(state => state);
-  const { selectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedDay } = useGlobalPersistedStore(state => state);
-  const { selectedClinic } = useGlobalPersistedStore(state => state);
+  const { selectedTreatments, selectedSlot, selectedDay } =
+    useGlobalPersistedStore(state => state);
 
   const localSelectedDay = dayjs(selectedDay);
+
   let selectedTreatmentsNames = '';
   if (selectedTreatments) {
     selectedTreatmentsNames = selectedTreatments!.map(x => x.title).join(' + ');
   }
+  /*   const date = dayjs(selectedDay, { locale: 'es' });
+
+  console.log(date)
+
+  // Format the date
+  const formattedDate = date.format('dddd D [de] MMMM, YYYY');
+
+  console.log(formattedDate); */
+
   return (
     <MainLayout hideFooter>
       <Container className="mt-12 mb-4 md:mt-16">
@@ -156,6 +156,16 @@ export default function ConfirmationCheckout() {
           </div>
         </div>
       </Container>
+
+      {localSelectedDay != undefined && (
+        <Flex>
+          <b>
+            {localSelectedDay.format('dddd')}, {localSelectedDay.format('D')},{' '}
+            {localSelectedDay.format('MMMM')}
+          </b>
+          {selectedSlot?.startTime}
+        </Flex>
+      )}
     </MainLayout>
   );
 }
