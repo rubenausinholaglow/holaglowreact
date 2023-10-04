@@ -153,16 +153,6 @@ export default function ConfirmationCheckout() {
                 </div>
               </Flex>
             </Flex>
-            {/* {localSelectedDay != undefined && (
-              <Flex>
-                <b>
-                  {localSelectedDay.format('dddd')},{' '}
-                  {localSelectedDay.format('D')},{' '}
-                  {localSelectedDay.format('MMMM')}
-                </b>
-                {selectedSlot?.startTime}
-              </Flex>
-            )} */}
           </div>
         </div>
       </Container>

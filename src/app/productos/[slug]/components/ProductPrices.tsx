@@ -175,16 +175,7 @@ function ProductPriceItem({
   isSessionProduct?: boolean;
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
-
-  function addSelectedTreatments(product: Product) {
-    const updatedSelectedTreatments = [...(selectedTreatments ?? [])];
-    updatedSelectedTreatments.push(product);
-
-    setSelectedTreatments(updatedSelectedTreatments);
-  }
+  const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
 
   return (
     <>
@@ -226,8 +217,7 @@ function ProductPriceItem({
                 type="tertiary"
                 customStyles="bg-hg-primary md:mt-4"
                 onClick={() => {
-                  console.log({ product });
-                  addSelectedTreatments(product);
+                  setSelectedTreatments([product]);
                 }}
               >
                 Reservar cita
@@ -292,8 +282,7 @@ function ProductPriceItem({
               customStyles="bg-hg-primary"
               className="mt-4"
               onClick={() => {
-                console.log(product);
-                addSelectedTreatments(product);
+                setSelectedTreatments([product]);
               }}
             >
               Reservar cita
