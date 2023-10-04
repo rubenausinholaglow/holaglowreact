@@ -227,7 +227,7 @@ function ProductPriceItem({
                 customStyles="bg-hg-primary md:mt-4"
                 onClick={() => {
                   console.log({ product });
-                  addSelectedTreatments({ product });
+                  addSelectedTreatments(product);
                 }}
               >
                 Reservar cita
