@@ -91,7 +91,7 @@ export default function ClinicsCheckout() {
                     : 'bg-hg-black50'
                 } `}
                 key={clinic.city}
-                onClick={() => setSelectedClinic(clinics[index])}
+                onClick={() => selectClinic(clinics[index])}
               >
                 <Flex layout="col-left">
                   <Text size="lg" className="font-semibold mb-2">

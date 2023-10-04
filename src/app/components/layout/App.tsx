@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { poppins } from 'app/fonts';
 import {
   useGlobalPersistedStore,
