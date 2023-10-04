@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { Product } from '@interface/product';
 import Dropdown from 'app/components/forms/Dropdown';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   Accordion,
@@ -172,6 +175,16 @@ function ProductPriceItem({
   isSessionProduct?: boolean;
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
+    state => state
+  );
+
+  function addSelectedTreatments(product: Product) {
+    const updatedSelectedTreatments = [...(selectedTreatments ?? [])];
+    updatedSelectedTreatments.push(product);
+
+    setSelectedTreatments(updatedSelectedTreatments);
+  }
 
   return (
     <>
@@ -209,7 +222,14 @@ function ProductPriceItem({
                   {product.sessions === 1 ? 'sesión' : 'sesiones'}
                 </Flex>
               </div>
-              <Button type="tertiary" customStyles="bg-hg-primary md:mt-4">
+              <Button
+                type="tertiary"
+                customStyles="bg-hg-primary md:mt-4"
+                onClick={() => {
+                  console.log({ product });
+                  addSelectedTreatments({ product });
+                }}
+              >
                 Reservar cita
                 <SvgArrow height={16} width={16} className="ml-2" />
               </Button>
@@ -271,6 +291,10 @@ function ProductPriceItem({
               type="tertiary"
               customStyles="bg-hg-primary"
               className="mt-4"
+              onClick={() => {
+                console.log(product);
+                addSelectedTreatments(product);
+              }}
             >
               Reservar cita
               <SvgArrow height={16} width={16} className="ml-2" />
@@ -286,6 +310,7 @@ export default function ProductPrices({ product }: { product: Product }) {
   const router = useRouter();
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [showDropdowns, setShowDropdowns] = useState(false);
+  const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
 
   function upgradeItem({ item, isPack }: { item: any; isPack: boolean }) {
     const iconComponentName = `Svg${UPGRADE_TYPES[item.type.toString()].icon}`;
