@@ -1,17 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
-import { isEmpty } from 'lodash';
-import { fetchClinics, fetchProducts } from 'utils/fetch';
 
-import { DeviceSize } from './Breakpoint';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';

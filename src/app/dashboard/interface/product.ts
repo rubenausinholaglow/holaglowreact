@@ -9,6 +9,7 @@ export interface Product {
   price: number;
   isPack: boolean;
   zone: number;
+  order: number;
   upgrades: Upgrade[];
   category: Category[];
   clinicDetail: ProductClinics[];

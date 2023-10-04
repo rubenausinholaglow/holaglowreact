@@ -19,7 +19,7 @@ export const Title = ({
 }) => {
   const STYLES = {
     '3xl': 'text-4xl lg:text-6xl',
-    '2xl': 'text-2xl lg:text-5xl',
+    '2xl': 'text-3xl lg:text-5xl',
     xl: 'text-xl lg:text-2xl',
   };
 
@@ -41,7 +41,7 @@ export const Text = ({
   children,
   rest,
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   as?: keyof JSX.IntrinsicElements;
   className?: string;
   onClick?: (...args: any[]) => void;
