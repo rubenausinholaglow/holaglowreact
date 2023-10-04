@@ -12,7 +12,7 @@ import * as utils from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useRouter } from 'next/navigation';
 
-import RegistrationForm from './RegistrationForm';
+import RegistrationForm from '../components/common/RegistrationForm';
 import SearchUser from './SearchUser';
 
 export default function Page({
