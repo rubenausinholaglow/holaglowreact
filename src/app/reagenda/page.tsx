@@ -8,22 +8,26 @@ import { SvgSpinner } from 'icons/Icons';
 import { Appointment } from '@interface/appointment';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
+import { Product } from '@interface/product';
 
 export default function Page({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const router = useRouter();
   const [appointments, setAppointments] = useState([] as Appointment[]);
   const [loading, setLoading] = useState(true);
   const [cancelling, setCancelling] = useState(false);
-  const { clinics } = useGlobalPersistedStore(state => state);
+  const { clinics, setCurrentUser, setSelectedTreatments, stateProducts } =
+    useGlobalPersistedStore(state => state);
   let showPast = false;
-
+  let token = '';
   useEffect(() => {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
-    const token = params.get('token');
+    token = params.get('token') ?? '';
     showPast = params.get('showPast') == 'true';
 
     const getAppointments = async () => {
@@ -42,7 +46,20 @@ export default function Page({
   };
 
   const rescheduleAppointment = (x: Appointment) => {
-    //TODO!!
+    setCurrentUser({
+      flowwwToken: token,
+      firstName: '',
+      email: '',
+    });
+    var treatments = x.treatment?.split(',');
+    var products: Product[] = [];
+    treatments?.forEach(treatment => {
+      products.push(
+        stateProducts.filter(y => y.flowwwId == Number(treatment))[0]
+      );
+    });
+    setSelectedTreatments(products);
+    router.push('/checkout/agenda');
   };
 
   return (

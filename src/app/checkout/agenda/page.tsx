@@ -35,7 +35,7 @@ export default function Agenda() {
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
   const [dateFromatted, setDateFormatted] = useState('');
-  const { selectedDay, setSelectedDay } = useGlobalPersistedStore(
+  const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
     state => state
   );
   const { setSelectedSlot } = useGlobalPersistedStore(state => state);
@@ -125,7 +125,12 @@ export default function Agenda() {
   const selectHour = (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
-    router.push('/checkout/contactform');
+    if (user?.flowwwToken) {
+      //DO REAGENDA
+      router.push('/checkout/confirmation');
+    } else {
+      router.push('/checkout/contactform');
+    }
   };
 
   const selectDate = (x: Date) => {
