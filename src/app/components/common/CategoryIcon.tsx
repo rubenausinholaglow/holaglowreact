@@ -47,13 +47,9 @@ export default function CategoryIcon({
   const IconComponent = (icon as any)[iconComponentName] || null;
   const borderColorStyle = `${CATEGORY_ICONS[category].color}`;
 
-  console.log(borderColorStyle);
-
   const backgroundColorStyle = `${
     !hasBackground ? '#ffffff' : `${CATEGORY_ICONS[category].color}33`
   }`;
-
-  console.log(borderColorStyle, backgroundColorStyle);
 
   return (
     <IconComponent

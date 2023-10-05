@@ -47,7 +47,7 @@ export default function FloatingBottomBar({ product }: { product?: Product }) {
                 <span>
                   Reservar cita desde{' '}
                   <span className="underline text-xl font-semibold">
-                    {product.price}
+                    {product.price} €
                   </span>
                 </span>
               ) : (
