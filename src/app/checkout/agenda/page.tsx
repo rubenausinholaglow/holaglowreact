@@ -357,19 +357,21 @@ export default function Agenda() {
                   ¿La cita que necesitas no está disponible?
                 </Text>
                 <Flex layout="row-left" className="gap-4 items-center w-full">
-                  <Button size="xl" type="tertiary">
-                    <SvgPhone className="mr-2" />
-                    {selectedClinic && (
-                      <div>
-                        <Text size="xs" className="whitespace-nowrap">
-                          Llamanos al
-                        </Text>
-                        <Text size="lg" className="whitespace-nowrap">
-                          {selectedClinic.phone}
-                        </Text>
-                      </div>
-                    )}
-                  </Button>
+                  <a href="tel:+34 682 417 208">
+                    <Button size="xl" type="tertiary">
+                      <SvgPhone className="mr-2" />
+                      {selectedClinic && (
+                        <div>
+                          <Text size="xs" className="whitespace-nowrap">
+                            Llamanos al
+                          </Text>
+                          <Text size="lg" className="whitespace-nowrap">
+                            {selectedClinic.phone}
+                          </Text>
+                        </div>
+                      )}
+                    </Button>
+                  </a>
                   <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
                 </Flex>
               </Flex>
