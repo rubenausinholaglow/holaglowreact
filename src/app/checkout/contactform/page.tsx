@@ -3,7 +3,7 @@
 import './phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
-import { Appointment } from '@interface/appointment';
+import { Appointment, User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -59,6 +59,7 @@ export default function ConctactForm() {
     treatmentPrice: 0,
   });
   const localSelectedDay = dayjs(selectedDay);
+  let localUser: User | undefined = undefined;
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
@@ -81,7 +82,7 @@ export default function ConctactForm() {
       [field]: value,
     }));
   };
-  const handleContinue = () => {
+  const handleContinue = async () => {
     setErrors([]);
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
@@ -96,7 +97,7 @@ export default function ConctactForm() {
       isEmailValid &&
       formData.termsAndConditionsAccepted
     ) {
-      handleRegistration();
+      await handleRegistration();
     } else {
       const errorMessages = [];
 
@@ -118,7 +119,7 @@ export default function ConctactForm() {
     await registerUser(formData);
   };
 
-  const createAppointment = () => {
+  const createAppointment = async () => {
     const appointments = [];
     const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
     appointments.push({
@@ -129,7 +130,7 @@ export default function ConctactForm() {
       startTime:
         selectedDay!.format(format) + ' ' + selectedSlot!.startTime + ':00',
       treatment: ids,
-      clientId: user?.flowwwToken,
+      clientId: localUser?.flowwwToken,
       comment: '', //TODO: Pending
       treatmentText: '', //TODO: Pending
       referralId: '',
@@ -151,7 +152,8 @@ export default function ConctactForm() {
       user = await UserService.registerUser(formData);
     }
     setCurrentUser(user);
-    createAppointment();
+    localUser = user;
+    await createAppointment();
     setIsLoading(false);
   };
 
