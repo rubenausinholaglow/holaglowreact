@@ -29,13 +29,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const [productId, setProductId] = useState('0');
 
   useEffect(() => {
-    console.log(stateProducts);
-
     if (!isEmpty(stateProducts)) {
       setProductsAreLoaded(true);
     }
-
-    console.log(productsAreLoaded);
   }, [stateProducts]);
 
   useEffect(() => {
@@ -57,12 +53,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }, [productsAreLoaded]);
 
   if (!productsAreLoaded) {
-    console.log('olakease')!;
-
     return <></>;
   }
-
-  console.log(stateProducts[0]);
 
   if (product != undefined && !isEmpty(product)) {
     return (

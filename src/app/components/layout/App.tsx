@@ -43,8 +43,6 @@ export default function Html({ children }: { children: ReactNode }) {
     if (isEmpty(stateProducts)) {
       initProducts();
     }
-
-    console.log(stateProducts[0]);
   }, [stateProducts]);
 
   useEffect(() => {
