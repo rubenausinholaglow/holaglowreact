@@ -36,9 +36,8 @@ export default function Agenda() {
   const { selectedDay, setSelectedDay } = useGlobalPersistedStore(
     state => state
   );
-  const { setSelectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedTreatments } = useGlobalPersistedStore(state => state);
-  const { selectedClinic } = useGlobalPersistedStore(state => state);
+  const { setSelectedSlot, selectedTreatments, selectedClinic } =
+    useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
