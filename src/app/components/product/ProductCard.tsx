@@ -19,22 +19,47 @@ export default function ProductCard({
   product: Product;
   [key: string]: any;
 }) {
-  const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
+  const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
 
   const [imgSrc, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
   );
 
+  const tempBgColors = [
+    ['#BBC7FFFF'],
+    ['#FFC7C7FF'],
+    ['#BBC7FFFF', '#FFC7C7FF'],
+    ['#BFE090FF'],
+    ['#BFE090FF'],
+    ['#FF75144D'],
+    ['#98A2B34D'],
+    ['#EBFF0D80', '#B7F9F980'],
+  ];
+
+  const randomIndex = Math.floor(Math.random() * tempBgColors.length);
+  const randomValue = tempBgColors[randomIndex];
+  console.log(randomValue.length, randomValue);
+
+  const imgBackgroundStyle =
+    randomValue.length === 2
+      ? `linear-gradient(45deg, ${randomValue[0]} 0%, ${randomValue[1]} 100%)`
+      : randomValue[0];
+
+  console.log(imgBackgroundStyle);
+
   return (
-    <div className="flex flex-col overflow-hidden h-full" {...rest}>
+    <div className="flex flex-col h-full" {...rest}>
       <Flex layout="col-left" className="">
-        <div className="relative aspect-[4/3] w-full">
+        <div
+          className={`relative aspect-[4/3] w-full rounded-t-2xl`}
+          style={{ background: imgBackgroundStyle }}
+        >
           <Image
             alt={product.title}
             fill
-            src={imgSrc}
+            src={DEFAULT_IMG_SRC}
             onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-            className="object-cover rounded-t-2xl"
+            className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
           />
 
           {!isEmpty(product.category) && (
