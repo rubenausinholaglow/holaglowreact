@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -47,69 +48,81 @@ export default function ProductCard({
 
   console.log(imgBackgroundStyle);
 
-  return (
-    <div className="flex flex-col h-full" {...rest}>
-      <Flex layout="col-left" className="">
-        <div
-          className={`relative aspect-[4/3] w-full rounded-t-2xl`}
-          style={{ background: imgBackgroundStyle }}
-        >
-          <Image
-            alt={product.title}
-            fill
-            src={DEFAULT_IMG_SRC}
-            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-            className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
-          />
+  console.log(product);
 
-          {!isEmpty(product.category) && (
-            <Flex
-              layout="row-center"
-              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
-            >
-              {product.category.map(category => {
-                return (
-                  <Flex
-                    key={category.name}
-                    layout="row-left"
-                    className="flex rounded-full bg-hg-tertiary300"
-                  >
-                    <SvgDiamond
-                      height={36}
-                      width={36}
-                      fill={HOLAGLOW_COLORS['secondary']}
-                      className="border rounded-full p-1"
-                      style={{ borderColor: `${HOLAGLOW_COLORS['secondary']}` }}
-                    />
-                  </Flex>
-                );
-              })}
-            </Flex>
-          )}
-        </div>
-      </Flex>
-      <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
-        <Text className="mb-2 font-semibold">{product.title}</Text>
-        <Text size="xs" className="text-hg-black500 mb-8">
-          {product.description}
-        </Text>
-        <Button
-          type="tertiary"
-          className="mt-auto"
-          bgColor="bg-hg-primary"
-          customStyles="hover:bg-hg-secondary100"
-        >
-          <Link
-            href={`/productos/${product?.extraInformation?.slug}`}
-            className="text-inherit"
+  return (
+    <Link
+      className="text-inherit"
+      href={`${ROUTES.products}/${product.extraInformation.slug}`}
+    >
+      <div className="flex flex-col h-full" {...rest}>
+        <Flex layout="col-left" className="">
+          <div
+            className={`relative aspect-[4/3] w-full rounded-t-2xl`}
+            style={{ background: imgBackgroundStyle }}
           >
-            <Flex layout="row-center">
-              <p className="mr-2">Saber más</p>
-              <SvgArrow height={20} width={20} />
-            </Flex>
-          </Link>
-        </Button>
-      </Flex>
-    </div>
+            <Image
+              alt={product.title}
+              fill
+              src={DEFAULT_IMG_SRC}
+              onError={() => setImgSrc(DEFAULT_IMG_SRC)}
+              className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
+            />
+
+            {!isEmpty(product.category) && (
+              <Flex
+                layout="row-center"
+                className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
+              >
+                {product.category.map(category => {
+                  return (
+                    <Flex
+                      key={category.name}
+                      layout="row-left"
+                      className="flex rounded-full bg-hg-tertiary300"
+                    >
+                      <SvgDiamond
+                        height={36}
+                        width={36}
+                        fill={HOLAGLOW_COLORS['secondary']}
+                        className="border rounded-full p-1"
+                        style={{
+                          borderColor: `${HOLAGLOW_COLORS['secondary']}`,
+                        }}
+                      />
+                    </Flex>
+                  );
+                })}
+              </Flex>
+            )}
+          </div>
+        </Flex>
+        <Flex
+          layout="col-left"
+          className="p-3 flex-grow bg-white rounded-b-2xl"
+        >
+          <Text className="mb-2 font-semibold">{product.title}</Text>
+          <Text size="xs" className="text-hg-black500 mb-8">
+            {product.description}
+          </Text>
+          <Button
+            type="tertiary"
+            className="mt-auto"
+            bgColor="bg-hg-primary"
+            customStyles="hover:bg-hg-secondary100"
+          >
+            <Link
+              href={`/productos/${product?.extraInformation?.slug}`}
+              className="text-inherit"
+            >
+              <Flex layout="row-center">
+                <p className="mr-2">Saber más</p>
+                <SvgArrow height={20} width={20} />
+              </Flex>
+            </Link>
+          </Button>
+        </Flex>
+      </div>
+    </Link>
   );
 }
