@@ -5,9 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
-import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -39,9 +37,7 @@ export default function Agenda() {
     state => state
   );
   const { setSelectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const { selectedTreatments } = useGlobalPersistedStore(state => state);
   const { selectedClinic } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
@@ -93,8 +89,6 @@ export default function Agenda() {
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatments([]);
-
       setSelectedTreatmentsIds(
         selectedTreatments!.map(x => x.flowwwId).join(', ')
       );

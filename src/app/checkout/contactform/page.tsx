@@ -138,14 +138,14 @@ export default function ConctactForm() {
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    const isSuccess = await UserService.registerUser(formData);
-    if (isSuccess) {
-      createAppointment();
-      setIsLoading(false);
-    } else {
-      handleRequestError([config.ERROR_REGISTRATION]);
-      setIsLoading(false);
+    const isValidUser = await UserService.checkUser(formData.email);
+
+    if (!isValidUser) {
+      await UserService.registerUser(formData);
     }
+
+    createAppointment();
+    setIsLoading(false);
   };
 
   const handleRequestError = (errors: Array<string>) => {
