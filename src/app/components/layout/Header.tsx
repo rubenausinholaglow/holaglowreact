@@ -7,18 +7,20 @@ import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
+import Link from 'next/link';
 
 import MobileNavigation from './MobileNavigation';
 
 let scrollPos = 0;
 
 const NAV_ITEMS = [
-  { name: 'Tratamientos' },
-  { name: 'Clínicas' },
-  { name: 'Sobre nosotros' },
+  { name: 'Tratamientos', link: ROUTES.products },
+  { name: 'Clínicas', link: ROUTES.products },
+  { name: 'Sobre nosotros', link: ROUTES.products },
 ];
 
 function Navigation({ className }: { className: string }) {
@@ -27,7 +29,9 @@ function Navigation({ className }: { className: string }) {
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
           <li className="font-medium" key={navItem.name}>
-            {navItem.name}
+            <Link className="text-inherit" href={navItem.link}>
+              {navItem.name}
+            </Link>
           </li>
         ))}
       </ul>
@@ -82,10 +86,12 @@ export default function Header() {
             layout="row-between"
             className={`relative py-3 lg:py-5 lg:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
-            <SvgHolaglow
-              fill={HOLAGLOW_COLORS['secondary']}
-              className="lg:absolute left-0 h-[24px] lg:h-[32px] w-[98px] lg:w-[130px] 2xl:ml-20"
-            />
+            <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
+              <SvgHolaglow
+                fill={HOLAGLOW_COLORS['secondary']}
+                className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
+              />
+            </Link>
             <Navigation className="hidden lg:block" />
 
             <Flex layout="row-center" className="lg:absolute right-0">

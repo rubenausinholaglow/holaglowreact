@@ -1,7 +1,9 @@
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import Link from 'next/link';
 
 export default function HomeHero() {
   return (
@@ -15,9 +17,11 @@ export default function HomeHero() {
           <br />
           tus normas
         </Title>
-        <Button type="primary" size="xl">
-          Ver tratamientos
-        </Button>
+        <Link href={ROUTES.products}>
+          <Button type="primary" size="xl">
+            Ver tratamientos
+          </Button>
+        </Link>
       </Flex>
     </Container>
   );

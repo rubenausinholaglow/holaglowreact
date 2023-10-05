@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Product } from '@interface/product';
 import Dropdown from 'app/components/forms/Dropdown';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { ROUTES } from 'app/utils/routes';
 import {
   Accordion,
   AccordionContent,
@@ -219,6 +217,7 @@ function ProductPriceItem({
                 onClick={() => {
                   setSelectedTreatments([product]);
                 }}
+                href={ROUTES.checkout.clinics}
               >
                 Reservar cita
                 <SvgArrow height={16} width={16} className="ml-2" />
@@ -279,11 +278,11 @@ function ProductPriceItem({
           ) : (
             <Button
               type="tertiary"
-              customStyles="bg-hg-primary"
-              className="mt-4"
+              customStyles="bg-hg-primary md:mt-4"
               onClick={() => {
                 setSelectedTreatments([product]);
               }}
+              href={ROUTES.checkout.clinics}
             >
               Reservar cita
               <SvgArrow height={16} width={16} className="ml-2" />
@@ -296,40 +295,21 @@ function ProductPriceItem({
 }
 
 export default function ProductPrices({ product }: { product: Product }) {
-  const router = useRouter();
   const { deviceSize } = useGlobalPersistedStore(state => state);
-  const [showDropdowns, setShowDropdowns] = useState(false);
-  const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
 
-  function upgradeItem({ item, isPack }: { item: any; isPack: boolean }) {
-    const iconComponentName = `Svg${UPGRADE_TYPES[item.type.toString()].icon}`;
-    const IconComponent = (icon as any)[iconComponentName] || null;
+  const isSessionProduct =
+    !isEmpty(product.upgrades) &&
+    product.upgrades?.every(upgrade => {
+      const regex = / x /;
+      return regex.test(upgrade.product.title);
+    });
 
-    return (
-      <Flex layout="col-left" className="w-full">
-        <Flex layout="row-left">
-          <IconComponent
-            height={16}
-            width={16}
-            className="text-hg-secondary mr-2"
-          />
-          <Text>{UPGRADE_TYPES[item.type.toString()].title}</Text>
-        </Flex>
-
-        {showDropdowns && isPack && (
-          <Dropdown
-            className="mt-2 w-full mb-4"
-            options={UPGRADE_TYPES[item.type.toString()].options}
-          />
-        )}
-      </Flex>
-    );
-  }
-
-  const isSessionProduct = product.upgrades?.every(upgrade => {
-    const regex = / x /;
-    return regex.test(upgrade.product.title);
-  });
+  const areUpgradesSessionProducts =
+    !isEmpty(product.upgrades) &&
+    product.upgrades.every(upgrade => {
+      const regex = / x /;
+      return regex.test(upgrade.product.title);
+    });
 
   return (
     <div
@@ -476,7 +456,7 @@ export default function ProductPrices({ product }: { product: Product }) {
             </>
           )}
 
-          {isSessionProduct && (
+          {areUpgradesSessionProducts && (
             <Flex layout="col-left" className="w-full">
               <Flex
                 layout="col-left"
@@ -487,7 +467,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                   className="w-full md:shadow-centered-secondary md:bg-white rounded-2xl"
                 >
                   <Text className="p-3 pb-0 font-semibold md:hidden">
-                    {product.title.slice(0, -4)}
+                    {product.title}
                   </Text>
                   <ProductPriceItem product={product} isSessionProduct />
                 </Flex>
