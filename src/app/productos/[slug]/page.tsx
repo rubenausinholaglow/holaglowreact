@@ -29,9 +29,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const [productId, setProductId] = useState('0');
 
   useEffect(() => {
+    console.log(stateProducts);
+
     if (!isEmpty(stateProducts)) {
       setProductsAreLoaded(true);
     }
+
+    console.log(productsAreLoaded);
   }, [stateProducts]);
 
   useEffect(() => {
@@ -53,8 +57,12 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }, [productsAreLoaded]);
 
   if (!productsAreLoaded) {
+    console.log('olakease')!;
+
     return <></>;
   }
+
+  console.log(stateProducts[0]);
 
   if (product != undefined && !isEmpty(product)) {
     return (
@@ -67,12 +75,10 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         <ProductPrices product={product} />
         <ProductExplanation product={product} />
         <ProductPaymentOptions totalPrice={product.price} />
-        <div className="bg-hg-black50 md:mt-16">
+        <div className="bg-hg-black50">
           <Testimonials />
         </div>
-        <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
-          <ProductSuggestions product={product} />
-        </div>
+        <ProductSuggestions product={product} />
         <ProductFaqs product={product} />
         <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
           <ProductCrosselling product={product} />

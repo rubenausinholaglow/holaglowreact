@@ -74,7 +74,10 @@ export default function ProductCard({
           bgColor="bg-hg-primary"
           customStyles="hover:bg-hg-secondary100"
         >
-          <Link href={`/productos/${product.slug}`} className="text-inherit">
+          <Link
+            href={`/productos/${product?.extraInformation?.slug}`}
+            className="text-inherit"
+          >
             <Flex layout="row-center">
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />

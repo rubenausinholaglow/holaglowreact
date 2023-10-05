@@ -2,24 +2,28 @@
 
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
-import { SvgArrow, SvgCheck } from 'icons/IconsDs';
+import {
+  SvgArrow,
+  SvgCheck,
+  SvgCheckCircle,
+  SvgRadioChecked,
+} from 'icons/IconsDs';
+import { useRouter } from 'next/navigation';
 
 export default function ConfirmationCheckout() {
-  const { selectedTreatments } = useGlobalPersistedStore(state => state);
-  const { selectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedDay } = useGlobalPersistedStore(state => state);
-  const { selectedClinic } = useGlobalPersistedStore(state => state);
-
+  const router = useRouter();
+  const { selectedTreatments, selectedSlot, selectedDay } =
+    useGlobalPersistedStore(state => state);
   const localSelectedDay = dayjs(selectedDay);
   let selectedTreatmentsNames = '';
-  let selectedTreatmentsDesc = '';
   if (selectedTreatments) {
-    selectedTreatmentsNames = selectedTreatments?.map(x => x.title).join(' + ');
+    selectedTreatmentsNames = selectedTreatments!.map(x => x.title).join(' + ');
     selectedTreatmentsDesc = selectedTreatments
       .map(x => x.description)
       .join(' + ');
@@ -64,16 +68,15 @@ export default function ConfirmationCheckout() {
                   {localSelectedDay.format('D')} de{' '}
                   {localSelectedDay.format('MMMM')} de{' '}
                   {localSelectedDay.format('YYYY')}
-                </Text>
-              </div>
+                </Text>              </div>
               <div className="w-full pb-3 flex items-center">
                 <SvgHour className="mr-2" />
-                <Text className="font-semibold">{selectedSlot?.startTime}</Text>
+ <Text className="font-semibold">{selectedSlot?.startTime}</Text>
               </div>
               <div className="w-full flex items-start pb-3 border-b border-hg-black700">
                 <SvgLocation className="mr-2 mt-1" />
                 <div className="flex flex-col">
-                  <Text className="font-semibold">{selectedClinic?.city}</Text>
+    <Text className="font-semibold">{selectedClinic?.city}</Text>
                   <Text size="xs">{selectedClinic?.address}</Text>
                 </div>
               </div>
@@ -82,7 +85,7 @@ export default function ConfirmationCheckout() {
                   <Text className="font-semibold">
                     {selectedTreatmentsNames}
                   </Text>
-                  <Text>{selectedTreatmentsDesc}</Text>
+                    <Text>{selectedTreatmentsDesc}</Text>
                 </div>
               </div>
             </div>

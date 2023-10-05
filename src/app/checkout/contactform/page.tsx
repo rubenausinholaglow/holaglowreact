@@ -23,8 +23,13 @@ dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
   const router = useRouter();
-  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
-    useGlobalPersistedStore(state => state);
+  const {
+    selectedTreatments,
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    setCurrentUser,
+  } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -118,9 +123,11 @@ export default function ConctactForm() {
     const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
     appointments.push({
       box: selectedSlot!.box,
-      endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+      endTime:
+        selectedDay!.format(format) + ' ' + selectedSlot!.endTime + ':00',
       id: '0',
-      startTime: selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+      startTime:
+        selectedDay!.format(format) + ' ' + selectedSlot!.startTime + ':00',
       treatment: ids,
       clientId: user?.flowwwToken,
       comment: '', //TODO: Pending
@@ -128,7 +135,7 @@ export default function ConctactForm() {
       referralId: '',
       externalReference: '', //TODO: Pending
       isPast: false,
-      clinicId: selectedClinic,
+      clinicId: selectedClinic?.flowwwId,
       isCancelled: false,
     } as Appointment);
     ScheduleService.scheduleBulk(appointments).then(x => {
@@ -138,12 +145,12 @@ export default function ConctactForm() {
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    const isValidUser = await UserService.checkUser(formData.email);
+    let user = await UserService.checkUser(formData.email);
 
-    if (!isValidUser) {
-      await UserService.registerUser(formData);
+    if (!user) {
+      user = await UserService.registerUser(formData);
     }
-
+    setCurrentUser(user);
     createAppointment();
     setIsLoading(false);
   };
