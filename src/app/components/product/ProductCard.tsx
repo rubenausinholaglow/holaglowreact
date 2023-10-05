@@ -12,6 +12,8 @@ import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import CategoryIcon from '../common/CategoryIcon';
+
 export default function ProductCard({
   product,
   ...rest
@@ -47,15 +49,9 @@ export default function ProductCard({
                   <Flex
                     key={category.name}
                     layout="row-left"
-                    className="flex rounded-full bg-hg-tertiary300"
+                    className="flex rounded-full"
                   >
-                    <SvgDiamond
-                      height={36}
-                      width={36}
-                      fill={HOLAGLOW_COLORS['secondary']}
-                      className="border rounded-full p-1"
-                      style={{ borderColor: `${HOLAGLOW_COLORS['secondary']}` }}
-                    />
+                    <CategoryIcon category={category.name} hasBackground />
                   </Flex>
                 );
               })}
