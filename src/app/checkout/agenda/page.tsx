@@ -9,7 +9,6 @@ import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { debug } from 'console';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
@@ -53,7 +52,7 @@ export default function Agenda() {
   };
 
   function loadMonth() {
-    if (selectedTreatmentsIds) {
+    if (selectedTreatmentsIds && availableDates.length < maxDays) {
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
@@ -118,7 +117,6 @@ export default function Agenda() {
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
     setSelectedDay(day);
-    console.log(selectedTreatments);
     ScheduleService.getSlots(
       day.format(format),
       selectedTreatments!.map(x => x.flowwwId).join(', '),
@@ -151,27 +149,10 @@ export default function Agenda() {
 
   const filterDate = (date: Date) => {
     const day = dayjs(date);
-
-    const availabilityForMonth = availableDates.find(x =>
-      day.isSame(x.date, 'month')
-    );
-
-    if (!availabilityForMonth) {
-      fetchData(day);
-    }
     return (
       availableDates.find(x => x.date == day.format(format))?.availability ??
       false
     );
-  };
-
-  const fetchData = async (day: any) => {
-    const data = await ScheduleService.getMonthAvailability(
-      day.format(format),
-      selectedTreatmentsIds,
-      selectedClinic!.flowwwId
-    );
-    setAvailableDates(prevDates => [...prevDates, ...data]);
   };
 
   return (
