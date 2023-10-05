@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 
 import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
+import UserService from '@services/UserService';
 
 const Page = () => {
   const [username, setUserName] = useState('');
@@ -24,11 +25,9 @@ const Page = () => {
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    const newCrisalix = localStorage.getItem('newCrisalix');
-    if (newCrisalix) {
-      menuItems[0].link = '/dashboard/crisalix';
-      menuItems[0].target = '';
-    }
+    UserService.createCrisalixUser(userId!, appointmentId!, clinicId!).then(
+      x => {}
+    );
     const storedUsername = localStorage.getItem('username') || '';
     setUserName(storedUsername);
 

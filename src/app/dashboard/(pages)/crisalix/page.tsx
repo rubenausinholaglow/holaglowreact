@@ -31,7 +31,7 @@ const Page = () => {
       () => {
         setAlmostReady(true);
       },
-      1 * 60 * 1000
+      3 * 60 * 1000
     );
   }, []);
 
@@ -43,7 +43,7 @@ const Page = () => {
       if (!x) {
         setTimeout(() => {
           checksimulationReady();
-        }, 15 * 1000);
+        }, 10 * 1000);
       }
     });
   };
@@ -73,6 +73,10 @@ const Page = () => {
               player_id: '${playerId}'
             };
             options['locale'] = 'es';
+            options['iframe'] = {
+              width: '98%',
+              height: '100%'
+            };  
             player.render('surgeon', options);
           });
         }
@@ -85,6 +89,10 @@ const Page = () => {
             player_id: '${playerId}'
           };
           options['locale'] = 'es';
+          options['iframe'] = {
+            width: '98%',
+            height: '100%'
+          };
           player.render('surgeon', options);
         }
       `;
@@ -101,23 +109,28 @@ const Page = () => {
       {username && (
         <Container>
           <Flex layout="col-center">
-            {!simulationReady && !loadPlayer && (
-              <p className="font-bold text-4xl mb-2">
-                {username}, estamos generando tu 3D/Avatar...
+            {!simulationReady && !loadPlayer && !almostReady && (
+              <p className="font-bold text-4xl mb-2 mt-[25%]">
+                {username}, estamos generando tu 3D...
               </p>
             )}
             {!simulationReady && !loadPlayer && almostReady && (
-              <p className="font-bold text-4xl mb-2">
-                {username}, en breves podrás ver tu 3D
+              <p className="font-bold text-4xl mb-2  mt-[25%]">
+                {username}, en breves podrás ver tu 3D!
               </p>
             )}
             {simulationReady && !loadPlayer && (
               <div>
-                <p className="font-bold text-4xl mb-2">
-                  {username}, ¿Listo para ver tu 3D?
+                <p className="font-bold text-4xl mb-2  mt-[25%]">
+                  {username} <br></br> ¿List@ para ver tu 3D?
                 </p>
 
-                <Button size="lg" style="primary" onClick={startPlayer}>
+                <Button
+                  size="lg"
+                  style="primary"
+                  onClick={startPlayer}
+                  className="mt-10"
+                >
                   Ver 3D
                 </Button>
               </div>
