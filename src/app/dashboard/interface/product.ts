@@ -82,6 +82,7 @@ export interface TipsDetails {
 }
 export interface Upgrade {
   product: Product;
+  order: number;
 }
 
 export interface RelatedProduct {

@@ -68,11 +68,11 @@ export default function Clinics({ className = '' }: { className: string }) {
                   <AccordionTrigger className="w-full">
                     <div
                       key="clinic.city"
-                      className={`mb-4 ${
+                      className={
                         selectedClinic.city === clinic.city
                           ? 'bg-hg-primary300'
                           : 'bg-hg-black100'
-                      } `}
+                      }
                       onClick={() => setSelectedClinic(clinics[index])}
                     >
                       <Flex
@@ -101,7 +101,7 @@ export default function Clinics({ className = '' }: { className: string }) {
                       </Flex>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                  <AccordionContent className="bg-hg-black100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <div
                       className={`overflow-hidden max-w-full w-full h-[300px]`}
                     >

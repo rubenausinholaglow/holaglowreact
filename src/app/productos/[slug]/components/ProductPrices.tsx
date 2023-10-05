@@ -380,7 +380,7 @@ export default function ProductPrices({ product }: { product: Product }) {
               </Flex>
 
               {product.upgrades
-                ?.sort((a, b) => a.product.order - b.product.order)
+                ?.sort((a, b) => a.order - b.order)
                 ?.map((upgrade: any, index) => {
                   const { product }: { product: Product } = upgrade;
 
@@ -473,8 +473,8 @@ export default function ProductPrices({ product }: { product: Product }) {
                 </Flex>
 
                 {product.upgrades
-                  ?.sort((a, b) => a.product.order - b.product.order)
-                  ?.map((upgrade, index) => {
+                  ?.sort((a, b) => a.order - b.order)
+                  ?.map(upgrade => {
                     return (
                       <Flex
                         key={upgrade.product.title}
