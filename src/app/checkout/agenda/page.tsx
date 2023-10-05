@@ -5,9 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
-import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -38,11 +36,8 @@ export default function Agenda() {
   const { selectedDay, setSelectedDay } = useGlobalPersistedStore(
     state => state
   );
-  const { setSelectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedTreatments, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
-  const { selectedClinic } = useGlobalPersistedStore(state => state);
+  const { setSelectedSlot, selectedTreatments, selectedClinic } =
+    useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
@@ -93,8 +88,6 @@ export default function Agenda() {
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatments([]);
-
       setSelectedTreatmentsIds(
         selectedTreatments!.map(x => x.flowwwId).join(', ')
       );
@@ -176,7 +169,7 @@ export default function Agenda() {
                 layout="row-between"
                 className="block gap-16 items-start md:flex"
               >
-                <div className="">
+                <div className="w-full">
                   {selectedTreatments &&
                     Array.isArray(selectedTreatments) &&
                     selectedTreatments.map(product => (

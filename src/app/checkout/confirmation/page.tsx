@@ -2,31 +2,24 @@
 
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
-import {
-  SvgArrow,
-  SvgCheck,
-  SvgCheckCircle,
-  SvgRadioChecked,
-} from 'icons/IconsDs';
-import { useRouter } from 'next/navigation';
+import { SvgArrow, SvgCheck } from 'icons/IconsDs';
 
 export default function ConfirmationCheckout() {
-  const router = useRouter();
-  const { selectedTreatments } = useGlobalPersistedStore(state => state);
-  const { selectedSlot } = useGlobalPersistedStore(state => state);
-  const { selectedDay } = useGlobalPersistedStore(state => state);
-  const { selectedClinic } = useGlobalPersistedStore(state => state);
-
+  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
+    useGlobalPersistedStore(state => state);
   const localSelectedDay = dayjs(selectedDay);
   let selectedTreatmentsNames = '';
+  let selectedTreatmentsDesc = '';
   if (selectedTreatments) {
     selectedTreatmentsNames = selectedTreatments!.map(x => x.title).join(' + ');
+    selectedTreatmentsDesc = selectedTreatments
+      .map(x => x.description)
+      .join(' + ');
   }
   return (
     <MainLayout hideFooter>
@@ -63,17 +56,22 @@ export default function ConfirmationCheckout() {
             <div className="bg-hg-black text-white p-4 gap-2 rounded-xl">
               <div className="w-full mt-3 pb-3 flex items-center">
                 <SvgCalendar className="mr-2" />
-                <Text className="font-semibold">Viernes 9 de Junio, 2023</Text>
+                <Text className="font-semibold">
+                  {localSelectedDay.format('dddd')},{' '}
+                  {localSelectedDay.format('D')} de{' '}
+                  {localSelectedDay.format('MMMM')} de{' '}
+                  {localSelectedDay.format('YYYY')}
+                </Text>{' '}
               </div>
               <div className="w-full pb-3 flex items-center">
                 <SvgHour className="mr-2" />
-                <Text className="font-semibold">15:30h</Text>
+                <Text className="font-semibold">{selectedSlot?.startTime}</Text>
               </div>
               <div className="w-full flex items-start pb-3 border-b border-hg-black700">
                 <SvgLocation className="mr-2 mt-1" />
                 <div className="flex flex-col">
-                  <Text className="font-semibold">Madrid Argüelles</Text>
-                  <Text size="xs">C. de Andrés Mellado 3, 28015, Madrid</Text>
+                  <Text className="font-semibold">{selectedClinic?.city}</Text>
+                  <Text size="xs">{selectedClinic?.address}</Text>
                 </div>
               </div>
               <div className="w-full flex items-start pt-4 text-hg-primary">
@@ -81,7 +79,7 @@ export default function ConfirmationCheckout() {
                   <Text className="font-semibold">
                     {selectedTreatmentsNames}
                   </Text>
-                  <Text>1 vial de ácido hialurónico</Text>
+                  <Text>{selectedTreatmentsDesc}</Text>
                 </div>
               </div>
             </div>
