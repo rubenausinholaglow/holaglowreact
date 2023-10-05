@@ -1,6 +1,6 @@
 import MainLayout from 'app/components/layout/MainLayout';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 
 export default function LegalAdvice() {
   return (
