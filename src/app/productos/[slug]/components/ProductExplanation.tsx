@@ -47,15 +47,42 @@ export default function ProductExplanation({ product }: { product: Product }) {
             variar según tus necesidades y la valoración del médico.
           </Text>
 
-          <div className="relative aspect-[4/3] mb-8">
+          <Text className="font-semibold">
+            Gif dentro de un placeholder cuadrado
+          </Text>
+          <div className="relative aspect-square mb-8">
             <Image
-              src="/images/product/fakeProductExample1.png"
+              src="/images/product/fakeProductGif.gif"
               alt="fakeImg"
               fill
               objectFit="cover"
               className="rounded-2xl"
             />
           </div>
+
+          <Text className="font-semibold">
+            Gif dentro de un placeholder 4/3 (aquí fuerzo la posición de la img
+            dentro del placeholder)
+          </Text>
+          <div className="relative aspect-[4/3] mb-8">
+            <Image
+              src="/images/product/fakeProductGif.gif"
+              alt="fakeImg"
+              fill
+              objectFit="cover"
+              className="rounded-2xl object-top"
+            />
+          </div>
+
+          <Text className="font-semibold">Gif a pelo</Text>
+          <Image
+            src="/images/product/fakeProductGif.gif"
+            alt="fakeImg"
+            width={100}
+            height={100}
+            className="rounded-2xl w-full"
+          />
+
           <ul className="flex flex-col mb-4 w-full">
             {product.extraInformation?.applicationZoneInfo?.applicationZoneDetail
               .sort((a, b) => a.order - b.order)
