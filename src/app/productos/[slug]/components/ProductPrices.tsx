@@ -1,4 +1,6 @@
-import { useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -16,6 +18,8 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import * as icon from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
+
+import ProductPriceCard from './ProductPriceCard';
 
 const UPGRADE_TYPES: Record<
   string,
@@ -131,7 +135,7 @@ const UPGRADE_TYPES: Record<
   },
 };
 
-function ProductPackItem({
+/* function ProductPackItem({
   item,
   showDropdown,
 }: {
@@ -291,24 +295,40 @@ function ProductPriceItem({
       )}
     </>
   );
-}
+} */
+
+/* const isSessionProduct =
+  !isEmpty(product.upgrades) &&
+  product.upgrades?.every(upgrade => {
+    const regex = / x /;
+    return regex.test(upgrade.product.title);
+  });
+
+const areUpgradesSessionProducts =
+  !isEmpty(product.upgrades) &&
+  product.upgrades.every(upgrade => {
+    const regex = / x /;
+    return regex.test(upgrade.product.title);
+  }); */
 
 export default function ProductPrices({ product }: { product: Product }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
+  const [productItems, setProductITems] = useState<any>([]);
 
-  const isSessionProduct =
-    !isEmpty(product.upgrades) &&
-    product.upgrades?.every(upgrade => {
-      const regex = / x /;
-      return regex.test(upgrade.product.title);
-    });
+  useEffect(() => {
+    if (product.upgrades) {
+      const AllProducts = [
+        { ...product },
+        ...product.upgrades.map(upgrade => ({ ...upgrade.product })),
+      ];
 
-  const areUpgradesSessionProducts =
-    !isEmpty(product.upgrades) &&
-    product.upgrades.every(upgrade => {
-      const regex = / x /;
-      return regex.test(upgrade.product.title);
-    });
+      setProductITems(AllProducts);
+    }
+  }, [product]);
+
+  if (isEmpty(productItems)) {
+    return <></>;
+  }
 
   return (
     <div
@@ -324,7 +344,11 @@ export default function ProductPrices({ product }: { product: Product }) {
         </Title>
 
         <Flex layout="col-left" className="md:flex-row mb-8 gap-8">
-          {!isSessionProduct && (
+          {productItems.map((item: Product, index: number) => (
+            <ProductPriceCard key={item.title} product={item} index={index} />
+          ))}
+
+          {/* {!isSessionProduct && (
             <>
               <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
                 <Accordion value="accordion">
@@ -489,7 +513,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                   })}
               </Flex>
             </Flex>
-          )}
+          )} */}
 
           {/* {product.isPack && (
             <Flex layout="col-left" className="w-full gap-4">
