@@ -9,7 +9,7 @@ import {
 } from 'app/utils/constants';
 import { ROUTES } from 'app/utils/routes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgHolaglow, SvgMenu } from 'icons/IconsDs';
+import { SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
 import MobileNavigation from './MobileNavigation';

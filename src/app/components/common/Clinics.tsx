@@ -16,7 +16,7 @@ import { SvgAngle } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 
-export default function Clinics({ className = '' }: { className: string }) {
+export default function Clinics({ className = '' }: { className?: string }) {
   const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
 
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
