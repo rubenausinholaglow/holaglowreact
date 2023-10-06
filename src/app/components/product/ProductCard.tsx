@@ -2,15 +2,15 @@
 
 import { useState } from 'react';
 import { Product } from '@interface/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
   product,
@@ -47,15 +47,9 @@ export default function ProductCard({
                   <Flex
                     key={category.name}
                     layout="row-left"
-                    className="flex rounded-full bg-hg-tertiary300"
+                    className="flex rounded-full"
                   >
-                    <SvgDiamond
-                      height={36}
-                      width={36}
-                      fill={HOLAGLOW_COLORS['secondary']}
-                      className="border rounded-full p-1"
-                      style={{ borderColor: `${HOLAGLOW_COLORS['secondary']}` }}
-                    />
+                    <CategoryIcon category={category.name} hasBackground />
                   </Flex>
                 );
               })}

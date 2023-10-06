@@ -16,7 +16,6 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import * as icon from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { useRouter } from 'next/navigation';
 
 const UPGRADE_TYPES: Record<
   string,
