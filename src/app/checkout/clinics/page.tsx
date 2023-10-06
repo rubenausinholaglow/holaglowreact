@@ -7,13 +7,18 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
   const { clinics, selectedClinic, setSelectedClinic } =
     useGlobalPersistedStore(state => state);
   const { selectedTreatments } = useGlobalPersistedStore(state => state);
-
+  useEffect(() => {
+    if (selectedClinic) {
+      setSelectedClinic(undefined);
+    }
+  }, []);
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
     router.push('/checkout/agenda');
