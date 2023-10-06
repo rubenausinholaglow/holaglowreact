@@ -82,9 +82,13 @@ export default function ClinicsCheckout() {
                   </address>
                 </Flex>
                 {selectedClinic && selectedClinic.city === clinic.city ? (
-                  <SvgRadioChecked height={24} width={24} />
+                  <SvgRadioChecked
+                    height={24}
+                    width={24}
+                    className="shrink-0 ml-4"
+                  />
                 ) : (
-                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full"></div>
+                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-4"></div>
                 )}
               </Flex>
             ))}

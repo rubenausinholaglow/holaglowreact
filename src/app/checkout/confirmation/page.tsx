@@ -2,6 +2,7 @@
 
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { ROUTES } from 'app/utils/routes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -24,7 +25,7 @@ export default function ConfirmationCheckout() {
   return (
     <MainLayout hideFooter>
       <Container className="mt-12 mb-4 md:mt-16">
-        <div className="md:w-1/2 pr-8">
+        <div className="md:w-1/2 md:pr-8">
           <SvgCheck
             height={88}
             width={88}
@@ -87,8 +88,9 @@ export default function ConfirmationCheckout() {
               <Button
                 type="tertiary"
                 size="md"
-                className={`hidden lg:block 2xl:mr-20`}
+                className="hidden md:inline"
                 customStyles="group-hover:bg-hg-secondary100"
+                href={ROUTES.products}
               >
                 <Flex layout="row-center">
                   <span className="font-semibold">Ver tratamientos</span>

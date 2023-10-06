@@ -212,7 +212,7 @@ function ProductPriceItem({
               </div>
               <Button
                 type="tertiary"
-                customStyles="bg-hg-primary md:mt-4"
+                customStyles="bg-hg-primary mt-4"
                 onClick={() => {
                   setSelectedTreatments([product]);
                 }}
@@ -277,7 +277,7 @@ function ProductPriceItem({
           ) : (
             <Button
               type="tertiary"
-              customStyles="bg-hg-primary md:mt-4"
+              customStyles="bg-hg-primary mt-4"
               onClick={() => {
                 setSelectedTreatments([product]);
               }}
