@@ -15,9 +15,11 @@ import Link from 'next/link';
 
 export default function ProductCard({
   product,
+  className = '',
   ...rest
 }: {
   product: Product;
+  className?: string;
   [key: string]: any;
 }) {
   const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
@@ -50,10 +52,11 @@ export default function ProductCard({
 
   return (
     <Link
-      className="text-inherit"
       href={`${ROUTES.products}/${product?.extraInformation?.slug}`}
+      className={`text-inherit ${className}`}
+      {...rest}
     >
-      <div className="flex flex-col h-full" {...rest}>
+      <div className="flex flex-col h-full pt-4 borde">
         <Flex layout="col-left" className="">
           <div
             className={`relative aspect-[4/3] w-full rounded-t-2xl`}
