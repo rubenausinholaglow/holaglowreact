@@ -48,12 +48,10 @@ export default function ProductCard({
 
   console.log(imgBackgroundStyle);
 
-  console.log(product);
-
   return (
     <Link
       className="text-inherit"
-      href={`${ROUTES.products}/${product.extraInformation.slug}`}
+      href={`${ROUTES.products}/${product?.extraInformation?.slug}`}
     >
       <div className="flex flex-col h-full" {...rest}>
         <Flex layout="col-left" className="">
