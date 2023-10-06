@@ -121,14 +121,14 @@ export default function ConctactForm() {
 
   const createAppointment = async () => {
     const appointments = [];
-    const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+    const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');´
     appointments.push({
       box: selectedSlot!.box,
       endTime:
-        selectedDay!.format(format) + ' ' + selectedSlot!.endTime + ':00',
+        dayjs(selectedDay)!.format(format) + ' ' + selectedSlot!.endTime + ':00',
       id: '0',
       startTime:
-        selectedDay!.format(format) + ' ' + selectedSlot!.startTime + ':00',
+      dayjs(selectedDay)!.format(format) + ' ' + selectedSlot!.startTime + ':00',
       treatment: ids,
       clientId: localUser?.flowwwToken,
       comment: '', //TODO: Pending
