@@ -7,11 +7,12 @@ import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
   product,
@@ -67,37 +68,36 @@ export default function ProductCard({
               className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
             />
 
-            {!isEmpty(product.category) && (
-              <Flex
-                layout="row-center"
-                className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
-              >
-                {product.category.map(category => {
-                  return (
-                    <Flex
-                      key={category.name}
-                      layout="row-left"
-                      className="flex rounded-full bg-hg-tertiary300"
-                    >
-                      <SvgDiamond
-                        height={36}
-                        width={36}
-                        fill={HOLAGLOW_COLORS['secondary']}
-                        className="border rounded-full p-1"
-                        style={{
-                          borderColor: `${HOLAGLOW_COLORS['secondary']}`,
-                        }}
-                      />
-                    </Flex>
-                  );
-                })}
-              </Flex>
-            )}
-          </div>
-        </Flex>
-        <Flex
-          layout="col-left"
-          className="p-3 flex-grow bg-white rounded-b-2xl"
+          {!isEmpty(product.category) && (
+            <Flex
+              layout="row-center"
+              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
+            >
+              {product.category.map(category => {
+                return (
+                  <Flex
+                    key={category.name}
+                    layout="row-left"
+                    className="flex rounded-full"
+                  >
+                    <CategoryIcon category={category.name} hasBackground />
+                  </Flex>
+                );
+              })}
+            </Flex>
+          )}
+        </div>
+      </Flex>
+      <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
+        <Text className="mb-2 font-semibold">{product.title}</Text>
+        <Text size="xs" className="text-hg-black500 mb-8">
+          {product.description}
+        </Text>
+        <Button
+          type="tertiary"
+          className="mt-auto"
+          bgColor="bg-hg-primary"
+          customStyles="hover:bg-hg-secondary100"
         >
           <Text className="mb-2 font-semibold">{product.title}</Text>
           <Text size="xs" className="text-hg-black500 mb-8">

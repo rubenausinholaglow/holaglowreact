@@ -11,7 +11,8 @@ import {
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
+
+import CategoryIcon from '../common/CategoryIcon';
 
 export default function CategorySelector({
   className,
@@ -90,15 +91,7 @@ export default function CategorySelector({
             }}
           >
             <Flex layout="row-left">
-              <SvgDiamond
-                height={32}
-                width={32}
-                fill={HOLAGLOW_COLORS['secondary']}
-                className="mr-2 border rounded-full p-1 bg-white"
-                style={{
-                  borderColor: `${HOLAGLOW_COLORS['secondary']}`,
-                }}
-              />
+              <CategoryIcon category={category} className="mr-2" />
               <Text size="xs" className="whitespace-nowrap font-medium">
                 {category}
               </Text>
