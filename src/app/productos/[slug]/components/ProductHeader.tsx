@@ -1,7 +1,7 @@
 import { Product } from '@interface/product';
 import CategoryIcon from 'app/components/common/CategoryIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
@@ -15,18 +15,20 @@ export default function ProductHeader({ product }: { product: Product }) {
         <Text className="text-hg-black500 mb-4">
           {product.extraInformation?.resultDescription}
         </Text>
-        {product.category.map(category => {
-          return (
-            <Button
-              key={category.name}
-              type="tertiary"
-              customStyles="border-none pl-1 mb-8"
-            >
-              <CategoryIcon category={category.name} />
-              {category.name}
-            </Button>
-          );
-        })}
+        <Flex className="gap-2">
+          {product.category.map(category => {
+            return (
+              <Button
+                key={category.name}
+                type="tertiary"
+                customStyles="border-none pl-1 mb-8"
+              >
+                <CategoryIcon category={category.name} className="mr-2" />
+                {category.name}
+              </Button>
+            );
+          })}
+        </Flex>
       </Container>
       <div className="md:w-1/2">
         <div className="relative aspect-[3/2] bg-hg-secondary700 rounded-t-2xl md:rounded-2xl md:mt-8">
