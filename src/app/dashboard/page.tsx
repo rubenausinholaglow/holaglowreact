@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../components/common/RegistrationForm';
 import SearchUser from './SearchUser';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 export default function Page({
   searchParams,
@@ -26,6 +27,7 @@ export default function Page({
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [boxId, setBoxId] = useState('');
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -64,7 +66,8 @@ export default function Page({
 
     await UserService.checkUser(userEmail)
       .then(async data => {
-        if (data && data !== '') {
+        if (data) {
+          setCurrentUser(data);
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           handleSearchError();
@@ -88,8 +91,9 @@ export default function Page({
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    const isSuccess = await UserService.registerUser(formData);
-    if (isSuccess) {
+    const user = await UserService.registerUser(formData);
+    if (user) {
+      setCurrentUser(user);
       redirectPage(formData.name, formData.id, formData.flowwwToken);
       setIsLoading(false);
     } else {

@@ -150,7 +150,7 @@ export default function ConctactForm() {
     if (!user) {
       user = await UserService.registerUser(formData);
     }
-    setCurrentUser(user);
+    if (user) setCurrentUser(user);
     createAppointment();
     setIsLoading(false);
   };

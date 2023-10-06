@@ -32,4 +32,8 @@ export interface ClientUpdate {
   postalCode: string;
   birthday: string;
   dni: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }

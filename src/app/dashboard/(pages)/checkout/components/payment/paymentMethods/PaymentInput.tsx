@@ -19,6 +19,7 @@ import TextInputField from '@components/TextInputField';
 import { ClientUpdate } from '@interface/client';
 import UserService from '@services/UserService';
 import FinanceService from '@services/FinanceService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -40,15 +41,20 @@ export default function PaymentInput(props: Props) {
   );
   const [showPepperModal, setShowPepperModal] = useState(false);
 
+  const { user } = useGlobalPersistedStore(state => state);
   const [formData, setFormData] = useState<ClientUpdate>({
-    dni: '',
-    address: '',
-    city: '',
-    province: '',
-    postalCode: '',
-    birthday: '',
-    id: '',
-    country: '',
+    dni: user!.dni,
+    address: user!.address,
+    city: user!.city,
+    province: user!.province,
+    postalCode: user!.postalCode,
+    birthday: user!.birthday,
+    id: user!.id,
+    country: user!.country,
+    firstName: user!.firstName,
+    lastName: user!.lastName + ' ' + user!.secondLastName,
+    email: user!.email,
+    phone: user!.phone,
   });
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
@@ -182,8 +188,31 @@ export default function PaymentInput(props: Props) {
             <HolaglowModal onClose={() => setShowPepperModal(false)}>
               <Container>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div>Tipo de producto: Tratamiento facial</div>
                   <div>Importe: {inputValue}</div>
+                  <TextInputField
+                    label="Nombre"
+                    placeholder="Nombre"
+                    value={formData.firstName}
+                    onChange={event => handleFormFieldChange(event, 'name')}
+                  />
+                  <TextInputField
+                    label="Apellidos"
+                    placeholder="Apellidos"
+                    value={formData.lastName}
+                    onChange={event => handleFormFieldChange(event, 'surnames')}
+                  />
+                  <TextInputField
+                    label="Email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={event => handleFormFieldChange(event, 'email')}
+                  />
+                  <TextInputField
+                    label="Teléfono"
+                    placeholder="Teléfono"
+                    value={formData.phone}
+                    onChange={event => handleFormFieldChange(event, 'phone')}
+                  />
                   <TextInputField
                     label="Fecha nacimiento"
                     placeholder="Fecha nacimiento"
