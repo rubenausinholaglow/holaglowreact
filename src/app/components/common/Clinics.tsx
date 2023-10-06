@@ -86,12 +86,6 @@ export default function Clinics({ className = '' }: { className: string }) {
                           <address className="text-xs not-italic mb-2">
                             {clinic.address}
                           </address>
-                          <Link
-                            className="text-sm underline"
-                            href={`https://www.holaglow.com/clinicas/${clinic.internalName}`}
-                          >
-                            Más info
-                          </Link>
                         </Flex>
                         <SvgAngle
                           height={24}
@@ -143,12 +137,6 @@ export default function Clinics({ className = '' }: { className: string }) {
                         <address className="not-italic mb-2 text-xs">
                           {clinic.address}
                         </address>
-                        <Link
-                          className="text-sm underline"
-                          href="https://www.google.cat"
-                        >
-                          Más info
-                        </Link>
                       </Flex>
                       <SvgAngle height={24} width={24} />
                     </Flex>
