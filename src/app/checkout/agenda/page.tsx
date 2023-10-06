@@ -2,6 +2,7 @@
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './datePickerStyle.css';
+
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Slot } from '@interface/slot';
@@ -17,6 +18,7 @@ import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
 export default function Agenda() {
