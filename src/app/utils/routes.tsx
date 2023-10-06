@@ -7,4 +7,6 @@ export const ROUTES = {
     contactForm: '/checkout/contactform',
     thankYou: '/checkout/confirmation',
   },
+  clinics: '/clinicas',
+  aboutUs: '/sobre-nosotros',
 };

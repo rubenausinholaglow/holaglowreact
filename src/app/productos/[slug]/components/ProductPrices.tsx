@@ -16,7 +16,6 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import * as icon from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { useRouter } from 'next/navigation';
 
 const UPGRADE_TYPES: Record<
   string,
@@ -380,7 +379,7 @@ export default function ProductPrices({ product }: { product: Product }) {
               </Flex>
 
               {product.upgrades
-                ?.sort((a, b) => a.product.order - b.product.order)
+                ?.sort((a, b) => a.order - b.order)
                 ?.map((upgrade: any, index) => {
                   const { product }: { product: Product } = upgrade;
 
@@ -473,8 +472,8 @@ export default function ProductPrices({ product }: { product: Product }) {
                 </Flex>
 
                 {product.upgrades
-                  ?.sort((a, b) => a.product.order - b.product.order)
-                  ?.map((upgrade, index) => {
+                  ?.sort((a, b) => a.order - b.order)
+                  ?.map(upgrade => {
                     return (
                       <Flex
                         key={upgrade.product.title}
