@@ -12,6 +12,12 @@ import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
 
+import es from 'date-fns/locale/es';
+import dayjs from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
+import { registerLocale } from 'react-datepicker';
+dayjs.locale(spanishConf);
+registerLocale('es', es);
 export default function MainLayout({
   isDashboard = false,
   isCheckout = false,

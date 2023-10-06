@@ -42,6 +42,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         }
       />
       <PhoneInput
+        disableSearchIcon={true}
+        countryCodeEditable={false}
         inputClass={`${poppins.className}`}
         inputStyle={{
           borderColor: 'white',

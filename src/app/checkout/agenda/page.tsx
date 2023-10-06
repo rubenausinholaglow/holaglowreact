@@ -2,16 +2,13 @@
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './datePickerStyle.css';
-
 import { useEffect, useState } from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
-import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -20,11 +17,7 @@ import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
-
-dayjs.locale(spanishConf);
-registerLocale('es', es);
 
 export default function Agenda() {
   const router = useRouter();
@@ -41,7 +34,6 @@ export default function Agenda() {
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
-  const localSelectedDay = dayjs(selectedDay);
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -51,7 +43,14 @@ export default function Agenda() {
   };
 
   function loadMonth() {
-    if (selectedTreatmentsIds && availableDates.length < maxDays) {
+    if (
+      selectedTreatmentsIds &&
+      (availableDates.length < maxDays ||
+        selectedTreatmentsIds.indexOf(
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+        ) == -1)
+    ) {
+      setLoading(true);
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
@@ -76,7 +75,10 @@ export default function Agenda() {
         if (!selectedDay) {
           setSelectedDay(dayjs());
           selectDate(new Date());
+        } else {
+          setSelectedDay(selectedDay);
         }
+        setLoading(false);
       });
     }
   }
@@ -116,6 +118,7 @@ export default function Agenda() {
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
     setSelectedDay(day);
+    setLoading(true);
     ScheduleService.getSlots(
       day.format(format),
       selectedTreatments!.map(x => x.flowwwId).join(', '),
