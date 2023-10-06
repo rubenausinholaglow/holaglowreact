@@ -56,7 +56,7 @@ export default function ConfirmationCheckout() {
             <div className="bg-hg-black text-white p-4 gap-2 rounded-xl">
               <div className="w-full mt-3 pb-3 flex items-center">
                 <SvgCalendar className="mr-2" />
-                <Text className="font-semibold">
+                <Text className="font-semibold capitalize">
                   {localSelectedDay.format('dddd')},{' '}
                   {localSelectedDay.format('D')} de{' '}
                   {localSelectedDay.format('MMMM')} de{' '}
