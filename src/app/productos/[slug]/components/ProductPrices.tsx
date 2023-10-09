@@ -6,6 +6,7 @@ import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { ROUTES } from 'app/utils/routes';
+import { group } from 'console';
 import {
   Accordion,
   AccordionContent,
@@ -20,6 +21,8 @@ import * as icon from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import ProductPriceCard from './ProductPriceCard';
+import ProductSessionGroupedPriceCard from './ProductSessionGroupedPriceCard';
+import ProductSessionPriceCard from './ProductSessionPriceCard';
 
 /* function ProductPackItem({
   item,
@@ -200,27 +203,63 @@ const areUpgradesSessionProducts =
 export default function ProductPrices({ product }: { product: Product }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [productItems, setProductITems] = useState<any>([]);
+  const [isSessionProduct, setIsSessionProduct] = useState<any>(false);
+  const [groupedSessionProducts, setGroupedSessionProducts] = useState<
+    Product[][] | null
+  >([]);
 
   useEffect(() => {
+    console.log(product.upgrades);
+
     if (product.upgrades) {
-      const AllProducts = [
-        { ...product },
-        ...product.upgrades.map(upgrade => ({ ...upgrade.product })),
-      ];
+      const AllProducts = product.upgrades.map(item => item.product);
 
       setProductITems(AllProducts);
     }
   }, [product]);
 
+  useEffect(() => {
+    console.log(productItems);
+
+    if (!isEmpty(productItems)) {
+      console.log(
+        productItems.map((item: Product) => item.title),
+        product.title
+      );
+
+      setIsSessionProduct(
+        productItems
+          .map((item: Product) => item.title)
+          .every((item: string) => item.includes(product.title))
+      );
+    }
+  }, [productItems]);
+
+  useEffect(() => {
+    function groupProductsByTitle(arr: Product[]) {
+      const groupedSessionProducts: { [key: string]: Product[] } = {};
+
+      for (const item of arr) {
+        if (!groupedSessionProducts[item.title]) {
+          groupedSessionProducts[item.title] = [];
+        }
+
+        groupedSessionProducts[item.title].push(item);
+      }
+
+      return Object.values(groupedSessionProducts);
+    }
+
+    const groupedArrays: Product[][] = groupProductsByTitle(productItems);
+
+    if (groupedArrays.length !== productItems.length) {
+      setGroupedSessionProducts(groupedArrays);
+    }
+  }, [isSessionProduct]);
+
   if (isEmpty(productItems)) {
     return <></>;
   }
-
-  console.log(
-    productItems
-      .map(item => item.title)
-      .every((item: string) => item.includes(item[0]))
-  );
 
   return (
     <div
@@ -235,298 +274,177 @@ export default function ProductPrices({ product }: { product: Product }) {
           tu experiencia
         </Title>
 
-        <Flex layout="col-left" className="md:flex-row mb-8 gap-8">
-          <Accordion
-            value={deviceSize.isMobile ? 'accordion-0' : 'value'}
-            className="flex flex-col gap-4 mb-8 md:flex-row md:gap-16 items-start"
-          >
-            {productItems.map((item: Product, index: number) => (
-              <ProductPriceCard key={item.title} product={item} index={index} />
-            ))}
-          </Accordion>
-        </Flex>
+        {!isSessionProduct && (
+          <Flex layout="col-left" className="md:flex-row mb-8 gap-8">
+            <Accordion
+              value={deviceSize.isMobile ? 'accordion-0' : 'value'}
+              className="flex flex-col gap-4 mb-8 md:flex-row md:gap-16 items-start"
+            >
+              {productItems.map((item: Product, index: number) => (
+                <ProductPriceCard
+                  key={item.title}
+                  product={item}
+                  index={index}
+                />
+              ))}
+            </Accordion>
+          </Flex>
+        )}
 
-        {/* {!isSessionProduct && (
-            <>
-              <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
-                <Accordion value="accordion">
-                  <AccordionItem value="accordion">
-                    <AccordionTrigger
-                      className={`${
-                        !deviceSize.isMobile ? 'pointer-events-none' : ''
-                      }`}
-                    >
-                      <Flex layout="col-left" className="p-3">
-                        <Flex layout="row-between" className="w-full">
-                          <Text
-                            size="xl"
-                            className="text-hg-secondary font-semibold md:text-2xl"
-                          >
-                            {product.price} €
-                          </Text>
-                          <Flex layout="row-right">
-                            <Text
-                              size="xs"
-                              className="py-1 px-2 bg-hg-pink/20 text-hg-pink rounded-md"
-                            >
-                              Básico
-                            </Text>
+        {isSessionProduct && isEmpty(groupedSessionProducts) && (
+          <Flex layout="col-left" className="md:flex-row md:gap-8">
+            <Flex
+              layout="col-left"
+              className="bg-white p-3 md:p-0 rounded-2xl w-full shadow-centered-secondary md:bg-transparent md:shadow-none"
+            >
+              <Text className="p-3 font-semibold md:hidden">
+                {product.title}
+              </Text>
 
-                            {deviceSize.isMobile && (
-                              <>
-                                <SvgAdd
-                                  height={24}
-                                  width={24}
-                                  className="ml-4 group-radix-state-open:hidden"
-                                />
-                                <SvgMinus
-                                  height={24}
-                                  width={24}
-                                  className="ml-4 hidden group-radix-state-open:block"
-                                />
-                              </>
-                            )}
-                          </Flex>
-                        </Flex>
-                        <Text className="font-semibold md:text-lg">
-                          {product.title}
-                        </Text>
-                      </Flex>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ProductPriceItem product={product} />
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-
-              {product.upgrades
-                ?.sort((a, b) => a.order - b.order)
-                ?.map((upgrade: any, index) => {
-                  const { product }: { product: Product } = upgrade;
-
-                  return (
-                    <Flex
-                      key={product.id}
-                      className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
-                    >
-                      <Accordion
-                        value={`${
-                          deviceSize.isMobile ? '' : `accordion${index}`
-                        }`}
-                      >
-                        <AccordionItem value={`accordion${index}`}>
-                          <AccordionTrigger
-                            className={`${
-                              !deviceSize.isMobile ? 'pointer-events-none' : ''
-                            }`}
-                          >
-                            <Flex layout="col-left" className="p-3">
-                              <Flex layout="row-between" className="w-full">
-                                <Text
-                                  size="xl"
-                                  className="text-hg-secondary font-semibold md:text-2xl"
-                                >
-                                  {product.price} €
-                                </Text>
-                                <Flex layout="row-right">
-                                  {product.isPack ? (
-                                    <Text
-                                      size="xs"
-                                      className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
-                                    >
-                                      Oferta especial
-                                    </Text>
-                                  ) : (
-                                    <Text
-                                      size="xs"
-                                      className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
-                                    >
-                                      Upgrade
-                                    </Text>
-                                  )}
-                                  {deviceSize.isMobile && (
-                                    <>
-                                      <SvgAdd
-                                        height={24}
-                                        width={24}
-                                        className="ml-4 group-radix-state-open:hidden"
-                                      />
-                                      <SvgMinus
-                                        height={24}
-                                        width={24}
-                                        className="ml-4 hidden group-radix-state-open:block"
-                                      />
-                                    </>
-                                  )}
-                                </Flex>
-                              </Flex>
-                              <Text className="font-semibold md:text-lg">
-                                {product.title}
-                              </Text>
-                            </Flex>
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <ProductPriceItem product={product} />
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </Flex>
-                  );
-                })}
-            </>
-          )}
-
-          {areUpgradesSessionProducts && (
-            <Flex layout="col-left" className="w-full">
               <Flex
                 layout="col-left"
-                className="md:flex-row bg-white md:bg-transparent p-3 md:p-0 rounded-2xl w-full shadow-centered-secondary md:shadow-none gap-4 md:gap-16"
+                className="gap-4 p-3 w-full md:flex-row md:gap-12"
+              >
+                {productItems.map((item: Product, index: number) => {
+                  if (item.price > 0) {
+                    return (
+                      <ProductSessionPriceCard
+                        key={item.title}
+                        product={item}
+                        index={index}
+                      />
+                    );
+                  }
+                })}
+              </Flex>
+            </Flex>
+          </Flex>
+        )}
+
+        {isSessionProduct && !isEmpty(groupedSessionProducts) && (
+          <Flex
+            layout="col-left"
+            className="w-full gap-4 md:gap-12 md:flex-row"
+          >
+            {groupedSessionProducts?.map((products, productIndex) => (
+              <Flex
+                layout="col-left"
+                className="w-full md:flex-row md:gap-8"
+                key={`productGroup-${productIndex}`}
               >
                 <Flex
                   layout="col-left"
-                  className="w-full md:shadow-centered-secondary md:bg-white rounded-2xl"
+                  className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary "
                 >
-                  <Text className="p-3 pb-0 font-semibold md:hidden">
-                    {product.title}
+                  <Text className="p-3 font-semibold md:text-lg">
+                    {products[0].title}
                   </Text>
-                  <ProductPriceItem product={product} isSessionProduct />
-                </Flex>
 
-                {product.upgrades
-                  ?.sort((a, b) => a.order - b.order)
-                  ?.map(upgrade => {
-                    return (
-                      <Flex
-                        key={upgrade.product.title}
-                        layout="col-left"
-                        className="w-full md:shadow-centered-secondary md:bg-white rounded-2xl"
-                      >
-                        <ProductPriceItem
-                          product={upgrade.product}
-                          isSessionProduct
-                        />
-                      </Flex>
-                    );
-                  })}
+                  <Flex layout="col-left" className="gap-4 w-full">
+                    {products.map((item: Product, index: number) => {
+                      if (item.price > 0) {
+                        return (
+                          <ProductSessionGroupedPriceCard
+                            key={`product-card-${index}`}
+                            product={item}
+                            index={index}
+                          />
+                        );
+                      }
+                      return null;
+                    })}
+                  </Flex>
+                </Flex>
               </Flex>
-            </Flex>
-          )} */}
+            ))}
+          </Flex>
+        )}
 
         {/* {product.isPack && (
-            <Flex layout="col-left" className="w-full gap-4">
+          <Flex layout="col-left" className="w-full gap-4">
+            <Flex
+              layout="col-left"
+              className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
+            >
+              <Flex layout="row-between" className="w-full p-2 mb-4">
+                <Text size="xl" className="font-semibold text-hg-secondary">
+                  1.299 €
+                </Text>
+                <Text
+                  size="xs"
+                  className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
+                >
+                  Upgrade
+                </Text>
+              </Flex>
+
               <Flex
                 layout="col-left"
-                className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary"
+                className="bg-hg-black50 p-3 gap-2 rounded-xl w-full"
               >
-                <Flex layout="row-between" className="w-full p-2 mb-4">
-                  <Text size="xl" className="font-semibold text-hg-secondary">
-                    1.299 €
-                  </Text>
-                  <Text
-                    size="xs"
-                    className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
-                  >
-                    Upgrade
-                  </Text>
+                <Flex layout="row-left">
+                  <SvgInjection
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2"
+                  />
+                  <Text className="font-semibold">{product.title}</Text>
                 </Flex>
 
-                <Flex
-                  layout="col-left"
-                  className="bg-hg-black50 p-3 gap-2 rounded-xl w-full"
-                >
-                  <Flex layout="row-left">
-                    <SvgInjection
-                      height={16}
-                      width={16}
-                      className="text-hg-secondary mr-2"
-                    />
-                    <Text className="font-semibold">{product.title}</Text>
-                  </Flex>
+                <Dropdown
+                  options={[
+                    { value: 'test', label: 'test' },
+                    { value: 'test2', label: 'test2' },
+                  ]}
+                  className="w-full mb-2"
+                />
 
-                  <Select
-                    options={selectOptions}
-                    className="w-full mb-2"
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        paddingTop: '5px',
-                        paddingBottom: '5px',
-                        borderRadius: '12px',
-                        background: state.hasValue
-                          ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
-                          : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
-                        borderColor: state.isFocused
-                          ? `${HOLAGLOW_COLORS['secondary']}`
-                          : `${HOLAGLOW_COLORS['black']}`,
-                      }),
-                      singleValue: (baseStyles, state) => ({
-                        ...baseStyles,
-                        color: state.hasValue
-                          ? `${HOLAGLOW_COLORS['secondary']}`
-                          : `${HOLAGLOW_COLORS['black300']}`,
-                      }),
-                      indicatorSeparator: () => ({ display: 'none' }),
-                      indicatorsContainer: () => ({ display: 'none' }),
-                    }}
+                <Flex layout="row-left">
+                  <SvgInjection
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2"
                   />
-
-                  <Flex layout="row-left">
-                    <SvgInjection
-                      height={16}
-                      width={16}
-                      className="text-hg-secondary mr-2"
-                    />
-                    <Text className="font-semibold">{product.title}</Text>
-                  </Flex>
-
-                  <Select
-                    options={selectOptions}
-                    className="w-full mb-2"
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        background: state.hasValue
-                          ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
-                          : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
-                        borderColor: state.isFocused
-                          ? `${HOLAGLOW_COLORS['secondary']}`
-                          : `${HOLAGLOW_COLORS['black']}`,
-                      }),
-                      indicatorSeparator: () => ({ display: 'none' }),
-                      indicatorsContainer: () => ({ display: 'none' }),
-                    }}
-                  />
-                  <Flex layout="row-left">
-                    <SvgInjection
-                      height={16}
-                      width={16}
-                      className="text-hg-secondary mr-2"
-                    />
-                    <Text className="font-semibold">{product.title}</Text>
-                  </Flex>
-
-                  <Select
-                    options={selectOptions}
-                    className="w-full mb-2"
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        background: state.hasValue
-                          ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
-                          : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
-                        borderColor: state.isFocused
-                          ? `${HOLAGLOW_COLORS['secondary']}`
-                          : `${HOLAGLOW_COLORS['black']}`,
-                      }),
-                      indicatorSeparator: () => ({ display: 'none' }),
-                      indicatorsContainer: () => ({ display: 'none' }),
-                    }}
-                  />
+                  <Text className="font-semibold">{product.title}</Text>
                 </Flex>
+
+                <Dropdown
+                  options={[
+                    { value: 'test', label: 'test' },
+                    { value: 'test2', label: 'test2' },
+                  ]}
+                  className="w-full mb-2"
+                />
+                <Flex layout="row-left">
+                  <SvgInjection
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2"
+                  />
+                  <Text className="font-semibold">{product.title}</Text>
+                </Flex>
+
+                <Select
+                  options={selectOptions}
+                  className="w-full mb-2"
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      background: state.hasValue
+                        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
+                        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+                      borderColor: state.isFocused
+                        ? `${HOLAGLOW_COLORS['secondary']}`
+                        : `${HOLAGLOW_COLORS['black']}`,
+                    }),
+                    indicatorSeparator: () => ({ display: 'none' }),
+                    indicatorsContainer: () => ({ display: 'none' }),
+                  }}
+                />
               </Flex>
             </Flex>
-          )} */}
+          </Flex>
+        )} */}
 
         <Flex className="bg-white/30 md:bg-transparent p-4 rounded-xl w-full md:w-auto gap-8 justify-center">
           <Text>Comparte</Text>
