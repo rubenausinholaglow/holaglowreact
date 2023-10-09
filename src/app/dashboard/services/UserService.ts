@@ -1,4 +1,5 @@
 import { User } from '@interface/appointment';
+
 import { Client } from '../interface/client';
 
 export default class UserService {
