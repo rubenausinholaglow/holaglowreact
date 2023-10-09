@@ -68,14 +68,20 @@
 #datepickerWrapper .react-datepicker__day--today {
   border-radius: 50%;
   background-color: #ffffff;
+  color: black;
 }
 
 /* Day Selected */
 #datepickerWrapper .react-datepicker__day--keyboard-selected,
 .react-datepicker__month-text--keyboard-selected,
 .react-datepicker__quarter-text--keyboard-selected,
-.react-datepicker__year-text--keyboard-selected {
-  border-radius: 50%;
-  background-color: #a96fe7;
-  color: #ffffff;
+.react-datepicker__year-text--keyboard-selected,
+.react-datepicker__day:hover {
+  border-radius: 50% !important;
+  background-color: #a96fe7 !important;
+  color: #ffffff !important;
+}
+
+.loading {
+  opacity: 0.25;
 }
