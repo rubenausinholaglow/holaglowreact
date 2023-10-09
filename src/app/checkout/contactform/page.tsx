@@ -157,10 +157,12 @@ export default function ConctactForm() {
     if (!user) {
       user = await UserService.registerUser(formData);
     }
-    setCurrentUser(user);
-    localUser = user;
-    await createAppointment();
-    setIsLoading(false);
+    if (user) {
+      setCurrentUser(user);
+      localUser = user;
+      await createAppointment();
+      setIsLoading(false);
+    }
   };
 
   const handleRequestError = (errors: Array<string>) => {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Clinic } from '@interface/clinic';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -13,7 +14,11 @@ export default function ClinicsCheckout() {
   const { clinics, selectedClinic, setSelectedClinic } =
     useGlobalPersistedStore(state => state);
   const { selectedTreatments } = useGlobalPersistedStore(state => state);
-
+  useEffect(() => {
+    if (selectedClinic) {
+      setSelectedClinic(undefined);
+    }
+  }, []);
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
     router.push('/checkout/agenda');
@@ -82,9 +87,13 @@ export default function ClinicsCheckout() {
                   </address>
                 </Flex>
                 {selectedClinic && selectedClinic.city === clinic.city ? (
-                  <SvgRadioChecked height={24} width={24} />
+                  <SvgRadioChecked
+                    height={24}
+                    width={24}
+                    className="shrink-0 ml-4"
+                  />
                 ) : (
-                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full"></div>
+                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-4"></div>
                 )}
               </Flex>
             ))}

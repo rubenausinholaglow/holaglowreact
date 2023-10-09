@@ -21,10 +21,8 @@ export default function Home() {
       <Products />
       <Professionals />
       <Testimonials />
-      <InTheNews />
       <Clinics />
       <GoToTreatments />
-      <FloatingBottomBar />
     </MainLayout>
   );
 }
