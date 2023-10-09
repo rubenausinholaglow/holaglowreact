@@ -7,6 +7,7 @@ import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgSpinner } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
+import { isEmpty } from 'lodash';
 
 const AppointmentsListComponent: React.FC<{
   clinicId: string;
@@ -48,7 +49,7 @@ const AppointmentsListComponent: React.FC<{
 
     await UserService.checkUser(appointment.lead?.user?.email)
       .then(async data => {
-        if (data && data !== '') {
+        if (data && !isEmpty(data)) {
           saveAppointmentInfo(appointment);
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
