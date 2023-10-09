@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Clinic } from '@interface/clinic';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -7,7 +8,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function ClinicsCheckout() {
   const router = useRouter();

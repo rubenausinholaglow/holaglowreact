@@ -1,6 +1,7 @@
+import { User } from '@interface/appointment';
+
 import { Client } from '../interface/client';
 
-import { User } from '@interface/appointment';
 export default class UserService {
   static async checkUser(email = ''): Promise<User | undefined> {
     try {
