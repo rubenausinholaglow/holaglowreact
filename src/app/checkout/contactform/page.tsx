@@ -125,16 +125,10 @@ export default function ConctactForm() {
     appointments.push({
       box: selectedSlot!.box,
       endTime:
-        dayjs(selectedDay)!.format(format) +
-        ' ' +
-        selectedSlot!.endTime +
-        ':00',
+        selectedDay!.format(format) + ' ' + selectedSlot!.endTime + ':00',
       id: '0',
       startTime:
-        dayjs(selectedDay)!.format(format) +
-        ' ' +
-        selectedSlot!.startTime +
-        ':00',
+        selectedDay!.format(format) + ' ' + selectedSlot!.startTime + ':00',
       treatment: ids,
       clientId: localUser?.flowwwToken,
       comment: '', //TODO: Pending
@@ -157,12 +151,10 @@ export default function ConctactForm() {
     if (!user) {
       user = await UserService.registerUser(formData);
     }
-    if (user) {
-      setCurrentUser(user);
-      localUser = user;
-      await createAppointment();
-      setIsLoading(false);
-    }
+    setCurrentUser(user);
+    localUser = user;
+    await createAppointment();
+    setIsLoading(false);
   };
 
   const handleRequestError = (errors: Array<string>) => {
