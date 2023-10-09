@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgHour, SvgLocation } from 'icons/Icons';
+import { SvgHour, SvgLocation, SvgSpinner } from 'icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
@@ -38,7 +38,8 @@ export default function Agenda() {
   const maxDays = 10;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingMonth, setLoadingMonth] = useState(false);
+  const [loadingDays, setLoadingDays] = useState(false);
 
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -52,7 +53,7 @@ export default function Agenda() {
           process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
         ) == -1)
     ) {
-      setLoading(true);
+      setLoadingMonth(true);
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
@@ -80,7 +81,7 @@ export default function Agenda() {
         } else {
           setSelectedDay(selectedDay);
         }
-        setLoading(false);
+        setLoadingMonth(false);
       });
     }
   }
@@ -113,14 +114,13 @@ export default function Agenda() {
   };
 
   const selectDate = (x: Date) => {
-    setLoading(true);
+    setLoadingDays(true);
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
     setSelectedDay(day);
-    setLoading(true);
     ScheduleService.getSlots(
       day.format(format),
       selectedTreatments!.map(x => x.flowwwId).join(', '),
@@ -147,7 +147,7 @@ export default function Agenda() {
         setAfternoonHours(afternoon);
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingDays(false);
       });
   };
 
@@ -241,6 +241,9 @@ export default function Agenda() {
                     calendarStartDay={1}
                     locale="es"
                     className="w-full"
+                    fixedHeight
+                    disabledKeyboardNavigation
+                    calendarClassName={`${loadingMonth ? 'loading' : ''}`}
                   ></DatePicker>
                 </Flex>
               </div>
@@ -337,23 +340,27 @@ export default function Agenda() {
                   </>
                 )}
               </Flex>
+              {loadingDays && <SvgSpinner height={24} width={24} />}
             </Container>
 
             <div className="mt-auto">
-              {isEmpty(afternoonHours) && isEmpty(morningHours) && !loading && (
-                <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
-                  <SvgSadIcon className="mb-5 text-hg-secondary" />
-                  <Title size="xl" className="font-semibold">
-                    ¡Lo sentimos!
-                  </Title>
-                  <Text size="sm" className="font-semibold mb-4 text-center">
-                    No hay citas para el dia seleccionado
-                  </Text>
-                  <Text size="xs" className="text-center">
-                    Selecciona otro día para ver la disponibilidad
-                  </Text>
-                </Flex>
-              )}
+              {isEmpty(afternoonHours) &&
+                isEmpty(morningHours) &&
+                !loadingMonth &&
+                !loadingDays && (
+                  <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+                    <SvgSadIcon className="mb-5 text-hg-secondary" />
+                    <Title size="xl" className="font-semibold">
+                      ¡Lo sentimos!
+                    </Title>
+                    <Text size="sm" className="font-semibold mb-4 text-center">
+                      No hay citas para el dia seleccionado
+                    </Text>
+                    <Text size="xs" className="text-center">
+                      Selecciona otro día para ver la disponibilidad
+                    </Text>
+                  </Flex>
+                )}
               <Flex
                 layout="col-left"
                 className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"
