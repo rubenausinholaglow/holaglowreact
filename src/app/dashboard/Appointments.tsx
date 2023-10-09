@@ -6,8 +6,8 @@ import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgSpinner } from 'icons/Icons';
-import { useRouter } from 'next/navigation';
 import { isEmpty } from 'lodash';
+import { useRouter } from 'next/navigation';
 
 const AppointmentsListComponent: React.FC<{
   clinicId: string;

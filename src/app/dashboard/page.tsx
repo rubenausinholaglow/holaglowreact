@@ -10,6 +10,7 @@ import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../components/common/RegistrationForm';
@@ -64,7 +65,7 @@ export default function Page({
 
     await UserService.checkUser(userEmail)
       .then(async data => {
-        if (data && data !== '') {
+        if (data && !isEmpty(data)) {
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           handleSearchError();
