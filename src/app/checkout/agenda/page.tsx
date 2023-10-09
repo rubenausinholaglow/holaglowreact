@@ -229,24 +229,34 @@ export default function Agenda() {
                 </div>
               </Flex>
             </Container>
-            <Container className="px-0 md:px-4">
-              <div className="">
-                <Flex className="w-full mb-6 md:mb-0" id="datepickerWrapper">
-                  <DatePicker
-                    inline
-                    onChange={selectDate}
-                    filterDate={filterDate}
-                    onMonthChange={onMonthChange}
-                    useWeekdaysShort
-                    calendarStartDay={1}
-                    locale="es"
-                    className="w-full"
-                    fixedHeight
-                    disabledKeyboardNavigation
-                    calendarClassName={`${loadingMonth ? 'loading' : ''}`}
-                  ></DatePicker>
-                </Flex>
-              </div>
+            <Container className="px-0 md:px-4 relative">
+              {loadingDays && (
+                <SvgSpinner
+                  height={48}
+                  width={48}
+                  className="absolute text-hg-secondary left-1/2 top-1/2 -ml-6 -mt-6"
+                />
+              )}
+              <Flex
+                className={`transition-opacity w-full mb-6 md:mb-0 ${
+                  loadingDays ? 'opacity-25' : 'opacity-100'
+                }`}
+                id="datepickerWrapper"
+              >
+                <DatePicker
+                  inline
+                  onChange={selectDate}
+                  filterDate={filterDate}
+                  onMonthChange={onMonthChange}
+                  useWeekdaysShort
+                  calendarStartDay={1}
+                  locale="es"
+                  className="w-full"
+                  fixedHeight
+                  disabledKeyboardNavigation
+                  calendarClassName={`${loadingMonth ? 'loading' : ''}`}
+                ></DatePicker>
+              </Flex>
             </Container>
           </div>
 
@@ -340,7 +350,6 @@ export default function Agenda() {
                   </>
                 )}
               </Flex>
-              {loadingDays && <SvgSpinner height={24} width={24} />}
             </Container>
 
             <div className="mt-auto">
