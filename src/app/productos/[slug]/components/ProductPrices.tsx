@@ -216,7 +216,12 @@ export default function ProductPrices({ product }: { product: Product }) {
     return <></>;
   }
 
-  console.log(product);
+  console.log(
+    productItems
+      .map(item => item.title)
+      .every((item: string) => item.includes(item[0]))
+  );
+
   return (
     <div
       className="bg-gradient from-hg-secondary500 to-hg-primary300"
@@ -239,8 +244,9 @@ export default function ProductPrices({ product }: { product: Product }) {
               <ProductPriceCard key={item.title} product={item} index={index} />
             ))}
           </Accordion>
+        </Flex>
 
-          {/* {!isSessionProduct && (
+        {/* {!isSessionProduct && (
             <>
               <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
                 <Accordion value="accordion">
@@ -407,7 +413,7 @@ export default function ProductPrices({ product }: { product: Product }) {
             </Flex>
           )} */}
 
-          {/* {product.isPack && (
+        {/* {product.isPack && (
             <Flex layout="col-left" className="w-full gap-4">
               <Flex
                 layout="col-left"
@@ -521,7 +527,6 @@ export default function ProductPrices({ product }: { product: Product }) {
               </Flex>
             </Flex>
           )} */}
-        </Flex>
 
         <Flex className="bg-white/30 md:bg-transparent p-4 rounded-xl w-full md:w-auto gap-8 justify-center">
           <Text>Comparte</Text>
