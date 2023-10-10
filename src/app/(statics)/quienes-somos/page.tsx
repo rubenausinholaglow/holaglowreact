@@ -2,8 +2,9 @@
 
 import Professionals from 'app/components/common/Professionals';
 import MainLayout from 'app/components/layout/MainLayout';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function StaticClinics() {
@@ -17,7 +18,10 @@ export default function StaticClinics() {
           <div className="md:flex md:flex-row gap-12 items-center">
             <Flex layout="col-left" className="md:w-1/2 mb-4 md:mb-0">
               <Title size="2xl" className="font-bold mb-4">
-                My glow, my rules
+                My glow,{' '}
+                <Underlined color={HOLAGLOW_COLORS['primary']}>
+                  my rules
+                </Underlined>
               </Title>
               <Text size="xl" className="">
                 Holaglow es la nueva cara de la medicina estética que dice adiós
@@ -36,13 +40,12 @@ export default function StaticClinics() {
           </div>
         </Container>
       </div>
+      <Professionals className="py-12 md:py-16" />
       <Container>
-        <Professionals className="py-12 md:py-16" />
-
-        <Flex className="py-12 md:py-16">
+        <Flex className="pb-12 md:pb-16">
           <ul className="flex flex-col gap-12">
-            <li className="flex flex-row gap-8 items-center">
-              <div className="w-1/5 aspect-square relative shrink-0">
+            <li className="flex flex-col md:flex-row gap-8 items-center">
+              <div className="w-full aspect-[2/1] md:w-1/5 md:aspect-square relative shrink-0">
                 <Image
                   alt="Sobre nosotros"
                   src="/images/statics/myGlowMyRules.webp"
@@ -52,7 +55,7 @@ export default function StaticClinics() {
               </div>
               <div>
                 <Title className="mb-4">Tú pones las reglas</Title>
-                <Text className="text-hg-black500">
+                <Text className="text-hg-black500 md:text-lg">
                   Hacemos fácil la medicina estética. La información y la
                   transparencia forman parte de nuestra esencia. Nosotros te
                   contamos sin tabúes todo lo que debes saber para que pongas
@@ -62,17 +65,8 @@ export default function StaticClinics() {
               </div>
             </li>
 
-            <li className="flex flex-row gap-8 items-center">
-              <div>
-                <Title className="mb-4">Conviértete en el centro</Title>
-                <Text className="text-hg-black500">
-                  Es tu momento. Ponemos el foco en ti. Disfruta de una
-                  experiencia hecha a la medida de todas las personas que ven en
-                  la medicina estética el mejor aliado para deslumbrar en su día
-                  a día.
-                </Text>
-              </div>
-              <div className="w-1/5 aspect-square relative shrink-0">
+            <li className="flex flex-col md:flex-row gap-8 items-center">
+              <div className="w-full aspect-[2/1] md:w-1/5 md:aspect-square relative shrink-0 md:order-2">
                 <Image
                   alt="Conviértete en el centro"
                   src="/images/statics/centro.webp"
@@ -80,10 +74,19 @@ export default function StaticClinics() {
                   className="object-cover rounded-2xl"
                 />
               </div>
+              <div>
+                <Title className="mb-4">Conviértete en el centro</Title>
+                <Text className="text-hg-black500 md:text-lg">
+                  Es tu momento. Ponemos el foco en ti. Disfruta de una
+                  experiencia hecha a la medida de todas las personas que ven en
+                  la medicina estética el mejor aliado para deslumbrar en su día
+                  a día.
+                </Text>
+              </div>
             </li>
 
-            <li className="flex flex-row gap-8 items-center">
-              <div className="w-1/5 aspect-square relative shrink-0">
+            <li className="flex flex-col md:flex-row gap-8 items-center">
+              <div className="w-full aspect-[2/1] md:w-1/5 md:aspect-square relative shrink-0">
                 <Image
                   alt="Resultados reales"
                   src="/images/statics/resultadosReales.webp"
@@ -93,7 +96,7 @@ export default function StaticClinics() {
               </div>
               <div>
                 <Title className="mb-4">Resultados reales</Title>
-                <Text className="text-hg-black500">
+                <Text className="text-hg-black500 md:text-lg">
                   Tus objetivos son los nuestros. Nuestro equipo médico experto
                   selecciona cada producto especialmente para ti, ajustándose a
                   tus necesidades y deseos. Queremos que disfrutes de tu glow.
@@ -103,6 +106,58 @@ export default function StaticClinics() {
           </ul>
         </Flex>
       </Container>
+      <div className="bg-hg-secondary100 py-12 md:py-16">
+        <Container>
+          <Title size="2xl" className="font-bold mb-12 md:mb-16">
+            Medicina estética{' '}
+            <Underlined color={HOLAGLOW_COLORS['secondary']}>
+              a tu medida
+            </Underlined>
+          </Title>
+
+          <div className="w-full relative aspect-[3/1] mb-12 md:mb-16">
+            <Image
+              alt="holaglow"
+              src={'/images/statics/clinics2.webp'}
+              fill
+              className="object-cover rounded-2xl"
+            />
+          </div>
+
+          <Flex layout="col-left" className="md:flex-row gap-8 md:gap-12">
+            <div>
+              <Text size="xl" className="font-semibold">
+                Equipo médico experto
+              </Text>
+              <Text className="text-hg-black500">
+                Nuestros doctores expertos en medicina estética cuentan con una
+                extensa experiencia que les permite aplicar nuestra selección de
+                tratamientos con la mayor seguridad.
+              </Text>
+            </div>
+            <div>
+              <Text size="xl" className="font-semibold">
+                Tratamientos no invasivos
+              </Text>
+              <Text className="text-hg-black500">
+                Nuestro equipo médico ha hecho una selección de tratamientos
+                estéticos validados para obtener los mejores resultados con el
+                menor tiempo de post-tratamiento posible.
+              </Text>
+            </div>
+            <div>
+              <Text size="xl" className="font-semibold">
+                Productos de calidad
+              </Text>
+              <Text className="text-hg-black500">
+                Todos los productos que empleamos han sido seleccionados
+                cuidadosamente con criterios de calidad y seguridad para obtener
+                los resultados deseados.
+              </Text>
+            </div>
+          </Flex>
+        </Container>
+      </div>
     </MainLayout>
   );
 }

@@ -54,7 +54,7 @@ export default function Professionals({
           literal y metafóricamente.
         </Text>
       </Container>
-      <div className="px-4 md:w-1/2">
+      <div className="md:w-1/2">
         {deviceSize.isMobile && (
           <ProductCarousel type="professionals" items={professionals} />
         )}
