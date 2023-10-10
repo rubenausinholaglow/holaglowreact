@@ -4,6 +4,11 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+export const metadata = {
+  title: 'Clínicas de medicina estética Holaglow',
+  description:
+    'Ven a visitar las clínicas Holaglow, un espacio de confianza, profesionalidad e innovación donde podrás expresar tu belleza libremente.',
+};
 export default function StaticClinics() {
   return (
     <MainLayout>
