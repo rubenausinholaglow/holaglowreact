@@ -148,9 +148,9 @@ export default function ProductPrices({ product }: { product: Product }) {
 
   useEffect(() => {
     if (product.upgrades) {
-      const AllProducts = product.upgrades.map(item => item.product);
-
-      setProductITems(AllProducts);
+      product.upgrades = product.upgrades.sort((x, y) => x.order - y.order);
+      let allProducts = product.upgrades.map(item => item.product);
+      setProductITems(allProducts);
     }
   }, [product]);
 
@@ -214,6 +214,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                   key={item.title}
                   product={item}
                   index={index}
+                  parentProduct={product}
                 />
               ))}
             </Accordion>
@@ -287,14 +288,6 @@ export default function ProductPrices({ product }: { product: Product }) {
             ))}
           </Flex>
         )}
-
-        <Flex className="bg-white/30 md:bg-transparent p-4 rounded-xl w-full md:w-auto gap-8 justify-center">
-          <Text>Comparte</Text>
-          <icon.SvgInstagram />
-          <icon.SvgFacebook />
-          <icon.SvgX />
-          <icon.SvgShare />
-        </Flex>
       </Container>
     </div>
   );

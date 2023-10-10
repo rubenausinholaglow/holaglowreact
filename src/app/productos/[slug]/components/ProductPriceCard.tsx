@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -130,21 +130,40 @@ const UPGRADE_TYPES: Record<
   },
 };
 
+export interface option {
+  label: string;
+  value: string;
+}
+
 export default function ProductPriceCard({
   product,
   index,
+  parentProduct,
 }: {
   product: Product;
   index: number;
+  parentProduct: Product;
 }) {
   const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
     state => state
   );
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedPackOptions, setSelectedPackOptions] = useState(
+    [] as option[]
+  );
   const [isButtonDisabled, setIsButtonDisabled] = useState(product.isPack);
-
-  console.log(product.title, product.isPack);
-
+  function selectedPackOption(i: number, x: option) {
+    var copy = selectedPackOptions;
+    if (selectedPackOptions.length < i + 1) {
+      selectedPackOptions.push(x);
+    } else {
+      selectedPackOptions[i] = x;
+    }
+    setSelectedPackOptions(copy);
+    if (selectedPackOptions.length == product.packUnities.length) {
+      setIsButtonDisabled(false);
+    }
+  }
   return (
     <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
       <AccordionItem
@@ -218,13 +237,19 @@ export default function ProductPriceCard({
               </Flex>
             ) : (
               <Flex layout="col-left" className="gap-1">
-                {product.packUnities.map((item: any) => {
+                {product.packUnities.map((item: any, i: number) => {
                   const iconComponentName = `Svg${
                     UPGRADE_TYPES[item.type.toString()].icon
                   }`;
                   const IconComponent =
                     (icon as any)[iconComponentName] || null;
-
+                  const options = UPGRADE_TYPES[item.type.toString()].options;
+                  let defaultValue = undefined;
+                  if (i == 0) {
+                    defaultValue = UPGRADE_TYPES[
+                      item.type.toString()
+                    ].options.find(x => parentProduct.title == x.label);
+                  }
                   return (
                     <Flex key={item.id} layout="col-left" className="w-full">
                       <Flex layout="row-left">
@@ -241,7 +266,9 @@ export default function ProductPriceCard({
                       {showDropdown && (
                         <Dropdown
                           className="mt-2 w-full mb-4"
-                          options={UPGRADE_TYPES[item.type.toString()].options}
+                          options={options}
+                          defaultValue={defaultValue}
+                          onChange={(x: any) => selectedPackOption(i, x)}
                         />
                       )}
                     </Flex>

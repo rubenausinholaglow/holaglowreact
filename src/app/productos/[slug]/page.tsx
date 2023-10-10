@@ -44,8 +44,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     setProductId(productId);
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
-      console.log(productDetails.upgrades);
-
       setProduct(isEmpty(product) ? null : productDetails);
     }
     if (productId !== '' && productsAreLoaded) {
@@ -59,9 +57,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }
 
   if (product != undefined && !isEmpty(product)) {
-    console.log(product);
-    console.log(product.upgrades);
-
     return (
       <MainLayout>
         <div className="bg-hg-cream500 rounded-t-3xl pt-8">
