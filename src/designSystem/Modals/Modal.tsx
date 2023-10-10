@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect } from 'react';
 import { useGlobalStore } from 'app/stores/globalStore';
+import { Container } from 'designSystem/Layouts/Layouts';
 import { twMerge } from 'tailwind-merge';
 
 export const ModalBackground = ({
@@ -29,7 +30,7 @@ export const Modal = ({
   width,
   height,
   className,
-  from = 'right',
+  type = 'right',
   hideModalBackground = false,
   children,
   ...rest
@@ -39,7 +40,7 @@ export const Modal = ({
   width?: string;
   height?: string;
   className?: string;
-  from?: 'right' | 'bottom';
+  type?: 'right' | 'bottom' | 'center';
   children: ReactNode;
   [key: string]: any;
 }) => {
@@ -54,20 +55,49 @@ export const Modal = ({
     setIsModalOpen(isVisible);
   }, [isVisible]);
 
-  const animationStyles =
-    isVisible && isModalOpen
-      ? from === 'right'
-        ? 'translate-x-[0%]'
-        : from === 'bottom'
-        ? 'translate-y-[0%]'
-        : ''
-      : `${from === 'right' ? 'translate-x-[105%]' : 'translate-y-[105%]'}`;
+  let animationStyles = `
+    ${type === 'right' ? 'translate-x-[105%]' : ' '}
+    ${type === 'bottom' ? 'translate-y-[105%]' : ' '}
+    ${type === 'center' ? 'translate-y-[200%]' : ' '}
+  `;
+
+  if (isVisible && isModalOpen) {
+    animationStyles = `
+      ${type === 'right' ? 'translate-x-[0%]' : ''}
+      ${type === 'bottom' ? 'translate-y-[0%]' : ''}
+      ${type === 'center' ? 'translate-y-[0%]' : ''}
+    `;
+  }
+
+  if (type === 'center') {
+    return (
+      <div
+        className={`transition-all fixed inset-0 z-50 ${animationStyles}`}
+        onClick={() => setIsModalOpen(false)}
+      >
+        <Container className="h-full relative">
+          <div
+            className={twMerge(
+              `transition-all mx-auto bg-white rounded-2xl relative top-1/2 -translate-y-1/2
+              ${width ? width : 'w-full'}
+              ${height ? height : 'h-full'}
+              ${className ? className : ''}`
+            )}
+            {...rest}
+          >
+            {children}
+          </div>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <div
       className={twMerge(
         `text-hg-black transition-all fixed right-0 bottom-0 bg-white z-50 shadow-centered-black overflow-y-auto
-          ${from === 'right' ? 'top-0' : ''}
+          ${type === 'right' ? 'top-0' : ''}
+          ${type === 'bottom' ? '' : ''}
           ${width ? width : 'w-full'}
           ${height ? height : 'h-full'}
           ${animationStyles}
