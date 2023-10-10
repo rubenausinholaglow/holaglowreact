@@ -4,27 +4,22 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
-import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgHour, SvgLocation } from 'icons/Icons';
+import { SvgHour, SvgLocation, SvgSpinner } from 'icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
-
-dayjs.locale(spanishConf);
-registerLocale('es', es);
 
 export default function Agenda() {
   const router = useRouter();
@@ -41,17 +36,24 @@ export default function Agenda() {
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
-  const localSelectedDay = dayjs(selectedDay);
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingMonth, setLoadingMonth] = useState(false);
+  const [loadingDays, setLoadingDays] = useState(false);
 
   const toggleClicked = () => {
     setClicked(!clicked);
   };
 
   function loadMonth() {
-    if (selectedTreatmentsIds && availableDates.length < maxDays) {
+    if (
+      selectedTreatmentsIds &&
+      (availableDates.length < maxDays ||
+        selectedTreatmentsIds.indexOf(
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+        ) == -1)
+    ) {
+      setLoadingMonth(true);
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
@@ -76,7 +78,10 @@ export default function Agenda() {
         if (!selectedDay) {
           setSelectedDay(dayjs());
           selectDate(new Date());
+        } else {
+          setSelectedDay(selectedDay);
         }
+        setLoadingMonth(false);
       });
     }
   }
@@ -109,7 +114,7 @@ export default function Agenda() {
   };
 
   const selectDate = (x: Date) => {
-    setLoading(true);
+    setLoadingDays(true);
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
@@ -142,7 +147,7 @@ export default function Agenda() {
         setAfternoonHours(afternoon);
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingDays(false);
       });
   };
 
@@ -224,21 +229,34 @@ export default function Agenda() {
                 </div>
               </Flex>
             </Container>
-            <Container className="px-0 md:px-4">
-              <div className="">
-                <Flex className="w-full mb-6 md:mb-0" id="datepickerWrapper">
-                  <DatePicker
-                    inline
-                    onChange={selectDate}
-                    filterDate={filterDate}
-                    onMonthChange={onMonthChange}
-                    useWeekdaysShort
-                    calendarStartDay={1}
-                    locale="es"
-                    className="w-full"
-                  ></DatePicker>
-                </Flex>
-              </div>
+            <Container className="px-0 md:px-4 relative">
+              {loadingDays && (
+                <SvgSpinner
+                  height={48}
+                  width={48}
+                  className="absolute text-hg-secondary left-1/2 top-1/2 -ml-6 -mt-6"
+                />
+              )}
+              <Flex
+                className={`transition-opacity w-full mb-6 md:mb-0 ${
+                  loadingDays ? 'opacity-25' : 'opacity-100'
+                }`}
+                id="datepickerWrapper"
+              >
+                <DatePicker
+                  inline
+                  onChange={selectDate}
+                  filterDate={filterDate}
+                  onMonthChange={onMonthChange}
+                  useWeekdaysShort
+                  calendarStartDay={1}
+                  locale="es"
+                  className="w-full"
+                  fixedHeight
+                  disabledKeyboardNavigation
+                  calendarClassName={`${loadingMonth ? 'loading' : ''}`}
+                ></DatePicker>
+              </Flex>
             </Container>
           </div>
 
@@ -285,7 +303,7 @@ export default function Agenda() {
                                 }}
                               >
                                 {clickedHour === x.startTime && (
-                                  <SvgCheck className="text-hg-primary mr-1" />
+                                  <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
                                 )}
                                 {x.startTime} h
                               </div>
@@ -335,20 +353,23 @@ export default function Agenda() {
             </Container>
 
             <div className="mt-auto">
-              {isEmpty(afternoonHours) && isEmpty(morningHours) && !loading && (
-                <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
-                  <SvgSadIcon className="mb-5 text-hg-secondary" />
-                  <Title size="xl" className="font-semibold">
-                    ¡Lo sentimos!
-                  </Title>
-                  <Text size="sm" className="font-semibold mb-4 text-center">
-                    No hay citas para el dia seleccionado
-                  </Text>
-                  <Text size="xs" className="text-center">
-                    Selecciona otro día para ver la disponibilidad
-                  </Text>
-                </Flex>
-              )}
+              {isEmpty(afternoonHours) &&
+                isEmpty(morningHours) &&
+                !loadingMonth &&
+                !loadingDays && (
+                  <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+                    <SvgSadIcon className="mb-5 text-hg-secondary" />
+                    <Title size="xl" className="font-semibold">
+                      ¡Lo sentimos!
+                    </Title>
+                    <Text size="sm" className="font-semibold mb-4 text-center">
+                      No hay citas para el dia seleccionado
+                    </Text>
+                    <Text size="xs" className="text-center">
+                      Selecciona otro día para ver la disponibilidad
+                    </Text>
+                  </Flex>
+                )}
               <Flex
                 layout="col-left"
                 className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"

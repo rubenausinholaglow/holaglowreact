@@ -24,6 +24,120 @@ import ProductPriceCard from './ProductPriceCard';
 import ProductSessionGroupedPriceCard from './ProductSessionGroupedPriceCard';
 import ProductSessionPriceCard from './ProductSessionPriceCard';
 
+const UPGRADE_TYPES: Record<
+  string,
+  {
+    title: string;
+    icon: string;
+    options: { label: string; value: string }[];
+  }
+> = {
+  '0': {
+    title: 'Ácido Hialurónico',
+    icon: 'Injection',
+    options: [
+      {
+        label: 'Aumento de labios',
+        value: 'Aumento de labios',
+      },
+      {
+        label: 'Código de barras',
+        value: 'Código de barras',
+      },
+      {
+        label: 'Proyección de mandíbula',
+        value: 'Proyección de mandíbula',
+      },
+      {
+        label: 'Proyección de mentón',
+        value: 'Proyección de mentón',
+      },
+      {
+        label: 'Proyección de Pómulos',
+        value: 'Proyección de Pómulos',
+      },
+      {
+        label: 'Relleno de ojeras',
+        value: 'Relleno de ojeras',
+      },
+      {
+        label: 'Relleno lineas marioneta',
+        value: 'Relleno lineas marioneta',
+      },
+      {
+        label: 'Rinomodelación',
+        value: 'Rinomodelación',
+      },
+      {
+        label: 'Sonrisa Gingival',
+        value: 'Sonrisa Gingival',
+      },
+      {
+        label: 'Surco Nasogeniano',
+        value: 'Surco Nasogeniano',
+      },
+      {
+        label: 'Volumen y perfilado de Cejas',
+        value: 'Volumen y perfilado de Cejas',
+      },
+    ],
+  },
+  '1': {
+    title: 'BabyBotox',
+    icon: 'Injection',
+    options: [
+      { label: 'Baby botox', value: 'Baby botox' },
+      {
+        label: 'Arrugas entrecejo y patas de gallo',
+        value: 'Arrugas entrecejo y patas de gallo',
+      },
+    ],
+  },
+  '2': {
+    title: 'Botox',
+    icon: 'Injection',
+    options: [
+      {
+        label: 'Arrugas expresión: frente, entrecejo y patas de gallo',
+        value: 'Arrugas expresión: frente, entrecejo y patas de gallo',
+      },
+    ],
+  },
+  '3': {
+    title: 'Piel',
+    icon: 'Injection',
+    options: [
+      {
+        label: 'Hydrafacial express (1 sesión)',
+        value: 'Hydrafacial express (1 sesión)',
+      },
+      {
+        label: 'Mesoterapia (1 sesión)',
+        value: 'Mesoterapia (1 sesión)',
+      },
+    ],
+  },
+  '4': {
+    title: 'Piel Profunda',
+    icon: 'Injection',
+    options: [
+      {
+        label: 'Hydrafacial deluxe (1 sesión)',
+        value: 'Hydrafacial deluxe (1 sesión)',
+      },
+      {
+        label: 'Dermapen (1 sesión)',
+        value: 'Dermapen (1 sesión)',
+      },
+    ],
+  },
+  '5': {
+    title: 'Vitaminas',
+    icon: 'Medicine',
+    options: [],
+  },
+};
+
 export default function ProductPrices({ product }: { product: Product }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [productItems, setProductITems] = useState<any>([]);

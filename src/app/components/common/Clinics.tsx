@@ -83,7 +83,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                           <Text size="lg" className="font-semibold mb-2">
                             {clinic.city}
                           </Text>
-                          <address className="text-xs not-italic mb-2">
+                          <address className="text-xs text-left not-italic mb-2">
                             {clinic.address}
                           </address>
                         </Flex>
@@ -134,7 +134,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                         <Text size="lg" className="font-semibold mb-2">
                           {clinic.city}
                         </Text>
-                        <address className="not-italic mb-2 text-xs">
+                        <address className="text-left not-italic mb-2 text-xs">
                           {clinic.address}
                         </address>
                       </Flex>

@@ -37,4 +37,6 @@ export interface User {
   firstName: string;
   flowwwToken: string;
   email: string;
+  phone: string;
+  id: string;
 }
