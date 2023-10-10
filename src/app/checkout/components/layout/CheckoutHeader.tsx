@@ -6,8 +6,8 @@ import { SvgHolaglow } from 'icons/IconsDs';
 export default function CheckoutHeader() {
   return (
     <Container>
-      <Flex layout="row-between" className="py-3">
-        <SvgHolaglow className="text-hg-secondary" />
+      <Flex layout="row-between" className="py-4 md:py-6">
+        <SvgHolaglow className="text-hg-secondary md:h-[29px] md:w-[120px]" />
         <Button size="sm" type="tertiary">
           <SvgArrowSmallLeft />
 
