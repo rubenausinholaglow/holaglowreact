@@ -124,44 +124,11 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '5': {
-    title: 'Vitaminas',
+    title: 'Cóctel de vitaminas',
     icon: 'Medicine',
     options: [],
   },
 };
-
-function ProductPackItem({
-  item,
-  showDropdown = false,
-}: {
-  item: any;
-  showDropdown?: boolean;
-}) {
-  const iconComponentName = `Svg${UPGRADE_TYPES[item.type.toString()].icon}`;
-  const IconComponent = (icon as any)[iconComponentName] || null;
-
-  return (
-    <Flex layout="col-left" className="w-full">
-      <Flex layout="row-left">
-        <IconComponent
-          height={16}
-          width={16}
-          className="text-hg-secondary mr-2"
-        />
-        <Text className="text-sm md:text-md">
-          {UPGRADE_TYPES[item.type.toString()].title}
-        </Text>
-      </Flex>
-
-      {showDropdown && (
-        <Dropdown
-          className="mt-2 w-full mb-4"
-          options={UPGRADE_TYPES[item.type.toString()].options}
-        />
-      )}
-    </Flex>
-  );
-}
 
 export default function ProductPriceCard({
   product,
@@ -170,8 +137,13 @@ export default function ProductPriceCard({
   product: Product;
   index: number;
 }) {
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
+    state => state
+  );
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(product.isPack);
+
+  console.log(product.title, product.isPack);
 
   return (
     <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
@@ -218,12 +190,12 @@ export default function ProductPriceCard({
                     <SvgAdd
                       height={24}
                       width={24}
-                      className="ml-4 group-radix-state-open:hidden"
+                      className="ml-2 group-radix-state-open:hidden"
                     />
                     <SvgMinus
                       height={24}
                       width={24}
-                      className="ml-4 hidden group-radix-state-open:block"
+                      className="ml-2 hidden group-radix-state-open:block"
                     />
                   </>
                 )}
@@ -246,13 +218,35 @@ export default function ProductPriceCard({
               </Flex>
             ) : (
               <Flex layout="col-left" className="gap-1">
-                {product.packUnities.map((item, index) => (
-                  <ProductPackItem
-                    item={item}
-                    key={index}
-                    showDropdown={showDropdown}
-                  />
-                ))}
+                {product.packUnities.map((item: any) => {
+                  const iconComponentName = `Svg${
+                    UPGRADE_TYPES[item.type.toString()].icon
+                  }`;
+                  const IconComponent =
+                    (icon as any)[iconComponentName] || null;
+
+                  return (
+                    <Flex key={item.id} layout="col-left" className="w-full">
+                      <Flex layout="row-left">
+                        <IconComponent
+                          height={16}
+                          width={16}
+                          className="text-hg-secondary mr-2"
+                        />
+                        <Text className="text-sm md:text-md">
+                          {UPGRADE_TYPES[item.type.toString()].title}
+                        </Text>
+                      </Flex>
+
+                      {showDropdown && (
+                        <Dropdown
+                          className="mt-2 w-full mb-4"
+                          options={UPGRADE_TYPES[item.type.toString()].options}
+                        />
+                      )}
+                    </Flex>
+                  );
+                })}
               </Flex>
             )}
 
@@ -273,7 +267,7 @@ export default function ProductPriceCard({
               </Accordion>
             )}
 
-            {product.isPack ? (
+            {product.isPack && !showDropdown ? (
               <Button
                 type="tertiary"
                 className="mt-4"
@@ -283,11 +277,12 @@ export default function ProductPriceCard({
               </Button>
             ) : (
               <Button
+                disabled={isButtonDisabled}
                 type="tertiary"
                 customStyles="bg-hg-primary md:mt-4"
-                /* onClick={() => {
-                    setSelectedTreatments([product]);
-                  }} */
+                onClick={() => {
+                  setSelectedTreatments([product]);
+                }}
                 href={ROUTES.checkout.clinics}
                 className="mt-4"
               >
