@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
 import ProductCarousel from 'app/components/product/fullWidthCarousel';
