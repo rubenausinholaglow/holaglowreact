@@ -19,6 +19,7 @@ type ButtonProps = {
   customStyles?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
+  disabled?: boolean;
   [key: string]: any;
 };
 
@@ -30,6 +31,7 @@ export const Button = ({
   customStyles = '',
   onClick = undefined,
   children,
+  disabled = false,
   ...rest
 }: ButtonProps) => {
   if (href) {
@@ -37,7 +39,11 @@ export const Button = ({
       <Link
         href={href}
         target={rest?.target}
-        className={twMerge(`relative group overflow-visible ${className}`)}
+        className={twMerge(
+          `relative group overflow-visible ${className} ${
+            disabled && 'opacity-25 pointer-events-none'
+          }`
+        )}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
@@ -54,7 +60,7 @@ export const Button = ({
       className={twMerge(
         `transition-all relative group overflow-visible ${
           ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
-        } ${className}`
+        } ${className} ${disabled && 'opacity-25 pointer-events-none'}`
       )}
       onClick={onClick}
       type={rest?.isSubmit ? 'submit' : 'button'}
