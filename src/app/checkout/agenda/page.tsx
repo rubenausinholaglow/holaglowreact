@@ -370,32 +370,36 @@ export default function Agenda() {
                     </Text>
                   </Flex>
                 )}
-              <Flex
-                layout="col-left"
-                className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"
-              >
-                <Text className="font-semibold">
-                  ¿La cita que necesitas no está disponible?
-                </Text>
-                <Flex layout="row-left" className="gap-4 items-center w-full">
-                  <a href="tel:+34 682 417 208">
-                    <Button size="xl" type="tertiary">
-                      <SvgPhone className="mr-2" />
-                      {selectedClinic && (
-                        <div>
-                          <Text size="xs" className="whitespace-nowrap">
-                            Llamanos al
-                          </Text>
-                          <Text size="lg" className="whitespace-nowrap">
-                            {selectedClinic.phone}
-                          </Text>
-                        </div>
-                      )}
-                    </Button>
-                  </a>
-                  <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+              {!loadingMonth && !loadingDays && (
+                <Flex
+                  layout="col-left"
+                  className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"
+                >
+                  <Text className="font-semibold">
+                    ¿La cita que necesitas no está disponible?
+                  </Text>
+                  <Flex layout="row-left" className="gap-4 items-center w-full">
+                    <a href="tel:+34 682 417 208">
+                      <Button size="xl" type="tertiary">
+                        <SvgPhone className="mr-2" />
+                        {selectedClinic && (
+                          <div>
+                            <Text size="xs" className="whitespace-nowrap">
+                              Llamanos al
+                            </Text>
+                            <Text size="lg" className="whitespace-nowrap">
+                              {selectedClinic.phone}
+                            </Text>
+                          </div>
+                        )}
+                      </Button>
+                    </a>
+                    <Text size="xs">
+                      Te ayudaremos a agendar tu tratamiento
+                    </Text>
+                  </Flex>
                 </Flex>
-              </Flex>
+              )}
             </div>
           </div>
         </Flex>
