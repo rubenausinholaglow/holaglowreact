@@ -10,7 +10,11 @@ import { isEmpty } from 'lodash';
 
 import ProfessionalCard from './ProfessionalCard';
 
-export default function Professionals() {
+export default function Professionals({
+  className = '',
+}: {
+  className?: string;
+}) {
   const { clinics, deviceSize } = useGlobalPersistedStore(state => state);
 
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
@@ -35,7 +39,9 @@ export default function Professionals() {
   }
 
   return (
-    <Container className="p-0 md:px-4 md:flex gap-16 justify-between md:mb-16">
+    <Container
+      className={`p-0 md:px-4 md:flex gap-16 justify-between md:mb-16 ${className}`}
+    >
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
         <Title size="2xl" className="font-bold mb-6 md:mb-8">
           Nuestros{' '}
@@ -48,7 +54,7 @@ export default function Professionals() {
           literal y metafóricamente.
         </Text>
       </Container>
-      <div className="px-4 md:w-1/2">
+      <div className="md:w-1/2">
         {deviceSize.isMobile && (
           <ProductCarousel type="professionals" items={professionals} />
         )}
