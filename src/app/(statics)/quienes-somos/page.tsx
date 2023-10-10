@@ -1,5 +1,3 @@
-'use client';
-
 import Professionals from 'app/components/common/Professionals';
 import MainLayout from 'app/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
