@@ -66,7 +66,9 @@ export const Carousel = ({
   };
 
   useEffect(() => {
-    setCurrentSlideIndex(0);
+    if (isFullWidth) {
+      setCurrentSlideIndex(0);
+    }
   }, [children]);
 
   return (
@@ -75,7 +77,7 @@ export const Carousel = ({
         className={`relative w-full  ${className}`}
         isIntrinsicHeight={isIntrinsicHeight}
         totalSlides={childrens.length}
-        currentSlide={currentSlideIndex}
+        currentSlide={isFullWidth ? currentSlideIndex : currentSlide}
         infinite
         lockOnWindowScroll={true}
         dragEnabled={dragEnabled}
