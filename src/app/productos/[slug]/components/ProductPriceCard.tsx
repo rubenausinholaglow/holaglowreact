@@ -375,35 +375,35 @@ export default function ProductPriceCard({
             )}
 
             {product?.packMoreInformation && !product.isPack && (
-              <>
-                <Accordion>
-                  <AccordionItem value="accordion">
-                    <AccordionContent>
-                      <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
-                        {product?.packMoreInformation}
-                      </p>
-                    </AccordionContent>
-                    <AccordionTrigger>
-                      <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
-                        + info
-                      </span>
-                    </AccordionTrigger>
-                  </AccordionItem>
-                </Accordion>
+              <Accordion>
+                <AccordionItem value="accordion">
+                  <AccordionContent>
+                    <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
+                      {product?.packMoreInformation}
+                    </p>
+                  </AccordionContent>
+                  <AccordionTrigger>
+                    <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
+                      + info
+                    </span>
+                  </AccordionTrigger>
+                </AccordionItem>
+              </Accordion>
+            )}
 
-                <Button
-                  type="tertiary"
-                  customStyles="bg-hg-primary md:mt-4"
-                  onClick={() => {
-                    setSelectedTreatments([product]);
-                  }}
-                  href={ROUTES.checkout.clinics}
-                  className="mt-4"
-                >
-                  Reservar cita
-                  <SvgArrow height={16} width={16} className="ml-2" />
-                </Button>
-              </>
+            {!product.isPack && (
+              <Button
+                type="tertiary"
+                customStyles="bg-hg-primary md:mt-4"
+                onClick={() => {
+                  setSelectedTreatments([product]);
+                }}
+                href={ROUTES.checkout.clinics}
+                className="mt-4"
+              >
+                Reservar cita
+                <SvgArrow height={16} width={16} className="ml-2" />
+              </Button>
             )}
           </div>
         </AccordionContent>
