@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { Product } from '@interface/product';
 import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -16,8 +15,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import * as icon from 'icons/IconsDs';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-
-import ProductResults from './ProductResults';
 
 const UPGRADE_TYPES: Record<
   string,
@@ -161,7 +158,7 @@ function ProductPriceItemsCard({
     setSelectedPackOptions(newOptions);
   };
 
-  const itemsIconsByIndex = product.packUnities.map((item, index) => {
+  const itemsIconsByIndex = product.packUnities.map((item: any, index) => {
     const iconComponentName = `Svg${UPGRADE_TYPES[item.type.toString()].icon}`;
     const IconComponent = (icon as any)[iconComponentName] || null;
 
@@ -175,7 +172,7 @@ function ProductPriceItemsCard({
     );
   });
 
-  const defaultValues = product.packUnities.map((item, index) => {
+  const defaultValues = product.packUnities.map((item: any, index) => {
     const defaultValue =
       index === 0
         ? UPGRADE_TYPES[item?.type.toString()].options.find(
@@ -187,7 +184,7 @@ function ProductPriceItemsCard({
 
   useEffect(() => {
     const initialSelectedPackOptions = defaultValues.map((item, index) => {
-      return { index: index, value: item?.value };
+      return { index: index, value: item?.value || '' };
     });
 
     setSelectedPackOptions(initialSelectedPackOptions);

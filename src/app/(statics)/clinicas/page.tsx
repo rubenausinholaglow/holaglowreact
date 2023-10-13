@@ -1,6 +1,6 @@
 import Clinics from 'app/components/common/Clinics';
 import MainLayout from 'app/components/layout/MainLayout';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Container } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 

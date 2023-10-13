@@ -2,141 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { ROUTES } from 'app/utils/routes';
-import { group } from 'console';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from 'designSystem/Accordion/Accordion';
-import { Button } from 'designSystem/Buttons/Buttons';
+import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
-import * as icon from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import ProductPriceCard from './ProductPriceCard';
 import ProductSessionGroupedPriceCard from './ProductSessionGroupedPriceCard';
 import ProductSessionPriceCard from './ProductSessionPriceCard';
-
-const UPGRADE_TYPES: Record<
-  string,
-  {
-    title: string;
-    icon: string;
-    options: { label: string; value: string }[];
-  }
-> = {
-  '0': {
-    title: 'Ácido Hialurónico',
-    icon: 'Injection',
-    options: [
-      {
-        label: 'Aumento de labios',
-        value: 'Aumento de labios',
-      },
-      {
-        label: 'Código de barras',
-        value: 'Código de barras',
-      },
-      {
-        label: 'Proyección de mandíbula',
-        value: 'Proyección de mandíbula',
-      },
-      {
-        label: 'Proyección de mentón',
-        value: 'Proyección de mentón',
-      },
-      {
-        label: 'Proyección de Pómulos',
-        value: 'Proyección de Pómulos',
-      },
-      {
-        label: 'Relleno de ojeras',
-        value: 'Relleno de ojeras',
-      },
-      {
-        label: 'Relleno lineas marioneta',
-        value: 'Relleno lineas marioneta',
-      },
-      {
-        label: 'Rinomodelación',
-        value: 'Rinomodelación',
-      },
-      {
-        label: 'Sonrisa Gingival',
-        value: 'Sonrisa Gingival',
-      },
-      {
-        label: 'Surco Nasogeniano',
-        value: 'Surco Nasogeniano',
-      },
-      {
-        label: 'Volumen y perfilado de Cejas',
-        value: 'Volumen y perfilado de Cejas',
-      },
-    ],
-  },
-  '1': {
-    title: 'BabyBotox',
-    icon: 'Injection',
-    options: [
-      { label: 'Baby botox', value: 'Baby botox' },
-      {
-        label: 'Arrugas entrecejo y patas de gallo',
-        value: 'Arrugas entrecejo y patas de gallo',
-      },
-    ],
-  },
-  '2': {
-    title: 'Botox',
-    icon: 'Injection',
-    options: [
-      {
-        label: 'Arrugas expresión: frente, entrecejo y patas de gallo',
-        value: 'Arrugas expresión: frente, entrecejo y patas de gallo',
-      },
-    ],
-  },
-  '3': {
-    title: 'Piel',
-    icon: 'Injection',
-    options: [
-      {
-        label: 'Hydrafacial express (1 sesión)',
-        value: 'Hydrafacial express (1 sesión)',
-      },
-      {
-        label: 'Mesoterapia (1 sesión)',
-        value: 'Mesoterapia (1 sesión)',
-      },
-    ],
-  },
-  '4': {
-    title: 'Piel Profunda',
-    icon: 'Injection',
-    options: [
-      {
-        label: 'Hydrafacial deluxe (1 sesión)',
-        value: 'Hydrafacial deluxe (1 sesión)',
-      },
-      {
-        label: 'Dermapen (1 sesión)',
-        value: 'Dermapen (1 sesión)',
-      },
-    ],
-  },
-  '5': {
-    title: 'Vitaminas',
-    icon: 'Medicine',
-    options: [],
-  },
-};
 
 export default function ProductPrices({ product }: { product: Product }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
@@ -149,7 +24,7 @@ export default function ProductPrices({ product }: { product: Product }) {
   useEffect(() => {
     if (product.upgrades) {
       product.upgrades = product.upgrades.sort((x, y) => x.order - y.order);
-      let allProducts = product.upgrades.map(item => item.product);
+      const allProducts = product.upgrades.map(item => item.product);
       setProductITems(allProducts);
     }
   }, [product]);
