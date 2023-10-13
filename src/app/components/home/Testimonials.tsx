@@ -7,7 +7,13 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-const TESTIMONIALS = [
+interface Testimonial {
+  name: string;
+  testimonial: string;
+  imgUrl: string;
+}
+
+const TESTIMONIALS: Testimonial[] = [
   {
     name: 'BELEN HEVIA',
     testimonial:
@@ -95,7 +101,7 @@ export default function Testimonials() {
     return 3;
   };
 
-  function shuffleArray(array: []) {
+  function shuffleArray(array: Testimonial[]) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -124,7 +130,7 @@ export default function Testimonials() {
         infinite={false}
         sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
       >
-        {shuffledTestimonials.map(item => (
+        {shuffledTestimonials.map((item: Testimonial) => (
           <Testimonial
             key={item.name}
             imgUrl={item.imgUrl}
