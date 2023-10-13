@@ -67,7 +67,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         <ProductPrices product={product} />
         <ProductExplanation product={product} />
         <ProductPaymentOptions totalPrice={product.price} />
-        <div className="bg-hg-black50">
+        <div className="bg-hg-black50 mt-16 md:mt-20">
           <Testimonials />
         </div>
         <ProductSuggestions product={product} />

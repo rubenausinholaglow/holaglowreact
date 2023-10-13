@@ -24,7 +24,7 @@ export default function Professionals({
   useEffect(() => {
     const professionalsWithCity = clinics.flatMap(clinic =>
       clinic.professionals.filter(professional => {
-        if (professional.professionalType != 2) {
+        if (professional.professionalType === 1) {
           return {
             ...professional,
             city: clinic.city,

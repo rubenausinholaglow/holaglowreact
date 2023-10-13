@@ -1,13 +1,18 @@
+'use client';
+
 import 'react-phone-input-2/lib/style.css';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
+import { phoneValidationRegex } from '@utils/validators';
 import { poppins } from 'app/fonts';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 
 import TextInputField from '../../dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../dashboard/utils/props';
@@ -19,17 +24,35 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   errors,
   isLoading,
 }) => {
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    if (
+      !isEmpty(formData.name) &&
+      !isEmpty(formData.surname) &&
+      !isEmpty(formData.email) &&
+      !isEmpty(formData.phone)
+    ) {
+      console.log('enable button!');
+      setIsDisabled(false);
+    }
+
+    console.log(formData);
+  }, [formData]);
+
   return (
     <div className="grid grid-cols-1 gap-4 w-full">
       <TextInputField
         placeholder="Nombre"
         value={formData.name}
         onChange={event => handleFieldChange(event, 'name')}
+        hasNoValidation
       />
       <TextInputField
         placeholder="Apellidos"
         value={formData.surname}
         onChange={event => handleFieldChange(event, 'surname')}
+        hasNoValidation
       />
       <TextInputField
         placeholder="Correo electrónico"
@@ -58,7 +81,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         containerStyle={{
           background: 'white',
           border: '1px solid',
-          borderColor: '#e5e7eb',
+          borderColor: HOLAGLOW_COLORS['black300'],
           borderRadius: '1rem',
           paddingLeft: '16px',
           paddingRight: '16px',
@@ -68,10 +91,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         }}
         placeholder="Número de teléfono"
         country={'es'}
+        preferredCountries={['es']}
         value={formData.phone}
         onChange={(value, data, event, formattedValue) =>
           handleFieldChange(event, 'phone')
         }
+        isValid={value => {
+          if (!phoneValidationRegex.test(value)) {
+            return 'Invalid phone number format';
+          }
+          return true;
+        }}
       />
 
       <Flex layout="col-left" className="my-2">
@@ -130,6 +160,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         </Flex>
 
         <Button
+          disabled={isDisabled}
           onClick={handleContinue}
           type="primary"
           size="xl"

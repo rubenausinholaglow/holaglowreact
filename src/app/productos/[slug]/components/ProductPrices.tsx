@@ -32,9 +32,10 @@ export default function ProductPrices({ product }: { product: Product }) {
   useEffect(() => {
     if (!isEmpty(productItems)) {
       setIsSessionProduct(
-        productItems
-          .map((item: Product) => item.title)
-          .every((item: string) => item.includes(product.title))
+        productItems.length > 1 &&
+          productItems
+            .map((item: Product) => item.title)
+            .every((item: string) => item.includes(product.title))
       );
     }
   }, [productItems]);
