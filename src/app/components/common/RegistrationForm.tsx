@@ -105,6 +105,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           }
           isValid={value => {
             setShowPhoneError(!phoneValidationRegex.test(value) && checkPhone);
+            return !phoneValidationRegex.test(value) && checkPhone;
           }}
         />
         {showPhoneError && (
