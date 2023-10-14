@@ -289,7 +289,7 @@ export default function Agenda() {
                             <Flex
                               key={x.startTime}
                               layout="row-between"
-                              className={`transition-all gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
+                              className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
                                 clickedHour === x.startTime
                                   ? 'bg-hg-secondary text-white'
                                   : ''
@@ -324,7 +324,7 @@ export default function Agenda() {
                             <Flex
                               key={x.startTime}
                               layout="row-between"
-                              className={`transition-all gap-2 border border-hg-black text-xs rounded-xl mr-3 w-20 h-8 mb-3 ${
+                              className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
                                 clickedHour === x.startTime
                                   ? 'bg-hg-secondary text-white'
                                   : 'bg-white'
