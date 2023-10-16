@@ -3,7 +3,6 @@ import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import Link from 'next/link';
 
 export default function HomeHero() {
   return (
@@ -17,11 +16,19 @@ export default function HomeHero() {
           <br />
           tus normas
         </Title>
-        <Link href={ROUTES.products}>
-          <Button type="primary" size="xl">
+        <Flex>
+          <Button
+            type="primary"
+            size="xl"
+            href={ROUTES.products}
+            className="mr-2"
+          >
             Ver tratamientos
           </Button>
-        </Link>
+          <Button type="tertiary" size="xl" href={ROUTES.checkout.clinics}>
+            Pedir cita
+          </Button>
+        </Flex>
       </Flex>
     </Container>
   );
