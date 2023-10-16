@@ -42,14 +42,13 @@ export default function ProductCard({
 
   const randomIndex = Math.floor(Math.random() * tempBgColors.length);
   const randomValue = tempBgColors[randomIndex];
-  console.log(randomValue.length, randomValue);
 
   const imgBackgroundStyle =
     randomValue.length === 2
       ? `linear-gradient(45deg, ${randomValue[0]} 0%, ${randomValue[1]} 100%)`
       : randomValue[0];
 
-  console.log(imgBackgroundStyle);
+  console.log(product.title, product.cardBackgroundColor);
 
   return (
     <Link

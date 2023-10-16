@@ -24,6 +24,7 @@ export interface Product {
   beforeAndAfterImages: BeforeAndAfterImages[];
   applicationTimeMinutes: number;
   type: ProductType;
+  cardBackgroundColor: string;
   visibility: boolean;
   sessions: number;
 }
