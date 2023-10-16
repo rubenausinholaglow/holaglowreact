@@ -27,9 +27,9 @@ export default function StaticClinics() {
                 </Underlined>
               </Title>
               <Text size="xl" className="">
-                Holaglow es la nueva cara de la medicina estática que dice
-                adidós a los prejuicios y reafirma que la belleza es lo que a ti
-                te dá la gana
+                Holaglow es la nueva cara de la medicina estática que dice adiós
+                a los prejuicios y reafirma que la belleza es lo que a ti te de
+                la gana
               </Text>
             </Flex>
             <div className="md:w-1/2 aspect-square relative">
@@ -59,7 +59,7 @@ export default function StaticClinics() {
               <div>
                 <Title className="mb-4">Tú pones las reglas</Title>
                 <Text className="text-hg-black500 md:text-lg">
-                  Hacemos fácil la medicina estática. La informacidón y la
+                  Hacemos fácil la medicina estética. La información y la
                   transparencia forman parte de nuestra esencia. Nosotros te
                   contamos sin tabúes todo lo que debes saber para que pongas
                   tus propias reglas. Creemos que la belleza real se basa en la
@@ -71,18 +71,18 @@ export default function StaticClinics() {
             <li className="flex flex-col md:flex-row gap-8 items-center">
               <div className="w-full aspect-[2/1] md:w-1/5 md:aspect-square relative shrink-0 md:order-2">
                 <Image
-                  alt="Conviártete en el centro"
+                  alt="Conviértete en el centro"
                   src="/images/statics/centro.webp"
                   fill
                   className="object-cover rounded-2xl"
                 />
               </div>
               <div>
-                <Title className="mb-4">Conviártete en el centro</Title>
+                <Title className="mb-4">Conviértete en el centro</Title>
                 <Text className="text-hg-black500 md:text-lg">
                   Es tu momento. Ponemos el foco en ti. Disfruta de una
                   experiencia hecha a la medida de todas las personas que ven en
-                  la medicina estática el mejor aliado para deslumbrar en su día
+                  la medicina estética el mejor aliado para deslumbrar en su día
                   a día.
                 </Text>
               </div>
@@ -100,7 +100,7 @@ export default function StaticClinics() {
               <div>
                 <Title className="mb-4">Resultados reales</Title>
                 <Text className="text-hg-black500 md:text-lg">
-                  Tus objetivos son los nuestros. Nuestro equipo mádico experto
+                  Tus objetivos son los nuestros. Nuestro equipo médico experto
                   selecciona cada producto especialmente para ti, ajustándose a
                   tus necesidades y deseos. Queremos que disfrutes de tu glow.
                 </Text>
@@ -112,7 +112,7 @@ export default function StaticClinics() {
       <div className="bg-hg-secondary100 py-12 md:py-16">
         <Container>
           <Title size="2xl" className="font-bold mb-12 md:mb-16">
-            Medicina estática{' '}
+            Medicina estética{' '}
             <Underlined color={HOLAGLOW_COLORS['secondary']}>
               a tu medida
             </Underlined>
@@ -130,12 +130,12 @@ export default function StaticClinics() {
           <Flex layout="col-left" className="md:flex-row gap-8 md:gap-12">
             <div>
               <Text size="xl" className="font-semibold">
-                Equipo mádico experto
+                Equipo médico experto
               </Text>
               <Text className="text-hg-black500">
-                Nuestros doctores expertos en medicina estática cuentan con una
-                extensa experiencia que les permite aplicar nuestra seleccidón
-                de tratamientos con la mayor seguridad.
+                Nuestros doctores expertos en medicina estética cuentan con una
+                extensa experiencia que les permite aplicar nuestra selección de
+                tratamientos con la mayor seguridad.
               </Text>
             </div>
             <div>
@@ -143,8 +143,8 @@ export default function StaticClinics() {
                 Tratamientos no invasivos
               </Text>
               <Text className="text-hg-black500">
-                Nuestro equipo mádico ha hecho una seleccidón de tratamientos
-                estáticos validados para obtener los mejores resultados con el
+                Nuestro equipo médico ha hecho una selección de tratamientos
+                estéticos validados para obtener los mejores resultados con el
                 menor tiempo de post-tratamiento posible.
               </Text>
             </div>
