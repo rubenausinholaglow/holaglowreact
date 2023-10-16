@@ -5,7 +5,7 @@ import 'react-phone-input-2/lib/style.css';
 import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
-import { phoneValidationRegex } from '@utils/validators';
+import { phoneValidationRegex, validateEmail } from '@utils/validators';
 import { poppins } from 'app/fonts';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -26,8 +26,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   isLoading,
 }) => {
   const [isDisabled, setIsDisabled] = useState(true);
-  const [checkPhone, setCheckPhone] = useState(false);
   const [showPhoneError, setShowPhoneError] = useState(false);
+  const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
 
   useEffect(() => {
     if (
@@ -37,14 +37,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !isEmpty(formData.phone)
     ) {
       setIsDisabled(false);
-      setCheckPhone(true);
     } else {
       setIsDisabled(true);
-      setCheckPhone(false);
     }
 
     console.log(formData);
   }, [formData]);
+
+  console.log(errors, showEmailError);
 
   return (
     <div className="grid grid-cols-1 gap-4 w-full">
@@ -63,11 +63,33 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       <TextInputField
         placeholder="Correo electrónico"
         value={formData.email}
-        onChange={event => handleFieldChange(event, 'email')}
+        onChange={event => {
+          handleFieldChange(event, 'email');
+
+          console.log(formData.email, formData.email.length);
+
+          if (formData.email.length === 0) {
+            console.log('HIDE ERROR');
+            setShowEmailError(false);
+          }
+
+          /*
+          setShowEmailError(
+            formData.email.length > 0 && !validateEmail(formData.email)
+            );
+            */
+        }}
         error={
-          errors.includes(errorsConfig.ERROR_EMAIL_NOT_VALID)
+          (errors.includes(errorsConfig.ERROR_EMAIL_NOT_VALID) &&
+            showEmailError) ||
+          showEmailError
             ? errorsConfig.ERROR_EMAIL_NOT_VALID
             : ''
+        }
+        onBlur={() =>
+          setShowEmailError(
+            formData.email.length > 0 && !validateEmail(formData.email)
+          )
         }
       />
       <div className="relative">
@@ -103,9 +125,18 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           onChange={(value, data, event, formattedValue) =>
             handleFieldChange(event, 'phone')
           }
-          isValid={value => {
-            setShowPhoneError(!phoneValidationRegex.test(value) && checkPhone);
-            return !phoneValidationRegex.test(value) && checkPhone;
+          onBlur={() => {
+            if (
+              formData.phone.length > 3 &&
+              formData.phone.startsWith('+34') &&
+              !phoneValidationRegex.test(
+                formData.phone.replace(/\D/g, '').slice(-9)
+              )
+            ) {
+              setShowPhoneError(true);
+            } else {
+              setShowPhoneError(false);
+            }
           }}
         />
         {showPhoneError && (

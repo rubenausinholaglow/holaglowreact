@@ -9,6 +9,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   placeholder,
   value,
   onChange = undefined,
+  onBlur = undefined,
   hasNoValidation,
   error = '',
 }) => {
@@ -36,6 +37,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
         type="text"
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         style={{
           background: getBackgroundIcon(),
         }}
