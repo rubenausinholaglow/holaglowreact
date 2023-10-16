@@ -27,7 +27,7 @@ export default function StaticClinics() {
                 </Underlined>
               </Title>
               <Text size="xl" className="">
-                Holaglow es la nueva cara de la medicina estática que dice adiós
+                Holaglow es la nueva cara de la medicina estética que dice adiós
                 a los prejuicios y reafirma que la belleza es lo que a ti te de
                 la gana
               </Text>
