@@ -42,6 +42,8 @@ export default function Dropdown({
       className={`w-full mb-2 ${rest.className}`}
       styles={dropdownStyles}
       {...rest}
+      placeholder="Seleccionar..."
+      blurInputOnSelect={true}
     />
   );
 }

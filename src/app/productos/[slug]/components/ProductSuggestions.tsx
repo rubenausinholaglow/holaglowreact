@@ -11,7 +11,9 @@ import { isEmpty } from 'lodash';
 
 export default function ProductSuggestions({ product }: { product: Product }) {
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
-  const [activeSlider, setActiveSlider] = useState('pre');
+  const [activeSlider, setActiveSlider] = useState(
+    !isEmpty(product.preTreatmentInfo?.tips) ? 'pre' : 'post'
+  );
 
   const visibleSuggestions = () => {
     if (deviceSize.isMobile) {
@@ -29,10 +31,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
     product.postTreatmentInfo.after24hTips
   );
 
-  if (
-    isEmpty(product.preTreatmentInfo?.tips) &&
-    isEmpty(product.postTreatmentInfo?.postTreatmentTips)
-  ) {
+  if (isEmpty(product.preTreatmentInfo?.tips) && isEmpty(postTreatmentTips)) {
     return <></>;
   }
 
@@ -43,30 +42,33 @@ export default function ProductSuggestions({ product }: { product: Product }) {
           Sugerencias
         </Title>
 
-        <Flex layout="col-center" className="mb-10">
-          <ul className="inline-flex bg-hg-secondary500 p-1 rounded-full">
-            <li
-              className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
-                activeSlider === 'pre'
-                  ? 'bg-hg-primary text-hg-black'
-                  : 'text-hg-secondary'
-              }`}
-              onClick={() => setActiveSlider('pre')}
-            >
-              Pretratamiento
-            </li>
-            <li
-              className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
-                activeSlider === 'post'
-                  ? 'bg-hg-primary text-hg-black'
-                  : 'text-hg-secondary'
-              }`}
-              onClick={() => setActiveSlider('post')}
-            >
-              Posttratamiento
-            </li>
-          </ul>
-        </Flex>
+        {isEmpty(product.preTreatmentInfo?.tips) ||
+          (isEmpty(postTreatmentTips) && (
+            <Flex layout="col-center" className="mb-10">
+              <ul className="inline-flex bg-hg-secondary500 p-1 rounded-full">
+                <li
+                  className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
+                    activeSlider === 'pre'
+                      ? 'bg-hg-primary text-hg-black'
+                      : 'text-hg-secondary'
+                  }`}
+                  onClick={() => setActiveSlider('pre')}
+                >
+                  Pretratamiento
+                </li>
+                <li
+                  className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
+                    activeSlider === 'post'
+                      ? 'bg-hg-primary text-hg-black'
+                      : 'text-hg-secondary'
+                  }`}
+                  onClick={() => setActiveSlider('post')}
+                >
+                  Posttratamiento
+                </li>
+              </ul>
+            </Flex>
+          ))}
 
         <Carousel
           hasControls

@@ -86,7 +86,6 @@ export default function ConctactForm() {
     setErrors([]);
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
-
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
       field => formData[field] !== ''
