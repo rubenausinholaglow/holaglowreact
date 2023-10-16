@@ -10,12 +10,3 @@
 .react-tel-input {
   padding-left: 12px !important;
 }
-
-.react-tel-input .invalid-number-message {
-  display: none;
-}
-
-.react-tel-input .form-control.invalid-number {
-  border: none !important;
-  background-color: transparent !important;
-}

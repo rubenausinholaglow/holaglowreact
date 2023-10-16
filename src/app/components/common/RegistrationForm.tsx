@@ -1,19 +1,13 @@
-'use client';
-
 import 'react-phone-input-2/lib/style.css';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
-import { phoneValidationRegex } from '@utils/validators';
 import { poppins } from 'app/fonts';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
-import { isEmpty } from 'lodash';
-import Image from 'next/image';
 
 import TextInputField from '../../dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../dashboard/utils/props';
@@ -25,40 +19,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   errors,
   isLoading,
 }) => {
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [checkPhone, setCheckPhone] = useState(false);
-  const [showPhoneError, setShowPhoneError] = useState(false);
-
-  useEffect(() => {
-    if (
-      !isEmpty(formData.name) &&
-      !isEmpty(formData.surname) &&
-      !isEmpty(formData.email) &&
-      !isEmpty(formData.phone)
-    ) {
-      setIsDisabled(false);
-      setCheckPhone(true);
-    } else {
-      setIsDisabled(true);
-      setCheckPhone(false);
-    }
-
-    console.log(formData);
-  }, [formData]);
-
   return (
     <div className="grid grid-cols-1 gap-4 w-full">
       <TextInputField
         placeholder="Nombre"
         value={formData.name}
         onChange={event => handleFieldChange(event, 'name')}
-        hasNoValidation
       />
       <TextInputField
         placeholder="Apellidos"
         value={formData.surname}
         onChange={event => handleFieldChange(event, 'surname')}
-        hasNoValidation
       />
       <TextInputField
         placeholder="Correo electrónico"
@@ -70,61 +41,40 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             : ''
         }
       />
-      <div className="relative">
-        <PhoneInput
-          disableSearchIcon={true}
-          countryCodeEditable={false}
-          inputClass={`${poppins.className}`}
-          inputStyle={{
-            borderColor: 'white',
-            width: '100%',
-            height: '44px',
-            paddingLeft: '65px',
-            fontSize: '12px',
-            lineHeight: '16px',
-            fontStyle: 'normal',
-            fontWeight: '400',
-          }}
-          containerStyle={{
-            background: 'white',
-            border: '1px solid',
-            borderColor: HOLAGLOW_COLORS['black300'],
-            borderRadius: '1rem',
-            paddingLeft: '16px',
-            paddingRight: '16px',
-            paddingBottom: '8px',
-            paddingTop: '8px',
-            height: '60px',
-          }}
-          placeholder="Número de teléfono"
-          country={'es'}
-          preferredCountries={['es']}
-          value={formData.phone}
-          onChange={(value, data, event, formattedValue) =>
-            handleFieldChange(event, 'phone')
-          }
-          isValid={value => {
-            setShowPhoneError(!phoneValidationRegex.test(value) && checkPhone);
-            return !phoneValidationRegex.test(value) && checkPhone;
-          }}
-        />
-        {showPhoneError && (
-          <>
-            <Image
-              src="/images/forms/error.svg"
-              alt="error"
-              height={26}
-              width={24}
-              className="absolute top-4 right-3"
-            />
-            <p className="text-hg-error text-sm p-2">
-              {errorsConfig.ERROR_PHONE_NOT_VALID}
-            </p>
-          </>
-        )}
-      </div>
+      <PhoneInput
+        disableSearchIcon={true}
+        countryCodeEditable={false}
+        inputClass={`${poppins.className}`}
+        inputStyle={{
+          borderColor: 'white',
+          width: '100%',
+          height: '44px',
+          paddingLeft: '65px',
+          fontSize: '12px',
+          lineHeight: '16px',
+          fontStyle: 'normal',
+          fontWeight: '400',
+        }}
+        containerStyle={{
+          background: 'white',
+          border: '1px solid',
+          borderColor: '#e5e7eb',
+          borderRadius: '1rem',
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          paddingBottom: '8px',
+          paddingTop: '8px',
+          height: '60px',
+        }}
+        placeholder="Número de teléfono"
+        country={'es'}
+        value={formData.phone}
+        onChange={(value, data, event, formattedValue) =>
+          handleFieldChange(event, 'phone')
+        }
+      />
 
-      <Flex layout="col-left" className="my-2 mb-6">
+      <Flex layout="col-left" className="my-2">
         <Flex layout="row-left">
           <label
             htmlFor="termsAndConditionsAccepted"
@@ -149,7 +99,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             </span>
           </label>
         </Flex>
-        <Flex layout="row-left" className="mt-2">
+        {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) && (
+          <p className="text-red-500 text-left text-sm mt-1">
+            {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
+          </p>
+        )}
+        <Flex layout="row-left" className="mt-2 mb-12">
           <label
             htmlFor="receiveCommunications"
             className="flex items-center cursor-pointer"
@@ -173,35 +128,21 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             </span>
           </label>
         </Flex>
-        {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) &&
-          !formData.termsAndConditionsAccepted && (
-            <Flex className="text-hg-error text-left text-sm py-2 px-3 bg-hg-error100 mt-2 w-full rounded-md">
-              <Image
-                src="/images/forms/error.svg"
-                alt="error"
-                height={16}
-                width={16}
-                className="mr-2"
-              />
-              {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
-            </Flex>
-          )}
-      </Flex>
 
-      <Button
-        disabled={isDisabled}
-        onClick={handleContinue}
-        type="primary"
-        size="xl"
-        className="w-full"
-      >
-        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
-      </Button>
-      {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
-        <p className="text-red-500 text-left text-sm mt-2">
-          {errorsConfig.ERROR_MISSING_FIELDS}
-        </p>
-      )}
+        <Button
+          onClick={handleContinue}
+          type="primary"
+          size="xl"
+          className="w-full"
+        >
+          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
+        </Button>
+        {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
+          <p className="text-red-500 text-left text-sm mt-2">
+            {errorsConfig.ERROR_MISSING_FIELDS}
+          </p>
+        )}
+      </Flex>
     </div>
   );
 };

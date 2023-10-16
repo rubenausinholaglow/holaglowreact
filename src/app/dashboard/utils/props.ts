@@ -7,7 +7,6 @@ export interface TextInputFieldProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
-  hasNoValidation?: boolean;
 }
 
 export interface SearchBarProps {

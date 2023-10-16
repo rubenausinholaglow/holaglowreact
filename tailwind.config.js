@@ -35,8 +35,6 @@ module.exports = {
           tertiary500: '#BCC4E1',
           tertiary300: '#D7DCED',
           tertiary100: '#F2F3F9',
-          error: '#E81E61',
-          error100: '#fde8ef',
           turquoise: '#3AD5DD',
           magenta: '#D600BF',
           orange: '#FF7514',
