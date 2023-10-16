@@ -37,12 +37,12 @@ export default function ZoneFilter({
     },
     {
       name: 'Tercio medio',
-      id: 2,
+      id: 3,
       icon: '/images/filters/tercioMedio.svg',
     },
     {
       name: 'Tercio superior',
-      id: 5,
+      id: 2,
       icon: '/images/filters/tercioSuperior.svg',
     },
   ];
