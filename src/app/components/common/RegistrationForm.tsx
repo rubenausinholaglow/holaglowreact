@@ -40,11 +40,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     } else {
       setIsDisabled(true);
     }
-
-    console.log(formData);
   }, [formData]);
-
-  console.log(errors, showEmailError);
 
   return (
     <div className="grid grid-cols-1 gap-4 w-full">
@@ -66,18 +62,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         onChange={event => {
           handleFieldChange(event, 'email');
 
-          console.log(formData.email, formData.email.length);
-
           if (formData.email.length === 0) {
-            console.log('HIDE ERROR');
             setShowEmailError(false);
           }
-
-          /*
-          setShowEmailError(
-            formData.email.length > 0 && !validateEmail(formData.email)
-            );
-            */
         }}
         error={
           (errors.includes(errorsConfig.ERROR_EMAIL_NOT_VALID) &&
