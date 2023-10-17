@@ -15,6 +15,7 @@ import PsrpPage from '../psrp';
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
 import ProductFaqs from './components/ProductFaqs';
+import ProductFreeAppointment from './components/ProductFreeAppointment';
 import ProductHeader from './components/ProductHeader';
 import ProductInfo from './components/ProductInfo';
 import ProductPaymentOptions from './components/ProductPaymentOptions';
@@ -44,7 +45,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     setProductId(productId);
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
-      setProduct(isEmpty(product) ? null : productDetails);
+      setProduct(productDetails);
     }
     if (productId !== '' && productsAreLoaded) {
       initProduct(productId);
@@ -56,7 +57,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     return <></>;
   }
 
-  if (product != undefined && !isEmpty(product)) {
+  if (product && product != undefined && !isEmpty(product)) {
     return (
       <MainLayout>
         <div className="bg-hg-cream500 rounded-t-3xl pt-8">
@@ -65,9 +66,10 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         </div>
         <ProductResults product={product} />
         <ProductPrices product={product} />
-        <ProductExplanation product={product} />
         <ProductPaymentOptions totalPrice={product.price} />
-        <div className="bg-hg-black50 mt-16 md:mt-20">
+        <ProductExplanation product={product} />
+        <ProductFreeAppointment />
+        <div className="bg-hg-black50">
           <Testimonials />
         </div>
         <ProductSuggestions product={product} />

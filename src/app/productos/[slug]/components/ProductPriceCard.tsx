@@ -289,9 +289,13 @@ export default function ProductPriceCard({
   index: number;
   parentProduct: Product;
 }) {
-  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const { deviceSize, setSelectedTreatments, stateProducts } =
+    useGlobalPersistedStore(state => state);
+
+  const setSelectedTreatment = (product: Product) => {
+    const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
+    setSelectedTreatments([productToAdd]);
+  };
 
   return (
     <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
@@ -393,7 +397,7 @@ export default function ProductPriceCard({
                 type="tertiary"
                 customStyles="bg-hg-primary md:mt-4"
                 onClick={() => {
-                  setSelectedTreatments([product]);
+                  setSelectedTreatment(product);
                 }}
                 href={ROUTES.checkout.clinics}
                 className="mt-4"

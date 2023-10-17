@@ -71,7 +71,7 @@ export default function Html({ children }: { children: ReactNode }) {
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
       </Head>
-      <body className={`${poppins.className} overflow-hidden`}>
+      <body className={`${poppins.className} overflow-hidden min-h-screen`}>
         <ModalBackground
           isVisible={showModalBackground}
           onClick={() => {

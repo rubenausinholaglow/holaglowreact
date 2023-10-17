@@ -119,7 +119,7 @@ export default function ConctactForm() {
   };
 
   const createAppointment = async () => {
-    const appointments = [];
+    const appointments: Appointment[] = [];
     const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
     appointments.push({
       box: selectedSlot!.box,
