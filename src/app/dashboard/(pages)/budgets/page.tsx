@@ -40,7 +40,7 @@ export default function Page() {
   const [isTypeFilterSelected, setIsTypeFilterSelected] = useState(true);
 
   useEffect(() => {
-    ProductService.getAllProducts()
+    ProductService.getDashboardProducts()
       .then(data => {
         data.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setProducts(data);

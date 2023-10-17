@@ -1,7 +1,9 @@
+import { User } from '@interface/appointment';
+
 import { Client } from '../interface/client';
 
 export default class UserService {
-  static async checkUser(email = '') {
+  static async checkUser(email = ''): Promise<User | undefined> {
     try {
       const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/V2/Search?search=${email}`;
       const res = await fetch(url);
@@ -9,10 +11,10 @@ export default class UserService {
         const data = await res.json();
         return data;
       } else {
-        return '';
+        return undefined;
       }
     } catch (err) {
-      return '';
+      return undefined;
     }
   }
 
@@ -60,7 +62,7 @@ export default class UserService {
     }
   }
 
-  static async registerUser(formData: Client) {
+  static async registerUser(formData: Client): Promise<User | undefined> {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`,
@@ -73,12 +75,12 @@ export default class UserService {
         }
       );
       if (res.ok) {
-        return true;
+        return undefined;
       } else {
-        return false;
+        return undefined;
       }
     } catch (err) {
-      return false;
+      return undefined;
     }
   }
 

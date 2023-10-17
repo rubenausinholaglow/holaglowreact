@@ -19,7 +19,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   errors,
   isLoading,
 }) => {
-  function phone() {}
   return (
     <div className="grid grid-cols-1 gap-4 w-full">
       <TextInputField
@@ -43,6 +42,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         }
       />
       <PhoneInput
+        disableSearchIcon={true}
+        countryCodeEditable={false}
         inputClass={`${poppins.className}`}
         inputStyle={{
           borderColor: 'white',
@@ -103,7 +104,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
           </p>
         )}
-        <Flex layout="row-left" className="mt-2">
+        <Flex layout="row-left" className="mt-2 mb-12">
           <label
             htmlFor="receiveCommunications"
             className="flex items-center cursor-pointer"
@@ -127,8 +128,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             </span>
           </label>
         </Flex>
-      </Flex>
-      <Flex layout="col-left" className="w-full">
+
         <Button
           onClick={handleContinue}
           type="primary"

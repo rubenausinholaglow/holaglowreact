@@ -15,6 +15,7 @@ import PsrpPage from '../psrp';
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
 import ProductFaqs from './components/ProductFaqs';
+import ProductFreeAppointment from './components/ProductFreeAppointment';
 import ProductHeader from './components/ProductHeader';
 import ProductInfo from './components/ProductInfo';
 import ProductPaymentOptions from './components/ProductPaymentOptions';
@@ -43,8 +44,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
     setProductId(productId);
     async function initProduct(productId: string) {
-      const product = await fetchProduct(productId);
-      setProduct(isEmpty(product) ? null : product);
+      const productDetails = await fetchProduct(productId);
+      setProduct(isEmpty(product) ? null : productDetails);
     }
     if (productId !== '' && productsAreLoaded) {
       initProduct(productId);
@@ -65,14 +66,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         </div>
         <ProductResults product={product} />
         <ProductPrices product={product} />
-        <ProductExplanation product={product} />
         <ProductPaymentOptions totalPrice={product.price} />
-        <div className="bg-hg-black50 md:mt-16">
+        <ProductExplanation product={product} />
+        <ProductFreeAppointment />
+        <div className="bg-hg-black50">
           <Testimonials />
         </div>
-        <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
-          <ProductSuggestions product={product} />
-        </div>
+        <ProductSuggestions product={product} />
         <ProductFaqs product={product} />
         <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
           <ProductCrosselling product={product} />

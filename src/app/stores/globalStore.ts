@@ -33,7 +33,7 @@ interface GlobalPersistActions {
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
-  setSelectedClinic: (value: Clinic) => void;
+  setSelectedClinic: (value?: Clinic) => void;
   setCurrentUser: (value: User) => void;
   setSelectedSlot: (slot: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
@@ -52,7 +52,7 @@ export const useGlobalPersistedStore = create(
         isWideScreen: false,
       },
       isMobile: true,
-      selectedTreatment: [''],
+      selectedTreatments: [],
       selectedClinic: undefined,
       user: undefined,
       selectedDay: dayjs(),

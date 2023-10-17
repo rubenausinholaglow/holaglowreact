@@ -11,6 +11,12 @@ import ValuesCarousel from './components/home/ValuesCarousel';
 import ValuesDescription from './components/home/ValuesDescription';
 import MainLayout from './components/layout/MainLayout';
 
+export const metadata = {
+  title: 'Holaglow - La nueva cara de la medicina estética',
+  description:
+    'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
+};
+
 export default function Home() {
   return (
     <MainLayout>
@@ -21,10 +27,8 @@ export default function Home() {
       <Products />
       <Professionals />
       <Testimonials />
-      <InTheNews />
       <Clinics />
       <GoToTreatments />
-      <FloatingBottomBar />
     </MainLayout>
   );
 }

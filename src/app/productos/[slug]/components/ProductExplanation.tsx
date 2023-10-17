@@ -20,14 +20,14 @@ export default function ProductExplanation({ product }: { product: Product }) {
         </Text>
 
         <Text size="xl" className="mb-4 font-semibold">
-          {product.extraInformation?.benefitsInformation.title}
+          {product.extraInformation?.benefitsInformation?.title}
         </Text>
         <Text className="text-hg-black500 mb-6">
-          {product.extraInformation?.benefitsInformation.description}
+          {product.extraInformation?.benefitsInformation?.description}
         </Text>
 
         <ul className="flex flex-col gap-4 mb-6">
-          {product.extraInformation?.benefitsInformation.benefitDetails
+          {product.extraInformation?.benefitsInformation?.benefitDetails
             .sort((a, b) => a.order - b.order)
             .map(benefit => (
               <li key={benefit.id} className="flex">
@@ -57,7 +57,7 @@ export default function ProductExplanation({ product }: { product: Product }) {
             />
           </div>
           <ul className="flex flex-col mb-4 w-full">
-            {product.extraInformation?.applicationZoneInfo.applicationZoneDetail
+            {product.extraInformation?.applicationZoneInfo?.applicationZoneDetail
               .sort((a, b) => a.order - b.order)
               .map((applicationZoneDetail, index) => (
                 <li

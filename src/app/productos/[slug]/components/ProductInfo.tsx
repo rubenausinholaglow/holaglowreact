@@ -20,7 +20,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                 className="text-hg-secondary mr-3 mt-1"
               />
               <div>
-                <Text size="lg" className="font-semibold mb-4">
+                <Text size="lg" className="font-semibold mb-1 md:mb-2">
                   {product.description}
                 </Text>
                 <Text>Producto aplicado</Text>
@@ -33,7 +33,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                 className="text-hg-secondary mr-3 mt-1"
               />
               <div>
-                <Text size="lg" className="font-semibold  mb-4">
+                <Text size="lg" className="font-semibold mb-1 md:mb-2">
                   {product.sessions.toString()}{' '}
                   {product.sessions === 1 ? 'sesión' : 'sesiones'}
                 </Text>
@@ -47,7 +47,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                 className="text-hg-secondary mr-3 mt-1"
               />
               <div>
-                <Text size="lg" className="font-semibold  mb-4">
+                <Text size="lg" className="font-semibold mb-1 md:mb-2">
                   {product.applicationTimeMinutes.toString()} minutos
                 </Text>
                 <Text>Tiempo de aplicación</Text>
@@ -61,7 +61,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                   className="text-hg-secondary mr-3 mt-1"
                 />
                 <div>
-                  <Text size="lg" className="font-semibold mb-4">
+                  <Text size="lg" className="font-semibold mb-1 md:mb-2">
                     {(product.durationMin / 30).toString()} -{' '}
                     {(product.durationMax / 30).toString()} meses
                   </Text>
@@ -77,7 +77,7 @@ export default function ProductInfo({ product }: { product: Product }) {
             bgColor="bg-hg-primary"
             className="hidden md:block md:mt-auto"
           >
-            <Link href={`/checkout/clinics`} className="text-inherit">
+            <Link href="#prices" className="text-inherit">
               Reserva cita desde{' '}
               <span className="inline-block text-xl font-bold underline ml-2">
                 {product.price} €

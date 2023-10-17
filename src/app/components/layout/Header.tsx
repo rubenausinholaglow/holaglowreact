@@ -7,18 +7,19 @@ import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
-import { Button } from 'designSystem/Buttons/Buttons';
+import { ROUTES } from 'app/utils/routes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
+import { SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
+import Link from 'next/link';
 
 import MobileNavigation from './MobileNavigation';
 
 let scrollPos = 0;
 
 const NAV_ITEMS = [
-  { name: 'Tratamientos' },
-  { name: 'Clínicas' },
-  { name: 'Sobre nosotros' },
+  { name: 'Tratamientos', link: ROUTES.products },
+  { name: 'Clínicas', link: ROUTES.clinics },
+  { name: 'Sobre nosotros', link: ROUTES.products },
 ];
 
 function Navigation({ className }: { className: string }) {
@@ -27,7 +28,9 @@ function Navigation({ className }: { className: string }) {
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
           <li className="font-medium" key={navItem.name}>
-            {navItem.name}
+            <Link className="text-inherit" href={navItem.link}>
+              {navItem.name}
+            </Link>
           </li>
         ))}
       </ul>
@@ -80,13 +83,15 @@ export default function Header() {
         <Container isHeader>
           <Flex
             layout="row-between"
-            className={`relative py-3 lg:py-5 lg:justify-center ${HEADER_HEIGHT_CLASS}`}
+            className={`relative py-3 lg:py-5 justify-between ${HEADER_HEIGHT_CLASS}`}
           >
-            <SvgHolaglow
-              fill={HOLAGLOW_COLORS['secondary']}
-              className="lg:absolute left-0 h-[24px] lg:h-[32px] w-[98px] lg:w-[130px] 2xl:ml-20"
-            />
-            <Navigation className="hidden lg:block" />
+            <Link href={ROUTES.home} className="2xl:ml-20">
+              <SvgHolaglow
+                fill={HOLAGLOW_COLORS['secondary']}
+                className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
+              />
+            </Link>
+            <Navigation className="hidden lg:block 2xl:mr-20" />
 
             <Flex layout="row-center" className="lg:absolute right-0">
               {!isMobileNavVisible && (
@@ -110,17 +115,6 @@ export default function Header() {
                   }}
                 />
               )}
-              <Button
-                type="tertiary"
-                size="md"
-                className={`hidden lg:block ${HEADER_HEIGHT_CLASS} 2xl:mr-20`}
-                customStyles="group-hover:bg-hg-secondary100"
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Reservar Cita</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
             </Flex>
           </Flex>
         </Container>

@@ -3,7 +3,7 @@
 import './phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
-import { Appointment } from '@interface/appointment';
+import { Appointment, User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -23,8 +23,13 @@ dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
   const router = useRouter();
-  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
-    useGlobalPersistedStore(state => state);
+  const {
+    selectedTreatments,
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    setCurrentUser,
+  } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -54,6 +59,7 @@ export default function ConctactForm() {
     treatmentPrice: 0,
   });
   const localSelectedDay = dayjs(selectedDay);
+  let localUser: User | undefined = undefined;
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
@@ -76,11 +82,10 @@ export default function ConctactForm() {
       [field]: value,
     }));
   };
-  const handleContinue = () => {
+  const handleContinue = async () => {
     setErrors([]);
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
-
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
       field => formData[field] !== ''
@@ -91,7 +96,7 @@ export default function ConctactForm() {
       isEmailValid &&
       formData.termsAndConditionsAccepted
     ) {
-      handleRegistration();
+      await handleRegistration();
     } else {
       const errorMessages = [];
 
@@ -113,16 +118,24 @@ export default function ConctactForm() {
     await registerUser(formData);
   };
 
-  const createAppointment = () => {
+  const createAppointment = async () => {
     const appointments: Appointment[] = [];
     const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
     appointments.push({
       box: selectedSlot!.box,
-      endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+      endTime:
+        dayjs(selectedDay)!.format(format) +
+        ' ' +
+        selectedSlot!.endTime +
+        ':00',
       id: '0',
-      startTime: selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+      startTime:
+        dayjs(selectedDay)!.format(format) +
+        ' ' +
+        selectedSlot!.startTime +
+        ':00',
       treatment: ids,
-      clientId: user?.flowwwToken,
+      clientId: localUser?.flowwwToken,
       comment: '', //TODO: Pending
       treatmentText: '', //TODO: Pending
       referralId: '',
@@ -138,12 +151,15 @@ export default function ConctactForm() {
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    const isSuccess = await UserService.registerUser(formData);
-    if (isSuccess) {
-      createAppointment();
-      setIsLoading(false);
-    } else {
-      handleRequestError([config.ERROR_REGISTRATION]);
+    let user = await UserService.checkUser(formData.email);
+
+    if (!user) {
+      user = await UserService.registerUser(formData);
+    }
+    if (user) {
+      setCurrentUser(user);
+      localUser = user;
+      await createAppointment();
       setIsLoading(false);
     }
   };
@@ -155,10 +171,10 @@ export default function ConctactForm() {
 
   return (
     <MainLayout isCheckout>
-      <Container className="p-0 md:px-4">
-        <Flex layout="col-left" className="mt-9 md:mt-16 md:flex-row items-end">
-          <div className="w-full md:w-1/2 bg-hg-black50 p-8 rounded-xl ">
-            <Flex layout="col-left" className="gap-6">
+      <Container className="px-0 mt-6 md:mt-16">
+        <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+          <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
+            <Flex layout="col-left" className="gap-4 mb-8">
               <Title size="xl" className="font-semibold">
                 Reserva tu cita
               </Title>
@@ -196,14 +212,15 @@ export default function ConctactForm() {
                   </Flex>
                 </>
               )}
-              <RegistrationForm
-                formData={formData}
-                handleFieldChange={handleFormFieldChange}
-                handleContinue={handleContinue}
-                errors={errors}
-                isLoading={isLoading}
-              ></RegistrationForm>
             </Flex>
+
+            <RegistrationForm
+              formData={formData}
+              handleFieldChange={handleFormFieldChange}
+              handleContinue={handleContinue}
+              errors={errors}
+              isLoading={isLoading}
+            />
           </div>
           <div className="w-full md:w-1/2"></div>
         </Flex>
