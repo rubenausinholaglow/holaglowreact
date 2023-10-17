@@ -12,6 +12,7 @@ export interface Product {
   upgrades: Upgrade[];
   category: Category[];
   clinicDetail: ProductClinics[];
+  cardBackgroundColor: string;
   extraInformation: ExtraInformation;
   preTreatmentInfo: PreTips;
   postTreatmentInfo: PostTips;

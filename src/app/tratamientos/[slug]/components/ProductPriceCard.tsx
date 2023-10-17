@@ -199,7 +199,7 @@ function ProductPriceItemsCard({
               key={UPGRADE_TYPES[item.type.toString()].title}
               layout="row-left"
             >
-              {itemsIconsByIndex[index]}
+              {itemsIconsByIndex[index]} - packUnity
               <Text className="text-sm md:text-md">
                 {UPGRADE_TYPES[item.type.toString()].title}
               </Text>

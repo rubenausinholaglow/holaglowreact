@@ -17,7 +17,7 @@ export default function HomeHero() {
           <br />
           tus normas
         </Title>
-        <Link href={ROUTES.products}>
+        <Link href={ROUTES.treatments}>
           <Button type="primary" size="xl">
             Ver tratamientos
           </Button>

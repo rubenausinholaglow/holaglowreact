@@ -1,7 +1,7 @@
 'use client';
 
-import { toggleIsPack } from 'app/productos/utils/filters';
 import { useGlobalStore } from 'app/stores/globalStore';
+import { toggleIsPack } from 'app/tratamientos/utils/filters';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { twMerge } from 'tailwind-merge';
