@@ -337,7 +337,7 @@ export default function ProductPriceCard({
                 {product.price} €
               </Text>
               <Flex layout="row-right">
-                {index === 0 ? (
+                {index === 0 && !product.isPack ? (
                   <Text
                     size="xs"
                     className="py-1 px-2 bg-hg-pink/20 text-hg-pink rounded-md"
