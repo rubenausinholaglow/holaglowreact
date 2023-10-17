@@ -139,7 +139,7 @@ export default function Header() {
     const utm_term = params.get('utm_term');
     const utm_content = params.get('utm_content');
     if (deviceStr) {
-      var device = 0;
+      let device = 0;
       switch (deviceStr) {
         case 'm':
           device = 3;

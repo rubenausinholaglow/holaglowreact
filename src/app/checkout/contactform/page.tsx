@@ -122,6 +122,8 @@ export default function ConctactForm() {
   const createAppointment = async () => {
     const appointments: Appointment[] = [];
     const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+    const treatments = selectedTreatments!.map(x => x.title).join(', ');
+    const comment = 'Tratamiento visto en web: ' + treatments;
     appointments.push({
       box: selectedSlot!.box,
       endTime:
@@ -137,8 +139,8 @@ export default function ConctactForm() {
         ':00',
       treatment: ids,
       clientId: localUser?.flowwwToken,
-      comment: '', //TODO: Pending
-      treatmentText: '', //TODO: Pending
+      comment: comment,
+      treatmentText: treatments,
       referralId: '',
       externalReference: '', //TODO: Pending
       isPast: false,
