@@ -83,7 +83,7 @@ export default function Products({
                       Precio
                     </span>
                     {product.priceWithDiscount !== product.price ? (
-                      <div className="w-full">
+                      <span className="w-full block">
                         <span className="text-2xl font-semibold block">
                           {`${priceFormat(Number(product.priceWithDiscount))}`}{' '}
                           €
@@ -91,7 +91,7 @@ export default function Products({
                         <span className="line-through text-hg-black400 block">
                           {`${priceFormat(Number(product.price))}`} €
                         </span>
-                      </div>
+                      </span>
                     ) : (
                       <span className="text-2xl font-semibold block">
                         {`${priceFormat(Number(product.price))}`} €
