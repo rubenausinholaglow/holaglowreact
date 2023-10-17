@@ -175,6 +175,11 @@ export default function Agenda() {
         });
         setMorningHours(morning);
         setAfternoonHours(afternoon);
+        window.scrollTo({
+          top: 425,
+          left: 0,
+          behavior: 'smooth',
+        });
       })
       .finally(() => {
         setLoadingDays(false);
