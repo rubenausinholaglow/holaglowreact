@@ -52,28 +52,48 @@ export default function MobileNavigation({
 
           <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Aumento de Labios</li>
-              <li>Relleno de ojeras</li>
-              <li>Proyección de pómulos</li>
-              <li>Ver más</li>
+              <a href="/tratamientos/aumento-labios">
+                <li>Aumento de Labios</li>
+              </a>
+              <a href="/tratamientos/relleno-ojeras">
+                <li>Relleno de ojeras</li>
+              </a>
+              <a href="/tratamientos/proyeccion-pomulos">
+                <li>Proyección de pómulos</li>
+              </a>
+              <a href="/tratamientos/relleno">
+                <li>Ver más</li>
+              </a>
             </ul>
           </SimpleAccordion>
 
           <SimpleAccordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Prevención de arrugas</li>
-              <li>Arrugas frente</li>
-              <li>Ver más</li>
+              <a href="/tratamientos/prevencion-arrugas">
+                <li>Prevención de arrugas</li>
+              </a>
+              <a href="/tratamientos/arrugas-expresion-frente-entrecejo-patas-gallo">
+                <li>Arrugas frente</li>
+              </a>
+              <a href="/tratamientos/arrugas">
+                <li>Ver más</li>
+              </a>
             </ul>
           </SimpleAccordion>
 
-          <p className="font-semibold">Hydrafacial ®</p>
+          <a href="/tratamientos/hydrafacial">
+            <p className="font-semibold">Hydrafacial ®</p>
+          </a>
 
-          <p className="font-semibold">Packs Glow</p>
+          <a href="/tratamientos/packs">
+            <p className="font-semibold">Packs Glow</p>
+          </a>
 
-          <Button type="tertiary" className="md:hidden">
-            Reservar Cita
-          </Button>
+          <a href="/checkout/clinicas">
+            <Button type="tertiary" className="md:hidden">
+              Reservar Cita
+            </Button>
+          </a>
         </Flex>
       </div>
       <div className="bg-white border-b border-hg-black py-8">
@@ -91,15 +111,23 @@ export default function MobileNavigation({
 
           <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Quiénes somos</li>
-              <li>Equipo médico</li>
+              <a href="/quienes-somos">
+                <li>Quiénes somos</li>
+              </a>
+              <a href="/quienes-somos">
+                <li>Equipo médico</li>
+              </a>
               <li>Blog</li>
             </ul>
           </SimpleAccordion>
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Política de privacidad</li>
-              <li>Términos y condiciones</li>
+              <a href="/politica-de-privacidad">
+                <li>Política de privacidad</li>
+              </a>
+              <a href="/aviso-legal">
+                <li>Términos y condiciones</li>
+              </a>
             </ul>
           </SimpleAccordion>
         </Flex>
@@ -112,14 +140,14 @@ export default function MobileNavigation({
         <Title size="xl">Contacto</Title>
         <p>
           Para dudas y pedidos, escríbenos a{' '}
-          <a href="mailto:info@holaglow.com">info@holaglow.com</a>
+          <a href="mailto:hola@holaglow.com">hola@holaglow.com</a>
         </p>
         <p className="leading-6">
           Por teléfono de Lunes a Viernes
           <br />
           De 10h a 18:30h
           <br />
-          <a href="tel:(+34) 699 999 999">(+34) 699 999 999</a>
+          <a href="tel:(+34) 682 417 208">(+34) 682 417 208</a>
         </p>
       </Flex>
     </Modal>
