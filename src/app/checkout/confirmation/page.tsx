@@ -90,7 +90,7 @@ export default function ConfirmationCheckout() {
                 size="md"
                 className="hidden md:inline"
                 customStyles="group-hover:bg-hg-secondary100"
-                href={ROUTES.products}
+                href={ROUTES.treatments}
               >
                 <Flex layout="row-center">
                   <span className="font-semibold">Ver tratamientos</span>
