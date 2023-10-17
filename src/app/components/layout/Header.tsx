@@ -19,7 +19,7 @@ let scrollPos = 0;
 const NAV_ITEMS = [
   { name: 'Tratamientos', link: ROUTES.treatments },
   { name: 'Clínicas', link: ROUTES.clinics },
-  { name: 'Sobre nosotros', link: ROUTES.treatments },
+  { name: 'Sobre nosotros', link: ROUTES.aboutUs },
 ];
 
 function Navigation({ className }: { className: string }) {
