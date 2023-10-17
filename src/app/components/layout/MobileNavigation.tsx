@@ -39,7 +39,7 @@ export default function MobileNavigation({
       isVisible={isVisible}
       width="w-full"
       className="shadow-none bg-hg-primary300"
-      from="right"
+      type="right"
       style={{ top: headerHeight }}
       hideModalBackground
     >

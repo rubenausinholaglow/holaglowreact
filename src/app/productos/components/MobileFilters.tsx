@@ -18,7 +18,7 @@ export default function MobileFilters({ isVisible }: { isVisible: boolean }) {
       width="w-full"
       height="h-5/6"
       className="shadow-none rounded-t-3xl"
-      from="bottom"
+      type="bottom"
     >
       <Flex layout="col-left" className="h-full relative pt-20">
         <Flex

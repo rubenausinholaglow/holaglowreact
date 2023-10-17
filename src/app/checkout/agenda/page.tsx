@@ -28,10 +28,10 @@ export default function Agenda() {
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
   const [dateFromatted, setDateFormatted] = useState('');
-  const { selectedDay, setSelectedDay } = useGlobalPersistedStore(
+  const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
     state => state
   );
-  const { setSelectedSlot, selectedTreatments, selectedClinic } =
+  const { setSelectedSlot, selectedSlot, previousAppointment, selectedTreatments, selectedClinic } =
     useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
@@ -110,7 +110,32 @@ export default function Agenda() {
   const selectHour = (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
-    router.push('/checkout/contactform');
+    if (user?.flowwwToken) {
+      const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+      ScheduleService.reschedule({
+        next: {
+          box: selectedSlot!.box,
+          endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+          id: '0',
+          startTime:
+            selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+          treatment: ids,
+          clientId: user?.flowwwToken,
+          comment: '', //TODO: Pending
+          treatmentText: '', //TODO: Pending
+          referralId: '',
+          externalReference: '', //TODO: Pending
+          isPast: false,
+          clinicId: selectedClinic?.flowwwId,
+          isCancelled: false,
+        },
+        previous: previousAppointment,
+      }).then(x => {
+        router.push('/checkout/confirmation');
+      });
+    } else {
+      router.push('/checkout/contactform');
+    }
   };
 
   const selectDate = (x: Date) => {
