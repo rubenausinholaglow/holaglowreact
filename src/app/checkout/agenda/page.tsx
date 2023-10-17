@@ -31,8 +31,13 @@ export default function Agenda() {
   const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
     state => state
   );
-  const { setSelectedSlot, selectedSlot, previousAppointment, selectedTreatments, selectedClinic } =
-    useGlobalPersistedStore(state => state);
+  const {
+    setSelectedSlot,
+    selectedSlot,
+    previousAppointment,
+    selectedTreatments,
+    selectedClinic,
+  } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
@@ -110,7 +115,7 @@ export default function Agenda() {
   const selectHour = (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
-    if (user?.flowwwToken) {
+    if (user?.flowwwToken && previousAppointment) {
       const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
       ScheduleService.reschedule({
         next: {

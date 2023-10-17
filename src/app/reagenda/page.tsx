@@ -80,6 +80,8 @@ export default function Page({
       flowwwToken: token,
       firstName: '',
       email: '',
+      id: '',
+      phone: '',
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];

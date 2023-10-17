@@ -24,7 +24,7 @@ interface GlobalPersistStore {
   selectedSlot?: Slot;
   user?: User;
   selectedDay: Dayjs;
-  previousAppointment: Appointment;
+  previousAppointment: Appointment | undefined;
 }
 
 interface GlobalPersistActions {
