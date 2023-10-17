@@ -1,5 +1,6 @@
 import { Product } from '@interface/product';
 import CategoryIcon from 'app/components/common/CategoryIcon';
+import { getProductCardColor } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -31,7 +32,12 @@ export default function ProductHeader({ product }: { product: Product }) {
         </Flex>
       </Container>
       <div className="md:w-1/2">
-        <div className="relative aspect-[3/2] bg-hg-secondary700 rounded-t-2xl md:rounded-2xl md:mt-8">
+        <div
+          className="relative aspect-[3/2] rounded-t-2xl md:rounded-2xl md:mt-8"
+          style={{
+            background: getProductCardColor(product.cardBackgroundColor),
+          }}
+        >
           <Image
             src="/images/product/fakeProduct.png"
             alt="fakeImg"

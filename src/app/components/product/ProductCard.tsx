@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { getProductCardColor } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -29,31 +30,9 @@ export default function ProductCard({
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
   );
 
-  const tempBgColors = [
-    ['#BBC7FFFF'],
-    ['#FFC7C7FF'],
-    ['#BBC7FFFF', '#FFC7C7FF'],
-    ['#BFE090FF'],
-    ['#BFE090FF'],
-    ['#FF75144D'],
-    ['#98A2B34D'],
-    ['#EBFF0D80', '#B7F9F980'],
-  ];
-
-  const randomIndex = Math.floor(Math.random() * tempBgColors.length);
-  const randomValue = tempBgColors[randomIndex];
-  console.log(randomValue.length, randomValue);
-
-  const imgBackgroundStyle =
-    randomValue.length === 2
-      ? `linear-gradient(45deg, ${randomValue[0]} 0%, ${randomValue[1]} 100%)`
-      : randomValue[0];
-
-  console.log(imgBackgroundStyle);
-
   return (
     <Link
-      href={`${ROUTES.products}/${product?.extraInformation?.slug}`}
+      href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
       className={`text-inherit ${className}`}
       {...rest}
     >
@@ -61,7 +40,9 @@ export default function ProductCard({
         <Flex layout="col-left" className="">
           <div
             className={`relative aspect-[4/3] w-full rounded-t-2xl`}
-            style={{ background: imgBackgroundStyle }}
+            style={{
+              background: getProductCardColor(product.cardBackgroundColor),
+            }}
           >
             <Image
               alt={product.title}
@@ -106,7 +87,7 @@ export default function ProductCard({
             customStyles="hover:bg-hg-secondary100"
           >
             <Link
-              href={`/productos/${product?.extraInformation?.slug}`}
+              href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
               className="text-inherit"
             >
               <Flex layout="row-center">

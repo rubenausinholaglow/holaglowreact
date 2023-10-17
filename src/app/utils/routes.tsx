@@ -1,6 +1,6 @@
 export const ROUTES = {
   home: '/',
-  products: '/productos',
+  treatments: '/tratamientos',
   checkout: {
     clinics: '/checkout/clinics',
     schedule: '/checkout/agenda',
