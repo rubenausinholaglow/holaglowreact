@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
@@ -15,6 +16,14 @@ import { Text } from 'designSystem/Texts/Texts';
 import * as icon from 'icons/IconsDs';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
+
+const APPLIED_PRODUCTS_ICONS: any = {
+  Acido: 'SvgInjection',
+  Antiarrugas: 'SvgInjection',
+  'Vitamina/Acido': 'SvgInjection',
+  Vitaminas: 'SvgInjection',
+  Hydrafacial: 'SvgInjection',
+};
 
 const UPGRADE_TYPES: Record<
   string,
@@ -142,6 +151,9 @@ function ProductPriceItemsCard({
   product: Product;
   parentProduct: Product;
 }) {
+  const { deviceSize, setSelectedTreatments, stateProducts } =
+    useGlobalPersistedStore(state => state);
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
@@ -172,6 +184,11 @@ function ProductPriceItemsCard({
     );
   });
 
+  const setSelectedTreatment = (product: Product) => {
+    const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
+    setSelectedTreatments([productToAdd]);
+  };
+
   const defaultValues = product.packUnities.map((item: any, index) => {
     const defaultValue =
       index === 0
@@ -192,89 +209,101 @@ function ProductPriceItemsCard({
 
   return (
     <Flex layout="col-left" className="w-full">
-      {!product.isPack &&
-        product.packUnities.map((item: any, index: number) => {
-          return (
-            <Flex
-              key={UPGRADE_TYPES[item.type.toString()].title}
-              layout="row-left"
-            >
-              {itemsIconsByIndex[index]} - packUnity
-              <Text className="text-sm md:text-md">
-                {UPGRADE_TYPES[item.type.toString()].title}
+      {!showDropdown &&
+        (!isEmpty(product.appliedProducts) ? (
+          product.appliedProducts.map(item => (
+            <Flex key={item.titlte} className="items-start mb-2">
+              <DynamicIcon
+                height={16}
+                width={16}
+                className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                name={APPLIED_PRODUCTS_ICONS[item.icon]}
+              />
+
+              <Text>
+                {item.titlte} - {item.icon}
               </Text>
             </Flex>
-          );
-        })}
+          ))
+        ) : (
+          <Flex className="items-start mb-2">
+            <SvgInjection
+              height={16}
+              width={16}
+              className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+            />
+            <Text>{product.description}</Text>
+          </Flex>
+        ))}
 
-      {product.isPack && (
-        <>
-          <form className="w-full" onSubmit={data => console.log(data)}>
-            {product.packUnities.map((item: any, index: number) => {
-              return (
-                <div
-                  className="w-full"
-                  key={UPGRADE_TYPES[item.type.toString()].title}
-                >
-                  <Flex layout="row-left">
-                    {itemsIconsByIndex[index]}
-                    <Text className="text-sm md:text-md">
-                      {UPGRADE_TYPES[item.type.toString()].title}
-                    </Text>
-                  </Flex>
-                  {showDropdown && (
-                    <Dropdown
-                      className="mt-2 w-full mb-4"
-                      options={UPGRADE_TYPES[item.type.toString()].options}
-                      defaultValue={defaultValues[index]}
-                      onChange={(value: any) => {
-                        updateSelectedPackOptions(value.value, index);
-                      }}
-                    />
-                  )}
-                </div>
-              );
-            })}
-
-            {product?.packMoreInformation && (
-              <Accordion>
-                <AccordionItem value="accordion">
-                  <AccordionContent>
-                    <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
-                      {product?.packMoreInformation}
-                    </p>
-                  </AccordionContent>
-                  <AccordionTrigger>
-                    <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
-                      + info
-                    </span>
-                  </AccordionTrigger>
-                </AccordionItem>
-              </Accordion>
-            )}
-
-            {showDropdown && (
-              <Button
-                type="tertiary"
-                customStyles="bg-hg-primary"
-                className="mt-4"
+      {showDropdown && (
+        <form className="w-full" onSubmit={data => console.log(data)}>
+          {product.packUnities.map((item: any, index: number) => {
+            return (
+              <div
+                className="w-full"
+                key={UPGRADE_TYPES[item.type.toString()].title}
               >
-                Reservar cita
-                <SvgArrow height={16} width={16} className="ml-2" />
-              </Button>
-            )}
-          </form>
+                <Flex layout="row-left">
+                  {itemsIconsByIndex[index]}
+                  <Text className="text-sm md:text-md">
+                    {UPGRADE_TYPES[item.type.toString()].title}
+                  </Text>
+                </Flex>
+                <Dropdown
+                  className="mt-2 w-full mb-4"
+                  options={UPGRADE_TYPES[item.type.toString()].options}
+                  defaultValue={defaultValues[index]}
+                  onChange={(value: any) => {
+                    updateSelectedPackOptions(value.value, index);
+                  }}
+                />
+              </div>
+            );
+          })}
+        </form>
+      )}
 
-          {!showDropdown && (
-            <Button
-              className="mt-4"
-              type="tertiary"
-              onClick={() => setShowDropdown(true)}
-            >
-              Seleccionar viales
-            </Button>
-          )}
-        </>
+      {product?.packMoreInformation && (
+        <Accordion>
+          <AccordionItem value="accordion">
+            <AccordionContent>
+              <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
+                {product?.packMoreInformation}
+              </p>
+            </AccordionContent>
+            <AccordionTrigger>
+              <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
+                + info
+              </span>
+            </AccordionTrigger>
+          </AccordionItem>
+        </Accordion>
+      )}
+
+      {product.isPack && !showDropdown && (
+        <Button
+          className="mt-8"
+          type="tertiary"
+          onClick={() => setShowDropdown(true)}
+        >
+          Seleccionar viales
+        </Button>
+      )}
+
+      {(!product.isPack || showDropdown) && (
+        <Button
+          type="tertiary"
+          customStyles="bg-hg-primary"
+          onClick={() => {
+            setSelectedTreatment(product);
+          }}
+          href={ROUTES.checkout.clinics}
+          className="mt-8"
+        >
+          Reservar cita
+          <SvgArrow height={16} width={16} className="ml-2" />
+        </Button>
       )}
     </Flex>
   );
@@ -289,13 +318,7 @@ export default function ProductPriceCard({
   index: number;
   parentProduct: Product;
 }) {
-  const { deviceSize, setSelectedTreatments, stateProducts } =
-    useGlobalPersistedStore(state => state);
-
-  const setSelectedTreatment = (product: Product) => {
-    const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
-    setSelectedTreatments([productToAdd]);
-  };
+  const { deviceSize } = useGlobalPersistedStore(state => state);
 
   return (
     <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
@@ -359,53 +382,10 @@ export default function ProductPriceCard({
 
         <AccordionContent>
           <div className="bg-hg-black50 p-3 w-full rounded-xl">
-            {isEmpty(product.packUnities) ? (
-              <Flex layout="row-left">
-                <SvgInjection
-                  height={16}
-                  width={16}
-                  className="text-hg-secondary mr-2"
-                />
-                <Text size="sm">{product.description}</Text>
-              </Flex>
-            ) : (
-              <ProductPriceItemsCard
-                product={product}
-                parentProduct={parentProduct}
-              />
-            )}
-
-            {product?.packMoreInformation && !product.isPack && (
-              <Accordion>
-                <AccordionItem value="accordion">
-                  <AccordionContent>
-                    <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
-                      {product?.packMoreInformation}
-                    </p>
-                  </AccordionContent>
-                  <AccordionTrigger>
-                    <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
-                      + info
-                    </span>
-                  </AccordionTrigger>
-                </AccordionItem>
-              </Accordion>
-            )}
-
-            {!product.isPack && (
-              <Button
-                type="tertiary"
-                customStyles="bg-hg-primary md:mt-4"
-                onClick={() => {
-                  setSelectedTreatment(product);
-                }}
-                href={ROUTES.checkout.clinics}
-                className="mt-4"
-              >
-                Reservar cita
-                <SvgArrow height={16} width={16} className="ml-2" />
-              </Button>
-            )}
+            <ProductPriceItemsCard
+              product={product}
+              parentProduct={parentProduct}
+            />
           </div>
         </AccordionContent>
       </AccordionItem>

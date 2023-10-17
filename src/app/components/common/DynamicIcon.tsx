@@ -5,10 +5,14 @@ import * as suggestionIcons from 'icons/suggestionIcons';
 export default function DynamicIcon({
   name = 'SvgCross',
   family = 'default',
+  height = 24,
+  width = 24,
   className = '',
 }: {
   name: string;
   family?: 'default' | 'suggestions';
+  height?: number;
+  width?: number;
   className?: string;
 }) {
   const iconComponentName = name;
@@ -19,5 +23,5 @@ export default function DynamicIcon({
     return <></>;
   }
 
-  return <IconComponent className={className} />;
+  return <IconComponent className={className} height={height} width={width} />;
 }
