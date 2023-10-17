@@ -117,6 +117,8 @@ export default function Agenda() {
     setSelectedSlot(x);
     if (user?.flowwwToken && previousAppointment) {
       const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+      const treatments = selectedTreatments!.map(x => x.title).join(', ');
+      const comment = 'Tratamiento visto en web: ' + treatments;
       ScheduleService.reschedule({
         next: {
           box: selectedSlot!.box,
@@ -126,8 +128,8 @@ export default function Agenda() {
             selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
           treatment: ids,
           clientId: user?.flowwwToken,
-          comment: '', //TODO: Pending
-          treatmentText: '', //TODO: Pending
+          comment: comment,
+          treatmentText: treatments,
           referralId: '',
           externalReference: '', //TODO: Pending
           isPast: false,

@@ -31,6 +31,7 @@ export default function ConctactForm() {
     setCurrentUser,
   } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
+  const { analyticsMetrics } = useGlobalPersistedStore(state => state);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const { user } = useGlobalPersistedStore(state => state);
@@ -121,6 +122,8 @@ export default function ConctactForm() {
   const createAppointment = async () => {
     const appointments: Appointment[] = [];
     const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+    const treatments = selectedTreatments!.map(x => x.title).join(', ');
+    const comment = 'Tratamiento visto en web: ' + treatments;
     appointments.push({
       box: selectedSlot!.box,
       endTime:
@@ -136,8 +139,8 @@ export default function ConctactForm() {
         ':00',
       treatment: ids,
       clientId: localUser?.flowwwToken,
-      comment: '', //TODO: Pending
-      treatmentText: '', //TODO: Pending
+      comment: comment,
+      treatmentText: treatments,
       referralId: '',
       externalReference: '', //TODO: Pending
       isPast: false,
@@ -154,6 +157,7 @@ export default function ConctactForm() {
     let user = await UserService.checkUser(formData.email);
 
     if (!user) {
+      formData.analyticsMetrics = analyticsMetrics;
       user = await UserService.registerUser(formData);
     }
     if (user) {

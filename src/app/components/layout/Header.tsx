@@ -43,6 +43,9 @@ export default function Header() {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+  const { analyticsMetrics, setAnalyticsMetrics } = useGlobalPersistedStore(
+    state => state
+  );
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -65,6 +68,8 @@ export default function Header() {
     recalculateVisibility();
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    getAnalyticsMetrics();
   }, []);
 
   return (
@@ -121,4 +126,43 @@ export default function Header() {
       </header>
     </>
   );
+
+  function getAnalyticsMetrics() {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const deviceStr = params.get('device');
+    const loc_physical_ms = params.get('loc_physical_ms');
+    const utm_adgroup = params.get('utm_adgroup');
+    const utm_campaign = params.get('utm_campaign');
+    const utm_medium = params.get('utm_medium');
+    const utm_source = params.get('utm_source');
+    const utm_term = params.get('utm_term');
+    const utm_content = params.get('utm_content');
+    if (deviceStr) {
+      let device = 0;
+      switch (deviceStr) {
+        case 'm':
+          device = 3;
+          break;
+        case 't':
+          device = 2;
+          break;
+        case 'd':
+          device = 1;
+          break;
+        default:
+          device = 0;
+          break;
+      }
+      analyticsMetrics.device = device;
+    }
+    if (loc_physical_ms) analyticsMetrics.locPhysicalMs = loc_physical_ms;
+    if (utm_adgroup) analyticsMetrics.utmAdgroup = utm_adgroup;
+    if (utm_campaign) analyticsMetrics.utmCampaign = utm_campaign;
+    if (utm_medium) analyticsMetrics.utmMedium = utm_medium;
+    if (utm_source) analyticsMetrics.utmSource = utm_source;
+    if (utm_term) analyticsMetrics.utmTerm = utm_term;
+    if (utm_content) analyticsMetrics.utmContent = utm_content;
+    setAnalyticsMetrics(analyticsMetrics);
+  }
 }
