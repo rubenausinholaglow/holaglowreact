@@ -1,4 +1,5 @@
 import { Appointment, User } from '@interface/appointment';
+import { AnalyticsMetrics } from '@interface/client';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
@@ -25,6 +26,7 @@ interface GlobalPersistStore {
   user?: User;
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
+  analyticsMetrics: AnalyticsMetrics;
 }
 
 interface GlobalPersistActions {
@@ -38,6 +40,7 @@ interface GlobalPersistActions {
   setSelectedSlot: (slot: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
+  setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
 }
 
 export const useGlobalPersistedStore = create(
@@ -58,6 +61,16 @@ export const useGlobalPersistedStore = create(
       selectedDay: dayjs(),
       selectedSlot: undefined,
       previousAppointment: undefined,
+      analyticsMetrics: {
+        device: 0,
+        locPhysicalMs: '',
+        utmAdgroup: '',
+        utmCampaign: '',
+        utmContent: '',
+        utmMedium: '',
+        utmSource: '',
+        utmTerm: '',
+      },
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -87,6 +100,9 @@ export const useGlobalPersistedStore = create(
       },
       setPreviousAppointment: value => {
         set({ previousAppointment: value });
+      },
+      setAnalyticsMetrics: value => {
+        set({ analyticsMetrics: value });
       },
     }),
     {

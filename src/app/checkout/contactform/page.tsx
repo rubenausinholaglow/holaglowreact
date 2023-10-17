@@ -31,6 +31,7 @@ export default function ConctactForm() {
     setCurrentUser,
   } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
+  const { analyticsMetrics } = useGlobalPersistedStore(state => state);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const { user } = useGlobalPersistedStore(state => state);
@@ -154,6 +155,7 @@ export default function ConctactForm() {
     let user = await UserService.checkUser(formData.email);
 
     if (!user) {
+      formData.analyticsMetrics = analyticsMetrics;
       user = await UserService.registerUser(formData);
     }
     if (user) {
