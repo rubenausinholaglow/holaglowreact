@@ -9,15 +9,14 @@ const handle = app.getRequestHandler();
 server.use(
   '/landing/probador-virtual',
   createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/landing/probador-virtual/',
+    target: 'https://practical-discussions-804147.framer.app/',
     changeOrigin: true,
   })
 );
 server.use(
   '/blog',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/blog/',
+    target: 'https://practical-discussions-804147.framer.app/',
     changeOrigin: true,
   })
 );
