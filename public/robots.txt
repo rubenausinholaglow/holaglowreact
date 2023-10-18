@@ -1,6 +1,9 @@
 # Block all crawlers for
 User-agent: *
-Disallow: /checkout/*
+Disallow: /checkout/clinicas
+Disallow: /checkout/agenda
+Disallow: /checkout/confirmation
+Disallow: /checkout/contactform
 
 # Allow all crawlers
 User-agent: *

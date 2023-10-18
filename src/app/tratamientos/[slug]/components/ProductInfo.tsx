@@ -53,7 +53,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                 <Text>Tiempo de aplicación</Text>
               </div>
             </li>
-            {product.durationMin !== 0 && (
+            {product.durationMin > 30 && (
               <li className="pb-4 flex">
                 <SvgCalendar
                   height={24}
