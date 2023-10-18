@@ -9,20 +9,21 @@ const handle = app.getRequestHandler();
 server.use(
   '/landing/probador-virtual',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/',
+    target:
+      'https://practical-discussions-804147.framer.app/landing/probador-virtual/',
     changeOrigin: true,
     pathRewrite: {
-      '^/landing/probador-virtual': '/landing/probador-virtual', // if needed, you can modify the path here
+      '^/landing/probador-virtual': '/', // if needed, you can modify the path here
     },
   })
 );
 server.use(
   '/blog',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/',
+    target: 'https://practical-discussions-804147.framer.app/blog',
     changeOrigin: true,
     pathRewrite: {
-      '^/blog': '/blog', // if needed, you can modify the path here
+      '^/blog': '/', // if needed, you can modify the path here
     },
   })
 );
