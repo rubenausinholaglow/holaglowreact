@@ -12,19 +12,13 @@ server.use(
     target:
       'https://practical-discussions-804147.framer.app/landing/probador-virtual/',
     changeOrigin: true,
-    pathRewrite: {
-      '^/landing/probador-virtual': '/', // if needed, you can modify the path here
-    },
   })
 );
 server.use(
   '/blog',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/blog',
+    target: 'https://practical-discussions-804147.framer.app/blog/',
     changeOrigin: true,
-    pathRewrite: {
-      '^/blog': '/', // if needed, you can modify the path here
-    },
   })
 );
 
