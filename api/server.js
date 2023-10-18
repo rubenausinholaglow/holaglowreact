@@ -1,4 +1,5 @@
 const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const server = express();
 
 server.all('/landing/probador-virtual', (req, res) => {
