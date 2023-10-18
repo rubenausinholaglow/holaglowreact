@@ -93,7 +93,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                     <DynamicIcon
                       className="h-12 w-12 mb-6 text-hg-secondary"
                       name={`Svg${tip.icon}`}
-                      family="suggestions"
+                      family="suggestion"
                     />
                     <Text className="text-center">{tip.details}</Text>
                   </Flex>
@@ -114,7 +114,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                     <DynamicIcon
                       className="h-12 w-12 mb-6 text-hg-secondary"
                       name={`Svg${tip.icon}`}
-                      family="suggestions"
+                      family="suggestion"
                     />
                     <Text className="text-center">{tip.details}</Text>
                   </Flex>
