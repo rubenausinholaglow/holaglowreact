@@ -34,7 +34,7 @@ const UPGRADE_TYPES: Record<
   }
 > = {
   '0': {
-    title: 'Ácido Hialurónico',
+    title: '1 vial de ácido hialurónico',
     icon: 'Injection',
     options: [
       {
@@ -84,7 +84,7 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '1': {
-    title: 'BabyBotox',
+    title: '0,5 vial de inyectable antiarrugas',
     icon: 'Injection',
     options: [
       { label: 'BabyBotox', value: 'BabyBotox' },
@@ -95,7 +95,7 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '2': {
-    title: 'Botox',
+    title: '1 vial de inyectable antiarrugas',
     icon: 'Injection',
     options: [
       {
@@ -105,7 +105,7 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '3': {
-    title: 'Piel',
+    title: '1 Hydrafacial express',
     icon: 'Injection',
     options: [
       {
@@ -119,7 +119,7 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '4': {
-    title: 'Piel Profunda',
+    title: '1 Hydrafacial deluxe',
     icon: 'Injection',
     options: [
       {
@@ -133,7 +133,7 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '5': {
-    title: 'Cóctel de vitaminas',
+    title: '1 sesión de vitaminas',
     icon: 'Medicine',
     options: [],
   },

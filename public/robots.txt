@@ -4,6 +4,8 @@ Disallow: /checkout/clinicas
 Disallow: /checkout/agenda
 Disallow: /checkout/confirmation
 Disallow: /checkout/contactform
+Disallow: /aviso-legal
+Disallow: /politica-de-privacidad
 
 # Allow all crawlers
 User-agent: *
