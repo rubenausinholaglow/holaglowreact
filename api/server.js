@@ -3,9 +3,14 @@ const server = express();
 
 server.all('/landing/probador-virtual', (req, res) => {
   // Redirect to your Framer URL or handle the proxy here
-  res.redirect(
-    'https://practical-discussions-804147.framer.app/landing/probador-virtual/'
-  );
+  createProxyMiddleware({
+    target:
+      'https://practical-discussions-804147.framer.app/landing/probador-virtual/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/landing/probador-virtual': '/', // if needed, you can modify the path here
+    },
+  });
 });
 
 server.all('*', (req, res) => {
