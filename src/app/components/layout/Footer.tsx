@@ -134,7 +134,6 @@ export function Footer() {
               <a href="/quienes-somos">
                 <li>Equipo médico</li>
               </a>
-              <li>Blog</li>
             </ul>
           </SimpleAccordion>
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>

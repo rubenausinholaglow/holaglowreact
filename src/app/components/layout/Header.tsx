@@ -28,9 +28,7 @@ function Navigation({ className }: { className: string }) {
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
           <li className="font-medium" key={navItem.name}>
-            <Link className="text-inherit" href={navItem.link}>
-              {navItem.name}
-            </Link>
+            <Link href={navItem.link}>{navItem.name}</Link>
           </li>
         ))}
       </ul>

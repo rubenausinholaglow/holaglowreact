@@ -27,7 +27,7 @@ body {
   color: theme('colors.hg.black');
 }
 
-a {
+a:hover {
   color: theme('colors.hg.secondary');
 }
 

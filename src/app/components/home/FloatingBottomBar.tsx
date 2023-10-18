@@ -49,7 +49,7 @@ export default function FloatingBottomBar({ product }: { product?: Product }) {
             className="grow mr-4 md:hidden pointer-events-auto"
             customStyles="px-4"
           >
-            <Link href="#prices" className="text-inherit">
+            <Link href="#prices">
               {product ? (
                 <>
                   <span className="inline-block">Reservar cita desde</span>{' '}
