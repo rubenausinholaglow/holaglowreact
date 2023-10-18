@@ -117,11 +117,13 @@ export function Footer() {
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6"
         >
           <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              {clinics.map(clinic => (
-                <li key={clinic.city}>{clinic.city}</li>
-              ))}
-            </ul>
+            <a href="/clinicas">
+              <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+                {clinics.map(clinic => (
+                  <li key={clinic.city}>{clinic.city}</li>
+                ))}
+              </ul>
+            </a>
           </SimpleAccordion>
 
           <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
