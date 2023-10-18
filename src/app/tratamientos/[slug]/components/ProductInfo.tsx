@@ -86,7 +86,7 @@ export default function ProductInfo({ product }: { product: Product }) {
           </Button>
         </Container>
         <div className="md:w-1/2">
-          <div className="relative aspect-[6/5] md:rounded-2xl">
+          {/*<div className="relative aspect-[6/5] md:rounded-2xl">
             <Image
               src="/images/product/fakeProductExample1.png"
               alt="fakeExample"
@@ -94,7 +94,7 @@ export default function ProductInfo({ product }: { product: Product }) {
               objectFit="cover"
               className="md:rounded-xl"
             />
-          </div>
+            </div> */}
         </div>
       </div>
     </Container>

@@ -4,8 +4,14 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgCheckCircle } from 'icons/IconsDs';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function ProductExplanation({ product }: { product: Product }) {
+  const DEFAULT_IMG_SRC = '/images/product/fakeProductExample1.png';
+
+  const [imgSrc, setImgSrc] = useState(
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productAnimation.gif`
+  );
   return (
     <Container className="gap-16 justify-between py-12 px-0 md:px-4 md:flex md:pb-24">
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
@@ -49,7 +55,8 @@ export default function ProductExplanation({ product }: { product: Product }) {
 
           <div className="relative aspect-[4/3] mb-8">
             <Image
-              src="/images/product/fakeProductExample1.png"
+              src={DEFAULT_IMG_SRC}
+              onError={() => setImgSrc(DEFAULT_IMG_SRC)}
               alt="fakeImg"
               fill
               objectFit="cover"
