@@ -27,6 +27,17 @@ server.use(
     },
   })
 );
+server.use(
+  '/landing/visita-medica-mgm',
+  createProxyMiddleware({
+    target:
+      'https://practical-discussions-804147.framer.app/landing/visita-medica-mgm/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/landing/visita-medica-mgm': '/', // if needed, you can modify the path here
+    },
+  })
+);
 
 server.all('*', (req, res) => handle(req, res));
 
