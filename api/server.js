@@ -1,9 +1,13 @@
 const express = require('express');
+const next = require('next');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const server = express();
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-server.all('/landing/probador-virtual', (req, res) => {
-  // Redirect to your Framer URL or handle the proxy here
+server.use(
+  '/landing/probador-virtual',
   createProxyMiddleware({
     target:
       'https://practical-discussions-804147.framer.app/landing/probador-virtual/',
@@ -11,13 +15,10 @@ server.all('/landing/probador-virtual', (req, res) => {
     pathRewrite: {
       '^/landing/probador-virtual': '/', // if needed, you can modify the path here
     },
-  });
-});
+  })
+);
 
-server.all('*', (req, res) => {
-  // Handle other routes or simply forward to your Next.js app
-  res.send('Other routes here');
-});
+server.all('*', (req, res) => handle(req, res));
 
 module.exports = (req, res) => {
   return server(req, res);
