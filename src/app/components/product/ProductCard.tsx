@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Product } from '@interface/product';
-import { getProductCardColor } from 'app/utils/common';
+import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -23,43 +23,31 @@ export default function ProductCard({
   className?: string;
   [key: string]: any;
 }) {
-  const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
+  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
 
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-left.png`
-  );
-  const [imageIndex, setImgIndex] = useState(0);
-  const arrayImages = ['center', 'right'];
-  const setNextImgSrc = () => {
-    if (imageIndex < arrayImages.length) {
-      setImgSrc(
-        `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${arrayImages[imageIndex]}.png`
-      );
-    } else {
-      setImgSrc(DEFAULT_IMG_SRC);
-    }
-    setImgIndex(imageIndex + 1);
-  };
   return (
     <Link
       href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
       className={`text-inherit ${className}`}
       {...rest}
     >
-      <div className="flex flex-col h-full pt-4 borde">
+      <div className="flex flex-col h-full pt-4 overflow-hidden">
         <Flex layout="col-left" className="">
-          <div
-            className="relative aspect-[4/3] w-full rounded-t-2xl"
-            style={{
-              background: getProductCardColor(product.cardBackgroundColor),
-            }}
-          >
+          <div className="relative h-[250px] w-full rounded-t-2xl">
+            <div
+              className="absolute inset-0 top-[10%] rounded-t-3xl "
+              style={{
+                background: getProductCardColor(product.cardBackgroundColor),
+              }}
+            />
+
             <Image
               alt={product.title}
-              fill
+              width={400}
+              height={300}
               src={imgSrc}
               onError={() => setNextImgSrc()}
-              className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
+              className={`relative ${alignmentStyles} h-[250px] w-auto`}
             />
 
             {!isEmpty(product.category) && (

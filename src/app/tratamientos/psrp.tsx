@@ -43,7 +43,7 @@ export default function PsrpPage({ slug }: { slug: string }) {
         let filterToApply = '';
         switch (slug) {
           case 'piel':
-            filterToApply = 'Calidad Piel';
+            filterToApply = 'Calidad de la Piel';
             break;
           case 'pelo':
             filterToApply = 'Caida del pelo';

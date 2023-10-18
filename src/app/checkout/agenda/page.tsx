@@ -100,7 +100,10 @@ export default function Agenda() {
   useEffect(() => {
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
       setSelectedTreatmentsIds(
-        selectedPacksTreatments!.map(x => x.flowwwId).join(',')
+        selectedPacksTreatments!
+          .slice(0, 3)
+          .map(x => x.flowwwId)
+          .join(',')
       );
     } else if (selectedTreatments && selectedTreatments.length > 0) {
       setSelectedTreatmentsIds(
@@ -123,7 +126,10 @@ export default function Agenda() {
     if (user?.flowwwToken && previousAppointment) {
       let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
       if (selectedPacksTreatments && selectedPacksTreatments.length) {
-        ids = selectedPacksTreatments!.map(x => x.flowwwId).join(',');
+        ids = selectedPacksTreatments!
+          .slice(0, 3)
+          .map(x => x.flowwwId)
+          .join(',');
       }
       const treatments = selectedTreatments!.map(x => x.title).join(', ');
       const comment = 'Tratamiento visto en web: ' + treatments;
@@ -247,7 +253,7 @@ export default function Agenda() {
                       <Text size="xs" className="w-full text-left">
                         {selectedClinic.address}, {selectedClinic.city}
                       </Text>
-                      <Link href="/checkout/clinics" className="text-xs">
+                      <Link href="/checkout/clinicas" className="text-xs">
                         Cambiar
                       </Link>
                     </Flex>
@@ -350,7 +356,7 @@ export default function Agenda() {
                                 {clickedHour === x.startTime && (
                                   <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
                                 )}
-                                {x.startTime} h
+                                {x.startTime}
                               </div>
                             </Flex>
                           );
@@ -385,7 +391,7 @@ export default function Agenda() {
                                 {clickedHour === x.startTime && (
                                   <SvgCheck className="text-hg-primary mr-1" />
                                 )}
-                                {x.startTime} h
+                                {x.startTime}
                               </div>
                             </Flex>
                           );
