@@ -98,7 +98,6 @@ export default function Agenda() {
   }, []);
 
   useEffect(() => {
-    debugger;
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
       setSelectedTreatmentsIds(
         selectedPacksTreatments!.map(x => x.flowwwId).join(',')
