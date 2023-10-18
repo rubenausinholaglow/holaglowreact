@@ -26,9 +26,20 @@ export default function ProductCard({
   const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
 
   const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard.png`
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-left.png`
   );
-
+  const [imageIndex, setImgIndex] = useState(0);
+  const arrayImages = ['middle', 'right'];
+  const setNextImgSrc = () => {
+    if (imageIndex < arrayImages.length) {
+      setImgSrc(
+        `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${arrayImages[imageIndex]}.png`
+      );
+    } else {
+      setImgSrc(DEFAULT_IMG_SRC);
+    }
+    setImgIndex(imageIndex + 1);
+  };
   return (
     <Link
       href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
@@ -38,7 +49,7 @@ export default function ProductCard({
       <div className="flex flex-col h-full pt-4 borde">
         <Flex layout="col-left" className="">
           <div
-            className={`relative aspect-[4/3] w-full rounded-t-2xl`}
+            className="relative aspect-[4/3] w-full rounded-t-2xl"
             style={{
               background: getProductCardColor(product.cardBackgroundColor),
             }}
@@ -47,7 +58,7 @@ export default function ProductCard({
               alt={product.title}
               fill
               src={imgSrc}
-              onError={() => setImgSrc(DEFAULT_IMG_SRC)}
+              onError={() => setNextImgSrc()}
               className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
             />
 

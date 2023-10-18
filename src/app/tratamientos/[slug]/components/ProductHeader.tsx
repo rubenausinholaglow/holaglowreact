@@ -11,8 +11,21 @@ export default function ProductHeader({ product }: { product: Product }) {
   const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
 
   const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard.png`
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-left.png`
   );
+  const [imageIndex, setImgIndex] = useState(0);
+  const arrayImages = ['center', 'right'];
+  const setNextImgSrc = () => {
+    if (imageIndex < arrayImages.length) {
+      setImgSrc(
+        `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${arrayImages[imageIndex]}.png`
+      );
+    } else {
+      setImgSrc(DEFAULT_IMG_SRC);
+    }
+    setImgIndex(imageIndex + 1);
+  };
+
   return (
     <Container className="p-0 md:px-4 md:flex gap-16 justify-between md:mb-16">
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
@@ -46,8 +59,8 @@ export default function ProductHeader({ product }: { product: Product }) {
         >
           <Image
             src={imgSrc}
-            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-            alt="fakeImg"
+            onError={() => setNextImgSrc()}
+            alt={product.title}
             fill
             objectFit="contain"
             className="scale-[110%] -translate-y-[5%]"

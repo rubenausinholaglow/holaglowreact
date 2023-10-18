@@ -26,7 +26,7 @@ export default function ProductResults({ product }: { product: Product }) {
       </Container>
       <div className="md:w-1/2">
         <Carousel
-          hasControls
+          hasControls={product.beforeAndAfterImages?.length > 1}
           dragEnabled={false}
           touchEnabled={false}
           hasDots
