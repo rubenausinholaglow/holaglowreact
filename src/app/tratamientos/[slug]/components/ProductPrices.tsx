@@ -15,8 +15,8 @@ import ProductSessionPriceCard from './ProductSessionPriceCard';
 
 export default function ProductPrices({ product }: { product: Product }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
-  const [productItems, setProductITems] = useState<any>([]);
-  const [isSessionProduct, setIsSessionProduct] = useState<any>(false);
+  const [productItems, setProductITems] = useState<Product[]>([]);
+  const [isSessionProduct, setIsSessionProduct] = useState<boolean>(false);
   const [groupedSessionProducts, setGroupedSessionProducts] = useState<
     Product[][] | null
   >([]);
@@ -42,17 +42,19 @@ export default function ProductPrices({ product }: { product: Product }) {
 
   useEffect(() => {
     function groupProductsByTitle(arr: Product[]) {
-      const groupedSessionProducts: { [key: string]: Product[] } = {};
+      const groupedArray: { [key: string]: Product[] } = {};
 
-      for (const item of arr) {
-        if (!groupedSessionProducts[item.title]) {
-          groupedSessionProducts[item.title] = [];
+      productItems.forEach((product: Product) => {
+        const title = product.title.replace(/ x[36]$/, '');
+
+        if (!groupedArray[title]) {
+          groupedArray[title] = [];
         }
 
-        groupedSessionProducts[item.title].push(item);
-      }
+        groupedArray[title].push(product);
+      });
 
-      return Object.values(groupedSessionProducts);
+      return Object.values(groupedArray);
     }
 
     const groupedArrays: Product[][] = groupProductsByTitle(productItems);

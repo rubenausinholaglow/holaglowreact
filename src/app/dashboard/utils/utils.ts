@@ -112,6 +112,10 @@ export function getPaymentBankText(bank: PaymentBank): string {
       return 'Alma';
     case PaymentBank.Pepper:
       return 'Pepper';
+    case PaymentBank.Cash:
+      return '';
+    case PaymentBank.CreditCard:
+      return '';
     default:
       return 'Unknown';
   }

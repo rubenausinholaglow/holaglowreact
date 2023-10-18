@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Product } from '@interface/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -23,52 +23,31 @@ export default function ProductCard({
   className?: string;
   [key: string]: any;
 }) {
-  const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
-
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
-  );
-
-  const tempBgColors = [
-    ['#BBC7FFFF'],
-    ['#FFC7C7FF'],
-    ['#BBC7FFFF', '#FFC7C7FF'],
-    ['#BFE090FF'],
-    ['#BFE090FF'],
-    ['#FF75144D'],
-    ['#98A2B34D'],
-    ['#EBFF0D80', '#B7F9F980'],
-  ];
-
-  const randomIndex = Math.floor(Math.random() * tempBgColors.length);
-  const randomValue = tempBgColors[randomIndex];
-  console.log(randomValue.length, randomValue);
-
-  const imgBackgroundStyle =
-    randomValue.length === 2
-      ? `linear-gradient(45deg, ${randomValue[0]} 0%, ${randomValue[1]} 100%)`
-      : randomValue[0];
-
-  console.log(imgBackgroundStyle);
+  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
 
   return (
     <Link
-      href={`${ROUTES.products}/${product?.extraInformation?.slug}`}
+      href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
       className={`text-inherit ${className}`}
       {...rest}
     >
-      <div className="flex flex-col h-full pt-4 borde">
+      <div className="flex flex-col h-full pt-4 overflow-hidden">
         <Flex layout="col-left" className="">
-          <div
-            className={`relative aspect-[4/3] w-full rounded-t-2xl`}
-            style={{ background: imgBackgroundStyle }}
-          >
+          <div className="relative h-[250px] w-full rounded-t-2xl">
+            <div
+              className="absolute inset-0 top-[10%] rounded-t-3xl "
+              style={{
+                background: getProductCardColor(product.cardBackgroundColor),
+              }}
+            />
+
             <Image
               alt={product.title}
-              fill
-              src={DEFAULT_IMG_SRC}
-              onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-              className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
+              width={400}
+              height={300}
+              src={imgSrc}
+              onError={() => setNextImgSrc()}
+              className={`relative ${alignmentStyles} h-[250px] w-auto`}
             />
 
             {!isEmpty(product.category) && (
@@ -106,7 +85,7 @@ export default function ProductCard({
             customStyles="hover:bg-hg-secondary100"
           >
             <Link
-              href={`/productos/${product?.extraInformation?.slug}`}
+              href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
               className="text-inherit"
             >
               <Flex layout="row-center">

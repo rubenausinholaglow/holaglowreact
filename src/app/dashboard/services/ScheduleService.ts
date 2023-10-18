@@ -1,5 +1,9 @@
 import Bugsnag from '@bugsnag/js';
-import { Appointment, Status } from '@interface/appointment';
+import {
+  Appointment,
+  RescheduleAppointmentRequest,
+  Status,
+} from '@interface/appointment';
 import { DayAvailability } from '@interface/dayAvailability';
 import { Slot } from '@interface/slot';
 
@@ -14,7 +18,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error getClinicSchedule', err);
       return err;
     }
   }
@@ -46,7 +51,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error updatePatientStatusAppointment', err);
       return '';
     }
   }
@@ -60,7 +66,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error getAppointmentsPerClinic', err);
       return err;
     }
   }
@@ -87,7 +94,8 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error finishing appointment', err);
       return '';
     }
   }
@@ -111,7 +119,8 @@ export default class ScheduleService {
       } else {
         return null;
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error confirming appointment', err);
       return null;
     }
   }
@@ -185,8 +194,76 @@ export default class ScheduleService {
       } else {
         return '';
       }
-    } catch (err) {
+    } catch (err: any) {
+      Bugsnag.notify('Error scheduleBulk', err);
       return err;
+    }
+  }
+  static async next(token: string): Promise<Appointment[]> {
+    try {
+      const url =
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Next?token=` +
+        token;
+
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error next', err);
+      return [];
+    }
+  }
+  static async cancel(appointment: Appointment) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment`;
+
+      const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(appointment),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error cancel', err);
+      return [];
+    }
+  }
+  static async reschedule(reschedule: RescheduleAppointmentRequest) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Reschedule`;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reschedule),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return [];
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error cancel', err);
+      return [];
     }
   }
 }

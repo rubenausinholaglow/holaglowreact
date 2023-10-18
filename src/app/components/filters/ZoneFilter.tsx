@@ -2,14 +2,14 @@
 
 import { useEffect } from 'react';
 import {
-  applyFilters,
-  filterCount,
-  toggleFilter,
-} from 'app/productos/utils/filters';
-import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/tratamientos/utils/filters';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import Image from 'next/image';

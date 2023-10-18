@@ -29,8 +29,10 @@ export default function ConctactForm() {
     selectedDay,
     selectedClinic,
     setCurrentUser,
+    selectedPacksTreatments,
   } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
+  const { analyticsMetrics } = useGlobalPersistedStore(state => state);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const { user } = useGlobalPersistedStore(state => state);
@@ -119,8 +121,17 @@ export default function ConctactForm() {
   };
 
   const createAppointment = async () => {
-    const appointments = [];
-    const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+    const appointments: Appointment[] = [];
+    let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
+    let treatments = selectedTreatments!.map(x => x.title).join(',');
+    if (selectedPacksTreatments && selectedPacksTreatments.length) {
+      ids = selectedPacksTreatments!
+        .slice(0, 3)
+        .map(x => x.flowwwId)
+        .join(',');
+      treatments = selectedPacksTreatments!.map(x => x.title).join(',');
+    }
+    const comment = 'Tratamiento visto en web: ' + treatments;
     appointments.push({
       box: selectedSlot!.box,
       endTime:
@@ -136,8 +147,8 @@ export default function ConctactForm() {
         ':00',
       treatment: ids,
       clientId: localUser?.flowwwToken,
-      comment: '', //TODO: Pending
-      treatmentText: '', //TODO: Pending
+      comment: comment,
+      treatmentText: treatments,
       referralId: '',
       externalReference: '', //TODO: Pending
       isPast: false,
@@ -154,13 +165,13 @@ export default function ConctactForm() {
     let user = await UserService.checkUser(formData.email);
 
     if (!user) {
+      formData.analyticsMetrics = analyticsMetrics;
       user = await UserService.registerUser(formData);
     }
     if (user) {
       setCurrentUser(user);
       localUser = user;
       await createAppointment();
-      setIsLoading(false);
     }
   };
 

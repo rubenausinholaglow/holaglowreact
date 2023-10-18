@@ -83,7 +83,8 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
         className={isCheckout ? 'p-4' : 'p-4 text-left w-full h-full'}
       >
         <Text size={isCheckout ? 'md' : 'sm'} className="font-semibold mb-1">
-          {product.title}
+          {product.title}{' '}
+          {product.sessions > 1 && !product.isPack && 'x' + product.sessions}
         </Text>
         <Text size={isCheckout ? 'sm' : 'xs'} className="text-hg-tertiary mb-3">
           {product.description}

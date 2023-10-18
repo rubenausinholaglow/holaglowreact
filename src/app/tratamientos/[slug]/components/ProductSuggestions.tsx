@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Product } from '@interface/product';
+import DynamicIcon from 'app/components/common/DynamicIcon';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -83,16 +84,17 @@ export default function ProductSuggestions({ product }: { product: Product }) {
             product.preTreatmentInfo?.tips
               .sort((a, b) => a.priority - b.priority)
               .map(tip => {
-                const iconComponentName = `Svg${tip.icon}`;
-                const IconComponent = (icon as any)[iconComponentName] || null;
-
                 return (
                   <Flex
                     key={tip.priority}
                     layout="col-center"
-                    className="bg-white/30 p-8 rounded-2xl h-full"
+                    className="bg-white/30 p-8 rounded-2xl h-full mr-4 ml-4"
                   >
-                    {IconComponent && <IconComponent />}
+                    <DynamicIcon
+                      className="h-12 w-12 mb-6 text-hg-secondary"
+                      name={`Svg${tip.icon}`}
+                      family="suggestion"
+                    />
                     <Text className="text-center">{tip.details}</Text>
                   </Flex>
                 );
@@ -103,16 +105,17 @@ export default function ProductSuggestions({ product }: { product: Product }) {
             postTreatmentTips
               .sort((a, b) => a.priority - b.priority)
               .map(tip => {
-                const iconComponentName = `Svg${tip.icon}`;
-                const IconComponent = (icon as any)[iconComponentName] || null;
-
                 return (
                   <Flex
                     key={tip.priority}
                     layout="col-center"
-                    className="bg-white/30 p-8 rounded-2xl h-full"
+                    className="bg-white/30 p-8 rounded-2xl h-full mr-4 ml-4"
                   >
-                    {IconComponent && <IconComponent />}
+                    <DynamicIcon
+                      className="h-12 w-12 mb-6 text-hg-secondary"
+                      name={`Svg${tip.icon}`}
+                      family="suggestion"
+                    />
                     <Text className="text-center">{tip.details}</Text>
                   </Flex>
                 );

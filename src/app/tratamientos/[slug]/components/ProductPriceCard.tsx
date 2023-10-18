@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
@@ -21,12 +22,14 @@ const UPGRADE_TYPES: Record<
   {
     title: string;
     icon: string;
+    family: string;
     options: { label: string; value: string }[];
   }
 > = {
   '0': {
-    title: 'Ácido Hialurónico',
-    icon: 'Injection',
+    title: '1 vial de ácido hialurónico',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Aumento de labios',
@@ -49,16 +52,8 @@ const UPGRADE_TYPES: Record<
         value: 'Proyección de Pómulos',
       },
       {
-        label: 'Relleno de ojeras',
-        value: 'Relleno de ojeras',
-      },
-      {
         label: 'Relleno lineas marioneta',
         value: 'Relleno lineas marioneta',
-      },
-      {
-        label: 'Rinomodelación',
-        value: 'Rinomodelación',
       },
       {
         label: 'Sonrisa Gingival',
@@ -69,16 +64,20 @@ const UPGRADE_TYPES: Record<
         value: 'Surco Nasogeniano',
       },
       {
-        label: 'Volumen y perfilado de Cejas',
-        value: 'Volumen y perfilado de Cejas',
+        label: 'Volumen y perfilado de cejas',
+        value: 'Volumen y perfilado de cejas',
       },
     ],
   },
   '1': {
-    title: 'BabyBotox',
-    icon: 'Injection',
+    title: '0,5 vial de inyectable antiarrugas',
+    icon: 'SvgArrugas',
+    family: 'category',
     options: [
-      { label: 'BabyBotox', value: 'BabyBotox' },
+      {
+        label: 'Prevención arrugas - Baby botox',
+        value: 'Prevención arrugas - Baby botox',
+      },
       {
         label: 'Arrugas entrecejo y patas de gallo',
         value: 'Arrugas entrecejo y patas de gallo',
@@ -86,47 +85,45 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '2': {
-    title: 'Botox',
-    icon: 'Injection',
+    title: '1 vial de inyectable antiarrugas',
+    icon: 'SvgArrugas',
+    family: 'category',
     options: [
       {
-        label: 'Arrugas expresión: frente, entrecejo y patas de gallo',
-        value: 'Arrugas expresión: frente, entrecejo y patas de gallo',
+        label: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
+        value: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
       },
     ],
   },
   '3': {
     title: 'Piel',
-    icon: 'Injection',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Hydrafacial express (1 sesión)',
-        value: 'Hydrafacial express (1 sesión)',
+        value: 'Hydrafacial',
       },
       {
         label: 'Mesoterapia (1 sesión)',
-        value: 'Mesoterapia (1 sesión)',
+        value: 'Revitalización facial: Mesoterapia',
       },
     ],
   },
   '4': {
     title: 'Piel Profunda',
-    icon: 'Injection',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Hydrafacial deluxe (1 sesión)',
-        value: 'Hydrafacial deluxe (1 sesión)',
+        value: 'Hydrafacial: Deluxe',
       },
       {
         label: 'Dermapen (1 sesión)',
-        value: 'Dermapen (1 sesión)',
+        value: 'Microneedling',
       },
     ],
-  },
-  '5': {
-    title: 'Cóctel de vitaminas',
-    icon: 'Medicine',
-    options: [],
   },
 };
 
@@ -142,6 +139,13 @@ function ProductPriceItemsCard({
   product: Product;
   parentProduct: Product;
 }) {
+  const {
+    deviceSize,
+    setSelectedTreatments,
+    setSelectedPackTreatments,
+    stateProducts,
+  } = useGlobalPersistedStore(state => state);
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
@@ -154,7 +158,6 @@ function ProductPriceItemsCard({
     if (itemToUpdate) {
       itemToUpdate.value = newValue;
     }
-
     setSelectedPackOptions(newOptions);
   };
 
@@ -171,6 +174,18 @@ function ProductPriceItemsCard({
       />
     );
   });
+
+  const setSelectedTreatment = (product: Product) => {
+    const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
+    setSelectedTreatments([productToAdd]);
+    const packTreatments: Product[] = [];
+    if (selectedPackOptions.length > 0) {
+      selectedPackOptions.forEach(x => {
+        packTreatments.push(stateProducts.filter(y => y?.title === x.value)[0]);
+      });
+    }
+    setSelectedPackTreatments(packTreatments);
+  };
 
   const defaultValues = product.packUnities.map((item: any, index) => {
     const defaultValue =
@@ -192,89 +207,115 @@ function ProductPriceItemsCard({
 
   return (
     <Flex layout="col-left" className="w-full">
-      {!product.isPack &&
-        product.packUnities.map((item: any, index: number) => {
-          return (
-            <Flex
-              key={UPGRADE_TYPES[item.type.toString()].title}
-              layout="row-left"
-            >
-              {itemsIconsByIndex[index]}
-              <Text className="text-sm md:text-md">
-                {UPGRADE_TYPES[item.type.toString()].title}
-              </Text>
-            </Flex>
-          );
-        })}
+      {!showDropdown &&
+        (!isEmpty(product.appliedProducts) ? (
+          product.appliedProducts.map(item => {
+            const iconName = item.icon.split('/')[0] || 'SvgCross';
+            const iconFamily:
+              | 'default'
+              | 'category'
+              | 'suggestion'
+              | 'service' = (item.icon.split('/')[1] as 'default') || 'default';
 
-      {product.isPack && (
-        <>
-          <form className="w-full" onSubmit={data => console.log(data)}>
-            {product.packUnities.map((item: any, index: number) => {
-              return (
-                <div
-                  className="w-full"
-                  key={UPGRADE_TYPES[item.type.toString()].title}
-                >
-                  <Flex layout="row-left">
-                    {itemsIconsByIndex[index]}
-                    <Text className="text-sm md:text-md">
-                      {UPGRADE_TYPES[item.type.toString()].title}
-                    </Text>
-                  </Flex>
-                  {showDropdown && (
-                    <Dropdown
-                      className="mt-2 w-full mb-4"
-                      options={UPGRADE_TYPES[item.type.toString()].options}
-                      defaultValue={defaultValues[index]}
-                      onChange={(value: any) => {
-                        updateSelectedPackOptions(value.value, index);
-                      }}
-                    />
-                  )}
-                </div>
-              );
-            })}
+            return (
+              <Flex key={item.titlte} className="items-start mb-2">
+                <DynamicIcon
+                  height={16}
+                  width={16}
+                  className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                  name={iconName}
+                  family={iconFamily}
+                />
 
-            {product?.packMoreInformation && (
-              <Accordion>
-                <AccordionItem value="accordion">
-                  <AccordionContent>
-                    <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
-                      {product?.packMoreInformation}
-                    </p>
-                  </AccordionContent>
-                  <AccordionTrigger>
-                    <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
-                      + info
-                    </span>
-                  </AccordionTrigger>
-                </AccordionItem>
-              </Accordion>
-            )}
+                <Text>{item.titlte}</Text>
+              </Flex>
+            );
+          })
+        ) : (
+          <Flex className="items-start mb-2">
+            <SvgInjection
+              height={16}
+              width={16}
+              className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+            />
+            <Text>{product.description}</Text>
+          </Flex>
+        ))}
 
-            {showDropdown && (
-              <Button
-                type="tertiary"
-                customStyles="bg-hg-primary"
-                className="mt-4"
+      {showDropdown && (
+        <form className="w-full" onSubmit={data => console.log(data)}>
+          {product.packUnities.map((item: any, index: number) => {
+            return (
+              <div
+                className="w-full"
+                key={UPGRADE_TYPES[item.type.toString()].title}
               >
-                Reservar cita
-                <SvgArrow height={16} width={16} className="ml-2" />
-              </Button>
-            )}
-          </form>
+                <Flex layout="row-left" className="items-start">
+                  {/* <DynamicIcon
+                    name={UPGRADE_TYPES[item.type.toString()].icon}
+                    family={UPGRADE_TYPES[item.type.toString()].family}
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2 mt-0.5"
+                  /> */}
+                  <Text className="text-sm md:text-md">
+                    {UPGRADE_TYPES[item.type.toString()].title}
+                  </Text>
+                </Flex>
+                <Dropdown
+                  className="mt-2 w-full mb-4"
+                  options={UPGRADE_TYPES[item.type.toString()].options}
+                  defaultValue={defaultValues[index]}
+                  onChange={(value: any) => {
+                    updateSelectedPackOptions(value.value, index);
+                  }}
+                />
+              </div>
+            );
+          })}
+        </form>
+      )}
 
-          {!showDropdown && (
-            <Button
-              className="mt-4"
-              type="tertiary"
-              onClick={() => setShowDropdown(true)}
-            >
-              Seleccionar viales
-            </Button>
-          )}
-        </>
+      {product?.packMoreInformation && (
+        <Accordion>
+          <AccordionItem value="accordion">
+            <AccordionContent>
+              <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
+                {product?.packMoreInformation}
+              </p>
+            </AccordionContent>
+            <AccordionTrigger>
+              <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
+                + info
+              </span>
+            </AccordionTrigger>
+          </AccordionItem>
+        </Accordion>
+      )}
+
+      {product.isPack && !showDropdown && (
+        <Button
+          className="mt-8"
+          type="tertiary"
+          onClick={() => setShowDropdown(true)}
+        >
+          Seleccionar viales
+        </Button>
+      )}
+
+      {(!product.isPack || showDropdown) && (
+        <Button
+          type="tertiary"
+          customStyles="bg-hg-primary"
+          onClick={() => {
+            setSelectedTreatment(product);
+          }}
+          href={ROUTES.checkout.clinics}
+          className="mt-8"
+        >
+          Reservar cita
+          <SvgArrow height={16} width={16} className="ml-2" />
+        </Button>
       )}
     </Flex>
   );
@@ -289,9 +330,7 @@ export default function ProductPriceCard({
   index: number;
   parentProduct: Product;
 }) {
-  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const { deviceSize } = useGlobalPersistedStore(state => state);
 
   return (
     <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
@@ -310,7 +349,7 @@ export default function ProductPriceCard({
                 {product.price} €
               </Text>
               <Flex layout="row-right">
-                {index === 0 ? (
+                {index === 0 && !product.isPack ? (
                   <Text
                     size="xs"
                     className="py-1 px-2 bg-hg-pink/20 text-hg-pink rounded-md"
@@ -355,53 +394,10 @@ export default function ProductPriceCard({
 
         <AccordionContent>
           <div className="bg-hg-black50 p-3 w-full rounded-xl">
-            {isEmpty(product.packUnities) ? (
-              <Flex layout="row-left">
-                <SvgInjection
-                  height={16}
-                  width={16}
-                  className="text-hg-secondary mr-2"
-                />
-                <Text size="sm">{product.description}</Text>
-              </Flex>
-            ) : (
-              <ProductPriceItemsCard
-                product={product}
-                parentProduct={parentProduct}
-              />
-            )}
-
-            {product?.packMoreInformation && !product.isPack && (
-              <Accordion>
-                <AccordionItem value="accordion">
-                  <AccordionContent>
-                    <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
-                      {product?.packMoreInformation}
-                    </p>
-                  </AccordionContent>
-                  <AccordionTrigger>
-                    <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
-                      + info
-                    </span>
-                  </AccordionTrigger>
-                </AccordionItem>
-              </Accordion>
-            )}
-
-            {!product.isPack && (
-              <Button
-                type="tertiary"
-                customStyles="bg-hg-primary md:mt-4"
-                onClick={() => {
-                  setSelectedTreatments([product]);
-                }}
-                href={ROUTES.checkout.clinics}
-                className="mt-4"
-              >
-                Reservar cita
-                <SvgArrow height={16} width={16} className="ml-2" />
-              </Button>
-            )}
+            <ProductPriceItemsCard
+              product={product}
+              parentProduct={parentProduct}
+            />
           </div>
         </AccordionContent>
       </AccordionItem>

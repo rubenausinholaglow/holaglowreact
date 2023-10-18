@@ -11,7 +11,9 @@ export interface Product {
   order: number;
   upgrades: Upgrade[];
   category: Category[];
+  appliedProducts: AppliedProduct[];
   clinicDetail: ProductClinics[];
+  cardBackgroundColor: string;
   extraInformation: ExtraInformation;
   preTreatmentInfo: PreTips;
   postTreatmentInfo: PostTips;
@@ -52,6 +54,11 @@ export interface BenefitDetails {
   title: string;
   order: number;
   id: string;
+}
+
+export interface AppliedProduct {
+  titlte: string;
+  icon: string;
 }
 
 export interface ApplicationZoneDetail {

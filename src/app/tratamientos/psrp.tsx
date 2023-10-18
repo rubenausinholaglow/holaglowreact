@@ -43,7 +43,7 @@ export default function PsrpPage({ slug }: { slug: string }) {
         let filterToApply = '';
         switch (slug) {
           case 'piel':
-            filterToApply = 'Calidad Piel';
+            filterToApply = 'Calidad de la Piel';
             break;
           case 'pelo':
             filterToApply = 'Caida del pelo';
@@ -109,10 +109,10 @@ export default function PsrpPage({ slug }: { slug: string }) {
 
       <div className="bg-[#F3EDE9] rounded-t-3xl pt-8 pb-4 lg:bg-[url('/images/products/productsBg.png')] bg-right-top bg-no-repeat bg-contain">
         <Container>
-          <Title size="3xl" className="font-bold mb-6 lg:mb-12 lg:w-2/5">
-            Loren ipsum{' '}
+          <Title size="3xl" className="font-bold mb-6 lg:mb-12 lg:w-3/5">
+            Nuestros{' '}
             <Underlined color={HOLAGLOW_COLORS['secondary700']}>
-              sita
+              tratamientos
             </Underlined>
           </Title>
         </Container>

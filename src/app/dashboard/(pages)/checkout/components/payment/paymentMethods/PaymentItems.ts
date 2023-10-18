@@ -16,13 +16,13 @@ export const paymentItems = [
   {
     key: 'cash',
     label: 'Efectivo',
-    paymentBank: PaymentBank.None,
+    paymentBank: PaymentBank.Cash,
     paymentMethod: PaymentMethod.Cash,
   },
   {
     key: 'creditCard',
     label: 'Tarjeta',
-    paymentBank: PaymentBank.None,
+    paymentBank: PaymentBank.CreditCard,
     paymentMethod: PaymentMethod.CreditCard,
   },
 ];

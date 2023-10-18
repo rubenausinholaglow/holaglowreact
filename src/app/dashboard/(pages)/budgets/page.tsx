@@ -33,7 +33,7 @@ export default function Page() {
   const [filterPain, setFilterPain] = useState<number[]>([]);
   const [filterText, setFilterText] = useState('');
   const [filterClinic, setFilterClinic] = useState<string[]>([]);
-  const [filterType, setFilterType] = useState<number[]>([2, 3]);
+  const [filterType, setFilterType] = useState<number[]>([2, 3, 5]);
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
   >([]);

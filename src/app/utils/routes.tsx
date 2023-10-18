@@ -1,13 +1,13 @@
 export const ROUTES = {
   home: '/',
-  products: '/productos',
+  treatments: '/tratamientos',
   checkout: {
-    clinics: '/checkout/clinics',
+    clinics: '/checkout/clinicas',
     treatments: '/checkout/treatments',
     schedule: '/checkout/agenda',
     contactForm: '/checkout/contactform',
     thankYou: '/checkout/confirmation',
   },
   clinics: '/clinicas',
-  aboutUs: '/sobre-nosotros',
+  aboutUs: '/quienes-somos',
 };
