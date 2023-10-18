@@ -47,15 +47,16 @@ export default function FloatingBottomBar({ product }: { product?: Product }) {
             type="tertiary"
             bgColor="bg-hg-primary"
             className="grow mr-4 md:hidden pointer-events-auto"
+            customStyles="px-4"
           >
             <Link href="#prices" className="text-inherit">
               {product ? (
-                <span>
-                  Reservar cita desde{' '}
-                  <span className="underline text-xl font-semibold">
+                <>
+                  <span className="inline-block">Reservar cita desde</span>{' '}
+                  <span className="inline-block underline text-xl font-semibold">
                     {product.price} €
                   </span>
-                </span>
+                </>
               ) : (
                 'Reservar cita'
               )}
