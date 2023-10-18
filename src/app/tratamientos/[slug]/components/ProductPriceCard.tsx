@@ -125,12 +125,6 @@ const UPGRADE_TYPES: Record<
       },
     ],
   },
-  '5': {
-    title: 'Cóctel de vitaminas',
-    icon: 'SvgMedicine',
-    family: 'default',
-    options: [],
-  },
 };
 
 export interface option {
