@@ -58,16 +58,8 @@ const UPGRADE_TYPES: Record<
         value: 'Proyección de Pómulos',
       },
       {
-        label: 'Relleno de ojeras',
-        value: 'Relleno de ojeras',
-      },
-      {
         label: 'Relleno lineas marioneta',
         value: 'Relleno lineas marioneta',
-      },
-      {
-        label: 'Rinomodelación',
-        value: 'Rinomodelación',
       },
       {
         label: 'Sonrisa Gingival',
@@ -78,8 +70,8 @@ const UPGRADE_TYPES: Record<
         value: 'Surco Nasogeniano',
       },
       {
-        label: 'Volumen y perfilado de Cejas',
-        value: 'Volumen y perfilado de Cejas',
+        label: 'Volumen y perfilado de cejas',
+        value: 'Volumen y perfilado de cejas',
       },
     ],
   },
@@ -87,7 +79,10 @@ const UPGRADE_TYPES: Record<
     title: '0,5 vial de inyectable antiarrugas',
     icon: 'Injection',
     options: [
-      { label: 'BabyBotox', value: 'BabyBotox' },
+      {
+        label: 'Prevención arrugas - Baby botox',
+        value: 'Prevención arrugas - Baby botox',
+      },
       {
         label: 'Arrugas entrecejo y patas de gallo',
         value: 'Arrugas entrecejo y patas de gallo',
@@ -99,8 +94,8 @@ const UPGRADE_TYPES: Record<
     icon: 'Injection',
     options: [
       {
-        label: 'Arrugas expresión: frente, entrecejo y patas de gallo',
-        value: 'Arrugas expresión: frente, entrecejo y patas de gallo',
+        label: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
+        value: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
       },
     ],
   },
@@ -110,11 +105,11 @@ const UPGRADE_TYPES: Record<
     options: [
       {
         label: 'Hydrafacial express (1 sesión)',
-        value: 'Hydrafacial express (1 sesión)',
+        value: 'Hydrafacial: Express',
       },
       {
         label: 'Mesoterapia (1 sesión)',
-        value: 'Mesoterapia (1 sesión)',
+        value: 'Revitalización facial: Mesoterapia',
       },
     ],
   },
@@ -124,11 +119,11 @@ const UPGRADE_TYPES: Record<
     options: [
       {
         label: 'Hydrafacial deluxe (1 sesión)',
-        value: 'Hydrafacial deluxe (1 sesión)',
+        value: 'Hydrafacial: Deluxe',
       },
       {
         label: 'Dermapen (1 sesión)',
-        value: 'Dermapen (1 sesión)',
+        value: 'Microneedling',
       },
     ],
   },
@@ -151,8 +146,12 @@ function ProductPriceItemsCard({
   product: Product;
   parentProduct: Product;
 }) {
-  const { deviceSize, setSelectedTreatments, stateProducts } =
-    useGlobalPersistedStore(state => state);
+  const {
+    deviceSize,
+    setSelectedTreatments,
+    setSelectedPackTreatments,
+    stateProducts,
+  } = useGlobalPersistedStore(state => state);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
@@ -166,7 +165,7 @@ function ProductPriceItemsCard({
     if (itemToUpdate) {
       itemToUpdate.value = newValue;
     }
-
+    console.log(newOptions);
     setSelectedPackOptions(newOptions);
   };
 
@@ -187,6 +186,13 @@ function ProductPriceItemsCard({
   const setSelectedTreatment = (product: Product) => {
     const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
     setSelectedTreatments([productToAdd]);
+    const packTreatments: Product[] = [];
+    if (selectedPackOptions.length > 0) {
+      selectedPackOptions.forEach(x => {
+        packTreatments.push(stateProducts.filter(y => y?.title === x.value)[0]);
+      });
+    }
+    setSelectedPackTreatments(packTreatments);
   };
 
   const defaultValues = product.packUnities.map((item: any, index) => {
