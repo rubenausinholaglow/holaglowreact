@@ -4,12 +4,10 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function HomeHero() {
   return (
     <Container className="border-b border-hg-black">
-      <Image src="/images/home/Header.png" alt="Holaglow" fill />
       <Flex layout="col-left" className="pt-[250px] pb-10 md:py-36 md:ml-[55%]">
         <Text size="xl" className="mb-2">
           Medicina estética
