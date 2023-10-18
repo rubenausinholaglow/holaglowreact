@@ -95,7 +95,6 @@ const ButtonBody = ({
       'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
     secondary:
       'bg-white text-hg-secondary border border-hg-black group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
-    //tertiary: `group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100 ${
     tertiary: `${bgColor ? bgColor : 'bg-white'} ${
       color ? color : 'text-hg-black border border-hg-black'
     }`,

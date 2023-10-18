@@ -77,7 +77,7 @@ export default function ProductInfo({ product }: { product: Product }) {
             bgColor="bg-hg-primary"
             className="hidden md:block md:mt-auto"
           >
-            <Link href="#prices" className="text-inherit">
+            <Link href="#prices" className="hover:text-inherit">
               Reserva cita desde{' '}
               <span className="inline-block text-xl font-bold underline ml-2">
                 {product.price} €

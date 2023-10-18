@@ -88,12 +88,6 @@ export default function MobileNavigation({
           <a href="/tratamientos/packs">
             <p className="font-semibold">Packs Glow</p>
           </a>
-
-          <a href="/checkout/clinicas">
-            <Button type="tertiary" className="md:hidden">
-              Reservar Cita
-            </Button>
-          </a>
         </Flex>
       </div>
       <div className="bg-white border-b border-hg-black py-8">
@@ -119,7 +113,6 @@ export default function MobileNavigation({
               <a href="/quienes-somos">
                 <li>Equipo médico</li>
               </a>
-              <li>Blog</li>
             </ul>
           </SimpleAccordion>
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
