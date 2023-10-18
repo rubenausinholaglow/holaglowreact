@@ -29,6 +29,7 @@ export default function ConctactForm() {
     selectedDay,
     selectedClinic,
     setCurrentUser,
+    selectedPacksTreatments,
   } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
   const { analyticsMetrics } = useGlobalPersistedStore(state => state);
@@ -121,8 +122,12 @@ export default function ConctactForm() {
 
   const createAppointment = async () => {
     const appointments: Appointment[] = [];
-    const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
-    const treatments = selectedTreatments!.map(x => x.title).join(', ');
+    let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
+    let treatments = selectedTreatments!.map(x => x.title).join(',');
+    if (selectedPacksTreatments && selectedPacksTreatments.length) {
+      ids = selectedPacksTreatments!.map(x => x.flowwwId).join(',');
+      treatments = selectedPacksTreatments!.map(x => x.title).join(',');
+    }
     const comment = 'Tratamiento visto en web: ' + treatments;
     appointments.push({
       box: selectedSlot!.box,

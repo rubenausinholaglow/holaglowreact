@@ -36,6 +36,7 @@ export default function Agenda() {
     selectedSlot,
     previousAppointment,
     selectedTreatments,
+    selectedPacksTreatments,
     selectedClinic,
   } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
@@ -97,9 +98,13 @@ export default function Agenda() {
   }, []);
 
   useEffect(() => {
-    if (selectedTreatments && selectedTreatments.length > 0) {
+    if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
       setSelectedTreatmentsIds(
-        selectedTreatments!.map(x => x.flowwwId).join(', ')
+        selectedPacksTreatments!.map(x => x.flowwwId).join(',')
+      );
+    } else if (selectedTreatments && selectedTreatments.length > 0) {
+      setSelectedTreatmentsIds(
+        selectedTreatments!.map(x => x.flowwwId).join(',')
       );
     } else setSelectedTreatmentsIds('674');
   }, [dateToCheck]);
@@ -116,7 +121,10 @@ export default function Agenda() {
     toggleClicked();
     setSelectedSlot(x);
     if (user?.flowwwToken && previousAppointment) {
-      const ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+      let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+      if (selectedPacksTreatments && selectedPacksTreatments.length) {
+        ids = selectedPacksTreatments!.map(x => x.flowwwId).join(',');
+      }
       const treatments = selectedTreatments!.map(x => x.title).join(', ');
       const comment = 'Tratamiento visto en web: ' + treatments;
       ScheduleService.reschedule({
@@ -155,7 +163,7 @@ export default function Agenda() {
     setSelectedDay(day);
     ScheduleService.getSlots(
       day.format(format),
-      selectedTreatments!.map(x => x.flowwwId).join(', '),
+      selectedTreatmentsIds,
       selectedClinic!.flowwwId
     )
       .then(data => {
@@ -342,7 +350,7 @@ export default function Agenda() {
                                 {clickedHour === x.startTime && (
                                   <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
                                 )}
-                                {x.startTime} h
+                                {x.startTime}
                               </div>
                             </Flex>
                           );
@@ -377,7 +385,7 @@ export default function Agenda() {
                                 {clickedHour === x.startTime && (
                                   <SvgCheck className="text-hg-primary mr-1" />
                                 )}
-                                {x.startTime} h
+                                {x.startTime}
                               </div>
                             </Flex>
                           );
