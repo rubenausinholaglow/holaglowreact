@@ -169,7 +169,6 @@ export default function ConctactForm() {
       setCurrentUser(user);
       localUser = user;
       await createAppointment();
-      setIsLoading(false);
     }
   };
 
