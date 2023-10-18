@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/probador-virtual", "destination": "/api/server" },
+    { "source": "/landing/probador-virtual", "destination": "/api/server" },
     { "source": "/another-route", "destination": "/api/server" }
   ]
 }
