@@ -29,3 +29,5 @@ app.prepare().then(() => {
     console.log('> Ready on http://localhost:3000');
   });
 });
+
+module.exports = app;
