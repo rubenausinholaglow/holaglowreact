@@ -19,7 +19,8 @@ export default function ProductExplanation({ product }: { product: Product }) {
           <Underlined color={HOLAGLOW_COLORS['secondary700']}>
             Procedimiento
           </Underlined>{' '}
-          con ácido hialurónico
+          {product.type == 2 && 'médico'}
+          {product.type == 1 && 'estético'}
         </Title>
         <Text className="text-hg-black500 mb-6">
           {product.extraInformation?.procedimentDescription}
