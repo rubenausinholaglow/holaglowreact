@@ -2,5 +2,6 @@
   "rewrites": [
     { "source": "/landing/probador-virtual", "destination": "/api/server" },
     { "source": "/blog", "destination": "/api/server" }
+    { "source": "/landing/visita-medica-mgm", "destination": "/api/server" }
   ]
 }
