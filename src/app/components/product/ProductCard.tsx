@@ -46,7 +46,7 @@ export default function ProductCard({
             <Image
               alt={product.title}
               fill
-              src={DEFAULT_IMG_SRC}
+              src={imgSrc}
               onError={() => setImgSrc(DEFAULT_IMG_SRC)}
               className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
             />

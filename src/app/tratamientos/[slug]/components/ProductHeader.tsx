@@ -45,7 +45,7 @@ export default function ProductHeader({ product }: { product: Product }) {
           }}
         >
           <Image
-            src={DEFAULT_IMG_SRC}
+            src={imgSrc}
             onError={() => setImgSrc(DEFAULT_IMG_SRC)}
             alt="fakeImg"
             fill

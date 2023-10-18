@@ -55,7 +55,7 @@ export default function ProductExplanation({ product }: { product: Product }) {
 
           <div className="relative aspect-[4/3] mb-8">
             <Image
-              src={DEFAULT_IMG_SRC}
+              src={imgSrc}
               onError={() => setImgSrc(DEFAULT_IMG_SRC)}
               alt="fakeImg"
               fill
