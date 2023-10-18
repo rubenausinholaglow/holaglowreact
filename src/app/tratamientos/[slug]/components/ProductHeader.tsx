@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Product } from '@interface/product';
 import CategoryIcon from 'app/components/common/CategoryIcon';
 import { getProductCardColor } from 'app/utils/common';
@@ -5,7 +6,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export default function ProductHeader({ product }: { product: Product }) {
   const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';

@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgCheckCircle } from 'icons/IconsDs';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export default function ProductExplanation({ product }: { product: Product }) {
   const DEFAULT_IMG_SRC = '/images/product/fakeProductExample1.png';
