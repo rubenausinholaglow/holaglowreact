@@ -11,7 +11,13 @@ export default function FloatingBottomBar({ product }: { product?: Product }) {
   const scrollPos = useRef(0);
 
   const [showBottomBar, setShowBottomBar] = useState(false);
-
+  let url =
+    'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20y%20vuestros%20tratamientos';
+  if (product) {
+    url =
+      'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20el%20tratamiento%20' +
+      product.title;
+  }
   const recalculateVisibility = () => {
     setShowBottomBar(window.scrollY < 350 /* || scrollPos > window.scrollY */);
     scrollPos.current = window.scrollY;
@@ -62,7 +68,9 @@ export default function FloatingBottomBar({ product }: { product?: Product }) {
             bgColor="bg-hg-black"
             customStyles="h-[64px] p-0 w-[64px]"
           >
-            <SvgWhatsapp className="text-hg-primary" />
+            <a href={url} target="_blank">
+              <SvgWhatsapp className="text-hg-primary" />
+            </a>
           </Button>
         </Flex>
       </div>

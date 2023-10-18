@@ -247,7 +247,7 @@ export default function Agenda() {
                       <Text size="xs" className="w-full text-left">
                         {selectedClinic.address}, {selectedClinic.city}
                       </Text>
-                      <Link href="/checkout/clinics" className="text-xs">
+                      <Link href="/checkout/clinicas" className="text-xs">
                         Cambiar
                       </Link>
                     </Flex>
