@@ -110,7 +110,7 @@ export default function PaymentInput(props: Props) {
       amount: amount,
       userId: GuidUser,
       paymentMethod: props.paymentMethod,
-      referenceId: '',
+      referenceId: props.paymentBank.toString(),
     };
     await createPayment(paymentRequestApi);
     setIsLoading(false);

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Product } from '@interface/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { getProductCardColor } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -27,7 +26,7 @@ export default function ProductCard({
   const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
 
   const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard.png`
   );
 
   return (
@@ -47,7 +46,7 @@ export default function ProductCard({
             <Image
               alt={product.title}
               fill
-              src={DEFAULT_IMG_SRC}
+              src={imgSrc}
               onError={() => setImgSrc(DEFAULT_IMG_SRC)}
               className="object-contain rounded-t-2xl scale-110 -translate-y-[5%]"
             />
