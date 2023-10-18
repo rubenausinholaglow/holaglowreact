@@ -102,7 +102,7 @@ const UPGRADE_TYPES: Record<
     options: [
       {
         label: 'Hydrafacial express (1 sesión)',
-        value: 'Hydrafacial: Express',
+        value: 'Hydrafacial',
       },
       {
         label: 'Mesoterapia (1 sesión)',
@@ -158,7 +158,6 @@ function ProductPriceItemsCard({
     if (itemToUpdate) {
       itemToUpdate.value = newValue;
     }
-    console.log(newOptions);
     setSelectedPackOptions(newOptions);
   };
 
