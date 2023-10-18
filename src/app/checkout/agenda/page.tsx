@@ -100,7 +100,10 @@ export default function Agenda() {
   useEffect(() => {
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
       setSelectedTreatmentsIds(
-        selectedPacksTreatments!.map(x => x.flowwwId).join(',')
+        selectedPacksTreatments!
+          .slice(0, 3)
+          .map(x => x.flowwwId)
+          .join(',')
       );
     } else if (selectedTreatments && selectedTreatments.length > 0) {
       setSelectedTreatmentsIds(
@@ -123,7 +126,10 @@ export default function Agenda() {
     if (user?.flowwwToken && previousAppointment) {
       let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
       if (selectedPacksTreatments && selectedPacksTreatments.length) {
-        ids = selectedPacksTreatments!.map(x => x.flowwwId).join(',');
+        ids = selectedPacksTreatments!
+          .slice(0, 3)
+          .map(x => x.flowwwId)
+          .join(',');
       }
       const treatments = selectedTreatments!.map(x => x.title).join(', ');
       const comment = 'Tratamiento visto en web: ' + treatments;
