@@ -186,7 +186,7 @@ function ProductPriceItemsCard({
   const setSelectedTreatment = (product: Product) => {
     const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
     setSelectedTreatments([productToAdd]);
-    let packTreatments: Product[] = [];
+    const packTreatments: Product[] = [];
     if (selectedPackOptions.length > 0) {
       selectedPackOptions.forEach(x => {
         packTreatments.push(stateProducts.filter(y => y?.title === x.value)[0]);
