@@ -64,7 +64,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           <ProductHeader product={product} />
           <ProductInfo product={product} />
         </div>
-        <ProductResults product={product} />
+        {product.beforeAndAfterImages?.length > 0 && (
+          <ProductResults product={product} />
+        )}
         <ProductPrices product={product} />
         <ProductPaymentOptions totalPrice={product.price} />
         <ProductExplanation product={product} />
