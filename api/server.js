@@ -38,7 +38,151 @@ server.use(
     },
   })
 );
+server.use(
+  '/landing/visita-medica',
+  createProxyMiddleware({
+    target:
+      'https://practical-discussions-804147.framer.app/landing/visita-medica/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/landing/visita-medica': '/', // if needed, you can modify the path here
+    },
+  })
+);
 
+server.use(
+  '/landing/holaglow',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/landing/holaglow/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/landing/holaglow': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/landing/visita-medica-madrid',
+  createProxyMiddleware({
+    target:
+      'https://practical-discussions-804147.framer.app/landing/visita-medica-madrid/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/landing/visita-medica-madrid': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/landing/visita-medica-barcelona',
+  createProxyMiddleware({
+    target:
+      'https://practical-discussions-804147.framer.app/landing/visita-medica-barcelona/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/landing/visita-medica-barcelona': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/valencia',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/valencia/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/valencia': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/multistep',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/multistep/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/multistep': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/form',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/form/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/form': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/agenda',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/agenda/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/agenda': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/thank-you',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/thank-you/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/thank-you': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/thank-you/madrid',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/thank-you/madrid/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/thank-you/madrid': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/thank-you/barcelona',
+  createProxyMiddleware({
+    target:
+      'https://practical-discussions-804147.framer.app/thank-you/barcelona/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/thank-you/barcelona': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/thank-you-1',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/thank-you-1/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/thank-you-1': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/thank-you-2',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/thank-you-2/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/thank-you-2': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
+  '/thank-you-3',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/thank-you-3/',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/thank-you-3': '/', // if needed, you can modify the path here
+    },
+  })
+);
 server.all('*', (req, res) => handle(req, res));
 
 module.exports = (req, res) => {

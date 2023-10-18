@@ -2,6 +2,23 @@
   "rewrites": [
     { "source": "/landing/probador-virtual", "destination": "/api/server" },
     { "source": "/blog", "destination": "/api/server" },
-    { "source": "/landing/visita-medica-mgm", "destination": "/api/server" }
+    { "source": "/landing/visita-medica-mgm", "destination": "/api/server" },
+    { "source": "/landing/visita-medica", "destination": "/api/server" },
+    { "source": "/landing/holaglow", "destination": "/api/server" },
+    { "source": "/landing/visita-medica-madrid", "destination": "/api/server" },
+    {
+      "source": "/landing/visita-medica-bacelona",
+      "destination": "/api/server"
+    },
+    { "source": "/landing/valencia", "destination": "/api/server" },
+    { "source": "/landing/multistep", "destination": "/api/server" },
+    { "source": "/landing/form", "destination": "/api/server" },
+    { "source": "/landing/agenda", "destination": "/api/server" },
+    { "source": "/landing/thank-you", "destination": "/api/server" },
+    { "source": "/landing/thank-you/madrid", "destination": "/api/server" },
+    { "source": "/landing/thank-you/barcelona", "destination": "/api/server" },
+    { "source": "/landing/thank-you-1", "destination": "/api/server" },
+    { "source": "/landing/thank-you-2", "destination": "/api/server" },
+    { "source": "/landing/thank-you-3", "destination": "/api/server" }
   ]
 }
