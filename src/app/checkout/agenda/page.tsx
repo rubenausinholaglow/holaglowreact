@@ -350,7 +350,7 @@ export default function Agenda() {
                                 {clickedHour === x.startTime && (
                                   <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
                                 )}
-                                {x.startTime} h
+                                {x.startTime}
                               </div>
                             </Flex>
                           );
@@ -385,7 +385,7 @@ export default function Agenda() {
                                 {clickedHour === x.startTime && (
                                   <SvgCheck className="text-hg-primary mr-1" />
                                 )}
-                                {x.startTime} h
+                                {x.startTime}
                               </div>
                             </Flex>
                           );

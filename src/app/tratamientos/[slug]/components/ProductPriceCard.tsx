@@ -17,25 +17,19 @@ import * as icon from 'icons/IconsDs';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
-const APPLIED_PRODUCTS_ICONS: any = {
-  Acido: 'SvgInjection',
-  Antiarrugas: 'SvgInjection',
-  'Vitamina/Acido': 'SvgInjection',
-  Vitaminas: 'SvgInjection',
-  Hydrafacial: 'SvgInjection',
-};
-
 const UPGRADE_TYPES: Record<
   string,
   {
     title: string;
     icon: string;
+    family: string;
     options: { label: string; value: string }[];
   }
 > = {
   '0': {
     title: '1 vial de ácido hialurónico',
-    icon: 'Injection',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Aumento de labios',
@@ -77,7 +71,8 @@ const UPGRADE_TYPES: Record<
   },
   '1': {
     title: '0,5 vial de inyectable antiarrugas',
-    icon: 'Injection',
+    icon: 'SvgArrugas',
+    family: 'category',
     options: [
       {
         label: 'Prevención arrugas - Baby botox',
@@ -91,7 +86,8 @@ const UPGRADE_TYPES: Record<
   },
   '2': {
     title: '1 vial de inyectable antiarrugas',
-    icon: 'Injection',
+    icon: 'SvgArrugas',
+    family: 'category',
     options: [
       {
         label: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
@@ -100,8 +96,9 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '3': {
-    title: '1 Hydrafacial express',
-    icon: 'Injection',
+    title: 'Piel',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Hydrafacial express (1 sesión)',
@@ -114,8 +111,9 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '4': {
-    title: '1 Hydrafacial deluxe',
-    icon: 'Injection',
+    title: 'Piel Profunda',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Hydrafacial deluxe (1 sesión)',
@@ -128,8 +126,9 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '5': {
-    title: '1 sesión de vitaminas',
-    icon: 'Medicine',
+    title: 'Cóctel de vitaminas',
+    icon: 'SvgMedicine',
+    family: 'default',
     options: [],
   },
 };
@@ -217,20 +216,28 @@ function ProductPriceItemsCard({
     <Flex layout="col-left" className="w-full">
       {!showDropdown &&
         (!isEmpty(product.appliedProducts) ? (
-          product.appliedProducts.map(item => (
-            <Flex key={item.titlte} className="items-start mb-2">
-              <DynamicIcon
-                height={16}
-                width={16}
-                className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                name={APPLIED_PRODUCTS_ICONS[item.icon]}
-              />
+          product.appliedProducts.map(item => {
+            const iconName = item.icon.split('/')[0] || 'SvgCross';
+            const iconFamily:
+              | 'default'
+              | 'category'
+              | 'suggestion'
+              | 'service' = (item.icon.split('/')[1] as 'default') || 'default';
 
-              <Text>
-                {item.titlte} - {item.icon}
-              </Text>
-            </Flex>
-          ))
+            return (
+              <Flex key={item.titlte} className="items-start mb-2">
+                <DynamicIcon
+                  height={16}
+                  width={16}
+                  className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                  name={iconName}
+                  family={iconFamily}
+                />
+
+                <Text>{item.titlte}</Text>
+              </Flex>
+            );
+          })
         ) : (
           <Flex className="items-start mb-2">
             <SvgInjection
@@ -250,8 +257,14 @@ function ProductPriceItemsCard({
                 className="w-full"
                 key={UPGRADE_TYPES[item.type.toString()].title}
               >
-                <Flex layout="row-left">
-                  {itemsIconsByIndex[index]}
+                <Flex layout="row-left" className="items-start">
+                  {/* <DynamicIcon
+                    name={UPGRADE_TYPES[item.type.toString()].icon}
+                    family={UPGRADE_TYPES[item.type.toString()].family}
+                    height={16}
+                    width={16}
+                    className="text-hg-secondary mr-2 mt-0.5"
+                  /> */}
                   <Text className="text-sm md:text-md">
                     {UPGRADE_TYPES[item.type.toString()].title}
                   </Text>

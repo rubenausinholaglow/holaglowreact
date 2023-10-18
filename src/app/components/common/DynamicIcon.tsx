@@ -1,5 +1,6 @@
-import { SVGProps } from 'react';
-import * as dsIcon from 'icons/IconsDs';
+import * as categoryIcons from 'icons/categoryIcons';
+import * as defaultIcons from 'icons/IconsDs';
+import * as serviceIcons from 'icons/serviceIcons';
 import * as suggestionIcons from 'icons/suggestionIcons';
 
 export default function DynamicIcon({
@@ -9,18 +10,38 @@ export default function DynamicIcon({
   width = 24,
   className = '',
 }: {
-  name: string;
-  family?: 'default' | 'suggestions';
+  name?: string;
+  family?: 'default' | 'suggestion' | 'service' | 'category';
   height?: number;
   width?: number;
   className?: string;
 }) {
-  const iconComponentName = name;
-  const iconFamily = family === 'suggestions' ? suggestionIcons : dsIcon;
-  const IconComponent = (iconFamily as any)[iconComponentName] || null;
+  let iconComponentName: string;
+  let IconComponent: React.ComponentType<any> | null = null;
+
+  switch (family) {
+    case 'default':
+      iconComponentName = name;
+      IconComponent = (defaultIcons as any)[iconComponentName] || null;
+      break;
+    case 'suggestion':
+      iconComponentName = name;
+      IconComponent = (suggestionIcons as any)[iconComponentName] || null;
+      break;
+    case 'service':
+      iconComponentName = name;
+      IconComponent = (serviceIcons as any)[iconComponentName] || null;
+      break;
+    case 'category':
+      iconComponentName = name;
+      IconComponent = (categoryIcons as any)[iconComponentName] || null;
+      break;
+    default:
+      break;
+  }
 
   if (!IconComponent) {
-    return <></>;
+    return null;
   }
 
   return <IconComponent className={className} height={height} width={width} />;
