@@ -29,7 +29,7 @@ export default function ProductCard({
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-left.png`
   );
   const [imageIndex, setImgIndex] = useState(0);
-  const arrayImages = ['center', 'right'];
+  const arrayImages = ['middle', 'right'];
   const setNextImgSrc = () => {
     if (imageIndex < arrayImages.length) {
       setImgSrc(
