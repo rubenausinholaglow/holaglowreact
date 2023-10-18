@@ -16,6 +16,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import * as icon from 'icons/IconsDs';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
+import { useRouter } from 'next/navigation';
 
 const UPGRADE_TYPES: Record<
   string,
@@ -146,6 +147,7 @@ function ProductPriceItemsCard({
     stateProducts,
   } = useGlobalPersistedStore(state => state);
 
+  const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
@@ -161,20 +163,6 @@ function ProductPriceItemsCard({
     setSelectedPackOptions(newOptions);
   };
 
-  const itemsIconsByIndex = product.packUnities.map((item: any, index) => {
-    const iconComponentName = `Svg${UPGRADE_TYPES[item.type.toString()].icon}`;
-    const IconComponent = (icon as any)[iconComponentName] || null;
-
-    return (
-      <IconComponent
-        key={index}
-        height={16}
-        width={16}
-        className="text-hg-secondary mr-2"
-      />
-    );
-  });
-
   const setSelectedTreatment = (product: Product) => {
     const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
     setSelectedTreatments([productToAdd]);
@@ -185,6 +173,13 @@ function ProductPriceItemsCard({
       });
     }
     setSelectedPackTreatments(packTreatments);
+    debugger;
+    if (
+      selectedPackOptions.filter(x => x.value != '').length ==
+      product.packUnities.length
+    ) {
+      router.push(ROUTES.checkout.clinics);
+    }
   };
 
   const defaultValues = product.packUnities.map((item: any, index) => {
@@ -310,8 +305,11 @@ function ProductPriceItemsCard({
           onClick={() => {
             setSelectedTreatment(product);
           }}
-          href={ROUTES.checkout.clinics}
           className="mt-8"
+          disabled={
+            selectedPackOptions.filter(x => x.value != '').length !=
+            product.packUnities.length
+          }
         >
           Reservar cita
           <SvgArrow height={16} width={16} className="ml-2" />
