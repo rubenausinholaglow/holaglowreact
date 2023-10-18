@@ -15,6 +15,7 @@ import spanishConf from 'dayjs/locale/es';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
+import { Analytics } from '@vercel/analytics/react';
 
 dayjs.locale(spanishConf);
 registerLocale('es', es);
@@ -84,6 +85,8 @@ export default function MainLayout({
       {children}
 
       {!hideFooter && <Footer />}
+
+      <Analytics />
     </main>
   );
 }

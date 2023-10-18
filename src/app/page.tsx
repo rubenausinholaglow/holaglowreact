@@ -4,7 +4,6 @@ import GoogleStars from './components/home/GoogleStars';
 import GoToTreatments from './components/home/GoToTreatments';
 import Hero from './components/home/Hero';
 import Professionals from './components/home/HomeProfessionals';
-import InTheNews from './components/home/InTheNews';
 import Products from './components/home/Products';
 import Testimonials from './components/home/Testimonials';
 import ValuesCarousel from './components/home/ValuesCarousel';
