@@ -6,17 +6,19 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-server.use(
-  '/landing/probador-virtual',
-  createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/landing/probador-virtual/',
-    changeOrigin: true,
-    pathRewrite: {
-      '^/landing/probador-virtual': '/', // if needed, you can modify the path here
-    },
-  })
-);
+const arrayUrls = ['/landing/probador-virtual', '/blog'];
+arrayUrls.forEach(x => {
+  server.use(
+    x,
+    createProxyMiddleware({
+      target: 'https://practical-discussions-804147.framer.app' + x,
+      changeOrigin: true,
+      pathRewrite: {
+        x: '/', // if needed, you can modify the path here
+      },
+    })
+  );
+});
 
 server.all('*', (req, res) => handle(req, res));
 
