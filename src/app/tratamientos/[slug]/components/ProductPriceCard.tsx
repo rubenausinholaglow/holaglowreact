@@ -173,7 +173,6 @@ function ProductPriceItemsCard({
       });
     }
     setSelectedPackTreatments(packTreatments);
-    debugger;
     if (
       selectedPackOptions.filter(x => x.value != '').length ==
       product.packUnities.length
