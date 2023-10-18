@@ -105,6 +105,7 @@ export default function PsrpPage({ slug }: { slug: string }) {
 
   return (
     <MainLayout>
+      <link rel="canonical" href="https://holaglow.com/tratamientos/" />
       <MobileFilters isVisible={isMobileFiltersVisible} />
 
       <div className="bg-[#F3EDE9] rounded-t-3xl pt-8 pb-4 lg:bg-[url('/images/products/productsBg.png')] bg-right-top bg-no-repeat bg-contain">

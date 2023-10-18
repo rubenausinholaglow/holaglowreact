@@ -5,6 +5,7 @@ import { Title } from 'designSystem/Texts/Texts';
 export default function LegalAdvice() {
   return (
     <MainLayout>
+      <meta name="robots" content="noindex,follow" />
       <Container className="py-8 md:py-12">
         <Title className="mb-8">Aviso Legal</Title>
         <Flex layout="col-left" className="gap-4">

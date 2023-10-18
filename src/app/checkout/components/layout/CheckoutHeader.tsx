@@ -9,6 +9,7 @@ export default function CheckoutHeader() {
 
   return (
     <Container>
+      <meta name="robots" content="noindex,follow" />
       <Flex layout="row-between" className="py-4 md:py-6">
         <SvgHolaglow className="text-hg-secondary md:h-[29px] md:w-[120px]" />
         <Button size="sm" type="tertiary" onClick={() => router.back()}>
