@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
+import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
@@ -15,7 +16,6 @@ import spanishConf from 'dayjs/locale/es';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
-import { Analytics } from '@vercel/analytics/react';
 
 dayjs.locale(spanishConf);
 registerLocale('es', es);
