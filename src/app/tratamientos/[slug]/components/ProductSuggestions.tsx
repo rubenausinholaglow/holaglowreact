@@ -88,7 +88,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                   <Flex
                     key={tip.priority}
                     layout="col-center"
-                    className="bg-white/30 p-8 rounded-2xl h-full"
+                    className="bg-white/30 p-8 rounded-2xl h-full mr-4 ml-4"
                   >
                     <DynamicIcon
                       className="h-12 w-12 mb-6 text-hg-secondary"
@@ -109,7 +109,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                   <Flex
                     key={tip.priority}
                     layout="col-center"
-                    className="bg-white/30 p-8 rounded-2xl h-full"
+                    className="bg-white/30 p-8 rounded-2xl h-full mr-4 ml-4"
                   >
                     <DynamicIcon
                       className="h-12 w-12 mb-6 text-hg-secondary"
