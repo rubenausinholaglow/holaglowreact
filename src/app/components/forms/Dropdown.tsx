@@ -44,6 +44,7 @@ export default function Dropdown({
       {...rest}
       placeholder="Seleccionar..."
       blurInputOnSelect={true}
+      isSearchable={false}
     />
   );
 }
