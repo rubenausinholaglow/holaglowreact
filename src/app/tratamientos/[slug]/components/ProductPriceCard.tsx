@@ -180,10 +180,10 @@ function ProductPriceItemsCard({
     }
   };
 
-  let defaultValues: { label: string; value: string }[] = [];
+  const defaultValues: { label: string; value: string }[] = [];
   product.packUnities.forEach((item: any, index: any) => {
     if (index == 0) {
-      var el = UPGRADE_TYPES[item?.type.toString()].options.find(
+      const el = UPGRADE_TYPES[item?.type.toString()].options.find(
         x => parentProduct.title == x.label
       );
       if (el) defaultValues.push(el);
