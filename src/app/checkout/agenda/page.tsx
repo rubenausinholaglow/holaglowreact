@@ -114,6 +114,7 @@ export default function Agenda() {
 
   useEffect(() => {
     loadMonth();
+    selectDate(dateToCheck.toDate());
   }, [selectedTreatmentsIds, dateToCheck]);
 
   const onMonthChange = (x: any) => {
@@ -160,6 +161,7 @@ export default function Agenda() {
   };
 
   const selectDate = (x: Date) => {
+    if (!selectedTreatmentsIds) return;
     setLoadingDays(true);
     setMorningHours([]);
     setAfternoonHours([]);

@@ -157,6 +157,11 @@ function ProductPriceItemsCard({
 
     if (itemToUpdate) {
       itemToUpdate.value = newValue;
+    } else {
+      newOptions.push({
+        index: index,
+        value: newValue,
+      });
     }
     setSelectedPackOptions(newOptions);
   };
@@ -180,14 +185,14 @@ function ProductPriceItemsCard({
     }
   };
 
-  const defaultValues = product.packUnities.map((item: any, index) => {
-    const defaultValue =
-      index === 0
-        ? UPGRADE_TYPES[item?.type.toString()].options.find(
-            x => parentProduct.title == x.label
-          )
-        : UPGRADE_TYPES[item?.type.toString()].options[0];
-    return defaultValue;
+  const defaultValues: { label: string; value: string }[] = [];
+  product.packUnities.forEach((item: any, index: any) => {
+    if (index == 0) {
+      const el = UPGRADE_TYPES[item?.type.toString()].options.find(
+        x => parentProduct.title == x.label
+      );
+      if (el) defaultValues.push(el);
+    }
   });
 
   useEffect(() => {
@@ -351,26 +356,12 @@ export default function ProductPriceCard({
                 {product.price} €
               </Text>
               <Flex layout="row-right">
-                {index === 0 && !product.isPack ? (
-                  <Text
-                    size="xs"
-                    className="py-1 px-2 bg-hg-pink/20 text-hg-pink rounded-md"
-                  >
-                    Básico
-                  </Text>
-                ) : product.isPack ? (
+                {product.isPack && (
                   <Text
                     size="xs"
                     className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
                   >
                     Oferta especial
-                  </Text>
-                ) : (
-                  <Text
-                    size="xs"
-                    className="py-1 px-2 bg-hg-orange/20 text-hg-orange rounded-md"
-                  >
-                    Upgrade
                   </Text>
                 )}
 
