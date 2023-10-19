@@ -1,5 +1,6 @@
 'use client';
 
+import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
@@ -9,8 +10,11 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgArrow, SvgCheck } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 
 export default function ConfirmationCheckout() {
+  const { selectedPacksTreatments } = useGlobalPersistedStore(state => state);
+
   const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
     useGlobalPersistedStore(state => state);
   const localSelectedDay = dayjs(selectedDay);
@@ -80,7 +84,48 @@ export default function ConfirmationCheckout() {
                   <Text className="font-semibold">
                     {selectedTreatmentsNames}
                   </Text>
-                  <Text>{selectedTreatmentsDesc}</Text>
+                  {selectedTreatments && selectedTreatments[0].isPack ? (
+                    <ul className="p-1">
+                      {selectedPacksTreatments &&
+                        selectedPacksTreatments.map(item => {
+                          return <li key={item.title}>- {item.title}</li>;
+                        })}
+                    </ul>
+                  ) : !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                    selectedTreatments[0].appliedProducts.map(item => {
+                      const iconName = item.icon.split('/')[0] || 'SvgCross';
+                      const iconFamily:
+                        | 'default'
+                        | 'category'
+                        | 'suggestion'
+                        | 'service' =
+                        (item.icon.split('/')[1] as 'default') || 'default';
+
+                      return (
+                        <Flex key={item.titlte} className="items-start mb-2">
+                          <DynamicIcon
+                            height={16}
+                            width={16}
+                            className="mr-2 mt-0.5 text-hg-primary shrink-0"
+                            name={iconName}
+                            family={iconFamily}
+                          />
+
+                          <Text>{item.titlte}</Text>
+                        </Flex>
+                      );
+                    })
+                  ) : (
+                    <Flex className="items-start mb-2">
+                      <SvgInjection
+                        height={16}
+                        width={16}
+                        className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                      />
+                      <Text>{selectedTreatments[0].description}</Text>
+                    </Flex>
+                  )}
+                  {/* <Text>{selectedTreatmentsDesc}</Text> */}
                 </div>
               </div>
             </div>

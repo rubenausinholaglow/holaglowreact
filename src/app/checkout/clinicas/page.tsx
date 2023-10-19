@@ -2,17 +2,23 @@
 
 import { useEffect } from 'react';
 import { Clinic } from '@interface/clinic';
+import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
+import { SvgCar, SvgInjection, SvgRadioChecked } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
-  const { clinics, selectedClinic, setSelectedClinic } =
-    useGlobalPersistedStore(state => state);
+  const {
+    clinics,
+    selectedClinic,
+    setSelectedClinic,
+    selectedPacksTreatments,
+  } = useGlobalPersistedStore(state => state);
   const { selectedTreatments } = useGlobalPersistedStore(state => state);
   useEffect(() => {
     if (selectedClinic) {
@@ -32,6 +38,7 @@ export default function ClinicsCheckout() {
             <Title className="font-semibold hidden md:block">
               Detalle de tu pedido
             </Title>
+
             {selectedTreatments &&
               Array.isArray(selectedTreatments) &&
               selectedTreatments.map(product => (
@@ -45,9 +52,52 @@ export default function ClinicsCheckout() {
                       <Text className="font-semibold text-left mb-2">
                         {product.title}
                       </Text>
-                      <Text className="text-left" size="xs">
-                        {product.description}
-                      </Text>
+
+                      {product.isPack ? (
+                        <ul className="p-1">
+                          {selectedPacksTreatments &&
+                            selectedPacksTreatments.map(item => {
+                              return <li key={item.title}>- {item.title}</li>;
+                            })}
+                        </ul>
+                      ) : !isEmpty(product.appliedProducts) ? (
+                        product.appliedProducts.map(item => {
+                          const iconName =
+                            item.icon.split('/')[0] || 'SvgCross';
+                          const iconFamily:
+                            | 'default'
+                            | 'category'
+                            | 'suggestion'
+                            | 'service' =
+                            (item.icon.split('/')[1] as 'default') || 'default';
+
+                          return (
+                            <Flex
+                              key={item.titlte}
+                              className="items-start mb-2"
+                            >
+                              <DynamicIcon
+                                height={16}
+                                width={16}
+                                className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                                name={iconName}
+                                family={iconFamily}
+                              />
+
+                              <Text>{item.titlte}</Text>
+                            </Flex>
+                          );
+                        })
+                      ) : (
+                        <Flex className="items-start mb-2">
+                          <SvgInjection
+                            height={16}
+                            width={16}
+                            className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                          />
+                          <Text>{product.description}</Text>
+                        </Flex>
+                      )}
                     </div>
                     <SvgRadioChecked
                       className="mt-[2px] shrink-0"
