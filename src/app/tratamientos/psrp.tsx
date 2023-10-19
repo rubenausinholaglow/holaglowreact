@@ -18,6 +18,7 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
 import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
+import Image from 'next/image';
 
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
@@ -108,16 +109,23 @@ export default function PsrpPage({ slug }: { slug: string }) {
       <link rel="canonical" href="https://holaglow.com/tratamientos/" />
       <MobileFilters isVisible={isMobileFiltersVisible} />
 
-      <div className="bg-[#F3EDE9] rounded-t-3xl pt-8 pb-4 lg:bg-[url('/images/products/productsBg.png')] bg-right-top bg-no-repeat bg-contain">
-        <Container>
+      <div className="bg-[#F3EDE9] rounded-t-3xl">
+        <Container className="relative pt-8 pb-4">
           <Title size="3xl" className="font-bold mb-6 lg:mb-12 lg:w-3/5">
             Nuestros{' '}
             <Underlined color={HOLAGLOW_COLORS['secondary700']}>
               tratamientos
             </Underlined>
           </Title>
+          <Image
+            src={'/images/products/productsBg.png'}
+            height={858}
+            width={1395}
+            alt="nuestros tratamientos"
+            className="hidden lg:block absolute right-[5%] top-[10%] h-full w-auto scale-[160%]"
+          />
         </Container>
-        <Container className="px-0 md:px-4 lg:pb-4">
+        <Container className="px-0 md:px-4 pb-4 relative">
           <div className="lg:flex lg:flex-row lg:justify-between">
             <CategorySelector className="mb-4 lg:mb-0" />
             <PackTypeFilter className="ml-4 md:ml-0" />
@@ -134,7 +142,7 @@ export default function PsrpPage({ slug }: { slug: string }) {
         </Flex>
       )}
       {!isEmpty(filteredProducts) && (
-        <div className="bg-[#f7f3f0] pb-32">
+        <div className="bg-[#f7f3f0] pb-32 relative">
           <Flex
             layout="row-left"
             className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
@@ -208,7 +216,7 @@ export default function PsrpPage({ slug }: { slug: string }) {
 
           <Container>
             <ul
-              className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6  ${
+              className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 ${
                 showDesktopFilters === true.toString() ? 'md:pt-12' : 'md:pt-24'
               }   pb-6`}
             >
