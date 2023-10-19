@@ -18,7 +18,7 @@ export default function ProductFaqs({ product }: { product: Product }) {
   const faqs: FAQ[] = [];
   const getFaqsFromProduct = (product: Product) => {
     product.appliedProducts.forEach(x => {
-      var faqsToAdd = getFaqsForAppliedProduct(x.titlte);
+      const faqsToAdd = getFaqsForAppliedProduct(x.titlte);
       faqsToAdd.forEach(y => {
         if (!faqs.find(y => x.titlte == y.description)) faqs.push(y);
       });
