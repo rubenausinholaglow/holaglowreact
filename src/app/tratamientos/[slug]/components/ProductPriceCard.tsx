@@ -157,6 +157,11 @@ function ProductPriceItemsCard({
 
     if (itemToUpdate) {
       itemToUpdate.value = newValue;
+    } else {
+      newOptions.push({
+        index: index,
+        value: newValue,
+      });
     }
     setSelectedPackOptions(newOptions);
   };
