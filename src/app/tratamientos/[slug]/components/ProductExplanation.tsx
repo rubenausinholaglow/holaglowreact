@@ -7,8 +7,6 @@ import { SvgCheckCircle } from 'icons/IconsDs';
 import Image from 'next/image';
 
 export default function ProductExplanation({ product }: { product: Product }) {
-  const DEFAULT_IMG_SRC = '/images/product/fakeProductExample1.png';
-
   const [imgSrc, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productAnimation.gif`
   );
@@ -53,17 +51,18 @@ export default function ProductExplanation({ product }: { product: Product }) {
             Te explicamos las zonas de aplicación del tratamiento, aunque pueden
             variar según tus necesidades y la valoración del médico.
           </Text>
-
-          <div className="relative aspect-[4/3] mb-8">
-            <Image
-              src={imgSrc}
-              onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-              alt="fakeImg"
-              fill
-              objectFit="cover"
-              className="rounded-2xl"
-            />
-          </div>
+          {imgSrc && (
+            <div className="relative aspect-[4/3] mb-8">
+              <Image
+                src={imgSrc}
+                onError={() => setImgSrc('')}
+                alt="fakeImg"
+                fill
+                objectFit="cover"
+                className="rounded-2xl"
+              />
+            </div>
+          )}
           <ul className="flex flex-col mb-4 w-full">
             {product.extraInformation?.applicationZoneInfo?.applicationZoneDetail
               .sort((a, b) => a.order - b.order)
