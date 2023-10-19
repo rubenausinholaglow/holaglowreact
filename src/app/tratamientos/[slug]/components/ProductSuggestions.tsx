@@ -66,7 +66,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                   }`}
                   onClick={() => setActiveSlider('post')}
                 >
-                  Posttratamiento
+                  Postratamiento
                 </li>
               </ul>
             </Flex>

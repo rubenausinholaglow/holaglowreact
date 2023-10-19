@@ -38,6 +38,7 @@ export interface Lead {
 }
 
 export interface User {
+  clinicToken: string;
   firstName: string;
   flowwwToken: string;
   email: string;

@@ -13,10 +13,10 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import * as icon from 'icons/IconsDs';
 import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+import { twMerge } from 'tailwind-merge';
 
 const UPGRADE_TYPES: Record<
   string,
@@ -71,7 +71,7 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '1': {
-    title: '0,5 vial de inyectable antiarrugas',
+    title: '0,5 viales de inyectable antiarrugas',
     icon: 'SvgArrugas',
     family: 'category',
     options: [
@@ -136,16 +136,14 @@ export interface option {
 function ProductPriceItemsCard({
   product,
   parentProduct,
+  setAccordionOverflow,
 }: {
   product: Product;
   parentProduct: Product;
+  setAccordionOverflow: (value: string) => void;
 }) {
-  const {
-    deviceSize,
-    setSelectedTreatments,
-    setSelectedPackTreatments,
-    stateProducts,
-  } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments, setSelectedPackTreatments, stateProducts } =
+    useGlobalPersistedStore(state => state);
 
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -164,7 +162,8 @@ function ProductPriceItemsCard({
   };
 
   const setSelectedTreatment = (product: Product) => {
-    const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
+    let productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
+    if (!productToAdd) productToAdd = product;
     setSelectedTreatments([productToAdd]);
     const packTreatments: Product[] = [];
     if (selectedPackOptions.length > 0) {
@@ -198,6 +197,16 @@ function ProductPriceItemsCard({
 
     setSelectedPackOptions(initialSelectedPackOptions);
   }, []);
+
+  useEffect(() => {
+    if (showDropdown) {
+      setAccordionOverflow('overflow-visible');
+    }
+
+    if (!showDropdown) {
+      setAccordionOverflow('overflow-hidden');
+    }
+  }, [showDropdown]);
 
   return (
     <Flex layout="col-left" className="w-full">
@@ -245,13 +254,6 @@ function ProductPriceItemsCard({
                 key={UPGRADE_TYPES[item.type.toString()].title}
               >
                 <Flex layout="row-left" className="items-start">
-                  {/* <DynamicIcon
-                    name={UPGRADE_TYPES[item.type.toString()].icon}
-                    family={UPGRADE_TYPES[item.type.toString()].family}
-                    height={16}
-                    width={16}
-                    className="text-hg-secondary mr-2 mt-0.5"
-                  /> */}
                   <Text className="text-sm md:text-md">
                     {UPGRADE_TYPES[item.type.toString()].title}
                   </Text>
@@ -328,6 +330,9 @@ export default function ProductPriceCard({
   parentProduct: Product;
 }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
+  const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
+
+  console.log();
 
   return (
     <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
@@ -389,11 +394,16 @@ export default function ProductPriceCard({
           </Flex>
         </AccordionTrigger>
 
-        <AccordionContent>
+        <AccordionContent
+          className={twMerge(
+            `data-[state=closed]:overflow-hidden ${accordionOverflow}`
+          )}
+        >
           <div className="bg-hg-black50 p-3 w-full rounded-xl">
             <ProductPriceItemsCard
               product={product}
               parentProduct={parentProduct}
+              setAccordionOverflow={setAccordionOverflow}
             />
           </div>
         </AccordionContent>
