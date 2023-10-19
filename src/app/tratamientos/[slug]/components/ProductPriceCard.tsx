@@ -257,7 +257,7 @@ function ProductPriceItemsCard({
                   </Text>
                 </Flex>
                 <Dropdown
-                  className="mt-2 w-full mb-4"
+                  className="mt-2 w-full mb-4  zIndex: 9999"
                   options={UPGRADE_TYPES[item.type.toString()].options}
                   defaultValue={defaultValues[index]}
                   onChange={(value: any) => {
