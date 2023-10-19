@@ -99,6 +99,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             lineHeight: '16px',
             fontStyle: 'normal',
             fontWeight: '400',
+            touchAction: 'manipulation',
           }}
           containerStyle={{
             background: 'white',
