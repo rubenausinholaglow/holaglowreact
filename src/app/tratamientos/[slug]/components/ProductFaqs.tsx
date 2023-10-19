@@ -4,22 +4,27 @@ import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
-import { faqItems } from './faqs';
+import { FAQ, faqItems } from './faqs';
 
 export default function ProductFaqs({ product }: { product: Product }) {
-  const getFaqsForProduct = (productTitle: string) => {
-    // Find the FAQ data for the given product title
-    const faqData = faqItems[0]?.faqData;
-
-    // Check if the faqData exists and the product title is in it
-    if (faqData && faqData[productTitle]) {
-      //return faqData[productTitle];
+  const getFaqsForAppliedProduct = (appliedProduct: string) => {
+    if (faqItems[appliedProduct]) {
+      return faqItems[appliedProduct];
     } else {
-      // Return an empty array or handle the case where the product title is not found
       return [];
     }
   };
 
+  const faqs: FAQ[] = [];
+  const getFaqsFromProduct = (product: Product) => {
+    product.appliedProducts.forEach(x => {
+      var faqsToAdd = getFaqsForAppliedProduct(x.titlte);
+      faqsToAdd.forEach(y => {
+        if (!faqs.find(y => x.titlte == y.description)) faqs.push(y);
+      });
+    });
+  };
+  getFaqsFromProduct(product);
   return (
     <Container className="py-12">
       <Title size="2xl" className="font-bold mb-8 md:mb-12">
@@ -28,58 +33,23 @@ export default function ProductFaqs({ product }: { product: Product }) {
       </Title>
 
       <Flex layout="col-left" className="gap-6 md:flex-row md:gap-16">
-        <Flex layout="col-left" className="w-full gap-6 md:w-1/2">
-          <SimpleAccordion
-            className="border-b border-hg-black pb-4"
-            trigger="¿Podré ver los resultados de manera instantánea?"
-            triggerStyles="text-left items-start font-semibold"
-          >
-            <Text size="sm" className="text-hg-black500 py-4">
-              En Holaglow defendemos una medicina estética que cuida y, para
-              ello, la profesionalidad y la empatía son fundamentales. Todos
-              nuestros doctores comparten el mismo compromiso: ponerse en tu
-              piel, de manera literal y metafóricamente.
-            </Text>
-          </SimpleAccordion>
-          <SimpleAccordion
-            className="border-b border-hg-black pb-4"
-            trigger="¿Cuánto tiempo duran los resultados del ácido hialurónico?"
-            triggerStyles="text-left items-start font-semibold"
-          >
-            <Text size="sm" className="text-hg-black500 py-4">
-              En Holaglow defendemos una medicina estética que cuida y, para
-              ello, la profesionalidad y la empatía son fundamentales. Todos
-              nuestros doctores comparten el mismo compromiso: ponerse en tu
-              piel, de manera literal y metafóricamente.
-            </Text>
-          </SimpleAccordion>
-        </Flex>
-        <Flex layout="col-left" className="w-full gap-6 md:w-1/2">
-          <SimpleAccordion
-            className="border-b border-hg-black pb-4"
-            trigger="¿La aplicación de ácido hialurónico es dolorosa?"
-            triggerStyles="text-left items-start font-semibold"
-          >
-            <Text size="sm" className="text-hg-black500 py-4">
-              En Holaglow defendemos una medicina estética que cuida y, para
-              ello, la profesionalidad y la empatía son fundamentales. Todos
-              nuestros doctores comparten el mismo compromiso: ponerse en tu
-              piel, de manera literal y metafóricamente.
-            </Text>
-          </SimpleAccordion>
-          <SimpleAccordion
-            className="border-b border-hg-black pb-4"
-            trigger="¿Qué efectos secundarios puede tener el ácido hialurónico?"
-            triggerStyles="text-left items-start font-semibold"
-          >
-            <Text size="sm" className="text-hg-black500 py-4">
-              En Holaglow defendemos una medicina estética que cuida y, para
-              ello, la profesionalidad y la empatía son fundamentales. Todos
-              nuestros doctores comparten el mismo compromiso: ponerse en tu
-              piel, de manera literal y metafóricamente.
-            </Text>
-          </SimpleAccordion>
-        </Flex>
+        {faqs.map(x => {
+          return (
+            <>
+              <Flex layout="col-left" className="w-full gap-6 md:w-1/2">
+                <SimpleAccordion
+                  className="border-b border-hg-black pb-4"
+                  trigger={x.title}
+                  triggerStyles="text-left items-start font-semibold"
+                >
+                  <Text size="sm" className="text-hg-black500 py-4">
+                    {x.description}
+                  </Text>
+                </SimpleAccordion>
+              </Flex>
+            </>
+          );
+        })}
       </Flex>
     </Container>
   );
