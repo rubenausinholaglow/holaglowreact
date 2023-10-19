@@ -11,9 +11,9 @@ import { ROUTES } from 'app/utils/routes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
+import Script from 'next/script';
 
 import MobileNavigation from './MobileNavigation';
-import Script from 'next/script';
 
 let scrollPos = 0;
 
