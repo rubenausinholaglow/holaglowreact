@@ -7,10 +7,17 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgWhatsapp } from 'icons/IconsDs';
 import Link from 'next/link';
 
-export default function FloatingBottomBar({ product }: { product?: Product }) {
+export default function FloatingBottomBar({
+  product,
+  isVisible = true,
+}: {
+  product?: Product;
+  isVisible?: boolean;
+}) {
   const scrollPos = useRef(0);
 
   const [showBottomBar, setShowBottomBar] = useState(false);
+
   let url =
     'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20y%20vuestros%20tratamientos';
   if (product) {
@@ -18,8 +25,9 @@ export default function FloatingBottomBar({ product }: { product?: Product }) {
       'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20el%20tratamiento%20' +
       product.title;
   }
+
   const recalculateVisibility = () => {
-    setShowBottomBar(window.scrollY < 350 /* || scrollPos > window.scrollY */);
+    setShowBottomBar(window.scrollY > 350);
     scrollPos.current = window.scrollY;
   };
 
@@ -37,7 +45,7 @@ export default function FloatingBottomBar({ product }: { product?: Product }) {
   return (
     <div
       className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none ${
-        showBottomBar ? 'translate-y-[105%]' : 'translate-y-[0%]'
+        showBottomBar && isVisible ? 'translate-y-[0%]' : 'translate-y-[105%]'
       }`}
     >
       <div className="p-4 mx-w-xl md:mx-w-0 bg-white md:bg-transparent rounded-t-[40px]">

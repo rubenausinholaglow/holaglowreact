@@ -8,6 +8,7 @@ import FloatingBottomBar from 'app/components/home/FloatingBottomBar';
 import Testimonials from 'app/components/home/Testimonials';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useElementOnScreen } from 'app/utils/common';
 import { isEmpty } from 'lodash';
 import { fetchProduct } from 'utils/fetch';
 
@@ -28,6 +29,12 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
+
+  const [productPriceRef, isProductPriceVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0,
+  });
 
   useEffect(() => {
     if (!isEmpty(stateProducts)) {
@@ -67,7 +74,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         {product.beforeAndAfterImages?.length > 0 && (
           <ProductResults product={product} />
         )}
-        <ProductPrices product={product} />
+        <div ref={productPriceRef as React.RefObject<HTMLDivElement>}>
+          <ProductPrices product={product} />
+        </div>
         <ProductPaymentOptions totalPrice={product.price} />
         <ProductExplanation product={product} />
         <ProductFreeAppointment />
@@ -86,7 +95,11 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
           <Professionals />
         </div>
-        <FloatingBottomBar product={product} />
+
+        <FloatingBottomBar
+          product={product}
+          isVisible={!isProductPriceVisible}
+        />
       </MainLayout>
     );
   } else if (productId == '') {
