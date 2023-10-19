@@ -6,7 +6,7 @@ import { SvgPhone, SvgWhatsapp } from 'icons/IconsDs';
 
 export default function LookingFor() {
   return (
-    <div className="bg-[url('/images/products/lookingForBg.png')] md:bg-[url('/images/products/lookingForBg-desktop.png')] bg-[#e3e2f9] bg-no-repeat bg-[75%_100%] md:bg-bottom bg-contain pt-12 pb-[600px] md:py-36">
+    <div className="bg-[url('/images/products/lookingForBg.png')] md:bg-[url('/images/products/lookingForBg-desktop.png')] bg-bottom bg-cover pt-16 pb-[650px] md:py-32">
       <Container>
         <Flex layout="col-center" className="md:items-start md:w-2/5">
           <Title

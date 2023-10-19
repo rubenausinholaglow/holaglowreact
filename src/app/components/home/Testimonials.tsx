@@ -18,37 +18,37 @@ const TESTIMONIALS: Testimonial[] = [
     name: 'BELEN HEVIA',
     testimonial:
       'Encantada de la experiencia, el doctor va explicando a cada momento lo que va haciendo y el personal súper amable . 100% recomendable 👌',
-    imgUrl: '/images/testimonials/belenHevia.jpg',
+    imgUrl: '/images/testimonials/belenHevia.png',
   },
   {
     name: 'MARIA JOSÉ ZAMORA',
     testimonial:
       'Perfecta experiencia en Holaglow! Equipo de súper profesionales, que te asesoran y acompañan durante el tratamiento',
-    imgUrl: '/images/testimonials/mariaJoseZamora.jpg',
+    imgUrl: '/images/testimonials/mariaJoseZamora.png',
   },
   {
     name: 'MARIA QUILEZ',
     testimonial:
       'Estoy super contenta con el resultado. El equipo médico me ha asesorado muy bien y me he sentido muy cómoda en todo momento. El escáner es una pasada!!!!',
-    imgUrl: '/images/testimonials/mariaQuilez.jpg',
+    imgUrl: '/images/testimonials/mariaQuilez.png',
   },
   {
     name: 'LUNA SANTIAGO',
     testimonial:
       'Me he hecho los labios y ha sido increíble!!! Sin duda el mejor lugar en el que poder confiarse. Un trato maravilloso hacia los clientes, os lo recomiendo!!',
-    imgUrl: '/images/testimonials/lunaSantiago.jpg',
+    imgUrl: '/images/testimonials/lunaSantiago.png',
   },
   {
     name: 'ANNA ASIÁN',
     testimonial:
       'He visitado la clínica y son súper amables y profesionales, antes del tratamiento puedes ver el resultado de forma virtual en un simulador. Decidí hacerme un tratamiento de botox en la frente, entrecejo y patas de gallo. Encantada con mi nueva imagen,mejorada y muy natural.',
-    imgUrl: '/images/testimonials/annaAsian.jpg',
+    imgUrl: '/images/testimonials/annaAsian.png',
   },
   {
     name: 'MONTSE MELERO',
     testimonial:
       'Ha sido mi primera vez y no puedo estar más contenta. El personal es encantador, me he sentido acompañada en todo momento y los resultados increíbles, ya se lo he recomendado a mis amigas, ¡Repetiré seguro!',
-    imgUrl: '/images/testimonials/montseMelero.jpg',
+    imgUrl: '/images/testimonials/montseMelero.png',
   },
   {
     name: 'ALBERTO SANTAMARIA',
