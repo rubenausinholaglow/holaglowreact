@@ -20,7 +20,7 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   isMobile: boolean;
   deviceSize: DeviceSize;
-  selectedTreatments?: Product[];
+  selectedTreatments: Product[];
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;

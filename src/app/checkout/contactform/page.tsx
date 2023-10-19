@@ -174,7 +174,6 @@ export default function ConctactForm() {
       if (user) {
         user.flowwwToken = user.clinicToken;
       }
-      debugger;
     }
     if (user) {
       setCurrentUser(user);

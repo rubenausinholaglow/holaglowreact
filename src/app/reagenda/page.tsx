@@ -82,6 +82,7 @@ export default function Page({
       email: '',
       id: '',
       phone: '',
+      clinicToken: token,
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];

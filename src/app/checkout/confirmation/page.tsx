@@ -9,7 +9,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
-import { SvgArrow, SvgCheck } from 'icons/IconsDs';
+import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 export default function ConfirmationCheckout() {
@@ -84,14 +84,17 @@ export default function ConfirmationCheckout() {
                   <Text className="font-semibold">
                     {selectedTreatmentsNames}
                   </Text>
-                  {selectedTreatments && selectedTreatments[0].isPack ? (
+                  {selectedTreatments &&
+                  selectedTreatments[0] &&
+                  selectedTreatments[0].isPack ? (
                     <ul className="p-1">
                       {selectedPacksTreatments &&
                         selectedPacksTreatments.map(item => {
                           return <li key={item.title}>- {item.title}</li>;
                         })}
                     </ul>
-                  ) : !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                  ) : selectedTreatments[0] &&
+                    !isEmpty(selectedTreatments[0].appliedProducts) ? (
                     selectedTreatments[0].appliedProducts.map(item => {
                       const iconName = item.icon.split('/')[0] || 'SvgCross';
                       const iconFamily:
@@ -122,7 +125,9 @@ export default function ConfirmationCheckout() {
                         width={16}
                         className="mr-2 mt-0.5 text-hg-secondary shrink-0"
                       />
-                      <Text>{selectedTreatments[0].description}</Text>
+                      {selectedTreatments[0] && (
+                        <Text>{selectedTreatments[0].description}</Text>
+                      )}
                     </Flex>
                   )}
                   {/* <Text>{selectedTreatmentsDesc}</Text> */}
