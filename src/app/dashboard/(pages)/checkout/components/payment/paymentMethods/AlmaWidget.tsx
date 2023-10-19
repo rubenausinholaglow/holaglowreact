@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { InitializePayment } from '@interface/initializePayment';
+import { PaymentBank } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -129,6 +130,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       amount: Number(resultValue),
       installments: installmentsValue,
       userId: GuidUser,
+      paymentBank: PaymentBank.Alma,
     };
 
     try {
