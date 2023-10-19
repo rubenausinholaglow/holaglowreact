@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Product } from '@interface/product';
 import { isEmpty } from 'lodash';
 
@@ -59,3 +59,28 @@ export function getProductCardColor(color: string) {
 
   return color;
 }
+
+export function useElementOnScreen(options: any) {
+  const [isIntersecting, setIntersecting] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIntersecting(entry.isIntersecting);
+    }, options);
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [options]);
+
+  return [ref, isIntersecting];
+}
+
+export default useElementOnScreen;
