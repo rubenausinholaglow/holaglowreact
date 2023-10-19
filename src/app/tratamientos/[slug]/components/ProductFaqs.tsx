@@ -4,7 +4,22 @@ import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
+import { faqItems } from './faqs';
+
 export default function ProductFaqs({ product }: { product: Product }) {
+  const getFaqsForProduct = (productTitle: string) => {
+    // Find the FAQ data for the given product title
+    const faqData = faqItems[0]?.faqData;
+
+    // Check if the faqData exists and the product title is in it
+    if (faqData && faqData[productTitle]) {
+      //return faqData[productTitle];
+    } else {
+      // Return an empty array or handle the case where the product title is not found
+      return [];
+    }
+  };
+
   return (
     <Container className="py-12">
       <Title size="2xl" className="font-bold mb-8 md:mb-12">
