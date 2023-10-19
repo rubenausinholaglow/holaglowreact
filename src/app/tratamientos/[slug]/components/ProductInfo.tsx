@@ -1,9 +1,11 @@
 import { Product } from '@interface/product';
+import DynamicIcon from 'app/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar } from 'icons/Icons';
 import { SvgInjection, SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -14,16 +16,40 @@ export default function ProductInfo({ product }: { product: Product }) {
         <Container className="mt-8 md:mt-0 md:px-0 md:w-1/2 md:flex md:flex-col md:justify-center md:items-start">
           <ul className="flex flex-col mb-4 w-full">
             <li className="mb-4 pb-4 border-b border-hg-black flex">
-              <SvgInjection
-                height={24}
-                width={24}
-                className="text-hg-secondary mr-3 mt-1"
-              />
               <div>
                 <Text size="lg" className="font-semibold mb-1 md:mb-2">
-                  {product.description}
+                  {!isEmpty(product.appliedProducts)
+                    ? product.appliedProducts.map(item => {
+                        const iconName = item.icon.split('/')[0] || 'SvgCross';
+                        const iconFamily:
+                          | 'default'
+                          | 'category'
+                          | 'suggestion'
+                          | 'service' =
+                          (item.icon.split('/')[1] as 'default') || 'default';
+
+                        return (
+                          <Flex key={item.titlte} className="items-start mb-2">
+                            <DynamicIcon
+                              height={24}
+                              width={24}
+                              className="mr-3 mt-1 text-hg-secondary shrink-0"
+                              name={iconName}
+                              family={iconFamily}
+                            />
+
+                            <Text
+                              size="lg"
+                              className="font-semibold mb-1 md:mb-2"
+                            >
+                              {item.titlte}
+                            </Text>
+                          </Flex>
+                        );
+                      })
+                    : product.description}
                 </Text>
-                <Text>Producto aplicado</Text>
+                <Text className="pl-9">Producto aplicado</Text>
               </div>
             </li>
             <li className="mb-4 pb-4 border-b border-hg-black flex">
