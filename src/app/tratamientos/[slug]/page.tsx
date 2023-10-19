@@ -74,7 +74,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         {product.beforeAndAfterImages?.length > 0 && (
           <ProductResults product={product} />
         )}
-        <div ref={productPriceRef}>
+        <div ref={productPriceRef as React.RefObject<HTMLDivElement>}>
           <ProductPrices product={product} />
         </div>
         <ProductPaymentOptions totalPrice={product.price} />

@@ -60,9 +60,11 @@ export function getProductCardColor(color: string) {
   return color;
 }
 
-export function useElementOnScreen(options: any) {
+type IntersectionOptions = IntersectionObserverInit;
+
+export function useElementOnScreen(options: IntersectionOptions) {
   const [isIntersecting, setIntersecting] = useState(false);
-  const ref = useRef();
+  const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -80,7 +82,5 @@ export function useElementOnScreen(options: any) {
     };
   }, [options]);
 
-  return [ref, isIntersecting];
+  return [ref, isIntersecting] as const;
 }
-
-export default useElementOnScreen;
