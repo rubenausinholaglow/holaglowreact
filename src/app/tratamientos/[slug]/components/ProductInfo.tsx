@@ -62,8 +62,10 @@ export default function ProductInfo({ product }: { product: Product }) {
                 />
                 <div>
                   <Text size="lg" className="font-semibold mb-1 md:mb-2">
-                    {(product.durationMin / 30).toString()} -{' '}
-                    {(product.durationMax / 30).toString()} meses
+                    {(product.durationMin / 30).toString()}
+                    {product.durationMax == product.durationMin && ' meses'}
+                    {product.durationMax != product.durationMin &&
+                      '- ' + (product.durationMax / 30).toString() + 'meses'}
                   </Text>
                   <Text>Duración del tratamiento</Text>
                 </div>

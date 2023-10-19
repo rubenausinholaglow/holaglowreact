@@ -76,9 +76,12 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         </div>
         <ProductSuggestions product={product} />
         <ProductFaqs product={product} />
-        <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
-          <ProductCrosselling product={product} />
-        </div>
+
+        {product.relatedProducts?.length > 0 && (
+          <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
+            <ProductCrosselling product={product} />
+          </div>
+        )}
         <Clinics />
         <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
           <Professionals />

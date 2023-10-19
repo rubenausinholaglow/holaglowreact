@@ -12,9 +12,6 @@ import { isEmpty } from 'lodash';
 
 export default function ProductSuggestions({ product }: { product: Product }) {
   const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
-  const [activeSlider, setActiveSlider] = useState(
-    !isEmpty(product.preTreatmentInfo?.tips) ? 'pre' : 'post'
-  );
   const visibleSuggestions = () => {
     if (deviceSize.isMobile) {
       return 1;
@@ -31,6 +28,11 @@ export default function ProductSuggestions({ product }: { product: Product }) {
     product.postTreatmentInfo.after24hTips
   );
 
+  const [activeSlider, setActiveSlider] = useState(
+    !isEmpty(product.preTreatmentInfo?.tips || postTreatmentTips.length == 0)
+      ? 'pre'
+      : 'post'
+  );
   if (isEmpty(product.preTreatmentInfo?.tips) && isEmpty(postTreatmentTips)) {
     return <></>;
   }
