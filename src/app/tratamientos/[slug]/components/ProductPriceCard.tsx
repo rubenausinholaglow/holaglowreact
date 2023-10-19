@@ -180,14 +180,14 @@ function ProductPriceItemsCard({
     }
   };
 
-  const defaultValues = product.packUnities.map((item: any, index) => {
-    const defaultValue =
-      index === 0
-        ? UPGRADE_TYPES[item?.type.toString()].options.find(
-            x => parentProduct.title == x.label
-          )
-        : UPGRADE_TYPES[item?.type.toString()].options[0];
-    return defaultValue;
+  let defaultValues: { label: string; value: string }[] = [];
+  product.packUnities.forEach((item: any, index: any) => {
+    if (index == 0) {
+      var el = UPGRADE_TYPES[item?.type.toString()].options.find(
+        x => parentProduct.title == x.label
+      );
+      if (el) defaultValues.push(el);
+    }
   });
 
   useEffect(() => {
