@@ -304,7 +304,6 @@ export default function Agenda() {
                   locale="es"
                   className="w-full"
                   fixedHeight
-                  disabledKeyboardNavigation
                   calendarClassName={`${loadingMonth ? 'loading' : ''}`}
                 ></DatePicker>
               </Flex>
