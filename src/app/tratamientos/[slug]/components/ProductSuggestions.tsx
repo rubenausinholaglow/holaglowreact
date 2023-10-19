@@ -29,7 +29,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
   );
 
   const [activeSlider, setActiveSlider] = useState(
-    !isEmpty(product.preTreatmentInfo?.tips || postTreatmentTips.length == 0)
+    !isEmpty(product.preTreatmentInfo?.tips || postTreatmentTips?.length == 0)
       ? 'pre'
       : 'post'
   );
