@@ -295,7 +295,7 @@ function ProductPriceItemsCard({
           type="tertiary"
           onClick={() => setShowDropdown(true)}
         >
-          Seleccionar viales
+          Personalizar
         </Button>
       )}
 
@@ -391,6 +391,11 @@ export default function ProductPriceCard({
               </Flex>
             </Flex>
             <Text className="font-semibold md:text-lg">{product.title}</Text>
+            {product.isPack && (
+              <Text className="font-semibold md:text-lg">
+                ¡Tu eliges la zona!
+              </Text>
+            )}
           </Flex>
         </AccordionTrigger>
 
