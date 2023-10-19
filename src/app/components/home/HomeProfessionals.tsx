@@ -54,9 +54,11 @@ export default function Profesionals() {
               asesorarte y aplicar nuestros tratamientos con la mayor seguridad,
               eficacia y confianza
             </Text>
-            <Button type="secondary" size="xl" className="mx-auto lg:mx-0">
-              Conoce al equipo
-            </Button>
+            <a href="/quienes-somos">
+              <Button type="secondary" size="xl" className="mx-auto lg:mx-0">
+                Conoce al equipo
+              </Button>
+            </a>
           </Flex>
         </Flex>
       </Container>
