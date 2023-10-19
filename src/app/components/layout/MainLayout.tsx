@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
@@ -75,6 +75,7 @@ export default function MainLayout({
       <>
         <CheckoutHeader />
         {children}
+        <Analytics />
       </>
     );
   }
