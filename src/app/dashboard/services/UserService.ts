@@ -75,7 +75,8 @@ export default class UserService {
         }
       );
       if (res.ok) {
-        return undefined;
+        const data = await res.json();
+        return data;
       } else {
         return undefined;
       }

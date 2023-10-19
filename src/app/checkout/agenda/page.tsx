@@ -101,7 +101,7 @@ export default function Agenda() {
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
       setSelectedTreatmentsIds(
         selectedPacksTreatments!
-          .slice(0, 3)
+          .slice(0, 2)
           .map(x => x.flowwwId)
           .join(',')
       );
@@ -127,7 +127,7 @@ export default function Agenda() {
       let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
       if (selectedPacksTreatments && selectedPacksTreatments.length) {
         ids = selectedPacksTreatments!
-          .slice(0, 3)
+          .slice(0, 2)
           .map(x => x.flowwwId)
           .join(',');
       }

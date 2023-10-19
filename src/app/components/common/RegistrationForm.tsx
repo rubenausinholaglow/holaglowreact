@@ -42,6 +42,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     }
   }, [formData]);
 
+  function handlePhoneChange(value: any, country: any, formattedValue: string) {
+    handleFieldChange(value, 'phone');
+    value.target.value = '+' + country.dialCode;
+    handleFieldChange(value, 'phonePrefix');
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4 w-full">
       <TextInputField
@@ -110,7 +116,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           preferredCountries={['es']}
           value={formData.phone}
           onChange={(value, data, event, formattedValue) =>
-            handleFieldChange(event, 'phone')
+            handlePhoneChange(event, data, formattedValue)
           }
           onBlur={() => {
             if (

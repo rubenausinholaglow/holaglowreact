@@ -71,7 +71,7 @@ const UPGRADE_TYPES: Record<
     ],
   },
   '1': {
-    title: '0,5 vial de inyectable antiarrugas',
+    title: '0,5 viales de inyectable antiarrugas',
     icon: 'SvgArrugas',
     family: 'category',
     options: [
@@ -164,7 +164,8 @@ function ProductPriceItemsCard({
   };
 
   const setSelectedTreatment = (product: Product) => {
-    const productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
+    let productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
+    if (!productToAdd) productToAdd = product;
     setSelectedTreatments([productToAdd]);
     const packTreatments: Product[] = [];
     if (selectedPackOptions.length > 0) {

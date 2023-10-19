@@ -40,6 +40,7 @@ export default function ConctactForm() {
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
+    phonePrefix: '',
     name: '',
     surname: '',
     secondSurname: '',
@@ -126,7 +127,7 @@ export default function ConctactForm() {
     let treatments = selectedTreatments!.map(x => x.title).join(',');
     if (selectedPacksTreatments && selectedPacksTreatments.length) {
       ids = selectedPacksTreatments!
-        .slice(0, 3)
+        .slice(0, 2)
         .map(x => x.flowwwId)
         .join(',');
       treatments = selectedPacksTreatments!.map(x => x.title).join(',');
@@ -166,7 +167,14 @@ export default function ConctactForm() {
 
     if (!user) {
       formData.analyticsMetrics = analyticsMetrics;
+      formData.phone = formData.phone
+        .replace(formData.phonePrefix, '')
+        .replaceAll(' ', '');
       user = await UserService.registerUser(formData);
+      if (user) {
+        user.flowwwToken = user.clinicToken;
+      }
+      debugger;
     }
     if (user) {
       setCurrentUser(user);
