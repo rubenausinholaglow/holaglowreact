@@ -1,8 +1,9 @@
-import { PaymentMethod } from './payment';
+import { PaymentBank, PaymentMethod } from './payment';
 
 export interface InitializePayment {
   userId: string;
   installments: number;
+  paymentBank: PaymentBank;
   amount: number;
 }
 

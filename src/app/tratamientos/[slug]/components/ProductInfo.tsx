@@ -114,15 +114,16 @@ export default function ProductInfo({ product }: { product: Product }) {
           </Button>
         </Container>
         <div className="md:w-1/2">
-          {/*<div className="relative aspect-[6/5] md:rounded-2xl">
-            <Image
-              src="/images/product/fakeProductExample1.png"
-              alt="fakeExample"
-              fill
-              objectFit="cover"
-              className="md:rounded-xl"
-            />
-            </div> */}
+          <div className="relative aspect-[4/5] md:rounded-2xl overflow-hidden">
+            <video
+              autoPlay={true}
+              loop={true}
+              muted
+              className="-translate-y-[25%]"
+            >
+              <source src="/videos/pdp.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </Container>
