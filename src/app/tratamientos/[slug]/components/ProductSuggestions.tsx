@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -15,7 +15,6 @@ export default function ProductSuggestions({ product }: { product: Product }) {
   const [activeSlider, setActiveSlider] = useState(
     !isEmpty(product.preTreatmentInfo?.tips) ? 'pre' : 'post'
   );
-
   const visibleSuggestions = () => {
     if (deviceSize.isMobile) {
       return 1;
@@ -43,8 +42,8 @@ export default function ProductSuggestions({ product }: { product: Product }) {
           Sugerencias
         </Title>
 
-        {isEmpty(product.preTreatmentInfo?.tips) ||
-          (isEmpty(postTreatmentTips) && (
+        {!isEmpty(product.preTreatmentInfo?.tips) &&
+          !isEmpty(postTreatmentTips) && (
             <Flex layout="col-center" className="mb-10">
               <ul className="inline-flex bg-hg-secondary500 p-1 rounded-full">
                 <li
@@ -69,7 +68,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                 </li>
               </ul>
             </Flex>
-          ))}
+          )}
 
         <Carousel
           hasControls
