@@ -135,10 +135,11 @@ server.use(
 server.use(
   '/thankyou/barcelona',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
+    target:
+      'https://practical-discussions-804147.framer.app/thankyou/barcelona/',
     changeOrigin: true,
     pathRewrite: {
-      '/thankyou/barcelona': '/thankyou/barcelona/', // if needed, you can modify the path here
+      '^/thankyou/barcelona': '/', // if needed, you can modify the path here
     },
   })
 );
