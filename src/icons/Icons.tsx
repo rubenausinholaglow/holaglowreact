@@ -424,7 +424,7 @@ export const SvgStethoscope = (props: SVGProps<SVGSVGElement>) => (
 );
 
 const spinerStyles =
-  '.spinner {transform-origin:center; animation:spinner_Animation .75s infinite linear} @keyframes spinner_Animation{100%{transform:rotate(360deg)}}';
+  '.spinner {will-change: transform; transform-origin: center; animation: spinner_Animation .75s infinite linear} @keyframes spinner_Animation {100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}';
 
 export const SvgSpinner = (props: SVGProps<SVGSVGElement>) => (
   <svg
