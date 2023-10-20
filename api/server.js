@@ -128,7 +128,7 @@ server.use(
     target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
     pathRewrite: {
-      '/thank-you/madrid': '/thank-you/madrid', // if needed, you can modify the path here
+      '/thank-you/madrid': '/thank-you/madrid/', // if needed, you can modify the path here
     },
   })
 );
@@ -138,17 +138,17 @@ server.use(
     target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
     pathRewrite: {
-      '/thank-you/barcelona': '/thank-you/barcelona', // if needed, you can modify the path here
+      '/thank-you/barcelona': '/thank-you/barcelona/', // if needed, you can modify the path here
     },
   })
 );
 server.use(
   '/checkout/thank-you-1',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
+    target: 'https://practical-discussions-804147.framer.app/thank-you-1/',
     changeOrigin: true,
     pathRewrite: {
-      '/checkout/thank-you-1': '/thank-you-1', // if needed, you can modify the path here
+      '/checkout/thank-you-1': '/', // if needed, you can modify the path here
     },
   })
 );
@@ -159,7 +159,7 @@ server.use(
     prependPath: true,
     changeOrigin: true,
     pathRewrite: {
-      '/thank-you-2': '/thank-you-2', // if needed, you can modify the path here
+      '/thank-you-2': '/thank-you-2/', // if needed, you can modify the path here
     },
   })
 );
@@ -170,7 +170,7 @@ server.use(
     prependPath: true,
     changeOrigin: true,
     pathRewrite: {
-      '/thank-you-3': '/thank-you-3', // if needed, you can modify the path here
+      '/thank-you-3': '/thank-you-3/', // if needed, you can modify the path here
     },
   })
 );
@@ -181,7 +181,7 @@ server.use(
     prependPath: true,
     changeOrigin: true,
     pathRewrite: {
-      '/thank-you': '/thank-you', // if needed, you can modify the path here
+      '/thank-you': '/thank-you/', // if needed, you can modify the path here
     },
   })
 );
