@@ -168,9 +168,6 @@ server.use(
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app/thank-you-3/',
     changeOrigin: true,
-    pathRewrite: {
-      '^/thank-you-3': '/', // if needed, you can modify the path here
-    },
   })
 );
 server.use(
@@ -178,9 +175,6 @@ server.use(
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app/thank-you/',
     changeOrigin: true,
-    pathRewrite: {
-      '^/thank-you': '/', // if needed, you can modify the path here
-    },
   })
 );
 server.all('*', (req, res) => handle(req, res));
