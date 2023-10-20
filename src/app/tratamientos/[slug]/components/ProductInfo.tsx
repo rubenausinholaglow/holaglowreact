@@ -119,6 +119,7 @@ export default function ProductInfo({ product }: { product: Product }) {
               autoPlay={true}
               loop={true}
               muted
+              playsInline={true}
               className="-translate-y-[25%] pointer-events-none"
             >
               <source src="/videos/pdp.mp4" type="video/mp4" />
