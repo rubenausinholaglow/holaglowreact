@@ -133,13 +133,13 @@ server.use(
   })
 );
 server.use(
-  '/thankyou/barcelona',
+  '/thank-you/barcelona',
   createProxyMiddleware({
     target:
-      'https://practical-discussions-804147.framer.app/thankyou/barcelona/',
+      'https://practical-discussions-804147.framer.app/thank-you/barcelona/',
     changeOrigin: true,
     pathRewrite: {
-      '^/thankyou/barcelona': '/', // if needed, you can modify the path here
+      '^/thank-you/barcelona': '/', // if needed, you can modify the path here
     },
   })
 );
