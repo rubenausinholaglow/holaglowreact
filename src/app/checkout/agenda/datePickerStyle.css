@@ -73,11 +73,8 @@
   align-items: center;
 }
 
-/* Today */
 #datepickerWrapper .react-datepicker__day--today {
-  border-radius: 50%;
-  background-color: #ffffff;
-  color: black;
+  font-weight: normal;
 }
 
 /* Day Selected */
