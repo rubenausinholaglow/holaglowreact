@@ -1,27 +1,26 @@
 {
   "rewrites": [
-    { "source": "/thank-you-2/", "destination": "/api/server" },
-    { "source": "/landing/probador-virtual/", "destination": "/api/server" },
-    { "source": "/blog/", "destination": "/api/server" },
-    { "source": "/landing/visita-medica-mgm/", "destination": "/api/server" },
-    { "source": "/landing/visita-medica/", "destination": "/api/server" },
-    { "source": "/landing/holaglow", "destination": "/landing/holaglow/" },
-    { "source": "/landing/holaglow/", "destination": "/api/server" },
+    { "source": "/thank-you-2", "destination": "/api/server" },
+    { "source": "/landing/probador-virtual", "destination": "/api/server" },
+    { "source": "/blog", "destination": "/api/server" },
+    { "source": "/landing/visita-medica-mgm", "destination": "/api/server" },
+    { "source": "/landing/visita-medica", "destination": "/api/server" },
+    { "source": "/landing/holaglow", "destination": "/api/server" },
     {
-      "source": "/landing/visita-medica-madrid/",
+      "source": "/landing/visita-medica-madrid",
       "destination": "/api/server"
     },
     {
-      "source": "/landing/visita-medica-barcelona/",
+      "source": "/landing/visita-medica-barcelona",
       "destination": "/api/server"
     },
-    { "source": "/valencia/", "destination": "/api/server" },
-    { "source": "/multistep/", "destination": "/api/server" },
-    { "source": "/form/", "destination": "/api/server" },
-    { "source": "/agenda/", "destination": "/api/server" },
-    { "source": "/thank-you/madrid/", "destination": "/api/server" },
-    { "source": "/thank-you/barcelona/", "destination": "/api/server" },
-    { "source": "/thank-you-1/", "destination": "/api/server" },
-    { "source": "/thank-you-3/", "destination": "/api/server" }
+    { "source": "/valencia", "destination": "/api/server" },
+    { "source": "/multistep", "destination": "/api/server" },
+    { "source": "/form", "destination": "/api/server" },
+    { "source": "/agenda", "destination": "/api/server" },
+    { "source": "/thank-you/madrid", "destination": "/api/server" },
+    { "source": "/thank-you/barcelona", "destination": "/api/server" },
+    { "source": "/thank-you-1", "destination": "/api/server" },
+    { "source": "/thank-you-3", "destination": "/api/server" }
   ]
 }
