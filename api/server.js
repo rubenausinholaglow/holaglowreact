@@ -175,14 +175,6 @@ server.use(
     },
   })
 );
-server.use(
-  '/thank-you',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/',
-    prependPath: true,
-    changeOrigin: true,
-  })
-);
 server.all('*', (req, res) => handle(req, res));
 
 module.exports = (req, res) => {
