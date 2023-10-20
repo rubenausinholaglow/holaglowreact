@@ -132,59 +132,6 @@ server.use(
     },
   })
 );
-server.use(
-  '/thank-you/barcelona',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
-    changeOrigin: true,
-    pathRewrite: {
-      '/thank-you/barcelona': '/thank-you/barcelona/', // if needed, you can modify the path here
-    },
-  })
-);
-server.use(
-  '/checkout/thank-you-1',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/thank-you-1/',
-    changeOrigin: true,
-    pathRewrite: {
-      '/checkout/thank-you-1': '/', // if needed, you can modify the path here
-    },
-  })
-);
-server.use(
-  '/thank-you-2',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
-    prependPath: true,
-    changeOrigin: true,
-    pathRewrite: {
-      '/thank-you-2': '/thank-you-2/', // if needed, you can modify the path here
-    },
-  })
-);
-server.use(
-  '/thank-you-3',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
-    prependPath: true,
-    changeOrigin: true,
-    pathRewrite: {
-      '/thank-you-3': '/thank-you-3/', // if needed, you can modify the path here
-    },
-  })
-);
-server.use(
-  '/thank-you',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
-    prependPath: true,
-    changeOrigin: true,
-    pathRewrite: {
-      '/thank-you': '/thank-you/', // if needed, you can modify the path here
-    },
-  })
-);
 server.all('*', (req, res) => handle(req, res));
 
 module.exports = (req, res) => {
