@@ -33,12 +33,12 @@ export default function ProductFaqs({ product }: { product: Product }) {
         <Underlined color={HOLAGLOW_COLORS['primary']}>frecuentes</Underlined>
       </Title>
 
-      <div className="md:grid-cols-2 md:gap-16">
+      <div className="md:grid md:grid-cols-2 md:gap-6">
         {faqs.map(faq => {
           return (
             <SimpleAccordion
               key={faq.title}
-              className="border-b border-hg-black pb-4"
+              className="border-b border-hg-black pb-6 mb-6 md:mb-0"
               trigger={faq.title}
               triggerStyles="text-left items-start font-semibold"
             >
