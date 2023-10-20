@@ -7,6 +7,17 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 server.use(
+  '/thank-you-2',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app/thank-you-2/',
+    prependPath: true,
+    changeOrigin: true,
+    pathRewrite: {
+      '^/thank-you-2': '/', // if needed, you can modify the path here
+    },
+  })
+);
+server.use(
   '/landing/probador-virtual',
   createProxyMiddleware({
     target:
@@ -150,17 +161,6 @@ server.use(
     changeOrigin: true,
     pathRewrite: {
       '/checkout/thank-you-1': '/', // if needed, you can modify the path here
-    },
-  })
-);
-server.use(
-  '/thank-you-2',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
-    prependPath: true,
-    changeOrigin: true,
-    pathRewrite: {
-      '/thank-you-2': '/thank-you-2/', // if needed, you can modify the path here
     },
   })
 );
