@@ -46,7 +46,6 @@ export default function Agenda() {
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
-  const [excludedDates, setExcludedDates] = useState([]);
 
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -304,7 +303,6 @@ export default function Agenda() {
                   onMonthChange={onMonthChange}
                   useWeekdaysShort
                   calendarStartDay={1}
-                  excludeDates={excludedDates}
                   locale="es"
                   className="w-full"
                   fixedHeight

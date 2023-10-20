@@ -85,7 +85,7 @@
 .react-datepicker__month-text--keyboard-selected,
 .react-datepicker__quarter-text--keyboard-selected,
 .react-datepicker__year-text--keyboard-selected,
-.react-datepicker__day:hover {
+.react-datepicker__day:hover:not(.react-datepicker__day--disabled) {
   border-radius: 50% !important;
   background-color: #a96fe7 !important;
   color: #ffffff !important;
