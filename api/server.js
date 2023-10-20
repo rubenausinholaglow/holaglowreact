@@ -166,14 +166,14 @@ server.use(
 server.use(
   '/thank-you-3',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/thank-you-3/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
   '/thank-you',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/thank-you/',
+    target: 'https://practical-discussions-804147.framer.app/',
     changeOrigin: true,
   })
 );
