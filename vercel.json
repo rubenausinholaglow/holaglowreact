@@ -7,7 +7,7 @@
     { "source": "/landing/holaglow", "destination": "/api/server" },
     { "source": "/landing/visita-medica-madrid", "destination": "/api/server" },
     {
-      "source": "/landing/visita-medica-bacelona",
+      "source": "/landing/visita-medica-barcelona",
       "destination": "/api/server"
     },
     { "source": "/valencia", "destination": "/api/server" },
