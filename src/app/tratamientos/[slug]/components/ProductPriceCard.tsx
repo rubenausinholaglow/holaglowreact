@@ -186,9 +186,10 @@ function ProductPriceItemsCard({
   };
 
   const defaultValues: { label: string; value: string }[] = [];
+
   product.packUnities.forEach((item: any, index: any) => {
     if (index == 0) {
-      const el = UPGRADE_TYPES[item?.type.toString()].options.find(
+      const el = UPGRADE_TYPES[item?.type.toString()]?.options.find(
         x => parentProduct.title == x.label
       );
       if (el) defaultValues.push(el);
@@ -313,8 +314,9 @@ function ProductPriceItemsCard({
           }}
           className="mt-8"
           disabled={
+            product.isPack &&
             selectedPackOptions.filter(x => x.value != '').length !=
-            product.packUnities.length
+              product.packUnities.length
           }
         >
           Reservar cita
