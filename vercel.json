@@ -18,7 +18,6 @@
     { "source": "/thank-you/barcelona", "destination": "/api/server" },
     { "source": "/thank-you-1", "destination": "/api/server" },
     { "source": "/thank-you-2", "destination": "/api/server" },
-    { "source": "/thank-you-3", "destination": "/api/server" },
-    { "source": "/thank-you", "destination": "/api/server" }
+    { "source": "/thank-you-3", "destination": "/api/server" }
   ]
 }
