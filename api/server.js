@@ -10,7 +10,6 @@ server.use(
   '/thank-you-2',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app/thank-you-2/',
-    prependPath: true,
     changeOrigin: true,
     pathRewrite: {
       '^/thank-you-2': '/', // if needed, you can modify the path here
