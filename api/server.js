@@ -125,7 +125,7 @@ server.use(
 server.use(
   '/thank-you/madrid',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.ap',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
     pathRewrite: {
       '/thank-you/madrid': '/thank-you/madrid', // if needed, you can modify the path here
@@ -143,12 +143,12 @@ server.use(
   })
 );
 server.use(
-  '/thank-you-1',
+  '/checkout/thank-you-1',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
     pathRewrite: {
-      '/thank-you-1': '/thank-you-1', // if needed, you can modify the path here
+      '/checkout/thank-you-1': '/thank-you-1', // if needed, you can modify the path here
     },
   })
 );
