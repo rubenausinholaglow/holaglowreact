@@ -7,121 +7,115 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 server.use(
-  '/thank-you-2',
+  '/thank-you-2/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/thank-you-2/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/landing/probador-virtual',
+  '/landing/probador-virtual/',
   createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/landing/probador-virtual/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/blog',
+  '/blog/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/blog/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/landing/visita-medica-mgm',
+  '/landing/visita-medica-mgm/',
   createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/landing/visita-medica-mgm/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/landing/visita-medica',
+  '/landing/visita-medica/',
   createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/landing/visita-medica/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 
 server.use(
-  '/landing/holaglow',
+  '/landing/holaglow/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/landing/holaglow/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/landing/visita-medica-madrid',
+  '/landing/visita-medica-madrid/',
   createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/landing/visita-medica-madrid/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/landing/visita-medica-barcelona',
+  '/landing/visita-medica-barcelona/',
   createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/landing/visita-medica-barcelona/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/valencia',
+  '/valencia/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/valencia/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/multistep',
+  '/multistep/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/multistep/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/form',
+  '/form/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/form/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/agenda',
+  '/agenda/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/agenda/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/thank-you/madrid',
+  '/thank-you/madrid/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/thank-you/madrid/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/thank-you/barcelona',
+  '/thank-you/barcelona/',
   createProxyMiddleware({
-    target:
-      'https://practical-discussions-804147.framer.app/thank-you/barcelona/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/checkout/thank-you-1',
+  '/checkout/thank-you-1/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/thank-you-1/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
 server.use(
-  '/thank-you-3',
+  '/thank-you-3/',
   createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app/thank-you-3/',
+    target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
   })
 );
