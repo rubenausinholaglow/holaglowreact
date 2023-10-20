@@ -90,11 +90,6 @@ export default function ClinicsCheckout() {
                         })
                       ) : (
                         <Flex className="items-start mb-2">
-                          <SvgInjection
-                            height={16}
-                            width={16}
-                            className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                          />
                           <Text>{product.description}</Text>
                         </Flex>
                       )}
