@@ -234,10 +234,7 @@ export default function Page({
           {appointments.length == 0 && !loading && (
             <div>
               ¡Ups! Parece que no tienes ninguna cita reservada. Para más dudas
-              <a href="https://api.whatsapp.com/send?phone=930346565">
-                llámanos
-              </a>
-              .
+              <a href="tel:682417208">llámanos</a>.
             </div>
           )}
         </Flex>
