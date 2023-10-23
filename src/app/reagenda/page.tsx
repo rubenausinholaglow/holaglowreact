@@ -50,6 +50,7 @@ export default function Page({
     setSelectedTreatments,
     stateProducts,
     setPreviousAppointment,
+    setSelectedClinic,
   } = useGlobalPersistedStore(state => state);
 
   let showPast = false;
@@ -74,7 +75,6 @@ export default function Page({
 
   const cancelAppointment = (x: Appointment) => {
     setCancelling(true);
-    debugger;
     var months: Array<string> = [
       'Enero',
       'Febrero',
@@ -100,7 +100,6 @@ export default function Page({
         startTime.getHours().toString().padStart(2, '0') +
         ':' +
         startTime.getMinutes().toString().padStart(2, '0');
-      debugger;
       router.push(url);
     });
   };
