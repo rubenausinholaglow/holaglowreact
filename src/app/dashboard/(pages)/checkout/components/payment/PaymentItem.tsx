@@ -23,13 +23,9 @@ export default function PaymentItem({ paymentRequest, color }: Props) {
   }
 
   useEffect(() => {
-    switch (color) {
-      case 'bg-green-500':
-        setDeleteEnabled(false);
-        break;
-      default:
-    }
+    if (color == 'bg-green-500') setDeleteEnabled(false);
   }, [color]);
+
   const deletePayment = async (id: string) => {
     FinanceService.deletePayment(id);
   };
