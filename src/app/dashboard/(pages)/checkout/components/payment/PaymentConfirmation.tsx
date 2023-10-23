@@ -26,7 +26,7 @@ export default function PaymentConfirmation({
 
   useEffect(() => {
     const SOCKET_URL =
-      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
+      process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/ProfessionalResponse';
     const newConnection = new HubConnectionBuilder()
       .withUrl(SOCKET_URL, {
         skipNegotiation: true,

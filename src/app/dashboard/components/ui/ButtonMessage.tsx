@@ -23,7 +23,7 @@ export default function ButtonMessage() {
   useEffect(() => {
     setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
     const SOCKET_URL =
-      process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/ProfessionalResponse';
+      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
     const webConnection = new HubService(SOCKET_URL);
 
     webConnection
