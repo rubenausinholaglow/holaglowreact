@@ -18,6 +18,7 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgLocation, SvgSpinner } from 'icons/Icons';
 import { SvgCross } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
+import ProductService from '@services/ProductService';
 
 export default function Page({
   searchParams,
@@ -96,7 +97,7 @@ export default function Page({
     });
   };
 
-  const rescheduleAppointment = (x: Appointment) => {
+  const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
       flowwwToken: token,
       firstName: '',
@@ -107,13 +108,17 @@ export default function Page({
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];
-    treatments?.forEach(treatment => {
-      products.push(
-        stateProducts.filter(y => y.flowwwId == Number(treatment))[0]
-      );
-    });
+    for (const treatment of treatments!) {
+      var product = stateProducts.filter(y => y.id == treatment)[0];
+      if (!product) {
+        product = await ProductService.getProduct(treatment);
+      }
+      products.push(product);
+    }
+    const selectedClinic = clinics.filter(y => y.flowwwId == x.clinicId)[0];
     setSelectedTreatments(products);
     setPreviousAppointment(x);
+    setSelectedClinic(selectedClinic);
     router.push('/checkout/agenda');
   };
 
