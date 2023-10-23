@@ -126,6 +126,20 @@ server.use(
     changeOrigin: true,
   })
 );
+server.use(
+  '/appointment-confirmed/barcelona',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
+  '/appointment-confirmed/madrid',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
 server.all('*', (req, res) => handle(req, res));
 
 module.exports = (req, res) => {

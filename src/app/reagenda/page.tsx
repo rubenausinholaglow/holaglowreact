@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import {
@@ -96,7 +97,7 @@ export default function Page({
     });
   };
 
-  const rescheduleAppointment = (x: Appointment) => {
+  const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
       flowwwToken: token,
       firstName: '',
@@ -107,13 +108,17 @@ export default function Page({
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];
-    treatments?.forEach(treatment => {
-      products.push(
-        stateProducts.filter(y => y.flowwwId == Number(treatment))[0]
-      );
-    });
+    for (const treatment of treatments!) {
+      let product = stateProducts.filter(y => y.id == treatment)[0];
+      if (!product) {
+        product = await ProductService.getProduct(treatment);
+      }
+      products.push(product);
+    }
+    const selectedClinic = clinics.filter(y => y.flowwwId == x.clinicId)[0];
     setSelectedTreatments(products);
     setPreviousAppointment(x);
+    setSelectedClinic(selectedClinic);
     router.push('/checkout/agenda');
   };
 
