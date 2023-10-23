@@ -15,16 +15,21 @@ interface Props {
 export default function PaymentItem({ paymentRequest, color }: Props) {
   const { removePayment } = usePaymentList();
   const aviableBanks = [1, 4];
-  const [enableDelete, setEnableDelete] = useState<boolean>(true);
+  const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
+  const normalizedColor = color ?? 'bg-gray-300';
 
-  if (color === undefined || color === 'undefined') {
-    color = 'bg-gray-300';
+  if (color === undefined) {
+    color = normalizedColor;
   }
 
   useEffect(() => {
-    if (color == 'bg-green-500') setEnableDelete(false);
+    switch (color) {
+      case 'bg-green-500':
+        setDeleteEnabled(false);
+        break;
+      default:
+    }
   }, [color]);
-
   const deletePayment = async (id: string) => {
     FinanceService.deletePayment(id);
   };
@@ -53,7 +58,7 @@ export default function PaymentItem({ paymentRequest, color }: Props) {
             className={`w-4 h-4 rounded-full inline-block ${color} mx-2`}
           ></div>
         )}
-        {enableDelete && (
+        {isDeleteEnabled && (
           <Button
             size="sm"
             type="secondary"
