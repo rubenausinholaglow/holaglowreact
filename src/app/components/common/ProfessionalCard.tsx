@@ -15,12 +15,12 @@ export default function ProfessionalCard({
   return (
     <div className={`flex flex-col overflow-hidden h-full ${className}`}>
       <Flex layout="col-center" className="text-center gap-2">
-        <div className="relative aspect-square w-full mb-4">
+        <div className="relative aspect-[5/6] w-full mb-4">
           <Image
             alt={professional.name}
             fill
             src={professional.urlPhoto}
-            className="object-cover rounded-3xl"
+            className="object-cover"
           />
         </div>
 
