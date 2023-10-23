@@ -9,23 +9,15 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import es from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { ButtonDefault } from 'designSystem/Buttons/Buttons.stories';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import {
-  SvgCalendar,
-  SvgLocation,
-  SvgMapMarker,
-  SvgSpinner,
-} from 'icons/Icons';
+import { SvgCalendar, SvgLocation, SvgSpinner } from 'icons/Icons';
 import { SvgCross } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
-import { start } from 'repl';
 
 export default function Page({
   searchParams,
@@ -75,7 +67,7 @@ export default function Page({
 
   const cancelAppointment = (x: Appointment) => {
     setCancelling(true);
-    var months: Array<string> = [
+    const months: Array<string> = [
       'Enero',
       'Febrero',
       'Marzo',
@@ -90,8 +82,8 @@ export default function Page({
       'Diciembre',
     ];
     ScheduleService.cancel(x).then(y => {
-      var startTime = new Date(x.startTime!);
-      var url =
+      const startTime = new Date(x.startTime!);
+      const url =
         '/appointment-cancel?day=' +
         startTime.getDate() +
         '&month=' +
