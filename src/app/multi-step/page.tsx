@@ -35,7 +35,7 @@ export default function Form() {
     if (categorySelected !== undefined) {
       window.parent.postMessage(
         MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing,
-        'https://holaglow.com'
+        'https://www.holaglow.com'
       );
     }
   };
