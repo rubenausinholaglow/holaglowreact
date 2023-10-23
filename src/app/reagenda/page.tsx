@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import {
@@ -18,7 +19,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgLocation, SvgSpinner } from 'icons/Icons';
 import { SvgCross } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
-import ProductService from '@services/ProductService';
 
 export default function Page({
   searchParams,
@@ -109,7 +109,7 @@ export default function Page({
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];
     for (const treatment of treatments!) {
-      var product = stateProducts.filter(y => y.id == treatment)[0];
+      let product = stateProducts.filter(y => y.id == treatment)[0];
       if (!product) {
         product = await ProductService.getProduct(treatment);
       }
