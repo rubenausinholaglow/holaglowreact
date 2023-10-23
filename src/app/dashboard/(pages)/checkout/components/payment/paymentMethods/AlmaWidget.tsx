@@ -132,10 +132,9 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       userId: GuidUser,
       paymentBank: PaymentBank.Alma,
     };
-
     try {
       const urlPayment = await FinanceService.initializePayment(data);
-      onUrlPayment(urlPayment.id);
+      onUrlPayment(urlPayment.id, urlPayment.url, urlPayment.referenceId);
     } catch (error: any) {
       Bugsnag.notify('Error initializing payment:', error);
     } finally {

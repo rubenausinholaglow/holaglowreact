@@ -3,8 +3,10 @@ import { Controller, useForm } from 'react-hook-form';
 import Notification from '@components/ui/Notification';
 import { CreatePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
+import FinanceService from '@services/FinanceService';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { debug } from 'console';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -57,27 +59,35 @@ export default function PaymentInput(props: Props) {
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
+    const response = await FinanceService.createPayment(paymentRequestApi);
+    const id: string = response as string;
+
     const paymentRequest = {
       amount: paymentRequestApi.amount,
       method: props.paymentMethod,
       bank: props.paymentBank,
       paymentReference: paymentRequestApi.referenceId,
-      id: createUniqueId(),
+      id: id,
     };
     addPaymentToList(paymentRequest);
     props.onButtonClick(false);
   };
-  const handleUrlPayment = async (urlPayment: string) => {
-    const amount = parseFloat(inputValue);
-    const GuidUser = localStorage.getItem('id') || '';
 
-    const paymentRequestApi = {
+  const handleUrlPayment = async (
+    idPayment: string,
+    urlPayment: string,
+    referencePayment: string
+  ) => {
+    const amount = parseFloat(inputValue);
+    const paymentRequest = {
       amount: amount,
-      userId: GuidUser,
-      paymentMethod: props.paymentMethod,
-      referenceId: urlPayment,
+      method: props.paymentMethod,
+      bank: props.paymentBank,
+      paymentReference: referencePayment,
+      id: idPayment,
     };
-    createPayment(paymentRequestApi);
+    addPaymentToList(paymentRequest);
+    props.onButtonClick(false);
   };
 
   const activateAlma = async () => {

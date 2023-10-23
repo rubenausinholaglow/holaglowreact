@@ -6,7 +6,6 @@ import { StatusBudget, TicketBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
 import { budgetService } from '@services/BudgetService';
-import FinanceService from '@services/FinanceService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
@@ -125,23 +124,6 @@ export const PaymentModule = () => {
     }
   };
 
-  const createPayments = async () => {
-    try {
-      for (const paymentRequest of paymentList) {
-        const paymentRequestApi = {
-          amount: paymentRequest.amount,
-          userId: guidUserId,
-          paymentMethod: paymentRequest.method,
-          referenceId: paymentRequest.paymentReference,
-        };
-
-        const response = await FinanceService.createPayment(paymentRequestApi);
-      }
-    } catch (error: any) {
-      Bugsnag.notify(error);
-    }
-  };
-
   const createTicket = async () => {
     if (totalAmount < cartTotalWithDiscount) {
       alert('Hay cantidad pendiente de pagar');
@@ -149,7 +131,6 @@ export const PaymentModule = () => {
     }
     setIsLoading(true);
     try {
-      const resultCreatePayments = await createPayments();
       const result = await sendTicket();
       if (result) {
         localStorage.removeItem('BudgetId');
