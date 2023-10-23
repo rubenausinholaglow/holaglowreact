@@ -6,11 +6,9 @@ import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import { debug } from 'console';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
-import { v4 as createUniqueId } from 'uuid';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
