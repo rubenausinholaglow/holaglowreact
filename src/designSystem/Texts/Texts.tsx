@@ -1,5 +1,8 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, RefObject } from 'react';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { useElementOnScreen } from 'app/utils/common';
 import { twMerge } from 'tailwind-merge';
 
 export const Title = ({
@@ -26,8 +29,24 @@ export const Title = ({
   const HtmlComponent = as;
   const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
 
+  const [titleRef, isTitleInViewport] = useElementOnScreen({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0,
+  });
+
   return (
-    <HtmlComponent className={styles} onClick={onClick}>
+    <HtmlComponent
+      ref={titleRef as RefObject<HTMLElement>}
+      className={twMerge(
+        `transition-all duration-700 ${styles}  ${
+          isTitleInViewport
+            ? 'opacity-1 translate-x-0'
+            : 'opacity-0 translate-x-full'
+        }`
+      )}
+      onClick={onClick}
+    >
       {children}
     </HtmlComponent>
   );
