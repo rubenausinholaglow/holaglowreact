@@ -47,8 +47,11 @@ export default function PaymentConfirmation({
             const finalMessage = message.messageText;
             console.log(finalMessage);
             if (finalMessage.startsWith('[PaymentResponse]')) {
-              const [, paymentId, PaymentStatus] = finalMessage.split('/');
-              if (paymentList.find(x => x.paymentReference == paymentId)) {
+              const [, paymentReferenceId, PaymentStatus] =
+                finalMessage.split('/');
+              if (
+                paymentList.find(x => x.paymentReference == paymentReferenceId)
+              ) {
                 switch (PaymentStatus) {
                   case 'Rejected':
                     setColor('red');
