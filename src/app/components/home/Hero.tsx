@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default function HomeHero() {
   return (
-    <Container className="relative border-b border-hg-black">
+    <Container className="relative border-b border-hg-black overflow-hidden">
       <Flex layout="col-center" className="md:flex-row">
         <Image
           src="/images/home/Header.png"
