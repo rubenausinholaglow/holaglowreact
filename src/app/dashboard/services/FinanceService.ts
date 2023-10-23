@@ -41,6 +41,27 @@ export default class FinanceService {
         body: JSON.stringify(updatedCreatePayment),
       });
 
+      if (!res.ok) {
+        Bugsnag.notify('Error creating Payment');
+        throw new Error('Erro creating Payment');
+      }
+      const data = await res.text();
+      return data;
+    } catch (error: any) {
+      Bugsnag.notify(error);
+    }
+  }
+
+  static async deletePayment(id: string) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment?id=${id}`;
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
       if (res.ok) {
         const data = await res.text();
         return data;
