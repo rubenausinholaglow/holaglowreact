@@ -22,7 +22,7 @@ export default function PaymentItem({ paymentRequest, color }: Props) {
   }
 
   useEffect(() => {
-    if (color == 'green') setEnableDelete(false);
+    if (color == 'bg-green-500') setEnableDelete(false);
   }, [color]);
 
   const deletePayment = async (id: string) => {
