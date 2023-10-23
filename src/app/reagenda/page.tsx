@@ -25,6 +25,7 @@ import {
 } from 'icons/Icons';
 import { SvgCross } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
+import { start } from 'repl';
 
 export default function Page({
   searchParams,
@@ -73,6 +74,35 @@ export default function Page({
 
   const cancelAppointment = (x: Appointment) => {
     setCancelling(true);
+    debugger;
+    var months: Array<string> = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ];
+    ScheduleService.cancel(x).then(y => {
+      var startTime = new Date(x.startTime!);
+      var url =
+        '/appointment-cancel?day=' +
+        startTime.getDate() +
+        '&month=' +
+        months[startTime.getMonth()] +
+        '&hour=' +
+        startTime.getHours().toString().padStart(2, '0') +
+        ':' +
+        startTime.getMinutes().toString().padStart(2, '0');
+      debugger;
+      router.push(url);
+    });
   };
 
   const rescheduleAppointment = (x: Appointment) => {
@@ -217,11 +247,12 @@ export default function Page({
                           onClick={() => {
                             setAppointmentToCancel(appointment);
                             setShowCancelModal(true);
+                            cancelAppointment(appointment);
                           }}
                         >
                           {!cancelling && <div id="cancelText">Cancelar</div>}
+                          {cancelling && <SvgSpinner height={24} width={24} />}
                         </Button>
-                        {cancelling && <SvgSpinner height={24} width={24} />}
                       </>
                     )}
                   </Flex>

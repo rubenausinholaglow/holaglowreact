@@ -21,6 +21,7 @@
     { "source": "/thank-you/madrid", "destination": "/api/server" },
     { "source": "/thank-you/barcelona", "destination": "/api/server" },
     { "source": "/thank-you-1", "destination": "/api/server" },
-    { "source": "/thank-you-3", "destination": "/api/server" }
+    { "source": "/thank-you-3", "destination": "/api/server" },
+    { "source": "/appointment-cancel", "destination": "/api/server" }
   ]
 }
