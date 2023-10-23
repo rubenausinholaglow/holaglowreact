@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  trailingSlash: true,
   images: {
     minimumCacheTTL: 60,
     remotePatterns: [
