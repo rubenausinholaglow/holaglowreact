@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PaymentProductRequest } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { getPaymentBankText, getPaymentMethodText } from '@utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
-import PaymentConfirmation from './PaymentConfirmation';
 import { usePaymentList } from './payments/usePaymentList';
 
 interface Props {
   paymentRequest: PaymentProductRequest;
+  color: string;
 }
 
-export default function PaymentItem({ paymentRequest }: Props) {
+export default function PaymentItem({ paymentRequest, color }: Props) {
   const { removePayment } = usePaymentList();
   const aviableBanks = [1, 4];
-  const [enableDelete, setEnableDelate] = useState<boolean>(true);
+  const [enableDelete, setEnableDelete] = useState<boolean>(true);
+
+  if (color === undefined || color === 'undefined') {
+    color = 'bg-gray-300';
+  }
+
+  useEffect(() => {
+    if (color == 'green') setEnableDelete(false);
+  }, [color]);
 
   const deletePayment = async (id: string) => {
     FinanceService.deletePayment(id);
@@ -40,9 +48,10 @@ export default function PaymentItem({ paymentRequest }: Props) {
         ) : null}{' '}
         <span className="font-bold">{`- ${paymentRequest.amount}€`}</span>
         {aviableBanks[paymentRequest.bank] && (
-          <PaymentConfirmation
-            onAcceptedPayment={() => setEnableDelate(false)}
-          ></PaymentConfirmation>
+          <div
+            key={paymentRequest.id}
+            className={`w-4 h-4 rounded-full inline-block ${color} mx-2`}
+          ></div>
         )}
         {enableDelete && (
           <Button

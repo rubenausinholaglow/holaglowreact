@@ -5,6 +5,11 @@ import Notification from '@components/ui/Notification';
 import { StatusBudget, TicketBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
+import {
+  HttpTransportType,
+  HubConnection,
+  HubConnectionBuilder,
+} from '@microsoft/signalr';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
@@ -37,11 +42,72 @@ export const PaymentModule = () => {
     null
   );
 
+  const [connection, setConnection] = useState<HubConnection | null>(null);
   const [guidUserId, setguidUserId] = useState<string | ''>('');
+  const [paymentColors, setPaymentColors] = useState<Record<string, string>>(
+    {}
+  );
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
   }, []);
+
+  useEffect(() => {
+    const SOCKET_URL =
+      process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
+    const newConnection = new HubConnectionBuilder()
+      .withUrl(SOCKET_URL, {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
+  }, []);
+
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then(result => {
+          connection.on('ReceiveMessage', message => {
+            const finalMessage = message.messageText;
+            console.log(finalMessage);
+            if (finalMessage.startsWith('[PaymentResponse]')) {
+              const [, paymentReferenceId, PaymentStatus] =
+                finalMessage.split('/');
+              const existingPayment = paymentList.find(
+                x => x.paymentReference === paymentReferenceId
+              );
+
+              if (existingPayment) {
+                switch (PaymentStatus) {
+                  case 'Rejected':
+                    setPaymentColors(prevColors => ({
+                      ...prevColors,
+                      [existingPayment.id]: 'bg-red-500',
+                    }));
+                    break;
+                  case 'Paid':
+                    setPaymentColors(prevColors => ({
+                      ...prevColors,
+                      [existingPayment.id]: 'bg-green-500',
+                    }));
+                    break;
+                  default:
+                    setPaymentColors(prevColors => ({
+                      ...prevColors,
+                      [existingPayment.id]: 'bg-gray-300',
+                    }));
+                }
+              }
+            }
+          });
+        })
+        .catch(e => Bugsnag.notify('Connection failed: ', e));
+    }
+  }, [connection]);
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -189,6 +255,7 @@ export const PaymentModule = () => {
               <PaymentItem
                 key={paymentRequest.id}
                 paymentRequest={paymentRequest}
+                color={paymentColors[paymentRequest.id]}
               />
             ))}
           </ul>
