@@ -151,7 +151,7 @@ export default function ConctactForm() {
       comment: comment,
       treatmentText: treatments,
       referralId: '',
-      externalReference: '', //TODO: Pending
+      externalReference: '14',
       isPast: false,
       clinicId: selectedClinic?.flowwwId,
       isCancelled: false,
