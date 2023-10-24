@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
@@ -36,40 +37,49 @@ export const Button = ({
 }: ButtonProps) => {
   if (href) {
     return (
-      <Link
-        href={href}
-        target={rest?.target}
+      <AnimateOnViewport>
+        <Link
+          href={href}
+          target={rest?.target}
+          className={twMerge(
+            `relative group overflow-visible ${className} ${
+              disabled && 'opacity-25 pointer-events-none'
+            }`
+          )}
+          onClick={onClick}
+          type={rest?.isSubmit ? 'submit' : 'button'}
+        >
+          <ButtonBase type={type} />
+          <ButtonBody type={type} size={size} customStyles={customStyles}>
+            {children}
+          </ButtonBody>
+        </Link>
+      </AnimateOnViewport>
+    );
+  }
+
+  return (
+    <AnimateOnViewport origin="left">
+      <button
         className={twMerge(
-          `relative group overflow-visible ${className} ${
-            disabled && 'opacity-25 pointer-events-none'
-          }`
+          `transition-all relative group overflow-visible ${
+            ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
+          } ${className} ${disabled && 'opacity-25 pointer-events-none'}`
         )}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
         <ButtonBase type={type} />
-        <ButtonBody type={type} size={size} customStyles={customStyles}>
+        <ButtonBody
+          type={type}
+          size={size}
+          customStyles={customStyles}
+          {...rest}
+        >
           {children}
         </ButtonBody>
-      </Link>
-    );
-  }
-
-  return (
-    <button
-      className={twMerge(
-        `transition-all relative group overflow-visible ${
-          ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
-        } ${className} ${disabled && 'opacity-25 pointer-events-none'}`
-      )}
-      onClick={onClick}
-      type={rest?.isSubmit ? 'submit' : 'button'}
-    >
-      <ButtonBase type={type} />
-      <ButtonBody type={type} size={size} customStyles={customStyles} {...rest}>
-        {children}
-      </ButtonBody>
-    </button>
+      </button>
+    </AnimateOnViewport>
   );
 };
 
