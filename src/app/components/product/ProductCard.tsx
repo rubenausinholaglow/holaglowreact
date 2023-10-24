@@ -78,22 +78,24 @@ export default function ProductCard({
           <Text size="xs" className="text-hg-black500 mb-8">
             {product.description}
           </Text>
-          <Button
-            type="tertiary"
-            className="mt-auto"
-            bgColor="bg-hg-primary"
-            customStyles="hover:bg-hg-secondary100"
-          >
-            <Link
-              href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
-              className="text-inherit"
+          <div className="mt-auto">
+            <Button
+              type="tertiary"
+              className="mt-auto"
+              bgColor="bg-hg-primary"
+              customStyles="hover:bg-hg-secondary100"
             >
-              <Flex layout="row-center">
-                <p className="mr-2">Saber más</p>
-                <SvgArrow height={20} width={20} />
-              </Flex>
-            </Link>
-          </Button>
+              <Link
+                href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
+                className="text-inherit"
+              >
+                <Flex layout="row-center">
+                  <p className="mr-2">Saber más</p>
+                  <SvgArrow height={20} width={20} />
+                </Flex>
+              </Link>
+            </Button>
+          </div>
         </Flex>
       </div>
     </Link>
