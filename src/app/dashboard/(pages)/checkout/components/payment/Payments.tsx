@@ -2,14 +2,11 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import Notification from '@components/ui/Notification';
+import { useMessageSocket } from '@components/useMessageSocket';
 import { StatusBudget, TicketBudget } from '@interface/budget';
+import { MessageType } from '@interface/messageSocket';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
-import {
-  HttpTransportType,
-  HubConnection,
-  HubConnectionBuilder,
-} from '@microsoft/signalr';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
@@ -20,7 +17,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
-import PaymentItem from './PaymentItem';
+import PaymentItem, { StatusPayment } from './PaymentItem';
 import PaymentClient from './paymentMethods/PaymentClient';
 import { paymentItems } from './paymentMethods/PaymentItems';
 import { usePaymentList } from './payments/usePaymentList';
@@ -41,73 +38,50 @@ export const PaymentModule = () => {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-
-  const [connection, setConnection] = useState<HubConnection | null>(null);
   const [guidUserId, setguidUserId] = useState<string | ''>('');
-  const [paymentColors, setPaymentColors] = useState<Record<string, string>>(
-    {}
-  );
+  const [paymentStatus, setPaymentStatus] = useState<
+    Record<string, StatusPayment>
+  >({});
+  const messageSocket = useMessageSocket(state => state);
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
   }, []);
 
   useEffect(() => {
-    const SOCKET_URL =
-      process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
-    const newConnection = new HubConnectionBuilder()
-      .withUrl(SOCKET_URL, {
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets,
-      })
-      .withAutomaticReconnect()
-      .build();
-
-    setConnection(newConnection);
-  }, []);
-
-  useEffect(() => {
-    if (connection) {
-      connection
-        .start()
-        .then(result => {
-          connection.on('ReceiveMessage', message => {
-            const finalMessage = message.messageText;
-            console.log(finalMessage);
-            if (finalMessage.startsWith('[PaymentResponse]')) {
-              const [, paymentReferenceId, PaymentStatus] =
-                finalMessage.split('/');
-              const existingPayment = paymentList.find(
-                x => x.paymentReference === paymentReferenceId
-              );
-
-              if (existingPayment) {
-                switch (PaymentStatus) {
-                  case 'Rejected':
-                    setPaymentColors(prevColors => ({
-                      ...prevColors,
-                      [existingPayment.id]: 'bg-red-500',
-                    }));
-                    break;
-                  case 'Paid':
-                    setPaymentColors(prevColors => ({
-                      ...prevColors,
-                      [existingPayment.id]: 'bg-green-500',
-                    }));
-                    break;
-                  default:
-                    setPaymentColors(prevColors => ({
-                      ...prevColors,
-                      [existingPayment.id]: 'bg-gray-300',
-                    }));
-                }
-              }
-            }
-          });
-        })
-        .catch(e => Bugsnag.notify('Connection failed: ', e));
+    const existMessagePaymentResponse = messageSocket.messageSocket.filter(
+      x => x.messageType == MessageType.PaymentResponse
+    );
+    if (existMessagePaymentResponse.length > 0) {
+      const finalMessage = existMessagePaymentResponse[0].message;
+      const [, paymentReferenceId, PaymentStatus] = finalMessage.split('/');
+      const existingPayment = paymentList.find(
+        x => x.paymentReference === paymentReferenceId
+      );
+      if (existingPayment) {
+        switch (PaymentStatus) {
+          case 'Rejected':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.Rejected,
+            }));
+            break;
+          case 'Paid':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.Paid,
+            }));
+            break;
+          default:
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.Waiting,
+            }));
+        }
+        messageSocket.removeMessageSocket(existMessagePaymentResponse[0]);
+      }
     }
-  }, [connection]);
+  }, [messageSocket]);
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -255,7 +229,7 @@ export const PaymentModule = () => {
               <PaymentItem
                 key={paymentRequest.id}
                 paymentRequest={paymentRequest}
-                color={paymentColors[paymentRequest.id]}
+                status={paymentStatus[paymentRequest.id]}
               />
             ))}
           </ul>

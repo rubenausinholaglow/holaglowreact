@@ -7,33 +7,46 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 
 import { usePaymentList } from './payments/usePaymentList';
 
+export enum StatusPayment {
+  Waiting,
+  Paid,
+  Rejected,
+}
 interface Props {
   paymentRequest: PaymentProductRequest;
-  color: string;
+  status: StatusPayment;
 }
 
-export default function PaymentItem({ paymentRequest, color }: Props) {
+export default function PaymentItem({ paymentRequest, status }: Props) {
   const { removePayment } = usePaymentList();
   const aviableBanks = [1, 4];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
-  const normalizedColor = color ?? 'bg-gray-300';
+  const [colorPayment, setColorPayment] = useState<string>('');
 
-  if (color === undefined) {
-    color = normalizedColor;
+  if (status === undefined) {
+    status = StatusPayment.Waiting;
   }
 
   useEffect(() => {
-    if (color == 'bg-green-500') setDeleteEnabled(false);
-  }, [color]);
+    switch (status) {
+      case StatusPayment.Paid:
+        setColorPayment('bg-green-500');
+        setDeleteEnabled(false);
+        break;
+      case StatusPayment.Rejected:
+        setColorPayment('bg-red-500');
+        break;
+      case StatusPayment.Waiting:
+      default:
+        setColorPayment('bg-gray-300');
+        break;
+    }
+  }, [status]);
 
-  const deletePayment = async (id: string) => {
-    FinanceService.deletePayment(id);
-  };
-
-  const handleRemoveAndDelete = (paymentRequest: any) => {
+  const handleRemoveAndDelete = async (paymentRequest: any) => {
     const id = paymentRequest.id;
     removePayment(paymentRequest);
-    deletePayment(id);
+    await FinanceService.deletePayment(id);
   };
 
   return (
@@ -51,7 +64,7 @@ export default function PaymentItem({ paymentRequest, color }: Props) {
         {aviableBanks[paymentRequest.bank] && (
           <div
             key={paymentRequest.id}
-            className={`w-4 h-4 rounded-full inline-block ${color} mx-2`}
+            className={`w-4 h-4 rounded-full inline-block ${colorPayment} mx-2`}
           ></div>
         )}
         {isDeleteEnabled && (

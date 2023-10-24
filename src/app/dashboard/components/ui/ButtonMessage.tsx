@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useMessageSocket } from '@components/useMessageSocket';
 import { ProfessionalType } from '@interface/clinic';
-import HubService from '@services/HubService';
+import { MessageType } from '@interface/messageSocket';
 import { messageService } from '@services/MessageService';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgStethoscope } from 'icons/Icons';
@@ -19,23 +20,22 @@ export default function ButtonMessage() {
   const [messageTimeout, setMessageTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
+  const messageSocket = useMessageSocket(state => state);
 
   useEffect(() => {
     setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
-    const SOCKET_URL =
-      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
-    const webConnection = new HubService(SOCKET_URL);
-
-    webConnection
-      .getConnection()
-      .on('ReceiveMessage', (receivedMessage: any) => {
-        showMessage(receivedMessage.actions[0]?.actionId || '');
-      });
-
-    return () => {
-      webConnection.getConnection().stop();
-    };
   }, []);
+
+  useEffect(() => {
+    const existMessageChatResponse = messageSocket.messageSocket.filter(
+      x => x.messageType == MessageType.ChatResponse
+    );
+    if (existMessageChatResponse.length > 0) {
+      const finalMessage = existMessageChatResponse[0].message;
+      showMessage(finalMessage);
+      messageSocket.removeMessageSocket(existMessageChatResponse[0]);
+    }
+  }, [messageSocket]);
 
   const sendMessageToMedic = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
