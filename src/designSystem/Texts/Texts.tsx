@@ -18,7 +18,7 @@ export const Title = ({
   weight?: string;
   as?: 'h3' | 'h1';
   className?: string;
-  disableAnimation: boolean;
+  disableAnimation?: boolean;
   children: ReactNode;
   onClick?: (...args: any[]) => void;
 }) => {
@@ -80,7 +80,7 @@ export const Text = ({
   className?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
-  disableAnimation: boolean;
+  disableAnimation?: boolean;
   [key: string]: any;
 }) => {
   const [animated, setAnimated] = useState(false);
