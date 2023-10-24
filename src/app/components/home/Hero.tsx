@@ -15,7 +15,7 @@ export default function HomeHero() {
           alt="Holaglow"
           width={1195}
           height={1500}
-          className="h-auto w-full scale-[140%] mt-[18%] md:w-[55%] md:scale-100 md:mt-0 md:py-16"
+          className="h-auto w-full scale-[135%] mt-[18%] md:w-[55%] md:scale-100 md:mt-0 md:py-16 ml-[15%] md:ml-0"
         />
         <Flex
           layout="col-left"

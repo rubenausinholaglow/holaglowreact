@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import Clinics from 'app/components/common/Clinics';
 import Professionals from 'app/components/common/Professionals';
@@ -74,7 +74,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         {product.beforeAndAfterImages?.length > 0 && (
           <ProductResults product={product} />
         )}
-        <div ref={productPriceRef as React.RefObject<HTMLDivElement>}>
+        <div ref={productPriceRef as RefObject<HTMLDivElement>}>
           <ProductPrices product={product} />
         </div>
         <ProductPaymentOptions totalPrice={product.price} />
