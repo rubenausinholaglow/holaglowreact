@@ -19,7 +19,7 @@ export default function ValuesCarousel() {
         <ul className="inline-block">
           {repeatedValues.map(value => (
             <li className="inline-block pt-2 pb-1 px-6" key={value}>
-              <Text size="lg" className="font-medium">
+              <Text disableAnimation size="lg" className="font-medium">
                 {value}
               </Text>
             </li>
@@ -28,7 +28,7 @@ export default function ValuesCarousel() {
         <ul className="inline-block">
           {repeatedValues.map(value => (
             <li className="inline-block pt-2 pb-1 px-6" key={value}>
-              <Text size="lg" className="font-medium">
+              <Text disableAnimation size="lg" className="font-medium">
                 {value}
               </Text>
             </li>

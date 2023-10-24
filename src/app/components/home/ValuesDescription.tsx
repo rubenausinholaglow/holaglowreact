@@ -13,7 +13,10 @@ export default function ValuesDescription() {
           <Title size="2xl" className="font-bold mb-12 md:mb-6 lg:pr-[20%]">
             La belleza es lo que te dé la gana
           </Title>
-          <Text className="absolute bottom-0 text-hg-black500 w-1/2 translate-y-full md:relative md:w-full md:translate-y-0 md:text-lg">
+          <Text
+            disableAnimation
+            className="absolute bottom-0 text-hg-black500 w-1/2 translate-y-full md:relative md:w-full md:translate-y-0 md:text-lg"
+          >
             Di adiós a los prejuicios y defiende tu propia idea de belleza con
             tratamientos eficaces para conseguir los objetivos que tú quieras.
           </Text>
