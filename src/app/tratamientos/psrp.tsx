@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { filterItems } from '@utils/filterItems';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import CategorySelector from 'app/components/filters/CategorySelector';
 import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -111,7 +112,10 @@ export default function PsrpPage({ slug }: { slug: string }) {
 
       <div className="bg-[#F3EDE9] rounded-t-3xl">
         <Container className="relative pt-8 pb-4">
-          <Title size="3xl" className="font-bold mb-6 lg:mb-12 lg:w-3/5">
+          <Title
+            size="2xl"
+            className="font-bold mb-6 lg:mb-12 lg:w-3/5 md:text-4xl lg:text-5xl"
+          >
             Nuestros{' '}
             <Underlined color={HOLAGLOW_COLORS['secondary700']}>
               tratamientos
@@ -127,7 +131,11 @@ export default function PsrpPage({ slug }: { slug: string }) {
         </Container>
         <Container className="px-0 md:px-4 pb-4 relative">
           <div className="lg:flex lg:flex-row lg:justify-between">
-            <CategorySelector className="mb-4 lg:mb-0" />
+            <AnimateOnViewport
+              origin={deviceSize.isMobile ? 'right' : 'bottom'}
+            >
+              <CategorySelector className="mb-4 lg:mb-0" />
+            </AnimateOnViewport>
             <PackTypeFilter className="ml-4 md:ml-0" />
           </div>
         </Container>

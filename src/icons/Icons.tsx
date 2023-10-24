@@ -423,23 +423,35 @@ export const SvgStethoscope = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const spinerStyles =
-  '.spinner {transform-origin:center; animation:spinner_Animation .75s infinite linear} @keyframes spinner_Animation{100%{transform:rotate(360deg)}}';
-
 export const SvgSpinner = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height={24}
-    width={24}
+    height={40}
+    width={40}
     fill="currentColor"
-    viewBox="0 0 24 24"
+    viewBox="0 0 40 40"
     {...props}
   >
-    <style>{spinerStyles}</style>
     <path
-      d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"
-      className="spinner"
+      opacity="0.2"
+      d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
     />
+    <path
+      d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+    C22.32,8.481,24.301,9.057,26.013,10.047z"
+    >
+      <animateTransform
+        attributeType="xml"
+        attributeName="transform"
+        type="rotate"
+        from="0 20 20"
+        to="360 20 20"
+        dur="0.9s"
+        repeatCount="indefinite"
+      />
+    </path>
   </svg>
 );
 

@@ -3,26 +3,20 @@
 import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import es from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { ButtonDefault } from 'designSystem/Buttons/Buttons.stories';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import {
-  SvgCalendar,
-  SvgLocation,
-  SvgMapMarker,
-  SvgSpinner,
-} from 'icons/Icons';
+import { SvgCalendar, SvgLocation, SvgSpinner } from 'icons/Icons';
 import { SvgCross } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
@@ -49,6 +43,7 @@ export default function Page({
     setSelectedTreatments,
     stateProducts,
     setPreviousAppointment,
+    setSelectedClinic,
   } = useGlobalPersistedStore(state => state);
 
   let showPast = false;
@@ -73,9 +68,36 @@ export default function Page({
 
   const cancelAppointment = (x: Appointment) => {
     setCancelling(true);
+    const months: Array<string> = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ];
+    ScheduleService.cancel(x).then(y => {
+      const startTime = new Date(x.startTime!);
+      const url =
+        '/appointment-cancel?day=' +
+        startTime.getDate() +
+        '&month=' +
+        months[startTime.getMonth()] +
+        '&hour=' +
+        startTime.getHours().toString().padStart(2, '0') +
+        ':' +
+        startTime.getMinutes().toString().padStart(2, '0');
+      router.push(url);
+    });
   };
 
-  const rescheduleAppointment = (x: Appointment) => {
+  const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
       flowwwToken: token,
       firstName: '',
@@ -86,13 +108,17 @@ export default function Page({
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];
-    treatments?.forEach(treatment => {
-      products.push(
-        stateProducts.filter(y => y.flowwwId == Number(treatment))[0]
-      );
-    });
+    for (const treatment of treatments!) {
+      let product = stateProducts.filter(y => y.id == treatment)[0];
+      if (!product) {
+        product = await ProductService.getProduct(treatment);
+      }
+      products.push(product);
+    }
+    const selectedClinic = clinics.filter(y => y.flowwwId == x.clinicId)[0];
     setSelectedTreatments(products);
     setPreviousAppointment(x);
+    setSelectedClinic(selectedClinic);
     router.push('/checkout/agenda');
   };
 
@@ -217,11 +243,12 @@ export default function Page({
                           onClick={() => {
                             setAppointmentToCancel(appointment);
                             setShowCancelModal(true);
+                            cancelAppointment(appointment);
                           }}
                         >
                           {!cancelling && <div id="cancelText">Cancelar</div>}
+                          {cancelling && <SvgSpinner height={24} width={24} />}
                         </Button>
-                        {cancelling && <SvgSpinner height={24} width={24} />}
                       </>
                     )}
                   </Flex>
