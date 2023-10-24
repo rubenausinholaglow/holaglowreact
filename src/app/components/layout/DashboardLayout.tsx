@@ -9,15 +9,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
-export interface MessageResponse {
-  channel?: string;
-  actions?: Action[];
-}
-
-export interface Action {
-  actionId?: string;
-}
-
 export default function DashboardLayout({
   hideTopBar = false,
   hideBackButton = false,
