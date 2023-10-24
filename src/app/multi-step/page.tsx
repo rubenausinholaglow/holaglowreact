@@ -33,10 +33,8 @@ export default function Form() {
 
   const redirectTo = (index: number) => {
     if (categorySelected !== undefined) {
-      window.parent.postMessage(
-        MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing,
-        'https://holaglow.com'
-      );
+      window.document.location.href =
+        MULTISTEP_TREATMENTS[categorySelected].treatments[index].landing;
     }
   };
 
@@ -51,7 +49,7 @@ export default function Form() {
   const sendEventTracking = (index: number) => {
     window.parent.postMessage(
       '(googleevent)multistep_step_' + index + '|',
-      'https://holaglow.com'
+      'https://www.holaglow.com'
     );
   };
 

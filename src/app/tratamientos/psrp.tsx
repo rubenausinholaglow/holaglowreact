@@ -112,7 +112,10 @@ export default function PsrpPage({ slug }: { slug: string }) {
 
       <div className="bg-[#F3EDE9] rounded-t-3xl">
         <Container className="relative pt-8 pb-4">
-          <Title size="3xl" className="font-bold mb-6 lg:mb-12 lg:w-3/5">
+          <Title
+            size="2xl"
+            className="font-bold mb-6 lg:mb-12 lg:w-3/5 md:text-4xl lg:text-5xl"
+          >
             Nuestros{' '}
             <Underlined color={HOLAGLOW_COLORS['secondary700']}>
               tratamientos
