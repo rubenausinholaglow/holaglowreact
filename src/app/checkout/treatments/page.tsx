@@ -85,6 +85,7 @@ export default function ClinicsCheckout() {
                     <Text className="font-semibold">Primera cita gratis</Text>
                     <Text className="text-xs">Escáner 3D</Text>
                   </div>
+                  <SvgAngle className="transition-all text-hg-black500 ml-auto" />
                 </Flex>
               </div>
 
