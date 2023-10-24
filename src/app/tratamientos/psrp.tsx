@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { filterItems } from '@utils/filterItems';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import CategorySelector from 'app/components/filters/CategorySelector';
 import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -130,7 +131,11 @@ export default function PsrpPage({ slug }: { slug: string }) {
         </Container>
         <Container className="px-0 md:px-4 pb-4 relative">
           <div className="lg:flex lg:flex-row lg:justify-between">
-            <CategorySelector className="mb-4 lg:mb-0" />
+            <AnimateOnViewport
+              origin={deviceSize.isMobile ? 'right' : 'bottom'}
+            >
+              <CategorySelector className="mb-4 lg:mb-0" />
+            </AnimateOnViewport>
             <PackTypeFilter className="ml-4 md:ml-0" />
           </div>
         </Container>

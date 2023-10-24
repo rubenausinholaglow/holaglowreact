@@ -113,19 +113,6 @@ export default function ProductInfo({ product }: { product: Product }) {
             </Link>
           </Button>
         </Container>
-        <div className="md:w-1/2">
-          <div className="relative aspect-[4/5] md:rounded-2xl overflow-hidden pointer-events-none">
-            <video
-              autoPlay={true}
-              loop={true}
-              muted
-              playsInline={true}
-              className="-translate-y-[25%] pointer-events-none"
-            >
-              <source src="/videos/pdp.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </div>
       </div>
     </Container>
   );
