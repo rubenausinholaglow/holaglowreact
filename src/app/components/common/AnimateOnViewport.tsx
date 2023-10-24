@@ -5,10 +5,12 @@ import { useElementOnScreen } from 'app/utils/common';
 
 export const AnimateOnViewport = ({
   disableAnimation = false,
+  className = '',
   origin = 'bottom',
   children,
 }: {
   disableAnimation?: boolean;
+  className?: string;
   origin?: 'top' | 'right' | 'bottom' | 'left';
   children: ReactNode;
 }) => {
@@ -38,7 +40,7 @@ export const AnimateOnViewport = ({
       break;
   }
 
-  let styles = 'transition-all duration-700';
+  let styles = `transition-all duration-700 ${className}`;
 
   if (!disableAnimation) {
     styles +=
