@@ -37,7 +37,7 @@ export const Button = ({
 }: ButtonProps) => {
   if (href) {
     return (
-      <AnimateOnViewport>
+      <AnimateOnViewport origin="left">
         <Link
           href={href}
           target={rest?.target}
