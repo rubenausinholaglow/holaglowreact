@@ -1,6 +1,10 @@
+'use client';
+
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
 
 export default function ValuesDescription() {
   return (
@@ -13,23 +17,23 @@ export default function ValuesDescription() {
           <Title size="2xl" className="font-bold mb-12 md:mb-6 lg:pr-[20%]">
             La belleza es lo que te dé la gana
           </Title>
-          <Text
-            disableAnimation
-            className="absolute bottom-0 text-hg-black500 w-1/2 translate-y-full md:relative md:w-full md:translate-y-0 md:text-lg"
-          >
+          <Text className="text-hg-black500 w-1/2 md:w-full md:text-lg">
             Di adiós a los prejuicios y defiende tu propia idea de belleza con
             tratamientos eficaces para conseguir los objetivos que tú quieras.
           </Text>
         </Flex>
 
-        <div className="relative aspect-square w-[150%] translate-x-[20%] -mt-12 md:w-1/2 md:translate-x-0 md:-mt-0">
-          <Image
-            src="/images/home/prejuiciosValue.png"
-            alt="prejuicios"
-            fill
-            className="object-cover rounded-xl"
-          />
-        </div>
+        <AnimateOnViewport className="w-full md:w-1/2" origin="right">
+          <div className="relative aspect-square w-[150%] -mt-[66%] md:w-full md:mt-0 md:ml-0">
+            <Image
+              src="/images/home/prejuiciosValue.png"
+              alt="prejuicios"
+              fill
+              className="object-cover rounded-xl"
+              loading="eager"
+            />
+          </div>
+        </AnimateOnViewport>
       </Flex>
     </Container>
   );

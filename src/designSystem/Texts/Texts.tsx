@@ -1,8 +1,8 @@
 'use client';
 
-import { ReactNode, RefObject, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { useElementOnScreen } from 'app/utils/common';
 import { twMerge } from 'tailwind-merge';
 
 export const Title = ({
@@ -22,47 +22,22 @@ export const Title = ({
   children: ReactNode;
   onClick?: (...args: any[]) => void;
 }) => {
-  const [animated, setAnimated] = useState(false);
-  const [titleRef, isTitleInViewport] = useElementOnScreen({
-    root: null,
-    rootMargin: '0px',
-    threshold: 0,
-  });
-
   const HtmlComponent = as;
+
   const STYLES = {
     '3xl': 'text-4xl lg:text-6xl',
     '2xl': 'text-3xl lg:text-5xl',
     xl: 'text-xl lg:text-2xl',
   };
 
-  const baseStyles = twMerge(
-    `${STYLES[size]} font-${weight} ${className} transition-all duration-700`
-  );
-
-  let styles = baseStyles;
-
-  if (!disableAnimation) {
-    styles +=
-      isTitleInViewport || animated
-        ? ' opacity-1 translate-y-0'
-        : ' opacity-0 translate-y-full';
-  }
-
-  useEffect(() => {
-    if (isTitleInViewport) {
-      setAnimated(true);
-    }
-  }, [isTitleInViewport]);
+  const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
 
   return (
-    <HtmlComponent
-      ref={titleRef as RefObject<HTMLHeadingElement>}
-      className={styles}
-      onClick={onClick}
-    >
-      {children}
-    </HtmlComponent>
+    <AnimateOnViewport disableAnimation={disableAnimation}>
+      <HtmlComponent className={styles} onClick={onClick}>
+        {children}
+      </HtmlComponent>
+    </AnimateOnViewport>
   );
 };
 
@@ -83,49 +58,18 @@ export const Text = ({
   disableAnimation?: boolean;
   [key: string]: any;
 }) => {
-  const [animated, setAnimated] = useState(false);
-  const [textRef, isTitleInViewport] = useElementOnScreen({
-    root: null,
-    rootMargin: '0px',
-    threshold: 0,
-  });
-
   const HtmlComponent = as;
 
-  const baseStyles = twMerge(
-    `text-left ${
-      size ? `text-${size}` : 'text-md'
-    } ${className} transition-all duration-700`
+  const styles = twMerge(
+    `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
   );
 
-  let styles = baseStyles;
-
-  if (!disableAnimation) {
-    styles +=
-      isTitleInViewport || animated
-        ? ' opacity-1 translate-y-0'
-        : ' opacity-0 translate-y-full';
-  }
-
-  useEffect(() => {
-    if (isTitleInViewport) {
-      setAnimated(true);
-    }
-  }, [isTitleInViewport]);
-
   return (
-    <HtmlComponent
-      className={styles}
-      onClick={onClick}
-      {...rest}
-      ref={
-        textRef as RefObject<
-          HTMLHeadingElement | HTMLParagraphElement | HTMLSpanElement
-        >
-      }
-    >
-      {children}
-    </HtmlComponent>
+    <AnimateOnViewport disableAnimation={disableAnimation}>
+      <HtmlComponent className={styles} onClick={onClick} {...rest}>
+        {children}
+      </HtmlComponent>
+    </AnimateOnViewport>
   );
 };
 
