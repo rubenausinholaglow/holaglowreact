@@ -211,7 +211,7 @@ export default function PaymentInput(props: Props) {
                     size="sm"
                     type="secondary"
                     isSubmit
-                    className="ml-2 w-1/2"
+                    className="ml-2"
                     onClick={() => activateAlma()}
                   >
                     Ver financiación
