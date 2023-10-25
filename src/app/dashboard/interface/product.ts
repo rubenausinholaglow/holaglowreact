@@ -28,6 +28,7 @@ export interface Product {
   type: ProductType;
   visibility: boolean;
   sessions: number;
+  productCardImagePosition: string;
 }
 
 export interface BeforeAndAfterImages {
