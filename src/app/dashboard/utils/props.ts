@@ -80,5 +80,5 @@ export interface CustomButtonFilter {
 
 export interface AlmaProps {
   amountFinance: string;
-  onUrlPayment: (url: string) => void;
+  onUrlPayment: (id: string, url: string, referencePayment: string) => void;
 }
