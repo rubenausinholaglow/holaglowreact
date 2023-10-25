@@ -3,6 +3,7 @@ export const ROUTES = {
   treatments: '/tratamientos',
   checkout: {
     clinics: '/checkout/clinicas',
+    treatments: '/checkout/treatments',
     schedule: '/checkout/agenda',
     contactForm: '/checkout/contactform',
     thankYou: '/checkout/confirmation',
