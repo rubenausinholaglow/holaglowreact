@@ -41,7 +41,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     name: 'ANNA ASIÁN',
     testimonial:
-      'He visitado la clínica y son súper amables y profesionales, antes del tratamiento puedes ver el resultado de forma virtual en un simulador. Decidí hacerme un tratamiento de botox en la frente, entrecejo y patas de gallo. Encantada con mi nueva imagen,mejorada y muy natural.',
+      'He visitado la clínica y son súper amables y profesionales, antes del tratamiento puedes ver el resultado de forma virtual en un simulador. Decidí hacerme un tratamiento antiarrugas en la frente, entrecejo y patas de gallo. Encantada con mi nueva imagen,mejorada y muy natural.',
     imgUrl: '/images/testimonials/annaAsian.png',
   },
   {
