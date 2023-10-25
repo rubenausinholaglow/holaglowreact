@@ -47,7 +47,7 @@ export default function ConctactForm() {
     termsAndConditionsAccepted: false,
     receiveCommunications: false,
     page: '',
-    externalReference: '14',
+    externalReference: '',
     analyticsMetrics: {
       device: 0,
       locPhysicalMs: '',
@@ -151,7 +151,7 @@ export default function ConctactForm() {
       comment: comment,
       treatmentText: treatments,
       referralId: '',
-      externalReference: '14',
+      externalReference: getExternalReference(),
       isPast: false,
       clinicId: selectedClinic?.flowwwId,
       isCancelled: false,
@@ -161,6 +161,25 @@ export default function ConctactForm() {
     });
   };
 
+  function getExternalReference(): string {
+    switch (analyticsMetrics.utmSource) {
+      case 'google':
+      case 'cpc':
+        return '16';
+      case 'instagram':
+      case 'ig':
+        return '17';
+      case 'facebook':
+      case 'fb':
+      case 'an':
+      case 'msg':
+        return '18';
+      case 'tiktok':
+        return '20';
+      default:
+        return '';
+    }
+  }
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
     let user = await UserService.checkUser(formData.email);

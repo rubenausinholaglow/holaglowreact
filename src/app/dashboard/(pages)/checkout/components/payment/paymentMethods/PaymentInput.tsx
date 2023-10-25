@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import Bugsnag from '@bugsnag/js';
 import Notification from '@components/ui/Notification';
 import { CreatePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
+import FinanceService from '@services/FinanceService';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
-import { v4 as createUniqueId } from 'uuid';
+import { isEmpty } from 'lodash';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
@@ -57,27 +59,43 @@ export default function PaymentInput(props: Props) {
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
+    await FinanceService.createPayment(paymentRequestApi)
+      .then(async data => {
+        if (data && !isEmpty(data)) {
+          const id: string = data as string;
+          const paymentRequest = {
+            amount: paymentRequestApi.amount,
+            method: props.paymentMethod,
+            bank: props.paymentBank,
+            paymentReference: paymentRequestApi.referenceId,
+            id: id,
+          };
+          addPaymentToList(paymentRequest);
+        } else {
+          setMessageNotification('Error creando el pago');
+        }
+      })
+      .catch(error => {
+        Bugsnag.notify('Error FinanceService.createPayment:', error);
+      });
+    props.onButtonClick(false);
+  };
+
+  const handleUrlPayment = async (
+    idPayment: string,
+    urlPayment: string,
+    referencePayment: string
+  ) => {
+    const amount = parseFloat(inputValue);
     const paymentRequest = {
-      amount: paymentRequestApi.amount,
+      amount: amount,
       method: props.paymentMethod,
       bank: props.paymentBank,
-      paymentReference: paymentRequestApi.referenceId,
-      id: createUniqueId(),
+      paymentReference: referencePayment,
+      id: idPayment,
     };
     addPaymentToList(paymentRequest);
     props.onButtonClick(false);
-  };
-  const handleUrlPayment = async (urlPayment: string) => {
-    const amount = parseFloat(inputValue);
-    const GuidUser = localStorage.getItem('id') || '';
-
-    const paymentRequestApi = {
-      amount: amount,
-      userId: GuidUser,
-      paymentMethod: props.paymentMethod,
-      referenceId: urlPayment,
-    };
-    createPayment(paymentRequestApi);
   };
 
   const activateAlma = async () => {
@@ -193,7 +211,7 @@ export default function PaymentInput(props: Props) {
                     size="sm"
                     type="secondary"
                     isSubmit
-                    className="ml-2 w-1/2"
+                    className="ml-2"
                     onClick={() => activateAlma()}
                   >
                     Ver financiación
