@@ -49,7 +49,9 @@ export default function MobileNavigation({
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
         >
-          <p className="font-semibold">Ver Tratamientos</p>
+          <a href={ROUTES.treatments}>
+            <p className="font-semcibold">Ver Tratamientos</p>
+          </a>
 
           <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
@@ -152,7 +154,7 @@ export default function MobileNavigation({
         <p className="leading-6">
           Por teléfono de Lunes a Viernes
           <br />
-          De 10h a 18:30h
+          De 10 a 14h y de 15 a 19h
           <br />
           <a href="tel:(+34) 682 417 208">(+34) 682 417 208</a>
         </p>
