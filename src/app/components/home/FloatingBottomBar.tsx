@@ -52,7 +52,7 @@ export default function FloatingBottomBar({
       }`}
     >
       <div className="p-4 mx-w-xl bg-white rounded-t-[40px]">
-        <Flex className="justify-between">
+        <Flex className="justify-between h-16">
           <div className="w-full mr-4">
             <Button
               size="xl"
