@@ -31,8 +31,8 @@ export default function ButtonMessage() {
       x => x.messageType == MessageType.ChatResponse
     );
     if (existMessageChatResponse.length > 0) {
-      const finalMessage = existMessageChatResponse[0].message;
-      showMessage(finalMessage);
+      const finalMessage: any = existMessageChatResponse[0].message;
+      showMessage(finalMessage.actions[0].actionId);
       messageSocket.removeMessageSocket(existMessageChatResponse[0]);
     }
   }, [messageSocket]);
