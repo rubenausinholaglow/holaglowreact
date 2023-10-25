@@ -146,7 +146,7 @@ export default function Agenda() {
           comment: comment,
           treatmentText: treatments,
           referralId: '',
-          externalReference: '', //TODO: Pending
+          externalReference: '',
           isPast: false,
           clinicId: selectedClinic?.flowwwId,
           isCancelled: false,
