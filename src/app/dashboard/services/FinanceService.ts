@@ -56,7 +56,7 @@ export default class FinanceService {
     try {
       const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment?id=${id}`;
       const res = await fetch(url, {
-        method: 'PUT',
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
