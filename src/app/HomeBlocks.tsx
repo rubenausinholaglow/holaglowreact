@@ -12,9 +12,11 @@ import Products from './components/home/Products';
 import Testimonials from './components/home/Testimonials';
 import ValuesCarousel from './components/home/ValuesCarousel';
 import ValuesDescription from './components/home/ValuesDescription';
+import { useGlobalPersistedStore } from './stores/globalStore';
 import { useElementOnScreen } from './utils/common';
 
 export default function HomeBlocks() {
+  const { deviceSize } = useGlobalPersistedStore(state => state);
   const [productCardsRef, isProductCardsVisible] = useElementOnScreen({
     root: null,
     rootMargin: '0px',
@@ -34,7 +36,9 @@ export default function HomeBlocks() {
       <Testimonials />
       <Clinics />
       <GoToTreatments />
-      <FloatingBottomBar isVisible={!isProductCardsVisible} />
+      {deviceSize.isMobile && (
+        <FloatingBottomBar isVisible={!isProductCardsVisible} />
+      )}
     </>
   );
 }
