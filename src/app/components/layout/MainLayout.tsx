@@ -4,7 +4,10 @@ import { Suspense, useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
@@ -40,8 +43,13 @@ export default function MainLayout({
 }) {
   const [isHydrated, setISHydrated] = useState(false);
   const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { setIsModalOpen, setIsMainScrollEnabled } = useGlobalStore(
+    state => state
+  );
 
   useEffect(() => {
+    setIsModalOpen(false);
+    setIsMainScrollEnabled(true);
     setISHydrated(true);
   }, []);
 
