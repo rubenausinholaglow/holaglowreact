@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Notification from '@components/ui/Notification';
 import { PaymentProductRequest } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { getPaymentBankText, getPaymentMethodText } from '@utils/utils';
@@ -22,6 +23,9 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   const aviableBanks = [1, 4];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
   const [colorPayment, setColorPayment] = useState<string>('');
+  const [messageNotification, setMessageNotification] = useState<string | null>(
+    null
+  );
 
   if (status === undefined) {
     status = StatusPayment.Waiting;
@@ -45,8 +49,12 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
 
   const handleRemoveAndDelete = async (paymentRequest: any) => {
     const id = paymentRequest.id;
-    removePayment(paymentRequest);
-    await FinanceService.deletePayment(id);
+    const response = await FinanceService.deletePayment(id);
+    if (response) {
+      removePayment(paymentRequest);
+    } else {
+      setMessageNotification('Error al eliminar pago');
+    }
   };
 
   return (
@@ -79,6 +87,11 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
           </Button>
         )}
       </Flex>
+      {messageNotification ? (
+        <Notification message={messageNotification} />
+      ) : (
+        <></>
+      )}
     </li>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import Bugsnag from '@bugsnag/js';
 import Notification from '@components/ui/Notification';
 import { CreatePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
@@ -9,6 +10,7 @@ import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
+import { isEmpty } from 'lodash';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
@@ -57,17 +59,25 @@ export default function PaymentInput(props: Props) {
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
-    const response = await FinanceService.createPayment(paymentRequestApi);
-    const id: string = response as string;
-
-    const paymentRequest = {
-      amount: paymentRequestApi.amount,
-      method: props.paymentMethod,
-      bank: props.paymentBank,
-      paymentReference: paymentRequestApi.referenceId,
-      id: id,
-    };
-    addPaymentToList(paymentRequest);
+    await FinanceService.createPayment(paymentRequestApi)
+      .then(async data => {
+        if (data && !isEmpty(data)) {
+          const id: string = data as string;
+          const paymentRequest = {
+            amount: paymentRequestApi.amount,
+            method: props.paymentMethod,
+            bank: props.paymentBank,
+            paymentReference: paymentRequestApi.referenceId,
+            id: id,
+          };
+          addPaymentToList(paymentRequest);
+        } else {
+          setMessageNotification('Error creando el pago');
+        }
+      })
+      .catch(error => {
+        Bugsnag.notify('Error FinanceService.createPayment:', error);
+      });
     props.onButtonClick(false);
   };
 
