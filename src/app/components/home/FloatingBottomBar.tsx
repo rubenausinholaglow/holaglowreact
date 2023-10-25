@@ -2,20 +2,23 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Product } from '@interface/product';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgWhatsapp } from 'icons/IconsDs';
-import Link from 'next/link';
 
 export default function FloatingBottomBar({
   product,
+  threshold,
   isVisible = true,
 }: {
   product?: Product;
+  threshold?: number;
   isVisible?: boolean;
 }) {
+  const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
   const scrollPos = useRef(0);
-
   const [showBottomBar, setShowBottomBar] = useState(false);
 
   let url =
@@ -27,7 +30,7 @@ export default function FloatingBottomBar({
   }
 
   const recalculateVisibility = () => {
-    setShowBottomBar(window.scrollY > 350);
+    setShowBottomBar(window.scrollY > (threshold ?? 350));
     scrollPos.current = window.scrollY;
   };
 
@@ -48,34 +51,35 @@ export default function FloatingBottomBar({
         showBottomBar && isVisible ? 'translate-y-[0%]' : 'translate-y-[105%]'
       }`}
     >
-      <div className="p-4 mx-w-xl md:mx-w-0 bg-white md:bg-transparent rounded-t-[40px]">
-        <Flex layout="row-right" className="w-full">
-          <Button
-            size="xl"
-            type="tertiary"
-            bgColor="bg-hg-primary"
-            className="grow mr-4 md:hidden pointer-events-auto"
-            customStyles="px-4"
-          >
-            <Link href="#prices">
+      <div className="p-4 mx-w-xl bg-white rounded-t-[40px]">
+        <Flex className="justify-between">
+          <div className="w-full mr-4">
+            <Button
+              size="xl"
+              type="tertiary"
+              bgColor="bg-hg-primary"
+              className="mr-4 pointer-events-auto w-full"
+              href={product ? '#prices' : ROUTES.checkout.clinics}
+              onClick={() => (!product ? setSelectedTreatments([]) : null)}
+              customStyles="px-4"
+            >
               {product ? (
-                <>
+                <div className="w-full">
                   <span className="inline-block">Reservar cita desde</span>{' '}
                   <span className="inline-block underline text-xl font-semibold">
                     {product.price} €
                   </span>
-                </>
+                </div>
               ) : (
                 'Reservar cita'
               )}
-            </Link>
-          </Button>
+            </Button>
+          </div>
           <Button
             type="primary"
             size="xl"
             className="pointer-events-auto"
-            bgColor="bg-hg-black"
-            customStyles="h-[64px] p-0 w-[64px]"
+            customStyles="h-[64px] p-0 w-[64px] shrink-0"
           >
             <a href={url} target="_blank">
               <SvgWhatsapp className="text-hg-primary" />
