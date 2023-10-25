@@ -5,26 +5,13 @@ import { isEmpty } from 'lodash';
 const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
 
 export const useImageProps = (product: Product) => {
-  const [imgIndex, setImgIndex] = useState(0);
-  const [imgAligment, setImgAlignment] = useState<'left' | 'middle' | 'right'>(
-    'left'
-  );
+  const [imgAligment] = useState<string>(product.productCardImagePosition);
   const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-left.png`
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`
   );
-
-  const arrayImages: any = ['middle', 'right'];
 
   const setNextImgSrc = () => {
-    if (imgIndex < arrayImages.length) {
-      setImgSrc(
-        `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${arrayImages[imgIndex]}.png`
-      );
-      setImgAlignment(arrayImages[imgIndex]);
-    } else {
-      setImgSrc(DEFAULT_IMG_SRC);
-    }
-    setImgIndex(imgIndex + 1);
+    setImgSrc(DEFAULT_IMG_SRC);
   };
 
   let alignmentStyles = '';
