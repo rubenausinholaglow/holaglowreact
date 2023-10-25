@@ -1,4 +1,6 @@
-import type { Metadata } from 'next';
+'use client';
+
+import { RefObject } from 'react';
 
 import Clinics from './components/common/Clinics';
 import FloatingBottomBar from './components/home/FloatingBottomBar';
@@ -10,20 +12,29 @@ import Products from './components/home/Products';
 import Testimonials from './components/home/Testimonials';
 import ValuesCarousel from './components/home/ValuesCarousel';
 import ValuesDescription from './components/home/ValuesDescription';
-import MainLayout from './components/layout/MainLayout';
-import HomeBlocks from './HomeBlocks';
 import { useElementOnScreen } from './utils/common';
 
-export const metadata: Metadata = {
-  title: 'Holaglow - La nueva cara de la medicina estética',
-  description:
-    'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
-};
+export default function HomeBlocks() {
+  const [productCardsRef, isProductCardsVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0,
+  });
 
-export default function Home() {
   return (
-    <MainLayout>
-      <HomeBlocks />
-    </MainLayout>
+    <>
+      <Hero />
+      <GoogleStars />
+      <ValuesCarousel />
+      <ValuesDescription />
+      <div ref={productCardsRef as RefObject<HTMLDivElement>}>
+        <Products />
+      </div>
+      <Professionals />
+      <Testimonials />
+      <Clinics />
+      <GoToTreatments />
+      <FloatingBottomBar isVisible={!isProductCardsVisible} />
+    </>
   );
 }

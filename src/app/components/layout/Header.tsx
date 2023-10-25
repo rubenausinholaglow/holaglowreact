@@ -8,8 +8,9 @@ import {
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
 import { ROUTES } from 'app/utils/routes';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
+import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
 import MobileNavigation from './MobileNavigation';
@@ -40,7 +41,9 @@ export default function Header() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 
-  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
+    state => state
+  );
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -81,17 +84,33 @@ export default function Header() {
         <Container isHeader>
           <Flex
             layout="row-between"
-            className={`relative py-3 lg:py-5 justify-between ${HEADER_HEIGHT_CLASS}`}
+            className={`w-full relative py-3 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
-            <Link href={ROUTES.home} className="2xl:ml-20">
+            <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
               <SvgHolaglow
                 fill={HOLAGLOW_COLORS['secondary']}
                 className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
               />
             </Link>
+
             <Navigation className="hidden lg:block 2xl:mr-20" />
 
-            <Flex layout="row-center" className="lg:absolute right-0">
+            <Flex
+              layout="row-center"
+              className="lg:absolute right-0  2xl:mr-20"
+            >
+              <Button
+                type="tertiary"
+                href={ROUTES.checkout.clinics}
+                className="hidden md:block mr-2"
+                onClick={() => {
+                  setSelectedTreatments([]);
+                }}
+              >
+                Reservar cita
+                <SvgArrow height={16} width={16} className="ml-2" />
+              </Button>
+
               {!isMobileNavVisible && (
                 <SvgMenu
                   height={24}
