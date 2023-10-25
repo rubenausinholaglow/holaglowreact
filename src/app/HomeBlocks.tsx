@@ -17,17 +17,15 @@ import { useGlobalPersistedStore } from './stores/globalStore';
 export default function HomeBlocks() {
   const { deviceSize } = useGlobalPersistedStore(state => state);
 
-  const [floatingBarThreshold, setFloatingBarThreshold] = useState<
-    number | null
-  >(null);
+  const [floatingBarThreshold, setFloatingBarThreshold] = useState(0);
 
   useEffect(() => {
-    const products = document.getElementById('products');
+    const professionals = document.getElementById('professionals');
 
-    if (products && !floatingBarThreshold) {
-      const rect = products.getBoundingClientRect();
+    if (professionals && floatingBarThreshold === 0) {
+      const rect = professionals.getBoundingClientRect();
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const elementTop = rect.top + scrollTop;
+      const elementTop = rect.top + scrollTop + 125;
 
       setFloatingBarThreshold(elementTop);
     }
@@ -39,14 +37,16 @@ export default function HomeBlocks() {
       <GoogleStars />
       <ValuesCarousel />
       <ValuesDescription />
-      <div id="products">
-        <Products />
+      <Products />
+      <div id="professionals">
+        <Professionals />
       </div>
-      <Professionals />
       <Testimonials />
       <Clinics />
       <GoToTreatments />
-      {deviceSize.isMobile && <FloatingBottomBar threshold={1200} />}
+      {deviceSize.isMobile && floatingBarThreshold !== 0 && (
+        <FloatingBottomBar threshold={floatingBarThreshold} />
+      )}
     </>
   );
 }

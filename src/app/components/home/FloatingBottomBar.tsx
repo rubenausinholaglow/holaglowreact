@@ -10,7 +10,7 @@ import { SvgWhatsapp } from 'icons/IconsDs';
 
 export default function FloatingBottomBar({
   product,
-  threshold = 350,
+  threshold,
   isVisible = true,
 }: {
   product?: Product;
@@ -30,7 +30,7 @@ export default function FloatingBottomBar({
   }
 
   const recalculateVisibility = () => {
-    setShowBottomBar(window.scrollY > threshold);
+    setShowBottomBar(window.scrollY > (threshold ?? 350));
     scrollPos.current = window.scrollY;
   };
 
