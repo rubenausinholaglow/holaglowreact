@@ -1,6 +1,7 @@
 'use client';
 
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { ROUTES } from 'app/utils/routes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -9,7 +10,8 @@ import { SvgHolaglow, SvgInstagram } from 'icons/IconsDs';
 import { usePathname } from 'next/navigation';
 
 export function Footer() {
-  const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
+  const { deviceSize, clinics, setSelectedTreatments } =
+    useGlobalPersistedStore(state => state);
   const isHome = usePathname() === '/';
 
   return (
@@ -105,11 +107,15 @@ export function Footer() {
             <p className="font-semibold">Packs Glow</p>
           </a>
 
-          <a href="/checkout/clinicas">
-            <Button type="tertiary" className="md:hidden">
-              Reservar Cita
-            </Button>
-          </a>
+          <Button
+            type="tertiary"
+            href={ROUTES.checkout.clinics}
+            onClick={() => {
+              setSelectedTreatments([]);
+            }}
+          >
+            Reservar Cita
+          </Button>
         </Flex>
 
         <Flex

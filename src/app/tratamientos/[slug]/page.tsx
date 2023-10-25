@@ -25,7 +25,7 @@ import ProductResults from './components/ProductResults';
 import ProductSuggestions from './components/ProductSuggestions';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, deviceSize } = useGlobalPersistedStore(state => state);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
@@ -95,11 +95,12 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
           <Professionals />
         </div>
-
-        <FloatingBottomBar
-          product={product}
-          isVisible={!isProductPriceVisible}
-        />
+        {deviceSize.isMobile && (
+          <FloatingBottomBar
+            product={product}
+            isVisible={!isProductPriceVisible}
+          />
+        )}
       </MainLayout>
     );
   } else if (productId == '') {

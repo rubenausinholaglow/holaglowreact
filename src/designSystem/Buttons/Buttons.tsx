@@ -50,7 +50,12 @@ export const Button = ({
           type={rest?.isSubmit ? 'submit' : 'button'}
         >
           <ButtonBase type={type} />
-          <ButtonBody type={type} size={size} customStyles={customStyles}>
+          <ButtonBody
+            type={type}
+            size={size}
+            customStyles={customStyles}
+            {...rest}
+          >
             {children}
           </ButtonBody>
         </Link>

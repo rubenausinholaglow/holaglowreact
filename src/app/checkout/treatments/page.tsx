@@ -38,6 +38,7 @@ export default function ClinicsCheckout() {
     }
 
     initProduct(probadorVirtualId);
+    setSelectedTreatments([]);
   }, []);
 
   function getProductsByCategory(category: string) {

@@ -2,11 +2,13 @@
 
 import { useEffect } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { ROUTES } from 'app/utils/routes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
+import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';
 
@@ -18,9 +20,8 @@ export default function MobileNavigation({
   headerHeight: number;
 }) {
   const paddingBottom = headerHeight + 16;
-  const { deviceSize, clinics, setClinics } = useGlobalPersistedStore(
-    state => state
-  );
+  const { deviceSize, clinics, setClinics, setSelectedTreatments } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     async function initClinics() {
@@ -88,6 +89,17 @@ export default function MobileNavigation({
           <a href="/tratamientos/packs">
             <p className="font-semibold">Packs Glow</p>
           </a>
+
+          <Button
+            type="tertiary"
+            href={ROUTES.checkout.clinics}
+            onClick={() => {
+              setSelectedTreatments([]);
+            }}
+          >
+            Reservar cita
+            <SvgArrow height={16} width={16} className="ml-2" />
+          </Button>
         </Flex>
       </div>
       <div className="bg-white border-b border-hg-black py-8">

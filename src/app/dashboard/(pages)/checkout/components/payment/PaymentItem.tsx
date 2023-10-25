@@ -5,6 +5,8 @@ import FinanceService from '@services/FinanceService';
 import { getPaymentBankText, getPaymentMethodText } from '@utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
+import { isEmpty } from 'lodash';
 
 import { usePaymentList } from './payments/usePaymentList';
 
@@ -12,6 +14,8 @@ export enum StatusPayment {
   Waiting,
   Paid,
   Rejected,
+  FinancingAccepted,
+  FinancingRejected,
 }
 interface Props {
   paymentRequest: PaymentProductRequest;
@@ -26,6 +30,7 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   if (status === undefined) {
     status = StatusPayment.Waiting;
@@ -40,6 +45,13 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
       case StatusPayment.Rejected:
         setColorPayment('bg-red-500');
         break;
+      case StatusPayment.FinancingRejected:
+        setColorPayment('bg-orange-400');
+        break;
+      case StatusPayment.FinancingAccepted:
+        setColorPayment('bg-blue-500');
+        break;
+
       case StatusPayment.Waiting:
       default:
         setColorPayment('bg-gray-300');
@@ -48,13 +60,20 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   }, [status]);
 
   const handleRemoveAndDelete = async (paymentRequest: any) => {
+    setIsLoading(true);
     const id = paymentRequest.id;
-    const response = await FinanceService.deletePayment(id);
-    if (response) {
-      removePayment(paymentRequest);
-    } else {
-      setMessageNotification('Error al eliminar pago');
-    }
+    await FinanceService.deletePayment(id)
+      .then(async data => {
+        if (data && !isEmpty(data)) {
+          removePayment(paymentRequest);
+        } else {
+          setMessageNotification('Error al eliminar pago');
+        }
+      })
+      .catch(error => {
+        setMessageNotification('Error al eliminar pago');
+      });
+    setIsLoading(false);
   };
 
   return (
@@ -83,7 +102,7 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
             className="ml-2"
             onClick={() => handleRemoveAndDelete(paymentRequest)}
           >
-            Eliminar
+            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Eliminar'}
           </Button>
         )}
       </Flex>

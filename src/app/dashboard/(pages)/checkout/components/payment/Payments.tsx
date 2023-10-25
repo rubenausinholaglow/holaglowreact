@@ -72,6 +72,18 @@ export const PaymentModule = () => {
               [existingPayment.id]: StatusPayment.Paid,
             }));
             break;
+          case 'FinancingRejected':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.FinancingRejected,
+            }));
+            break;
+          case 'FinancingAccepted':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.FinancingAccepted,
+            }));
+            break;
           default:
             setPaymentStatus(prevPaymentStatus => ({
               ...prevPaymentStatus,
