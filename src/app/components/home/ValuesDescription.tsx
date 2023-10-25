@@ -23,16 +23,17 @@ export default function ValuesDescription() {
           </Text>
         </Flex>
 
-        <div className="relative aspect-square w-[150%] -mt-[66%] ml-[66%] md:w-1/2 md:mt-0 md:ml-0">
-          <AnimateOnViewport>
+        <AnimateOnViewport className="w-full md:w-1/2" origin="right">
+          <div className="relative aspect-square w-[150%] -mt-[66%] md:w-full md:mt-0 md:ml-0">
             <Image
               src="/images/home/prejuiciosValue.png"
               alt="prejuicios"
               fill
               className="object-cover rounded-xl"
+              loading="eager"
             />
-          </AnimateOnViewport>
-        </div>
+          </div>
+        </AnimateOnViewport>
       </Flex>
     </Container>
   );

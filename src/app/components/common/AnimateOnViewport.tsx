@@ -40,7 +40,7 @@ export const AnimateOnViewport = ({
       break;
   }
 
-  let styles = `transition-all duration-700 ${className}`;
+  let styles = `transition-all duration-500 ${className}`;
 
   if (!disableAnimation) {
     styles +=

@@ -1,11 +1,17 @@
+'use client';
+
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
+
 export default function Profesionals() {
+  const { deviceSize } = useGlobalPersistedStore(state => state);
+
   return (
     <div className="bg-hg-skyblue/20 overflow-hidden">
       <Container className="py-12">
@@ -13,14 +19,19 @@ export default function Profesionals() {
           layout="col-left"
           className="gap-8 lg:gap-16 w-full items-stretch lg:flex-row"
         >
-          <div className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2">
+          <AnimateOnViewport
+            className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2"
+            origin={deviceSize.isMobile ? 'bottom' : 'left'}
+          >
             <Image
               src="/images/home/profesionales.jpg"
               alt="profesionales"
               fill
               className="object-cover rounded-xl"
+              loading="eager"
             />
-          </div>
+          </AnimateOnViewport>
+
           <Flex layout="col-left" className="lg:w-1/2 pb-1">
             <Flex
               layout="row-center"
