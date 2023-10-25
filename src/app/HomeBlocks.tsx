@@ -1,6 +1,6 @@
 'use client';
 
-import { RefObject } from 'react';
+import { useEffect, useState } from 'react';
 
 import Clinics from './components/common/Clinics';
 import FloatingBottomBar from './components/home/FloatingBottomBar';
@@ -13,15 +13,25 @@ import Testimonials from './components/home/Testimonials';
 import ValuesCarousel from './components/home/ValuesCarousel';
 import ValuesDescription from './components/home/ValuesDescription';
 import { useGlobalPersistedStore } from './stores/globalStore';
-import { useElementOnScreen } from './utils/common';
 
 export default function HomeBlocks() {
   const { deviceSize } = useGlobalPersistedStore(state => state);
-  const [productCardsRef, isProductCardsVisible] = useElementOnScreen({
-    root: null,
-    rootMargin: '0px',
-    threshold: 0,
-  });
+
+  const [floatingBarThreshold, setFloatingBarThreshold] = useState<
+    number | null
+  >(null);
+
+  useEffect(() => {
+    const products = document.getElementById('products');
+
+    if (products && !floatingBarThreshold) {
+      const rect = products.getBoundingClientRect();
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const elementTop = rect.top + scrollTop;
+
+      setFloatingBarThreshold(elementTop);
+    }
+  }, []);
 
   return (
     <>
@@ -29,16 +39,14 @@ export default function HomeBlocks() {
       <GoogleStars />
       <ValuesCarousel />
       <ValuesDescription />
-      <div ref={productCardsRef as RefObject<HTMLDivElement>}>
+      <div id="products">
         <Products />
       </div>
       <Professionals />
       <Testimonials />
       <Clinics />
       <GoToTreatments />
-      {deviceSize.isMobile && (
-        <FloatingBottomBar isVisible={!isProductCardsVisible} />
-      )}
+      {deviceSize.isMobile && <FloatingBottomBar threshold={1200} />}
     </>
   );
 }

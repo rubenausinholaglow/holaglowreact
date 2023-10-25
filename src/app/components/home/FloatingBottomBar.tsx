@@ -10,9 +10,11 @@ import { SvgWhatsapp } from 'icons/IconsDs';
 
 export default function FloatingBottomBar({
   product,
+  threshold = 350,
   isVisible = true,
 }: {
   product?: Product;
+  threshold?: number;
   isVisible?: boolean;
 }) {
   const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
@@ -28,7 +30,7 @@ export default function FloatingBottomBar({
   }
 
   const recalculateVisibility = () => {
-    setShowBottomBar(window.scrollY > 350);
+    setShowBottomBar(window.scrollY > threshold);
     scrollPos.current = window.scrollY;
   };
 
