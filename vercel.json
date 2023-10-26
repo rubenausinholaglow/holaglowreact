@@ -28,127 +28,205 @@
       "destination": "/api/server"
     },
     { "source": "/appointment-confirmed/madrid", "destination": "/api/server" },
-    { "source": "/tratamientos-labios", "destination": "/api/server" },
-    { "source": "/tratamientos-faciales", "destination": "/api/server" },
-    { "source": "/tratamientos-piel", "destination": "/api/server" },
-    { "source": "/tratamientos-capilares", "destination": "/api/server" },
-    { "source": "/otros-tratamientos", "destination": "/api/server" },
-    { "source": "/tratamientos-laser", "destination": "/api/server" },
     {
-      "source": "/tratamientos-labios/aumento-labios",
-      "destination": "/api/server"
+      "source": "/tratamientos-labios/",
+      "destination": "/tratamientos"
     },
     {
-      "source": "/tratamientos-labios/sonrisa-gingival",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/",
+      "destination": "/tratamientos"
     },
     {
-      "source": "/tratamientos-faciales/proyeccion-pomulos",
-      "destination": "/api/server"
+      "source": "/tratamientos-piel/",
+      "destination": "/tratamientos"
     },
     {
-      "source": "/tratamientos-faciales/relleno-surco-nasogeniano",
-      "destination": "/api/server"
+      "source": "/tratamientos-capilares/",
+      "destination": "/tratamientos"
     },
     {
-      "source": "/tratamientos-faciales/codigo-barras",
-      "destination": "/api/server"
+      "source": "/otros-tratamientos/",
+      "destination": "/tratamientos"
     },
     {
-      "source": "/tratamientos-faciales/arrugas-entrecejo-patas-gallo",
-      "destination": "/api/server"
+      "source": "/tratamientos-laser/",
+      "destination": "/tratamientos"
     },
     {
-      "source": "/tratamientos-faciales/arrugas-expresion",
-      "destination": "/api/server"
+      "source": "/tratamientos-labios/aumento-labios/",
+      "destination": "/tratamientos/aumento-labios"
     },
     {
-      "source": "/tratamientos-faciales/proyeccion-menton",
-      "destination": "/api/server"
+      "source": "/tratamientos-labios/sonrisa-gingival/",
+      "destination": "/tratamientos/sonrisa-gingival"
     },
     {
-      "source": "/tratamientos-faciales/proyeccion-mandibula",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/proyeccion-pomulos/",
+      "destination": "/tratamientos/proyeccion-pomulos"
     },
     {
-      "source": "/tratamientos-faciales/relleno-ojeras",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/relleno-surco-nasogeniano/",
+      "destination": "/tratamientos/surco-nasogeniano"
     },
     {
-      "source": "/tratamientos-faciales/rinomodelacion",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/codigo-barras/",
+      "destination": "/tratamientos/codigo-barras"
     },
     {
-      "source": "/tratamientos-faciales/prevencion-arrugas",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/arrugas-entrecejo-patas-gallo/",
+      "destination": "/tratamientos/arrugas-entrecejo-patas-gallo"
     },
     {
-      "source": "/tratamientos-piel/revitalizacion-facial",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/arrugas-expresion/",
+      "destination": "/tratamientos/arrugas-expresion-frente-entrecejo-patas-gallo"
     },
     {
-      "source": "/tratamientos-piel/peeling-quimico",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/proyeccion-menton/",
+      "destination": "/tratamientos/proyeccion-menton"
     },
     {
-      "source": "/tratamientos-capilares/rejuvenecimiento-capilar",
-      "destination": "/api/server"
-    },
-    { "source": "/otros-tratamientos/bruxismo", "destination": "/api/server" },
-    { "source": "/tratamientos-laser/laser", "destination": "/api/server" },
-    {
-      "source": "/tratamientos-faciales/hilos-tensores-faciales",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/proyeccion-mandibula/",
+      "destination": "/tratamientos/proyeccion-mandibula"
     },
     {
-      "source": "/tratamientos-faciales/hilos-tensores-cuello",
-      "destination": "/api/server"
-    },
-    { "source": "/packs", "destination": "/api/server" },
-    { "source": "/packs/prevencion", "destination": "/api/server" },
-    { "source": "/packs/armonizacion-facial", "destination": "/api/server" },
-    { "source": "/packs/wellaging-plus", "destination": "/api/server" },
-    { "source": "/packs/full-face", "destination": "/api/server" },
-    { "source": "/packs/glow", "destination": "/api/server" },
-    { "source": "/packs/wellaging-esencial", "destination": "/api/server" },
-    { "source": "/packs/skin-care", "destination": "/api/server" },
-    {
-      "source": "/tratamientos-faciales/lifting-liquido",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/relleno-ojeras/",
+      "destination": "/tratamientos/relleno-ojeras"
     },
     {
-      "source": "/tratamientos-faciales/relleno-lineas-marioneta",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/rinomodelacion/",
+      "destination": "/tratamientos/rinomodelacion"
     },
     {
-      "source": "/tratamientos-faciales/elevacion-cejas",
-      "destination": "/api/server"
+      "source": "/tratamientos-faciales/prevencion-arrugas/",
+      "destination": "/tratamientos/prevencion-arrugas"
     },
     {
-      "source": "/tratamientos-piel/hidratacion-profunda",
-      "destination": "/api/server"
+      "source": "/tratamientos-piel/revitalizacion-facial/",
+      "destination": "/tratamientos/mesoterapia-facial"
     },
     {
-      "source": "/tratamientos-piel/rejuvenecimiento-dinamico",
-      "destination": "/api/server"
+      "source": "/tratamientos-piel/peeling-quimico/",
+      "destination": "/tratamientos/peeling-quimico"
+    },
+    {
+      "source": "/tratamientos-capilares/rejuvenecimiento-capilar/",
+      "destination": "/tratamientos/rejuvenecimiento-capilar"
+    },
+    {
+      "source": "/otros-tratamientos/bruxismo/",
+      "destination": "/tratamientos/bruxismo"
+    },
+    {
+      "source": "/tratamientos-laser/laser/",
+      "destination": "/tratamientos"
+    },
+    {
+      "source": "/tratamientos-faciales/hilos-tensores-faciales/",
+      "destination": "/tratamientos/hilos-tensores-faciales"
+    },
+    {
+      "source": "/tratamientos-faciales/hilos-tensores-cuello/",
+      "destination": "/tratamientos/hilos-tensores-cuello"
+    },
+    {
+      "source": "/packs/",
+      "destination": "/tratamientos"
+    },
+    {
+      "source": "/packs/prevencion/",
+      "destination": "/tratamientos/pack-prevencion"
+    },
+    {
+      "source": "/packs/armonizacion-facial/",
+      "destination": "/tratamientos/armonizacion-facial"
+    },
+    {
+      "source": "/packs/wellaging-plus/",
+      "destination": "/tratamientos/pack-wellaging-plus"
+    },
+    {
+      "source": "/packs/full-face/",
+      "destination": "/tratamientos/pack-full-face"
+    },
+    {
+      "source": "/packs/glow/",
+      "destination": "/tratamientos/glow-pack"
+    },
+    {
+      "source": "/packs/wellaging-esencial/",
+      "destination": "/tratamientos/pack-wellaging-esencial"
+    },
+    {
+      "source": "/packs/skin-care/",
+      "destination": "/tratamientos/skin-care-pack"
+    },
+    {
+      "source": "/tratamientos-faciales/lifting-liquido/",
+      "destination": "/tratamientos/lifting-liquido"
+    },
+    {
+      "source": "/tratamientos-faciales/relleno-lineas-marioneta/",
+      "destination": "/tratamientos/relleno-lineas-marioneta"
+    },
+    {
+      "source": "/tratamientos-faciales/elevacion-cejas/",
+      "destination": "/tratamientos/volumen-perfilado-cejas"
+    },
+    {
+      "source": "/tratamientos-piel/hidratacion-profunda/",
+      "destination": "/tratamientos/hidratacion-profunda"
+    },
+    {
+      "source": "/tratamientos-piel/rejuvenecimiento-dinamico/",
+      "destination": "/tratamientos/rejuvenecimiento-dinamico"
     },
     {
       "source": "/tratamientos-piel/hydrafacial",
-      "destination": "/api/server"
+      "destination": "/tratamientos/hydrafacial"
     },
     {
-      "source": "/tratamientos-piel/microneedling",
-      "destination": "/api/server"
+      "source": "/tratamientos-piel/microneedling/",
+      "destination": "/tratamientos/microneedling"
     },
-    { "source": "/landing/hydrafacial", "destination": "/api/server" },
-    { "source": "/about-us", "destination": "/api/server" },
-    { "source": "/landing/aumento-labios", "destination": "/api/server" },
-    { "source": "/landing/dermapen", "destination": "/api/server" },
-    { "source": "/old-home-2", "destination": "/api/server" },
-    { "source": "/old-home-4", "destination": "/api/server" },
-    { "source": "/old-home-3", "destination": "/api/server" },
-    { "source": "/home", "destination": "/api/server" },
-    { "source": "/clinicas-holaglow", "destination": "/api/server" },
-    { "source": "/landing/sonrisa-gingival", "destination": "/api/server" }
+    {
+      "source": "/landing/hydrafacial/",
+      "destination": "/tratamientos/hydrafacial"
+    },
+    {
+      "source": "/about-us",
+      "destination": "/quienes-somos"
+    },
+    {
+      "source": "/landing/aumento-labios",
+      "destination": "/tratamientos/aumento-labios"
+    },
+    {
+      "source": "/landing/dermapen/",
+      "destination": "/tratamientos/microneedling"
+    },
+    {
+      "source": "/old-home-2",
+      "destination": ""
+    },
+    {
+      "source": "/old-home-4",
+      "destination": ""
+    },
+    {
+      "source": "/old-home-3",
+      "destination": ""
+    },
+    {
+      "source": "/home",
+      "destination": ""
+    },
+    {
+      "source": "/clinicas-holaglow",
+      "destination": "/clinicas"
+    },
+    {
+      "source": "/landing/sonrisa-gingival",
+      "destination": "/tratamientos/sonrisa-gingival"
+    }
   ]
 }
