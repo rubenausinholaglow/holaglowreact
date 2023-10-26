@@ -40,9 +40,6 @@ const Page = () => {
   useEffect(() => {
     if (budgetId && totalPriceInitial != totalPriceToShow) {
       setBudgetModified(true);
-      console.log(`true  ${totalPriceInitial}  ${totalPriceToShow}`);
-    } else {
-      console.log(`false ${totalPriceInitial}  ${totalPriceToShow}`);
     }
   }),
     [totalPriceInitial, totalPrice];
