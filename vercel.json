@@ -29,11 +29,11 @@
     },
     { "source": "/appointment-confirmed/madrid", "destination": "/api/server" },
     {
-      "source": "/tratamientos-labios/",
+      "source": "/tratamientos-labios",
       "destination": "/tratamientos"
     },
     {
-      "source": "/tratamientos-faciales/",
+      "source": "/tratamientos-faciales",
       "destination": "/tratamientos"
     },
     {
