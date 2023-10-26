@@ -97,7 +97,7 @@ export default function ClinicsCheckout() {
                       <AccordionItem
                         value={category}
                         key={category}
-                        className={`transition-all w-full rounded-lg mb-4 ${
+                        className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
                           selectedCategory === category
                             ? 'bg-hg-secondary100'
                             : 'bg-hg-black50'
