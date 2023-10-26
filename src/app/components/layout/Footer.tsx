@@ -49,7 +49,7 @@ export function Footer() {
           <Text size="xs" className="leading-6 mb-10">
             Por teléfono de Lunes a Viernes
             <br />
-            De 10h a 18:30h
+            De 10 a 14h y de 15 a 19h
             <br />
             <a href="tel:+34 682 417 208">(+34) 682 417 208</a>
           </Text>
@@ -64,7 +64,7 @@ export function Footer() {
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6 border-b border-hg-black md:border-none"
         >
-          <a href="/tratamientos">
+          <a href={ROUTES.treatments}>
             <p className="font-semibold">Ver Tratamientos</p>
           </a>
 
