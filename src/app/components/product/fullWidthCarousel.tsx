@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Testimonial } from '@interface/testimonial';
@@ -23,12 +24,16 @@ export default function FullWidthCarousel({
   const CONTAINER_PADDING = 16;
   let firstItemLeftMargin = 0;
 
-  if (document.body.clientWidth > CONTAINER_WIDTH) {
-    firstItemLeftMargin =
-      (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
-  } else {
-    firstItemLeftMargin = 16;
-  }
+  useEffect(() => {
+    if (document) {
+      if (document.body.clientWidth > CONTAINER_WIDTH) {
+        firstItemLeftMargin =
+          (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
+      } else {
+        firstItemLeftMargin = 16;
+      }
+    }
+  }, []);
 
   const visibleSlides = (document.body.clientWidth - firstItemLeftMargin) / 304;
 

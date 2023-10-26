@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Testimonial } from '@interface/testimonial';
 import RegistrationForm from 'app/components/common/RegistrationForm';
 import GoogleStars from 'app/components/home/GoogleStars';
@@ -102,6 +103,7 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export default function LandingCaptacion() {
+  const [loadCarousel, setLoadCarousel] = useState(false);
   const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
     state => state
   );
@@ -110,6 +112,10 @@ export default function LandingCaptacion() {
     ? HEADER_HEIGHT_MOBILE
     : HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
+
+  useEffect(() => {
+    setLoadCarousel(true);
+  }, []);
 
   return (
     <>
@@ -233,11 +239,13 @@ export default function LandingCaptacion() {
             ?
           </Title>
         </Container>
-        <FullWidthCarousel
-          className="pb-8"
-          type="testimonials"
-          items={TESTIMONIALS}
-        />
+        {loadCarousel && (
+          <FullWidthCarousel
+            className="pb-8"
+            type="testimonials"
+            items={TESTIMONIALS}
+          />
+        )}
       </div>
 
       <div className="bg-hg-black100 rounded-t-2xl">
