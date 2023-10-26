@@ -1,0 +1,14 @@
+<svg width="132" height="133" viewBox="0 0 132 133" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Atoms / Resources / Halos">
+<g id="Halo 1" filter="url(#filter0_f_2256_10650)">
+<path d="M102.256 83.2194C95.7758 96.8386 85.876 107.196 75.1269 112.945C64.3831 118.691 52.9067 119.791 43.0215 115.181C33.1308 110.569 26.5677 101.052 24.0929 89.1364C21.6177 77.2193 23.2742 63.0228 29.7496 49.4146C36.2275 35.8009 46.1789 25.4691 56.9827 19.7443C67.7832 14.0212 79.3176 12.9451 89.2056 17.5559C99.0936 22.1668 105.601 31.6548 108.022 43.5416C110.444 55.4321 108.734 69.6057 102.256 83.2194Z" stroke="#3AD5DD" stroke-width="4"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_2256_10650" x="8.99243" y="0.684204" width="114.085" height="131.357" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="6" result="effect1_foregroundBlur_2256_10650"/>
+</filter>
+</defs>
+</svg>

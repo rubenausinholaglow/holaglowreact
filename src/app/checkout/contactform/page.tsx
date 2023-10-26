@@ -28,41 +28,14 @@ export default function ConctactForm() {
     selectedSlot,
     selectedDay,
     selectedClinic,
-    setCurrentUser,
     selectedPacksTreatments,
   } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
   const { analyticsMetrics } = useGlobalPersistedStore(state => state);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Array<string>>([]);
-  const { user } = useGlobalPersistedStore(state => state);
+
   const format = 'YYYY-MM-DD';
-  const [formData, setFormData] = useState<Client>({
-    email: '',
-    phone: '',
-    phonePrefix: '',
-    name: '',
-    surname: '',
-    secondSurname: '',
-    termsAndConditionsAccepted: false,
-    receiveCommunications: false,
-    page: '',
-    externalReference: '',
-    analyticsMetrics: {
-      device: 0,
-      locPhysicalMs: '',
-      utmAdgroup: '',
-      utmCampaign: '',
-      utmContent: '',
-      utmMedium: '',
-      utmSource: '',
-      utmTerm: '',
-    },
-    interestedTreatment: '',
-    treatmentPrice: 0,
-  });
+
   const localSelectedDay = dayjs(selectedDay);
-  let localUser: User | undefined = undefined;
 
   useEffect(() => {
     if (selectedTreatments && selectedTreatments.length > 0) {
@@ -71,140 +44,6 @@ export default function ConctactForm() {
       );
     }
   }, []);
-
-  const handleFormFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
-    const value =
-      event.target.type === 'checkbox'
-        ? event.target.checked
-        : event.target.value;
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [field]: value,
-    }));
-  };
-  const handleContinue = async () => {
-    setErrors([]);
-
-    const requiredFields = ['email', 'phone', 'name', 'surname'];
-    const isEmailValid = utils.validateEmail(formData.email);
-    const areAllFieldsFilled = requiredFields.every(
-      field => formData[field] !== ''
-    );
-
-    if (
-      areAllFieldsFilled &&
-      isEmailValid &&
-      formData.termsAndConditionsAccepted
-    ) {
-      await handleRegistration();
-    } else {
-      const errorMessages = [];
-
-      if (!isEmailValid && formData['email'].length > 0) {
-        errorMessages.push(config.ERROR_EMAIL_NOT_VALID);
-      }
-      if (requiredFields.some(field => formData[field] === '')) {
-        errorMessages.push(config.ERROR_MISSING_FIELDS);
-      }
-      if (!formData.termsAndConditionsAccepted) {
-        errorMessages.push(config.ERROR_TERMS_CONDITIONS_UNACCEPTED);
-      }
-
-      handleRequestError(errorMessages);
-    }
-  };
-
-  const handleRegistration = async () => {
-    await registerUser(formData);
-  };
-
-  const createAppointment = async () => {
-    const appointments: Appointment[] = [];
-    let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
-    let treatments = selectedTreatments!.map(x => x.title).join(',');
-    if (selectedPacksTreatments && selectedPacksTreatments.length) {
-      ids = selectedPacksTreatments!
-        .slice(0, 2)
-        .map(x => x.flowwwId)
-        .join(',');
-      treatments = selectedPacksTreatments!.map(x => x.title).join(',');
-    }
-    const comment = 'Tratamiento visto en web: ' + treatments;
-    appointments.push({
-      box: selectedSlot!.box,
-      endTime:
-        dayjs(selectedDay)!.format(format) +
-        ' ' +
-        selectedSlot!.endTime +
-        ':00',
-      id: '0',
-      startTime:
-        dayjs(selectedDay)!.format(format) +
-        ' ' +
-        selectedSlot!.startTime +
-        ':00',
-      treatment: ids,
-      clientId: localUser?.flowwwToken,
-      comment: comment,
-      treatmentText: treatments,
-      referralId: '',
-      externalReference: getExternalReference(),
-      isPast: false,
-      clinicId: selectedClinic?.flowwwId,
-      isCancelled: false,
-    } as Appointment);
-    ScheduleService.scheduleBulk(appointments).then(x => {
-      router.push('/checkout/confirmation');
-    });
-  };
-
-  function getExternalReference(): string {
-    switch (analyticsMetrics.utmSource) {
-      case 'google':
-      case 'cpc':
-        return '16';
-      case 'instagram':
-      case 'ig':
-        return '17';
-      case 'facebook':
-      case 'fb':
-      case 'an':
-      case 'msg':
-        return '18';
-      case 'tiktok':
-        return '20';
-      default:
-        return '';
-    }
-  }
-  const registerUser = async (formData: Client) => {
-    setIsLoading(true);
-    let user = await UserService.checkUser(formData.email);
-
-    if (!user) {
-      formData.analyticsMetrics = analyticsMetrics;
-      formData.phone = formData.phone
-        .replace(formData.phonePrefix, '')
-        .replaceAll(' ', '');
-      user = await UserService.registerUser(formData);
-      if (user) {
-        user.flowwwToken = user.clinicToken;
-      }
-    }
-    if (user) {
-      setCurrentUser(user);
-      localUser = user;
-      await createAppointment();
-    }
-  };
-
-  const handleRequestError = (errors: Array<string>) => {
-    localStorage.clear();
-    setErrors(errors);
-  };
 
   return (
     <MainLayout isCheckout>
@@ -251,13 +90,7 @@ export default function ConctactForm() {
               )}
             </Flex>
 
-            <RegistrationForm
-              formData={formData}
-              handleFieldChange={handleFormFieldChange}
-              handleContinue={handleContinue}
-              errors={errors}
-              isLoading={isLoading}
-            />
+            <RegistrationForm />
           </div>
           <div className="w-full md:w-1/2"></div>
         </Flex>

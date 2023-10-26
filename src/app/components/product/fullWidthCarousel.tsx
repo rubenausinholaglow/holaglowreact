@@ -2,10 +2,12 @@
 
 import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
+import { Testimonial } from '@interface/testimonial';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { isEmpty } from 'lodash';
 
 import ProfessionalCard from '../common/ProfessionalCard';
+import TestimonialCard from '../common/TestimonialCard';
 import ProductCard from './ProductCard';
 
 export default function FullWidthCarousel({
@@ -13,9 +15,9 @@ export default function FullWidthCarousel({
   className,
   items,
 }: {
-  type: 'products' | 'professionals';
+  type: 'products' | 'professionals' | 'testimonials';
   className?: string;
-  items: Product[] | Professional[] | null;
+  items: Product[] | Professional[] | Testimonial[] | null;
 }) {
   const CONTAINER_WIDTH = 1152;
   const CONTAINER_PADDING = 16;
@@ -76,6 +78,18 @@ export default function FullWidthCarousel({
                 key={professional.name}
                 professional={professional}
                 className="h-full flex flex-col mr-10"
+              />
+            );
+          })}
+
+        {type === 'testimonials' &&
+          items &&
+          items.map((testimonial: Testimonial | any) => {
+            return (
+              <TestimonialCard
+                key={testimonial.name}
+                testimonial={testimonial}
+                className="h-full flex flex-col mr-4"
               />
             );
           })}
