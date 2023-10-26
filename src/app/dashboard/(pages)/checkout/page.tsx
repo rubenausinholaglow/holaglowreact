@@ -34,6 +34,15 @@ const Page = () => {
   const [clientToken, setClientToken] = useState<string | ''>('');
   const [budgetId, setBudgetId] = useState<string | ''>('');
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
+  const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
+  const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
+
+  useEffect(() => {
+    if (budgetId && totalPriceInitial != totalPriceToShow) {
+      setBudgetModified(true);
+    }
+  }),
+    [totalPriceInitial, totalPrice];
 
   useEffect(() => {
     const budgetId = localStorage.getItem('BudgetId');
@@ -51,6 +60,8 @@ const Page = () => {
   }, [budgetId]);
 
   const handleFinalize = async () => {
+    setTotalPriceInitial(totalPriceToShow);
+
     const GuidUser = localStorage.getItem('id') || '';
     const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
@@ -78,9 +89,16 @@ const Page = () => {
     };
 
     try {
-      const data = await budgetService.createBudget(budget);
-      localStorage.setItem('BudgetId', data.id);
-      setBudgetId(localStorage.getItem('BudgetId') || '');
+      if (budgetId.length > 0) {
+        setBudgetModified(false);
+        setShowProductDiscount(false);
+        budget.id = budgetId;
+        const result = await budgetService.updateBudget(budget);
+      } else {
+        const data = await budgetService.createBudget(budget);
+        localStorage.setItem('BudgetId', data.id);
+        setBudgetId(localStorage.getItem('BudgetId') || '');
+      }
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
     }
@@ -118,24 +136,25 @@ const Page = () => {
           <ul className="w-1/2 shrink-0">
             {cart?.map(cartItem => (
               <li key={cartItem.uniqueId} className="mb-4">
-                <ProductCard isCheckout product={cartItem} budget={budgetId} />
+                <ProductCard isCheckout product={cartItem} />
               </li>
             ))}
           </ul>
           <Flex layout="col-left" className="w-1/2 pl-8 shrink-0 relative">
-            {!showPaymentButtons && !budgetId && (
-              <SvgAngleDown
-                height={20}
-                width={20}
-                fill="white"
-                className={`transition-transform bg-slate-400 rounded-full mr-2 absolute top-2 right-2 cursor-pointer ${
-                  showProductDiscount ? 'rotate-180' : 'rotate-0'
-                }`}
-                onClick={() => setShowProductDiscount(!showProductDiscount)}
-              />
-            )}
+            <SvgAngleDown
+              height={20}
+              width={20}
+              fill="white"
+              className={`transition-transform bg-slate-400 rounded-full mr-2 absolute top-2 right-2 cursor-pointer ${
+                showProductDiscount ? 'rotate-180' : 'rotate-0'
+              }`}
+              onClick={() => setShowProductDiscount(!showProductDiscount)}
+            />
             <CartTotal isCheckout />
-            {showPaymentButtons ? (
+            {budgetId &&
+            !isBudgetModified &&
+            !showProductDiscount &&
+            !isLoading ? (
               <Flex layout="col-left" className="gap-2 w-full mt-4">
                 <PaymentModule></PaymentModule>
               </Flex>
