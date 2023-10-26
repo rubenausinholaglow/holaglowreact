@@ -18,10 +18,9 @@ const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
   product: CartItem;
   isCheckout?: boolean;
-  budget: string;
 }
 
-export default function ProductCard({ product, isCheckout, budget }: Props) {
+export default function ProductCard({ product, isCheckout }: Props) {
   const cart = useCartStore(state => state.cart);
   const removeFromCart = useCartStore(state => state.removeFromCart);
   const addToCart = useCartStore(state => state.addItemToCart);
@@ -54,15 +53,13 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
         }
       }}
     >
-      {!budget && (
-        <SvgClose
-          width={20}
-          height={20}
-          fill={HOLAGLOW_COLORS['black']}
-          className="absolute top-2 right-2 cursor-pointer"
-          onClick={() => removeFromCart(product)}
-        />
-      )}
+      <SvgClose
+        width={20}
+        height={20}
+        fill={HOLAGLOW_COLORS['black']}
+        className="absolute top-2 right-2 cursor-pointer"
+        onClick={() => removeFromCart(product)}
+      />
       {!showDiscountForm && (
         <div
           className={`aspect-square relative ${
@@ -90,7 +87,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
           {product.description}
         </Text>
         <Flex layout="row-left" className="mb-3">
-          {isCheckout && !budget && (
+          {isCheckout && (
             <SvgAngleDown
               height={20}
               width={20}
@@ -133,7 +130,7 @@ export default function ProductCard({ product, isCheckout, budget }: Props) {
             Seleccionar
           </Button>
         )}
-        {showDiscountForm && !budget && (
+        {showDiscountForm && (
           <>
             <ProductDiscountForm
               cartUniqueId={product.uniqueId}
