@@ -23,6 +23,10 @@ export default function Clinics({ className = '' }: { className?: string }) {
   const [googleMapAddress, setGoogleMapAddress] = useState('');
 
   useEffect(() => {
+    if (!deviceSize.isMobile && clinics.length > 0)
+      setSelectedClinic(clinics[0]);
+  }, []);
+  useEffect(() => {
     if (!isEmpty(selectedClinic)) {
       const mapLayer = document.querySelector('#mapLayer');
 
