@@ -86,8 +86,6 @@ export default function ConctactForm() {
     }));
   };
   const handleContinue = async () => {
-    setErrors([]);
-
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
@@ -97,8 +95,10 @@ export default function ConctactForm() {
     if (
       areAllFieldsFilled &&
       isEmailValid &&
-      formData.termsAndConditionsAccepted
+      formData.termsAndConditionsAccepted &&
+      errors.length == 0
     ) {
+      setErrors([]);
       await handleRegistration();
     } else {
       const errorMessages = [];

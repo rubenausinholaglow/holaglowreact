@@ -34,13 +34,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !isEmpty(formData.name) &&
       !isEmpty(formData.surname) &&
       !isEmpty(formData.email) &&
-      !isEmpty(formData.phone)
+      !isEmpty(formData.phone) &&
+      !showPhoneError &&
+      !showEmailError
     ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [formData]);
+  }, [formData, showPhoneError, showEmailError]);
 
   function handlePhoneChange(value: any, country: any, formattedValue: string) {
     handleFieldChange(value, 'phone');
