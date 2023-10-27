@@ -18,7 +18,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgLocation } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
-import { error } from 'console';
 
 dayjs.locale(spanishConf);
 
