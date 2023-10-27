@@ -279,7 +279,7 @@ const nextConfig = {
       },
       {
         source: '/home',
-        destination: '',
+        destination: '/',
         permanent: true,
       },
       {
