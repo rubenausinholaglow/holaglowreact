@@ -3,12 +3,6 @@
 import './phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
-import { Appointment, User } from '@interface/appointment';
-import { Client } from '@interface/client';
-import ScheduleService from '@services/ScheduleService';
-import UserService from '@services/UserService';
-import * as config from '@utils/textConstants';
-import * as utils from '@utils/validators';
 import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -17,23 +11,13 @@ import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgLocation } from 'icons/Icons';
-import { useRouter } from 'next/navigation';
 
 dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
-  const router = useRouter();
-  const {
-    selectedTreatments,
-    selectedSlot,
-    selectedDay,
-    selectedClinic,
-    selectedPacksTreatments,
-  } = useGlobalPersistedStore(state => state);
+  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
+    useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
-  const { analyticsMetrics } = useGlobalPersistedStore(state => state);
-
-  const format = 'YYYY-MM-DD';
 
   const localSelectedDay = dayjs(selectedDay);
 

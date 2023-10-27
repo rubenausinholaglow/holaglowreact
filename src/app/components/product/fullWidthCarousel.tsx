@@ -1,43 +1,46 @@
 'use client';
 
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Testimonial } from '@interface/testimonial';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { isEmpty } from 'lodash';
+import CheckHydration from 'utils/CheckHydration';
 
 import ProfessionalCard from '../common/ProfessionalCard';
-import TestimonialCard from '../common/TestimonialCard';
 import ProductCard from './ProductCard';
 
 export default function FullWidthCarousel({
   type = 'products',
+  visibleSlides,
   className,
   items,
+  children,
 }: {
-  type: 'products' | 'professionals' | 'testimonials';
+  type?: 'products' | 'professionals';
+  visibleSlides?: number | null;
   className?: string;
-  items: Product[] | Professional[] | Testimonial[] | null;
+  items?: Product[] | Professional[] | Testimonial[] | null;
+  children?: ReactNode;
 }) {
   const CONTAINER_WIDTH = 1152;
   const CONTAINER_PADDING = 16;
-  let firstItemLeftMargin = 0;
+  let firstItemLeftMargin = 16;
+  let slidesToShow = visibleSlides ? visibleSlides : 1.5;
 
-  useEffect(() => {
-    if (document) {
-      if (document.body.clientWidth > CONTAINER_WIDTH) {
-        firstItemLeftMargin =
-          (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
-      } else {
-        firstItemLeftMargin = 16;
-      }
+  if (typeof window !== 'undefined') {
+    if (document && document.body.clientWidth > CONTAINER_WIDTH) {
+      firstItemLeftMargin =
+        (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
     }
-  }, []);
 
-  const visibleSlides = (document.body.clientWidth - firstItemLeftMargin) / 304;
+    if (!visibleSlides) {
+      slidesToShow = (document.body.clientWidth - firstItemLeftMargin) / 304;
+    }
+  }
 
-  if (isEmpty(items)) {
+  if (isEmpty(items) && !children) {
     return <></>;
   }
 
@@ -55,11 +58,12 @@ export default function FullWidthCarousel({
         hasControls
         className={`relative ${className}`}
         isIntrinsicHeight
-        visibleSlides={visibleSlides}
+        visibleSlides={slidesToShow}
         infinite={false}
         isFullWidth
       >
-        {type === 'products' &&
+        {type &&
+          type === 'products' &&
           items &&
           items.map((product: Product | any, index) => {
             if (product.visibility) {
@@ -75,7 +79,8 @@ export default function FullWidthCarousel({
             return null;
           })}
 
-        {type === 'professionals' &&
+        {type &&
+          type === 'professionals' &&
           items &&
           items.map((professional: Professional | any, index) => {
             return (
@@ -87,17 +92,7 @@ export default function FullWidthCarousel({
             );
           })}
 
-        {type === 'testimonials' &&
-          items &&
-          items.map((testimonial: Testimonial | any) => {
-            return (
-              <TestimonialCard
-                key={testimonial.name}
-                testimonial={testimonial}
-                className="h-full flex flex-col mr-4"
-              />
-            );
-          })}
+        {children}
       </Carousel>
     </>
   );
