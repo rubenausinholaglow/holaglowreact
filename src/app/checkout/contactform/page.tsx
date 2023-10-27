@@ -18,6 +18,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgLocation } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
+import { error } from 'console';
 
 dayjs.locale(spanishConf);
 
@@ -86,8 +87,6 @@ export default function ConctactForm() {
     }));
   };
   const handleContinue = async () => {
-    setErrors([]);
-
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
@@ -97,8 +96,10 @@ export default function ConctactForm() {
     if (
       areAllFieldsFilled &&
       isEmailValid &&
-      formData.termsAndConditionsAccepted
+      formData.termsAndConditionsAccepted &&
+      errors.length == 0
     ) {
+      setErrors([]);
       await handleRegistration();
     } else {
       const errorMessages = [];
