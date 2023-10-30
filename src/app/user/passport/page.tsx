@@ -6,10 +6,11 @@ import PendingBonus from './PendingBonus';
 import Recomendations from './Recomendations';
 import Treatments from './Treatments';
 
-const fetchPassportData = async (id: number) => {
+const fetchPassportData = async (id: string) => {
   try {
     const passportResponse = await fetch(
       `https://holaglowcontactsapi.azurewebsites.net/BeautyPass?id=${id}`,
+
       {
         cache: 'no-store',
       }
@@ -32,8 +33,8 @@ export default async function Passport({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const passportID = searchParams.id;
-  const passportData = await fetchPassportData(Number(passportID));
+  const passportID = searchParams.id as string;
+  const passportData = await fetchPassportData(passportID);
 
   const {
     appointment = null,
