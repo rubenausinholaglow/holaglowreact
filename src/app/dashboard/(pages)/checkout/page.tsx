@@ -198,9 +198,11 @@ const Page = () => {
                 <span className="font-semibold">Agendar Cita</span>
               </Button>
               <Button size="md" className="w-full mt-4" onClick={cancelBudget}>
-                {!budgetId ? 'Cancelar Presupuesto' : 'Volver al dashboard'}
+                {isBudgetModified
+                  ? 'Cancelar Presupuesto'
+                  : 'Volver al dashboard'}
               </Button>
-              {!budgetId && (
+              {!isBudgetModified && (
                 <PepperWidget
                   totalPrice={Number(totalPriceToShow)}
                 ></PepperWidget>
