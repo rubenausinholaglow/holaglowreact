@@ -1,7 +1,5 @@
 'use client';
 
-import './phoneInputStyle.css';
-
 import { useEffect, useState } from 'react';
 import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';

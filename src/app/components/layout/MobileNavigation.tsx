@@ -152,7 +152,7 @@ export default function MobileNavigation({
         <p className="leading-6">
           Por teléfono de Lunes a Viernes
           <br />
-          De 10h a 18:30h
+          De 10 a 14h y de 15 a 19h
           <br />
           <a href="tel:(+34) 682 417 208">(+34) 682 417 208</a>
         </p>

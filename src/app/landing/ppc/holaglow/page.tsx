@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Clinics from 'app/components/common/Clinics';
 import Professionals from 'app/components/common/Professionals';
 import RegistrationForm from 'app/components/common/RegistrationForm';
@@ -22,11 +23,10 @@ import { SvgHolaglow } from 'icons/Icons';
 import { SvgArrow } from 'icons/IconsDs';
 import Image from 'next/image';
 import Link from 'next/link';
+import { fetchProduct } from 'utils/fetch';
 
 import ConsistOf from './components/ConsistOF';
 import LandingTestimonials from './components/LandingTestimonials';
-import { useEffect } from 'react';
-import { fetchProduct } from 'utils/fetch';
 
 export default function LandingCaptacion() {
   const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
@@ -83,8 +83,8 @@ export default function LandingCaptacion() {
         </Container>
       </header>
 
-      <Container>
-        <div className="relative md:grid md:grid-cols-2 pt-12 pb-16 border-b border-hg-black">
+      <Container className="px-0 md:px-4 overflow-hidden">
+        <div className="px-4 md:px-0 relative md:grid md:grid-cols-2 pt-12 pb-16 border-b border-hg-black">
           <div className="col-start-2 md:ml-16">
             <Title size="2xl" className="font-bold mb-4 md:mb-8">
               Asesórate{' '}
@@ -96,8 +96,13 @@ export default function LandingCaptacion() {
               sin compromiso
             </Text>
             <Flex className="hidden md:block md:justify-start">
-              <Button size="xl" type="secondary" href="#leadForm">
-                Pide tu cita médiga gratis
+              <Button
+                size="xl"
+                type="tertiary"
+                customStyles="bg-hg-primary"
+                href="#leadForm"
+              >
+                Pide tu cita médica gratis
               </Button>
             </Flex>
           </div>
@@ -112,8 +117,13 @@ export default function LandingCaptacion() {
               className="translate-x-4 -translate-y-[5%] md:translate-y-0 md:translate-x-0"
             />
             <Flex className="justify-center col-start-2 -mt-[10%] md:hidden md:mt-auto md:self-start md:justify-start md:ml-16 ">
-              <Button size="xl" type="secondary" href="#leadForm">
-                Pide tu cita médiga gratis
+              <Button
+                size="xl"
+                type="tertiary"
+                customStyles="bg-hg-primary"
+                href="#leadForm"
+              >
+                Pide tu cita médica gratis
               </Button>
             </Flex>
           </div>
@@ -180,7 +190,7 @@ export default function LandingCaptacion() {
             </Text>
           </Container>
 
-          <Container className="mt-12 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0">
+          <Container className="mt-12 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0 overflow-hidden">
             <Image
               src="/images/statics/landings/captacion/comoFunciona.png"
               alt="¿Cómo Funciona?"
@@ -213,7 +223,12 @@ export default function LandingCaptacion() {
 
         <Container>
           <Flex className="justify-center">
-            <Button size="xl" type="secondary" href="#leadForm">
+            <Button
+              size="xl"
+              type="tertiary"
+              customStyles="bg-hg-primary"
+              href="#leadForm"
+            >
               Pide tu cita médiga gratis
             </Button>
           </Flex>

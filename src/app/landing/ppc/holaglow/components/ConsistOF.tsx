@@ -108,7 +108,12 @@ export default function ConsistOf() {
       )}
 
       <Flex className="justify-center">
-        <Button size="xl" type="secondary" href="#leadForm">
+        <Button
+          size="xl"
+          type="tertiary"
+          customStyles="bg-hg-primary"
+          href="#leadForm"
+        >
           ¡Yo quiero!
         </Button>
       </Flex>
