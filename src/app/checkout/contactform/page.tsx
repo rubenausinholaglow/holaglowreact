@@ -182,7 +182,7 @@ export default function ConctactForm() {
   }
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    var request = { ...formData };
+    const request = { ...formData };
     request.analyticsMetrics = analyticsMetrics;
     request.phone = formData.phone
       .replace(formData.phonePrefix, '')
