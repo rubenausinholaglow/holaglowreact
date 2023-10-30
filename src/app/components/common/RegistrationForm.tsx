@@ -35,8 +35,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
   const [showPhoneError, setShowPhoneError] = useState(false);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
 
-  let localUser: User | undefined = undefined;
-  const format = 'YYYY-MM-DD';
   const {
     selectedTreatments,
     selectedSlot,
@@ -46,66 +44,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     analyticsMetrics,
     setCurrentUser,
   } = useGlobalPersistedStore(state => state);
-
-  function getExternalReference(): string {
-    switch (analyticsMetrics.utmSource) {
-      case 'google':
-      case 'cpc':
-        return '16';
-      case 'instagram':
-      case 'ig':
-        return '17';
-      case 'facebook':
-      case 'fb':
-      case 'an':
-      case 'msg':
-        return '18';
-      case 'tiktok':
-        return '20';
-      default:
-        return '';
-    }
-  }
-
-  const createAppointment = async () => {
-    const appointments: Appointment[] = [];
-    let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
-    let treatments = selectedTreatments!.map(x => x.title).join(',');
-    if (selectedPacksTreatments && selectedPacksTreatments.length) {
-      ids = selectedPacksTreatments!
-        .slice(0, 2)
-        .map(x => x.flowwwId)
-        .join(',');
-      treatments = selectedPacksTreatments!.map(x => x.title).join(',');
-    }
-    const comment = 'Tratamiento visto en web: ' + treatments;
-    appointments.push({
-      box: selectedSlot!.box,
-      endTime:
-        dayjs(selectedDay)!.format(format) +
-        ' ' +
-        selectedSlot!.endTime +
-        ':00',
-      id: '0',
-      startTime:
-        dayjs(selectedDay)!.format(format) +
-        ' ' +
-        selectedSlot!.startTime +
-        ':00',
-      treatment: ids,
-      clientId: localUser?.flowwwToken,
-      comment: comment,
-      treatmentText: treatments,
-      referralId: '',
-      externalReference: getExternalReference(),
-      isPast: false,
-      clinicId: selectedClinic?.flowwwId,
-      isCancelled: false,
-    } as Appointment);
-    ScheduleService.scheduleBulk(appointments).then(x => {
-      router.push('/checkout/confirmation');
-    });
-  };
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -222,8 +160,21 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     }
     if (user) {
       setCurrentUser(user);
-      localUser = user;
-      await createAppointment();
+      if (selectedSlot && selectedClinic) {
+        await ScheduleService.createAppointment(
+          selectedTreatments,
+          selectedSlot!,
+          selectedDay,
+          selectedClinic!,
+          user,
+          selectedPacksTreatments!,
+          analyticsMetrics
+        ).then(x => {
+          router.push('/checkout/confirmation');
+        });
+      } else {
+        router.push('/checkout/clinicas');
+      }
     }
   };
 

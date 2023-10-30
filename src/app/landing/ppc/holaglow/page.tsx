@@ -25,6 +25,8 @@ import Link from 'next/link';
 
 import ConsistOf from './components/ConsistOF';
 import LandingTestimonials from './components/LandingTestimonials';
+import { useEffect } from 'react';
+import { fetchProduct } from 'utils/fetch';
 
 export default function LandingCaptacion() {
   const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
@@ -35,6 +37,15 @@ export default function LandingCaptacion() {
     ? HEADER_HEIGHT_MOBILE
     : HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
+
+  useEffect(() => {
+    async function initProduct(productId: string) {
+      const productDetails = await fetchProduct(productId);
+      setSelectedTreatments([productDetails]);
+    }
+
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
+  }, []);
 
   return (
     <MainLayout hideHeader>
@@ -59,9 +70,6 @@ export default function LandingCaptacion() {
                 size={deviceSize.isMobile ? 'sm' : 'md'}
                 type="tertiary"
                 href={ROUTES.checkout.clinics}
-                onClick={() => {
-                  setSelectedTreatments([]);
-                }}
               >
                 Reservar cita
                 <SvgArrow
