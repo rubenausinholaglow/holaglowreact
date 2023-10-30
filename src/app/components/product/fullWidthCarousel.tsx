@@ -1,12 +1,11 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Testimonial } from '@interface/testimonial';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { isEmpty } from 'lodash';
-import CheckHydration from 'utils/CheckHydration';
 
 import ProfessionalCard from '../common/ProfessionalCard';
 import ProductCard from './ProductCard';
@@ -21,7 +20,7 @@ export default function FullWidthCarousel({
   type?: 'products' | 'professionals';
   visibleSlides?: number | null;
   className?: string;
-  items?: Product[] | Professional[] | Testimonial[] | null;
+  items?: Product[] | Professional[] | null;
   children?: ReactNode;
 }) {
   const CONTAINER_WIDTH = 1152;
