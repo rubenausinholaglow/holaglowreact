@@ -182,9 +182,9 @@ export default function ConctactForm() {
   }
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-
-    formData.analyticsMetrics = analyticsMetrics;
-    formData.phone = formData.phone
+    var request = { ...formData };
+    request.analyticsMetrics = analyticsMetrics;
+    request.phone = formData.phone
       .replace(formData.phonePrefix, '')
       .replaceAll(' ', '');
     const user = await UserService.registerUser(formData);
