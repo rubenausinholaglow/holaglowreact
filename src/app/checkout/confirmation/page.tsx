@@ -135,18 +135,20 @@ export default function ConfirmationCheckout() {
               </div>
             </div>
             <div className="pt-12">
-              <Button
-                type="tertiary"
-                size="md"
-                className="hidden md:inline"
-                customStyles="group-hover:bg-hg-secondary100"
-                href={ROUTES.treatments}
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Ver tratamientos</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
+              <a href="/tratamientos">
+                <Button
+                  type="tertiary"
+                  size="md"
+                  className="hidden md:inline"
+                  customStyles="group-hover:bg-hg-secondary100"
+                  href={ROUTES.treatments}
+                >
+                  <Flex layout="row-center">
+                    <span className="font-semibold">Ver tratamientos</span>
+                    <SvgArrow height={18} width={18} className="ml-2" />
+                  </Flex>
+                </Button>
+              </a>
             </div>
           </div>
           <div className="w-full">

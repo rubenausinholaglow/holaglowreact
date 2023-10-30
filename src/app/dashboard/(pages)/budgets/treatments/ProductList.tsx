@@ -16,11 +16,7 @@ export default function ProductList({
         } `}
       >
         {products?.map(product => (
-          <ProductCard
-            key={product.id}
-            product={product as CartItem}
-            budget=""
-          />
+          <ProductCard key={product.id} product={product as CartItem} />
         ))}
       </div>
     </>

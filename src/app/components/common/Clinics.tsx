@@ -14,7 +14,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAngle } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import Link from 'next/link';
 
 export default function Clinics({ className = '' }: { className?: string }) {
   const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
@@ -24,11 +23,9 @@ export default function Clinics({ className = '' }: { className?: string }) {
   const [googleMapAddress, setGoogleMapAddress] = useState('');
 
   useEffect(() => {
-    if (isEmpty(selectedClinic) && !isEmpty(clinics)) {
+    if (!deviceSize.isMobile && clinics.length > 0)
       setSelectedClinic(clinics[0]);
-    }
-  }, [clinics]);
-
+  }, []);
   useEffect(() => {
     if (!isEmpty(selectedClinic)) {
       const mapLayer = document.querySelector('#mapLayer');
@@ -44,10 +41,6 @@ export default function Clinics({ className = '' }: { className?: string }) {
       setGoogleMapAddress(`${formattedAddress},${formattedCity}`);
     }
   }, [selectedClinic]);
-
-  if (isEmpty(selectedClinic)) {
-    return <></>;
-  }
 
   return (
     <div className={className}>
@@ -69,7 +62,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                     <div
                       key="clinic.city"
                       className={
-                        selectedClinic.city === clinic.city
+                        selectedClinic && selectedClinic.city === clinic.city
                           ? 'bg-hg-primary300'
                           : 'bg-hg-black100'
                       }
@@ -123,7 +116,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                     <Flex
                       layout="row-center"
                       className={`transition-all w-full justify-between bg-hg-black100 p-4 cursor-pointer ${
-                        selectedClinic.city === clinic.city
+                        selectedClinic && selectedClinic.city === clinic.city
                           ? 'bg-hg-primary300'
                           : 'bg-hg-black100'
                       } `}

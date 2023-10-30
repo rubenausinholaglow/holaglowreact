@@ -5,7 +5,6 @@ import 'app/checkout/contactform/phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import { Appointment, User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -15,7 +14,6 @@ import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -76,13 +74,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       !isEmpty(formData.name) &&
       !isEmpty(formData.surname) &&
       !isEmpty(formData.email) &&
-      !isEmpty(formData.phone)
+      !isEmpty(formData.phone) &&
+      !showPhoneError &&
+      !showEmailError
     ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [formData]);
+  }, [formData, showPhoneError, showEmailError]);
 
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -99,8 +99,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
   };
 
   const handleContinue = async () => {
-    setErrors([]);
-
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
@@ -110,8 +108,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     if (
       areAllFieldsFilled &&
       isEmailValid &&
-      formData.termsAndConditionsAccepted
+      formData.termsAndConditionsAccepted &&
+      errors.length == 0
     ) {
+      setErrors([]);
       await handleRegistration();
     } else {
       const errorMessages = [];
