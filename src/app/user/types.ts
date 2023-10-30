@@ -13,6 +13,7 @@ export interface Product {
     description: string;
     price: number;
     imgSrc: string;
+    cardBackgroundColor: string;
   };
   price: number;
   priceDiscount: number;

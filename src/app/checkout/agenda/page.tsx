@@ -255,7 +255,10 @@ export default function Agenda() {
                       <Text size="xs" className="w-full text-left">
                         {selectedClinic.address}, {selectedClinic.city}
                       </Text>
-                      <Link href="/checkout/clinicas" className="text-xs">
+                      <Link
+                        href="/checkout/clinicas"
+                        className="text-xs ml-auto text-hg-secondary font-semibold"
+                      >
                         Cambiar
                       </Link>
                     </Flex>
