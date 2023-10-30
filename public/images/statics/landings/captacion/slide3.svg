@@ -1,0 +1,14 @@
+<svg width="143" height="143" viewBox="0 0 143 143" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Atoms / Resources / Halos">
+<g id="Halo 3" filter="url(#filter0_f_2256_10666)">
+<path d="M104.275 49.2281L103.24 53.0919L107.103 54.1271C120.982 57.8458 129.23 72.1243 125.518 85.9786C121.806 99.8328 107.523 108.074 93.6448 104.355L89.7811 103.32L88.7458 107.184C85.0336 121.038 70.7508 129.279 56.8724 125.56C42.9939 121.842 34.7453 107.563 38.4575 93.709L39.4889 89.8598L35.6436 88.8139C21.8304 85.0568 13.6217 70.8475 17.3346 56.9908C21.0474 43.1341 35.2611 34.9329 49.1022 38.5857L52.9553 39.6026L53.9866 35.7534C57.7003 21.894 71.9267 13.6433 85.8601 17.3767C99.7385 21.0954 107.987 35.3739 104.275 49.2281Z" stroke="#FFC7C7" stroke-width="8"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_2256_10666" x="0.440674" y="0.477661" width="141.968" height="141.976" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="6" result="effect1_foregroundBlur_2256_10666"/>
+</filter>
+</defs>
+</svg>

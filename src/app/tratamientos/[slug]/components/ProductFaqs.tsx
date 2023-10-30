@@ -1,7 +1,7 @@
 import { Product } from '@interface/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
 import { FAQ, faqItems } from './faqs';

@@ -8,8 +8,6 @@ import {
 } from 'app/stores/globalStore';
 import { ModalBackground } from 'designSystem/Modals/Modal';
 import { isEmpty } from 'lodash';
-import Head from 'next/head';
-import Script from 'next/script';
 import { fetchClinics, fetchProducts } from 'utils/fetch';
 
 import { Breakpoint, DeviceSize } from './Breakpoint';

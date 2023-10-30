@@ -4,9 +4,8 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar } from 'icons/Icons';
-import { SvgInjection, SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
+import { SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function ProductInfo({ product }: { product: Product }) {

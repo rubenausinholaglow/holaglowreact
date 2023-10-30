@@ -84,7 +84,7 @@ export default function Header() {
         <Container isHeader>
           <Flex
             layout="row-between"
-            className={`w-full relative py-3 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
+            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
             <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
               <SvgHolaglow

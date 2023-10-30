@@ -41,6 +41,7 @@ module.exports = {
           magenta: '#D600BF',
           orange: '#FF7514',
           pink: '#FFC7C7',
+          pink300: '#ffeeee',
           cream: '#EFE8E2',
           cream500: '#f7f3f0',
           green: '#B9DDB6',
@@ -67,7 +68,7 @@ module.exports = {
         '2xl': '1280px',
       },
       boxShadow: {
-        'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.1)',
+        'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.05)',
         'centered-black': '0 0 10px 10px rgba(0,0,0,0.1)',
         'centered-black-sm': '0 0 5px 5px rgba(0,0,0,0.1)',
       },

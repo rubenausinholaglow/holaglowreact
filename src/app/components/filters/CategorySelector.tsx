@@ -8,7 +8,6 @@ import {
   filterCount,
   toggleFilter,
 } from 'app/tratamientos/utils/filters';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 

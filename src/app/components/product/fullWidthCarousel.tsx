@@ -1,5 +1,6 @@
 'use client';
 
+import { ReactNode } from 'react';
 import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Carousel } from 'designSystem/Carousel/Carousel';
@@ -10,27 +11,34 @@ import ProductCard from './ProductCard';
 
 export default function FullWidthCarousel({
   type = 'products',
+  visibleSlides,
   className,
   items,
+  children,
 }: {
-  type: 'products' | 'professionals';
+  type?: 'products' | 'professionals';
+  visibleSlides?: number | null;
   className?: string;
-  items: Product[] | Professional[] | null;
+  items?: Product[] | Professional[] | null;
+  children?: ReactNode;
 }) {
   const CONTAINER_WIDTH = 1152;
   const CONTAINER_PADDING = 16;
-  let firstItemLeftMargin = 0;
+  let firstItemLeftMargin = 16;
+  let slidesToShow = visibleSlides ? visibleSlides : 1.5;
 
-  if (document.body.clientWidth > CONTAINER_WIDTH) {
-    firstItemLeftMargin =
-      (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
-  } else {
-    firstItemLeftMargin = 16;
+  if (typeof window !== 'undefined') {
+    if (document && document.body.clientWidth > CONTAINER_WIDTH) {
+      firstItemLeftMargin =
+        (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
+    }
+
+    if (!visibleSlides) {
+      slidesToShow = (document.body.clientWidth - firstItemLeftMargin) / 304;
+    }
   }
 
-  const visibleSlides = (document.body.clientWidth - firstItemLeftMargin) / 304;
-
-  if (isEmpty(items)) {
+  if (isEmpty(items) && !children) {
     return <></>;
   }
 
@@ -48,11 +56,12 @@ export default function FullWidthCarousel({
         hasControls
         className={`relative ${className}`}
         isIntrinsicHeight
-        visibleSlides={visibleSlides}
+        visibleSlides={slidesToShow}
         infinite={false}
         isFullWidth
       >
-        {type === 'products' &&
+        {type &&
+          type === 'products' &&
           items &&
           items.map((product: Product | any, index) => {
             if (product.visibility) {
@@ -68,7 +77,8 @@ export default function FullWidthCarousel({
             return null;
           })}
 
-        {type === 'professionals' &&
+        {type &&
+          type === 'professionals' &&
           items &&
           items.map((professional: Professional | any, index) => {
             return (
@@ -79,6 +89,8 @@ export default function FullWidthCarousel({
               />
             );
           })}
+
+        {children}
       </Carousel>
     </>
   );

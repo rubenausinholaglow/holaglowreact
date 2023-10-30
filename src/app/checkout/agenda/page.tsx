@@ -38,6 +38,7 @@ export default function Agenda() {
     selectedTreatments,
     selectedPacksTreatments,
     selectedClinic,
+    analyticsMetrics,
   } = useGlobalPersistedStore(state => state);
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
@@ -56,7 +57,7 @@ export default function Agenda() {
       selectedTreatmentsIds &&
       (availableDates.length < maxDays ||
         selectedTreatmentsIds.indexOf(
-          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!
         ) == -1)
     ) {
       setLoadingMonth(true);
@@ -72,7 +73,7 @@ export default function Agenda() {
           if (
             (availability.length < maxDays ||
               selectedTreatmentsIds.indexOf(
-                process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+                process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!
               ) == -1) &&
             (date.isAfter(today) || date.isSame(today, 'day')) &&
             x.availability
@@ -121,7 +122,7 @@ export default function Agenda() {
     const date = dayjs(x);
     setDateToCheck(date);
   };
-  const selectHour = (x: Slot) => {
+  const selectHour = async (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
     if (user?.flowwwToken && previousAppointment) {
@@ -153,6 +154,18 @@ export default function Agenda() {
         },
         previous: previousAppointment,
       }).then(x => {
+        router.push('/checkout/confirmation');
+      });
+    } else if (user) {
+      await ScheduleService.createAppointment(
+        selectedTreatments,
+        selectedSlot!,
+        selectedDay,
+        selectedClinic!,
+        user,
+        selectedPacksTreatments!,
+        analyticsMetrics
+      ).then(x => {
         router.push('/checkout/confirmation');
       });
     } else {

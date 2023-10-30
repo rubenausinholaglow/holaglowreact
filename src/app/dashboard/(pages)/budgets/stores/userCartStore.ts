@@ -32,8 +32,6 @@ function recalculateCartItems(
     return cart;
   }
 
-  const price = applyDiscountToItem(value, discountType, cartItem);
-
   const updatedCartItem = {
     ...cartItem,
     priceWithDiscount:

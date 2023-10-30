@@ -17,7 +17,6 @@ export default function ProductPaymentOptions() {
     state => state
   );
   const [product, setProduct] = useState<Product | null>(null);
-  const probadorVirtualId = '75219EB2-DEC0-4CF9-2542-08DB4645F595';
 
   useEffect(() => {
     async function initProduct(productId: string) {
@@ -25,7 +24,7 @@ export default function ProductPaymentOptions() {
       setProduct(productDetails);
     }
 
-    initProduct(probadorVirtualId);
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!);
   }, []);
 
   const imgUrl = deviceSize.isMobile
