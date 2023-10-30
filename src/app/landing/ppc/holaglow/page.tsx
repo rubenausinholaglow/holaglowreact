@@ -176,18 +176,11 @@ export default function LandingCaptacion() {
         <Container className="px-0 md:flex md:flex-row items-start">
           <Container className="mb-4 md:w-3/5 mr-16">
             <Title size="2xl" className="font-bold mb-4 md:mr-16">
-              ¿Cómo{' '}
+              Diseñamos contigo un tratamiento{' '}
               <Underlined color={HOLAGLOW_COLORS['primary']}>
-                funciona
+                a tu medida
               </Underlined>
-              ?
             </Title>
-            <Text className="text-hg-black500 md:text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Text>
           </Container>
 
           <Container className="mt-12 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0 overflow-hidden">
