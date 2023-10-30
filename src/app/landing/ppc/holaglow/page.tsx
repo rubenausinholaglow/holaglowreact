@@ -116,7 +116,7 @@ export default function LandingCaptacion() {
               width={924}
               className="translate-x-4 -translate-y-[5%] md:translate-y-0 md:translate-x-0"
             />
-            <Flex className="justify-center col-start-2 -mt-[10%] md:hidden md:mt-auto md:self-start md:justify-start md:ml-16 ">
+            <Flex className="justify-center col-start-2 -mt-[40%] md:hidden md:mt-auto md:self-start md:justify-start md:ml-16 ">
               <Button
                 size="xl"
                 type="tertiary"
