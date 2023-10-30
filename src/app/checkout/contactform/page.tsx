@@ -182,19 +182,14 @@ export default function ConctactForm() {
   }
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    let user = await UserService.checkUser(formData.email);
 
-    if (!user) {
-      formData.analyticsMetrics = analyticsMetrics;
-      formData.phone = formData.phone
-        .replace(formData.phonePrefix, '')
-        .replaceAll(' ', '');
-      user = await UserService.registerUser(formData);
-      if (user) {
-        user.flowwwToken = user.clinicToken;
-      }
-    }
+    formData.analyticsMetrics = analyticsMetrics;
+    formData.phone = formData.phone
+      .replace(formData.phonePrefix, '')
+      .replaceAll(' ', '');
+    let user = await UserService.registerUser(formData);
     if (user) {
+      user.flowwwToken = user.clinicToken;
       setCurrentUser(user);
       localUser = user;
       await createAppointment();
