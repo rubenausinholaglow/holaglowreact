@@ -187,7 +187,7 @@ export default function ConctactForm() {
     request.phone = formData.phone
       .replace(formData.phonePrefix, '')
       .replaceAll(' ', '');
-    const user = await UserService.registerUser(formData);
+    const user = await UserService.registerUser(request);
     if (user) {
       user.flowwwToken = user.clinicToken;
       setCurrentUser(user);
