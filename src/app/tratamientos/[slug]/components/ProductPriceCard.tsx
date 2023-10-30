@@ -331,18 +331,21 @@ export default function ProductPriceCard({
   product,
   index,
   parentProduct,
+  className,
 }: {
   product: Product;
   index: number;
   parentProduct: Product;
+  className?: string;
 }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
-
   console.log();
 
   return (
-    <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
+    <Flex
+      className={`bg-white p-3 rounded-2xl w-full shadow-centered-secondary ${className}`}
+    >
       <AccordionItem
         value={deviceSize.isMobile ? `accordion-${index}` : 'value'}
       >
