@@ -30,6 +30,7 @@ export const Carousel = ({
   sliderWidth = {},
   sliderStyles = '',
   isFullWidth = false,
+  isPlaying = false,
   ...rest
 }: {
   children: ReactNode;
@@ -47,6 +48,7 @@ export const Carousel = ({
   sliderWidth?: object;
   sliderStyles?: string;
   isFullWidth?: boolean;
+  isPlaying?: boolean;
   [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -77,7 +79,6 @@ export const Carousel = ({
       isIntrinsicHeight={isIntrinsicHeight}
       totalSlides={childrens.length}
       currentSlide={isFullWidth ? currentSlideIndex : currentSlide}
-      infinite
       lockOnWindowScroll={true}
       dragEnabled={dragEnabled}
       touchEnabled={touchEnabled}
@@ -87,6 +88,8 @@ export const Carousel = ({
       orientation="horizontal"
       preventVerticalScrollOnTouch={true}
       verticalPixelThreshold={1000}
+      isPlaying={isPlaying}
+      interval={3000}
       {...rest}
     >
       <div style={sliderWidth}>

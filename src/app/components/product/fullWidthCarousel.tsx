@@ -14,12 +14,14 @@ export default function FullWidthCarousel({
   visibleSlides,
   className,
   items,
+  isPlaying = false,
   children,
 }: {
   type?: 'products' | 'professionals';
   visibleSlides?: number | null;
   className?: string;
   items?: Product[] | Professional[] | null;
+  isPlaying?: boolean;
   children?: ReactNode;
 }) {
   const CONTAINER_WIDTH = 1152;
@@ -57,7 +59,7 @@ export default function FullWidthCarousel({
         className={`relative ${className}`}
         isIntrinsicHeight
         visibleSlides={slidesToShow}
-        infinite={false}
+        isPlaying={isPlaying}
         isFullWidth
       >
         {type &&
