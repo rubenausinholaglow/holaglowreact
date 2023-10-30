@@ -5,7 +5,7 @@ import { MessageType } from '@interface/messageSocket';
 import { messageService } from '@services/MessageService';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgStethoscope } from 'icons/Icons';
-import { SvgCalling, SvgUserSquare } from 'icons/IconsDs';
+import { SvgUserSquare } from 'icons/IconsDs';
 
 import Notification from './Notification';
 

@@ -3,7 +3,6 @@
 import { ReactNode } from 'react';
 import { Professional } from '@interface/clinic';
 import { Product } from '@interface/product';
-import { Testimonial } from '@interface/testimonial';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { isEmpty } from 'lodash';
 

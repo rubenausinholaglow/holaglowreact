@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Product } from '@interface/product';
 import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
