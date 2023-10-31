@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
+import { Clinic } from '@interface/clinic';
+import { Slot } from '@interface/slot';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -13,8 +15,6 @@ import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
-import { Clinic } from '@interface/clinic';
-import { Slot } from '@interface/slot';
 
 export default function ConfirmationCheckout() {
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function ConfirmationCheckout() {
 
   let appointmentClinic: Clinic | undefined = undefined;
   if (selectedClinic) appointmentClinic = { ...selectedClinic };
-  let appointmentDay: {} | undefined = undefined;
+  let appointmentDay: any | undefined = undefined;
   if (selectedDay) appointmentDay = { ...selectedDay };
   let appointmentSlot: Slot | undefined = undefined;
   if (selectedSlot) appointmentSlot = { ...selectedSlot };
@@ -48,7 +48,6 @@ export default function ConfirmationCheckout() {
   }
 
   useEffect(() => {
-    debugger;
     if (
       appointmentClinic &&
       appointmentDay &&
