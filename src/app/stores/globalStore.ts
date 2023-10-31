@@ -39,7 +39,7 @@ interface GlobalPersistActions {
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setCurrentUser: (value: User) => void;
-  setSelectedSlot: (slot: Slot) => void;
+  setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
