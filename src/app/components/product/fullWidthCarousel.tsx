@@ -16,6 +16,7 @@ export default function FullWidthCarousel({
   items,
   hasControls = true,
   isPlaying = false,
+  disableLeftMargin = false,
   children,
 }: {
   type?: 'products' | 'professionals';
@@ -24,8 +25,11 @@ export default function FullWidthCarousel({
   items?: Product[] | Professional[] | null;
   hasControls?: boolean;
   isPlaying?: boolean;
+  disableLeftMargin?: boolean;
   children?: ReactNode;
 }) {
+  const randomId = Math.random().toString().slice(2, 5);
+
   const CONTAINER_WIDTH = 1152;
   const CONTAINER_PADDING = 16;
   let firstItemLeftMargin = 16;
@@ -50,13 +54,15 @@ export default function FullWidthCarousel({
     <>
       <style>
         {`
-          #productCarousel [aria-label="slider"] {
-            padding-left: ${firstItemLeftMargin}px;
+          #productCarousel${randomId} [aria-label="slider"] {
+            padding-left: ${
+              disableLeftMargin ? '0' : firstItemLeftMargin
+            }px !important;
           }
         `}
       </style>
       <Carousel
-        id="productCarousel"
+        id={`productCarousel${randomId}`}
         hasControls={hasControls && !isPlaying}
         className={`relative ${className}`}
         isIntrinsicHeight

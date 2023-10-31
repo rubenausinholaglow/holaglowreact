@@ -3,6 +3,7 @@
 import { Testimonial } from '@interface/testimonial';
 import TestimonialCard from 'app/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/components/product/fullWidthCarousel';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
@@ -59,25 +60,33 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export default function LandingTestimonials() {
+  const { deviceSize } = useGlobalPersistedStore(state => state);
+
   return (
-    <>
-      <Container className="pt-12 pb-4">
+    <Container className="px-0 md:flex md:items-center">
+      <Container className="pt-12 pb-4 md:w-[45%] shrink-0">
         <Title size="2xl" className="font-bold mb-4">
           ¿Qué dicen de{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>nosotros</Underlined>?
         </Title>
       </Container>
-      <FullWidthCarousel className="pb-8">
-        {TESTIMONIALS.map((testimonial: Testimonial | any) => {
-          return (
-            <TestimonialCard
-              key={testimonial.name}
-              testimonial={testimonial}
-              className="h-full flex flex-col mr-4"
-            />
-          );
-        })}
-      </FullWidthCarousel>
-    </>
+      <div className="md:w-[55%] md:mt-20">
+        <FullWidthCarousel
+          className="pb-8"
+          disableLeftMargin={!deviceSize.isMobile}
+          visibleSlides={deviceSize.isMobile ? 1.25 : 2}
+        >
+          {TESTIMONIALS.map((testimonial: Testimonial | any) => {
+            return (
+              <TestimonialCard
+                key={testimonial.name}
+                testimonial={testimonial}
+                className="h-full flex flex-col mr-4"
+              />
+            );
+          })}
+        </FullWidthCarousel>
+      </div>
+    </Container>
   );
 }

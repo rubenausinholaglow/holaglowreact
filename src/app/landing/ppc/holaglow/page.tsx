@@ -140,7 +140,7 @@ export default function LandingCaptacion() {
 
       <Products hideCategorySelector />
 
-      <div className="bg-[#eaf5e9]">
+      <div className="bg-[url('/images/statics/landings/captacion/testimonialsBg.svg')] md:bg-[url('/images/statics/landings/captacion/testimonialsBg-desktop.svg')] bg-no-repeat bg-center pb-12 md:py-16">
         <LandingTestimonials />
       </div>
 
