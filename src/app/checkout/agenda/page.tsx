@@ -23,11 +23,7 @@ import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
 export default function Agenda() {
   const router = useRouter();
-  const [dateToCheck, setDateToCheck] = useState(dayjs());
-  const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
-  const [morningHours, setMorningHours] = useState(Array<Slot>);
-  const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
-  const [dateFromatted, setDateFormatted] = useState('');
+
   const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
     state => state
   );
@@ -40,6 +36,13 @@ export default function Agenda() {
     selectedClinic,
     analyticsMetrics,
   } = useGlobalPersistedStore(state => state);
+
+  const [enableScheduler, setEnableScheduler] = useState(false);
+  const [dateToCheck, setDateToCheck] = useState(dayjs());
+  const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
+  const [morningHours, setMorningHours] = useState(Array<Slot>);
+  const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
+  const [dateFromatted, setDateFormatted] = useState('');
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
@@ -97,6 +100,7 @@ export default function Agenda() {
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
     setSelectedSlot(undefined);
+    setEnableScheduler(true);
   }, []);
 
   useEffect(() => {
@@ -150,7 +154,10 @@ export default function Agenda() {
         router.push('/checkout/contactform');
       }
     }
-    if (selectedSlot) schedule();
+
+    if (selectedSlot && enableScheduler) {
+      schedule();
+    }
   }, [selectedSlot]);
 
   useEffect(() => {
