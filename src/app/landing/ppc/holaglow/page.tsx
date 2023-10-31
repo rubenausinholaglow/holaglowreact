@@ -29,9 +29,12 @@ import ConsistOf from './components/ConsistOF';
 import LandingTestimonials from './components/LandingTestimonials';
 
 export default function LandingCaptacion() {
-  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const {
+    deviceSize,
+    setSelectedTreatments,
+    setSelectedSlot,
+    setSelectedClinic,
+  } = useGlobalPersistedStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -39,6 +42,8 @@ export default function LandingCaptacion() {
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
   useEffect(() => {
+    setSelectedSlot(undefined);
+    setSelectedClinic(undefined);
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setSelectedTreatments([productDetails]);
