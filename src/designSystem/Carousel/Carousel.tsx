@@ -89,7 +89,7 @@ export const Carousel = ({
       preventVerticalScrollOnTouch={true}
       verticalPixelThreshold={1000}
       isPlaying={isPlaying}
-      interval={3000}
+      interval={2000}
       {...rest}
     >
       <div style={sliderWidth}>
