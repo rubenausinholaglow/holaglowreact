@@ -5,7 +5,7 @@ import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -13,6 +13,8 @@ import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+import { Clinic } from '@interface/clinic';
+import { Slot } from '@interface/slot';
 
 export default function ConfirmationCheckout() {
   const router = useRouter();
@@ -30,9 +32,12 @@ export default function ConfirmationCheckout() {
     setSelectedClinic,
   } = useGlobalPersistedStore(state => state);
 
-  const appointmentClinic = { ...selectedClinic };
-  const appointmentDay = { ...selectedDay };
-  const appointmentSlot = { ...selectedSlot };
+  let appointmentClinic: Clinic | undefined = undefined;
+  if (selectedClinic) appointmentClinic = { ...selectedClinic };
+  let appointmentDay: {} | undefined = undefined;
+  if (selectedDay) appointmentDay = { ...selectedDay };
+  let appointmentSlot: Slot | undefined = undefined;
+  if (selectedSlot) appointmentSlot = { ...selectedSlot };
 
   const localSelectedDay = dayjs(selectedDay);
 
@@ -43,6 +48,7 @@ export default function ConfirmationCheckout() {
   }
 
   useEffect(() => {
+    debugger;
     if (
       appointmentClinic &&
       appointmentDay &&
@@ -52,8 +58,6 @@ export default function ConfirmationCheckout() {
       setSelectedClinic(undefined);
       setSelectedDay(dayjs());
       setSelectedSlot(undefined);
-      setSelectedTreatments([]);
-      setSelectedPackTreatments([]);
     }
     if (!appointmentClinic || !appointmentSlot || !selectedTreatments) {
       router.push(ROUTES.home);
