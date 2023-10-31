@@ -49,6 +49,7 @@ export default function LandingCaptacion() {
 
   return (
     <MainLayout hideHeader>
+      <meta name="robots" content="noindex,follow" />
       <header id="header" className="z-30 w-full bg-white">
         <Container isHeader>
           <Flex

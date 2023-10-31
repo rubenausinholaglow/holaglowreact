@@ -157,6 +157,8 @@ export default function Agenda() {
         router.push('/checkout/confirmation');
       });
     } else if (user) {
+      setLoadingDays(true);
+      setLoadingMonth(true);
       await ScheduleService.createAppointment(
         selectedTreatments,
         selectedSlot!,
