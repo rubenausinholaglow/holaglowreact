@@ -30,20 +30,16 @@ export default function ConfirmationCheckout() {
     setSelectedClinic,
   } = useGlobalPersistedStore(state => state);
 
-  const appointmentClinic = selectedClinic;
-  const appointmentDay = selectedDay;
-  const appointmentSlot = selectedSlot;
-  const appointmentTreatments = selectedTreatments;
-  const appointmentPacksTreatments = selectedPacksTreatments;
+  const appointmentClinic = { ...selectedClinic };
+  const appointmentDay = { ...selectedDay };
+  const appointmentSlot = { ...selectedSlot };
 
-  const localSelectedDay = dayjs(appointmentDay);
+  const localSelectedDay = dayjs(selectedDay);
 
   let selectedTreatmentsNames = '';
 
-  if (appointmentTreatments) {
-    selectedTreatmentsNames = appointmentTreatments
-      .map(x => x.title)
-      .join(' + ');
+  if (selectedTreatments) {
+    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
   }
 
   useEffect(() => {
@@ -51,7 +47,7 @@ export default function ConfirmationCheckout() {
       appointmentClinic &&
       appointmentDay &&
       appointmentSlot &&
-      appointmentTreatments
+      selectedTreatments
     ) {
       setSelectedClinic(undefined);
       setSelectedDay(dayjs());
@@ -59,7 +55,7 @@ export default function ConfirmationCheckout() {
       setSelectedTreatments([]);
       setSelectedPackTreatments([]);
     }
-    if (!appointmentClinic || !appointmentSlot || !appointmentTreatments) {
+    if (!appointmentClinic || !appointmentSlot || !selectedTreatments) {
       router.push(ROUTES.home);
     }
   }, []);
@@ -126,18 +122,18 @@ export default function ConfirmationCheckout() {
                   <Text className="font-semibold">
                     {selectedTreatmentsNames}
                   </Text>
-                  {appointmentTreatments &&
-                  appointmentTreatments[0] &&
-                  appointmentTreatments[0].isPack ? (
+                  {selectedTreatments &&
+                  selectedTreatments[0] &&
+                  selectedTreatments[0].isPack ? (
                     <ul className="p-1">
-                      {appointmentPacksTreatments &&
-                        appointmentPacksTreatments.map(item => {
+                      {selectedPacksTreatments &&
+                        selectedPacksTreatments.map(item => {
                           return <li key={item.title}>- {item.title}</li>;
                         })}
                     </ul>
-                  ) : appointmentTreatments[0] &&
-                    !isEmpty(appointmentTreatments[0].appliedProducts) ? (
-                    appointmentTreatments[0].appliedProducts.map(item => {
+                  ) : selectedTreatments[0] &&
+                    !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                    selectedTreatments[0].appliedProducts.map(item => {
                       const iconName = item.icon.split('/')[0] || 'SvgCross';
                       const iconFamily:
                         | 'default'
@@ -167,8 +163,8 @@ export default function ConfirmationCheckout() {
                         width={16}
                         className="mr-2 mt-0.5 text-hg-secondary shrink-0"
                       />
-                      {appointmentTreatments[0] && (
-                        <Text>{appointmentTreatments[0].description}</Text>
+                      {selectedTreatments[0] && (
+                        <Text>{selectedTreatments[0].description}</Text>
                       )}
                     </Flex>
                   )}
