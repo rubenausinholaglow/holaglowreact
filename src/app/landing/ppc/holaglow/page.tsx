@@ -196,6 +196,7 @@ export default function LandingCaptacion() {
         <FullWidthCarousel
           className="pb-8 -mt-8"
           visibleSlides={deviceSize.isMobile ? 1.5 : null}
+          isPlaying
         >
           {Array.from({ length: 15 }, (_, index) => (
             <div
