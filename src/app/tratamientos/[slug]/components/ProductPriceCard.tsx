@@ -137,16 +137,18 @@ function ProductPriceItemsCard({
   product,
   parentProduct,
   setAccordionOverflow,
+  isOpen,
 }: {
   product: Product;
   parentProduct: Product;
   setAccordionOverflow: (value: string) => void;
+  isOpen?: boolean;
 }) {
   const { setSelectedTreatments, setSelectedPackTreatments, stateProducts } =
     useGlobalPersistedStore(state => state);
 
   const router = useRouter();
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(isOpen);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
   );
@@ -388,7 +390,7 @@ export default function ProductPriceCard({
               </Flex>
             </Flex>
             <Text className="font-semibold md:text-lg">{product.title}</Text>
-            {product.isPack && (
+            {product.isPack && deviceSize.isMobile && (
               <Text className="font-semibold md:text-lg">
                 ¡Tu eliges la zona!
               </Text>
@@ -401,11 +403,64 @@ export default function ProductPriceCard({
             `data-[state=closed]:overflow-hidden ${accordionOverflow}`
           )}
         >
-          <ProductPriceItemsCard
-            product={product}
-            parentProduct={parentProduct}
-            setAccordionOverflow={setAccordionOverflow}
-          />
+          <Flex layout="col-left" className="md:flex-row items-start p-4">
+            <div className="md:w-1/2 shrink-0">
+              {fullWidthPack && !deviceSize.isMobile && (
+                <>
+                  <Text className="font-semibold md:text-lg mb-2">
+                    ¡Tu eliges la zona!
+                  </Text>
+                  {!isEmpty(product.appliedProducts) ? (
+                    <>
+                      {product.appliedProducts.map(item => {
+                        const iconName = item.icon.split('/')[0] || 'SvgCross';
+                        const iconFamily:
+                          | 'default'
+                          | 'category'
+                          | 'suggestion'
+                          | 'service' =
+                          (item.icon.split('/')[1] as 'default') || 'default';
+
+                        return (
+                          <Flex key={item.titlte} className="items-start mb-2">
+                            <DynamicIcon
+                              height={16}
+                              width={16}
+                              className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                              name={iconName}
+                              family={iconFamily}
+                            />
+
+                            <Text>{item.titlte}</Text>
+                          </Flex>
+                        );
+                      })}
+                      {product?.packMoreInformation && (
+                        <p>{product?.packMoreInformation}</p>
+                      )}
+                    </>
+                  ) : (
+                    <Flex className="items-start mb-2">
+                      <SvgInjection
+                        height={16}
+                        width={16}
+                        className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                      />
+                      <Text>{product.description}</Text>
+                    </Flex>
+                  )}
+                </>
+              )}
+            </div>
+            <div className="bg-hg-black50 p-3 w-full rounded-xl md:w-1/2">
+              <ProductPriceItemsCard
+                product={product}
+                parentProduct={parentProduct}
+                setAccordionOverflow={setAccordionOverflow}
+                isOpen={fullWidthPack && !deviceSize.isMobile}
+              />
+            </div>
+          </Flex>
         </AccordionContent>
       </AccordionItem>
     </Flex>
