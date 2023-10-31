@@ -89,12 +89,15 @@ export default function ProductPrices({ product }: { product: Product }) {
             >
               {productItems.map((item: Product, index: number) => (
                 <ProductPriceCard
+                  fullWidthPack={productItems.length === 1 && item.isPack}
                   key={item.title}
                   product={item}
                   index={index}
                   parentProduct={product}
                   className={
-                    productItems.length === 1 && !deviceSize.isMobile
+                    productItems.length === 1 &&
+                    !deviceSize.isMobile &&
+                    !item.isPack
                       ? 'w-1/2'
                       : ''
                   }

@@ -331,16 +331,17 @@ export default function ProductPriceCard({
   product,
   index,
   parentProduct,
+  fullWidthPack = false,
   className,
 }: {
   product: Product;
   index: number;
   parentProduct: Product;
+  fullWidthPack?: boolean;
   className?: string;
 }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
-  console.log();
 
   return (
     <Flex
@@ -400,13 +401,11 @@ export default function ProductPriceCard({
             `data-[state=closed]:overflow-hidden ${accordionOverflow}`
           )}
         >
-          <div className="bg-hg-black50 p-3 w-full rounded-xl">
-            <ProductPriceItemsCard
-              product={product}
-              parentProduct={parentProduct}
-              setAccordionOverflow={setAccordionOverflow}
-            />
-          </div>
+          <ProductPriceItemsCard
+            product={product}
+            parentProduct={parentProduct}
+            setAccordionOverflow={setAccordionOverflow}
+          />
         </AccordionContent>
       </AccordionItem>
     </Flex>
