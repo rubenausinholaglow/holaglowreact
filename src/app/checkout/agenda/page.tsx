@@ -135,7 +135,7 @@ export default function Agenda() {
       }
       const treatments = selectedTreatments!.map(x => x.title).join(', ');
       const comment = 'Tratamiento visto en web: ' + treatments;
-      ScheduleService.reschedule({
+      await ScheduleService.reschedule({
         next: {
           box: selectedSlot!.box,
           endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
@@ -367,8 +367,8 @@ export default function Agenda() {
                             >
                               <div
                                 className="w-full cursor-pointer flex justify-center"
-                                onClick={() => {
-                                  selectHour(x);
+                                onClick={async () => {
+                                  await selectHour(x);
                                   setClickedHour(x.startTime);
                                 }}
                               >
@@ -402,8 +402,8 @@ export default function Agenda() {
                             >
                               <div
                                 className="w-full cursor-pointer flex justify-center"
-                                onClick={() => {
-                                  selectHour(x);
+                                onClick={async () => {
+                                  await selectHour(x);
                                   setClickedHour(x.startTime);
                                 }}
                               >
