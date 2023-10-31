@@ -59,11 +59,10 @@ export default function ConfirmationCheckout() {
       setSelectedTreatments([]);
       setSelectedPackTreatments([]);
     }
+    if (!appointmentClinic || !appointmentSlot || !appointmentTreatments) {
+      router.push(ROUTES.home);
+    }
   }, []);
-
-  if (!appointmentClinic || !appointmentSlot || !appointmentTreatments) {
-    router.push(ROUTES.home);
-  }
 
   return (
     <MainLayout hideFooter>
