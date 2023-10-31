@@ -96,7 +96,62 @@ export default function Agenda() {
   useEffect(() => {
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
+    setSelectedSlot(undefined);
   }, []);
+
+  useEffect(() => {
+    async function schedule() {
+      if (user?.flowwwToken && previousAppointment) {
+        let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+        if (selectedPacksTreatments && selectedPacksTreatments.length) {
+          ids = selectedPacksTreatments!
+            .slice(0, 2)
+            .map(x => x.flowwwId)
+            .join(',');
+        }
+        const treatments = selectedTreatments!.map(x => x.title).join(', ');
+        const comment = 'Tratamiento visto en web: ' + treatments;
+        await ScheduleService.reschedule({
+          next: {
+            box: selectedSlot!.box,
+            endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+            id: '0',
+            startTime:
+              selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+            treatment: ids,
+            clientId: user?.flowwwToken,
+            comment: comment,
+            treatmentText: treatments,
+            referralId: '',
+            externalReference: '',
+            isPast: false,
+            clinicId: selectedClinic?.flowwwId,
+            isCancelled: false,
+          },
+          previous: previousAppointment,
+        }).then(x => {
+          router.push('/checkout/confirmation');
+        });
+      } else if (user) {
+        setLoadingDays(true);
+        setLoadingMonth(true);
+        await ScheduleService.createAppointment(
+          selectedTreatments,
+          selectedSlot!,
+          selectedDay,
+          selectedClinic!,
+          user,
+          selectedPacksTreatments!,
+          analyticsMetrics
+        ).then(x => {
+          router.push('/checkout/confirmation');
+        });
+      } else {
+        router.push('/checkout/contactform');
+      }
+    }
+    if (selectedSlot) schedule();
+  }, [selectedSlot]);
 
   useEffect(() => {
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
@@ -125,54 +180,6 @@ export default function Agenda() {
   const selectHour = async (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
-    if (user?.flowwwToken && previousAppointment) {
-      let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
-      if (selectedPacksTreatments && selectedPacksTreatments.length) {
-        ids = selectedPacksTreatments!
-          .slice(0, 2)
-          .map(x => x.flowwwId)
-          .join(',');
-      }
-      const treatments = selectedTreatments!.map(x => x.title).join(', ');
-      const comment = 'Tratamiento visto en web: ' + treatments;
-      await ScheduleService.reschedule({
-        next: {
-          box: selectedSlot!.box,
-          endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
-          id: '0',
-          startTime:
-            selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
-          treatment: ids,
-          clientId: user?.flowwwToken,
-          comment: comment,
-          treatmentText: treatments,
-          referralId: '',
-          externalReference: '',
-          isPast: false,
-          clinicId: selectedClinic?.flowwwId,
-          isCancelled: false,
-        },
-        previous: previousAppointment,
-      }).then(x => {
-        router.push('/checkout/confirmation');
-      });
-    } else if (user) {
-      setLoadingDays(true);
-      setLoadingMonth(true);
-      await ScheduleService.createAppointment(
-        selectedTreatments,
-        selectedSlot!,
-        selectedDay,
-        selectedClinic!,
-        user,
-        selectedPacksTreatments!,
-        analyticsMetrics
-      ).then(x => {
-        router.push('/checkout/confirmation');
-      });
-    } else {
-      router.push('/checkout/contactform');
-    }
   };
 
   const selectDate = (x: Date) => {
@@ -368,8 +375,8 @@ export default function Agenda() {
                               <div
                                 className="w-full cursor-pointer flex justify-center"
                                 onClick={async () => {
-                                  await selectHour(x);
                                   setClickedHour(x.startTime);
+                                  await selectHour(x);
                                 }}
                               >
                                 {clickedHour === x.startTime && (
@@ -403,8 +410,8 @@ export default function Agenda() {
                               <div
                                 className="w-full cursor-pointer flex justify-center"
                                 onClick={async () => {
-                                  await selectHour(x);
                                   setClickedHour(x.startTime);
+                                  await selectHour(x);
                                 }}
                               >
                                 {clickedHour === x.startTime && (
