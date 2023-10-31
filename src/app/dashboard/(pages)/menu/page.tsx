@@ -43,25 +43,8 @@ const Page = () => {
     setFlowwwToken(localStorage.getItem('flowwwToken') || '');
   }, []);
 
-  const handleClick = async () => {
-    setIsCommentModalOpen(true);
-  };
-  const handleCommentSubmit = async () => {
-    setIsCommentModalOpen(false);
-    const result = await ScheduleService.finish(
-      appointmentId ?? '',
-      comment ?? '',
-      userId || ''
-    );
-    if (result) {
-      clearLocalStorage(false);
-      router.push(`/dashboard?clinicId=${clinicId}&boxId=${boxId}`);
-    } else {
-      //TODO - MESSAGE!
-    }
-  };
   return (
-    <MainLayout isDashboard>
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {username && (
         <Container>
           <Flex layout="col-center">
@@ -84,39 +67,6 @@ const Page = () => {
               ))}
             </div>
           </Flex>
-          {!isCommentModalOpen && (
-            <Flex layout="col-center" className="mt-8">
-              <Button isSubmit onClick={handleClick} type="secondary">
-                Validar Cita
-              </Button>
-            </Flex>
-          )}
-          {isCommentModalOpen && (
-            <Flex layout="col-center" className="mt-8">
-              <textarea
-                value={comment}
-                onChange={e => setComment(e.target.value)}
-                placeholder="Escribe tu comentario..."
-                className="w-full h-40 p-2 resize-none border rounded-lg"
-              />
-
-              <Button
-                isSubmit
-                onClick={handleCommentSubmit}
-                type="secondary"
-                className="mt-4"
-              >
-                Validar Cita
-              </Button>
-              <Button
-                onClick={() => setIsCommentModalOpen(false)}
-                type="secondary"
-                className="mt-4"
-              >
-                Cancelar
-              </Button>
-            </Flex>
-          )}
         </Container>
       )}
     </MainLayout>

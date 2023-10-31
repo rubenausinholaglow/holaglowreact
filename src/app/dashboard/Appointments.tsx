@@ -82,7 +82,7 @@ const AppointmentsListComponent: React.FC<{
           );
           localStorage.setItem('boxId', boxId || '');
           saveUserDetails(name, id, flowwwToken);
-          router.push('/dashboard/menu');
+          router.push('/dashboard/remoteControl');
         } else {
           //TODO - Poner un mensaje de Error en UI
         }

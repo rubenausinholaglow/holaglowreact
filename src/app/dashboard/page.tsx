@@ -14,6 +14,7 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../components/common/RegistrationForm';
+import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
 
 export default function Page({
@@ -26,7 +27,9 @@ export default function Page({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [clinicId, setClinicId] = useState('');
   const [boxId, setBoxId] = useState('');
+  const [remoteControl, setRemoteControl] = useState(false);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -58,6 +61,8 @@ export default function Page({
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
+    setRemoteControl(searchParams.remoteControl == 'true');
+    setClinicId(params.get('clinicId') || '');
   }, []);
 
   const handleCheckUser = async () => {
@@ -193,32 +198,50 @@ export default function Page({
     setErrors(errors);
   };
 
-  return (
-    <MainLayout
-      isDashboard
-      hideBackButton
-      hideContactButtons
-      hideProfessionalSelector
-    >
-      <div className="mt-8">
-        {showRegistration ? (
-          <RegistrationForm
-            formData={formData}
-            handleFieldChange={handleFormFieldChange}
-            handleContinue={handleContinue}
-            errors={errors}
-            isLoading={isLoading}
-          />
-        ) : (
-          <SearchUser
-            email={userEmail}
-            handleFieldChange={handleFieldEmailChange}
-            handleCheckUser={handleCheckUser}
-            errors={errors}
-            isLoading={isLoading}
-          />
-        )}
-      </div>
-    </MainLayout>
-  );
+  if (remoteControl)
+    return (
+      <MainLayout
+        isDashboard
+        hideBackButton
+        hideContactButtons
+        hideProfessionalSelector
+      >
+        <div>
+          <AppointmentsListComponent
+            clinicId={clinicId}
+            boxId={boxId}
+          ></AppointmentsListComponent>
+        </div>
+      </MainLayout>
+    );
+
+  if (!remoteControl)
+    return (
+      <MainLayout
+        isDashboard
+        hideBackButton
+        hideContactButtons
+        hideProfessionalSelector
+      >
+        <div className="mt-8">
+          {showRegistration ? (
+            <RegistrationForm
+              formData={formData}
+              handleFieldChange={handleFormFieldChange}
+              handleContinue={handleContinue}
+              errors={errors}
+              isLoading={isLoading}
+            />
+          ) : (
+            <SearchUser
+              email={userEmail}
+              handleFieldChange={handleFieldEmailChange}
+              handleCheckUser={handleCheckUser}
+              errors={errors}
+              isLoading={isLoading}
+            />
+          )}
+        </div>
+      </MainLayout>
+    );
 }

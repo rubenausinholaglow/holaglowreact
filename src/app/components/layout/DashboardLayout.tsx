@@ -26,35 +26,36 @@ export default function DashboardLayout({
   const messageSocket = useMessageSocket(state => state);
 
   useEffect(() => {
+    if (!hideContactButtons) {
+      SocketService.getInstance({
+        urlConnection:
+          process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse',
+        onReceiveMessage: message => {
+          const finalMessage: MessageSocket = {
+            messageType: MessageType.ChatResponse,
+            message: message,
+          };
+          messageSocket.addMessageSocket(finalMessage);
+        },
+      });
+      SocketService.getInstance({
+        urlConnection:
+          process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/PatientArrived',
+        onReceiveMessage: message => {
+          const finalMessage: MessageSocket = {
+            messageType: MessageType.PatientArrived,
+            message: message,
+          };
+          messageSocket.addMessageSocket(finalMessage);
+        },
+      });
+    }
     SocketService.getInstance({
       urlConnection:
         process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse',
       onReceiveMessage: message => {
         const finalMessage: MessageSocket = {
           messageType: MessageType.PaymentResponse,
-          message: message,
-        };
-        messageSocket.addMessageSocket(finalMessage);
-      },
-    });
-
-    SocketService.getInstance({
-      urlConnection: process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/PatientArrived',
-      onReceiveMessage: message => {
-        const finalMessage: MessageSocket = {
-          messageType: MessageType.PatientArrived,
-          message: message,
-        };
-        messageSocket.addMessageSocket(finalMessage);
-      },
-    });
-
-    SocketService.getInstance({
-      urlConnection:
-        process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse',
-      onReceiveMessage: message => {
-        const finalMessage: MessageSocket = {
-          messageType: MessageType.ChatResponse,
           message: message,
         };
         messageSocket.addMessageSocket(finalMessage);
