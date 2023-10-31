@@ -3,11 +3,85 @@ import {
   Appointment,
   RescheduleAppointmentRequest,
   Status,
+  User,
 } from '@interface/appointment';
+import { AnalyticsMetrics } from '@interface/client';
+import { Clinic } from '@interface/clinic';
 import { DayAvailability } from '@interface/dayAvailability';
+import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import dayjs, { Dayjs } from 'dayjs';
+import router from 'next/router';
 
 export default class ScheduleService {
+  static getExternalReference(analyticsMetrics: AnalyticsMetrics): string {
+    switch (analyticsMetrics.utmSource) {
+      case 'google':
+      case 'cpc':
+        return '16';
+      case 'instagram':
+      case 'ig':
+        return '17';
+      case 'facebook':
+      case 'fb':
+      case 'an':
+      case 'msg':
+        return '18';
+      case 'tiktok':
+        return '20';
+      default:
+        return '';
+    }
+  }
+
+  static createAppointment = async (
+    selectedTreatments: Product[],
+    selectedSlot: Slot,
+    selectedDay: Dayjs,
+    selectedClinic: Clinic,
+    user: User,
+    selectedPacksTreatments: Product[],
+    analyticsMetrics: AnalyticsMetrics
+  ) => {
+    const appointments: Appointment[] = [];
+    let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
+    let treatments = selectedTreatments!.map(x => x.title).join(',');
+    if (selectedPacksTreatments && selectedPacksTreatments.length) {
+      ids = selectedPacksTreatments!
+        .slice(0, 2)
+        .map(x => x.flowwwId)
+        .join(',');
+      treatments = selectedPacksTreatments!.map(x => x.title).join(',');
+    }
+    const format = 'YYYY-MM-DD';
+    const comment = 'Tratamiento visto en web: ' + treatments;
+    appointments.push({
+      box: selectedSlot!.box,
+      endTime:
+        dayjs(selectedDay)!.format(format) +
+        ' ' +
+        selectedSlot!.endTime +
+        ':00',
+      id: '0',
+      startTime:
+        dayjs(selectedDay)!.format(format) +
+        ' ' +
+        selectedSlot!.startTime +
+        ':00',
+      treatment: ids,
+      clientId: user?.flowwwToken,
+      comment: comment,
+      treatmentText: treatments,
+      referralId: '',
+      externalReference: ScheduleService.getExternalReference(analyticsMetrics),
+      isPast: false,
+      clinicId: selectedClinic?.flowwwId,
+      isCancelled: false,
+    } as Appointment);
+    await ScheduleService.scheduleBulk(appointments);
+  };
+
   static async getClinicSchedule(flowwwToken: string) {
     try {
       const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/v2/Next?token=${flowwwToken}`;

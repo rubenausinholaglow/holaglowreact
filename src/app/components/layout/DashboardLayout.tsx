@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
 import ButtonMessage from '@components/ui/ButtonMessage';
 import { useMessageSocket } from '@components/useMessageSocket';

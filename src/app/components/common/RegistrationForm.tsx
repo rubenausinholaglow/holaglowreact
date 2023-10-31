@@ -1,12 +1,18 @@
 'use client';
 
 import 'react-phone-input-2/lib/style.css';
+import 'app/checkout/contactform/phoneInputStyle.css';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
+import { Client } from '@interface/client';
+import ScheduleService from '@services/ScheduleService';
+import UserService from '@services/UserService';
 import * as errorsConfig from '@utils/textConstants';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
+import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -14,20 +20,54 @@ import { SvgSpinner } from 'icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import TextInputField from '../../dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../dashboard/utils/props';
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({
-  formData,
-  handleFieldChange,
-  handleContinue,
-  errors,
-  isLoading,
-}) => {
+const RegistrationForm: React.FC<RegistrationFormProps> = () => {
+  const router = useRouter();
+
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState(false);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
+
+  const {
+    selectedTreatments,
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    selectedPacksTreatments,
+    analyticsMetrics,
+    setCurrentUser,
+  } = useGlobalPersistedStore(state => state);
+
+  const [formData, setFormData] = useState<Client>({
+    email: '',
+    phone: '',
+    phonePrefix: '',
+    name: '',
+    surname: '',
+    secondSurname: '',
+    termsAndConditionsAccepted: false,
+    receiveCommunications: false,
+    page: '',
+    externalReference: '',
+    analyticsMetrics: {
+      device: 0,
+      locPhysicalMs: '',
+      utmAdgroup: '',
+      utmCampaign: '',
+      utmContent: '',
+      utmMedium: '',
+      utmSource: '',
+      utmTerm: '',
+    },
+    interestedTreatment: '',
+    treatmentPrice: 0,
+  });
 
   useEffect(() => {
     if (
@@ -44,11 +84,100 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     }
   }, [formData, showPhoneError, showEmailError]);
 
+  const handleFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    const value =
+      event.target.type === 'checkbox'
+        ? event.target.checked
+        : event.target.value;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [field]: value,
+    }));
+  };
+
+  const handleContinue = async () => {
+    const requiredFields = ['email', 'phone', 'name', 'surname'];
+    const isEmailValid = utils.validateEmail(formData.email);
+    const areAllFieldsFilled = requiredFields.every(
+      field => formData[field] !== ''
+    );
+
+    if (
+      areAllFieldsFilled &&
+      isEmailValid &&
+      formData.termsAndConditionsAccepted &&
+      errors.length == 0
+    ) {
+      setErrors([]);
+      await handleRegistration();
+    } else {
+      const errorMessages = [];
+
+      if (!isEmailValid && formData['email'].length > 0) {
+        errorMessages.push(errorsConfig.ERROR_EMAIL_NOT_VALID);
+      }
+      if (requiredFields.some(field => formData[field] === '')) {
+        errorMessages.push(errorsConfig.ERROR_MISSING_FIELDS);
+      }
+      if (!formData.termsAndConditionsAccepted) {
+        errorMessages.push(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED);
+      }
+
+      handleRequestError(errorMessages);
+    }
+  };
+
   function handlePhoneChange(value: any, country: any, formattedValue: string) {
     handleFieldChange(value, 'phone');
     value.target.value = '+' + country.dialCode;
     handleFieldChange(value, 'phonePrefix');
   }
+
+  const handleRegistration = async () => {
+    await registerUser(formData);
+  };
+
+  const handleRequestError = (errors: Array<string>) => {
+    localStorage.clear();
+    setErrors(errors);
+  };
+
+  const registerUser = async (formData: Client) => {
+    setIsLoading(true);
+    let user = await UserService.checkUser(formData.email);
+
+    if (!user) {
+      formData.analyticsMetrics = analyticsMetrics;
+      formData.phone = formData.phone
+        .replace(formData.phonePrefix, '')
+        .replaceAll(' ', '');
+      user = await UserService.registerUser(formData);
+      if (user) {
+        user.flowwwToken = user.clinicToken;
+      }
+    }
+    if (user) {
+      setCurrentUser(user);
+      if (selectedSlot && selectedClinic) {
+        await ScheduleService.createAppointment(
+          selectedTreatments,
+          selectedSlot!,
+          selectedDay,
+          selectedClinic!,
+          user,
+          selectedPacksTreatments!,
+          analyticsMetrics
+        ).then(x => {
+          router.push('/checkout/confirmation');
+        });
+      } else {
+        router.push('/checkout/clinicas');
+      }
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 gap-4 w-full">

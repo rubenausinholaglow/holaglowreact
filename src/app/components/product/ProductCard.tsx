@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Product } from '@interface/product';
 import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
@@ -11,23 +10,37 @@ import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
   product,
   className = '',
+  searchParams,
   ...rest
 }: {
   product: Product;
   className?: string;
   [key: string]: any;
 }) {
+  const pathName = usePathname();
+
+  const LANDINGS: { [key: string]: string } = {
+    '/landing/ppc/holaglow': '#leadForm',
+  };
+
+  const isLanding = Object.keys(LANDINGS).includes(usePathname());
+
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
 
   return (
     <Link
-      href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
+      href={
+        isLanding
+          ? LANDINGS[pathName]
+          : `${ROUTES.treatments}/${product?.extraInformation?.slug}`
+      }
       className={`text-inherit ${className}`}
       {...rest}
     >
@@ -85,15 +98,8 @@ export default function ProductCard({
               bgColor="bg-hg-primary"
               customStyles="hover:bg-hg-secondary100"
             >
-              <Link
-                href={`${ROUTES.treatments}/${product?.extraInformation?.slug}`}
-                className="text-inherit"
-              >
-                <Flex layout="row-center">
-                  <p className="mr-2">Saber más</p>
-                  <SvgArrow height={20} width={20} />
-                </Flex>
-              </Link>
+              <p className="mr-2">Saber más</p>
+              <SvgArrow height={20} width={20} />
             </Button>
           </div>
         </Flex>

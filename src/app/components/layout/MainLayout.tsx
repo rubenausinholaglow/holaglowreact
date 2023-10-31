@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
@@ -26,6 +26,7 @@ export default function MainLayout({
   isDashboard = false,
   isCheckout = false,
   hideTopBar = false,
+  hideHeader = false,
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
@@ -34,6 +35,7 @@ export default function MainLayout({
 }: {
   isDashboard?: boolean;
   isCheckout?: boolean;
+  hideHeader?: boolean;
   hideBackButton?: boolean;
   hideTopBar?: boolean;
   hideContactButtons?: boolean;
@@ -54,6 +56,10 @@ export default function MainLayout({
   }, []);
 
   const mainLayoutTopPadding = () => {
+    if (hideHeader) {
+      return '0px';
+    }
+
     return `${
       deviceSize.isMobile || deviceSize.isTablet
         ? HEADER_HEIGHT_MOBILE
@@ -90,7 +96,8 @@ export default function MainLayout({
 
   return (
     <main style={{ paddingTop: mainLayoutTopPadding() }}>
-      <Header />
+      {!hideHeader && <Header />}
+
       {children}
 
       {!hideFooter && <Footer />}

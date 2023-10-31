@@ -19,13 +19,11 @@ export default function ConfirmationCheckout() {
     useGlobalPersistedStore(state => state);
   const localSelectedDay = dayjs(selectedDay);
   let selectedTreatmentsNames = '';
-  let selectedTreatmentsDesc = '';
+
   if (selectedTreatments) {
-    selectedTreatmentsNames = selectedTreatments!.map(x => x.title).join(' + ');
-    selectedTreatmentsDesc = selectedTreatments
-      .map(x => x.description)
-      .join(' + ');
+    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
   }
+
   return (
     <MainLayout hideFooter>
       <Container className="mt-12 mb-4 md:mt-16">
@@ -130,7 +128,6 @@ export default function ConfirmationCheckout() {
                       )}
                     </Flex>
                   )}
-                  {/* <Text>{selectedTreatmentsDesc}</Text> */}
                 </div>
               </div>
             </div>

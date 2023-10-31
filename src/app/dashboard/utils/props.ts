@@ -23,14 +23,14 @@ export interface SearchBarProps {
 }
 
 export interface RegistrationFormProps {
-  formData: Client;
-  handleFieldChange: (
+  formData?: Client;
+  handleFieldChange?: (
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => void;
-  handleContinue: () => void;
-  errors: Array<string>;
-  isLoading: boolean;
+  handleContinue?: () => void;
+  errors?: Array<string>;
+  isLoading?: boolean;
 }
 
 export interface CheckboxProps {

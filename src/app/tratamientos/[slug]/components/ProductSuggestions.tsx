@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import * as icon from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 export default function ProductSuggestions({ product }: { product: Product }) {
