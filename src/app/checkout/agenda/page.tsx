@@ -9,7 +9,6 @@ import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { ROUTES } from 'app/utils/routes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -118,12 +117,6 @@ export default function Agenda() {
     loadMonth();
     selectDate(dateToCheck.toDate());
   }, [selectedTreatmentsIds, dateToCheck]);
-
-  useEffect(() => {
-    if (!selectedClinic) {
-      router.push(ROUTES.home);
-    }
-  }, []);
 
   const onMonthChange = (x: any) => {
     const date = dayjs(x);

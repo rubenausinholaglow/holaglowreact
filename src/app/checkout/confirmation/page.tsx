@@ -1,67 +1,28 @@
 'use client';
 
-import { useEffect } from 'react';
-import { Clinic } from '@interface/clinic';
-import { Slot } from '@interface/slot';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { useRouter } from 'next/navigation';
 
 export default function ConfirmationCheckout() {
-  const router = useRouter();
+  const { selectedPacksTreatments } = useGlobalPersistedStore(state => state);
 
-  const {
-    selectedTreatments,
-    setSelectedTreatments,
-    selectedPacksTreatments,
-    setSelectedPackTreatments,
-    selectedSlot,
-    setSelectedSlot,
-    selectedDay,
-    setSelectedDay,
-    selectedClinic,
-    setSelectedClinic,
-  } = useGlobalPersistedStore(state => state);
-
-  let appointmentClinic: Clinic | undefined = undefined;
-  if (selectedClinic) appointmentClinic = { ...selectedClinic };
-  let appointmentDay: any | undefined = undefined;
-  if (selectedDay) appointmentDay = { ...selectedDay };
-  let appointmentSlot: Slot | undefined = undefined;
-  if (selectedSlot) appointmentSlot = { ...selectedSlot };
-
+  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
+    useGlobalPersistedStore(state => state);
   const localSelectedDay = dayjs(selectedDay);
-
   let selectedTreatmentsNames = '';
 
   if (selectedTreatments) {
     selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
   }
-
-  useEffect(() => {
-    if (
-      appointmentClinic &&
-      appointmentDay &&
-      appointmentSlot &&
-      selectedTreatments
-    ) {
-      setSelectedClinic(undefined);
-      setSelectedDay(dayjs());
-      setSelectedSlot(undefined);
-    }
-    if (!appointmentClinic || !appointmentSlot || !selectedTreatments) {
-      router.push(ROUTES.home);
-    }
-  }, []);
 
   return (
     <MainLayout hideFooter>
@@ -107,17 +68,13 @@ export default function ConfirmationCheckout() {
               </div>
               <div className="w-full pb-3 flex items-center">
                 <SvgHour className="mr-2" />
-                <Text className="font-semibold">
-                  {appointmentSlot?.startTime}
-                </Text>
+                <Text className="font-semibold">{selectedSlot?.startTime}</Text>
               </div>
               <div className="w-full flex items-start pb-3 border-b border-hg-black700">
                 <SvgLocation className="mr-2 mt-1" />
                 <div className="flex flex-col">
-                  <Text className="font-semibold">
-                    {appointmentClinic?.city}
-                  </Text>
-                  <Text size="xs">{appointmentClinic?.address}</Text>
+                  <Text className="font-semibold">{selectedClinic?.city}</Text>
+                  <Text size="xs">{selectedClinic?.address}</Text>
                 </div>
               </div>
               <div className="w-full flex items-start pt-4 text-hg-primary">
