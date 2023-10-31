@@ -111,7 +111,7 @@ export default function ConsistOf() {
         <Button
           size="xl"
           type="tertiary"
-          customStyles="bg-hg-primary"
+          customStyles="bg-hg-primary hover:bg-hg-secondary100"
           href="#leadForm"
         >
           ¡Yo quiero!

@@ -14,6 +14,7 @@ export default function FullWidthCarousel({
   visibleSlides,
   className,
   items,
+  hasControls = true,
   isPlaying = false,
   children,
 }: {
@@ -21,6 +22,7 @@ export default function FullWidthCarousel({
   visibleSlides?: number | null;
   className?: string;
   items?: Product[] | Professional[] | null;
+  hasControls?: boolean;
   isPlaying?: boolean;
   children?: ReactNode;
 }) {
@@ -55,7 +57,7 @@ export default function FullWidthCarousel({
       </style>
       <Carousel
         id="productCarousel"
-        hasControls
+        hasControls={hasControls && !isPlaying}
         className={`relative ${className}`}
         isIntrinsicHeight
         visibleSlides={slidesToShow}

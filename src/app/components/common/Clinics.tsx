@@ -18,6 +18,7 @@ import { isEmpty } from 'lodash';
 export default function Clinics({ className = '' }: { className?: string }) {
   const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
 
+  const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
   const [googleMapAddress, setGoogleMapAddress] = useState('');
@@ -26,6 +27,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
     if (!deviceSize.isMobile && clinics.length > 0)
       setSelectedClinic(clinics[0]);
   }, []);
+
   useEffect(() => {
     if (!isEmpty(selectedClinic)) {
       const mapLayer = document.querySelector('#mapLayer');
@@ -50,7 +52,10 @@ export default function Clinics({ className = '' }: { className?: string }) {
             Nuestras <br className="hidden md:block" />
             <Underlined color={HOLAGLOW_COLORS['primary']}>clínicas</Underlined>
           </Title>
-          <Accordion className={`w-full flex flex-col gap-4`}>
+          <Accordion
+            className={`w-full flex flex-col gap-4`}
+            value={selectedAccordion}
+          >
             {deviceSize.isMobile &&
               clinics.map((clinic, index) => (
                 <AccordionItem
@@ -62,11 +67,19 @@ export default function Clinics({ className = '' }: { className?: string }) {
                     <div
                       key="clinic.city"
                       className={
-                        selectedClinic && selectedClinic.city === clinic.city
+                        selectedAccordion === index.toString()
                           ? 'bg-hg-primary300'
                           : 'bg-hg-black100'
                       }
-                      onClick={() => setSelectedClinic(clinics[index])}
+                      onClick={() => {
+                        if (index.toString() === selectedAccordion) {
+                          setSelectedAccordion('3');
+                        } else {
+                          setSelectedAccordion(index.toString());
+                        }
+
+                        setSelectedClinic(clinics[index]);
+                      }}
                     >
                       <Flex
                         layout="row-center"
@@ -80,6 +93,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                             {clinic.address}
                           </address>
                         </Flex>
+
                         <SvgAngle
                           height={24}
                           width={24}

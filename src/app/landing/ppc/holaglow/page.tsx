@@ -99,7 +99,7 @@ export default function LandingCaptacion() {
               <Button
                 size="xl"
                 type="tertiary"
-                customStyles="bg-hg-primary"
+                customStyles="bg-hg-primary hover:bg-hg-secondary100"
                 href="#leadForm"
               >
                 Pide tu cita médica gratis
@@ -120,7 +120,7 @@ export default function LandingCaptacion() {
               <Button
                 size="xl"
                 type="tertiary"
-                customStyles="bg-hg-primary"
+                customStyles="bg-hg-primary hover:bg-hg-secondary100"
                 href="#leadForm"
               >
                 Pide tu cita médica gratis
@@ -173,9 +173,9 @@ export default function LandingCaptacion() {
       </div>
 
       <div className="bg-hg-pink/30 py-16">
-        <Container className="px-0 md:flex md:flex-row items-start">
-          <Container className="mb-4 md:w-3/5 mr-16">
-            <Title size="2xl" className="font-bold mb-4 md:mr-16">
+        <Container className="px-0 md:flex md:flex-row items-center">
+          <Container className="mb-4 md:w-3/4">
+            <Title size="2xl" className="font-bold mb-4">
               Diseñamos contigo un tratamiento{' '}
               <Underlined color={HOLAGLOW_COLORS['primary']}>
                 a tu medida
@@ -183,13 +183,13 @@ export default function LandingCaptacion() {
             </Title>
           </Container>
 
-          <Container className="mt-12 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0 overflow-hidden">
+          <Container className="mt-12 pt-6 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0 overflow-hidden md:overflow-auto">
             <Image
               src="/images/statics/landings/captacion/comoFunciona.png"
               alt="¿Cómo Funciona?"
               width={816}
               height={816}
-              className="w-full scale-[115%] mt-4"
+              className="w-full scale-[115%] md:scale-100 mt-4"
             />
           </Container>
         </Container>
@@ -210,6 +210,7 @@ export default function LandingCaptacion() {
                 alt={`Cómo funciona ${index}`}
                 fill
                 className="object-cover"
+                loading="eager"
               />
             </div>
           ))}
@@ -220,10 +221,10 @@ export default function LandingCaptacion() {
             <Button
               size="xl"
               type="tertiary"
-              customStyles="bg-hg-primary"
+              customStyles="bg-hg-primary hover:bg-hg-secondary100"
               href="#leadForm"
             >
-              Pide tu cita médiga gratis
+              Pide tu cita médica gratis
             </Button>
           </Flex>
         </Container>
