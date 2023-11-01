@@ -147,7 +147,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    var formDatacopy = { ...formData };
+    const formDatacopy = { ...formData };
     formDatacopy.analyticsMetrics = analyticsMetrics;
     formDatacopy.phone = formData.phone
       .replace(formDatacopy.phonePrefix, '')
