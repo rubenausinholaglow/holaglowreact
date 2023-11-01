@@ -151,7 +151,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     formData.phone = formData.phone
       .replace(formData.phonePrefix, '')
       .replaceAll(' ', '');
-    let user = await UserService.registerUser(formData);
+    const user = await UserService.registerUser(formData);
     if (user) {
       user.flowwwToken = user.clinicToken;
     }
