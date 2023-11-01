@@ -147,11 +147,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    formData.analyticsMetrics = analyticsMetrics;
-    formData.phone = formData.phone
-      .replace(formData.phonePrefix, '')
+    var formDatacopy = { ...formData };
+    formDatacopy.analyticsMetrics = analyticsMetrics;
+    formDatacopy.phone = formData.phone
+      .replace(formDatacopy.phonePrefix, '')
       .replaceAll(' ', '');
-    const user = await UserService.registerUser(formData);
+    const user = await UserService.registerUser(formDatacopy);
     if (user) {
       user.flowwwToken = user.clinicToken;
     }
