@@ -140,6 +140,13 @@ server.use(
     changeOrigin: true,
   })
 );
+server.use(
+  '/bases-legales-trae-un-amigo',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
 server.all('*', (req, res) => handle(req, res));
 
 module.exports = (req, res) => {

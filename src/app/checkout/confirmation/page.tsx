@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -15,14 +16,22 @@ import { isEmpty } from 'lodash';
 export default function ConfirmationCheckout() {
   const { selectedPacksTreatments } = useGlobalPersistedStore(state => state);
 
-  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
-    useGlobalPersistedStore(state => state);
+  const {
+    selectedTreatments,
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    setCurrentUser,
+  } = useGlobalPersistedStore(state => state);
   const localSelectedDay = dayjs(selectedDay);
   let selectedTreatmentsNames = '';
 
   if (selectedTreatments) {
     selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
   }
+  useEffect(() => {
+    setCurrentUser(undefined);
+  }, []);
 
   return (
     <MainLayout hideFooter>

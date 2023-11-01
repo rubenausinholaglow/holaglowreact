@@ -23,11 +23,7 @@ import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
 export default function Agenda() {
   const router = useRouter();
-  const [dateToCheck, setDateToCheck] = useState(dayjs());
-  const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
-  const [morningHours, setMorningHours] = useState(Array<Slot>);
-  const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
-  const [dateFromatted, setDateFormatted] = useState('');
+
   const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
     state => state
   );
@@ -40,6 +36,13 @@ export default function Agenda() {
     selectedClinic,
     analyticsMetrics,
   } = useGlobalPersistedStore(state => state);
+
+  const [enableScheduler, setEnableScheduler] = useState(false);
+  const [dateToCheck, setDateToCheck] = useState(dayjs());
+  const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
+  const [morningHours, setMorningHours] = useState(Array<Slot>);
+  const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
+  const [dateFromatted, setDateFormatted] = useState('');
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   const maxDays = 10;
@@ -96,7 +99,66 @@ export default function Agenda() {
   useEffect(() => {
     setSelectedDay(dayjs(new Date()));
     selectDate(new Date());
+    setSelectedSlot(undefined);
+    setEnableScheduler(true);
   }, []);
+
+  useEffect(() => {
+    async function schedule() {
+      if (user?.flowwwToken && previousAppointment) {
+        let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+        if (selectedPacksTreatments && selectedPacksTreatments.length) {
+          ids = selectedPacksTreatments!
+            .slice(0, 2)
+            .map(x => x.flowwwId)
+            .join(',');
+        }
+        const treatments = selectedTreatments!.map(x => x.title).join(', ');
+        const comment = 'Tratamiento visto en web: ' + treatments;
+        await ScheduleService.reschedule({
+          next: {
+            box: selectedSlot!.box,
+            endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+            id: '0',
+            startTime:
+              selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+            treatment: ids,
+            clientId: user?.flowwwToken,
+            comment: comment,
+            treatmentText: treatments,
+            referralId: '',
+            externalReference: '',
+            isPast: false,
+            clinicId: selectedClinic?.flowwwId,
+            isCancelled: false,
+          },
+          previous: previousAppointment,
+        }).then(x => {
+          router.push('/checkout/confirmation');
+        });
+      } else if (user) {
+        setLoadingDays(true);
+        setLoadingMonth(true);
+        await ScheduleService.createAppointment(
+          selectedTreatments,
+          selectedSlot!,
+          selectedDay,
+          selectedClinic!,
+          user,
+          selectedPacksTreatments!,
+          analyticsMetrics
+        ).then(x => {
+          router.push('/checkout/confirmation');
+        });
+      } else {
+        router.push('/checkout/contactform');
+      }
+    }
+
+    if (selectedSlot && enableScheduler) {
+      schedule();
+    }
+  }, [selectedSlot]);
 
   useEffect(() => {
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
@@ -125,52 +187,6 @@ export default function Agenda() {
   const selectHour = async (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
-    if (user?.flowwwToken && previousAppointment) {
-      let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
-      if (selectedPacksTreatments && selectedPacksTreatments.length) {
-        ids = selectedPacksTreatments!
-          .slice(0, 2)
-          .map(x => x.flowwwId)
-          .join(',');
-      }
-      const treatments = selectedTreatments!.map(x => x.title).join(', ');
-      const comment = 'Tratamiento visto en web: ' + treatments;
-      ScheduleService.reschedule({
-        next: {
-          box: selectedSlot!.box,
-          endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
-          id: '0',
-          startTime:
-            selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
-          treatment: ids,
-          clientId: user?.flowwwToken,
-          comment: comment,
-          treatmentText: treatments,
-          referralId: '',
-          externalReference: '',
-          isPast: false,
-          clinicId: selectedClinic?.flowwwId,
-          isCancelled: false,
-        },
-        previous: previousAppointment,
-      }).then(x => {
-        router.push('/checkout/confirmation');
-      });
-    } else if (user) {
-      await ScheduleService.createAppointment(
-        selectedTreatments,
-        selectedSlot!,
-        selectedDay,
-        selectedClinic!,
-        user,
-        selectedPacksTreatments!,
-        analyticsMetrics
-      ).then(x => {
-        router.push('/checkout/confirmation');
-      });
-    } else {
-      router.push('/checkout/contactform');
-    }
   };
 
   const selectDate = (x: Date) => {
@@ -365,9 +381,9 @@ export default function Agenda() {
                             >
                               <div
                                 className="w-full cursor-pointer flex justify-center"
-                                onClick={() => {
-                                  selectHour(x);
+                                onClick={async () => {
                                   setClickedHour(x.startTime);
+                                  await selectHour(x);
                                 }}
                               >
                                 {clickedHour === x.startTime && (
@@ -400,9 +416,9 @@ export default function Agenda() {
                             >
                               <div
                                 className="w-full cursor-pointer flex justify-center"
-                                onClick={() => {
-                                  selectHour(x);
+                                onClick={async () => {
                                   setClickedHour(x.startTime);
+                                  await selectHour(x);
                                 }}
                               >
                                 {clickedHour === x.startTime && (

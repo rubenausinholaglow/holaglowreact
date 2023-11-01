@@ -27,6 +27,7 @@
       "source": "/appointment-confirmed/barcelona",
       "destination": "/api/server"
     },
-    { "source": "/appointment-confirmed/madrid", "destination": "/api/server" }
+    { "source": "/appointment-confirmed/madrid", "destination": "/api/server" },
+    { "source": "/bases-legales-trae-un-amigo", "destination": "/api/server" }
   ]
 }
