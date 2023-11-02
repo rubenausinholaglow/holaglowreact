@@ -45,7 +45,39 @@ export default function Agenda() {
   const [dateFromatted, setDateFormatted] = useState('');
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  const maxDays = 10;
+  let maxDays = 10;
+  if (selectedTreatments[0].type == 2 || selectedTreatments[0].type == 1)
+    maxDays = 15;
+  const maxDaysByClinicAndType: any = {
+    '1': {
+      //Madrid
+      '0': 7,
+    },
+    '4': {
+      //Barcelona
+      '1': 20,
+      '2': 20,
+    },
+    '5': {
+      //Valencia
+      '1': 15,
+      '2': 15,
+      '0': 10,
+    },
+  };
+  if (
+    maxDaysByClinicAndType &&
+    maxDaysByClinicAndType[selectedClinic?.flowwwId!] &&
+    maxDaysByClinicAndType[selectedClinic?.flowwwId!][
+      selectedTreatments[0].type
+    ]
+  ) {
+    maxDays =
+      maxDaysByClinicAndType[selectedClinic?.flowwwId!][
+        selectedTreatments[0].type
+      ];
+  }
+  const maxDay = dayjs().add(maxDays, 'day');
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -333,6 +365,7 @@ export default function Agenda() {
                   onChange={selectDate}
                   filterDate={filterDate}
                   onMonthChange={onMonthChange}
+                  maxDate={maxDay.toDate()}
                   useWeekdaysShort
                   calendarStartDay={1}
                   locale="es"
