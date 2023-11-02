@@ -155,7 +155,7 @@ export default function Agenda() {
       }
     }
 
-    if (selectedSlot && enableScheduler) {
+    if (selectedSlot && enableScheduler && !loadingDays && !loadingMonth) {
       schedule();
     }
   }, [selectedSlot]);
