@@ -10,7 +10,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   value,
   onChange = undefined,
   onBlur = undefined,
-  hasNoValidation,
+  inputStyles,
   error = '',
 }) => {
   function getBackgroundIcon() {
@@ -26,13 +26,15 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
 
   return (
     <div className="flex flex-col">
-      {label && <label className="text-gray-700 text-left">{label}</label>}
+      {label && <label className="text-gray-700 text-left mb-2">{label}</label>}
       <input
         placeholder={placeholder ? placeholder : ''}
         className={twMerge(
-          `border border-hg-black300 rounded-2xl px-4 py-2 mr-4 w-full text-hg-black h-16 focus:outline-none ${
+          `border border-hg-black300 rounded-2xl px-4 py-2 w-full text-hg-black h-16 focus:outline-none ${
             value.length > 0 ? 'border-hg-black' : ''
-          }`
+          }
+          ${inputStyles ? inputStyles : ''}
+          `
         )}
         type="text"
         value={value}
