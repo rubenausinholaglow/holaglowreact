@@ -50,6 +50,8 @@ export default function Page({
       utmSource: '',
       utmTerm: '',
       treatmentText: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
     },
     interestedTreatment: '',
     treatmentPrice: 0,

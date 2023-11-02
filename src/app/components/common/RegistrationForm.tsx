@@ -65,6 +65,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       utmSource: '',
       utmTerm: '',
       treatmentText: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
     },
     interestedTreatment: '',
     treatmentPrice: 0,

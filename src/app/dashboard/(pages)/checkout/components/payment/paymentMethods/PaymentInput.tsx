@@ -4,7 +4,6 @@ import Bugsnag from '@bugsnag/js';
 import Notification from '@components/ui/Notification';
 import { CreatePayment, InitializePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
-import FinanceService from '@services/FinanceService';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { Button } from 'designSystem/Buttons/Buttons';

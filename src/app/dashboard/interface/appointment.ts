@@ -53,7 +53,6 @@ export interface User {
   country: string;
   lastName: string;
   secondLastName: string;
-  phone: string;
 }
 
 export interface RescheduleAppointmentRequest {
