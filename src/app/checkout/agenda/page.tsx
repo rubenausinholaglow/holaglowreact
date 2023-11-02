@@ -60,14 +60,16 @@ export default function Agenda() {
       selectedTreatmentsIds &&
       (availableDates.length < maxDays ||
         selectedTreatmentsIds.indexOf(
-          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
+            ? process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
+            : ''
         ) == -1)
     ) {
       setLoadingMonth(true);
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
-        selectedClinic!.flowwwId
+        selectedClinic?.flowwwId ? selectedClinic.flowwwId : ''
       ).then(data => {
         const availability = availableDates ?? [];
         const today = dayjs();
@@ -76,7 +78,9 @@ export default function Agenda() {
           if (
             (availability.length < maxDays ||
               selectedTreatmentsIds.indexOf(
-                process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!
+                process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
+                  ? process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
+                  : ''
               ) == -1) &&
             (date.isAfter(today) || date.isSame(today, 'day')) &&
             x.availability
@@ -106,22 +110,27 @@ export default function Agenda() {
   useEffect(() => {
     async function schedule() {
       if (user?.flowwwToken && previousAppointment) {
-        let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
-        if (selectedPacksTreatments && selectedPacksTreatments.length) {
-          ids = selectedPacksTreatments!
+        let ids = selectedTreatments?.map(x => x.flowwwId).join(', ');
+
+        if (selectedPacksTreatments && selectedPacksTreatments.length >= 2) {
+          ids = selectedPacksTreatments
             .slice(0, 2)
             .map(x => x.flowwwId)
             .join(',');
+        } else {
+          ids = '';
         }
-        const treatments = selectedTreatments!.map(x => x.title).join(', ');
+
+        const treatments = selectedTreatments?.map(x => x.title).join(', ');
         const comment = 'Tratamiento visto en web: ' + treatments;
+
         await ScheduleService.reschedule({
           next: {
-            box: selectedSlot!.box,
-            endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+            box: selectedSlot?.box,
+            endTime: selectedDay?.format(format) + ' ' + selectedSlot?.endTime,
             id: '0',
             startTime:
-              selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+              selectedDay?.format(format) + ' ' + selectedSlot?.startTime,
             treatment: ids,
             clientId: user?.flowwwToken,
             comment: comment,
@@ -163,14 +172,14 @@ export default function Agenda() {
   useEffect(() => {
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
       setSelectedTreatmentsIds(
-        selectedPacksTreatments!
+        selectedPacksTreatments
           .slice(0, 2)
           .map(x => x.flowwwId)
           .join(',')
       );
     } else if (selectedTreatments && selectedTreatments.length > 0) {
       setSelectedTreatmentsIds(
-        selectedTreatments!.map(x => x.flowwwId).join(',')
+        selectedTreatments?.map(x => x.flowwwId).join(',')
       );
     } else setSelectedTreatmentsIds('674');
   }, [dateToCheck]);

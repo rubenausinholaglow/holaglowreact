@@ -93,7 +93,6 @@ const Page = () => {
         setBudgetModified(false);
         setShowProductDiscount(false);
         budget.id = budgetId;
-        const result = await budgetService.updateBudget(budget);
       } else {
         const data = await budgetService.createBudget(budget);
         localStorage.setItem('BudgetId', data.id);
