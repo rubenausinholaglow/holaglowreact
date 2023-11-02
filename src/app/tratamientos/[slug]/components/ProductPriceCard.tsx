@@ -272,7 +272,14 @@ function ProductPriceItemsCard({
                     width={16}
                     className="mr-2 mt-0.5 text-hg-secondary shrink-0"
                     name={UPGRADE_TYPES[item.type.toString()].icon}
-                    family={UPGRADE_TYPES[item.type.toString()].family}
+                    family={
+                      (UPGRADE_TYPES[item.type.toString()].family as
+                        | 'default'
+                        | 'suggestion'
+                        | 'service'
+                        | 'category'
+                        | undefined) || 'default'
+                    }
                   />
                   <Text className="text-sm md:text-md">
                     {UPGRADE_TYPES[item.type.toString()].title}
