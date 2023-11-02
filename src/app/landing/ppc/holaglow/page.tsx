@@ -53,6 +53,13 @@ export default function LandingCaptacion() {
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
     analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
+    analyticsMetrics.utmAdgroup = '';
+    analyticsMetrics.utmCampaign = '';
+    analyticsMetrics.utmContent = '';
+    analyticsMetrics.utmMedium = '';
+    analyticsMetrics.utmSource = '';
+    analyticsMetrics.utmTerm = '';
+    analyticsMetrics.locPhysicalMs = '';
     setAnalyticsMetrics(analyticsMetrics);
   }, []);
 
