@@ -5,8 +5,6 @@ import MainLayout from 'app/components/layout/MainLayout';
 async function getAppointment(id: string) {
   const res = await ScheduleService.confirm(id);
 
-  console.log(res);
-
   return res;
 }
 

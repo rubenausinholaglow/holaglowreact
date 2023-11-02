@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -30,6 +30,9 @@ export default function Confirmation({
     setCurrentUser,
   } = useGlobalPersistedStore(state => state);
 
+  const [city, setCity] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+
   const localSelectedDay = dayjs(
     appointment ? appointment.startTime : selectedDay
   );
@@ -40,28 +43,29 @@ export default function Confirmation({
       : ''
     : selectedSlot?.startTime;
 
-  const appointmentClinic = clinics.filter(
-    clinic => clinic.flowwwId === appointment?.clinicId
-  )[0];
-
-  const appointmentCity = appointment ? appointmentClinic.city : undefined;
-  const appointmentAddress = appointment
-    ? appointmentClinic.address
-    : undefined;
-
-  const city = appointmentCity ? appointmentCity : selectedClinic?.city;
-  const address = appointmentAddress
-    ? appointmentAddress
-    : selectedClinic?.address;
-
   let selectedTreatmentsNames = '';
 
   if (selectedTreatments) {
     selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
   }
+
   useEffect(() => {
     setCurrentUser(undefined);
   }, []);
+
+  useEffect(() => {
+    const appointmentClinic = appointment
+      ? clinics.filter(clinic => clinic.flowwwId === appointment?.clinicId)[0]
+      : undefined;
+
+    const appointmentCity = appointmentClinic ? appointmentClinic.city : '';
+    const appointmentAddress = appointmentClinic
+      ? appointmentClinic.address
+      : '';
+
+    setCity(appointmentCity || selectedClinic?.city || '');
+    setAddress(appointmentAddress || selectedClinic?.address || '');
+  }, [clinics]);
 
   return (
     <Container className="mt-12 mb-4 md:mt-16">
