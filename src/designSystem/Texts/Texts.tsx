@@ -1,4 +1,7 @@
+'use client';
+
 import { ReactNode } from 'react';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { twMerge } from 'tailwind-merge';
 
@@ -7,29 +10,34 @@ export const Title = ({
   weight = 'semibold',
   as = 'h3',
   className = '',
+  disableAnimation = false,
   onClick = undefined,
   children,
 }: {
   size?: '3xl' | '2xl' | 'xl';
   weight?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: 'h3' | 'h1';
   className?: string;
+  disableAnimation?: boolean;
   children: ReactNode;
   onClick?: (...args: any[]) => void;
 }) => {
+  const HtmlComponent = as;
+
   const STYLES = {
     '3xl': 'text-4xl lg:text-6xl',
     '2xl': 'text-3xl lg:text-5xl',
     xl: 'text-xl lg:text-2xl',
   };
 
-  const HtmlComponent = as;
   const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
 
   return (
-    <HtmlComponent className={styles} onClick={onClick}>
-      {children}
-    </HtmlComponent>
+    <AnimateOnViewport disableAnimation={disableAnimation}>
+      <HtmlComponent className={styles} onClick={onClick}>
+        {children}
+      </HtmlComponent>
+    </AnimateOnViewport>
   );
 };
 
@@ -39,24 +47,29 @@ export const Text = ({
   className = '',
   onClick = undefined,
   children,
+  disableAnimation = false,
   rest,
 }: {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-  as?: keyof JSX.IntrinsicElements;
+  as?: 'h3' | 'p' | 'span';
   className?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
+  disableAnimation?: boolean;
   [key: string]: any;
 }) => {
   const HtmlComponent = as;
+
   const styles = twMerge(
     `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
   );
 
   return (
-    <HtmlComponent className={styles} onClick={onClick} {...rest}>
-      {children}
-    </HtmlComponent>
+    <AnimateOnViewport disableAnimation={disableAnimation}>
+      <HtmlComponent className={styles} onClick={onClick} {...rest}>
+        {children}
+      </HtmlComponent>
+    </AnimateOnViewport>
   );
 };
 

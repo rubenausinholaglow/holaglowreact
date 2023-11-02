@@ -6,7 +6,9 @@ export interface TextInputFieldProps {
   label?: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  hasNoValidation?: boolean;
 }
 
 export interface SearchBarProps {
@@ -21,14 +23,14 @@ export interface SearchBarProps {
 }
 
 export interface RegistrationFormProps {
-  formData: Client;
-  handleFieldChange: (
+  formData?: Client;
+  handleFieldChange?: (
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => void;
-  handleContinue: () => void;
-  errors: Array<string>;
-  isLoading: boolean;
+  handleContinue?: () => void;
+  errors?: Array<string>;
+  isLoading?: boolean;
 }
 
 export interface CheckboxProps {
@@ -78,5 +80,5 @@ export interface CustomButtonFilter {
 
 export interface AlmaProps {
   amountFinance: string;
-  onUrlPayment: (url: string) => void;
+  onUrlPayment: (id: string, url: string, referencePayment: string) => void;
 }

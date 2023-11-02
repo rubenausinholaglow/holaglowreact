@@ -95,12 +95,13 @@ export default class UserService {
         }
       );
       if (res.ok) {
-        return true;
+        const data = await res.json();
+        return data;
       } else {
-        return false;
+        return undefined;
       }
     } catch (err) {
-      return false;
+      return undefined;
     }
   }
 

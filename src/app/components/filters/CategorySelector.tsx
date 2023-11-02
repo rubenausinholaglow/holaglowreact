@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import {
-  applyFilters,
-  filterCount,
-  toggleFilter,
-} from 'app/productos/utils/filters';
-import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/tratamientos/utils/filters';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
+
+import CategoryIcon from '../common/CategoryIcon';
 
 export default function CategorySelector({
   className,
@@ -60,7 +60,7 @@ export default function CategorySelector({
   return (
     <ul
       id="categorySelector"
-      className={`flex overflow-scroll md:overflow-auto ${
+      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto ${
         className ? className : ''
       }
       ${isStacked ? 'flex-wrap' : ''}
@@ -90,15 +90,7 @@ export default function CategorySelector({
             }}
           >
             <Flex layout="row-left">
-              <SvgDiamond
-                height={32}
-                width={32}
-                fill={HOLAGLOW_COLORS['secondary']}
-                className="mr-2 border rounded-full p-1 bg-white"
-                style={{
-                  borderColor: `${HOLAGLOW_COLORS['secondary']}`,
-                }}
-              />
+              <CategoryIcon category={category} className="mr-2" />
               <Text size="xs" className="whitespace-nowrap font-medium">
                 {category}
               </Text>

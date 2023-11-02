@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
@@ -19,6 +20,7 @@ type ButtonProps = {
   customStyles?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
+  disabled?: boolean;
   [key: string]: any;
 };
 
@@ -30,40 +32,59 @@ export const Button = ({
   customStyles = '',
   onClick = undefined,
   children,
+  disabled = false,
   ...rest
 }: ButtonProps) => {
   if (href) {
     return (
-      <Link
-        href={href}
-        target={rest?.target}
-        className={twMerge(`relative group overflow-visible ${className}`)}
-        onClick={onClick}
-        type={rest?.isSubmit ? 'submit' : 'button'}
-      >
-        <ButtonBase type={type} />
-        <ButtonBody type={type} size={size} customStyles={customStyles}>
-          {children}
-        </ButtonBody>
-      </Link>
+      <AnimateOnViewport origin="left">
+        <Link
+          href={href}
+          target={rest?.target}
+          className={twMerge(
+            `relative group overflow-visible ${className} ${
+              disabled && 'opacity-25 pointer-events-none'
+            }`
+          )}
+          onClick={onClick}
+          type={rest?.isSubmit ? 'submit' : 'button'}
+        >
+          <ButtonBase type={type} />
+          <ButtonBody
+            type={type}
+            size={size}
+            customStyles={customStyles}
+            {...rest}
+          >
+            {children}
+          </ButtonBody>
+        </Link>
+      </AnimateOnViewport>
     );
   }
 
   return (
-    <button
-      className={twMerge(
-        `transition-all relative group overflow-visible ${
-          ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
-        } ${className}`
-      )}
-      onClick={onClick}
-      type={rest?.isSubmit ? 'submit' : 'button'}
-    >
-      <ButtonBase type={type} />
-      <ButtonBody type={type} size={size} customStyles={customStyles} {...rest}>
-        {children}
-      </ButtonBody>
-    </button>
+    <AnimateOnViewport origin="left">
+      <button
+        className={twMerge(
+          `transition-all relative group overflow-visible ${
+            ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
+          } ${className} ${disabled && 'opacity-25 pointer-events-none'}`
+        )}
+        onClick={onClick}
+        type={rest?.isSubmit ? 'submit' : 'button'}
+      >
+        <ButtonBase type={type} />
+        <ButtonBody
+          type={type}
+          size={size}
+          customStyles={customStyles}
+          {...rest}
+        >
+          {children}
+        </ButtonBody>
+      </button>
+    </AnimateOnViewport>
   );
 };
 
@@ -89,7 +110,6 @@ const ButtonBody = ({
       'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
     secondary:
       'bg-white text-hg-secondary border border-hg-black group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
-    //tertiary: `group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100 ${
     tertiary: `${bgColor ? bgColor : 'bg-white'} ${
       color ? color : 'text-hg-black border border-hg-black'
     }`,

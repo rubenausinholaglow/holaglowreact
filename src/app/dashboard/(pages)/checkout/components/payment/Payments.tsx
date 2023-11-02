@@ -2,11 +2,12 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import Notification from '@components/ui/Notification';
+import { useMessageSocket } from '@components/useMessageSocket';
 import { StatusBudget, TicketBudget } from '@interface/budget';
+import { MessageType } from '@interface/messageSocket';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
 import { budgetService } from '@services/BudgetService';
-import FinanceService from '@services/FinanceService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
@@ -16,7 +17,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
-import PaymentItem from './PaymentItem';
+import PaymentItem, { StatusPayment } from './PaymentItem';
 import PaymentClient from './paymentMethods/PaymentClient';
 import { paymentItems } from './paymentMethods/PaymentItems';
 import { usePaymentList } from './payments/usePaymentList';
@@ -37,12 +38,62 @@ export const PaymentModule = () => {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-
   const [guidUserId, setguidUserId] = useState<string | ''>('');
+  const [paymentStatus, setPaymentStatus] = useState<
+    Record<string, StatusPayment>
+  >({});
+  const messageSocket = useMessageSocket(state => state);
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
   }, []);
+
+  useEffect(() => {
+    const existMessagePaymentResponse = messageSocket.messageSocket.filter(
+      x => x.messageType == MessageType.PaymentResponse
+    );
+    if (existMessagePaymentResponse.length > 0) {
+      const finalMessage = existMessagePaymentResponse[0].message;
+      const [, paymentReferenceId, PaymentStatus] = finalMessage.split('/');
+      const existingPayment = paymentList.find(
+        x => x.paymentReference === paymentReferenceId
+      );
+      if (existingPayment) {
+        switch (PaymentStatus) {
+          case 'Rejected':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.Rejected,
+            }));
+            break;
+          case 'Paid':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.Paid,
+            }));
+            break;
+          case 'FinancingRejected':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.FinancingRejected,
+            }));
+            break;
+          case 'FinancingAccepted':
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.FinancingAccepted,
+            }));
+            break;
+          default:
+            setPaymentStatus(prevPaymentStatus => ({
+              ...prevPaymentStatus,
+              [existingPayment.id]: StatusPayment.Waiting,
+            }));
+        }
+        messageSocket.removeMessageSocket(existMessagePaymentResponse[0]);
+      }
+    }
+  }, [messageSocket]);
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -125,23 +176,6 @@ export const PaymentModule = () => {
     }
   };
 
-  const createPayments = async () => {
-    try {
-      for (const paymentRequest of paymentList) {
-        const paymentRequestApi = {
-          amount: paymentRequest.amount,
-          userId: guidUserId,
-          paymentMethod: paymentRequest.method,
-          referenceId: paymentRequest.paymentReference,
-        };
-
-        const response = await FinanceService.createPayment(paymentRequestApi);
-      }
-    } catch (error: any) {
-      Bugsnag.notify(error);
-    }
-  };
-
   const createTicket = async () => {
     if (totalAmount < cartTotalWithDiscount) {
       alert('Hay cantidad pendiente de pagar');
@@ -149,7 +183,6 @@ export const PaymentModule = () => {
     }
     setIsLoading(true);
     try {
-      const resultCreatePayments = await createPayments();
       const result = await sendTicket();
       if (result) {
         localStorage.removeItem('BudgetId');
@@ -208,6 +241,7 @@ export const PaymentModule = () => {
               <PaymentItem
                 key={paymentRequest.id}
                 paymentRequest={paymentRequest}
+                status={paymentStatus[paymentRequest.id]}
               />
             ))}
           </ul>

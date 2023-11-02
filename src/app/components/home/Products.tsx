@@ -14,7 +14,11 @@ import { isEmpty } from 'lodash';
 
 import CategorySelector from '../filters/CategorySelector';
 
-export default function HomeProducts() {
+export default function HomeProducts({
+  hideCategorySelector,
+}: {
+  hideCategorySelector?: boolean;
+}) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const { filteredProducts, setFilteredProducts } = useGlobalStore(
     state => state
@@ -49,9 +53,11 @@ export default function HomeProducts() {
           </span>
         </Title>
       </Container>
-      <Container className="px-0 mb-12 md:px-4">
-        <CategorySelector />
-      </Container>
+      {!hideCategorySelector && (
+        <Container className="px-0 mb-12 md:px-4">
+          <CategorySelector />
+        </Container>
+      )}
       <FullWidthCarousel
         className="pb-8"
         type="products"

@@ -1,10 +1,11 @@
 import MainLayout from 'app/components/layout/MainLayout';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 
 export default function PrivacyPolicy() {
   return (
     <MainLayout>
+      <meta name="robots" content="noindex,follow" />
       <Container className="py-8 md:py-12">
         <Title className="mb-8">Política de privacidad</Title>
         <Flex layout="col-left" className="gap-4">

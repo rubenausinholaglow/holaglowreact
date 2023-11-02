@@ -2,14 +2,14 @@
 
 import { useEffect } from 'react';
 import {
-  applyFilters,
-  filterCount,
-  toggleFilter,
-} from 'app/productos/utils/filters';
-import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';

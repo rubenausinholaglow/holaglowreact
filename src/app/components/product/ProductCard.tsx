@@ -1,90 +1,109 @@
 'use client';
 
-import { useState } from 'react';
 import { Product } from '@interface/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { getProductCardColor, useImageProps } from 'app/utils/common';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgDiamond } from 'icons/Icons';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
   product,
+  className = '',
+  searchParams,
   ...rest
 }: {
   product: Product;
+  className?: string;
   [key: string]: any;
 }) {
-  const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
+  const pathName = usePathname();
 
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
-  );
+  const LANDINGS: { [key: string]: string } = {
+    '/landing/ppc/holaglow': '#leadForm',
+  };
+
+  const isLanding = Object.keys(LANDINGS).includes(usePathname());
+
+  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
 
   return (
-    <div className="flex flex-col overflow-hidden h-full" {...rest}>
-      <Flex layout="col-left" className="">
-        <div className="relative aspect-[4/3] w-full">
-          <Image
-            alt={product.title}
-            fill
-            src={imgSrc}
-            onError={() => setImgSrc(DEFAULT_IMG_SRC)}
-            className="object-cover rounded-t-2xl"
-          />
+    <Link
+      href={
+        isLanding
+          ? LANDINGS[pathName]
+          : `${ROUTES.treatments}/${product?.extraInformation?.slug}`
+      }
+      className={`text-inherit ${className}`}
+      {...rest}
+    >
+      <div className="flex flex-col h-full pt-4 overflow-hidden">
+        <Flex layout="col-left" className="">
+          <div className="relative h-[250px] w-full rounded-t-2xl">
+            <div
+              className="absolute inset-0 top-[10%] rounded-t-3xl "
+              style={{
+                background: getProductCardColor(product.cardBackgroundColor),
+              }}
+            />
 
-          {!isEmpty(product.category) && (
-            <Flex
-              layout="row-center"
-              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
-            >
-              {product.category.map(category => {
-                return (
-                  <Flex
-                    key={category.name}
-                    layout="row-left"
-                    className="flex rounded-full bg-hg-tertiary300"
-                  >
-                    <SvgDiamond
-                      height={36}
-                      width={36}
-                      fill={HOLAGLOW_COLORS['secondary']}
-                      className="border rounded-full p-1"
-                      style={{ borderColor: `${HOLAGLOW_COLORS['secondary']}` }}
-                    />
-                  </Flex>
-                );
-              })}
-            </Flex>
-          )}
-        </div>
-      </Flex>
-      <Flex layout="col-left" className="p-3 flex-grow bg-white rounded-b-2xl">
-        <Text className="mb-2 font-semibold">{product.title}</Text>
-        <Text size="xs" className="text-hg-black500 mb-8">
-          {product.description}
-        </Text>
-        <Button
-          type="tertiary"
-          className="mt-auto"
-          bgColor="bg-hg-primary"
-          customStyles="hover:bg-hg-secondary100"
+            <Image
+              alt={product.title}
+              width={400}
+              height={300}
+              src={imgSrc}
+              onError={() => setNextImgSrc()}
+              className={`relative ${alignmentStyles} h-[250px] w-auto`}
+            />
+
+            {!isEmpty(product.category) && (
+              <Flex
+                layout="row-center"
+                className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
+              >
+                {product.category.map(category => {
+                  return (
+                    <Flex
+                      key={category.name}
+                      layout="row-left"
+                      className="flex rounded-full"
+                    >
+                      <CategoryIcon category={category.name} hasBackground />
+                    </Flex>
+                  );
+                })}
+              </Flex>
+            )}
+          </div>
+        </Flex>
+        <Flex
+          layout="col-left"
+          className="p-3 flex-grow bg-white rounded-b-2xl"
         >
-          <Link
-            href={`/productos/${product?.extraInformation?.slug}`}
-            className="text-inherit"
-          >
-            <Flex layout="row-center">
+          <Text className="mb-2 font-semibold">{product.title}</Text>
+          <Text size="xs" className="text-hg-black500 mb-8">
+            {product.description}
+          </Text>
+          <div className="mt-auto">
+            <Button
+              type="tertiary"
+              className="mt-auto"
+              bgColor="bg-hg-primary"
+              customStyles="hover:bg-hg-secondary100"
+            >
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />
-            </Flex>
-          </Link>
-        </Button>
-      </Flex>
-    </div>
+            </Button>
+          </div>
+        </Flex>
+      </div>
+    </Link>
   );
 }

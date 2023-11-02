@@ -41,7 +41,7 @@ export default function GoToTreatments() {
           </Flex>
           <div className="w-full md:w-1/2 relative aspect-square">
             <Image
-              src="/images/home/treatments.png?1"
+              src="/images/home/treatments.png"
               alt="descubre los tratamientos"
               fill
               className="object-fit"

@@ -7,25 +7,20 @@ import Products from './Products';
 import PromoCode from './PromoCode';
 import Simulation from './Simulation';
 
-const fetchBudgetData = async (id: string) => {
-  try {
-    const budgetResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_CONTACTS_API}budget?id=${id}`,
-      {
-        cache: 'no-store',
-      }
-    );
-
-    if (!budgetResponse) {
-      throw new Error('Network response was not OK');
+async function fetchBudgetData(id: string) {
+  const budgetResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_CONTACTS_API}budget?id=${id}`,
+    {
+      cache: 'no-store',
     }
+  );
 
-    const budgetData = await budgetResponse.json();
-    return budgetData;
-  } catch (error) {
-    console.error('There has been a problem with your fetch operation:', error);
+  if (!budgetResponse.ok) {
+    throw new Error('Failed to fetch data');
   }
-};
+
+  return budgetResponse.json();
+}
 
 export default async function Budget({
   searchParams,

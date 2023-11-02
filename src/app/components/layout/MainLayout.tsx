@@ -1,21 +1,32 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { registerLocale } from 'react-datepicker';
+import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
+import es from 'date-fns/locale/es';
+import dayjs from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
 
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
 
+dayjs.locale(spanishConf);
+registerLocale('es', es);
 export default function MainLayout({
   isDashboard = false,
   isCheckout = false,
   hideTopBar = false,
+  hideHeader = false,
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
@@ -24,6 +35,7 @@ export default function MainLayout({
 }: {
   isDashboard?: boolean;
   isCheckout?: boolean;
+  hideHeader?: boolean;
   hideBackButton?: boolean;
   hideTopBar?: boolean;
   hideContactButtons?: boolean;
@@ -33,12 +45,21 @@ export default function MainLayout({
 }) {
   const [isHydrated, setISHydrated] = useState(false);
   const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { setIsModalOpen, setIsMainScrollEnabled } = useGlobalStore(
+    state => state
+  );
 
   useEffect(() => {
+    setIsModalOpen(false);
+    setIsMainScrollEnabled(true);
     setISHydrated(true);
   }, []);
 
   const mainLayoutTopPadding = () => {
+    if (hideHeader) {
+      return '0px';
+    }
+
     return `${
       deviceSize.isMobile || deviceSize.isTablet
         ? HEADER_HEIGHT_MOBILE
@@ -68,16 +89,20 @@ export default function MainLayout({
       <>
         <CheckoutHeader />
         {children}
+        <Analytics />
       </>
     );
   }
 
   return (
     <main style={{ paddingTop: mainLayoutTopPadding() }}>
-      <Header />
+      {!hideHeader && <Header />}
+
       {children}
 
       {!hideFooter && <Footer />}
+
+      <Analytics />
     </main>
   );
 }

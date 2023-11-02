@@ -63,7 +63,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
   const ValidateUser = async (email: string, phone: string) => {
     try {
       const data = await UserService.checkUser(email);
-      if (data && data !== '' && data.phone === phone) {
+      if (data && data.phone === phone) {
         return data;
       }
     } catch (error: any) {
@@ -88,9 +88,8 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
     if (user) {
       try {
         const { id, flowwwToken, firstName } = user;
-        const appointmentInfo = await ScheduleService.getClinicSchedule(
-          flowwwToken
-        );
+        const appointmentInfo =
+          await ScheduleService.getClinicSchedule(flowwwToken);
         await ScheduleService.updatePatientStatusAppointment(
           appointmentInfo.id,
           id,

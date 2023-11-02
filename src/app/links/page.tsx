@@ -9,7 +9,7 @@ export default function Home() {
       <Link prefetch={false} href="/user/passport?id=62280">
         test passport
       </Link>
-      <Link href="/form">multistep</Link>
+      <Link href="/multi-step">multistep</Link>
       <Link href="/dashboard">dashboard</Link>
     </main>
   );

@@ -2,11 +2,13 @@
 
 import { useEffect } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { ROUTES } from 'app/utils/routes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
+import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';
 
@@ -18,9 +20,8 @@ export default function MobileNavigation({
   headerHeight: number;
 }) {
   const paddingBottom = headerHeight + 16;
-  const { deviceSize, clinics, setClinics } = useGlobalPersistedStore(
-    state => state
-  );
+  const { deviceSize, clinics, setClinics, setSelectedTreatments } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     async function initClinics() {
@@ -39,7 +40,7 @@ export default function MobileNavigation({
       isVisible={isVisible}
       width="w-full"
       className="shadow-none bg-hg-primary300"
-      from="right"
+      type="right"
       style={{ top: headerHeight }}
       hideModalBackground
     >
@@ -48,31 +49,58 @@ export default function MobileNavigation({
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
         >
-          <p className="font-semibold">Ver Tratamientos</p>
+          <a href={ROUTES.treatments}>
+            <p className="font-semcibold">Ver Tratamientos</p>
+          </a>
 
           <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Aumento de Labios</li>
-              <li>Relleno de ojeras</li>
-              <li>Proyección de pómulos</li>
-              <li>Ver más</li>
+              <a href="/tratamientos/aumento-labios">
+                <li>Aumento de Labios</li>
+              </a>
+              <a href="/tratamientos/relleno-ojeras">
+                <li>Relleno de ojeras</li>
+              </a>
+              <a href="/tratamientos/proyeccion-pomulos">
+                <li>Proyección de pómulos</li>
+              </a>
+              <a href="/tratamientos/relleno">
+                <li>Ver más</li>
+              </a>
             </ul>
           </SimpleAccordion>
 
           <SimpleAccordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Prevención de arrugas</li>
-              <li>Arrugas frente</li>
-              <li>Ver más</li>
+              <a href="/tratamientos/prevencion-arrugas">
+                <li>Prevención de arrugas</li>
+              </a>
+              <a href="/tratamientos/arrugas-expresion-frente-entrecejo-patas-gallo">
+                <li>Arrugas frente</li>
+              </a>
+              <a href="/tratamientos/arrugas">
+                <li>Ver más</li>
+              </a>
             </ul>
           </SimpleAccordion>
 
-          <p className="font-semibold">Hydrafacial ®</p>
+          <a href="/tratamientos/hydrafacial">
+            <p className="font-semibold">Hydrafacial ®</p>
+          </a>
 
-          <p className="font-semibold">Packs Glow</p>
+          <a href="/tratamientos/packs">
+            <p className="font-semibold">Packs Glow</p>
+          </a>
 
-          <Button type="tertiary" className="md:hidden">
-            Reservar Cita
+          <Button
+            type="tertiary"
+            href={ROUTES.checkout.clinics}
+            onClick={() => {
+              setSelectedTreatments([]);
+            }}
+          >
+            Reservar cita
+            <SvgArrow height={16} width={16} className="ml-2" />
           </Button>
         </Flex>
       </div>
@@ -82,24 +110,33 @@ export default function MobileNavigation({
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
         >
           <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              {clinics.map(clinic => (
-                <li key={clinic.city}>{clinic.city}</li>
-              ))}
-            </ul>
+            <a href="/clinicas">
+              <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+                {clinics.map(clinic => (
+                  <li key={clinic.city}>{clinic.city}</li>
+                ))}
+              </ul>
+            </a>
           </SimpleAccordion>
 
           <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Quiénes somos</li>
-              <li>Equipo médico</li>
-              <li>Blog</li>
+              <a href="/quienes-somos">
+                <li>Quiénes somos</li>
+              </a>
+              <a href="/quienes-somos">
+                <li>Equipo médico</li>
+              </a>
             </ul>
           </SimpleAccordion>
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <li>Política de privacidad</li>
-              <li>Términos y condiciones</li>
+              <a href="/politica-de-privacidad">
+                <li>Política de privacidad</li>
+              </a>
+              <a href="/aviso-legal">
+                <li>Términos y condiciones</li>
+              </a>
             </ul>
           </SimpleAccordion>
         </Flex>
@@ -112,14 +149,14 @@ export default function MobileNavigation({
         <Title size="xl">Contacto</Title>
         <p>
           Para dudas y pedidos, escríbenos a{' '}
-          <a href="mailto:info@holaglow.com">info@holaglow.com</a>
+          <a href="mailto:hola@holaglow.com">hola@holaglow.com</a>
         </p>
         <p className="leading-6">
           Por teléfono de Lunes a Viernes
           <br />
-          De 10h a 18:30h
+          De 10 a 14h y de 15 a 19h
           <br />
-          <a href="tel:(+34) 699 999 999">(+34) 699 999 999</a>
+          <a href="tel:(+34) 682 417 208">(+34) 682 417 208</a>
         </p>
       </Flex>
     </Modal>

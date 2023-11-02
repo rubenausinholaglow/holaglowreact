@@ -17,4 +17,7 @@ export enum PaymentBank {
   None,
   Alma,
   Pepper,
+  Cash,
+  Stripe,
+  CreditCard,
 }

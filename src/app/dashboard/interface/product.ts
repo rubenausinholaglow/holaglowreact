@@ -2,7 +2,6 @@ import { ProductClinics } from './clinic';
 
 export interface Product {
   id: string;
-  slug: string;
   title: string;
   description: string;
   detail: string;
@@ -12,7 +11,9 @@ export interface Product {
   order: number;
   upgrades: Upgrade[];
   category: Category[];
+  appliedProducts: AppliedProduct[];
   clinicDetail: ProductClinics[];
+  cardBackgroundColor: string;
   extraInformation: ExtraInformation;
   preTreatmentInfo: PreTips;
   postTreatmentInfo: PostTips;
@@ -27,6 +28,7 @@ export interface Product {
   type: ProductType;
   visibility: boolean;
   sessions: number;
+  productCardImagePosition: string;
 }
 
 export interface BeforeAndAfterImages {
@@ -53,6 +55,11 @@ export interface BenefitDetails {
   title: string;
   order: number;
   id: string;
+}
+
+export interface AppliedProduct {
+  titlte: string;
+  icon: string;
 }
 
 export interface ApplicationZoneDetail {
@@ -82,6 +89,7 @@ export interface TipsDetails {
 }
 export interface Upgrade {
   product: Product;
+  order: number;
 }
 
 export interface RelatedProduct {

@@ -2,16 +2,17 @@
 
 import { useEffect } from 'react';
 import {
-  applyFilters,
-  filterCount,
-  toggleFilter,
-} from 'app/productos/utils/filters';
-import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/tratamientos/utils/filters';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgCheckSquare, SvgCheckSquareActive, SvgCross } from 'icons/IconsDs';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
+import Image from 'next/image';
 
 export default function ZoneFilter({
   className,
@@ -32,14 +33,17 @@ export default function ZoneFilter({
     {
       name: 'Tercio inferior',
       id: 4,
+      icon: '/images/filters/tercioInferior.svg',
     },
     {
       name: 'Tercio medio',
-      id: 2,
+      id: 3,
+      icon: '/images/filters/tercioMedio.svg',
     },
     {
       name: 'Tercio superior',
-      id: 5,
+      id: 2,
+      icon: '/images/filters/tercioSuperior.svg',
     },
   ];
 
@@ -80,7 +84,7 @@ export default function ZoneFilter({
           ) : (
             <SvgCheckSquare className="ml-auto" />
           )}
-          <SvgCross height={24} width={24} />
+          <Image height={40} width={40} src={zone.icon} alt={zone.name} />
           <Text size="xs">{zone.name}</Text>
         </li>
       ))}

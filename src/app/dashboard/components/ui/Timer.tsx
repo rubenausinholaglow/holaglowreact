@@ -1,54 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import Bugsnag from '@bugsnag/js';
-import {
-  HttpTransportType,
-  HubConnection,
-  HubConnectionBuilder,
-} from '@microsoft/signalr';
+import { useMessageSocket } from '@components/useMessageSocket';
+import { MessageType } from '@interface/messageSocket';
 
 interface TimerProps {
   onColorChange: (color: string) => void;
 }
 
 export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
-  const [color, setColor] = useState('bg-green-500');
   const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [connection, setConnection] = useState<HubConnection | null>(null);
   const [patientArrived, setPatientArrived] = useState<boolean | null>(null);
+  const messageSocket = useMessageSocket(state => state);
 
   useEffect(() => {
-    const SOCKET_URL =
-      process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/PatientArrived';
-    const newConnection = new HubConnectionBuilder()
-      .withUrl(SOCKET_URL, {
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets,
-      })
-      .withAutomaticReconnect()
-      .build();
-
-    setConnection(newConnection);
-  }, []);
-
-  useEffect(() => {
-    if (connection) {
-      connection
-        .start()
-        .then(result => {
-          connection.on('ReceiveMessage', message => {
-            const finalMessage = message.messageText;
-            if (finalMessage.startsWith('[PatientArrived]')) {
-              const [, clinicId, boxId] = finalMessage.split('/');
-              updateColor(clinicId, boxId);
-            }
-          });
-        })
-        .catch(e => Bugsnag.notify('Connection failed: ', e));
+    const existMessagePatientArrived = messageSocket.messageSocket.filter(
+      x => x.messageType == MessageType.PatientArrived
+    );
+    if (existMessagePatientArrived.length > 0) {
+      const finalMessage = existMessagePatientArrived[0].message;
+      const [, clinicId, boxId] = finalMessage.split('/');
+      updateColor(clinicId, boxId);
+      messageSocket.removeMessageSocket(existMessagePatientArrived[0]);
     }
-    onColorChange(color);
-  }, [connection]);
+  }, [messageSocket]);
 
   useEffect(() => {
     const updateColorAndTime = () => {

@@ -16,6 +16,10 @@ export interface Appointment {
   isCancelled?: boolean;
   clinicId?: string;
   professionalName?: string;
+  clientId: string;
+  comment: string;
+  referralId: string;
+  externalReference: string;
 }
 
 export enum Status {
@@ -34,6 +38,7 @@ export interface Lead {
 }
 
 export interface User {
+  clinicToken: string;
   firstName: string;
   flowwwToken: string;
   email: string;
@@ -44,8 +49,14 @@ export interface User {
   province: string;
   postalCode: string;
   birthday: string;
+  phone: string;
   country: string;
   lastName: string;
   secondLastName: string;
   phone: string;
+}
+
+export interface RescheduleAppointmentRequest {
+  previous: Appointment;
+  next: Appointment;
 }

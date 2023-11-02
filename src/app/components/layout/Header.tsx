@@ -18,9 +18,9 @@ import MobileNavigation from './MobileNavigation';
 let scrollPos = 0;
 
 const NAV_ITEMS = [
-  { name: 'Tratamientos', link: ROUTES.products },
-  { name: 'Clínicas', link: ROUTES.products },
-  { name: 'Sobre nosotros', link: ROUTES.products },
+  { name: 'Tratamientos', link: ROUTES.treatments },
+  { name: 'Clínicas', link: ROUTES.clinics },
+  { name: 'Sobre nosotros', link: ROUTES.aboutUs },
 ];
 
 function Navigation({ className }: { className: string }) {
@@ -29,9 +29,7 @@ function Navigation({ className }: { className: string }) {
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
           <li className="font-medium" key={navItem.name}>
-            <Link className="text-inherit" href={navItem.link}>
-              {navItem.name}
-            </Link>
+            <Link href={navItem.link}>{navItem.name}</Link>
           </li>
         ))}
       </ul>
@@ -43,7 +41,9 @@ export default function Header() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 
-  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
+    state => state
+  );
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -84,7 +84,7 @@ export default function Header() {
         <Container isHeader>
           <Flex
             layout="row-between"
-            className={`relative py-3 lg:py-5 lg:justify-center ${HEADER_HEIGHT_CLASS}`}
+            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
           >
             <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
               <SvgHolaglow
@@ -92,9 +92,25 @@ export default function Header() {
                 className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
               />
             </Link>
-            <Navigation className="hidden lg:block" />
 
-            <Flex layout="row-center" className="lg:absolute right-0">
+            <Navigation className="hidden lg:block 2xl:mr-20" />
+
+            <Flex
+              layout="row-center"
+              className="lg:absolute right-0  2xl:mr-20"
+            >
+              <Button
+                type="tertiary"
+                href={ROUTES.checkout.clinics}
+                className="hidden md:block mr-2"
+                onClick={() => {
+                  setSelectedTreatments([]);
+                }}
+              >
+                Reservar cita
+                <SvgArrow height={16} width={16} className="ml-2" />
+              </Button>
+
               {!isMobileNavVisible && (
                 <SvgMenu
                   height={24}
@@ -116,17 +132,6 @@ export default function Header() {
                   }}
                 />
               )}
-              <Button
-                type="tertiary"
-                size="md"
-                className={`hidden lg:block ${HEADER_HEIGHT_CLASS} 2xl:mr-20`}
-                customStyles="group-hover:bg-hg-secondary100"
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Reservar Cita</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
             </Flex>
           </Flex>
         </Container>

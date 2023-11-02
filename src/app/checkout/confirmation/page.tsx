@@ -1,30 +1,42 @@
 'use client';
 
+import { useEffect } from 'react';
+import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { ROUTES } from 'app/utils/routes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
-import { SvgArrow, SvgCheck } from 'icons/IconsDs';
+import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 
 export default function ConfirmationCheckout() {
-  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
-    useGlobalPersistedStore(state => state);
+  const { selectedPacksTreatments } = useGlobalPersistedStore(state => state);
+
+  const {
+    selectedTreatments,
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    setCurrentUser,
+  } = useGlobalPersistedStore(state => state);
   const localSelectedDay = dayjs(selectedDay);
   let selectedTreatmentsNames = '';
-  let selectedTreatmentsDesc = '';
+
   if (selectedTreatments) {
-    selectedTreatmentsNames = selectedTreatments!.map(x => x.title).join(' + ');
-    selectedTreatmentsDesc = selectedTreatments
-      .map(x => x.description)
-      .join(' + ');
+    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
   }
+  useEffect(() => {
+    setCurrentUser(undefined);
+  }, []);
+
   return (
     <MainLayout hideFooter>
       <Container className="mt-12 mb-4 md:mt-16">
-        <div className="md:w-1/2 pr-8">
+        <div className="md:w-1/2 md:pr-8">
           <SvgCheck
             height={88}
             width={88}
@@ -56,7 +68,7 @@ export default function ConfirmationCheckout() {
             <div className="bg-hg-black text-white p-4 gap-2 rounded-xl">
               <div className="w-full mt-3 pb-3 flex items-center">
                 <SvgCalendar className="mr-2" />
-                <Text className="font-semibold">
+                <Text className="font-semibold capitalize">
                   {localSelectedDay.format('dddd')},{' '}
                   {localSelectedDay.format('D')} de{' '}
                   {localSelectedDay.format('MMMM')} de{' '}
@@ -79,22 +91,70 @@ export default function ConfirmationCheckout() {
                   <Text className="font-semibold">
                     {selectedTreatmentsNames}
                   </Text>
-                  <Text>{selectedTreatmentsDesc}</Text>
+                  {selectedTreatments &&
+                  selectedTreatments[0] &&
+                  selectedTreatments[0].isPack ? (
+                    <ul className="p-1">
+                      {selectedPacksTreatments &&
+                        selectedPacksTreatments.map(item => {
+                          return <li key={item.title}>- {item.title}</li>;
+                        })}
+                    </ul>
+                  ) : selectedTreatments[0] &&
+                    !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                    selectedTreatments[0].appliedProducts.map(item => {
+                      const iconName = item.icon.split('/')[0] || 'SvgCross';
+                      const iconFamily:
+                        | 'default'
+                        | 'category'
+                        | 'suggestion'
+                        | 'service' =
+                        (item.icon.split('/')[1] as 'default') || 'default';
+
+                      return (
+                        <Flex key={item.titlte} className="items-start mb-2">
+                          <DynamicIcon
+                            height={16}
+                            width={16}
+                            className="mr-2 mt-0.5 text-hg-primary shrink-0"
+                            name={iconName}
+                            family={iconFamily}
+                          />
+
+                          <Text>{item.titlte}</Text>
+                        </Flex>
+                      );
+                    })
+                  ) : (
+                    <Flex className="items-start mb-2">
+                      <SvgInjection
+                        height={16}
+                        width={16}
+                        className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                      />
+                      {selectedTreatments[0] && (
+                        <Text>{selectedTreatments[0].description}</Text>
+                      )}
+                    </Flex>
+                  )}
                 </div>
               </div>
             </div>
             <div className="pt-12">
-              <Button
-                type="tertiary"
-                size="md"
-                className={`hidden lg:block 2xl:mr-20`}
-                customStyles="group-hover:bg-hg-secondary100"
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Ver tratamientos</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
+              <a href="/tratamientos">
+                <Button
+                  type="tertiary"
+                  size="md"
+                  className="hidden md:inline"
+                  customStyles="group-hover:bg-hg-secondary100"
+                  href={ROUTES.treatments}
+                >
+                  <Flex layout="row-center">
+                    <span className="font-semibold">Ver tratamientos</span>
+                    <SvgArrow height={18} width={18} className="ml-2" />
+                  </Flex>
+                </Button>
+              </a>
             </div>
           </div>
           <div className="w-full">

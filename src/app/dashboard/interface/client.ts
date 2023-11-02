@@ -8,16 +8,21 @@ export interface Client {
   receiveCommunications: boolean;
   page: string;
   externalReference: string;
-  analyticsMetrics: {
-    device: number;
-    locPhysicalMs: string;
-    utmAdgroup: string;
-    utmCampaign: string;
-    utmContent: string;
-    utmMedium: string;
-    utmSource: string;
-    utmTerm: string;
-  };
+  analyticsMetrics: AnalyticsMetrics;
+  interestedTreatment: string;
+  treatmentPrice: number;
+  [key: string]: any;
+}
+
+export interface AnalyticsMetrics {
+  device: number;
+  locPhysicalMs: string;
+  utmAdgroup: string;
+  utmCampaign: string;
+  utmContent: string;
+  utmMedium: string;
+  utmSource: string;
+  utmTerm: string;
   interestedTreatment: string;
   treatmentPrice: number;
   [key: string]: any;

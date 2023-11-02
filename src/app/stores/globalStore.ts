@@ -1,8 +1,9 @@
-import { User } from '@interface/appointment';
+import { Appointment, User } from '@interface/appointment';
+import { AnalyticsMetrics } from '@interface/client';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
-import { INITIAL_FILTERS } from 'app/productos/utils/filters';
+import { INITIAL_FILTERS } from 'app/tratamientos/utils/filters';
 import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
 import { create } from 'zustand';
@@ -19,11 +20,14 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   isMobile: boolean;
   deviceSize: DeviceSize;
-  selectedTreatments?: Product[];
+  selectedTreatments: Product[];
+  selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
   user?: User;
   selectedDay: Dayjs;
+  previousAppointment: Appointment | undefined;
+  analyticsMetrics: AnalyticsMetrics;
 }
 
 interface GlobalPersistActions {
@@ -32,10 +36,13 @@ interface GlobalPersistActions {
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
-  setSelectedClinic: (value: Clinic) => void;
-  setCurrentUser: (value: User) => void;
-  setSelectedSlot: (slot: Slot) => void;
+  setSelectedPackTreatments: (value: Product[]) => void;
+  setSelectedClinic: (value?: Clinic) => void;
+  setCurrentUser: (value?: User) => void;
+  setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
+  setPreviousAppointment: (appointment: Appointment) => void;
+  setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
 }
 
 export const useGlobalPersistedStore = create(
@@ -51,10 +58,23 @@ export const useGlobalPersistedStore = create(
       },
       isMobile: true,
       selectedTreatments: [],
+      selectedPacksTreatments: [],
       selectedClinic: undefined,
       user: undefined,
       selectedDay: dayjs(),
       selectedSlot: undefined,
+      previousAppointment: undefined,
+      analyticsMetrics: {
+        device: 0,
+        locPhysicalMs: '',
+        utmAdgroup: '',
+        utmCampaign: '',
+        utmContent: '',
+        utmMedium: '',
+        utmSource: '',
+        utmTerm: '',
+        treatmentText: '',
+      },
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -70,6 +90,9 @@ export const useGlobalPersistedStore = create(
       setSelectedTreatments: value => {
         set({ selectedTreatments: value });
       },
+      setSelectedPackTreatments: value => {
+        set({ selectedPacksTreatments: value });
+      },
       setSelectedClinic: value => {
         set({ selectedClinic: value });
       },
@@ -82,9 +105,16 @@ export const useGlobalPersistedStore = create(
       setSelectedDay: value => {
         set({ selectedDay: value });
       },
+      setPreviousAppointment: value => {
+        set({ previousAppointment: value });
+      },
+      setAnalyticsMetrics: value => {
+        set({ analyticsMetrics: value });
+      },
     }),
     {
       name: 'global-storage',
+      version: 6,
     }
   )
 );

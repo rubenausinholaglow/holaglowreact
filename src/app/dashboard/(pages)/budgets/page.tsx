@@ -33,14 +33,14 @@ export default function Page() {
   const [filterPain, setFilterPain] = useState<number[]>([]);
   const [filterText, setFilterText] = useState('');
   const [filterClinic, setFilterClinic] = useState<string[]>([]);
-  const [filterType, setFilterType] = useState<number[]>([2, 3]);
+  const [filterType, setFilterType] = useState<number[]>([2, 3, 5]);
   const [priceRanges, setPriceRanges] = useState<
     { min: number; max: number }[]
   >([]);
   const [isTypeFilterSelected, setIsTypeFilterSelected] = useState(true);
 
   useEffect(() => {
-    ProductService.getAllProducts()
+    ProductService.getDashboardProducts()
       .then(data => {
         data.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setProducts(data);
