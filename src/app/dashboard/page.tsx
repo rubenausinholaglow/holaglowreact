@@ -10,12 +10,12 @@ import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../components/common/RegistrationForm';
 import SearchUser from './SearchUser';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 export default function Page({
   searchParams,

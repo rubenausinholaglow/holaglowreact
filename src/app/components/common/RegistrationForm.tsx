@@ -186,13 +186,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
         placeholder="Nombre"
         value={formData.name}
         onChange={event => handleFieldChange(event, 'name')}
-        hasNoValidation
       />
       <TextInputField
         placeholder="Apellidos"
         value={formData.surname}
         onChange={event => handleFieldChange(event, 'surname')}
-        hasNoValidation
       />
       <TextInputField
         placeholder="Correo electrónico"
