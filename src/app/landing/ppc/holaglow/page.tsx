@@ -34,6 +34,8 @@ export default function LandingCaptacion() {
     setSelectedTreatments,
     setSelectedSlot,
     setSelectedClinic,
+    analyticsMetrics,
+    setAnalyticsMetrics,
   } = useGlobalPersistedStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
@@ -50,6 +52,8 @@ export default function LandingCaptacion() {
     }
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
+    analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
+    setAnalyticsMetrics(analyticsMetrics);
   }, []);
 
   return (
