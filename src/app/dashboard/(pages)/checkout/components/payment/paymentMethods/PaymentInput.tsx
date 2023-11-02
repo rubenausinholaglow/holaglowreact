@@ -16,6 +16,7 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import DatePicker from 'react-datepicker';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
@@ -26,6 +27,8 @@ import { isEmpty } from 'lodash';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 import PepperWidget from './PepperWidget';
+import dayjs from 'dayjs';
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -262,13 +265,32 @@ export default function PaymentInput(props: Props) {
             </Flex>
 
             <Flex className="gap-4">
-              <TextInputField
-                label="Fecha nacimiento"
-                placeholder="Fecha nacimiento"
-                value={formData.birthday}
-                onChange={event => handleFormFieldChange(event, 'birthday')}
-                inputStyles="h-12 rounded-xl"
-              />
+              <DatePicker
+                onChange={x => {
+                  debugger;
+                  const day = dayjs(x);
+                  const formattedDate = day.format('YYYY-MM-DD');
+                  setFormData((prevFormData: any) => ({
+                    ...prevFormData,
+                    ['birthday']: formattedDate,
+                  }));
+                }}
+                useWeekdaysShort
+                calendarStartDay={1}
+                locale="es"
+                className="w-full"
+                fixedHeight
+                customInput={
+                  <input
+                    placeholder={'Fecha nacimiento'}
+                    className={
+                      'border border-hg-black300 rounded-2xl px-4 py-2 w-full text-hg-black h-16 focus:outline-none h-12 rounded-xl'
+                    }
+                    type="text"
+                    value={formData.birthday}
+                  />
+                }
+              ></DatePicker>
               <TextInputField
                 label="DNI"
                 placeholder="DNI"
