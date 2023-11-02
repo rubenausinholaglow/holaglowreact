@@ -98,7 +98,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                     productItems.length === 1 &&
                     !deviceSize.isMobile &&
                     !item.isPack
-                      ? 'w-1/2'
+                      ? 'w-1/3'
                       : ''
                   }
                 />
