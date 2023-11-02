@@ -72,8 +72,8 @@ const UPGRADE_TYPES: Record<
   },
   '1': {
     title: '0,5 viales de inyectable antiarrugas',
-    icon: 'SvgArrugas',
-    family: 'category',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Prevención arrugas - Baby botox',
@@ -87,8 +87,8 @@ const UPGRADE_TYPES: Record<
   },
   '2': {
     title: '1 vial de inyectable antiarrugas',
-    icon: 'SvgArrugas',
-    family: 'category',
+    icon: 'SvgInjection',
+    family: 'default',
     options: [
       {
         label: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
@@ -137,19 +137,26 @@ function ProductPriceItemsCard({
   product,
   parentProduct,
   setAccordionOverflow,
+  isOpen,
 }: {
   product: Product;
   parentProduct: Product;
   setAccordionOverflow: (value: string) => void;
+  isOpen?: boolean;
 }) {
   const { setSelectedTreatments, setSelectedPackTreatments, stateProducts } =
     useGlobalPersistedStore(state => state);
 
   const router = useRouter();
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(isOpen);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
   );
+
+  const isDisabled =
+    product.isPack &&
+    selectedPackOptions.filter(x => x.value != '').length !=
+      product.packUnities.length;
 
   const updateSelectedPackOptions = (newValue: string, index: number) => {
     const newOptions = [...selectedPackOptions];
@@ -252,7 +259,7 @@ function ProductPriceItemsCard({
         ))}
 
       {showDropdown && (
-        <form className="w-full" onSubmit={data => console.log(data)}>
+        <form className="w-full">
           {product.packUnities.map((item: any, index: number) => {
             return (
               <div
@@ -260,6 +267,20 @@ function ProductPriceItemsCard({
                 key={UPGRADE_TYPES[item.type.toString()].title}
               >
                 <Flex layout="row-left" className="items-start">
+                  <DynamicIcon
+                    height={16}
+                    width={16}
+                    className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                    name={UPGRADE_TYPES[item.type.toString()].icon}
+                    family={
+                      (UPGRADE_TYPES[item.type.toString()].family as
+                        | 'default'
+                        | 'suggestion'
+                        | 'service'
+                        | 'category'
+                        | undefined) || 'default'
+                    }
+                  />
                   <Text className="text-sm md:text-md">
                     {UPGRADE_TYPES[item.type.toString()].title}
                   </Text>
@@ -277,7 +298,6 @@ function ProductPriceItemsCard({
           })}
         </form>
       )}
-
       {product?.packMoreInformation && (
         <Accordion>
           <AccordionItem value="accordion">
@@ -294,30 +314,28 @@ function ProductPriceItemsCard({
           </AccordionItem>
         </Accordion>
       )}
-
       {product.isPack && !showDropdown && (
         <Button
           className="mt-8"
           type="tertiary"
+          customStyles="hover:bg-hg-secondary100"
           onClick={() => setShowDropdown(true)}
         >
           Personalizar
         </Button>
       )}
-
       {(!product.isPack || showDropdown) && (
         <Button
           type="tertiary"
-          customStyles="bg-hg-primary"
+          customStyles={
+            isDisabled
+              ? 'bg-white text-hg-black300 border-hg-black300 pointer-events-none cursor-default'
+              : 'bg-hg-primary hover:bg-hg-secondary100'
+          }
           onClick={() => {
             setSelectedTreatment(product);
           }}
           className="mt-8"
-          disabled={
-            product.isPack &&
-            selectedPackOptions.filter(x => x.value != '').length !=
-              product.packUnities.length
-          }
         >
           Reservar cita
           <SvgArrow height={16} width={16} className="ml-2" />
@@ -331,18 +349,22 @@ export default function ProductPriceCard({
   product,
   index,
   parentProduct,
+  fullWidthPack = false,
+  className,
 }: {
   product: Product;
   index: number;
   parentProduct: Product;
+  fullWidthPack?: boolean;
+  className?: string;
 }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
 
-  console.log();
-
   return (
-    <Flex className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary">
+    <Flex
+      className={`bg-white p-3 rounded-2xl w-full shadow-centered-secondary ${className}`}
+    >
       <AccordionItem
         value={deviceSize.isMobile ? `accordion-${index}` : 'value'}
       >
@@ -384,7 +406,7 @@ export default function ProductPriceCard({
               </Flex>
             </Flex>
             <Text className="font-semibold md:text-lg">{product.title}</Text>
-            {product.isPack && (
+            {product.isPack && deviceSize.isMobile && (
               <Text className="font-semibold md:text-lg">
                 ¡Tu eliges la zona!
               </Text>
@@ -397,13 +419,51 @@ export default function ProductPriceCard({
             `data-[state=closed]:overflow-hidden ${accordionOverflow}`
           )}
         >
-          <div className="bg-hg-black50 p-3 w-full rounded-xl">
-            <ProductPriceItemsCard
-              product={product}
-              parentProduct={parentProduct}
-              setAccordionOverflow={setAccordionOverflow}
-            />
-          </div>
+          <Flex
+            layout="col-left"
+            className={`md:flex-row items-start mt-3 ${
+              fullWidthPack && !deviceSize.isMobile ? 'md:p-4' : ''
+            }`}
+          >
+            {fullWidthPack && !deviceSize.isMobile && (
+              <div className="md:w-1/2 shrink-0">
+                <Text className="font-semibold md:text-lg mb-2">
+                  ¡Tu eliges la zona!
+                </Text>
+                {!isEmpty(product.appliedProducts) ? (
+                  <>
+                    {product.appliedProducts.map(item => (
+                      <Text key={item.titlte}>{item.titlte}</Text>
+                    ))}
+                    {product?.packMoreInformation && (
+                      <p>{product?.packMoreInformation}</p>
+                    )}
+                  </>
+                ) : (
+                  <Flex className="items-start mb-2">
+                    <SvgInjection
+                      height={16}
+                      width={16}
+                      className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                    />
+                    <Text>{product.description}</Text>
+                  </Flex>
+                )}
+              </div>
+            )}
+            <div
+              className={`bg-hg-black50 p-3 w-full rounded-xl ${
+                fullWidthPack && !deviceSize.isMobile ? 'md:w-1/2' : ''
+              }`}
+            >
+              <ProductPriceItemsCard
+                product={product}
+                parentProduct={parentProduct}
+                setAccordionOverflow={setAccordionOverflow}
+                isOpen={fullWidthPack && !deviceSize.isMobile}
+              />
+            </div>
+          </Flex>
         </AccordionContent>
       </AccordionItem>
     </Flex>
