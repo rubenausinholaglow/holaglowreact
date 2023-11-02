@@ -56,8 +56,6 @@ export default class ScheduleService {
     }
     const format = 'YYYY-MM-DD';
     const comment = 'Tratamiento visto en web: ' + treatments;
-    if (analyticsMetrics.treatmentText)
-      treatments = analyticsMetrics.treatmentText;
     appointments.push({
       box: selectedSlot!.box,
       endTime:
