@@ -174,24 +174,26 @@ export default function PsrpPage({ slug }: { slug: string }) {
                   <Flex layout="col-center">Filtrar</Flex>
                 </Button>
 
-                <Text
-                  size="xs"
-                  className={`text-hg-secondary transition-opacity underline cursor-pointer mr-auto ${
-                    filterCount(productFilters) === 0
-                      ? 'opacity-0'
-                      : 'opacity-100'
-                  }`}
-                  onClick={() => {
-                    setProductFilters({
-                      isPack: false,
-                      category: [],
-                      zone: [],
-                      clinic: [],
-                    });
-                  }}
-                >
-                  Borrar filtros ({filterCount(productFilters)})
-                </Text>
+                <div className="mr-auto">
+                  <Text
+                    size="xs"
+                    className={`text-hg-secondary transition-opacity underline cursor-pointer ${
+                      filterCount(productFilters) === 0
+                        ? 'opacity-0'
+                        : 'opacity-100'
+                    }`}
+                    onClick={() => {
+                      setProductFilters({
+                        isPack: false,
+                        category: [],
+                        zone: [],
+                        clinic: [],
+                      });
+                    }}
+                  >
+                    Borrar filtros ({filterCount(productFilters)})
+                  </Text>
+                </div>
                 <Text size="xs">
                   {
                     filteredProducts.filter(product => product.visibility)

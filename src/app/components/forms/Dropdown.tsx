@@ -15,9 +15,12 @@ export default function Dropdown({
       paddingTop: '5px',
       paddingBottom: '5px',
       borderRadius: '12px',
-      background: state.hasValue
-        ? 'url("/images/forms/formCheck.svg") no-repeat center right 6px'
-        : 'url("/images/forms/formAngle.svg") no-repeat center right 6px',
+      backgroundImage: state.hasValue
+        ? 'url("/images/forms/formCheck.svg")'
+        : 'url("/images/forms/formAngle.svg")',
+      backgroundColor: '#ffffff',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center right 6px',
       borderColor: state.isFocused
         ? `${HOLAGLOW_COLORS['secondary']}`
         : `${HOLAGLOW_COLORS['black']}`,
@@ -39,7 +42,7 @@ export default function Dropdown({
   return (
     <Select
       options={options}
-      className={`w-full mb-2 ${rest.className}`}
+      className={`w-full mb-2 bg-white ${rest.className}`}
       styles={dropdownStyles}
       {...rest}
       placeholder="Seleccionar..."
