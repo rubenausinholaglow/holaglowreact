@@ -32,9 +32,9 @@ export default function LegalAdvice() {
             </li>
 
             <li>
-              Puedes acumular tantos bonos de la promoción "Trae a un amigo"
-              como quieras y canjearlos por separado o conjuntamente en
-              tratamientos para ti. La promoción no es acumulable a otras
+              Puedes acumular tantos bonos de la promoción &quot;Trae a un
+              amigo&quot; como quieras y canjearlos por separado o conjuntamente
+              en tratamientos para ti. La promoción no es acumulable a otras
               ofertas y promociones.
             </li>
 
