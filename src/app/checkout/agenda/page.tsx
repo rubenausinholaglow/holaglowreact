@@ -47,7 +47,11 @@ export default function Agenda() {
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   let maxDays = 40;
-  if (selectedTreatments[0].type == 2 || selectedTreatments[0].type == 1)
+  if (
+    selectedTreatments &&
+    selectedTreatments[0] &&
+    (selectedTreatments[0].type == 2 || selectedTreatments[0].type == 1)
+  )
     maxDays = 15;
   const maxDaysByClinicAndType: any = {
     '1': {
@@ -67,14 +71,15 @@ export default function Agenda() {
     },
   };
   if (
+    selectedClinic &&
+    selectedTreatments &&
+    selectedTreatments[0] &&
     maxDaysByClinicAndType &&
-    maxDaysByClinicAndType[selectedClinic?.flowwwId!] &&
-    maxDaysByClinicAndType[selectedClinic?.flowwwId!][
-      selectedTreatments[0].type
-    ]
+    maxDaysByClinicAndType[selectedClinic.flowwwId] &&
+    maxDaysByClinicAndType[selectedClinic.flowwwId][selectedTreatments[0].type]
   ) {
     maxDays =
-      maxDaysByClinicAndType[selectedClinic?.flowwwId!][
+      maxDaysByClinicAndType[selectedClinic.flowwwId][
         selectedTreatments[0].type
       ];
   }
