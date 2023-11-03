@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import clinicService from '@services/ClinicService';
+import { messageService } from '@services/MessageService';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -27,7 +27,7 @@ export default function Page() {
       setName(props.name);
       setHour(props.hour);
       setProfessional(props.professional);
-      clinicService.PatientArrived(props);
+      messageService.PatientArrived(props);
       reloadPageAfterDelay(30000);
     } else {
       reloadPageAfterDelay(5000);

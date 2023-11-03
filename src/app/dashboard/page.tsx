@@ -2,7 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import { useMessageSocket } from '@components/useMessageSocket';
 import { Client } from '@interface/client';
+import { MessageType } from '@interface/messageSocket';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
@@ -10,6 +12,7 @@ import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
+import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
@@ -24,13 +27,14 @@ export default function Page({
 }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [clinicId, setClinicId] = useState('');
   const [boxId, setBoxId] = useState('');
   const [remoteControl, setRemoteControl] = useState(false);
-
+  const messageSocket = useMessageSocket(state => state);
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -56,6 +60,48 @@ export default function Page({
   });
 
   useEffect(() => {
+    const isRemoteControl = localStorage.getItem('RemoteControl');
+    if (isRemoteControl === 'false') {
+      const existsMessageStartAppointment: any =
+        messageSocket.messageSocket.filter(
+          x => x.messageType == MessageType.StartAppointment
+        );
+      if (existsMessageStartAppointment.length > 0) {
+        setIsLoadingUser(true);
+        const finaldata = {
+          ClinicId: existsMessageStartAppointment[0].ClinicId,
+          BoxId: existsMessageStartAppointment[0].BoxId,
+          FlowwwToken: existsMessageStartAppointment[0].FlowwwToken,
+        };
+        startAppointment(
+          finaldata.ClinicId,
+          finaldata.BoxId,
+          finaldata.FlowwwToken
+        );
+        messageSocket.removeMessageSocket(existsMessageStartAppointment[0]);
+      }
+    }
+  }, [messageSocket]);
+
+  async function startAppointment(
+    clinicId: string,
+    boxId: string,
+    flowwwToken: string
+  ) {
+    const guidClinic = localStorage.getItem('ClinicId') || '';
+    const boxIdLocal = localStorage.getItem('BoxId') || '';
+
+    if (
+      guidClinic.toUpperCase() === clinicId.toUpperCase() &&
+      String(boxId) === String(boxIdLocal)
+    ) {
+      await redirectPage('', '', flowwwToken);
+    }
+
+    setIsLoadingUser(false);
+  }
+
+  useEffect(() => {
     clearLocalStorage(false);
 
     const queryString = window.location.search;
@@ -63,6 +109,9 @@ export default function Page({
     setBoxId(params.get('boxId') || '');
     setRemoteControl(searchParams.remoteControl == 'true');
     setClinicId(params.get('clinicId') || '');
+    localStorage.setItem('RemoteControl', params.get('remoteControl') || '');
+    localStorage.setItem('ClinicId', params.get('clinicId') || '');
+    localStorage.setItem('BoxId', params.get('boxId') || '');
   }, []);
 
   const handleCheckUser = async () => {
@@ -106,7 +155,7 @@ export default function Page({
 
   async function redirectPage(name: string, id: string, flowwwToken: string) {
     try {
-      await ScheduleService.getClinicSchedule(flowwwToken).then(data => {
+      await ScheduleService.getClinicSchedule(flowwwToken).then(async data => {
         if (data != null) {
           localStorage.setItem('appointmentId', data.id);
           localStorage.setItem('appointmentFlowwwId', data.flowwwId ?? '');
@@ -116,7 +165,12 @@ export default function Page({
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
-          localStorage.setItem('boxId', boxId || data.boxId);
+          //localStorage.setItem('boxId', boxId || data.boxId);
+          if (name == '') {
+            name = data.lead.user.firstName;
+            id = data.lead.user.id;
+          }
+
           saveUserDetails(name, id, flowwwToken);
           router.push('/dashboard/menu');
         } else {
@@ -241,6 +295,7 @@ export default function Page({
               isLoading={isLoading}
             />
           )}
+          {isLoadingUser && <SvgSpinner />}
         </div>
       </MainLayout>
     );

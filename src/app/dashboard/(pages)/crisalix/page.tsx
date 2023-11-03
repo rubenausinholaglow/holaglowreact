@@ -5,6 +5,8 @@ import MainLayout from 'app/components/layout/MainLayout';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
+import { useCrisalix } from './useCrisalix';
+
 const Page = () => {
   const [id, setId] = useState('');
   const [playerId, setPlayerId] = useState('');
@@ -14,18 +16,19 @@ const Page = () => {
   const [loadPlayer, setLoadPlayer] = useState(false);
   const username =
     typeof window !== 'undefined' ? localStorage.getItem('username') : null;
+  const userCrisalix = useCrisalix(state => state);
 
   useEffect(() => {
-    const userId = localStorage.getItem('id');
-    const appointmentId = localStorage.getItem('appointmentId');
-    const clinicId = localStorage.getItem('ClinicId');
-    UserService.createCrisalixUser(userId!, appointmentId!, clinicId!).then(
-      x => {
-        setPlayerId(x.playerId);
-        setPlayerToken(x.playerToken);
-        setId(x.id);
-      }
-    );
+    const existsCrisalixUser =
+      userCrisalix.crisalixUser.length > 0
+        ? userCrisalix.crisalixUser[0]
+        : null;
+
+    if (existsCrisalixUser != null) {
+      setPlayerId(userCrisalix.crisalixUser[0].playerId);
+      setPlayerToken(userCrisalix.crisalixUser[0].playerToken);
+      setId(userCrisalix.crisalixUser[0].id);
+    }
 
     setTimeout(
       () => {
@@ -97,7 +100,7 @@ const Page = () => {
   };
 
   return (
-    <MainLayout isDashboard>
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {username && (
         <Container>
           <Flex layout="col-center">

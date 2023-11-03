@@ -1,47 +1,64 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ScheduleService from '@services/ScheduleService';
-import { clearLocalStorage } from '@utils/utils';
+import { useMessageSocket } from '@components/useMessageSocket';
+import { CrisalixUser } from '@interface/crisalix';
+import { MessageType } from '@interface/messageSocket';
 import MainLayout from 'app/components/layout/MainLayout';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { useRouter } from 'next/navigation';
 
+import { useCrisalix } from '../crisalix/useCrisalix';
 import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
 
 const Page = () => {
   const [username, setUserName] = useState('');
-  const [clinicId, setClinicId] = useState<string | null>(null);
-  const [boxId, setBoxId] = useState<string | null>(null);
-  const [appointmentId, setAppointmentId] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const [flowwwToken, setFlowwwToken] = useState('');
-
-  const router = useRouter();
-  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-  const [comment, setComment] = useState('');
+  const messageSocket = useMessageSocket(state => state);
+  const userCrisalix = useCrisalix(state => state);
 
   useEffect(() => {
-    const newCrisalix = localStorage.getItem('newCrisalix');
-    if (newCrisalix) {
-      menuItems[0].link = '/dashboard/crisalix';
-      menuItems[0].target = '';
-    }
     const storedUsername = localStorage.getItem('username') || '';
     setUserName(storedUsername);
-
-    if (!storedUsername) {
-      router.push('/dashboard');
-    }
-
-    setAppointmentId(localStorage.getItem('appointmentId') || '');
-    setClinicId(localStorage.getItem('ClinicId') || '');
-    setBoxId(localStorage.getItem('boxId') || '');
-    setUserId(localStorage.getItem('id') || '');
-    setFlowwwToken(localStorage.getItem('flowwwToken') || '');
   }, []);
+
+  useEffect(() => {
+    const isRemoteControl = localStorage.getItem('RemoteControl');
+    if (isRemoteControl === 'false') {
+      const existsMessageCrisalixUser: any = messageSocket.messageSocket.filter(
+        x => x.messageType == MessageType.CrisalixUser
+      );
+      if (existsMessageCrisalixUser.length > 0) {
+        const data = {
+          ClinicId: existsMessageCrisalixUser[0].ClinicId,
+          BoxId: existsMessageCrisalixUser[0].BoxId,
+          id: existsMessageCrisalixUser[0].id,
+          playerId: existsMessageCrisalixUser[0].playerToken,
+          playerToken: existsMessageCrisalixUser[0].playerToken,
+        };
+        saveCrisalixUser(data);
+        messageSocket.removeMessageSocket(existsMessageCrisalixUser[0]);
+      }
+    }
+  }, [messageSocket]);
+
+  async function saveCrisalixUser(props: any) {
+    const guidClinic = localStorage.getItem('ClinicId') || '';
+    const boxIdLocal = localStorage.getItem('BoxId') || '';
+
+    if (
+      guidClinic.toUpperCase() === props.ClinicId.toUpperCase() &&
+      String(props.BoxId) === String(boxIdLocal)
+    ) {
+      const crisalixUser: CrisalixUser = {
+        id: props.id,
+        playerId: props.playerToken,
+        playerToken: props.playerToken,
+        name: props.name,
+      };
+      userCrisalix.addCrisalixUser(crisalixUser);
+    }
+  }
 
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>

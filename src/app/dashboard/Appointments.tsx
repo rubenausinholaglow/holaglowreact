@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Appointment, Status } from '@interface/appointment';
+import { CrisalixUser } from '@interface/crisalix';
+import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
@@ -8,6 +10,8 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+
+import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 
 const AppointmentsListComponent: React.FC<{
   clinicId: string;
@@ -17,7 +21,7 @@ const AppointmentsListComponent: React.FC<{
   const [loadingAppointments, setLoadingAppointments] = useState<{
     [id: string]: boolean;
   }>({});
-
+  const userCrisalix = useCrisalix(state => state);
   const router = useRouter();
 
   useEffect(() => {
@@ -72,7 +76,7 @@ const AppointmentsListComponent: React.FC<{
 
   async function redirectPage(name: string, id: string, flowwwToken: string) {
     try {
-      await ScheduleService.getClinicSchedule(flowwwToken).then(data => {
+      await ScheduleService.getClinicSchedule(flowwwToken).then(async data => {
         if (data != null) {
           localStorage.setItem('ClinicId', data.clinic.id);
           localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
@@ -80,9 +84,32 @@ const AppointmentsListComponent: React.FC<{
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
-          localStorage.setItem('boxId', boxId || '');
+          //localStorage.setItem('boxId', boxId || '');
           saveUserDetails(name, id, flowwwToken);
-          router.push('/dashboard/remoteControl');
+          await messageService.StartAppointment(data).then(async info => {
+            if (info != null) {
+              await UserService.createCrisalixUser(id, data.id, clinicId).then(
+                async x => {
+                  const crisalixUser: CrisalixUser = {
+                    id: x.id,
+                    playerId: x.playerToken,
+                    playerToken: x.playerToken,
+                    name: x.name,
+                  };
+                  userCrisalix.addCrisalixUser(crisalixUser);
+                  const props = {
+                    id: crisalixUser.id,
+                    playerId: crisalixUser.playerToken,
+                    playerToken: crisalixUser.playerToken,
+                    boxId: boxId,
+                    clinicId: clinicId,
+                  };
+                  await messageService.CrisalixUser(props);
+                }
+              );
+              router.push('/dashboard/remoteControl');
+            }
+          });
         } else {
           //TODO - Poner un mensaje de Error en UI
         }
@@ -128,7 +155,9 @@ const AppointmentsListComponent: React.FC<{
         <tbody>
           {appointments.map(appointment => (
             <tr key={appointment.id}>
-              <td>{appointment.startTime}</td>
+              <td>
+                {appointment.startTime} {appointment.id}
+              </td>
               <td>{translateStatus(appointment.status ?? Status.Open)}</td>
               <td>{appointment.lead?.user?.firstName}</td>
               <td>{appointment.clinicProfessional?.name}</td>

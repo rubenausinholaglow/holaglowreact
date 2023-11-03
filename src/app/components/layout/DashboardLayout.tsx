@@ -38,18 +38,55 @@ export default function DashboardLayout({
           messageSocket.addMessageSocket(finalMessage);
         },
       });
-      SocketService.getInstance({
-        urlConnection:
-          process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/PatientArrived',
-        onReceiveMessage: message => {
-          const finalMessage: MessageSocket = {
-            messageType: MessageType.PatientArrived,
-            message: message,
-          };
-          messageSocket.addMessageSocket(finalMessage);
-        },
-      });
     }
+    SocketService.getInstance({
+      urlConnection: process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications',
+      onReceiveMessage: message => {
+        const isRemoteControl =
+          localStorage.getItem('remoteControle') === 'true';
+        let messageData: any;
+        switch (message.event) {
+          case 'PatientArrived':
+            if (!isRemoteControl) return true;
+            messageData = {
+              messageType: MessageType.PatientArrived,
+              ClinicId: message.data.clinicId,
+              BoxId: message.data.boxId,
+            };
+            break;
+          case 'StartAppointment':
+            if (isRemoteControl) {
+              return true;
+            }
+            messageData = {
+              messageType: MessageType.StartAppointment,
+              ClinicId: message.data.clinicId,
+              BoxId: message.data.boxId,
+              FlowwwToken: message.data.token,
+            };
+
+            break;
+          case 'CrisalixUser':
+            if (isRemoteControl) {
+              return true;
+            }
+            messageData = {
+              messageType: MessageType.CrisalixUser,
+              ClinicId: message.data.clinicId,
+              BoxId: message.data.boxId,
+              id: message.data.id,
+              playerToken: message.data.playerToken,
+              playerId: message.data.playerId,
+            };
+
+            break;
+
+          default:
+            throw new Error(`Unsupported event: ${message.Event}`);
+        }
+        messageSocket.addMessageSocket(messageData);
+      },
+    });
     SocketService.getInstance({
       urlConnection:
         process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse',

@@ -3,8 +3,8 @@ export const menuItems = [
     iconSrc: '/images/dashboard/menu-icons/3d_simulator.png',
     altText: 'Simulador 3D',
     title: 'Simulador 3D',
-    link: 'https://sso.crisalix.com/users/sign_in',
-    target: '_blank',
+    link: '/dashboard/crisalix',
+    target: '',
   },
   {
     iconSrc: '/images/dashboard/menu-icons/budgets.png',

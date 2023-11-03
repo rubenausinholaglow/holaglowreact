@@ -14,13 +14,16 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
   const messageSocket = useMessageSocket(state => state);
 
   useEffect(() => {
-    const existMessagePatientArrived = messageSocket.messageSocket.filter(
+    const existMessagePatientArrived: any = messageSocket.messageSocket.filter(
       x => x.messageType == MessageType.PatientArrived
     );
     if (existMessagePatientArrived.length > 0) {
-      const finalMessage = existMessagePatientArrived[0].message;
-      const [, clinicId, boxId] = finalMessage.split('/');
-      updateColor(clinicId, boxId);
+      const finaldata = {
+        ClinicId: existMessagePatientArrived[0].ClinicId,
+        BoxId: existMessagePatientArrived[0].BoxId,
+      };
+
+      updateColor(finaldata.ClinicId, finaldata.BoxId);
       messageSocket.removeMessageSocket(existMessagePatientArrived[0]);
     }
   }, [messageSocket]);
