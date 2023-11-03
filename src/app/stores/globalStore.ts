@@ -74,6 +74,7 @@ export const useGlobalPersistedStore = create(
         utmSource: '',
         utmTerm: '',
         treatmentText: '',
+        externalReference: '',
       },
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });

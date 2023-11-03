@@ -24,4 +24,5 @@ export interface AnalyticsMetrics {
   utmSource: string;
   utmTerm: string;
   treatmentText: string;
+  externalReference: string;
 }

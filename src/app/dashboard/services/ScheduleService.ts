@@ -29,6 +29,8 @@ export default class ScheduleService {
       case 'tiktok':
         return '20';
       default:
+        if (analyticsMetrics.externalReference)
+          return analyticsMetrics.externalReference;
         return '';
     }
   }
