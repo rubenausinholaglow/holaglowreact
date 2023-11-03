@@ -19,13 +19,18 @@ const Page = () => {
     const userId = localStorage.getItem('id');
     const appointmentId = localStorage.getItem('appointmentId');
     const clinicId = localStorage.getItem('ClinicId');
-    UserService.createCrisalixUser(userId!, appointmentId!, clinicId!).then(
+    /*UserService.createCrisalixUser(userId!, appointmentId!, clinicId!).then(
       x => {
-        setPlayerId(x.playerId);
+        setPlayerId(x.player_id);
         setPlayerToken(x.playerToken);
         setId(x.id);
+        console.log(x.player_id);
+        console.log(x.playerToken);
       }
-    );
+    );*/
+    setId('1433856');
+    setPlayerId('CJGGFI6');
+    setPlayerToken('67e5aa0dfa0ec9260330eaad1da9c918');
 
     setTimeout(
       () => {
