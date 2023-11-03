@@ -222,7 +222,7 @@ export default function Page() {
   } else {
     const filteredProducts = filterProducts() || [];
     return (
-      <MainLayout isDashboard>
+      <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
         <Modal isVisible={showProductModal} width="w-3/4">
           <HightLightedProduct />
         </Modal>

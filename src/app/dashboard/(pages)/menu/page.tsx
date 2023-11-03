@@ -19,7 +19,9 @@ const Page = () => {
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username') || '';
+    const storedFlowwwtoken = localStorage.getItem('flowwwToken') || '';
     setUserName(storedUsername);
+    setFlowwwToken(storedFlowwwtoken);
   }, []);
 
   useEffect(() => {
