@@ -1,3 +1,4 @@
+import ReactPlayer from 'react-player';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -6,7 +7,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar } from 'icons/Icons';
 import { SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import Link from 'next/link';
 
 export default function ProductInfo({ product }: { product: Product }) {
   return (
@@ -111,6 +111,22 @@ export default function ProductInfo({ product }: { product: Product }) {
             </span>
           </Button>
         </Container>
+        <div className="md:w-2/5">
+          <div className="relative aspect-[4/5] md:rounded-2xl overflow-hidden pointer-events-none">
+            <ReactPlayer
+              loop
+              muted
+              playing
+              url="/videos/pdp.mp4"
+              height={960}
+              width={540}
+              className="-translate-y-[25%] pointer-events-none"
+              style={{
+                transform: 'translate(-10%, -25%)',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </Container>
   );
