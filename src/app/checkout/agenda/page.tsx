@@ -43,7 +43,8 @@ export default function Agenda() {
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
   const [maxDay, setMaxDay] = useState(dayjs());
-  const [dateFromatted, setDateFormatted] = useState('');
+  const [dateFormatted, setDateFormatted] = useState('');
+  const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
   let maxDays = 10;
@@ -208,6 +209,7 @@ export default function Agenda() {
 
   useEffect(() => {
     selectDate(dayjs(selectedDay).toDate());
+    setLocalDateSelected(dayjs(selectedDay).toDate());
   }, [selectedDay, selectedTreatmentsIds]);
 
   useEffect(() => {
@@ -225,6 +227,7 @@ export default function Agenda() {
 
   const selectDate = (x: Date) => {
     if (!selectedTreatmentsIds) return;
+    setLocalDateSelected(x);
     setLoadingDays(true);
     setMorningHours([]);
     setAfternoonHours([]);
@@ -373,8 +376,7 @@ export default function Agenda() {
                   locale="es"
                   className="w-full"
                   fixedHeight
-                  selected={dayjs(selectedDay).toDate()}
-                  adjustDateOnChange={true}
+                  selected={localDateSelected}
                   disabledKeyboardNavigation
                   calendarClassName={`${loadingMonth ? 'loading' : ''}`}
                 ></DatePicker>
@@ -396,7 +398,7 @@ export default function Agenda() {
                     >
                       Selecciona hora para el{' '}
                       <span className="font-semibold">
-                        {dateFromatted.toString()}
+                        {dateFormatted.toString()}
                       </span>
                     </Text>
                     {morningHours.length > 0 && (
