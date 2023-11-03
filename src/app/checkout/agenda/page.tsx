@@ -46,7 +46,7 @@ export default function Agenda() {
   const [dateFromatted, setDateFormatted] = useState('');
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  let maxDays = 40;
+  let maxDays = 10;
   if (
     selectedTreatments &&
     selectedTreatments[0] &&
