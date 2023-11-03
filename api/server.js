@@ -1,6 +1,7 @@
 const express = require('express');
 const next = require('next');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+
 const server = express();
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -140,13 +141,7 @@ server.use(
     changeOrigin: true,
   })
 );
-server.use(
-  '/bases-legales-trae-un-amigo',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
-    changeOrigin: true,
-  })
-);
+
 server.all('*', (req, res) => handle(req, res));
 
 module.exports = (req, res) => {
