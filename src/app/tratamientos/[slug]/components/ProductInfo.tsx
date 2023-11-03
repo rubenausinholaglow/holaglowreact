@@ -114,13 +114,14 @@ export default function ProductInfo({ product }: { product: Product }) {
         <div className="md:w-2/5">
           <div className="relative aspect-[4/5] md:rounded-2xl overflow-hidden pointer-events-none">
             <ReactPlayer
-              playsInline
-              loop
-              muted
-              playing
+              playsInline={true}
+              loop={true}
+              muted={true}
+              playing={true}
               url="/videos/pdp.mp4"
               height={960}
               width={540}
+              controls={true}
               style={{
                 transform: 'translate(-10%, -25%)',
               }}
