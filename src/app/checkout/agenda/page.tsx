@@ -42,10 +42,11 @@ export default function Agenda() {
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
+  const [maxDay, setMaxDay] = useState(dayjs());
   const [dateFromatted, setDateFormatted] = useState('');
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  let maxDays = 10;
+  let maxDays = 40;
   if (selectedTreatments[0].type == 2 || selectedTreatments[0].type == 1)
     maxDays = 15;
   const maxDaysByClinicAndType: any = {
@@ -77,7 +78,6 @@ export default function Agenda() {
         selectedTreatments[0].type
       ];
   }
-  const maxDay = dayjs().add(maxDays, 'day');
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -88,13 +88,7 @@ export default function Agenda() {
   };
 
   function loadMonth() {
-    if (
-      selectedTreatmentsIds &&
-      (availableDates.length < maxDays ||
-        selectedTreatmentsIds.indexOf(
-          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!
-        ) == -1)
-    ) {
+    if (selectedTreatmentsIds && availableDates.length < maxDays) {
       setLoadingMonth(true);
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
@@ -106,10 +100,7 @@ export default function Agenda() {
         data.forEach((x: any) => {
           const date = dayjs(x.date);
           if (
-            (availability.length < maxDays ||
-              selectedTreatmentsIds.indexOf(
-                process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!
-              ) == -1) &&
+            availability.length < maxDays &&
             (date.isAfter(today) || date.isSame(today, 'day')) &&
             x.availability
           ) {
@@ -118,19 +109,22 @@ export default function Agenda() {
         });
         setAvailableDates(availability);
         if (!selectedDay) {
-          setSelectedDay(dayjs());
-          selectDate(new Date());
+          setSelectedDay(dayjs(availability[0].date));
         } else {
           setSelectedDay(selectedDay);
         }
         setLoadingMonth(false);
+        if (availability.length == maxDays)
+          setMaxDay(dayjs(availability[availability.length - 1].date));
+        else {
+          setDateToCheck(dateToCheck.add(1, 'month'));
+        }
       });
     }
   }
 
   useEffect(() => {
-    setSelectedDay(dayjs(new Date()));
-    selectDate(new Date());
+    setSelectedDay(dayjs());
     setSelectedSlot(undefined);
     setEnableScheduler(true);
   }, []);
@@ -208,8 +202,11 @@ export default function Agenda() {
   }, [dateToCheck]);
 
   useEffect(() => {
+    selectDate(dayjs(selectedDay).toDate());
+  }, [selectedDay, selectedTreatmentsIds]);
+
+  useEffect(() => {
     loadMonth();
-    selectDate(dateToCheck.toDate());
   }, [selectedTreatmentsIds, dateToCheck]);
 
   const onMonthChange = (x: any) => {
@@ -229,7 +226,6 @@ export default function Agenda() {
     const day = dayjs(x);
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
-    setSelectedDay(day);
     ScheduleService.getSlots(
       day.format(format),
       selectedTreatmentsIds,
@@ -366,11 +362,15 @@ export default function Agenda() {
                   filterDate={filterDate}
                   onMonthChange={onMonthChange}
                   maxDate={maxDay.toDate()}
+                  minDate={new Date()}
                   useWeekdaysShort
                   calendarStartDay={1}
                   locale="es"
                   className="w-full"
                   fixedHeight
+                  selected={dayjs(selectedDay).toDate()}
+                  adjustDateOnChange={true}
+                  disabledKeyboardNavigation
                   calendarClassName={`${loadingMonth ? 'loading' : ''}`}
                 ></DatePicker>
               </Flex>
