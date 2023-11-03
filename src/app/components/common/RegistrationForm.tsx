@@ -65,6 +65,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       utmSource: '',
       utmTerm: '',
       treatmentText: '',
+      externalReference: '',
     },
     interestedTreatment: '',
     treatmentPrice: 0,
@@ -154,6 +155,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       .replace(formDatacopy.phonePrefix, '')
       .replaceAll(' ', '');
     formDatacopy.interestedTreatment = analyticsMetrics.treatmentText;
+    if (analyticsMetrics.externalReference)
+      formDatacopy.externalReference = analyticsMetrics.externalReference;
     const user = await UserService.registerUser(formDatacopy);
     if (user) {
       user.flowwwToken = user.clinicToken;
