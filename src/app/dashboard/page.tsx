@@ -54,6 +54,7 @@ export default function Page({
       utmMedium: '',
       utmSource: '',
       utmTerm: '',
+      treatmentText: '',
     },
     interestedTreatment: '',
     treatmentPrice: 0,

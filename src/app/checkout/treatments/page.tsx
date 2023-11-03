@@ -36,7 +36,7 @@ export default function ClinicsCheckout() {
       setPVProduct(productDetails);
     }
 
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID!);
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
     setSelectedTreatments([]);
   }, []);
 

@@ -62,7 +62,7 @@ export default function Professionals({
         )}
         {!deviceSize.isMobile && (
           <Carousel
-            hasControls
+            hasControls={professionals?.map && professionals?.map.length > 2}
             className="relative"
             isIntrinsicHeight
             visibleSlides={2}

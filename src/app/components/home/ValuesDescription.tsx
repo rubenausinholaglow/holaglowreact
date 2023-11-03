@@ -29,7 +29,7 @@ export default function ValuesDescription() {
               src="/images/home/prejuiciosValue.png"
               alt="prejuicios"
               fill
-              className="object-cover rounded-xl"
+              className="object-contain rounded-xl"
               loading="eager"
             />
           </div>

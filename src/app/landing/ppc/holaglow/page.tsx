@@ -29,9 +29,14 @@ import ConsistOf from './components/ConsistOF';
 import LandingTestimonials from './components/LandingTestimonials';
 
 export default function LandingCaptacion() {
-  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const {
+    deviceSize,
+    setSelectedTreatments,
+    setSelectedSlot,
+    setSelectedClinic,
+    analyticsMetrics,
+    setAnalyticsMetrics,
+  } = useGlobalPersistedStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -39,16 +44,28 @@ export default function LandingCaptacion() {
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
   useEffect(() => {
+    setSelectedSlot(undefined);
+    setSelectedClinic(undefined);
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setSelectedTreatments([productDetails]);
     }
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
+    analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
+    analyticsMetrics.utmAdgroup = '';
+    analyticsMetrics.utmCampaign = '';
+    analyticsMetrics.utmContent = '';
+    analyticsMetrics.utmMedium = '';
+    analyticsMetrics.utmSource = '';
+    analyticsMetrics.utmTerm = '';
+    analyticsMetrics.locPhysicalMs = '';
+    setAnalyticsMetrics(analyticsMetrics);
   }, []);
 
   return (
     <MainLayout hideHeader>
+      <meta name="robots" content="noindex,follow" />
       <header id="header" className="z-30 w-full bg-white">
         <Container isHeader>
           <Flex
@@ -99,7 +116,7 @@ export default function LandingCaptacion() {
               <Button
                 size="xl"
                 type="tertiary"
-                customStyles="bg-hg-primary"
+                customStyles="bg-hg-primary hover:bg-hg-secondary100"
                 href="#leadForm"
               >
                 Pide tu cita médica gratis
@@ -120,7 +137,7 @@ export default function LandingCaptacion() {
               <Button
                 size="xl"
                 type="tertiary"
-                customStyles="bg-hg-primary"
+                customStyles="bg-hg-primary hover:bg-hg-secondary100"
                 href="#leadForm"
               >
                 Pide tu cita médica gratis
@@ -140,7 +157,7 @@ export default function LandingCaptacion() {
 
       <Products hideCategorySelector />
 
-      <div className="bg-[#eaf5e9]">
+      <div className="bg-[url('/images/statics/landings/captacion/testimonialsBg.svg')] md:bg-[url('/images/statics/landings/captacion/testimonialsBg-desktop.svg')] bg-no-repeat bg-center pb-12 md:py-16">
         <LandingTestimonials />
       </div>
 
@@ -173,9 +190,9 @@ export default function LandingCaptacion() {
       </div>
 
       <div className="bg-hg-pink/30 py-16">
-        <Container className="px-0 md:flex md:flex-row items-start">
-          <Container className="mb-4 md:w-3/5 mr-16">
-            <Title size="2xl" className="font-bold mb-4 md:mr-16">
+        <Container className="px-0 md:flex md:flex-row items-center">
+          <Container className="mb-4 md:w-3/4">
+            <Title size="2xl" className="font-bold mb-4">
               Diseñamos contigo un tratamiento{' '}
               <Underlined color={HOLAGLOW_COLORS['primary']}>
                 a tu medida
@@ -183,13 +200,13 @@ export default function LandingCaptacion() {
             </Title>
           </Container>
 
-          <Container className="mt-12 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0 overflow-hidden">
+          <Container className="mt-12 pt-6 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0 overflow-hidden md:overflow-auto">
             <Image
               src="/images/statics/landings/captacion/comoFunciona.png"
               alt="¿Cómo Funciona?"
               width={816}
               height={816}
-              className="w-full scale-[115%] mt-4"
+              className="w-full scale-[115%] md:scale-100 mt-4"
             />
           </Container>
         </Container>
@@ -210,6 +227,7 @@ export default function LandingCaptacion() {
                 alt={`Cómo funciona ${index}`}
                 fill
                 className="object-cover"
+                loading="eager"
               />
             </div>
           ))}
@@ -220,10 +238,10 @@ export default function LandingCaptacion() {
             <Button
               size="xl"
               type="tertiary"
-              customStyles="bg-hg-primary"
+              customStyles="bg-hg-primary hover:bg-hg-secondary100"
               href="#leadForm"
             >
-              Pide tu cita médiga gratis
+              Pide tu cita médica gratis
             </Button>
           </Flex>
         </Container>

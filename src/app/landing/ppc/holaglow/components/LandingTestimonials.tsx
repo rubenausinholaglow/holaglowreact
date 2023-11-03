@@ -61,7 +61,7 @@ const TESTIMONIALS: Testimonial[] = [
 export default function LandingTestimonials() {
   return (
     <>
-      <Container className="pt-12 pb-4">
+      <Container>
         <Title size="2xl" className="font-bold mb-4">
           ¿Qué dicen de{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>nosotros</Underlined>?

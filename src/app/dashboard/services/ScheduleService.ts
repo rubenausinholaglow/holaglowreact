@@ -10,9 +10,7 @@ import { Clinic } from '@interface/clinic';
 import { DayAvailability } from '@interface/dayAvailability';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs, { Dayjs } from 'dayjs';
-import router from 'next/router';
 
 export default class ScheduleService {
   static getExternalReference(analyticsMetrics: AnalyticsMetrics): string {
@@ -56,6 +54,8 @@ export default class ScheduleService {
     }
     const format = 'YYYY-MM-DD';
     const comment = 'Tratamiento visto en web: ' + treatments;
+    if (analyticsMetrics.treatmentText)
+      treatments = analyticsMetrics.treatmentText;
     appointments.push({
       box: selectedSlot!.box,
       endTime:

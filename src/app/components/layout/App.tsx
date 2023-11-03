@@ -17,6 +17,7 @@ export default function Html({ children }: { children: ReactNode }) {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     const deviceStr = params.get('device');
+    const treatmentText = params.get('treatmentText');
     const loc_physical_ms = params.get('loc_physical_ms');
     const utm_adgroup = params.get('utm_adgroup');
     const utm_campaign = params.get('utm_campaign');
@@ -49,6 +50,7 @@ export default function Html({ children }: { children: ReactNode }) {
     if (utm_source) analyticsMetrics.utmSource = utm_source;
     if (utm_term) analyticsMetrics.utmTerm = utm_term;
     if (utm_content) analyticsMetrics.utmContent = utm_content;
+    if (treatmentText) analyticsMetrics.treatmentText = treatmentText;
     setAnalyticsMetrics(analyticsMetrics);
   }
 

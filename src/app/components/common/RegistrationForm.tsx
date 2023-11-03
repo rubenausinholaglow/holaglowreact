@@ -64,6 +64,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       utmMedium: '',
       utmSource: '',
       utmTerm: '',
+      treatmentText: '',
     },
     interestedTreatment: '',
     treatmentPrice: 0,
@@ -147,17 +148,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    let user = await UserService.checkUser(formData.email);
-
-    if (!user) {
-      formData.analyticsMetrics = analyticsMetrics;
-      formData.phone = formData.phone
-        .replace(formData.phonePrefix, '')
-        .replaceAll(' ', '');
-      user = await UserService.registerUser(formData);
-      if (user) {
-        user.flowwwToken = user.clinicToken;
-      }
+    const formDatacopy = { ...formData };
+    formDatacopy.analyticsMetrics = analyticsMetrics;
+    formDatacopy.phone = formData.phone
+      .replace(formDatacopy.phonePrefix, '')
+      .replaceAll(' ', '');
+    formDatacopy.interestedTreatment = analyticsMetrics.treatmentText;
+    const user = await UserService.registerUser(formDatacopy);
+    if (user) {
+      user.flowwwToken = user.clinicToken;
     }
     if (user) {
       setCurrentUser(user);
