@@ -48,6 +48,7 @@ export default function Page({
       utmSource: '',
       utmTerm: '',
       treatmentText: '',
+      externalReference: '',
     },
     interestedTreatment: '',
     treatmentPrice: 0,
