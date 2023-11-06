@@ -1,4 +1,3 @@
-import ReactPlayer from 'react-player';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
