@@ -28,6 +28,7 @@ export default function Page({
 }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
@@ -116,6 +117,7 @@ export default function Page({
     localStorage.setItem('RemoteControl', params.get('remoteControl') || '');
     localStorage.setItem('ClinicId', params.get('clinicId') || '');
     localStorage.setItem('BoxId', params.get('boxId') || '');
+    setIsLoadingPage(false);
   }, []);
 
   const handleCheckUser = async () => {
@@ -256,6 +258,18 @@ export default function Page({
     localStorage.clear();
     setErrors(errors);
   };
+
+  if (isLoadingPage)
+    return (
+      <MainLayout
+        isDashboard
+        hideBackButton
+        hideContactButtons
+        hideProfessionalSelector
+      >
+        <div></div>
+      </MainLayout>
+    );
 
   if (remoteControl)
     return (
