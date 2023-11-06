@@ -147,10 +147,10 @@ const ButtonBody = ({
 
 const ButtonBase = ({
   type,
-  disabled,
+  disabled = false,
 }: {
   type: ButtonTypes;
-  disabled: boolean;
+  disabled?: boolean;
 }) => {
   const BUTTON_TYPES = ['primary', 'secondary'];
 
