@@ -12,6 +12,7 @@ import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -19,7 +20,6 @@ import { useRouter } from 'next/navigation';
 import RegistrationForm from '../components/common/RegistrationForm';
 import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 export default function Page({
   searchParams,
@@ -56,13 +56,13 @@ export default function Page({
       utmMedium: '',
       utmSource: '',
       utmTerm: '',
-	  treatmentText: '',
+      treatmentText: '',
     },
     interestedTreatment: '',
     treatmentPrice: 0,
   });
 
-    useEffect(() => {
+  useEffect(() => {
     const isRemoteControl = localStorage.getItem('RemoteControl');
     if (isRemoteControl === 'false') {
       const existsMessageStartAppointment: any =
@@ -116,7 +116,6 @@ export default function Page({
     localStorage.setItem('ClinicId', params.get('clinicId') || '');
     localStorage.setItem('BoxId', params.get('boxId') || '');
   }, []);
-
 
   const handleCheckUser = async () => {
     setIsLoading(true);
@@ -172,7 +171,7 @@ export default function Page({
             data.clinicProfessional.id
           );
           //localStorage.setItem('boxId', boxId || data.boxId);
- 		  if (name == '') {
+          if (name == '') {
             name = data.lead.user.firstName;
             id = data.lead.user.id;
           }

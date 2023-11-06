@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
+import TextInputField from '@components/TextInputField';
 import Notification from '@components/ui/Notification';
+import { ClientUpdate } from '@interface/client';
 import { CreatePayment, InitializePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
+import UserService from '@services/UserService';
 import { applyDiscountToCart } from '@utils/utils';
+import HolaglowModal from 'app/components/common/Modal';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -15,13 +21,6 @@ import { isEmpty } from 'lodash';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 import PepperWidget from './PepperWidget';
-import HolaglowModal from 'app/components/common/Modal';
-import { createPortal } from 'react-dom';
-import TextInputField from '@components/TextInputField';
-import { ClientUpdate } from '@interface/client';
-import UserService from '@services/UserService';
-import FinanceService from '@services/FinanceService';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -45,19 +44,22 @@ export default function PaymentInput(props: Props) {
 
   const { user } = useGlobalPersistedStore(state => state);
   const [formData, setFormData] = useState<ClientUpdate>({
-    dni: user!.dni,
-    address: user!.address,
-    city: user!.city,
-    province: user!.province,
-    postalCode: user!.postalCode,
-    birthday: user!.birthday,
-    id: user!.id,
-    country: user!.country,
-    firstName: user!.firstName,
-    lastName: user!.lastName + ' ' + user!.secondLastName,
-    email: user!.email,
-    phone: user!.phone,
+    dni: user?.dni ?? '',
+    address: user?.address ?? '',
+    city: user?.city ?? '',
+    province: user?.province ?? '',
+    postalCode: user?.postalCode ?? '',
+    birthday: user?.birthday ?? '',
+    id: user?.id ?? '',
+    country: user?.country ?? '',
+    firstName: user?.firstName ?? '',
+    lastName: user?.lastName
+      ? `${user.lastName} ${user.secondLastName ?? ''}`
+      : '',
+    email: user?.email ?? '',
+    phone: user?.phone ?? '',
   });
+
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);

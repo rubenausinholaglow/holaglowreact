@@ -1,5 +1,5 @@
-import { Button } from 'designSystem/Buttons/Buttons';
 import { ReactNode } from 'react';
+import { Button } from 'designSystem/Buttons/Buttons';
 
 const css = `
 .modal {
