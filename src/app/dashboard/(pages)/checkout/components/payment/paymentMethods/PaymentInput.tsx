@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { createPortal } from 'react-dom';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@components/TextInputField';
@@ -11,14 +13,15 @@ import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import UserService from '@services/UserService';
 import { applyDiscountToCart } from '@utils/utils';
+import HolaglowModal from 'app/components/common/Modal';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import DatePicker from 'react-datepicker';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgClose, SvgSpinner } from 'icons/Icons';
@@ -27,13 +30,6 @@ import { isEmpty } from 'lodash';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 import PepperWidget from './PepperWidget';
-import HolaglowModal from 'app/components/common/Modal';
-import { createPortal } from 'react-dom';
-import TextInputField from '@components/TextInputField';
-import { ClientUpdate } from '@interface/client';
-import UserService from '@services/UserService';
-import FinanceService from '@services/FinanceService';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -59,20 +55,20 @@ export default function PaymentInput(props: Props) {
   const { isModalOpen } = useGlobalStore(state => state);
 
   const [formData, setFormData] = useState<ClientUpdate>({
-    dni: user ? user.dni : '',
-    address: user ? user.address : '',
-    city: user ? user.city : '',
-    province: user ? user.province : '',
-    postalCode: user ? user.postalCode : '',
-    birthday: user ? user.birthday : '',
-    id: user ? user.id : '',
-    country: user ? user.country : '',
-    firstName: user ? user.firstName : '',
-    lastName: user
-      ? user.lastName + (user.secondLastName ? ' ' + user.secondLastName : '')
+    dni: user?.dni ?? '',
+    address: user?.address ?? '',
+    city: user?.city ?? '',
+    province: user?.province ?? '',
+    postalCode: user?.postalCode ?? '',
+    birthday: user?.birthday ?? '',
+    id: user?.id ?? '',
+    country: user?.country ?? '',
+    firstName: user?.firstName ?? '',
+    lastName: user?.lastName
+      ? `${user.lastName} ${user.secondLastName ?? ''}`
       : '',
-    email: user ? user.email : '',
-    phone: user ? user.phone : '',
+    email: user?.email ?? '',
+    phone: user?.phone ?? '',
   });
 
   const { priceDiscount, percentageDiscount, manualPrice } = useCartStore(
@@ -225,61 +221,72 @@ export default function PaymentInput(props: Props) {
   const renderFinance = () => {
     return (
       <>
-        {showPepperModal &&
-          createPortal(
-            <HolaglowModal onClose={() => setShowPepperModal(false)}>
-              <Container>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div>Importe: {inputValue}</div>
-                  <TextInputField
-                    label="Nombre"
-                    placeholder="Nombre"
-                    value={formData.firstName}
-                    onChange={event => handleFormFieldChange(event, 'name')}
-                  />
-                  <TextInputField
-                    label="Apellidos"
-                    placeholder="Apellidos"
-                    value={formData.lastName}
-                    onChange={event => handleFormFieldChange(event, 'surnames')}
-                  />
-                  <TextInputField
-                    label="Email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={event => handleFormFieldChange(event, 'email')}
-                  />
-                  <TextInputField
-                    label="Teléfono"
-                    placeholder="Teléfono"
-                    value={formData.phone}
-                    onChange={event => handleFormFieldChange(event, 'phone')}
-                  />
-                  <TextInputField
-                    label="Fecha nacimiento"
-                    placeholder="Fecha nacimiento"
-                    value={formData.birthday}
-                    onChange={event => handleFormFieldChange(event, 'birthday')}
-                  />
-                  <TextInputField
-                    label="DNI"
-                    placeholder="DNI"
-                    value={formData.dni}
-                    onChange={event => handleFormFieldChange(event, 'dni')}
-                  />
-                  <TextInputField
-                    label="Dirección"
-                    placeholder="Dirección"
-                    value={formData.address}
-                    onChange={event => handleFormFieldChange(event, 'address')}
-                  />
-                  <TextInputField
-                    label="Código Postal"
-                    placeholder="Código Postal"
-                    value={formData.postalCode}
-                    onChange={event =>
-                      handleFormFieldChange(event, 'postalCode')
+        <Modal isVisible={showPepperModal} width="w-3/4">
+          <Flex layout="col-left" className="p-4 relative gap-4">
+            <SvgClose
+              onClick={() => setShowPepperModal(false)}
+              className="mb-4"
+            />
+            <Title>
+              Importe: <span className="font-semibold">{inputValue}</span>
+            </Title>
+
+            <Flex className="gap-4">
+              <TextInputField
+                label="Nombre"
+                placeholder="Nombre"
+                value={formData.firstName}
+                onChange={event => handleFormFieldChange(event, 'name')}
+                inputStyles="h-12 rounded-xl"
+              />
+              <TextInputField
+                label="Apellidos"
+                placeholder="Apellidos"
+                value={formData.lastName}
+                onChange={event => handleFormFieldChange(event, 'surnames')}
+                inputStyles="h-12 rounded-xl"
+              />
+            </Flex>
+            <Flex className="gap-4">
+              <TextInputField
+                label="Email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={event => handleFormFieldChange(event, 'email')}
+                inputStyles="h-12 rounded-xl"
+              />
+              <TextInputField
+                label="Teléfono"
+                placeholder="Teléfono"
+                value={formData.phone}
+                onChange={event => handleFormFieldChange(event, 'phone')}
+                inputStyles="h-12 rounded-xl"
+              />
+            </Flex>
+
+            <Flex className="gap-4">
+              <DatePicker
+                onChange={x => {
+                  const day = dayjs(x);
+                  const formattedDate = day.format('YYYY-MM-DD');
+                  setFormData((prevFormData: any) => ({
+                    ...prevFormData,
+                    ['birthday']: formattedDate,
+                  }));
+                }}
+                useWeekdaysShort
+                calendarStartDay={1}
+                locale="es"
+                className="w-full"
+                fixedHeight
+                customInput={
+                  <input
+                    placeholder={'Fecha nacimiento'}
+                    className={
+                      'border border-hg-black300 rounded-2xl px-4 py-2 w-full text-hg-black h-16 focus:outline-none h-12 rounded-xl'
                     }
+                    type="text"
+                    value={formData.birthday}
                   />
                 }
               ></DatePicker>
