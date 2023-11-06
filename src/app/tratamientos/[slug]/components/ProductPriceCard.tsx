@@ -327,11 +327,7 @@ function ProductPriceItemsCard({
       {(!product.isPack || showDropdown) && (
         <Button
           type="tertiary"
-          customStyles={
-            isDisabled
-              ? 'bg-white text-hg-black300 border-hg-black300 pointer-events-none cursor-default'
-              : 'bg-hg-primary hover:bg-hg-secondary100'
-          }
+          disabled={isDisabled}
           onClick={() => {
             setSelectedTreatment(product);
           }}
