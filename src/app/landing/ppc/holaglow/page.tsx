@@ -242,7 +242,7 @@ export default function LandingCaptacion() {
               customStyles="bg-hg-primary hover:bg-hg-secondary100"
               href="#leadForm"
             >
-              Pide tu cita médica gratis
+              Pide tu cita médica gratis.
             </Button>
           </Flex>
         </Container>
