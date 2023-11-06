@@ -87,11 +87,10 @@ const AppointmentsListComponent: React.FC<{
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
-          //localStorage.setItem('boxId', boxId || '');
           saveUserDetails(name, id, flowwwToken);
           await messageService.StartAppointment(data).then(async info => {
             if (info != null) {
-              /*await UserService.createCrisalixUser(id, data.id, clinicId).then(
+              await UserService.createCrisalixUser(id, data.id, clinicId).then(
                 async x => {
                   const crisalixUser: CrisalixUser = {
                     id: x.id,
@@ -109,7 +108,7 @@ const AppointmentsListComponent: React.FC<{
                   };
                   await messageService.CrisalixUser(props);
                 }
-              );*/
+              );
               router.push('/dashboard/remoteControl');
             }
           });
@@ -163,7 +162,9 @@ const AppointmentsListComponent: React.FC<{
               </td>
               <td>{translateStatus(appointment.status ?? Status.Open)}</td>
               <td>{appointment.lead?.user?.firstName}</td>
-              <td>{appointment.clinicProfessional?.name}</td>
+              <td>
+                {appointment.clinicProfessional?.name} {appointment.clinicId}
+              </td>
               <td>
                 <Button
                   isSubmit
