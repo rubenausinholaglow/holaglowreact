@@ -112,14 +112,21 @@ export default function ProductInfo({ product }: { product: Product }) {
           </Button>
         </Container>
         <div className="md:w-2/5 shrink-0">
-          <video
+          {/* <video
             autoPlay
             loop
             muted
             playsInline
             src="/videos/pdp.mp4"
             className="md:rounded-xl"
-          />
+          /> */}
+          <video
+            src="https://framerusercontent.com/assets/B0OHblcW1dMwqgmXyF5UuiQ1pc.mp4"
+            loop
+            autoPlay
+            playsInline
+            className="w-full h-full block bg-black object-center"
+          ></video>
         </div>
       </div>
     </Container>
