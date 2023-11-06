@@ -117,7 +117,7 @@ export default function ProductInfo({ product }: { product: Product }) {
             muted
             loop
             playsInline
-            src="https://framerusercontent.com/assets/B0OHblcW1dMwqgmXyF5UuiQ1pc.mp4"
+            src="/videos/testFramer.mp4"
             className="w-full h-full block bg-black object-center md:rounded-xl"
           />
         </div>
