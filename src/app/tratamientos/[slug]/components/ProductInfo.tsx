@@ -1,4 +1,3 @@
-import ReactPlayer from 'react-player';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -111,16 +110,6 @@ export default function ProductInfo({ product }: { product: Product }) {
             </span>
           </Button>
         </Container>
-        <div className="md:w-2/5 shrink-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            src="/videos/pdp.mp4"
-            className="md:rounded-xl"
-          />
-        </div>
       </div>
     </Container>
   );
