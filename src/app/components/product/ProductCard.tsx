@@ -6,7 +6,7 @@ import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgArrow } from 'icons/IconsDs';
+import { SvgArrow, SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -48,7 +48,7 @@ export default function ProductCard({
         <Flex layout="col-left" className="">
           <div className="relative h-[250px] w-full rounded-t-2xl">
             <div
-              className="absolute inset-0 top-[10%] rounded-t-3xl "
+              className="absolute inset-0 top-[10%] rounded-t-2xl "
               style={{
                 background: getProductCardColor(product.cardBackgroundColor),
               }}
@@ -79,6 +79,22 @@ export default function ProductCard({
                     </Flex>
                   );
                 })}
+              </Flex>
+            )}
+
+            {product.isPack && (
+              <Flex
+                layout="row-center"
+                className="bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
+              >
+                <SvgGlow
+                  height={12}
+                  width={12}
+                  className="text-hg-primary mr-1"
+                />
+                <Text className="text-hg-secondary" size="xs">
+                  B.<span className="text-hg-primary">Friday</span>
+                </Text>
               </Flex>
             )}
           </div>
