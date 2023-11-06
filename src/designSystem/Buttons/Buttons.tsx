@@ -41,11 +41,7 @@ export const Button = ({
         <Link
           href={href}
           target={rest?.target}
-          className={twMerge(
-            `relative group overflow-visible ${className} ${
-              disabled && 'opacity-25 pointer-events-none'
-            }`
-          )}
+          className={twMerge(`relative group overflow-visible ${className}`)}
           onClick={onClick}
           type={rest?.isSubmit ? 'submit' : 'button'}
         >
@@ -69,16 +65,17 @@ export const Button = ({
         className={twMerge(
           `transition-all relative group overflow-visible ${
             ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
-          } ${className} ${disabled && 'opacity-25 pointer-events-none'}`
+          } ${className}`
         )}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
-        <ButtonBase type={type} />
+        <ButtonBase type={type} disabled={disabled} />
         <ButtonBody
           type={type}
           size={size}
           customStyles={customStyles}
+          disabled={disabled}
           {...rest}
         >
           {children}
@@ -94,6 +91,7 @@ const ButtonBody = ({
   customStyles,
   color,
   bgColor,
+  disabled = false,
   children,
 }: {
   type: ButtonTypes;
@@ -101,8 +99,18 @@ const ButtonBody = ({
   customStyles?: string;
   color?: string;
   bgColor?: string;
+  disabled?: boolean;
   children: ReactNode;
 }) => {
+  const DISABLED_STYLES: any = {
+    primary:
+      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
+    secondary:
+      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
+    tertiary:
+      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
+  };
+
   const STYLES: any = {
     common: 'transition-all relative bottom-[1px] text-center rounded-full',
     animations: '-translate-y-1 group-active:-translate-y-0',
@@ -122,12 +130,12 @@ const ButtonBody = ({
     xl: 'text-md font-semibold h-[64px] px-6',
   };
 
-  const isAnimated = type === 'primary' || type === 'secondary';
+  const isAnimated = (type === 'primary' || type === 'secondary') && !disabled;
 
   const styles = twMerge(
     `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
       isAnimated ? STYLES.animations : ''
-    }`
+    }${disabled ? DISABLED_STYLES[type] : ''}`
   );
 
   return (
@@ -137,7 +145,13 @@ const ButtonBody = ({
   );
 };
 
-const ButtonBase = ({ type }: { type: ButtonTypes }) => {
+const ButtonBase = ({
+  type,
+  disabled,
+}: {
+  type: ButtonTypes;
+  disabled: boolean;
+}) => {
   const BUTTON_TYPES = ['primary', 'secondary'];
 
   const STYLES: any = {
@@ -147,6 +161,10 @@ const ButtonBase = ({ type }: { type: ButtonTypes }) => {
   };
 
   const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;
+
+  if (disabled) {
+    return <></>;
+  }
 
   return (
     <div
