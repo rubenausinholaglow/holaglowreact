@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import RegistrationForm from '../components/common/RegistrationForm';
 import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 export default function Page({
   searchParams,
@@ -35,6 +36,7 @@ export default function Page({
   const [boxId, setBoxId] = useState('');
   const [remoteControl, setRemoteControl] = useState(false);
   const messageSocket = useMessageSocket(state => state);
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -54,13 +56,13 @@ export default function Page({
       utmMedium: '',
       utmSource: '',
       utmTerm: '',
-      treatmentText: '',
+	  treatmentText: '',
     },
     interestedTreatment: '',
     treatmentPrice: 0,
   });
 
-  useEffect(() => {
+    useEffect(() => {
     const isRemoteControl = localStorage.getItem('RemoteControl');
     if (isRemoteControl === 'false') {
       const existsMessageStartAppointment: any =
@@ -115,12 +117,14 @@ export default function Page({
     localStorage.setItem('BoxId', params.get('boxId') || '');
   }, []);
 
+
   const handleCheckUser = async () => {
     setIsLoading(true);
 
     await UserService.checkUser(userEmail)
       .then(async data => {
         if (data && !isEmpty(data)) {
+          setCurrentUser(data);
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           handleSearchError();
@@ -144,8 +148,9 @@ export default function Page({
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    const isSuccess = await UserService.registerUser(formData);
-    if (isSuccess) {
+    const user = await UserService.registerUser(formData);
+    if (user) {
+      setCurrentUser(user);
       redirectPage(formData.name, formData.id, formData.flowwwToken);
       setIsLoading(false);
     } else {
@@ -167,11 +172,10 @@ export default function Page({
             data.clinicProfessional.id
           );
           //localStorage.setItem('boxId', boxId || data.boxId);
-          if (name == '') {
+ 		  if (name == '') {
             name = data.lead.user.firstName;
             id = data.lead.user.id;
           }
-
           saveUserDetails(name, id, flowwwToken);
           router.push('/dashboard/menu');
         } else {

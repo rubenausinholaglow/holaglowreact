@@ -13,7 +13,6 @@ export interface Client {
   treatmentPrice: number;
   [key: string]: any;
 }
-
 export interface AnalyticsMetrics {
   device: number;
   locPhysicalMs: string;
@@ -24,4 +23,18 @@ export interface AnalyticsMetrics {
   utmSource: string;
   utmTerm: string;
   treatmentText: string;
+}
+export interface ClientUpdate {
+  id: string;
+  country: string;
+  province: string;
+  city: string;
+  address: string;
+  postalCode: string;
+  birthday: string;
+  dni: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }

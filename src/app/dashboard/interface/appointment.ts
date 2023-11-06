@@ -38,12 +38,20 @@ export interface Lead {
 }
 
 export interface User {
-  clinicToken: string;
   firstName: string;
   flowwwToken: string;
   email: string;
-  phone: string;
   id: string;
+  dni: string;
+  address: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  birthday: string;
+  country: string;
+  lastName: string;
+  secondLastName: string;
+  phone: string;
 }
 
 export interface RescheduleAppointmentRequest {

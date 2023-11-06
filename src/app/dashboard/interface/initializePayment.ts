@@ -5,6 +5,7 @@ export interface InitializePayment {
   installments: number;
   paymentBank: PaymentBank;
   amount: number;
+  paymentBank: number;
 }
 
 export interface CreatePayment {
