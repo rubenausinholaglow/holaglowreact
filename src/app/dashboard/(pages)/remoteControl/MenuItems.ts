@@ -22,9 +22,9 @@ export const menuItems = [
   },
   {
     iconSrc: '/images/dashboard/menu-icons/agenda.png',
-    altText: 'Pagar Pepper',
-    title: 'Pagar con Pepper',
-    link: 'https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken',
-    target: '_blank',
+    altText: 'Pagos',
+    title: 'Pagos',
+    link: '/dashboard/remoteControl/Payment',
+    target: '',
   },
 ];

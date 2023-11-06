@@ -6,6 +6,7 @@ import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
@@ -23,6 +24,7 @@ const AppointmentsListComponent: React.FC<{
   }>({});
   const userCrisalix = useCrisalix(state => state);
   const router = useRouter();
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -54,6 +56,7 @@ const AppointmentsListComponent: React.FC<{
     await UserService.checkUser(appointment.lead?.user?.email)
       .then(async data => {
         if (data && !isEmpty(data)) {
+          setCurrentUser(data);
           saveAppointmentInfo(appointment);
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
@@ -88,7 +91,7 @@ const AppointmentsListComponent: React.FC<{
           saveUserDetails(name, id, flowwwToken);
           await messageService.StartAppointment(data).then(async info => {
             if (info != null) {
-              await UserService.createCrisalixUser(id, data.id, clinicId).then(
+              /*await UserService.createCrisalixUser(id, data.id, clinicId).then(
                 async x => {
                   const crisalixUser: CrisalixUser = {
                     id: x.id,
@@ -106,7 +109,7 @@ const AppointmentsListComponent: React.FC<{
                   };
                   await messageService.CrisalixUser(props);
                 }
-              );
+              );*/
               router.push('/dashboard/remoteControl');
             }
           });
