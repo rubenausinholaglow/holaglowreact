@@ -53,6 +53,7 @@ export default function LandingCaptacion() {
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
     analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
+    analyticsMetrics.externalReference = 'Landing';
     analyticsMetrics.utmAdgroup = '';
     analyticsMetrics.utmCampaign = '';
     analyticsMetrics.utmContent = '';
