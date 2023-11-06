@@ -107,17 +107,27 @@ export default function ProductCard({
           <Text size="xs" className="text-hg-black500 mb-8">
             {product.description}
           </Text>
-          <div className="mt-auto">
+
+          <Flex className="mt-auto justify-between w-full">
+            <div className="mr-4">
+              <Text className="text-xs line-through text-hg-black500">
+                355 €
+              </Text>
+              <Text className=" text-hg-secondary font-semibold text-lg">
+                {product.price} €{' '}
+                <span className="text-xs font-normal">¡Descuento BF!</span>
+              </Text>
+            </div>
             <Button
               type="tertiary"
               className="mt-auto"
               bgColor="bg-hg-primary"
-              customStyles="hover:bg-hg-secondary100"
+              customStyles="hover:bg-hg-secondary100 px-0 w-[40px] shrink-0"
             >
-              <p className="mr-2">Saber más</p>
-              <SvgArrow height={20} width={20} />
+              {/* <p className="mr-2">Saber más</p> */}
+              <SvgArrow height={20} width={20} className="rotate-45" />
             </Button>
-          </div>
+          </Flex>
         </Flex>
       </div>
     </Link>

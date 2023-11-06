@@ -21,6 +21,7 @@ type ButtonProps = {
   onClick?: (...args: any[]) => void;
   children: ReactNode;
   disabled?: boolean;
+  disableAnimation?: boolean;
   [key: string]: any;
 };
 
@@ -33,11 +34,12 @@ export const Button = ({
   onClick = undefined,
   children,
   disabled = false,
+  disableAnimation = false,
   ...rest
 }: ButtonProps) => {
   if (href) {
     return (
-      <AnimateOnViewport origin="left">
+      <AnimateOnViewport disableAnimation={disableAnimation} origin="left">
         <Link
           href={href}
           target={rest?.target}
@@ -64,7 +66,7 @@ export const Button = ({
   }
 
   return (
-    <AnimateOnViewport origin="left">
+    <AnimateOnViewport disableAnimation={disableAnimation} origin="left">
       <button
         className={twMerge(
           `transition-all relative group overflow-visible ${
