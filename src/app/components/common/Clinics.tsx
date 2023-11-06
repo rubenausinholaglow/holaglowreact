@@ -57,6 +57,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
             value={selectedAccordion}
           >
             {deviceSize.isMobile &&
+              clinics &&
               clinics.map((clinic, index) => (
                 <AccordionItem
                   className="w-full"
@@ -122,7 +123,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
           </Accordion>
 
           {/* desktop clinic selector */}
-          {!deviceSize.isMobile && (
+          {!deviceSize.isMobile && clinics && (
             <>
               <div className="hidden md:flex w-1/2">
                 <Flex layout="col-left" className="gap-4 mr-24 w-full">
