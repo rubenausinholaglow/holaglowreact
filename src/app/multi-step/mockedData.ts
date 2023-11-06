@@ -1,4 +1,10 @@
-import { SvgCream, SvgCreams, SvgDehydration, SvgHairCare, SvgSkinCare } from 'icons/Icons';
+import {
+  SvgCream,
+  SvgCreams,
+  SvgDehydration,
+  SvgHairCare,
+  SvgSkinCare,
+} from 'icons/Icons';
 
 export const MULTISTEP_QUESTIONS: any = [
   {
@@ -33,25 +39,25 @@ export const MULTISTEP_TREATMENTS: any = [
         name: 'Líneas de expresión',
         price: 250,
         landing:
-          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1',
       },
       {
         name: 'Flacidez',
         price: 250,
         landing:
-          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1',
       },
       {
         name: 'Abrir mirada',
         price: 250,
         landing:
-          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1/?treatmentText=Multistep',
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-1',
       },
       {
         name: 'Calidad de la piel',
         price: 250,
         landing:
-          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2/?treatmentText=Multistep',
+          'https://www.holaglow.com/form/?page=0&treatmentText=Multistep&redirection=thank-you-2',
       },
     ],
   },

@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/thank-you-2", "destination": "/api/server" },
     { "source": "/landing/probador-virtual", "destination": "/api/server" },
     { "source": "/blog", "destination": "/api/server" },
     { "source": "/landing/visita-medica-mgm", "destination": "/api/server" },
@@ -21,6 +20,7 @@
     { "source": "/thank-you/madrid", "destination": "/api/server" },
     { "source": "/thank-you/barcelona", "destination": "/api/server" },
     { "source": "/thank-you-1", "destination": "/api/server" },
+    { "source": "/thank-you-2", "destination": "/api/server" },
     { "source": "/thank-you-3", "destination": "/api/server" },
     { "source": "/appointment-cancel", "destination": "/api/server" },
     {
