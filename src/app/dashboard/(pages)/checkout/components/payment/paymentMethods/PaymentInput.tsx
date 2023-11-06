@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@components/TextInputField';
@@ -10,17 +11,29 @@ import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import UserService from '@services/UserService';
 import { applyDiscountToCart } from '@utils/utils';
-import HolaglowModal from 'app/components/common/Modal';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
+import DatePicker from 'react-datepicker';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgSpinner } from 'icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Modal } from 'designSystem/Modals/Modal';
+import { Text, Title } from 'designSystem/Texts/Texts';
+import { SvgClose, SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 import PepperWidget from './PepperWidget';
+import HolaglowModal from 'app/components/common/Modal';
+import { createPortal } from 'react-dom';
+import TextInputField from '@components/TextInputField';
+import { ClientUpdate } from '@interface/client';
+import UserService from '@services/UserService';
+import FinanceService from '@services/FinanceService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 interface Props {
   paymentMethod: PaymentMethod;
@@ -43,26 +56,28 @@ export default function PaymentInput(props: Props) {
   const [showPepperModal, setShowPepperModal] = useState(false);
 
   const { user } = useGlobalPersistedStore(state => state);
+  const { isModalOpen } = useGlobalStore(state => state);
+
   const [formData, setFormData] = useState<ClientUpdate>({
-    dni: user?.dni ?? '',
-    address: user?.address ?? '',
-    city: user?.city ?? '',
-    province: user?.province ?? '',
-    postalCode: user?.postalCode ?? '',
-    birthday: user?.birthday ?? '',
-    id: user?.id ?? '',
-    country: user?.country ?? '',
-    firstName: user?.firstName ?? '',
-    lastName: user?.lastName
-      ? `${user.lastName} ${user.secondLastName ?? ''}`
+    dni: user ? user.dni : '',
+    address: user ? user.address : '',
+    city: user ? user.city : '',
+    province: user ? user.province : '',
+    postalCode: user ? user.postalCode : '',
+    birthday: user ? user.birthday : '',
+    id: user ? user.id : '',
+    country: user ? user.country : '',
+    firstName: user ? user.firstName : '',
+    lastName: user
+      ? user.lastName + (user.secondLastName ? ' ' + user.secondLastName : '')
       : '',
-    email: user?.email ?? '',
-    phone: user?.phone ?? '',
+    email: user ? user.email : '',
+    phone: user ? user.phone : '',
   });
 
-  const priceDiscount = useCartStore(state => state.priceDiscount);
-  const percentageDiscount = useCartStore(state => state.percentageDiscount);
-  const manualPrice = useCartStore(state => state.manualPrice);
+  const { priceDiscount, percentageDiscount, manualPrice } = useCartStore(
+    state => state
+  );
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -200,6 +215,13 @@ export default function PaymentInput(props: Props) {
       [field]: value,
     }));
   };
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setShowPepperModal(false);
+    }
+  }, [isModalOpen]);
+
   const renderFinance = () => {
     return (
       <>
@@ -259,33 +281,61 @@ export default function PaymentInput(props: Props) {
                       handleFormFieldChange(event, 'postalCode')
                     }
                   />
-                  <TextInputField
-                    label="Provincia"
-                    placeholder="Provincia"
-                    value={formData.province}
-                    onChange={event => handleFormFieldChange(event, 'province')}
-                  />
-                  <TextInputField
-                    label="Ciudad"
-                    placeholder="Ciudad"
-                    value={formData.city}
-                    onChange={event => handleFormFieldChange(event, 'city')}
-                  />
+                }
+              ></DatePicker>
+              <TextInputField
+                label="DNI"
+                placeholder="DNI"
+                value={formData.dni}
+                onChange={event => handleFormFieldChange(event, 'dni')}
+                inputStyles="h-12 rounded-xl"
+              />
+            </Flex>
 
-                  <Button
-                    size="sm"
-                    type="secondary"
-                    isSubmit
-                    className="ml-2"
-                    onClick={initializePepper}
-                  >
-                    Pagar
-                  </Button>
-                </div>
-              </Container>
-            </HolaglowModal>,
-            document.body
-          )}
+            <Flex className="gap-4">
+              <TextInputField
+                label="Dirección"
+                placeholder="Dirección"
+                value={formData.address}
+                onChange={event => handleFormFieldChange(event, 'address')}
+                inputStyles="h-12 rounded-xl"
+              />
+              <TextInputField
+                label="Código Postal"
+                placeholder="Código Postal"
+                value={formData.postalCode}
+                onChange={event => handleFormFieldChange(event, 'postalCode')}
+                inputStyles="h-12 rounded-xl"
+              />
+            </Flex>
+
+            <Flex className="gap-4">
+              <TextInputField
+                label="Provincia"
+                placeholder="Provincia"
+                value={formData.province}
+                onChange={event => handleFormFieldChange(event, 'province')}
+                inputStyles="h-12 rounded-xl"
+              />
+              <TextInputField
+                label="Ciudad"
+                placeholder="Ciudad"
+                value={formData.city}
+                onChange={event => handleFormFieldChange(event, 'city')}
+                inputStyles="h-12 rounded-xl"
+              />
+            </Flex>
+            <Button
+              size="lg"
+              type="secondary"
+              isSubmit
+              className="self-end"
+              onClick={initializePepper}
+            >
+              Pagar
+            </Button>
+          </Flex>
+        </Modal>
         {showAlma && (
           <AlmaWidget
             amountFinance={inputValue}

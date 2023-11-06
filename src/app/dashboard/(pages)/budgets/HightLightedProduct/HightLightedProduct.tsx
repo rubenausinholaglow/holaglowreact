@@ -17,20 +17,21 @@ import { Operation, Quantifier } from './Quantifier';
 const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 
 export default function HightLightedProduct() {
-  const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
+  const { setIsModalOpen } = useGlobalStore(state => state);
 
-  const addToCart = useCartStore(state => state.addItemToCart);
-  const getQuantityOfProduct = useCartStore(
-    state => state.getQuantityOfProduct
-  );
-  const removeSingleProduct = useCartStore(state => state.removeSingleProduct);
-  const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
-  const productHighlighted = useCartStore(state => state.productHighlighted);
-  const professionals = useCartStore(state => state.professionals);
+  const {
+    addItemToCart,
+    getQuantityOfProduct,
+    removeSingleProduct,
+    productHighlighted,
+    setHighlightProduct,
+    professionals,
+  } = useCartStore(state => state);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<CartItem | null>(null);
   const [imgSrc, setImgSrc] = useState('');
+
   useEffect(() => {
     setIsLoading(true);
     setProduct(null);
@@ -124,7 +125,7 @@ export default function HightLightedProduct() {
                   operation: Operation
                 ): void {
                   if (operation == 'increase') {
-                    addToCart(product);
+                    addItemToCart(product);
                   } else {
                     removeSingleProduct(product);
                   }

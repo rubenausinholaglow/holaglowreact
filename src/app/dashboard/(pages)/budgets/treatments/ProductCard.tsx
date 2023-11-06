@@ -21,12 +21,15 @@ interface Props {
 }
 
 export default function ProductCard({ product, isCheckout }: Props) {
-  const cart = useCartStore(state => state.cart);
-  const removeFromCart = useCartStore(state => state.removeFromCart);
-  const addToCart = useCartStore(state => state.addItemToCart);
-  const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
-  const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
-  const removeItemDiscount = useCartStore(state => state.removeItemDiscount);
+  const {
+    cart,
+    removeFromCart,
+    addItemToCart,
+    setHighlightProduct,
+    removeItemDiscount,
+  } = useCartStore(state => state);
+
+  const { isModalOpen, setIsModalOpen } = useGlobalStore(state => state);
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
   const [imgSrc, setImgSrc] = useState(
@@ -123,7 +126,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
             type="secondary"
             onClick={e => {
               e.stopPropagation();
-              addToCart(product);
+              addItemToCart(product);
             }}
             className="w-full mt-auto"
           >
