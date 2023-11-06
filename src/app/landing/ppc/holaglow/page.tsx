@@ -52,7 +52,7 @@ export default function LandingCaptacion() {
     }
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
-    var varToBreak = null as any;
+    const varToBreak = null as any;
     varToBreak.id = '1';
     analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
     analyticsMetrics.externalReference = 'Landing';
