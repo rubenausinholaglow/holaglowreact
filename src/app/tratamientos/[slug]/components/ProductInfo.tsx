@@ -1,3 +1,4 @@
+import ReactPlayer from 'react-player';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -6,12 +7,11 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar } from 'icons/Icons';
 import { SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import Link from 'next/link';
 
 export default function ProductInfo({ product }: { product: Product }) {
   return (
     <Container className="p-0 md:px-4 md:pb-16">
-      <div className="md:flex gap-16 justify-between md:bg-hg-cream md:p-6 md:rounded-2xl">
+      <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl">
         <Container className="mt-8 md:mt-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
           <ul className="flex flex-col mb-4 w-full">
             <li className="mb-4 pb-4 border-b border-hg-black flex">
@@ -111,6 +111,16 @@ export default function ProductInfo({ product }: { product: Product }) {
             </span>
           </Button>
         </Container>
+        <div className="md:w-2/5 shrink-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            src="/videos/pdp.mp4"
+            className="md:rounded-xl"
+          />
+        </div>
       </div>
     </Container>
   );
