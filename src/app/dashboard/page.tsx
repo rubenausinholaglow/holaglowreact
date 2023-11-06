@@ -109,11 +109,12 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
-
     const queryString = window.location.search;
+    console.log(queryString);
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
-    setRemoteControl(searchParams.remoteControl == 'true');
+    setRemoteControl(params.get('remoteControl') == 'true');
+
     setClinicId(params.get('clinicId') || '');
     localStorage.setItem('RemoteControl', params.get('remoteControl') || '');
     localStorage.setItem('ClinicId', params.get('clinicId') || '');
@@ -281,10 +282,7 @@ export default function Page({
         hideProfessionalSelector
       >
         <div>
-          <AppointmentsListComponent
-            clinicId={clinicId}
-            boxId={boxId}
-          ></AppointmentsListComponent>
+          <AppointmentsListComponent clinicId={clinicId} boxId={boxId} />
         </div>
       </MainLayout>
     );
