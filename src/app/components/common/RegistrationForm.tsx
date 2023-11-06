@@ -3,7 +3,7 @@
 import 'react-phone-input-2/lib/style.css';
 import 'app/checkout/contactform/phoneInputStyle.css';
 
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
@@ -132,10 +132,22 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     }
   };
 
-  function handlePhoneChange(value: any, country: any, formattedValue: string) {
-    handleFieldChange(value, 'phone');
-    value.target.value = '+' + country.dialCode;
-    handleFieldChange(value, 'phonePrefix');
+  function handlePhoneChange(
+    event: any,
+    country: any,
+    formattedValue: string,
+    value: string
+  ) {
+    if (event.nativeEvent.inputType) {
+      handleFieldChange(event, 'phone');
+      event.target.value = '+' + country.dialCode;
+      handleFieldChange(event, 'phonePrefix');
+    } else {
+      event.target.value = '+34' + value;
+      handleFieldChange(event, 'phone');
+      event.target.value = '+34';
+      handleFieldChange(event, 'phonePrefix');
+    }
   }
 
   const handleRegistration = async () => {
@@ -221,7 +233,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       <div className="relative">
         <PhoneInput
           disableSearchIcon={true}
-          countryCodeEditable={false}
+          countryCodeEditable={true}
           inputClass={`${poppins.className}`}
           inputStyle={{
             borderColor: 'white',
@@ -249,9 +261,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
           country={'es'}
           preferredCountries={['es']}
           value={formData.phone}
-          onChange={(value, data, event, formattedValue) =>
-            handlePhoneChange(event, data, formattedValue)
-          }
+          onChange={(value, data, event, formattedValue) => {
+            handlePhoneChange(event, data, formattedValue, value);
+          }}
           onBlur={() => {
             if (
               formData.phone.length > 3 &&
