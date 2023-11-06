@@ -178,14 +178,20 @@ export default function PaymentInput(props: Props) {
   };
 
   const initializePepper = async () => {
+    setIsLoading(true);
     const GuidUser = localStorage.getItem('id') || '';
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       ['id']: GuidUser,
     }));
-    UserService.updateUser(formData).then(async x => {
+    await UserService.updateUser(formData).then(async x => {
+      let resultValue = '';
+      if (!isNaN(Number(inputValue))) {
+        resultValue = Math.round(Number(inputValue) * 100).toString();
+      }
+
       const data: InitializePayment = {
-        amount: Number(inputValue),
+        amount: Number(resultValue),
         installments: 1,
         userId: GuidUser,
         paymentBank: 2,
@@ -194,8 +200,10 @@ export default function PaymentInput(props: Props) {
       await FinanceService.initializePayment(data).then(x => {
         setShowPepperModal(false);
         window.open(x.url, '_blank');
+        handleUrlPayment(x.id, '', x.referenceId);
       });
     });
+    setIsLoading(false);
   };
 
   const handleFormFieldChange = (
@@ -332,14 +340,15 @@ export default function PaymentInput(props: Props) {
                 inputStyles="h-12 rounded-xl"
               />
             </Flex>
+
             <Button
-              size="lg"
+              size="sm"
               type="secondary"
               isSubmit
-              className="self-end"
+              className="ml-2"
               onClick={initializePepper}
             >
-              Pagar
+              {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
             </Button>
           </Flex>
         </Modal>
