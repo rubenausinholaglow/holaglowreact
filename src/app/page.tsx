@@ -1,8 +1,9 @@
 import React from 'react';
+import BugsnagPerformance from '@bugsnag/browser-performance';
 import Bugsnag from '@bugsnag/js';
 import BugsnagPluginReact from '@bugsnag/plugin-react';
-import BugsnagPerformance from '@bugsnag/browser-performance';
 import type { Metadata } from 'next';
+
 import MainLayout from './components/layout/MainLayout';
 import HomeBlocks from './HomeBlocks';
 
