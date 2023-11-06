@@ -210,7 +210,7 @@ export default function Agenda() {
   useEffect(() => {
     selectDate(dayjs(selectedDay).toDate());
     setLocalDateSelected(dayjs(selectedDay).toDate());
-  }, [selectedDay, selectedTreatmentsIds]);
+  }, [selectedTreatmentsIds]);
 
   useEffect(() => {
     loadMonth();
@@ -227,6 +227,7 @@ export default function Agenda() {
 
   const selectDate = (x: Date) => {
     if (!selectedTreatmentsIds) return;
+    setSelectedDay(dayjs(x));
     setLocalDateSelected(x);
     setLoadingDays(true);
     setMorningHours([]);
