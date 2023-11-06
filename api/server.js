@@ -107,7 +107,7 @@ server.use(
   })
 );
 server.use(
-  '/checkout/thank-you-1',
+  '/thank-you-1',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
