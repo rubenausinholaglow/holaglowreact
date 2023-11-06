@@ -110,12 +110,11 @@ export default function Page({
   useEffect(() => {
     clearLocalStorage(false);
     const queryString = window.location.search;
-    console.log(queryString);
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
     setRemoteControl(params.get('remoteControl') == 'true');
-
     setClinicId(params.get('clinicId') || '');
+
     localStorage.setItem('RemoteControl', params.get('remoteControl') || '');
     localStorage.setItem('ClinicId', params.get('clinicId') || '');
     localStorage.setItem('BoxId', params.get('boxId') || '');

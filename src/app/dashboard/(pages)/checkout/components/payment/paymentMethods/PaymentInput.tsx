@@ -189,7 +189,6 @@ export default function PaymentInput(props: Props) {
       if (!isNaN(Number(inputValue))) {
         resultValue = Math.round(Number(inputValue) * 100).toString();
       }
-
       const data: InitializePayment = {
         amount: Number(resultValue),
         installments: 1,
