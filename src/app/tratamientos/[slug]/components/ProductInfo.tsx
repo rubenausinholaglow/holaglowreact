@@ -111,20 +111,6 @@ export default function ProductInfo({ product }: { product: Product }) {
             </span>
           </Button>
         </Container>
-        <div className="md:w-2/5 shrink-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            src={`${
-              product.id === '49a4a3d8-2b92-4808-fc04-08db60f8a4d3'
-                ? '/videos/testFramer.mp4'
-                : '/videos/pdp.mp4'
-            }`}
-            className="w-full h-full block bg-black object-center md:rounded-xl"
-          />
-        </div>
       </div>
     </Container>
   );
