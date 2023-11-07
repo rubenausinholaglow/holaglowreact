@@ -158,7 +158,7 @@ export default function LandingCaptacion() {
 
       <Products hideCategorySelector />
 
-      <div className="bg-[url('/images/statics/landings/captacion/testimonialsBg.svg')] md:bg-[url('/images/statics/landings/captacion/testimonialsBg-desktop.svg')] bg-no-repeat bg-center pb-12 md:py-16">
+      <div className="bg-[url('/images/statics/landings/captacion/testimonialsBg.svg')] md:bg-[url('/images/statics/landings/captacion/testimonialsBg-desktop.svg')] bg-no-repeat bg-center py-12 md:py-16">
         <LandingTestimonials />
       </div>
 
@@ -242,7 +242,7 @@ export default function LandingCaptacion() {
               customStyles="bg-hg-primary hover:bg-hg-secondary100"
               href="#leadForm"
             >
-              Pide tu cita médica gratis
+              Pide tu cita médica gratis.
             </Button>
           </Flex>
         </Container>

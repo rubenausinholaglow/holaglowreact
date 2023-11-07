@@ -335,11 +335,6 @@ function ProductPriceItemsCard({
         <Button
           type="tertiary"
           disabled={isDisabled}
-          /* customStyles={
-            isDisabled
-              ? 'bg-white text-hg-black300 border-hg-black300 pointer-events-none cursor-default'
-              : 'bg-hg-primary hover:bg-hg-secondary100'
-          } */
           onClick={() => {
             setSelectedTreatment(product);
           }}
@@ -369,8 +364,6 @@ export default function ProductPriceCard({
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
-
-  console.log(product.title, product.discounts, product.tags);
 
   useEffect(() => {
     if (product && !isEmpty(product.discounts)) {

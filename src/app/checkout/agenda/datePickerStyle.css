@@ -82,11 +82,18 @@
 .react-datepicker__month-text--keyboard-selected,
 .react-datepicker__day--selected,
 .react-datepicker__quarter-text--keyboard-selected,
-.react-datepicker__year-text--keyboard-selected,
-.react-datepicker__day:hover:not(.react-datepicker__day--disabled) {
+.react-datepicker__year-text--keyboard-selected {
+  transition: all 0.3s ease;
   border-radius: 50% !important;
-  background-color: #a96fe7 !important;
-  color: #ffffff !important;
+  background-color: #a96fe7;
+  color: #ffffff;
+}
+
+/*  */
+.react-datepicker__day:hover:not(.react-datepicker__day--disabled) {
+  transition: background-color 0.3s ease;
+  border-radius: 50% !important;
+  background-color: #e6d4f8;
 }
 
 .loading {
