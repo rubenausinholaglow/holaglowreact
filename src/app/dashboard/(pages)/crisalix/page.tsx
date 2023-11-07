@@ -25,9 +25,9 @@ const Page = () => {
         : null;
 
     if (existsCrisalixUser != null) {
-      setPlayerId(userCrisalix.crisalixUser[0].playerId);
-      setPlayerToken(userCrisalix.crisalixUser[0].playerToken);
       setId(userCrisalix.crisalixUser[0].id);
+      setPlayerToken(userCrisalix.crisalixUser[0].playerToken);
+      setPlayerId(userCrisalix.crisalixUser[0].playerId);
     }
 
     setTimeout(

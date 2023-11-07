@@ -35,7 +35,7 @@ const Page = () => {
           ClinicId: existsMessageCrisalixUser[0].ClinicId,
           BoxId: existsMessageCrisalixUser[0].BoxId,
           id: existsMessageCrisalixUser[0].id,
-          playerId: existsMessageCrisalixUser[0].playerToken,
+          playerId: existsMessageCrisalixUser[0].playerId,
           playerToken: existsMessageCrisalixUser[0].playerToken,
         };
         saveCrisalixUser(data);
@@ -54,7 +54,7 @@ const Page = () => {
     ) {
       const crisalixUser: CrisalixUser = {
         id: props.id,
-        playerId: props.playerToken,
+        playerId: props.playerId,
         playerToken: props.playerToken,
         name: props.name,
       };

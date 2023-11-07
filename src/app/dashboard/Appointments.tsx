@@ -94,14 +94,14 @@ const AppointmentsListComponent: React.FC<{
                 async x => {
                   const crisalixUser: CrisalixUser = {
                     id: x.id,
-                    playerId: x.playerToken,
+                    playerId: x.player_id,
                     playerToken: x.playerToken,
                     name: x.name,
                   };
                   userCrisalix.addCrisalixUser(crisalixUser);
                   const props = {
                     id: crisalixUser.id,
-                    playerId: crisalixUser.playerToken,
+                    playerId: crisalixUser.playerId,
                     playerToken: crisalixUser.playerToken,
                     boxId: boxId,
                     clinicId: clinicId,
@@ -145,7 +145,7 @@ const AppointmentsListComponent: React.FC<{
   return (
     <div className="w-full px-11">
       <h1>Lista de citas</h1>
-      <table className="w-full">
+      <table className="w-full mt-9">
         <thead>
           <tr>
             <th>Hora</th>
