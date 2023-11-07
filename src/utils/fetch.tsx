@@ -3,6 +3,8 @@ import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
 import clinicService from '@services/ClinicService';
 import ProductService from '@services/ProductService';
+import promoService from '@services/PromoService';
+import { Promo } from 'types/promo';
 
 export async function fetchProducts() {
   // Esthetic = 1, Medical = 2
@@ -50,4 +52,16 @@ export async function fetchClinics() {
   }
 
   return [] as Clinic[];
+}
+
+export async function fetchPromos() {
+  try {
+    const promos: Promo[] = await promoService.getPromos();
+
+    return promos;
+  } catch (error: any) {
+    Bugsnag.notify('Error fetching promos:', error);
+  }
+
+  return [] as Promo[];
 }

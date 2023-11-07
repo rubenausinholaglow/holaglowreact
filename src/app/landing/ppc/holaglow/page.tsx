@@ -163,7 +163,7 @@ export default function LandingCaptacion() {
       </div>
 
       <div
-        className="bg-hg-black100 pb-4 rounded-t-2xl md:bg-hg-secondary100"
+        className="bg-hg-black50 pb-4 rounded-t-2xl md:bg-hg-secondary100"
         id="leadForm"
       >
         <Container className="py-8 md:py-16">

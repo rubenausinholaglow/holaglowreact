@@ -6,6 +6,7 @@ import { Slot } from '@interface/slot';
 import { INITIAL_FILTERS } from 'app/tratamientos/utils/filters';
 import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
+import { Promo } from 'types/promo';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -18,6 +19,7 @@ type DeviceSize = {
 interface GlobalPersistStore {
   stateProducts: Product[];
   clinics: Clinic[];
+  promos: Promo[];
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
@@ -33,6 +35,7 @@ interface GlobalPersistStore {
 interface GlobalPersistActions {
   setStateProducts: (value: Product[]) => void;
   setClinics: (value: Clinic[]) => void;
+  setPromos: (value: Promo[]) => void;
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
@@ -50,6 +53,7 @@ export const useGlobalPersistedStore = create(
     set => ({
       stateProducts: [],
       clinics: [],
+      promos: [],
       deviceSize: {
         isMobile: true,
         isTablet: false,
@@ -81,6 +85,9 @@ export const useGlobalPersistedStore = create(
       },
       setClinics: (value: Clinic[]) => {
         set({ clinics: value });
+      },
+      setPromos: (value: Promo[]) => {
+        set({ promos: value });
       },
       setIsMobile: value => {
         set({ isMobile: value });
