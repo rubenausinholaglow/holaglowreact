@@ -3,7 +3,7 @@
 import 'react-phone-input-2/lib/style.css';
 import 'app/checkout/contactform/phoneInputStyle.css';
 
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
@@ -31,7 +31,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
-  const [showPhoneError, setShowPhoneError] = useState(false);
+  const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
 
   const {
@@ -132,10 +132,22 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     }
   };
 
-  function handlePhoneChange(value: any, country: any, formattedValue: string) {
-    handleFieldChange(value, 'phone');
-    value.target.value = '+' + country.dialCode;
-    handleFieldChange(value, 'phonePrefix');
+  function handlePhoneChange(
+    event: any,
+    country: any,
+    formattedValue: string,
+    value: string
+  ) {
+    if (event && event.nativeEvent && event.nativeEvent.inputType) {
+      handleFieldChange(event, 'phone');
+      event.target.value = '+' + country.dialCode;
+      handleFieldChange(event, 'phonePrefix');
+    } else {
+      event.target.value = '+34' + value;
+      handleFieldChange(event, 'phone');
+      event.target.value = '+34';
+      handleFieldChange(event, 'phonePrefix');
+    }
   }
 
   const handleRegistration = async () => {
@@ -221,7 +233,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       <div className="relative">
         <PhoneInput
           disableSearchIcon={true}
-          countryCodeEditable={false}
+          countryCodeEditable={true}
           inputClass={`${poppins.className}`}
           inputStyle={{
             borderColor: 'white',
@@ -237,10 +249,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
           containerStyle={{
             background: 'white',
             border: '1px solid',
-            borderColor: HOLAGLOW_COLORS['black300'],
+            borderColor:
+              showPhoneError !== null && !showPhoneError
+                ? HOLAGLOW_COLORS['black']
+                : HOLAGLOW_COLORS['black300'],
             borderRadius: '1rem',
             paddingLeft: '16px',
-            paddingRight: '16px',
+            paddingRight: '12px',
             paddingBottom: '8px',
             paddingTop: '8px',
             height: '60px',
@@ -249,9 +264,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
           country={'es'}
           preferredCountries={['es']}
           value={formData.phone}
-          onChange={(value, data, event, formattedValue) =>
-            handlePhoneChange(event, data, formattedValue)
-          }
+          onChange={(value, data, event, formattedValue) => {
+            handlePhoneChange(event, data, formattedValue, value);
+          }}
           onBlur={() => {
             if (
               formData.phone.length > 3 &&
@@ -264,21 +279,25 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
             } else {
               setShowPhoneError(false);
             }
+
+            if (formData.phone === '+34') {
+              setShowPhoneError(null);
+            }
           }}
         />
+        {showPhoneError !== null && (
+          <Image
+            src={`/images/forms/${showPhoneError ? 'error' : 'formCheck'}.svg`}
+            alt="error"
+            height={26}
+            width={24}
+            className="absolute top-4 right-3"
+          />
+        )}
         {showPhoneError && (
-          <>
-            <Image
-              src="/images/forms/error.svg"
-              alt="error"
-              height={26}
-              width={24}
-              className="absolute top-4 right-3"
-            />
-            <p className="text-hg-error text-sm p-2">
-              {errorsConfig.ERROR_PHONE_NOT_VALID}
-            </p>
-          </>
+          <p className="text-hg-error text-sm p-2">
+            {errorsConfig.ERROR_PHONE_NOT_VALID}
+          </p>
         )}
       </div>
 

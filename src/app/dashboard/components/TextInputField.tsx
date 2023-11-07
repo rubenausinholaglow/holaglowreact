@@ -15,10 +15,10 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
 }) => {
   function getBackgroundIcon() {
     if (!isEmpty(error)) {
-      return 'url("/images/forms/error.svg") no-repeat center right 12px';
+      return 'url("/images/forms/error.svg") #ffffff no-repeat center right 12px';
     }
     if (value.length > 0) {
-      return 'url("/images/forms/formCheck.svg") no-repeat center right 12px';
+      return 'url("/images/forms/formCheck.svg") #ffffff no-repeat center right 12px';
     }
 
     return '';
