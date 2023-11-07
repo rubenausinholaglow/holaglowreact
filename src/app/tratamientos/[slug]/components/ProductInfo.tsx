@@ -116,7 +116,7 @@ export default function ProductInfo({ product }: { product: Product }) {
             muted
             loop
             playsInline
-            src={`${'/videos/testFramer.mp4'}`}
+            src={`${'/videos/pdp2.mp4'}`}
             className="w-full h-full block bg-black object-center md:rounded-xl"
           />
         </div>
