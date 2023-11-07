@@ -27,6 +27,28 @@ export default function RootLayout({
       </Head>
       <head>
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+
+        <Script
+          id="bugnsag"
+          type="text/javascript"
+          strategy="beforeInteractive"
+          src="https://d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"
+        ></Script>
+        <Script
+          id="bugsnagPerformance"
+          type="text/javascript"
+          strategy="beforeInteractive"
+          src="https://d2wy8f7a9ursnm.cloudfront.net/v1.2.0/bugsnag-performance.min.js"
+        ></Script>
+
+        <Script
+          id="bugsnagStart"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `Bugsnag.start({ apiKey: '8c6cd8495d37038715215411471cd7e6' });
+          BugsnagPerformance.start({ apiKey: '8c6cd8495d37038715215411471cd7e6' });`,
+          }}
+        ></Script>
         <Script
           id="cookieyes"
           type="text/javascript"

@@ -14,13 +14,13 @@ export default function CheckoutHeader() {
         id="bugnsag"
         type="text/javascript"
         strategy="beforeInteractive"
-        src="//d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"
+        src="https://d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"
       ></Script>
       <Script
         id="bugsnagPerformance"
         type="text/javascript"
         strategy="beforeInteractive"
-        src="//d2wy8f7a9ursnm.cloudfront.net/v1.2.0/bugsnag-performance.min.js"
+        src="https://d2wy8f7a9ursnm.cloudfront.net/v1.2.0/bugsnag-performance.min.js"
       ></Script>
 
       <Script
