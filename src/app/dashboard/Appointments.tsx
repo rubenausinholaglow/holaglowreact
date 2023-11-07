@@ -143,33 +143,37 @@ const AppointmentsListComponent: React.FC<{
   }
 
   return (
-    <div>
+    <div className="w-full px-11">
       <h1>Lista de citas</h1>
-      <table>
+      <table className="w-full">
         <thead>
           <tr>
             <th>Hora</th>
             <th>Estado</th>
             <th>Nombre</th>
-            <th>Professional</th>
+            <th>Profesional</th>
           </tr>
         </thead>
         <tbody>
           {appointments.map(appointment => (
             <tr key={appointment.id}>
-              <td>
-                {appointment.startTime} {appointment.id}
+              <td className="my-2 mx-2">{appointment.startTime}</td>
+              <td className="my-2 mx-2">
+                {translateStatus(appointment.status ?? Status.Open)}
               </td>
-              <td>{translateStatus(appointment.status ?? Status.Open)}</td>
-              <td>{appointment.lead?.user?.firstName}</td>
-              <td>
+              <td className="my-2 mx-2">
+                {appointment.lead?.user?.firstName}{' '}
+                {appointment.lead?.user?.lastName}
+              </td>
+              <td className="my-2 mx-2">
                 {appointment.clinicProfessional?.name} {appointment.clinicId}
               </td>
-              <td>
+              <td className="my-2 mx-2">
                 <Button
                   isSubmit
                   onClick={() => handleCheckUser(appointment)}
                   type="secondary"
+                  className="my-2 mx-2"
                 >
                   {loadingAppointments[appointment.id] ? (
                     <SvgSpinner height={24} width={24} />

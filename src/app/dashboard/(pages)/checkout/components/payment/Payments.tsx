@@ -49,17 +49,21 @@ export const PaymentModule = () => {
   }, []);
 
   useEffect(() => {
-    const existMessagePaymentResponse = messageSocket.messageSocket.filter(
+    const existsMessagePaymentResponse = messageSocket.messageSocket.filter(
       x => x.messageType == MessageType.PaymentResponse
     );
-    if (existMessagePaymentResponse.length > 0) {
-      const finalMessage = existMessagePaymentResponse[0].message;
-      const [, paymentReferenceId, PaymentStatus] = finalMessage.split('/');
+    if (existsMessagePaymentResponse.length > 0) {
+      const payment = {
+        referenceId: existsMessagePaymentResponse[0].message.data.id,
+        paymentStatus:
+          existsMessagePaymentResponse[0].message.data.paymentStatus,
+      };
+
       const existingPayment = paymentList.find(
-        x => x.paymentReference === paymentReferenceId
+        x => x.paymentReference === payment.referenceId
       );
       if (existingPayment) {
-        switch (PaymentStatus) {
+        switch (payment.paymentStatus) {
           case 'Rejected':
             setPaymentStatus(prevPaymentStatus => ({
               ...prevPaymentStatus,
@@ -90,7 +94,7 @@ export const PaymentModule = () => {
               [existingPayment.id]: StatusPayment.Waiting,
             }));
         }
-        messageSocket.removeMessageSocket(existMessagePaymentResponse[0]);
+        messageSocket.removeMessageSocket(existsMessagePaymentResponse[0]);
       }
     }
   }, [messageSocket]);

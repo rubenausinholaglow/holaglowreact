@@ -1,5 +1,7 @@
 'use client';
 
+import 'react-datepicker/dist/react-datepicker.css';
+
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { createPortal } from 'react-dom';
@@ -198,8 +200,12 @@ export default function PaymentInput(props: Props) {
 
       await FinanceService.initializePayment(data).then(x => {
         setShowPepperModal(false);
-        window.open(x.url, '_blank');
-        handleUrlPayment(x.id, '', x.referenceId);
+        if (x) {
+          window.open(x.url, '_blank');
+          handleUrlPayment(x.id, '', x.referenceId);
+        } else {
+          setMessageNotification('Error pagando con Pepper');
+        }
       });
     });
     setIsLoading(false);
@@ -273,12 +279,16 @@ export default function PaymentInput(props: Props) {
 
             <Flex className="gap-4">
               <DatePicker
-                onChange={x => {
-                  const day = dayjs(x);
-                  const formattedDate = day.format('YYYY-MM-DD');
-                  setFormData((prevFormData: any) => ({
+                selected={
+                  formData.birthday ? dayjs(formData.birthday).toDate() : null
+                }
+                onChange={date => {
+                  const formattedDate = date
+                    ? dayjs(date).format('YYYY-MM-DD')
+                    : '';
+                  setFormData(prevFormData => ({
                     ...prevFormData,
-                    ['birthday']: formattedDate,
+                    birthday: formattedDate,
                   }));
                 }}
                 useWeekdaysShort
@@ -293,7 +303,8 @@ export default function PaymentInput(props: Props) {
                       'border border-hg-black300 rounded-2xl px-4 py-2 w-full text-hg-black h-16 focus:outline-none h-12 rounded-xl'
                     }
                     type="text"
-                    value={formData.birthday}
+                    value={formData.birthday || ''}
+                    onChange={() => {}}
                   />
                 }
               ></DatePicker>

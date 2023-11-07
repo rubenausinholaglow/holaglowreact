@@ -180,7 +180,9 @@ export default function Page({
             id = data.lead.user.id;
           }
           saveUserDetails(name, id, flowwwToken);
-          router.push('/dashboard/menu');
+          if (remoteControl) {
+            router.push('/dashboard/remoteControl');
+          } else router.push('/dashboard/menu');
         } else {
           //TODO - Poner un mensaje de Error en UI
         }
@@ -280,8 +282,28 @@ export default function Page({
         hideContactButtons
         hideProfessionalSelector
       >
-        <div>
+        <div className="w-full justify-center content-center px-11">
           <AppointmentsListComponent clinicId={clinicId} boxId={boxId} />
+          <div className="mt-8">
+            {showRegistration ? (
+              <RegistrationForm
+                formData={formData}
+                handleFieldChange={handleFormFieldChange}
+                handleContinue={handleContinue}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            ) : (
+              <SearchUser
+                email={userEmail}
+                handleFieldChange={handleFieldEmailChange}
+                handleCheckUser={handleCheckUser}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            )}
+            {isLoadingUser && <SvgSpinner />}
+          </div>
         </div>
       </MainLayout>
     );

@@ -27,34 +27,32 @@ export default function RemoteControl({
   }, []);
 
   return (
-    <React.StrictMode>
-      <MainLayout isDashboard>
-        <Flex layout="col-center">
-          <p className="text-4xl mb-2">Paciente: {username}</p>
-          <div className="grid grid-cols-3">
-            {menuItems.map(item => (
-              <DashboardMenuItem
-                key={item.title}
-                iconSrc={item.iconSrc}
-                altText={item.altText}
-                title={item.title}
-                link={
-                  item.link.includes('flowwwToken')
-                    ? item.link.replace('flowwwToken', flowwwToken)
-                    : item.link
-                }
-                target={item.target}
-              />
-            ))}
-          </div>
-          <ValidateComment></ValidateComment>
-          {messageNotification ? (
-            <Notification message={messageNotification} />
-          ) : (
-            <></>
-          )}
-        </Flex>
-      </MainLayout>
-    </React.StrictMode>
+    <MainLayout isDashboard>
+      <Flex layout="col-center">
+        <p className="text-4xl mb-2">Paciente: {username}</p>
+        <div className="grid grid-cols-3">
+          {menuItems.map(item => (
+            <DashboardMenuItem
+              key={item.title}
+              iconSrc={item.iconSrc}
+              altText={item.altText}
+              title={item.title}
+              link={
+                item.link.includes('flowwwToken')
+                  ? item.link.replace('flowwwToken', flowwwToken)
+                  : item.link
+              }
+              target={item.target}
+            />
+          ))}
+        </div>
+        <ValidateComment></ValidateComment>
+        {messageNotification ? (
+          <Notification message={messageNotification} />
+        ) : (
+          <></>
+        )}
+      </Flex>
+    </MainLayout>
   );
 }

@@ -26,7 +26,8 @@ export default function PaymentRemoteControl() {
       usePaymentList.setState(INITIAL_STATE_PAYMENT);
       useCartStore.setState(INITIAL_STATE);
       const budgetIdlocal = localStorage.getItem('BudgetId');
-      if (finalBudget == undefined && budgetIdlocal == null) {
+
+      if (!finalBudget && !budgetIdlocal) {
         fetchData();
       }
     }
@@ -39,7 +40,9 @@ export default function PaymentRemoteControl() {
       .getLastBudgetCreated(userId)
       .then((budget: Budget | undefined) => {
         if (budget) {
-          processBudget(budget);
+          if (!finalBudget) {
+            processBudget(budget);
+          }
         } else {
           // ERROR
         }
@@ -50,7 +53,10 @@ export default function PaymentRemoteControl() {
   }
 
   function processBudget(budget: Budget) {
-    localStorage.setItem('BudgetId', budget.id ?? '');
+    console.log(budget);
+    console.log(finalBudget);
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
     setFinalBudget(budget);
     applyCartDiscounts(budget);
     processBudgetItems(budget);
