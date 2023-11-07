@@ -1,14 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 function BlackFriday() {
@@ -57,11 +52,7 @@ function BlackFriday() {
 export default function HomePromo() {
   const { promo } = useGlobalPersistedStore(state => state);
 
-  useEffect(() => {
-    console.log(promo);
-  }, [promo]);
-
-  if (promo.title === 'Black Friday') {
+  if (promo && promo.title === 'Black Friday') {
     return <BlackFriday />;
   }
 

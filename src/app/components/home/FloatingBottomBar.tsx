@@ -7,7 +7,6 @@ import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
 import { SvgWhatsapp } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 

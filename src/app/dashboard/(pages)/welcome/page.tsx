@@ -1,12 +1,7 @@
-'use client';
-
-import React, { useEffect } from 'react';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
 export default function Page() {
-  useEffect(() => {}, []);
-
   return (
     <Container>
       <Flex layout="col-center">

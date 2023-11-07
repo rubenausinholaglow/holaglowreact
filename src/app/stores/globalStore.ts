@@ -19,7 +19,7 @@ type DeviceSize = {
 interface GlobalPersistStore {
   stateProducts: Product[];
   clinics: Clinic[];
-  promo: Promo;
+  promo: Promo | undefined;
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
@@ -53,7 +53,7 @@ export const useGlobalPersistedStore = create(
     set => ({
       stateProducts: [],
       clinics: [],
-      promo: {},
+      promo: undefined,
       deviceSize: {
         isMobile: true,
         isTablet: false,
