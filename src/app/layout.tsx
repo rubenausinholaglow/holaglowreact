@@ -36,10 +36,12 @@ export default function RootLayout({
         ></Script>
         <Script
           id="bugsnagPerformance"
-          type="text/javascript"
+          type="module"
           strategy="beforeInteractive"
-          src="https://d2wy8f7a9ursnm.cloudfront.net/v1.2.0/bugsnag-performance.min.js"
-        ></Script>
+        >
+          import BugsnagPerformance from
+          '//d2wy8f7a9ursnm.cloudfront.net/v1.2.0/bugsnag-performance.min.js'
+        </Script>
 
         <Script
           id="bugsnagStart"
