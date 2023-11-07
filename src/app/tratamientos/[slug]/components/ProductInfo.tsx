@@ -24,7 +24,7 @@ export default function ProductInfo({ product }: { product: Product }) {
     <Container className="p-0 md:px-4 md:pb-16">
       <div className="md:flex gap-16 justify-between md:bg-hg-cream md:p-6 md:rounded-2xl">
         <Container className="mt-8 md:mt-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
-          <ul className="flex flex-col mb-4 w-full">
+          <ul className="flex flex-col pb-4 w-full">
             <li className="mb-4 pb-4 border-b border-hg-black flex">
               <div>
                 <Text size="lg" className="font-semibold mb-1 md:mb-2">

@@ -325,7 +325,7 @@ function ProductPriceItemsCard({
         <Button
           className="mt-8"
           type="tertiary"
-          customStyles="hover:bg-hg-secondary100"
+          customStyles="hover:bg-hg-secondary50"
           onClick={() => setShowDropdown(true)}
         >
           Personalizar
@@ -334,11 +334,12 @@ function ProductPriceItemsCard({
       {(!product.isPack || showDropdown) && (
         <Button
           type="tertiary"
-          customStyles={
+          disabled={isDisabled}
+          /* customStyles={
             isDisabled
               ? 'bg-white text-hg-black300 border-hg-black300 pointer-events-none cursor-default'
               : 'bg-hg-primary hover:bg-hg-secondary100'
-          }
+          } */
           onClick={() => {
             setSelectedTreatment(product);
           }}
@@ -369,7 +370,7 @@ export default function ProductPriceCard({
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
-  console.log(product.title, product);
+  console.log(product.title, product.discounts, product.tags);
 
   useEffect(() => {
     if (product && !isEmpty(product.discounts)) {
@@ -388,28 +389,21 @@ export default function ProductPriceCard({
           className={`${!deviceSize.isMobile ? 'pointer-events-none' : ''}`}
         >
           <Flex layout="col-left" className="p-3">
-            <Flex layout="row-between" className="w-full">
-              <Text>
+            <Flex layout="row-between" className="w-full mb-2">
+              <Flex>
+                <span className="text-xl text-hg-secondary font-semibold md:text-2xl mr-2">
+                  {discountedPrice ? discountedPrice : product.price} €
+                </span>
                 {discountedPrice && (
-                  <span className="inline-block line-through font-normal mr-1">
+                  <span className="inline-block line-through font-normal text-hg-black500">
                     {product.price} €
                   </span>
                 )}
-                <span className="text-xl text-hg-secondary font-semibold md:text-2xl">
-                  {discountedPrice ? discountedPrice : product.price} €
-                </span>
-              </Text>
+              </Flex>
               <Flex layout="row-right">
                 {product.isPack &&
                   (!isEmpty(product.tags) &&
                   product.tags[0].tag === 'B.Friday' ? (
-                    <Text
-                      size="xs"
-                      className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
-                    >
-                      Oferta especial
-                    </Text>
-                  ) : (
                     <Flex
                       layout="row-center"
                       className="bg-hg-black rounded-full p-1 px-2"
@@ -423,6 +417,13 @@ export default function ProductPriceCard({
                         B.<span className="text-hg-primary">Friday</span>
                       </Text>
                     </Flex>
+                  ) : (
+                    <Text
+                      size="xs"
+                      className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                    >
+                      Oferta especial
+                    </Text>
                   ))}
 
                 {deviceSize.isMobile && (
