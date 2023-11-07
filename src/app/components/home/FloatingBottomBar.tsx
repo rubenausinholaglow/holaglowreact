@@ -3,10 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Product } from '@interface/product';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgWhatsapp } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 
 export default function FloatingBottomBar({
   product,
@@ -20,6 +23,7 @@ export default function FloatingBottomBar({
   const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);
+  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   let url =
     'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20y%20vuestros%20tratamientos';
@@ -45,6 +49,12 @@ export default function FloatingBottomBar({
     window.addEventListener('scroll', handleScroll, { passive: true });
   }, []);
 
+  useEffect(() => {
+    if (product && !isEmpty(product.discounts)) {
+      setDiscountedPrice(getDiscountedPrice(product));
+    }
+  }, [product]);
+
   return (
     <div
       className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none ${
@@ -61,13 +71,18 @@ export default function FloatingBottomBar({
               className="mr-4 pointer-events-auto w-full"
               href={product ? '#prices' : ROUTES.checkout.clinics}
               onClick={() => (!product ? setSelectedTreatments([]) : null)}
-              customStyles="px-4"
+              customStyles="px-2"
             >
               {product ? (
                 <div className="w-full">
-                  <span className="inline-block">Reservar cita desde</span>{' '}
-                  <span className="inline-block underline text-xl font-semibold">
-                    {product.price} €
+                  <span className="inline-block mr-1">Reserva desde</span>
+                  {discountedPrice && (
+                    <span className="inline-block line-through font-normal mr-1">
+                      {product.price} €
+                    </span>
+                  )}
+                  <span className="font-semibold text-lg">
+                    {discountedPrice ? discountedPrice : product.price} €
                   </span>
                 </div>
               ) : (

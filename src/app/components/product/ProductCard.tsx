@@ -1,7 +1,12 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import { getProductCardColor, useImageProps } from 'app/utils/common';
+import {
+  getDiscountedPrice,
+  getProductCardColor,
+  useImageProps,
+} from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -25,6 +30,8 @@ export default function ProductCard({
   [key: string]: any;
 }) {
   const pathName = usePathname();
+  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
+  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
@@ -32,7 +39,11 @@ export default function ProductCard({
 
   const isLanding = Object.keys(LANDINGS).includes(usePathname());
 
-  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
+  useEffect(() => {
+    if (!isEmpty(product.discounts)) {
+      setDiscountedPrice(getDiscountedPrice(product));
+    }
+  }, [product]);
 
   return (
     <Link
@@ -82,7 +93,7 @@ export default function ProductCard({
               </Flex>
             )}
 
-            {product.isPack && (
+            {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
               <Flex
                 layout="row-center"
                 className="bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
@@ -109,24 +120,25 @@ export default function ProductCard({
           </Text>
 
           <Flex className="mt-auto justify-between w-full">
-            <div className="mr-4">
-              <Text className="text-xs line-through text-hg-black500">
-                355 €
-              </Text>
-              <Text className=" text-hg-secondary font-semibold text-lg">
-                {product.price} €{' '}
-                <span className="text-xs font-normal">¡Descuento BF!</span>
-              </Text>
-            </div>
             <Button
               type="tertiary"
               className="mt-auto"
               bgColor="bg-hg-primary"
-              customStyles="hover:bg-hg-secondary100 px-0 w-[40px] shrink-0"
+              customStyles="hover:bg-hg-secondary100"
             >
-              {/* <p className="mr-2">Saber más</p> */}
-              <SvgArrow height={20} width={20} className="rotate-45" />
+              <p className="mr-2">Saber más</p>
+              <SvgArrow height={20} width={20} />
             </Button>
+            <div className="ml-4">
+              {discountedPrice && (
+                <Text className="text-xs line-through text-hg-black500">
+                  {product.price} €
+                </Text>
+              )}
+              <Text className=" text-hg-secondary font-semibold text-lg">
+                {discountedPrice ? discountedPrice : product.price} €{' '}
+              </Text>
+            </div>
           </Flex>
         </Flex>
       </div>

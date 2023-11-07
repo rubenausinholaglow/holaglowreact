@@ -68,7 +68,7 @@ export default function Html({ children }: { children: ReactNode }) {
     setStateProducts,
     clinics,
     setClinics,
-    promos,
+    promo,
     setPromos,
     analyticsMetrics,
     setAnalyticsMetrics,
@@ -103,16 +103,15 @@ export default function Html({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     async function initPromos() {
-      const promos = await fetchPromos();
-      setPromos(promos);
+      const promo = await fetchPromos();
+
+      setPromos(promo);
     }
 
-    if (isEmpty(promos)) {
-      console.log('initPromos');
-
+    if (isEmpty(promo)) {
       initPromos();
     }
-  }, [promos]);
+  }, [promo]);
 
   return (
     <body

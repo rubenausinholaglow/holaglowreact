@@ -19,7 +19,7 @@ type DeviceSize = {
 interface GlobalPersistStore {
   stateProducts: Product[];
   clinics: Clinic[];
-  promos: Promo[];
+  promo: Promo;
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
@@ -35,7 +35,7 @@ interface GlobalPersistStore {
 interface GlobalPersistActions {
   setStateProducts: (value: Product[]) => void;
   setClinics: (value: Clinic[]) => void;
-  setPromos: (value: Promo[]) => void;
+  setPromos: (value: Promo) => void;
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
@@ -53,7 +53,7 @@ export const useGlobalPersistedStore = create(
     set => ({
       stateProducts: [],
       clinics: [],
-      promos: [],
+      promo: {},
       deviceSize: {
         isMobile: true,
         isTablet: false,
@@ -86,8 +86,8 @@ export const useGlobalPersistedStore = create(
       setClinics: (value: Clinic[]) => {
         set({ clinics: value });
       },
-      setPromos: (value: Promo[]) => {
-        set({ promos: value });
+      setPromos: (value: Promo) => {
+        set({ promo: value });
       },
       setIsMobile: value => {
         set({ isMobile: value });

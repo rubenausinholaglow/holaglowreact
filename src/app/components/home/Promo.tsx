@@ -55,11 +55,15 @@ function BlackFriday() {
 }
 
 export default function HomePromo() {
-  useEffect(() => {}, []);
+  const { promo } = useGlobalPersistedStore(state => state);
 
-  return (
-    <Container className="px-0 pt-8 md:pt-12">
-      Aquí hauria d'haver-hi al promo de black friday
-    </Container>
-  );
+  useEffect(() => {
+    console.log(promo);
+  }, [promo]);
+
+  if (promo.title === 'Black Friday') {
+    return <BlackFriday />;
+  }
+
+  return <></>;
 }

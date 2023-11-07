@@ -56,12 +56,12 @@ export async function fetchClinics() {
 
 export async function fetchPromos() {
   try {
-    const promos: Promo[] = await promoService.getPromos();
+    const promo: Promo = await promoService.getPromos();
 
-    return promos;
+    return promo;
   } catch (error: any) {
     Bugsnag.notify('Error fetching promos:', error);
   }
 
-  return [] as Promo[];
+  return {} as Promo;
 }

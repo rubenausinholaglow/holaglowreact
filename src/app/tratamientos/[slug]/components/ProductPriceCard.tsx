@@ -3,6 +3,7 @@ import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import {
   Accordion,
@@ -13,7 +14,13 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
+import {
+  SvgAdd,
+  SvgArrow,
+  SvgGlow,
+  SvgInjection,
+  SvgMinus,
+} from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
@@ -360,6 +367,15 @@ export default function ProductPriceCard({
 }) {
   const { deviceSize } = useGlobalPersistedStore(state => state);
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
+  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
+
+  console.log(product.title, product);
+
+  useEffect(() => {
+    if (product && !isEmpty(product.discounts)) {
+      setDiscountedPrice(getDiscountedPrice(product));
+    }
+  }, [product]);
 
   return (
     <Flex
@@ -373,21 +389,41 @@ export default function ProductPriceCard({
         >
           <Flex layout="col-left" className="p-3">
             <Flex layout="row-between" className="w-full">
-              <Text
-                size="xl"
-                className="text-hg-secondary font-semibold md:text-2xl"
-              >
-                {product.price} €
+              <Text>
+                {discountedPrice && (
+                  <span className="inline-block line-through font-normal mr-1">
+                    {product.price} €
+                  </span>
+                )}
+                <span className="text-xl text-hg-secondary font-semibold md:text-2xl">
+                  {discountedPrice ? discountedPrice : product.price} €
+                </span>
               </Text>
               <Flex layout="row-right">
-                {product.isPack && (
-                  <Text
-                    size="xs"
-                    className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
-                  >
-                    Oferta especial
-                  </Text>
-                )}
+                {product.isPack &&
+                  (!isEmpty(product.tags) &&
+                  product.tags[0].tag === 'B.Friday' ? (
+                    <Text
+                      size="xs"
+                      className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                    >
+                      Oferta especial
+                    </Text>
+                  ) : (
+                    <Flex
+                      layout="row-center"
+                      className="bg-hg-black rounded-full p-1 px-2"
+                    >
+                      <SvgGlow
+                        height={12}
+                        width={12}
+                        className="text-hg-primary mr-1"
+                      />
+                      <Text className="text-hg-secondary" size="xs">
+                        B.<span className="text-hg-primary">Friday</span>
+                      </Text>
+                    </Flex>
+                  ))}
 
                 {deviceSize.isMobile && (
                   <>
