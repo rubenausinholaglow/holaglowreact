@@ -111,12 +111,14 @@ export default function ProductInfo({ product }: { product: Product }) {
           </Button>
         </Container>
         <div className="md:w-2/5 shrink-0">
-          <iframe
-            width="420"
-            height="315"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            src={`${'/videos/pdp3.mp4'}`}
             className="w-full h-full block bg-black object-center md:rounded-xl"
-            src="https://www.youtube.com/embed/Suj8Q0zGNNg?autoplay=1&mute=1&loop=1&controls=0"
-          ></iframe>
+          />
         </div>
       </div>
     </Container>
