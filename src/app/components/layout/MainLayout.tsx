@@ -1,7 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
+import BugsnagPerformance from '@bugsnag/browser-performance';
+import Bugsnag from '@bugsnag/js';
+import BugsnagPluginReact from '@bugsnag/plugin-react';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
 import {
@@ -53,6 +56,10 @@ export default function MainLayout({
     setIsModalOpen(false);
     setIsMainScrollEnabled(true);
     setISHydrated(true);
+    Bugsnag.start({
+      apiKey: 'bd4b9a1e96dd2a5c39cbf8d487763afc',
+      plugins: [new BugsnagPluginReact()],
+    });
   }, []);
 
   const mainLayoutTopPadding = () => {
