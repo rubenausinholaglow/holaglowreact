@@ -40,7 +40,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
         >
           import BugsnagPerformance from
-          '//d2wy8f7a9ursnm.cloudfront.net/v1.2.0/bugsnag-performance.min.js'
+          &apos;//d2wy8f7a9ursnm.cloudfront.net/v1.2.0/bugsnag-performance.min.js&apos;
         </Script>
 
         <Script
