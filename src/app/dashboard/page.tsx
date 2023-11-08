@@ -30,7 +30,6 @@ export default function Page({
   const router = useRouter();
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);

@@ -1,5 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
+import Notification from '@components/ui/Notification';
 import { Budget, BudgetProduct } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
@@ -18,7 +20,9 @@ export default function PaymentRemoteControl() {
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const [finalBudget, setFinalBudget] = useState<Budget | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const [messageNotification, setMessageNotification] = useState<string | ''>(
+    ''
+  );
   useEffect(() => {
     const fetchData = async () => {
       await loadBudget();
@@ -43,11 +47,11 @@ export default function PaymentRemoteControl() {
             processBudget(budget);
           }
         } else {
-          // ERROR
+          setMessageNotification('Error cargando el presupuesto');
         }
       })
       .catch(error => {
-        // ERROR
+        Bugsnag.notify(error);
       });
   }
 
@@ -114,6 +118,7 @@ export default function PaymentRemoteControl() {
           <PaymentModule></PaymentModule>
         )}
       </Flex>
+      {messageNotification ?? <Notification message={messageNotification} />}
     </MainLayout>
   );
 }
