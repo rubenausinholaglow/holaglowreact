@@ -54,11 +54,7 @@ export default function LandingCaptacion() {
       setSelectedTreatments([productDetails]);
     }
 
-    initProduct(
-      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID
-        ? process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID
-        : ''
-    );
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
     analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
     analyticsMetrics.externalReference = 'Landing';
     analyticsMetrics.utmAdgroup = '';

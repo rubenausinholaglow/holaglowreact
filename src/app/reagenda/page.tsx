@@ -106,15 +106,6 @@ export default function Page({
       id: '',
       phone: '',
       clinicToken: token,
-      address: '',
-      birthday: '',
-      city: '',
-      country: '',
-      dni: '',
-      lastName: '',
-      postalCode: '',
-      province: '',
-      secondLastName: '',
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];

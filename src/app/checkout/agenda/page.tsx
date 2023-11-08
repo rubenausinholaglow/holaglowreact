@@ -46,10 +46,48 @@ export default function Agenda() {
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
-  const [dateFromatted, setDateFormatted] = useState('');
+  const [maxDay, setMaxDay] = useState(dayjs());
+  const [dateFormatted, setDateFormatted] = useState('');
+  const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  const maxDays = 10;
+  let maxDays = 10;
+  if (
+    selectedTreatments &&
+    selectedTreatments[0] &&
+    (selectedTreatments[0].type == 2 || selectedTreatments[0].type == 1)
+  )
+    maxDays = 15;
+  const maxDaysByClinicAndType: any = {
+    '1': {
+      //Madrid
+      '0': 7,
+    },
+    '4': {
+      //Barcelona
+      '1': 20,
+      '2': 20,
+    },
+    '5': {
+      //Valencia
+      '1': 15,
+      '2': 15,
+      '0': 10,
+    },
+  };
+  if (
+    selectedClinic &&
+    selectedTreatments &&
+    selectedTreatments[0] &&
+    maxDaysByClinicAndType &&
+    maxDaysByClinicAndType[selectedClinic.flowwwId] &&
+    maxDaysByClinicAndType[selectedClinic.flowwwId][selectedTreatments[0].type]
+  ) {
+    maxDays =
+      maxDaysByClinicAndType[selectedClinic.flowwwId][
+        selectedTreatments[0].type
+      ];
+  }
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -60,32 +98,19 @@ export default function Agenda() {
   };
 
   function loadMonth() {
-    if (
-      selectedTreatmentsIds &&
-      (availableDates.length < maxDays ||
-        selectedTreatmentsIds.indexOf(
-          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
-            ? process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
-            : ''
-        ) == -1)
-    ) {
+    if (selectedTreatmentsIds && availableDates.length < maxDays) {
       setLoadingMonth(true);
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
-        selectedClinic?.flowwwId ? selectedClinic.flowwwId : ''
+        selectedClinic!.flowwwId
       ).then(data => {
         const availability = availableDates ?? [];
         const today = dayjs();
         data.forEach((x: any) => {
           const date = dayjs(x.date);
           if (
-            (availability.length < maxDays ||
-              selectedTreatmentsIds.indexOf(
-                process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
-                  ? process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_FLOWWWID
-                  : ''
-              ) == -1) &&
+            availability.length < maxDays &&
             (date.isAfter(today) || date.isSame(today, 'day')) &&
             x.availability
           ) {
@@ -94,19 +119,22 @@ export default function Agenda() {
         });
         setAvailableDates(availability);
         if (!selectedDay) {
-          setSelectedDay(dayjs());
-          selectDate(new Date());
+          setSelectedDay(dayjs(availability[0].date));
         } else {
           setSelectedDay(selectedDay);
         }
         setLoadingMonth(false);
+        if (availability.length == maxDays)
+          setMaxDay(dayjs(availability[availability.length - 1].date));
+        else {
+          setDateToCheck(dateToCheck.add(1, 'month'));
+        }
       });
     }
   }
 
   useEffect(() => {
-    setSelectedDay(dayjs(new Date()));
-    selectDate(new Date());
+    setSelectedDay(dayjs());
     setSelectedSlot(undefined);
     setEnableScheduler(true);
   }, []);
@@ -114,27 +142,22 @@ export default function Agenda() {
   useEffect(() => {
     async function schedule() {
       if (user?.flowwwToken && previousAppointment) {
-        let ids = selectedTreatments?.map(x => x.flowwwId).join(', ');
-
-        if (selectedPacksTreatments && selectedPacksTreatments.length >= 2) {
-          ids = selectedPacksTreatments
+        let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+        if (selectedPacksTreatments && selectedPacksTreatments.length) {
+          ids = selectedPacksTreatments!
             .slice(0, 2)
             .map(x => x.flowwwId)
             .join(',');
-        } else {
-          ids = '';
         }
-
-        const treatments = selectedTreatments?.map(x => x.title).join(', ');
+        const treatments = selectedTreatments!.map(x => x.title).join(', ');
         const comment = 'Tratamiento visto en web: ' + treatments;
-
         await ScheduleService.reschedule({
           next: {
-            box: selectedSlot?.box,
-            endTime: selectedDay?.format(format) + ' ' + selectedSlot?.endTime,
+            box: selectedSlot!.box,
+            endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
             id: '0',
             startTime:
-              selectedDay?.format(format) + ' ' + selectedSlot?.startTime,
+              selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
             treatment: ids,
             clientId: user?.flowwwToken,
             comment: comment,
@@ -168,7 +191,7 @@ export default function Agenda() {
       }
     }
 
-    if (selectedSlot && enableScheduler) {
+    if (selectedSlot && enableScheduler && !loadingDays && !loadingMonth) {
       schedule();
     }
   }, [selectedSlot]);
@@ -176,21 +199,25 @@ export default function Agenda() {
   useEffect(() => {
     if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
       setSelectedTreatmentsIds(
-        selectedPacksTreatments
+        selectedPacksTreatments!
           .slice(0, 2)
           .map(x => x.flowwwId)
           .join(',')
       );
     } else if (selectedTreatments && selectedTreatments.length > 0) {
       setSelectedTreatmentsIds(
-        selectedTreatments?.map(x => x.flowwwId).join(',')
+        selectedTreatments!.map(x => x.flowwwId).join(',')
       );
     } else setSelectedTreatmentsIds('674');
   }, [dateToCheck]);
 
   useEffect(() => {
+    selectDate(dayjs(selectedDay).toDate());
+    setLocalDateSelected(dayjs(selectedDay).toDate());
+  }, [selectedTreatmentsIds]);
+
+  useEffect(() => {
     loadMonth();
-    selectDate(dateToCheck.toDate());
   }, [selectedTreatmentsIds, dateToCheck]);
 
   const onMonthChange = (x: any) => {
@@ -204,13 +231,14 @@ export default function Agenda() {
 
   const selectDate = (x: Date) => {
     if (!selectedTreatmentsIds) return;
+    setSelectedDay(dayjs(x));
+    setLocalDateSelected(x);
     setLoadingDays(true);
     setMorningHours([]);
     setAfternoonHours([]);
     const day = dayjs(x);
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
-    setSelectedDay(day);
     ScheduleService.getSlots(
       day.format(format),
       selectedTreatmentsIds,
@@ -346,11 +374,15 @@ export default function Agenda() {
                   onChange={selectDate}
                   filterDate={filterDate}
                   onMonthChange={onMonthChange}
+                  maxDate={maxDay.toDate()}
+                  minDate={new Date()}
                   useWeekdaysShort
                   calendarStartDay={1}
                   locale="es"
                   className="w-full"
                   fixedHeight
+                  selected={localDateSelected}
+                  disabledKeyboardNavigation
                   calendarClassName={`${loadingMonth ? 'loading' : ''}`}
                 ></DatePicker>
               </Flex>
@@ -371,7 +403,7 @@ export default function Agenda() {
                     >
                       Selecciona hora para el{' '}
                       <span className="font-semibold">
-                        {dateFromatted.toString()}
+                        {dateFormatted.toString()}
                       </span>
                     </Text>
                     {morningHours.length > 0 && (

@@ -68,8 +68,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       utmSource: '',
       utmTerm: '',
       treatmentText: '',
-      interestedTreatment: '',
-      treatmentPrice: 0,
+      externalReference: '',
     },
     interestedTreatment: '',
     treatmentPrice: 0,
@@ -173,7 +172,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     formDatacopy.interestedTreatment = analyticsMetrics.treatmentText;
     if (analyticsMetrics.externalReference)
       formDatacopy.externalReference = analyticsMetrics.externalReference;
-
     const user = await UserService.registerUser(formDatacopy);
     if (user) {
       user.flowwwToken = user.clinicToken;
@@ -204,11 +202,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
         placeholder="Nombre"
         value={formData.name}
         onChange={event => handleFieldChange(event, 'name')}
+        hasNoValidation
       />
       <TextInputField
         placeholder="Apellidos"
         value={formData.surname}
         onChange={event => handleFieldChange(event, 'surname')}
+        hasNoValidation
       />
       <TextInputField
         placeholder="Correo electrónico"

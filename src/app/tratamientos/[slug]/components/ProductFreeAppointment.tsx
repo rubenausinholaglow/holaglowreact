@@ -22,11 +22,7 @@ export default function ProductPaymentOptions() {
       setProduct(productDetails);
     }
 
-    initProduct(
-      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID
-        ? process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID
-        : 'undefined'
-    );
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
   }, []);
 
   const imgUrl = deviceSize.isMobile
