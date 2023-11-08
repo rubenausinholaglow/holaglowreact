@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import CategoryIcon from 'app/components/common/CategoryIcon';
 import MainLayout from 'app/components/layout/MainLayout';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import {
   Accordion,
@@ -21,9 +24,8 @@ import { fetchProduct } from 'utils/fetch';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
-  const { stateProducts, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import {
@@ -151,8 +154,10 @@ function ProductPriceItemsCard({
   setAccordionOverflow: (value: string) => void;
   isOpen?: boolean;
 }) {
-  const { setSelectedTreatments, setSelectedPackTreatments, stateProducts } =
-    useGlobalPersistedStore(state => state);
+  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments, setSelectedPackTreatments } = useSessionStore(
+    state => state
+  );
 
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(isOpen);
@@ -362,7 +367,7 @@ export default function ProductPriceCard({
   fullWidthPack?: boolean;
   className?: string;
 }) {
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 

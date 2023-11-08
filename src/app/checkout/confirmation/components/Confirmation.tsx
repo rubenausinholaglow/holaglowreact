@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
+import { AnalyticsMetrics } from '@interface/client';
 import DynamicIcon from 'app/components/common/DynamicIcon';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -18,17 +22,17 @@ export default function Confirmation({
 }: {
   appointment?: Appointment;
 }) {
-  const { selectedPacksTreatments, clinics } = useGlobalPersistedStore(
-    state => state
-  );
+  const { clinics } = useGlobalPersistedStore(state => state);
 
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const {
     selectedTreatments,
     selectedSlot,
     selectedDay,
     selectedClinic,
-    setCurrentUser,
-  } = useGlobalPersistedStore(state => state);
+    selectedPacksTreatments,
+    setAnalyticsMetrics,
+  } = useSessionStore(state => state);
 
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
@@ -51,6 +55,19 @@ export default function Confirmation({
 
   useEffect(() => {
     setCurrentUser(undefined);
+    const metrics: AnalyticsMetrics = {
+      device: 0,
+      locPhysicalMs: '',
+      utmAdgroup: '',
+      utmCampaign: '',
+      utmContent: '',
+      utmMedium: '',
+      utmSource: '',
+      utmTerm: '',
+      treatmentText: '',
+      externalReference: '',
+    };
+    setAnalyticsMetrics(metrics);
   }, []);
 
   useEffect(() => {

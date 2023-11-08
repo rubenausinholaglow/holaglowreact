@@ -12,7 +12,10 @@ import * as errorsConfig from '@utils/textConstants';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -34,6 +37,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
 
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const {
     selectedTreatments,
     selectedSlot,
@@ -41,8 +45,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     selectedClinic,
     selectedPacksTreatments,
     analyticsMetrics,
-    setCurrentUser,
-  } = useGlobalPersistedStore(state => state);
+  } = useSessionStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',

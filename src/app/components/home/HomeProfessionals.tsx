@@ -1,6 +1,6 @@
 'use client';
 
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
 
 export default function Profesionals() {
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
 
   return (
     <div className="bg-hg-skyblue/20 overflow-hidden">

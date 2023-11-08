@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
-import { useGlobalStore } from 'app/stores/globalStore';
+import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
@@ -38,6 +38,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
+  const { deviceSize } = useSessionStore(state => state);
   const { setIsModalOpen, setIsMainScrollEnabled } = useGlobalStore(
     state => state
   );

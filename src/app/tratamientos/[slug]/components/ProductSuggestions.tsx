@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function ProductSuggestions({ product }: { product: Product }) {
-  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+  const deviceSize = useSessionStore(state => state.deviceSize);
   const visibleSuggestions = () => {
     if (deviceSize.isMobile) {
       return 1;

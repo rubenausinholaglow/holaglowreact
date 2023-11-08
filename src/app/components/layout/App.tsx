@@ -5,6 +5,7 @@ import { poppins } from 'app/fonts';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
+  useSessionStore,
 } from 'app/stores/globalStore';
 import { ModalBackground } from 'designSystem/Modals/Modal';
 import { isEmpty } from 'lodash';
@@ -63,16 +64,15 @@ export default function Html({ children }: { children: ReactNode }) {
   } = useGlobalStore(state => state);
 
   const {
-    setDeviceSize,
     stateProducts,
     setStateProducts,
     clinics,
     setClinics,
     promo,
     setPromos,
-    analyticsMetrics,
-    setAnalyticsMetrics,
   } = useGlobalPersistedStore(state => state);
+  const { setDeviceSize, analyticsMetrics, setAnalyticsMetrics } =
+    useSessionStore(state => state);
 
   useEffect(() => {
     setDeviceSize(DeviceSize());

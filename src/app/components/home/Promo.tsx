@@ -1,6 +1,9 @@
 'use client';
 
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -9,7 +12,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 function BlackFriday() {
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
   const router = useRouter();
 
   return (
