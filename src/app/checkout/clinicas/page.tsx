@@ -128,37 +128,19 @@ export default function ClinicsCheckout() {
                         width={24}
                       />
                     </Flex>
-                    <Flex className="w-full justify-between items-end">
-                      <div>
-                        {discountedPrice && discountedPrice.length > 0 && (
-                          <Text className="line-through text-hg-black500">
-                            {product.price} €
-                          </Text>
-                        )}
-                        <Text className=" text-hg-secondary font-semibold text-2xl">
-                          {discountedPrice && discountedPrice.length > 0
-                            ? discountedPrice[index]
-                            : product.price}{' '}
-                          €
+                    <div>
+                      {discountedPrice && discountedPrice.length > 0 && (
+                        <Text className="line-through text-hg-black500">
+                          {product.price} €
                         </Text>
-                      </div>
-                      {!isEmpty(selectedTreatments[0].tags) &&
-                        selectedTreatments[0].tags[0].tag === 'B.Friday' && (
-                          <Flex
-                            layout="row-center"
-                            className="bg-hg-black rounded-full p-1 px-2"
-                          >
-                            <SvgGlow
-                              height={12}
-                              width={12}
-                              className="text-hg-primary mr-1"
-                            />
-                            <Text className="text-hg-secondary" size="xs">
-                              B.<span className="text-hg-primary">Friday</span>
-                            </Text>
-                          </Flex>
-                        )}
-                    </Flex>
+                      )}
+                      <Text className=" text-hg-secondary font-semibold text-2xl">
+                        {discountedPrice && discountedPrice.length > 0
+                          ? discountedPrice[index]
+                          : product.price}{' '}
+                        €
+                      </Text>
+                    </div>
                   </Flex>
                 ))}
             </Flex>
