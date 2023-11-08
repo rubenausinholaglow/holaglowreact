@@ -282,14 +282,12 @@ export default function PaymentInput(props: Props) {
                 placeholder="Nombre"
                 value={formData.firstName}
                 onChange={event => handleFormFieldChange(event, 'name')}
-                inputStyles="h-12 rounded-xl"
               />
               <TextInputField
                 label="Apellidos"
                 placeholder="Apellidos"
                 value={formData.lastName}
                 onChange={event => handleFormFieldChange(event, 'surnames')}
-                inputStyles="h-12 rounded-xl"
               />
             </Flex>
             <Flex className="gap-4">
@@ -298,14 +296,12 @@ export default function PaymentInput(props: Props) {
                 placeholder="Email"
                 value={formData.email}
                 onChange={event => handleFormFieldChange(event, 'email')}
-                inputStyles="h-12 rounded-xl"
               />
               <TextInputField
                 label="Teléfono"
                 placeholder="Teléfono"
                 value={formData.phone}
                 onChange={event => handleFormFieldChange(event, 'phone')}
-                inputStyles="h-12 rounded-xl"
               />
             </Flex>
 
@@ -358,7 +354,6 @@ export default function PaymentInput(props: Props) {
                 placeholder="DNI"
                 value={formData.dni}
                 onChange={event => handleFormFieldChange(event, 'dni')}
-                inputStyles="h-12 rounded-xl"
               />
             </Flex>
 
@@ -368,14 +363,12 @@ export default function PaymentInput(props: Props) {
                 placeholder="Dirección"
                 value={formData.address}
                 onChange={event => handleFormFieldChange(event, 'address')}
-                inputStyles="h-12 rounded-xl"
               />
               <TextInputField
                 label="Código Postal"
                 placeholder="Código Postal"
                 value={formData.postalCode}
                 onChange={event => handleFormFieldChange(event, 'postalCode')}
-                inputStyles="h-12 rounded-xl"
               />
             </Flex>
 
@@ -385,14 +378,12 @@ export default function PaymentInput(props: Props) {
                 placeholder="Provincia"
                 value={formData.province}
                 onChange={event => handleFormFieldChange(event, 'province')}
-                inputStyles="h-12 rounded-xl"
               />
               <TextInputField
                 label="Ciudad"
                 placeholder="Ciudad"
                 value={formData.city}
                 onChange={event => handleFormFieldChange(event, 'city')}
-                inputStyles="h-12 rounded-xl"
               />
             </Flex>
 
