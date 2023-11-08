@@ -305,12 +305,9 @@ export const PaymentModule = () => {
           Faltan: {missingAmountFormatted}€
         </Text>
       </Flex>
-      {!remoteControl ?? (
-        <Button size="lg" className="w-full mt-4" onClick={createTicket}>
-          {' '}
-          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
-        </Button>
-      )}
+      <Button size="lg" className="w-full mt-4" onClick={createTicket}>
+        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
+      </Button>
       {messageNotification ? (
         <Notification message={messageNotification} />
       ) : (
