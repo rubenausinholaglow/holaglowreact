@@ -69,6 +69,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
       utmTerm: '',
       treatmentText: '',
       externalReference: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
     },
     interestedTreatment: '',
     treatmentPrice: 0,

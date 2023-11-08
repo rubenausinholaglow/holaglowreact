@@ -66,6 +66,8 @@ export default function Confirmation({
       utmTerm: '',
       treatmentText: '',
       externalReference: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
   }, []);

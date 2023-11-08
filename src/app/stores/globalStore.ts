@@ -45,6 +45,7 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   user?: User;
   promo: Promo | undefined;
+  remoteControl: boolean;
 }
 
 interface GlobalPersistActions {
@@ -52,6 +53,7 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
+  setRemoteControl: (remoteControl: boolean) => void;
 }
 
 export const useSessionStore = create(
@@ -68,6 +70,8 @@ export const useSessionStore = create(
         utmTerm: '',
         treatmentText: '',
         externalReference: '',
+        interestedTreatment: '',
+        treatmentPrice: 0,
       },
       deviceSize: {
         isMobile: true,
@@ -75,13 +79,13 @@ export const useSessionStore = create(
         isDesktop: false,
         isWideScreen: false,
       },
-      isMobile: true,
       selectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
       selectedDay: dayjs(),
       selectedSlot: undefined,
       previousAppointment: undefined,
+      isMobile: true,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -136,6 +140,10 @@ export const useGlobalPersistedStore = create(
       },
       setPromos: (value: Promo) => {
         set({ promo: value });
+      },
+      remoteControl: false,
+      setRemoteControl: value => {
+        set({ remoteControl: value });
       },
     }),
     {
