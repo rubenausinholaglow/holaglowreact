@@ -338,6 +338,7 @@ function ProductPriceItemsCard({
           onClick={() => {
             setSelectedTreatment(product);
           }}
+          customStyles="bg-hg-primary hover:bg-hg-secondary100"
           className="mt-8"
         >
           Reservar cita

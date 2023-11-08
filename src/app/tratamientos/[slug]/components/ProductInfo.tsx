@@ -116,7 +116,9 @@ export default function ProductInfo({ product }: { product: Product }) {
             className="hidden md:block md:mt-auto"
             href="#prices"
           >
-            <span className="inline-block mr-1">Reserva cita desde</span>
+            <span className="inline-block mr-1">
+              Reserva cita {product.isPack ? '' : 'desde'}
+            </span>
             {discountedPrice && (
               <span className="inline-block line-through font-normal mr-1">
                 {product.price} €

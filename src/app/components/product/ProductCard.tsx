@@ -135,6 +135,9 @@ export default function ProductCard({
                   {product.price} €
                 </Text>
               )}
+              {!discountedPrice && !product.isPack && (
+                <Text className="text-xs text-hg-secondary">desde</Text>
+              )}
               <Text className=" text-hg-secondary font-semibold text-lg">
                 {discountedPrice ? discountedPrice : product.price} €{' '}
               </Text>
