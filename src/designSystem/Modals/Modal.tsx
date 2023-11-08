@@ -130,10 +130,11 @@ export const SwipeModal = ({
     if (modalRef.current) {
       if (isOpen) {
         console.log('translatey0');
-        modalRef.current.style.transform = 'translateY(0)';
+        (modalRef.current as HTMLDivElement).style.transform = 'translateY(0)';
       } else {
         console.log('translatey100');
-        modalRef.current.style.transform = 'translateY(105%)';
+        (modalRef.current as HTMLDivElement).style.transform =
+          'translateY(105%)';
       }
     }
   }, [isOpen]);
@@ -152,7 +153,9 @@ export const SwipeModal = ({
 
     if (modalRef.current) {
       if (deltaY > 0) {
-        modalRef.current.style.transform = `translateY(${deltaY}px)`;
+        (
+          modalRef.current as HTMLDivElement
+        ).style.transform = `translateY(${deltaY}px)`;
       }
     }
 
@@ -164,9 +167,8 @@ export const SwipeModal = ({
 
   const handleTouchEnd = (e: any) => {
     setIsDragging(false);
-    console.log(deltaYScroll);
     if (deltaYScroll < 100 && modalRef.current) {
-      modalRef.current.style.transform = 'translateY(0)';
+      (modalRef.current as HTMLDivElement).style.transform = 'translateY(0)';
     }
   };
 
