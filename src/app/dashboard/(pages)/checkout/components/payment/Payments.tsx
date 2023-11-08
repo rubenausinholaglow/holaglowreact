@@ -11,6 +11,8 @@ import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import RemoteControl from 'app/dashboard/(pages)/remoteControl/page';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -43,6 +45,7 @@ export const PaymentModule = () => {
     Record<string, StatusPayment>
   >({});
   const messageSocket = useMessageSocket(state => state);
+  const { remoteControl } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
@@ -303,10 +306,12 @@ export const PaymentModule = () => {
           Faltan: {missingAmountFormatted}€
         </Text>
       </Flex>
-      <Button size="lg" className="w-full mt-4" onClick={createTicket}>
-        {' '}
-        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
-      </Button>
+      {!remoteControl ?? (
+        <Button size="lg" className="w-full mt-4" onClick={createTicket}>
+          {' '}
+          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
+        </Button>
+      )}
       {messageNotification ? (
         <Notification message={messageNotification} />
       ) : (
