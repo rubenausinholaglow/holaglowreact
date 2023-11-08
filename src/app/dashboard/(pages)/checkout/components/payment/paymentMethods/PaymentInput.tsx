@@ -4,7 +4,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { createPortal } from 'react-dom';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@components/TextInputField';
@@ -16,7 +15,6 @@ import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import UserService from '@services/UserService';
 import { applyDiscountToCart } from '@utils/utils';
-import HolaglowModal from 'app/components/common/Modal';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
@@ -24,11 +22,12 @@ import {
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 import { SvgClose, SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
+import { twMerge } from 'tailwind-merge';
 
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
@@ -311,36 +310,49 @@ export default function PaymentInput(props: Props) {
             </Flex>
 
             <Flex className="gap-4">
-              <DatePicker
-                selected={
-                  formData.birthday ? dayjs(formData.birthday).toDate() : null
-                }
-                onChange={date => {
-                  const formattedDate = date
-                    ? dayjs(date).format('YYYY-MM-DD')
-                    : '';
-                  setFormData(prevFormData => ({
-                    ...prevFormData,
-                    birthday: formattedDate,
-                  }));
-                }}
-                useWeekdaysShort
-                calendarStartDay={1}
-                locale="es"
-                className="w-full"
-                fixedHeight
-                customInput={
-                  <input
-                    placeholder={'Fecha nacimiento'}
-                    className={
-                      'border border-hg-black300 rounded-2xl px-4 py-2 w-full text-hg-black h-16 focus:outline-none h-12 rounded-xl'
-                    }
-                    type="text"
-                    value={formData.birthday || ''}
-                    onChange={() => {}}
-                  />
-                }
-              ></DatePicker>
+              <Flex className="flex-col">
+                <label className="text-gray-700 mb-2 w-full text-left">
+                  Fecha Nacimiento
+                </label>
+                <DatePicker
+                  selected={
+                    formData.birthday
+                      ? dayjs(formData.birthday).toDate()
+                      : new Date()
+                  }
+                  onChange={date => {
+                    const formattedDate = date
+                      ? dayjs(date).format('YYYY-MM-DD')
+                      : '';
+                    setFormData(prevFormData => ({
+                      ...prevFormData,
+                      birthday: formattedDate,
+                    }));
+                  }}
+                  useWeekdaysShort
+                  calendarStartDay={1}
+                  locale="es"
+                  className="w-full"
+                  fixedHeight
+                  customInput={
+                    <input
+                      placeholder={'Fecha nacimiento'}
+                      className={twMerge(
+                        `border border-hg-black300 rounded-2xl px-4 py-2 w-full text-hg-black h-12 focus:outline-none ${
+                          formData.birthday.length > 0 ? 'border-hg-black' : ''
+                        }
+                      
+                      `
+                      )}
+                      type="text"
+                      value={formData.birthday || ''}
+                      onChange={() => {}}
+                    />
+                  }
+                  showYearDropdown
+                  showMonthDropdown
+                ></DatePicker>
+              </Flex>
               <TextInputField
                 label="DNI"
                 placeholder="DNI"
