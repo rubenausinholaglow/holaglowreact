@@ -9,6 +9,7 @@ import GoToTreatments from './components/home/GoToTreatments';
 import Hero from './components/home/Hero';
 import Professionals from './components/home/HomeProfessionals';
 import Products from './components/home/Products';
+import HomePromo from './components/home/Promo';
 import Testimonials from './components/home/Testimonials';
 import ValuesCarousel from './components/home/ValuesCarousel';
 import ValuesDescription from './components/home/ValuesDescription';
@@ -36,6 +37,7 @@ export default function HomeBlocks() {
       <Hero />
       <GoogleStars />
       <ValuesCarousel />
+      <HomePromo />
       <ValuesDescription />
       <Products />
       <div id="professionals">

@@ -74,7 +74,6 @@ export default function PsrpPage({ slug }: { slug: string }) {
         productFilters.isPack = true;
       }
       setProductFilters(productFilters);
-      console.log(productFilters);
     }
   }, [slug]);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -8,10 +8,11 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
+import { SvgCar, SvgGlow, SvgRadioChecked } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
@@ -24,6 +25,8 @@ export default function ClinicsCheckout() {
     selectedPacksTreatments,
     selectedTreatments,
   } = useSessionStore(state => state);
+
+  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
 
   useEffect(() => {
     if (selectedClinic) {
@@ -41,7 +44,21 @@ export default function ClinicsCheckout() {
     );
   };
 
-  console.log(selectedTreatments);
+  useEffect(() => {
+    const discountedPrices: any = [];
+
+    if (selectedTreatments && !isEmpty(selectedTreatments)) {
+      selectedTreatments.map(product => {
+        const discountedPrice = getDiscountedPrice(product);
+
+        if (discountedPrice !== product.price) {
+          discountedPrices.push(discountedPrice);
+        }
+      });
+    }
+
+    setDiscountedPrice(discountedPrices);
+  }, [selectedTreatments]);
 
   return (
     <MainLayout isCheckout>
@@ -54,7 +71,7 @@ export default function ClinicsCheckout() {
               </Title>
 
               {Array.isArray(selectedTreatments) &&
-                selectedTreatments.map(product => (
+                selectedTreatments.map((product, index) => (
                   <Flex
                     layout="col-left"
                     className="w-full bg-hg-secondary100 p-3 gap-3 rounded-xl mb-12"
@@ -114,12 +131,19 @@ export default function ClinicsCheckout() {
                         width={24}
                       />
                     </Flex>
-                    <Text
-                      size="xl"
-                      className="text-hg-secondary font-semibold w-full text-right"
-                    >
-                      {product.price}€
-                    </Text>
+                    <div>
+                      {discountedPrice && discountedPrice.length > 0 && (
+                        <Text className="line-through text-hg-black500">
+                          {product.price} €
+                        </Text>
+                      )}
+                      <Text className=" text-hg-secondary font-semibold text-2xl">
+                        {discountedPrice && discountedPrice.length > 0
+                          ? discountedPrice[index]
+                          : product.price}{' '}
+                        €
+                      </Text>
+                    </div>
                   </Flex>
                 ))}
             </Flex>

@@ -75,8 +75,8 @@ export default function Header() {
 
       <header
         id="header"
-        className={`z-30 w-full bg-white fixed top-0 transition-transform ${
-          !isHeaderVisible ? '-translate-y-full' : ''
+        className={`z-30 w-full bg-white top-0 sticky transition-transform ${
+          !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
         }`}
       >
         <Container isHeader>
@@ -93,14 +93,11 @@ export default function Header() {
 
             <Navigation className="hidden lg:block 2xl:mr-20" />
 
-            <Flex
-              layout="row-center"
-              className="lg:absolute right-0  2xl:mr-20"
-            >
+            <Flex layout="row-center" className="lg:absolute right-0 2xl:mr-20">
               <Button
                 type="tertiary"
                 href={ROUTES.checkout.clinics}
-                className="hidden md:block mr-2"
+                className="hidden md:block"
                 onClick={() => {
                   setSelectedTreatments([]);
                 }}

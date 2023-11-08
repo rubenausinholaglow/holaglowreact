@@ -9,7 +9,7 @@ import {
 } from 'app/stores/globalStore';
 import { ModalBackground } from 'designSystem/Modals/Modal';
 import { isEmpty } from 'lodash';
-import { fetchClinics, fetchProducts } from 'utils/fetch';
+import { fetchClinics, fetchProducts, fetchPromos } from 'utils/fetch';
 
 import { Breakpoint, DeviceSize } from './Breakpoint';
 
@@ -63,8 +63,14 @@ export default function Html({ children }: { children: ReactNode }) {
     isMainScrollEnabled,
   } = useGlobalStore(state => state);
 
-  const { stateProducts, setStateProducts, clinics, setClinics } =
-    useGlobalPersistedStore(state => state);
+  const {
+    stateProducts,
+    setStateProducts,
+    clinics,
+    setClinics,
+    promo,
+    setPromos,
+  } = useGlobalPersistedStore(state => state);
   const { setDeviceSize, analyticsMetrics, setAnalyticsMetrics } =
     useSessionStore(state => state);
 
@@ -94,6 +100,18 @@ export default function Html({ children }: { children: ReactNode }) {
       initClinics();
     }
   }, [clinics]);
+
+  useEffect(() => {
+    async function initPromos() {
+      const promo = await fetchPromos();
+
+      setPromos(promo);
+    }
+
+    if (isEmpty(promo)) {
+      initPromos();
+    }
+  }, [promo]);
 
   return (
     <body

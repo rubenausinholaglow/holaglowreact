@@ -6,6 +6,7 @@ import { Slot } from '@interface/slot';
 import { INITIAL_FILTERS } from 'app/tratamientos/utils/filters';
 import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
+import { Promo } from 'types/promo';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -43,12 +44,14 @@ interface GlobalPersistStore {
   stateProducts: Product[];
   clinics: Clinic[];
   user?: User;
+  promo: Promo | undefined;
 }
 
 interface GlobalPersistActions {
   setStateProducts: (value: Product[]) => void;
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
+  setPromos: (value: Promo) => void;
 }
 
 export const useSessionStore = create(
@@ -118,6 +121,7 @@ export const useSessionStore = create(
 export const useGlobalPersistedStore = create(
   persist<GlobalPersistStore & GlobalPersistActions>(
     set => ({
+      promo: undefined,
       stateProducts: [],
       clinics: [],
       user: undefined,
@@ -129,6 +133,9 @@ export const useGlobalPersistedStore = create(
       },
       setCurrentUser: value => {
         set({ user: value });
+      },
+      setPromos: (value: Promo) => {
+        set({ promo: value });
       },
     }),
     {

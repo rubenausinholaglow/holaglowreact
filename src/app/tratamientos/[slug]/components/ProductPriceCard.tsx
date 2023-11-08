@@ -6,6 +6,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import {
   Accordion,
@@ -16,7 +17,13 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgAdd, SvgArrow, SvgInjection, SvgMinus } from 'icons/IconsDs';
+import {
+  SvgAdd,
+  SvgArrow,
+  SvgGlow,
+  SvgInjection,
+  SvgMinus,
+} from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
@@ -323,7 +330,7 @@ function ProductPriceItemsCard({
         <Button
           className="mt-8"
           type="tertiary"
-          customStyles="hover:bg-hg-secondary100"
+          customStyles="hover:bg-hg-secondary50"
           onClick={() => setShowDropdown(true)}
         >
           Personalizar
@@ -336,6 +343,7 @@ function ProductPriceItemsCard({
           onClick={() => {
             setSelectedTreatment(product);
           }}
+          customStyles="bg-hg-primary hover:bg-hg-secondary100"
           className="mt-8"
         >
           Reservar cita
@@ -361,6 +369,13 @@ export default function ProductPriceCard({
 }) {
   const { deviceSize } = useSessionStore(state => state);
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
+  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
+
+  useEffect(() => {
+    if (product && !isEmpty(product.discounts)) {
+      setDiscountedPrice(getDiscountedPrice(product));
+    }
+  }, [product]);
 
   return (
     <Flex
@@ -373,22 +388,42 @@ export default function ProductPriceCard({
           className={`${!deviceSize.isMobile ? 'pointer-events-none' : ''}`}
         >
           <Flex layout="col-left" className="p-3">
-            <Flex layout="row-between" className="w-full">
-              <Text
-                size="xl"
-                className="text-hg-secondary font-semibold md:text-2xl"
-              >
-                {product.price} €
-              </Text>
-              <Flex layout="row-right">
-                {product.isPack && (
-                  <Text
-                    size="xs"
-                    className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
-                  >
-                    Oferta especial
-                  </Text>
+            <Flex layout="row-between" className="w-full mb-2">
+              <Flex>
+                <span className="text-xl text-hg-secondary font-semibold md:text-2xl mr-2">
+                  {discountedPrice ? discountedPrice : product.price} €
+                </span>
+                {discountedPrice && (
+                  <span className="inline-block line-through font-normal text-hg-black500">
+                    {product.price} €
+                  </span>
                 )}
+              </Flex>
+              <Flex layout="row-right">
+                {product.isPack &&
+                  (!isEmpty(product.tags) &&
+                  product.tags[0].tag === 'B.Friday' ? (
+                    <Flex
+                      layout="row-center"
+                      className="bg-hg-black rounded-full p-1 px-2"
+                    >
+                      <SvgGlow
+                        height={12}
+                        width={12}
+                        className="text-hg-primary mr-1"
+                      />
+                      <Text className="text-hg-secondary" size="xs">
+                        B.<span className="text-hg-primary">Friday</span>
+                      </Text>
+                    </Flex>
+                  ) : (
+                    <Text
+                      size="xs"
+                      className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                    >
+                      Oferta especial
+                    </Text>
+                  ))}
 
                 {deviceSize.isMobile && (
                   <>
