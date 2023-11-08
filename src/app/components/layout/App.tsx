@@ -112,6 +112,10 @@ export default function Html({ children }: { children: ReactNode }) {
     }
   }, [promo]);
 
+  useEffect(() => {
+    setShowModalBackground(isModalOpen);
+  }, [isModalOpen]);
+
   return (
     <body
       className={`${poppins.className} min-h-screen ${
@@ -123,8 +127,8 @@ export default function Html({ children }: { children: ReactNode }) {
       <ModalBackground
         isVisible={showModalBackground}
         onClick={() => {
-          setShowModalBackground(false);
           setIsModalOpen(false);
+          setShowModalBackground(false);
         }}
       />
       <Breakpoint />
