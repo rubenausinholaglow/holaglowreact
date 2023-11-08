@@ -83,7 +83,6 @@ const AppointmentsListComponent: React.FC<{
     try {
       await ScheduleService.getClinicSchedule(flowwwToken).then(async data => {
         if (data != null) {
-          //localStorage.setItem('ClinicId', data.clinic.id);
           localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
           localStorage.setItem(
             'ClinicProfessionalId',
