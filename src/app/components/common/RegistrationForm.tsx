@@ -3,7 +3,7 @@
 import 'react-phone-input-2/lib/style.css';
 import 'app/checkout/contactform/phoneInputStyle.css';
 
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
