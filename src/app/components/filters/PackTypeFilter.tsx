@@ -1,6 +1,9 @@
 'use client';
 
-import { useGlobalStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { toggleIsPack } from 'app/tratamientos/utils/filters';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
@@ -13,6 +16,7 @@ export default function PackTypeFilter({
   className?: string;
   customStyles?: string;
 }) {
+  const { promo } = useGlobalPersistedStore(state => state);
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
   return (
@@ -20,18 +24,43 @@ export default function PackTypeFilter({
       className={className}
       type="tertiary"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
-      customStyles={twMerge(
-        `border-none group-hover:bg-hg-secondary100 ${
+      customStyles={twMerge(`
+        border-none group-hover:bg-hg-secondary100 ${
           customStyles ? customStyles : ''
-        } ${productFilters.isPack ? 'bg-hg-primary500' : ''}`
-      )}
+        } 
+        ${
+          promo && promo?.title === 'Black Friday'
+            ? `bg-hg-black group-hover:bg- hg-black`
+            : ''
+        }
+        ${productFilters.isPack ? 'bg-hg-primary500' : ''}
+      `)}
     >
       {productFilters.isPack ? (
-        <SvgCheckSquareActive className="mr-2" />
+        <SvgCheckSquareActive
+          className={`mr-2 ${
+            promo && promo?.title === 'Black Friday' ? 'text-hg-black' : ''
+          }`}
+        />
       ) : (
-        <SvgCheckSquare className="mr-2" />
+        <SvgCheckSquare
+          className={`mr-2 ${
+            promo && promo?.title === 'Black Friday' ? 'text-hg-primary' : ''
+          }`}
+        />
       )}
-      Sólo Packs Glow
+
+      {promo && promo?.title === 'Black Friday' ? (
+        <span
+          className={
+            productFilters.isPack ? 'text-hg-black' : 'text-hg-primary'
+          }
+        >
+          Sólo Packs <span className="text-hg-secondary">Black</span> Friday
+        </span>
+      ) : (
+        'Sólo Packs Glow'
+      )}
     </Button>
   );
 }

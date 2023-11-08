@@ -531,3 +531,16 @@ export const SvgUserScan = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const SvgGlow = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height={24}
+    width={24}
+    fill="currentColor"
+    viewBox="0 0 24 24"
+    {...props}
+  >
+    <path d="M0 11.8349C7.49948 14.4712 8.51573 15.859 6.48323 23.8968C11.2326 17.288 12.9955 17.1642 18.3837 24C15.3184 16.0292 16.0899 14.368 24 13.4342C16.4839 10.8495 16.0277 8.98194 19.4787 1.80567C13.3439 7.81083 11.6723 7.42906 7.69858 0C8.59869 8.00688 7.29623 9.20894 0 11.8349Z" />
+  </svg>
+);
