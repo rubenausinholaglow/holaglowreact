@@ -14,16 +14,14 @@ export default function RemoteControl({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const [flowwwToken, setFlowwwToken] = useState('');
-  const [messageNotification, setMessageNotification] = useState<string | null>(
-    null
-  );
   const [username, setUserName] = useState('');
 
   useEffect(() => {
-    setFlowwwToken('');
     localStorage.removeItem('BudgetId');
     const storedUsername = localStorage.getItem('username') || '';
+    const storedFlowwwtoken = localStorage.getItem('flowwwToken') || '';
     setUserName(storedUsername);
+    setFlowwwToken(storedFlowwwtoken);
   }, []);
 
   return (
@@ -47,11 +45,6 @@ export default function RemoteControl({
           ))}
         </div>
         <ValidateComment></ValidateComment>
-        {messageNotification ? (
-          <Notification message={messageNotification} />
-        ) : (
-          <></>
-        )}
       </Flex>
     </MainLayout>
   );
