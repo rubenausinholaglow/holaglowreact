@@ -7,7 +7,7 @@ import { INITIAL_FILTERS } from 'app/tratamientos/utils/filters';
 import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 type DeviceSize = {
   isMobile: boolean;
@@ -15,6 +15,14 @@ type DeviceSize = {
   isDesktop: boolean;
   isWideScreen: boolean;
 };
+
+interface SessionStore {
+  analyticsMetrics: AnalyticsMetrics;
+}
+interface SessionActions {
+  setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
+}
+
 interface GlobalPersistStore {
   stateProducts: Product[];
   clinics: Clinic[];
@@ -27,7 +35,6 @@ interface GlobalPersistStore {
   user?: User;
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
-  analyticsMetrics: AnalyticsMetrics;
 }
 
 interface GlobalPersistActions {
@@ -42,8 +49,34 @@ interface GlobalPersistActions {
   setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
-  setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
 }
+
+export const useSessionStore = create(
+  persist<SessionStore & SessionActions>(
+    set => ({
+      analyticsMetrics: {
+        device: 0,
+        locPhysicalMs: '',
+        utmAdgroup: '',
+        utmCampaign: '',
+        utmContent: '',
+        utmMedium: '',
+        utmSource: '',
+        utmTerm: '',
+        treatmentText: '',
+        externalReference: '',
+      },
+      setAnalyticsMetrics: value => {
+        set({ analyticsMetrics: value });
+      },
+    }),
+    {
+      name: 'session-storage',
+      version: 1,
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
 
 export const useGlobalPersistedStore = create(
   persist<GlobalPersistStore & GlobalPersistActions>(
@@ -64,18 +97,6 @@ export const useGlobalPersistedStore = create(
       selectedDay: dayjs(),
       selectedSlot: undefined,
       previousAppointment: undefined,
-      analyticsMetrics: {
-        device: 0,
-        locPhysicalMs: '',
-        utmAdgroup: '',
-        utmCampaign: '',
-        utmContent: '',
-        utmMedium: '',
-        utmSource: '',
-        utmTerm: '',
-        treatmentText: '',
-        externalReference: '',
-      },
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -108,9 +129,6 @@ export const useGlobalPersistedStore = create(
       },
       setPreviousAppointment: value => {
         set({ previousAppointment: value });
-      },
-      setAnalyticsMetrics: value => {
-        set({ analyticsMetrics: value });
       },
     }),
     {

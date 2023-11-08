@@ -8,7 +8,10 @@ import DatePicker from 'react-datepicker';
 import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -34,9 +37,9 @@ export default function Agenda() {
     selectedTreatments,
     selectedPacksTreatments,
     selectedClinic,
-    analyticsMetrics,
   } = useGlobalPersistedStore(state => state);
 
+  const { analyticsMetrics } = useSessionStore(state => state);
   const [enableScheduler, setEnableScheduler] = useState(false);
   const [dateToCheck, setDateToCheck] = useState(dayjs());
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
