@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -14,7 +14,7 @@ import ProductSessionGroupedPriceCard from './ProductSessionGroupedPriceCard';
 import ProductSessionPriceCard from './ProductSessionPriceCard';
 
 export default function ProductPrices({ product }: { product: Product }) {
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
   const [productItems, setProductITems] = useState<Product[]>([]);
   const [isSessionProduct, setIsSessionProduct] = useState<boolean>(false);
   const [groupedSessionProducts, setGroupedSessionProducts] = useState<

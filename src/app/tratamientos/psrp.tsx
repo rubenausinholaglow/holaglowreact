@@ -11,6 +11,7 @@ import ProductCard from 'app/components/product/ProductCard';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
+  useSessionStore,
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -27,7 +28,8 @@ import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
 
 export default function PsrpPage({ slug }: { slug: string }) {
-  const { stateProducts, deviceSize } = useGlobalPersistedStore(state => state);
+  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
   const {
     filteredProducts,
     setFilteredProducts,

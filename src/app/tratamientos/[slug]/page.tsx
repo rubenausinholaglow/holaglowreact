@@ -7,7 +7,10 @@ import Professionals from 'app/components/common/Professionals';
 import FloatingBottomBar from 'app/components/home/FloatingBottomBar';
 import Testimonials from 'app/components/home/Testimonials';
 import MainLayout from 'app/components/layout/MainLayout';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { useElementOnScreen } from 'app/utils/common';
 import { isEmpty } from 'lodash';
 import { fetchProduct } from 'utils/fetch';
@@ -25,7 +28,8 @@ import ProductResults from './components/ProductResults';
 import ProductSuggestions from './components/ProductSuggestions';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
-  const { stateProducts, deviceSize } = useGlobalPersistedStore(state => state);
+  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');

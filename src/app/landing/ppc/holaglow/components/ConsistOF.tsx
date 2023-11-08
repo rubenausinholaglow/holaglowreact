@@ -1,6 +1,6 @@
 'use client';
 
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
@@ -38,7 +38,7 @@ const SLIDES: SliderItem[] = [
 ];
 
 export default function ConsistOf() {
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
 
   return (
     <Container className="py-8 md:mb-12">

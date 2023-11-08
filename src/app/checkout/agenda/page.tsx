@@ -27,9 +27,8 @@ import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 export default function Agenda() {
   const router = useRouter();
 
-  const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
-    state => state
-  );
+  const { user } = useGlobalPersistedStore(state => state);
+
   const {
     setSelectedSlot,
     selectedSlot,
@@ -37,9 +36,11 @@ export default function Agenda() {
     selectedTreatments,
     selectedPacksTreatments,
     selectedClinic,
-  } = useGlobalPersistedStore(state => state);
+    analyticsMetrics,
+    selectedDay,
+    setSelectedDay,
+  } = useSessionStore(state => state);
 
-  const { analyticsMetrics } = useSessionStore(state => state);
   const [enableScheduler, setEnableScheduler] = useState(false);
   const [dateToCheck, setDateToCheck] = useState(dayjs());
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);

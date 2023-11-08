@@ -37,10 +37,9 @@ export default function LandingCaptacion() {
     setSelectedTreatments,
     setSelectedSlot,
     setSelectedClinic,
-  } = useGlobalPersistedStore(state => state);
-  const { analyticsMetrics, setAnalyticsMetrics } = useSessionStore(
-    state => state
-  );
+    analyticsMetrics,
+    setAnalyticsMetrics,
+  } = useSessionStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE

@@ -37,15 +37,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
 
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const {
     selectedTreatments,
     selectedSlot,
     selectedDay,
     selectedClinic,
     selectedPacksTreatments,
-    setCurrentUser,
-  } = useGlobalPersistedStore(state => state);
-  const { analyticsMetrics } = useSessionStore(state => state);
+    analyticsMetrics,
+  } = useSessionStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',

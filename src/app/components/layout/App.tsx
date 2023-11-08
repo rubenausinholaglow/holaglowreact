@@ -63,16 +63,10 @@ export default function Html({ children }: { children: ReactNode }) {
     isMainScrollEnabled,
   } = useGlobalStore(state => state);
 
-  const {
-    setDeviceSize,
-    stateProducts,
-    setStateProducts,
-    clinics,
-    setClinics,
-  } = useGlobalPersistedStore(state => state);
-  const { analyticsMetrics, setAnalyticsMetrics } = useSessionStore(
-    state => state
-  );
+  const { stateProducts, setStateProducts, clinics, setClinics } =
+    useGlobalPersistedStore(state => state);
+  const { setDeviceSize, analyticsMetrics, setAnalyticsMetrics } =
+    useSessionStore(state => state);
 
   useEffect(() => {
     setDeviceSize(DeviceSize());

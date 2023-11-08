@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import { Clinic } from '@interface/clinic';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -14,13 +17,13 @@ import { useRouter } from 'next/navigation';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
+  const { clinics } = useGlobalPersistedStore(state => state);
   const {
-    clinics,
     selectedClinic,
     setSelectedClinic,
     selectedPacksTreatments,
-  } = useGlobalPersistedStore(state => state);
-  const { selectedTreatments } = useGlobalPersistedStore(state => state);
+    selectedTreatments,
+  } = useSessionStore(state => state);
 
   useEffect(() => {
     if (selectedClinic) {

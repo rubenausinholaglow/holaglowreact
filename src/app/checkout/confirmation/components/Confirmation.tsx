@@ -22,18 +22,17 @@ export default function Confirmation({
 }: {
   appointment?: Appointment;
 }) {
-  const { selectedPacksTreatments, clinics } = useGlobalPersistedStore(
-    state => state
-  );
+  const { clinics } = useGlobalPersistedStore(state => state);
 
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const {
     selectedTreatments,
     selectedSlot,
     selectedDay,
     selectedClinic,
-    setCurrentUser,
-  } = useGlobalPersistedStore(state => state);
-  const { setAnalyticsMetrics } = useSessionStore(state => state);
+    selectedPacksTreatments,
+    setAnalyticsMetrics,
+  } = useSessionStore(state => state);
 
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
