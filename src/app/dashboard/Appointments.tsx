@@ -83,12 +83,13 @@ const AppointmentsListComponent: React.FC<{
     try {
       await ScheduleService.getClinicSchedule(flowwwToken).then(async data => {
         if (data != null) {
-          localStorage.setItem('ClinicId', data.clinic.id);
+          //localStorage.setItem('ClinicId', data.clinic.id);
           localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
           localStorage.setItem(
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
+          data.boxId = localStorage.getItem('BoxId');
           saveUserDetails(name, id, flowwwToken);
           await messageService.StartAppointment(data).then(async info => {
             if (info != null) {
