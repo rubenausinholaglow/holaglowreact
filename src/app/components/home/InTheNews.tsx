@@ -1,6 +1,6 @@
 'use client';
 
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -61,7 +61,7 @@ const NewsExtract = ({
 };
 
 export default function InTheNews() {
-  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
+  const deviceSize = useSessionStore(state => state.deviceSize);
 
   const visibleNews = () => {
     if (deviceSize.isMobile) {

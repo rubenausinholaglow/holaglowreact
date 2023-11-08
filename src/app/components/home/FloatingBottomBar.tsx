@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Product } from '@interface/product';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -19,7 +22,7 @@ export default function FloatingBottomBar({
   threshold?: number;
   isVisible?: boolean;
 }) {
-  const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);

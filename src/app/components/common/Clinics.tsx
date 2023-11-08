@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   Accordion,
@@ -16,7 +19,8 @@ import { SvgAngle } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 export default function Clinics({ className = '' }: { className?: string }) {
-  const { deviceSize, clinics } = useGlobalPersistedStore(state => state);
+  const { clinics } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
 
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
