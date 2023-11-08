@@ -6,6 +6,7 @@ import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import MainLayout from 'app/components/layout/MainLayout';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
 
 import { useCartStore } from '../../budgets/stores/userCartStore';
 import { PaymentModule } from '../../checkout/components/payment/Payments';
@@ -19,19 +20,17 @@ export default function PaymentRemoteControl() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (isLoading) {
-      const fetchData = async () => {
-        await loadBudget();
-      };
-      usePaymentList.setState(INITIAL_STATE_PAYMENT);
-      useCartStore.setState(INITIAL_STATE);
-      const budgetIdlocal = localStorage.getItem('BudgetId');
+    const fetchData = async () => {
+      await loadBudget();
+      setIsLoading(false);
+    };
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
+    const budgetIdlocal = localStorage.getItem('BudgetId');
 
-      if (!finalBudget && !budgetIdlocal) {
-        fetchData();
-      }
+    if (!finalBudget && !budgetIdlocal) {
+      fetchData();
     }
-    setIsLoading(false);
   }, []);
 
   async function loadBudget() {
@@ -53,10 +52,9 @@ export default function PaymentRemoteControl() {
   }
 
   function processBudget(budget: Budget) {
-    console.log(budget);
-    console.log(finalBudget);
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
+    localStorage.setItem('BudgetId', String(budget.id || ''));
     setFinalBudget(budget);
     applyCartDiscounts(budget);
     processBudgetItems(budget);
@@ -107,12 +105,15 @@ export default function PaymentRemoteControl() {
     applyItemDiscount(id, value, discountType);
   };
 
-  if (!isLoading)
-    return (
-      <MainLayout isDashboard>
-        <Flex layout="col-center">
+  return (
+    <MainLayout isDashboard>
+      <Flex layout="col-center">
+        {isLoading ? (
+          <SvgSpinner height={24} width={24} />
+        ) : (
           <PaymentModule></PaymentModule>
-        </Flex>
-      </MainLayout>
-    );
+        )}
+      </Flex>
+    </MainLayout>
+  );
 }

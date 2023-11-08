@@ -8,16 +8,27 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
-  return [
-    ...cart,
-    {
+  const updatedCart: CartItem[] = [...cart];
+
+  if (product.id.length > 0) {
+    updatedCart.push({
+      ...product,
+      percentageDiscount: 0,
+      priceDiscount: 0,
+      priceWithDiscount: Number(product.price),
+      uniqueId: product.id,
+    });
+  } else {
+    updatedCart.push({
       ...product,
       percentageDiscount: 0,
       priceDiscount: 0,
       priceWithDiscount: Number(product.price),
       uniqueId: createUniqueId(),
-    },
-  ];
+    });
+  }
+
+  return updatedCart;
 }
 
 function recalculateCartItems(

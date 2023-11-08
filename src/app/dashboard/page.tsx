@@ -13,6 +13,7 @@ import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -27,6 +28,7 @@ export default function Page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const router = useRouter();
+  const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
@@ -35,9 +37,12 @@ export default function Page({
   const [userEmail, setUserEmail] = useState('');
   const [clinicId, setClinicId] = useState('');
   const [boxId, setBoxId] = useState('');
-  const [remoteControl, setRemoteControl] = useState(false);
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
+  const { remoteControl, setRemoteControl } = useGlobalPersistedStore(
+    state => state
+  );
+
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -66,8 +71,7 @@ export default function Page({
   });
 
   useEffect(() => {
-    const isRemoteControl = localStorage.getItem('RemoteControl');
-    if (isRemoteControl === 'false') {
+    if (!remoteControl) {
       const existsMessageStartAppointment: any =
         messageSocket.messageSocket.filter(
           x => x.messageType == MessageType.StartAppointment
@@ -118,7 +122,6 @@ export default function Page({
     localStorage.setItem('RemoteControl', params.get('remoteControl') || '');
     localStorage.setItem('ClinicId', params.get('clinicId') || '');
     localStorage.setItem('BoxId', params.get('boxId') || '');
-    setIsLoadingPage(false);
   }, []);
 
   const handleCheckUser = async () => {
@@ -174,7 +177,6 @@ export default function Page({
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
-          //localStorage.setItem('boxId', boxId || data.boxId);
           if (name == '') {
             name = data.lead.user.firstName;
             id = data.lead.user.id;
@@ -262,18 +264,6 @@ export default function Page({
     setErrors(errors);
   };
 
-  if (isLoadingPage)
-    return (
-      <MainLayout
-        isDashboard
-        hideBackButton
-        hideContactButtons
-        hideProfessionalSelector
-      >
-        <div></div>
-      </MainLayout>
-    );
-
   if (remoteControl)
     return (
       <MainLayout
@@ -316,26 +306,38 @@ export default function Page({
         hideContactButtons
         hideProfessionalSelector
       >
-        <div className="mt-8">
-          {showRegistration ? (
-            <RegistrationForm
-              formData={formData}
-              handleFieldChange={handleFormFieldChange}
-              handleContinue={handleContinue}
-              errors={errors}
-              isLoading={isLoading}
-            />
-          ) : (
-            <SearchUser
-              email={userEmail}
-              handleFieldChange={handleFieldEmailChange}
-              handleCheckUser={handleCheckUser}
-              errors={errors}
-              isLoading={isLoading}
-            />
-          )}
-          {isLoadingUser && <SvgSpinner />}
+        <div className="fixed bottom-0 right-0 py-3 px-3">
+          <Button
+            onClick={() => setShowForm(!showForm)}
+            type="tertiary"
+            size="sm"
+            className=""
+          >
+            Búsqueda Manual
+          </Button>
         </div>
+        {showForm && (
+          <div className="mt-8">
+            {showRegistration ? (
+              <RegistrationForm
+                formData={formData}
+                handleFieldChange={handleFormFieldChange}
+                handleContinue={handleContinue}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            ) : (
+              <SearchUser
+                email={userEmail}
+                handleFieldChange={handleFieldEmailChange}
+                handleCheckUser={handleCheckUser}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            )}
+          </div>
+        )}
+        {isLoadingUser && <SvgSpinner />}
       </MainLayout>
     );
 }

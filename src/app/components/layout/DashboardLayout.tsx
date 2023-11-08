@@ -4,6 +4,7 @@ import ButtonMessage from '@components/ui/ButtonMessage';
 import { useMessageSocket } from '@components/useMessageSocket';
 import { MessageSocket, MessageType } from '@interface/messageSocket';
 import SocketService from '@services/SocketService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
@@ -24,6 +25,7 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const messageSocket = useMessageSocket(state => state);
+  const { remoteControl } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     if (!hideContactButtons) {
@@ -42,12 +44,18 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications',
       onReceiveMessage: message => {
-        const isRemoteControl =
-          localStorage.getItem('remoteControle') === 'true';
+        const localClinicId = localStorage.getItem('ClinicId');
+        const localBoxId = localStorage.getItem('BoxId');
+        if (
+          message.data.clinicId != localClinicId &&
+          message.data.boxId != localBoxId
+        ) {
+          return true;
+        }
         let messageData: any;
         switch (message.event) {
           case 'PatientArrived':
-            if (!isRemoteControl) return true;
+            if (!remoteControl) return true;
             messageData = {
               messageType: MessageType.PatientArrived,
               ClinicId: message.data.clinicId,
@@ -55,7 +63,7 @@ export default function DashboardLayout({
             };
             break;
           case 'StartAppointment':
-            if (isRemoteControl) {
+            if (remoteControl) {
               return true;
             }
             messageData = {
@@ -67,7 +75,7 @@ export default function DashboardLayout({
 
             break;
           case 'CrisalixUser':
-            if (isRemoteControl) {
+            if (remoteControl) {
               return true;
             }
             messageData = {
@@ -80,11 +88,28 @@ export default function DashboardLayout({
             };
 
             break;
+          case 'PaymentCreate':
+            if (remoteControl != message.data.remoteControl) {
+              messageData = {
+                messageType: MessageType.PaymentCreate,
+                ClinicId: message.data.clinicId,
+                BoxId: message.data.boxId,
+                id: message.data.id,
+                referenceId: message.data.referenceId,
+                paymentBank: message.data.paymentBank,
+                paymentMethod: message.data.paymentMethod,
+                amount: message.data.amount,
+                remoteControl: message.data.remoteControl,
+                budgetId: message.data.budgetId,
+              };
+            }
+
+            break;
 
           default:
             throw new Error(`Unsupported event: ${message.Event}`);
         }
-        messageSocket.addMessageSocket(messageData);
+        if (messageData) messageSocket.addMessageSocket(messageData);
       },
     });
     SocketService.getInstance({

@@ -21,7 +21,7 @@ export const menuItems = [
     target: '_blank',
   },
   {
-    iconSrc: '/images/dashboard/menu-icons/agenda.png',
+    iconSrc: '/images/dashboard/menu-icons/pago.png',
     altText: 'Pagos',
     title: 'Pagos',
     link: '/dashboard/remoteControl/Payment',

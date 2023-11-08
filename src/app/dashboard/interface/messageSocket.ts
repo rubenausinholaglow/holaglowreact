@@ -14,6 +14,7 @@ export enum MessageType {
   PaymentResponse,
   StartAppointment,
   CrisalixUser,
+  PaymentCreate,
 }
 
 export interface MessageSocketActions {

@@ -5,6 +5,7 @@ import { useMessageSocket } from '@components/useMessageSocket';
 import { CrisalixUser } from '@interface/crisalix';
 import { MessageType } from '@interface/messageSocket';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
 import { useCrisalix } from '../crisalix/useCrisalix';
@@ -16,6 +17,7 @@ const Page = () => {
   const [flowwwToken, setFlowwwToken] = useState('');
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
+  const { remoteControl } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username') || '';
@@ -25,8 +27,7 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    const isRemoteControl = localStorage.getItem('RemoteControl');
-    if (isRemoteControl === 'false') {
+    if (!remoteControl) {
       const existsMessageCrisalixUser: any = messageSocket.messageSocket.filter(
         x => x.messageType == MessageType.CrisalixUser
       );

@@ -13,6 +13,7 @@ import { ClientUpdate } from '@interface/client';
 import { CreatePayment, InitializePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
+import { messageService } from '@services/MessageService';
 import UserService from '@services/UserService';
 import { applyDiscountToCart } from '@utils/utils';
 import HolaglowModal from 'app/components/common/Modal';
@@ -109,6 +110,12 @@ export default function PaymentInput(props: Props) {
             id: id,
           };
           addPaymentToList(paymentRequest);
+
+          await sendPaymentCreated(
+            id,
+            paymentRequestApi.amount,
+            paymentRequestApi.referenceId
+          );
         } else {
           setMessageNotification('Error creando el pago');
         }
@@ -117,6 +124,31 @@ export default function PaymentInput(props: Props) {
         Bugsnag.notify('Error FinanceService.createPayment:', error);
       });
     props.onButtonClick(false);
+  };
+
+  const sendPaymentCreated = async (
+    paymentId: string,
+    amount: any,
+    referenceId: string
+  ) => {
+    const localClinicId = localStorage.getItem('ClinicId');
+    const localBoxId = localStorage.getItem('BoxId');
+    const remoteControl = localStorage.getItem('RemoteControl');
+    const localBudgetId = localStorage.getItem('BudgetId');
+
+    const paymentCreatedRequest = {
+      clinicId: localClinicId,
+      boxId: localBoxId,
+      id: paymentId,
+      amount: amount,
+      paymentBank: props.paymentBank,
+      paymentMethod: props.paymentMethod,
+      referenceId: referenceId,
+      remoteControl: remoteControl,
+      budgetId: localBudgetId,
+    };
+
+    await messageService.PaymentCreated(paymentCreatedRequest);
   };
 
   const handleUrlPayment = async (
@@ -133,6 +165,7 @@ export default function PaymentInput(props: Props) {
       id: idPayment,
     };
     addPaymentToList(paymentRequest);
+    sendPaymentCreated(idPayment, amount, referencePayment);
     props.onButtonClick(false);
   };
 

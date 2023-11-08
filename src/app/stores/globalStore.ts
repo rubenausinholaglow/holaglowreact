@@ -28,6 +28,7 @@ interface GlobalPersistStore {
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
   analyticsMetrics: AnalyticsMetrics;
+  remoteControl: boolean;
 }
 
 interface GlobalPersistActions {
@@ -43,6 +44,7 @@ interface GlobalPersistActions {
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
+  setRemoteControl: (remoteControl: boolean) => void;
 }
 
 export const useGlobalPersistedStore = create(
@@ -74,10 +76,11 @@ export const useGlobalPersistedStore = create(
         utmSource: '',
         utmTerm: '',
         treatmentText: '',
-		externalReference: '',
+        externalReference: '',
         interestedTreatment: '',
         treatmentPrice: 0,
       },
+      remoteControl: false,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -113,6 +116,9 @@ export const useGlobalPersistedStore = create(
       },
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
+      },
+      setRemoteControl: value => {
+        set({ remoteControl: value });
       },
     }),
     {

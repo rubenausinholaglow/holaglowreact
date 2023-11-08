@@ -31,7 +31,7 @@ export const PaymentModule = () => {
   const paymentList = usePaymentList(state => state.paymentRequest);
   const totalPrice = useCartStore(state => state.totalPrice);
   const totalAmount = usePaymentList(state => state.totalAmount);
-
+  const { addPaymentToList, removePayment } = usePaymentList();
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
@@ -49,55 +49,99 @@ export const PaymentModule = () => {
   }, []);
 
   useEffect(() => {
-    const existsMessagePaymentResponse = messageSocket.messageSocket.filter(
-      x => x.messageType == MessageType.PaymentResponse
-    );
-    if (existsMessagePaymentResponse.length > 0) {
-      const payment = {
-        referenceId: existsMessagePaymentResponse[0].message.data.id,
-        paymentStatus:
-          existsMessagePaymentResponse[0].message.data.paymentStatus,
-      };
+    const { paymentCreatedMessages, paymentResponseMessages } =
+      processPaymentMessages(messageSocket.messageSocket);
 
-      const existingPayment = paymentList.find(
-        x => x.paymentReference === payment.referenceId
-      );
-      if (existingPayment) {
-        switch (payment.paymentStatus) {
-          case 'Rejected':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.Rejected,
-            }));
-            break;
-          case 'Paid':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.Paid,
-            }));
-            break;
-          case 'FinancingRejected':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.FinancingRejected,
-            }));
-            break;
-          case 'FinancingAccepted':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.FinancingAccepted,
-            }));
-            break;
-          default:
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.Waiting,
-            }));
-        }
-        messageSocket.removeMessageSocket(existsMessagePaymentResponse[0]);
+    paymentResponseMessages.forEach(handlePaymentResponse);
+    paymentCreatedMessages.forEach(handlePaymentCreate);
+  }, [messageSocket]);
+
+  const processPaymentMessages = (paymentMessages: any) => {
+    const paymentCreatedMessages = paymentMessages.filter(
+      (x: any) => x.messageType === MessageType.PaymentCreate
+    );
+
+    const paymentResponseMessages = paymentMessages.filter(
+      (x: any) => x.messageType === MessageType.PaymentResponse
+    );
+
+    return { paymentCreatedMessages, paymentResponseMessages };
+  };
+
+  const handlePaymentCreate = (message: any) => {
+    const localBudgetId = localStorage.getItem('BudgetId');
+    if (localBudgetId != message.budgetId) return true;
+    const existsPayment = paymentList.find(x => x.id == message.id);
+    if (!existsPayment) {
+      const paymentRequest = {
+        amount: message.amount,
+        method: message.paymentMethod,
+        bank: message.paymentBank,
+        paymentReference: message.ReferenceId,
+        id: message.id,
+      };
+      if (message.amount > 0) addPaymentToList(paymentRequest);
+      messageSocket.removeMessageSocket(message);
+    } else {
+      if (message.amount == 0) {
+        const paymentRequest = {
+          amount: existsPayment.amount,
+          method: message.paymentMethod,
+          bank: message.paymentBank,
+          paymentReference: message.ReferenceId,
+          id: message.id,
+        };
+        if (existsPayment.amount > 0) removePayment(paymentRequest);
+        messageSocket.removeMessageSocket(message);
       }
     }
-  }, [messageSocket]);
+  };
+
+  const handlePaymentResponse = (message: any) => {
+    const payment = {
+      referenceId: message.message.data.id,
+      paymentStatus: message.message.data.paymentStatus,
+    };
+
+    const existingPayment = paymentList.find(
+      x => x.paymentReference === payment.referenceId
+    );
+
+    if (existingPayment) {
+      switch (payment.paymentStatus) {
+        case 'Rejected':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.Rejected,
+          }));
+          break;
+        case 'Paid':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.Paid,
+          }));
+          break;
+        case 'FinancingRejected':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.FinancingRejected,
+          }));
+          break;
+        case 'FinancingAccepted':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.FinancingAccepted,
+          }));
+          break;
+        default:
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.Waiting,
+          }));
+      }
+      messageSocket.removeMessageSocket(message);
+    }
+  };
 
   let productsPriceTotalWithDiscounts = 0;
 

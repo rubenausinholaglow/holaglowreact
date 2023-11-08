@@ -75,6 +75,11 @@ class MessageService {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}CrisalixUser`;
     return this.sendRequest(url, crisalixUser);
   }
+
+  public async PaymentCreated(props: any): Promise<any> {
+    const url = `${process.env.NEXT_PUBLIC_CLINICS_API}PaymentCreated`;
+    return this.sendRequest(url, props);
+  }
 }
 
 export const messageService = new MessageService();

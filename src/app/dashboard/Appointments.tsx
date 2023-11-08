@@ -25,6 +25,7 @@ const AppointmentsListComponent: React.FC<{
   const userCrisalix = useCrisalix(state => state);
   const router = useRouter();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -36,6 +37,7 @@ const AppointmentsListComponent: React.FC<{
 
         if (Array.isArray(data)) {
           setAppointments(data);
+          setIsLoadingPage(false);
         } else {
           Bugsnag.notify('Received non-array data:', data);
         }
@@ -145,47 +147,51 @@ const AppointmentsListComponent: React.FC<{
   return (
     <div className="w-full px-11">
       <h1>Lista de citas</h1>
-      <table className="w-full mt-9">
-        <thead>
-          <tr>
-            <th>Hora</th>
-            <th>Estado</th>
-            <th>Nombre</th>
-            <th>Profesional</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map(appointment => (
-            <tr key={appointment.id}>
-              <td className="my-2 mx-2">{appointment.startTime}</td>
-              <td className="my-2 mx-2">
-                {translateStatus(appointment.status ?? Status.Open)}
-              </td>
-              <td className="my-2 mx-2">
-                {appointment.lead?.user?.firstName}{' '}
-                {appointment.lead?.user?.lastName}
-              </td>
-              <td className="my-2 mx-2">
-                {appointment.clinicProfessional?.name} {appointment.clinicId}
-              </td>
-              <td className="my-2 mx-2">
-                <Button
-                  isSubmit
-                  onClick={() => handleCheckUser(appointment)}
-                  type="secondary"
-                  className="my-2 mx-2"
-                >
-                  {loadingAppointments[appointment.id] ? (
-                    <SvgSpinner height={24} width={24} />
-                  ) : (
-                    'Empezar'
-                  )}
-                </Button>
-              </td>
+      {isLoadingPage ? (
+        <SvgSpinner className="w-full justify-center" />
+      ) : (
+        <table className="w-full mt-9">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Estado</th>
+              <th>Nombre</th>
+              <th>Profesional</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {appointments.map(appointment => (
+              <tr key={appointment.id}>
+                <td className="my-2 mx-2">{appointment.startTime}</td>
+                <td className="my-2 mx-2">
+                  {translateStatus(appointment.status ?? Status.Open)}
+                </td>
+                <td className="my-2 mx-2">
+                  {appointment.lead?.user?.firstName}{' '}
+                  {appointment.lead?.user?.lastName}
+                </td>
+                <td className="my-2 mx-2">
+                  {appointment.clinicProfessional?.name} {appointment.clinicId}
+                </td>
+                <td className="my-2 mx-2">
+                  <Button
+                    isSubmit
+                    onClick={() => handleCheckUser(appointment)}
+                    type="secondary"
+                    className="my-2 mx-2"
+                  >
+                    {loadingAppointments[appointment.id] ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      'Empezar'
+                    )}
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
