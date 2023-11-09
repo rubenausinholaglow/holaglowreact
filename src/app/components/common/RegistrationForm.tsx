@@ -138,11 +138,16 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
     formattedValue: string,
     value: string
   ) {
-    if (event && event.nativeEvent && event.nativeEvent.inputType) {
+    if (
+      event &&
+      event.nativeEvent &&
+      (event.nativeEvent.inputType || event.nativeEvent.type == 'click')
+    ) {
       handleFieldChange(event, 'phone');
       event.target.value = '+' + country.dialCode;
       handleFieldChange(event, 'phonePrefix');
     } else {
+      if (value.startsWith('34')) value = value.substring(2, value.length);
       event.target.value = '+34' + value;
       handleFieldChange(event, 'phone');
       event.target.value = '+34';
