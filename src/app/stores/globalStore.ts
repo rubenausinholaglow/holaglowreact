@@ -46,8 +46,8 @@ interface GlobalPersistStore {
   user?: User;
   promo: Promo | undefined;
   remoteControl: boolean;
-  storedClinicId: string;
-  storedBoxId: string;
+  storedClinicId: string | '';
+  storedBoxId: string | '';
 }
 
 interface GlobalPersistActions {
@@ -57,7 +57,7 @@ interface GlobalPersistActions {
   setPromos: (value: Promo) => void;
   setRemoteControl: (remoteControl: boolean) => void;
   setClinicId: (storedClinicId: string) => void;
-  setBoxId: (setBoxId: boolean) => void;
+  setBoxId: (setBoxId: string) => void;
 }
 
 export const useSessionStore = create(
@@ -148,6 +148,14 @@ export const useGlobalPersistedStore = create(
       remoteControl: false,
       setRemoteControl: value => {
         set({ remoteControl: value });
+      },
+      storedClinicId: '',
+      setClinicId: value => {
+        set({ storedClinicId: value });
+      },
+      storedBoxId: '',
+      setBoxId: value => {
+        set({ storedBoxId: value });
       },
     }),
     {

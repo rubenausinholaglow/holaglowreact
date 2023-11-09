@@ -25,7 +25,8 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const messageSocket = useMessageSocket(state => state);
-  const { remoteControl } = useGlobalPersistedStore(state => state);
+  const { remoteControl, storedBoxId, storedClinicId } =
+    useGlobalPersistedStore(state => state);
   const [flowwwToken, setFlowwwToken] = useState('');
 
   const routePages: any = {
@@ -53,11 +54,9 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications',
       onReceiveMessage: message => {
-        const localClinicId = localStorage.getItem('ClinicId');
-        const localBoxId = localStorage.getItem('BoxId');
         if (
-          message.data.clinicId != localClinicId &&
-          message.data.boxId != localBoxId
+          message.data.clinicId != storedClinicId &&
+          message.data.boxId != storedBoxId
         ) {
           return true;
         }

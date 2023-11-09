@@ -34,13 +34,16 @@ export default function Page({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const [clinicId, setClinicId] = useState('');
-  const [boxId, setBoxId] = useState('');
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
-  const { remoteControl, setRemoteControl } = useGlobalPersistedStore(
-    state => state
-  );
+  const {
+    remoteControl,
+    storedBoxId,
+    storedClinicId,
+    setBoxId,
+    setClinicId,
+    setRemoteControl,
+  } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -271,7 +274,10 @@ export default function Page({
         hideProfessionalSelector
       >
         <div className="w-full justify-center content-center px-11">
-          <AppointmentsListComponent clinicId={clinicId} boxId={boxId} />
+          <AppointmentsListComponent
+            clinicId={storedClinicId}
+            boxId={storedBoxId}
+          />
           <div className="mt-8">
             {showRegistration ? (
               <RegistrationForm
