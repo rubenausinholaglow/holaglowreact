@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { twMerge } from 'tailwind-merge';
@@ -104,6 +104,84 @@ export const Modal = ({
           ${className ? className : ''}`
       )}
       {...rest}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const SwipeModal = ({
+  children,
+  isOpen,
+  className,
+  setModalVisibility,
+}: {
+  children: ReactNode;
+  isOpen: boolean;
+  className: string;
+  setModalVisibility: (value: boolean) => void;
+}) => {
+  const [deltaYScroll, setDeltaYScroll] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (modalRef.current) {
+      if (isOpen) {
+        console.log('translatey0');
+        (modalRef.current as HTMLDivElement).style.transform = 'translateY(0)';
+      } else {
+        console.log('translatey100');
+        (modalRef.current as HTMLDivElement).style.transform =
+          'translateY(105%)';
+      }
+    }
+  }, [isOpen]);
+
+  const handleTouchStart = (e: any) => {
+    if (!isOpen) return;
+    setIsDragging(true);
+    setStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: any) => {
+    if (!isDragging) return;
+
+    const deltaY = e.touches[0].clientY - startY;
+    setDeltaYScroll(deltaY);
+
+    if (modalRef.current) {
+      if (deltaY > 0) {
+        (
+          modalRef.current as HTMLDivElement
+        ).style.transform = `translateY(${deltaY}px)`;
+      }
+    }
+
+    if (deltaY > 100) {
+      setIsDragging(false);
+      setModalVisibility(false);
+    }
+  };
+
+  const handleTouchEnd = (e: any) => {
+    setIsDragging(false);
+    if (deltaYScroll < 100 && modalRef.current) {
+      (modalRef.current as HTMLDivElement).style.transform = 'translateY(0)';
+    }
+  };
+
+  return (
+    <div
+      className={`transition-all z-50 translate-y-[105%] rounded-t-2xl fixed w-full overflow-hidden bg-white bottom-0 left-0 right-0 swipe-modal 
+        ${isOpen ? 'translate-y-0' : ''}
+        ${className ? className : ''}
+      `}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      ref={modalRef}
     >
       {children}
     </div>
