@@ -17,6 +17,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
@@ -114,13 +115,15 @@ export default function ProductCard({
           layout="col-left"
           className="p-3 flex-grow bg-white rounded-b-2xl"
         >
-          <Text className="mb-2 font-semibold">{product.title}</Text>
-          <Text size="xs" className="text-hg-black500 mb-8">
-            {product.description}
-          </Text>
+          <AnimateOnViewport origin="top">
+            <Text className="mb-2 font-semibold">{product.title}</Text>
+            <Text size="xs" className="text-hg-black500 mb-8">
+              {product.description}
+            </Text>
+          </AnimateOnViewport>
 
           <Flex className="mt-auto justify-between w-full">
-            <div>
+            <AnimateOnViewport origin="left">
               {discountedPrice && (
                 <Text className="text-xs line-through text-hg-black500">
                   {product.price} €
@@ -132,8 +135,9 @@ export default function ProductCard({
               <Text className=" text-hg-secondary font-semibold text-lg">
                 {discountedPrice ? discountedPrice : product.price} €{' '}
               </Text>
-            </div>
+            </AnimateOnViewport>
             <Button
+              isAnimated
               type="tertiary"
               className="mt-auto ml-4"
               bgColor="bg-hg-primary"

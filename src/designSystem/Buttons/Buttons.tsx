@@ -18,10 +18,12 @@ type ButtonProps = {
   href?: string;
   className?: string;
   customStyles?: string;
+  wrapperClassName?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
   disabled?: boolean;
-  disableAnimation?: boolean;
+  isAnimated?: boolean;
+  origin?: 'top' | 'right' | 'bottom' | 'left';
   [key: string]: any;
 };
 
@@ -31,15 +33,17 @@ export const Button = ({
   href = '',
   className = '',
   customStyles = '',
+  wrapperClassName = '',
   onClick = undefined,
   children,
   disabled = false,
-  disableAnimation = false,
+  isAnimated = false,
+  origin = 'bottom',
   ...rest
 }: ButtonProps) => {
-  if (href) {
+  if (href && isAnimated) {
     return (
-      <AnimateOnViewport disableAnimation={disableAnimation} origin="left">
+      <AnimateOnViewport origin={origin} className={wrapperClassName}>
         <Link
           href={href}
           target={rest?.target}
@@ -61,29 +65,76 @@ export const Button = ({
     );
   }
 
-  return (
-    <AnimateOnViewport disableAnimation={disableAnimation} origin="left">
-      <button
-        className={twMerge(
-          `transition-all relative group overflow-visible ${
-            ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
-          } ${className}`
-        )}
+  if (href) {
+    return (
+      <Link
+        href={href}
+        target={rest?.target}
+        className={twMerge(`relative group overflow-visible ${className}`)}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
-        <ButtonBase type={type} disabled={disabled} />
+        <ButtonBase type={type} />
         <ButtonBody
           type={type}
           size={size}
           customStyles={customStyles}
-          disabled={disabled}
           {...rest}
         >
           {children}
         </ButtonBody>
-      </button>
-    </AnimateOnViewport>
+      </Link>
+    );
+  }
+
+  if (isAnimated) {
+    return (
+      <AnimateOnViewport origin="left">
+        <button
+          className={twMerge(
+            `transition-all relative group overflow-visible ${
+              ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
+            } ${className}`
+          )}
+          onClick={onClick}
+          type={rest?.isSubmit ? 'submit' : 'button'}
+        >
+          <ButtonBase type={type} disabled={disabled} />
+          <ButtonBody
+            type={type}
+            size={size}
+            customStyles={customStyles}
+            disabled={disabled}
+            {...rest}
+          >
+            {children}
+          </ButtonBody>
+        </button>
+      </AnimateOnViewport>
+    );
+  }
+
+  return (
+    <button
+      className={twMerge(
+        `transition-all relative group overflow-visible ${
+          ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
+        } ${className}`
+      )}
+      onClick={onClick}
+      type={rest?.isSubmit ? 'submit' : 'button'}
+    >
+      <ButtonBase type={type} disabled={disabled} />
+      <ButtonBody
+        type={type}
+        size={size}
+        customStyles={customStyles}
+        disabled={disabled}
+        {...rest}
+      >
+        {children}
+      </ButtonBody>
+    </button>
   );
 };
 
