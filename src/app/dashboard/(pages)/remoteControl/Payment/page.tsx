@@ -32,7 +32,7 @@ export default function PaymentRemoteControl() {
     useCartStore.setState(INITIAL_STATE);
     const budgetIdlocal = localStorage.getItem('BudgetId');
 
-    if (!finalBudget && !budgetIdlocal) {
+    if (!finalBudget) {
       fetchData();
     }
   }, []);
