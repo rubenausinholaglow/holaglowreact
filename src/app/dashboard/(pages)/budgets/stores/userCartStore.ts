@@ -10,24 +10,16 @@ import { persist } from 'zustand/middleware';
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   const updatedCart: CartItem[] = [...cart];
 
-  if (product.id.length > 0) {
-    updatedCart.push({
-      ...product,
-      percentageDiscount: 0,
-      priceDiscount: 0,
-      priceWithDiscount: Number(product.price),
-      uniqueId: product.id,
-    });
-  } else {
-    updatedCart.push({
-      ...product,
-      percentageDiscount: 0,
-      priceDiscount: 0,
-      priceWithDiscount: Number(product.price),
-      uniqueId: createUniqueId(),
-    });
+  if (product.id.length == 0) {
+    product.id = createUniqueId();
   }
-
+  updatedCart.push({
+    ...product,
+    percentageDiscount: 0,
+    priceDiscount: 0,
+    priceWithDiscount: Number(product.price),
+    uniqueId: product.id,
+  });
   return updatedCart;
 }
 
