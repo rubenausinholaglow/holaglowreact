@@ -1,5 +1,9 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
+import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -8,11 +12,19 @@ import { SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 export default function ProductInfo({ product }: { product: Product }) {
+  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
+
+  useEffect(() => {
+    if (product && !isEmpty(product.discounts)) {
+      setDiscountedPrice(getDiscountedPrice(product));
+    }
+  }, [product]);
+
   return (
     <Container className="p-0 md:px-4 md:pb-16">
       <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl">
         <Container className="mt-8 md:mt-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
-          <ul className="flex flex-col mb-4 w-full">
+          <ul className="flex flex-col pb-4 w-full">
             <li className="mb-4 pb-4 border-b border-hg-black flex">
               <div>
                 <Text size="lg" className="font-semibold mb-1 md:mb-2">
@@ -104,9 +116,16 @@ export default function ProductInfo({ product }: { product: Product }) {
             className="hidden md:block md:mt-auto"
             href="#prices"
           >
-            Reserva cita desde{' '}
-            <span className="inline-block text-xl font-bold underline ml-2">
-              {product.price} €
+            <span className="inline-block mr-1">
+              Reserva cita {product.isPack ? '' : 'desde'}
+            </span>
+            {discountedPrice && (
+              <span className="inline-block line-through font-normal mr-1">
+                {product.price} €
+              </span>
+            )}
+            <span className="font-semibold text-lg">
+              {discountedPrice ? discountedPrice : product.price} €
             </span>
           </Button>
         </Container>
