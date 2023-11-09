@@ -71,12 +71,3 @@ export function useElementOnScreen(options: IntersectionOptions) {
 
   return [ref, isIntersecting] as const;
 }
-
-export function getDiscountedPrice(product: Product) {
-  const totalDiscountSum = product.discounts.reduce(
-    (total, discount) => total + discount.totalDiscount,
-    0
-  );
-
-  return product.price - totalDiscountSum;
-}

@@ -6,9 +6,8 @@ import { Slot } from '@interface/slot';
 import { INITIAL_FILTERS } from 'app/tratamientos/utils/filters';
 import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
-import { Promo } from 'types/promo';
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 type DeviceSize = {
   isMobile: boolean;
@@ -16,47 +15,55 @@ type DeviceSize = {
   isDesktop: boolean;
   isWideScreen: boolean;
 };
-
-interface SessionStore {
-  analyticsMetrics: AnalyticsMetrics;
+interface GlobalPersistStore {
+  stateProducts: Product[];
+  clinics: Clinic[];
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
+  user?: User;
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
-}
-interface SessionActions {
-  setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
-  setIsMobile: (value: boolean) => void;
-  setDeviceSize: (value: DeviceSize) => void;
-  setSelectedTreatments: (value: Product[]) => void;
-  setSelectedPackTreatments: (value: Product[]) => void;
-  setSelectedClinic: (value?: Clinic) => void;
-  setSelectedSlot: (slot?: Slot) => void;
-  setSelectedDay: (day: Dayjs) => void;
-  setPreviousAppointment: (appointment: Appointment) => void;
-}
-
-interface GlobalPersistStore {
-  stateProducts: Product[];
-  clinics: Clinic[];
-  user?: User;
-  promo: Promo | undefined;
+  analyticsMetrics: AnalyticsMetrics;
 }
 
 interface GlobalPersistActions {
   setStateProducts: (value: Product[]) => void;
   setClinics: (value: Clinic[]) => void;
+  setIsMobile: (value: boolean) => void;
+  setDeviceSize: (value: DeviceSize) => void;
+  setSelectedTreatments: (value: Product[]) => void;
+  setSelectedPackTreatments: (value: Product[]) => void;
+  setSelectedClinic: (value?: Clinic) => void;
   setCurrentUser: (value?: User) => void;
-  setPromos: (value: Promo) => void;
+  setSelectedSlot: (slot?: Slot) => void;
+  setSelectedDay: (day: Dayjs) => void;
+  setPreviousAppointment: (appointment: Appointment) => void;
+  setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
 }
 
-export const useSessionStore = create(
-  persist<SessionStore & SessionActions>(
+export const useGlobalPersistedStore = create(
+  persist<GlobalPersistStore & GlobalPersistActions>(
     set => ({
+      stateProducts: [],
+      clinics: [],
+      deviceSize: {
+        isMobile: true,
+        isTablet: false,
+        isDesktop: false,
+        isWideScreen: false,
+      },
+      isMobile: true,
+      selectedTreatments: [],
+      selectedPacksTreatments: [],
+      selectedClinic: undefined,
+      user: undefined,
+      selectedDay: dayjs(),
+      selectedSlot: undefined,
+      previousAppointment: undefined,
       analyticsMetrics: {
         device: 0,
         locPhysicalMs: '',
@@ -69,21 +76,11 @@ export const useSessionStore = create(
         treatmentText: '',
         externalReference: '',
       },
-      deviceSize: {
-        isMobile: true,
-        isTablet: false,
-        isDesktop: false,
-        isWideScreen: false,
+      setStateProducts: (value: Product[]) => {
+        set({ stateProducts: value });
       },
-      isMobile: true,
-      selectedTreatments: [],
-      selectedPacksTreatments: [],
-      selectedClinic: undefined,
-      selectedDay: dayjs(),
-      selectedSlot: undefined,
-      previousAppointment: undefined,
-      setAnalyticsMetrics: value => {
-        set({ analyticsMetrics: value });
+      setClinics: (value: Clinic[]) => {
+        set({ clinics: value });
       },
       setIsMobile: value => {
         set({ isMobile: value });
@@ -100,6 +97,9 @@ export const useSessionStore = create(
       setSelectedClinic: value => {
         set({ selectedClinic: value });
       },
+      setCurrentUser: value => {
+        set({ user: value });
+      },
       setSelectedSlot: value => {
         set({ selectedSlot: value });
       },
@@ -109,38 +109,13 @@ export const useSessionStore = create(
       setPreviousAppointment: value => {
         set({ previousAppointment: value });
       },
-    }),
-    {
-      name: 'session-storage',
-      version: 1,
-      storage: createJSONStorage(() => sessionStorage),
-    }
-  )
-);
-
-export const useGlobalPersistedStore = create(
-  persist<GlobalPersistStore & GlobalPersistActions>(
-    set => ({
-      promo: undefined,
-      stateProducts: [],
-      clinics: [],
-      user: undefined,
-      setStateProducts: (value: Product[]) => {
-        set({ stateProducts: value });
-      },
-      setClinics: (value: Clinic[]) => {
-        set({ clinics: value });
-      },
-      setCurrentUser: value => {
-        set({ user: value });
-      },
-      setPromos: (value: Promo) => {
-        set({ promo: value });
+      setAnalyticsMetrics: value => {
+        set({ analyticsMetrics: value });
       },
     }),
     {
       name: 'global-storage',
-      version: 7,
+      version: 6,
     }
   )
 );

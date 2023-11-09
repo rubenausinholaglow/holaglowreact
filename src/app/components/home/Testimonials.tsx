@@ -1,6 +1,6 @@
 'use client';
 
-import { useSessionStore } from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -87,7 +87,7 @@ const Testimonial = ({
 };
 
 export default function Testimonials() {
-  const deviceSize = useSessionStore(state => state.deviceSize);
+  const deviceSize = useGlobalPersistedStore(state => state.deviceSize);
 
   const visibleTestimonials = () => {
     if (deviceSize.isMobile) {
