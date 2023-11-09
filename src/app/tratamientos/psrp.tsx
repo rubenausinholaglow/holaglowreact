@@ -109,7 +109,10 @@ export default function PsrpPage({ slug }: { slug: string }) {
   return (
     <MainLayout>
       <link rel="canonical" href="https://holaglow.com/tratamientos/" />
-      <MobileFilters isVisible={isMobileFiltersVisible} />
+      <MobileFilters
+        isVisible={isMobileFiltersVisible}
+        setModalVisibility={setIsMobileFiltersVisible}
+      />
 
       <div className="bg-[#F3EDE9] rounded-t-3xl">
         <Container className="relative pt-8 pb-4">
