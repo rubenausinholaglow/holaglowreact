@@ -120,16 +120,7 @@ export default function ProductCard({
           </Text>
 
           <Flex className="mt-auto justify-between w-full">
-            <Button
-              type="tertiary"
-              className="mt-auto"
-              bgColor="bg-hg-primary"
-              customStyles="hover:bg-hg-secondary100"
-            >
-              <p className="mr-2">Saber más</p>
-              <SvgArrow height={20} width={20} />
-            </Button>
-            <div className="ml-4">
+            <div>
               {discountedPrice && (
                 <Text className="text-xs line-through text-hg-black500">
                   {product.price} €
@@ -142,6 +133,15 @@ export default function ProductCard({
                 {discountedPrice ? discountedPrice : product.price} €{' '}
               </Text>
             </div>
+            <Button
+              type="tertiary"
+              className="mt-auto ml-4"
+              bgColor="bg-hg-primary"
+              customStyles="hover:bg-hg-secondary100"
+            >
+              <p className="mr-2">Saber más</p>
+              <SvgArrow height={20} width={20} />
+            </Button>
           </Flex>
         </Flex>
       </div>

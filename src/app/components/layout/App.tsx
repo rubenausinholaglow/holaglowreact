@@ -104,11 +104,10 @@ export default function Html({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function initPromos() {
       const promo = await fetchPromos();
-
       setPromos(promo);
     }
 
-    if (isEmpty(promo)) {
+    if (!promo) {
       initPromos();
     }
   }, [promo]);
