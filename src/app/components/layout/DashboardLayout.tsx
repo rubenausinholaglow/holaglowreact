@@ -117,7 +117,7 @@ export default function DashboardLayout({
               router.push(routePages[message.data.page]);
             } else if (remoteControl) {
               return true;
-            } else {
+            } else if (message.data.page != 'CheckOut') {
               setFlowwwToken(localStorage.getItem('flowwwToken') || '');
               router.push(routePages[message.data.page]);
             }
