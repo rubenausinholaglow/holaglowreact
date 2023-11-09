@@ -42,6 +42,7 @@ export default function DashboardLayout({
         urlConnection:
           process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse',
         onReceiveMessage: message => {
+          console.log(message);
           const finalMessage: MessageSocket = {
             messageType: MessageType.ChatResponse,
             message: message,
