@@ -55,10 +55,6 @@ export const AnimateOnViewport = ({
     }
   }, [isInViewport]);
 
-  if (disableAnimation) {
-    return children;
-  }
-
   return (
     <div ref={ref as RefObject<HTMLDivElement>} className={styles}>
       {children}

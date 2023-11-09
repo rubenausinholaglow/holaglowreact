@@ -4,8 +4,6 @@ import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgGlow } from 'icons/IconsDs';
-import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 export default function ProductHeader({ product }: { product: Product }) {
@@ -52,22 +50,6 @@ export default function ProductHeader({ product }: { product: Product }) {
             onError={() => setNextImgSrc()}
             className={`relative ${alignmentStyles} rounded-3xl w-[66%]`}
           />
-
-          {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
-            <Flex
-              layout="row-center"
-              className="bg-hg-black rounded-full p-1 px-2 absolute top-[36px] md:top-[46px] left-[4px] m-2"
-            >
-              <SvgGlow
-                height={12}
-                width={12}
-                className="text-hg-primary mr-1"
-              />
-              <Text className="text-hg-secondary" size="xs">
-                B.<span className="text-hg-primary">Friday</span>
-              </Text>
-            </Flex>
-          )}
         </div>
       </div>
     </Container>

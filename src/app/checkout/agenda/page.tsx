@@ -8,10 +8,7 @@ import DatePicker from 'react-datepicker';
 import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -27,8 +24,9 @@ import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 export default function Agenda() {
   const router = useRouter();
 
-  const { user } = useGlobalPersistedStore(state => state);
-
+  const { selectedDay, setSelectedDay, user } = useGlobalPersistedStore(
+    state => state
+  );
   const {
     setSelectedSlot,
     selectedSlot,
@@ -37,9 +35,7 @@ export default function Agenda() {
     selectedPacksTreatments,
     selectedClinic,
     analyticsMetrics,
-    selectedDay,
-    setSelectedDay,
-  } = useSessionStore(state => state);
+  } = useGlobalPersistedStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
   const [dateToCheck, setDateToCheck] = useState(dayjs());

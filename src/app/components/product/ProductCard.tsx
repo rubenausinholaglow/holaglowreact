@@ -1,17 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import {
-  getDiscountedPrice,
-  getProductCardColor,
-  useImageProps,
-} from 'app/utils/common';
+import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgArrow, SvgGlow } from 'icons/IconsDs';
+import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,8 +25,6 @@ export default function ProductCard({
   [key: string]: any;
 }) {
   const pathName = usePathname();
-  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
-  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
@@ -39,11 +32,7 @@ export default function ProductCard({
 
   const isLanding = Object.keys(LANDINGS).includes(usePathname());
 
-  useEffect(() => {
-    if (!isEmpty(product.discounts)) {
-      setDiscountedPrice(getDiscountedPrice(product));
-    }
-  }, [product]);
+  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
 
   return (
     <Link
@@ -59,7 +48,7 @@ export default function ProductCard({
         <Flex layout="col-left" className="">
           <div className="relative h-[250px] w-full rounded-t-2xl">
             <div
-              className="absolute inset-0 top-[10%] rounded-t-2xl "
+              className="absolute inset-0 top-[10%] rounded-t-3xl "
               style={{
                 background: getProductCardColor(product.cardBackgroundColor),
               }}
@@ -92,22 +81,6 @@ export default function ProductCard({
                 })}
               </Flex>
             )}
-
-            {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
-              <Flex
-                layout="row-center"
-                className="bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
-              >
-                <SvgGlow
-                  height={12}
-                  width={12}
-                  className="text-hg-primary mr-1"
-                />
-                <Text className="text-hg-secondary" size="xs">
-                  B.<span className="text-hg-primary">Friday</span>
-                </Text>
-              </Flex>
-            )}
           </div>
         </Flex>
         <Flex
@@ -118,8 +91,7 @@ export default function ProductCard({
           <Text size="xs" className="text-hg-black500 mb-8">
             {product.description}
           </Text>
-
-          <Flex className="mt-auto justify-between w-full">
+          <div className="mt-auto">
             <Button
               type="tertiary"
               className="mt-auto"
@@ -129,20 +101,7 @@ export default function ProductCard({
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />
             </Button>
-            <div className="ml-4">
-              {discountedPrice && (
-                <Text className="text-xs line-through text-hg-black500">
-                  {product.price} €
-                </Text>
-              )}
-              {!discountedPrice && !product.isPack && (
-                <Text className="text-xs text-hg-secondary">desde</Text>
-              )}
-              <Text className=" text-hg-secondary font-semibold text-lg">
-                {discountedPrice ? discountedPrice : product.price} €{' '}
-              </Text>
-            </div>
-          </Flex>
+          </div>
         </Flex>
       </div>
     </Link>

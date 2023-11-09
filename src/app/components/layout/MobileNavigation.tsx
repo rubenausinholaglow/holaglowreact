@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -23,8 +20,8 @@ export default function MobileNavigation({
   headerHeight: number;
 }) {
   const paddingBottom = headerHeight + 16;
-  const { clinics, setClinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { deviceSize, clinics, setClinics, setSelectedTreatments } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     async function initClinics() {

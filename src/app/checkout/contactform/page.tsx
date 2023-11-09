@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';
-import { useSessionStore } from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -14,7 +14,7 @@ dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
   const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
-    useSessionStore(state => state);
+    useGlobalPersistedStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
 
   const localSelectedDay = dayjs(selectedDay);
