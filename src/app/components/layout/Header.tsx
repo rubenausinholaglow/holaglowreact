@@ -14,8 +14,10 @@ import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
 import MobileNavigation from './MobileNavigation';
+import PromoTopBar from './PromoTopBar';
 
 let scrollPos = 0;
+let isTicking = false;
 
 const NAV_ITEMS = [
   { name: 'Tratamientos', link: ROUTES.treatments },
@@ -49,21 +51,40 @@ export default function Header() {
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
   const recalculateVisibility = () => {
+    console.log(
+      window.scrollY,
+      scrollPos,
+      HEADER_HEIGHT,
+      window.scrollY < HEADER_HEIGHT,
+      scrollPos > window.scrollY
+    );
+
     setIsHeaderVisible(
       window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
     );
+
     scrollPos = window.scrollY;
+    isTicking = false;
   };
 
   const handleScroll = () => {
-    requestAnimationFrame(() => recalculateVisibility());
+    if (!isTicking) {
+      requestAnimationFrame(() => recalculateVisibility());
+      isTicking = true;
+    }
   };
 
   useEffect(() => {
+    console.log('restart addEventListener');
     scrollPos = 0;
-    recalculateVisibility();
+    isTicking = false;
 
+    recalculateVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll, { passive: true });
+    };
   }, []);
 
   return (
@@ -79,6 +100,7 @@ export default function Header() {
           !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
         }`}
       >
+        <PromoTopBar />
         <Container isHeader>
           <Flex
             layout="row-between"
