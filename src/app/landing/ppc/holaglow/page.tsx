@@ -9,10 +9,7 @@ import GoToTreatments from 'app/components/home/GoToTreatments';
 import Products from 'app/components/home/Products';
 import MainLayout from 'app/components/layout/MainLayout';
 import FullWidthCarousel from 'app/components/product/fullWidthCarousel';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -39,7 +36,7 @@ export default function LandingCaptacion() {
     setSelectedClinic,
     analyticsMetrics,
     setAnalyticsMetrics,
-  } = useSessionStore(state => state);
+  } = useGlobalPersistedStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE

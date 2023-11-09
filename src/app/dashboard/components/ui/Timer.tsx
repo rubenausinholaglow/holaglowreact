@@ -7,6 +7,7 @@ interface TimerProps {
 }
 
 export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
+  const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [patientArrived, setPatientArrived] = useState<boolean | null>(null);
@@ -33,6 +34,8 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
         const currentTimeStamp = new Date().getTime();
         const totalTime = currentTimeStamp - startTime;
 
+        setCurrentTime(totalTime);
+
         const fifteenMinutes = 15 * 60 * 1000;
         const twentyFiveMinutes = 25 * 60 * 1000;
 
@@ -56,6 +59,12 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
 
     return () => clearInterval(timer);
   }, [isRunning, startTime]);
+
+  const formatTime = (ms: number) => {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
 
   const handleStartTimer = () => {
     if (!isRunning) {

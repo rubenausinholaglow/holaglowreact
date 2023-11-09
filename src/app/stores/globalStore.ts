@@ -79,6 +79,7 @@ export const useSessionStore = create(
         isDesktop: false,
         isWideScreen: false,
       },
+      isMobile: true,
       selectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,

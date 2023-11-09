@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSessionStore } from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -41,7 +41,9 @@ export default function Header() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
+    state => state
+  );
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -75,8 +77,8 @@ export default function Header() {
 
       <header
         id="header"
-        className={`z-30 w-full bg-white top-0 sticky transition-transform ${
-          !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
+        className={`z-30 w-full bg-white fixed top-0 transition-transform ${
+          !isHeaderVisible ? '-translate-y-full' : ''
         }`}
       >
         <Container isHeader>
@@ -93,11 +95,14 @@ export default function Header() {
 
             <Navigation className="hidden lg:block 2xl:mr-20" />
 
-            <Flex layout="row-center" className="lg:absolute right-0 2xl:mr-20">
+            <Flex
+              layout="row-center"
+              className="lg:absolute right-0  2xl:mr-20"
+            >
               <Button
                 type="tertiary"
                 href={ROUTES.checkout.clinics}
-                className="hidden md:block"
+                className="hidden md:block mr-2"
                 onClick={() => {
                   setSelectedTreatments([]);
                 }}

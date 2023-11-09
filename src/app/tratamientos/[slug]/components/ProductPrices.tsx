@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import { useSessionStore } from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -14,7 +14,7 @@ import ProductSessionGroupedPriceCard from './ProductSessionGroupedPriceCard';
 import ProductSessionPriceCard from './ProductSessionPriceCard';
 
 export default function ProductPrices({ product }: { product: Product }) {
-  const { deviceSize } = useSessionStore(state => state);
+  const { deviceSize } = useGlobalPersistedStore(state => state);
   const [productItems, setProductITems] = useState<Product[]>([]);
   const [isSessionProduct, setIsSessionProduct] = useState<boolean>(false);
   const [groupedSessionProducts, setGroupedSessionProducts] = useState<
@@ -82,7 +82,7 @@ export default function ProductPrices({ product }: { product: Product }) {
         </Title>
 
         {!isSessionProduct && (
-          <Flex layout="col-left" className="md:flex-row gap-8">
+          <Flex layout="col-left" className="md:flex-row mb-8 gap-8">
             <Accordion
               value={deviceSize.isMobile ? 'accordion-0' : 'value'}
               className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
@@ -108,7 +108,7 @@ export default function ProductPrices({ product }: { product: Product }) {
         )}
 
         {isSessionProduct && isEmpty(groupedSessionProducts) && (
-          <Flex layout="col-left" className="md:flex-row md:gap-8">
+          <Flex layout="col-left" className="md:flex-row mb-8 md:gap-8">
             <Flex
               layout="col-left"
               className="bg-white p-3 md:p-0 rounded-2xl w-full shadow-centered-secondary md:bg-transparent md:shadow-none"
@@ -140,7 +140,7 @@ export default function ProductPrices({ product }: { product: Product }) {
         {isSessionProduct && !isEmpty(groupedSessionProducts) && (
           <Flex
             layout="col-left"
-            className="w-full gap-4 md:gap-12 md:flex-row"
+            className="w-full mb-8 gap-4 md:gap-12 md:flex-row"
           >
             {groupedSessionProducts?.map((products, productIndex) => (
               <Flex

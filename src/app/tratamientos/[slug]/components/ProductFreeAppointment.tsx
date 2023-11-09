@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import { useSessionStore } from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -13,7 +13,9 @@ import { fetchProduct } from 'utils/fetch';
 
 export default function ProductPaymentOptions() {
   const router = useRouter();
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
+    state => state
+  );
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {

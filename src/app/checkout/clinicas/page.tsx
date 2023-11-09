@@ -1,32 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Clinic } from '@interface/clinic';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import MainLayout from 'app/components/layout/MainLayout';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
-import { getDiscountedPrice } from 'app/utils/common';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCar, SvgGlow, SvgRadioChecked } from 'icons/IconsDs';
+import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
-  const { clinics } = useGlobalPersistedStore(state => state);
   const {
+    clinics,
     selectedClinic,
     setSelectedClinic,
     selectedPacksTreatments,
-    selectedTreatments,
-  } = useSessionStore(state => state);
-
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
+  } = useGlobalPersistedStore(state => state);
+  const { selectedTreatments } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     if (selectedClinic) {
@@ -44,21 +38,7 @@ export default function ClinicsCheckout() {
     );
   };
 
-  useEffect(() => {
-    const discountedPrices: any = [];
-
-    if (selectedTreatments && !isEmpty(selectedTreatments)) {
-      selectedTreatments.map(product => {
-        const discountedPrice = getDiscountedPrice(product);
-
-        if (discountedPrice !== product.price) {
-          discountedPrices.push(discountedPrice);
-        }
-      });
-    }
-
-    setDiscountedPrice(discountedPrices);
-  }, [selectedTreatments]);
+  console.log(selectedTreatments);
 
   return (
     <MainLayout isCheckout>
@@ -71,7 +51,7 @@ export default function ClinicsCheckout() {
               </Title>
 
               {Array.isArray(selectedTreatments) &&
-                selectedTreatments.map((product, index) => (
+                selectedTreatments.map(product => (
                   <Flex
                     layout="col-left"
                     className="w-full bg-hg-secondary100 p-3 gap-3 rounded-xl mb-12"
@@ -131,19 +111,12 @@ export default function ClinicsCheckout() {
                         width={24}
                       />
                     </Flex>
-                    <div>
-                      {discountedPrice && discountedPrice.length > 0 && (
-                        <Text className="line-through text-hg-black500">
-                          {product.price} €
-                        </Text>
-                      )}
-                      <Text className=" text-hg-secondary font-semibold text-2xl">
-                        {discountedPrice && discountedPrice.length > 0
-                          ? discountedPrice[index]
-                          : product.price}{' '}
-                        €
-                      </Text>
-                    </div>
+                    <Text
+                      size="xl"
+                      className="text-hg-secondary font-semibold w-full text-right"
+                    >
+                      {product.price}€
+                    </Text>
                   </Flex>
                 ))}
             </Flex>
