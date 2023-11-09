@@ -9,6 +9,7 @@ import MainLayout from 'app/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
+  useSessionStore,
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import es from 'dayjs/locale/es';
@@ -27,7 +28,12 @@ export default function Page({
 }) {
   dayjs.locale(es);
 
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const {
+    deviceSize,
+    setSelectedTreatments,
+    setPreviousAppointment,
+    setSelectedClinic,
+  } = useSessionStore(state => state);
   const router = useRouter();
   const [appointments, setAppointments] = useState([] as Appointment[]);
   const [loading, setLoading] = useState(true);
@@ -37,14 +43,9 @@ export default function Page({
   const [cancelling, setCancelling] = useState(false);
 
   const { isModalOpen } = useGlobalStore(state => state);
-  const {
-    clinics,
-    setCurrentUser,
-    setSelectedTreatments,
-    stateProducts,
-    setPreviousAppointment,
-    setSelectedClinic,
-  } = useGlobalPersistedStore(state => state);
+  const { clinics, setCurrentUser, stateProducts } = useGlobalPersistedStore(
+    state => state
+  );
 
   let showPast = false;
   let token = '';

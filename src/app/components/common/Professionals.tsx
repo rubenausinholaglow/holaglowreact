@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
 import ProductCarousel from 'app/components/product/fullWidthCarousel';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
@@ -17,7 +20,8 @@ export default function Professionals({
 }: {
   className?: string;
 }) {
-  const { clinics, deviceSize } = useGlobalPersistedStore(state => state);
+  const { clinics } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
 
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 

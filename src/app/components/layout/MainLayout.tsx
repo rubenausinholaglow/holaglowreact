@@ -4,14 +4,7 @@ import { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
-import {
-  HEADER_HEIGHT_DESKTOP,
-  HEADER_HEIGHT_MOBILE,
-} from 'app/utils/constants';
+import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
@@ -19,6 +12,7 @@ import spanishConf from 'dayjs/locale/es';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
+import PromoTopBar from './PromoTopBar';
 
 dayjs.locale(spanishConf);
 registerLocale('es', es);
@@ -44,7 +38,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const { deviceSize } = useGlobalPersistedStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
   const { setIsModalOpen, setIsMainScrollEnabled } = useGlobalStore(
     state => state
   );
@@ -54,18 +48,6 @@ export default function MainLayout({
     setIsMainScrollEnabled(true);
     setISHydrated(true);
   }, []);
-
-  const mainLayoutTopPadding = () => {
-    if (hideHeader) {
-      return '0px';
-    }
-
-    return `${
-      deviceSize.isMobile || deviceSize.isTablet
-        ? HEADER_HEIGHT_MOBILE
-        : HEADER_HEIGHT_DESKTOP
-    }px`;
-  };
 
   if (!isHydrated) {
     return <></>;
@@ -95,14 +77,17 @@ export default function MainLayout({
   }
 
   return (
-    <main style={{ paddingTop: mainLayoutTopPadding() }}>
-      {!hideHeader && <Header />}
+    <>
+      <PromoTopBar />
+      <main>
+        {!hideHeader && <Header />}
 
-      {children}
+        {children}
 
-      {!hideFooter && <Footer />}
+        {!hideFooter && <Footer />}
 
-      <Analytics />
-    </main>
+        <Analytics />
+      </main>
+    </>
   );
 }

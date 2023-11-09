@@ -1,4 +1,3 @@
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { priceFormat } from 'utils/priceFormat';
 

@@ -1,5 +1,5 @@
 import { Product } from '@interface/product';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -12,7 +12,7 @@ export default function ProductSessionGroupedPriceCard({
 }: {
   product: Product;
 }) {
-  const { setSelectedTreatments } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
 
   return (
     <div className="w-full">

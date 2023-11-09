@@ -18,6 +18,8 @@ export interface Product {
   preTreatmentInfo: PreTips;
   postTreatmentInfo: PostTips;
   packUnities: [];
+  discounts: Discount[];
+  tags: Tag[];
   packMoreInformation: string;
   relatedProducts: RelatedProduct[];
   flowwwId: number;
@@ -74,6 +76,7 @@ export interface PreTips {
   icon: string;
   tips: TipsDetails[];
 }
+
 export interface PostTips {
   info: string;
   icon: string;
@@ -82,14 +85,35 @@ export interface PostTips {
   possibleComplications: TipsDetails[];
   postTreatmentTips?: TipsDetails[];
 }
+
 export interface TipsDetails {
   details: string;
   priority: number;
   icon?: string;
 }
+
 export interface Upgrade {
   product: Product;
   order: number;
+}
+
+export interface Discount {
+  totalDiscount: number;
+  percentageDiscount: number;
+  startDate: string;
+  endDate: string;
+  id: string;
+  creationDate: string;
+  active: boolean;
+}
+
+export interface Tag {
+  tag: string;
+  startDate: string;
+  endDate: string;
+  id: string;
+  creationDate: string;
+  active: boolean;
 }
 
 export interface RelatedProduct {
