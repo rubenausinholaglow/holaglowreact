@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -14,8 +14,10 @@ import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
 import MobileNavigation from './MobileNavigation';
+import PromoTopBar from './PromoTopBar';
 
 let scrollPos = 0;
+let isTicking = false;
 
 const NAV_ITEMS = [
   { name: 'Tratamientos', link: ROUTES.treatments },
@@ -41,9 +43,7 @@ export default function Header() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 
-  const { deviceSize, setSelectedTreatments } = useGlobalPersistedStore(
-    state => state
-  );
+  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -54,17 +54,23 @@ export default function Header() {
     setIsHeaderVisible(
       window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
     );
+
     scrollPos = window.scrollY;
+    isTicking = false;
   };
 
   const handleScroll = () => {
-    requestAnimationFrame(() => recalculateVisibility());
+    if (!isTicking) {
+      requestAnimationFrame(() => recalculateVisibility());
+      isTicking = true;
+    }
   };
 
   useEffect(() => {
     scrollPos = 0;
-    recalculateVisibility();
+    isTicking = false;
 
+    recalculateVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
   }, []);
 
@@ -77,10 +83,11 @@ export default function Header() {
 
       <header
         id="header"
-        className={`z-30 w-full bg-white fixed top-0 transition-transform ${
-          !isHeaderVisible ? '-translate-y-full' : ''
+        className={`z-30 w-full bg-white top-0 sticky transition-transform ${
+          !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
         }`}
       >
+        <PromoTopBar />
         <Container isHeader>
           <Flex
             layout="row-between"
@@ -95,14 +102,11 @@ export default function Header() {
 
             <Navigation className="hidden lg:block 2xl:mr-20" />
 
-            <Flex
-              layout="row-center"
-              className="lg:absolute right-0  2xl:mr-20"
-            >
+            <Flex layout="row-center" className="lg:absolute right-0 2xl:mr-20">
               <Button
                 type="tertiary"
                 href={ROUTES.checkout.clinics}
-                className="hidden md:block mr-2"
+                className="hidden md:block"
                 onClick={() => {
                   setSelectedTreatments([]);
                 }}

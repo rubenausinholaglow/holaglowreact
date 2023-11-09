@@ -1,6 +1,9 @@
 'use client';
 
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { ROUTES } from 'app/utils/routes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -10,8 +13,8 @@ import { SvgHolaglow, SvgInstagram } from 'icons/IconsDs';
 import { usePathname } from 'next/navigation';
 
 export function Footer() {
-  const { deviceSize, clinics, setSelectedTreatments } =
-    useGlobalPersistedStore(state => state);
+  const { clinics } = useGlobalPersistedStore(state => state);
+  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
   const isHome = usePathname() === '/';
 
   return (
