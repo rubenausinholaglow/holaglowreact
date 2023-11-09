@@ -32,6 +32,7 @@ export default function ButtonMessage() {
     );
     if (existMessageChatResponse.length > 0) {
       const finalMessage: any = existMessageChatResponse[0].message;
+      console.log(finalMessage);
       showMessage(finalMessage.actions[0].actionId);
       messageSocket.removeMessageSocket(existMessageChatResponse[0]);
     }
