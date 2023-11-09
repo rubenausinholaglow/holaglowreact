@@ -33,6 +33,7 @@ export default function DashboardLayout({
     Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
     Menu: '/dashboard/menu',
     Home: '/dashboard',
+    CheckOut: '/dashboard/remoteControl/Payment',
   };
 
   useEffect(() => {
@@ -111,6 +112,10 @@ export default function DashboardLayout({
             }
             break;
           case 'GoToPage':
+            if (remoteControl && message.data.page === 'CheckOut') {
+              setFlowwwToken(localStorage.getItem('flowwwToken') || '');
+              router.push(routePages[message.data.page]);
+            }
             if (remoteControl) return true;
             setFlowwwToken(localStorage.getItem('flowwwToken') || '');
             router.push(routePages[message.data.page]);

@@ -4,6 +4,7 @@ import Bugsnag from '@bugsnag/js';
 import { Budget, StatusBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
+import { messageService } from '@services/MessageService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { applyDiscountToCart } from '@utils/utils';
@@ -175,6 +176,12 @@ const Page = () => {
                       await handleFinalize();
                       setIsLoading(false);
                       setShowPaymentButtons(!showPaymentButtons);
+                      const message: any = {
+                        clinicId: localStorage.getItem('ClinicId'),
+                        boxId: localStorage.getItem('BoxId'),
+                        page: 'CheckOut',
+                      };
+                      messageService.goToPage(message);
                     }}
                   >
                     {isLoading ? (
