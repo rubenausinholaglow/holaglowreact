@@ -51,14 +51,6 @@ export default function Header() {
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
   const recalculateVisibility = () => {
-    console.log(
-      window.scrollY,
-      scrollPos,
-      HEADER_HEIGHT,
-      window.scrollY < HEADER_HEIGHT,
-      scrollPos > window.scrollY
-    );
-
     setIsHeaderVisible(
       window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
     );
@@ -75,16 +67,11 @@ export default function Header() {
   };
 
   useEffect(() => {
-    console.log('restart addEventListener');
     scrollPos = 0;
     isTicking = false;
 
     recalculateVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll, { passive: true });
-    };
   }, []);
 
   return (
