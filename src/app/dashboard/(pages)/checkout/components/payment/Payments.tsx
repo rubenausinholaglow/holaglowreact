@@ -8,6 +8,7 @@ import { MessageType } from '@interface/messageSocket';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
 import { budgetService } from '@services/BudgetService';
+import { messageService } from '@services/MessageService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
@@ -45,6 +46,8 @@ export const PaymentModule = () => {
   >({});
   const messageSocket = useMessageSocket(state => state);
   const { remoteControl } = useGlobalPersistedStore(state => state);
+  const GuidClinicId = localStorage.getItem('ClinicId') || '';
+  const localBoxId = localStorage.getItem('BoxId') || '';
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
@@ -163,7 +166,6 @@ export const PaymentModule = () => {
   const missingAmountFormatted = missingAmount.toFixed(2);
 
   const sendTicket = async () => {
-    const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
     const BudgetId = localStorage.getItem('BudgetId') || '';
     const ClinicFlowwwId = localStorage.getItem('ClinicFlowwwId') || '';
@@ -238,6 +240,14 @@ export const PaymentModule = () => {
         localStorage.removeItem('BudgetId');
         usePaymentList.setState(INITIAL_STATE_PAYMENT);
         useCartStore.setState(INITIAL_STATE);
+        if (remoteControl) {
+          const message: any = {
+            clinicId: GuidClinicId,
+            BoxId: localBoxId,
+            Page: 'Menu',
+          };
+          messageService.goToPage(message);
+        }
         router.push('/dashboard/menu');
         setMessageNotification('Ticket Creado Correctamente');
       } else {

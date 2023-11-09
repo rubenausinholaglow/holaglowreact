@@ -55,6 +55,7 @@ export default function PaymentInput(props: Props) {
 
   const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
+  const { remoteControl } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
@@ -132,7 +133,6 @@ export default function PaymentInput(props: Props) {
   ) => {
     const localClinicId = localStorage.getItem('ClinicId');
     const localBoxId = localStorage.getItem('BoxId');
-    const remoteControl = localStorage.getItem('RemoteControl');
     const localBudgetId = localStorage.getItem('BudgetId');
 
     const paymentCreatedRequest = {

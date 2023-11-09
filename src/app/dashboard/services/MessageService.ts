@@ -80,6 +80,11 @@ class MessageService {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}PaymentCreated`;
     return this.sendRequest(url, props);
   }
+
+  public async goToPage(props: any): Promise<any> {
+    const url = `${process.env.NEXT_PUBLIC_CLINICS_API}GoToPage`;
+    return this.sendRequest(url, props);
+  }
 }
 
 export const messageService = new MessageService();

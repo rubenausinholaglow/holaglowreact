@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
 import ButtonMessage from '@components/ui/ButtonMessage';
 import { useMessageSocket } from '@components/useMessageSocket';
@@ -26,6 +26,14 @@ export default function DashboardLayout({
   const router = useRouter();
   const messageSocket = useMessageSocket(state => state);
   const { remoteControl } = useGlobalPersistedStore(state => state);
+  const [flowwwToken, setFlowwwToken] = useState('');
+
+  const routePages: any = {
+    Crisalix: '/dashboard/crisalix',
+    Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
+    Menu: '/dashboard/menu',
+    Home: '/dashboard',
+  };
 
   useEffect(() => {
     if (!hideContactButtons) {
@@ -72,7 +80,6 @@ export default function DashboardLayout({
               BoxId: message.data.boxId,
               FlowwwToken: message.data.token,
             };
-
             break;
           case 'CrisalixUser':
             if (remoteControl) {
@@ -86,7 +93,6 @@ export default function DashboardLayout({
               playerToken: message.data.playerToken,
               playerId: message.data.playerId,
             };
-
             break;
           case 'PaymentCreate':
             if (remoteControl != message.data.remoteControl) {
@@ -103,9 +109,12 @@ export default function DashboardLayout({
                 budgetId: message.data.budgetId,
               };
             }
-
             break;
-
+          case 'GoToPage':
+            if (remoteControl) return true;
+            setFlowwwToken(localStorage.getItem('flowwwToken') || '');
+            router.push(routePages[message.data.page]);
+            break;
           default:
             throw new Error(`Unsupported event: ${message.Event}`);
         }
