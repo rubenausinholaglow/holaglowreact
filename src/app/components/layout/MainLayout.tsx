@@ -38,7 +38,6 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const [isHydrated, setISHydrated] = useState(false);
-  const { deviceSize } = useSessionStore(state => state);
   const { setIsModalOpen, setIsMainScrollEnabled } = useGlobalStore(
     state => state
   );
@@ -78,14 +77,10 @@ export default function MainLayout({
 
   return (
     <>
-      <PromoTopBar />
       <main>
         {!hideHeader && <Header />}
-
         {children}
-
         {!hideFooter && <Footer />}
-
         <Analytics />
       </main>
     </>
