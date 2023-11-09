@@ -115,10 +115,12 @@ export default function DashboardLayout({
             if (remoteControl && message.data.page === 'CheckOut') {
               setFlowwwToken(localStorage.getItem('flowwwToken') || '');
               router.push(routePages[message.data.page]);
+            } else if (remoteControl) {
+              return true;
+            } else {
+              setFlowwwToken(localStorage.getItem('flowwwToken') || '');
+              router.push(routePages[message.data.page]);
             }
-            if (remoteControl) return true;
-            setFlowwwToken(localStorage.getItem('flowwwToken') || '');
-            router.push(routePages[message.data.page]);
             break;
           default:
             throw new Error(`Unsupported event: ${message.Event}`);
