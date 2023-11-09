@@ -14,8 +14,10 @@ import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
 import MobileNavigation from './MobileNavigation';
+import PromoTopBar from './PromoTopBar';
 
 let scrollPos = 0;
+let isTicking = false;
 
 const NAV_ITEMS = [
   { name: 'Tratamientos', link: ROUTES.treatments },
@@ -54,17 +56,23 @@ export default function Header() {
     setIsHeaderVisible(
       window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
     );
+
     scrollPos = window.scrollY;
+    isTicking = false;
   };
 
   const handleScroll = () => {
-    requestAnimationFrame(() => recalculateVisibility());
+    if (!isTicking) {
+      requestAnimationFrame(() => recalculateVisibility());
+      isTicking = true;
+    }
   };
 
   useEffect(() => {
     scrollPos = 0;
-    recalculateVisibility();
+    isTicking = false;
 
+    recalculateVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
   }, []);
 
@@ -81,6 +89,7 @@ export default function Header() {
           !isHeaderVisible ? '-translate-y-full' : ''
         }`}
       >
+        <PromoTopBar />
         <Container isHeader>
           <Flex
             layout="row-between"

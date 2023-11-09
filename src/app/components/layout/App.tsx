@@ -98,7 +98,16 @@ export default function Html({ children }: { children: ReactNode }) {
       initClinics();
     }
   }, [clinics]);
+useEffect(() => {
+    async function initPromos() {
+      const promo = await fetchPromos();
+      setPromos(promo);
+    }
 
+    if (!promo) {
+      initPromos();
+    }
+  }, [promo]);
   return (
     <body
       className={`${poppins.className} min-h-screen ${

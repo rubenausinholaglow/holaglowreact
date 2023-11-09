@@ -92,16 +92,17 @@ export default function ProductCard({
             {product.description}
           </Text>
           <div className="mt-auto">
+            <div>
+          </div>
             <Button
               type="tertiary"
-              className="mt-auto"
+              className="mt-auto ml-4"
               bgColor="bg-hg-primary"
               customStyles="hover:bg-hg-secondary100"
             >
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />
             </Button>
-          </div>
         </Flex>
       </div>
     </Link>

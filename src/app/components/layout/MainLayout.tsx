@@ -97,11 +97,8 @@ export default function MainLayout({
   return (
     <main style={{ paddingTop: mainLayoutTopPadding() }}>
       {!hideHeader && <Header />}
-
       {children}
-
       {!hideFooter && <Footer />}
-
       <Analytics />
     </main>
   );
