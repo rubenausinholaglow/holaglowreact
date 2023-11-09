@@ -1,10 +1,18 @@
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 
 export default function PromoTopBar() {
+  const { promo } = useGlobalPersistedStore(state => state);
+
+  if (isEmpty(promo)) {
+    return <></>;
+  }
+
   return (
     <div className="bg-hg-black w-full overflow-hidden relative">
       <div className="whitespace-nowrap overflow-hidden inline-block animate-horizontalScroll">

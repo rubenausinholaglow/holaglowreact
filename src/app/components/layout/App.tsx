@@ -104,14 +104,17 @@ export default function Html({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function initPromos() {
       const promo = await fetchPromos();
-
       setPromos(promo);
     }
 
-    if (isEmpty(promo)) {
+    if (!promo) {
       initPromos();
     }
   }, [promo]);
+
+  useEffect(() => {
+    setShowModalBackground(isModalOpen);
+  }, [isModalOpen]);
 
   return (
     <body
@@ -124,8 +127,8 @@ export default function Html({ children }: { children: ReactNode }) {
       <ModalBackground
         isVisible={showModalBackground}
         onClick={() => {
-          setShowModalBackground(false);
           setIsModalOpen(false);
+          setShowModalBackground(false);
         }}
       />
       <Breakpoint />
