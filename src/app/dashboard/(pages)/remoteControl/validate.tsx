@@ -1,11 +1,16 @@
 'use client';
 import { useState } from 'react';
+import ScheduleService from '@services/ScheduleService';
+import { clearLocalStorage } from '@utils/utils';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import router from 'next/router';
 
 export default function ValidateComment() {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [comment, setComment] = useState('');
+  const { user, storedAppointmentId } = useGlobalPersistedStore(state => state);
 
   const handleClick = async () => {
     setIsCommentModalOpen(true);
@@ -13,17 +18,17 @@ export default function ValidateComment() {
 
   const handleCommentSubmit = async () => {
     setIsCommentModalOpen(false);
-    /* const result = await ScheduleService.finish(
-      appointmentId ?? '',
+    const result = await ScheduleService.finish(
+      storedAppointmentId ?? '',
       comment ?? '',
-      userId || ''
+      user?.id || ''
     );
     if (result) {
       clearLocalStorage(false);
       router.push('/dashboard');
     } else {
       //TODO - MESSAGE!
-    }*/
+    }
   };
 
   return (

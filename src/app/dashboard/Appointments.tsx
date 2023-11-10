@@ -27,8 +27,9 @@ const AppointmentsListComponent: React.FC<{
   const router = useRouter();
   const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
-  const { storedBoxId } = useGlobalPersistedStore(state => state);
-  const [appointmentId, setAppointmentId] = useState('');
+  const { storedBoxId, storedAppointmentId, setAppointmentId } =
+    useGlobalPersistedStore(state => state);
+
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -91,7 +92,7 @@ const AppointmentsListComponent: React.FC<{
           await messageService.startAppointment(data).then(async info => {
             if (info != null) {
               await ScheduleService.updatePatientStatusAppointment(
-                appointmentId,
+                storedAppointmentId,
                 user?.id || '',
                 Status.CheckIn
               );
