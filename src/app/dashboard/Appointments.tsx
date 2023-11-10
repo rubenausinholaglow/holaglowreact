@@ -108,7 +108,7 @@ const AppointmentsListComponent: React.FC<{
                 await ScheduleService.updatePatientStatusAppointment(
                   storedAppointmentId,
                   user?.id || '',
-                  Status.CheckIn
+                  Status.InProgress
                 );
 
                 await UserService.createCrisalixUser(
