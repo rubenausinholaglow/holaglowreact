@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Appointment, Status } from '@interface/appointment';
 import { CrisalixUser } from '@interface/crisalix';
-import { CrisalixUserData } from '@interface/FrontEndMessages';
+import {
+  CrisalixUserData,
+  StartAppointmentData,
+} from '@interface/FrontEndMessages';
 import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -27,7 +30,7 @@ const AppointmentsListComponent: React.FC<{
   const router = useRouter();
   const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
-  const { storedBoxId, storedAppointmentId, setAppointmentId } =
+  const { storedClinicId, storedBoxId, storedAppointmentId, setAppointmentId } =
     useGlobalPersistedStore(state => state);
 
   useEffect(() => {
@@ -92,16 +95,27 @@ const AppointmentsListComponent: React.FC<{
           data.boxId = storedBoxId;
           saveUserDetails(name, id, flowwwToken);
 
-          await messageService.startAppointment(data).then(async info => {
-            if (info != null) {
-              await ScheduleService.updatePatientStatusAppointment(
-                storedAppointmentId,
-                user?.id || '',
-                Status.CheckIn
-              );
+          const startAppointmentData: StartAppointmentData = {
+            clinicId: storedClinicId,
+            boxId: storedBoxId,
+            flowwwToken: data.lead.user?.flowwwToken,
+          };
 
-              await UserService.createCrisalixUser(id, data.id, clinicId).then(
-                async x => {
+          await messageService
+            .startAppointment(startAppointmentData)
+            .then(async info => {
+              if (info != null) {
+                await ScheduleService.updatePatientStatusAppointment(
+                  storedAppointmentId,
+                  user?.id || '',
+                  Status.CheckIn
+                );
+
+                await UserService.createCrisalixUser(
+                  id,
+                  data.id,
+                  clinicId
+                ).then(async x => {
                   const crisalixUser: CrisalixUser = {
                     id: x.id,
                     playerId: x.player_id,
@@ -117,11 +131,10 @@ const AppointmentsListComponent: React.FC<{
                     clinicId: clinicId,
                   };
                   await messageService.crisalixUser(crisalixUserData);
-                }
-              );
-              router.push('/dashboard/remoteControl');
-            }
-          });
+                });
+                router.push('/dashboard/remoteControl');
+              }
+            });
         } else {
           //TODO - Poner un mensaje de Error en UI
         }
