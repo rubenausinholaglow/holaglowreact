@@ -98,7 +98,7 @@ export default async function Budget({
   products.forEach((product: any) => {
     if (product.product.discounts) {
       product.product.discounts.forEach((x: any) => {
-        if (new Date(x.endDate) > now) {
+        if (new Date(x.startDate) < now && new Date(x.endDate) > now) {
           maxDiscountDate = new Date(x.endDate);
         }
       });
