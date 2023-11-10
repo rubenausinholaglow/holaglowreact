@@ -30,3 +30,11 @@ export interface PaymentCreatedData extends BaseDataMessage {
 export interface GoToPageData extends BaseDataMessage {
   page: string;
 }
+
+export enum EventTypes {
+  PatientArrived = 'PatientArrived',
+  StartAppointment = 'StartAppointment',
+  CrisalixUser = 'CrisalixUser',
+  PaymentCreate = 'PaymentCreate',
+  GoToPage = 'GoToPage',
+}

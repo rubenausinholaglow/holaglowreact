@@ -2,11 +2,11 @@ import { ProfessionalType } from '@interface/clinic';
 import {
   CrisalixUserData,
   GoToPageData,
+  PatientArrivedData,
   PaymentCreatedData,
   StartAppointmentData,
 } from '@interface/FrontEndMessages';
 import { MessageSent } from '@interface/message';
-import { PatientArrivedData } from '@interface/messageTypes';
 import {
   ERROR_RESPONSE_MESSAGE,
   ERROR_SEND_MESSAGE,
