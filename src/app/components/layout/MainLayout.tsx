@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/checkout/components/layout/CheckoutHeader';
-import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
+import { useGlobalStore } from 'app/stores/globalStore';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
@@ -12,7 +12,6 @@ import spanishConf from 'dayjs/locale/es';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
-import PromoTopBar from './PromoTopBar';
 
 dayjs.locale(spanishConf);
 registerLocale('es', es);
@@ -37,7 +36,7 @@ export default function MainLayout({
   hideFooter?: boolean;
   children: React.ReactNode;
 }) {
-  const [isHydrated, setISHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
   const { setIsModalOpen, setIsMainScrollEnabled } = useGlobalStore(
     state => state
   );
@@ -45,7 +44,7 @@ export default function MainLayout({
   useEffect(() => {
     setIsModalOpen(false);
     setIsMainScrollEnabled(true);
-    setISHydrated(true);
+    setIsHydrated(true);
   }, []);
 
   if (!isHydrated) {

@@ -16,8 +16,8 @@ import Link from 'next/link';
 import MobileNavigation from './MobileNavigation';
 import PromoTopBar from './PromoTopBar';
 
-let scrollPos = 0;
 let isTicking = false;
+let scrollPos = 0;
 
 const NAV_ITEMS = [
   { name: 'Tratamientos', link: ROUTES.treatments },
@@ -54,8 +54,8 @@ export default function Header() {
     setIsHeaderVisible(
       window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
     );
-
     scrollPos = window.scrollY;
+
     isTicking = false;
   };
 
@@ -72,6 +72,10 @@ export default function Header() {
 
     recalculateVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
