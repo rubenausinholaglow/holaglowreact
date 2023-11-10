@@ -50,6 +50,8 @@ const AppointmentsListComponent: React.FC<{
     };
 
     fetchAppointments();
+    const intervalId = setInterval(fetchAppointments, 5 * 60 * 1000);
+    return () => clearInterval(intervalId);
   }, [clinicId, boxId]);
 
   const handleCheckUser = async (appointment: Appointment) => {
@@ -63,6 +65,7 @@ const AppointmentsListComponent: React.FC<{
         if (data && !isEmpty(data)) {
           setCurrentUser(data);
           setAppointmentId(appointment.id);
+
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           //TODO - MESSAGE ERROR UI
@@ -158,6 +161,7 @@ const AppointmentsListComponent: React.FC<{
         <table className="w-full mt-9">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Hora</th>
               <th>Estado</th>
               <th>Nombre</th>
@@ -167,6 +171,9 @@ const AppointmentsListComponent: React.FC<{
           <tbody>
             {appointments.map(appointment => (
               <tr key={appointment.id}>
+                <td className="my-2 mx-2">
+                  {appointment.lead?.user?.flowwwToken.slice(0, -32)}
+                </td>
                 <td className="my-2 mx-2">{appointment.startTime}</td>
                 <td className="my-2 mx-2">
                   {translateStatus(appointment.status ?? Status.Open)}
