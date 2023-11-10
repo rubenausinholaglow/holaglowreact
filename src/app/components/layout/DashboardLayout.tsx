@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
 import ButtonMessage from '@components/ui/ButtonMessage';
 import { useMessageSocket } from '@components/useMessageSocket';
+import { EventTypes } from '@interface/FrontEndMessages';
 import { MessageSocket, MessageType } from '@interface/messageSocket';
 import SocketService from '@services/SocketService';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -36,14 +37,6 @@ export default function DashboardLayout({
   const SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE =
     process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
 
-  enum EventTypes {
-    PatientArrived = 'PatientArrived',
-    StartAppointment = 'StartAppointment',
-    CrisalixUser = 'CrisalixUser',
-    PaymentCreate = 'PaymentCreate',
-    GoToPage = 'GoToPage',
-  }
-
   const routePages: Record<string, string | ''> = {
     Crisalix: '/dashboard/crisalix',
     Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
@@ -55,9 +48,7 @@ export default function DashboardLayout({
   useEffect(() => {
     if (!hideContactButtons) {
       SocketService.getInstance({
-        urlConnection:
-          process.env.NEXT_PUBLIC_CLINICS_API +
-          SOCKET_URL_PROFESSIONAL_RESPONSE,
+        urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
         onReceiveMessage: message => {
           const finalMessage: MessageSocket = {
             messageType: MessageType.ChatResponse,
@@ -68,8 +59,7 @@ export default function DashboardLayout({
       });
     }
     SocketService.getInstance({
-      urlConnection:
-        process.env.NEXT_PUBLIC_CLINICS_API + SOCKET_URL_COMMUNICATIONS,
+      urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
         const isBoxIdInStoredBoxIds = isBoxIdInStoredBoxId(
           message.data.boxId,
@@ -109,9 +99,7 @@ export default function DashboardLayout({
       },
     });
     SocketService.getInstance({
-      urlConnection:
-        process.env.NEXT_PUBLIC_FINANCE_API +
-        SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
+      urlConnection: SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
       onReceiveMessage: message => {
         const finalMessage: MessageSocket = {
           messageType: MessageType.PaymentResponse,
