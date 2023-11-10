@@ -6,10 +6,10 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import CheckHydration from 'utils/CheckHydration';
+import Link from 'next/link';
 
 import ReadQr from './ReadQr';
 import useFormHook from './useFormHook';
-import Link from 'next/link';
 
 const WELCOME_MESSAGE = 'Bienvenid@ a Holaglow!';
 const SCAN_QR_MESSAGE = '¡Escanea el QR que te hemos enviado!';
