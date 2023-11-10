@@ -10,6 +10,7 @@ import { ERROR_POST } from '@utils/textConstants';
 import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
@@ -37,6 +38,9 @@ const Page = () => {
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
   const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
+  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
+    state => state
+  );
 
   useEffect(() => {
     if (budgetId && totalPriceInitial != totalPriceToShow) {
@@ -64,7 +68,6 @@ const Page = () => {
     setTotalPriceInitial(totalPriceToShow);
 
     const GuidUser = localStorage.getItem('id') || '';
-    const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
 
     const budget: Budget = {
@@ -77,7 +80,7 @@ const Page = () => {
       manualPrice: Number(manualPrice.toFixed(2)),
       totalPrice: Number(totalPrice.toFixed(2)),
       totalPriceWithIva: Number(totalPrice.toFixed(2)),
-      clinicInfoId: GuidClinicId,
+      clinicInfoId: storedClinicId,
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: GuidProfessional,
@@ -88,7 +91,6 @@ const Page = () => {
         priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
       })),
     };
-
     try {
       if (budgetId.length > 0) {
         setBudgetModified(false);
@@ -177,8 +179,8 @@ const Page = () => {
                       setIsLoading(false);
                       setShowPaymentButtons(!showPaymentButtons);
                       const message: any = {
-                        clinicId: localStorage.getItem('ClinicId'),
-                        boxId: localStorage.getItem('BoxId'),
+                        clinicId: storedClinicId,
+                        boxId: storedBoxId,
                         page: 'CheckOut',
                       };
                       messageService.goToPage(message);

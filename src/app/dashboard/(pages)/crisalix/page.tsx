@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import UserService from '@services/UserService';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
@@ -17,6 +18,7 @@ const Page = () => {
   const username =
     typeof window !== 'undefined' ? localStorage.getItem('username') : null;
   const userCrisalix = useCrisalix(state => state);
+  const { storedClinicId } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const existsCrisalixUser =
@@ -40,8 +42,7 @@ const Page = () => {
 
   const checksimulationReady = () => {
     if (id == '' || playerToken == '') return;
-    const clinicId = localStorage.getItem('ClinicId');
-    UserService.getSimulationReady(id, clinicId!).then(x => {
+    UserService.getSimulationReady(id, storedClinicId!).then(x => {
       setSimulationReady(x);
       if (!x) {
         setTimeout(() => {

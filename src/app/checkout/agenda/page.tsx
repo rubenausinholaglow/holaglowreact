@@ -103,7 +103,7 @@ export default function Agenda() {
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
-        selectedClinic!.flowwwId
+        selectedClinic?.flowwwId || ''
       ).then(data => {
         const availability = availableDates ?? [];
         const today = dayjs();

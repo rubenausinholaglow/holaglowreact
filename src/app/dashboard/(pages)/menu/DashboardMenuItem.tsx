@@ -1,16 +1,12 @@
 'use client';
 
+import { GoToPageData } from '@interface/FrontEndMessages';
 import { messageService } from '@services/MessageService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { DashboardMenuItemProps } from '../../utils/props';
-
-type GoToCrisalix = {
-  clinicId: string;
-  boxId: string;
-  page: string;
-};
 
 const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   iconSrc,
@@ -19,15 +15,16 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   link,
   target,
 }) => {
+  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
+    state => state
+  );
   function goToPage(name: string) {
-    const localClinicId = localStorage.getItem('ClinicId' || '');
-    const localBoxId = localStorage.getItem('BoxId' || '');
-    let message: GoToCrisalix;
+    let message: GoToPageData;
     switch (name) {
       case 'Simulador 3D':
         message = {
-          clinicId: localClinicId || '',
-          boxId: localBoxId || '',
+          clinicId: storedClinicId || '',
+          boxId: storedBoxId || '',
           page: 'Crisalix',
         };
         messageService.goToPage(message);

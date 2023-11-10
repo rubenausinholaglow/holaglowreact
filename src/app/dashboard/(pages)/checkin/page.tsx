@@ -27,7 +27,7 @@ export default function Page() {
       setName(props.name);
       setHour(props.hour);
       setProfessional(props.professional);
-      messageService.PatientArrived(props);
+      messageService.patientArrived(props);
       reloadPageAfterDelay(30000);
     } else {
       reloadPageAfterDelay(5000);

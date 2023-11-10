@@ -45,9 +45,8 @@ export const PaymentModule = () => {
     Record<string, StatusPayment>
   >({});
   const messageSocket = useMessageSocket(state => state);
-  const { remoteControl } = useGlobalPersistedStore(state => state);
-  const GuidClinicId = localStorage.getItem('ClinicId') || '';
-  const localBoxId = localStorage.getItem('BoxId') || '';
+  const { remoteControl, storedBoxId, storedClinicId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
@@ -78,28 +77,39 @@ export const PaymentModule = () => {
     if (localBudgetId != message.budgetId) return true;
     const existsPayment = paymentList.find(x => x.id == message.id);
     if (!existsPayment) {
-      const paymentRequest = {
-        amount: message.amount,
-        method: message.paymentMethod,
-        bank: message.paymentBank,
-        paymentReference: message.ReferenceId,
-        id: message.id,
-      };
-      if (message.amount > 0) addPaymentToList(paymentRequest);
-      messageSocket.removeMessageSocket(message);
+      handleNewPayment(message);
     } else {
-      if (message.amount == 0) {
-        const paymentRequest = {
-          amount: existsPayment.amount,
-          method: message.paymentMethod,
-          bank: message.paymentBank,
-          paymentReference: message.ReferenceId,
-          id: message.id,
-        };
-        if (existsPayment.amount > 0) removePayment(paymentRequest);
-        messageSocket.removeMessageSocket(message);
-      }
+      handleExistingPayment(message, existsPayment);
     }
+  };
+
+  const handleNewPayment = (message: any): void => {
+    const paymentRequest = createPaymentRequest(message);
+    if (message.amount > 0) {
+      addPaymentToList(paymentRequest);
+    }
+    messageSocket.removeMessageSocket(message);
+  };
+
+  const handleExistingPayment = (message: any, existsPayment: any): void => {
+    if (message.amount === 0) {
+      message.amount = existsPayment.amount;
+      const paymentRequest = createPaymentRequest(message);
+      if (existsPayment.amount > 0) {
+        removePayment(paymentRequest);
+      }
+      messageSocket.removeMessageSocket(message);
+    }
+  };
+
+  const createPaymentRequest = (message: any): any => {
+    return {
+      amount: message.amount,
+      method: message.paymentMethod,
+      bank: message.paymentBank,
+      paymentReference: message.ReferenceId,
+      id: message.id,
+    };
   };
 
   const handlePaymentResponse = (message: any) => {
@@ -181,7 +191,7 @@ export const PaymentModule = () => {
       manualPrice: 0,
       totalPrice: totalPrice,
       totalPriceWithIva: totalPrice,
-      clinicInfoId: GuidClinicId,
+      clinicInfoId: storedClinicId,
       FlowwwId: '',
       referenceId: '',
       statusBudget: StatusBudget.Open,
@@ -242,8 +252,8 @@ export const PaymentModule = () => {
         useCartStore.setState(INITIAL_STATE);
         if (remoteControl) {
           const message: any = {
-            clinicId: GuidClinicId,
-            BoxId: localBoxId,
+            clinicId: storedClinicId,
+            BoxId: storedBoxId,
             Page: 'Menu',
           };
           messageService.goToPage(message);

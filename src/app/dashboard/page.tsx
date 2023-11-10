@@ -100,12 +100,9 @@ export default function Page({
     boxId: string,
     flowwwToken: string
   ) {
-    const guidClinic = localStorage.getItem('ClinicId') || '';
-    const boxIdLocal = localStorage.getItem('BoxId') || '';
-
     if (
-      guidClinic.toUpperCase() === clinicId.toUpperCase() &&
-      String(boxId) === String(boxIdLocal)
+      storedClinicId.toUpperCase() === clinicId.toUpperCase() &&
+      String(boxId) === String(storedBoxId)
     ) {
       await redirectPage('', '', flowwwToken);
     }
@@ -120,9 +117,6 @@ export default function Page({
     setBoxId(params.get('boxId') || '');
     setRemoteControl(params.get('remoteControl') == 'true');
     setClinicId(params.get('clinicId') || '');
-
-    localStorage.setItem('ClinicId', params.get('clinicId') || '');
-    localStorage.setItem('BoxId', params.get('boxId') || '');
   }, []);
 
   const handleCheckUser = async () => {

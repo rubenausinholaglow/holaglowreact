@@ -1,5 +1,14 @@
 import { ProfessionalType } from '@interface/clinic';
+import {
+  CrisalixUserData,
+  GoToPageData,
+  PaymentCreatedData,
+} from '@interface/FrontEndMessages';
 import { MessageSent } from '@interface/message';
+import {
+  PatientArrivedData,
+  StartAppointmentData,
+} from '@interface/messageTypes';
 import {
   ERROR_RESPONSE_MESSAGE,
   ERROR_SEND_MESSAGE,
@@ -40,50 +49,35 @@ class MessageService {
     return this.sendRequest(url, messageSent);
   }
 
-  public async PatientArrived(props: any): Promise<any> {
-    const patientArrived: any = {
-      clinicId: props.clinicId,
-      boxId: props.boxId,
-    };
-
+  public async patientArrived(
+    patientArrived: PatientArrivedData
+  ): Promise<boolean> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}PatientArrived`;
-
     return this.sendRequest(url, patientArrived);
   }
 
-  public async StartAppointment(props: any): Promise<any> {
-    const startAppointment: any = {
-      clinicId: props.clinic.id,
-      boxId: props.boxId,
-      flowwwToken: props.lead.user.flowwwToken,
-    };
-
+  public async startAppointment(
+    startAppontmentData: StartAppointmentData
+  ): Promise<any> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}StartAppointment`;
-
-    return this.sendRequest(url, startAppointment);
+    return this.sendRequest(url, startAppontmentData);
   }
 
-  public async CrisalixUser(props: any): Promise<any> {
-    const crisalixUser: any = {
-      clinicId: props.clinicId,
-      boxId: props.boxId,
-      id: props.id,
-      playerId: props.playerId,
-      playerToken: props.playerToken,
-    };
-
+  public async crisalixUser(crisalixUserData: CrisalixUserData): Promise<any> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}CrisalixUser`;
-    return this.sendRequest(url, crisalixUser);
+    return this.sendRequest(url, crisalixUserData);
   }
 
-  public async PaymentCreated(props: any): Promise<any> {
+  public async paymentCreated(
+    PaymentCreatedData: PaymentCreatedData
+  ): Promise<boolean> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}PaymentCreated`;
-    return this.sendRequest(url, props);
+    return this.sendRequest(url, PaymentCreatedData);
   }
 
-  public async goToPage(props: any): Promise<any> {
+  public async goToPage(goToPageData: GoToPageData): Promise<any> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}GoToPage`;
-    return this.sendRequest(url, props);
+    return this.sendRequest(url, goToPageData);
   }
 }
 

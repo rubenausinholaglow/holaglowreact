@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMessageSocket } from '@components/useMessageSocket';
 import { MessageType } from '@interface/messageSocket';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 interface TimerProps {
   onColorChange: (color: string) => void;
@@ -11,6 +12,9 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [patientArrived, setPatientArrived] = useState<boolean | null>(null);
   const messageSocket = useMessageSocket(state => state);
+  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
+    state => state
+  );
 
   useEffect(() => {
     const existMessagePatientArrived: any = messageSocket.messageSocket.filter(
@@ -65,13 +69,9 @@ export const TimerComponent: React.FC<TimerProps> = ({ onColorChange }) => {
   };
 
   function updateColor(clinicId: string, boxId: string) {
-    const GuidClinic = localStorage.getItem('ClinicId') || '';
-    const boxIdlocal = localStorage.getItem('boxId') || '';
-    if (GuidClinic === clinicId && boxId == boxIdlocal) {
-      handleStopTimer();
-      setPatientArrived(true);
-      onColorChange('bg-red-500');
-    }
+    handleStopTimer();
+    setPatientArrived(true);
+    onColorChange('bg-red-500');
   }
 
   const handleStopTimer = () => {

@@ -17,7 +17,8 @@ const Page = () => {
   const [flowwwToken, setFlowwwToken] = useState('');
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
-  const { remoteControl } = useGlobalPersistedStore(state => state);
+  const { remoteControl, storedBoxId, storedClinicId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username') || '';
@@ -32,12 +33,13 @@ const Page = () => {
         x => x.messageType == MessageType.CrisalixUser
       );
       if (existsMessageCrisalixUser.length > 0) {
+        const crisalixUser = existsMessageCrisalixUser[0];
         const data = {
-          ClinicId: existsMessageCrisalixUser[0].ClinicId,
-          BoxId: existsMessageCrisalixUser[0].BoxId,
-          id: existsMessageCrisalixUser[0].id,
-          playerId: existsMessageCrisalixUser[0].playerId,
-          playerToken: existsMessageCrisalixUser[0].playerToken,
+          ClinicId: crisalixUser.ClinicId,
+          BoxId: crisalixUser.BoxId,
+          id: crisalixUser.id,
+          playerId: crisalixUser.playerId,
+          playerToken: crisalixUser.playerToken,
         };
         saveCrisalixUser(data);
         messageSocket.removeMessageSocket(existsMessageCrisalixUser[0]);
@@ -46,21 +48,13 @@ const Page = () => {
   }, [messageSocket]);
 
   async function saveCrisalixUser(props: any) {
-    const guidClinic = localStorage.getItem('ClinicId') || '';
-    const boxIdLocal = localStorage.getItem('BoxId') || '';
-
-    if (
-      guidClinic.toUpperCase() === props.ClinicId.toUpperCase() &&
-      String(props.BoxId) === String(boxIdLocal)
-    ) {
-      const crisalixUser: CrisalixUser = {
-        id: props.id,
-        playerId: props.playerId,
-        playerToken: props.playerToken,
-        name: props.name,
-      };
-      userCrisalix.addCrisalixUser(crisalixUser);
-    }
+    const crisalixUser: CrisalixUser = {
+      id: props.id,
+      playerId: props.playerId,
+      playerToken: props.playerToken,
+      name: props.name,
+    };
+    userCrisalix.addCrisalixUser(crisalixUser);
   }
 
   return (

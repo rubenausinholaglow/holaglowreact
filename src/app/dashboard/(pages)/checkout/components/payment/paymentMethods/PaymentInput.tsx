@@ -9,6 +9,7 @@ import Bugsnag from '@bugsnag/js';
 import TextInputField from '@components/TextInputField';
 import Notification from '@components/ui/Notification';
 import { ClientUpdate } from '@interface/client';
+import { PaymentCreatedData } from '@interface/FrontEndMessages';
 import { CreatePayment, InitializePayment } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
@@ -55,7 +56,8 @@ export default function PaymentInput(props: Props) {
 
   const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
-  const { remoteControl } = useGlobalPersistedStore(state => state);
+  const { remoteControl, storedBoxId, storedClinicId } =
+    useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
@@ -131,23 +133,21 @@ export default function PaymentInput(props: Props) {
     amount: any,
     referenceId: string
   ) => {
-    const localClinicId = localStorage.getItem('ClinicId');
-    const localBoxId = localStorage.getItem('BoxId');
     const localBudgetId = localStorage.getItem('BudgetId');
 
-    const paymentCreatedRequest = {
-      clinicId: localClinicId,
-      boxId: localBoxId,
+    const paymentCreatedRequest: PaymentCreatedData = {
+      clinicId: storedClinicId,
+      boxId: storedBoxId,
       id: paymentId,
       amount: amount,
       paymentBank: props.paymentBank,
       paymentMethod: props.paymentMethod,
       referenceId: referenceId,
       remoteControl: remoteControl,
-      budgetId: localBudgetId,
+      budgetId: localBudgetId || '',
     };
 
-    await messageService.PaymentCreated(paymentCreatedRequest);
+    await messageService.paymentCreated(paymentCreatedRequest);
   };
 
   const handleUrlPayment = async (

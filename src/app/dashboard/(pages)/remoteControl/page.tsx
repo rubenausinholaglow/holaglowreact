@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Notification from '@components/ui/Notification';
 import MainLayout from 'app/components/layout/MainLayout';
 import { Flex } from 'designSystem/Layouts/Layouts';
 

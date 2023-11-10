@@ -54,10 +54,11 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications',
       onReceiveMessage: message => {
-        if (
-          message.data.clinicId != storedClinicId &&
-          message.data.boxId != storedBoxId
-        ) {
+        const isBoxIdInStoredBoxIds = isBoxIdInStoredBoxId(
+          message.data.boxId,
+          storedBoxId
+        );
+        if (message.data.clinicId != storedClinicId && !isBoxIdInStoredBoxIds) {
           return true;
         }
         let messageData: any;
@@ -139,6 +140,24 @@ export default function DashboardLayout({
       },
     });
   }, []);
+
+  function isBoxIdInStoredBoxId(
+    messageBoxId: string,
+    storedBoxId: string
+  ): boolean {
+    const messageBoxIdArray: number[] = messageBoxId.split(',').map(Number);
+    const storedBoxIdArray: number[] = storedBoxId.split(',').map(Number);
+
+    const storedBoxIdSet = new Set(storedBoxIdArray);
+
+    for (const boxId of messageBoxIdArray) {
+      if (!storedBoxIdSet.has(boxId)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 
   return (
     <main className="min-h-screen h-100 pt-4 text-sm bg-[url('/images/dashboard/background/main_background.png')] bg-[#A96FE7] bg-bottom bg-contain bg-no-repeat">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Appointment, Status } from '@interface/appointment';
 import { CrisalixUser } from '@interface/crisalix';
+import { CrisalixUserData } from '@interface/FrontEndMessages';
 import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -26,7 +27,7 @@ const AppointmentsListComponent: React.FC<{
   const router = useRouter();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
-
+  const { storedBoxId } = useGlobalPersistedStore(state => state);
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -88,9 +89,9 @@ const AppointmentsListComponent: React.FC<{
             'ClinicProfessionalId',
             data.clinicProfessional.id
           );
-          data.boxId = localStorage.getItem('BoxId');
+          data.boxId = storedBoxId;
           saveUserDetails(name, id, flowwwToken);
-          await messageService.StartAppointment(data).then(async info => {
+          await messageService.startAppointment(data).then(async info => {
             if (info != null) {
               await UserService.createCrisalixUser(id, data.id, clinicId).then(
                 async x => {
@@ -101,14 +102,14 @@ const AppointmentsListComponent: React.FC<{
                     name: x.name,
                   };
                   userCrisalix.addCrisalixUser(crisalixUser);
-                  const props = {
+                  const crisalixUserData: CrisalixUserData = {
                     id: crisalixUser.id,
                     playerId: crisalixUser.playerId,
                     playerToken: crisalixUser.playerToken,
                     boxId: boxId,
                     clinicId: clinicId,
                   };
-                  await messageService.CrisalixUser(props);
+                  await messageService.crisalixUser(crisalixUserData);
                 }
               );
               router.push('/dashboard/remoteControl');

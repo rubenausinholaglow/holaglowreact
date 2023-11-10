@@ -2,10 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Product } from '@interface/product';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';

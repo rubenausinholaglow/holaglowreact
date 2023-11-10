@@ -47,10 +47,11 @@ export default function PaymentRemoteControl() {
             processBudget(budget);
           }
         } else {
-          setMessageNotification('Error cargando el presupuesto');
+          setMessageNotification('Error, presupuesto no encontrado');
         }
       })
       .catch(error => {
+        setMessageNotification('Error cargando el presupuesto');
         Bugsnag.notify(error);
       });
   }

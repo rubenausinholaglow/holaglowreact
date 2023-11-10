@@ -20,7 +20,7 @@ export default function ValidateComment() {
     );
     if (result) {
       clearLocalStorage(false);
-      router.push(`/dashboard?clinicId=${clinicId}&boxId=${boxId}`);
+      router.push('/dashboard');
     } else {
       //TODO - MESSAGE!
     }*/

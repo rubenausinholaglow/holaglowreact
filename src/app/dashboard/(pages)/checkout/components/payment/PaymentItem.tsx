@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Notification from '@components/ui/Notification';
+import { PaymentCreatedData } from '@interface/FrontEndMessages';
 import { PaymentProductRequest } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
@@ -33,7 +34,8 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
     null
   );
   const [isLoading, setIsLoading] = useState(false);
-  const { remoteControl } = useGlobalPersistedStore(state => state);
+  const { remoteControl, storedBoxId, storedClinicId } =
+    useGlobalPersistedStore(state => state);
 
   if (status === undefined) {
     status = StatusPayment.Waiting;
@@ -81,11 +83,11 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   };
 
   const sendPaymentDeleted = async (paymentId: string) => {
-    const localClinicId = localStorage.getItem('ClinicId');
-    const localBoxId = localStorage.getItem('BoxId');
+    const localClinicId = storedClinicId;
+    const localBoxId = storedBoxId;
     const localBudgetId = localStorage.getItem('BudgetId');
 
-    const paymentCreatedRequest = {
+    const paymentCreatedRequest: PaymentCreatedData = {
       clinicId: localClinicId,
       boxId: localBoxId,
       id: paymentId,
@@ -94,10 +96,10 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
       paymentMethod: 0,
       referenceId: '',
       remoteControl: remoteControl,
-      budgetId: localBudgetId,
+      budgetId: localBudgetId || '',
     };
 
-    await messageService.PaymentCreated(paymentCreatedRequest);
+    await messageService.paymentCreated(paymentCreatedRequest);
   };
 
   return (
