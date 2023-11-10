@@ -281,13 +281,13 @@ export default function PaymentInput(props: Props) {
                 label="Nombre"
                 placeholder="Nombre"
                 value={formData.firstName}
-                onChange={event => handleFormFieldChange(event, 'name')}
+                onChange={event => handleFormFieldChange(event, 'firstName')}
               />
               <TextInputField
                 label="Apellidos"
                 placeholder="Apellidos"
                 value={formData.lastName}
-                onChange={event => handleFormFieldChange(event, 'surnames')}
+                onChange={event => handleFormFieldChange(event, 'lastName')}
               />
             </Flex>
             <Flex className="gap-4">
