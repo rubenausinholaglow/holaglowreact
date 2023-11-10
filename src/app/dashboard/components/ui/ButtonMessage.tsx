@@ -32,7 +32,9 @@ export default function ButtonMessage() {
     );
     if (existMessageChatResponse.length > 0) {
       const finalMessage: any = existMessageChatResponse[0].message;
-      showMessage(finalMessage.actions[0].actionId);
+      if (finalMessage.actions) {
+        showMessage(finalMessage.actions[0].actionId);
+      }
       messageSocket.removeMessageSocket(existMessageChatResponse[0]);
     }
   }, [messageSocket]);

@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgClose } from 'icons/Icons';
+import { SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
@@ -28,6 +30,8 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
   const removeItemDiscount = useCartStore(state => state.removeItemDiscount);
 
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
   const [imgSrc, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
@@ -39,7 +43,20 @@ export default function ProductCard({ product, isCheckout }: Props) {
   )[0];
 
   const productHasDiscount = !isEmpty(productCartItem);
-
+  const productHasPromoDiscount = !isEmpty(product.discounts);
+  const productPricewithPromoDiscount = getDiscountedPrice(product);
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+  console.log(product.tags);
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(product),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
   return (
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
@@ -75,6 +92,17 @@ export default function ProductCard({ product, isCheckout }: Props) {
           />
         </div>
       )}
+      {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
+        <Flex
+          layout="row-center"
+          className="tagtest bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
+        >
+          <SvgGlow height={12} width={12} className="text-hg-primary mr-1" />
+          <Text className="text-hg-secondary" size="xs">
+            B.<span className="text-hg-primary">Friday</span>
+          </Text>
+        </Flex>
+      )}
       <Flex
         layout="col-left"
         className={isCheckout ? 'p-4' : 'p-4 text-left w-full h-full'}
@@ -103,6 +131,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
               {Number(product.priceWithDiscount).toFixed(2)}€
             </Text>
           )}
+
           <Text
             size="lg"
             className={`font-semibold text-red
@@ -110,11 +139,16 @@ export default function ProductCard({ product, isCheckout }: Props) {
               productHasDiscount && isCheckout
                 ? 'text-red-600 text-sm text line-through opacity-50'
                 : 'text-hg-black text-lg'
-            }
+            } ${productHasPromoDiscount ? 'line-through text-xs' : ''}
               `}
           >
             {product.price.toFixed(2)}€
           </Text>
+          {productHasPromoDiscount && !isCheckout && (
+            <Text size="lg" className={`font-semibold text-red ml-2`}>
+              {productPricewithPromoDiscount.toFixed(2)}€
+            </Text>
+          )}
         </Flex>
 
         {!isCheckout && (
@@ -124,6 +158,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
             onClick={e => {
               e.stopPropagation();
               addToCart(product);
+              setPendingDiscount(true);
             }}
             className="w-full mt-auto"
           >
