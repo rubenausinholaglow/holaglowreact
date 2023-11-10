@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -13,6 +13,7 @@ import Image from 'next/image';
 
 import ProductDiscountForm from '../../checkout/components/ProductDiscountForm';
 import { useCartStore } from '../stores/userCartStore';
+import { getDiscountedPrice } from 'app/utils/common';
 
 const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
@@ -28,6 +29,8 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
   const removeItemDiscount = useCartStore(state => state.removeItemDiscount);
 
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
   const [imgSrc, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
@@ -39,7 +42,19 @@ export default function ProductCard({ product, isCheckout }: Props) {
   )[0];
 
   const productHasDiscount = !isEmpty(productCartItem);
-
+  const productHasPromoDiscount = !isEmpty(product.discounts);
+  const productPricewithPromoDiscount = getDiscountedPrice(product);
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(product),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
   return (
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
@@ -103,6 +118,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
               {Number(product.priceWithDiscount).toFixed(2)}€
             </Text>
           )}
+
           <Text
             size="lg"
             className={`font-semibold text-red
@@ -110,11 +126,16 @@ export default function ProductCard({ product, isCheckout }: Props) {
               productHasDiscount && isCheckout
                 ? 'text-red-600 text-sm text line-through opacity-50'
                 : 'text-hg-black text-lg'
-            }
+            } ${productHasPromoDiscount ? 'line-through text-xs' : ''}
               `}
           >
             {product.price.toFixed(2)}€
           </Text>
+          {productHasPromoDiscount && !isCheckout && (
+            <Text size="lg" className={`font-semibold text-red`}>
+              {productPricewithPromoDiscount.toFixed(2)}€
+            </Text>
+          )}
         </Flex>
 
         {!isCheckout && (
@@ -124,6 +145,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
             onClick={e => {
               e.stopPropagation();
               addToCart(product);
+              setPendingDiscount(true);
             }}
             className="w-full mt-auto"
           >
