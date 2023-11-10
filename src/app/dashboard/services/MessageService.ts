@@ -3,12 +3,10 @@ import {
   CrisalixUserData,
   GoToPageData,
   PaymentCreatedData,
+  StartAppointmentData,
 } from '@interface/FrontEndMessages';
 import { MessageSent } from '@interface/message';
-import {
-  PatientArrivedData,
-  StartAppointmentData,
-} from '@interface/messageTypes';
+import { PatientArrivedData } from '@interface/messageTypes';
 import {
   ERROR_RESPONSE_MESSAGE,
   ERROR_SEND_MESSAGE,
@@ -58,7 +56,7 @@ class MessageService {
 
   public async startAppointment(
     startAppontmentData: StartAppointmentData
-  ): Promise<any> {
+  ): Promise<boolean> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}StartAppointment`;
     return this.sendRequest(url, startAppontmentData);
   }

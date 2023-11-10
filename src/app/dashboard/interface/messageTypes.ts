@@ -3,19 +3,8 @@ interface FrontEndMessage<T> {
   data: T;
 }
 
-interface StartAppointmentMessage
-  extends FrontEndMessage<StartAppointmentData> {
-  Event: 'Startappointment';
-}
-
 interface PatientArrivedMessage extends FrontEndMessage<PatientArrivedData> {
   Event: 'PatientArrived';
-}
-
-interface StartAppointmentData {
-  ClinicId: string;
-  BoxId: string;
-  Token: string;
 }
 
 interface PatientArrivedData {
@@ -23,10 +12,4 @@ interface PatientArrivedData {
   BoxId: string;
 }
 
-export type {
-  FrontEndMessage,
-  PatientArrivedData,
-  PatientArrivedMessage,
-  StartAppointmentData,
-  StartAppointmentMessage,
-};
+export type { FrontEndMessage, PatientArrivedData, PatientArrivedMessage };
