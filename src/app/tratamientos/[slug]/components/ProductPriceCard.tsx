@@ -128,7 +128,7 @@ const UPGRADE_TYPES: Record<
     options: [
       {
         label: 'Hydrafacial deluxe (1 sesión)',
-        value: 'Hydrafacial: Deluxe',
+        value: 'Hydrafacial',
       },
       {
         label: 'Dermapen (1 sesión)',
