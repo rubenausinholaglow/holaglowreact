@@ -25,9 +25,10 @@ const AppointmentsListComponent: React.FC<{
   }>({});
   const userCrisalix = useCrisalix(state => state);
   const router = useRouter();
-  const { setCurrentUser } = useGlobalPersistedStore(state => state);
+  const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const { storedBoxId } = useGlobalPersistedStore(state => state);
+  const [appointmentId, setAppointmentId] = useState('');
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -60,7 +61,7 @@ const AppointmentsListComponent: React.FC<{
       .then(async data => {
         if (data && !isEmpty(data)) {
           setCurrentUser(data);
-          saveAppointmentInfo(appointment);
+          setAppointmentId(appointment.id);
           await redirectPage(data.firstName, data.id, data.flowwwToken);
         } else {
           //TODO - MESSAGE ERROR UI
@@ -75,11 +76,6 @@ const AppointmentsListComponent: React.FC<{
     }));
   };
 
-  function saveAppointmentInfo(appointment: Appointment) {
-    localStorage.setItem('appointmentId', appointment.id);
-    localStorage.setItem('appointmentFlowwwId', appointment.flowwwId ?? '');
-  }
-
   async function redirectPage(name: string, id: string, flowwwToken: string) {
     try {
       await ScheduleService.getClinicSchedule(flowwwToken).then(async data => {
@@ -91,8 +87,15 @@ const AppointmentsListComponent: React.FC<{
           );
           data.boxId = storedBoxId;
           saveUserDetails(name, id, flowwwToken);
+
           await messageService.startAppointment(data).then(async info => {
             if (info != null) {
+              await ScheduleService.updatePatientStatusAppointment(
+                appointmentId,
+                user?.id || '',
+                Status.CheckIn
+              );
+
               await UserService.createCrisalixUser(id, data.id, clinicId).then(
                 async x => {
                   const crisalixUser: CrisalixUser = {

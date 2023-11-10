@@ -31,7 +31,7 @@ export default function ValidateComment() {
       {!isCommentModalOpen && (
         <Flex layout="col-center" className="mt-8">
           <Button isSubmit onClick={handleClick} type="secondary">
-            Validar Cita
+            Finalizar Cita
           </Button>
         </Flex>
       )}
@@ -50,7 +50,7 @@ export default function ValidateComment() {
             type="secondary"
             className="mt-4"
           >
-            Validar Cita
+            Finalizar Cita
           </Button>
           <Button
             onClick={() => setIsCommentModalOpen(false)}

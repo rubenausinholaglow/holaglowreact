@@ -30,9 +30,8 @@ export default function PaymentRemoteControl() {
     };
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
-    const budgetIdlocal = localStorage.getItem('BudgetId');
 
-    if (!finalBudget && !budgetIdlocal) {
+    if (!finalBudget) {
       fetchData();
     }
   }, []);

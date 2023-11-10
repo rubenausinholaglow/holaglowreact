@@ -126,8 +126,6 @@ export function getPaymentBankText(bank: PaymentBank): string {
 }
 
 export function clearLocalStorage(allLocalStorage: boolean) {
-  localStorage.removeItem('appointmentFlowwwId');
-  localStorage.removeItem('appointmentId');
   localStorage.removeItem('ClinicProfessionalId');
   localStorage.removeItem('username');
   localStorage.removeItem('flowwwToken');

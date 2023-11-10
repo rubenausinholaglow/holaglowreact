@@ -164,8 +164,6 @@ export default function Page({
     try {
       await ScheduleService.getClinicSchedule(flowwwToken).then(async data => {
         if (data != null) {
-          localStorage.setItem('appointmentId', data.id);
-          localStorage.setItem('appointmentFlowwwId', data.flowwwId ?? '');
           localStorage.setItem('ClinicId', data.clinic.id);
           localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
           localStorage.setItem(

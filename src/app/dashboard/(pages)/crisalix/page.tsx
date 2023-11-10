@@ -15,10 +15,10 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
-  const username =
-    typeof window !== 'undefined' ? localStorage.getItem('username') : null;
+
   const userCrisalix = useCrisalix(state => state);
-  const { storedClinicId } = useGlobalPersistedStore(state => state);
+  const { user, storedClinicId } = useGlobalPersistedStore(state => state);
+  const username = typeof window !== 'undefined' ? user?.firstName : null;
 
   useEffect(() => {
     const existsCrisalixUser =
@@ -27,9 +27,9 @@ const Page = () => {
         : null;
 
     if (existsCrisalixUser != null) {
-      setId(userCrisalix.crisalixUser[0].id);
-      setPlayerToken(userCrisalix.crisalixUser[0].playerToken);
-      setPlayerId(userCrisalix.crisalixUser[0].playerId);
+      setId(existsCrisalixUser.id);
+      setPlayerToken(existsCrisalixUser.playerToken);
+      setPlayerId(existsCrisalixUser.playerId);
     }
 
     setTimeout(

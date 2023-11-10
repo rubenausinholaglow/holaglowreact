@@ -29,7 +29,22 @@ export default function DashboardLayout({
     useGlobalPersistedStore(state => state);
   const [flowwwToken, setFlowwwToken] = useState('');
 
-  const routePages: any = {
+  const SOCKET_URL_COMMUNICATIONS =
+    process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications';
+  const SOCKET_URL_PROFESSIONAL_RESPONSE =
+    process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
+  const SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE =
+    process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
+
+  enum EventTypes {
+    PatientArrived = 'PatientArrived',
+    StartAppointment = 'StartAppointment',
+    CrisalixUser = 'CrisalixUser',
+    PaymentCreate = 'PaymentCreate',
+    GoToPage = 'GoToPage',
+  }
+
+  const routePages: Record<string, string | ''> = {
     Crisalix: '/dashboard/crisalix',
     Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
     Menu: '/dashboard/menu',
@@ -41,7 +56,8 @@ export default function DashboardLayout({
     if (!hideContactButtons) {
       SocketService.getInstance({
         urlConnection:
-          process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse',
+          process.env.NEXT_PUBLIC_CLINICS_API +
+          SOCKET_URL_PROFESSIONAL_RESPONSE,
         onReceiveMessage: message => {
           const finalMessage: MessageSocket = {
             messageType: MessageType.ChatResponse,
@@ -52,7 +68,8 @@ export default function DashboardLayout({
       });
     }
     SocketService.getInstance({
-      urlConnection: process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications',
+      urlConnection:
+        process.env.NEXT_PUBLIC_CLINICS_API + SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
         const isBoxIdInStoredBoxIds = isBoxIdInStoredBoxId(
           message.data.boxId,
@@ -63,64 +80,27 @@ export default function DashboardLayout({
         }
         let messageData: any;
         switch (message.event) {
-          case 'PatientArrived':
+          case EventTypes.PatientArrived:
             if (!remoteControl) return true;
-            messageData = {
-              messageType: MessageType.PatientArrived,
-              ClinicId: message.data.clinicId,
-              BoxId: message.data.boxId,
-            };
+            messageData = handlePatientArrived(message);
             break;
-          case 'StartAppointment':
+          case EventTypes.StartAppointment:
             if (remoteControl) {
               return true;
             }
-            messageData = {
-              messageType: MessageType.StartAppointment,
-              ClinicId: message.data.clinicId,
-              BoxId: message.data.boxId,
-              FlowwwToken: message.data.token,
-            };
+            messageData = handleStartAppointment(message);
             break;
-          case 'CrisalixUser':
+          case EventTypes.CrisalixUser:
             if (remoteControl) {
               return true;
             }
-            messageData = {
-              messageType: MessageType.CrisalixUser,
-              ClinicId: message.data.clinicId,
-              BoxId: message.data.boxId,
-              id: message.data.id,
-              playerToken: message.data.playerToken,
-              playerId: message.data.playerId,
-            };
+            messageData = handleCrisalixUser(message);
             break;
-          case 'PaymentCreate':
-            if (remoteControl != message.data.remoteControl) {
-              messageData = {
-                messageType: MessageType.PaymentCreate,
-                ClinicId: message.data.clinicId,
-                BoxId: message.data.boxId,
-                id: message.data.id,
-                referenceId: message.data.referenceId,
-                paymentBank: message.data.paymentBank,
-                paymentMethod: message.data.paymentMethod,
-                amount: message.data.amount,
-                remoteControl: message.data.remoteControl,
-                budgetId: message.data.budgetId,
-              };
-            }
+          case EventTypes.PaymentCreate:
+            messageData = handlePaymentCreate(message);
             break;
-          case 'GoToPage':
-            if (remoteControl && message.data.page === 'CheckOut') {
-              setFlowwwToken(localStorage.getItem('flowwwToken') || '');
-              router.push(routePages[message.data.page]);
-            } else if (remoteControl) {
-              return true;
-            } else if (message.data.page != 'CheckOut') {
-              setFlowwwToken(localStorage.getItem('flowwwToken') || '');
-              router.push(routePages[message.data.page]);
-            }
+          case EventTypes.GoToPage:
+            messageData = handleGoToPage(message);
             break;
           default:
             throw new Error(`Unsupported event: ${message.Event}`);
@@ -130,7 +110,8 @@ export default function DashboardLayout({
     });
     SocketService.getInstance({
       urlConnection:
-        process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse',
+        process.env.NEXT_PUBLIC_FINANCE_API +
+        SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
       onReceiveMessage: message => {
         const finalMessage: MessageSocket = {
           messageType: MessageType.PaymentResponse,
@@ -140,6 +121,81 @@ export default function DashboardLayout({
       },
     });
   }, []);
+
+  function handlePatientArrived(message: any) {
+    if (!remoteControl) return true;
+
+    const messageData = {
+      messageType: MessageType.PatientArrived,
+      ClinicId: message.data.clinicId,
+      BoxId: message.data.boxId,
+    };
+
+    return messageData;
+  }
+
+  function handleStartAppointment(message: any) {
+    if (remoteControl) return true;
+
+    const messageData = {
+      messageType: MessageType.StartAppointment,
+      ClinicId: message.data.clinicId,
+      BoxId: message.data.boxId,
+      FlowwwToken: message.data.token,
+    };
+
+    return messageData;
+  }
+
+  function handleCrisalixUser(message: any) {
+    if (remoteControl) return true;
+
+    const messageData = {
+      messageType: MessageType.CrisalixUser,
+      ClinicId: message.data.clinicId,
+      BoxId: message.data.boxId,
+      id: message.data.id,
+      playerToken: message.data.playerToken,
+      playerId: message.data.playerId,
+    };
+
+    return messageData;
+  }
+
+  function handlePaymentCreate(message: any) {
+    if (remoteControl !== message.data.remoteControl) {
+      const messageData = {
+        messageType: MessageType.PaymentCreate,
+        ClinicId: message.data.clinicId,
+        BoxId: message.data.boxId,
+        id: message.data.id,
+        referenceId: message.data.referenceId,
+        paymentBank: message.data.paymentBank,
+        paymentMethod: message.data.paymentMethod,
+        amount: message.data.amount,
+        remoteControl: message.data.remoteControl,
+        budgetId: message.data.budgetId,
+      };
+
+      return messageData;
+    }
+
+    return true;
+  }
+
+  function handleGoToPage(message: any) {
+    if (remoteControl && message.data.page === 'CheckOut') {
+      setFlowwwToken(localStorage.getItem('flowwwToken') || '');
+      router.push(routePages[message.data.page]);
+    } else if (remoteControl) {
+      return true;
+    } else if (message.data.page !== 'CheckOut') {
+      setFlowwwToken(localStorage.getItem('flowwwToken') || '');
+      router.push(routePages[message.data.page]);
+    }
+
+    return true;
+  }
 
   function isBoxIdInStoredBoxId(
     messageBoxId: string,
