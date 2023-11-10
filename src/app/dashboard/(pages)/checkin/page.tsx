@@ -9,6 +9,7 @@ import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
 import useFormHook from './useFormHook';
+import Link from 'next/link';
 
 const WELCOME_MESSAGE = 'Bienvenid@ a Holaglow!';
 const SCAN_QR_MESSAGE = '¡Escanea el QR que te hemos enviado!';
@@ -121,59 +122,70 @@ function FormSection({
 }: any) {
   return (
     <>
-      <Text size="lg" className="font-semibold mb-4">
-        ...o identifícate con tu email y teléfono
-      </Text>
-      <form onSubmit={handleSubmit} className="relative">
-        <Flex
-          layout="col-left"
-          className={`gap-4 px-12 py-8 bg-hg-tertiary300 relative z-10 ${
-            checkIn ? 'rounded-t-xl' : 'rounded-xl'
-          }`}
-        >
-          <Flex layout="col-left">
-            <label className="mb-2">Correo Electrónico:</label>
-            <input
-              className="py-3 px-2 rounded-md"
-              type="email"
-              value={formData.email}
-              onChange={e => handleInputChange('email', e.target.value)}
-            />
-            {errors.email && (
-              <span style={{ color: 'red' }}>{errors.email}</span>
-            )}
-          </Flex>
-          <Flex layout="col-left">
-            <label className="mb-2">Teléfono:</label>
-            <input
-              className="py-3 px-2 rounded-md"
-              type="tel"
-              value={formData.phone}
-              onChange={e => handleInputChange('phone', e.target.value)}
-            />
-            {errors.phone && (
-              <span style={{ color: 'red' }}>{errors.phone}</span>
-            )}
-          </Flex>
-          <Button
-            type="secondary"
-            isSubmit
-            disabled={isLoading}
-            className="ml-auto"
+      {!checkIn && (
+        <>
+          <Text size="lg" className="font-semibold mb-4">
+            ...o identifícate con tu email y teléfono
+          </Text>
+          <form onSubmit={handleSubmit} className="relative">
+            <Flex
+              layout="col-left"
+              className={`gap-4 px-12 py-8 bg-hg-tertiary300 relative z-10 ${
+                checkIn ? 'rounded-t-xl' : 'rounded-xl'
+              }`}
+            >
+              <Flex layout="col-left">
+                <label className="mb-2">Correo Electrónico:</label>
+                <input
+                  className="py-3 px-2 rounded-md"
+                  type="email"
+                  value={formData.email}
+                  onChange={e => handleInputChange('email', e.target.value)}
+                />
+                {errors.email && (
+                  <span style={{ color: 'red' }}>{errors.email}</span>
+                )}
+              </Flex>
+              <Flex layout="col-left">
+                <label className="mb-2">Teléfono:</label>
+                <input
+                  className="py-3 px-2 rounded-md"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={e => handleInputChange('phone', e.target.value)}
+                />
+                {errors.phone && (
+                  <span style={{ color: 'red' }}>{errors.phone}</span>
+                )}
+              </Flex>
+              <Button
+                type="secondary"
+                isSubmit
+                disabled={isLoading}
+                className="ml-auto"
+              >
+                {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
+              </Button>
+            </Flex>
+          </form>
+        </>
+      )}
+      {checkIn && (
+        <>
+          <Text size="lg" className="font-semibold mb-4">
+            Vaya, parece que no tienes cita con nosotros.
+          </Text>
+
+          <Link
+            href="https://www.holaglow.com/checkout/clinicas"
+            target="_blank"
           >
-            {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
-          </Button>
-        </Flex>
-        <Text
-          className={`transition-all text-center bg-hg-tertiary text-white font-semibold w-full p-2 rounded-b-xl ${
-            checkIn
-              ? 'translate-y-0 opacity-100'
-              : '-translate-y-full opacity-0'
-          }`}
-        >
-          {checkIn && checkIn}
-        </Text>
-      </form>
+            <Button type="secondary" className="ml-auto">
+              Agendar
+            </Button>
+          </Link>
+        </>
+      )}
     </>
   );
 }
