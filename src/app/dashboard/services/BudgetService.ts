@@ -80,7 +80,7 @@ export const budgetService = {
 
   async getLastBudgetCreated(id: string): Promise<Budget | undefined> {
     try {
-      const url = `${process.env.NEXT_PUBLIC_PATIENTS_API}${id}`;
+      const url = `${process.env.NEXT_PUBLIC_PATIENTS_API}Budget/user/${id}/latest`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
