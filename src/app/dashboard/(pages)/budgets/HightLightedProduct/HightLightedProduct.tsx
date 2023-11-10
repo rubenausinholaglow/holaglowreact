@@ -4,6 +4,7 @@ import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { getDiscountedPrice } from 'app/utils/common';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -13,7 +14,6 @@ import Image from 'next/image';
 
 import { useCartStore } from '../stores/userCartStore';
 import { Operation, Quantifier } from './Quantifier';
-import { getDiscountedPrice } from 'app/utils/common';
 
 const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 

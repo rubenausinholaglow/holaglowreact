@@ -4,16 +4,17 @@ import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgAngleDown, SvgClose } from 'icons/Icons';
+import { SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 import ProductDiscountForm from '../../checkout/components/ProductDiscountForm';
 import { useCartStore } from '../stores/userCartStore';
-import { getDiscountedPrice } from 'app/utils/common';
 
 const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
@@ -45,6 +46,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const productHasPromoDiscount = !isEmpty(product.discounts);
   const productPricewithPromoDiscount = getDiscountedPrice(product);
   const [pendingDiscount, setPendingDiscount] = useState(false);
+  console.log(product.tags);
   useEffect(() => {
     if (pendingDiscount) {
       applyItemDiscount(
@@ -90,6 +92,17 @@ export default function ProductCard({ product, isCheckout }: Props) {
           />
         </div>
       )}
+      {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
+        <Flex
+          layout="row-center"
+          className="tagtest bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
+        >
+          <SvgGlow height={12} width={12} className="text-hg-primary mr-1" />
+          <Text className="text-hg-secondary" size="xs">
+            B.<span className="text-hg-primary">Friday</span>
+          </Text>
+        </Flex>
+      )}
       <Flex
         layout="col-left"
         className={isCheckout ? 'p-4' : 'p-4 text-left w-full h-full'}
@@ -132,7 +145,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
             {product.price.toFixed(2)}€
           </Text>
           {productHasPromoDiscount && !isCheckout && (
-            <Text size="lg" className={`font-semibold text-red`}>
+            <Text size="lg" className={`font-semibold text-red ml-2`}>
               {productPricewithPromoDiscount.toFixed(2)}€
             </Text>
           )}
