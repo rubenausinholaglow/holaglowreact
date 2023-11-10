@@ -1,6 +1,7 @@
 'use client';
 
 import { Testimonial } from '@interface/testimonial';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import TestimonialCard from 'app/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/components/product/fullWidthCarousel';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -62,22 +63,24 @@ export default function LandingTestimonials() {
   return (
     <>
       <Container>
-        <Title size="2xl" className="font-bold mb-4">
+        <Title isAnimated size="2xl" className="font-bold mb-4">
           ¿Qué dicen de{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>nosotros</Underlined>?
         </Title>
       </Container>
-      <FullWidthCarousel className="pb-8">
-        {TESTIMONIALS.map((testimonial: Testimonial | any) => {
-          return (
-            <TestimonialCard
-              key={testimonial.name}
-              testimonial={testimonial}
-              className="h-full flex flex-col mr-4"
-            />
-          );
-        })}
-      </FullWidthCarousel>
+      <AnimateOnViewport>
+        <FullWidthCarousel className="pb-8">
+          {TESTIMONIALS.map((testimonial: Testimonial | any) => {
+            return (
+              <TestimonialCard
+                key={testimonial.name}
+                testimonial={testimonial}
+                className="h-full flex flex-col mr-4"
+              />
+            );
+          })}
+        </FullWidthCarousel>
+      </AnimateOnViewport>
     </>
   );
 }

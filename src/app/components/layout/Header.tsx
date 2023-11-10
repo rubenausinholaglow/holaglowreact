@@ -17,8 +17,8 @@ import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
 import PromoTopBar from './PromoTopBar';
 
-let scrollPos = 0;
 let isTicking = false;
+let scrollPos = 0;
 
 const NAV_ITEMS = [
   { name: 'Tratamientos', link: ROUTES.treatments },
@@ -55,8 +55,8 @@ export default function Header() {
     setIsHeaderVisible(
       window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
     );
-
     scrollPos = window.scrollY;
+
     isTicking = false;
   };
 
@@ -73,6 +73,10 @@ export default function Header() {
 
     recalculateVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
@@ -80,6 +84,7 @@ export default function Header() {
       <MobileNavigation
         isVisible={isMobileNavVisible}
         headerHeight={HEADER_HEIGHT}
+        setIsMobileNavVisible={setIsMobileNavVisible}
       />
 
       <header
@@ -120,27 +125,14 @@ export default function Header() {
                   <SvgArrow height={16} width={16} className="ml-2" />
                 </Button>
 
-                {!isMobileNavVisible && (
-                  <SvgMenu
-                    height={24}
-                    width={24}
-                    className="ml-2 lg:hidden"
-                    onClick={() => {
-                      setIsMobileNavVisible(true);
-                    }}
-                  />
-                )}
-
-                {isMobileNavVisible && (
-                  <SvgCross
-                    height={24}
-                    width={24}
-                    className="ml-2 lg:hidden"
-                    onClick={() => {
-                      setIsMobileNavVisible(false);
-                    }}
-                  />
-                )}
+                <SvgMenu
+                  height={24}
+                  width={24}
+                  className="ml-2 lg:hidden"
+                  onClick={() => {
+                    setIsMobileNavVisible(true);
+                  }}
+                />
               </Flex>
             </Flex>
           </Container>

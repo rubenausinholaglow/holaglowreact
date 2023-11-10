@@ -51,16 +51,17 @@ export default function ProductPaymentOptions() {
           layout="col-center"
           className="px-4 py-8 md:px-0 md:w-1/2 md:ml-[50%] md:py-24 md:pl-16"
         >
-          <Title className="text-hg-secondary mb-2 md:mb-6">
+          <Title isAnimated className="text-hg-secondary mb-2 md:mb-6">
             ¿Te gustaría ver cómo quedará tu tratamiento antes de hacértelo?
           </Title>
-          <Text className="mb-8 md:mb-12 md:text-lg md:text-center">
+          <Text isAnimated className="mb-8 md:mb-12 md:text-lg md:text-center">
             Si sientes curiosidad por algún tratamiento de medicina estética,
             podrás descubrir cómo será el resultado sobre una simulación 3D de
             tu rostro.
           </Text>
 
           <Button
+            isAnimated
             size={deviceSize.isMobile ? 'lg' : 'xl'}
             type="secondary"
             onClick={() => {

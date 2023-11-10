@@ -26,7 +26,6 @@ export const AnimateOnViewport = ({
       animationOrigin = '-translate-y-full';
       break;
     case 'right':
-      console.log('origin right!');
       animationOrigin = 'translate-x-full';
       break;
     case 'bottom':
@@ -48,7 +47,6 @@ export const AnimateOnViewport = ({
 
   useEffect(() => {
     if (isInViewport) {
-      console.log('setAnimated');
       setAnimated(true);
     }
   }, [isInViewport]);

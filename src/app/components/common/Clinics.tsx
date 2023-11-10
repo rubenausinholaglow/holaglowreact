@@ -18,6 +18,8 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgAngle } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
+import { AnimateOnViewport } from './AnimateOnViewport';
+
 export default function Clinics({ className = '' }: { className?: string }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const { deviceSize } = useSessionStore(state => state);
@@ -52,7 +54,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
     <div className={className}>
       <div className="relative bg-white">
         <Container className="py-12 md:py-16">
-          <Title size="2xl" className="font-bold mb-8 md:w-1/2">
+          <Title isAnimated size="2xl" className="font-bold mb-8 md:w-1/2">
             Nuestras <br className="hidden md:block" />
             <Underlined color={HOLAGLOW_COLORS['primary']}>clínicas</Underlined>
           </Title>
@@ -69,43 +71,45 @@ export default function Clinics({ className = '' }: { className?: string }) {
                   value={index.toString()}
                 >
                   <AccordionTrigger className="w-full">
-                    <div
-                      key="clinic.city"
-                      className={
-                        selectedAccordion === index.toString()
-                          ? 'bg-hg-primary300'
-                          : 'bg-hg-black100'
-                      }
-                      onClick={() => {
-                        if (index.toString() === selectedAccordion) {
-                          setSelectedAccordion('3');
-                        } else {
-                          setSelectedAccordion(index.toString());
+                    <AnimateOnViewport>
+                      <div
+                        key="clinic.city"
+                        className={
+                          selectedAccordion === index.toString()
+                            ? 'bg-hg-primary300'
+                            : 'bg-hg-black100'
                         }
+                        onClick={() => {
+                          if (index.toString() === selectedAccordion) {
+                            setSelectedAccordion('3');
+                          } else {
+                            setSelectedAccordion(index.toString());
+                          }
 
-                        setSelectedClinic(clinics[index]);
-                      }}
-                    >
-                      <Flex
-                        layout="row-center"
-                        className="w-full text-xs transition-all justify-between cursor-pointer p-3 "
+                          setSelectedClinic(clinics[index]);
+                        }}
                       >
-                        <Flex layout="col-left">
-                          <Text size="lg" className="font-semibold mb-2">
-                            {clinic.city}
-                          </Text>
-                          <address className="text-xs text-left not-italic mb-2">
-                            {clinic.address}
-                          </address>
-                        </Flex>
+                        <Flex
+                          layout="row-center"
+                          className="w-full text-xs transition-all justify-between cursor-pointer p-3 "
+                        >
+                          <Flex layout="col-left">
+                            <Text size="lg" className="font-semibold mb-2">
+                              {clinic.city}
+                            </Text>
+                            <address className="text-xs text-left not-italic mb-2">
+                              {clinic.address}
+                            </address>
+                          </Flex>
 
-                        <SvgAngle
-                          height={24}
-                          width={24}
-                          className="rotate-90 md:rotate-0"
-                        />
-                      </Flex>
-                    </div>
+                          <SvgAngle
+                            height={24}
+                            width={24}
+                            className="rotate-90 md:rotate-0"
+                          />
+                        </Flex>
+                      </div>
+                    </AnimateOnViewport>
                   </AccordionTrigger>
                   <AccordionContent className="bg-hg-black100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                     <div

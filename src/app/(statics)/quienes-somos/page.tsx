@@ -20,13 +20,13 @@ export default function StaticClinics() {
         <Container>
           <div className="md:flex md:flex-row gap-12 items-center">
             <Flex layout="col-left" className="md:w-1/2 mb-4 md:mb-0">
-              <Title size="2xl" className="font-bold mb-4">
+              <Title isAnimated size="2xl" className="font-bold mb-4">
                 My glow,{' '}
                 <Underlined color={HOLAGLOW_COLORS['primary']}>
                   my rules
                 </Underlined>
               </Title>
-              <Text size="xl" className="">
+              <Text isAnimated size="xl" className="">
                 Holaglow es la nueva cara de la medicina estética que dice adiós
                 a los prejuicios y reafirma que la belleza es lo que a ti te de
                 la gana
@@ -57,8 +57,10 @@ export default function StaticClinics() {
                 />
               </div>
               <div>
-                <Title className="mb-4">Tú pones las reglas</Title>
-                <Text className="text-hg-black500 md:text-lg">
+                <Title isAnimated className="mb-4">
+                  Tú pones las reglas
+                </Title>
+                <Text isAnimated className="text-hg-black500 md:text-lg">
                   Hacemos fácil la medicina estética. La información y la
                   transparencia forman parte de nuestra esencia. Nosotros te
                   contamos sin tabúes todo lo que debes saber para que pongas
@@ -78,8 +80,10 @@ export default function StaticClinics() {
                 />
               </div>
               <div>
-                <Title className="mb-4">Conviértete en el centro</Title>
-                <Text className="text-hg-black500 md:text-lg">
+                <Title isAnimated className="mb-4">
+                  Conviértete en el centro
+                </Title>
+                <Text isAnimated className="text-hg-black500 md:text-lg">
                   Es tu momento. Ponemos el foco en ti. Disfruta de una
                   experiencia hecha a la medida de todas las personas que ven en
                   la medicina estética el mejor aliado para deslumbrar en su día
@@ -98,8 +102,10 @@ export default function StaticClinics() {
                 />
               </div>
               <div>
-                <Title className="mb-4">Resultados reales</Title>
-                <Text className="text-hg-black500 md:text-lg">
+                <Title isAnimated className="mb-4">
+                  Resultados reales
+                </Title>
+                <Text isAnimated className="text-hg-black500 md:text-lg">
                   Tus objetivos son los nuestros. Nuestro equipo médico experto
                   selecciona cada producto especialmente para ti, ajustándose a
                   tus necesidades y deseos. Queremos que disfrutes de tu glow.
@@ -111,7 +117,7 @@ export default function StaticClinics() {
       </Container>
       <div className="bg-hg-secondary100 py-12 md:py-16">
         <Container>
-          <Title size="2xl" className="font-bold mb-12 md:mb-16">
+          <Title isAnimated size="2xl" className="font-bold mb-12 md:mb-16">
             Medicina estética{' '}
             <Underlined color={HOLAGLOW_COLORS['secondary']}>
               a tu medida
@@ -129,7 +135,7 @@ export default function StaticClinics() {
 
           <Flex layout="col-left" className="md:flex-row gap-8 md:gap-12">
             <div>
-              <Text size="xl" className="font-semibold">
+              <Text size="xl" className="font-semibold mb-2">
                 Equipo médico experto
               </Text>
               <Text className="text-hg-black500">
@@ -139,7 +145,7 @@ export default function StaticClinics() {
               </Text>
             </div>
             <div>
-              <Text size="xl" className="font-semibold">
+              <Text size="xl" className="font-semibold mb-2">
                 Tratamientos no invasivos
               </Text>
               <Text className="text-hg-black500">
@@ -149,7 +155,7 @@ export default function StaticClinics() {
               </Text>
             </div>
             <div>
-              <Text size="xl" className="font-semibold">
+              <Text size="xl" className="font-semibold mb-2">
                 Productos de calidad
               </Text>
               <Text className="text-hg-black500">

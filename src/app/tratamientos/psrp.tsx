@@ -117,6 +117,7 @@ export default function PsrpPage({ slug }: { slug: string }) {
       <div className="bg-[#F3EDE9] rounded-t-3xl">
         <Container className="relative pt-8 pb-4">
           <Title
+            isAnimated
             size="2xl"
             className="font-bold mb-6 lg:mb-12 lg:w-3/5 md:text-4xl lg:text-5xl"
           >
@@ -160,52 +161,54 @@ export default function PsrpPage({ slug }: { slug: string }) {
             className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
           >
             <Container>
-              <Flex layout="row-left" className="w-full justify-between">
-                <Button
-                  type="tertiary"
-                  size="sm"
-                  className="mr-2"
-                  customStyles="group-hover:bg-hg-secondary100"
-                  onClick={() => {
-                    deviceSize.isMobile
-                      ? setIsMobileFiltersVisible(true)
-                      : setShowDesktopFilters(
-                          showDesktopFilters === 'true' ? 'false' : 'true'
-                        );
-                  }}
-                >
-                  <SvgFilters className="mr-2" />
-                  <Flex layout="col-center">Filtrar</Flex>
-                </Button>
-
-                <div className="mr-auto">
-                  <Text
-                    size="xs"
-                    className={`text-hg-secondary transition-opacity underline cursor-pointer ${
-                      filterCount(productFilters) === 0
-                        ? 'opacity-0'
-                        : 'opacity-100'
-                    }`}
+              <AnimateOnViewport>
+                <Flex layout="row-left" className="w-full justify-between">
+                  <Button
+                    type="tertiary"
+                    size="sm"
+                    className="mr-2"
+                    customStyles="group-hover:bg-hg-secondary100"
                     onClick={() => {
-                      setProductFilters({
-                        isPack: false,
-                        category: [],
-                        zone: [],
-                        clinic: [],
-                      });
+                      deviceSize.isMobile
+                        ? setIsMobileFiltersVisible(true)
+                        : setShowDesktopFilters(
+                            showDesktopFilters === 'true' ? 'false' : 'true'
+                          );
                     }}
                   >
-                    Borrar filtros ({filterCount(productFilters)})
+                    <SvgFilters className="mr-2" />
+                    <Flex layout="col-center">Filtrar</Flex>
+                  </Button>
+
+                  <div className="mr-auto">
+                    <Text
+                      size="xs"
+                      className={`text-hg-secondary transition-opacity underline cursor-pointer ${
+                        filterCount(productFilters) === 0
+                          ? 'opacity-0'
+                          : 'opacity-100'
+                      }`}
+                      onClick={() => {
+                        setProductFilters({
+                          isPack: false,
+                          category: [],
+                          zone: [],
+                          clinic: [],
+                        });
+                      }}
+                    >
+                      Borrar filtros ({filterCount(productFilters)})
+                    </Text>
+                  </div>
+                  <Text size="xs">
+                    {
+                      filteredProducts.filter(product => product.visibility)
+                        .length
+                    }{' '}
+                    productos
                   </Text>
-                </div>
-                <Text size="xs">
-                  {
-                    filteredProducts.filter(product => product.visibility)
-                      .length
-                  }{' '}
-                  productos
-                </Text>
-              </Flex>
+                </Flex>
+              </AnimateOnViewport>
             </Container>
           </Flex>
 

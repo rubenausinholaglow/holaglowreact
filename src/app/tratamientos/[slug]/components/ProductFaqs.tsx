@@ -28,7 +28,7 @@ export default function ProductFaqs({ product }: { product: Product }) {
 
   return (
     <Container className="py-12">
-      <Title size="2xl" className="font-bold mb-8 md:mb-12">
+      <Title isAnimated size="2xl" className="font-bold mb-8 md:mb-12">
         Consulta las preguntas{' '}
         <Underlined color={HOLAGLOW_COLORS['primary']}>frecuentes</Underlined>
       </Title>

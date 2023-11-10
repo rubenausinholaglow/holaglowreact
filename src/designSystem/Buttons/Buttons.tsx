@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { Children, ReactNode } from 'react';
 import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
@@ -89,7 +89,7 @@ export const Button = ({
 
   if (isAnimated) {
     return (
-      <AnimateOnViewport origin="left">
+      <AnimateOnViewport origin={origin}>
         <button
           className={twMerge(
             `transition-all relative group overflow-visible ${
