@@ -93,12 +93,22 @@ export default async function Budget({
 
     return total;
   };
-
+  let maxDiscountDate = new Date('2011/06/28');
+  const now = new Date();
+  products.forEach((product: any) => {
+    if (product.product.discounts) {
+      product.product.discounts.forEach((x: any) => {
+        if (new Date(x.startDate) < now && new Date(x.endDate) > now) {
+          maxDiscountDate = new Date(x.endDate);
+        }
+      });
+    }
+  });
   return (
     <div className="flex flex-col text-hg-black">
       {products && simulations ? (
         <>
-          <Header clinicInfo={clinicInfo} />
+          <Header clinicInfo={clinicInfo} maxDiscountDate={maxDiscountDate} />
           <hr className="bg-hg-primary h-[4px] border-0" />
 
           {products.length > 0 && (

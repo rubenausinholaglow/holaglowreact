@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import Clinics from 'app/components/common/Clinics';
 import Professionals from 'app/components/common/Professionals';
 import RegistrationForm from 'app/components/common/RegistrationForm';
@@ -9,10 +10,7 @@ import GoToTreatments from 'app/components/home/GoToTreatments';
 import Products from 'app/components/home/Products';
 import MainLayout from 'app/components/layout/MainLayout';
 import FullWidthCarousel from 'app/components/product/fullWidthCarousel';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
@@ -107,17 +105,18 @@ export default function LandingCaptacion() {
       <Container className="px-0 md:px-4 overflow-hidden">
         <div className="px-4 md:px-0 relative md:grid md:grid-cols-2 pt-12 pb-16 border-b border-hg-black">
           <div className="col-start-2 md:ml-16">
-            <Title size="2xl" className="font-bold mb-4 md:mb-8">
+            <Title isAnimated size="2xl" className="font-bold mb-4 md:mb-8">
               Asesórate{' '}
               <Underlined color={HOLAGLOW_COLORS['primary']}>gratis</Underlined>{' '}
               con nuestro equipo médico
             </Title>
-            <Text className="w-[220px] md:w-full md:mb-12">
+            <Text isAnimated className="w-[220px] md:w-full md:mb-12">
               Pide tu primera cita médica e infórmate sobre medicina estética
               sin compromiso
             </Text>
             <Flex className="hidden md:block md:justify-start">
               <Button
+                isAnimated
                 size="xl"
                 type="tertiary"
                 customStyles="bg-hg-primary hover:bg-hg-secondary100"
@@ -175,20 +174,34 @@ export default function LandingCaptacion() {
             className="md:flex md:flex-row items-center md:gap-16"
           >
             <div className="md:order-2">
-              <Title size="2xl" className="font-bold mb-4">
+              <Title
+                isAnimated
+                origin={deviceSize.isMobile ? 'bottom' : 'right'}
+                size="2xl"
+                className="font-bold mb-4"
+              >
                 Rellena el formulario para{' '}
                 <Underlined color={HOLAGLOW_COLORS['primary']}>
                   agendar
                 </Underlined>{' '}
                 tu cita
               </Title>
-              <Text className="text-hg-black500 mb-8 md:text-lg">
+              <Text
+                isAnimated
+                origin={deviceSize.isMobile ? 'bottom' : 'right'}
+                className="text-hg-black500 mb-8 md:text-lg"
+              >
                 En el siguiente paso podrás seleccionar clínica
               </Text>
             </div>
-            <div className="md:bg-hg-black50 md:p-8 rounded-2xl shrink-0 md:shadow-centered-secondary">
-              <RegistrationForm />
-            </div>
+            <AnimateOnViewport
+              origin={deviceSize.isMobile ? 'bottom' : 'left'}
+              className="w-full"
+            >
+              <div className="md:bg-hg-black50 md:p-8 rounded-2xl shrink-0 md:shadow-centered-secondary">
+                <RegistrationForm />
+              </div>
+            </AnimateOnViewport>
           </Flex>
         </Container>
       </div>
@@ -196,7 +209,7 @@ export default function LandingCaptacion() {
       <div className="bg-hg-pink/30 py-16">
         <Container className="px-0 md:flex md:flex-row items-center">
           <Container className="mb-4 md:w-3/4">
-            <Title size="2xl" className="font-bold mb-4">
+            <Title isAnimated size="2xl" className="font-bold mb-4">
               Diseñamos contigo un tratamiento{' '}
               <Underlined color={HOLAGLOW_COLORS['primary']}>
                 a tu medida
@@ -214,28 +227,30 @@ export default function LandingCaptacion() {
             />
           </Container>
         </Container>
-        <FullWidthCarousel
-          className="pb-8 -mt-8"
-          visibleSlides={deviceSize.isMobile ? 1.5 : null}
-          isPlaying
-        >
-          {Array.from({ length: 15 }, (_, index) => (
-            <div
-              className="aspect-[3/4] relative h-[300px] md:h-[350px] mr-8 rounded-3xl overflow-hidden"
-              key={index}
-            >
-              <Image
-                src={`/images/statics/landings/captacion/comoFunciona/${
-                  index + 1
-                }.jpg`}
-                alt={`Cómo funciona ${index}`}
-                fill
-                className="object-cover"
-                loading="eager"
-              />
-            </div>
-          ))}
-        </FullWidthCarousel>
+        <AnimateOnViewport>
+          <FullWidthCarousel
+            className="pb-8 -mt-8"
+            visibleSlides={deviceSize.isMobile ? 1.5 : null}
+            isPlaying
+          >
+            {Array.from({ length: 15 }, (_, index) => (
+              <div
+                className="aspect-[3/4] relative h-[300px] md:h-[350px] mr-8 rounded-3xl overflow-hidden"
+                key={index}
+              >
+                <Image
+                  src={`/images/statics/landings/captacion/comoFunciona/${
+                    index + 1
+                  }.jpg`}
+                  alt={`Cómo funciona ${index}`}
+                  fill
+                  className="object-cover"
+                  loading="eager"
+                />
+              </div>
+            ))}
+          </FullWidthCarousel>
+        </AnimateOnViewport>
 
         <Container>
           <Flex className="justify-center">

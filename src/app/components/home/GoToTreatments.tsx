@@ -17,19 +17,24 @@ export default function GoToTreatments() {
               width={90}
               className="text-hg-secondary mb-6"
             />
-            <Title size="2xl" className="font-bold mb-12 md:mb-6 text-white">
+            <Title
+              isAnimated
+              size="2xl"
+              className="font-bold mb-12 md:mb-6 text-white"
+            >
               ¿Te ayudamos a encontrar tu{' '}
               <Underlined color={HOLAGLOW_COLORS['tertiary']}>
                 tratamiento
               </Underlined>{' '}
               ideal?
             </Title>
-            <Text size="lg" className="text-white mb-12">
+            <Text isAnimated size="lg" className="text-white mb-12">
               Nosotros preguntamos y tú respondes. Fácil y rápido. Este es el
               primer paso para descubrir juntos cuál es el tratamiento que mejor
               se adapta a ti, a tus necesidades y a tus deseos.
             </Text>
             <Button
+              isAnimated
               type="secondary"
               size="xl"
               className="mx-auto md:mx-0 mb-10"

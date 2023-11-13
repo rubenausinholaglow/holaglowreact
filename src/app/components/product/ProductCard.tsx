@@ -17,6 +17,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
@@ -112,37 +113,40 @@ export default function ProductCard({
         </Flex>
         <Flex
           layout="col-left"
-          className="p-3 flex-grow bg-white rounded-b-2xl"
+          className="p-3 flex-grow bg-white rounded-b-2xl z-10"
         >
-          <Text className="mb-2 font-semibold">{product.title}</Text>
-          <Text size="xs" className="text-hg-black500 mb-8">
-            {product.description}
-          </Text>
-
-          <Flex className="mt-auto justify-between w-full">
-            <div>
-              {discountedPrice && (
-                <Text className="text-xs line-through text-hg-black500">
-                  {product.price} €
+          <AnimateOnViewport origin="bottom">
+            <Text className="mb-2 font-semibold">{product.title}</Text>
+            <Text size="xs" className="text-hg-black500 mb-8">
+              {product.description}
+            </Text>
+          </AnimateOnViewport>
+          <AnimateOnViewport origin="bottom" className="w-full mt-auto">
+            <Flex className="mt-auto justify-between w-full">
+              <div>
+                {discountedPrice && (
+                  <Text className="text-xs line-through text-hg-black500">
+                    {product.price} €
+                  </Text>
+                )}
+                {!discountedPrice && !product.isPack && (
+                  <Text className="text-xs text-hg-secondary">desde</Text>
+                )}
+                <Text className=" text-hg-secondary font-semibold text-lg">
+                  {discountedPrice ? discountedPrice : product.price} €{' '}
                 </Text>
-              )}
-              {!discountedPrice && !product.isPack && (
-                <Text className="text-xs text-hg-secondary">desde</Text>
-              )}
-              <Text className=" text-hg-secondary font-semibold text-lg">
-                {discountedPrice ? discountedPrice : product.price} €{' '}
-              </Text>
-            </div>
-            <Button
-              type="tertiary"
-              className="mt-auto ml-4"
-              bgColor="bg-hg-primary"
-              customStyles="hover:bg-hg-secondary100"
-            >
-              <p className="mr-2">Saber más</p>
-              <SvgArrow height={20} width={20} />
-            </Button>
-          </Flex>
+              </div>
+              <Button
+                type="tertiary"
+                className="mt-auto ml-4"
+                bgColor="bg-hg-primary"
+                customStyles="hover:bg-hg-secondary100"
+              >
+                <p className="mr-2">Saber más</p>
+                <SvgArrow height={20} width={20} />
+              </Button>
+            </Flex>
+          </AnimateOnViewport>
         </Flex>
       </div>
     </Link>

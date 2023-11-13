@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
@@ -74,7 +75,7 @@ export default function ProductPrices({ product }: { product: Product }) {
       id="prices"
     >
       <Container className="py-12">
-        <Title size="2xl" className="font-bold mb-6 md:mb-12">
+        <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
           <Underlined color={HOLAGLOW_COLORS['primary']}>
             Personaliza
           </Underlined>{' '}
@@ -148,28 +149,30 @@ export default function ProductPrices({ product }: { product: Product }) {
                 className="w-full md:flex-row md:gap-8"
                 key={`productGroup-${productIndex}`}
               >
-                <Flex
-                  layout="col-left"
-                  className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary "
-                >
-                  <Text className="p-3 font-semibold md:text-lg">
-                    {products[0].title}
-                  </Text>
+                <AnimateOnViewport className="w-full">
+                  <Flex
+                    layout="col-left"
+                    className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary "
+                  >
+                    <Text className="p-3 font-semibold md:text-lg">
+                      {products[0].title}
+                    </Text>
 
-                  <Flex layout="col-left" className="gap-4 w-full">
-                    {products.map((item: Product, index: number) => {
-                      if (item.price > 0) {
-                        return (
-                          <ProductSessionGroupedPriceCard
-                            key={`product-card-${index}`}
-                            product={item}
-                          />
-                        );
-                      }
-                      return null;
-                    })}
+                    <Flex layout="col-left" className="gap-4 w-full">
+                      {products.map((item: Product, index: number) => {
+                        if (item.price > 0) {
+                          return (
+                            <ProductSessionGroupedPriceCard
+                              key={`product-card-${index}`}
+                              product={item}
+                            />
+                          );
+                        }
+                        return null;
+                      })}
+                    </Flex>
                   </Flex>
-                </Flex>
+                </AnimateOnViewport>
               </Flex>
             ))}
           </Flex>
