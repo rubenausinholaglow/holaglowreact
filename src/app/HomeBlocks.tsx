@@ -35,7 +35,7 @@ export default function HomeBlocks() {
   return (
     <>
       <Hero />
-      <GoogleStars />
+      {/*       <GoogleStars />
       <ValuesCarousel />
       <HomePromo />
       <ValuesDescription />
@@ -48,7 +48,7 @@ export default function HomeBlocks() {
       <GoToTreatments />
       {deviceSize.isMobile && floatingBarThreshold !== 0 && (
         <FloatingBottomBar threshold={floatingBarThreshold} />
-      )}
+      )} */}
     </>
   );
 }
