@@ -244,7 +244,6 @@ export default function Page({
                           onClick={() => {
                             setAppointmentToCancel(appointment);
                             setShowCancelModal(true);
-                            cancelAppointment(appointment);
                           }}
                         >
                           {!cancelling && <div id="cancelText">Cancelar</div>}
