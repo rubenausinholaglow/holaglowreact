@@ -129,10 +129,8 @@ export const SwipeModal = ({
   useEffect(() => {
     if (modalRef.current) {
       if (isOpen) {
-        console.log('translatey0');
         (modalRef.current as HTMLDivElement).style.transform = 'translateY(0)';
       } else {
-        console.log('translatey100');
         (modalRef.current as HTMLDivElement).style.transform =
           'translateY(105%)';
       }

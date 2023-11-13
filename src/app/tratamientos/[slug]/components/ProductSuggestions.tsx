@@ -39,7 +39,11 @@ export default function ProductSuggestions({ product }: { product: Product }) {
   return (
     <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
       <Container>
-        <Title size="2xl" className="font-bold text-center mb-8 md:mb-12">
+        <Title
+          isAnimated
+          size="2xl"
+          className="font-bold text-center mb-8 md:mb-12"
+        >
           Sugerencias
         </Title>
 

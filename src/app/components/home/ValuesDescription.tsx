@@ -14,10 +14,17 @@ export default function ValuesDescription() {
         className="gap-4 items-center relative md:justify-center md:flex-row"
       >
         <Flex layout="col-left" className="relative z-10 md:w-1/2">
-          <Title size="2xl" className="font-bold mb-12 md:mb-6 lg:pr-[20%]">
+          <Title
+            isAnimated
+            size="2xl"
+            className="font-bold mb-12 md:mb-6 lg:pr-[20%]"
+          >
             La belleza es lo que te dé la gana
           </Title>
-          <Text className="text-hg-black500 w-1/2 md:w-full md:text-lg">
+          <Text
+            isAnimated
+            className="text-hg-black500 w-1/2 md:w-full md:text-lg"
+          >
             Di adiós a los prejuicios y defiende tu propia idea de belleza con
             tratamientos eficaces para conseguir los objetivos que tú quieras.
           </Text>

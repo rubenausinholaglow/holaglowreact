@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
 import {
@@ -190,12 +191,15 @@ function ProductPriceItemsCard({
     if (!productToAdd) productToAdd = product;
     setSelectedTreatments([productToAdd]);
     const packTreatments: Product[] = [];
+
     if (selectedPackOptions.length > 0) {
       selectedPackOptions.forEach(x => {
         packTreatments.push(stateProducts.filter(y => y?.title === x.value)[0]);
       });
     }
+
     setSelectedPackTreatments(packTreatments);
+
     if (
       selectedPackOptions.filter(x => x.value != '').length ==
       product.packUnities.length
@@ -378,130 +382,132 @@ export default function ProductPriceCard({
   }, [product]);
 
   return (
-    <Flex
-      className={`bg-white p-3 rounded-2xl w-full shadow-centered-secondary ${className}`}
-    >
-      <AccordionItem
-        value={deviceSize.isMobile ? `accordion-${index}` : 'value'}
+    <AnimateOnViewport className="w-full">
+      <Flex
+        className={`bg-white p-3 rounded-2xl w-full shadow-centered-secondary ${className}`}
       >
-        <AccordionTrigger
-          className={`${!deviceSize.isMobile ? 'pointer-events-none' : ''}`}
+        <AccordionItem
+          value={deviceSize.isMobile ? `accordion-${index}` : 'value'}
         >
-          <Flex layout="col-left" className="p-3">
-            <Flex layout="row-between" className="w-full mb-2">
-              <Flex>
-                <span className="text-xl text-hg-secondary font-semibold md:text-2xl mr-2">
-                  {discountedPrice ? discountedPrice : product.price} €
-                </span>
-                {discountedPrice && (
-                  <span className="inline-block line-through font-normal text-hg-black500">
-                    {product.price} €
-                  </span>
-                )}
-              </Flex>
-              <Flex layout="row-right">
-                {product.isPack &&
-                  (!isEmpty(product.tags) &&
-                  product.tags[0].tag === 'B.Friday' ? (
-                    <Flex
-                      layout="row-center"
-                      className="bg-hg-black rounded-full p-1 px-2"
-                    >
-                      <SvgGlow
-                        height={12}
-                        width={12}
-                        className="text-hg-primary mr-1"
-                      />
-                      <Text className="text-hg-secondary" size="xs">
-                        B.<span className="text-hg-primary">Friday</span>
-                      </Text>
-                    </Flex>
-                  ) : (
-                    <Text
-                      size="xs"
-                      className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
-                    >
-                      Oferta especial
-                    </Text>
-                  ))}
-
-                {deviceSize.isMobile && (
-                  <>
-                    <SvgAdd
-                      height={24}
-                      width={24}
-                      className="ml-2 group-radix-state-open:hidden"
-                    />
-                    <SvgMinus
-                      height={24}
-                      width={24}
-                      className="ml-2 hidden group-radix-state-open:block"
-                    />
-                  </>
-                )}
-              </Flex>
-            </Flex>
-            <Text className="font-semibold md:text-lg">{product.title}</Text>
-            {product.isPack && deviceSize.isMobile && (
-              <Text className="font-semibold md:text-lg">
-                ¡Tu eliges la zona!
-              </Text>
-            )}
-          </Flex>
-        </AccordionTrigger>
-
-        <AccordionContent
-          className={twMerge(
-            `data-[state=closed]:overflow-hidden ${accordionOverflow}`
-          )}
-        >
-          <Flex
-            layout="col-left"
-            className={`md:flex-row items-start mt-3 ${
-              fullWidthPack && !deviceSize.isMobile ? 'md:p-4' : ''
-            }`}
+          <AccordionTrigger
+            className={`${!deviceSize.isMobile ? 'pointer-events-none' : ''}`}
           >
-            {fullWidthPack && !deviceSize.isMobile && (
-              <div className="md:w-1/2 shrink-0">
-                <Text className="font-semibold md:text-lg mb-2">
+            <Flex layout="col-left" className="p-3">
+              <Flex layout="row-between" className="w-full mb-2">
+                <Flex>
+                  <span className="text-xl text-hg-secondary font-semibold md:text-2xl mr-2">
+                    {discountedPrice ? discountedPrice : product.price} €
+                  </span>
+                  {discountedPrice && (
+                    <span className="inline-block line-through font-normal text-hg-black500">
+                      {product.price} €
+                    </span>
+                  )}
+                </Flex>
+                <Flex layout="row-right">
+                  {product.isPack &&
+                    (!isEmpty(product.tags) &&
+                    product.tags[0].tag === 'B.Friday' ? (
+                      <Flex
+                        layout="row-center"
+                        className="bg-hg-black rounded-full p-1 px-2"
+                      >
+                        <SvgGlow
+                          height={12}
+                          width={12}
+                          className="text-hg-primary mr-1"
+                        />
+                        <Text className="text-hg-secondary" size="xs">
+                          B.<span className="text-hg-primary">Friday</span>
+                        </Text>
+                      </Flex>
+                    ) : (
+                      <Text
+                        size="xs"
+                        className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                      >
+                        Oferta especial
+                      </Text>
+                    ))}
+
+                  {deviceSize.isMobile && (
+                    <Flex>
+                      <SvgAdd
+                        height={24}
+                        width={24}
+                        className="ml-2 group-radix-state-open:hidden"
+                      />
+                      <SvgMinus
+                        height={24}
+                        width={24}
+                        className="ml-2 hidden group-radix-state-open:block"
+                      />
+                    </Flex>
+                  )}
+                </Flex>
+              </Flex>
+              <Text className="font-semibold md:text-lg">{product.title}</Text>
+              {product.isPack && deviceSize.isMobile && (
+                <Text className="font-semibold md:text-lg">
                   ¡Tu eliges la zona!
                 </Text>
-                {!isEmpty(product.appliedProducts) ? (
-                  <>
-                    {product.appliedProducts.map(item => (
-                      <Text key={item.titlte}>{item.titlte}</Text>
-                    ))}
-                    {product?.packMoreInformation && (
-                      <p>{product?.packMoreInformation}</p>
-                    )}
-                  </>
-                ) : (
-                  <Flex className="items-start mb-2">
-                    <SvgInjection
-                      height={16}
-                      width={16}
-                      className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                    />
-                    <Text>{product.description}</Text>
-                  </Flex>
-                )}
-              </div>
+              )}
+            </Flex>
+          </AccordionTrigger>
+
+          <AccordionContent
+            className={twMerge(
+              `data-[state=closed]:overflow-hidden ${accordionOverflow}`
             )}
-            <div
-              className={`bg-hg-black50 p-3 w-full rounded-xl ${
-                fullWidthPack && !deviceSize.isMobile ? 'md:w-1/2' : ''
+          >
+            <Flex
+              layout="col-left"
+              className={`md:flex-row items-start mt-3 ${
+                fullWidthPack && !deviceSize.isMobile ? 'md:p-4' : ''
               }`}
             >
-              <ProductPriceItemsCard
-                product={product}
-                parentProduct={parentProduct}
-                setAccordionOverflow={setAccordionOverflow}
-                isOpen={fullWidthPack && !deviceSize.isMobile}
-              />
-            </div>
-          </Flex>
-        </AccordionContent>
-      </AccordionItem>
-    </Flex>
+              {fullWidthPack && !deviceSize.isMobile && (
+                <div className="md:w-1/2 shrink-0">
+                  <Text className="font-semibold md:text-lg mb-2">
+                    ¡Tu eliges la zona!
+                  </Text>
+                  {!isEmpty(product.appliedProducts) ? (
+                    <>
+                      {product.appliedProducts.map(item => (
+                        <Text key={item.titlte}>{item.titlte}</Text>
+                      ))}
+                      {product?.packMoreInformation && (
+                        <p>{product?.packMoreInformation}</p>
+                      )}
+                    </>
+                  ) : (
+                    <Flex className="items-start mb-2">
+                      <SvgInjection
+                        height={16}
+                        width={16}
+                        className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                      />
+                      <Text>{product.description}</Text>
+                    </Flex>
+                  )}
+                </div>
+              )}
+              <div
+                className={`bg-hg-black50 p-3 w-full rounded-xl ${
+                  fullWidthPack && !deviceSize.isMobile ? 'md:w-1/2' : ''
+                }`}
+              >
+                <ProductPriceItemsCard
+                  product={product}
+                  parentProduct={parentProduct}
+                  setAccordionOverflow={setAccordionOverflow}
+                  isOpen={fullWidthPack && !deviceSize.isMobile}
+                />
+              </div>
+            </Flex>
+          </AccordionContent>
+        </AccordionItem>
+      </Flex>
+    </AnimateOnViewport>
   );
 }

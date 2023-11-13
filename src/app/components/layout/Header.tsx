@@ -13,6 +13,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
 import PromoTopBar from './PromoTopBar';
 
@@ -83,6 +84,7 @@ export default function Header() {
       <MobileNavigation
         isVisible={isMobileNavVisible}
         headerHeight={HEADER_HEIGHT}
+        setIsMobileNavVisible={setIsMobileNavVisible}
       />
 
       <header
@@ -92,34 +94,37 @@ export default function Header() {
         }`}
       >
         <PromoTopBar />
-        <Container isHeader>
-          <Flex
-            layout="row-between"
-            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
-          >
-            <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
-              <SvgHolaglow
-                fill={HOLAGLOW_COLORS['secondary']}
-                className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
-              />
-            </Link>
+        <AnimateOnViewport origin="top">
+          <Container isHeader>
+            <Flex
+              layout="row-between"
+              className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
+            >
+              <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
+                <SvgHolaglow
+                  fill={HOLAGLOW_COLORS['secondary']}
+                  className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
+                />
+              </Link>
 
-            <Navigation className="hidden lg:block 2xl:mr-20" />
+              <Navigation className="hidden lg:block 2xl:mr-20" />
 
-            <Flex layout="row-center" className="lg:absolute right-0 2xl:mr-20">
-              <Button
-                type="tertiary"
-                href={ROUTES.checkout.clinics}
-                className="hidden md:block"
-                onClick={() => {
-                  setSelectedTreatments([]);
-                }}
+              <Flex
+                layout="row-center"
+                className="lg:absolute right-0 2xl:mr-20"
               >
-                Reservar cita
-                <SvgArrow height={16} width={16} className="ml-2" />
-              </Button>
+                <Button
+                  type="tertiary"
+                  href={ROUTES.checkout.clinics}
+                  className="hidden md:block"
+                  onClick={() => {
+                    setSelectedTreatments([]);
+                  }}
+                >
+                  Reservar cita
+                  <SvgArrow height={16} width={16} className="ml-2" />
+                </Button>
 
-              {!isMobileNavVisible && (
                 <SvgMenu
                   height={24}
                   width={24}
@@ -128,21 +133,10 @@ export default function Header() {
                     setIsMobileNavVisible(true);
                   }}
                 />
-              )}
-
-              {isMobileNavVisible && (
-                <SvgCross
-                  height={24}
-                  width={24}
-                  className="ml-2 lg:hidden"
-                  onClick={() => {
-                    setIsMobileNavVisible(false);
-                  }}
-                />
-              )}
+              </Flex>
             </Flex>
-          </Flex>
-        </Container>
+          </Container>
+        </AnimateOnViewport>
       </header>
     </>
   );

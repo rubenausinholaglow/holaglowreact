@@ -10,7 +10,9 @@ export const Title = ({
   weight = 'semibold',
   as = 'h3',
   className = '',
-  disableAnimation = false,
+  wrapperClassName = '',
+  isAnimated = false,
+  origin = 'bottom',
   onClick = undefined,
   children,
 }: {
@@ -18,7 +20,9 @@ export const Title = ({
   weight?: string;
   as?: 'h3' | 'h1';
   className?: string;
-  disableAnimation?: boolean;
+  wrapperClassName?: string;
+  isAnimated?: boolean;
+  origin?: 'top' | 'right' | 'bottom' | 'left';
   children: ReactNode;
   onClick?: (...args: any[]) => void;
 }) => {
@@ -32,12 +36,20 @@ export const Title = ({
 
   const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
 
+  if (isAnimated) {
+    return (
+      <AnimateOnViewport className={wrapperClassName} origin={origin}>
+        <HtmlComponent className={styles} onClick={onClick}>
+          {children}
+        </HtmlComponent>
+      </AnimateOnViewport>
+    );
+  }
+
   return (
-    <AnimateOnViewport disableAnimation={disableAnimation}>
-      <HtmlComponent className={styles} onClick={onClick}>
-        {children}
-      </HtmlComponent>
-    </AnimateOnViewport>
+    <HtmlComponent className={styles} onClick={onClick}>
+      {children}
+    </HtmlComponent>
   );
 };
 
@@ -45,17 +57,21 @@ export const Text = ({
   size = 'md',
   as = 'p',
   className = '',
+  wrapperClassName = '',
   onClick = undefined,
   children,
-  disableAnimation = false,
+  isAnimated = false,
+  origin = 'bottom',
   rest,
 }: {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   as?: 'h3' | 'p' | 'span';
   className?: string;
+  wrapperClassName?: string;
   onClick?: (...args: any[]) => void;
   children: ReactNode;
-  disableAnimation?: boolean;
+  isAnimated?: boolean;
+  origin?: 'top' | 'right' | 'bottom' | 'left';
   [key: string]: any;
 }) => {
   const HtmlComponent = as;
@@ -64,12 +80,20 @@ export const Text = ({
     `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
   );
 
+  if (isAnimated) {
+    return (
+      <AnimateOnViewport origin={origin} className={wrapperClassName}>
+        <HtmlComponent className={styles} onClick={onClick}>
+          {children}
+        </HtmlComponent>
+      </AnimateOnViewport>
+    );
+  }
+
   return (
-    <AnimateOnViewport disableAnimation={disableAnimation}>
-      <HtmlComponent className={styles} onClick={onClick} {...rest}>
-        {children}
-      </HtmlComponent>
-    </AnimateOnViewport>
+    <HtmlComponent className={styles} onClick={onClick} {...rest}>
+      {children}
+    </HtmlComponent>
   );
 };
 
