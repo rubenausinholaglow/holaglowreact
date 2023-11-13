@@ -197,11 +197,9 @@ export default function DashboardLayout({
   }
 
   function handleBackButton() {
-    /*  if (router. === '/dashboard/menu') {
+    if (window.location.pathname == '/dashboard/menu') {
       router.push('/dashboard');
-    } else {*/
-    router.back();
-    //}
+    } else router.back();
   }
 
   return (
