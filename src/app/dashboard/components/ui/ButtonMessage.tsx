@@ -42,13 +42,13 @@ export default function ButtonMessage() {
 
   const sendMessageToMedic = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
-    setmedicClassName('bg-hg-tertiary');
+    setmedicClassName('bg-hg-primary');
     startTimeout();
   };
 
   const sendMessageToReception = () => {
     messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
-    setreceptionClassName('bg-hg-tertiary');
+    setreceptionClassName('bg-hg-primary');
     startTimeout();
   };
 
@@ -58,6 +58,7 @@ export default function ButtonMessage() {
     const action = partsToCompare[1];
     const professionalType = partsToCompare[2];
     const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
+
     if (professionalId === clinicProfessionalId) {
       if (action === '0') {
         if (professionalType == 'Medical') {
@@ -97,14 +98,24 @@ export default function ButtonMessage() {
   };
 
   return (
-    <Flex layout="row-left" className="gap-2 overflow-hidden relative">
-      <Button type="tertiary">
-        <SvgStethoscope height={16} width={16} />
+    <Flex layout="row-left" className="gap-2 pt-1 overflow-hidden relative">
+      <Button
+        size="sm"
+        type="tertiary"
+        customStyles={`border-none px-3 ${medicClassName}`}
+        onClick={() => sendMessageToMedic()}
+      >
+        <SvgStethoscope className="mr-2" height={16} width={16} />
         Llamar Doctor/a
       </Button>
 
-      <Button type="tertiary">
-        <SvgUserSquare height={16} width={16} />
+      <Button
+        size="sm"
+        type="tertiary"
+        customStyles={`border-none px-3 ${receptionClassName}`}
+        onClick={() => sendMessageToReception()}
+      >
+        <SvgUserSquare className="mr-2" height={16} width={16} />
         Llamar Beauty Adv.
       </Button>
 

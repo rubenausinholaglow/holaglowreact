@@ -213,7 +213,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <main className="bg-gradient-15deg from-hg-primary300 to-hg-secondary500">
+    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary500">
       {!hideTopBar && (
         <DashboardHeader
           hideContactButtons={hideContactButtons}
@@ -223,7 +223,7 @@ export default function DashboardLayout({
 
       <Flex
         layout="col-center"
-        className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"
+        className=" text-hg-black text-sm overflow-hidden"
       >
         {!hideTopBar && (
           <Container>

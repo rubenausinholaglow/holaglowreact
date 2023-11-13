@@ -12,7 +12,10 @@ import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
+import { SvgArrow, SvgUserSquare } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
@@ -168,56 +171,66 @@ const AppointmentsListComponent: React.FC<{
   }
 
   return (
-    <div className="w-full px-11">
-      <h1>Lista de citas</h1>
+    <div className="w-ful">
       {isLoadingPage ? (
         <SvgSpinner className="w-full justify-center" />
       ) : (
-        <table className="w-full mt-9">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Hora</th>
-              <th>Estado</th>
-              <th>Nombre</th>
-              <th>Profesional</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="w-full bg-white/60 p-6 rounded-2xl">
+          <Title size="xl" className="font-bold text-left mb-4">
+            Tus citas del día
+          </Title>
+          <Flex layout="col-left" className="w-full gap-2">
+            <Flex className="w-full font-normal text-hg-secondary text-xs p-2">
+              <Text className="w-[60%]">Nombre del paciente</Text>
+              <Text className="w-[15%]">Hora cita</Text>
+              <Text className="w-[20%]">Estado</Text>
+              <Text className="w-[10%]"> </Text>
+            </Flex>
             {appointments.map(appointment => (
-              <tr key={appointment.id}>
-                <td className="my-2 mx-2">
-                  {appointment.lead?.user?.flowwwToken.slice(0, -32)}
-                </td>
-                <td className="my-2 mx-2">{appointment.startTime}</td>
-                <td className="my-2 mx-2">
-                  {translateStatus(appointment.status ?? Status.Open)}
-                </td>
-                <td className="my-2 mx-2">
-                  {appointment.lead?.user?.firstName}{' '}
-                  {appointment.lead?.user?.lastName}
-                </td>
-                <td className="my-2 mx-2">
-                  {appointment.clinicProfessional?.name} {appointment.clinicId}
-                </td>
-                <td className="my-2 mx-2">
+              <Flex
+                key={appointment.id}
+                className="text-left bg-white/75 rounded-xl w-full py-2 px-3"
+              >
+                <Flex className="w-[60%]">
+                  <SvgUserSquare className="mr-2" />
+                  <div>
+                    <Text className="font-semibold">
+                      {appointment.lead?.user?.firstName}{' '}
+                      {appointment.lead?.user?.lastName}
+                    </Text>
+                    <Text className="text-hg-black500 text-xs">
+                      {appointment.lead?.user?.flowwwToken.slice(0, -32)}
+                    </Text>
+                  </div>
+                </Flex>
+                <Text className="w-[15%]">{appointment.startTime}</Text>
+                <Flex className="w-[20%]">
+                  <Flex className="bg-hg-secondary300 py-1 px-2 rounded-lg">
+                    <div className="h-1 w-1 bg-hg-secondary rounded-full mr-2"></div>
+                    <Text size="xs" className="text-hg-secondary">
+                      {translateStatus(appointment.status ?? Status.Open)}
+                    </Text>
+                  </Flex>
+                </Flex>
+                <Flex className="w-[10%] justify-end">
                   <Button
+                    size="sm"
                     isSubmit
                     onClick={() => handleCheckUser(appointment)}
-                    type="secondary"
-                    className="my-2 mx-2"
+                    type="tertiary"
+                    customStyles="bg-hg-primary px-3"
                   >
                     {loadingAppointments[appointment.id] ? (
                       <SvgSpinner height={24} width={24} />
                     ) : (
-                      'Empezar'
+                      <SvgArrow height={16} width={16} />
                     )}
                   </Button>
-                </td>
-              </tr>
+                </Flex>
+              </Flex>
             ))}
-          </tbody>
-        </table>
+          </Flex>
+        </div>
       )}
     </div>
   );
