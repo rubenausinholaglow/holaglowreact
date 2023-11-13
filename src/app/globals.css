@@ -27,6 +27,11 @@ body {
   color: theme('colors.hg.black');
 }
 
+a {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 a:hover {
   color: theme('colors.hg.secondary');
 }
