@@ -42,7 +42,7 @@ export default function ConsistOf() {
 
   return (
     <Container className="py-8 md:mb-12">
-      <Title animated size="2xl" className="font-bold mb-4 text-center">
+      <Title isAnimated size="2xl" className="font-bold mb-4 text-center">
         ¿En qué{' '}
         <Underlined color={HOLAGLOW_COLORS['primary']}>consiste</Underlined>?
       </Title>
@@ -69,12 +69,8 @@ export default function ConsistOf() {
                   {index + 1}
                 </span>
               </div>
-              <Title disableAnimation className="text-2xl mb-4">
-                {item.title}
-              </Title>
-              <Text disableAnimation className="text-center">
-                {item.text}
-              </Text>
+              <Title className="text-2xl mb-4">{item.title}</Title>
+              <Text className="text-center">{item.text}</Text>
             </Flex>
           ))}
         </Carousel>
@@ -96,12 +92,8 @@ export default function ConsistOf() {
                   {index + 1}
                 </span>
               </div>
-              <Title disableAnimation className="text-2xl mb-4">
-                {item.title}
-              </Title>
-              <Text disableAnimation className="text-center">
-                {item.text}
-              </Text>
+              <Title className="text-2xl mb-4">{item.title}</Title>
+              <Text className="text-center">{item.text}</Text>
             </Flex>
           ))}
         </div>
