@@ -72,7 +72,7 @@ export default function Agenda() {
       //Valencia
       '1': 15,
       '2': 15,
-      '0': 10,
+      '0': 15,
     },
   };
   if (
