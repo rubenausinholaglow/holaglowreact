@@ -9,6 +9,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 
+import DashboardHeader from './DashboardHeader';
+
 export default function DashboardLayout({
   hideTopBar = false,
   hideBackButton = false,
@@ -63,7 +65,14 @@ export default function DashboardLayout({
   }, []);
 
   return (
-    <main className="min-h-screen h-100 pt-4 text-sm bg-[url('/images/dashboard/background/main_background.png')] bg-[#A96FE7] bg-bottom bg-contain bg-no-repeat">
+    <main className="bg-gradient-15deg from-hg-primary300 to-hg-secondary500">
+      {!hideTopBar && (
+        <DashboardHeader
+          hideContactButtons={hideContactButtons}
+          hideProfessionalSelector={hideProfessionalSelector}
+        />
+      )}
+
       <Flex
         layout="col-center"
         className="min-h-screen h-100 text-hg-black text-sm overflow-hidden"

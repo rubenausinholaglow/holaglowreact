@@ -3,6 +3,7 @@ import { useMessageSocket } from '@components/useMessageSocket';
 import { ProfessionalType } from '@interface/clinic';
 import { MessageType } from '@interface/messageSocket';
 import { messageService } from '@services/MessageService';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgStethoscope } from 'icons/Icons';
 import { SvgUserSquare } from 'icons/IconsDs';
@@ -96,24 +97,17 @@ export default function ButtonMessage() {
   };
 
   return (
-    <Flex layout="row-left" className="gap-2 ml-4 overflow-hidden relative">
-      <div
-        className={`transition-all flex flex-row gap-2 translate-x-0  opacity-100`}
-      >
-        <div
-          className={`${medicClassName} rounded-full p-3 text-hg-tertiary cursor-pointer`}
-          onClick={sendMessageToMedic}
-        >
-          <SvgStethoscope height={16} width={16} />
-        </div>
+    <Flex layout="row-left" className="gap-2 overflow-hidden relative">
+      <Button type="tertiary">
+        <SvgStethoscope height={16} width={16} />
+        Llamar Doctor/a
+      </Button>
 
-        <div
-          className={`${receptionClassName} rounded-full p-3 text-hg-tertiary cursor-pointer`}
-          onClick={sendMessageToReception}
-        >
-          <SvgUserSquare height={16} width={16} />
-        </div>
-      </div>
+      <Button type="tertiary">
+        <SvgUserSquare height={16} width={16} />
+        Llamar Beauty Adv.
+      </Button>
+
       {messageNotification ? (
         <Notification message={messageNotification} />
       ) : (
