@@ -15,7 +15,7 @@ import { PaymentModule } from '../../checkout/components/payment/Payments';
 import { usePaymentList } from '../../checkout/components/payment/payments/usePaymentList';
 
 export default function PaymentRemoteControl() {
-  const addToCart = useCartStore(state => state.addItemToCart);
+  const addItemToCart = useCartStore(state => state.addItemToCart);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const [finalBudget, setFinalBudget] = useState<Budget | undefined>(undefined);
@@ -73,7 +73,7 @@ export default function PaymentRemoteControl() {
         id: product.id,
         price: product.price,
       };
-      addToCart(cartItem);
+      addItemToCart(cartItem);
       applyItemDiscounts(product);
     });
   }

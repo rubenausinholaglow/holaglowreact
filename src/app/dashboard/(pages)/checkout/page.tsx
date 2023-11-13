@@ -154,10 +154,7 @@ const Page = () => {
               onClick={() => setShowProductDiscount(!showProductDiscount)}
             />
             <CartTotal isCheckout />
-            {budgetId &&
-            !isBudgetModified &&
-            !showProductDiscount &&
-            !isLoading ? (
+            {budgetId && !isBudgetModified && !isLoading ? (
               <Flex layout="col-left" className="gap-2 w-full mt-4">
                 <PaymentModule></PaymentModule>
               </Flex>
@@ -207,7 +204,7 @@ const Page = () => {
                 <span className="font-semibold">Agendar Cita</span>
               </Button>
               <Button size="md" className="w-full mt-4" onClick={cancelBudget}>
-                {isBudgetModified
+                {isBudgetModified || budgetId
                   ? 'Cancelar Presupuesto'
                   : 'Volver al dashboard'}
               </Button>

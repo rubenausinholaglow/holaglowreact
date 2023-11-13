@@ -160,7 +160,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
             type="secondary"
             onClick={e => {
               e.stopPropagation();
-              addToCart(product);
+              addItemToCart(product);
               setPendingDiscount(true);
             }}
             className="w-full mt-auto"
