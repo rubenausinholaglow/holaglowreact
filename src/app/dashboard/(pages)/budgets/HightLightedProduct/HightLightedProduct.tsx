@@ -4,6 +4,7 @@ import { CartItem, emptyProduct } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { getDiscountedPrice } from 'app/utils/common';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -30,6 +31,8 @@ export default function HightLightedProduct() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<CartItem | null>(null);
+  const [productPricewithPromoDiscount, setProductPricewithPromoDiscount] =
+    useState<number>(0);
   const [imgSrc, setImgSrc] = useState('');
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export default function HightLightedProduct() {
           setImgSrc(
             `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${data.flowwwId}/${data.flowwwId}.jpg`
           );
+          setProductPricewithPromoDiscount(getDiscountedPrice(data));
         }
       } catch (error: any) {
         Bugsnag.notify(error);
@@ -107,10 +111,21 @@ export default function HightLightedProduct() {
             <Title size="xl" className="font-semibold">
               {product.title}
               <br />
-              <span className="text-lg text-hg-black font-semibold mb-3">
+              <span
+                className={`text-lg text-hg-black font-semibold mb-3 ${
+                  !isEmpty(product.discounts) ? 'line-through text-xs' : ''
+                }`}
+              >
                 {product.price.toFixed(2)}€
               </span>
             </Title>
+
+            {productPricewithPromoDiscount > 0 &&
+              !isEmpty(product.discounts) && (
+                <Text size="lg" className={`font-semibold text-red`}>
+                  {productPricewithPromoDiscount.toFixed(2)}€
+                </Text>
+              )}
             <p className="mb-4 text-hg-tertiary">{product.description}</p>
 
             <Flex

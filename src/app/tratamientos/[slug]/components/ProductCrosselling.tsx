@@ -13,7 +13,7 @@ export default function ProductCrosselling({ product }: { product: Product }) {
   return (
     <>
       <Container>
-        <Title size="2xl" className="font-bold mb-8 md:mb-12">
+        <Title isAnimated size="2xl" className="font-bold mb-8 md:mb-12">
           Tratamientos que también te{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>
             pueden interesar

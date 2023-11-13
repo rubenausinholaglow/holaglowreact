@@ -4,12 +4,10 @@ import { ReactNode, RefObject, useEffect, useState } from 'react';
 import { useElementOnScreen } from 'app/utils/common';
 
 export const AnimateOnViewport = ({
-  disableAnimation = false,
   className = '',
   origin = 'bottom',
   children,
 }: {
-  disableAnimation?: boolean;
   className?: string;
   origin?: 'top' | 'right' | 'bottom' | 'left';
   children: ReactNode;
@@ -42,22 +40,16 @@ export const AnimateOnViewport = ({
 
   let styles = `transition-all duration-500 ${className}`;
 
-  if (!disableAnimation) {
-    styles +=
-      isInViewport || animated
-        ? ' opacity-1 translate-0'
-        : ` opacity-0 ${animationOrigin}`;
-  }
+  styles +=
+    isInViewport || animated
+      ? ' opacity-1 translate-0'
+      : ` opacity-0 ${animationOrigin}`;
 
   useEffect(() => {
     if (isInViewport) {
       setAnimated(true);
     }
   }, [isInViewport]);
-
-  if (disableAnimation) {
-    return children;
-  }
 
   return (
     <div ref={ref as RefObject<HTMLDivElement>} className={styles}>

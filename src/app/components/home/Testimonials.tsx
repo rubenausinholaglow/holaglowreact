@@ -113,7 +113,7 @@ export default function Testimonials() {
 
   return (
     <Container className="py-12">
-      <Title size="2xl" className="font-bold mb-6 md:mb-8">
+      <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-8">
         Si tú estás{' '}
         <Underlined color={HOLAGLOW_COLORS['primary']}>feliz</Underlined>,
         nosotros también

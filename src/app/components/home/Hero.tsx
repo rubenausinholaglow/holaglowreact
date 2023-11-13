@@ -1,3 +1,4 @@
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -6,7 +7,11 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
+
 export default function HomeHero() {
+  const { deviceSize } = useSessionStore(state => state);
+
   return (
     <Container className="relative border-b border-hg-black overflow-hidden">
       <Flex layout="col-center" className="md:flex-row">
@@ -21,22 +26,22 @@ export default function HomeHero() {
           layout="col-left"
           className="pb-10 z-10 w-full md:w-[45%] md:pl-8"
         >
-          <Text size="xl" className="mb-2">
+          <Text size="xl" className="mb-2" isAnimated origin="top">
             Medicina estética
           </Text>
           <Title
             size="3xl"
             className="text-left font-bold leading-none mb-6 md:mb-12"
+            isAnimated
+            origin="right"
           >
             Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
             <br />
             tus normas
           </Title>
-          <Link href={ROUTES.treatments}>
-            <Button type="primary" size="xl">
-              Ver tratamientos
-            </Button>
-          </Link>
+          <Button type="primary" size="xl" href={ROUTES.treatments} isAnimated>
+            Ver tratamientos
+          </Button>
         </Flex>
       </Flex>
     </Container>

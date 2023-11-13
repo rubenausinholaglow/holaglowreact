@@ -11,16 +11,18 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
-import { SvgArrow } from 'icons/IconsDs';
+import { SvgArrow, SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';
 
 export default function MobileNavigation({
   isVisible,
   headerHeight,
+  setIsMobileNavVisible,
 }: {
   isVisible: boolean;
   headerHeight: number;
+  setIsMobileNavVisible: (value: boolean) => void;
 }) {
   const paddingBottom = headerHeight + 16;
   const { clinics, setClinics } = useGlobalPersistedStore(state => state);
@@ -44,10 +46,15 @@ export default function MobileNavigation({
       width="w-full"
       className="shadow-none bg-hg-primary300"
       type="right"
-      style={{ top: headerHeight }}
       hideModalBackground
     >
-      <div className="bg-white border-b border-hg-black py-8">
+      <div className="bg-white border-b border-hg-black pt-12 pb-8 relative">
+        <SvgCross
+          height={20}
+          width={20}
+          className="absolute top-4 right-4"
+          onClick={() => setIsMobileNavVisible(false)}
+        />
         <Flex
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"

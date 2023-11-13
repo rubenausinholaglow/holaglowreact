@@ -12,6 +12,7 @@ import { Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import CategorySelector from '../filters/CategorySelector';
 
 export default function HomeProducts({
@@ -37,7 +38,7 @@ export default function HomeProducts({
   return (
     <div className="bg-hg-cream500 overflow-hidden py-12">
       <Container>
-        <Title size="2xl" className="font-bold mb-6 md:mb-12">
+        <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
           Tratamientos para conseguir resultados{' '}
           <Underlined color={HOLAGLOW_COLORS['primary']}>
             irresistibles
@@ -54,8 +55,10 @@ export default function HomeProducts({
         </Title>
       </Container>
       {!hideCategorySelector && (
-        <Container className="px-0 mb-12 md:px-4">
-          <CategorySelector />
+        <Container className="px-0 mb-8 md:px-4">
+          <AnimateOnViewport origin="right">
+            <CategorySelector />
+          </AnimateOnViewport>
         </Container>
       )}
       <FullWidthCarousel

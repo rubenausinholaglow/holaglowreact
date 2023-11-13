@@ -42,7 +42,7 @@ export default function ConsistOf() {
 
   return (
     <Container className="py-8 md:mb-12">
-      <Title size="2xl" className="font-bold mb-4">
+      <Title animated size="2xl" className="font-bold mb-4 text-center">
         ¿En qué{' '}
         <Underlined color={HOLAGLOW_COLORS['primary']}>consiste</Underlined>?
       </Title>
@@ -109,6 +109,7 @@ export default function ConsistOf() {
 
       <Flex className="justify-center">
         <Button
+          isAnimated
           size="xl"
           type="tertiary"
           customStyles="bg-hg-primary hover:bg-hg-secondary100"
