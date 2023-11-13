@@ -83,12 +83,13 @@ export default function Page({
         const finaldata = {
           ClinicId: existsMessageStartAppointment[0].ClinicId,
           BoxId: existsMessageStartAppointment[0].BoxId,
-          FlowwwToken: existsMessageStartAppointment[0].FlowwwToken,
+          AppointmentId: existsMessageStartAppointment[0].AppointmentId,
         };
+
         startAppointment(
           finaldata.ClinicId,
           finaldata.BoxId,
-          finaldata.FlowwwToken
+          finaldata.AppointmentId
         );
         messageSocket.removeMessageSocket(existsMessageStartAppointment[0]);
       }
@@ -98,13 +99,13 @@ export default function Page({
   async function startAppointment(
     clinicId: string,
     boxId: string,
-    flowwwToken: string
+    appointmentId: string
   ) {
     if (
       storedClinicId.toUpperCase() === clinicId.toUpperCase() &&
       String(boxId) === String(storedBoxId)
     ) {
-      await redirectPage('', '', flowwwToken);
+      await redirectPageByAppointmentId('', '', appointmentId);
     }
 
     setIsLoadingUser(false);
@@ -126,7 +127,11 @@ export default function Page({
       .then(async data => {
         if (data && !isEmpty(data)) {
           setCurrentUser(data);
-          await redirectPage(data.firstName, data.id, data.flowwwToken);
+          await redirectPageByflowwwToken(
+            data.firstName,
+            data.id,
+            data.flowwwToken
+          );
         } else {
           handleSearchError();
         }
@@ -150,9 +155,14 @@ export default function Page({
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
     const user = await UserService.registerUser(formData);
+
     if (user) {
       setCurrentUser(user);
-      redirectPage(formData.name, formData.id, formData.flowwwToken);
+      redirectPageByflowwwToken(
+        formData.name,
+        formData.id,
+        formData.flowwwToken
+      );
       setIsLoading(false);
     } else {
       handleRequestError([config.ERROR_REGISTRATION]);
@@ -160,28 +170,69 @@ export default function Page({
     }
   };
 
-  async function redirectPage(name: string, id: string, flowwwToken: string) {
+  async function redirectPageByAppointmentId(
+    name: string,
+    id: string,
+    appointmentId: string
+  ) {
     try {
-      await ScheduleService.getClinicSchedule(flowwwToken).then(async data => {
-        if (data != null) {
-          localStorage.setItem('ClinicId', data.clinic.id);
-          localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
-          localStorage.setItem(
-            'ClinicProfessionalId',
-            data.clinicProfessional.id
-          );
-          if (name == '') {
-            name = data.lead.user.firstName;
-            id = data.lead.user.id;
+      await ScheduleService.getClinicSchedule(appointmentId).then(
+        async data => {
+          if (data != null) {
+            setCurrentUser(data.user);
+            localStorage.setItem('ClinicId', data.clinic.id);
+            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
+            localStorage.setItem(
+              'ClinicProfessionalId',
+              data.clinicProfessional.id
+            );
+            if (name == '') {
+              name = data.lead.user.firstName;
+              id = data.lead.user.id;
+            }
+            saveUserDetails(name, id, '');
+            if (remoteControl) {
+              router.push('/dashboard/remoteControl');
+            } else router.push('/dashboard/menu');
+          } else {
+            //TODO - Poner un mensaje de Error en UI
           }
-          saveUserDetails(name, id, flowwwToken);
-          if (remoteControl) {
-            router.push('/dashboard/remoteControl');
-          } else router.push('/dashboard/menu');
-        } else {
-          //TODO - Poner un mensaje de Error en UI
         }
-      });
+      );
+    } catch (err) {
+      Bugsnag.notify(ERROR_GETTING_DATA + err);
+    }
+  }
+
+  async function redirectPageByflowwwToken(
+    name: string,
+    id: string,
+    flowwwToken: string
+  ) {
+    try {
+      await ScheduleService.getClinicScheduleByToken(flowwwToken).then(
+        async data => {
+          if (data != null) {
+            setCurrentUser(data.user);
+            localStorage.setItem('ClinicId', data.clinic.id);
+            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
+            localStorage.setItem(
+              'ClinicProfessionalId',
+              data.clinicProfessional.id
+            );
+            if (name == '') {
+              name = data.lead.user.firstName;
+              id = data.lead.user.id;
+            }
+            saveUserDetails(name, id, flowwwToken);
+            if (remoteControl) {
+              router.push('/dashboard/remoteControl');
+            } else router.push('/dashboard/menu');
+          } else {
+            //TODO - Poner un mensaje de Error en UI
+          }
+        }
+      );
     } catch (err) {
       Bugsnag.notify(ERROR_GETTING_DATA + err);
     }

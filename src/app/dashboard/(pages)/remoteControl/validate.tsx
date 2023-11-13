@@ -1,16 +1,20 @@
 'use client';
 import { useState } from 'react';
+import { GoToPageData } from '@interface/FrontEndMessages';
+import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import { clearLocalStorage } from '@utils/utils';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function ValidateComment() {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [comment, setComment] = useState('');
-  const { user, storedAppointmentId } = useGlobalPersistedStore(state => state);
+  const { user, storedAppointmentId, storedClinicId, storedBoxId } =
+    useGlobalPersistedStore(state => state);
+  const router = useRouter();
 
   const handleClick = async () => {
     setIsCommentModalOpen(true);
@@ -18,17 +22,21 @@ export default function ValidateComment() {
 
   const handleCommentSubmit = async () => {
     setIsCommentModalOpen(false);
-    const result = await ScheduleService.finish(
+    await ScheduleService.finish(
       storedAppointmentId ?? '',
       comment ?? '',
       user?.id || ''
     );
-    if (result) {
-      clearLocalStorage(false);
-      router.push('/dashboard');
-    } else {
-      //TODO - MESSAGE!
-    }
+    const gotoPage: GoToPageData = {
+      clinicId: storedClinicId,
+      boxId: storedBoxId,
+      page: 'Home',
+    };
+    messageService.goToPage(gotoPage);
+    clearLocalStorage(false);
+    router.push(
+      `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=true`
+    );
   };
 
   return (

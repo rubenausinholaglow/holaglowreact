@@ -8,7 +8,7 @@ interface BaseDataMessage {
 export type PatientArrivedData = BaseDataMessage;
 
 export interface StartAppointmentData extends BaseDataMessage {
-  flowwwToken: string;
+  appointmentId: string;
 }
 
 export interface CrisalixUserData extends BaseDataMessage {

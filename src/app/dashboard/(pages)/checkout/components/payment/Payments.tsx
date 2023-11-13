@@ -257,8 +257,11 @@ export const PaymentModule = () => {
             Page: 'Menu',
           };
           messageService.goToPage(message);
+          router.push('/dashboard/remoteControl');
+        } else {
+          router.push('/dashboard/menu');
         }
-        router.push('/dashboard/menu');
+
         setMessageNotification('Ticket Creado Correctamente');
       } else {
         //TODO - ALERT MESSAGE

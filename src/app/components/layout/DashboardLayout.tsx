@@ -41,7 +41,7 @@ export default function DashboardLayout({
     Crisalix: '/dashboard/crisalix',
     Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
     Menu: '/dashboard/menu',
-    Home: '/dashboard',
+    Home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
     CheckOut: '/dashboard/remoteControl/Payment',
   };
 
@@ -71,19 +71,12 @@ export default function DashboardLayout({
         let messageData: any;
         switch (message.event) {
           case EventTypes.PatientArrived:
-            if (!remoteControl) return true;
             messageData = handlePatientArrived(message);
             break;
           case EventTypes.StartAppointment:
-            if (remoteControl) {
-              return true;
-            }
             messageData = handleStartAppointment(message);
             break;
           case EventTypes.CrisalixUser:
-            if (remoteControl) {
-              return true;
-            }
             messageData = handleCrisalixUser(message);
             break;
           case EventTypes.PaymentCreate:
@@ -129,7 +122,7 @@ export default function DashboardLayout({
       messageType: MessageType.StartAppointment,
       ClinicId: message.data.clinicId,
       BoxId: message.data.boxId,
-      FlowwwToken: message.data.token,
+      AppointmentId: message.data.appointmentId,
     };
 
     return messageData;
@@ -203,6 +196,14 @@ export default function DashboardLayout({
     return true;
   }
 
+  function handleBackButton() {
+    /*  if (router. === '/dashboard/menu') {
+      router.push('/dashboard');
+    } else {*/
+    router.back();
+    //}
+  }
+
   return (
     <main className="min-h-screen h-100 pt-4 text-sm bg-[url('/images/dashboard/background/main_background.png')] bg-[#A96FE7] bg-bottom bg-contain bg-no-repeat">
       <Flex
@@ -213,7 +214,7 @@ export default function DashboardLayout({
           <Container>
             <Flex layout="row-left" className="w-full pb-8">
               {!hideBackButton && (
-                <Button type="tertiary" onClick={() => router.back()}>
+                <Button type="tertiary" onClick={() => handleBackButton()}>
                   <Flex layout="row-left">
                     <SvgArrowSmallLeft
                       height={40}

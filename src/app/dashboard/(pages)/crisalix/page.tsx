@@ -18,7 +18,8 @@ const Page = () => {
 
   const userCrisalix = useCrisalix(state => state);
   const { user, storedClinicId } = useGlobalPersistedStore(state => state);
-  const username = typeof window !== 'undefined' ? user?.firstName : null;
+  const username = localStorage.getItem('username') || '';
+  //TODO arreglar el username
 
   useEffect(() => {
     const existsCrisalixUser =
