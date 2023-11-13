@@ -82,10 +82,32 @@ export default class ScheduleService {
     await ScheduleService.scheduleBulk(appointments);
   };
 
-  static async getClinicSchedule(flowwwToken: string) {
+  static async getClinicScheduleByToken(flowwwToken: string) {
     try {
       const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/v2/Next?token=${flowwwToken}`;
       const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error getAppointmentsPerClinic', err);
+      return err;
+    }
+  }
+
+  static async getClinicSchedule(appointmentId: string) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/${appointmentId}/Start`;
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: '',
+      });
       if (res.ok) {
         const data = await res.json();
         return data;

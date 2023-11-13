@@ -6,6 +6,7 @@ import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { normalizeString } from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
@@ -38,6 +39,7 @@ export default function Page() {
     { min: number; max: number }[]
   >([]);
   const [isTypeFilterSelected, setIsTypeFilterSelected] = useState(true);
+  const { isModalOpen } = useGlobalStore(state => state);
 
   useEffect(() => {
     ProductService.getDashboardProducts()
@@ -51,6 +53,12 @@ export default function Page() {
     setShowPacks(!showPacks);
     setHighlightProduct(null);
   }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setHighlightProduct(null);
+    }
+  }, [isModalOpen]);
 
   useEffect(() => {
     setShowProductModal(!isEmpty(productHighlighted));
@@ -222,7 +230,7 @@ export default function Page() {
   } else {
     const filteredProducts = filterProducts() || [];
     return (
-      <MainLayout isDashboard>
+      <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
         <Modal isVisible={showProductModal} width="w-3/4">
           <HightLightedProduct />
         </Modal>

@@ -2,8 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import UserService from '@services/UserService';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
+
+import { useCrisalix } from './useCrisalix';
 
 const Page = () => {
   const [id, setId] = useState('');
@@ -12,20 +15,23 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
-  const username =
-    typeof window !== 'undefined' ? localStorage.getItem('username') : null;
+
+  const userCrisalix = useCrisalix(state => state);
+  const { user, storedClinicId } = useGlobalPersistedStore(state => state);
+  const username = localStorage.getItem('username') || '';
+  //TODO arreglar el username
 
   useEffect(() => {
-    const userId = localStorage.getItem('id');
-    const appointmentId = localStorage.getItem('appointmentId');
-    const clinicId = localStorage.getItem('ClinicId');
-    UserService.createCrisalixUser(userId!, appointmentId!, clinicId!).then(
-      x => {
-        setPlayerId(x.playerId);
-        setPlayerToken(x.playerToken);
-        setId(x.id);
-      }
-    );
+    const existsCrisalixUser =
+      userCrisalix.crisalixUser.length > 0
+        ? userCrisalix.crisalixUser[0]
+        : null;
+
+    if (existsCrisalixUser != null) {
+      setId(existsCrisalixUser.id);
+      setPlayerToken(existsCrisalixUser.playerToken);
+      setPlayerId(existsCrisalixUser.playerId);
+    }
 
     setTimeout(
       () => {
@@ -37,8 +43,7 @@ const Page = () => {
 
   const checksimulationReady = () => {
     if (id == '' || playerToken == '') return;
-    const clinicId = localStorage.getItem('ClinicId');
-    UserService.getSimulationReady(id, clinicId!).then(x => {
+    UserService.getSimulationReady(id, storedClinicId!).then(x => {
       setSimulationReady(x);
       if (!x) {
         setTimeout(() => {
@@ -97,7 +102,7 @@ const Page = () => {
   };
 
   return (
-    <MainLayout isDashboard>
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {username && (
         <Container>
           <Flex layout="col-center">

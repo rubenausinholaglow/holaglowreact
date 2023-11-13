@@ -1,5 +1,8 @@
 'use client';
 
+import { GoToPageData } from '@interface/FrontEndMessages';
+import { messageService } from '@services/MessageService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,8 +15,26 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   link,
   target,
 }) => {
+  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
+    state => state
+  );
+  function goToPage(name: string) {
+    let message: GoToPageData;
+    switch (name) {
+      case 'Simulador 3D':
+        message = {
+          clinicId: storedClinicId || '',
+          boxId: storedBoxId || '',
+          page: 'Crisalix',
+        };
+        messageService.goToPage(message);
+        break;
+      default:
+        '';
+    }
+  }
   return (
-    <Link href={link} target={target}>
+    <Link href={link} target={target} onClick={() => goToPage(title)}>
       <Image
         className="mx-auto"
         src={iconSrc}

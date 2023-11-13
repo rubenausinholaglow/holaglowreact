@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Professional, ProfessionalType } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -24,13 +25,14 @@ export const ClinicProfessional = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { storedClinicId } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const fetchProfessionals = async () => {
       try {
         const professionalType = ProfessionalType.All;
         const professionalsData = await clinicService.getProfessionalsByClinic(
-          localStorage.getItem('ClinicId') || '',
+          storedClinicId,
           professionalType
         );
 

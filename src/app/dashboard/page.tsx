@@ -2,7 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import { useMessageSocket } from '@components/useMessageSocket';
 import { Client } from '@interface/client';
+import { MessageType } from '@interface/messageSocket';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
@@ -10,10 +12,14 @@ import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { clearLocalStorage } from '@utils/utils';
 import * as utils from '@utils/validators';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../components/common/RegistrationForm';
+import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
 
 export default function Page({
@@ -22,11 +28,22 @@ export default function Page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const router = useRouter();
+  const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const [boxId, setBoxId] = useState('');
+  const messageSocket = useMessageSocket(state => state);
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
+  const {
+    remoteControl,
+    storedBoxId,
+    storedClinicId,
+    setBoxId,
+    setClinicId,
+    setRemoteControl,
+  } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -48,18 +65,59 @@ export default function Page({
       utmSource: '',
       utmTerm: '',
       treatmentText: '',
-      externalReference: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
     },
     interestedTreatment: '',
     treatmentPrice: 0,
   });
 
   useEffect(() => {
-    clearLocalStorage(false);
+    if (!remoteControl) {
+      const existsMessageStartAppointment: any =
+        messageSocket.messageSocket.filter(
+          x => x.messageType == MessageType.StartAppointment
+        );
+      if (existsMessageStartAppointment.length > 0) {
+        setIsLoadingUser(true);
+        const finaldata = {
+          ClinicId: existsMessageStartAppointment[0].ClinicId,
+          BoxId: existsMessageStartAppointment[0].BoxId,
+          AppointmentId: existsMessageStartAppointment[0].AppointmentId,
+        };
 
+        startAppointment(
+          finaldata.ClinicId,
+          finaldata.BoxId,
+          finaldata.AppointmentId
+        );
+        messageSocket.removeMessageSocket(existsMessageStartAppointment[0]);
+      }
+    }
+  }, [messageSocket]);
+
+  async function startAppointment(
+    clinicId: string,
+    boxId: string,
+    appointmentId: string
+  ) {
+    if (
+      storedClinicId.toUpperCase() === clinicId.toUpperCase() &&
+      String(boxId) === String(storedBoxId)
+    ) {
+      await redirectPageByAppointmentId('', '', appointmentId);
+    }
+
+    setIsLoadingUser(false);
+  }
+
+  useEffect(() => {
+    clearLocalStorage(false);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
+    setRemoteControl(params.get('remoteControl') == 'true');
+    setClinicId(params.get('clinicId') || '');
   }, []);
 
   const handleCheckUser = async () => {
@@ -68,7 +126,12 @@ export default function Page({
     await UserService.checkUser(userEmail)
       .then(async data => {
         if (data && !isEmpty(data)) {
-          await redirectPage(data.firstName, data.id, data.flowwwToken);
+          setCurrentUser(data);
+          await redirectPageByflowwwToken(
+            data.firstName,
+            data.id,
+            data.flowwwToken
+          );
         } else {
           handleSearchError();
         }
@@ -91,9 +154,15 @@ export default function Page({
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    const isSuccess = await UserService.registerUser(formData);
-    if (isSuccess) {
-      redirectPage(formData.name, formData.id, formData.flowwwToken);
+    const user = await UserService.registerUser(formData);
+
+    if (user) {
+      setCurrentUser(user);
+      redirectPageByflowwwToken(
+        formData.name,
+        formData.id,
+        formData.flowwwToken
+      );
       setIsLoading(false);
     } else {
       handleRequestError([config.ERROR_REGISTRATION]);
@@ -101,25 +170,69 @@ export default function Page({
     }
   };
 
-  async function redirectPage(name: string, id: string, flowwwToken: string) {
+  async function redirectPageByAppointmentId(
+    name: string,
+    id: string,
+    appointmentId: string
+  ) {
     try {
-      await ScheduleService.getClinicSchedule(flowwwToken).then(data => {
-        if (data != null) {
-          localStorage.setItem('appointmentId', data.id);
-          localStorage.setItem('appointmentFlowwwId', data.flowwwId ?? '');
-          localStorage.setItem('ClinicId', data.clinic.id);
-          localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
-          localStorage.setItem(
-            'ClinicProfessionalId',
-            data.clinicProfessional.id
-          );
-          localStorage.setItem('boxId', boxId || data.boxId);
-          saveUserDetails(name, id, flowwwToken);
-          router.push('/dashboard/menu');
-        } else {
-          //TODO - Poner un mensaje de Error en UI
+      await ScheduleService.getClinicSchedule(appointmentId).then(
+        async data => {
+          if (data != null) {
+            setCurrentUser(data.user);
+            localStorage.setItem('ClinicId', data.clinic.id);
+            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
+            localStorage.setItem(
+              'ClinicProfessionalId',
+              data.clinicProfessional.id
+            );
+            if (name == '') {
+              name = data.lead.user.firstName;
+              id = data.lead.user.id;
+            }
+            saveUserDetails(name, id, '');
+            if (remoteControl) {
+              router.push('/dashboard/remoteControl');
+            } else router.push('/dashboard/menu');
+          } else {
+            //TODO - Poner un mensaje de Error en UI
+          }
         }
-      });
+      );
+    } catch (err) {
+      Bugsnag.notify(ERROR_GETTING_DATA + err);
+    }
+  }
+
+  async function redirectPageByflowwwToken(
+    name: string,
+    id: string,
+    flowwwToken: string
+  ) {
+    try {
+      await ScheduleService.getClinicScheduleByToken(flowwwToken).then(
+        async data => {
+          if (data != null) {
+            setCurrentUser(data.user);
+            localStorage.setItem('ClinicId', data.clinic.id);
+            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
+            localStorage.setItem(
+              'ClinicProfessionalId',
+              data.clinicProfessional.id
+            );
+            if (name == '') {
+              name = data.lead.user.firstName;
+              id = data.lead.user.id;
+            }
+            saveUserDetails(name, id, flowwwToken);
+            if (remoteControl) {
+              router.push('/dashboard/remoteControl');
+            } else router.push('/dashboard/menu');
+          } else {
+            //TODO - Poner un mensaje de Error en UI
+          }
+        }
+      );
     } catch (err) {
       Bugsnag.notify(ERROR_GETTING_DATA + err);
     }
@@ -195,32 +308,83 @@ export default function Page({
     setErrors(errors);
   };
 
-  return (
-    <MainLayout
-      isDashboard
-      hideBackButton
-      hideContactButtons
-      hideProfessionalSelector
-    >
-      <div className="mt-8">
-        {showRegistration ? (
-          <RegistrationForm
-            formData={formData}
-            handleFieldChange={handleFormFieldChange}
-            handleContinue={handleContinue}
-            errors={errors}
-            isLoading={isLoading}
+  if (remoteControl)
+    return (
+      <MainLayout
+        isDashboard
+        hideBackButton
+        hideContactButtons
+        hideProfessionalSelector
+      >
+        <div className="w-full justify-center content-center px-11">
+          <AppointmentsListComponent
+            clinicId={storedClinicId}
+            boxId={storedBoxId}
           />
-        ) : (
-          <SearchUser
-            email={userEmail}
-            handleFieldChange={handleFieldEmailChange}
-            handleCheckUser={handleCheckUser}
-            errors={errors}
-            isLoading={isLoading}
-          />
+          <div className="mt-8">
+            {showRegistration ? (
+              <RegistrationForm
+                formData={formData}
+                handleFieldChange={handleFormFieldChange}
+                handleContinue={handleContinue}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            ) : (
+              <SearchUser
+                email={userEmail}
+                handleFieldChange={handleFieldEmailChange}
+                handleCheckUser={handleCheckUser}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            )}
+            {isLoadingUser && <SvgSpinner />}
+          </div>
+        </div>
+      </MainLayout>
+    );
+
+  if (!remoteControl)
+    return (
+      <MainLayout
+        isDashboard
+        hideBackButton
+        hideContactButtons
+        hideProfessionalSelector
+      >
+        <div className="fixed bottom-0 right-0 py-3 px-3">
+          <Button
+            onClick={() => setShowForm(!showForm)}
+            type="tertiary"
+            size="sm"
+            className=""
+          >
+            Búsqueda Manual
+          </Button>
+        </div>
+        {showForm && (
+          <div className="mt-8">
+            {showRegistration ? (
+              <RegistrationForm
+                formData={formData}
+                handleFieldChange={handleFormFieldChange}
+                handleContinue={handleContinue}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            ) : (
+              <SearchUser
+                email={userEmail}
+                handleFieldChange={handleFieldEmailChange}
+                handleCheckUser={handleCheckUser}
+                errors={errors}
+                isLoading={isLoading}
+              />
+            )}
+          </div>
         )}
-      </div>
-    </MainLayout>
-  );
+        {isLoadingUser && <SvgSpinner />}
+      </MainLayout>
+    );
 }

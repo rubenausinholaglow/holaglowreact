@@ -50,7 +50,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     resultValue = Math.round(parsedValue * 100).toString();
   }
   const script = `
-      var url = '../scripts/Alma/widget.js';
+      var url = '/scripts/Alma/widget.js';
       var scriptLoaded = false;
       if (!url) url = 'http://xxx.co.uk/xxx/script.js';
       var scripts = document.getElementsByTagName('script');
@@ -132,6 +132,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       userId: GuidUser,
       paymentBank: PaymentBank.Alma,
     };
+
     try {
       const urlPayment = await FinanceService.initializePayment(data);
       onUrlPayment(urlPayment.id, urlPayment.url, urlPayment.referenceId);

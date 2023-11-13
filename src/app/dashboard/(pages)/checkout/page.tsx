@@ -4,11 +4,13 @@ import Bugsnag from '@bugsnag/js';
 import { Budget, StatusBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
+import { messageService } from '@services/MessageService';
 import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
 import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
@@ -29,13 +31,16 @@ const Page = () => {
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const [showPaymentButtons, setShowPaymentButtons] = useState(false);
+  const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [clientToken, setClientToken] = useState<string | ''>('');
   const [budgetId, setBudgetId] = useState<string | ''>('');
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
   const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
+  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
+    state => state
+  );
 
   useEffect(() => {
     if (budgetId && totalPriceInitial != totalPriceToShow) {
@@ -63,7 +68,6 @@ const Page = () => {
     setTotalPriceInitial(totalPriceToShow);
 
     const GuidUser = localStorage.getItem('id') || '';
-    const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
 
     const budget: Budget = {
@@ -76,7 +80,7 @@ const Page = () => {
       manualPrice: Number(manualPrice.toFixed(2)),
       totalPrice: Number(totalPrice.toFixed(2)),
       totalPriceWithIva: Number(totalPrice.toFixed(2)),
-      clinicInfoId: GuidClinicId,
+      clinicInfoId: storedClinicId,
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: GuidProfessional,
@@ -87,12 +91,12 @@ const Page = () => {
         priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
       })),
     };
-
     try {
       if (budgetId.length > 0) {
         setBudgetModified(false);
         setShowProductDiscount(false);
         budget.id = budgetId;
+        await budgetService.updateBudget(budget);
       } else {
         const data = await budgetService.createBudget(budget);
         localStorage.setItem('BudgetId', data.id);
@@ -129,7 +133,7 @@ const Page = () => {
   }
 
   return (
-    <MainLayout isDashboard>
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       <Container>
         <Flex layout="row-left" className="items-start">
           <ul className="w-1/2 shrink-0">
@@ -150,10 +154,7 @@ const Page = () => {
               onClick={() => setShowProductDiscount(!showProductDiscount)}
             />
             <CartTotal isCheckout />
-            {budgetId &&
-            !isBudgetModified &&
-            !showProductDiscount &&
-            !isLoading ? (
+            {budgetId && !isBudgetModified && !isLoading ? (
               <Flex layout="col-left" className="gap-2 w-full mt-4">
                 <PaymentModule></PaymentModule>
               </Flex>
@@ -175,6 +176,12 @@ const Page = () => {
                       await handleFinalize();
                       setIsLoading(false);
                       setShowPaymentButtons(!showPaymentButtons);
+                      const message: any = {
+                        clinicId: storedClinicId,
+                        boxId: storedBoxId,
+                        page: 'CheckOut',
+                      };
+                      messageService.goToPage(message);
                     }}
                   >
                     {isLoading ? (
@@ -197,7 +204,7 @@ const Page = () => {
                 <span className="font-semibold">Agendar Cita</span>
               </Button>
               <Button size="md" className="w-full mt-4" onClick={cancelBudget}>
-                {isBudgetModified
+                {isBudgetModified || budgetId
                   ? 'Cancelar Presupuesto'
                   : 'Volver al dashboard'}
               </Button>

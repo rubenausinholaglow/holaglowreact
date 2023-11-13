@@ -1,67 +1,64 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ScheduleService from '@services/ScheduleService';
-import { clearLocalStorage } from '@utils/utils';
+import { useMessageSocket } from '@components/useMessageSocket';
+import { CrisalixUser } from '@interface/crisalix';
+import { MessageType } from '@interface/messageSocket';
 import MainLayout from 'app/components/layout/MainLayout';
-import { Button } from 'designSystem/Buttons/Buttons';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { useRouter } from 'next/navigation';
 
+import { useCrisalix } from '../crisalix/useCrisalix';
 import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
 
 const Page = () => {
   const [username, setUserName] = useState('');
-  const [clinicId, setClinicId] = useState<string | null>(null);
-  const [boxId, setBoxId] = useState<string | null>(null);
-  const [appointmentId, setAppointmentId] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const [flowwwToken, setFlowwwToken] = useState('');
-
-  const router = useRouter();
-  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-  const [comment, setComment] = useState('');
+  const messageSocket = useMessageSocket(state => state);
+  const userCrisalix = useCrisalix(state => state);
+  const { remoteControl, storedBoxId, storedClinicId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
-    const newCrisalix = localStorage.getItem('newCrisalix');
-    if (newCrisalix) {
-      menuItems[0].link = '/dashboard/crisalix';
-      menuItems[0].target = '';
-    }
     const storedUsername = localStorage.getItem('username') || '';
+    const storedFlowwwtoken = localStorage.getItem('flowwwToken') || '';
     setUserName(storedUsername);
-
-    if (!storedUsername) {
-      router.push('/dashboard');
-    }
-
-    setAppointmentId(localStorage.getItem('appointmentId') || '');
-    setClinicId(localStorage.getItem('ClinicId') || '');
-    setBoxId(localStorage.getItem('boxId') || '');
-    setUserId(localStorage.getItem('id') || '');
-    setFlowwwToken(localStorage.getItem('flowwwToken') || '');
+    setFlowwwToken(storedFlowwwtoken);
   }, []);
 
-  const handleClick = async () => {
-    setIsCommentModalOpen(true);
-  };
-  const handleCommentSubmit = async () => {
-    setIsCommentModalOpen(false);
-    const result = await ScheduleService.finish(
-      appointmentId ?? '',
-      comment ?? '',
-      userId || ''
-    );
-    if (result) {
-      clearLocalStorage(false);
-      router.push(`/dashboard?clinicId=${clinicId}&boxId=${boxId}`);
-    } else {
-      //TODO - MESSAGE!
+  useEffect(() => {
+    if (!remoteControl) {
+      const existsMessageCrisalixUser: any = messageSocket.messageSocket.filter(
+        x => x.messageType == MessageType.CrisalixUser
+      );
+      if (existsMessageCrisalixUser.length > 0) {
+        const crisalixUser = existsMessageCrisalixUser[0];
+        const data = {
+          ClinicId: crisalixUser.ClinicId,
+          BoxId: crisalixUser.BoxId,
+          id: crisalixUser.id,
+          playerId: crisalixUser.playerId,
+          playerToken: crisalixUser.playerToken,
+        };
+        saveCrisalixUser(data);
+        messageSocket.removeMessageSocket(existsMessageCrisalixUser[0]);
+      }
     }
-  };
+  }, [messageSocket]);
+
+  async function saveCrisalixUser(props: any) {
+    const crisalixUser: CrisalixUser = {
+      id: props.id,
+      playerId: props.playerId,
+      playerToken: props.playerToken,
+      name: props.name,
+    };
+    userCrisalix.addCrisalixUser(crisalixUser);
+  }
+
   return (
-    <MainLayout isDashboard>
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {username && (
         <Container>
           <Flex layout="col-center">
@@ -84,39 +81,6 @@ const Page = () => {
               ))}
             </div>
           </Flex>
-          {!isCommentModalOpen && (
-            <Flex layout="col-center" className="mt-8">
-              <Button isSubmit onClick={handleClick} type="secondary">
-                Validar Cita
-              </Button>
-            </Flex>
-          )}
-          {isCommentModalOpen && (
-            <Flex layout="col-center" className="mt-8">
-              <textarea
-                value={comment}
-                onChange={e => setComment(e.target.value)}
-                placeholder="Escribe tu comentario..."
-                className="w-full h-40 p-2 resize-none border rounded-lg"
-              />
-
-              <Button
-                isSubmit
-                onClick={handleCommentSubmit}
-                type="secondary"
-                className="mt-4"
-              >
-                Validar Cita
-              </Button>
-              <Button
-                onClick={() => setIsCommentModalOpen(false)}
-                type="secondary"
-                className="mt-4"
-              >
-                Cancelar
-              </Button>
-            </Flex>
-          )}
         </Container>
       )}
     </MainLayout>

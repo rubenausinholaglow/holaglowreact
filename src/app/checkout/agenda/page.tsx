@@ -72,7 +72,7 @@ export default function Agenda() {
       //Valencia
       '1': 15,
       '2': 15,
-      '0': 10,
+      '0': 15,
     },
   };
   if (
@@ -103,7 +103,7 @@ export default function Agenda() {
       ScheduleService.getMonthAvailability(
         dateToCheck.format(format),
         selectedTreatmentsIds,
-        selectedClinic!.flowwwId
+        selectedClinic?.flowwwId || ''
       ).then(data => {
         const availability = availableDates ?? [];
         const today = dayjs();

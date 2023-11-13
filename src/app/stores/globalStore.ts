@@ -45,6 +45,10 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   user?: User;
   promo: Promo | undefined;
+  remoteControl: boolean;
+  storedClinicId: string | '';
+  storedBoxId: string | '';
+  storedAppointmentId: string | '';
 }
 
 interface GlobalPersistActions {
@@ -52,6 +56,10 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
+  setRemoteControl: (remoteControl: boolean) => void;
+  setClinicId: (storedClinicId: string) => void;
+  setBoxId: (setBoxId: string) => void;
+  setAppointmentId: (storedAppointmentId: string) => void;
 }
 
 export const useSessionStore = create(
@@ -68,6 +76,8 @@ export const useSessionStore = create(
         utmTerm: '',
         treatmentText: '',
         externalReference: '',
+        interestedTreatment: '',
+        treatmentPrice: 0,
       },
       deviceSize: {
         isMobile: true,
@@ -75,13 +85,13 @@ export const useSessionStore = create(
         isDesktop: false,
         isWideScreen: false,
       },
-      isMobile: true,
       selectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
       selectedDay: dayjs(),
       selectedSlot: undefined,
       previousAppointment: undefined,
+      isMobile: true,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -136,6 +146,22 @@ export const useGlobalPersistedStore = create(
       },
       setPromos: (value: Promo) => {
         set({ promo: value });
+      },
+      remoteControl: false,
+      setRemoteControl: value => {
+        set({ remoteControl: value });
+      },
+      storedClinicId: '',
+      setClinicId: value => {
+        set({ storedClinicId: value });
+      },
+      storedBoxId: '',
+      setBoxId: value => {
+        set({ storedBoxId: value });
+      },
+      storedAppointmentId: '',
+      setAppointmentId: value => {
+        set({ storedAppointmentId: value });
       },
     }),
     {

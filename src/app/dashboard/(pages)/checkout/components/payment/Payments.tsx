@@ -8,9 +8,11 @@ import { MessageType } from '@interface/messageSocket';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
 import { budgetService } from '@services/BudgetService';
+import { messageService } from '@services/MessageService';
 import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -31,7 +33,7 @@ export const PaymentModule = () => {
   const paymentList = usePaymentList(state => state.paymentRequest);
   const totalPrice = useCartStore(state => state.totalPrice);
   const totalAmount = usePaymentList(state => state.totalAmount);
-
+  const { addPaymentToList, removePayment } = usePaymentList();
   const priceDiscount = useCartStore(state => state.priceDiscount);
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
@@ -43,57 +45,118 @@ export const PaymentModule = () => {
     Record<string, StatusPayment>
   >({});
   const messageSocket = useMessageSocket(state => state);
+  const { remoteControl, storedBoxId, storedClinicId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
   }, []);
 
   useEffect(() => {
-    const existMessagePaymentResponse = messageSocket.messageSocket.filter(
-      x => x.messageType == MessageType.PaymentResponse
-    );
-    if (existMessagePaymentResponse.length > 0) {
-      const finalMessage = existMessagePaymentResponse[0].message;
-      const [, paymentReferenceId, PaymentStatus] = finalMessage.split('/');
-      const existingPayment = paymentList.find(
-        x => x.paymentReference === paymentReferenceId
-      );
-      if (existingPayment) {
-        switch (PaymentStatus) {
-          case 'Rejected':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.Rejected,
-            }));
-            break;
-          case 'Paid':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.Paid,
-            }));
-            break;
-          case 'FinancingRejected':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.FinancingRejected,
-            }));
-            break;
-          case 'FinancingAccepted':
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.FinancingAccepted,
-            }));
-            break;
-          default:
-            setPaymentStatus(prevPaymentStatus => ({
-              ...prevPaymentStatus,
-              [existingPayment.id]: StatusPayment.Waiting,
-            }));
-        }
-        messageSocket.removeMessageSocket(existMessagePaymentResponse[0]);
-      }
-    }
+    const { paymentCreatedMessages, paymentResponseMessages } =
+      processPaymentMessages(messageSocket.messageSocket);
+
+    paymentResponseMessages.forEach(handlePaymentResponse);
+    paymentCreatedMessages.forEach(handlePaymentCreate);
   }, [messageSocket]);
+
+  const processPaymentMessages = (paymentMessages: any) => {
+    const paymentCreatedMessages = paymentMessages.filter(
+      (x: any) => x.messageType === MessageType.PaymentCreate
+    );
+
+    const paymentResponseMessages = paymentMessages.filter(
+      (x: any) => x.messageType === MessageType.PaymentResponse
+    );
+
+    return { paymentCreatedMessages, paymentResponseMessages };
+  };
+
+  const handlePaymentCreate = (message: any) => {
+    const localBudgetId = localStorage.getItem('BudgetId');
+    if (localBudgetId != message.budgetId) return true;
+    const existsPayment = paymentList.find(x => x.id == message.id);
+    if (!existsPayment) {
+      handleNewPayment(message);
+    } else {
+      handleExistingPayment(message, existsPayment);
+    }
+  };
+
+  const handleNewPayment = (message: any): void => {
+    const paymentRequest = createPaymentRequest(message);
+    if (message.amount > 0) {
+      addPaymentToList(paymentRequest);
+    }
+    messageSocket.removeMessageSocket(message);
+  };
+
+  const handleExistingPayment = (message: any, existsPayment: any): void => {
+    if (message.amount === 0) {
+      message.amount = existsPayment.amount;
+      const paymentRequest = createPaymentRequest(message);
+      if (existsPayment.amount > 0) {
+        removePayment(paymentRequest);
+      }
+      messageSocket.removeMessageSocket(message);
+    }
+  };
+
+  const createPaymentRequest = (message: any): any => {
+    return {
+      amount: message.amount,
+      method: message.paymentMethod,
+      bank: message.paymentBank,
+      paymentReference: message.ReferenceId,
+      id: message.id,
+    };
+  };
+
+  const handlePaymentResponse = (message: any) => {
+    const payment = {
+      referenceId: message.message.data.id,
+      paymentStatus: message.message.data.paymentStatus,
+    };
+
+    const existingPayment = paymentList.find(
+      x => x.paymentReference === payment.referenceId
+    );
+
+    if (existingPayment) {
+      switch (payment.paymentStatus) {
+        case 'Rejected':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.Rejected,
+          }));
+          break;
+        case 'Paid':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.Paid,
+          }));
+          break;
+        case 'FinancingRejected':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.FinancingRejected,
+          }));
+          break;
+        case 'FinancingAccepted':
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.FinancingAccepted,
+          }));
+          break;
+        default:
+          setPaymentStatus(prevPaymentStatus => ({
+            ...prevPaymentStatus,
+            [existingPayment.id]: StatusPayment.Waiting,
+          }));
+      }
+      messageSocket.removeMessageSocket(message);
+    }
+  };
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -113,7 +176,6 @@ export const PaymentModule = () => {
   const missingAmountFormatted = missingAmount.toFixed(2);
 
   const sendTicket = async () => {
-    const GuidClinicId = localStorage.getItem('ClinicId') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
     const BudgetId = localStorage.getItem('BudgetId') || '';
     const ClinicFlowwwId = localStorage.getItem('ClinicFlowwwId') || '';
@@ -129,7 +191,7 @@ export const PaymentModule = () => {
       manualPrice: 0,
       totalPrice: totalPrice,
       totalPriceWithIva: totalPrice,
-      clinicInfoId: GuidClinicId,
+      clinicInfoId: storedClinicId,
       FlowwwId: '',
       referenceId: '',
       statusBudget: StatusBudget.Open,
@@ -188,7 +250,18 @@ export const PaymentModule = () => {
         localStorage.removeItem('BudgetId');
         usePaymentList.setState(INITIAL_STATE_PAYMENT);
         useCartStore.setState(INITIAL_STATE);
-        router.push('/dashboard/menu');
+        if (remoteControl) {
+          const message: any = {
+            clinicId: storedClinicId,
+            BoxId: storedBoxId,
+            Page: 'Menu',
+          };
+          messageService.goToPage(message);
+          router.push('/dashboard/remoteControl');
+        } else {
+          router.push('/dashboard/menu');
+        }
+
         setMessageNotification('Ticket Creado Correctamente');
       } else {
         //TODO - ALERT MESSAGE
@@ -256,7 +329,6 @@ export const PaymentModule = () => {
         </Text>
       </Flex>
       <Button size="lg" className="w-full mt-4" onClick={createTicket}>
-        {' '}
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>
       {messageNotification ? (
