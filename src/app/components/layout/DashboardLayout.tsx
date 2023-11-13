@@ -199,23 +199,11 @@ export default function DashboardLayout({
     return true;
   }
 
-  function handleBackButton() {
-    if (window.location.pathname == '/dashboard/menu/') {
-      if (remoteControl) {
-        router.push(
-          `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=true`
-        );
-      } else
-        router.push(
-          `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`
-        );
-    } else router.back();
-  }
-
   return (
     <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary500">
       {!hideTopBar && (
         <DashboardHeader
+          hideBackButton={hideBackButton}
           hideContactButtons={hideContactButtons}
           hideProfessionalSelector={hideProfessionalSelector}
         />
@@ -225,32 +213,6 @@ export default function DashboardLayout({
         layout="col-center"
         className=" text-hg-black text-sm overflow-hidden"
       >
-        {!hideTopBar && (
-          <Container>
-            <Flex layout="row-left" className="w-full pb-8">
-              {!hideBackButton && (
-                <Button type="tertiary" onClick={() => handleBackButton()}>
-                  <Flex layout="row-left">
-                    <SvgArrowSmallLeft
-                      height={40}
-                      width={40}
-                      className="pr-2"
-                    />
-                    Volver
-                  </Flex>
-                </Button>
-              )}
-
-              {!hideContactButtons && <ButtonMessage />}
-
-              {!hideProfessionalSelector && (
-                <div className="ml-auto z-10">
-                  <ClinicProfessional />
-                </div>
-              )}
-            </Flex>
-          </Container>
-        )}
         {children}
       </Flex>
     </main>

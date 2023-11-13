@@ -5,7 +5,7 @@ import { MessageType } from '@interface/messageSocket';
 import { messageService } from '@services/MessageService';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgStethoscope } from 'icons/Icons';
+import { SvgHolaglowHand, SvgStethoscope } from 'icons/Icons';
 import { SvgUserSquare } from 'icons/IconsDs';
 
 import Notification from './Notification';
@@ -98,7 +98,7 @@ export default function ButtonMessage() {
   };
 
   return (
-    <Flex layout="row-left" className="gap-2 pt-1 overflow-hidden relative">
+    <Flex layout="row-left" className="gap-2 py-4 overflow-hidden ">
       <Button
         size="sm"
         type="tertiary"
@@ -115,7 +115,7 @@ export default function ButtonMessage() {
         customStyles={`border-none px-3 ${receptionClassName}`}
         onClick={() => sendMessageToReception()}
       >
-        <SvgUserSquare className="mr-2" height={16} width={16} />
+        <SvgHolaglowHand className="mr-2" height={16} width={16} />
         Llamar Beauty Adv.
       </Button>
 

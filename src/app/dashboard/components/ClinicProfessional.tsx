@@ -7,7 +7,9 @@ import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
+import { SvgUserOctagon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
@@ -83,6 +85,7 @@ export const ClinicProfessional = () => {
   const handleTimerColorChange = (newColor: string) => {
     setColor(newColor);
   };
+
   const handleToggleProfessionalList = () => {
     setShowProfessionalList(prevState => !prevState);
   };
@@ -101,49 +104,60 @@ export const ClinicProfessional = () => {
     return <></>;
   }
 
+  console.log();
+
   return (
-    <Flex layout="col-center" className="relative">
+    <Flex layout="col-center" className="relative p-4">
       <Flex
         layout="row-left"
         className={`
-            transition-all opacity-0 pointer-events-none absolute top-[20px] right-[20px] 
-            bg-white text-hg-black p-2 rounded-lg border border-hg-black/20 text-left 
+            transition-all opacity-0 pointer-events-none absolute top-0 right-0 w-[400px] rounded-b-3xl
+            bg-white text-hg-black text-left 
             ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
       >
-        <ul className="w-[125px]">
+        <ul className="w-full flex flex-col mt-16">
           {beautyAdvisors.map(professional => (
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
-              className="px-2 py-1 cursor-pointer hover:font-semibold text-black"
+              className="py-2 cursor-pointer hover:font-semibold text-black border-b border-hg-black300 text-sm"
             >
-              {professional.name}
+              <Flex className="px-4 gap-2">
+                <SvgUserOctagon />
+                {professional.name}
+              </Flex>
             </li>
           ))}
         </ul>
       </Flex>
-      <Flex
-        layout="col-center"
-        onClick={() =>
-          beautyAdvisors.length > 1 && handleToggleProfessionalList()
-        }
-        className={`aspect-square h-[40px] rounded-full ${color}  text-white justify-center relative ${
-          beautyAdvisors.length > 1 && 'cursor-pointer'
-        }`}
-      >
-        <p style={{ margin: 0, fontWeight: 'bold' }}>
-          {selectedProfessional
-            ? selectedProfessional.name
-                .split(' ')
-                .map(word => word.charAt(0))
-                .join('')
-            : professionals[0].name
-                .split(' ')
-                .map(word => word.charAt(0))
-                .join('')}
-        </p>
+
+      <Flex className="gap-2 z-10">
+        <Text className="text-sm font-semibold">
+          ¡Hola {selectedProfessional.name}!
+        </Text>
+        <Flex
+          layout="col-center"
+          onClick={() =>
+            beautyAdvisors.length > 1 && handleToggleProfessionalList()
+          }
+          className={`aspect-square h-[32px] rounded-full ${color} justify-center relative ${
+            beautyAdvisors.length > 1 && 'cursor-pointer'
+          }`}
+        >
+          <Text className="text-sm">
+            {selectedProfessional
+              ? selectedProfessional.name
+                  .split(' ')
+                  .map(word => word.charAt(0))
+                  .join('')
+              : professionals[0].name
+                  .split(' ')
+                  .map(word => word.charAt(0))
+                  .join('')}
+          </Text>
+        </Flex>
+        <Timer onColorChange={handleTimerColorChange} />
       </Flex>
-      <Timer onColorChange={handleTimerColorChange} />
     </Flex>
   );
 };

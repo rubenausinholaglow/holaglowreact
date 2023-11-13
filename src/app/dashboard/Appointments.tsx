@@ -11,6 +11,7 @@ import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -29,12 +30,19 @@ const AppointmentsListComponent: React.FC<{
   const [loadingAppointments, setLoadingAppointments] = useState<{
     [id: string]: boolean;
   }>({});
-  const userCrisalix = useCrisalix(state => state);
   const router = useRouter();
-  const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
+  const userCrisalix = useCrisalix(state => state);
+
+  const {
+    user,
+    setCurrentUser,
+    storedClinicId,
+    storedBoxId,
+    storedAppointmentId,
+    setAppointmentId,
+  } = useGlobalPersistedStore(state => state);
+
   const [isLoadingPage, setIsLoadingPage] = useState(true);
-  const { storedClinicId, storedBoxId, storedAppointmentId, setAppointmentId } =
-    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -170,6 +178,49 @@ const AppointmentsListComponent: React.FC<{
     return statusTranslations[status] || 'Unknown Status';
   }
 
+  const APPOINTMENT_STATUS = {
+    0: {
+      text: 'Pendiente',
+      color: 'hg-black500',
+      bg: 'hg-black100',
+    },
+    1: {
+      text: 'Cancelada',
+      color: 'hg-orange',
+      bg: 'hg-orange/50',
+    },
+    2: {
+      text: 'No show',
+      color: 'hg-red',
+      bg: 'hg-red300',
+    },
+    3: {
+      text: 'Movida',
+      color: 'hg-tertiary',
+      bg: 'hg-tertiary500',
+    },
+    4: {
+      text: 'Confirmada',
+      color: 'hg-secondary',
+      bg: 'hg-secondary300',
+    },
+    5: {
+      text: 'Confirmada',
+      color: 'hg-green',
+      bg: 'hg-green300',
+    },
+    6: {
+      text: 'Confirmada',
+      color: 'hg-secondary',
+      bg: 'hg-secondary300',
+    },
+    7: {
+      text: 'Confirmada',
+      color: 'hg-primary',
+      bg: 'hg-primary100',
+    },
+  };
+
   return (
     <div className="w-ful">
       {isLoadingPage ? (
@@ -205,10 +256,29 @@ const AppointmentsListComponent: React.FC<{
                 </Flex>
                 <Text className="w-[15%]">{appointment.startTime}</Text>
                 <Flex className="w-[20%]">
-                  <Flex className="bg-hg-secondary300 py-1 px-2 rounded-lg">
-                    <div className="h-1 w-1 bg-hg-secondary rounded-full mr-2"></div>
-                    <Text size="xs" className="text-hg-secondary">
-                      {translateStatus(appointment.status ?? Status.Open)}
+                  <Flex
+                    className={`py-1 px-2 rounded-lg bg-${
+                      APPOINTMENT_STATUS[appointment.status ?? Status.Open].bg
+                    }`}
+                  >
+                    <div
+                      className={`h-1 w-1 bg-${
+                        APPOINTMENT_STATUS[appointment.status ?? Status.Open]
+                          .color
+                      } rounded-full mr-2`}
+                    ></div>
+
+                    <Text
+                      size="xs"
+                      className={`text-${
+                        APPOINTMENT_STATUS[appointment.status ?? Status.Open]
+                          .color
+                      }`}
+                    >
+                      {
+                        APPOINTMENT_STATUS[appointment.status ?? Status.Open]
+                          .text
+                      }
                     </Text>
                   </Flex>
                 </Flex>
@@ -229,6 +299,16 @@ const AppointmentsListComponent: React.FC<{
                 </Flex>
               </Flex>
             ))}
+
+            <Text className="text-right w-full p-2 text-xs">
+              <span className="text-hg-black500">
+                {dayjs().format('dddd, D [de] MMMM')}
+              </span>
+              {' · '}
+              <span>
+                <b>{appointments.length}</b> visitas agendadas para hoy
+              </span>
+            </Text>
           </Flex>
         </div>
       )}
