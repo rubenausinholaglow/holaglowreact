@@ -10,6 +10,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
+import { removeEmitHelper } from 'typescript';
 
 export default function DashboardLayout({
   hideTopBar = false,
@@ -197,8 +198,15 @@ export default function DashboardLayout({
   }
 
   function handleBackButton() {
-    if (window.location.pathname == '/dashboard/menu') {
-      router.push('/dashboard');
+    if (window.location.pathname == '/dashboard/menu/') {
+      if (remoteControl) {
+        router.push(
+          `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=true`
+        );
+      } else
+        router.push(
+          `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`
+        );
     } else router.back();
   }
 
