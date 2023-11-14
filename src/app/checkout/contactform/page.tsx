@@ -13,11 +13,10 @@ import { SvgCalendar, SvgLocation } from 'icons/Icons';
 dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
-  let hideLayout = false;
-
   const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
     useSessionStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
+  const [hideLayout, setHideLayout] = useState(false);
 
   const localSelectedDay = dayjs(selectedDay);
 
@@ -30,7 +29,7 @@ export default function ConctactForm() {
     if (window) {
       const queryString = window.location.search;
       const params = new URLSearchParams(queryString);
-      hideLayout = params.get('hideLayout') == 'true';
+      setHideLayout(params.get('hideLayout') == 'true');
     }
   }, []);
   const content = (
