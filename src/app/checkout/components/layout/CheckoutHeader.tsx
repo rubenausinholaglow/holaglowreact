@@ -5,17 +5,23 @@ import { SvgHolaglow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
-export default function CheckoutHeader() {
+export default function CheckoutHeader({
+  loadCookies = true,
+}: {
+  loadCookies: boolean;
+}) {
   const router = useRouter();
 
   return (
     <Container>
-      <Script
-        id="cookieyes"
-        type="text/javascript"
-        strategy="beforeInteractive"
-        src="https://cdn-cookieyes.com/client_data/358786368d84a68230dff524/script.js"
-      ></Script>
+      {loadCookies && (
+        <Script
+          id="cookieyes"
+          type="text/javascript"
+          strategy="beforeInteractive"
+          src="https://cdn-cookieyes.com/client_data/358786368d84a68230dff524/script.js"
+        ></Script>
+      )}
       <noscript>
         <iframe
           src="https://www.googletagmanager.com/ns.html?id=GTM-K3NZR8P"
