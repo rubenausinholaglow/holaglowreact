@@ -32,66 +32,69 @@ export default function ConctactForm() {
       setHideLayout(params.get('hideLayout') == 'true');
     }
   }, []);
-  const content = (
-    <Container className="px-0 mt-6 md:mt-16">
-      <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
-        <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
-          <Flex layout="col-left" className="gap-4 mb-8">
-            <Title size="xl" className="font-semibold">
-              Reserva tu cita
-            </Title>
-            {localSelectedDay != undefined && (
-              <>
-                {!selectedSlot && (
-                  <Text size="sm">
-                    Introduce tus datos de contacto para acceder a la agenda
-                  </Text>
-                )}
-                {selectedSlot && (
-                  <Text size="sm">
-                    Introduce tus datos de contacto para la cita de{' '}
-                    <span className="font-semibold w-full">
-                      {selectedTreatmentsNames}
-                    </span>
-                  </Text>
-                )}
-                {selectedClinic && selectedSlot && (
-                  <Flex className="">
-                    <span>
-                      <SvgLocation />
-                    </span>
-                    <Text size="xs" className="w-full text-left pl-2">
-                      {selectedClinic.address}, {selectedClinic.city}
+  return (
+    <MainLayout
+      isCheckout={!hideLayout}
+      hideHeader={hideLayout}
+      hideFooter={hideLayout}
+    >
+      <Container className="px-0 mt-6 md:mt-16">
+        <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+          <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
+            <Flex layout="col-left" className="gap-4 mb-8">
+              <Title size="xl" className="font-semibold">
+                Reserva tu cita
+              </Title>
+              {localSelectedDay != undefined && (
+                <>
+                  {!selectedSlot && (
+                    <Text size="sm">
+                      Introduce tus datos de contacto para acceder a la agenda
                     </Text>
-                  </Flex>
-                )}
-                {selectedSlot && (
-                  <Flex>
-                    <span>
-                      <SvgCalendar />
-                    </span>
-                    <Text
-                      size="xs"
-                      className="w-full text-left pl-2 capitalize"
-                    >
-                      {localSelectedDay.format('dddd')},{' '}
-                      {localSelectedDay.format('D')} de{' '}
-                      {localSelectedDay.format('MMMM')}{' '}
-                      {selectedSlot?.startTime}
+                  )}
+                  {selectedSlot && (
+                    <Text size="sm">
+                      Introduce tus datos de contacto para la cita de{' '}
+                      <span className="font-semibold w-full">
+                        {selectedTreatmentsNames}
+                      </span>
                     </Text>
-                  </Flex>
-                )}
-              </>
-            )}
-          </Flex>
+                  )}
+                  {selectedClinic && selectedSlot && (
+                    <Flex className="">
+                      <span>
+                        <SvgLocation />
+                      </span>
+                      <Text size="xs" className="w-full text-left pl-2">
+                        {selectedClinic.address}, {selectedClinic.city}
+                      </Text>
+                    </Flex>
+                  )}
+                  {selectedSlot && (
+                    <Flex>
+                      <span>
+                        <SvgCalendar />
+                      </span>
+                      <Text
+                        size="xs"
+                        className="w-full text-left pl-2 capitalize"
+                      >
+                        {localSelectedDay.format('dddd')},{' '}
+                        {localSelectedDay.format('D')} de{' '}
+                        {localSelectedDay.format('MMMM')}{' '}
+                        {selectedSlot?.startTime}
+                      </Text>
+                    </Flex>
+                  )}
+                </>
+              )}
+            </Flex>
 
-          <RegistrationForm redirect={hideLayout} />
-        </div>
-        <div className="w-full md:w-1/2"></div>
-      </Flex>
-    </Container>
+            <RegistrationForm redirect={hideLayout} />
+          </div>
+          <div className="w-full md:w-1/2"></div>
+        </Flex>
+      </Container>
+    </MainLayout>
   );
-  if (hideLayout) {
-    return content;
-  } else return <MainLayout isCheckout>{content}</MainLayout>;
 }
