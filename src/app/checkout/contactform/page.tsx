@@ -16,6 +16,7 @@ export default function ConctactForm() {
   const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
     useSessionStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
+  const [hideLayout, setHideLayout] = useState(false);
 
   const localSelectedDay = dayjs(selectedDay);
 
@@ -25,10 +26,18 @@ export default function ConctactForm() {
         selectedTreatments!.map(x => x.title).join(' + ')
       );
     }
+    if (window) {
+      const queryString = window.location.search;
+      const params = new URLSearchParams(queryString);
+      setHideLayout(params.get('hideLayout') == 'true');
+    }
   }, []);
-
   return (
-    <MainLayout isCheckout>
+    <MainLayout
+      isCheckout={!hideLayout}
+      hideHeader={hideLayout}
+      hideFooter={hideLayout}
+    >
       <Container className="px-0 mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
           <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
@@ -38,13 +47,20 @@ export default function ConctactForm() {
               </Title>
               {localSelectedDay != undefined && (
                 <>
-                  <Text size="sm">
-                    Introduce tus datos de contacto para la cita de{' '}
-                    <span className="font-semibold w-full">
-                      {selectedTreatmentsNames}
-                    </span>
-                  </Text>
-                  {selectedClinic && (
+                  {!selectedSlot && (
+                    <Text size="sm">
+                      Introduce tus datos de contacto para acceder a la agenda
+                    </Text>
+                  )}
+                  {selectedSlot && (
+                    <Text size="sm">
+                      Introduce tus datos de contacto para la cita de{' '}
+                      <span className="font-semibold w-full">
+                        {selectedTreatmentsNames}
+                      </span>
+                    </Text>
+                  )}
+                  {selectedClinic && selectedSlot && (
                     <Flex className="">
                       <span>
                         <SvgLocation />
@@ -54,25 +70,27 @@ export default function ConctactForm() {
                       </Text>
                     </Flex>
                   )}
-                  <Flex>
-                    <span>
-                      <SvgCalendar />
-                    </span>
-                    <Text
-                      size="xs"
-                      className="w-full text-left pl-2 capitalize"
-                    >
-                      {localSelectedDay.format('dddd')},{' '}
-                      {localSelectedDay.format('D')} de{' '}
-                      {localSelectedDay.format('MMMM')}{' '}
-                      {selectedSlot?.startTime}
-                    </Text>
-                  </Flex>
+                  {selectedSlot && (
+                    <Flex>
+                      <span>
+                        <SvgCalendar />
+                      </span>
+                      <Text
+                        size="xs"
+                        className="w-full text-left pl-2 capitalize"
+                      >
+                        {localSelectedDay.format('dddd')},{' '}
+                        {localSelectedDay.format('D')} de{' '}
+                        {localSelectedDay.format('MMMM')}{' '}
+                        {selectedSlot?.startTime}
+                      </Text>
+                    </Flex>
+                  )}
                 </>
               )}
             </Flex>
 
-            <RegistrationForm />
+            <RegistrationForm redirect={hideLayout} />
           </div>
           <div className="w-full md:w-1/2"></div>
         </Flex>
