@@ -26,7 +26,7 @@ export default function RemoteControl({
   return (
     <MainLayout isDashboard>
       <Flex layout="col-center">
-        <p className="text-4xl mb-2">Paciente: {username}</p>
+        <p className="text-4xl mb-2">Hola {username}</p>
         <div className="grid grid-cols-3">
           {menuItems.map(item => (
             <DashboardMenuItem

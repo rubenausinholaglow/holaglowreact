@@ -112,16 +112,16 @@ export const ClinicProfessional = () => {
       <Flex
         layout="col-left"
         className={`
-            transition-all opacity-0 pointer-events-none absolute top-0 right-0 w-[400px] rounded-b-3xl py-8
-            bg-white text-hg-black text-left 
-            ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
+            transition-all pointer-events-none absolute top-0 right-0 w-[400px] rounded-b-3xl py-8
+            bg-white text-hg-black text-left -translate-y-full
+            ${showProfessionalList && 'translate-y-0 pointer-events-auto'}`}
       >
         <ul className="w-full flex flex-col my-8">
           {beautyAdvisors.map(professional => (
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
-              className="py-4 cursor-pointer hover:font-semibold border-b border-hg-black300 text-sm"
+              className=" py-4 cursor-pointer hover:font-semibold border-b border-hg-black300 text-sm"
             >
               <Flex className="px-8 gap-2">
                 <SvgUserOctagon />
@@ -137,7 +137,11 @@ export const ClinicProfessional = () => {
             </Flex>
           </li>
         </ul>
-        <Button type="tertiary" className="ml-8">
+        <Button
+          type="tertiary"
+          className="ml-8"
+          onClick={() => handleToggleProfessionalList()}
+        >
           Cerrar
         </Button>
       </Flex>
