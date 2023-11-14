@@ -34,7 +34,10 @@ export const Quantifier: FunctionComponent<Props> = ({
     setValue(prevState => prevState + 1);
   };
   return (
-    <Flex layout="row-left">
+    <Flex
+      layout="row-left"
+      className="bg-hg-secondary500 rounded-3xl gap-1 p-1"
+    >
       <Button
         type="primary"
         onClick={reduce}
