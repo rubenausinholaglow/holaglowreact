@@ -6,8 +6,10 @@ import { EventTypes } from '@interface/FrontEndMessages';
 import { MessageSocket, MessageType } from '@interface/messageSocket';
 import SocketService from '@services/SocketService';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
 import { useRouter } from 'next/navigation';
 import { removeEmitHelper } from 'typescript';
@@ -200,7 +202,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary500">
+    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary500 flex flex-col">
       {!hideTopBar && (
         <DashboardHeader
           hideBackButton={hideBackButton}
@@ -214,6 +216,11 @@ export default function DashboardLayout({
         className=" text-hg-black text-sm overflow-hidden"
       >
         {children}
+      </Flex>
+
+      <Flex className="justify-between mt-auto p-4 text-xs">
+        <Text>Centro de medicina estética</Text>
+        <Text>© {dayjs().year()}, Holaglow</Text>
       </Flex>
     </main>
   );

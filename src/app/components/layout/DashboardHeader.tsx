@@ -44,7 +44,7 @@ export default function DashboardHeader({
               onClick={() => handleBackButton()}
               customStyles="bg-hg-black text-hg-primary px-2 py-4"
               size="sm"
-              className="pl-4"
+              className="pl-4 py-4"
             >
               <SvgArrow height={16} width={16} className="rotate-180" />
             </Button>

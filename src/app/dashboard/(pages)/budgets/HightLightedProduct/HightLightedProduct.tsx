@@ -22,11 +22,9 @@ export default function HightLightedProduct() {
       (params.slug = productHighlighted?.extraInformation.slug || '');
   }, [productHighlighted]);
   return (
-    <>
-      <Modal isVisible={true} width="w-3/4">
-        {productHighlighted?.extraInformation.slug || ''}
-        <ProductDetail params={params}></ProductDetail>
-      </Modal>
-    </>
+    <Modal isVisible={true} width="w-3/4">
+      {productHighlighted?.extraInformation.slug || ''}
+      <ProductDetail params={params}></ProductDetail>
+    </Modal>
   );
 }

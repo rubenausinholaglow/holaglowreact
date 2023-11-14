@@ -6,7 +6,8 @@ import { CrisalixUser } from '@interface/crisalix';
 import { MessageType } from '@interface/messageSocket';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Title, Underlined } from 'designSystem/Texts/Texts';
 
 import { useCrisalix } from '../crisalix/useCrisalix';
 import DashboardMenuItem from './DashboardMenuItem';
@@ -17,8 +18,7 @@ const Page = () => {
   const [flowwwToken, setFlowwwToken] = useState('');
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
-  const { remoteControl, storedBoxId, storedClinicId } =
-    useGlobalPersistedStore(state => state);
+  const { remoteControl } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username') || '';
@@ -60,28 +60,30 @@ const Page = () => {
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {username && (
-        <Container>
-          <Flex layout="col-center">
-            <p className="font-bold text-4xl mb-2">¡Hola {username}!</p>
-            <p className="text-4xl mb-8">Tu glow, tus normas</p>
-            <div className="grid grid-cols-3">
-              {menuItems.map(item => (
-                <DashboardMenuItem
-                  key={item.title}
-                  iconSrc={item.iconSrc}
-                  altText={item.altText}
-                  title={item.title}
-                  link={
-                    item.link.includes('flowwwToken')
-                      ? item.link.replace('flowwwToken', flowwwToken)
-                      : item.link
-                  }
-                  target={item.target}
-                />
-              ))}
-            </div>
-          </Flex>
-        </Container>
+        <div className="mt-8">
+          <Title className="text-xl mb-4">¡Hola {username}!</Title>
+          <Title className="font-bold text-5xl mb-8">
+            Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
+            <br />
+            tus normas
+          </Title>
+          <div className="grid grid-cols-3 mb-12">
+            {menuItems.map(item => (
+              <DashboardMenuItem
+                key={item.title}
+                iconSrc={item.iconSrc}
+                altText={item.altText}
+                title={item.title}
+                link={
+                  item.link.includes('flowwwToken')
+                    ? item.link.replace('flowwwToken', flowwwToken)
+                    : item.link
+                }
+                target={item.target}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </MainLayout>
   );

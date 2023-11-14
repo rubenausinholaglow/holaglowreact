@@ -1,7 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainLayout from 'app/components/layout/MainLayout';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Title, Underlined } from 'designSystem/Texts/Texts';
 
 import DashboardMenuItem from '../menu/DashboardMenuItem';
 import { menuItems } from './MenuItems';
@@ -25,9 +26,14 @@ export default function RemoteControl({
 
   return (
     <MainLayout isDashboard>
-      <Flex layout="col-center">
-        <p className="text-4xl mb-2">Hola {username}</p>
-        <div className="grid grid-cols-3">
+      <div className="mt-8">
+        <Title className="text-xl mb-4">¡Hola {username}!</Title>
+        <Title className="font-bold text-5xl mb-8">
+          Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
+          <br />
+          tus normas
+        </Title>
+        <div className="grid grid-cols-3 mb-12">
           {menuItems.map(item => (
             <DashboardMenuItem
               key={item.title}
@@ -43,8 +49,8 @@ export default function RemoteControl({
             />
           ))}
         </div>
-        <ValidateComment></ValidateComment>
-      </Flex>
+        <ValidateComment />
+      </div>
     </MainLayout>
   );
 }
