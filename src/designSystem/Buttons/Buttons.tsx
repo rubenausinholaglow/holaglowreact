@@ -47,7 +47,9 @@ export const Button = ({
         <Link
           href={href}
           target={rest?.target}
-          className={twMerge(`relative group overflow-visible ${className}`)}
+          className={twMerge(
+            `relative group overflow-visible ${className} inline-block`
+          )}
           onClick={onClick}
           type={rest?.isSubmit ? 'submit' : 'button'}
         >
@@ -70,7 +72,9 @@ export const Button = ({
       <Link
         href={href}
         target={rest?.target}
-        className={twMerge(`relative group overflow-visible ${className}`)}
+        className={twMerge(
+          `relative group overflow-visible ${className} inline-block`
+        )}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
