@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import UserService from '@services/UserService';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -17,9 +18,12 @@ const Page = () => {
   const [loadPlayer, setLoadPlayer] = useState(false);
 
   const userCrisalix = useCrisalix(state => state);
-  const { user, storedClinicId } = useGlobalPersistedStore(state => state);
-  const username = localStorage.getItem('username') || '';
-  //TODO arreglar el username
+  const { storedClinicId } = useGlobalPersistedStore(state => state);
+
+  const username =
+    typeof localStorage !== 'undefined'
+      ? localStorage.getItem('username') || ''
+      : '';
 
   useEffect(() => {
     const existsCrisalixUser =

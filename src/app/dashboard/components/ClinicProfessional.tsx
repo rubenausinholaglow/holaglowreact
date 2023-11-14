@@ -6,10 +6,11 @@ import clinicService from '@services/ClinicService';
 import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
-import { SvgUserOctagon } from 'icons/IconsDs';
+import { SvgLogout, SvgUserOctagon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
@@ -109,26 +110,36 @@ export const ClinicProfessional = () => {
   return (
     <Flex layout="col-center" className="relative p-4">
       <Flex
-        layout="row-left"
+        layout="col-left"
         className={`
-            transition-all opacity-0 pointer-events-none absolute top-0 right-0 w-[400px] rounded-b-3xl
+            transition-all opacity-0 pointer-events-none absolute top-0 right-0 w-[400px] rounded-b-3xl py-8
             bg-white text-hg-black text-left 
             ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
       >
-        <ul className="w-full flex flex-col mt-16">
+        <ul className="w-full flex flex-col my-8">
           {beautyAdvisors.map(professional => (
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
-              className="py-2 cursor-pointer hover:font-semibold text-black border-b border-hg-black300 text-sm"
+              className="py-4 cursor-pointer hover:font-semibold border-b border-hg-black300 text-sm"
             >
-              <Flex className="px-4 gap-2">
+              <Flex className="px-8 gap-2">
                 <SvgUserOctagon />
                 {professional.name}
               </Flex>
             </li>
           ))}
+
+          <li className="py-4 cursor-pointer hover:font-semibold text-sm">
+            <Flex className="px-8 gap-2">
+              <SvgLogout height={20} width={20} className="mr-1" />
+              Cerrar sesión
+            </Flex>
+          </li>
         </ul>
+        <Button type="tertiary" className="ml-8">
+          Cerrar
+        </Button>
       </Flex>
 
       <Flex className="gap-2 z-10">

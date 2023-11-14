@@ -16,7 +16,7 @@ import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
@@ -30,6 +30,8 @@ import ConsistOf from './components/ConsistOF';
 import LandingTestimonials from './components/LandingTestimonials';
 
 export default function LandingCaptacion() {
+  const ROUTES = useRoutes();
+
   const {
     deviceSize,
     setSelectedTreatments,

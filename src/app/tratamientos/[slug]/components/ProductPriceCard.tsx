@@ -8,7 +8,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import {
   Accordion,
   AccordionContent,
@@ -161,6 +161,7 @@ function ProductPriceItemsCard({
   );
 
   const router = useRouter();
+  const ROUTES = useRoutes();
   const [showDropdown, setShowDropdown] = useState(isOpen);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]

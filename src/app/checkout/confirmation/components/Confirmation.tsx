@@ -8,7 +8,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -22,8 +22,8 @@ export default function Confirmation({
 }: {
   appointment?: Appointment;
 }) {
+  const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
-
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const {
     selectedTreatments,
