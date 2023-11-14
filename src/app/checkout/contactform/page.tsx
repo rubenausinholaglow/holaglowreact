@@ -85,7 +85,7 @@ export default function ConctactForm() {
             )}
           </Flex>
 
-          <RegistrationForm />
+          <RegistrationForm redirect={hideLayout} />
         </div>
         <div className="w-full md:w-1/2"></div>
       </Flex>
