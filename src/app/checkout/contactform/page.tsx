@@ -33,7 +33,11 @@ export default function ConctactForm() {
     }
   }, []);
   return (
-    <MainLayout isCheckout hideHeader={hideLayout} hideFooter={hideLayout}>
+    <MainLayout
+      isCheckout={!hideLayout}
+      hideHeader={hideLayout}
+      hideFooter={hideLayout}
+    >
       <Container className="px-0 mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
           <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
