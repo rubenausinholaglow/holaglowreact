@@ -27,6 +27,7 @@ export default function Page() {
   const [showFilters, setShowFilters] = useState(true);
 
   const [showProductModal, setShowProductModal] = useState(false);
+
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState('');
   const [showPacks, setShowPacks] = useState(false);
@@ -39,7 +40,9 @@ export default function Page() {
     { min: number; max: number }[]
   >([]);
   const [isTypeFilterSelected, setIsTypeFilterSelected] = useState(true);
-  const { isModalOpen } = useGlobalStore(state => state);
+  const { isModalOpen, setShowModalBackground } = useGlobalStore(
+    state => state
+  );
 
   useEffect(() => {
     ProductService.getDashboardProducts()
@@ -62,6 +65,7 @@ export default function Page() {
 
   useEffect(() => {
     setShowProductModal(!isEmpty(productHighlighted));
+    setShowModalBackground(!isEmpty(productHighlighted));
   }, [productHighlighted]);
 
   const toggleFilter = (id: string, inputText: string, tag: string) => {
@@ -231,7 +235,7 @@ export default function Page() {
     const filteredProducts = filterProducts() || [];
     return (
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-        <HightLightedProduct />
+        {showProductModal && <HightLightedProduct />}
 
         <Flex layout="col-center" className="w-full">
           <Container>

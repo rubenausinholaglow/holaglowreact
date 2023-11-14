@@ -1,9 +1,11 @@
 'use client';
 import { useEffect } from 'react';
+import { useGlobalStore } from 'app/stores/globalStore';
 import ProductDetail from 'app/tratamientos/[slug]/components/ProductDetail';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgCross } from 'icons/IconsDs';
+import { SvgCart, SvgCross } from 'icons/IconsDs';
 
 import { useCartStore } from '../stores/userCartStore';
 
@@ -12,9 +14,8 @@ type paramsDetail = {
   isDashboard: boolean;
 };
 export default function HightLightedProduct() {
-  const { productHighlighted, totalItems, totalPrice } = useCartStore(
-    state => state
-  );
+  const { productHighlighted, setHighlightProduct, totalItems, totalPrice } =
+    useCartStore(state => state);
 
   const params: paramsDetail = {
     slug: productHighlighted?.extraInformation.slug || '',
@@ -25,15 +26,32 @@ export default function HightLightedProduct() {
     (params.isDashboard = true),
       (params.slug = productHighlighted?.extraInformation.slug || '');
   }, [productHighlighted]);
+
   return (
-    <Modal isVisible={true} width="w-3/4">
-      <div className="pb-24 flex">
-        <SvgCross />
-        <div className="w-1/2 flex justify-end pt-6 pr-8 gap-3">
-          Total ({totalItems} ud.) {totalPrice} €
-        </div>
-      </div>
-      <ProductDetail params={params}></ProductDetail>
-    </Modal>
+    <>
+      <Modal isVisible={true} width="w-3/4">
+        <Flex className="p-6">
+          <div className="w-1/2 ">
+            {/* <Text size="md">X</Text> */}
+            <SvgCross
+              onClick={() => {
+                setHighlightProduct(null);
+              }}
+            />
+          </div>
+          <Flex className="w-1/2 justify-end gap-2">
+            <Text>
+              Total ({totalItems} ud.) {totalPrice} €
+            </Text>
+            <SvgCart
+              height={32}
+              width={32}
+              className="p-2 bg-hg-black text-hg-primary rounded-full"
+            />
+          </Flex>
+        </Flex>
+        <ProductDetail params={params}></ProductDetail>
+      </Modal>
+    </>
   );
 }

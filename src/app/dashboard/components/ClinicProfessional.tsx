@@ -113,7 +113,7 @@ export const ClinicProfessional = () => {
         layout="col-left"
         className={`
             transition-all pointer-events-none absolute top-0 right-0 w-[400px] rounded-b-3xl py-8
-            bg-white text-hg-black text-left -translate-y-full
+            bg-white text-hg-black text-left -translate-y-full z-10
             ${showProfessionalList && 'translate-y-0 pointer-events-auto'}`}
       >
         <ul className="w-full flex flex-col my-8">
