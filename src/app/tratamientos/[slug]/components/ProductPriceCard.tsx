@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
+import { CartItem, Product } from '@interface/product';
 import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
+import { Quantifier } from 'app/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
+import {
+  Operation,
+  useCartStore,
+} from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -166,6 +171,12 @@ function ProductPriceItemsCard({
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
   );
+  const {
+    productHighlighted,
+    addItemToCart,
+    getQuantityOfProduct,
+    removeSingleProduct,
+  } = useCartStore(state => state);
 
   const isDisabled =
     product.isPack &&
@@ -331,7 +342,7 @@ function ProductPriceItemsCard({
           </AccordionItem>
         </Accordion>
       )}
-      {product.isPack && !showDropdown && (
+      {!productHighlighted && product.isPack && !showDropdown && (
         <Button
           className="mt-8"
           type="tertiary"
@@ -341,19 +352,37 @@ function ProductPriceItemsCard({
           Personalizar
         </Button>
       )}
-      {(!product.isPack || showDropdown) && (
-        <Button
-          type="tertiary"
-          disabled={isDisabled}
-          onClick={() => {
-            setSelectedTreatment(product);
-          }}
-          customStyles="bg-hg-primary hover:bg-hg-secondary100"
-          className="mt-8"
-        >
-          Reservar cita
-          <SvgArrow height={16} width={16} className="ml-2" />
-        </Button>
+      {(!productHighlighted && !product.isPack) ||
+        (showDropdown && (
+          <Button
+            type="tertiary"
+            disabled={isDisabled}
+            onClick={() => {
+              setSelectedTreatment(product);
+            }}
+            customStyles="bg-hg-primary hover:bg-hg-secondary100"
+            className="mt-8"
+          >
+            Reservar cita
+            <SvgArrow height={16} width={16} className="ml-2" />
+          </Button>
+        ))}
+
+      {productHighlighted && (
+        <div className="pt-1 mt-2">
+          <Quantifier
+            handleUpdateQuantity={function handleUpdateQuantity(
+              operation: Operation
+            ): void {
+              if (operation == 'increase') {
+                addItemToCart(product as CartItem);
+              } else {
+                removeSingleProduct(product as CartItem);
+              }
+            }}
+            quantity={getQuantityOfProduct(product)}
+          />
+        </div>
       )}
     </Flex>
   );
