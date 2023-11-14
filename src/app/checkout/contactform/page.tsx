@@ -13,10 +13,8 @@ import { SvgCalendar, SvgLocation } from 'icons/Icons';
 dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
-  const queryString = window.location.search;
-  const params = new URLSearchParams(queryString);
+  let hideLayout = false;
 
-  const hideLayout = params.get('hideLayout') == 'true';
   const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
     useSessionStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
@@ -29,8 +27,13 @@ export default function ConctactForm() {
         selectedTreatments!.map(x => x.title).join(' + ')
       );
     }
+    if (window) {
+      const queryString = window.location.search;
+      const params = new URLSearchParams(queryString);
+      hideLayout = params.get('hideLayout') == 'true';
+    }
   }, []);
-  var content = (
+  const content = (
     <Container className="px-0 mt-6 md:mt-16">
       <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
         <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
