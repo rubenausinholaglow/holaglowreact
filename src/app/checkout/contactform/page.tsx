@@ -42,13 +42,20 @@ export default function ConctactForm() {
             </Title>
             {localSelectedDay != undefined && (
               <>
-                <Text size="sm">
-                  Introduce tus datos de contacto para la cita de{' '}
-                  <span className="font-semibold w-full">
-                    {selectedTreatmentsNames}
-                  </span>
-                </Text>
-                {selectedClinic && (
+                {!selectedSlot && (
+                  <Text size="sm">
+                    Introduce tus datos de contacto para acceder a la agenda
+                  </Text>
+                )}
+                {selectedSlot && (
+                  <Text size="sm">
+                    Introduce tus datos de contacto para la cita de{' '}
+                    <span className="font-semibold w-full">
+                      {selectedTreatmentsNames}
+                    </span>
+                  </Text>
+                )}
+                {selectedClinic && selectedSlot && (
                   <Flex className="">
                     <span>
                       <SvgLocation />
@@ -58,16 +65,22 @@ export default function ConctactForm() {
                     </Text>
                   </Flex>
                 )}
-                <Flex>
-                  <span>
-                    <SvgCalendar />
-                  </span>
-                  <Text size="xs" className="w-full text-left pl-2 capitalize">
-                    {localSelectedDay.format('dddd')},{' '}
-                    {localSelectedDay.format('D')} de{' '}
-                    {localSelectedDay.format('MMMM')} {selectedSlot?.startTime}
-                  </Text>
-                </Flex>
+                {selectedSlot && (
+                  <Flex>
+                    <span>
+                      <SvgCalendar />
+                    </span>
+                    <Text
+                      size="xs"
+                      className="w-full text-left pl-2 capitalize"
+                    >
+                      {localSelectedDay.format('dddd')},{' '}
+                      {localSelectedDay.format('D')} de{' '}
+                      {localSelectedDay.format('MMMM')}{' '}
+                      {selectedSlot?.startTime}
+                    </Text>
+                  </Flex>
+                )}
               </>
             )}
           </Flex>
