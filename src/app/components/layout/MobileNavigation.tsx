@@ -149,6 +149,9 @@ export default function MobileNavigation({
               <a href="/aviso-legal">
                 <li>Términos y condiciones</li>
               </a>
+              <a href="/condiciones-black-friday">
+                <li>Condiciones Black Friday</li>
+              </a>
             </ul>
           </SimpleAccordion>
         </Flex>

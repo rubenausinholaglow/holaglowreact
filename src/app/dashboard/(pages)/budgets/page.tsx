@@ -231,9 +231,8 @@ export default function Page() {
     const filteredProducts = filterProducts() || [];
     return (
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-        <Modal isVisible={showProductModal} width="w-3/4">
-          <HightLightedProduct />
-        </Modal>
+        <HightLightedProduct />
+
         <Flex layout="col-center" className="w-full">
           <Container>
             {products.length > 0 ? (
