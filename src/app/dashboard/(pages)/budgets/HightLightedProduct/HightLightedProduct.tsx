@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import ProductDetail from 'app/tratamientos/[slug]/components/ProductDetail';
 import { Modal } from 'designSystem/Modals/Modal';
+import { Text } from 'designSystem/Texts/Texts';
 
 import { useCartStore } from '../stores/userCartStore';
 
@@ -10,7 +11,9 @@ type paramsDetail = {
   isDashboard: boolean;
 };
 export default function HightLightedProduct() {
-  const { productHighlighted } = useCartStore(state => state);
+  const { productHighlighted, totalItems, totalPrice } = useCartStore(
+    state => state
+  );
 
   const params: paramsDetail = {
     slug: productHighlighted?.extraInformation.slug || '',
@@ -24,7 +27,14 @@ export default function HightLightedProduct() {
   return (
     <>
       <Modal isVisible={true} width="w-3/4">
-        {productHighlighted?.extraInformation.slug || ''}
+        <div className="pb-24 flex">
+          <div className="w-1/2 pt-6 pl-8">
+            <Text size="md">X</Text>
+          </div>
+          <div className="w-1/2 flex justify-end pt-6 pr-8 gap-3">
+            Total ({totalItems} ud.) {totalPrice} €
+          </div>
+        </div>
         <ProductDetail params={params}></ProductDetail>
       </Modal>
     </>

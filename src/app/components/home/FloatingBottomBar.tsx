@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Product } from '@interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgWhatsapp } from 'icons/IconsDs';
@@ -19,6 +19,8 @@ export default function FloatingBottomBar({
   threshold?: number;
   isVisible?: boolean;
 }) {
+  const ROUTES = useRoutes();
+
   const { setSelectedTreatments } = useSessionStore(state => state);
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
+import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
@@ -21,6 +22,7 @@ export default function ProductPrices({ product }: { product: Product }) {
   const [groupedSessionProducts, setGroupedSessionProducts] = useState<
     Product[][] | null
   >([]);
+  const { productHighlighted } = useCartStore(state => state);
 
   useEffect(() => {
     if (product.upgrades) {
@@ -75,12 +77,14 @@ export default function ProductPrices({ product }: { product: Product }) {
       id="prices"
     >
       <Container className="py-12">
-        <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
-          <Underlined color={HOLAGLOW_COLORS['primary']}>
-            Personaliza
-          </Underlined>{' '}
-          tu experiencia
-        </Title>
+        {!productHighlighted && (
+          <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
+            <Underlined color={HOLAGLOW_COLORS['primary']}>
+              Personaliza
+            </Underlined>{' '}
+            tu experiencia
+          </Title>
+        )}
 
         {!isSessionProduct && (
           <Flex layout="col-left" className="md:flex-row gap-8">

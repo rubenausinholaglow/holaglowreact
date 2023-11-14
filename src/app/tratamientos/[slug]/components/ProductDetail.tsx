@@ -61,19 +61,18 @@ export default function ProductDetailPage({
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
     }
-    if (isDashboard) {
-      const product = stateProducts.filter(
-        product => product?.extraInformation?.slug === slug
-      )[0];
 
-      const productId = product?.id ?? '';
+    const product = stateProducts.filter(
+      product => product?.extraInformation?.slug === slug
+    )[0];
 
-      setProductId(productId);
+    const productId = product?.id ?? '';
 
-      if (productId !== '' && productsAreLoaded) {
-        initProduct(productId);
-        setProduct(isEmpty(product) ? null : product);
-      }
+    setProductId(productId);
+
+    if (productId !== '' && productsAreLoaded) {
+      initProduct(productId);
+      setProduct(isEmpty(product) ? null : product);
     }
   }, [productsAreLoaded, slug]);
 
@@ -121,9 +120,11 @@ export default function ProductDetailPage({
           </div>
         )}
         {!isDashboard && <ProductPaymentOptions totalPrice={product.price} />}
-        <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
-          <Professionals />
-        </div>
+        {isDashboard && (
+          <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
+            <Professionals />
+          </div>
+        )}
         {!isDashboard && (
           <>
             <ProductExplanation product={product} />

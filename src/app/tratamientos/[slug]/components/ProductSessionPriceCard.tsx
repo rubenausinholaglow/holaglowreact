@@ -1,6 +1,6 @@
 import { Product } from '@interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -15,6 +15,7 @@ export default function ProductSessionPriceCard({
   index: number;
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);
+  const ROUTES = useRoutes();
 
   return (
     <div className="w-full">

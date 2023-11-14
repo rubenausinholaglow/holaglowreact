@@ -316,31 +316,31 @@ export default function Page({
         hideContactButtons
         hideProfessionalSelector
       >
-        <div className="w-full justify-center content-center px-11">
+        <div className="px-4 w-full">
           <AppointmentsListComponent
             clinicId={storedClinicId}
             boxId={storedBoxId}
           />
-          <div className="mt-8">
-            {showRegistration ? (
-              <RegistrationForm
-                formData={formData}
-                handleFieldChange={handleFormFieldChange}
-                handleContinue={handleContinue}
-                errors={errors}
-                isLoading={isLoading}
-              />
-            ) : (
-              <SearchUser
-                email={userEmail}
-                handleFieldChange={handleFieldEmailChange}
-                handleCheckUser={handleCheckUser}
-                errors={errors}
-                isLoading={isLoading}
-              />
-            )}
-            {isLoadingUser && <SvgSpinner />}
-          </div>
+        </div>
+        <div className="mt-8">
+          {showRegistration ? (
+            <RegistrationForm
+              formData={formData}
+              handleFieldChange={handleFormFieldChange}
+              handleContinue={handleContinue}
+              errors={errors}
+              isLoading={isLoading}
+            />
+          ) : (
+            <SearchUser
+              email={userEmail}
+              handleFieldChange={handleFieldEmailChange}
+              handleCheckUser={handleCheckUser}
+              errors={errors}
+              isLoading={isLoading}
+            />
+          )}
+          {isLoadingUser && <SvgSpinner />}
         </div>
       </MainLayout>
     );

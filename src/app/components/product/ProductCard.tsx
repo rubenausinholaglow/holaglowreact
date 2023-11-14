@@ -7,7 +7,7 @@ import {
   getProductCardColor,
   useImageProps,
 } from 'app/utils/common';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -30,6 +30,8 @@ export default function ProductCard({
   className?: string;
   [key: string]: any;
 }) {
+  const ROUTES = useRoutes();
+
   const pathName = usePathname();
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);

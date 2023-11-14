@@ -8,7 +8,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import {
   Accordion,
   AccordionContent,
@@ -24,6 +24,8 @@ import { fetchProduct } from 'utils/fetch';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
+  const ROUTES = useRoutes();
+
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const { setSelectedTreatments } = useSessionStore(state => state);
 

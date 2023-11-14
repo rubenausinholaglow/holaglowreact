@@ -1,6 +1,7 @@
 import { Product } from '@interface/product';
+import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useSessionStore } from 'app/stores/globalStore';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -13,6 +14,8 @@ export default function ProductSessionGroupedPriceCard({
   product: Product;
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);
+  const ROUTES = useRoutes();
+  const { productHighlighted } = useCartStore(state => state);
 
   return (
     <div className="w-full">
@@ -41,18 +44,20 @@ export default function ProductSessionGroupedPriceCard({
             </Flex>
           </Flex>
         </div>
-        <Button
-          type="tertiary"
-          className="shrink-0"
-          customStyles="bg-hg-primary"
-          onClick={() => {
-            setSelectedTreatments([product]);
-          }}
-          href={ROUTES.checkout.clinics}
-        >
-          Reservar cita
-          <SvgArrow height={16} width={16} className="ml-2" />
-        </Button>
+        {!productHighlighted && (
+          <Button
+            type="tertiary"
+            className="shrink-0"
+            customStyles="bg-hg-primary"
+            onClick={() => {
+              setSelectedTreatments([product]);
+            }}
+            href={ROUTES.checkout.clinics}
+          >
+            Reservar cita
+            <SvgArrow height={16} width={16} className="ml-2" />
+          </Button>
+        )}
       </Flex>
     </div>
   );
