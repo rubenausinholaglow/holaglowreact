@@ -12,11 +12,11 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
-import Script from 'next/script';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
 import PromoTopBar from './PromoTopBar';
+import Script from 'next/script';
 
 let isTicking = false;
 let scrollPos = 0;
