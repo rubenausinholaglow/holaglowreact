@@ -15,12 +15,7 @@ export default function ProductSessionGroupedPriceCard({
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);
   const ROUTES = useRoutes();
-  const {
-    productHighlighted,
-    addItemToCart,
-    getQuantityOfProduct,
-    removeSingleProduct,
-  } = useCartStore(state => state);
+  const { productHighlighted } = useCartStore(state => state);
 
   return (
     <div className="w-full">

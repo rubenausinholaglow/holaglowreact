@@ -36,17 +36,17 @@ export const Quantifier: FunctionComponent<Props> = ({
   return (
     <Flex
       layout="row-left"
-      className="bg-hg-secondary500 rounded-3xl gap-1 p-1"
+      className="bg-hg-secondary500 rounded-3xl gap-1 p-1 "
     >
       <Button
         type="tertiary"
         onClick={reduce}
         className="p-0"
-        customStyles="p-0 h-8 w-8 border-none bg-hg-secondary300 t"
+        customStyles={`p-0 ${
+          value === 0 ? '' : 'bg-hg-secondary300'
+        } p-0 h-8 w-8 border-none`}
       >
-        <Text size="md" className="font-bold">
-          -
-        </Text>
+        <Text size="md">-</Text>
       </Button>
       <Text
         type="number"
@@ -65,9 +65,7 @@ export const Quantifier: FunctionComponent<Props> = ({
         className="p-0"
         customStyles="p-0 h-8 w-8 border-none bg-hg-secondary300"
       >
-        <Text size="md" className="font-bold">
-          +
-        </Text>
+        <Text size="md">+</Text>
       </Button>
     </Flex>
   );

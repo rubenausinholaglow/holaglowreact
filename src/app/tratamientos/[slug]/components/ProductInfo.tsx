@@ -32,7 +32,7 @@ export default function ProductInfo({ product }: { product: Product }) {
   }, [product]);
 
   return (
-    <Container className="p-0 md:px-0 md:pb-0 md:py-0 bg-red-600 mx-0 w-full">
+    <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-0 w-full">
       <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl w-full">
         <Container className="mt-8 md:mt-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
           <ul className="flex flex-col pb-4 w-full">
