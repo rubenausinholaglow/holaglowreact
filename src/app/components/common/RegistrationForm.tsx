@@ -28,7 +28,11 @@ import { useRouter } from 'next/navigation';
 import TextInputField from '../../dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../dashboard/utils/props';
 
-const RegistrationForm: React.FC<RegistrationFormProps> = () => {
+const RegistrationForm: React.FC<RegistrationFormProps> = ({
+  redirect = false,
+}: {
+  redirect?: boolean;
+}) => {
   const router = useRouter();
 
   const [isDisabled, setIsDisabled] = useState(true);
@@ -196,7 +200,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = () => {
           router.push('/checkout/confirmation');
         });
       } else {
-        router.push('/checkout/clinicas');
+        if (redirect) {
+          window.parent.location.href =
+            'https://holaglow.com/checkout/clinicas';
+        } else router.push('/checkout/clinicas');
       }
     }
   };

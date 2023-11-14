@@ -118,7 +118,7 @@ export default function Html({ children }: { children: ReactNode }) {
 
   return (
     <body
-      className={`${poppins.className} min-h-screen ${
+      className={`${poppins.className} ${
         isModalOpen || !isMainScrollEnabled
           ? 'overflow-hidden'
           : 'overflow-auto'
