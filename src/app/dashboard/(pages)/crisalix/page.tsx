@@ -18,7 +18,7 @@ const Page = () => {
 
   const userCrisalix = useCrisalix(state => state);
   const { user, storedClinicId } = useGlobalPersistedStore(state => state);
-  let username = localStorage.getItem('username');
+  let username = localStorage.getItem('username') || '';
   //TODO arreglar el username
 
   useEffect(() => {
