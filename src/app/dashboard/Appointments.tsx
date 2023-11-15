@@ -69,7 +69,7 @@ const AppointmentsListComponent: React.FC<{
           setCurrentUser(data);
           setAppointmentId(appointment.id);
 
-          await redirectPage(data.firstName, data.id);
+          await redirectPage(data.firstName, data.id, appointment.id);
         } else {
           //TODO - MESSAGE ERROR UI
         }
@@ -83,9 +83,9 @@ const AppointmentsListComponent: React.FC<{
     }));
   };
 
-  async function redirectPage(name: string, id: string) {
+  async function redirectPage(name: string, id: string, appointmentId: string) {
     try {
-      await ScheduleService.getClinicSchedule(storedAppointmentId).then(
+      await ScheduleService.getClinicSchedule(appointmentId).then(
         async data => {
           if (data != null) {
             localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
@@ -99,7 +99,7 @@ const AppointmentsListComponent: React.FC<{
             const startAppointmentData: StartAppointmentData = {
               clinicId: storedClinicId,
               boxId: storedBoxId,
-              appointmentId: storedAppointmentId,
+              appointmentId: appointmentId,
             };
 
             await messageService
@@ -107,7 +107,7 @@ const AppointmentsListComponent: React.FC<{
               .then(async info => {
                 if (info != null) {
                   await ScheduleService.updatePatientStatusAppointment(
-                    storedAppointmentId,
+                    appointmentId,
                     user?.id || '',
                     Status.InProgress
                   );
