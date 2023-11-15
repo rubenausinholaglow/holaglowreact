@@ -122,7 +122,6 @@ export default function Page({
 
   const handleCheckUser = async () => {
     setIsLoading(true);
-    debugger;
     await UserService.checkUser(userEmail)
       .then(async data => {
         if (data && !isEmpty(data)) {
@@ -179,7 +178,6 @@ export default function Page({
       await ScheduleService.getClinicSchedule(appointmentId).then(
         async data => {
           if (data != null) {
-            debugger;
             setCurrentUser(data.lead.user);
             localStorage.setItem('ClinicId', data.clinic.id);
             localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
@@ -214,7 +212,6 @@ export default function Page({
       await ScheduleService.getClinicScheduleByToken(flowwwToken).then(
         async data => {
           if (data != null) {
-            debugger;
             setCurrentUser(data.lead.user);
             localStorage.setItem('ClinicId', data.clinic.id);
             localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
