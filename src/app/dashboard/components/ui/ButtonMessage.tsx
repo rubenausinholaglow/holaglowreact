@@ -98,7 +98,7 @@ export default function ButtonMessage() {
   };
 
   return (
-    <Flex layout="row-left" className="gap-2 py-4 overflow-hidden ">
+    <Flex layout="row-left" className="gap-2 py-4 overflow-hidden">
       <Button
         size="sm"
         type="tertiary"
@@ -106,7 +106,7 @@ export default function ButtonMessage() {
         onClick={() => sendMessageToMedic()}
       >
         <SvgStethoscope className="mr-2" height={16} width={16} />
-        Llamar Doctor/a
+        Llamar
       </Button>
 
       <Button
@@ -116,7 +116,7 @@ export default function ButtonMessage() {
         onClick={() => sendMessageToReception()}
       >
         <SvgHolaglowHand className="mr-2" height={16} width={16} />
-        Llamar Beauty Adv.
+        Llamar
       </Button>
 
       {messageNotification ? (

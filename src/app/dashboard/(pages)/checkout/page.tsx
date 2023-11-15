@@ -133,7 +133,12 @@ const Page = () => {
   }
 
   return (
-    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
+    <MainLayout
+      isDashboard
+      isCheckout
+      hideContactButtons
+      hideProfessionalSelector
+    >
       <Container>
         <Flex layout="row-left" className="items-start">
           <ul className="w-1/2 shrink-0">
