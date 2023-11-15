@@ -17,12 +17,14 @@ import { removeEmitHelper } from 'typescript';
 import DashboardHeader from './DashboardHeader';
 
 export default function DashboardLayout({
+  isCheckout = false,
   hideTopBar = false,
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
   children,
 }: {
+  isCheckout?: boolean;
   hideTopBar?: boolean;
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
@@ -202,7 +204,13 @@ export default function DashboardLayout({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary500 flex flex-col">
+    <main
+      className={`min-h-screen flex flex-col ${
+        isCheckout
+          ? 'bg-hg-black50'
+          : 'bg-gradient-15deg from-hg-primary300 to-hg-secondary500'
+      }`}
+    >
       {!hideTopBar && (
         <DashboardHeader
           hideBackButton={hideBackButton}

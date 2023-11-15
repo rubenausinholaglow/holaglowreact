@@ -29,7 +29,7 @@ export const applyDiscountToCart = (
   finalValue = finalValue - priceDiscount;
   finalValue = finalValue - finalValue * (percentageDiscount / 100);
 
-  return finalValue;
+  return Number(finalValue).toFixed(2);
 };
 
 export const applyDiscountToItem = (

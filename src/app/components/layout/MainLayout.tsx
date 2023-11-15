@@ -54,6 +54,7 @@ export default function MainLayout({
   if (isDashboard) {
     return (
       <DashboardLayout
+        isCheckout={isCheckout}
         hideTopBar={hideTopBar}
         hideBackButton={hideBackButton}
         hideContactButtons={hideContactButtons}
