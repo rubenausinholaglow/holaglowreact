@@ -34,7 +34,19 @@ export default function HightLightedProduct() {
   const [productPricewithPromoDiscount, setProductPricewithPromoDiscount] =
     useState<number>(0);
   const [imgSrc, setImgSrc] = useState('');
-
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const cart = useCartStore(state => state.cart);
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(product!),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
   useEffect(() => {
     setIsLoading(true);
     setProduct(null);
@@ -141,6 +153,7 @@ export default function HightLightedProduct() {
                 ): void {
                   if (operation == 'increase') {
                     addItemToCart(product);
+                    setPendingDiscount(true);
                   } else {
                     removeSingleProduct(product);
                   }
