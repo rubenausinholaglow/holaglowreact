@@ -184,11 +184,11 @@ export default function PaymentInput(props: Props) {
   };
 
   const openPepper = () => {
-    //setShowPepperModal(true);
-    window.open(
+    setShowPepperModal(true);
+    /*window.open(
       'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
       '_blank'
-    );
+    );*/
   };
   async function addPayment(number: any) {
     setIsLoading(true);
@@ -346,7 +346,15 @@ export default function PaymentInput(props: Props) {
                       )}
                       type="text"
                       value={formData.birthday || ''}
-                      onChange={() => {}}
+                      onChange={event => {
+                        const formattedDate = event.target.value
+                          ? dayjs(event.target.value).format('YYYY-MM-DD')
+                          : '';
+                        setFormData(prevFormData => ({
+                          ...prevFormData,
+                          birthday: formattedDate,
+                        }));
+                      }}
                     />
                   }
                   showYearDropdown
