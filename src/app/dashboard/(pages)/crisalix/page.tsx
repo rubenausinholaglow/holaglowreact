@@ -15,10 +15,10 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
+  const [username, setUsername] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
   const { user, storedClinicId } = useGlobalPersistedStore(state => state);
-  let username = localStorage.getItem('username') || '';
   //TODO arreglar el username
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Page = () => {
       },
       1 * 60 * 1000
     );
-    username = localStorage.getItem('username') || '';
+    setUsername(localStorage.getItem('username') || '');
   }, []);
 
   const checksimulationReady = () => {
