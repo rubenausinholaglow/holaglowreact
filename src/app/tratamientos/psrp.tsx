@@ -171,13 +171,15 @@ export default function PsrpPage({
                         Borrar filtros ({filterCount(productFilters)})
                       </Text>
                     </div>
-                    <Text size="xs">
-                      {
-                        filteredProducts.filter(product => product.visibility)
-                          .length
-                      }{' '}
-                      productos
-                    </Text>
+                    {!isDashboard ?? (
+                      <Text size="xs">
+                        {
+                          filteredProducts.filter(product => product.visibility)
+                            .length
+                        }{' '}
+                        productos
+                      </Text>
+                    )}
                   </Flex>
                 </AnimateOnViewport>
               </Container>
@@ -219,6 +221,7 @@ export default function PsrpPage({
                       <ProductCard
                         product={product}
                         className="h-full flex flex-col"
+                        isDashboard={isDashboard}
                       />
                     </li>
                   );

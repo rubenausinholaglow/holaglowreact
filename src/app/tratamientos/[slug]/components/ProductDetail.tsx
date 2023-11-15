@@ -40,7 +40,6 @@ export default function ProductDetailPage({
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
   const { productHighlighted } = useCartStore(state => state);
-  const [imgSrc, setImgSrc] = useState('');
 
   const { slug, isDashboard } = params;
 
