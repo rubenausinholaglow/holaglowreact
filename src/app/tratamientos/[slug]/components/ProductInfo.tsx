@@ -32,7 +32,7 @@ export default function ProductInfo({ product }: { product: Product }) {
   }, [product]);
 
   return (
-    <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-0 w-full">
+    <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-auto w-full">
       <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl w-full">
         <Container className="mt-8 md:mt-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
           <ul className="flex flex-col pb-4 w-full">
@@ -74,7 +74,11 @@ export default function ProductInfo({ product }: { product: Product }) {
               </div>
             </li>
             <li className="mb-4 pb-4 border-b border-hg-black flex">
-              <div className="flex flex-col gap-4 relative md:justify-center md:flex-row w-full">
+              <div
+                className={`flex  gap-4 relative md:justify-center ${
+                  productHighlighted ? 'flex-row' : 'flex-col'
+                } w-full`}
+              >
                 <div className="flex-1 flex items-start pr-4 border-r border-hg-black w-full">
                   <SvgTimeLeft
                     height={24}
@@ -165,7 +169,7 @@ export default function ProductInfo({ product }: { product: Product }) {
               </span>
             </Button>
           ) : (
-            <Flex className="bg-white rounded-3xl h-14 justify-center align-center gap-4 px-2 py-4">
+            <Flex className="bg-white inline-flex rounded-3xl gap-4 px-2 py-2 mb-2 justify-start flex-row">
               {discountedPrice && (
                 <span className="inline-block line-through font-normal mr-1">
                   {product.price} €

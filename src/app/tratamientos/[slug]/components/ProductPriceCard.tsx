@@ -286,7 +286,7 @@ function ProductPriceItemsCard({
           </Flex>
         ))}
 
-      {showDropdown && (
+      {!productHighlighted && showDropdown && (
         <form className="w-full">
           {product.packUnities.map((item: any, index: number) => {
             return (
@@ -352,8 +352,8 @@ function ProductPriceItemsCard({
           Personalizar
         </Button>
       )}
-      {(!productHighlighted && !product.isPack) ||
-        (showDropdown && (
+      {!product.isPack ||
+        (!productHighlighted && showDropdown && (
           <Button
             type="tertiary"
             disabled={isDisabled}
