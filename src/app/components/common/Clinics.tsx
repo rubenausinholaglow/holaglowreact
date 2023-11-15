@@ -32,7 +32,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
   useEffect(() => {
     if (!deviceSize.isMobile && clinics.length > 0)
       setSelectedClinic(clinics[0]);
-  }, []);
+  }, [clinics]);
 
   useEffect(() => {
     if (!isEmpty(selectedClinic)) {
