@@ -12,7 +12,6 @@ export const useMessageSocket = create(
     (set, get) => ({
       messageSocket: INITIAL_STATE_MESSAGESOCKETLIST.messageSocket,
       addMessageSocket: (newMessageSocket: MessageSocket) => {
-        debugger;
         const messageAleradyExists = get().messageSocket.some(
           msg =>
             msg.message?.messageId === newMessageSocket?.message?.messageId &&
