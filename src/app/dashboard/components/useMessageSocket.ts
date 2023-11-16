@@ -12,10 +12,14 @@ export const useMessageSocket = create(
     (set, get) => ({
       messageSocket: INITIAL_STATE_MESSAGESOCKETLIST.messageSocket,
       addMessageSocket: (newMessageSocket: MessageSocket) => {
-        const messageTypeExists = get().messageSocket.some(
-          msg => msg.messageType === newMessageSocket.messageType
+        debugger;
+        const messageAleradyExists = get().messageSocket.some(
+          msg =>
+            msg.message?.messageId === newMessageSocket?.message?.messageId &&
+            msg.message?.messageId &&
+            newMessageSocket?.message?.messageId
         );
-        if (!messageTypeExists) {
+        if (!messageAleradyExists) {
           set(state => ({
             messageSocket: [...state.messageSocket, newMessageSocket],
           }));
