@@ -143,15 +143,13 @@ const Page = () => {
       hideProfessionalSelector
     >
       <Flex className="h-screen w-full">
-        <div className="w-1/2 h-full">
-          módulos de pago
-          {budgetId && !isBudgetModified && !isLoading && (
-            <Flex layout="col-left" className="gap-2 w-full mt-4">
-              <PaymentModule></PaymentModule>
-            </Flex>
+        <div className="w-[55%] h-full p-4">
+          {budgetId && (
+            /* !isBudgetModified && !isLoading && */ <PaymentModule />
           )}
         </div>
-        <div className="w-1/2 bg-white h-full">
+
+        <div className="w-[45%] bg-white h-full">
           <Flex layout="col-left" className="p-4">
             <Flex className="gap-2">
               <SvgBag height={20} width={20} />
@@ -168,11 +166,13 @@ const Page = () => {
 
           <CheckoutTotal />
 
-          {!budgetId ||
-            (!isBudgetModified && !isLoading && (
+          <Flex layout="col-left" className="gap-4 mt-8 px-4">
+            {(!budgetId || (!isBudgetModified && !isLoading)) && (
               <Button
                 className="w-full"
-                size="md"
+                customStyles="bg-hg-primary"
+                size="xl"
+                type="tertiary"
                 onClick={async () => {
                   setIsLoading(true);
                   await handleFinalize();
@@ -192,29 +192,23 @@ const Page = () => {
                   'Finalizar Presupuesto'
                 )}
               </Button>
-            ))}
-
-          <Button size="lg" className="w-full mt-4" onClick={createTicket}>
-            {isLoading ? (
-              <SvgSpinner height={24} width={24} />
-            ) : (
-              'Generar Tiquet'
             )}
-          </Button>
+
+            <Button
+              className="w-full"
+              size="md"
+              target="_blank"
+              href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
+              type="tertiary"
+            >
+              <span className="font-semibold">Agendar Cita</span>
+            </Button>
+          </Flex>
         </div>
       </Flex>
 
-      <Flex layout="row-left" className="items-start">
+      {/* <Flex layout="row-left" className="items-start">
         <Container>
-          {/*
-          <ul className="w-1/2 shrink-0">
-            {cart?.map(cartItem => (
-              <li key={cartItem.uniqueId} className="mb-4">
-                <ProductCard isCheckout product={cartItem} />
-              </li>
-            ))} 
-          </ul>
-          */}
           <Flex layout="col-left" className="w-1/2 pl-8 shrink-0 relative">
             <Flex layout="col-left" className="gap-2 w-full mt-8">
               <Button
@@ -239,7 +233,7 @@ const Page = () => {
             </Flex>
           </Flex>
         </Container>
-      </Flex>
+      </Flex> */}
     </MainLayout>
   );
 };

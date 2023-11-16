@@ -21,7 +21,7 @@ export default function CheckoutTotal() {
     applyCartDiscount,
   } = useCartStore(state => state);
 
-  const [showCartDiscount, setShowCartDiscount] = useState(true);
+  const [showCartDiscount, setShowCartDiscount] = useState(false);
 
   let productsPriceTotal = 0;
   if (cart) {

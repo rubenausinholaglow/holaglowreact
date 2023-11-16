@@ -13,10 +13,18 @@ import { INITIAL_STATE } from '@utils/constants';
 import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
+import { SvgRadioChecked, SvgTimer } from 'icons/IconsDs';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import PaymentItem, { StatusPayment } from './PaymentItem';
@@ -172,7 +180,7 @@ export const PaymentModule = () => {
     manualPrice,
     productsPriceTotalWithDiscounts
   );
-  const missingAmount = cartTotalWithDiscount - totalAmount;
+  const missingAmount = Number(cartTotalWithDiscount) - Number(totalAmount);
   const missingAmountFormatted = missingAmount.toFixed(2);
 
   const sendTicket = async () => {
@@ -239,7 +247,7 @@ export const PaymentModule = () => {
   };
 
   const createTicket = async () => {
-    if (totalAmount < cartTotalWithDiscount) {
+    if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
       alert('Hay cantidad pendiente de pagar');
       return;
     }
@@ -272,10 +280,79 @@ export const PaymentModule = () => {
     }
     setIsLoading(false);
   };
+
+  const PAYMENT_ICONS = {
+    Alma: ['alma.svg'],
+    Pepper: ['pepper.svg'],
+    Efectivo: [],
+    Tarjeta: ['visa.svg', 'mastercard.svg'],
+  };
+
   return (
     <>
-      <Flex className="gap-2 flex-wrap">
+      <Accordion
+        value="activePaymentMethod"
+        className="flex flex-col gap-8 w-full mb-8"
+      >
         {paymentItems.map(method => (
+          <AccordionItem
+            key={method.key}
+            value={method.label}
+            className="bg-white py-6 px-8 rounded-xl w-full"
+          >
+            <AccordionTrigger className="text-left">
+              <Flex
+                className="gap-2"
+                onClick={() => handleOnButtonPaymentClick(method.key)}
+              >
+                <SvgRadioChecked
+                  height={24}
+                  width={24}
+                  className="shrink-0 hidden group-data-[state=open]:block"
+                />
+                <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
+
+                <Text>{method.label}</Text>
+
+                <Flex className="ml-auto gap-2">
+                  {PAYMENT_ICONS[method.label as keyof typeof PAYMENT_ICONS] &&
+                    PAYMENT_ICONS[
+                      method.label as keyof typeof PAYMENT_ICONS
+                    ].map((icon: string) => (
+                      <Image
+                        src={`/images/dashboard/payment/${icon}`}
+                        height={32}
+                        width={56}
+                        key={icon}
+                        alt={method.label}
+                        className="ml-auto"
+                      />
+                    ))}
+                </Flex>
+              </Flex>
+            </AccordionTrigger>
+            <AccordionContent>
+              <Flex className="mt-4 pt-5 border-t border-hg-black w-full">
+                {paymentItems.map(method =>
+                  activePaymentMethod === method.key ? (
+                    <PaymentClient
+                      key={method.key}
+                      paymentBank={method.paymentBank}
+                      paymentMethod={method.paymentMethod}
+                      onPaymentClick={() => {
+                        setActivePaymentMethod('');
+                        setOnLoad(false);
+                      }}
+                    ></PaymentClient>
+                  ) : null
+                )}
+              </Flex>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+
+      {/* {paymentItems.map(method => (
           <Button
             size="sm"
             key={method.key}
@@ -290,10 +367,9 @@ export const PaymentModule = () => {
           >
             {method.label}
           </Button>
-        ))}
-      </Flex>
+        ))} */}
 
-      {paymentItems.map(method =>
+      {/* {paymentItems.map(method =>
         activePaymentMethod === method.key ? (
           <PaymentClient
             key={method.key}
@@ -305,30 +381,37 @@ export const PaymentModule = () => {
             }}
           ></PaymentClient>
         ) : null
-      )}
+      )} */}
 
-      <Flex layout="col-left" className="bg-white rounded-xl p-4 w-full mt-8">
-        {totalAmount > 0 && (
-          <ul>
-            {paymentList?.map(paymentRequest => (
-              <PaymentItem
-                key={paymentRequest.id}
-                paymentRequest={paymentRequest}
-                status={paymentStatus[paymentRequest.id]}
-              />
-            ))}
-          </ul>
-        )}
-        {totalAmount > 0 && (
-          <Text className="font-bold pt-4 mt-4 border-t border-hg-black300 w-full">
-            Total Pagado: {totalAmount.toFixed(2)}€
-          </Text>
-        )}
-        <Text size="sm" className="text-hg-black500">
-          Faltan: {missingAmountFormatted}€
+      <Flex
+        layout="col-left"
+        className="bg-hg-black100 w-full p-6 rounded-xl gap-4 mb-8"
+      >
+        {totalAmount > 0 &&
+          paymentList?.map(paymentRequest => (
+            <PaymentItem
+              key={paymentRequest.id}
+              paymentRequest={paymentRequest}
+              status={paymentStatus[paymentRequest.id]}
+            />
+          ))}
+      </Flex>
+
+      <Flex className="bg-hg-black100 w-full p-6 rounded-xl gap-2 mb-8">
+        <SvgTimer height={20} width={20} className="text-hg-secondary" />
+        <Text className="text-hg-secondary">Pendiente</Text>
+        <Text className="ml-auto font-semibold text-lg">
+          {missingAmountFormatted}€
         </Text>
       </Flex>
-      <Button size="lg" className="w-full mt-4" onClick={createTicket}>
+
+      <Button
+        size="lg"
+        type="tertiary"
+        className="w-full"
+        customStyles="bg-hg-primary"
+        onClick={createTicket}
+      >
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>
       {messageNotification ? (

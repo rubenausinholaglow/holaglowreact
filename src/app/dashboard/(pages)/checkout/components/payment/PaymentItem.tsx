@@ -8,7 +8,9 @@ import { getPaymentBankText, getPaymentMethodText } from '@utils/utils';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
+import { SvgCheck, SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { usePaymentList } from './payments/usePaymentList';
@@ -103,32 +105,38 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   };
 
   return (
-    <li className="text-hg-black">
-      <Flex layout="row-left">
+    <Flex className="gap-2 w-full">
+      <SvgCheck height={24} width={24} className="text-hg-secondary" />
+      <Text className="text-hg-secondary">Pagado</Text>
+      <Text className="text-hg-black500">
+        ({getPaymentMethodText(paymentRequest.method)})
+      </Text>
+      {paymentRequest.bank ? (
         <span className="font-bold mr-1">
-          {getPaymentMethodText(paymentRequest.method)}
+          {getPaymentBankText(paymentRequest.bank)}
         </span>
-        {paymentRequest.bank ? (
-          <span className="font-bold mr-1">
-            {getPaymentBankText(paymentRequest.bank)}
-          </span>
-        ) : null}{' '}
-        <span className="font-bold">{`- ${paymentRequest.amount}€`}</span>
-        {aviableBanks[paymentRequest.bank] && (
-          <div
-            key={paymentRequest.id}
-            className={`w-4 h-4 rounded-full inline-block ${colorPayment} mx-2`}
-          ></div>
-        )}
+      ) : null}{' '}
+      {aviableBanks[paymentRequest.bank] && (
+        <div
+          key={paymentRequest.id}
+          className={`w-4 h-4 rounded-full inline-block ${colorPayment} mx-2`}
+        ></div>
+      )}
+      <Flex className="ml-auto gap-2">
+        <Text className="font-semibold text-lg">{paymentRequest.amount} €</Text>
         {isDeleteEnabled && (
           <Button
             size="sm"
-            type="secondary"
+            type="tertiary"
             isSubmit
-            className="ml-2"
+            customStyles="bg-white border-none p-2"
             onClick={() => handleRemoveAndDelete(paymentRequest)}
           >
-            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Eliminar'}
+            {isLoading ? (
+              <SvgSpinner height={24} width={24} />
+            ) : (
+              <SvgCross height={16} width={16} className="text-hg-black" />
+            )}
           </Button>
         )}
       </Flex>
@@ -137,6 +145,6 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
       ) : (
         <></>
       )}
-    </li>
+    </Flex>
   );
 }

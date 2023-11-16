@@ -27,6 +27,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
 import { SvgClose, SvgSpinner } from 'icons/Icons';
+import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 
@@ -96,7 +97,7 @@ export default function PaymentInput(props: Props) {
   );
 
   const MaxValue =
-    parseFloat(cartTotalWithDiscount.toFixed(2)) -
+    parseFloat(Number(cartTotalWithDiscount.toFixed(2))) -
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
@@ -409,12 +410,11 @@ export default function PaymentInput(props: Props) {
           ></AlmaWidget>
         )}
         {showPepper && (
-          <Flex layout="col-left">
+          <Flex layout="col-left" className="w-full">
             <PepperWidget totalPrice={Number(inputValue)}></PepperWidget>
             <Flex className="mt-4">
               <Button
-                size="sm"
-                type="secondary"
+                type="tertiary"
                 isSubmit
                 className="ml-2"
                 onClick={() => openPepper()}
@@ -422,8 +422,8 @@ export default function PaymentInput(props: Props) {
                 Abrir Pepper
               </Button>
               <Button
-                size="sm"
-                type="secondary"
+                type="tertiary"
+                customStyles="bg-hg-primary"
                 isSubmit
                 className="ml-2"
                 onClick={() => pay()}
@@ -439,17 +439,25 @@ export default function PaymentInput(props: Props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleSubmitForm)}>
-        <Flex layout="col-left" className="items-start">
+      <form onSubmit={handleSubmit(handleSubmitForm)} className="w-full">
+        <Flex layout="col-left" className="w-full">
           <Controller
             name="number"
             control={control}
             defaultValue=""
             render={({ field, fieldState }) => (
-              <Flex layout="row-left" className="mb-2 content-center">
+              <Flex
+                layout="row-left"
+                className="mb-2 content-center relative w-full gap-2"
+              >
+                <label className="absolute top-2 left-3 text-xs text-hg-black400">
+                  {props.paymentBank === PaymentBank.Alma ||
+                  props.paymentBank === PaymentBank.Pepper
+                    ? 'Importe a financiar'
+                    : 'Cantidad'}
+                </label>
                 <input
-                  placeholder="Importe"
-                  className="bg-white border border-hg-tertiary rounded-md p-2 text-hg-black w-1/2"
+                  className="bg-white border border-hg-black300 rounded-xl px-3 pt-6 pb-2 text-hg-black w-1/2 grow"
                   type="number"
                   {...field}
                   onChange={e => {
@@ -460,41 +468,45 @@ export default function PaymentInput(props: Props) {
                     field.onChange(newValue);
                     setInputValue(newValue.toString());
                   }}
+                  style={{
+                    background:
+                      'url("/images/forms/euro.svg") #ffffff no-repeat center right 12px',
+                  }}
                 />
                 {props.paymentBank === PaymentBank.Alma && (
                   <Button
-                    size="sm"
-                    type="secondary"
+                    type="tertiary"
                     isSubmit
-                    className="ml-2"
                     onClick={() => activateAlma()}
                   >
-                    Ver financiación
+                    Continuar
+                    <SvgArrow height={16} width={16} className="ml-2" />
                   </Button>
                 )}
                 {props.paymentBank === PaymentBank.Pepper && (
                   <Button
-                    size="sm"
-                    type="secondary"
+                    type="tertiary"
                     isSubmit
-                    className="ml-2"
                     onClick={() => activatePepper()}
                   >
-                    Ver financiación
+                    Continuar
+                    <SvgArrow height={16} width={16} className="ml-2" />
                   </Button>
                 )}
                 {props.paymentBank != PaymentBank.Alma &&
                   props.paymentBank != PaymentBank.Pepper && (
                     <Button
-                      size="sm"
-                      type="secondary"
+                      type="tertiary"
+                      customStyles="bg-hg-primary"
                       isSubmit
-                      className="ml-2"
                     >
                       {isLoading ? (
                         <SvgSpinner height={24} width={24} />
                       ) : (
-                        'Pagar'
+                        <>
+                          Pagar
+                          <SvgArrow height={16} width={16} className="ml-2" />
+                        </>
                       )}
                     </Button>
                   )}

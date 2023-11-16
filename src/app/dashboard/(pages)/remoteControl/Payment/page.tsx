@@ -112,11 +112,7 @@ export default function PaymentRemoteControl() {
   return (
     <MainLayout isDashboard>
       <Flex layout="col-center">
-        {isLoading ? (
-          <SvgSpinner height={24} width={24} />
-        ) : (
-          <PaymentModule></PaymentModule>
-        )}
+        {isLoading ? <SvgSpinner height={24} width={24} /> : <PaymentModule />}
       </Flex>
       {messageNotification ?? <Notification message={messageNotification} />}
     </MainLayout>

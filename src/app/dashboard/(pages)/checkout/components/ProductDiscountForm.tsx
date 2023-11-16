@@ -54,7 +54,7 @@ export default function ProductDiscountForm({
       className={twMerge(`text-left ${className}`)}
     >
       <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
-        <Flex layout="row-left" className="gap-4">
+        <Flex layout="row-left" className="gap-2">
           {cartUniqueId && (
             <input
               type="hidden"
