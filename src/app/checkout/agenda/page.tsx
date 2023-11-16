@@ -48,6 +48,7 @@ export default function Agenda() {
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
   const [maxDay, setMaxDay] = useState(dayjs());
   const [dateFormatted, setDateFormatted] = useState('');
+  const [firstLoad, setFirstLoad] = useState(true);
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
@@ -117,10 +118,12 @@ export default function Agenda() {
           }
         });
         setAvailableDates(availability);
-        if (!selectedDay) {
+        if (!selectedDay || firstLoad) {
           setSelectedDay(dayjs(availability[0].date));
-        } else {
+          selectDate(dayjs(availability[0].date).toDate());
+        } else if (selectedDay) {
           setSelectedDay(selectedDay);
+          selectDate(dayjs(selectedDay).toDate());
         }
         setLoadingMonth(false);
         if (availability.length == maxDays)
@@ -128,12 +131,13 @@ export default function Agenda() {
         else {
           setDateToCheck(dateToCheck.add(1, 'month'));
         }
+        setFirstLoad(false);
       });
     }
   }
 
   useEffect(() => {
-    setSelectedDay(dayjs());
+    //setSelectedDay(dayjs());
     setSelectedSlot(undefined);
     setEnableScheduler(true);
   }, []);
@@ -211,8 +215,10 @@ export default function Agenda() {
   }, [dateToCheck]);
 
   useEffect(() => {
-    selectDate(dayjs(selectedDay).toDate());
-    setLocalDateSelected(dayjs(selectedDay).toDate());
+    if (selectedDay && !firstLoad) {
+      selectDate(dayjs(selectedDay).toDate());
+      setLocalDateSelected(dayjs(selectedDay).toDate());
+    }
   }, [selectedTreatmentsIds]);
 
   useEffect(() => {
