@@ -97,7 +97,7 @@ export default function PaymentInput(props: Props) {
   );
 
   const MaxValue =
-    parseFloat(Number(cartTotalWithDiscount.toFixed(2))) -
+    parseFloat(cartTotalWithDiscount.toFixed(2)) -
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
