@@ -49,7 +49,7 @@ export const PaymentModule = () => {
   }, []);
 
   useEffect(() => {
-    const existMessagePaymentResponse = messageSocket.messageSocket.filter(
+    /*const existMessagePaymentResponse = messageSocket.messageSocket.filter(
       x => x.messageType == MessageType.PaymentResponse
     );
     if (existMessagePaymentResponse.length > 0) {
@@ -92,7 +92,7 @@ export const PaymentModule = () => {
         }
         messageSocket.removeMessageSocket(existMessagePaymentResponse[0]);
       }
-    }
+    }*/
   }, [messageSocket]);
 
   let productsPriceTotalWithDiscounts = 0;
