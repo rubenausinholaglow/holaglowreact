@@ -51,6 +51,13 @@ server.use(
   })
 );
 server.use(
+  '/landing/test',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
   '/landing/visita-medica-madrid',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',
@@ -107,6 +114,13 @@ server.use(
   })
 );
 server.use(
+  '/thank-you/valencia',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
   '/thank-you-1',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',
@@ -129,6 +143,13 @@ server.use(
 );
 server.use(
   '/appointment-confirmed/barcelona',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
+  '/appointment-confirmed/valencia',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',
     changeOrigin: true,
