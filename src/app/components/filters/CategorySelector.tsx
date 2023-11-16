@@ -60,7 +60,7 @@ export default function CategorySelector({
   return (
     <ul
       id="categorySelector"
-      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto ${
+      className={` overflow-x-scroll overflow-y-hidden md:overflow-auto ${
         className ? className : ''
       }
       ${isStacked ? 'flex-wrap' : ''}
@@ -70,7 +70,7 @@ export default function CategorySelector({
         return (
           <li
             key={category}
-            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 mr-3 ${
+            className={`transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
                 : isStacked

@@ -7,6 +7,9 @@ export const INITIAL_FILTERS = {
   category: [],
   zone: [],
   clinic: [],
+  text: [],
+  type: [],
+  price: [],
 };
 
 export const applyFilters = ({
@@ -45,11 +48,16 @@ export const applyFilters = ({
     const isVisibleByPack =
       (product.isPack && filters.isPack) || !filters.isPack;
 
+    const isVisibleByText =
+      !filters.text ||
+      filters.text.length === 0 ||
+      product.title.toLowerCase().includes(filters.text[0].toLowerCase());
+
     if (!hasArrayFilters) {
       productVisibility = true;
     }
 
-    productVisibility = productVisibility && isVisibleByPack;
+    productVisibility = productVisibility && isVisibleByPack && isVisibleByText;
 
     return { ...product, visibility: productVisibility };
   });
@@ -122,7 +130,7 @@ export const toggleFilter = ({
   value,
   filters,
 }: {
-  filter: 'category' | 'zone' | 'clinic';
+  filter: 'category' | 'zone' | 'clinic' | 'text' | 'price' | 'type';
   value: string | number;
   filters: ProductFilters;
 }) => {

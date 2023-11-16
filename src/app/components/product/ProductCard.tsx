@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { CartItem, Product } from '@interface/product';
+import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { useGlobalStore } from 'app/stores/globalStore';
 import {
   getDiscountedPrice,
   getProductCardColor,
@@ -39,20 +41,45 @@ export default function ProductCard({
   const pathName = usePathname();
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
-  const { productHighlighted } = useCartStore(state => state);
+  const { productHighlighted, setHighlightProduct } = useCartStore(
+    state => state
+  );
   const addToCart = useCartStore(state => state.addItemToCart);
+
+  const [showProductModal, setShowProductModal] = useState(false);
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
   };
 
   const isLanding = Object.keys(LANDINGS).includes(usePathname());
+  const { isModalOpen, setShowModalBackground } = useGlobalStore(
+    state => state
+  );
+
+  /*useEffect(() => {
+    if (!isModalOpen) {
+      setHighlightProduct(null);
+    }
+  }, [isModalOpen]);*/
+
+  /* useEffect(() => {
+    console.log(productHighlighted);
+    setShowProductModal(!isEmpty(productHighlighted));
+    setShowModalBackground(!isEmpty(productHighlighted));
+  }, [productHighlighted]);*/
 
   useEffect(() => {
     if (!isEmpty(product.discounts)) {
       setDiscountedPrice(getDiscountedPrice(product));
     }
   }, [product]);
+
+  function assignHighlightedProduct() {
+    setHighlightProduct(product);
+    setShowProductModal(true);
+    setShowModalBackground(true);
+  }
 
   const productElement = (
     <div className="flex flex-col h-full pt-4 overflow-hidden">
@@ -72,6 +99,7 @@ export default function ProductCard({
             src={imgSrc}
             onError={() => setNextImgSrc()}
             className={`relative ${alignmentStyles} h-[250px] w-auto`}
+            onClick={() => isDashboard && assignHighlightedProduct()}
           />
 
           {!isEmpty(product.category) && (
@@ -180,5 +208,11 @@ export default function ProductCard({
       </Link>
     );
 
-  if (isDashboard) return <>{productElement}</>;
+  if (isDashboard)
+    return (
+      <>
+        {showProductModal && <HightLightedProduct />}
+        {productElement}
+      </>
+    );
 }

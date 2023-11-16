@@ -58,6 +58,9 @@ export default function MobileFilters({
                     category: [],
                     zone: [],
                     clinic: [],
+                    text: [],
+                    type: [],
+                    price: [],
                   });
                   setModalVisibility(false);
                 }}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Filters } from '@components/Filters';
 import { Product } from '@interface/product';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
@@ -33,11 +34,9 @@ import { applyFilters, filterCount } from './utils/filters';
 export default function PsrpPage({
   slug,
   isDashboard,
-  productsDashboard,
 }: {
   slug: string;
   isDashboard: boolean;
-  productsDashboard?: Product[];
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const { deviceSize } = useSessionStore(state => state);
@@ -48,15 +47,11 @@ export default function PsrpPage({
     setProductFilters,
     isModalOpen,
   } = useGlobalStore(state => state);
-  const { productHighlighted, setHighlightProduct } = useCartStore(
-    state => state
-  );
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
-  const [error, setError] = useState('');
+  const [showDashboardFilters, setShowDashboardFilters] = useState('false');
 
   useEffect(() => {
-    if (isDashboard) return;
     if (slug) {
       if (slug != 'packs') {
         let filterToApply = '';
@@ -93,7 +88,6 @@ export default function PsrpPage({
   }, [slug]);
 
   useEffect(() => {
-    if (isDashboard) return;
     if (isEmpty(filteredProducts)) {
       setFilteredProducts(stateProducts);
     }
@@ -140,11 +134,7 @@ export default function PsrpPage({
                       className="mr-2"
                       customStyles="group-hover:bg-hg-secondary100"
                       onClick={() => {
-                        deviceSize.isMobile
-                          ? setIsMobileFiltersVisible(true)
-                          : setShowDesktopFilters(
-                              showDesktopFilters === 'true' ? 'false' : 'true'
-                            );
+                        setShowDashboardFilters('true');
                       }}
                     >
                       <SvgFilters className="mr-2" />
@@ -165,13 +155,14 @@ export default function PsrpPage({
                             category: [],
                             zone: [],
                             clinic: [],
+                            text: [],
+                            type: [],
+                            price: [],
                           });
                         }}
                       >
                         Borrar filtros ({filterCount(productFilters)})
                       </Text>
-                    </div>
-                    {!isDashboard ?? (
                       <Text size="xs">
                         {
                           filteredProducts.filter(product => product.visibility)
@@ -179,55 +170,43 @@ export default function PsrpPage({
                         }{' '}
                         productos
                       </Text>
-                    )}
+                    </div>
                   </Flex>
                 </AnimateOnViewport>
               </Container>
             </Flex>
-
-            <AccordionPrimitive.Root
-              type="single"
-              className="w-full bg-white"
-              collapsible
-              value={showDesktopFilters}
-              onValueChange={setShowDesktopFilters}
-            >
-              <AccordionPrimitive.Item
-                value={true.toString()}
-                className="w-full"
-              >
-                <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-                  <Container className="pt-24 px-8 pb-12">
-                    <DesktopFilters
-                      showDesktopFilters={showDesktopFilters}
-                      setShowDesktopFilters={setShowDesktopFilters}
-                    />
-                  </Container>
-                </AccordionPrimitive.Content>
-              </AccordionPrimitive.Item>
-            </AccordionPrimitive.Root>
-
-            <Container>
-              <ul
-                className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 ${
-                  showDesktopFilters === true.toString()
-                    ? 'md:pt-12'
-                    : 'md:pt-24'
-                }   pb-6`}
-              >
-                {productsDashboard?.map(product => {
-                  return (
-                    <li key={product.id}>
-                      <ProductCard
-                        product={product}
-                        className="h-full flex flex-col"
-                        isDashboard={isDashboard}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </Container>
+            <Flex layout="row-left" className="items-start">
+              {showDashboardFilters.toString() === 'true' && (
+                <DesktopFilters
+                  showDesktopFilters={showDashboardFilters ? 'true' : 'false'}
+                  setShowDesktopFilters={setShowDashboardFilters}
+                  isDashboard={true}
+                />
+              )}
+              <Flex layout="col-center">
+                <ul
+                  className={`transition-all grid  flex-col gap-6 ${
+                    showDashboardFilters.toString() === 'true'
+                      ? 'md:pt-12 grid-cols-2'
+                      : 'md:pt-24 grid-cols-3'
+                  }   pb-6`}
+                >
+                  {filteredProducts?.map(product => {
+                    if (product.visibility) {
+                      return (
+                        <li key={product.id}>
+                          <ProductCard
+                            product={product}
+                            className="h-full flex flex-col"
+                            isDashboard={isDashboard}
+                          />
+                        </li>
+                      );
+                    }
+                  })}
+                </ul>
+              </Flex>
+            </Flex>
           </div>
         )}
       </MainLayout>
@@ -321,6 +300,9 @@ export default function PsrpPage({
                             category: [],
                             zone: [],
                             clinic: [],
+                            text: [],
+                            type: [],
+                            price: [],
                           });
                         }}
                       >
@@ -355,6 +337,7 @@ export default function PsrpPage({
                     <DesktopFilters
                       showDesktopFilters={showDesktopFilters}
                       setShowDesktopFilters={setShowDesktopFilters}
+                      isDashboard={false}
                     />
                   </Container>
                 </AccordionPrimitive.Content>

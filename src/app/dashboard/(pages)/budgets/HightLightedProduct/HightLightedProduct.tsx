@@ -1,6 +1,5 @@
 'use client';
 import { useEffect } from 'react';
-import { useGlobalStore } from 'app/stores/globalStore';
 import ProductDetail from 'app/tratamientos/[slug]/components/ProductDetail';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
