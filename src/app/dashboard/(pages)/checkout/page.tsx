@@ -136,7 +136,6 @@ const Page = () => {
 
   return (
     <MainLayout
-      hideTopBar
       isDashboard
       isCheckout
       hideContactButtons
