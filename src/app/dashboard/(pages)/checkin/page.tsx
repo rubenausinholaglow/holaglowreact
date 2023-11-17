@@ -1,17 +1,20 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import TextInputField from '@components/TextInputField';
 import { messageService } from '@services/MessageService';
+import MainLayout from 'app/components/layout/MainLayout';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { SvgScanQR } from 'icons/Icons';
+import { SvgArrow, SvgCheck } from 'icons/IconsDs';
 import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
 import useFormHook from './useFormHook';
 
-const WELCOME_MESSAGE = 'Bienvenid@ a Holaglow!';
-const SCAN_QR_MESSAGE = '¡Escanea el QR que te hemos enviado!';
 const SCAN_QR = 'Escanear QR';
 const CHECKIN_BUTTON_TEXT = 'Checkin';
 const CHECKIN_LOADING_TEXT = 'Checking In...';
@@ -28,9 +31,9 @@ export default function Page() {
       setHour(props.hour);
       setProfessional(props.professional);
       messageService.patientArrived(props);
-      reloadPageAfterDelay(30000);
+      //reloadPageAfterDelay(30000);
     } else {
-      reloadPageAfterDelay(5000);
+      //reloadPageAfterDelay(5000);
     }
   };
 
@@ -60,54 +63,86 @@ export default function Page() {
   };
 
   return (
-    <CheckHydration>
-      <Flex layout="col-center" className="w-full">
-        {name ? (
-          <WelcomeSection name={name} hour={hour} professional={professional} />
-        ) : (
-          <>
-            <Flex layout="col-center" className="gap-4 mb-12">
-              <Title size="xl" className="text-left">
-                {WELCOME_MESSAGE}
-              </Title>
-              <Text className="mb-8">{SCAN_QR_MESSAGE}</Text>
-              {isScanning ? (
-                <ReadQr
-                  onScanSuccess={onScanSuccess}
-                  onErrorScan={reloadPageAfterDelay}
-                />
-              ) : (
-                <Button size="lg" style="primary" onClick={startScan}>
-                  {SCAN_QR}
-                </Button>
-              )}
-            </Flex>
-            <FormSection
-              formData={formData}
-              errors={errors}
-              handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
-              isLoading={isLoading}
-              checkIn={checkIn}
+    <MainLayout
+      isDashboard
+      hideBackButton
+      hideContactButtons
+      hideProfessionalSelector
+    >
+      <CheckHydration>
+        <Flex layout="col-center" className="w-full">
+          {name ? (
+            <WelcomeSection
+              name={name}
+              hour={hour}
+              professional={professional}
             />
-          </>
-        )}
-      </Flex>
-    </CheckHydration>
+          ) : (
+            <>
+              <Flex layout="col-center" className="gap-4 mb-12">
+                <Title className="font-bold text-5xl mb-8">
+                  ¡
+                  <Underlined color={HOLAGLOW_COLORS['primary']}>
+                    Bienvenid@
+                  </Underlined>{' '}
+                  <br />a Holaglow!
+                </Title>
+                <Text className="mb-8 font-bold">
+                  Escanea el QR que te hemos envíado para acceder a tu cita.
+                </Text>
+                {isScanning ? (
+                  <ReadQr
+                    onScanSuccess={onScanSuccess}
+                    onErrorScan={reloadPageAfterDelay}
+                  />
+                ) : (
+                  <div
+                    onClick={startScan}
+                    className="justify-center items-center"
+                  >
+                    <SvgScanQR height={192} width={192} fill="white" />
+                    <Text className="mb-8 text-center">{SCAN_QR}</Text>
+                  </div>
+                )}
+              </Flex>
+
+              {!isScanning && (
+                <FormSection
+                  formData={formData}
+                  errors={errors}
+                  handleInputChange={handleInputChange}
+                  handleSubmit={handleSubmit}
+                  isLoading={isLoading}
+                  checkIn={checkIn}
+                />
+              )}
+            </>
+          )}
+        </Flex>
+      </CheckHydration>
+    </MainLayout>
   );
 }
 
 function WelcomeSection({ name, hour, professional }: any) {
   return (
-    <div>
-      <Title className="align-center">Bienvenid@ {name}</Title>
-      <Text size="lg" className="align-center">
+    <Flex className="flex-col">
+      <SvgCheck
+        width={96}
+        height={96}
+        className="text-hg-primary bg-hg-secondary rounded-full"
+      />
+      <Title className="align-center font-bold" size="xl">
+        ¡Gracias {name}!
+      </Title>
+      <Title className="align-center font-bold">Cita confirmada</Title>
+      <Text size="lg" className="align-center mt-8">
         Tu cita es a las {hour} para el Probador Virtual.
       </Text>
-      <Text size="lg" className="align-center">
+      <Text size="lg" className="align-center justify-center">
         Por favor, toma asiento y en breves serás atendid@ por {professional}.
       </Text>
-    </div>
+    </Flex>
   );
 }
 
@@ -121,47 +156,48 @@ function FormSection({
 }: any) {
   return (
     <>
-      <Text size="lg" className="font-semibold mb-4">
-        ...o identifícate con tu email y teléfono
-      </Text>
       <form onSubmit={handleSubmit} className="relative">
         <Flex
           layout="col-left"
-          className={`gap-4 px-12 py-8 bg-hg-tertiary300 relative z-10 ${
+          className={`gap-4 px-12 py-8 bg-hg-secondary100 relative z-10 w-full ${
             checkIn ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          <Flex layout="col-left">
-            <label className="mb-2">Correo Electrónico:</label>
-            <input
-              className="py-3 px-2 rounded-md"
-              type="email"
+          <Text size="lg" className="font-semibold mb-4">
+            ...o identifícate con tu email y teléfono
+          </Text>
+          <div className="grid grid-cols-1 gap-4 w-full">
+            <TextInputField
+              placeholder="Correo Electrónico"
               value={formData.email}
               onChange={e => handleInputChange('email', e.target.value)}
+              hasNoValidation
             />
             {errors.email && (
               <span style={{ color: 'red' }}>{errors.email}</span>
             )}
-          </Flex>
-          <Flex layout="col-left">
-            <label className="mb-2">Teléfono:</label>
-            <input
-              className="py-3 px-2 rounded-md"
-              type="tel"
+
+            <TextInputField
+              placeholder="Teléfono"
               value={formData.phone}
               onChange={e => handleInputChange('phone', e.target.value)}
+              hasNoValidation
             />
             {errors.phone && (
               <span style={{ color: 'red' }}>{errors.phone}</span>
             )}
-          </Flex>
+          </div>
           <Button
-            type="secondary"
+            type="tertiary"
             isSubmit
             disabled={isLoading}
             className="ml-auto"
+            customStyles="bg-hg-primary"
           >
-            {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
+            <p className="mr-2">
+              {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
+            </p>
+            <SvgArrow height={20} width={20} />
           </Button>
         </Flex>
         <Text

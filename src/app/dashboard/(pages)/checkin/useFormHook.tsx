@@ -89,7 +89,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
       try {
         const { id, flowwwToken, firstName } = user;
         const appointmentInfo =
-          await ScheduleService.getClinicSchedule(flowwwToken);
+          await ScheduleService.getClinicScheduleByToken(flowwwToken);
         await ScheduleService.updatePatientStatusAppointment(
           appointmentInfo.id,
           id,
