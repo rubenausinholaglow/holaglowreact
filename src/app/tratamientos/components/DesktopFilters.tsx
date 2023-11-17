@@ -14,8 +14,8 @@ export default function DesktopFilters({
   setShowDesktopFilters,
   isDashboard,
 }: {
-  showDesktopFilters: string;
-  setShowDesktopFilters?: (value: boolean) => void;
+  showDesktopFilters: boolean;
+  setShowDesktopFilters: (value: boolean) => void;
   isDashboard: boolean;
 }) {
   if (isDashboard)
@@ -51,11 +51,7 @@ export default function DesktopFilters({
         <Button
           type="tertiary"
           customStyles="group-hover:bg-hg-secondary100"
-          onClick={() => {
-            if (setShowDesktopFilters) {
-              setShowDesktopFilters(!showDesktopFilters);
-            }
-          }}
+          onClick={() => setShowDesktopFilters(!showDesktopFilters)}
         >
           Cerrar
         </Button>
@@ -81,11 +77,7 @@ export default function DesktopFilters({
       <Button
         type="tertiary"
         customStyles="group-hover:bg-hg-secondary100"
-        onClick={() => {
-          if (setShowDesktopFilters) {
-            setShowDesktopFilters(!showDesktopFilters);
-          }
-        }}
+        onClick={() => setShowDesktopFilters(!showDesktopFilters)}
       >
         Cerrar
       </Button>

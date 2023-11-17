@@ -48,7 +48,7 @@ export default function PsrpPage({
     isModalOpen,
   } = useGlobalStore(state => state);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
-  const [showDesktopFilters, setShowDesktopFilters] = useState('false');
+  const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
 
   useEffect(() => {
@@ -167,7 +167,7 @@ export default function PsrpPage({
                 }`}
               >
                 <DesktopFilters
-                  showDesktopFilters={showDashboardFilters ? 'true' : 'false'}
+                  showDesktopFilters={showDashboardFilters}
                   setShowDesktopFilters={setShowDashboardFilters}
                   isDashboard={true}
                 />
@@ -342,9 +342,7 @@ export default function PsrpPage({
                       onClick={() => {
                         deviceSize.isMobile
                           ? setIsMobileFiltersVisible(true)
-                          : setShowDesktopFilters(
-                              showDesktopFilters === 'true' ? 'false' : 'true'
-                            );
+                          : setShowDesktopFilters(!showDesktopFilters);
                       }}
                     >
                       <SvgFilters className="mr-2" />
@@ -390,13 +388,9 @@ export default function PsrpPage({
               type="single"
               className="w-full bg-white"
               collapsible
-              value={showDesktopFilters}
-              onValueChange={setShowDesktopFilters}
+              value={showDesktopFilters.toString()}
             >
-              <AccordionPrimitive.Item
-                value={true.toString()}
-                className="w-full"
-              >
+              <AccordionPrimitive.Item value="true" className="w-full">
                 <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                   <Container className="pt-24 px-8 pb-12">
                     <DesktopFilters
@@ -412,9 +406,7 @@ export default function PsrpPage({
             <Container>
               <ul
                 className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 ${
-                  showDesktopFilters === true.toString()
-                    ? 'md:pt-12'
-                    : 'md:pt-24'
+                  showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
                 }   pb-6`}
               >
                 {filteredProducts.map(product => {
