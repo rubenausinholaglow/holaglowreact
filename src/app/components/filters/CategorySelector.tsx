@@ -3,11 +3,7 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import {
-  applyFilters,
-  filterCount,
-  toggleFilter,
-} from 'app/tratamientos/utils/filters';
+import { toggleFilter } from 'app/tratamientos/utils/filters';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
@@ -22,12 +18,7 @@ export default function CategorySelector({
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
-  const {
-    filteredProducts,
-    setFilteredProducts,
-    productFilters,
-    setProductFilters,
-  } = useGlobalStore(state => state);
+  const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
 

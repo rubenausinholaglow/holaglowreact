@@ -3,7 +3,7 @@ import { Product } from '@interface/product';
 import { ProductFilters } from 'types/filters';
 
 export const INITIAL_FILTERS = {
-  isPack: false,
+  isPack: true,
   category: [],
   zone: [],
   clinic: [],
@@ -20,25 +20,21 @@ export const applyFilters = ({
 }) => {
   let updatedProducts = products;
 
-  const hasArrayFilters =
-    filters.category.length > 0 ||
-    filters.zone.length > 0 ||
-    filters.clinic.length > 0 ||
-    filters.price.length > 0;
-
   updatedProducts = products.map(product => {
-    const isVisibleByCategory = product.category.some(category =>
-      filters.category.includes(category.name)
-    );
+    const isVisibleByCategory =
+      filters.category.length == 0 ||
+      product.category.some(category =>
+        filters.category.includes(category.name)
+      );
     const isVisibleByZone =
       filters.zone.length == 0 || filters.zone.includes(product.zone);
 
     const productClinics: Array<string> = product.clinicDetail.map(
       (item: ProductClinics) => item.clinic.internalName
     );
-    const isVisibleByClinic = filters.clinic.some(clinic =>
-      productClinics.includes(clinic)
-    );
+    const isVisibleByClinic =
+      filters.clinic.length == 0 ||
+      filters.clinic.some(clinic => productClinics.includes(clinic));
 
     const isVisibleByPack =
       (product.isPack && filters.isPack) || !filters.isPack;
@@ -66,20 +62,8 @@ export const applyFilters = ({
       isVisibleByClinic,
       isVisibleByPrice,
       isVisibleByText,
-    ].some(value => value === true);
-    if (!hasArrayFilters) {
-      productVisibility = true;
-    }
-
-    console.log('FIRST', filters.text, isVisibleByText, productVisibility);
-    productVisibility =
-      productVisibility &&
-      isVisibleByPack &&
-      isVisibleByText &&
-      isVisibleByPrice &&
-      isVisibleByZone;
-
-    console.log(filters.text, isVisibleByText, productVisibility);
+      isVisibleByPack,
+    ].every(value => value === true);
     return { ...product, visibility: productVisibility };
   });
   console.log(updatedProducts);
@@ -155,7 +139,7 @@ export const toggleFilter = ({
   value,
   filters,
 }: {
-  filter: 'category' | 'zone' | 'clinic' | 'text' | 'price' | 'type';
+  filter: 'category' | 'zone' | 'clinic' | 'text' | 'price';
   value: string | number;
   filters: ProductFilters;
 }) => {
