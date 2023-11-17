@@ -206,7 +206,7 @@ export default class ScheduleService {
   ): Promise<Array<DayAvailability>> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/MonthAvailabilityv2?date=` +
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/MonthAvailability?date=` +
         date +
         `&treatment=` +
         treatment +
@@ -232,7 +232,7 @@ export default class ScheduleService {
   ): Promise<Array<Slot>> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Slotsv2?date=` +
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Slots?date=` +
         date +
         `&treatment=` +
         treatment +
