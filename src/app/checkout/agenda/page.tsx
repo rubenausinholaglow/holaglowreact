@@ -99,36 +99,23 @@ export default function Agenda() {
   function loadMonth() {
     if (selectedTreatmentsIds && availableDates.length < maxDays) {
       setLoadingMonth(true);
-      ScheduleService.getMonthAvailability(
-        dateToCheck.format(format),
-        selectedTreatmentsIds,
-        selectedClinic!.flowwwId
-      ).then(data => {
-        const availability = availableDates ?? [];
-        const today = dayjs();
-        data.forEach((x: any) => {
-          const date = dayjs(x.date);
-          if (
-            availability.length < maxDays &&
-            (date.isAfter(today) || date.isSame(today, 'day')) &&
-            x.availability
-          ) {
-            availability.push(x);
-          }
+      if (selectedTreatmentsIds != '902') {
+        ScheduleService.getMonthAvailability(
+          dateToCheck.format(format),
+          selectedTreatmentsIds,
+          selectedClinic!.flowwwId
+        ).then(data => {
+          callbackMonthAvailability(data);
         });
-        setAvailableDates(availability);
-        if (!selectedDay) {
-          setSelectedDay(dayjs(availability[0].date));
-        } else {
-          setSelectedDay(selectedDay);
-        }
-        setLoadingMonth(false);
-        if (availability.length == maxDays)
-          setMaxDay(dayjs(availability[availability.length - 1].date));
-        else {
-          setDateToCheck(dateToCheck.add(1, 'month'));
-        }
-      });
+      } else {
+        ScheduleService.getMonthAvailabilityv2(
+          dateToCheck.format(format),
+          selectedTreatmentsIds,
+          selectedClinic!.flowwwId
+        ).then(data => {
+          callbackMonthAvailability(data);
+        });
+      }
     }
   }
 
@@ -238,39 +225,31 @@ export default function Agenda() {
     const day = dayjs(x);
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
-    ScheduleService.getSlots(
-      day.format(format),
-      selectedTreatmentsIds,
-      selectedClinic!.flowwwId
-    )
-      .then(data => {
-        const hours = Array<Slot>();
-        const morning = Array<Slot>();
-        const afternoon = Array<Slot>();
-        data.forEach(x => {
-          const hour = x.startTime.split(':')[0];
-          const minutes = x.startTime.split(':')[1];
-          if (
-            (minutes == '00' || minutes == '30') &&
-            !(hour == '10' && minutes == '00')
-          ) {
-            hours.push(x);
-            if (parseInt(hour) < 16) {
-              morning.push(x);
-            } else afternoon.push(x);
-          }
+    if (selectedTreatmentsIds != '902') {
+      ScheduleService.getSlots(
+        day.format(format),
+        selectedTreatmentsIds,
+        selectedClinic!.flowwwId
+      )
+        .then(data => {
+          callbackGetSlots(data);
+        })
+        .finally(() => {
+          setLoadingDays(false);
         });
-        setMorningHours(morning);
-        setAfternoonHours(afternoon);
-        window.scrollTo({
-          top: 425,
-          left: 0,
-          behavior: 'smooth',
+    } else {
+      ScheduleService.getSlotsv2(
+        day.format(format),
+        selectedTreatmentsIds,
+        selectedClinic!.flowwwId
+      )
+        .then(data => {
+          callbackGetSlots(data);
+        })
+        .finally(() => {
+          setLoadingDays(false);
         });
-      })
-      .finally(() => {
-        setLoadingDays(false);
-      });
+    }
   };
 
   const filterDate = (date: Date) => {
@@ -534,4 +513,57 @@ export default function Agenda() {
       </Container>
     </MainLayout>
   );
+
+  function callbackGetSlots(data: Slot[]) {
+    const hours = Array<Slot>();
+    const morning = Array<Slot>();
+    const afternoon = Array<Slot>();
+    data.forEach(x => {
+      const hour = x.startTime.split(':')[0];
+      const minutes = x.startTime.split(':')[1];
+      if (
+        (minutes == '00' || minutes == '30') &&
+        !(hour == '10' && minutes == '00')
+      ) {
+        hours.push(x);
+        if (parseInt(hour) < 16) {
+          morning.push(x);
+        } else afternoon.push(x);
+      }
+    });
+    setMorningHours(morning);
+    setAfternoonHours(afternoon);
+    window.scrollTo({
+      top: 425,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  function callbackMonthAvailability(data: DayAvailability[]) {
+    const availability = availableDates ?? [];
+    const today = dayjs();
+    data.forEach((x: any) => {
+      const date = dayjs(x.date);
+      if (
+        availability.length < maxDays &&
+        (date.isAfter(today) || date.isSame(today, 'day')) &&
+        x.availability
+      ) {
+        availability.push(x);
+      }
+    });
+    setAvailableDates(availability);
+    if (!selectedDay) {
+      setSelectedDay(dayjs(availability[0].date));
+    } else {
+      setSelectedDay(selectedDay);
+    }
+    setLoadingMonth(false);
+    if (availability.length == maxDays)
+      setMaxDay(dayjs(availability[availability.length - 1].date));
+    else {
+      setDateToCheck(dateToCheck.add(1, 'month'));
+    }
+  }
 }
