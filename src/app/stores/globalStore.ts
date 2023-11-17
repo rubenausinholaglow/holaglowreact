@@ -46,6 +46,7 @@ interface GlobalPersistStore {
   user?: User;
   promo: Promo | undefined;
   remoteControl: boolean;
+  ignoreMessages: boolean;
   storedClinicId: string | '';
   storedBoxId: string | '';
   storedAppointmentId: string | '';
@@ -57,6 +58,7 @@ interface GlobalPersistActions {
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
   setRemoteControl: (remoteControl: boolean) => void;
+  setIgnoreMessages: (ignoreMessages: boolean) => void;
   setClinicId: (storedClinicId: string) => void;
   setBoxId: (setBoxId: string) => void;
   setAppointmentId: (storedAppointmentId: string) => void;
@@ -150,6 +152,10 @@ export const useGlobalPersistedStore = create(
       remoteControl: false,
       setRemoteControl: value => {
         set({ remoteControl: value });
+      },
+      ignoreMessages: false,
+      setIgnoreMessages: value => {
+        set({ ignoreMessages: value });
       },
       storedClinicId: '',
       setClinicId: value => {

@@ -28,7 +28,9 @@ const AppointmentsListComponent: React.FC<{
   }>({});
   const userCrisalix = useCrisalix(state => state);
   const router = useRouter();
-  const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
+  const { user, setCurrentUser, ignoreMessages } = useGlobalPersistedStore(
+    state => state
+  );
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const { storedClinicId, storedBoxId, storedAppointmentId, setAppointmentId } =
     useGlobalPersistedStore(state => state);
@@ -101,41 +103,36 @@ const AppointmentsListComponent: React.FC<{
               boxId: storedBoxId,
               appointmentId: appointmentId,
             };
-
-            await messageService
-              .startAppointment(startAppointmentData)
-              .then(async info => {
-                if (info != null) {
-                  await ScheduleService.updatePatientStatusAppointment(
-                    appointmentId,
-                    user?.id || '',
-                    Status.InProgress
-                  );
-
-                  await UserService.createCrisalixUser(
-                    id,
-                    data.id,
-                    clinicId
-                  ).then(async x => {
-                    const crisalixUser: CrisalixUser = {
-                      id: x.id,
-                      playerId: x.player_id,
-                      playerToken: x.playerToken,
-                      name: x.name,
-                    };
-                    userCrisalix.addCrisalixUser(crisalixUser);
-                    const crisalixUserData: CrisalixUserData = {
-                      id: crisalixUser.id,
-                      playerId: crisalixUser.playerId,
-                      playerToken: crisalixUser.playerToken,
-                      boxId: boxId,
-                      clinicId: clinicId,
-                    };
-                    await messageService.crisalixUser(crisalixUserData);
-                  });
-                  router.push('/dashboard/remoteControl');
-                }
-              });
+            if (!ignoreMessages)
+              await messageService
+                .startAppointment(startAppointmentData)
+                .then(async info => {
+                  if (info != null) {
+                    await startAppointment(
+                      appointmentId,
+                      user,
+                      id,
+                      data,
+                      clinicId,
+                      userCrisalix,
+                      boxId,
+                      ignoreMessages,
+                      router
+                    );
+                  }
+                });
+            else
+              await startAppointment(
+                appointmentId,
+                user,
+                id,
+                data,
+                clinicId,
+                userCrisalix,
+                boxId,
+                ignoreMessages,
+                router
+              );
           } else {
             //TODO - Poner un mensaje de Error en UI
           }
@@ -224,3 +221,42 @@ const AppointmentsListComponent: React.FC<{
 };
 
 export default AppointmentsListComponent;
+async function startAppointment(
+  appointmentId: string,
+  user:
+    | import('c:/Repos/holaglowreact/src/app/dashboard/interface/appointment').User
+    | undefined,
+  id: string,
+  data: any,
+  clinicId: string,
+  userCrisalix: import('c:/Repos/holaglowreact/src/app/dashboard/interface/crisalix').CrisalixUserList &
+    import('c:/Repos/holaglowreact/src/app/dashboard/interface/crisalix').CrisalixActions,
+  boxId: string,
+  ignoreMessages: boolean,
+  router
+) {
+  await ScheduleService.updatePatientStatusAppointment(
+    appointmentId,
+    user?.id || '',
+    Status.InProgress
+  );
+
+  await UserService.createCrisalixUser(id, data.id, clinicId).then(async x => {
+    const crisalixUser: CrisalixUser = {
+      id: x.id,
+      playerId: x.player_id,
+      playerToken: x.playerToken,
+      name: x.name,
+    };
+    userCrisalix.addCrisalixUser(crisalixUser);
+    const crisalixUserData: CrisalixUserData = {
+      id: crisalixUser.id,
+      playerId: crisalixUser.playerId,
+      playerToken: crisalixUser.playerToken,
+      boxId: boxId,
+      clinicId: clinicId,
+    };
+    if (!ignoreMessages) await messageService.crisalixUser(crisalixUserData);
+  });
+  router.push('/dashboard/remoteControl');
+}

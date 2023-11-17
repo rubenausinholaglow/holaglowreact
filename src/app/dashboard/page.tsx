@@ -43,6 +43,7 @@ export default function Page({
     setBoxId,
     setClinicId,
     setRemoteControl,
+    setIgnoreMessages,
   } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
@@ -117,6 +118,7 @@ export default function Page({
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
     setRemoteControl(params.get('remoteControl') == 'true');
+    setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
   }, []);
 
