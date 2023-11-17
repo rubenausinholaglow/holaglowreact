@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Appointment, Status } from '@interface/appointment';
-import { CrisalixUser } from '@interface/crisalix';
+import {
+  CrisalixActions,
+  CrisalixUser,
+  CrisalixUserList,
+} from '@interface/crisalix';
 import {
   CrisalixUserData,
   StartAppointmentData,
@@ -85,6 +89,47 @@ const AppointmentsListComponent: React.FC<{
     }));
   };
 
+  async function startAppointment(
+    appointmentId: string,
+    user:
+      | import('c:/Repos/holaglowreact/src/app/dashboard/interface/appointment').User
+      | undefined,
+    id: string,
+    data: any,
+    clinicId: string,
+    userCrisalix: CrisalixUserList & CrisalixActions,
+    boxId: string,
+    ignoreMessages: boolean,
+    router: any
+  ) {
+    await ScheduleService.updatePatientStatusAppointment(
+      appointmentId,
+      user?.id || '',
+      Status.InProgress
+    );
+
+    await UserService.createCrisalixUser(id, data.id, clinicId).then(
+      async x => {
+        const crisalixUser: CrisalixUser = {
+          id: x.id,
+          playerId: x.player_id,
+          playerToken: x.playerToken,
+          name: x.name,
+        };
+        userCrisalix.addCrisalixUser(crisalixUser);
+        const crisalixUserData: CrisalixUserData = {
+          id: crisalixUser.id,
+          playerId: crisalixUser.playerId,
+          playerToken: crisalixUser.playerToken,
+          boxId: boxId,
+          clinicId: clinicId,
+        };
+        if (!ignoreMessages)
+          await messageService.crisalixUser(crisalixUserData);
+      }
+    );
+    router.push('/dashboard/remoteControl');
+  }
   async function redirectPage(name: string, id: string, appointmentId: string) {
     try {
       await ScheduleService.getClinicSchedule(appointmentId).then(
@@ -221,42 +266,3 @@ const AppointmentsListComponent: React.FC<{
 };
 
 export default AppointmentsListComponent;
-async function startAppointment(
-  appointmentId: string,
-  user:
-    | import('c:/Repos/holaglowreact/src/app/dashboard/interface/appointment').User
-    | undefined,
-  id: string,
-  data: any,
-  clinicId: string,
-  userCrisalix: import('c:/Repos/holaglowreact/src/app/dashboard/interface/crisalix').CrisalixUserList &
-    import('c:/Repos/holaglowreact/src/app/dashboard/interface/crisalix').CrisalixActions,
-  boxId: string,
-  ignoreMessages: boolean,
-  router: any
-) {
-  await ScheduleService.updatePatientStatusAppointment(
-    appointmentId,
-    user?.id || '',
-    Status.InProgress
-  );
-
-  await UserService.createCrisalixUser(id, data.id, clinicId).then(async x => {
-    const crisalixUser: CrisalixUser = {
-      id: x.id,
-      playerId: x.player_id,
-      playerToken: x.playerToken,
-      name: x.name,
-    };
-    userCrisalix.addCrisalixUser(crisalixUser);
-    const crisalixUserData: CrisalixUserData = {
-      id: crisalixUser.id,
-      playerId: crisalixUser.playerId,
-      playerToken: crisalixUser.playerToken,
-      boxId: boxId,
-      clinicId: clinicId,
-    };
-    if (!ignoreMessages) await messageService.crisalixUser(crisalixUserData);
-  });
-  router.push('/dashboard/remoteControl');
-}
