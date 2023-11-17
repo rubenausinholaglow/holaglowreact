@@ -60,7 +60,7 @@ export default function CategorySelector({
   return (
     <ul
       id="categorySelector"
-      className={` overflow-x-scroll overflow-y-hidden md:overflow-auto ${
+      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto ${
         className ? className : ''
       }
       ${isStacked ? 'flex-wrap' : ''}

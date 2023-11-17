@@ -15,19 +15,19 @@ export default function DesktopFilters({
   isDashboard,
 }: {
   showDesktopFilters: string;
-  setShowDesktopFilters: (value: string) => void;
+  setShowDesktopFilters?: (value: boolean) => void;
   isDashboard: boolean;
 }) {
   if (isDashboard)
     return (
       <Flex layout="col-left" className="bg-white gap-2 mr-2">
-        <Flex layout="col-left">
+        <Flex layout="col-left" className="w-full">
           <Text size="sm" className="mb-4 font-semibold">
             Zona de la cara
           </Text>
           <ZoneFilter className="mb-8" />
         </Flex>
-        <Flex layout="col-left">
+        <Flex layout="col-left" className="w-full">
           <Text size="sm" className="mb-4 font-semibold">
             Tipo
           </Text>
@@ -40,7 +40,7 @@ export default function DesktopFilters({
           <PriceFilter className="mb-8" />
         </Flex>
         <Flex layout="col-left" className="w-full">
-          <CategorySelector className="mb-4 inner-flex" />
+          <CategorySelector className="mb-4 inner-flex" isStacked />
         </Flex>
         <Flex layout="col-left" className="w-full">
           <PackTypeFilter />
@@ -51,11 +51,11 @@ export default function DesktopFilters({
         <Button
           type="tertiary"
           customStyles="group-hover:bg-hg-secondary100"
-          onClick={() =>
-            setShowDesktopFilters(
-              showDesktopFilters === 'true' ? 'false' : 'true'
-            )
-          }
+          onClick={() => {
+            if (setShowDesktopFilters) {
+              setShowDesktopFilters(!showDesktopFilters);
+            }
+          }}
         >
           Cerrar
         </Button>
@@ -81,11 +81,11 @@ export default function DesktopFilters({
       <Button
         type="tertiary"
         customStyles="group-hover:bg-hg-secondary100"
-        onClick={() =>
-          setShowDesktopFilters(
-            showDesktopFilters === 'true' ? 'false' : 'true'
-          )
-        }
+        onClick={() => {
+          if (setShowDesktopFilters) {
+            setShowDesktopFilters(!showDesktopFilters);
+          }
+        }}
       >
         Cerrar
       </Button>

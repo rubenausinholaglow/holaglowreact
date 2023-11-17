@@ -55,7 +55,11 @@ export default function PriceFilter({
   }, [productFilters]);
 
   return (
-    <ul className={`flex gap-5 w-full flex-col ${className ? className : ''}`}>
+    <ul
+      className={`flex gap-5 w-full flex-col bg-hg-black100 rounded-xl p-4 ${
+        className ? className : ''
+      }`}
+    >
       {PRICES.map(price => (
         <li
           key={price.name}
@@ -68,12 +72,12 @@ export default function PriceFilter({
               })
             )
           }
-          className="w-full flex"
+          className="w-full flex justify-start gap-2"
         >
           {productFilters.price.includes('1') ? (
-            <SvgCheckSquareActive className="ml-auto" />
+            <SvgCheckSquareActive />
           ) : (
-            <SvgCheckSquare className="ml-auto" />
+            <SvgCheckSquare />
           )}
           <Text size="xs">{price.name}</Text>
         </li>

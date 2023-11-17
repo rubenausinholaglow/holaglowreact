@@ -33,17 +33,17 @@ export default function TypeFilter({
     {
       name: 'Cuerpo',
       id: 1,
-      icon: '/images/filters/tercioInferior.svg',
+      icon: '/images/filters/cuerpo.svg',
     },
     {
       name: 'Pelo',
       id: 2,
-      icon: '/images/filters/tercioMedio.svg',
+      icon: '/images/filters/pelo.svg',
     },
     {
       name: 'Piel',
       id: 5,
-      icon: '/images/filters/tercioSuperior.svg',
+      icon: '/images/filters/piel.svg',
     },
   ];
 
@@ -62,12 +62,12 @@ export default function TypeFilter({
       {TYPE.map(type => (
         <li
           key={type.name}
-          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer ${
+          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer gap-2 ${
             isDesktop ? 'w-[120px]' : ''
           } ${
             productFilters.type.includes(type.id)
               ? 'bg-hg-primary500'
-              : 'bg-hg-black50'
+              : 'bg-hg-black100'
           }`}
           onClick={() =>
             setProductFilters(
@@ -85,7 +85,9 @@ export default function TypeFilter({
             <SvgCheckSquare className="ml-auto" />
           )}
           <Image height={40} width={40} src={type.icon} alt={type.name} />
-          <Text size="xs">{type.name}</Text>
+          <Text size="xs" className="text-center">
+            {type.name}
+          </Text>
         </li>
       ))}
     </ul>

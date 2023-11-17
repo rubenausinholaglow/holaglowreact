@@ -22,7 +22,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
-import { SvgFilters } from 'icons/IconsDs';
+import { SvgCross, SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
@@ -32,11 +32,11 @@ import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
 
 export default function PsrpPage({
-  slug,
-  isDashboard,
+  slug = '',
+  isDashboard = false,
 }: {
-  slug: string;
-  isDashboard: boolean;
+  slug?: string;
+  isDashboard?: boolean;
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const { deviceSize } = useSessionStore(state => state);
@@ -49,11 +49,11 @@ export default function PsrpPage({
   } = useGlobalStore(state => state);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState('false');
-  const [showDashboardFilters, setShowDashboardFilters] = useState('false');
+  const [showDashboardFilters, setShowDashboardFilters] = useState(true);
 
   useEffect(() => {
-    if (slug) {
-      if (slug != 'packs') {
+    if (slug !== '') {
+      if (slug !== 'packs') {
         let filterToApply = '';
         switch (slug) {
           case 'piel':
@@ -120,60 +120,126 @@ export default function PsrpPage({
     return (
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
         {!isEmpty(filteredProducts) && (
-          <div className="bg-[#f7f3f0] pb-32 relative">
-            <Flex
-              layout="row-left"
-              className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
-            >
-              <Container>
-                <AnimateOnViewport>
-                  <Flex layout="row-left" className="w-full justify-between">
-                    <Button
-                      type="tertiary"
-                      size="sm"
-                      className="mr-2"
-                      customStyles="group-hover:bg-hg-secondary100"
-                      onClick={() => {
-                        setShowDashboardFilters('true');
-                      }}
-                    >
-                      <SvgFilters className="mr-2" />
-                      <Flex layout="col-center">Filtrar</Flex>
-                    </Button>
+          <>
+            <Flex className="justify-start px-4 py-1 w-full">
+              <Flex className="mr-auto gap-2">
+                <Button
+                  type="tertiary"
+                  size="sm"
+                  onClick={() => {
+                    setShowDashboardFilters(!showDashboardFilters);
+                  }}
+                >
+                  <SvgFilters className="mr-2" />
+                  <Flex layout="col-center">Filtrar</Flex>
+                </Button>
+                <Text
+                  size="xs"
+                  className={`text-hg-secondary transition-opacity underline cursor-pointer ${
+                    filterCount(productFilters) === 0
+                      ? 'opacity-0'
+                      : 'opacity-100'
+                  }`}
+                  onClick={() => {
+                    setProductFilters({
+                      isPack: false,
+                      category: [],
+                      zone: [],
+                      clinic: [],
+                      text: [],
+                      type: [],
+                      price: [],
+                    });
+                  }}
+                >
+                  Borrar filtros ({filterCount(productFilters)})
+                </Text>
+              </Flex>
+              <Text size="xs">
+                {filteredProducts.filter(product => product.visibility).length}{' '}
+                productos
+              </Text>
+            </Flex>
+            <Flex className="justify-end relative w-full -mt-3">
+              <div
+                className={`transition-all bg-white rounded-r-xl py-6 px-4 mt-10 absolute left-0 top-0 z-10 w-2/5 ${
+                  showDashboardFilters ? 'translate-0' : '-translate-x-full'
+                }`}
+              >
+                <DesktopFilters
+                  showDesktopFilters={showDashboardFilters ? 'true' : 'false'}
+                  setShowDesktopFilters={setShowDashboardFilters}
+                  isDashboard={true}
+                />
+              </div>
+              <ul
+                className={`transition-all px-4 grid gap-4 ${
+                  showDashboardFilters
+                    ? 'grid-cols-2 w-3/5'
+                    : 'grid-cols-3 w-full'
+                } pb-6`}
+              >
+                {filteredProducts?.map(product => {
+                  if (product.visibility) {
+                    return (
+                      <li key={product.id}>
+                        <ProductCard
+                          product={product}
+                          className="h-full flex flex-col"
+                          isDashboard={isDashboard}
+                        />
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </Flex>
+          </>
+        )}
 
-                    <div className="mr-auto">
-                      <Text
-                        size="xs"
-                        className={`text-hg-secondary transition-opacity underline cursor-pointer ${
-                          filterCount(productFilters) === 0
-                            ? 'opacity-0'
-                            : 'opacity-100'
-                        }`}
-                        onClick={() => {
-                          setProductFilters({
-                            isPack: false,
-                            category: [],
-                            zone: [],
-                            clinic: [],
-                            text: [],
-                            type: [],
-                            price: [],
-                          });
-                        }}
-                      >
-                        Borrar filtros ({filterCount(productFilters)})
-                      </Text>
-                      <Text size="xs">
-                        {
-                          filteredProducts.filter(product => product.visibility)
-                            .length
-                        }{' '}
-                        productos
-                      </Text>
-                    </div>
-                  </Flex>
-                </AnimateOnViewport>
-              </Container>
+        {/* <div className="pb-32 relative">
+            <Flex layout="row-left" className="justify-between">
+              <Button
+                  type="tertiary"
+                  size="sm"
+                  className="mr-2"
+                  customStyles="group-hover:bg-hg-secondary100"
+                  onClick={() => {
+                    setShowDashboardFilters('true');
+                  }}
+                >
+                  <SvgFilters className="mr-2" />
+                  <Flex layout="col-center">Filtrar</Flex>
+                </Button>
+
+                <Text
+                  size="xs"
+                  className={`text-hg-secondary transition-opacity underline cursor-pointer ${
+                    filterCount(productFilters) === 0
+                      ? 'opacity-0'
+                      : 'opacity-100'
+                  }`}
+                  onClick={() => {
+                    setProductFilters({
+                      isPack: false,
+                      category: [],
+                      zone: [],
+                      clinic: [],
+                      text: [],
+                      type: [],
+                      price: [],
+                    });
+                  }}
+                >
+                  Borrar filtros ({filterCount(productFilters)})
+                </Text>
+                <Text size="xs">
+                  {
+                    filteredProducts.filter(product => product.visibility)
+                      .length
+                  }{' '}
+                  productos
+                </Text>
             </Flex>
             <Flex layout="row-left" className="items-start">
               {showDashboardFilters.toString() === 'true' && (
@@ -185,7 +251,7 @@ export default function PsrpPage({
               )}
               <Flex layout="col-center">
                 <ul
-                  className={`transition-all grid  flex-col gap-6 ${
+                  className={`transition-all grid px-4 flex-col gap-6 ${
                     showDashboardFilters.toString() === 'true'
                       ? 'md:pt-12 grid-cols-2'
                       : 'md:pt-24 grid-cols-3'
@@ -207,8 +273,7 @@ export default function PsrpPage({
                 </ul>
               </Flex>
             </Flex>
-          </div>
-        )}
+                </div> */}
       </MainLayout>
     );
   else

@@ -81,10 +81,12 @@ export default function ProductCard({
     setShowModalBackground(true);
   }
 
+  const imgHeight = isDashboard ? 'h-[200px]' : 'h-[250px]';
+
   const productElement = (
     <div className="flex flex-col h-full pt-4 overflow-hidden">
       <Flex layout="col-left" className="">
-        <div className="relative h-[250px] w-full rounded-t-2xl">
+        <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
           <div
             className="absolute inset-0 top-[10%] rounded-t-2xl "
             style={{
@@ -98,7 +100,7 @@ export default function ProductCard({
             height={300}
             src={imgSrc}
             onError={() => setNextImgSrc()}
-            className={`relative ${alignmentStyles} h-[250px] w-auto`}
+            className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
             onClick={() => isDashboard && assignHighlightedProduct()}
           />
 

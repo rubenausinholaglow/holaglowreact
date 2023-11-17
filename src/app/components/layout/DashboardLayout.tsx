@@ -202,7 +202,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary500 flex flex-col">
+    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary300 flex flex-col w-full">
       {!hideTopBar && (
         <DashboardHeader
           hideBackButton={hideBackButton}

@@ -62,12 +62,12 @@ export default function ZoneFilter({
       {ZONES.map(zone => (
         <li
           key={zone.name}
-          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer ${
+          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer gap-2 ${
             isDesktop ? 'w-[120px]' : ''
           } ${
             productFilters.zone.includes(zone.id)
               ? 'bg-hg-primary500'
-              : 'bg-hg-black50'
+              : 'bg-hg-black100'
           }`}
           onClick={() =>
             setProductFilters(
@@ -85,7 +85,9 @@ export default function ZoneFilter({
             <SvgCheckSquare className="ml-auto" />
           )}
           <Image height={40} width={40} src={zone.icon} alt={zone.name} />
-          <Text size="xs">{zone.name}</Text>
+          <Text size="xs" className="text-center">
+            {zone.name}
+          </Text>
         </li>
       ))}
     </ul>
