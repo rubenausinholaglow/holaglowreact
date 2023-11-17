@@ -18,7 +18,7 @@ registerLocale('es', es);
 export default function MainLayout({
   isDashboard = false,
   isCheckout = false,
-  hideTopBar = false,
+  hideBottomBar = false,
   hideHeader = false,
   hideBackButton = false,
   hideContactButtons = false,
@@ -30,7 +30,7 @@ export default function MainLayout({
   isCheckout?: boolean;
   hideHeader?: boolean;
   hideBackButton?: boolean;
-  hideTopBar?: boolean;
+  hideBottomBar?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
   hideFooter?: boolean;
@@ -54,7 +54,7 @@ export default function MainLayout({
   if (isDashboard) {
     return (
       <DashboardLayout
-        hideTopBar={hideTopBar}
+        hideBottomBar={hideBottomBar}
         hideBackButton={hideBackButton}
         hideContactButtons={hideContactButtons}
         hideProfessionalSelector={hideProfessionalSelector}

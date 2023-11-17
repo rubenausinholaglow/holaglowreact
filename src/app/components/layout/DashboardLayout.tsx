@@ -11,19 +11,20 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgArrowSmallLeft } from 'icons/Icons';
+import { SvgHolaglow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 import { removeEmitHelper } from 'typescript';
 
-import DashboardHeader from './DashboardHeader';
+import DashboardFooter from './DashboardFooter';
 
 export default function DashboardLayout({
-  hideTopBar = false,
+  hideBottomBar = false,
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
   children,
 }: {
-  hideTopBar?: boolean;
+  hideBottomBar?: boolean;
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
@@ -202,14 +203,16 @@ export default function DashboardLayout({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary300 flex flex-col w-full">
-      {!hideTopBar && (
-        <DashboardHeader
-          hideBackButton={hideBackButton}
-          hideContactButtons={hideContactButtons}
-          hideProfessionalSelector={hideProfessionalSelector}
-        />
-      )}
+    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary300 flex flex-col w-full pb-16">
+      <Flex className="p-4 justify-center relative">
+        <SvgHolaglow height={25} width={100} className="text-hg-secondary" />
+
+        {!hideProfessionalSelector && (
+          <div className="absolute right-0 top-0">
+            {!hideProfessionalSelector && <ClinicProfessional />}
+          </div>
+        )}
+      </Flex>
 
       <Flex
         layout="col-center"
@@ -217,11 +220,18 @@ export default function DashboardLayout({
       >
         {children}
       </Flex>
-
+      {/* 
       <Flex className="justify-between mt-auto p-4 text-xs">
         <Text>Centro de medicina estética</Text>
         <Text>© {dayjs().year()}, Holaglow</Text>
-      </Flex>
+      </Flex> */}
+
+      {!hideBottomBar && (
+        <DashboardFooter
+          hideBackButton={hideBackButton}
+          hideContactButtons={hideContactButtons}
+        />
+      )}
     </main>
   );
 }

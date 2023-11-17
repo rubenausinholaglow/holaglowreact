@@ -75,11 +75,10 @@ export default function ProductCard({
     }
   }, [product]);
 
-  function assignHighlightedProduct() {
+  /*   function assignHighlightedProduct() {
     setHighlightProduct(product);
-    setShowProductModal(true);
     setShowModalBackground(true);
-  }
+  } */
 
   const imgHeight = isDashboard ? 'h-[200px]' : 'h-[250px]';
 
@@ -101,7 +100,7 @@ export default function ProductCard({
             src={imgSrc}
             onError={() => setNextImgSrc()}
             className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
-            onClick={() => isDashboard && assignHighlightedProduct()}
+            onClick={() => isDashboard && setHighlightProduct(product)}
           />
 
           {!isEmpty(product.category) && (
@@ -210,11 +209,7 @@ export default function ProductCard({
       </Link>
     );
 
-  if (isDashboard)
-    return (
-      <>
-        {showProductModal && <HightLightedProduct />}
-        {productElement}
-      </>
-    );
+  if (isDashboard) return productElement;
 }
+
+/* {showProductModal && <HightLightedProduct />} */
