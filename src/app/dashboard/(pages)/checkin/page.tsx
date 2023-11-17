@@ -31,9 +31,9 @@ export default function Page() {
       setHour(props.hour);
       setProfessional(props.professional);
       messageService.patientArrived(props);
-      //reloadPageAfterDelay(30000);
+      reloadPageAfterDelay(7000);
     } else {
-      //reloadPageAfterDelay(5000);
+      reloadPageAfterDelay(5000);
     }
   };
 
@@ -81,11 +81,10 @@ export default function Page() {
             <>
               <Flex layout="col-center" className="gap-4 mb-12">
                 <Title className="font-bold text-5xl mb-8">
-                  ¡
+                  Te damos la
                   <Underlined color={HOLAGLOW_COLORS['primary']}>
                     Bienvenid@
                   </Underlined>{' '}
-                  <br />a Holaglow!
                 </Title>
                 <Text className="mb-8 font-bold">
                   Escanea el QR que te hemos envíado para acceder a tu cita.
@@ -133,14 +132,14 @@ function WelcomeSection({ name, hour, professional }: any) {
         className="text-hg-primary bg-hg-secondary rounded-full"
       />
       <Title className="align-center font-bold" size="xl">
-        ¡Gracias {name}!
+        Hola {name}
       </Title>
       <Title className="align-center font-bold">Cita confirmada</Title>
       <Text size="lg" className="align-center mt-8">
-        Tu cita es a las {hour} para el Probador Virtual.
+        Tu cita para el Probador Virtual es a las {hour}.
       </Text>
       <Text size="lg" className="align-center justify-center">
-        Por favor, toma asiento y en breves serás atendid@ por {professional}.
+        Por favor, toma asiento y en breves te atenderá {professional}.
       </Text>
     </Flex>
   );
