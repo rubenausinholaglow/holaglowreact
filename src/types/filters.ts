@@ -4,6 +4,6 @@ export interface ProductFilters {
   zone: number[];
   clinic: string[];
   text: string[];
-  price: string[];
+  price: number[];
   type: number[];
 }

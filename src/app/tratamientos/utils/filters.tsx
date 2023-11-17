@@ -24,13 +24,16 @@ export const applyFilters = ({
   const hasArrayFilters =
     filters.category.length > 0 ||
     filters.zone.length > 0 ||
-    filters.clinic.length > 0;
+    filters.clinic.length > 0 ||
+    filters.price.length > 0 ||
+    filters.type.length > 0;
 
   updatedProducts = products.map(product => {
     const isVisibleByCategory = product.category.some(category =>
       filters.category.includes(category.name)
     );
     const isVisibleByZone = filters.zone.includes(product.zone);
+    const isVisibleByType = filters.type.includes(product.type);
 
     const productClinics: Array<string> = product.clinicDetail.map(
       (item: ProductClinics) => item.clinic.internalName
@@ -39,15 +42,30 @@ export const applyFilters = ({
       productClinics.includes(clinic)
     );
 
+    const isVisibleByPack =
+      (product.isPack && filters.isPack) || !filters.isPack;
+    let isVisibleByPrice = filters.price.length == 0;
+    filters.price.forEach(x => {
+      switch (x) {
+        case 1:
+          isVisibleByPrice = isVisibleByPrice || product.price < 250;
+          break;
+        case 2:
+          isVisibleByPrice =
+            isVisibleByPrice || (product.price >= 250 && product.price < 500);
+          break;
+        case 3:
+          isVisibleByPrice = isVisibleByPrice || product.price >= 500;
+          break;
+      }
+    });
     let productVisibility = [
       isVisibleByCategory,
       isVisibleByZone,
       isVisibleByClinic,
+      isVisibleByPrice,
+      isVisibleByType,
     ].some(value => value === true);
-
-    const isVisibleByPack =
-      (product.isPack && filters.isPack) || !filters.isPack;
-
     const isVisibleByText =
       !filters.text ||
       filters.text.length === 0 ||
@@ -57,11 +75,15 @@ export const applyFilters = ({
       productVisibility = true;
     }
 
-    productVisibility = productVisibility && isVisibleByPack && isVisibleByText;
+    productVisibility =
+      productVisibility &&
+      isVisibleByPack &&
+      isVisibleByText &&
+      isVisibleByPrice;
 
     return { ...product, visibility: productVisibility };
   });
-
+  console.log(updatedProducts);
   return updatedProducts;
 };
 
@@ -75,6 +97,8 @@ export const filterCount = (filters: ProductFilters) => {
   filterCount = filterCount + filters.category.length;
   filterCount = filterCount + filters.zone.length;
   filterCount = filterCount + filters.clinic.length;
+  filterCount = filterCount + filters.price.length;
+  filterCount = filterCount + filters.type.length;
 
   return filterCount;
 };

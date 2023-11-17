@@ -5,11 +5,7 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import {
-  applyFilters,
-  filterCount,
-  toggleFilter,
-} from 'app/tratamientos/utils/filters';
+import { toggleFilter } from 'app/tratamientos/utils/filters';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import Image from 'next/image';
@@ -21,13 +17,7 @@ export default function ZoneFilter({
   className?: string;
   isDesktop?: boolean;
 }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
-  const {
-    productFilters,
-    setProductFilters,
-    filteredProducts,
-    setFilteredProducts,
-  } = useGlobalStore(state => state);
+  const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
   const ZONES = [
     {
@@ -46,16 +36,6 @@ export default function ZoneFilter({
       icon: '/images/filters/tercioSuperior.svg',
     },
   ];
-
-  useEffect(() => {
-    setFilteredProducts(
-      applyFilters({ products: filteredProducts, filters: productFilters })
-    );
-
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(stateProducts);
-    }
-  }, [productFilters]);
 
   return (
     <ul className={`flex gap-5 w-full ${className ? className : ''}`}>

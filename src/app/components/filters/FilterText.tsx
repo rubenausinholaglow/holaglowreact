@@ -21,16 +21,6 @@ export default function FilterText({ className }: { className?: string }) {
     setFilteredProducts,
   } = useGlobalStore(state => state);
 
-  useEffect(() => {
-    setFilteredProducts(
-      applyFilters({ products: filteredProducts, filters: productFilters })
-    );
-
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(stateProducts);
-    }
-  }, [productFilters]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductFilters(
       toggleFilter({

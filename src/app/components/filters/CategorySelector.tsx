@@ -47,16 +47,6 @@ export default function CategorySelector({
     setProductCategories(uniqueCategoryNames);
   }, [stateProducts]);
 
-  useEffect(() => {
-    setFilteredProducts(
-      applyFilters({ products: filteredProducts, filters: productFilters })
-    );
-
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(stateProducts);
-    }
-  }, [productFilters]);
-
   return (
     <ul
       id="categorySelector"

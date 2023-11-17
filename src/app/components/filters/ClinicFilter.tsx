@@ -38,16 +38,6 @@ export default function ClinicFilter({ className }: { className?: string }) {
     }
   }, [clinics]);
 
-  useEffect(() => {
-    setFilteredProducts(
-      applyFilters({ products: filteredProducts, filters: productFilters })
-    );
-
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(stateProducts);
-    }
-  }, [productFilters]);
-
   return (
     <ul className={`flex flex-col ${className ? className : ''}`}>
       {clinics.map(clinic => (
