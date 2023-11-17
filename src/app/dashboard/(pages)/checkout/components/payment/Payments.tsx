@@ -290,67 +290,71 @@ export const PaymentModule = () => {
 
   return (
     <>
-      <Accordion
-        value="activePaymentMethod"
-        className="flex flex-col gap-8 w-full mb-8"
-      >
-        {paymentItems.map(method => (
-          <AccordionItem
-            key={method.key}
-            value={method.label}
-            className="bg-white py-6 px-8 rounded-xl w-full"
-          >
-            <AccordionTrigger className="text-left">
-              <Flex
-                className="gap-2"
-                onClick={() => handleOnButtonPaymentClick(method.key)}
-              >
-                <SvgRadioChecked
-                  height={24}
-                  width={24}
-                  className="shrink-0 hidden group-data-[state=open]:block"
-                />
-                <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
+      {paymentItems.length > 0 && (
+        <Accordion
+          value="activePaymentMethod"
+          className="flex flex-col gap-8 w-full mb-8"
+        >
+          {paymentItems.map(method => (
+            <AccordionItem
+              key={method.key}
+              value={method.label}
+              className="bg-white py-6 px-8 rounded-xl w-full"
+            >
+              <AccordionTrigger className="text-left">
+                <Flex
+                  className="gap-2"
+                  onClick={() => handleOnButtonPaymentClick(method.key)}
+                >
+                  <SvgRadioChecked
+                    height={24}
+                    width={24}
+                    className="shrink-0 hidden group-data-[state=open]:block"
+                  />
+                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
 
-                <Text>{method.label}</Text>
+                  <Text>{method.label}</Text>
 
-                <Flex className="ml-auto gap-2">
-                  {PAYMENT_ICONS[method.label as keyof typeof PAYMENT_ICONS] &&
-                    PAYMENT_ICONS[
+                  <Flex className="ml-auto gap-2">
+                    {PAYMENT_ICONS[
                       method.label as keyof typeof PAYMENT_ICONS
-                    ].map((icon: string) => (
-                      <Image
-                        src={`/images/dashboard/payment/${icon}`}
-                        height={32}
-                        width={56}
-                        key={icon}
-                        alt={method.label}
-                        className="ml-auto"
-                      />
-                    ))}
+                    ] &&
+                      PAYMENT_ICONS[
+                        method.label as keyof typeof PAYMENT_ICONS
+                      ].map((icon: string) => (
+                        <Image
+                          src={`/images/dashboard/payment/${icon}`}
+                          height={32}
+                          width={56}
+                          key={icon}
+                          alt={method.label}
+                          className="ml-auto"
+                        />
+                      ))}
+                  </Flex>
                 </Flex>
-              </Flex>
-            </AccordionTrigger>
-            <AccordionContent>
-              <Flex className="mt-4 pt-5 border-t border-hg-black w-full">
-                {paymentItems.map(method =>
-                  activePaymentMethod === method.key ? (
-                    <PaymentClient
-                      key={method.key}
-                      paymentBank={method.paymentBank}
-                      paymentMethod={method.paymentMethod}
-                      onPaymentClick={() => {
-                        setActivePaymentMethod('');
-                        setOnLoad(false);
-                      }}
-                    ></PaymentClient>
-                  ) : null
-                )}
-              </Flex>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+              </AccordionTrigger>
+              <AccordionContent>
+                <Flex className="mt-4 pt-5 border-t border-hg-black w-full">
+                  {paymentItems.map(method =>
+                    activePaymentMethod === method.key ? (
+                      <PaymentClient
+                        key={method.key}
+                        paymentBank={method.paymentBank}
+                        paymentMethod={method.paymentMethod}
+                        onPaymentClick={() => {
+                          setActivePaymentMethod('');
+                          setOnLoad(false);
+                        }}
+                      ></PaymentClient>
+                    ) : null
+                  )}
+                </Flex>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      )}
 
       {/* {paymentItems.map(method => (
           <Button
@@ -383,19 +387,21 @@ export const PaymentModule = () => {
         ) : null
       )} */}
 
-      <Flex
-        layout="col-left"
-        className="bg-hg-black100 w-full p-6 rounded-xl gap-4 mb-8"
-      >
-        {totalAmount > 0 &&
-          paymentList?.map(paymentRequest => (
-            <PaymentItem
-              key={paymentRequest.id}
-              paymentRequest={paymentRequest}
-              status={paymentStatus[paymentRequest.id]}
-            />
-          ))}
-      </Flex>
+      {paymentList.length > 0 && (
+        <Flex
+          layout="col-left"
+          className="bg-hg-black100 w-full p-6 rounded-xl gap-4 mb-8"
+        >
+          {totalAmount > 0 &&
+            paymentList?.map(paymentRequest => (
+              <PaymentItem
+                key={paymentRequest.id}
+                paymentRequest={paymentRequest}
+                status={paymentStatus[paymentRequest.id]}
+              />
+            ))}
+        </Flex>
+      )}
 
       <Flex className="bg-hg-black100 w-full p-6 rounded-xl gap-2 mb-8">
         <SvgTimer height={20} width={20} className="text-hg-secondary" />

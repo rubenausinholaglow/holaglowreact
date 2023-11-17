@@ -27,7 +27,7 @@ export default function ProductDiscountForm({
   const discountValue = watch('Value');
   const discountType = watch('DiscountType');
 
-  console.log(discountType);
+  console.log(cartUniqueId);
 
   const [discountIcon, setDiscountIcon] = useState<'euro' | 'percentage'>(
     'percentage'

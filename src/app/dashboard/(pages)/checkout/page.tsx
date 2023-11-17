@@ -144,7 +144,7 @@ const Page = () => {
     >
       <Flex className="h-screen w-full">
         <div className="w-[55%] h-full p-4">
-          {budgetId && (
+          {budgetId && !isBudgetModified && (
             /* !isBudgetModified && !isLoading && */ <PaymentModule />
           )}
         </div>
@@ -167,7 +167,7 @@ const Page = () => {
           <CheckoutTotal />
 
           <Flex layout="col-left" className="gap-4 mt-8 px-4">
-            {(!budgetId || (!isBudgetModified && !isLoading)) && (
+            {(!budgetId || isBudgetModified || isLoading) && (
               <Button
                 className="w-full"
                 customStyles="bg-hg-primary"

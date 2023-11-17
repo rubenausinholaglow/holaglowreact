@@ -457,7 +457,8 @@ export default function PaymentInput(props: Props) {
                     : 'Cantidad'}
                 </label>
                 <input
-                  className="bg-white border border-hg-black300 rounded-xl px-3 pt-6 pb-2 text-hg-black w-1/2 grow"
+                  className="bg-white border border-hg-black300 rounded-xl px-3 pt-6 pb-2 text-hg-black w-1/2 grow 
+                  [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   type="number"
                   {...field}
                   onChange={e => {
