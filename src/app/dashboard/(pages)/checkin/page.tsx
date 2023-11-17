@@ -44,6 +44,7 @@ export default function Page() {
     handleSubmit,
     isLoading,
     checkIn,
+    isChecked,
   } = useFormHook(onScanSuccess);
 
   const startScan = () => {
@@ -81,7 +82,7 @@ export default function Page() {
             <>
               <Flex layout="col-center" className="gap-4 mb-12">
                 <Title className="font-bold text-5xl mb-8">
-                  Te damos la
+                  Te damos la <br />
                   <Underlined color={HOLAGLOW_COLORS['primary']}>
                     Bienvenid@
                   </Underlined>{' '}
@@ -141,6 +142,33 @@ function WelcomeSection({ name, hour, professional }: any) {
       <Text size="lg" className="align-center justify-center">
         Por favor, toma asiento y en breves te atenderá {professional}.
       </Text>
+    </Flex>
+  );
+}
+
+function BadRequestSection() {
+  return (
+    <Flex className="flex-col">
+      <SvgCheck
+        width={96}
+        height={96}
+        className="text-hg-primary bg-hg-secondary rounded-full"
+      />
+      <Title className="align-center font-bold" size="xl">
+        ¡Ups!
+      </Title>
+      <Title className="align-center font-bold">Algo ha salido mal</Title>
+      <Text size="lg" className="align-center mt-8">
+        Por favor, inténtalo de nuevo.
+      </Text>
+      <Button
+        type="tertiary"
+        isSubmit
+        className="ml-auto"
+        customStyles="bg-hg-primary"
+      >
+        Volver
+      </Button>
     </Flex>
   );
 }
