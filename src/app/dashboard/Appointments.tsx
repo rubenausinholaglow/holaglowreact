@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Appointment, Status } from '@interface/appointment';
+import { Appointment, Status, User } from '@interface/appointment';
 import {
   CrisalixActions,
   CrisalixUser,
@@ -91,9 +91,7 @@ const AppointmentsListComponent: React.FC<{
 
   async function startAppointment(
     appointmentId: string,
-    user:
-      | import('c:/Repos/holaglowreact/src/app/dashboard/interface/appointment').User
-      | undefined,
+    user: User | undefined,
     id: string,
     data: any,
     clinicId: string,
