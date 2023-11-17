@@ -13,6 +13,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 
+import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { useCartStore } from './stores/userCartStore';
 
 export default function Page() {
@@ -57,7 +58,10 @@ export default function Page() {
   return (
     <Flex layout="col-center" className="w-full gap-1">
       {stateProducts.length > 0 ? (
-        <PsrpPage isDashboard />
+        <>
+          <HightLightedProduct />
+          <PsrpPage isDashboard />
+        </>
       ) : (
         <Flex layout="col-center">
           <p className="mb-4">Cargando productos...</p>

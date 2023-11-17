@@ -176,7 +176,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
               productPrice={product.price}
               isCheckout={false}
             />
-            {productHasDiscount && (
+            {/* {productHasDiscount && (
               <Flex layout="row-left" className="mt-2">
                 {productCartItem.priceDiscount < productCartItem.price &&
                   productCartItem.priceDiscount !== 0 && (
@@ -204,7 +204,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
                   </Flex>
                 )}
               </Flex>
-            )}
+            )} */}
           </>
         )}
       </Flex>

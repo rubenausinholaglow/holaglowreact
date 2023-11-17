@@ -5,6 +5,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCart, SvgCross } from 'icons/IconsDs';
+import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../stores/userCartStore';
 
@@ -13,8 +14,9 @@ type paramsDetail = {
   isDashboard: boolean;
 };
 export default function HightLightedProduct() {
-  const { productHighlighted, setHighlightProduct, totalItems, totalPrice } =
-    useCartStore(state => state);
+  const { productHighlighted, setHighlightProduct } = useCartStore(
+    state => state
+  );
 
   const params: paramsDetail = {
     slug: productHighlighted?.extraInformation.slug || '',
@@ -28,25 +30,13 @@ export default function HightLightedProduct() {
 
   return (
     <>
-      <Modal isVisible={true} width="w-[90%]">
+      <Modal isVisible={!isEmpty(productHighlighted)} width="w-[90%]">
         <Flex className="p-6">
-          <div className="w-1/2 ">
-            <SvgCross
-              onClick={() => {
-                setHighlightProduct(null);
-              }}
-            />
-          </div>
-          <Flex className="w-1/2 justify-end gap-2">
-            <Text>
-              Total ({totalItems} ud.) {totalPrice} €
-            </Text>
-            <SvgCart
-              height={32}
-              width={32}
-              className="p-2 bg-hg-black text-hg-primary rounded-full"
-            />
-          </Flex>
+          <SvgCross
+            onClick={() => {
+              setHighlightProduct(null);
+            }}
+          />
         </Flex>
         <ProductDetail params={params}></ProductDetail>
       </Modal>

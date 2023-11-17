@@ -11,6 +11,7 @@ import CategorySelector from 'app/components/filters/CategorySelector';
 import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
 import ProductCard from 'app/components/product/ProductCard';
+import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
@@ -47,6 +48,11 @@ export default function PsrpPage({
     setProductFilters,
     isModalOpen,
   } = useGlobalStore(state => state);
+
+  const { productHighlighted, setHighlightProduct } = useCartStore(
+    state => state
+  );
+
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
@@ -116,9 +122,19 @@ export default function PsrpPage({
     }
   }, [isModalOpen]);
 
+  useEffect(() => {
+    if (!isEmpty(productHighlighted)) {
+      console.log('tenim productHighlighted');
+    } else {
+      console.log('NO tenim productHighlighted');
+    }
+  }, [productHighlighted]);
+
   if (isDashboard)
     return (
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
+        <HightLightedProduct />
+
         {!isEmpty(filteredProducts) && (
           <>
             <Flex className="justify-start px-4 py-1 w-full">
