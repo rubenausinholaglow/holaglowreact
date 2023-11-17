@@ -29,10 +29,9 @@ export default function HightLightedProduct() {
 
   return (
     <>
-      <Modal isVisible={true} width="w-3/4">
+      <Modal isVisible={true} width="w-[90%]">
         <Flex className="p-6">
           <div className="w-1/2 ">
-            {/* <Text size="md">X</Text> */}
             <SvgCross
               onClick={() => {
                 setHighlightProduct(null);

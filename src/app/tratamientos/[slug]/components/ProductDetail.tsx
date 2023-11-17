@@ -40,7 +40,6 @@ export default function ProductDetailPage({
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
   const { productHighlighted } = useCartStore(state => state);
-  const [imgSrc, setImgSrc] = useState('');
 
   const { slug, isDashboard } = params;
 
@@ -104,7 +103,7 @@ export default function ProductDetailPage({
         <div className="bg-hg-cream500 rounded-t-3xl pt-8">
           <ProductHeader product={product} />
           <ProductInfo product={product} />
-          {isDashboard && (
+          {isDashboard && !product.isPack && (
             <div ref={productPriceRef as RefObject<HTMLDivElement>}>
               <ProductPrices product={product} />
             </div>
@@ -155,6 +154,6 @@ export default function ProductDetailPage({
       </>
     );
   } else if (productId == '') {
-    return <PsrpPage slug={params.slug} />;
+    return <PsrpPage slug={params.slug} isDashboard={false} />;
   }
 }
