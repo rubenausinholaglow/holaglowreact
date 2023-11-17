@@ -48,7 +48,6 @@ export default function HightLightedProduct() {
           <SvgCross
             onClick={() => {
               setHighlightProduct(null);
-              setPendingDiscount(true);
             }}
           />
         </Flex>

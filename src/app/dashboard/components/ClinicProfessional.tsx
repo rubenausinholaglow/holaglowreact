@@ -105,8 +105,6 @@ export const ClinicProfessional = () => {
     return <></>;
   }
 
-  console.log();
-
   return (
     <Flex layout="col-center" className="relative p-4">
       <Flex

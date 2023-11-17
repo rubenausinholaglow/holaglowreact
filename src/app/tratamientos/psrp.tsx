@@ -100,20 +100,11 @@ export default function PsrpPage({
   }, [stateProducts]);
 
   useEffect(() => {
-    if (isEmpty(filteredProducts)) {
-      setFilteredProducts(stateProducts);
-      setFilteredProducts(
-        applyFilters({ products: stateProducts, filters: productFilters })
-      );
-    } else {
-      setFilteredProducts(
-        applyFilters({ products: filteredProducts, filters: productFilters })
-      );
-    }
+    processFilters();
+  }, []);
 
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(stateProducts);
-    }
+  useEffect(() => {
+    processFilters();
   }, [productFilters]);
 
   useEffect(() => {
@@ -121,14 +112,6 @@ export default function PsrpPage({
       setIsMobileFiltersVisible(false);
     }
   }, [isModalOpen]);
-
-  useEffect(() => {
-    if (!isEmpty(productHighlighted)) {
-      console.log('tenim productHighlighted');
-    } else {
-      console.log('NO tenim productHighlighted');
-    }
-  }, [productHighlighted]);
 
   if (isDashboard)
     return (
@@ -213,84 +196,6 @@ export default function PsrpPage({
             </Flex>
           </>
         )}
-
-        {/* <div className="pb-32 relative">
-            <Flex layout="row-left" className="justify-between">
-              <Button
-                  type="tertiary"
-                  size="sm"
-                  className="mr-2"
-                  customStyles="group-hover:bg-hg-secondary100"
-                  onClick={() => {
-                    setShowDashboardFilters('true');
-                  }}
-                >
-                  <SvgFilters className="mr-2" />
-                  <Flex layout="col-center">Filtrar</Flex>
-                </Button>
-
-                <Text
-                  size="xs"
-                  className={`text-hg-secondary transition-opacity underline cursor-pointer ${
-                    filterCount(productFilters) === 0
-                      ? 'opacity-0'
-                      : 'opacity-100'
-                  }`}
-                  onClick={() => {
-                    setProductFilters({
-                      isPack: false,
-                      category: [],
-                      zone: [],
-                      clinic: [],
-                      text: [],
-                      type: [],
-                      price: [],
-                    });
-                  }}
-                >
-                  Borrar filtros ({filterCount(productFilters)})
-                </Text>
-                <Text size="xs">
-                  {
-                    filteredProducts.filter(product => product.visibility)
-                      .length
-                  }{' '}
-                  productos
-                </Text>
-            </Flex>
-            <Flex layout="row-left" className="items-start">
-              {showDashboardFilters.toString() === 'true' && (
-                <DesktopFilters
-                  showDesktopFilters={showDashboardFilters ? 'true' : 'false'}
-                  setShowDesktopFilters={setShowDashboardFilters}
-                  isDashboard={true}
-                />
-              )}
-              <Flex layout="col-center">
-                <ul
-                  className={`transition-all grid px-4 flex-col gap-6 ${
-                    showDashboardFilters.toString() === 'true'
-                      ? 'md:pt-12 grid-cols-2'
-                      : 'md:pt-24 grid-cols-3'
-                  }   pb-6`}
-                >
-                  {filteredProducts?.map(product => {
-                    if (product.visibility) {
-                      return (
-                        <li key={product.id}>
-                          <ProductCard
-                            product={product}
-                            className="h-full flex flex-col"
-                            isDashboard={isDashboard}
-                          />
-                        </li>
-                      );
-                    }
-                  })}
-                </ul>
-              </Flex>
-            </Flex>
-                </div> */}
       </MainLayout>
     );
   else
@@ -445,4 +350,21 @@ export default function PsrpPage({
         <LookingFor />
       </MainLayout>
     );
+
+  function processFilters() {
+    if (isEmpty(filteredProducts)) {
+      setFilteredProducts(stateProducts);
+      setFilteredProducts(
+        applyFilters({ products: stateProducts, filters: productFilters })
+      );
+    } else {
+      setFilteredProducts(
+        applyFilters({ products: filteredProducts, filters: productFilters })
+      );
+    }
+
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(stateProducts);
+    }
+  }
 }

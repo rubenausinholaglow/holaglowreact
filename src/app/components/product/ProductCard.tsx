@@ -56,34 +56,19 @@ export default function ProductCard({
   const { isModalOpen, setShowModalBackground } = useGlobalStore(
     state => state
   );
-
-  /*useEffect(() => {
-    if (!isModalOpen) {
-      setHighlightProduct(null);
-    }
-  }, [isModalOpen]);*/
-
-  /* useEffect(() => {
-    console.log(productHighlighted);
-    setShowProductModal(!isEmpty(productHighlighted));
-    setShowModalBackground(!isEmpty(productHighlighted));
-  }, [productHighlighted]);*/
-
   useEffect(() => {
     if (!isEmpty(product.discounts)) {
       setDiscountedPrice(getDiscountedPrice(product));
     }
   }, [product]);
 
-  /*   function assignHighlightedProduct() {
-    setHighlightProduct(product);
-    setShowModalBackground(true);
-  } */
-
   const imgHeight = isDashboard ? 'h-[200px]' : 'h-[250px]';
 
   const productElement = (
-    <div className="flex flex-col h-full pt-4 overflow-hidden">
+    <div
+      className="flex flex-col h-full pt-4 overflow-hidden"
+      onClick={() => isDashboard && setHighlightProduct(product)}
+    >
       <Flex layout="col-left" className="">
         <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
           <div
@@ -100,7 +85,6 @@ export default function ProductCard({
             src={imgSrc}
             onError={() => setNextImgSrc()}
             className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
-            onClick={() => isDashboard && setHighlightProduct(product)}
           />
 
           {!isEmpty(product.category) && (

@@ -66,7 +66,6 @@ export const applyFilters = ({
     ].every(value => value === true);
     return { ...product, visibility: productVisibility };
   });
-  console.log(updatedProducts);
   return updatedProducts;
 };
 

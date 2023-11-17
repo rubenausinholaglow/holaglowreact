@@ -62,8 +62,6 @@ export default function ClinicsCheckout() {
     setDiscountedPrice(discountedPrices);
   }, [selectedTreatments]);
 
-  console.log(selectedPacksTreatments);
-
   return (
     <MainLayout isCheckout>
       <Container className="mt-6 md:mt-16">

@@ -50,7 +50,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const productPricewithPromoDiscount = getDiscountedPrice(product);
   const [pendingDiscount, setPendingDiscount] = useState(false);
 
-  console.log(product.tags);
   useEffect(() => {
     if (pendingDiscount) {
       applyItemDiscount(

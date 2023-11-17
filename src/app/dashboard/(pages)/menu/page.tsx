@@ -61,11 +61,13 @@ const Page = () => {
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {username && (
         <div className="mt-8">
-          <Title className="text-xl mb-4">¡Hola {username}!</Title>
+          <Title className="text-xl mb-4">Tu glow, tus normas</Title>
           <Title className="font-bold text-5xl mb-8">
-            Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
-            <br />
-            tus normas
+            ¡Hola{' '}
+            <Underlined color={HOLAGLOW_COLORS['primary']}>
+              {username}
+            </Underlined>
+            !
           </Title>
           <div className="grid grid-cols-3 mb-12">
             {menuItems.map(item => (
