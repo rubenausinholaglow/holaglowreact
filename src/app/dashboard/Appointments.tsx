@@ -233,7 +233,7 @@ async function startAppointment(
     import('c:/Repos/holaglowreact/src/app/dashboard/interface/crisalix').CrisalixActions,
   boxId: string,
   ignoreMessages: boolean,
-  router
+  router: any
 ) {
   await ScheduleService.updatePatientStatusAppointment(
     appointmentId,
