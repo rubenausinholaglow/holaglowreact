@@ -43,6 +43,7 @@ export default function Page({
     setBoxId,
     setClinicId,
     setRemoteControl,
+    setIgnoreMessages,
   } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
@@ -117,12 +118,12 @@ export default function Page({
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
     setRemoteControl(params.get('remoteControl') == 'true');
+    setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
   }, []);
 
   const handleCheckUser = async () => {
     setIsLoading(true);
-
     await UserService.checkUser(userEmail)
       .then(async data => {
         if (data && !isEmpty(data)) {
@@ -179,7 +180,7 @@ export default function Page({
       await ScheduleService.getClinicSchedule(appointmentId).then(
         async data => {
           if (data != null) {
-            setCurrentUser(data.user);
+            setCurrentUser(data.lead.user);
             localStorage.setItem('ClinicId', data.clinic.id);
             localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
             localStorage.setItem(
@@ -213,7 +214,7 @@ export default function Page({
       await ScheduleService.getClinicScheduleByToken(flowwwToken).then(
         async data => {
           if (data != null) {
-            setCurrentUser(data.user);
+            setCurrentUser(data.lead.user);
             localStorage.setItem('ClinicId', data.clinic.id);
             localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
             localStorage.setItem(

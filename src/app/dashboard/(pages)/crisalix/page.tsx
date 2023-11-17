@@ -16,14 +16,10 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
+  const [username, setUsername] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
   const { storedClinicId } = useGlobalPersistedStore(state => state);
-
-  const username =
-    typeof localStorage !== 'undefined'
-      ? localStorage.getItem('username') || ''
-      : '';
 
   useEffect(() => {
     const existsCrisalixUser =
@@ -43,6 +39,7 @@ const Page = () => {
       },
       1 * 60 * 1000
     );
+    setUsername(localStorage.getItem('username') || '');
   }, []);
 
   const checksimulationReady = () => {

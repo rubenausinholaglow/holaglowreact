@@ -56,7 +56,7 @@ export const applyFilters = ({
     const isVisibleByText =
       filters.text.length === 0 ||
       product.title.toLowerCase().includes(filters.text.toLowerCase());
-    let productVisibility = [
+    const productVisibility = [
       isVisibleByCategory,
       isVisibleByZone,
       isVisibleByClinic,

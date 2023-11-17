@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Appointment, Status } from '@interface/appointment';
-import { CrisalixUser } from '@interface/crisalix';
+import { Appointment, Status, User } from '@interface/appointment';
+import {
+  CrisalixActions,
+  CrisalixUser,
+  CrisalixUserList,
+} from '@interface/crisalix';
 import {
   CrisalixUserData,
   StartAppointmentData,
@@ -39,6 +43,7 @@ const AppointmentsListComponent: React.FC<{
     storedClinicId,
     storedBoxId,
     storedAppointmentId,
+    ignoreMessages,
     setAppointmentId,
   } = useGlobalPersistedStore(state => state);
 
@@ -80,7 +85,7 @@ const AppointmentsListComponent: React.FC<{
           setCurrentUser(data);
           setAppointmentId(appointment.id);
 
-          await redirectPage(data.firstName, data.id);
+          await redirectPage(data.firstName, data.id, appointment.id);
         } else {
           //TODO - MESSAGE ERROR UI
         }
@@ -94,9 +99,48 @@ const AppointmentsListComponent: React.FC<{
     }));
   };
 
-  async function redirectPage(name: string, id: string) {
+  async function startAppointment(
+    appointmentId: string,
+    user: User | undefined,
+    id: string,
+    data: any,
+    clinicId: string,
+    userCrisalix: CrisalixUserList & CrisalixActions,
+    boxId: string,
+    ignoreMessages: boolean,
+    router: any
+  ) {
+    await ScheduleService.updatePatientStatusAppointment(
+      appointmentId,
+      user?.id || '',
+      Status.InProgress
+    );
+
+    await UserService.createCrisalixUser(id, data.id, clinicId).then(
+      async x => {
+        const crisalixUser: CrisalixUser = {
+          id: x.id,
+          playerId: x.player_id,
+          playerToken: x.playerToken,
+          name: x.name,
+        };
+        userCrisalix.addCrisalixUser(crisalixUser);
+        const crisalixUserData: CrisalixUserData = {
+          id: crisalixUser.id,
+          playerId: crisalixUser.playerId,
+          playerToken: crisalixUser.playerToken,
+          boxId: boxId,
+          clinicId: clinicId,
+        };
+        if (!ignoreMessages)
+          await messageService.crisalixUser(crisalixUserData);
+      }
+    );
+    router.push('/dashboard/remoteControl');
+  }
+  async function redirectPage(name: string, id: string, appointmentId: string) {
     try {
-      await ScheduleService.getClinicSchedule(storedAppointmentId).then(
+      await ScheduleService.getClinicSchedule(appointmentId).then(
         async data => {
           if (data != null) {
             localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
@@ -110,43 +154,38 @@ const AppointmentsListComponent: React.FC<{
             const startAppointmentData: StartAppointmentData = {
               clinicId: storedClinicId,
               boxId: storedBoxId,
-              appointmentId: storedAppointmentId,
+              appointmentId: appointmentId,
             };
-
-            await messageService
-              .startAppointment(startAppointmentData)
-              .then(async info => {
-                if (info != null) {
-                  await ScheduleService.updatePatientStatusAppointment(
-                    storedAppointmentId,
-                    user?.id || '',
-                    Status.InProgress
-                  );
-
-                  await UserService.createCrisalixUser(
-                    id,
-                    data.id,
-                    clinicId
-                  ).then(async x => {
-                    const crisalixUser: CrisalixUser = {
-                      id: x.id,
-                      playerId: x.player_id,
-                      playerToken: x.playerToken,
-                      name: x.name,
-                    };
-                    userCrisalix.addCrisalixUser(crisalixUser);
-                    const crisalixUserData: CrisalixUserData = {
-                      id: crisalixUser.id,
-                      playerId: crisalixUser.playerId,
-                      playerToken: crisalixUser.playerToken,
-                      boxId: boxId,
-                      clinicId: clinicId,
-                    };
-                    await messageService.crisalixUser(crisalixUserData);
-                  });
-                  router.push('/dashboard/remoteControl');
-                }
-              });
+            if (!ignoreMessages)
+              await messageService
+                .startAppointment(startAppointmentData)
+                .then(async info => {
+                  if (info != null) {
+                    await startAppointment(
+                      appointmentId,
+                      user,
+                      id,
+                      data,
+                      clinicId,
+                      userCrisalix,
+                      boxId,
+                      ignoreMessages,
+                      router
+                    );
+                  }
+                });
+            else
+              await startAppointment(
+                appointmentId,
+                user,
+                id,
+                data,
+                clinicId,
+                userCrisalix,
+                boxId,
+                ignoreMessages,
+                router
+              );
           } else {
             //TODO - Poner un mensaje de Error en UI
           }

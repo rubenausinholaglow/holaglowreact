@@ -347,7 +347,15 @@ export default function PaymentInput(props: Props) {
                       )}
                       type="text"
                       value={formData.birthday || ''}
-                      onChange={() => {}}
+                      onChange={event => {
+                        const formattedDate = event.target.value
+                          ? dayjs(event.target.value).format('YYYY-MM-DD')
+                          : '';
+                        setFormData(prevFormData => ({
+                          ...prevFormData,
+                          birthday: formattedDate,
+                        }));
+                      }}
                     />
                   }
                   showYearDropdown

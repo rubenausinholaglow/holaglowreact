@@ -1,9 +1,9 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ProductDetail from 'app/tratamientos/[slug]/components/ProductDetail';
+import { getDiscountedPrice } from 'app/utils/common';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
-import { Text } from 'designSystem/Texts/Texts';
 import { SvgCart, SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
@@ -17,6 +17,19 @@ export default function HightLightedProduct() {
   const { productHighlighted, setHighlightProduct } = useCartStore(
     state => state
   );
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const cart = useCartStore(state => state.cart);
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(productHighlighted!),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
 
   const params: paramsDetail = {
     slug: productHighlighted?.extraInformation.slug || '',
@@ -35,6 +48,7 @@ export default function HightLightedProduct() {
           <SvgCross
             onClick={() => {
               setHighlightProduct(null);
+              setPendingDiscount(true);
             }}
           />
         </Flex>

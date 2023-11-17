@@ -15,9 +15,8 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   link,
   target,
 }) => {
-  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
-    state => state
-  );
+  const { storedBoxId, storedClinicId, ignoreMessages } =
+    useGlobalPersistedStore(state => state);
   function goToPage(name: string) {
     let message: GoToPageData;
     switch (name) {
@@ -27,7 +26,7 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
           boxId: storedBoxId || '',
           page: 'Crisalix',
         };
-        messageService.goToPage(message);
+        if (!ignoreMessages) messageService.goToPage(message);
         break;
       default:
         '';
