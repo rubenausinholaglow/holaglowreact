@@ -214,12 +214,7 @@ export default function DashboardLayout({
         )}
       </Flex>
 
-      <Flex
-        layout="col-center"
-        className=" text-hg-black text-sm overflow-hidden"
-      >
-        {children}
-      </Flex>
+      <Flex layout="col-center">{children}</Flex>
       {/* 
       <Flex className="justify-between mt-auto p-4 text-xs">
         <Text>Centro de medicina estética</Text>

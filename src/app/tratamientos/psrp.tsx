@@ -175,10 +175,12 @@ export default function PsrpPage({
                 productos
               </Text>
             </Flex>
-            <Flex className="justify-end relative w-full -mt-3">
+            <Flex className="justify-end relative w-full -mt-3 min-h-screen items-start pb-24">
               <div
-                className={`transition-all bg-white rounded-r-xl py-6 px-4 mt-10 absolute left-0 top-0 z-10 w-2/5 ${
-                  showDashboardFilters ? 'translate-0' : '-translate-x-full'
+                className={`transition-all bg-white rounded-r-xl py-6 px-4 mt-10 left-0 top-0  z-10 w-2/5 ${
+                  showDashboardFilters
+                    ? 'translate-0 sticky'
+                    : '-translate-x-full absolute'
                 }`}
               >
                 <DesktopFilters
