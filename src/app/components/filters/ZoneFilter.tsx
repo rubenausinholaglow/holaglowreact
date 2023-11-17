@@ -53,7 +53,9 @@ export default function ZoneFilter({
   ];
 
   return (
-    <ul className={`flex gap-5 w-full ${className ? className : ''}`}>
+    <ul
+      className={`grid grid-cols-3 gap-5 w-full ${className ? className : ''}`}
+    >
       {ZONES.map(zone => (
         <li
           key={zone.name}
