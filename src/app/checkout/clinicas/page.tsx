@@ -184,7 +184,7 @@ export default function ClinicsCheckout() {
             ))}
             <Flex
               layout="row-left"
-              className="bg-hg-primary100 p-6 gap-3 rounded-t-2xl md:rounded-2xl w-full items-start fixed bottom-0 left-0 right-0 md:relative"
+              className="bg-hg-primary100 p-6 gap-3 rounded-t-2xl md:rounded-2xl w-full items-start relative bottom-0 left-0 right-0 md:relative"
             >
               <div className="bg-hg-primary p-3 rounded-full">
                 <SvgCar height={16} width={16} />
