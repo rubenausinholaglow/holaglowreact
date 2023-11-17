@@ -7,8 +7,7 @@ export const INITIAL_FILTERS = {
   category: [],
   zone: [],
   clinic: [],
-  text: [],
-  type: [],
+  text: '',
   price: [],
 };
 
@@ -25,15 +24,14 @@ export const applyFilters = ({
     filters.category.length > 0 ||
     filters.zone.length > 0 ||
     filters.clinic.length > 0 ||
-    filters.price.length > 0 ||
-    filters.type.length > 0;
+    filters.price.length > 0;
 
   updatedProducts = products.map(product => {
     const isVisibleByCategory = product.category.some(category =>
       filters.category.includes(category.name)
     );
-    const isVisibleByZone = filters.zone.includes(product.zone);
-    const isVisibleByType = filters.type.includes(product.type);
+    const isVisibleByZone =
+      filters.zone.length == 0 || filters.zone.includes(product.zone);
 
     const productClinics: Array<string> = product.clinicDetail.map(
       (item: ProductClinics) => item.clinic.internalName
@@ -59,28 +57,29 @@ export const applyFilters = ({
           break;
       }
     });
+    const isVisibleByText =
+      filters.text.length === 0 ||
+      product.title.toLowerCase().includes(filters.text.toLowerCase());
     let productVisibility = [
       isVisibleByCategory,
       isVisibleByZone,
       isVisibleByClinic,
       isVisibleByPrice,
-      isVisibleByType,
+      isVisibleByText,
     ].some(value => value === true);
-    const isVisibleByText =
-      !filters.text ||
-      filters.text.length === 0 ||
-      product.title.toLowerCase().includes(filters.text[0].toLowerCase());
-
     if (!hasArrayFilters) {
       productVisibility = true;
     }
 
+    console.log('FIRST', filters.text, isVisibleByText, productVisibility);
     productVisibility =
       productVisibility &&
       isVisibleByPack &&
       isVisibleByText &&
-      isVisibleByPrice;
+      isVisibleByPrice &&
+      isVisibleByZone;
 
+    console.log(filters.text, isVisibleByText, productVisibility);
     return { ...product, visibility: productVisibility };
   });
   console.log(updatedProducts);
@@ -94,11 +93,13 @@ export const filterCount = (filters: ProductFilters) => {
     filterCount = 1;
   }
 
+  if (filters.text) {
+    filterCount += 1;
+  }
   filterCount = filterCount + filters.category.length;
   filterCount = filterCount + filters.zone.length;
   filterCount = filterCount + filters.clinic.length;
   filterCount = filterCount + filters.price.length;
-  filterCount = filterCount + filters.type.length;
 
   return filterCount;
 };
@@ -159,16 +160,18 @@ export const toggleFilter = ({
   filters: ProductFilters;
 }) => {
   const updatedFilters: ProductFilters = { ...filters } || {};
-
-  const valueIndex = (updatedFilters[filter] as Array<string | number>).indexOf(
-    value
-  );
-
-  if (valueIndex === -1) {
-    (updatedFilters[filter] as Array<string | number>).push(value);
+  if (filter == 'text') {
+    updatedFilters.text = value.toString();
   } else {
-    updatedFilters[filter].splice(valueIndex, 1);
-  }
+    const valueIndex = (
+      updatedFilters[filter] as Array<string | number>
+    ).indexOf(value);
 
+    if (valueIndex === -1) {
+      (updatedFilters[filter] as Array<string | number>).push(value);
+    } else {
+      updatedFilters[filter].splice(valueIndex, 1);
+    }
+  }
   return updatedFilters;
 };

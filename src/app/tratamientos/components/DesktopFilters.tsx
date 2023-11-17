@@ -3,7 +3,6 @@ import ClinicFilter from 'app/components/filters/ClinicFilter';
 import FilterText from 'app/components/filters/FilterText';
 import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import PriceFilter from 'app/components/filters/PriceFilter';
-import TypeFilter from 'app/components/filters/TypeFilter';
 import ZoneFilter from 'app/components/filters/ZoneFilter';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -23,15 +22,9 @@ export default function DesktopFilters({
       <Flex layout="col-left" className="bg-white gap-2 mr-2">
         <Flex layout="col-left" className="w-full">
           <Text size="sm" className="mb-4 font-semibold">
-            Zona de la cara
+            Zona
           </Text>
           <ZoneFilter className="mb-8" />
-        </Flex>
-        <Flex layout="col-left" className="w-full">
-          <Text size="sm" className="mb-4 font-semibold">
-            Tipo
-          </Text>
-          <TypeFilter className="mb-8" />
         </Flex>
         <Flex layout="col-left" className="w-full">
           <Text size="sm" className="mb-4 font-semibold">

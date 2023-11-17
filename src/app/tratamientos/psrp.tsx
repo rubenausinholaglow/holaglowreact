@@ -146,7 +146,7 @@ export default function PsrpPage({
                       category: [],
                       zone: [],
                       clinic: [],
-                      text: [],
+                      text: '',
                       type: [],
                       price: [],
                     });
@@ -363,7 +363,7 @@ export default function PsrpPage({
                             category: [],
                             zone: [],
                             clinic: [],
-                            text: [],
+                            text: '',
                             type: [],
                             price: [],
                           });

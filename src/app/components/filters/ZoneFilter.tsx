@@ -35,6 +35,21 @@ export default function ZoneFilter({
       id: 2,
       icon: '/images/filters/tercioSuperior.svg',
     },
+    {
+      name: 'Cuerpo',
+      id: 1,
+      icon: '/images/filters/cuerpo.svg',
+    },
+    {
+      name: 'Pelo',
+      id: 6,
+      icon: '/images/filters/pelo.svg',
+    },
+    {
+      name: 'Piel',
+      id: 5,
+      icon: '/images/filters/piel.svg',
+    },
   ];
 
   return (

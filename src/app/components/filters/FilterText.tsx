@@ -1,25 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
-import {
-  applyFilters,
-  filterCount,
-  toggleFilter,
-} from 'app/tratamientos/utils/filters';
+import { useGlobalStore } from 'app/stores/globalStore';
+import { toggleFilter } from 'app/tratamientos/utils/filters';
 
 export default function FilterText({ className }: { className?: string }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
-
-  const {
-    productFilters,
-    setProductFilters,
-    filteredProducts,
-    setFilteredProducts,
-  } = useGlobalStore(state => state);
+  const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductFilters(

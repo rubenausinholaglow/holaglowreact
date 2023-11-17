@@ -3,7 +3,7 @@ export interface ProductFilters {
   category: string[];
   zone: number[];
   clinic: string[];
-  text: string[];
+  text: string;
   price: number[];
   type: number[];
 }
