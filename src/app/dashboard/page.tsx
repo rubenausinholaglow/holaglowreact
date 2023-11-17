@@ -349,6 +349,7 @@ export default function Page({
     return (
       <MainLayout
         isDashboard
+        hideBottomBar
         hideBackButton
         hideContactButtons
         hideProfessionalSelector

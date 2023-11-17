@@ -145,11 +145,12 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
 
   return (
     <>
-      <Flex layout="col-left" className="relative w-full flex-wrap pb-[150px]">
+      <Flex layout="col-left" className="relative w-full flex-wrap pb-[125px]">
         <section id="payment-plans" className="absolute inset-0"></section>
         <div className="absolute bottom-0">
           <Button
-            type="secondary"
+            type="tertiary"
+            customStyles="bg-hg-primary"
             onClick={async () => await handleClick(amountFinance)}
           >
             {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { SvgAdd } from 'icons/IconsDs';
 import { twMerge } from 'tailwind-merge';
@@ -61,12 +61,15 @@ export function Accordion({
   value?: string;
   children: ReactNode;
 }) {
+  const [isOpen, setIsOpen] = useState(value === 'value');
+
   return (
     <AccordionPrimitive.Root
       type="single"
       className={twMerge(`w-full ${className}`)}
       collapsible
       defaultValue={value ? value : ''}
+      onValueChange={value => console.log(value)}
     >
       {children}
     </AccordionPrimitive.Root>

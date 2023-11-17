@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import CheckoutTotal from '@components/checkout/CheckoutTotal';
+import ProductCard from '@components/checkout/ProductCard';
 import { Budget, StatusBudget } from '@interface/budget';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
@@ -9,17 +11,17 @@ import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
-import { PaymentModule } from 'app/dashboard/(pages)/checkout/components/payment/Payments';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
+import { SvgBag } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
-import ProductCard from '../budgets/treatments/ProductCard';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';
+import { PaymentModule } from './components/payment/Payments';
 import { usePaymentList } from './components/payment/payments/usePaymentList';
 import ProductDiscountForm from './components/ProductDiscountForm';
 
@@ -133,66 +135,81 @@ const Page = () => {
   }
 
   return (
-    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-      <Container>
-        <Flex layout="row-left" className="items-start">
-          <ul className="w-1/2 shrink-0">
+    <MainLayout
+      hideTopBar
+      isDashboard
+      isCheckout
+      hideContactButtons
+      hideProfessionalSelector
+    >
+      <Flex className="h-screen w-full">
+        <div className="w-[55%] h-full p-4">
+          {budgetId && !isBudgetModified && (
+            /* !isBudgetModified && !isLoading && */ <PaymentModule />
+          )}
+        </div>
+
+        <div className="w-[45%] bg-white h-full">
+          <Flex layout="col-left" className="p-4">
+            <Flex className="gap-2">
+              <SvgBag height={20} width={20} />
+              Resumen del pedido
+            </Flex>
+          </Flex>
+          <ul>
             {cart?.map(cartItem => (
-              <li key={cartItem.uniqueId} className="mb-4">
+              <li key={cartItem.uniqueId}>
                 <ProductCard isCheckout product={cartItem} />
               </li>
             ))}
           </ul>
-          <Flex layout="col-left" className="w-1/2 pl-8 shrink-0 relative">
-            <SvgAngleDown
-              height={20}
-              width={20}
-              fill="white"
-              className={`transition-transform bg-slate-400 rounded-full mr-2 absolute top-2 right-2 cursor-pointer ${
-                showProductDiscount ? 'rotate-180' : 'rotate-0'
-              }`}
-              onClick={() => setShowProductDiscount(!showProductDiscount)}
-            />
-            <CartTotal isCheckout />
-            {budgetId && !isBudgetModified && !isLoading ? (
-              <Flex layout="col-left" className="gap-2 w-full mt-4">
-                <PaymentModule></PaymentModule>
-              </Flex>
-            ) : (
-              <>
-                {showProductDiscount && (
-                  <ProductDiscountForm
-                    isCheckout={true}
-                    className="mt-4"
-                    productPrice={totalPrice}
-                  />
+
+          <CheckoutTotal />
+
+          <Flex layout="col-left" className="gap-4 mt-8 px-4">
+            {(!budgetId || isBudgetModified || isLoading) && (
+              <Button
+                className="w-full"
+                customStyles="bg-hg-primary"
+                size="xl"
+                type="tertiary"
+                onClick={async () => {
+                  setIsLoading(true);
+                  await handleFinalize();
+                  setIsLoading(false);
+                  setShowPaymentButtons(!showPaymentButtons);
+                  const message: any = {
+                    clinicId: storedClinicId,
+                    boxId: storedBoxId,
+                    page: 'CheckOut',
+                  };
+                  messageService.goToPage(message);
+                }}
+              >
+                {isLoading ? (
+                  <SvgSpinner height={24} width={24} />
+                ) : (
+                  'Finalizar Presupuesto'
                 )}
-                <Flex layout="col-left" className="gap-2 w-full mt-8">
-                  <Button
-                    className="w-full"
-                    size="md"
-                    onClick={async () => {
-                      setIsLoading(true);
-                      await handleFinalize();
-                      setIsLoading(false);
-                      setShowPaymentButtons(!showPaymentButtons);
-                      const message: any = {
-                        clinicId: storedClinicId,
-                        boxId: storedBoxId,
-                        page: 'CheckOut',
-                      };
-                      messageService.goToPage(message);
-                    }}
-                  >
-                    {isLoading ? (
-                      <SvgSpinner height={24} width={24} />
-                    ) : (
-                      'Finalizar Presupuesto'
-                    )}
-                  </Button>
-                </Flex>
-              </>
+              </Button>
             )}
+
+            <Button
+              className="w-full"
+              size="md"
+              target="_blank"
+              href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
+              type="tertiary"
+            >
+              <span className="font-semibold">Agendar Cita</span>
+            </Button>
+          </Flex>
+        </div>
+      </Flex>
+
+      {/* <Flex layout="row-left" className="items-start">
+        <Container>
+          <Flex layout="col-left" className="w-1/2 pl-8 shrink-0 relative">
             <Flex layout="col-left" className="gap-2 w-full mt-8">
               <Button
                 className="w-full"
@@ -215,8 +232,8 @@ const Page = () => {
               )}
             </Flex>
           </Flex>
-        </Flex>
-      </Container>
+        </Container>
+      </Flex> */}
     </MainLayout>
   );
 };

@@ -18,7 +18,7 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
     percentageDiscount: 0,
     priceDiscount: 0,
     priceWithDiscount: Number(product.price),
-    uniqueId: product.id,
+    uniqueId: createUniqueId(),
   });
   return updatedCart;
 }

@@ -205,17 +205,17 @@ const AppointmentsListComponent: React.FC<{
       bg: 'hg-secondary300',
     },
     5: {
-      text: 'Confirmada',
+      text: 'Finalizada',
       color: 'hg-green',
       bg: 'hg-green300',
     },
     6: {
-      text: 'Confirmada',
+      text: 'Esperando',
       color: 'hg-secondary',
       bg: 'hg-secondary300',
     },
     7: {
-      text: 'Confirmada',
+      text: 'En Visita',
       color: 'hg-primary',
       bg: 'hg-primary100',
     },

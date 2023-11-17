@@ -19,12 +19,14 @@ import DashboardFooter from './DashboardFooter';
 
 export default function DashboardLayout({
   hideBottomBar = false,
+  isCheckout = false,
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
   children,
 }: {
   hideBottomBar?: boolean;
+  isCheckout?: boolean;
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
@@ -203,7 +205,13 @@ export default function DashboardLayout({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-15deg from-hg-primary300 to-hg-secondary300 flex flex-col w-full pb-16">
+    <main
+      className={`min-h-screen flex flex-col w-full pb-16 ${
+        isCheckout
+          ? 'bg-hg-black50'
+          : 'bg-gradient-15deg from-hg-primary300 to-hg-secondary500'
+      }`}
+    >
       <Flex className="p-4 justify-center relative">
         <SvgHolaglow height={25} width={100} className="text-hg-secondary" />
 
@@ -215,11 +223,6 @@ export default function DashboardLayout({
       </Flex>
 
       <Flex layout="col-center">{children}</Flex>
-      {/* 
-      <Flex className="justify-between mt-auto p-4 text-xs">
-        <Text>Centro de medicina estética</Text>
-        <Text>© {dayjs().year()}, Holaglow</Text>
-      </Flex> */}
 
       {!hideBottomBar && (
         <DashboardFooter
