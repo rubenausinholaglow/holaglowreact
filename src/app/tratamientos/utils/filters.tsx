@@ -3,7 +3,7 @@ import { Product } from '@interface/product';
 import { ProductFilters } from 'types/filters';
 
 export const INITIAL_FILTERS = {
-  isPack: true,
+  isPack: false,
   category: [],
   zone: [],
   clinic: [],

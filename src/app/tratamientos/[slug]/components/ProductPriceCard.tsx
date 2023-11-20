@@ -351,21 +351,20 @@ function ProductPriceItemsCard({
           Personalizar
         </Button>
       )}
-      {!product.isPack ||
-        (!productHighlighted && showDropdown && (
-          <Button
-            type="tertiary"
-            disabled={isDisabled}
-            onClick={() => {
-              setSelectedTreatment(product);
-            }}
-            customStyles="bg-hg-primary hover:bg-hg-secondary100"
-            className="mt-8"
-          >
-            Reservar cita
-            <SvgArrow height={16} width={16} className="ml-2" />
-          </Button>
-        ))}
+      {(!product.isPack || (!productHighlighted && showDropdown)) && (
+        <Button
+          type="tertiary"
+          disabled={isDisabled}
+          onClick={() => {
+            setSelectedTreatment(product);
+          }}
+          customStyles="bg-hg-primary hover:bg-hg-secondary100"
+          className="mt-8"
+        >
+          Reservar cita
+          <SvgArrow height={16} width={16} className="ml-2" />
+        </Button>
+      )}
 
       {productHighlighted && (
         <div className="pt-1 mt-2">
