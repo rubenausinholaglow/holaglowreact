@@ -33,7 +33,6 @@ export interface RegistrationFormProps {
   isLoading?: boolean;
   redirect?: boolean;
   isDashboard?: boolean;
-  handleAcceptForm: () => void;
 }
 
 export interface CheckboxProps {

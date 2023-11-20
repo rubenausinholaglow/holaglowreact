@@ -17,6 +17,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -31,13 +32,12 @@ import { RegistrationFormProps } from '../../dashboard/utils/props';
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
   isDashboard = false,
-  handleAcceptForm,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
-  handleAcceptForm: () => void;
 }) => {
   const router = useRouter();
+  const routes = useRoutes();
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -143,8 +143,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
       handleRequestError(errorMessages);
     }
-
-    handleAcceptForm();
   };
 
   function handlePhoneChange(
@@ -205,7 +203,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           selectedPacksTreatments!,
           analyticsMetrics
         ).then(x => {
-          router.push('/checkout/confirmation');
+          if (isDashboard) {
+            router.push(routes.dashboard.checkIn.treatments);
+          } else router.push('/checkout/confirmation');
         });
       } else {
         if (!isDashboard) {
@@ -213,7 +213,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             window.parent.location.href =
               'https://holaglow.com/checkout/clinicas';
           } else router.push('/checkout/clinicas');
-        }
+        } else router.push(routes.dashboard.checkIn.treatments);
       }
     }
   };

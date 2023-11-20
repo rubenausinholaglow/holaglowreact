@@ -13,6 +13,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import useRoutes from 'app/utils/useRoutes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -25,16 +26,9 @@ import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
-export default function Agenda({
-  isDashboard,
-  setConfirmationClick,
-  setAppointmentClick,
-}: {
-  isDashboard?: boolean;
-  setConfirmationClick: (confirmation: boolean) => void;
-  setAppointmentClick: (appointment: Appointment) => void;
-}) {
+export default function Agenda({ isDashboard }: { isDashboard?: boolean }) {
   const router = useRouter();
+  const ROUTE = useRoutes();
 
   const { user } = useGlobalPersistedStore(state => state);
 
@@ -219,8 +213,7 @@ export default function Agenda({
           previous: previousAppointment,
         }).then(x => {
           if (isDashboard) {
-            setAppointmentClick(x);
-            setConfirmationClick(true);
+            router.push(ROUTE.dashboard.checkIn.confirmation);
           } else {
             router.push('/checkout/confirmation');
           }
@@ -238,8 +231,7 @@ export default function Agenda({
           analyticsMetrics
         ).then(x => {
           if (isDashboard) {
-            setAppointmentClick(x as unknown as Appointment);
-            setConfirmationClick(true);
+            router.push(ROUTE.dashboard.checkIn.confirmation);
           } else {
             router.push('/checkout/confirmation');
           }

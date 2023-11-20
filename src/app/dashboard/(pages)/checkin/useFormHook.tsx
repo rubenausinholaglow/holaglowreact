@@ -97,7 +97,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
           await ScheduleService.getClinicScheduleByToken(flowwwToken);
         if (!appointmentInfo) {
           setShowAgenda(true);
-          setIsChecked(true);
+          setIsChecked(false);
           setIsLoading(false);
           setFormData(initialFormData);
           return;
@@ -117,12 +117,11 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
           clinicId: appointmentInfo.clinic.id,
         };
         onScanSuccess(props);
-        setIsChecked(true);
       } catch (error: any) {
         Bugsnag.notify(error);
       }
     } else {
-      setIsChecked(true);
+      setIsChecked(false);
       setCheckIn(CHECK_IN_INCORRECT);
     }
 

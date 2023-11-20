@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import Treatments from 'app/user/passport/Treatments';
 
 const useRoutes = () => {
   const [flowwwToken, setFlowwwToken] = useState('');
@@ -34,7 +35,15 @@ const useRoutes = () => {
       menu: '/dashboard/menu',
       home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
       checkOut: '/dashboard/remoteControl/Payment',
-      checkIn: '/dashboard/checkin',
+      checkIn: {
+        root: '/dashboard/checkin',
+        treatments: '/dashboard/checkin/treatments',
+        agenda: '/dashboard/checkin/agenda',
+        thankYou: '/dashboard/checkin/welcome',
+        contactForm: '/dashboard/checkin/treatments',
+        badRequest: '/dashboard/checkin/badRequest',
+        confirmation: '/dashboard/checkin/confirmation',
+      },
     },
   };
 };
