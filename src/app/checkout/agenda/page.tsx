@@ -31,8 +31,8 @@ export default function Agenda({
   setAppointmentClick,
 }: {
   isDashboard?: boolean;
-  setConfirmationClick: boolean;
-  setAppointmentClick: boolean;
+  setConfirmationClick: (confirmation: boolean) => void;
+  setAppointmentClick: (appointment: Appointment) => void;
 }) {
   const router = useRouter();
 
