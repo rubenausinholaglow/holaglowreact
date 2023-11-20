@@ -222,17 +222,21 @@ function AgendaSection() {
 
   return (
     <Flex className="flex-col items-center">
-      <SvgSadIcon
-        width={96}
-        height={96}
-        className="text-hg-primary bg-hg-secondary rounded-full"
-      />
-      <Title className="align-center font-bold mt-8" size="xl">
-        ¡Ups!
-      </Title>
-      <Title className="align-center font-bold">
-        No tienes ninguna cita prevista
-      </Title>
+      {!displayAgenda && (
+        <>
+          <SvgSadIcon
+            width={96}
+            height={96}
+            className="text-hg-primary bg-hg-secondary rounded-full"
+          />
+          <Title className="align-center font-bold mt-8" size="xl">
+            ¡Ups!
+          </Title>
+          <Title className="align-center font-bold">
+            No tienes ninguna cita prevista
+          </Title>
+        </>
+      )}
       {!displayAgenda ? (
         <ClinicsCheckout
           isDashboard={true}

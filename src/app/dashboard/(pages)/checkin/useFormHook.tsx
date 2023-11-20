@@ -84,7 +84,6 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
     if (!validateForm()) {
       setIsLoading(false);
       setCheckIn(CHECK_IN_INCORRECT);
-      setIsChecked(true);
       return;
     }
 

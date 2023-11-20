@@ -16,7 +16,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { useRouter } from 'next/navigation';
 
 export default function Confirmation({
   appointment,
@@ -25,7 +24,6 @@ export default function Confirmation({
   appointment?: Appointment;
   isDashboard?: boolean;
 }) {
-  const router = useRouter();
   const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
@@ -58,6 +56,16 @@ export default function Confirmation({
   }
 
   useEffect(() => {
+    if (isDashboard) {
+      const timerId = setTimeout(() => {
+        window.location.reload();
+      }, 10000);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [isDashboard]);
+
+  useEffect(() => {
     setCurrentUser(undefined);
     const metrics: AnalyticsMetrics = {
       device: 0,
@@ -74,14 +82,6 @@ export default function Confirmation({
       treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
-
-    if (isDashboard) {
-      const timerId = setTimeout(() => {
-        router.push(ROUTES.dashboard.checkIn);
-      }, 10000);
-
-      return () => clearTimeout(timerId);
-    }
   }, []);
 
   useEffect(() => {
