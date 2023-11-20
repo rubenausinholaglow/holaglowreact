@@ -187,11 +187,12 @@ function BadRequestSection() {
     undefined
   );
   const handleFormContinue = () => {
-    //setDisplayForm(false);
+    setDisplayForm(false);
+    setDisplayAgenda(true);
   };
 
   const handleAgendaClick = () => {
-    setDisplayAgenda(true);
+    setDisplayAgenda(false);
   };
 
   const handleConfirmationClick = () => {
@@ -204,25 +205,29 @@ function BadRequestSection() {
 
   return (
     <Flex className="flex-col items-center">
-      <SvgSadIcon
-        width={96}
-        height={96}
-        className="text-hg-primary bg-hg-secondary rounded-full"
-      />
-      <Title className="align-center font-bold mt-8" size="xl">
-        ¡Ups!
-      </Title>
-      <Title className="align-center font-bold">No te hemos encontrado</Title>
-      <Text size="lg" className="align-center mt-8 mb-8">
-        Por favor, registrate y agenda una cita.
-      </Text>
-
       {displayForm ? (
-        <RegistrationForm
-          isDashboard={true}
-          redirect={false}
-          handleAcceptForm={handleFormContinue}
-        />
+        <>
+          <SvgSadIcon
+            width={96}
+            height={96}
+            className="text-hg-primary bg-hg-secondary rounded-full"
+          />
+          <Title className="align-center font-bold mt-8" size="xl">
+            ¡Ups!
+          </Title>
+          <Title className="align-center font-bold">
+            No te hemos encontrado
+          </Title>
+          <Text size="lg" className="align-center mt-8 mb-8">
+            Por favor, registrate y agenda una cita.
+          </Text>
+
+          <RegistrationForm
+            isDashboard={true}
+            redirect={false}
+            handleAcceptForm={handleFormContinue}
+          />
+        </>
       ) : (
         <>
           {displayAgenda ? (

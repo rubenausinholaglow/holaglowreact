@@ -208,11 +208,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           router.push('/checkout/confirmation');
         });
       } else {
-        if (isDashboard) return;
-        if (redirect) {
-          window.parent.location.href =
-            'https://holaglow.com/checkout/clinicas';
-        } else router.push('/checkout/clinicas');
+        if (!isDashboard) {
+          if (redirect) {
+            window.parent.location.href =
+              'https://holaglow.com/checkout/clinicas';
+          } else router.push('/checkout/clinicas');
+        }
       }
     }
   };
