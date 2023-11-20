@@ -41,6 +41,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
   const [isLoading, setIsLoading] = useState(false);
   const [checkIn, setCheckIn] = useState<string | null>(null);
   const [isChecked, setIsChecked] = useState<boolean | undefined>(undefined);
+  const [showAgenda, setShowAgenda] = useState<boolean | undefined>(undefined);
 
   const validateForm = () => {
     const newErrors: ValidationErrors = {};
@@ -92,6 +93,13 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
         const { id, flowwwToken, firstName } = user;
         const appointmentInfo =
           await ScheduleService.getClinicScheduleByToken(flowwwToken);
+        if (!appointmentInfo) {
+          setShowAgenda(true);
+          setIsChecked(true);
+          setIsLoading(false);
+          setFormData(initialFormData);
+          return;
+        }
         await ScheduleService.updatePatientStatusAppointment(
           appointmentInfo.id,
           id,
@@ -135,6 +143,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
     handleInputChange,
     handleSubmit,
     isChecked,
+    showAgenda,
   };
 };
 

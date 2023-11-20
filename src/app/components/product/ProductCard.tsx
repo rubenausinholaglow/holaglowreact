@@ -206,5 +206,3 @@ export default function ProductCard({
 
   if (isDashboard) return productElement;
 }
-
-/* {showProductModal && <HightLightedProduct />} */

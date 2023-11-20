@@ -49,10 +49,6 @@ export default function PsrpPage({
     isModalOpen,
   } = useGlobalStore(state => state);
 
-  const { productHighlighted, setHighlightProduct } = useCartStore(
-    state => state
-  );
-
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
@@ -91,17 +87,7 @@ export default function PsrpPage({
       }
       setProductFilters(productFilters);
     }
-  }, [slug]);
-
-  useEffect(() => {
-    if (isEmpty(filteredProducts)) {
-      setFilteredProducts(stateProducts);
-    }
-  }, [stateProducts]);
-
-  useEffect(() => {
-    processFilters();
-  }, []);
+  }, [slug, stateProducts]);
 
   useEffect(() => {
     processFilters();
@@ -336,6 +322,7 @@ export default function PsrpPage({
                       <li key={product.id}>
                         <ProductCard
                           product={product}
+                          isDashboard={false}
                           className="h-full flex flex-col"
                         />
                       </li>
@@ -361,10 +348,6 @@ export default function PsrpPage({
       setFilteredProducts(
         applyFilters({ products: filteredProducts, filters: productFilters })
       );
-    }
-
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(stateProducts);
     }
   }
 }

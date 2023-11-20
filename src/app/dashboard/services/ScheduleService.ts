@@ -82,10 +82,16 @@ export default class ScheduleService {
     await ScheduleService.scheduleBulk(appointments);
   };
 
-  static async getClinicScheduleByToken(flowwwToken: string) {
+  static async getClinicScheduleByToken(
+    flowwwToken: string
+  ): Promise<any | undefined> {
     try {
       const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/v2/Next?token=${flowwwToken}`;
       const res = await fetch(url);
+      if (res.status === 204) {
+        return undefined;
+      }
+
       if (res.ok) {
         const data = await res.json();
         return data;

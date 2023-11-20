@@ -11,7 +11,6 @@ import PsrpPage from 'app/tratamientos/psrp';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
-import { isEmpty } from 'lodash';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { useCartStore } from './stores/userCartStore';
@@ -21,7 +20,8 @@ export default function Page() {
   const { setStateProducts, stateProducts } = useGlobalPersistedStore(
     state => state
   );
-  const { setFilteredProducts } = useGlobalStore(state => state);
+  const { setFilteredProducts, setProductFilters, productFilters } =
+    useGlobalStore(state => state);
   const [error, setError] = useState('');
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -37,7 +37,6 @@ export default function Page() {
         }));
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setStateProducts(products);
-        setFilteredProducts(products);
       } catch (error: any) {
         setError(error);
       }
@@ -45,6 +44,8 @@ export default function Page() {
 
     fetchProducts();
     setHighlightProduct(null);
+    productFilters.isPack = true;
+    setProductFilters(productFilters);
   }, []);
 
   useEffect(() => {
