@@ -94,16 +94,6 @@ export default function PsrpPage({
   }, [slug]);
 
   useEffect(() => {
-    if (isEmpty(filteredProducts)) {
-      setFilteredProducts(stateProducts);
-    }
-  }, [stateProducts]);
-
-  useEffect(() => {
-    processFilters();
-  }, []);
-
-  useEffect(() => {
     processFilters();
   }, [productFilters]);
 
@@ -361,10 +351,6 @@ export default function PsrpPage({
       setFilteredProducts(
         applyFilters({ products: filteredProducts, filters: productFilters })
       );
-    }
-
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(stateProducts);
     }
   }
 }
