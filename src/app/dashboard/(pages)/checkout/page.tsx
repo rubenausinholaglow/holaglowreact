@@ -13,17 +13,14 @@ import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
 import { SvgBag } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
-import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
-import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { PaymentModule } from './components/payment/Payments';
 import { usePaymentList } from './components/payment/payments/usePaymentList';
-import ProductDiscountForm from './components/ProductDiscountForm';
 
 const Page = () => {
   const cart = useCartStore(state => state.cart);
@@ -146,7 +143,7 @@ const Page = () => {
           {budgetId && !isBudgetModified && <PaymentModule />}
         </div>
 
-        <div className="w-[45%] bg-white h-full">
+        <div className="w-[45%] bg-white rounded-tl-2xl h-full">
           <Flex layout="col-left" className="p-4">
             <Flex className="gap-2">
               <SvgBag height={20} width={20} />

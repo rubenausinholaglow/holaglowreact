@@ -41,21 +41,15 @@ export default function ProductCard({
   const pathName = usePathname();
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
-  const { productHighlighted, setHighlightProduct } = useCartStore(
-    state => state
-  );
+  const { setHighlightProduct } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
-
-  const [showProductModal, setShowProductModal] = useState(false);
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
   };
 
   const isLanding = Object.keys(LANDINGS).includes(usePathname());
-  const { isModalOpen, setShowModalBackground } = useGlobalStore(
-    state => state
-  );
+
   useEffect(() => {
     if (!isEmpty(product.discounts)) {
       setDiscountedPrice(getDiscountedPrice(product));
@@ -129,29 +123,46 @@ export default function ProductCard({
       >
         <AnimateOnViewport origin="bottom">
           <Text className="mb-2 font-semibold">{product.title}</Text>
-          <Text size="xs" className="text-hg-black500 mb-8">
-            {product.description}
-          </Text>
+          {!isDashboard && (
+            <Text size="xs" className="text-hg-black500 mb-8">
+              {product.description}
+            </Text>
+          )}
         </AnimateOnViewport>
         <AnimateOnViewport origin="bottom" className="w-full mt-auto">
-          <Flex className="mt-auto justify-between w-full">
-            <div>
+          <Flex
+            layout={isDashboard ? 'col-left' : 'row-left'}
+            className="mt-auto justify-between w-full"
+          >
+            <Flex
+              layout={isDashboard ? 'row-left' : 'col-left'}
+              className="gap-2 mb-2"
+            >
               {discountedPrice && (
-                <Text className="text-xs line-through text-hg-black500">
+                <Text
+                  className={`text-xs line-through text-hg-black500 ${
+                    isDashboard ? 'order-2 text-md' : ''
+                  }`}
+                >
                   {product.price} €
                 </Text>
               )}
               {!discountedPrice && !product.isPack && (
                 <Text className="text-xs text-hg-secondary">desde</Text>
               )}
-              <Text className=" text-hg-secondary font-semibold text-lg">
+              <Text
+                className={`text-hg-secondary font-semibold ${
+                  isDashboard ? 'text-xl' : 'text-lg'
+                }`}
+              >
                 {discountedPrice ? discountedPrice : product.price} €{' '}
               </Text>
-            </div>
+            </Flex>
             {isDashboard ? (
               <Button
+                size="sm"
                 type="tertiary"
-                className="mt-auto ml-4"
+                className="mt-auto"
                 bgColor="bg-hg-primary"
                 onClick={e => {
                   e.stopPropagation();
