@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import TextInputField from '@components/TextInputField';
 import { Appointment } from '@interface/appointment';
+import { Clinic } from '@interface/clinic';
 import { messageService } from '@services/MessageService';
 import Agenda from 'app/checkout/agenda/page';
 import Confirmation from 'app/checkout/confirmation/components/Confirmation';
@@ -19,7 +20,6 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgScanQR } from 'icons/Icons';
 import { SvgArrow, SvgCheck, SvgSadIcon } from 'icons/IconsDs';
-import App from 'next/app';
 import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
@@ -35,7 +35,9 @@ export default function Page() {
   const [hour, setHour] = useState<string | null>(null);
   const [professional, setProfessional] = useState<string | null>(null);
   const { setSelectedClinic } = useSessionStore(state => state);
-  const { clinics } = useGlobalPersistedStore(state => state);
+  const { clinics, setClinicId, storedClinicId } = useGlobalPersistedStore(
+    state => state
+  );
 
   const onScanSuccess = (props: any) => {
     if (props) {
@@ -77,7 +79,16 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setSelectedClinic(clinics[0]);
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const clinicId = params.get('clinicId') || '';
+
+    const currentClinic = clinics.find(
+      x => x.id.toUpperCase() === clinicId.toUpperCase()
+    );
+    if (currentClinic) {
+      setSelectedClinic(currentClinic);
+    }
   }, [clinics]);
 
   return (
