@@ -10,6 +10,7 @@ import {
   INVALID_PHONE_FORMAT,
   PHONE_REQUIRED,
 } from '@utils/textConstants';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 interface FormData {
   email: string;
@@ -42,6 +43,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
   const [checkIn, setCheckIn] = useState<string | null>(null);
   const [isChecked, setIsChecked] = useState<boolean | undefined>(undefined);
   const [showAgenda, setShowAgenda] = useState<boolean | undefined>(undefined);
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
 
   const validateForm = () => {
     const newErrors: ValidationErrors = {};
@@ -82,7 +84,6 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
     if (!validateForm()) {
       setIsLoading(false);
       setCheckIn(CHECK_IN_INCORRECT);
-      setIsChecked(true);
       return;
     }
 
@@ -90,6 +91,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
 
     if (user) {
       try {
+        setCurrentUser(user);
         const { id, flowwwToken, firstName } = user;
         const appointmentInfo =
           await ScheduleService.getClinicScheduleByToken(flowwwToken);

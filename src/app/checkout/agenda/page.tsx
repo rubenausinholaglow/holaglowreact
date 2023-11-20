@@ -5,6 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { Appointment } from '@interface/appointment';
 import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -24,7 +25,15 @@ import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
-export default function Agenda() {
+export default function Agenda({
+  isDashboard,
+  setConfirmationClick,
+  setAppointmentClick,
+}: {
+  isDashboard?: boolean;
+  setConfirmationClick: (confirmation: boolean) => void;
+  setAppointmentClick: (appointment: Appointment) => void;
+}) {
   const router = useRouter();
 
   const { user } = useGlobalPersistedStore(state => state);
@@ -103,7 +112,7 @@ export default function Agenda() {
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
-        selectedClinic?.flowwwId || ''
+          selectedClinic?.flowwwId || ''
         ).then(data => {
           callbackMonthAvailability(data);
         });
@@ -116,6 +125,59 @@ export default function Agenda() {
           callbackMonthAvailability(data);
         });
       }
+    }
+  }
+
+  function callbackGetSlots(data: Slot[]) {
+    const hours = Array<Slot>();
+    const morning = Array<Slot>();
+    const afternoon = Array<Slot>();
+    data.forEach(x => {
+      const hour = x.startTime.split(':')[0];
+      const minutes = x.startTime.split(':')[1];
+      if (
+        (minutes == '00' || minutes == '30') &&
+        !(hour == '10' && minutes == '00')
+      ) {
+        hours.push(x);
+        if (parseInt(hour) < 16) {
+          morning.push(x);
+        } else afternoon.push(x);
+      }
+    });
+    setMorningHours(morning);
+    setAfternoonHours(afternoon);
+    window.scrollTo({
+      top: 425,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  function callbackMonthAvailability(data: DayAvailability[]) {
+    const availability = availableDates ?? [];
+    const today = dayjs();
+    data.forEach((x: any) => {
+      const date = dayjs(x.date);
+      if (
+        availability.length < maxDays &&
+        (date.isAfter(today) || date.isSame(today, 'day')) &&
+        x.availability
+      ) {
+        availability.push(x);
+      }
+    });
+    setAvailableDates(availability);
+    if (!selectedDay) {
+      setSelectedDay(dayjs(availability[0].date));
+    } else {
+      setSelectedDay(selectedDay);
+    }
+    setLoadingMonth(false);
+    if (availability.length == maxDays)
+      setMaxDay(dayjs(availability[availability.length - 1].date));
+    else {
+      setDateToCheck(dateToCheck.add(1, 'month'));
     }
   }
 
@@ -156,7 +218,12 @@ export default function Agenda() {
           },
           previous: previousAppointment,
         }).then(x => {
-          router.push('/checkout/confirmation');
+          if (isDashboard) {
+            setAppointmentClick(x);
+            setConfirmationClick(true);
+          } else {
+            router.push('/checkout/confirmation');
+          }
         });
       } else if (user) {
         setLoadingDays(true);
@@ -170,7 +237,12 @@ export default function Agenda() {
           selectedPacksTreatments!,
           analyticsMetrics
         ).then(x => {
-          router.push('/checkout/confirmation');
+          if (isDashboard) {
+            setAppointmentClick(x as unknown as Appointment);
+            setConfirmationClick(true);
+          } else {
+            router.push('/checkout/confirmation');
+          }
         });
       } else {
         router.push('/checkout/contactform');
@@ -261,7 +333,7 @@ export default function Agenda() {
   };
 
   return (
-    <MainLayout isCheckout>
+    <MainLayout isCheckout hideHeader={isDashboard}>
       <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
         <Title size="xl" className="font-semibold">
           Selecciona día y hora
@@ -513,57 +585,4 @@ export default function Agenda() {
       </Container>
     </MainLayout>
   );
-
-  function callbackGetSlots(data: Slot[]) {
-    const hours = Array<Slot>();
-    const morning = Array<Slot>();
-    const afternoon = Array<Slot>();
-    data.forEach(x => {
-      const hour = x.startTime.split(':')[0];
-      const minutes = x.startTime.split(':')[1];
-      if (
-        (minutes == '00' || minutes == '30') &&
-        !(hour == '10' && minutes == '00')
-      ) {
-        hours.push(x);
-        if (parseInt(hour) < 16) {
-          morning.push(x);
-        } else afternoon.push(x);
-      }
-    });
-    setMorningHours(morning);
-    setAfternoonHours(afternoon);
-    window.scrollTo({
-      top: 425,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }
-
-  function callbackMonthAvailability(data: DayAvailability[]) {
-    const availability = availableDates ?? [];
-    const today = dayjs();
-    data.forEach((x: any) => {
-      const date = dayjs(x.date);
-      if (
-        availability.length < maxDays &&
-        (date.isAfter(today) || date.isSame(today, 'day')) &&
-        x.availability
-      ) {
-        availability.push(x);
-      }
-    });
-    setAvailableDates(availability);
-    if (!selectedDay) {
-      setSelectedDay(dayjs(availability[0].date));
-    } else {
-      setSelectedDay(selectedDay);
-    }
-    setLoadingMonth(false);
-    if (availability.length == maxDays)
-      setMaxDay(dayjs(availability[availability.length - 1].date));
-    else {
-      setDateToCheck(dateToCheck.add(1, 'month'));
-    }
-  }
 }

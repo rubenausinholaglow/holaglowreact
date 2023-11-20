@@ -19,8 +19,10 @@ import { isEmpty } from 'lodash';
 
 export default function Confirmation({
   appointment,
+  isDashboard,
 }: {
   appointment?: Appointment;
+  isDashboard?: boolean;
 }) {
   const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
@@ -52,6 +54,16 @@ export default function Confirmation({
   if (selectedTreatments) {
     selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
   }
+
+  useEffect(() => {
+    if (isDashboard) {
+      const timerId = setTimeout(() => {
+        window.location.reload();
+      }, 10000);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [isDashboard]);
 
   useEffect(() => {
     setCurrentUser(undefined);
@@ -213,20 +225,22 @@ export default function Confirmation({
             )}
           </div>
           <div className="pt-12">
-            <a href="/tratamientos">
-              <Button
-                type="tertiary"
-                size="md"
-                className="hidden md:inline"
-                customStyles="group-hover:bg-hg-secondary100"
-                href={ROUTES.treatments}
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Ver tratamientos</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
-            </a>
+            {!isDashboard && (
+              <a href="/tratamientos">
+                <Button
+                  type="tertiary"
+                  size="md"
+                  className="hidden md:inline"
+                  customStyles="group-hover:bg-hg-secondary100"
+                  href={ROUTES.treatments}
+                >
+                  <Flex layout="row-center">
+                    <span className="font-semibold">Ver tratamientos</span>
+                    <SvgArrow height={18} width={18} className="ml-2" />
+                  </Flex>
+                </Button>
+              </a>
+            )}
           </div>
         </div>
 

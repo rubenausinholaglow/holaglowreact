@@ -2,9 +2,18 @@
 
 import React, { useEffect, useState } from 'react';
 import TextInputField from '@components/TextInputField';
+import { Appointment } from '@interface/appointment';
+import { Clinic } from '@interface/clinic';
 import { messageService } from '@services/MessageService';
+import Agenda from 'app/checkout/agenda/page';
+import Confirmation from 'app/checkout/confirmation/components/Confirmation';
+import ClinicsCheckout from 'app/checkout/treatments/page';
 import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -25,6 +34,8 @@ export default function Page() {
   const [name, setName] = useState<string | null>(null);
   const [hour, setHour] = useState<string | null>(null);
   const [professional, setProfessional] = useState<string | null>(null);
+  const { setSelectedClinic } = useSessionStore(state => state);
+  const { clinics } = useGlobalPersistedStore(state => state);
 
   const onScanSuccess = (props: any) => {
     if (props) {
@@ -64,6 +75,19 @@ export default function Page() {
       window.location.reload();
     }, delay);
   };
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const clinicId = params.get('clinicId') || '';
+
+    const currentClinic = clinics.find(
+      x => x.id.toUpperCase() === clinicId.toUpperCase()
+    );
+    if (currentClinic) {
+      setSelectedClinic(currentClinic);
+    }
+  }, [clinics]);
 
   return (
     <MainLayout
@@ -156,21 +180,76 @@ function WelcomeSection({ name, hour, professional }: any) {
 }
 
 function BadRequestSection() {
+  const [displayForm, setDisplayForm] = useState(true);
+  const [displayAgenda, setDisplayAgenda] = useState(false);
+  const [displayConfirmation, setDisplayConfirmation] = useState(false);
+  const [appointment, setAppointment] = useState<Appointment | undefined>(
+    undefined
+  );
+  const handleFormContinue = () => {
+    setDisplayForm(false);
+    setDisplayAgenda(true);
+  };
+
+  const handleAgendaClick = () => {
+    setDisplayAgenda(false);
+  };
+
+  const handleConfirmationClick = () => {
+    setDisplayConfirmation(true);
+  };
+
+  const handleSetAppointmentClick = (selectedAppointment: Appointment) => {
+    setAppointment(selectedAppointment);
+  };
+
   return (
     <Flex className="flex-col items-center">
-      <SvgSadIcon
-        width={96}
-        height={96}
-        className="text-hg-primary bg-hg-secondary rounded-full"
-      />
-      <Title className="align-center font-bold mt-8" size="xl">
-        ¡Ups!
-      </Title>
-      <Title className="align-center font-bold">No te hemos encontrado</Title>
-      <Text size="lg" className="align-center mt-8 mb-8">
-        Por favor, registrate y agenda una cita.
-      </Text>
-      <RegistrationForm />
+      {displayForm ? (
+        <>
+          <SvgSadIcon
+            width={96}
+            height={96}
+            className="text-hg-primary bg-hg-secondary rounded-full"
+          />
+          <Title className="align-center font-bold mt-8" size="xl">
+            ¡Ups!
+          </Title>
+          <Title className="align-center font-bold">
+            No te hemos encontrado
+          </Title>
+          <Text size="lg" className="align-center mt-8 mb-8">
+            Por favor, registrate y agenda una cita.
+          </Text>
+
+          <RegistrationForm
+            isDashboard={true}
+            redirect={false}
+            handleAcceptForm={handleFormContinue}
+          />
+        </>
+      ) : (
+        <>
+          {displayAgenda ? (
+            <ClinicsCheckout
+              isDashboard={true}
+              setDisplayAgenda={handleAgendaClick}
+            />
+          ) : (
+            <>
+              {!displayConfirmation ? (
+                <Agenda
+                  isDashboard={true}
+                  setConfirmationClick={handleConfirmationClick}
+                  setAppointmentClick={() => handleSetAppointmentClick}
+                />
+              ) : (
+                <Confirmation appointment={appointment} isDashboard={true} />
+              )}
+            </>
+          )}
+        </>
+      )}
       <Button
         type="tertiary"
         isSubmit
@@ -187,20 +266,60 @@ function BadRequestSection() {
 }
 
 function AgendaSection() {
+  const [displayAgenda, setDisplayAgenda] = useState(false);
+  const [displayConfirmation, setDisplayConfirmation] = useState(false);
+  const [appointment, setAppointment] = useState<Appointment | undefined>(
+    undefined
+  );
+
+  const handleAgendaClick = () => {
+    setDisplayAgenda(true);
+  };
+
+  const handleConfirmationClick = () => {
+    setDisplayConfirmation(true);
+  };
+
+  const handleSetAppointmentClick = (selectedAppointment: Appointment) => {
+    setAppointment(selectedAppointment);
+  };
+
   return (
     <Flex className="flex-col items-center">
-      <SvgSadIcon
-        width={96}
-        height={96}
-        className="text-hg-primary bg-hg-secondary rounded-full"
-      />
-      <Title className="align-center font-bold mt-8" size="xl">
-        ¡Ups!
-      </Title>
-      <Title className="align-center font-bold">
-        No tienes ninguna cita prevista
-      </Title>
-      Agenda
+      {!displayAgenda && (
+        <>
+          <SvgSadIcon
+            width={96}
+            height={96}
+            className="text-hg-primary bg-hg-secondary rounded-full"
+          />
+          <Title className="align-center font-bold mt-8" size="xl">
+            ¡Ups!
+          </Title>
+          <Title className="align-center font-bold">
+            No tienes ninguna cita prevista
+          </Title>
+        </>
+      )}
+      {!displayAgenda ? (
+        <ClinicsCheckout
+          isDashboard={true}
+          setDisplayAgenda={handleAgendaClick}
+        />
+      ) : (
+        <>
+          {!displayConfirmation ? (
+            <Agenda
+              isDashboard={true}
+              setConfirmationClick={handleConfirmationClick}
+              setAppointmentClick={() => handleSetAppointmentClick}
+            />
+          ) : (
+            <Confirmation appointment={appointment} isDashboard={true} />
+          )}
+        </>
+      )}
+
       <Button
         type="tertiary"
         isSubmit
