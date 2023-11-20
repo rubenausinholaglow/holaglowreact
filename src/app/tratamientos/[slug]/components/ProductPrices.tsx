@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -153,30 +152,28 @@ export default function ProductPrices({ product }: { product: Product }) {
                 className="w-full md:flex-row md:gap-8"
                 key={`productGroup-${productIndex}`}
               >
-                <AnimateOnViewport className="w-full">
-                  <Flex
-                    layout="col-left"
-                    className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary "
-                  >
-                    <Text className="p-3 font-semibold md:text-lg">
-                      {products[0].title}
-                    </Text>
+                <Flex
+                  layout="col-left"
+                  className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary "
+                >
+                  <Text className="p-3 font-semibold md:text-lg">
+                    {products[0].title}
+                  </Text>
 
-                    <Flex layout="col-left" className="gap-4 w-full">
-                      {products.map((item: Product, index: number) => {
-                        if (item.price > 0) {
-                          return (
-                            <ProductSessionGroupedPriceCard
-                              key={`product-card-${index}`}
-                              product={item}
-                            />
-                          );
-                        }
-                        return null;
-                      })}
-                    </Flex>
+                  <Flex layout="col-left" className="gap-4 w-full">
+                    {products.map((item: Product, index: number) => {
+                      if (item.price > 0) {
+                        return (
+                          <ProductSessionGroupedPriceCard
+                            key={`product-card-${index}`}
+                            product={item}
+                          />
+                        );
+                      }
+                      return null;
+                    })}
                   </Flex>
-                </AnimateOnViewport>
+                </Flex>
               </Flex>
             ))}
           </Flex>
