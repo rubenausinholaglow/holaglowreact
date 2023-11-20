@@ -30,8 +30,12 @@ import { RegistrationFormProps } from '../../dashboard/utils/props';
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
+  isDashboard = false,
+  handleAcceptForm,
 }: {
   redirect?: boolean;
+  isDashboard?: boolean;
+  handleAcceptForm: () => void;
 }) => {
   const router = useRouter();
 
@@ -139,6 +143,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
       handleRequestError(errorMessages);
     }
+
+    handleAcceptForm();
   };
 
   function handlePhoneChange(
@@ -202,6 +208,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           router.push('/checkout/confirmation');
         });
       } else {
+        if (isDashboard) return;
         if (redirect) {
           window.parent.location.href =
             'https://holaglow.com/checkout/clinicas';

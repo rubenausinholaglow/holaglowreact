@@ -35,9 +35,7 @@ export default function Page() {
   const [hour, setHour] = useState<string | null>(null);
   const [professional, setProfessional] = useState<string | null>(null);
   const { setSelectedClinic } = useSessionStore(state => state);
-  const { clinics, setClinicId, storedClinicId } = useGlobalPersistedStore(
-    state => state
-  );
+  const { clinics } = useGlobalPersistedStore(state => state);
 
   const onScanSuccess = (props: any) => {
     if (props) {
@@ -182,6 +180,28 @@ function WelcomeSection({ name, hour, professional }: any) {
 }
 
 function BadRequestSection() {
+  const [displayForm, setDisplayForm] = useState(true);
+  const [displayAgenda, setDisplayAgenda] = useState(false);
+  const [displayConfirmation, setDisplayConfirmation] = useState(false);
+  const [appointment, setAppointment] = useState<Appointment | undefined>(
+    undefined
+  );
+  const handleFormContinue = () => {
+    //setDisplayForm(false);
+  };
+
+  const handleAgendaClick = () => {
+    setDisplayAgenda(true);
+  };
+
+  const handleConfirmationClick = () => {
+    setDisplayConfirmation(true);
+  };
+
+  const handleSetAppointmentClick = (selectedAppointment: Appointment) => {
+    setAppointment(selectedAppointment);
+  };
+
   return (
     <Flex className="flex-col items-center">
       <SvgSadIcon
@@ -196,7 +216,35 @@ function BadRequestSection() {
       <Text size="lg" className="align-center mt-8 mb-8">
         Por favor, registrate y agenda una cita.
       </Text>
-      <RegistrationForm />
+
+      {displayForm ? (
+        <RegistrationForm
+          isDashboard={true}
+          redirect={false}
+          handleAcceptForm={handleFormContinue}
+        />
+      ) : (
+        <>
+          {displayAgenda ? (
+            <ClinicsCheckout
+              isDashboard={true}
+              setDisplayAgenda={handleAgendaClick}
+            />
+          ) : (
+            <>
+              {!displayConfirmation ? (
+                <Agenda
+                  isDashboard={true}
+                  setConfirmationClick={handleConfirmationClick}
+                  setAppointmentClick={() => handleSetAppointmentClick}
+                />
+              ) : (
+                <Confirmation appointment={appointment} isDashboard={true} />
+              )}
+            </>
+          )}
+        </>
+      )}
       <Button
         type="tertiary"
         isSubmit
