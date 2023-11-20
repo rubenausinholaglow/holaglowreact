@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Status } from '@interface/appointment';
 import ScheduleService from '@services/ScheduleService';

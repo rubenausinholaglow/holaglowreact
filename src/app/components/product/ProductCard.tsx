@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { CartItem, Product } from '@interface/product';
-import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import { useGlobalStore } from 'app/stores/globalStore';
 import {
   getDiscountedPrice,
   getProductCardColor,
@@ -41,21 +39,28 @@ export default function ProductCard({
   const pathName = usePathname();
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
-  const { productHighlighted, setHighlightProduct } = useCartStore(
-    state => state
-  );
+  const { setHighlightProduct, cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
-
-  const [showProductModal, setShowProductModal] = useState(false);
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
   };
 
   const isLanding = Object.keys(LANDINGS).includes(usePathname());
-  const { isModalOpen, setShowModalBackground } = useGlobalStore(
-    state => state
-  );
+
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(product),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
   useEffect(() => {
     if (!isEmpty(product.discounts)) {
       setDiscountedPrice(getDiscountedPrice(product));
@@ -67,7 +72,9 @@ export default function ProductCard({
   const productElement = (
     <div
       className="flex flex-col h-full pt-4 overflow-hidden"
-      onClick={() => isDashboard && setHighlightProduct(product)}
+      onClick={() => {
+        setHighlightProduct(product);
+      }}
     >
       <Flex layout="col-left" className="">
         <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
@@ -129,33 +136,51 @@ export default function ProductCard({
       >
         <AnimateOnViewport origin="bottom">
           <Text className="mb-2 font-semibold">{product.title}</Text>
-          <Text size="xs" className="text-hg-black500 mb-8">
-            {product.description}
-          </Text>
+          {!isDashboard && (
+            <Text size="xs" className="text-hg-black500 mb-8">
+              {product.description}
+            </Text>
+          )}
         </AnimateOnViewport>
         <AnimateOnViewport origin="bottom" className="w-full mt-auto">
-          <Flex className="mt-auto justify-between w-full">
-            <div>
+          <Flex
+            layout={isDashboard ? 'col-left' : 'row-left'}
+            className="mt-auto justify-between w-full"
+          >
+            <Flex
+              layout={isDashboard ? 'row-left' : 'col-left'}
+              className="gap-2 mb-2"
+            >
               {discountedPrice && (
-                <Text className="text-xs line-through text-hg-black500">
+                <Text
+                  className={`text-xs line-through text-hg-black500 ${
+                    isDashboard ? 'order-2 text-md' : ''
+                  }`}
+                >
                   {product.price} €
                 </Text>
               )}
               {!discountedPrice && !product.isPack && (
                 <Text className="text-xs text-hg-secondary">desde</Text>
               )}
-              <Text className=" text-hg-secondary font-semibold text-lg">
+              <Text
+                className={`text-hg-secondary font-semibold ${
+                  isDashboard ? 'text-xl' : 'text-lg'
+                }`}
+              >
                 {discountedPrice ? discountedPrice : product.price} €{' '}
               </Text>
-            </div>
+            </Flex>
             {isDashboard ? (
               <Button
+                size="sm"
                 type="tertiary"
-                className="mt-auto ml-4"
+                className="mt-auto"
                 bgColor="bg-hg-primary"
                 onClick={e => {
                   e.stopPropagation();
                   addToCart(product as CartItem);
+                  setPendingDiscount(true);
                 }}
               >
                 <p className="mr-2">Añadir </p>

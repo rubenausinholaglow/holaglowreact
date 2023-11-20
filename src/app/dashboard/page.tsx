@@ -317,7 +317,7 @@ export default function Page({
         hideContactButtons
         hideProfessionalSelector
       >
-        <div className="px-4 w-full">
+        <div className="px-4 w-full max-h-[85%] overflow-y-auto">
           <AppointmentsListComponent
             clinicId={storedClinicId}
             boxId={storedBoxId}

@@ -1,10 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { toggleFilter } from 'app/tratamientos/utils/filters';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';

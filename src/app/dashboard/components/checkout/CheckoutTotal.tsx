@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 import { applyDiscountToCart } from '@utils/utils';
-//import CartItem from 'app/dashboard/(pages)/budgets/minicart/CartItem';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import ProductDiscountForm from 'app/dashboard/(pages)/checkout/components/ProductDiscountForm';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgClose } from 'icons/Icons';

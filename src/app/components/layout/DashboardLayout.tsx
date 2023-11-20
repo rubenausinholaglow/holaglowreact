@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
-import ButtonMessage from '@components/ui/ButtonMessage';
 import { useMessageSocket } from '@components/useMessageSocket';
 import { EventTypes } from '@interface/FrontEndMessages';
 import { MessageSocket, MessageType } from '@interface/messageSocket';
 import SocketService from '@services/SocketService';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import dayjs from 'dayjs';
-import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
-import { SvgArrowSmallLeft } from 'icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgHolaglow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
-import { removeEmitHelper } from 'typescript';
 
 import DashboardFooter from './DashboardFooter';
 
@@ -206,29 +200,33 @@ export default function DashboardLayout({
 
   return (
     <main
-      className={`min-h-screen flex flex-col w-full pb-16 ${
+      className={`h-screen overflow-hidden flex flex-col w-full ${
         isCheckout
           ? 'bg-hg-black50'
           : 'bg-gradient-15deg from-hg-primary300 to-hg-secondary500'
       }`}
     >
-      <Flex className="p-4 justify-center relative">
-        <SvgHolaglow height={25} width={100} className="text-hg-secondary" />
+      <Flex layout="col-center" className="grow overflow-y-auto relative pb-8">
+        <Flex className="p-4 justify-center">
+          <SvgHolaglow height={25} width={100} className="text-hg-secondary" />
 
-        {!hideProfessionalSelector && (
-          <div className="absolute right-0 top-0">
-            {!hideProfessionalSelector && <ClinicProfessional />}
-          </div>
-        )}
+          {!hideProfessionalSelector && (
+            <div className="absolute right-0 top-0">
+              <ClinicProfessional />
+            </div>
+          )}
+        </Flex>
+
+        {children}
       </Flex>
 
-      <Flex layout="col-center">{children}</Flex>
-
       {!hideBottomBar && (
-        <DashboardFooter
-          hideBackButton={hideBackButton}
-          hideContactButtons={hideContactButtons}
-        />
+        <footer className="z-10 bg-hg-secondary/40 backdrop-blur-sm">
+          <DashboardFooter
+            hideBackButton={hideBackButton}
+            hideContactButtons={hideContactButtons}
+          />
+        </footer>
       )}
     </main>
   );

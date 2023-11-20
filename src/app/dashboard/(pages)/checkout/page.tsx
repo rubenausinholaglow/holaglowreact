@@ -4,26 +4,19 @@ import Bugsnag from '@bugsnag/js';
 import CheckoutTotal from '@components/checkout/CheckoutTotal';
 import ProductCard from '@components/checkout/ProductCard';
 import { Budget, StatusBudget } from '@interface/budget';
-import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
-import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgAngleDown, SvgSpinner } from 'icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { SvgSpinner } from 'icons/Icons';
 import { SvgBag } from 'icons/IconsDs';
-import { useRouter } from 'next/navigation';
 
-import { CartTotal } from '../budgets/minicart/Cart';
 import { useCartStore } from '../budgets/stores/userCartStore';
-import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { PaymentModule } from './components/payment/Payments';
-import { usePaymentList } from './components/payment/payments/usePaymentList';
-import ProductDiscountForm from './components/ProductDiscountForm';
 
 const Page = () => {
   const cart = useCartStore(state => state.cart);
@@ -32,7 +25,6 @@ const Page = () => {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [clientToken, setClientToken] = useState<string | ''>('');
@@ -109,12 +101,6 @@ const Page = () => {
     }
   };
 
-  function cancelBudget() {
-    localStorage.removeItem('BudgetId');
-    usePaymentList.setState(INITIAL_STATE_PAYMENT);
-    useCartStore.setState(INITIAL_STATE);
-    router.push('/dashboard/menu');
-  }
   function cartTotalPrice() {
     let productsPriceTotalWithDiscounts = 0;
 
@@ -146,7 +132,7 @@ const Page = () => {
           {budgetId && !isBudgetModified && <PaymentModule />}
         </div>
 
-        <div className="w-[45%] bg-white h-full">
+        <div className="w-[45%] bg-white rounded-tl-2xl h-full">
           <Flex layout="col-left" className="p-4">
             <Flex className="gap-2">
               <SvgBag height={20} width={20} />

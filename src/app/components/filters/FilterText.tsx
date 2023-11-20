@@ -2,6 +2,7 @@
 
 import { useGlobalStore } from 'app/stores/globalStore';
 import { toggleFilter } from 'app/tratamientos/utils/filters';
+import { twMerge } from 'tailwind-merge';
 
 export default function FilterText({ className }: { className?: string }) {
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
@@ -21,7 +22,11 @@ export default function FilterText({ className }: { className?: string }) {
       <input
         type="text"
         placeholder="Filtrar por título o descripción"
-        className="border border-hg-tertiary rounded px-2 py-1 mt-2 text-black w-full mb-6"
+        className={twMerge(
+          `border border-hg-tertiary rounded px-2 py-1 mt-2 text-black w-full mb-6 ${
+            className ? className : ''
+          }`
+        )}
         onChange={handleInputChange}
       />
     </>

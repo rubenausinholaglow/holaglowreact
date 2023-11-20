@@ -42,7 +42,6 @@ const AppointmentsListComponent: React.FC<{
     setCurrentUser,
     storedClinicId,
     storedBoxId,
-    storedAppointmentId,
     ignoreMessages,
     setAppointmentId,
   } = useGlobalPersistedStore(state => state);
@@ -202,21 +201,6 @@ const AppointmentsListComponent: React.FC<{
     localStorage.setItem('flowwwToken', flowwwToken);
   }
 
-  const statusTranslations = {
-    [Status.Open]: 'Pendiente',
-    [Status.Canceled]: 'Cancelada',
-    [Status.NoShow]: 'No Show',
-    [Status.Moved]: 'Movida',
-    [Status.Confirmed]: 'Confirmada',
-    [Status.Finished]: 'Finalizado',
-    [Status.CheckIn]: 'Esperando',
-    [Status.InProgress]: 'En Visita',
-  };
-
-  function translateStatus(status: Status): string {
-    return statusTranslations[status] || 'Unknown Status';
-  }
-
   const APPOINTMENT_STATUS = {
     0: {
       text: 'Pendiente',
@@ -261,7 +245,7 @@ const AppointmentsListComponent: React.FC<{
   };
 
   return (
-    <div className="w-ful">
+    <div className="w-full">
       {isLoadingPage ? (
         <SvgSpinner className="w-full justify-center" />
       ) : (

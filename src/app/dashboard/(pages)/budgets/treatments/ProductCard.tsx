@@ -23,15 +23,10 @@ interface Props {
 }
 
 export default function ProductCard({ product, isCheckout }: Props) {
-  const {
-    cart,
-    removeFromCart,
-    addItemToCart,
-    setHighlightProduct,
-    removeItemDiscount,
-  } = useCartStore(state => state);
+  const { cart, removeFromCart, addItemToCart, setHighlightProduct } =
+    useCartStore(state => state);
 
-  const { isModalOpen, setIsModalOpen } = useGlobalStore(state => state);
+  const { setIsModalOpen } = useGlobalStore(state => state);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
