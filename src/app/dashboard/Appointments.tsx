@@ -261,7 +261,7 @@ const AppointmentsListComponent: React.FC<{
   };
 
   return (
-    <div className="w-ful">
+    <div className="w-full">
       {isLoadingPage ? (
         <SvgSpinner className="w-full justify-center" />
       ) : (

@@ -19,37 +19,46 @@ export default function DesktopFilters({
 }) {
   if (isDashboard)
     return (
-      <Flex layout="col-left" className="bg-white gap-2 mr-2">
-        <Flex layout="col-left" className="w-full">
-          <Text size="sm" className="mb-4 font-semibold">
-            Zona
-          </Text>
-          <ZoneFilter className="mb-8" />
-        </Flex>
-        <Flex layout="col-left" className="w-full">
-          <Text size="sm" className="mb-4 font-semibold">
-            Precio
-          </Text>
-          <PriceFilter className="mb-8" />
-        </Flex>
-        <Flex layout="col-left" className="w-full">
-          <CategorySelector className="mb-4 inner-flex" isStacked />
-        </Flex>
-        <Flex layout="col-left" className="w-full">
-          <PackTypeFilter />
-        </Flex>
-        <Flex layout="col-left" className="w-full">
-          <FilterText />
-        </Flex>
-        <Button
-          type="tertiary"
-          customStyles="group-hover:bg-hg-secondary100"
-          onClick={() => setShowDesktopFilters(!showDesktopFilters)}
+      <div className="absolute inset-0">
+        <Flex
+          layout="col-left"
+          className="bg-white gap-2 mr-2 p-4 rounded-r-2xl"
         >
-          Cerrar
-        </Button>
-      </Flex>
+          <Flex
+            layout="col-left"
+            className="h-[700px] overflow-y-auto w-full gap-8"
+          >
+            <FilterText className="mb-0" />
+            <Flex layout="col-left" className="w-full">
+              <Text size="sm" className="font-semibold">
+                Zona
+              </Text>
+              <ZoneFilter />
+            </Flex>
+            <Flex layout="col-left" className="w-full">
+              <Text size="sm" className="font-semibold">
+                Precio
+              </Text>
+              <PriceFilter />
+            </Flex>
+            <Flex layout="col-left" className="w-full">
+              <CategorySelector className="inner-flex" isStacked />
+            </Flex>
+            <Flex layout="col-left" className="w-full">
+              <PackTypeFilter />
+            </Flex>
+            <Button
+              type="tertiary"
+              customStyles="group-hover:bg-hg-secondary100"
+              onClick={() => setShowDesktopFilters(!showDesktopFilters)}
+            >
+              Cerrar
+            </Button>
+          </Flex>
+        </Flex>
+      </div>
     );
+
   return (
     <Flex layout="col-left">
       <Flex className="gap-16 items-start">

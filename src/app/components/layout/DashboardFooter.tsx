@@ -39,24 +39,23 @@ export default function DashboardFooter({
   }
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-10 bg-hg-secondary/40 backdrop-blur-sm">
-      <Flex className="gap-4 justify-start">
-        <div className="mr-auto  p-4">
-          {!hideBackButton && (
-            <Button
-              type="tertiary"
-              onClick={() => handleBackButton()}
-              customStyles="bg-hg-black text-hg-primary"
-              size="sm"
-            >
-              <SvgArrow height={16} width={16} className="rotate-180" />
-            </Button>
-          )}
-          {!hideContactButtons && <ButtonMessage />}
-        </div>
-
-        <Cart />
+    <Flex className="gap-4 justify-start">
+      <Flex className="mr-auto gap-2">
+        {!hideBackButton && (
+          <Button
+            type="tertiary"
+            onClick={() => handleBackButton()}
+            customStyles="bg-hg-black text-hg-primary"
+            size="sm"
+            className="py-4 pl-4"
+          >
+            <SvgArrow height={16} width={16} className="rotate-180" />
+          </Button>
+        )}
+        {!hideContactButtons && <ButtonMessage />}
       </Flex>
-    </footer>
+
+      <Cart />
+    </Flex>
   );
 }
