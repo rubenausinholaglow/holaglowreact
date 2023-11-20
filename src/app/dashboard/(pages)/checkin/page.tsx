@@ -24,7 +24,6 @@ export default function Page() {
   const [name, setName] = useState<string | null>(null);
   const [hour, setHour] = useState<string | null>(null);
   const [professional, setProfessional] = useState<string | null>(null);
-  const [resultScan, setResultScan] = useState<boolean | null>(null);
 
   const onScanSuccess = (props: any) => {
     if (props) {
