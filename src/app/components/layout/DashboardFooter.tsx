@@ -56,38 +56,6 @@ export default function DashboardFooter({
         </div>
 
         <Cart />
-
-        {/* <Flex className="w-1/2 justify-end items-center gap-2">
-          <Text className="text-xl font-semibold">{totalPrice} €</Text>(
-          {totalItems} ud.)
-
-
-
-          {(hasProductsDiscount || hasCartDiscount) && (
-          <Text size="xl" className="text-hg-black font-semibold mr-2">
-            {hasCartDiscount ? (
-              <>{cartTotalWithDiscount.toFixed(2)}€</>
-            ) : (
-              <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
-            )}
-          </Text>
-        )}
-        <Text
-          className={
-            hasProductsDiscount || hasCartDiscount
-              ? 'text-red-600 text-lg line-through opacity-50 font-semibold'
-              : 'text-hg-black text-xl font-semibold'
-          }
-        >
-          {productsPriceTotal.toFixed(2)}€
-        </Text>
-
-          <SvgCart
-            height={32}
-            width={32}
-            className="p-2 bg-white text-hg-black rounded-full"
-          />
-        </Flex> */}
       </Flex>
     </footer>
   );

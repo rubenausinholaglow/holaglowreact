@@ -174,35 +174,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
               productPrice={product.price}
               isCheckout={false}
             />
-            {/* {productHasDiscount && (
-              <Flex layout="row-left" className="mt-2">
-                {productCartItem.priceDiscount < productCartItem.price &&
-                  productCartItem.priceDiscount !== 0 && (
-                    <Flex
-                      layout="row-left"
-                      className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                      onClick={() => removeItemDiscount(product.uniqueId, '€')}
-                    >
-                      <Text size="xs">
-                        total: {productCartItem.priceDiscount}€
-                      </Text>
-                      <SvgClose height={12} width={12} className="ml-1" />
-                    </Flex>
-                  )}
-                {productCartItem.percentageDiscount > 0 && (
-                  <Flex
-                    layout="row-left"
-                    className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                    onClick={() => removeItemDiscount(product.uniqueId, '%')}
-                  >
-                    <Text size="xs">
-                      -{productCartItem.percentageDiscount}%
-                    </Text>
-                    <SvgClose height={12} width={12} className="ml-1" />
-                  </Flex>
-                )}
-              </Flex>
-            )} */}
           </>
         )}
       </Flex>

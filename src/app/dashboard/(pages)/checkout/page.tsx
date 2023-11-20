@@ -143,9 +143,7 @@ const Page = () => {
     >
       <Flex className="h-screen w-full">
         <div className="w-[55%] h-full p-4">
-          {budgetId && !isBudgetModified && (
-            /* !isBudgetModified && !isLoading && */ <PaymentModule />
-          )}
+          {budgetId && !isBudgetModified && <PaymentModule />}
         </div>
 
         <div className="w-[45%] bg-white h-full">
@@ -205,34 +203,6 @@ const Page = () => {
           </Flex>
         </div>
       </Flex>
-
-      {/* <Flex layout="row-left" className="items-start">
-        <Container>
-          <Flex layout="col-left" className="w-1/2 pl-8 shrink-0 relative">
-            <Flex layout="col-left" className="gap-2 w-full mt-8">
-              <Button
-                className="w-full"
-                size="md"
-                target="_blank"
-                href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
-                type="tertiary"
-              >
-                <span className="font-semibold">Agendar Cita</span>
-              </Button>
-              <Button size="md" className="w-full mt-4" onClick={cancelBudget}>
-                {isBudgetModified || budgetId
-                  ? 'Cancelar Presupuesto'
-                  : 'Volver al dashboard'}
-              </Button>
-              {!isBudgetModified && (
-                <PepperWidget
-                  totalPrice={Number(totalPriceToShow)}
-                ></PepperWidget>
-              )}
-            </Flex>
-          </Flex>
-        </Container>
-      </Flex> */}
     </MainLayout>
   );
 };

@@ -356,37 +356,6 @@ export const PaymentModule = () => {
         </Accordion>
       )}
 
-      {/* {paymentItems.map(method => (
-          <Button
-            size="sm"
-            key={method.key}
-            type="tertiary"
-            className={
-              onLoad && activePaymentMethod != method.key
-                ? 'opacity-25'
-                : 'opacity-100'
-            }
-            target="_blank"
-            onClick={() => handleOnButtonPaymentClick(method.key)}
-          >
-            {method.label}
-          </Button>
-        ))} */}
-
-      {/* {paymentItems.map(method =>
-        activePaymentMethod === method.key ? (
-          <PaymentClient
-            key={method.key}
-            paymentBank={method.paymentBank}
-            paymentMethod={method.paymentMethod}
-            onPaymentClick={() => {
-              setActivePaymentMethod('');
-              setOnLoad(false);
-            }}
-          ></PaymentClient>
-        ) : null
-      )} */}
-
       {paymentList.length > 0 && (
         <Flex
           layout="col-left"

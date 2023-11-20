@@ -85,29 +85,6 @@ export function Cart() {
     </Flex>
   );
 }
-{
-  /* <div className="">
-  <Container>
-    <Flex layout="row-left">
-      <Flex layout="col-left">
-        <Text size="md" className="font-semibold text-hg-secondary mb-2">
-          Productos seleccionados:
-        </Text>
-        <ul className="flex flex-col gap-1">
-          {cart?.map(product => (
-            <CartItem key={product.id} product={product} />
-          ))}
-        </ul>
-      </Flex>
-      <CartTotal />
-      <Button type="primary" href="checkout">
-        Continuar
-      </Button>
-    </Flex>
-  </Container>
-</div>
-*/
-}
 
 export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
   const cart = useCartStore(state => state.cart);
@@ -143,92 +120,5 @@ export function CartTotal({ isCheckout }: { isCheckout?: boolean }) {
     productsPriceTotalWithDiscounts
   );
 
-  return (
-    <Flex className="gap-2">
-      {/* <Text className="text-xl font-semibold">{cartTotalWithDiscount} €</Text>(
-          {totalItems} ud.)
- */}
-      {/* {(hasProductsDiscount || hasCartDiscount) && (
-        <Text size="xl" className="text-hg-black font-semibold mr-2">
-          {hasCartDiscount ? (
-            <>{cartTotalWithDiscount.toFixed(2)}€</>
-          ) : (
-            <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
-          )}
-        </Text>
-      )}
-      OLAKEAAAAAAAAASE
-      <Text
-        className={
-          hasProductsDiscount || hasCartDiscount
-            ? 'text-red-600 text-lg line-through opacity-50 font-semibold'
-            : 'text-hg-black text-xl font-semibold'
-        }
-      >
-        {productsPriceTotal.toFixed(2)}€
-      </Text> */}
-    </Flex>
-  );
-}
-
-{
-  /* <Flex
-  layout="col-left"
-  className={`ml-auto text-hg-black ${isCheckout && 'w-full'}`}
->
-  <Flex layout={isCheckout ? 'col-left' : 'row-left'} className={`mr-4`}>
-    {(hasProductsDiscount || hasCartDiscount) && (
-      <Text size="xl" className="text-hg-black font-semibold mr-2">
-        {hasCartDiscount ? (
-          <>{cartTotalWithDiscount.toFixed(2)}€</>
-        ) : (
-          <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
-        )}
-      </Text>
-    )}
-    <Text
-      className={
-        hasProductsDiscount || hasCartDiscount
-          ? 'text-red-600 text-lg line-through opacity-50 font-semibold'
-          : 'text-hg-black text-xl font-semibold'
-      }
-    >
-      {productsPriceTotal.toFixed(2)}€
-    </Text>
-  </Flex>
-  {hasCartDiscount && (
-    <Flex layout="row-left" className="mt-2 mb-6">
-      {manualPrice > 0 && (
-        <Flex
-          layout="row-left"
-          className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-          onClick={() => applyCartDiscount(0, 'total')}
-        >
-          <Text size="xs">total: {manualPrice}€</Text>
-          <SvgClose height={12} width={12} className="ml-1" />
-        </Flex>
-      )}
-      {percentageDiscount > 0 && (
-        <Flex
-          layout="row-left"
-          className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-          onClick={() => applyCartDiscount(0, '%')}
-        >
-          <Text size="xs">- {percentageDiscount}%</Text>
-          <SvgClose height={12} width={12} className="ml-1" />
-        </Flex>
-      )}
-      {priceDiscount > 0 && (
-        <Flex
-          layout="row-left"
-          className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-          onClick={() => applyCartDiscount(0, '€')}
-        >
-          <Text size="xs">- {priceDiscount}€</Text>
-          <SvgClose height={12} width={12} className="ml-1" />
-        </Flex>
-      )}
-    </Flex>
-  )}
-</Flex> */
+  return <Flex className="gap-2">{}</Flex>;
 }
