@@ -89,7 +89,7 @@ export function Cart() {
       </Flex>
       <Flex className="gap-2 z-10">
         <Text className="text-lg font-semibold">
-          Total: {productsPriceTotal.toFixed(2)} €
+          Total: {cartTotalWithDiscount.toFixed(2)} €
         </Text>
         <SvgCart
           height={32}

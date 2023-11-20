@@ -41,7 +41,7 @@ export default function ProductCard({
   const pathName = usePathname();
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
-  const { setHighlightProduct } = useCartStore(state => state);
+  const { setHighlightProduct, cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
 
   const LANDINGS: { [key: string]: string } = {
@@ -50,6 +50,19 @@ export default function ProductCard({
 
   const isLanding = Object.keys(LANDINGS).includes(usePathname());
 
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(product),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
   useEffect(() => {
     if (!isEmpty(product.discounts)) {
       setDiscountedPrice(getDiscountedPrice(product));
@@ -61,7 +74,9 @@ export default function ProductCard({
   const productElement = (
     <div
       className="flex flex-col h-full pt-4 overflow-hidden"
-      onClick={() => isDashboard && setHighlightProduct(product)}
+      onClick={() => {
+        setHighlightProduct(product);
+      }}
     >
       <Flex layout="col-left" className="">
         <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
@@ -167,6 +182,7 @@ export default function ProductCard({
                 onClick={e => {
                   e.stopPropagation();
                   addToCart(product as CartItem);
+                  setPendingDiscount(true);
                 }}
               >
                 <p className="mr-2">Añadir </p>
