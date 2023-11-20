@@ -68,7 +68,10 @@ export default function MainLayout({
   if (isCheckout) {
     return (
       <>
-        <CheckoutHeader loadCookies={hideHeader && hideFooter} />
+        <CheckoutHeader
+          loadCookies={hideHeader && hideFooter}
+          hideHeader={hideHeader}
+        />
         {children}
         <Analytics />
       </>

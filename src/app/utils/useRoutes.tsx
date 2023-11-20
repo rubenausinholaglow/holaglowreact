@@ -34,6 +34,7 @@ const useRoutes = () => {
       menu: '/dashboard/menu',
       home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
       checkOut: '/dashboard/remoteControl/Payment',
+      checkIn: '/dashboard/checkin',
     },
   };
 };

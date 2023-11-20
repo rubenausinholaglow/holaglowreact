@@ -16,12 +16,16 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
+import { useRouter } from 'next/navigation';
 
 export default function Confirmation({
   appointment,
+  isDashboard,
 }: {
   appointment?: Appointment;
+  isDashboard?: boolean;
 }) {
+  const router = useRouter();
   const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
@@ -70,6 +74,14 @@ export default function Confirmation({
       treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
+
+    if (isDashboard) {
+      const timerId = setTimeout(() => {
+        router.push(ROUTES.dashboard.checkIn);
+      }, 10000);
+
+      return () => clearTimeout(timerId);
+    }
   }, []);
 
   useEffect(() => {
@@ -213,20 +225,22 @@ export default function Confirmation({
             )}
           </div>
           <div className="pt-12">
-            <a href="/tratamientos">
-              <Button
-                type="tertiary"
-                size="md"
-                className="hidden md:inline"
-                customStyles="group-hover:bg-hg-secondary100"
-                href={ROUTES.treatments}
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Ver tratamientos</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
-            </a>
+            {!isDashboard && (
+              <a href="/tratamientos">
+                <Button
+                  type="tertiary"
+                  size="md"
+                  className="hidden md:inline"
+                  customStyles="group-hover:bg-hg-secondary100"
+                  href={ROUTES.treatments}
+                >
+                  <Flex layout="row-center">
+                    <span className="font-semibold">Ver tratamientos</span>
+                    <SvgArrow height={18} width={18} className="ml-2" />
+                  </Flex>
+                </Button>
+              </a>
+            )}
           </div>
         </div>
 

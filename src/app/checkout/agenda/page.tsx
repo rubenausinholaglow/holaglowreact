@@ -5,6 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { Appointment } from '@interface/appointment';
 import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -24,7 +25,13 @@ import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
-export default function Agenda() {
+const Agenda: React.FC<{
+  isDashboard?: boolean;
+  setConfirmationClick: React.Dispatch<React.SetStateAction<boolean>>;
+  setAppointmentClick: React.Dispatch<
+    React.SetStateAction<Appointment | undefined>
+  >;
+}> = ({ isDashboard, setConfirmationClick, setAppointmentClick }) => {
   const router = useRouter();
 
   const { user } = useGlobalPersistedStore(state => state);
@@ -103,7 +110,7 @@ export default function Agenda() {
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
-        selectedClinic?.flowwwId || ''
+          selectedClinic?.flowwwId || ''
         ).then(data => {
           callbackMonthAvailability(data);
         });
@@ -156,7 +163,12 @@ export default function Agenda() {
           },
           previous: previousAppointment,
         }).then(x => {
-          router.push('/checkout/confirmation');
+          if (isDashboard) {
+            setAppointmentClick(x);
+            setConfirmationClick(true);
+          } else {
+            router.push('/checkout/confirmation');
+          }
         });
       } else if (user) {
         setLoadingDays(true);
@@ -170,7 +182,12 @@ export default function Agenda() {
           selectedPacksTreatments!,
           analyticsMetrics
         ).then(x => {
-          router.push('/checkout/confirmation');
+          if (isDashboard) {
+            setAppointmentClick(x as unknown as Appointment);
+            setConfirmationClick(true);
+          } else {
+            router.push('/checkout/confirmation');
+          }
         });
       } else {
         router.push('/checkout/contactform');
@@ -261,7 +278,7 @@ export default function Agenda() {
   };
 
   return (
-    <MainLayout isCheckout>
+    <MainLayout isCheckout hideHeader={isDashboard}>
       <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
         <Title size="xl" className="font-semibold">
           Selecciona día y hora
@@ -566,4 +583,6 @@ export default function Agenda() {
       setDateToCheck(dateToCheck.add(1, 'month'));
     }
   }
-}
+};
+
+export default Agenda;

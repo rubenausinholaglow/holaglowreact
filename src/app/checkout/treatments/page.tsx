@@ -22,7 +22,15 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { fetchProduct } from 'utils/fetch';
 
-export default function ClinicsCheckout() {
+interface ClinicsCheckoutProps {
+  isDashboard?: boolean;
+  setDisplayAgenda: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({
+  isDashboard,
+  setDisplayAgenda,
+}) => {
   const router = useRouter();
   const ROUTES = useRoutes();
 
@@ -69,7 +77,7 @@ export default function ClinicsCheckout() {
   }, [stateProducts]);
 
   return (
-    <MainLayout isCheckout>
+    <MainLayout isCheckout hideHeader={isDashboard}>
       <Container className="mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
           <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
@@ -81,7 +89,11 @@ export default function ClinicsCheckout() {
                   className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
                   onClick={() => {
                     setSelectedTreatments([PVProduct] as Product[]);
-                    router.push(ROUTES.checkout.schedule);
+                    if (isDashboard) {
+                      setDisplayAgenda(true);
+                    } else {
+                      router.push(ROUTES.checkout.schedule);
+                    }
                   }}
                 >
                   <Flex className="">
@@ -140,7 +152,11 @@ export default function ClinicsCheckout() {
                                   onClick={() => {
                                     setSelectedProduct(product);
                                     setSelectedTreatments([product]);
-                                    router.push(ROUTES.checkout.schedule);
+                                    if (isDashboard) {
+                                      setDisplayAgenda(true);
+                                    } else {
+                                      router.push(ROUTES.checkout.schedule);
+                                    }
                                   }}
                                 >
                                   <div className="mr-4">
@@ -177,4 +193,6 @@ export default function ClinicsCheckout() {
       </Container>
     </MainLayout>
   );
-}
+};
+
+export default ClinicsCheckout;
