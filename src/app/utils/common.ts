@@ -73,10 +73,12 @@ export function useElementOnScreen(options: IntersectionOptions) {
 }
 
 export function getDiscountedPrice(product: Product) {
-  const totalDiscountSum = product.discounts.reduce(
-    (total, discount) => total + discount.totalDiscount,
-    0
-  );
-
+  let totalDiscountSum = 0;
+  if (product.discounts) {
+    totalDiscountSum = product.discounts.reduce(
+      (total, discount) => total + discount.totalDiscount,
+      0
+    );
+  }
   return product.price - totalDiscountSum;
 }

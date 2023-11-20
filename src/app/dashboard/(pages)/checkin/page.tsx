@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import TextInputField from '@components/TextInputField';
 import { messageService } from '@services/MessageService';
+import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgScanQR } from 'icons/Icons';
-import { SvgArrow, SvgCheck } from 'icons/IconsDs';
+import { SvgArrow, SvgCheck, SvgSadIcon } from 'icons/IconsDs';
 import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
@@ -45,6 +46,7 @@ export default function Page() {
     isLoading,
     checkIn,
     isChecked,
+    showAgenda,
   } = useFormHook(onScanSuccess);
 
   const startScan = () => {
@@ -69,6 +71,7 @@ export default function Page() {
       hideBackButton
       hideContactButtons
       hideProfessionalSelector
+      hideBottomBar
     >
       <CheckHydration>
         <Flex layout="col-center" className="w-full">
@@ -81,7 +84,7 @@ export default function Page() {
                   professional={professional}
                 />
               ) : (
-                <BadRequestSection />
+                <>{showAgenda ? <AgendaSection /> : <BadRequestSection />}</>
               )}
             </>
           ) : (
@@ -155,7 +158,7 @@ function WelcomeSection({ name, hour, professional }: any) {
 function BadRequestSection() {
   return (
     <Flex className="flex-col items-center">
-      <SvgCheck
+      <SvgSadIcon
         width={96}
         height={96}
         className="text-hg-primary bg-hg-secondary rounded-full"
@@ -163,10 +166,41 @@ function BadRequestSection() {
       <Title className="align-center font-bold mt-8" size="xl">
         ¡Ups!
       </Title>
-      <Title className="align-center font-bold">Algo ha salido mal</Title>
-      <Text size="lg" className="align-center mt-8">
-        Por favor, inténtalo de nuevo.
+      <Title className="align-center font-bold">No te hemos encontrado</Title>
+      <Text size="lg" className="align-center mt-8 mb-8">
+        Por favor, registrate y agenda una cita.
       </Text>
+      <RegistrationForm />
+      <Button
+        type="tertiary"
+        isSubmit
+        className="align-center"
+        customStyles="bg-hg-primary mt-8"
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
+        Volver
+      </Button>
+    </Flex>
+  );
+}
+
+function AgendaSection() {
+  return (
+    <Flex className="flex-col items-center">
+      <SvgSadIcon
+        width={96}
+        height={96}
+        className="text-hg-primary bg-hg-secondary rounded-full"
+      />
+      <Title className="align-center font-bold mt-8" size="xl">
+        ¡Ups!
+      </Title>
+      <Title className="align-center font-bold">
+        No tienes ninguna cita prevista
+      </Title>
+      Agenda
       <Button
         type="tertiary"
         isSubmit
