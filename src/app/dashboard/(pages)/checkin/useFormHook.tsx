@@ -40,7 +40,7 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [checkIn, setCheckIn] = useState<string | null>(null);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState<boolean | undefined>(undefined);
 
   const validateForm = () => {
     const newErrors: ValidationErrors = {};
@@ -80,8 +80,8 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
 
     if (!validateForm()) {
       setIsLoading(false);
-      setIsChecked(false);
       setCheckIn(CHECK_IN_INCORRECT);
+      setIsChecked(true);
       return;
     }
 
@@ -107,11 +107,12 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
           clinicId: appointmentInfo.clinic.id,
         };
         onScanSuccess(props);
+        setIsChecked(true);
       } catch (error: any) {
         Bugsnag.notify(error);
       }
     } else {
-      setIsChecked(false);
+      setIsChecked(true);
       setCheckIn(CHECK_IN_INCORRECT);
     }
 

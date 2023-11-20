@@ -24,6 +24,7 @@ export default function Page() {
   const [name, setName] = useState<string | null>(null);
   const [hour, setHour] = useState<string | null>(null);
   const [professional, setProfessional] = useState<string | null>(null);
+  const [resultScan, setResultScan] = useState<boolean | null>(null);
 
   const onScanSuccess = (props: any) => {
     if (props) {
@@ -72,12 +73,18 @@ export default function Page() {
     >
       <CheckHydration>
         <Flex layout="col-center" className="w-full">
-          {name ? (
-            <WelcomeSection
-              name={name}
-              hour={hour}
-              professional={professional}
-            />
+          {isChecked ? (
+            <>
+              {name ? (
+                <WelcomeSection
+                  name={name}
+                  hour={hour}
+                  professional={professional}
+                />
+              ) : (
+                <BadRequestSection />
+              )}
+            </>
           ) : (
             <>
               <Flex layout="col-center" className="gap-4 mb-12">
@@ -148,13 +155,13 @@ function WelcomeSection({ name, hour, professional }: any) {
 
 function BadRequestSection() {
   return (
-    <Flex className="flex-col">
+    <Flex className="flex-col items-center">
       <SvgCheck
         width={96}
         height={96}
         className="text-hg-primary bg-hg-secondary rounded-full"
       />
-      <Title className="align-center font-bold" size="xl">
+      <Title className="align-center font-bold mt-8" size="xl">
         ¡Ups!
       </Title>
       <Title className="align-center font-bold">Algo ha salido mal</Title>
@@ -164,8 +171,11 @@ function BadRequestSection() {
       <Button
         type="tertiary"
         isSubmit
-        className="ml-auto"
-        customStyles="bg-hg-primary"
+        className="align-center"
+        customStyles="bg-hg-primary mt-8"
+        onClick={() => {
+          window.location.reload();
+        }}
       >
         Volver
       </Button>
