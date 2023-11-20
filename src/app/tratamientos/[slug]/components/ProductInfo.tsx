@@ -169,15 +169,15 @@ export default function ProductInfo({ product }: { product: Product }) {
               </span>
             </Button>
           ) : (
-            <Flex className="bg-white inline-flex rounded-3xl gap-4 px-2 py-2 mb-2 justify-start flex-row">
+            <Flex className="bg-white inline-flex rounded-full gap-2 pl-4 pr-2 py-2 mb-2 ">
+              <span className="font-semibold text-hg-secondary text-xl">
+                {discountedPrice ? discountedPrice : product.price} €
+              </span>
               {discountedPrice && (
                 <span className="inline-block line-through font-normal mr-1">
                   {product.price} €
                 </span>
               )}
-              <span className="font-semibold text-lg">
-                {discountedPrice ? discountedPrice : product.price} €
-              </span>
               <Quantifier
                 handleUpdateQuantity={function handleUpdateQuantity(
                   operation: Operation

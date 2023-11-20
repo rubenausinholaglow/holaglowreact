@@ -2,28 +2,26 @@
 
 import ButtonMessage from '@components/ui/ButtonMessage';
 import { Cart } from 'app/dashboard/(pages)/budgets/minicart/Cart';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
-import { SvgArrow, SvgCart } from 'icons/IconsDs';
+import { SvgArrow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardFooter({
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
+  isCheckout = false,
 }: {
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
+  isCheckout?: boolean;
 }) {
   const router = useRouter();
   const { remoteControl, storedBoxId, storedClinicId } =
     useGlobalPersistedStore(state => state);
-
-  const { totalItems, totalPrice } = useCartStore(state => state);
 
   function handleBackButton() {
     if (window.location.pathname == '/dashboard/menu/') {

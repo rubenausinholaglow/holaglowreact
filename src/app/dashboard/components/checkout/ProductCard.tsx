@@ -22,22 +22,13 @@ interface Props {
 }
 
 export default function ProductCard({ product, isCheckout }: Props) {
-  const {
-    cart,
-    removeFromCart,
-    addItemToCart,
-    setHighlightProduct,
-    removeItemDiscount,
-  } = useCartStore(state => state);
-
-  const { isModalOpen, setIsModalOpen } = useGlobalStore(state => state);
+  const { cart, removeFromCart, removeItemDiscount } = useCartStore(
+    state => state
+  );
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
-  );
   const productCartItem = cart.filter(
     item =>
       item.uniqueId === product.uniqueId &&
@@ -46,7 +37,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
   const productHasDiscount = !isEmpty(productCartItem);
   const productHasPromoDiscount = !isEmpty(product.discounts);
-  const productPricewithPromoDiscount = getDiscountedPrice(product);
   const [pendingDiscount, setPendingDiscount] = useState(false);
 
   useEffect(() => {
@@ -61,13 +51,17 @@ export default function ProductCard({ product, isCheckout }: Props) {
   }, [pendingDiscount]);
   return (
     <Flex layout="col-left" className="border-b border-hg-black">
-      <Flex className="w-full justify-between items-start p-4">
+      <Flex className="w-full justify-between items-start px-4 pt-4">
         <div>
           <Text className="font-semibold text-md">
             {product.title}{' '}
-            {product.sessions > 1 && !product.isPack && 'x' + product.sessions}
+            {!isCheckout &&
+              product.sessions > 1 &&
+              !product.isPack &&
+              'x' + product.sessions}
           </Text>
-          {product.description && (
+
+          {product.description && !isCheckout && (
             <Text size="sm" className="text-hg-black500">
               {product.description}
             </Text>
@@ -81,35 +75,37 @@ export default function ProductCard({ product, isCheckout }: Props) {
           onClick={() => removeFromCart(product)}
         />
       </Flex>
-      <Flex className="p-4 w-full">
+      <Flex className="px-4 pb-4 w-full">
         {(productHasDiscount || productHasPromoDiscount) && (
-          <Text className="text-hg-secondary font-semibold text-2xl mr-2 self-end">
+          <Text className="text-hg-secondary font-semibold text-xl mr-2 self-end">
             {Number(product.priceWithDiscount).toFixed(2)}€
           </Text>
         )}
 
         <Text
           size="lg"
-          className={`font-semibold text-red self-end mb-1
+          className={`self-end mb-1
             ${
               productHasDiscount || productHasPromoDiscount
-                ? 'text-hg-black500 text-md text line-through opacity-50'
-                : 'text-hg-secondary text-lg'
+                ? 'text-hg-black500 text-md line-through'
+                : 'text-hg-secondary text-xl font-semibold'
             }`}
         >
           {product.price.toFixed(2)}€
         </Text>
 
-        <SvgArrow
-          height={28}
-          width={28}
-          className={`ml-auto transition-transform border border-hg-black rounded-full cursor-pointer p-1.5 ${
-            showDiscountForm
-              ? 'rotate-90 bg-hg-secondary100 border-none'
-              : 'rotate-0'
-          }`}
-          onClick={() => setShowDiscountBlock(!showDiscountForm)}
-        />
+        {!isCheckout && (
+          <SvgArrow
+            height={28}
+            width={28}
+            className={`ml-auto transition-transform border border-hg-black rounded-full cursor-pointer p-1.5 ${
+              showDiscountForm
+                ? 'rotate-90 bg-hg-secondary100 border-none'
+                : 'rotate-0'
+            }`}
+            onClick={() => setShowDiscountBlock(!showDiscountForm)}
+          />
+        )}
       </Flex>
 
       {showDiscountForm && (

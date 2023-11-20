@@ -36,7 +36,7 @@ export const Quantifier: FunctionComponent<Props> = ({
   return (
     <Flex
       layout="row-left"
-      className="bg-hg-secondary500 rounded-3xl gap-1 p-1 "
+      className="bg-hg-secondary500 rounded-3xl gap-1 py-1 px-2"
     >
       <Button
         type="tertiary"
@@ -54,7 +54,7 @@ export const Quantifier: FunctionComponent<Props> = ({
         max=""
         value={value}
         onChange={(e: any) => setValue(parseInt(e.target.value))}
-        className="mx-2 py-2 px-2 appearance-none"
+        className="mx-2 py-2 px-2 appearance-none "
         style={{ WebkitAppearance: 'none', margin: 0 }}
       >
         {value}

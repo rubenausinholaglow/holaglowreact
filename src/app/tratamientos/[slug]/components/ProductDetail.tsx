@@ -153,7 +153,7 @@ export default function ProductDetailPage({
         )}
       </>
     );
-  } else {
+  } else if (productId == '') {
     return <PsrpPage slug={params.slug} isDashboard={false} />;
   }
 }
