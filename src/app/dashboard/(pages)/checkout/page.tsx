@@ -4,10 +4,8 @@ import Bugsnag from '@bugsnag/js';
 import CheckoutTotal from '@components/checkout/CheckoutTotal';
 import ProductCard from '@components/checkout/ProductCard';
 import { Budget, StatusBudget } from '@interface/budget';
-import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
-import { INITIAL_STATE } from '@utils/constants';
 import { ERROR_POST } from '@utils/textConstants';
 import { applyDiscountToCart } from '@utils/utils';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -16,11 +14,9 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 import { SvgBag } from 'icons/IconsDs';
-import { useRouter } from 'next/navigation';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
 import { PaymentModule } from './components/payment/Payments';
-import { usePaymentList } from './components/payment/payments/usePaymentList';
 
 const Page = () => {
   const cart = useCartStore(state => state.cart);
@@ -29,7 +25,6 @@ const Page = () => {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [clientToken, setClientToken] = useState<string | ''>('');
@@ -106,12 +101,6 @@ const Page = () => {
     }
   };
 
-  function cancelBudget() {
-    localStorage.removeItem('BudgetId');
-    usePaymentList.setState(INITIAL_STATE_PAYMENT);
-    useCartStore.setState(INITIAL_STATE);
-    router.push('/dashboard/menu');
-  }
   function cartTotalPrice() {
     let productsPriceTotalWithDiscounts = 0;
 

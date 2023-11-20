@@ -6,7 +6,6 @@ import { messageService } from '@services/MessageService';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgHolaglowHand, SvgStethoscope } from 'icons/Icons';
-import { SvgUserSquare } from 'icons/IconsDs';
 
 import Notification from './Notification';
 

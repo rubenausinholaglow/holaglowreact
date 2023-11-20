@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ClinicProfessional } from '@components/ClinicProfessional';
-import ButtonMessage from '@components/ui/ButtonMessage';
 import { useMessageSocket } from '@components/useMessageSocket';
 import { EventTypes } from '@interface/FrontEndMessages';
 import { MessageSocket, MessageType } from '@interface/messageSocket';
 import SocketService from '@services/SocketService';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import dayjs from 'dayjs';
-import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
-import { SvgArrowSmallLeft } from 'icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgHolaglow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
-import { removeEmitHelper } from 'typescript';
 
 import DashboardFooter from './DashboardFooter';
 

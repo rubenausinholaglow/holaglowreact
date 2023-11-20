@@ -4,7 +4,7 @@ import ProductDetail from 'app/tratamientos/[slug]/components/ProductDetail';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
-import { SvgCart, SvgCross } from 'icons/IconsDs';
+import { SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../stores/userCartStore';

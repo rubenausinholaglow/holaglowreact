@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Filters } from '@components/Filters';
-import { Product } from '@interface/product';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import ProductService from '@services/ProductService';
 import { filterItems } from '@utils/filterItems';
 import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import CategorySelector from 'app/components/filters/CategorySelector';
@@ -12,7 +9,6 @@ import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
 import ProductCard from 'app/components/product/ProductCard';
 import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -23,7 +19,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
-import { SvgCross, SvgFilters } from 'icons/IconsDs';
+import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
@@ -159,19 +155,6 @@ export default function PsrpPage({
                 />
               </div>
 
-              {/* <div
-                className={`transition-all bg-white rounded-r-xl py-6 px-4 mt-10 left-0 top-0 z-10 w-2/5 ${
-                  showDashboardFilters
-                    ? 'translate-0 sticky'
-                    : '-translate-x-full absolute'
-                }`}
-              >
-                <DesktopFilters
-                  showDesktopFilters={showDashboardFilters}
-                  setShowDesktopFilters={setShowDashboardFilters}
-                  isDashboard={true}
-                />
-              </div> */}
               <ul
                 className={`transition-all px-4 grid gap-4 ${
                   showDashboardFilters

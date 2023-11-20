@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import TextInputField from '@components/TextInputField';
 import { Appointment } from '@interface/appointment';
-import { Clinic } from '@interface/clinic';
 import { messageService } from '@services/MessageService';
 import Agenda from 'app/checkout/agenda/page';
 import Confirmation from 'app/checkout/confirmation/components/Confirmation';

@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { CartItem, Product } from '@interface/product';
-import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
-import { useGlobalStore } from 'app/stores/globalStore';
 import {
   getDiscountedPrice,
   getProductCardColor,

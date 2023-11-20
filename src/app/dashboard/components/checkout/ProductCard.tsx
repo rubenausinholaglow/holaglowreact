@@ -4,18 +4,14 @@ import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import ProductDiscountForm from 'app/dashboard/(pages)/checkout/components/ProductDiscountForm';
-import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { getDiscountedPrice } from 'app/utils/common';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgAngleDown, SvgClose } from 'icons/Icons';
-import { SvgArrow, SvgGlow } from 'icons/IconsDs';
+import { SvgClose } from 'icons/Icons';
+import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import Image from 'next/image';
 
-const DEFAULT_IMG_SRC = '/images/product/holaglowProduct.png?1';
 interface Props {
   product: CartItem;
   isCheckout?: boolean;
