@@ -25,13 +25,15 @@ import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
-const Agenda: React.FC<{
+export default function Agenda({
+  isDashboard,
+  setConfirmationClick,
+  setAppointmentClick,
+}: {
   isDashboard?: boolean;
-  setConfirmationClick: React.Dispatch<React.SetStateAction<boolean>>;
-  setAppointmentClick: React.Dispatch<
-    React.SetStateAction<Appointment | undefined>
-  >;
-}> = ({ isDashboard, setConfirmationClick, setAppointmentClick }) => {
+  setConfirmationClick: boolean;
+  setAppointmentClick: boolean;
+}) {
   const router = useRouter();
 
   const { user } = useGlobalPersistedStore(state => state);
@@ -123,6 +125,59 @@ const Agenda: React.FC<{
           callbackMonthAvailability(data);
         });
       }
+    }
+  }
+
+  function callbackGetSlots(data: Slot[]) {
+    const hours = Array<Slot>();
+    const morning = Array<Slot>();
+    const afternoon = Array<Slot>();
+    data.forEach(x => {
+      const hour = x.startTime.split(':')[0];
+      const minutes = x.startTime.split(':')[1];
+      if (
+        (minutes == '00' || minutes == '30') &&
+        !(hour == '10' && minutes == '00')
+      ) {
+        hours.push(x);
+        if (parseInt(hour) < 16) {
+          morning.push(x);
+        } else afternoon.push(x);
+      }
+    });
+    setMorningHours(morning);
+    setAfternoonHours(afternoon);
+    window.scrollTo({
+      top: 425,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  function callbackMonthAvailability(data: DayAvailability[]) {
+    const availability = availableDates ?? [];
+    const today = dayjs();
+    data.forEach((x: any) => {
+      const date = dayjs(x.date);
+      if (
+        availability.length < maxDays &&
+        (date.isAfter(today) || date.isSame(today, 'day')) &&
+        x.availability
+      ) {
+        availability.push(x);
+      }
+    });
+    setAvailableDates(availability);
+    if (!selectedDay) {
+      setSelectedDay(dayjs(availability[0].date));
+    } else {
+      setSelectedDay(selectedDay);
+    }
+    setLoadingMonth(false);
+    if (availability.length == maxDays)
+      setMaxDay(dayjs(availability[availability.length - 1].date));
+    else {
+      setDateToCheck(dateToCheck.add(1, 'month'));
     }
   }
 
@@ -530,59 +585,4 @@ const Agenda: React.FC<{
       </Container>
     </MainLayout>
   );
-
-  function callbackGetSlots(data: Slot[]) {
-    const hours = Array<Slot>();
-    const morning = Array<Slot>();
-    const afternoon = Array<Slot>();
-    data.forEach(x => {
-      const hour = x.startTime.split(':')[0];
-      const minutes = x.startTime.split(':')[1];
-      if (
-        (minutes == '00' || minutes == '30') &&
-        !(hour == '10' && minutes == '00')
-      ) {
-        hours.push(x);
-        if (parseInt(hour) < 16) {
-          morning.push(x);
-        } else afternoon.push(x);
-      }
-    });
-    setMorningHours(morning);
-    setAfternoonHours(afternoon);
-    window.scrollTo({
-      top: 425,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }
-
-  function callbackMonthAvailability(data: DayAvailability[]) {
-    const availability = availableDates ?? [];
-    const today = dayjs();
-    data.forEach((x: any) => {
-      const date = dayjs(x.date);
-      if (
-        availability.length < maxDays &&
-        (date.isAfter(today) || date.isSame(today, 'day')) &&
-        x.availability
-      ) {
-        availability.push(x);
-      }
-    });
-    setAvailableDates(availability);
-    if (!selectedDay) {
-      setSelectedDay(dayjs(availability[0].date));
-    } else {
-      setSelectedDay(selectedDay);
-    }
-    setLoadingMonth(false);
-    if (availability.length == maxDays)
-      setMaxDay(dayjs(availability[availability.length - 1].date));
-    else {
-      setDateToCheck(dateToCheck.add(1, 'month'));
-    }
-  }
-};
-
-export default Agenda;
+}
