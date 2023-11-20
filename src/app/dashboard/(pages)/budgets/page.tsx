@@ -11,7 +11,6 @@ import PsrpPage from 'app/tratamientos/psrp';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
-import { isEmpty } from 'lodash';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { useCartStore } from './stores/userCartStore';
