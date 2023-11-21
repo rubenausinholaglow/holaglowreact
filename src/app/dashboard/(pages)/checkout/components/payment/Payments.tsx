@@ -132,25 +132,25 @@ export const PaymentModule = () => {
 
     if (existingPayment) {
       switch (payment.paymentStatus) {
-        case 'Rejected':
+        case 2:
           setPaymentStatus(prevPaymentStatus => ({
             ...prevPaymentStatus,
             [existingPayment.id]: StatusPayment.Rejected,
           }));
           break;
-        case 'Paid':
+        case 1:
           setPaymentStatus(prevPaymentStatus => ({
             ...prevPaymentStatus,
             [existingPayment.id]: StatusPayment.Paid,
           }));
           break;
-        case 'FinancingRejected':
+        case 5:
           setPaymentStatus(prevPaymentStatus => ({
             ...prevPaymentStatus,
             [existingPayment.id]: StatusPayment.FinancingRejected,
           }));
           break;
-        case 'FinancingAccepted':
+        case 4:
           setPaymentStatus(prevPaymentStatus => ({
             ...prevPaymentStatus,
             [existingPayment.id]: StatusPayment.FinancingAccepted,

@@ -185,11 +185,11 @@ export default function PaymentInput(props: Props) {
   };
 
   const openPepper = () => {
-    //setShowPepperModal(true);
-    window.open(
+    setShowPepperModal(true);
+    /*window.open(
       'https://www.pepperspain.com/pepper/Page.aspx?__IDAPPLGN=3470',
       '_blank'
-    );
+    );*/
   };
   async function addPayment(number: any) {
     setIsLoading(true);
