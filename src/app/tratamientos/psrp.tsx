@@ -140,9 +140,9 @@ export default function PsrpPage({
                 productos
               </Text>
             </Flex>
-            <Flex className="justify-end relative w-full -mt-3 min-h-screen items-start">
+            <div className="w-full mt-9">
               <div
-                className={`transition-all bg-white rounded-r-xl mt-10 left-0 top-0 z-10 w-2/5 ${
+                className={`transition-all bg-white rounded-r-xl left-0 top-0 z-10 w-2/5 ${
                   showDashboardFilters
                     ? 'translate-0 sticky'
                     : '-translate-x-full absolute'
@@ -156,9 +156,9 @@ export default function PsrpPage({
               </div>
 
               <ul
-                className={`transition-all px-4 grid gap-4 ${
+                className={`transition-all -mt-9 px-4 grid gap-4 ${
                   showDashboardFilters
-                    ? 'grid-cols-2 w-3/5'
+                    ? 'grid-cols-2 w-3/5 ml-[40%]'
                     : 'grid-cols-3 w-full'
                 } pb-6`}
               >
@@ -176,7 +176,7 @@ export default function PsrpPage({
                   }
                 })}
               </ul>
-            </Flex>
+            </div>
           </>
         )}
       </MainLayout>

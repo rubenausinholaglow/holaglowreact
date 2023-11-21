@@ -56,7 +56,11 @@ export default function Professionals({
           productHighlighted ? '' : 'md:w-1/2'
         } md:px-0 md:flex md:flex-col md:justify-center md:items-start`}
       >
-        <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-8">
+        <Title
+          isAnimated
+          size="2xl"
+          className="text-left font-bold mb-6 md:mb-8"
+        >
           Nuestros{' '}
           <Underlined color={HOLAGLOW_COLORS['secondary']}>doctores</Underlined>
         </Title>

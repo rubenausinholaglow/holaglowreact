@@ -1,7 +1,6 @@
 import { Product } from '@interface/product';
 import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/components/common/CategoryIcon';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -10,18 +9,27 @@ import { SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
-export default function ProductHeader({ product }: { product: Product }) {
+export default function ProductHeader({
+  product,
+  isDashboard = false,
+}: {
+  product: Product;
+  isDashboard?: boolean;
+}) {
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
-  const { productHighlighted } = useCartStore(state => state);
 
   return (
     <Container
-      className={`p-0 md:px-4 gap-16 justify-between md:mb-16 ${
-        productHighlighted ? 'flex flex-row' : 'md:flex '
+      className={`p-0 md:px-4 gap-4 md:gap-16 justify-between md:mb-16 ${
+        isDashboard ? 'flex flex-row' : ''
       }`}
     >
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
-        <Title isAnimated size="2xl" className="font-bold mb-4 md:mt-8">
+        <Title
+          isAnimated
+          size="2xl"
+          className="text-left font-bold mb-4 md:mt-8"
+        >
           {product.title}
         </Title>
         <Text isAnimated className="text-hg-black500 mb-4">
@@ -44,7 +52,7 @@ export default function ProductHeader({ product }: { product: Product }) {
           </Flex>
         </AnimateOnViewport>
       </Container>
-      <div className="md:w-1/2">
+      <div className={`md:w-1/2 ${isDashboard ? 'pr-4' : ''}`}>
         <div className="relative aspect-[3/2] w-full">
           <div
             className="absolute inset-0 top-[10%] rounded-3xl"

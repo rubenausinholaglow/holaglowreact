@@ -22,39 +22,34 @@ export default function DesktopFilters({
       <div className="absolute inset-0">
         <Flex
           layout="col-left"
-          className="bg-white gap-2 mr-2 p-4 rounded-r-2xl"
+          className="bg-white p-4 rounded-r-2xl h-[80vh] overflow-y-auto w-full gap-8"
         >
-          <Flex
-            layout="col-left"
-            className="h-[700px] overflow-y-auto w-full gap-8"
-          >
-            <FilterText className="mb-0" />
-            <Flex layout="col-left" className="w-full">
-              <Text size="sm" className="font-semibold">
-                Zona
-              </Text>
-              <ZoneFilter />
-            </Flex>
-            <Flex layout="col-left" className="w-full">
-              <Text size="sm" className="font-semibold">
-                Precio
-              </Text>
-              <PriceFilter />
-            </Flex>
-            <Flex layout="col-left" className="w-full">
-              <CategorySelector className="inner-flex" isStacked />
-            </Flex>
-            <Flex layout="col-left" className="w-full">
-              <PackTypeFilter />
-            </Flex>
-            <Button
-              type="tertiary"
-              customStyles="group-hover:bg-hg-secondary100"
-              onClick={() => setShowDesktopFilters(!showDesktopFilters)}
-            >
-              Cerrar
-            </Button>
+          <FilterText className="mb-0" />
+          <Flex layout="col-left" className="w-full">
+            <Text size="sm" className="font-semibold">
+              Zona
+            </Text>
+            <ZoneFilter />
           </Flex>
+          <Flex layout="col-left" className="w-full">
+            <Text size="sm" className="font-semibold">
+              Precio
+            </Text>
+            <PriceFilter />
+          </Flex>
+          <Flex layout="col-left" className="w-full">
+            <CategorySelector isDashboard className="inner-flex" isStacked />
+          </Flex>
+          <Flex layout="col-left" className="w-full">
+            <PackTypeFilter />
+          </Flex>
+          <Button
+            type="tertiary"
+            customStyles="group-hover:bg-hg-secondary100"
+            onClick={() => setShowDesktopFilters(!showDesktopFilters)}
+          >
+            Cerrar
+          </Button>
         </Flex>
       </div>
     );
