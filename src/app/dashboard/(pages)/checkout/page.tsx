@@ -176,7 +176,7 @@ const Page = () => {
               className="w-full"
               size="md"
               target="_blank"
-              href={`https://agenda.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
+              href={`https://agenda2.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
               type="tertiary"
             >
               <span className="font-semibold">Agendar Cita</span>
