@@ -105,8 +105,6 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
     await messageService.paymentCreated(paymentCreatedRequest);
   };
 
-  console.log(paymentRequest);
-
   return (
     <Flex className="gap-1 w-full">
       <Text className="font-semibold">
