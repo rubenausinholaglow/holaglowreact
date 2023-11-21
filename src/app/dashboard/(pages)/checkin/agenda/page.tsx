@@ -1,5 +1,5 @@
 'use client';
-import Agenda from 'app/checkout/agenda/page';
+import Agenda from 'app/checkout/agenda/Agenda';
 import MainLayout from 'app/components/layout/MainLayout';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -17,7 +17,7 @@ export default function AgendaCheckIn() {
       hideProfessionalSelector
       hideBottomBar
     >
-      <Agenda isDashboard={true} />
+      <Agenda isDashboard={false} />
       <Button
         type="tertiary"
         isSubmit
