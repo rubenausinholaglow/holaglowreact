@@ -16,7 +16,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
 import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { useRouter } from 'next/navigation';
 
 export default function Confirmation({
   appointment,
@@ -25,7 +24,6 @@ export default function Confirmation({
   appointment?: Appointment;
   isDashboard?: boolean;
 }) {
-  const router = useRouter();
   const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
