@@ -101,7 +101,7 @@ export default function ProductDetailPage({
     return (
       <>
         <div className="bg-hg-cream500 rounded-t-3xl pt-8">
-          <ProductHeader product={product} />
+          <ProductHeader product={product} isDashboard={isDashboard} />
           <ProductInfo product={product} />
           {isDashboard && !product.isPack && (
             <div ref={productPriceRef as RefObject<HTMLDivElement>}>

@@ -10,7 +10,13 @@ import { SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
-export default function ProductHeader({ product }: { product: Product }) {
+export default function ProductHeader({
+  product,
+  isDashboard,
+}: {
+  product: Product;
+  isDashboard?: boolean;
+}) {
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const { productHighlighted } = useCartStore(state => state);
 
@@ -24,9 +30,17 @@ export default function ProductHeader({ product }: { product: Product }) {
         <Title isAnimated size="2xl" className="font-bold mb-4 md:mt-8">
           {product.title}
         </Title>
-        <Text isAnimated className="text-hg-black500 mb-4">
-          {product.extraInformation?.resultDescription}
-        </Text>
+        {isDashboard ? (
+          <p
+            className="mb-16"
+            dangerouslySetInnerHTML={{ __html: product?.detail }}
+          />
+        ) : (
+          <Text isAnimated className="text-hg-black500 mb-4">
+            {product.extraInformation?.resultDescription}
+          </Text>
+        )}
+
         <AnimateOnViewport>
           <Flex className="gap-2">
             {product.category.map(category => {
