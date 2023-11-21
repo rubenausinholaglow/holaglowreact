@@ -14,10 +14,9 @@ import DashboardFooter from './DashboardFooter';
 export default function DashboardLayout({
   hideBottomBar = false,
   isCheckout = false,
-  hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
-  hideCart = false,
+  showCart = false,
   children,
 }: {
   hideBottomBar?: boolean;
@@ -25,7 +24,7 @@ export default function DashboardLayout({
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
-  hideCart?: boolean;
+  showCart?: boolean;
   children: React.ReactNode;
 }) {
   const router = useRouter();
@@ -224,11 +223,7 @@ export default function DashboardLayout({
 
       {!hideBottomBar && (
         <footer className="z-10 bg-hg-secondary300">
-          <DashboardFooter
-            hideBackButton={hideBackButton}
-            hideContactButtons={hideContactButtons}
-            hideCart={hideCart}
-          />
+          <DashboardFooter showCart={showCart} />
         </footer>
       )}
     </main>

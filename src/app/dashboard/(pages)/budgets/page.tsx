@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
+import MainLayout from 'app/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -65,14 +66,14 @@ export default function Page() {
           <PsrpPage isDashboard />
         </>
       ) : (
-        <Flex layout="col-center">
+        <MainLayout isDashboard>
           <p className="mb-4">Cargando productos...</p>
           <SvgSpinner
             height={30}
             width={30}
             fill={HOLAGLOW_COLORS['primary']}
           />
-        </Flex>
+        </MainLayout>
       )}
     </Flex>
   );

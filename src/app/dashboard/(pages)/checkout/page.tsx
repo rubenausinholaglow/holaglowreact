@@ -121,13 +121,7 @@ const Page = () => {
   }
 
   return (
-    <MainLayout
-      isDashboard
-      isCheckout
-      //hideContactButtons
-      //hideProfessionalSelector
-      hideCart
-    >
+    <MainLayout isDashboard isCheckout>
       <Flex className="h-screen w-full">
         <div className="w-[55%] h-full p-4">
           {budgetId && !isBudgetModified && <PaymentModule />}

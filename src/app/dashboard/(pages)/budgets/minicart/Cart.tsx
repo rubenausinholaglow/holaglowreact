@@ -55,7 +55,7 @@ export function Cart() {
         <ul className="flex flex-col w-full ">
           {cart?.map(cartItem => (
             <li key={cartItem.uniqueId}>
-              <ProductCard isCheckout product={cartItem} />
+              <ProductCard product={cartItem} />
             </li>
           ))}
         </ul>
@@ -69,7 +69,7 @@ export function Cart() {
             size="sm"
             href={ROUTES.dashboard.checkOut}
           >
-            Continuar Compra
+            Continuar compra
           </Button>
         </Flex>
       </Flex>
@@ -83,6 +83,7 @@ export function Cart() {
             <>{productsPriceTotal.toFixed(2)}€</>
           )}
         </Text>
+
         <SvgCart
           height={32}
           width={32}

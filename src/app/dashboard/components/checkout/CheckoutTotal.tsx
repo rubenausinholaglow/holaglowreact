@@ -22,13 +22,10 @@ export default function CheckoutTotal() {
   const [showCartDiscount, setShowCartDiscount] = useState(false);
 
   let productsPriceTotal = 0;
-  if (cart) {
-    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
-  }
-
   let productsPriceTotalWithDiscounts = 0;
 
   if (cart) {
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
     productsPriceTotalWithDiscounts = cart.reduce(
       (acc, product) => acc + Number(product.priceWithDiscount),
       0
@@ -55,15 +52,6 @@ export default function CheckoutTotal() {
           <Flex className="w-full">
             <Text className="text-hg-black400 text-sm">Subtotal</Text>
             <Flex className="ml-auto items-baseline gap-2">
-              <Text
-                className={
-                  hasProductsDiscount || hasCartDiscount
-                    ? 'text-hg-black400 text-sm line-through'
-                    : 'text-hg-black'
-                }
-              >
-                {productsPriceTotal.toFixed(2)}€
-              </Text>
               {(hasProductsDiscount || hasCartDiscount) && (
                 <Text className="text-hg-black">
                   {hasCartDiscount ? (
@@ -73,6 +61,15 @@ export default function CheckoutTotal() {
                   )}
                 </Text>
               )}
+              <Text
+                className={
+                  hasProductsDiscount || hasCartDiscount
+                    ? 'text-hg-black400 text-sm line-through'
+                    : 'text-hg-black'
+                }
+              >
+                {productsPriceTotal.toFixed(2)}€
+              </Text>
             </Flex>
           </Flex>
           <Flex className="w-full gap-2">
@@ -131,9 +128,25 @@ export default function CheckoutTotal() {
         </Flex>
       )}
 
-      <Flex className="justify-between w-full p-4 border-t border-hg-black font-semibold items-baseline">
-        <Text className="text-xl">Total:</Text>
-        <Text className="text-2xl">{cartTotalWithDiscount} €</Text>
+      <Flex className="justify-end w-full p-4 border-t border-hg-black items-baseline gap-2">
+        {(hasProductsDiscount || hasCartDiscount) && (
+          <Text className="text-hg-secondary text-xl font-semibold">
+            {hasCartDiscount ? (
+              <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
+            ) : (
+              <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
+            )}
+          </Text>
+        )}
+        <Text
+          className={
+            hasProductsDiscount || hasCartDiscount
+              ? 'text-hg-black500 text-md line-through'
+              : 'text-hg-black'
+          }
+        >
+          {productsPriceTotal.toFixed(2)}€
+        </Text>
       </Flex>
     </div>
   );

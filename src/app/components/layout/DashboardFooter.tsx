@@ -9,17 +9,9 @@ import { SvgArrow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardFooter({
-  hideBackButton = false,
-  hideContactButtons = false,
-  hideProfessionalSelector = false,
-  hideCart = false,
-  isCheckout = false,
+  showCart = false,
 }: {
-  hideBackButton?: boolean;
-  hideContactButtons?: boolean;
-  hideProfessionalSelector?: boolean;
-  hideCart?: boolean;
-  isCheckout?: boolean;
+  showCart?: boolean;
 }) {
   const router = useRouter();
   const { remoteControl, storedBoxId, storedClinicId } =
@@ -41,21 +33,19 @@ export default function DashboardFooter({
   return (
     <Flex className="gap-4 justify-start">
       <Flex className="mr-auto gap-2">
-        {!hideBackButton && (
-          <Button
-            type="tertiary"
-            onClick={() => handleBackButton()}
-            customStyles="bg-hg-black text-hg-primary"
-            size="sm"
-            className="py-4 pl-4"
-          >
-            <SvgArrow height={16} width={16} className="rotate-180" />
-          </Button>
-        )}
-        {!hideContactButtons && <ButtonMessage />}
+        <Button
+          type="tertiary"
+          onClick={() => handleBackButton()}
+          customStyles="bg-hg-black text-hg-primary"
+          size="sm"
+          className="py-4 pl-4"
+        >
+          <SvgArrow height={16} width={16} className="rotate-180" />
+        </Button>
+        {remoteControl && <ButtonMessage />}
       </Flex>
 
-      {!hideCart && <Cart />}
+      {showCart && !remoteControl && <Cart />}
     </Flex>
   );
 }

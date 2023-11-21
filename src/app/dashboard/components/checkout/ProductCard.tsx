@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import ProductDiscountForm from 'app/dashboard/(pages)/checkout/components/ProductDiscountForm';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -25,6 +24,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
+
   const productCartItem = cart.filter(
     item =>
       item.uniqueId === product.uniqueId &&
@@ -47,26 +47,17 @@ export default function ProductCard({ product, isCheckout }: Props) {
   }, [pendingDiscount]);
   return (
     <Flex layout="col-left" className="border-b border-hg-black">
-      <Flex className="w-full justify-between items-start px-4 pt-4">
-        <div>
-          <Text className="font-semibold text-md">
-            {product.title}{' '}
-            {!isCheckout &&
-              product.sessions > 1 &&
-              !product.isPack &&
-              'x' + product.sessions}
-          </Text>
-
-          {product.description && !isCheckout && (
-            <Text size="sm" className="text-hg-black500">
-              {product.description}
-            </Text>
-          )}
-        </div>
+      <Flex className="w-full justify-between items-start px-4 pt-4 mb-4">
+        <Text className="font-semibold text-md">
+          {product.title}{' '}
+          {!isCheckout &&
+            product.sessions > 1 &&
+            !product.isPack &&
+            'x' + product.sessions}
+        </Text>
         <SvgClose
           width={20}
           height={20}
-          fill={HOLAGLOW_COLORS['black']}
           className="cursor-pointer shrink-0"
           onClick={() => removeFromCart(product)}
         />
@@ -82,12 +73,12 @@ export default function ProductCard({ product, isCheckout }: Props) {
           className={
             productHasDiscount || productHasPromoDiscount
               ? 'text-hg-black500 text-md line-through'
-              : 'text-hg-secondary text-xl font-semibold'
+              : 'text-hg-secondary text-lg font-semibold'
           }
         >
           {product.price.toFixed(2)}€
         </Text>
-        {!isCheckout && (
+        {isCheckout && (
           <SvgArrow
             height={28}
             width={28}
