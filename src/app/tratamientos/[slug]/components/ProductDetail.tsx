@@ -8,6 +8,7 @@ import Clinics from 'app/components/common/Clinics';
 import Professionals from 'app/components/common/Professionals';
 import FloatingBottomBar from 'app/components/home/FloatingBottomBar';
 import Testimonials from 'app/components/home/Testimonials';
+import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
@@ -60,10 +61,17 @@ export default function ProductDetailPage({
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
     }
-
-    const product = stateProducts.filter(
-      product => product?.extraInformation?.slug === slug
-    )[0];
+    let product = undefined;
+    if (isDashboard) {
+      product = stateProducts.filter(
+        product =>
+          product?.id.toUpperCase() === productHighlighted?.id.toUpperCase()
+      )[0];
+    } else {
+      product = stateProducts.filter(
+        product => product?.extraInformation?.slug === slug
+      )[0];
+    }
 
     const productId = product?.id ?? '';
 
