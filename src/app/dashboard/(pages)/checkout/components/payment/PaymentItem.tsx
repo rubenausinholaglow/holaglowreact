@@ -61,7 +61,7 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
 
       case StatusPayment.Waiting:
       default:
-        setTextPayment('Esperando');
+        setTextPayment('Pendiente');
         break;
     }
   }, [status]);
