@@ -8,7 +8,6 @@ import Clinics from 'app/components/common/Clinics';
 import Professionals from 'app/components/common/Professionals';
 import FloatingBottomBar from 'app/components/home/FloatingBottomBar';
 import Testimonials from 'app/components/home/Testimonials';
-import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,

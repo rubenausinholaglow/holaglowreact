@@ -8,7 +8,6 @@ import CategorySelector from 'app/components/filters/CategorySelector';
 import PackTypeFilter from 'app/components/filters/PackTypeFilter';
 import MainLayout from 'app/components/layout/MainLayout';
 import ProductCard from 'app/components/product/ProductCard';
-import HightLightedProduct from 'app/dashboard/(pages)/budgets/HightLightedProduct/HightLightedProduct';
 import {
   useGlobalPersistedStore,
   useGlobalStore,

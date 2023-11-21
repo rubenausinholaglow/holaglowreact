@@ -20,8 +20,12 @@ export default function Page() {
   const { setStateProducts, stateProducts } = useGlobalPersistedStore(
     state => state
   );
-  const { setFilteredProducts, setProductFilters, productFilters } =
-    useGlobalStore(state => state);
+  const {
+    setFilteredProducts,
+    setProductFilters,
+    productFilters,
+    isModalOpen,
+  } = useGlobalStore(state => state);
   const [error, setError] = useState('');
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -52,6 +56,12 @@ export default function Page() {
   useEffect(() => {
     setIsHydrated(true);
   }, [stateProducts]);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setHighlightProduct(null);
+    }
+  }, [isModalOpen]);
 
   if (error || !isHydrated) {
     return <>{error}</>;
