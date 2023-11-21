@@ -26,7 +26,11 @@ import { useRouter } from 'next/navigation';
 
 import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 
-export default function Agenda({ isDashboard }: { isDashboard?: boolean }) {
+export default function Agenda({
+  isDashboard = false,
+}: {
+  isDashboard: boolean;
+}) {
   const router = useRouter();
   const ROUTE = useRoutes();
 
