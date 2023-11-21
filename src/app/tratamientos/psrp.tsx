@@ -98,8 +98,6 @@ export default function PsrpPage({
   if (isDashboard)
     return (
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-        <HightLightedProduct />
-
         {!isEmpty(filteredProducts) && (
           <>
             <Flex className="justify-start px-4 py-1 w-full">
