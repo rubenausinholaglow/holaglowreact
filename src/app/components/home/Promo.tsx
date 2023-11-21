@@ -41,7 +41,7 @@ function BlackFriday() {
           >
             Descuentos especiales
             <br />
-            sólo hoy
+            hasta el 27/11
           </Text>
           <Button
             size="xl"
