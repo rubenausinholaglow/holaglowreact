@@ -35,6 +35,7 @@ export default function ProductHeader({
         <Text isAnimated className="text-hg-black500 mb-4">
           {product.extraInformation?.resultDescription}
         </Text>
+
         <AnimateOnViewport>
           <Flex className="gap-2">
             {product.category.map(category => {

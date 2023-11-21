@@ -56,16 +56,6 @@ export default function Confirmation({
   }
 
   useEffect(() => {
-    if (isDashboard) {
-      const timerId = setTimeout(() => {
-        window.location.reload();
-      }, 10000);
-
-      return () => clearTimeout(timerId);
-    }
-  }, [isDashboard]);
-
-  useEffect(() => {
     setCurrentUser(undefined);
     const metrics: AnalyticsMetrics = {
       device: 0,

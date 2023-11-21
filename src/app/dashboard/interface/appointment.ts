@@ -59,3 +59,9 @@ export interface RescheduleAppointmentRequest {
   previous: Appointment;
   next: Appointment;
 }
+
+export interface UserCheckin {
+  name: string;
+  hour: string;
+  professional: string;
+}

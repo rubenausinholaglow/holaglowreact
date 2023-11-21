@@ -2,23 +2,21 @@
 
 import React, { useEffect, useState } from 'react';
 import TextInputField from '@components/TextInputField';
-import { Appointment } from '@interface/appointment';
+import { UserCheckin } from '@interface/appointment';
 import { messageService } from '@services/MessageService';
-import Agenda from 'app/checkout/agenda/page';
-import Confirmation from 'app/checkout/confirmation/components/Confirmation';
-import ClinicsCheckout from 'app/checkout/treatments/page';
-import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { SvgScanQR } from 'icons/Icons';
-import { SvgArrow, SvgCheck, SvgSadIcon } from 'icons/IconsDs';
+import { SvgArrow } from 'icons/IconsDs';
+import { useRouter } from 'next/navigation';
 import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
@@ -30,21 +28,26 @@ const CHECKIN_LOADING_TEXT = 'Checking In...';
 
 export default function Page() {
   const [isScanning, setIsScanning] = useState(false);
-  const [name, setName] = useState<string | null>(null);
-  const [hour, setHour] = useState<string | null>(null);
-  const [professional, setProfessional] = useState<string | null>(null);
-  const { setSelectedClinic } = useSessionStore(state => state);
-  const { clinics } = useGlobalPersistedStore(state => state);
+  const { setSelectedClinic, setSelectedSlot, setSelectedTreatments } =
+    useSessionStore(state => state);
+  const { clinics, user, setUserCheckIn, setCurrentUser, setClinicId } =
+    useGlobalPersistedStore(state => state);
+
+  const router = useRouter();
+  const ROUTES = useRoutes();
 
   const onScanSuccess = (props: any) => {
     if (props) {
-      setName(props.name);
-      setHour(props.hour);
-      setProfessional(props.professional);
+      const user: UserCheckin = {
+        name: props.name,
+        hour: props.hour,
+        professional: props.professional,
+      };
+      setUserCheckIn(user);
       messageService.patientArrived(props);
-      reloadPageAfterDelay(7000);
+      router.push(ROUTES.dashboard.checkIn.thankYou);
     } else {
-      reloadPageAfterDelay(5000);
+      router.push(ROUTES.dashboard.checkIn.treatments);
     }
   };
 
@@ -56,18 +59,11 @@ export default function Page() {
     isLoading,
     checkIn,
     isChecked,
-    showAgenda,
   } = useFormHook(onScanSuccess);
 
   const startScan = () => {
     setIsScanning(true);
   };
-
-  useEffect(() => {
-    if (name) {
-      reloadPageAfterDelay(30000);
-    }
-  }, [name]);
 
   const reloadPageAfterDelay = (delay: number) => {
     setTimeout(() => {
@@ -76,10 +72,26 @@ export default function Page() {
   };
 
   useEffect(() => {
+    if (isChecked == undefined) return;
+    if (!isChecked && user) {
+      router.push(ROUTES.dashboard.checkIn.treatments);
+    } else if (isChecked) {
+      router.push(ROUTES.dashboard.checkIn.thankYou);
+    } else {
+      router.push(ROUTES.dashboard.checkIn.badRequest);
+    }
+  }, [isChecked]);
+
+  useEffect(() => {
+    setUserCheckIn(undefined);
+    setCurrentUser(undefined);
+    setSelectedSlot(undefined);
+    setClinicId('');
+    setSelectedTreatments([]);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     const clinicId = params.get('clinicId') || '';
-
+    setClinicId(clinicId);
     const currentClinic = clinics.find(
       x => x.id.toUpperCase() === clinicId.toUpperCase()
     );
@@ -98,239 +110,42 @@ export default function Page() {
     >
       <CheckHydration>
         <Flex layout="col-center" className="w-full">
-          {isChecked ? (
-            <>
-              {name ? (
-                <WelcomeSection
-                  name={name}
-                  hour={hour}
-                  professional={professional}
-                />
-              ) : (
-                <>{showAgenda ? <AgendaSection /> : <BadRequestSection />}</>
-              )}
-            </>
-          ) : (
-            <>
-              <Flex layout="col-center" className="gap-4 mb-12">
-                <Title className="font-bold text-5xl mb-8">
-                  Te damos la <br />
-                  <Underlined color={HOLAGLOW_COLORS['primary']}>
-                    Bienvenid@
-                  </Underlined>{' '}
-                </Title>
-                <Text className="mb-8 font-bold">
-                  Escanea el QR que te hemos envíado para acceder a tu cita.
-                </Text>
-                {isScanning ? (
-                  <ReadQr
-                    onScanSuccess={onScanSuccess}
-                    onErrorScan={reloadPageAfterDelay}
-                  />
-                ) : (
-                  <div
-                    onClick={startScan}
-                    className="justify-center items-center"
-                  >
-                    <SvgScanQR height={192} width={192} fill="white" />
-                    <Text className="mb-8 text-center">{SCAN_QR}</Text>
-                  </div>
-                )}
-              </Flex>
+          <Flex layout="col-center" className="gap-4 mb-12">
+            <Title className="font-bold text-5xl mb-8">
+              Te damos la <br />
+              <Underlined color={HOLAGLOW_COLORS['primary']}>
+                Bienvenid@
+              </Underlined>{' '}
+            </Title>
+            <Text className="mb-8 font-bold">
+              Escanea el QR que te hemos envíado para acceder a tu cita.
+            </Text>
+            {isScanning ? (
+              <ReadQr
+                onScanSuccess={onScanSuccess}
+                onErrorScan={reloadPageAfterDelay}
+              />
+            ) : (
+              <div onClick={startScan} className="justify-center items-center">
+                <SvgScanQR height={192} width={192} fill="white" />
+                <Text className="mb-8 text-center">{SCAN_QR}</Text>
+              </div>
+            )}
+          </Flex>
 
-              {!isScanning && (
-                <FormSection
-                  formData={formData}
-                  errors={errors}
-                  handleInputChange={handleInputChange}
-                  handleSubmit={handleSubmit}
-                  isLoading={isLoading}
-                  checkIn={checkIn}
-                />
-              )}
-            </>
+          {!isScanning && (
+            <FormSection
+              formData={formData}
+              errors={errors}
+              handleInputChange={handleInputChange}
+              handleSubmit={handleSubmit}
+              isLoading={isLoading}
+              checkIn={checkIn}
+            />
           )}
         </Flex>
       </CheckHydration>
     </MainLayout>
-  );
-}
-
-function WelcomeSection({ name, hour, professional }: any) {
-  return (
-    <Flex className="flex-col">
-      <SvgCheck
-        width={96}
-        height={96}
-        className="text-hg-primary bg-hg-secondary rounded-full"
-      />
-      <Title className="align-center font-bold" size="xl">
-        Hola {name}
-      </Title>
-      <Title className="align-center font-bold">Cita confirmada</Title>
-      <Text size="lg" className="align-center mt-8">
-        Tu cita para el Probador Virtual es a las {hour}.
-      </Text>
-      <Text size="lg" className="align-center justify-center">
-        Por favor, toma asiento y en breves te atenderá {professional}.
-      </Text>
-    </Flex>
-  );
-}
-
-function BadRequestSection() {
-  const [displayForm, setDisplayForm] = useState(true);
-  const [displayAgenda, setDisplayAgenda] = useState(false);
-  const [displayConfirmation, setDisplayConfirmation] = useState(false);
-  const [appointment, setAppointment] = useState<Appointment | undefined>(
-    undefined
-  );
-  const handleFormContinue = () => {
-    setDisplayForm(false);
-    setDisplayAgenda(true);
-  };
-
-  const handleAgendaClick = () => {
-    setDisplayAgenda(false);
-  };
-
-  const handleConfirmationClick = () => {
-    setDisplayConfirmation(true);
-  };
-
-  const handleSetAppointmentClick = (selectedAppointment: Appointment) => {
-    setAppointment(selectedAppointment);
-  };
-
-  return (
-    <Flex className="flex-col items-center">
-      {displayForm ? (
-        <>
-          <SvgSadIcon
-            width={96}
-            height={96}
-            className="text-hg-primary bg-hg-secondary rounded-full"
-          />
-          <Title className="align-center font-bold mt-8" size="xl">
-            ¡Ups!
-          </Title>
-          <Title className="align-center font-bold">
-            No te hemos encontrado
-          </Title>
-          <Text size="lg" className="align-center mt-8 mb-8">
-            Por favor, registrate y agenda una cita.
-          </Text>
-
-          <RegistrationForm
-            isDashboard={true}
-            redirect={false}
-            handleAcceptForm={handleFormContinue}
-          />
-        </>
-      ) : (
-        <>
-          {displayAgenda ? (
-            <ClinicsCheckout
-              isDashboard={true}
-              setDisplayAgenda={handleAgendaClick}
-            />
-          ) : (
-            <>
-              {!displayConfirmation ? (
-                <Agenda
-                  isDashboard={true}
-                  setConfirmationClick={handleConfirmationClick}
-                  setAppointmentClick={() => handleSetAppointmentClick}
-                />
-              ) : (
-                <Confirmation appointment={appointment} isDashboard={true} />
-              )}
-            </>
-          )}
-        </>
-      )}
-      <Button
-        type="tertiary"
-        isSubmit
-        className="align-center"
-        customStyles="bg-hg-primary mt-8"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        Volver
-      </Button>
-    </Flex>
-  );
-}
-
-function AgendaSection() {
-  const [displayAgenda, setDisplayAgenda] = useState(false);
-  const [displayConfirmation, setDisplayConfirmation] = useState(false);
-  const [appointment, setAppointment] = useState<Appointment | undefined>(
-    undefined
-  );
-
-  const handleAgendaClick = () => {
-    setDisplayAgenda(true);
-  };
-
-  const handleConfirmationClick = () => {
-    setDisplayConfirmation(true);
-  };
-
-  const handleSetAppointmentClick = (selectedAppointment: Appointment) => {
-    setAppointment(selectedAppointment);
-  };
-
-  return (
-    <Flex className="flex-col items-center">
-      {!displayAgenda && (
-        <>
-          <SvgSadIcon
-            width={96}
-            height={96}
-            className="text-hg-primary bg-hg-secondary rounded-full"
-          />
-          <Title className="align-center font-bold mt-8" size="xl">
-            ¡Ups!
-          </Title>
-          <Title className="align-center font-bold">
-            No tienes ninguna cita prevista
-          </Title>
-        </>
-      )}
-      {!displayAgenda ? (
-        <ClinicsCheckout
-          isDashboard={true}
-          setDisplayAgenda={handleAgendaClick}
-        />
-      ) : (
-        <>
-          {!displayConfirmation ? (
-            <Agenda
-              isDashboard={true}
-              setConfirmationClick={handleConfirmationClick}
-              setAppointmentClick={() => handleSetAppointmentClick}
-            />
-          ) : (
-            <Confirmation appointment={appointment} isDashboard={true} />
-          )}
-        </>
-      )}
-
-      <Button
-        type="tertiary"
-        isSubmit
-        className="align-center"
-        customStyles="bg-hg-primary mt-8"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        Volver
-      </Button>
-    </Flex>
   );
 }
 

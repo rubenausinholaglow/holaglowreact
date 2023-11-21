@@ -1,4 +1,4 @@
-import { Appointment, User } from '@interface/appointment';
+import { Appointment, User, UserCheckin } from '@interface/appointment';
 import { AnalyticsMetrics } from '@interface/client';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
@@ -50,6 +50,7 @@ interface GlobalPersistStore {
   storedClinicId: string | '';
   storedBoxId: string | '';
   storedAppointmentId: string | '';
+  userCheckin?: UserCheckin;
 }
 
 interface GlobalPersistActions {
@@ -62,6 +63,7 @@ interface GlobalPersistActions {
   setClinicId: (storedClinicId: string) => void;
   setBoxId: (setBoxId: string) => void;
   setAppointmentId: (storedAppointmentId: string) => void;
+  setUserCheckIn: (value?: UserCheckin) => void;
 }
 
 export const useSessionStore = create(
@@ -137,6 +139,7 @@ export const useGlobalPersistedStore = create(
       stateProducts: [],
       clinics: [],
       user: undefined,
+
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -145,6 +148,10 @@ export const useGlobalPersistedStore = create(
       },
       setCurrentUser: value => {
         set({ user: value });
+      },
+      userCheckin: undefined,
+      setUserCheckIn: value => {
+        set({ userCheckin: value });
       },
       setPromos: (value: Promo) => {
         set({ promo: value });

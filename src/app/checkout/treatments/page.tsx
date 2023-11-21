@@ -24,13 +24,9 @@ import { fetchProduct } from 'utils/fetch';
 
 interface ClinicsCheckoutProps {
   isDashboard?: boolean;
-  setDisplayAgenda: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({
-  isDashboard,
-  setDisplayAgenda,
-}) => {
+const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
   const router = useRouter();
   const ROUTES = useRoutes();
 
@@ -90,7 +86,7 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({
                   onClick={() => {
                     setSelectedTreatments([PVProduct] as Product[]);
                     if (isDashboard) {
-                      setDisplayAgenda(true);
+                      router.push(ROUTES.dashboard.checkIn.agenda);
                     } else {
                       router.push(ROUTES.checkout.schedule);
                     }
@@ -153,7 +149,9 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({
                                     setSelectedProduct(product);
                                     setSelectedTreatments([product]);
                                     if (isDashboard) {
-                                      setDisplayAgenda(true);
+                                      router.push(
+                                        ROUTES.dashboard.checkIn.agenda
+                                      );
                                     } else {
                                       router.push(ROUTES.checkout.schedule);
                                     }

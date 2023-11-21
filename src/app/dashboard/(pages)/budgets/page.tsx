@@ -26,10 +26,10 @@ export default function Page() {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    setStateProducts([]);
+    setFilteredProducts([]);
     const fetchProducts = async () => {
       try {
-        setStateProducts([]);
-        setFilteredProducts([]);
         const data = await ProductService.getDashboardProducts();
         const products = data.map((product: Product) => ({
           ...product,
@@ -37,6 +37,7 @@ export default function Page() {
         }));
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setStateProducts(products);
+        setFilteredProducts(products);
       } catch (error: any) {
         setError(error);
       }
