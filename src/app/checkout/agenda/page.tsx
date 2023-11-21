@@ -29,7 +29,7 @@ import { DayAvailability } from './../../dashboard/interface/dayAvailability';
 export default function Agenda({
   isDashboard = false,
 }: {
-  isDashboard: boolean;
+  isDashboard?: boolean;
 }) {
   const router = useRouter();
   const ROUTE = useRoutes();
