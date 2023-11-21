@@ -31,7 +31,7 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   const { removePayment } = usePaymentList(state => state);
   const aviableBanks = [1, 2, 4];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
-  const [colorPayment, setColorPayment] = useState<string>('');
+  const [textPayment, setTextPayment] = useState<string>('');
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
@@ -46,22 +46,22 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   useEffect(() => {
     switch (status) {
       case StatusPayment.Paid:
-        setColorPayment('bg-green-500');
+        setTextPayment('Pagado');
         setDeleteEnabled(false);
         break;
       case StatusPayment.Rejected:
-        setColorPayment('bg-red-500');
+        setTextPayment('Rechazado');
         break;
       case StatusPayment.FinancingRejected:
-        setColorPayment('bg-orange-400');
+        setTextPayment('Financiación rechazada');
         break;
       case StatusPayment.FinancingAccepted:
-        setColorPayment('bg-blue-500');
+        setTextPayment('Financiación aceptada');
         break;
 
       case StatusPayment.Waiting:
       default:
-        setColorPayment('bg-gray-300');
+        setTextPayment('Esperando');
         break;
     }
   }, [status]);
@@ -119,8 +119,10 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
       {aviableBanks[paymentRequest.bank] && (
         <div
           key={paymentRequest.id}
-          className={`w-4 h-4 rounded-full inline-block ${colorPayment} mx-2`}
-        ></div>
+          className={`w-4 h-4 rounded-full inline-block mx-2`}
+        >
+          {textPayment}
+        </div>
       )}
       <Flex className="ml-auto gap-2">
         <Text className="font-semibold text-lg">{paymentRequest.amount} €</Text>
