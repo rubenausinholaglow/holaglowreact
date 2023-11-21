@@ -34,7 +34,7 @@ const useRoutes = () => {
       agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
       menu: '/dashboard/menu',
       home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
-      checkOut: '/dashboard/remoteControl/Payment',
+      checkOut: '/dashboard/checkout',
       checkIn: {
         root: `/dashboard/checkin?clinicId=${storedClinicId}`,
         treatments: '/dashboard/checkin/treatments',

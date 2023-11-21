@@ -17,6 +17,7 @@ export default function DashboardLayout({
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
+  hideCart = false,
   children,
 }: {
   hideBottomBar?: boolean;
@@ -24,6 +25,7 @@ export default function DashboardLayout({
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
+  hideCart?: boolean;
   children: React.ReactNode;
 }) {
   const router = useRouter();
@@ -206,7 +208,7 @@ export default function DashboardLayout({
           : 'bg-gradient-15deg from-hg-primary300 to-hg-secondary500'
       }`}
     >
-      <Flex layout="col-center" className="grow overflow-y-auto relative pb-8">
+      <Flex layout="col-center" className="grow overflow-y-auto relative">
         <Flex className="p-4 justify-center">
           <SvgHolaglow height={25} width={100} className="text-hg-secondary" />
 
@@ -221,10 +223,11 @@ export default function DashboardLayout({
       </Flex>
 
       {!hideBottomBar && (
-        <footer className="z-10 bg-hg-secondary/40 backdrop-blur-sm">
+        <footer className="z-10 bg-hg-secondary300">
           <DashboardFooter
             hideBackButton={hideBackButton}
             hideContactButtons={hideContactButtons}
+            hideCart={hideCart}
           />
         </footer>
       )}

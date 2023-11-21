@@ -124,8 +124,9 @@ const Page = () => {
     <MainLayout
       isDashboard
       isCheckout
-      hideContactButtons
-      hideProfessionalSelector
+      //hideContactButtons
+      //hideProfessionalSelector
+      hideCart
     >
       <Flex className="h-screen w-full">
         <div className="w-[55%] h-full p-4">
