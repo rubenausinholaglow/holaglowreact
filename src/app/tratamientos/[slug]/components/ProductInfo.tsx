@@ -20,10 +20,25 @@ export default function ProductInfo({ product }: { product: Product }) {
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
   const {
     productHighlighted,
+    cart,
     addItemToCart,
     getQuantityOfProduct,
     removeSingleProduct,
+    applyItemDiscount,
   } = useCartStore(state => state);
+
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(product),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
 
   useEffect(() => {
     if (product && !isEmpty(product.discounts)) {
@@ -184,6 +199,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                 ): void {
                   if (operation == 'increase') {
                     addItemToCart(product as CartItem);
+                    setPendingDiscount(true);
                   } else {
                     removeSingleProduct(product as CartItem);
                   }

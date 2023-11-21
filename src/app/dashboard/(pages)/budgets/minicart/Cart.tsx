@@ -18,9 +18,11 @@ export function Cart() {
 
   const [showCart, setShowCart] = useState(cart.length > 0);
 
+  let productsPriceTotal = 0;
   let productsPriceTotalWithDiscounts = 0;
 
   if (cart) {
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
     productsPriceTotalWithDiscounts = cart.reduce(
       (acc, product) => acc + Number(product.priceWithDiscount),
       0
@@ -72,8 +74,14 @@ export function Cart() {
         </Flex>
       </Flex>
       <Flex className="gap-2 z-10">
-        <Text className="text-lg font-semibold">
-          Total: {cartTotalWithDiscount.toFixed(2)} €
+        <Text className="text-xl font-semibold">
+          {cartTotalWithDiscount.toFixed(2)} €
+        </Text>
+        <Text className="text-lg line-through text-hg-black500">
+          {productsPriceTotal.toFixed(2) !==
+            cartTotalWithDiscount.toFixed(2) && (
+            <>{productsPriceTotal.toFixed(2)}€</>
+          )}
         </Text>
         <SvgCart
           height={32}

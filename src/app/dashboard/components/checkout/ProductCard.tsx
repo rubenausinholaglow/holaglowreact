@@ -71,25 +71,22 @@ export default function ProductCard({ product, isCheckout }: Props) {
           onClick={() => removeFromCart(product)}
         />
       </Flex>
-      <Flex className="px-4 pb-4 w-full">
+      <Flex className="px-4 pb-4 w-full items-end">
         {(productHasDiscount || productHasPromoDiscount) && (
-          <Text className="text-hg-secondary font-semibold text-xl mr-2 self-end">
+          <Text className="text-hg-secondary font-semibold text-lg mr-2 self-end">
             {Number(product.priceWithDiscount).toFixed(2)}€
           </Text>
         )}
-
         <Text
           size="lg"
-          className={`self-end mb-1
-            ${
-              productHasDiscount || productHasPromoDiscount
-                ? 'text-hg-black500 text-md line-through'
-                : 'text-hg-secondary text-xl font-semibold'
-            }`}
+          className={
+            productHasDiscount || productHasPromoDiscount
+              ? 'text-hg-black500 text-md line-through'
+              : 'text-hg-secondary text-xl font-semibold'
+          }
         >
           {product.price.toFixed(2)}€
         </Text>
-
         {!isCheckout && (
           <SvgArrow
             height={28}

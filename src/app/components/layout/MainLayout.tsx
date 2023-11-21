@@ -22,6 +22,7 @@ export default function MainLayout({
   hideHeader = false,
   hideBackButton = false,
   hideContactButtons = false,
+  hideCart = false,
   hideProfessionalSelector = false,
   hideFooter = false,
   children,
@@ -32,6 +33,7 @@ export default function MainLayout({
   hideBackButton?: boolean;
   hideBottomBar?: boolean;
   hideContactButtons?: boolean;
+  hideCart?: boolean;
   hideProfessionalSelector?: boolean;
   hideFooter?: boolean;
   children: React.ReactNode;
@@ -59,6 +61,7 @@ export default function MainLayout({
         hideBackButton={hideBackButton}
         hideContactButtons={hideContactButtons}
         hideProfessionalSelector={hideProfessionalSelector}
+        hideCart={hideCart}
       >
         {children}
       </DashboardLayout>

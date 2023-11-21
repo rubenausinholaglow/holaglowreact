@@ -61,6 +61,7 @@ export default function ProductCard({
       setPendingDiscount(false);
     }
   }, [pendingDiscount]);
+
   useEffect(() => {
     if (!isEmpty(product.discounts)) {
       setDiscountedPrice(getDiscountedPrice(product));

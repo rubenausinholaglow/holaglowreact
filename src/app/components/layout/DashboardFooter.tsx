@@ -12,11 +12,13 @@ export default function DashboardFooter({
   hideBackButton = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
+  hideCart = false,
   isCheckout = false,
 }: {
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
+  hideCart?: boolean;
   isCheckout?: boolean;
 }) {
   const router = useRouter();
@@ -53,7 +55,7 @@ export default function DashboardFooter({
         {!hideContactButtons && <ButtonMessage />}
       </Flex>
 
-      <Cart />
+      {!hideCart && <Cart />}
     </Flex>
   );
 }
