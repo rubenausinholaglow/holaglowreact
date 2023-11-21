@@ -66,7 +66,7 @@ export function Accordion({
       type="single"
       className={twMerge(`w-full ${className}`)}
       collapsible
-      defaultValue={value ? value : ''}
+      value={value ? value : ''}
     >
       {children}
     </AccordionPrimitive.Root>

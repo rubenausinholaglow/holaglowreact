@@ -99,14 +99,7 @@ export default function ProductDiscountForm({
                 : ''
             }`}
           >
-            <Flex className="gap-2">
-              Aplicar
-              <SvgAdd
-                height={16}
-                width={16}
-                className="border border-hg-black rounded-full"
-              />
-            </Flex>
+            <Flex className="gap-2">Aplicar</Flex>
           </Button>
         </Flex>
       </Flex>

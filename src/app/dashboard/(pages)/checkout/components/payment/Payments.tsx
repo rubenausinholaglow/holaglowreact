@@ -23,7 +23,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
-import { SvgRadioChecked, SvgTimer } from 'icons/IconsDs';
+import { SvgCheck, SvgRadioChecked, SvgTimer } from 'icons/IconsDs';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -33,28 +33,28 @@ import { paymentItems } from './paymentMethods/PaymentItems';
 import { usePaymentList } from './payments/usePaymentList';
 
 export const PaymentModule = () => {
+  const router = useRouter();
+
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [onLoad, setOnLoad] = useState(false);
-  const cart = useCartStore(state => state.cart);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const paymentList = usePaymentList(state => state.paymentRequest);
-  const totalPrice = useCartStore(state => state.totalPrice);
-  const totalAmount = usePaymentList(state => state.totalAmount);
-  const { addPaymentToList, removePayment } = usePaymentList();
-  const priceDiscount = useCartStore(state => state.priceDiscount);
-  const percentageDiscount = useCartStore(state => state.percentageDiscount);
-  const manualPrice = useCartStore(state => state.manualPrice);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-  const [guidUserId, setguidUserId] = useState<string | ''>('');
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
+  const [guidUserId, setguidUserId] = useState<string | ''>('');
+
+  const { cart, totalPrice, priceDiscount, percentageDiscount, manualPrice } =
+    useCartStore(state => state);
+  const paymentList = usePaymentList(state => state.paymentRequest);
+  const { totalAmount } = usePaymentList(state => state);
   const messageSocket = useMessageSocket(state => state);
   const { remoteControl, storedBoxId, storedClinicId } =
     useGlobalPersistedStore(state => state);
+
+  const { addPaymentToList, removePayment } = usePaymentList();
 
   useEffect(() => {
     setguidUserId(localStorage.getItem('id') || '');
@@ -67,6 +67,10 @@ export const PaymentModule = () => {
     paymentResponseMessages.forEach(handlePaymentResponse);
     paymentCreatedMessages.forEach(handlePaymentCreate);
   }, [messageSocket]);
+
+  useEffect(() => {
+    setActivePaymentMethod('');
+  }, [paymentList]);
 
   const processPaymentMessages = (paymentMessages: any) => {
     const paymentCreatedMessages = paymentMessages.filter(
@@ -292,13 +296,13 @@ export const PaymentModule = () => {
     <>
       {paymentItems.length > 0 && (
         <Accordion
-          value="activePaymentMethod"
+          value={activePaymentMethod}
           className="flex flex-col gap-8 w-full mb-8"
         >
           {paymentItems.map(method => (
             <AccordionItem
               key={method.key}
-              value={method.label}
+              value={method.key}
               className="bg-white py-6 px-8 rounded-xl w-full"
             >
               <AccordionTrigger className="text-left">
@@ -312,9 +316,7 @@ export const PaymentModule = () => {
                     className="shrink-0 hidden group-data-[state=open]:block"
                   />
                   <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-
                   <Text>{method.label}</Text>
-
                   <Flex className="ml-auto gap-2">
                     {PAYMENT_ICONS[
                       method.label as keyof typeof PAYMENT_ICONS
@@ -361,6 +363,10 @@ export const PaymentModule = () => {
           layout="col-left"
           className="bg-hg-black100 w-full p-6 rounded-xl gap-4 mb-8"
         >
+          <Flex className="gap-2">
+            <SvgCheck height={24} width={24} className="text-hg-secondary" />
+            <Text className="text-hg-secondary">Pagado</Text>
+          </Flex>
           {totalAmount > 0 &&
             paymentList?.map(paymentRequest => (
               <PaymentItem

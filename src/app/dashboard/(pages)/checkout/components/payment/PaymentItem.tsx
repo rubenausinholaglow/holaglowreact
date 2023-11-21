@@ -29,7 +29,8 @@ interface Props {
 
 export default function PaymentItem({ paymentRequest, status }: Props) {
   const { removePayment } = usePaymentList(state => state);
-  const aviableBanks = [1, 2, 4];
+  const availableBanks = [1, 2, 4];
+  const financialBanks = [1, 2];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
   const [textPayment, setTextPayment] = useState<string>('');
   const [messageNotification, setMessageNotification] = useState<string | null>(
@@ -104,25 +105,21 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
     await messageService.paymentCreated(paymentCreatedRequest);
   };
 
+  console.log(paymentRequest);
+
   return (
-    <Flex className="gap-2 w-full">
-      <SvgCheck height={24} width={24} className="text-hg-secondary" />
-      <Text className="text-hg-secondary">Pagado</Text>
-      <Text className="text-hg-black500">
-        ({getPaymentMethodText(paymentRequest.method)})
+    <Flex className="gap-1 w-full">
+      <Text className="font-semibold">
+        {getPaymentMethodText(paymentRequest.method)}
       </Text>
-      {paymentRequest.bank ? (
-        <span className="font-bold mr-1">
+      {financialBanks.includes(paymentRequest.bank) && (
+        <span className="mr-1 font-semibold">
           {getPaymentBankText(paymentRequest.bank)}
         </span>
-      ) : null}{' '}
-      {aviableBanks[paymentRequest.bank] && (
-        <div
-          key={paymentRequest.id}
-          className={`w-4 h-4 rounded-full inline-block mx-2`}
-        >
-          {textPayment}
-        </div>
+      )}
+
+      {availableBanks[paymentRequest.bank] && (
+        <Text key={paymentRequest.id}>{textPayment}</Text>
       )}
       <Flex className="ml-auto gap-2">
         <Text className="font-semibold text-lg">{paymentRequest.amount} €</Text>
