@@ -2,11 +2,17 @@
 
 import RegistrationForm from 'app/components/common/RegistrationForm';
 import MainLayout from 'app/components/layout/MainLayout';
+import useRoutes from 'app/utils/useRoutes';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { SvgSadIcon } from 'icons/IconsDs';
+import { useRouter } from 'next/navigation';
 
 export default function BadRequestSection() {
+  const router = useRouter();
+  const routes = useRoutes();
+
   return (
     <MainLayout
       isDashboard
@@ -28,6 +34,15 @@ export default function BadRequestSection() {
           No te hemos encontrado
         </Title>
         <RegistrationForm isDashboard={true} redirect={false} />
+        <Button
+          type="tertiary"
+          isSubmit
+          className="ml-auto"
+          customStyles="bg-hg-primary mt-8 align-center"
+          onClick={() => router.push(routes.dashboard.checkIn.root)}
+        >
+          Volver
+        </Button>
       </Flex>
     </MainLayout>
   );

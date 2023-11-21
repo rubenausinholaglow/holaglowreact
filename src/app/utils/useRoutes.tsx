@@ -36,7 +36,7 @@ const useRoutes = () => {
       home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
       checkOut: '/dashboard/remoteControl/Payment',
       checkIn: {
-        root: '/dashboard/checkin',
+        root: `/dashboard/checkin?clinicId=${storedClinicId}`,
         treatments: '/dashboard/checkin/treatments',
         agenda: '/dashboard/checkin/agenda',
         thankYou: '/dashboard/checkin/welcome',

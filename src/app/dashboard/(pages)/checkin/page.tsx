@@ -30,7 +30,7 @@ export default function Page() {
   const [isScanning, setIsScanning] = useState(false);
   const { setSelectedClinic, setSelectedSlot, setSelectedTreatments } =
     useSessionStore(state => state);
-  const { clinics, user, setUserCheckIn, setCurrentUser } =
+  const { clinics, user, setUserCheckIn, setCurrentUser, setClinicId } =
     useGlobalPersistedStore(state => state);
 
   const router = useRouter();
@@ -86,11 +86,12 @@ export default function Page() {
     setUserCheckIn(undefined);
     setCurrentUser(undefined);
     setSelectedSlot(undefined);
+    setClinicId('');
     setSelectedTreatments([]);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     const clinicId = params.get('clinicId') || '';
-
+    setClinicId(clinicId);
     const currentClinic = clinics.find(
       x => x.id.toUpperCase() === clinicId.toUpperCase()
     );
