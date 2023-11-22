@@ -88,45 +88,60 @@ export default function ProductInfo({ product }: { product: Product }) {
                 <Text className="pl-9">Producto aplicado</Text>
               </div>
             </li>
-            <li className="mb-4 pb-4 border-b border-hg-black flex">
-              <div
-                className={`flex  gap-4 relative md:justify-center ${
-                  productHighlighted ? 'flex-row' : 'flex-col'
-                } w-full`}
-              >
-                <div className="flex-1 flex items-start pr-4 border-r border-hg-black w-full">
-                  <SvgTimeLeft
-                    height={24}
-                    width={24}
-                    className="text-hg-secondary mr-3 mt-1"
-                  />
-                  <div>
-                    <Text size="lg" className="font-semibold mb-1 md:mb-2">
-                      {product.sessions.toString()}{' '}
-                      {product.sessions === 1 ? 'sesión' : 'sesiones'}
-                    </Text>
-                    <Text>Número de sesiones</Text>
-                  </div>
-                </div>
-                <div className="flex-1 w-full md:w-1/6">
-                  {productHighlighted && (
-                    <div className="flex items-start">
-                      <SvgTimer
-                        height={24}
-                        width={24}
-                        className="text-hg-secondary mr-3 mt-1"
-                      />
-                      <div>
-                        <Text size="lg" className="font-semibold mb-1 md:mb-2">
-                          {product.applicationTimeMinutes.toString()} minutos
-                        </Text>
-                        <Text>Tiempo de aplicación</Text>
+            {(product.sessions > 0 || product.applicationTimeMinutes > 0) && (
+              <li className="mb-4 pb-4 border-b border-hg-black flex">
+                <div
+                  className={`flex  gap-4 relative md:justify-center ${
+                    productHighlighted ? 'flex-row' : 'flex-col'
+                  } w-full`}
+                >
+                  {product.sessions > 0 && (
+                    <>
+                      <div className="flex-1 flex items-start pr-4 border-r border-hg-black w-full">
+                        <SvgTimeLeft
+                          height={24}
+                          width={24}
+                          className="text-hg-secondary mr-3 mt-1"
+                        />
+                        <div>
+                          <Text
+                            size="lg"
+                            className="font-semibold mb-1 md:mb-2"
+                          >
+                            {product.sessions.toString()}{' '}
+                            {product.sessions === 1 ? 'sesión' : 'sesiones'}
+                          </Text>
+                          <Text>Número de sesiones</Text>
+                        </div>
                       </div>
+                    </>
+                  )}
+                  {product.applicationTimeMinutes > 0 && (
+                    <div className="flex-1 w-full md:w-1/6">
+                      {productHighlighted && (
+                        <div className="flex items-start">
+                          <SvgTimer
+                            height={24}
+                            width={24}
+                            className="text-hg-secondary mr-3 mt-1"
+                          />
+                          <div>
+                            <Text
+                              size="lg"
+                              className="font-semibold mb-1 md:mb-2"
+                            >
+                              {product.applicationTimeMinutes.toString()}{' '}
+                              minutos
+                            </Text>
+                            <Text>Tiempo de aplicación</Text>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              </div>
-            </li>
+              </li>
+            )}
 
             {!productHighlighted && (
               <li className="mb-4 pb-4 border-b border-hg-black flex">
