@@ -69,6 +69,7 @@ export default function CategorySelector({
       {productCategories.map((category, i) => {
         return (
           <li
+            id={'tmevent_treatments_type'}
             key={category}
             className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
