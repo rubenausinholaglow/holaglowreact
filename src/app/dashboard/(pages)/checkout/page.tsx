@@ -16,6 +16,7 @@ import { SvgSpinner } from 'icons/Icons';
 import { SvgBag } from 'icons/IconsDs';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
+import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { PaymentModule } from './components/payment/Payments';
 
 const Page = () => {
@@ -125,6 +126,7 @@ const Page = () => {
       <Flex className="h-screen w-full">
         <div className="w-[55%] h-full p-4">
           {budgetId && !isBudgetModified && <PaymentModule />}
+          <PepperWidget totalPrice={Number(cartTotalPrice())}></PepperWidget>
         </div>
 
         <div className="w-[45%] bg-white rounded-tl-2xl h-full">
