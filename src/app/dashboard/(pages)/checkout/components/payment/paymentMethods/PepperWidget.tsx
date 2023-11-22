@@ -23,7 +23,7 @@ export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
             Pago financiado
           </p>
           <p className="-ml-2 rounded-lg bg-white p-1.5 w-1/2 max-w-[200px] border border-hg-black">
-            Importe mensual
+            Importe mensual*
           </p>
         </Flex>
         {PEPPER_TABLE_CONFIG.periods.map((period, index) => (
