@@ -55,6 +55,7 @@ export default function ProductCard({
       }
       className={`text-inherit ${className}`}
       {...rest}
+      id={'tmevent_click_product_card'}
     >
       <div className="flex flex-col h-full pt-4 overflow-hidden">
         <Flex layout="col-left" className="">

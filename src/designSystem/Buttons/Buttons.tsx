@@ -150,6 +150,7 @@ const ButtonBody = ({
   bgColor,
   disabled = false,
   children,
+  ...rest
 }: {
   type: ButtonTypes;
   size: ButtonSizes;
@@ -196,7 +197,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles}>
+    <Flex layout="row-center" className={styles} {...rest}>
       {children}
     </Flex>
   );

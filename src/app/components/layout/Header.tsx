@@ -126,6 +126,7 @@ export default function Header() {
                 </Button>
 
                 <SvgMenu
+                  id={'tmevent_nav_menu_click'}
                   height={24}
                   width={24}
                   className="ml-2 lg:hidden"

@@ -39,7 +39,13 @@ export default function HomeHero() {
             <br />
             tus normas
           </Title>
-          <Button type="primary" size="xl" href={ROUTES.treatments} isAnimated>
+          <Button
+            id={'tmevent_header_button'}
+            type="primary"
+            size="xl"
+            href={ROUTES.treatments}
+            isAnimated
+          >
             Ver tratamientos
           </Button>
         </Flex>

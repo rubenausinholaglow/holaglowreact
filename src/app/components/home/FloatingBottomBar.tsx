@@ -74,6 +74,7 @@ export default function FloatingBottomBar({
               href={product ? '#prices' : ROUTES.checkout.clinics}
               onClick={() => (!product ? setSelectedTreatments([]) : null)}
               customStyles="px-2"
+              id={'tmevent_click_floating_button'}
             >
               {product ? (
                 <div className="w-full">
@@ -97,6 +98,7 @@ export default function FloatingBottomBar({
             size="xl"
             className="pointer-events-auto"
             customStyles="h-[64px] p-0 w-[64px] shrink-0"
+            id={'tmevent_click_floating_button'}
           >
             <a href={url} target="_blank">
               <SvgWhatsapp className="text-hg-primary" />
