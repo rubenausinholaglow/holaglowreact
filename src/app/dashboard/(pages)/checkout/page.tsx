@@ -125,8 +125,10 @@ const Page = () => {
     <MainLayout isDashboard isCheckout>
       <Flex className="h-screen w-full">
         <div className="w-[55%] h-full p-4">
-          {budgetId && !isBudgetModified && <PaymentModule />}
-          <PepperWidget totalPrice={Number(cartTotalPrice())}></PepperWidget>
+          {budgetId && !isBudgetModified && !isLoading && <PaymentModule />}
+          {!(budgetId && !isBudgetModified && !isLoading) && (
+            <PepperWidget totalPrice={Number(cartTotalPrice())}></PepperWidget>
+          )}
         </div>
 
         <div className="w-[45%] bg-white rounded-tl-2xl h-full">
