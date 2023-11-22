@@ -42,6 +42,7 @@ export default function Page() {
         }));
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setStateProducts(products);
+        setIsHydrated(true);
         productFilters.isPack = true;
         setProductFilters(productFilters);
       } catch (error: any) {
@@ -54,10 +55,6 @@ export default function Page() {
     productFilters.isPack = true;
     setProductFilters(productFilters);
   }, []);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, [stateProducts]);
 
   useEffect(() => {
     if (!isModalOpen) {
