@@ -61,6 +61,7 @@ export default function ZoneFilter({
     <ul className={`flex gap-5 w-full ${className ? className : ''}`}>
       {ZONES.map(zone => (
         <li
+          id={'tmevent_filters'}
           key={zone.name}
           className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer ${
             isDesktop ? 'w-[120px]' : ''

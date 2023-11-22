@@ -29,6 +29,7 @@ export default function DesktopFilters({
       </Flex>
 
       <Button
+        id={'tmevent_filters'}
         type="tertiary"
         customStyles="group-hover:bg-hg-secondary100"
         onClick={() =>

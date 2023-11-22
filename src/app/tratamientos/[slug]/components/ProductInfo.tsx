@@ -110,6 +110,7 @@ export default function ProductInfo({ product }: { product: Product }) {
           </ul>
 
           <Button
+            id={'tmevent_click_book_anchor_button'}
             size="xl"
             type="tertiary"
             bgColor="bg-hg-primary"

@@ -42,6 +42,7 @@ export default function ProductSessionGroupedPriceCard({
           </Flex>
         </div>
         <Button
+          id={'click_book_button_prices'}
           type="tertiary"
           className="shrink-0"
           customStyles="bg-hg-primary"

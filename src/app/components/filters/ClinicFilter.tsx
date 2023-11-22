@@ -52,6 +52,7 @@ export default function ClinicFilter({ className }: { className?: string }) {
     <ul className={`flex flex-col ${className ? className : ''}`}>
       {clinics.map(clinic => (
         <li
+          id={'tmevent_filters'}
           key={clinic.city}
           className={`transition-all flex p-2 mb-2 items-center rounded-xl cursor-pointer ${
             productFilters.clinic.includes(clinic.internalName)

@@ -331,6 +331,7 @@ function ProductPriceItemsCard({
       )}
       {product.isPack && !showDropdown && (
         <Button
+          id={'tmevent_click_book_button_customize'}
           className="mt-8"
           type="tertiary"
           customStyles="hover:bg-hg-secondary50"
@@ -341,6 +342,7 @@ function ProductPriceItemsCard({
       )}
       {(!product.isPack || showDropdown) && (
         <Button
+          id={'click_book_button_prices'}
           type="tertiary"
           disabled={isDisabled}
           onClick={() => {

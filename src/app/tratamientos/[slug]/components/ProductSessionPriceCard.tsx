@@ -49,6 +49,7 @@ export default function ProductSessionPriceCard({
               {product.sessions === 1 ? 'sesión' : 'sesiones'}
             </Flex>
             <Button
+              id={'click_book_button_prices'}
               type="tertiary"
               className="hidden md:block shrink-0"
               customStyles="bg-hg-primary md:mt-4"
@@ -63,6 +64,7 @@ export default function ProductSessionPriceCard({
           </Flex>
         </div>
         <Button
+          id={'click_book_button_prices'}
           type="tertiary"
           className="md:hidden shrink-0"
           customStyles="bg-hg-primary md:mt-4"

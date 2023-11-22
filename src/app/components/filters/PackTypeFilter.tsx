@@ -23,6 +23,7 @@ export default function PackTypeFilter({
 
   return (
     <Button
+      id={'tmevent_filters'}
       isAnimated
       origin="right"
       className={className}

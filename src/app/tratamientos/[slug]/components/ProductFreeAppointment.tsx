@@ -61,6 +61,7 @@ export default function ProductPaymentOptions() {
           </Text>
 
           <Button
+            id={'tmevent_click_pv_button'}
             isAnimated
             size={deviceSize.isMobile ? 'lg' : 'xl'}
             type="secondary"

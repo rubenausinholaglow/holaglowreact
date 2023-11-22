@@ -27,12 +27,14 @@ export default function LookingFor() {
             size="xl"
             className="mb-8"
             href="tel:682417208"
+            id={'tmevent_help_module_click'}
           >
             <SvgPhone className="mr-4" />
             Llámanos ahora
           </Button>
 
           <Button
+            id={'tmevent_help_module_click'}
             isAnimated
             type="tertiary"
             className="mt-auto"
