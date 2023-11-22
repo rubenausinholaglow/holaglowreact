@@ -7,6 +7,7 @@ import SocketService from '@services/SocketService';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgHolaglow } from 'icons/IconsDs';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import DashboardFooter from './DashboardFooter';
@@ -16,6 +17,7 @@ export default function DashboardLayout({
   isCheckout = false,
   hideContactButtons = false,
   hideProfessionalSelector = false,
+  hasAnimatedBackground = false,
   showCart = false,
   children,
 }: {
@@ -24,6 +26,7 @@ export default function DashboardLayout({
   hideBackButton?: boolean;
   hideContactButtons?: boolean;
   hideProfessionalSelector?: boolean;
+  hasAnimatedBackground?: boolean;
   showCart?: boolean;
   children: React.ReactNode;
 }) {
@@ -201,15 +204,33 @@ export default function DashboardLayout({
 
   return (
     <main
-      className={`h-screen overflow-hidden flex flex-col w-full ${
+      className={`transition-all h-screen overflow-hidden flex flex-col w-full ${
         isCheckout
           ? 'bg-hg-black50'
+          : hasAnimatedBackground
+          ? 'bg-gradient-animated animate-animateBG bg-[length:1200%_1200%]'
           : 'bg-gradient-15deg from-hg-primary300 to-hg-secondary500'
       }`}
     >
       <Flex layout="col-center" className="grow overflow-y-auto relative">
+        {hasAnimatedBackground && (
+          <Flex className="absolute inset-0 justify-center items-center pointer-events-none">
+            <Image
+              src="/images/dashboard/background/bg.png"
+              alt="holaglow"
+              height={708}
+              width={808}
+              className="w-3/4"
+            />
+          </Flex>
+        )}
+
         <Flex className="p-4 justify-center">
-          <SvgHolaglow height={25} width={100} className="text-hg-secondary" />
+          <SvgHolaglow
+            height={37.5}
+            width={150}
+            className="text-hg-secondary"
+          />
 
           {!hideProfessionalSelector && (
             <div className="absolute right-0 top-0">
