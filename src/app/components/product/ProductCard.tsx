@@ -74,7 +74,7 @@ export default function ProductCard({
     <div
       className="flex flex-col h-full pt-4 overflow-hidden"
       onClick={() => {
-        setHighlightProduct(product);
+        if (isDashboard) setHighlightProduct(product);
       }}
     >
       <Flex layout="col-left" className="">
