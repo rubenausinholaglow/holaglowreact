@@ -42,7 +42,8 @@ export default function Page() {
         }));
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setStateProducts(products);
-        setFilteredProducts(products);
+        productFilters.isPack = true;
+        setProductFilters(productFilters);
       } catch (error: any) {
         setError(error);
       }
