@@ -34,7 +34,7 @@ export default function ProductHeader({
             {product.title}
           </Title>
 
-          {product.extraInformation?.resultDescription.includes('</div>') ? (
+          {product.type == 3 ? (
             <Text isAnimated className="text-hg-black500">
               <p
                 dangerouslySetInnerHTML={{
@@ -101,7 +101,7 @@ export default function ProductHeader({
           </div>
         </div>
       </Container>
-      {isDashboard && (
+      {product.type == 3 && (
         <Container>
           <Text isAnimated className="text-hg-black500 mb-4 mt-8">
             <p
