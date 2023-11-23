@@ -7,7 +7,8 @@ import { MessageType } from '@interface/messageSocket';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Title, Underlined } from 'designSystem/Texts/Texts';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
 import { useCrisalix } from '../crisalix/useCrisalix';
 import DashboardMenuItem from './DashboardMenuItem';
@@ -60,15 +61,17 @@ const Page = () => {
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {username && (
-        <div className="mt-8">
-          <Title className="text-xl mb-4">Tu glow, tus normas</Title>
-          <Title className="font-bold text-5xl mb-8">
+        <Flex layout="col-center" className="mt-8 w-full grow justify-center">
+          <Text className="text-3xl font-bold mb-4 -mt-[10%]">
+            Tu glow, tus normas
+          </Text>
+          <Text className="font-bold text-6xl mb-8">
             ¡Hola{' '}
             <Underlined color={HOLAGLOW_COLORS['primary']}>
               {username}
             </Underlined>
             !
-          </Title>
+          </Text>
           <div className="grid grid-cols-3 mb-12">
             {menuItems.map(item => (
               <DashboardMenuItem
@@ -85,7 +88,7 @@ const Page = () => {
               />
             ))}
           </div>
-        </div>
+        </Flex>
       )}
     </MainLayout>
   );

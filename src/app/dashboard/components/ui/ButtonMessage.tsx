@@ -99,7 +99,7 @@ export default function ButtonMessage() {
   return (
     <Flex layout="row-left" className="gap-2 py-4 overflow-hidden">
       <Button
-        size="sm"
+        size="xl"
         type="tertiary"
         customStyles={`border-none px-3 ${medicClassName}`}
         onClick={() => sendMessageToMedic()}
@@ -109,7 +109,7 @@ export default function ButtonMessage() {
       </Button>
 
       <Button
-        size="sm"
+        size="xl"
         type="tertiary"
         customStyles={`border-none px-3 ${receptionClassName}`}
         onClick={() => sendMessageToReception()}

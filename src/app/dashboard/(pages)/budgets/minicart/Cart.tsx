@@ -48,7 +48,7 @@ export function Cart() {
     <Flex className="w-1/2 justify-end relative p-4 z-10">
       <Flex
         layout="col-left"
-        className={`transition-all absolute right-0 bottom-0 left-0 bg-white pb-16 rounded-tl-2xl shadow-centered-black ${
+        className={`transition-all absolute right-0 -bottom-4 left-0 bg-white pb-24 rounded-tl-2xl shadow-centered-black ${
           showCart && cart.length > 0 ? 'translate-y-0' : 'translate-y-[105%]'
         }`}
       >
@@ -60,24 +60,24 @@ export function Cart() {
           ))}
         </ul>
         <Flex className="w-full p-4 justify-between">
-          <Button type="tertiary" size="sm" onClick={() => setShowCart(false)}>
+          <Button type="tertiary" size="lg" onClick={() => setShowCart(false)}>
             Cerrar
           </Button>
           <Button
             type="tertiary"
             customStyles="bg-hg-primary"
-            size="sm"
+            size="lg"
             href={ROUTES.dashboard.checkOut}
           >
             Continuar compra
           </Button>
         </Flex>
       </Flex>
-      <Flex className="gap-2 z-10">
-        <Text className="text-xl font-semibold">
+      <Flex className="gap-4 z-10 items-center">
+        <Text className="text-3xl font-semibold">
           {cartTotalWithDiscount.toFixed(2)} €
         </Text>
-        <Text className="text-lg line-through text-hg-black500">
+        <Text className="text-xl line-through text-hg-black500">
           {productsPriceTotal.toFixed(2) !==
             cartTotalWithDiscount.toFixed(2) && (
             <>{productsPriceTotal.toFixed(2)}€</>
@@ -85,8 +85,8 @@ export function Cart() {
         </Text>
 
         <SvgCart
-          height={32}
-          width={32}
+          height={42}
+          width={42}
           className={`p-2 text-hg-black rounded-full cursor-pointer ${
             showCart ? 'bg-hg-black100' : 'bg-white'
           }`}

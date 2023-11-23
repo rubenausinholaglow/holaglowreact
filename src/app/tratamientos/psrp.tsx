@@ -105,10 +105,10 @@ export default function PsrpPage({
         {!isEmpty(filteredProducts) && (
           <>
             <Flex className="justify-start px-4 py-1 w-full">
-              <Flex className="mr-auto gap-2">
+              <Flex className="mr-auto gap-4">
                 <Button
                   type="tertiary"
-                  size="sm"
+                  size="lg"
                   onClick={() => {
                     setShowDashboardFilters(!showDashboardFilters);
                   }}
@@ -117,7 +117,7 @@ export default function PsrpPage({
                   <Flex layout="col-center">Filtrar</Flex>
                 </Button>
                 <Text
-                  size="xs"
+                  size="lg"
                   className={`text-hg-secondary transition-opacity underline cursor-pointer ${
                     filterCount(productFilters) === 0
                       ? 'opacity-0'
@@ -137,14 +137,14 @@ export default function PsrpPage({
                   Borrar filtros ({filterCount(productFilters)})
                 </Text>
               </Flex>
-              <Text size="xs">
+              <Text size="lg">
                 {filteredProducts.filter(product => product.visibility).length}{' '}
                 productos
               </Text>
             </Flex>
             <div className="w-full mt-9">
               <div
-                className={`transition-all bg-white rounded-r-xl left-0 top-0 z-10 w-2/5 ${
+                className={`transition-all bg-white rounded-r-xl left-0 top-0 z-10 w-1/3 ${
                   showDashboardFilters
                     ? 'translate-0 sticky'
                     : '-translate-x-full absolute'
@@ -160,7 +160,7 @@ export default function PsrpPage({
               <ul
                 className={`transition-all -mt-9 px-4 grid gap-4 ${
                   showDashboardFilters
-                    ? 'grid-cols-2 w-3/5 ml-[40%]'
+                    ? 'grid-cols-2 w-2/3 ml-[33.333%]'
                     : 'grid-cols-3 w-full'
                 } pb-6`}
               >

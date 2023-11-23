@@ -22,28 +22,29 @@ export default function DesktopFilters({
       <div className="absolute inset-0">
         <Flex
           layout="col-left"
-          className="bg-white p-4 rounded-r-2xl h-[80vh] overflow-y-auto w-full gap-8"
+          className="bg-white p-4 rounded-r-2xl w-full gap-8"
         >
-          <FilterText className="mb-0" />
           <Flex layout="col-left" className="w-full">
-            <Text size="sm" className="font-semibold">
+            <Text size="xl" className="font-semibold">
               Zona
             </Text>
-            <ZoneFilter />
+            <ZoneFilter isDashboard />
           </Flex>
           <Flex layout="col-left" className="w-full">
-            <Text size="sm" className="font-semibold">
+            <Text size="xl" className="font-semibold">
               Precio
             </Text>
-            <PriceFilter />
+            <PriceFilter isDashboard />
           </Flex>
           <Flex layout="col-left" className="w-full">
             <CategorySelector isDashboard className="inner-flex" isStacked />
           </Flex>
           <Flex layout="col-left" className="w-full">
-            <PackTypeFilter />
+            <PackTypeFilter isDashboard />
           </Flex>
+          <FilterText className="mb-0" />
           <Button
+            size="lg"
             type="tertiary"
             customStyles="group-hover:bg-hg-secondary100"
             onClick={() => setShowDesktopFilters(!showDesktopFilters)}

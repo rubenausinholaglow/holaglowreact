@@ -10,8 +10,10 @@ import { useRouter } from 'next/navigation';
 
 export default function DashboardFooter({
   showCart = false,
+  hideContactButtons = false,
 }: {
   showCart?: boolean;
+  hideContactButtons?: boolean;
 }) {
   const router = useRouter();
   const { remoteControl, storedBoxId, storedClinicId } =
@@ -37,12 +39,12 @@ export default function DashboardFooter({
           type="tertiary"
           onClick={() => handleBackButton()}
           customStyles="bg-hg-black text-hg-primary"
-          size="sm"
+          size="xl"
           className="py-4 pl-4"
         >
-          <SvgArrow height={16} width={16} className="rotate-180" />
+          <SvgArrow height={32} width={32} className="rotate-180" />
         </Button>
-        {remoteControl && <ButtonMessage />}
+        {remoteControl && !hideContactButtons && <ButtonMessage />}
       </Flex>
 
       {showCart && !remoteControl && <Cart />}

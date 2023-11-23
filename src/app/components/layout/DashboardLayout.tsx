@@ -226,11 +226,7 @@ export default function DashboardLayout({
         )}
 
         <Flex className="p-4 justify-center">
-          <SvgHolaglow
-            height={37.5}
-            width={150}
-            className="text-hg-secondary"
-          />
+          <SvgHolaglow height={50} width={200} className="text-hg-secondary" />
 
           {!hideProfessionalSelector && (
             <div className="absolute right-0 top-0">
@@ -244,7 +240,10 @@ export default function DashboardLayout({
 
       {!hideBottomBar && (
         <footer className="z-10 bg-hg-secondary300">
-          <DashboardFooter showCart={showCart} />
+          <DashboardFooter
+            hideContactButtons={hideContactButtons}
+            showCart={showCart}
+          />
         </footer>
       )}
     </main>

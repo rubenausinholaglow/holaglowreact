@@ -8,9 +8,11 @@ import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 export default function PriceFilter({
   className,
   isDesktop,
+  isDashboard = false,
 }: {
   className?: string;
   isDesktop?: boolean;
+  isDashboard?: boolean;
 }) {
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
@@ -47,14 +49,14 @@ export default function PriceFilter({
               })
             );
           }}
-          className="w-full flex justify-start gap-2"
+          className="w-full flex justify-start gap-2 items-center"
         >
           {productFilters.price.includes(price.id) ? (
             <SvgCheckSquareActive />
           ) : (
             <SvgCheckSquare />
           )}
-          <Text size="xs">{price.name}</Text>
+          <Text size={isDashboard ? 'lg' : 'xs'}>{price.name}</Text>
         </li>
       ))}
     </ul>

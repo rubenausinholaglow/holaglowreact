@@ -48,7 +48,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
   return (
     <Flex layout="col-left" className="border-b border-hg-black">
       <Flex className="w-full justify-between items-start px-4 pt-4 mb-4">
-        <Text className="font-semibold text-md">
+        <Text className="font-semibold text-xl">
           {product.title}{' '}
           {!isCheckout &&
             product.sessions > 1 &&
@@ -64,7 +64,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
       </Flex>
       <Flex className="px-4 pb-4 w-full items-end">
         {(productHasDiscount || productHasPromoDiscount) && (
-          <Text className="text-hg-secondary font-semibold text-lg mr-2 self-end">
+          <Text className="text-hg-secondary font-semibold text-2xl mr-2 self-end">
             {Number(product.priceWithDiscount).toFixed(2)}€
           </Text>
         )}
@@ -72,8 +72,8 @@ export default function ProductCard({ product, isCheckout }: Props) {
           size="lg"
           className={
             productHasDiscount || productHasPromoDiscount
-              ? 'text-hg-black500 text-md line-through'
-              : 'text-hg-secondary text-lg font-semibold'
+              ? 'text-hg-black500 text-xl line-through'
+              : 'text-hg-secondary text-2xl font-semibold'
           }
         >
           {product.price.toFixed(2)}€

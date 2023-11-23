@@ -12,15 +12,18 @@ import { twMerge } from 'tailwind-merge';
 export default function PackTypeFilter({
   className,
   customStyles,
+  isDashboard = false,
 }: {
   className?: string;
   customStyles?: string;
+  isDashboard?: boolean;
 }) {
   const { promo } = useGlobalPersistedStore(state => state);
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
   return (
     <Button
+      size={isDashboard ? 'xl' : 'md'}
       isAnimated
       origin="right"
       className={className}

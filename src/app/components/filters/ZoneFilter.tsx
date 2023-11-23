@@ -9,9 +9,11 @@ import Image from 'next/image';
 export default function ZoneFilter({
   className,
   isDesktop,
+  isDashboard = false,
 }: {
   className?: string;
   isDesktop?: boolean;
+  isDashboard?: boolean;
 }) {
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
@@ -78,7 +80,7 @@ export default function ZoneFilter({
             <SvgCheckSquare className="ml-auto" />
           )}
           <Image height={40} width={40} src={zone.icon} alt={zone.name} />
-          <Text size="xs" className="text-center">
+          <Text size={isDashboard ? 'lg' : 'xs'} className="text-center">
             {zone.name}
           </Text>
         </li>

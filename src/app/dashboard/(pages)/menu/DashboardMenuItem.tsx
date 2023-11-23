@@ -35,13 +35,13 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   return (
     <Link href={link} target={target} onClick={() => goToPage(title)}>
       <Image
-        className="mx-auto w-full max-w-[200px]"
+        className="mx-auto w-full max-w-[300px]"
         src={iconSrc}
-        height="180"
-        width="180"
+        height="300"
+        width="300"
         alt={altText}
       />
-      <p className="text-center text-lg -mt-4 text-hg-black font-medium">
+      <p className="text-center text-2xl -mt-4 text-hg-black font-medium">
         {title}
       </p>
     </Link>

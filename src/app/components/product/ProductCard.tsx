@@ -136,7 +136,9 @@ export default function ProductCard({
         className="p-3 flex-grow bg-white rounded-b-2xl z-10"
       >
         <AnimateOnViewport origin="bottom">
-          <Text className="mb-2 font-semibold">{product.title}</Text>
+          <Text size={isDashboard ? 'xl' : 'md'} className="mb-2 font-semibold">
+            {product.title}
+          </Text>
           {!isDashboard && (
             <Text size="xs" className="text-hg-black500 mb-8">
               {product.description}
@@ -155,7 +157,7 @@ export default function ProductCard({
               {discountedPrice && (
                 <Text
                   className={`text-xs line-through text-hg-black500 ${
-                    isDashboard ? 'order-2 text-md' : ''
+                    isDashboard ? 'order-2 text-xl' : ''
                   }`}
                 >
                   {product.price} €
@@ -166,27 +168,29 @@ export default function ProductCard({
               )}
               <Text
                 className={`text-hg-secondary font-semibold ${
-                  isDashboard ? 'text-xl' : 'text-lg'
+                  isDashboard ? 'text-2xl' : 'text-lg'
                 }`}
               >
                 {discountedPrice ? discountedPrice : product.price} €{' '}
               </Text>
             </Flex>
             {isDashboard ? (
-              <Button
-                size="sm"
-                type="tertiary"
-                className="mt-auto"
-                bgColor="bg-hg-primary"
-                onClick={e => {
-                  e.stopPropagation();
-                  addToCart(product as CartItem);
-                  setPendingDiscount(true);
-                }}
-              >
-                <p className="mr-2">Añadir </p>
-                <SvgPlusSmall height={20} width={20} />
-              </Button>
+              <div className="mt-auto">
+                <Button
+                  size="lg"
+                  type="tertiary"
+                  className="mt-4"
+                  bgColor="bg-hg-primary"
+                  onClick={e => {
+                    e.stopPropagation();
+                    addToCart(product as CartItem);
+                    setPendingDiscount(true);
+                  }}
+                >
+                  <p className="mr-2">Añadir </p>
+                  <SvgPlusSmall height={20} width={20} />
+                </Button>
+              </div>
             ) : (
               <Button
                 type="tertiary"

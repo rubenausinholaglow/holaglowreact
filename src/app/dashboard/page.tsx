@@ -353,7 +353,7 @@ export default function Page({
           <Button
             onClick={() => setShowForm(!showForm)}
             type="tertiary"
-            size="sm"
+            size="xl"
             className=""
           >
             Búsqueda Manual

@@ -78,7 +78,10 @@ export default function CategorySelector({
               {!isDashboard && (
                 <CategoryIcon category={category} className="mr-2" />
               )}
-              <Text size="xs" className="whitespace-nowrap font-medium">
+              <Text
+                size={isDashboard ? 'lg' : 'xs'}
+                className="whitespace-nowrap font-medium"
+              >
                 {category}
               </Text>
             </Flex>
