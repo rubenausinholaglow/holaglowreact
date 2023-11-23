@@ -9,7 +9,7 @@ import {
   applyFilters,
   filterCount,
   toggleFilter,
-} from 'app/tratamientos/utils/filters';
+} from 'app/(web)/tratamientos/utils/filters';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import Image from 'next/image';

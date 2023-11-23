@@ -5,7 +5,7 @@ import {
   useGlobalStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { toggleIsPack } from 'app/tratamientos/utils/filters';
+import { toggleIsPack } from 'app/(web)/tratamientos/utils/filters';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { twMerge } from 'tailwind-merge';

@@ -9,7 +9,7 @@ import {
   applyFilters,
   filterCount,
   toggleFilter,
-} from 'app/tratamientos/utils/filters';
+} from 'app/(web)/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';

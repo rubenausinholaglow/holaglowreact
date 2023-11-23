@@ -1,7 +1,7 @@
 'use client';
 
 import 'react-phone-input-2/lib/style.css';
-import 'app/checkout/contactform/phoneInputStyle.css';
+import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';

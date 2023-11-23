@@ -1,10 +1,10 @@
-import './globals.css';
-import './../../public/styles/Alma/widgets.min.css';
+import '/globals.css';
+import '/public/styles/Alma/widgets.min.css';
 
 import Head from 'next/head';
 import Script from 'next/script';
 
-import App from './components/layout/App';
+import App from '../components/layout/App';
 
 export const metadata = {
   title: 'Holaglow - Medicina estética',

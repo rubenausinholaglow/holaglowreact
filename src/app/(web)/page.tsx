@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
-import MainLayout from './components/layout/MainLayout';
-import HomeBlocks from './HomeBlocks';
+import MainLayout from '../components/layout/MainLayout';
+import HomeBlocks from '../HomeBlocks';
 
 export const metadata: Metadata = {
   title: 'Holaglow - La nueva cara de la medicina estética',

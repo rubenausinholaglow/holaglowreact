@@ -7,7 +7,7 @@ import {
   applyFilters,
   filterCount,
   toggleFilter,
-} from 'app/tratamientos/utils/filters';
+} from 'app/(web)/tratamientos/utils/filters';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
