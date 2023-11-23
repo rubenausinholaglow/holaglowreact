@@ -17,6 +17,7 @@ const Page = () => {
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
   const [username, setUsername] = useState('');
+  const [clinicFlowId, setClinicFlowId] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
   const { storedClinicId } = useGlobalPersistedStore(state => state);
@@ -40,11 +41,12 @@ const Page = () => {
       1 * 60 * 1000
     );
     setUsername(localStorage.getItem('username') || '');
+    setClinicFlowId(localStorage.getItem('ClinicFlowwwId') || '');
   }, []);
 
   const checksimulationReady = () => {
     if (id == '' || playerToken == '') return;
-    UserService.getSimulationReady(id, storedClinicId!).then(x => {
+    UserService.getSimulationReady(id, clinicFlowId!).then(x => {
       setSimulationReady(x);
       if (!x) {
         setTimeout(() => {
