@@ -5,6 +5,7 @@ import { CartItem } from '@interface/product';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import ProductDiscountForm from 'app/dashboard/(pages)/checkout/components/ProductDiscountForm';
 import { getDiscountedPrice } from 'app/utils/common';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgClose } from 'icons/Icons';
@@ -55,12 +56,22 @@ export default function ProductCard({ product, isCheckout }: Props) {
             !product.isPack &&
             'x' + product.sessions}
         </Text>
-        <SvgClose
-          width={20}
-          height={20}
-          className="cursor-pointer shrink-0"
-          onClick={() => removeFromCart(product)}
-        />
+        {isCheckout ? (
+          <SvgClose
+            width={20}
+            height={20}
+            className="cursor-pointer shrink-0"
+            onClick={() => removeFromCart(product)}
+          />
+        ) : (
+          <Button
+            size="sm"
+            onClick={() => removeFromCart(product)}
+            type="tertiary"
+          >
+            Eliminar
+          </Button>
+        )}
       </Flex>
       <Flex className="px-4 pb-4 w-full items-end">
         {(productHasDiscount || productHasPromoDiscount) && (
