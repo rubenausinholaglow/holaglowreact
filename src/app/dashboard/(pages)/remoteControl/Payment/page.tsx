@@ -40,10 +40,10 @@ export default function PaymentRemoteControl() {
     const userId = localStorage.getItem('id') || '';
     await budgetService
       .getLastBudgetCreated(userId)
-      .then((budget: Budget | undefined) => {
+      .then(async (budget: Budget | undefined) => {
         if (budget) {
           if (!finalBudget) {
-            processBudget(budget);
+            await processBudget(budget);
           }
         } else {
           setMessageNotification('Error, presupuesto no encontrado');
@@ -55,16 +55,16 @@ export default function PaymentRemoteControl() {
       });
   }
 
-  function processBudget(budget: Budget) {
+  async function processBudget(budget: Budget) {
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
     localStorage.setItem('BudgetId', String(budget.id || ''));
     setFinalBudget(budget);
     applyCartDiscounts(budget);
-    processBudgetItems(budget);
+    await processBudgetItems(budget);
   }
 
-  function processBudgetItems(budget: Budget) {
+  async function processBudgetItems(budget: Budget) {
     budget.products.forEach(product => {
       const cartItem: any = {
         priceDiscount: product.priceDiscount,
