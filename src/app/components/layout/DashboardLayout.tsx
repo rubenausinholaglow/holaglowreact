@@ -64,6 +64,7 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
+        debugger;
         const isBoxIdInStoredBoxIds = isBoxIdInStoredBoxId(
           message.data.boxId,
           storedBoxId
@@ -124,7 +125,7 @@ export default function DashboardLayout({
     const messageData = {
       messageType: MessageType.StartAppointment,
       ClinicId: message.data.clinicId,
-      BoxId: message.data.boxId,
+      BoxId: storedBoxId,
       AppointmentId: message.data.appointmentId,
     };
 
