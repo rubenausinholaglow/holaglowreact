@@ -348,13 +348,7 @@ export default function Page({
 
   if (!remoteControl)
     return (
-      <MainLayout
-        isDashboard
-        hideBottomBar
-        hideBackButton
-        hideContactButtons
-        hideProfessionalSelector
-      >
+      <MainLayout isDashboard hideBottomBar hasAnimatedBackground>
         <div className="fixed bottom-0 right-0 py-3 px-3">
           <Button
             onClick={() => setShowForm(!showForm)}

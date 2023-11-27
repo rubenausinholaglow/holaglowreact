@@ -22,6 +22,7 @@ export default function MainLayout({
   hideHeader = false,
   hideBackButton = false,
   hideContactButtons = false,
+  hasAnimatedBackground = false,
   showCart = false,
   hideProfessionalSelector = false,
   hideFooter = false,
@@ -33,6 +34,7 @@ export default function MainLayout({
   hideBackButton?: boolean;
   hideBottomBar?: boolean;
   hideContactButtons?: boolean;
+  hasAnimatedBackground?: boolean;
   showCart?: boolean;
   hideProfessionalSelector?: boolean;
   hideFooter?: boolean;
@@ -61,6 +63,7 @@ export default function MainLayout({
         hideBackButton={hideBackButton}
         hideContactButtons={hideContactButtons}
         hideProfessionalSelector={hideProfessionalSelector}
+        hasAnimatedBackground={hasAnimatedBackground}
         showCart={showCart}
       >
         {children}
