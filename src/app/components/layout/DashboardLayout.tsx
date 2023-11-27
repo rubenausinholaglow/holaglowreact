@@ -64,7 +64,6 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
-        debugger;
         const isBoxIdInStoredBoxIds = isBoxIdInStoredBoxId(
           message.data.boxId,
           storedBoxId
