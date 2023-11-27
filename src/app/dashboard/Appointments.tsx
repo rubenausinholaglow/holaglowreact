@@ -77,7 +77,6 @@ const AppointmentsListComponent: React.FC<{
       ...prevLoadingAppointments,
       [appointment.id]: true,
     }));
-
     await UserService.checkUser(appointment.lead?.user?.email)
       .then(async data => {
         if (data && !isEmpty(data)) {
@@ -147,12 +146,11 @@ const AppointmentsListComponent: React.FC<{
               'ClinicProfessionalId',
               data.clinicProfessional.id
             );
-            data.boxId = storedBoxId;
             saveUserDetails(name, id, '');
 
             const startAppointmentData: StartAppointmentData = {
               clinicId: storedClinicId,
-              boxId: storedBoxId,
+              boxId: data.boxId,
               appointmentId: appointmentId,
             };
             if (!ignoreMessages)
