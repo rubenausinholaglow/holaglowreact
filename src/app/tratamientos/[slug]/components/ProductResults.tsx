@@ -58,7 +58,7 @@ export default function ProductResults({ product }: { product: Product }) {
                     />
                   </div>
                   <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
-                    Despues
+                    Después
                   </span>
                 </figure>
               </ImgComparisonSlider>
