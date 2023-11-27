@@ -33,7 +33,7 @@ const Page = () => {
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
   const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
-  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
+  const { storedBoxId, storedClinicId, user } = useGlobalPersistedStore(
     state => state
   );
 
@@ -62,11 +62,10 @@ const Page = () => {
   const handleFinalize = async () => {
     setTotalPriceInitial(totalPriceToShow);
 
-    const GuidUser = localStorage.getItem('id') || '';
     const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
 
     const budget: Budget = {
-      userId: GuidUser,
+      userId: user?.id || '',
       discountCode: clientToken.substring(0, clientToken.length - 32),
       discountAmount: '',
       FlowwwId: '',
