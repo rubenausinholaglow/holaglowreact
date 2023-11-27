@@ -311,12 +311,7 @@ export default function Page({
 
   if (remoteControl)
     return (
-      <MainLayout
-        isDashboard
-        hideBackButton
-        hideContactButtons
-        hideProfessionalSelector
-      >
+      <MainLayout isDashboard hideBottomBar>
         <div className="px-4 w-full max-h-[85%] overflow-y-auto">
           <AppointmentsListComponent
             clinicId={storedClinicId}
