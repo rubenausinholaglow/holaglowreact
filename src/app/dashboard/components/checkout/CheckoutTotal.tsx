@@ -132,7 +132,7 @@ export default function CheckoutTotal() {
         {(hasProductsDiscount || hasCartDiscount) && (
           <Text className="text-hg-secondary text-xl font-semibold">
             {hasCartDiscount ? (
-              <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
+              <>{Number(cartTotalWithDiscount).toFixed(2)}€</>
             ) : (
               <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
             )}
