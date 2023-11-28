@@ -38,7 +38,7 @@ export default function ProductCard({
 
   const pathName = usePathname();
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
-  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
+  const [discountedPrice, setDiscountedPrice] = useState<0 | number>(0);
   const { setHighlightProduct, cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
 
@@ -152,7 +152,7 @@ export default function ProductCard({
               layout={isDashboard ? 'row-left' : 'col-left'}
               className="gap-2 mb-2"
             >
-              {discountedPrice && (
+              {discountedPrice > 0 && (
                 <Text
                   className={`text-xs line-through text-hg-black500 ${
                     isDashboard ? 'order-2 text-md' : ''
