@@ -1,10 +1,13 @@
-import { Product } from '@interface/product';
+import { useEffect, useState } from 'react';
+import { CartItem, Product } from '@interface/product';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useSessionStore } from 'app/stores/globalStore';
+import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { SvgPlusSmall } from 'icons/Icons';
 import * as icon from 'icons/IconsDs';
 import { SvgArrow } from 'icons/IconsDs';
 
@@ -15,7 +18,21 @@ export default function ProductSessionGroupedPriceCard({
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);
   const ROUTES = useRoutes();
-  const { productHighlighted } = useCartStore(state => state);
+  const { productHighlighted, cart } = useCartStore(state => state);
+  const addToCart = useCartStore(state => state.addItemToCart);
+  const [pendingDiscount, setPendingDiscount] = useState(false);
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+
+  useEffect(() => {
+    if (pendingDiscount) {
+      applyItemDiscount(
+        cart[cart.length - 1].uniqueId,
+        getDiscountedPrice(product),
+        '€'
+      );
+      setPendingDiscount(false);
+    }
+  }, [pendingDiscount]);
 
   return (
     <div className="w-full">
@@ -44,6 +61,22 @@ export default function ProductSessionGroupedPriceCard({
             </Flex>
           </Flex>
         </div>
+        {productHighlighted && (
+          <Button
+            size="sm"
+            type="tertiary"
+            className="mt-auto"
+            bgColor="bg-hg-primary"
+            onClick={e => {
+              e.stopPropagation();
+              addToCart(product as CartItem);
+              setPendingDiscount(true);
+            }}
+          >
+            <p className="mr-2">Añadir </p>
+            <SvgPlusSmall height={20} width={20} />
+          </Button>
+        )}
         {!productHighlighted && (
           <Button
             type="tertiary"
