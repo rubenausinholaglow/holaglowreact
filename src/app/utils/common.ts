@@ -80,5 +80,5 @@ export function getDiscountedPrice(product: Product) {
       0
     );
   }
-  return product.price - totalDiscountSum;
+  return totalDiscountSum === 0 ? 0 : product.price - totalDiscountSum;
 }
