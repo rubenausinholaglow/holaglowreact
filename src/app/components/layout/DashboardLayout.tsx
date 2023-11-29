@@ -89,12 +89,13 @@ export default function DashboardLayout({
             messageData = handlePaymentCreate(message);
             break;
           case EventTypes.GoToPage:
-            messageData = handleGoToPage(message);
+            handleGoToPage(message);
             break;
           default:
             throw new Error(`Unsupported event: ${message.Event}`);
         }
-        if (messageData) messageSocket.addMessageSocket(messageData);
+        if (messageData && message.event != EventTypes.GoToPage)
+          messageSocket.addMessageSocket(messageData);
       },
     });
     SocketService.getInstance({
@@ -180,8 +181,6 @@ export default function DashboardLayout({
       setFlowwwToken(localStorage.getItem('flowwwToken') || '');
       router.push(routePages[message.data.page]);
     }
-
-    return true;
   }
 
   function isBoxIdInStoredBoxId(
