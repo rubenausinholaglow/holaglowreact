@@ -141,8 +141,8 @@ export default function CheckoutTotal() {
         <Text
           className={
             hasProductsDiscount || hasCartDiscount
-              ? 'text-hg-black500 text-md line-through'
-              : 'text-hg-black'
+              ? 'text-hg-black500 text-lg line-through'
+              : 'text-xl text-hg-secondary font-semibold'
           }
         >
           {productsPriceTotal.toFixed(2)}€

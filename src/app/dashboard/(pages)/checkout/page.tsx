@@ -122,7 +122,7 @@ const Page = () => {
 
   return (
     <MainLayout isDashboard isCheckout>
-      <Flex className="h-screen w-full">
+      <Flex className="w-full">
         <div className="w-[55%] h-full p-4">
           {budgetId && !isBudgetModified && !isLoading && <PaymentModule />}
           {!(budgetId && !isBudgetModified && !isLoading) && (
@@ -130,7 +130,7 @@ const Page = () => {
           )}
         </div>
 
-        <div className="w-[45%] bg-white rounded-tl-2xl h-full">
+        <div className="w-[45%] bg-white rounded-l-2xl h-full">
           <Flex layout="col-left" className="p-4">
             <Flex className="gap-2">
               <SvgBag height={20} width={20} />
@@ -147,7 +147,7 @@ const Page = () => {
 
           <CheckoutTotal />
 
-          <Flex layout="col-left" className="gap-4 mt-8 px-4">
+          <Flex layout="col-left" className="gap-4 my-8 px-4">
             {(!budgetId || isBudgetModified || isLoading) && (
               <Button
                 className="w-full"

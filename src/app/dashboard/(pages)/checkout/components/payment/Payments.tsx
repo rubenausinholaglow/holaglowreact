@@ -30,6 +30,7 @@ import { useRouter } from 'next/navigation';
 import PaymentItem, { StatusPayment } from './PaymentItem';
 import PaymentClient from './paymentMethods/PaymentClient';
 import { paymentItems } from './paymentMethods/PaymentItems';
+import PepperWidget from './paymentMethods/PepperWidget';
 import { usePaymentList } from './payments/usePaymentList';
 
 export const PaymentModule = () => {
@@ -386,10 +387,15 @@ export const PaymentModule = () => {
         </Text>
       </Flex>
 
+      <PepperWidget
+        className="mb-8"
+        totalPrice={Number(missingAmountFormatted)}
+      />
+
       <Button
         size="lg"
         type="tertiary"
-        className="w-full"
+        className="w-full mb-8"
         customStyles="bg-hg-primary"
         onClick={createTicket}
       >
