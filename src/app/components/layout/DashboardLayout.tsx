@@ -67,11 +67,12 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
+        debugger;
         const isBoxIdInStoredBoxIds = isBoxIdInStoredBoxId(
           message.data.boxId,
           storedBoxId
         );
-        if (message.data.clinicId != storedClinicId && !isBoxIdInStoredBoxIds) {
+        if (message.data.clinicId != storedClinicId || !isBoxIdInStoredBoxIds) {
           return true;
         }
         let messageData: any;
