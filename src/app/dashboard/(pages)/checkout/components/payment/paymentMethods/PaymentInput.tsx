@@ -235,7 +235,7 @@ export default function PaymentInput(props: Props) {
       await FinanceService.initializePayment(data).then(x => {
         setShowPepperModal(false);
         if (x) {
-          window.open(x.url, '_blank');
+          openWindow(x.url);
           handleUrlPayment(x.id, '', x.referenceId);
         } else {
           setMessageNotification('Error pagando con Pepper');
@@ -243,6 +243,13 @@ export default function PaymentInput(props: Props) {
       });
     });
     setIsLoading(false);
+  };
+
+  const openWindow = (url: string) => {
+    const newWindow = window.open(url, '_blank');
+    if (newWindow) {
+      newWindow.opener = null;
+    }
   };
 
   const handleBirthdayChange = (date: any) => {
