@@ -5,7 +5,6 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { Appointment } from '@interface/appointment';
 import { Slot } from '@interface/slot';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/components/layout/MainLayout';

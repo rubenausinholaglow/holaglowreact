@@ -3,7 +3,11 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { toggleFilter } from 'app/tratamientos/utils/filters';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/tratamientos/utils/filters';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
@@ -21,7 +25,12 @@ export default function CategorySelector({
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
-  const { productFilters, setProductFilters } = useGlobalStore(state => state);
+  const {
+    productFilters,
+    setProductFilters,
+    filteredProducts,
+    setFilteredProducts,
+  } = useGlobalStore(state => state);
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
@@ -40,6 +49,16 @@ export default function CategorySelector({
 
     setProductCategories(uniqueCategoryNames);
   }, [stateProducts]);
+
+  useEffect(() => {
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
+
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(stateProducts);
+    }
+  }, [productFilters]);
 
   return (
     <ul

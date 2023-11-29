@@ -1,6 +1,7 @@
 'use client';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import 'app/checkout/agenda/datePickerStyle.css';
 
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
@@ -244,6 +245,14 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   };
 
+  const handleBirthdayChange = (date: any) => {
+    const formattedDate = date ? dayjs(date).format('YYYY-MM-DD') : '';
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      birthday: formattedDate,
+    }));
+  };
+
   const handleFormFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
@@ -274,7 +283,7 @@ export default function PaymentInput(props: Props) {
               className="mb-4"
             />
             <Title>
-              Importe: <span className="font-semibold">{inputValue}</span>
+              Importe: <span className="font-semibold">{inputValue}</span> €
             </Title>
 
             <Flex className="gap-4">
@@ -309,7 +318,7 @@ export default function PaymentInput(props: Props) {
             <Flex className="gap-4">
               <Flex className="flex-col">
                 <label className="text-gray-700 mb-2 w-full text-left">
-                  Fecha Nacimiento
+                  Fecha Nacimiento dd/mm/aaaa
                 </label>
                 <DatePicker
                   selected={
@@ -318,19 +327,21 @@ export default function PaymentInput(props: Props) {
                       : new Date()
                   }
                   onChange={date => {
-                    const formattedDate = date
-                      ? dayjs(date).format('YYYY-MM-DD')
-                      : '';
-                    setFormData(prevFormData => ({
-                      ...prevFormData,
-                      birthday: formattedDate,
-                    }));
+                    handleBirthdayChange(date);
+                  }}
+                  onMonthChange={date => {
+                    handleBirthdayChange(date);
+                  }}
+                  onYearChange={date => {
+                    handleBirthdayChange(date);
                   }}
                   useWeekdaysShort
                   calendarStartDay={1}
                   locale="es"
                   className="w-full"
                   fixedHeight
+                  popperClassName="pepper-datepicker"
+                  popperPlacement="bottom"
                   customInput={
                     <input
                       placeholder={'Fecha nacimiento'}
@@ -356,6 +367,7 @@ export default function PaymentInput(props: Props) {
                   }
                   showYearDropdown
                   showMonthDropdown
+                  dateFormat="dd/MM/yyyy"
                 ></DatePicker>
               </Flex>
               <TextInputField
@@ -397,10 +409,10 @@ export default function PaymentInput(props: Props) {
             </Flex>
 
             <Button
-              size="sm"
-              type="secondary"
+              size="lg"
+              type="tertiary"
+              customStyles="bg-hg-primary px-8"
               isSubmit
-              className="ml-2"
               onClick={initializePepper}
             >
               {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}

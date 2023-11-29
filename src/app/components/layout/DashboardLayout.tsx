@@ -243,7 +243,7 @@ export default function DashboardLayout({
       </Flex>
 
       {!hideBottomBar && (
-        <footer className="z-10 bg-hg-secondary300">
+        <footer className="z-50 bg-hg-secondary300">
           <DashboardFooter showCart={showCart} />
         </footer>
       )}
