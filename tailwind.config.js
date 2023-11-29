@@ -6,6 +6,10 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx,mdx}',
   ],
   theme: {
+    fontFamily: {
+      gtUltraThin: ['gtUltraThin', 'Georgia', 'serif'],
+      gtUltraBold: ['gtUltraBold', 'Georgia', 'serif'],
+    },
     fontSize: {
       '6xl': ['78px', '92px'],
       '5xl': ['64px', '72px'],
