@@ -118,6 +118,7 @@ export default function Header() {
                 className="lg:absolute right-0 2xl:mr-20"
               >
                 <Button
+                  size="sm"
                   type="tertiary"
                   href={ROUTES.checkout.clinics}
                   className="hidden md:block"
