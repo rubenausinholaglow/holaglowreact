@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { CrisalixUser } from '@interface/crisalix';
 import UserService from '@services/UserService';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -20,7 +21,9 @@ const Page = () => {
   const [clinicFlowId, setClinicFlowId] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
-  const { storedClinicId } = useGlobalPersistedStore(state => state);
+  const { storedClinicId, user, storedAppointmentId } = useGlobalPersistedStore(
+    state => state
+  );
 
   useEffect(() => {
     const existsCrisalixUser =
@@ -28,12 +31,15 @@ const Page = () => {
         ? userCrisalix.crisalixUser[0]
         : null;
 
+    if (existsCrisalixUser == null) {
+      createCrisalixUser(user?.id || '', storedAppointmentId, storedClinicId);
+    }
+
     if (existsCrisalixUser != null) {
       setId(existsCrisalixUser.id);
       setPlayerToken(existsCrisalixUser.playerToken);
       setPlayerId(existsCrisalixUser.playerId);
     }
-
     setTimeout(
       () => {
         setAlmostReady(true);
@@ -43,6 +49,27 @@ const Page = () => {
     setUsername(localStorage.getItem('username') || '');
     setClinicFlowId(localStorage.getItem('ClinicFlowwwId') || '');
   }, []);
+
+  async function createCrisalixUser(
+    userId: string,
+    appointmentId: string,
+    clinicId: string
+  ) {
+    await UserService.createCrisalixUser(userId, appointmentId, clinicId).then(
+      async x => {
+        const crisalixUser: CrisalixUser = {
+          id: x.id,
+          playerId: x.player_id,
+          playerToken: x.playerToken,
+          name: x.name,
+        };
+        userCrisalix.addCrisalixUser(crisalixUser);
+        setId(x.id);
+        setPlayerToken(x.playerToken);
+        setPlayerId(x.playerId);
+      }
+    );
+  }
 
   const checksimulationReady = () => {
     if (id == '' || playerToken == '') return;
@@ -55,6 +82,7 @@ const Page = () => {
       }
     });
   };
+
   useEffect(() => {
     checksimulationReady();
   }, [playerId, playerToken]);

@@ -35,7 +35,9 @@ export default function Page({
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const messageSocket = useMessageSocket(state => state);
-  const { setCurrentUser } = useGlobalPersistedStore(state => state);
+  const { setCurrentUser, setAppointmentId } = useGlobalPersistedStore(
+    state => state
+  );
   const {
     remoteControl,
     storedBoxId,
@@ -215,6 +217,7 @@ export default function Page({
         async data => {
           if (data != null) {
             setCurrentUser(data.lead.user);
+            setAppointmentId(data.id);
             localStorage.setItem('ClinicId', data.clinic.id);
             localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
             localStorage.setItem(
