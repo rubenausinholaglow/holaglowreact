@@ -271,7 +271,8 @@ const AppointmentsListComponent: React.FC<{
                       {appointment.lead?.user?.lastName}
                     </Text>
                     <Text className="text-hg-black500 text-xs">
-                      {appointment.lead?.user?.flowwwToken.slice(0, -32)}
+                      {appointment.lead?.user?.flowwwToken.slice(0, -32)} -{' '}
+                      {appointment.lead?.user?.phone}
                     </Text>
                   </div>
                 </Flex>
