@@ -32,9 +32,9 @@ const Page = () => {
         ? userCrisalix.crisalixUser[0]
         : null;
 
-    if (existsCrisalixUser == null) {
+    /*if (existsCrisalixUser == null) {
       createCrisalixUser(user?.id || '', storedAppointmentId, storedClinicId);
-    }
+    }*/
 
     if (existsCrisalixUser != null) {
       setId(existsCrisalixUser.id);
