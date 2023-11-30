@@ -19,6 +19,7 @@ const Page = () => {
   const [loadPlayer, setLoadPlayer] = useState(false);
   const [username, setUsername] = useState('');
   const [clinicFlowId, setClinicFlowId] = useState('');
+  const [isChecking, setIsChecking] = useState(false);
 
   const userCrisalix = useCrisalix(state => state);
   const { storedClinicId, user, storedAppointmentId } = useGlobalPersistedStore(
@@ -40,6 +41,7 @@ const Page = () => {
       setPlayerToken(existsCrisalixUser.playerToken);
       setPlayerId(existsCrisalixUser.playerId);
     }
+    setIsChecking(true);
     setTimeout(
       () => {
         setAlmostReady(true);
@@ -72,7 +74,7 @@ const Page = () => {
   }
 
   const checksimulationReady = () => {
-    if (id == '' || playerToken == '') return;
+    if (id === '' || playerToken === '' || !isChecking) return;
     UserService.getSimulationReady(id, clinicFlowId!).then(x => {
       setSimulationReady(x);
       if (!x) {
@@ -89,6 +91,7 @@ const Page = () => {
 
   useEffect(() => {
     if (playerId == '' || playerToken == '') return;
+    setIsChecking(false);
     const script = `
         var url = 'https://api3d.crisalix.com/v2/player.js';
         var scriptLoaded = false;
