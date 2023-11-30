@@ -18,13 +18,16 @@ const Page = () => {
   const [flowwwToken, setFlowwwToken] = useState('');
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
-  const { remoteControl } = useGlobalPersistedStore(state => state);
+  const { remoteControl, setCheckSimulator } = useGlobalPersistedStore(
+    state => state
+  );
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username') || '';
     const storedFlowwwtoken = localStorage.getItem('flowwwToken') || '';
     setUserName(storedUsername);
     setFlowwwToken(storedFlowwwtoken);
+    setCheckSimulator(false);
   }, []);
 
   useEffect(() => {
