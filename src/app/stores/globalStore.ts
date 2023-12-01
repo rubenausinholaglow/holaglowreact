@@ -52,6 +52,9 @@ interface GlobalPersistStore {
   storedAppointmentId: string | '';
   userCheckin?: UserCheckin;
   checkSimulator: boolean;
+  storedClinicFlowwwId: string | '';
+  storedClinicProfessionalId: string | '';
+  storedBudgetId: string | '';
 }
 
 interface GlobalPersistActions {
@@ -66,6 +69,9 @@ interface GlobalPersistActions {
   setAppointmentId: (storedAppointmentId: string) => void;
   setUserCheckIn: (value?: UserCheckin) => void;
   setCheckSimulator: (value?: boolean) => void;
+  setClinicFlowwwId: (value?: string) => void;
+  setClinicProfessionalId: (value?: string) => void;
+  setBudgetId: (value?: string) => void;
 }
 
 export const useSessionStore = create(
@@ -181,6 +187,18 @@ export const useGlobalPersistedStore = create(
       checkSimulator: false,
       setCheckSimulator: value => {
         set({ checkSimulator: value });
+      },
+      storedClinicFlowwwId: '',
+      setClinicFlowwwId: value => {
+        set({ storedClinicFlowwwId: value });
+      },
+      storedClinicProfessionalId: '',
+      setClinicProfessionalId: value => {
+        set({ storedClinicProfessionalId: value });
+      },
+      storedBudgetId: '',
+      setBudgetId: value => {
+        set({ storedBudgetId: value });
       },
     }),
     {

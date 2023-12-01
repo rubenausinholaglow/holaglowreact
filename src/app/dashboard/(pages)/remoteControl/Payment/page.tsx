@@ -7,6 +7,7 @@ import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
 
@@ -23,6 +24,7 @@ export default function PaymentRemoteControl() {
   const [messageNotification, setMessageNotification] = useState<string | ''>(
     ''
   );
+  const { setBudgetId } = useGlobalPersistedStore(state => state);
   useEffect(() => {
     const fetchData = async () => {
       await loadBudget();
@@ -58,7 +60,6 @@ export default function PaymentRemoteControl() {
   async function processBudget(budget: Budget) {
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
-    localStorage.setItem('BudgetId', String(budget.id || ''));
     setFinalBudget(budget);
     applyCartDiscounts(budget);
     await processBudgetItems(budget);

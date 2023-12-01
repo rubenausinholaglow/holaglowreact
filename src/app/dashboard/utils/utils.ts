@@ -126,17 +126,7 @@ export function getPaymentBankText(bank: PaymentBank): string {
 }
 
 export function clearLocalStorage(allLocalStorage: boolean) {
-  localStorage.removeItem('ClinicProfessionalId');
-  localStorage.removeItem('username');
-  localStorage.removeItem('flowwwToken');
-  localStorage.removeItem('id');
-  localStorage.removeItem('BudgetId');
-  if (allLocalStorage) {
-    localStorage.removeItem('ClinicFlowwwId');
-    localStorage.removeItem('boxId');
-    localStorage.removeItem('ClinicId');
-    localStorage.removeItem('ClinicProfessionalId');
-  }
+  localStorage.clear();
   useCrisalix.setState(INITIAL_STATE_CRISALIXUSERLIST);
   useMessageSocket.setState(INITIAL_STATE_MESSAGESOCKETLIST);
   usePaymentList.setState(INITIAL_STATE_PAYMENT);

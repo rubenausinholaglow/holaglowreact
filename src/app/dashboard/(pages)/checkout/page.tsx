@@ -29,16 +29,14 @@ const Page = () => {
   const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [clientToken, setClientToken] = useState<string | ''>('');
-  const [budgetId, setBudgetId] = useState<string | ''>('');
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
   const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
-  const { storedBoxId, storedClinicId, user } = useGlobalPersistedStore(
-    state => state
-  );
+  const { storedBoxId, storedClinicId, user, storedBudgetId, setBudgetId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
-    if (budgetId && totalPriceInitial != totalPriceToShow) {
+    if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
       setBudgetModified(true);
     }
   }),
@@ -57,7 +55,7 @@ const Page = () => {
 
   useEffect(() => {
     setBudgetId(localStorage.getItem('BudgetId') || '');
-  }, [budgetId]);
+  }, [storedBudgetId]);
 
   const handleFinalize = async () => {
     setTotalPriceInitial(totalPriceToShow);
@@ -86,10 +84,10 @@ const Page = () => {
       })),
     };
     try {
-      if (budgetId.length > 0) {
+      if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         setShowProductDiscount(false);
-        budget.id = budgetId;
+        budget.id = storedBudgetId;
         await budgetService.updateBudget(budget);
       } else {
         const data = await budgetService.createBudget(budget);
@@ -124,8 +122,10 @@ const Page = () => {
     <MainLayout isDashboard isCheckout>
       <Flex className="w-full">
         <div className="w-[55%] h-full p-4">
-          {budgetId && !isBudgetModified && !isLoading && <PaymentModule />}
-          {!(budgetId && !isBudgetModified && !isLoading) && (
+          {storedBudgetId && !isBudgetModified && !isLoading && (
+            <PaymentModule />
+          )}
+          {!(storedBudgetId && !isBudgetModified && !isLoading) && (
             <PepperWidget totalPrice={Number(cartTotalPrice())}></PepperWidget>
           )}
         </div>
@@ -148,7 +148,7 @@ const Page = () => {
           <CheckoutTotal />
 
           <Flex layout="col-left" className="gap-4 my-8 px-4">
-            {(!budgetId || isBudgetModified || isLoading) && (
+            {(!storedBudgetId || isBudgetModified || isLoading) && (
               <Button
                 className="w-full"
                 customStyles="bg-hg-primary"

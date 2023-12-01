@@ -46,6 +46,8 @@ export default function Page({
     setClinicId,
     setRemoteControl,
     setIgnoreMessages,
+    setClinicFlowwwId,
+    setClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
@@ -183,17 +185,15 @@ export default function Page({
         async data => {
           if (data != null) {
             setCurrentUser(data.lead.user);
-            localStorage.setItem('ClinicId', data.clinic.id);
-            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
-            localStorage.setItem(
-              'ClinicProfessionalId',
-              data.clinicProfessional.id
-            );
+            setClinicId(data.clinic.id);
+            setClinicFlowwwId(data.clinic.flowwwId);
+            setClinicProfessionalId(data.clinicProfessional.id);
+
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;
             }
-            saveUserDetails(name, id, '');
+
             if (remoteControl) {
               router.push('/dashboard/remoteControl');
             } else router.push('/dashboard/menu');
@@ -218,17 +218,15 @@ export default function Page({
           if (data != null) {
             setCurrentUser(data.lead.user);
             setAppointmentId(data.id);
-            localStorage.setItem('ClinicId', data.clinic.id);
-            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
-            localStorage.setItem(
-              'ClinicProfessionalId',
-              data.clinicProfessional.id
-            );
+            setClinicId(data.clinic.id);
+            setClinicFlowwwId(data.clinic.flowwwId);
+            setClinicProfessionalId(data.clinicProfessional.id);
+
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;
             }
-            saveUserDetails(name, id, flowwwToken);
+
             if (remoteControl) {
               router.push('/dashboard/remoteControl');
             } else router.push('/dashboard/menu');
@@ -240,12 +238,6 @@ export default function Page({
     } catch (err) {
       Bugsnag.notify(ERROR_GETTING_DATA + err);
     }
-  }
-
-  function saveUserDetails(name: string, id: string, flowwwToken: string) {
-    localStorage.setItem('username', name);
-    localStorage.setItem('id', id);
-    localStorage.setItem('flowwwToken', flowwwToken);
   }
 
   const handleFormFieldChange = (
