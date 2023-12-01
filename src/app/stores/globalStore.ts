@@ -51,6 +51,7 @@ interface GlobalPersistStore {
   storedBoxId: string | '';
   storedAppointmentId: string | '';
   userCheckin?: UserCheckin;
+  checkSimulator: boolean;
 }
 
 interface GlobalPersistActions {
@@ -64,6 +65,7 @@ interface GlobalPersistActions {
   setBoxId: (setBoxId: string) => void;
   setAppointmentId: (storedAppointmentId: string) => void;
   setUserCheckIn: (value?: UserCheckin) => void;
+  setCheckSimulator: (value?: boolean) => void;
 }
 
 export const useSessionStore = create(
@@ -175,6 +177,10 @@ export const useGlobalPersistedStore = create(
       storedAppointmentId: '',
       setAppointmentId: value => {
         set({ storedAppointmentId: value });
+      },
+      checkSimulator: false,
+      setCheckSimulator: value => {
+        set({ checkSimulator: value });
       },
     }),
     {

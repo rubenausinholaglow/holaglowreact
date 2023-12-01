@@ -20,6 +20,7 @@ export default class UserService {
 
   static async getSimulationReady(id: string, clinicId: string) {
     try {
+      console.log('executed');
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_CONTACTS_API}Crisalix/SimulationReady?id=${id}&clinic=${clinicId}`,
         {

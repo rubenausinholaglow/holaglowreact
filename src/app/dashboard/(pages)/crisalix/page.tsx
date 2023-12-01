@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CrisalixUser } from '@interface/crisalix';
 import UserService from '@services/UserService';
 import MainLayout from 'app/components/layout/MainLayout';
@@ -19,29 +19,32 @@ const Page = () => {
   const [loadPlayer, setLoadPlayer] = useState(false);
   const [username, setUsername] = useState('');
   const [clinicFlowId, setClinicFlowId] = useState('');
-  const [isChecking, setIsChecking] = useState(false);
 
   const userCrisalix = useCrisalix(state => state);
-  const { storedClinicId, user, storedAppointmentId } = useGlobalPersistedStore(
-    state => state
-  );
+  const {
+    storedClinicId,
+    user,
+    storedAppointmentId,
+    checkSimulator,
+    setCheckSimulator,
+  } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
+    setCheckSimulator(true);
     const existsCrisalixUser =
       userCrisalix.crisalixUser.length > 0
         ? userCrisalix.crisalixUser[0]
         : null;
 
-    /*if (existsCrisalixUser == null) {
+    if (existsCrisalixUser == null) {
       createCrisalixUser(user?.id || '', storedAppointmentId, storedClinicId);
-    }*/
+    }
 
     if (existsCrisalixUser != null) {
       setId(existsCrisalixUser.id);
       setPlayerToken(existsCrisalixUser.playerToken);
       setPlayerId(existsCrisalixUser.playerId);
     }
-    setIsChecking(true);
     setTimeout(
       () => {
         setAlmostReady(true);
@@ -68,30 +71,36 @@ const Page = () => {
         userCrisalix.addCrisalixUser(crisalixUser);
         setId(x.id);
         setPlayerToken(x.playerToken);
-        setPlayerId(x.playerId);
+        setPlayerId(x.player_Id);
       }
     );
   }
 
-  const checksimulationReady = () => {
-    if (id === '' || playerToken === '' || !isChecking) return;
-    UserService.getSimulationReady(id, clinicFlowId!).then(x => {
-      setSimulationReady(x);
-      if (!x) {
-        setTimeout(() => {
-          checksimulationReady();
-        }, 15 * 1000);
-      }
-    });
-  };
-
   useEffect(() => {
-    checksimulationReady();
-  }, [playerId, playerToken]);
+    let timerId: NodeJS.Timeout;
+
+    const checksimulationReady = () => {
+      if (id === '' || playerToken === '') return;
+
+      UserService.getSimulationReady(id, clinicFlowId!).then(x => {
+        setSimulationReady(x);
+        if (!x && checkSimulator) {
+          timerId = setTimeout(checksimulationReady, 15 * 1000);
+        }
+      });
+    };
+
+    if (id !== '' && playerToken !== '') {
+      timerId = setTimeout(checksimulationReady, 15 * 1000);
+    }
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [id, playerToken, clinicFlowId, checkSimulator]);
 
   useEffect(() => {
     if (playerId == '' || playerToken == '') return;
-    setIsChecking(false);
     const script = `
         var url = 'https://api3d.crisalix.com/v2/player.js';
         var scriptLoaded = false;
