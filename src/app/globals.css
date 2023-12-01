@@ -58,7 +58,8 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-#categorySelector::-webkit-scrollbar {
+#categorySelector::-webkit-scrollbar,
+#blogCategorySelector::-webkit-scrollbar {
   display: none;
 }
 
