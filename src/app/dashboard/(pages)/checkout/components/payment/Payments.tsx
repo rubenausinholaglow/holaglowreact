@@ -7,6 +7,7 @@ import { StatusBudget, TicketBudget } from '@interface/budget';
 import { MessageType } from '@interface/messageSocket';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { Ticket } from '@interface/ticket';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
 import { INITIAL_STATE } from '@utils/constants';
@@ -14,7 +15,6 @@ import { applyDiscountToCart } from '@utils/utils';
 import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
-  Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
@@ -296,9 +296,14 @@ export const PaymentModule = () => {
   return (
     <>
       {paymentItems.length > 0 && (
-        <Accordion
-          value={activePaymentMethod}
+        <AccordionPrimitive.Root
           className="flex flex-col gap-8 w-full mb-8"
+          collapsible
+          value={activePaymentMethod}
+          type="single"
+          onValueChange={(activePaymentMethod: string) => {
+            setActivePaymentMethod(activePaymentMethod);
+          }}
         >
           {paymentItems.map(method => (
             <AccordionItem
@@ -356,7 +361,7 @@ export const PaymentModule = () => {
               </AccordionContent>
             </AccordionItem>
           ))}
-        </Accordion>
+        </AccordionPrimitive.Root>
       )}
 
       {paymentList.length > 0 && (
