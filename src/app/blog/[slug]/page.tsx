@@ -1,16 +1,44 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Professional } from '@interface/clinic';
 import MainLayout from 'app/components/layout/MainLayout';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { SvgCheckCircle } from 'icons/IconsDs';
 import Image from 'next/image';
 
+import BlogAuthor from '../components/BlogAuthor';
 import BlogBreadcrumb from '../components/BlogBreadcrumb';
 import BlogCategories from '../components/BlogCategories';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
+  const { clinics } = useGlobalPersistedStore(state => state);
+
+  const [professionals, setProfessionals] = useState<Professional[] | null>([]);
+
+  useEffect(() => {
+    const professionalsWithCity = clinics.flatMap(clinic =>
+      clinic.professionals.filter(professional => {
+        if (professional.professionalType === 1) {
+          return {
+            ...professional,
+            city: clinic.city,
+          };
+        }
+      })
+    );
+
+    setProfessionals(professionalsWithCity);
+  }, [clinics]);
+
+  console.log(professionals);
+
   return (
     <MainLayout>
       <div className="rounded-t-3xl shadow-centered-black-lg ">
-        <Container className="mb-8 pt-6 md:pt-12">
+        <Container className="mb-8 py-6 md:py-12">
           <BlogBreadcrumb />
 
           <Image
@@ -102,11 +130,99 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 3
               </span>
               <div>
-                <p>Muy versátil, trata múltiples necesidades de tu piel:</p>
+                <p className="mb-6">
+                  Muy versátil, trata múltiples necesidades de tu piel:
+                </p>
+
+                <ul>
+                  <li className="flex items-center gap-2 mb-6">
+                    <SvgCheckCircle
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary shrink-0"
+                    />
+                    Hidratación profunda
+                  </li>
+                  <li className="flex items-center gap-2 mb-6">
+                    <SvgCheckCircle
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary shrink-0"
+                    />
+                    Tratamiento de arrugas finas
+                  </li>
+                  <li className="flex items-center gap-2 mb-6">
+                    <SvgCheckCircle
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary shrink-0"
+                    />
+                    Prevención de la formación de nuevas arrugas
+                  </li>
+                  <li className="flex items-center gap-2 mb-6">
+                    <SvgCheckCircle
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary shrink-0"
+                    />
+                    Eliminación de puntos negros
+                  </li>
+                  <li className="flex items-center gap-2 mb-6">
+                    <SvgCheckCircle
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary shrink-0"
+                    />
+                    Tratamientos de los surcos lagrimales
+                  </li>
+                  <li className="flex items-center gap-2 mb-6">
+                    <SvgCheckCircle
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary shrink-0"
+                    />
+                    Luminosidad y aspecto saludable de la piel
+                  </li>
+                  <li className="flex items-center gap-2 mb-6">
+                    <SvgCheckCircle
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary shrink-0"
+                    />
+                    Tensado de la piel
+                  </li>
+                </ul>
               </div>
             </li>
           </ul>
+
+          <Image
+            src="/images/blog/post1.png"
+            alt="placeholder"
+            height={400}
+            width={600}
+            className="w-full rounded-3xl mb-8"
+          />
+
+          <Text className="text-xl font-semibold mb-6">
+            ¿Cuándo podré ver los resultados? ¿Cuál es su duración?
+          </Text>
+
+          <p className="mb-6">
+            Los resultados de la Mesoterapia Facial se pueden observar después
+            de la primera sesión, mejorando la textura y el aspecto de la piel.
+            El resultado estético cúspide se consigue de forma acumulativa tras
+            3 - 5 sesiones con un intervalo de 15-20 días.
+          </p>
+
+          <p className="mb-6">
+            Después de los 3 primeros meses, se sugiere repetir el tratamiento
+            cada 2-6 meses, dependiendo de las necesidades personales de cada
+            paciente.
+          </p>
         </Container>
+
+        {/* <BlogAuthor /> */}
       </div>
     </MainLayout>
   );

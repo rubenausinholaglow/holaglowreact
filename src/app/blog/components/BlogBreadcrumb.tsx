@@ -12,7 +12,7 @@ export default function BlogBreadcrumb({
   className?: string;
 }) {
   return (
-    <Flex layout="row-right" className={className}>
+    <Flex layout="row-right" className={`mb-8 ${className}`}>
       <Flex className="gap-2 text-sm">
         <SvgArrow className="rotate-180" height={16} width={16} /> Volver
       </Flex>
