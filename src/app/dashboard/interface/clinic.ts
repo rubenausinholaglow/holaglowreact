@@ -17,6 +17,7 @@ export interface Professional {
   id: string;
   collegiateNumber: string;
   title: string;
+  tittleAbbreviation: string;
   urlPhoto: string;
   name: string;
   professionalType: ProfessionalType;

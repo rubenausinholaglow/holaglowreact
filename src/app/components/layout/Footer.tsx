@@ -9,7 +9,8 @@ import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgHolaglow, SvgInstagram } from 'icons/IconsDs';
+import { SvgHolaglow } from 'icons/IconsDs';
+import { SvgInstagram } from 'icons/socialIcons';
 import { usePathname } from 'next/navigation';
 
 export function Footer() {

@@ -1,11 +1,11 @@
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   SvgHolaglow,
-  SvgInstagram,
   SvgMapMarker,
   SvgPhone,
   SvgWorldWideWeb,
 } from 'icons/Icons';
+import { SvgInstagram } from 'icons/socialIcons';
 
 import { Clinic } from './types';
 

@@ -8,15 +8,20 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCheckCircle } from 'icons/IconsDs';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 import BlogAuthor from '../components/BlogAuthor';
 import BlogBreadcrumb from '../components/BlogBreadcrumb';
 import BlogCategories from '../components/BlogCategories';
+import BlogRelatedPosts from '../components/BlogRelatedPosts';
+import BlogShareBar from '../components/BlogShareBar';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const { clinics } = useGlobalPersistedStore(state => state);
 
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
+
+  const route = usePathname();
 
   useEffect(() => {
     const professionalsWithCity = clinics.flatMap(clinic =>
@@ -32,8 +37,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
     setProfessionals(professionalsWithCity);
   }, [clinics]);
-
-  console.log(professionals);
 
   return (
     <MainLayout>
@@ -222,7 +225,19 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           </p>
         </Container>
 
-        {/* <BlogAuthor /> */}
+        {professionals && (
+          <BlogAuthor className="mb-12" professional={professionals[1]} />
+        )}
+
+        <Container className="border-t border-hg-black">
+          <BlogShareBar
+            className="my-12"
+            url={`https://www.holaglow.com${route}`}
+            title="titulo del post"
+          />
+
+          <BlogRelatedPosts categories={['Arrugas']} />
+        </Container>
       </div>
     </MainLayout>
   );
