@@ -19,7 +19,6 @@ const Page = () => {
   const [loadPlayer, setLoadPlayer] = useState(false);
   const [username, setUsername] = useState('');
   const [clinicFlowId, setClinicFlowId] = useState('');
-  const isMounted = useRef<boolean>(true);
 
   const userCrisalix = useCrisalix(state => state);
   const {
@@ -76,17 +75,6 @@ const Page = () => {
       }
     );
   }
-
-  const checksimulationReady = () => {
-    if (id === '' || playerToken === '') return;
-
-    UserService.getSimulationReady(id, clinicFlowId!).then(x => {
-      setSimulationReady(x);
-      if (!x && checkSimulator) {
-        setTimeout(checksimulationReady, 15 * 1000);
-      }
-    });
-  };
 
   useEffect(() => {
     let timerId: NodeJS.Timeout;
