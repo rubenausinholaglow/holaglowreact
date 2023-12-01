@@ -37,7 +37,7 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
     null
   );
   const [isLoading, setIsLoading] = useState(false);
-  const { remoteControl, storedBoxId, storedClinicId } =
+  const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
     useGlobalPersistedStore(state => state);
 
   if (status === undefined) {
@@ -86,20 +86,16 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   };
 
   const sendPaymentDeleted = async (paymentId: string) => {
-    const localClinicId = storedClinicId;
-    const localBoxId = storedBoxId;
-    const localBudgetId = localStorage.getItem('BudgetId');
-
     const paymentCreatedRequest: PaymentCreatedData = {
-      clinicId: localClinicId,
-      boxId: localBoxId,
+      clinicId: storedClinicId,
+      boxId: storedBoxId,
       id: paymentId,
       amount: 0,
       paymentBank: 0,
       paymentMethod: 0,
       referenceId: '',
       remoteControl: remoteControl,
-      budgetId: localBudgetId || '',
+      budgetId: storedBudgetId || '',
     };
 
     await messageService.paymentCreated(paymentCreatedRequest);

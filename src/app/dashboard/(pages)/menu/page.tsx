@@ -14,19 +14,13 @@ import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
 
 const Page = () => {
-  const [username, setUserName] = useState('');
-  const [flowwwToken, setFlowwwToken] = useState('');
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
-  const { remoteControl, setCheckSimulator } = useGlobalPersistedStore(
+  const { remoteControl, setCheckSimulator, user } = useGlobalPersistedStore(
     state => state
   );
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username') || '';
-    const storedFlowwwtoken = localStorage.getItem('flowwwToken') || '';
-    setUserName(storedUsername);
-    setFlowwwToken(storedFlowwwtoken);
     setCheckSimulator(false);
   }, []);
 
@@ -62,13 +56,13 @@ const Page = () => {
 
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-      {username && (
+      {user?.firstName && (
         <div className="mt-8">
           <Title className="text-xl mb-4">Tu glow, tus normas</Title>
           <Title className="font-bold text-5xl mb-8">
             ¡Hola{' '}
             <Underlined color={HOLAGLOW_COLORS['primary']}>
-              {username}
+              {user?.firstName}
             </Underlined>
             !
           </Title>
@@ -81,7 +75,7 @@ const Page = () => {
                 title={item.title}
                 link={
                   item.link.includes('flowwwToken')
-                    ? item.link.replace('flowwwToken', flowwwToken)
+                    ? item.link.replace('flowwwToken', user?.flowwwToken)
                     : item.link
                 }
                 target={item.target}

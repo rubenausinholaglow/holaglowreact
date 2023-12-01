@@ -1,21 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import Treatments from 'app/user/passport/Treatments';
 
 const useRoutes = () => {
-  const [flowwwToken, setFlowwwToken] = useState('');
-
-  const { storedBoxId, storedClinicId } = useGlobalPersistedStore(
+  const { storedBoxId, storedClinicId, user } = useGlobalPersistedStore(
     state => state
   );
-
-  useEffect(() => {
-    if (typeof localStorage !== 'undefined') {
-      setFlowwwToken(localStorage.getItem('flowwwToken') || '');
-    }
-  }, []);
 
   return {
     home: '/',
@@ -31,7 +21,7 @@ const useRoutes = () => {
     aboutUs: '/quienes-somos',
     dashboard: {
       crisalix: '/dashboard/crisalix',
-      agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
+      agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
       menu: '/dashboard/menu',
       home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
       checkOut: '/dashboard/checkout',

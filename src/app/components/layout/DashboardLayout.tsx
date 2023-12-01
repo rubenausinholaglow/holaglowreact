@@ -32,9 +32,8 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const messageSocket = useMessageSocket(state => state);
-  const { remoteControl, storedBoxId, storedClinicId } =
+  const { remoteControl, storedBoxId, storedClinicId, user } =
     useGlobalPersistedStore(state => state);
-  const [flowwwToken, setFlowwwToken] = useState('');
 
   const SOCKET_URL_COMMUNICATIONS =
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications';
@@ -45,7 +44,7 @@ export default function DashboardLayout({
 
   const routePages: Record<string, string | ''> = {
     Crisalix: '/dashboard/crisalix',
-    Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${flowwwToken}`,
+    Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
     Menu: '/dashboard/menu',
     Home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
     CheckOut: '/dashboard/remoteControl/Payment',
@@ -173,12 +172,10 @@ export default function DashboardLayout({
 
   function handleGoToPage(message: any) {
     if (remoteControl && message.data.page === 'CheckOut') {
-      setFlowwwToken(localStorage.getItem('flowwwToken') || '');
       router.push(routePages[message.data.page]);
     } else if (remoteControl) {
       return true;
     } else if (message.data.page !== 'CheckOut') {
-      setFlowwwToken(localStorage.getItem('flowwwToken') || '');
       router.push(routePages[message.data.page]);
     }
   }

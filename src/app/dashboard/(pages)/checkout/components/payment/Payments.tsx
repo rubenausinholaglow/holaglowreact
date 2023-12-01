@@ -45,21 +45,24 @@ export const PaymentModule = () => {
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
-  const [guidUserId, setguidUserId] = useState<string | ''>('');
 
   const { cart, totalPrice, priceDiscount, percentageDiscount, manualPrice } =
     useCartStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
   const { totalAmount } = usePaymentList(state => state);
   const messageSocket = useMessageSocket(state => state);
-  const { remoteControl, storedBoxId, storedClinicId } =
-    useGlobalPersistedStore(state => state);
+  const {
+    remoteControl,
+    storedBoxId,
+    storedClinicId,
+    user,
+    storedClinicFlowwwId,
+    storedClinicProfessionalId,
+    storedBudgetId,
+    setBudgetId,
+  } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
-
-  useEffect(() => {
-    setguidUserId(localStorage.getItem('id') || '');
-  }, []);
 
   useEffect(() => {
     const { paymentCreatedMessages, paymentResponseMessages } =
@@ -86,8 +89,7 @@ export const PaymentModule = () => {
   };
 
   const handlePaymentCreate = (message: any) => {
-    const localBudgetId = localStorage.getItem('BudgetId');
-    if (localBudgetId != message.budgetId) return true;
+    if (storedBudgetId != message.budgetId) return true;
     const existsPayment = paymentList.find(x => x.id == message.id);
     if (!existsPayment) {
       handleNewPayment(message);
@@ -189,15 +191,10 @@ export const PaymentModule = () => {
   const missingAmountFormatted = missingAmount.toFixed(2);
 
   const sendTicket = async () => {
-    const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
-    const BudgetId = localStorage.getItem('BudgetId') || '';
-    const ClinicFlowwwId = localStorage.getItem('ClinicFlowwwId') || '';
-    const ClientFlowToken = localStorage.getItem('flowwwToken') || '';
-
     const finalBudget: TicketBudget = {
-      id: BudgetId,
+      id: storedBudgetId,
       discountAmount: '',
-      userId: guidUserId,
+      userId: user?.id || '',
       discountCode: '',
       priceDiscount: 0,
       percentageDiscount: 0,
@@ -208,7 +205,7 @@ export const PaymentModule = () => {
       FlowwwId: '',
       referenceId: '',
       statusBudget: StatusBudget.Open,
-      professionalId: GuidProfessional,
+      professionalId: storedClinicProfessionalId,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: CartItem.price,
@@ -221,9 +218,9 @@ export const PaymentModule = () => {
     const ticket: Ticket = {
       promoCode: '',
       reference: '',
-      userId: guidUserId,
-      clientFlowwwToken: ClientFlowToken,
-      clinicFlowwwId: ClinicFlowwwId,
+      userId: user?.id || '',
+      clientFlowwwToken: user?.flowwwToken || '',
+      clinicFlowwwId: storedClinicFlowwwId,
       professional: '',
       budget: finalBudget,
       paymentProductRequest: paymentList.map(payItem => ({
@@ -260,7 +257,7 @@ export const PaymentModule = () => {
     try {
       const result = await sendTicket();
       if (result) {
-        localStorage.removeItem('BudgetId');
+        setBudgetId('');
         usePaymentList.setState(INITIAL_STATE_PAYMENT);
         useCartStore.setState(INITIAL_STATE);
         if (remoteControl) {

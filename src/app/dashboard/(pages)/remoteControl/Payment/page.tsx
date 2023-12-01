@@ -24,7 +24,7 @@ export default function PaymentRemoteControl() {
   const [messageNotification, setMessageNotification] = useState<string | ''>(
     ''
   );
-  const { setBudgetId } = useGlobalPersistedStore(state => state);
+  const { user } = useGlobalPersistedStore(state => state);
   useEffect(() => {
     const fetchData = async () => {
       await loadBudget();
@@ -39,9 +39,8 @@ export default function PaymentRemoteControl() {
   }, []);
 
   async function loadBudget() {
-    const userId = localStorage.getItem('id') || '';
     await budgetService
-      .getLastBudgetCreated(userId)
+      .getLastBudgetCreated(user?.id || '')
       .then(async (budget: Budget | undefined) => {
         if (budget) {
           if (!finalBudget) {

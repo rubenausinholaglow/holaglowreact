@@ -58,7 +58,7 @@ export default function PaymentInput(props: Props) {
 
   const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
-  const { remoteControl, storedBoxId, storedClinicId } =
+  const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
     useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<ClientUpdate>({
@@ -135,8 +135,6 @@ export default function PaymentInput(props: Props) {
     amount: any,
     referenceId: string
   ) => {
-    const localBudgetId = localStorage.getItem('BudgetId');
-
     const paymentCreatedRequest: PaymentCreatedData = {
       clinicId: storedClinicId,
       boxId: storedBoxId,
@@ -146,7 +144,7 @@ export default function PaymentInput(props: Props) {
       paymentMethod: props.paymentMethod,
       referenceId: referenceId,
       remoteControl: remoteControl,
-      budgetId: localBudgetId || '',
+      budgetId: storedBudgetId || '',
     };
 
     await messageService.paymentCreated(paymentCreatedRequest);
@@ -191,11 +189,10 @@ export default function PaymentInput(props: Props) {
   async function addPayment(number: any) {
     setIsLoading(true);
     const amount = parseFloat(number);
-    const GuidUser = localStorage.getItem('id') || '';
 
     const paymentRequestApi = {
       amount: amount,
-      userId: GuidUser,
+      userId: user?.id || '',
       paymentMethod: props.paymentMethod,
       referenceId: props.paymentBank.toString(),
     };
@@ -215,10 +212,10 @@ export default function PaymentInput(props: Props) {
 
   const initializePepper = async () => {
     setIsLoading(true);
-    const GuidUser = localStorage.getItem('id') || '';
+
     setFormData((prevFormData: any) => ({
       ...prevFormData,
-      ['id']: GuidUser,
+      ['id']: user?.id,
     }));
     await UserService.updateUser(formData).then(async x => {
       let resultValue = '';
@@ -228,7 +225,7 @@ export default function PaymentInput(props: Props) {
       const data: InitializePayment = {
         amount: Number(resultValue),
         installments: 1,
-        userId: GuidUser,
+        userId: user?.id || '',
         paymentBank: 2,
       };
 
