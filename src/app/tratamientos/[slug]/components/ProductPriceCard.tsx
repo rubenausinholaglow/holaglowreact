@@ -151,7 +151,7 @@ export interface option {
 function ProductPriceItemsCard({
   product,
   parentProduct,
-  isDashboard,
+  isDashboard = false,
   setAccordionOverflow,
   isOpen,
 }: {
@@ -393,7 +393,7 @@ export default function ProductPriceCard({
   index,
   parentProduct,
   fullWidthPack = false,
-  isDashboard,
+  isDashboard = false,
   className,
 }: {
   product: Product;
