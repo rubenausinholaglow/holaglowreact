@@ -95,7 +95,7 @@ export default function Header() {
 
       <header
         id="header"
-        className={`z-30 w-full bg-white top-0 sticky transition-all ${
+        className={`z-30 w-full top-0 sticky transition-all ${
           !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
         } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
       >
