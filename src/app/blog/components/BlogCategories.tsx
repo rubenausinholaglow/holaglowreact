@@ -1,8 +1,10 @@
+import { Category } from '@interface/product';
+
 export default function BlogCategories({
   categories,
   className,
 }: {
-  categories: string[];
+  categories: Category[];
   className?: string;
 }) {
   return (
@@ -10,9 +12,9 @@ export default function BlogCategories({
       {categories.map(category => (
         <li
           className="bg-hg-tertiary100 text-hg-tertiary px-4 py-2 rounded-full text-xs"
-          key={category}
+          key={category.name}
         >
-          {category}
+          {category.name}
         </li>
       ))}
     </ul>

@@ -16,24 +16,18 @@ export default function BlogShareBar({
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyToClipboard = () => {
-    // Create a temporary textarea element
     const textarea = document.createElement('textarea');
     textarea.value = url;
 
-    // Append the textarea to the document
     document.body.appendChild(textarea);
 
-    // Select and copy the text
     textarea.select();
     document.execCommand('copy');
 
-    // Remove the temporary textarea
     document.body.removeChild(textarea);
 
-    // Update the state to indicate that the text is copied
     setIsCopied(true);
 
-    // Reset the "copied" state after a brief delay
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);

@@ -1,9 +1,11 @@
 import Bugsnag from '@bugsnag/js';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
+import blogService from '@services/BlogService';
 import clinicService from '@services/ClinicService';
 import ProductService from '@services/ProductService';
 import promoService from '@services/PromoService';
+import { Post } from 'types/blog';
 import { Promo } from 'types/promo';
 
 export async function fetchProducts() {
@@ -64,4 +66,16 @@ export async function fetchPromos() {
   }
 
   return {} as Promo;
+}
+
+export async function fetchBlogPosts() {
+  try {
+    const blogPosts: Post[] = await blogService.getBlogPosts();
+
+    return blogPosts;
+  } catch (error: any) {
+    Bugsnag.notify('Error fetching posts from blog:', error);
+  }
+
+  return [] as Post[];
 }

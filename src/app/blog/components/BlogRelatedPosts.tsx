@@ -1,70 +1,54 @@
-import { useState } from 'react';
-import { FacebookShareButton, TwitterShareButton } from 'react-share';
+import { Category } from '@interface/product';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgArrow } from 'icons/IconsDs';
-import { SvgExport, SvgFacebook, SvgX } from 'icons/socialIcons';
 import Link from 'next/link';
+import { Post } from 'types/blog';
 
 export default function BlogRelatedPosts({
   className = '',
-  categories = [],
+  posts,
+  categories,
 }: {
   className?: string;
-  categories: string[];
+  posts?: Post[];
+  categories: Category[];
 }) {
+  function filterPostsByCategories(
+    posts: Post[],
+    targetCategories: Category[]
+  ) {
+    return posts.filter(post => {
+      return post.categories.some(postCategory =>
+        targetCategories.some(
+          targetCategory => postCategory.name === targetCategory.name
+        )
+      );
+    });
+  }
+
+  if (!posts) {
+    return <></>;
+  }
+
+  const filteredPosts = filterPostsByCategories(posts, categories);
+
   return (
     <Flex layout="col-left" className={`w-full ${className}`}>
       <Text className="text-xl font-semibold mb-8">Post relacionados</Text>
 
       <ul className="flex flex-col gap-6 w-full">
-        <li>
-          <Link
-            href="htpps://www.google.es"
-            className="flex gap-4 items-start text-hg-secondary"
-          >
-            <SvgArrow className="rotate-45 h-8 w-8 text-hg-black" />
-            <Text className="text-lg font-medium">
-              Loren Ipsum fk.ghn edkg hkds
-            </Text>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="htpps://www.google.es"
-            className="flex gap-4 items-start text-hg-secondary"
-          >
-            <SvgArrow className="rotate-45 h-8 w-8 text-hg-black" />
-            <Text className="text-lg font-medium">Loren Ipsum</Text>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="htpps://www.google.es"
-            className="flex gap-4 items-start text-hg-secondary"
-          >
-            <SvgArrow className="rotate-45 h-8 w-8 text-hg-black" />
-            <Text className="text-lg font-medium">Loren Ipsum</Text>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="htpps://www.google.es"
-            className="flex gap-4 items-start text-hg-secondary"
-          >
-            <SvgArrow className="rotate-45 h-8 w-8 text-hg-black" />
-            <Text className="text-lg font-medium">Loren Ipsum</Text>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="htpps://www.google.es"
-            className="flex gap-4 items-start text-hg-secondary"
-          >
-            <SvgArrow className="rotate-45 h-8 w-8 text-hg-black" />
-            <Text className="text-lg font-medium">Loren Ipsum</Text>
-          </Link>
-        </li>
+        {filteredPosts.map(post => (
+          <li key={post.slug}>
+            <Link
+              href={`/blog/${post.slug}`}
+              className="flex gap-4 items-start text-hg-secondary"
+            >
+              <SvgArrow className="rotate-45 h-8 w-8 text-hg-black" />
+              <Text className="text-lg font-medium">{post.title}</Text>
+            </Link>
+          </li>
+        ))}
       </ul>
     </Flex>
   );

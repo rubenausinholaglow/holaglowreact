@@ -6,7 +6,6 @@ export const SvgExport = (props: SVGProps<SVGSVGElement>) => (
     width={24}
     height={24}
     viewBox="0 0 24 24"
-    stroke="currentColor"
     {...props}
   >
     <path
@@ -33,7 +32,6 @@ export const SvgX = (props: SVGProps<SVGSVGElement>) => (
     width={24}
     height={24}
     viewBox="0 0 24 24"
-    stroke="currentColor"
     {...props}
   >
     <path
@@ -51,7 +49,6 @@ export const SvgInstagram = (props: SVGProps<SVGSVGElement>) => (
     width={24}
     height={24}
     viewBox="0 0 24 24"
-    stroke="currentColor"
     {...props}
   >
     <path
@@ -78,7 +75,6 @@ export const SvgFacebook = (props: SVGProps<SVGSVGElement>) => (
     width={24}
     height={24}
     viewBox="0 0 24 24"
-    stroke="currentColor"
     {...props}
   >
     <path

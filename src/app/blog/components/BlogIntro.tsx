@@ -1,15 +1,19 @@
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+import { Post } from 'types/blog';
 
 import BlogCategories from './BlogCategories';
 
 export default function BlogIntro({
   className = '',
+  post,
   showButton = false,
 }: {
   className?: string;
+  post: Post;
   showButton?: boolean;
 }) {
   return (
@@ -23,14 +27,16 @@ export default function BlogIntro({
       />
 
       <div className="w-full md:w-1/2">
-        <BlogCategories className="mb-8" categories={['Arrugas', 'Relleno']} />
+        <BlogCategories className="mb-8" categories={post.categories} />
 
         <Title size="2xl" className="font-bold mb-4">
-          Mesoterapia facial: Tu nuevo aliado para tu rutina de skincare
+          {post.title}
         </Title>
         <Text size="xs" className="mb-8">
-          Por Dr. Sonsoles Espí.{' '}
-          <span className="text-hg-black500">Mar 15, 2023</span>
+          Por Dr. {post.author}.{' '}
+          <span className="text-hg-black500">
+            {dayjs(post.creationDate).format('D MMMM, YYYY')}
+          </span>
         </Text>
 
         {showButton && (
@@ -39,7 +45,7 @@ export default function BlogIntro({
             type="tertiary"
             className="mb-8"
             customStyles="bg-hg-black border-hg-primary text-hg-primary"
-            href="/blog/test-blog"
+            href={`/blog/${post.slug}`}
           >
             Leer más
           </Button>
