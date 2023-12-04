@@ -35,9 +35,8 @@ export default function Page({
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const messageSocket = useMessageSocket(state => state);
-  const { setCurrentUser, setAppointmentId } = useGlobalPersistedStore(
-    state => state
-  );
+  const { setCurrentUser, setAppointmentId, setBudgetId } =
+    useGlobalPersistedStore(state => state);
   const {
     remoteControl,
     storedBoxId,
@@ -118,6 +117,9 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
+    setBudgetId('');
+    setAppointmentId('');
+    setClinicProfessionalId('');
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
