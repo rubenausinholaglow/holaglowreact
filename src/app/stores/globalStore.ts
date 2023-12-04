@@ -54,7 +54,7 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
-  setBlogPosts: (value: Posts[]) => void;
+  setBlogPosts: (value: Post[]) => void;
 }
 
 export const useSessionStore = create(
