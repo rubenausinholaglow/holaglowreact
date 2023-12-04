@@ -151,12 +151,14 @@ export interface option {
 function ProductPriceItemsCard({
   product,
   parentProduct,
+  isDashboard = false,
   setAccordionOverflow,
   isOpen,
 }: {
   product: Product;
   parentProduct: Product;
   setAccordionOverflow: (value: string) => void;
+  isDashboard: boolean;
   isOpen?: boolean;
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
@@ -284,7 +286,6 @@ function ProductPriceItemsCard({
             <Text>{product.description}</Text>
           </Flex>
         ))}
-
       {!productHighlighted && showDropdown && (
         <form className="w-full">
           {product.packUnities.map((item: any, index: number) => {
@@ -351,21 +352,22 @@ function ProductPriceItemsCard({
           Personalizar
         </Button>
       )}
-      {(!product.isPack || (!productHighlighted && showDropdown)) && (
-        <Button
-          type="tertiary"
-          disabled={isDisabled}
-          onClick={() => {
-            setSelectedTreatment(product);
-          }}
-          customStyles="bg-hg-primary hover:bg-hg-secondary100"
-          className="mt-8"
-        >
-          Reservar cita
-          <SvgArrow height={16} width={16} className="ml-2" />
-        </Button>
-      )}
 
+      {(!product.isPack || (!productHighlighted && showDropdown)) &&
+        !isDashboard && (
+          <Button
+            type="tertiary"
+            disabled={isDisabled}
+            onClick={() => {
+              setSelectedTreatment(product);
+            }}
+            customStyles="bg-hg-primary hover:bg-hg-secondary100"
+            className="mt-8"
+          >
+            Reservar cita
+            <SvgArrow height={16} width={16} className="ml-2" />
+          </Button>
+        )}
       {productHighlighted && (
         <div className="pt-1 mt-2">
           <Quantifier
@@ -391,12 +393,14 @@ export default function ProductPriceCard({
   index,
   parentProduct,
   fullWidthPack = false,
+  isDashboard = false,
   className,
 }: {
   product: Product;
   index: number;
   parentProduct: Product;
   fullWidthPack?: boolean;
+  isDashboard?: boolean;
   className?: string;
 }) {
   const { deviceSize } = useSessionStore(state => state);
@@ -525,6 +529,7 @@ export default function ProductPriceCard({
               }`}
             >
               <ProductPriceItemsCard
+                isDashboard={isDashboard}
                 product={product}
                 parentProduct={parentProduct}
                 setAccordionOverflow={setAccordionOverflow}

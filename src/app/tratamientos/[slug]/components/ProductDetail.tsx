@@ -112,7 +112,7 @@ export default function ProductDetailPage({
           <ProductInfo product={product} />
           {isDashboard && !product.isPack && product.type != 3 && (
             <div ref={productPriceRef as RefObject<HTMLDivElement>}>
-              <ProductPrices product={product} />
+              <ProductPrices product={product} isDashboard />
             </div>
           )}
         </div>
