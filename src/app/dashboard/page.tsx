@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { useMessageSocket } from '@components/useMessageSocket';
+import { Status } from '@interface/appointment';
 import { Client } from '@interface/client';
+import { CrisalixUser } from '@interface/crisalix';
 import { MessageType } from '@interface/messageSocket';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -19,6 +21,7 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../components/common/RegistrationForm';
+import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
 
@@ -48,6 +51,7 @@ export default function Page({
     setClinicFlowwwId,
     setClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
+  const userCrisalix = useCrisalix(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -228,6 +232,26 @@ export default function Page({
               name = data.lead.user.firstName;
               id = data.lead.user.id;
             }
+
+            await ScheduleService.updatePatientStatusAppointment(
+              data.id,
+              data.lead.user.id || '',
+              Status.InProgress
+            );
+
+            await UserService.createCrisalixUser(
+              id,
+              data.id,
+              data.clinic.id
+            ).then(async x => {
+              const crisalixUser: CrisalixUser = {
+                id: x.id,
+                playerId: x.player_id,
+                playerToken: x.playerToken,
+                name: x.name,
+              };
+              userCrisalix.addCrisalixUser(crisalixUser);
+            });
 
             if (remoteControl) {
               router.push('/dashboard/remoteControl');
