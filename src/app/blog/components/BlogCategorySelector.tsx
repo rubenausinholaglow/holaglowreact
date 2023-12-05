@@ -1,13 +1,44 @@
+import { Category } from '@interface/product';
 import { Post } from 'types/blog';
 
 export default function BlogCategorySelector({
   className,
   posts,
+  activeCategories,
+  setActiveCategories,
 }: {
   className?: string;
   posts: Post[];
+  activeCategories: string[];
+  setActiveCategories: (value: string[]) => void;
 }) {
-  console.log(posts);
+  const uniqueCategories: Category[] = posts.reduce((accumulator, post) => {
+    post.categories.forEach((category: Category) => {
+      const exists = accumulator.some(
+        existingCategory => existingCategory.name === category.name
+      );
+
+      if (!exists) {
+        accumulator.push(category);
+      }
+    });
+
+    return accumulator;
+  }, [] as Category[]);
+
+  function handleCategory(category: string) {
+    let updatedCategories = [...activeCategories];
+
+    if (updatedCategories.includes(category)) {
+      updatedCategories = updatedCategories.filter(item => item !== category);
+    } else {
+      updatedCategories.push(category);
+    }
+
+    setActiveCategories(
+      updatedCategories.length === 0 ? [] : updatedCategories
+    );
+  }
 
   return (
     <ul
@@ -16,17 +47,29 @@ export default function BlogCategorySelector({
         className ? className : ''
       }`}
     >
-      <li className="flex justify-center items-center bg-hg-black100 text-hg-black300 border border-hg-black100 px-4 py-3 rounded-full text-xs shrink-0 ml-4">
+      <li
+        className={`cursor-pointer transition-all flex justify-center items-center px-4 py-3 rounded-full text-xs shrink-0 ml-4 border border-hg-black ${
+          activeCategories.length === 0
+            ? 'bg-hg-primary border-hg-primary font-semibold'
+            : ''
+        }`}
+        onClick={() => setActiveCategories([])}
+      >
         Todas
       </li>
-      {/* {CATEGORIES.map(category => (
+      {uniqueCategories.map((category: Category) => (
         <li
-          className="flex justify-center items-center bg-white text-hg-black300 border border-hg-black300 px-4 py-3 rounded-full text-xs shrink-0"
-          key={category}
+          className={`cursor-pointer flex justify-center items-center  px-4 py-3 rounded-full text-xs shrink-0 border border-hg-black ${
+            activeCategories.includes(category.name)
+              ? 'bg-hg-primary border-hg-primary font-semibold'
+              : ''
+          }`}
+          onClick={() => handleCategory(category.name)}
+          key={category.name}
         >
-          {category}
+          {category.name}
         </li>
-      ))} */}
+      ))}
     </ul>
   );
 }

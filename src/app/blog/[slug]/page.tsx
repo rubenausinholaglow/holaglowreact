@@ -54,7 +54,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     <MainLayout>
       <div className="rounded-t-3xl shadow-centered-black-lg ">
         <Container className="mb-8 py-6 md:py-12">
-          <BlogBreadcrumb />
+          <BlogBreadcrumb title={post.title} />
 
           <Image
             src="/images/blog/post1.png"
@@ -68,7 +68,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             <div>
               <BlogCategories className="mb-8" categories={post.categories} />
 
-              <Text size="2xl" className="font-bold mb-4">
+              <Text className="font-bold mb-4 text-2xl md:text-5xl">
                 {post.title}
               </Text>
               <Text size="xs" className="mb-8">
