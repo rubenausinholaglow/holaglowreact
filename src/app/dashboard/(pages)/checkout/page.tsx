@@ -28,45 +28,40 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [showProductDiscount, setShowProductDiscount] = useState(false);
-  const [clientToken, setClientToken] = useState<string | ''>('');
-  const [budgetId, setBudgetId] = useState<string | ''>('');
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
   const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
-  const { storedBoxId, storedClinicId, user } = useGlobalPersistedStore(
-    state => state
-  );
+  const {
+    storedBoxId,
+    storedClinicId,
+    user,
+    storedBudgetId,
+    setBudgetId,
+    storedClinicProfessionalId,
+  } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
-    if (budgetId && totalPriceInitial != totalPriceToShow) {
+    if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
       setBudgetModified(true);
     }
   }),
     [totalPriceInitial, totalPrice];
 
   useEffect(() => {
-    const budgetId = localStorage.getItem('BudgetId');
-    setClientToken(localStorage.getItem('flowwwToken') || '');
-    setBudgetId(budgetId || '');
-    if (budgetId && budgetId != '') setShowPaymentButtons(true);
+    if (storedBudgetId && storedBudgetId != '') setShowPaymentButtons(true);
   }, []);
 
   useEffect(() => {
     setTotalPriceToShow(cartTotalPrice());
   }, [cart, totalPrice, priceDiscount, percentageDiscount, manualPrice]);
 
-  useEffect(() => {
-    setBudgetId(localStorage.getItem('BudgetId') || '');
-  }, [budgetId]);
-
   const handleFinalize = async () => {
     setTotalPriceInitial(totalPriceToShow);
 
-    const GuidProfessional = localStorage.getItem('ClinicProfessionalId') || '';
-
     const budget: Budget = {
       userId: user?.id || '',
-      discountCode: clientToken.substring(0, clientToken.length - 32),
+      discountCode:
+        user?.flowwwToken.substring(0, user?.flowwwToken.length - 32) || '',
       discountAmount: '',
       FlowwwId: '',
       priceDiscount: Number(priceDiscount.toFixed(2)),
@@ -77,7 +72,7 @@ const Page = () => {
       clinicInfoId: storedClinicId,
       referenceId: '',
       statusBudget: StatusBudget.Open,
-      professionalId: GuidProfessional,
+      professionalId: storedClinicProfessionalId,
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: Number(CartItem.price.toFixed(2)),
@@ -86,15 +81,14 @@ const Page = () => {
       })),
     };
     try {
-      if (budgetId.length > 0) {
+      if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         setShowProductDiscount(false);
-        budget.id = budgetId;
+        budget.id = storedBudgetId;
         await budgetService.updateBudget(budget);
       } else {
         const data = await budgetService.createBudget(budget);
-        localStorage.setItem('BudgetId', data.id);
-        setBudgetId(localStorage.getItem('BudgetId') || '');
+        setBudgetId(data.id);
       }
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
@@ -124,8 +118,10 @@ const Page = () => {
     <MainLayout isDashboard isCheckout>
       <Flex className="w-full">
         <div className="w-[55%] h-full p-4">
-          {budgetId && !isBudgetModified && !isLoading && <PaymentModule />}
-          {!(budgetId && !isBudgetModified && !isLoading) && (
+          {storedBudgetId && !isBudgetModified && !isLoading && (
+            <PaymentModule />
+          )}
+          {!(storedBudgetId && !isBudgetModified && !isLoading) && (
             <PepperWidget totalPrice={Number(cartTotalPrice())}></PepperWidget>
           )}
         </div>
@@ -148,7 +144,7 @@ const Page = () => {
           <CheckoutTotal />
 
           <Flex layout="col-left" className="gap-4 my-8 px-4">
-            {(!budgetId || isBudgetModified || isLoading) && (
+            {(!storedBudgetId || isBudgetModified || isLoading) && (
               <Button
                 className="w-full"
                 customStyles="bg-hg-primary"
@@ -179,7 +175,7 @@ const Page = () => {
               className="w-full"
               size="md"
               target="_blank"
-              href={`https://agenda2.holaglow.com/schedule?mode=dashboard&token=${clientToken}`}
+              href={`https://agenda2.holaglow.com/schedule?mode=dashboard&token=${user?.flowwwToken}`}
               type="tertiary"
             >
               <span className="font-semibold">Agendar Cita</span>
