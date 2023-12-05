@@ -5,6 +5,7 @@ import Bugsnag from '@bugsnag/js';
 import { InitializePayment } from '@interface/initializePayment';
 import { PaymentBank } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -17,6 +18,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
 }) => {
   const parsedValue = parseFloat(amountFinance);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useGlobalPersistedStore(state => state);
   let resultValue = '';
   let installments = -1;
 
@@ -125,11 +127,10 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       }
     }
 
-    const GuidUser = localStorage.getItem('id') || '';
     const data: InitializePayment = {
       amount: Number(resultValue),
       installments: installmentsValue,
-      userId: GuidUser,
+      userId: user?.id || '',
       paymentBank: PaymentBank.Alma,
     };
 

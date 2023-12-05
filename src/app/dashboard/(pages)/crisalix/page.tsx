@@ -17,8 +17,6 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
-  const [username, setUsername] = useState('');
-  const [clinicFlowId, setClinicFlowId] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
   const {
@@ -27,6 +25,7 @@ const Page = () => {
     storedAppointmentId,
     checkSimulator,
     setCheckSimulator,
+    storedClinicFlowwwId,
   } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
@@ -51,8 +50,6 @@ const Page = () => {
       },
       1 * 60 * 1000
     );
-    setUsername(localStorage.getItem('username') || '');
-    setClinicFlowId(localStorage.getItem('ClinicFlowwwId') || '');
   }, []);
 
   async function createCrisalixUser(
@@ -82,7 +79,7 @@ const Page = () => {
     const checksimulationReady = () => {
       if (id === '' || playerToken === '') return;
 
-      UserService.getSimulationReady(id, clinicFlowId!).then(x => {
+      UserService.getSimulationReady(id, storedClinicFlowwwId!).then(x => {
         setSimulationReady(x);
         if (!x && checkSimulator) {
           timerId = setTimeout(checksimulationReady, 15 * 1000);
@@ -97,7 +94,7 @@ const Page = () => {
     return () => {
       clearTimeout(timerId);
     };
-  }, [id, playerToken, clinicFlowId, checkSimulator]);
+  }, [id, playerToken, storedClinicFlowwwId, checkSimulator]);
 
   useEffect(() => {
     if (playerId == '' || playerToken == '') return;
@@ -146,23 +143,23 @@ const Page = () => {
 
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-      {username && (
+      {user?.firstName && (
         <Container>
           <Flex layout="col-center">
             {!simulationReady && !loadPlayer && (
               <p className="font-bold text-4xl mb-2">
-                {username}, estamos generando tu 3D/Avatar...
+                {user?.firstName}, estamos generando tu 3D/Avatar...
               </p>
             )}
             {!simulationReady && !loadPlayer && almostReady && (
               <p className="font-bold text-4xl mb-2">
-                {username}, en breves podrás ver tu 3D
+                {user?.firstName}, en breve podrás ver tu 3D
               </p>
             )}
             {simulationReady && !loadPlayer && (
               <div>
                 <p className="font-bold text-4xl mb-2">
-                  {username}, ¿Listo para ver tu 3D?
+                  {user?.firstName}, ¿Listo para ver tu 3D?
                 </p>
 
                 <Button size="lg" style="primary" onClick={startPlayer}>

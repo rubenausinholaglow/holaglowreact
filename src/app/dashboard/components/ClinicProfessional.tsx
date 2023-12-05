@@ -28,7 +28,8 @@ export const ClinicProfessional = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { storedClinicId } = useGlobalPersistedStore(state => state);
+  const { storedClinicId, storedClinicProfessionalId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const fetchProfessionals = async () => {
@@ -67,8 +68,7 @@ export const ClinicProfessional = () => {
 
       setSelectedProfessional(
         professionals.filter(
-          professional =>
-            professional.id === localStorage.getItem('ClinicProfessionalId')
+          professional => professional.id === storedClinicProfessionalId
         )[0]
       );
     }

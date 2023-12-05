@@ -3,6 +3,7 @@ import { useMessageSocket } from '@components/useMessageSocket';
 import { ProfessionalType } from '@interface/clinic';
 import { MessageType } from '@interface/messageSocket';
 import { messageService } from '@services/MessageService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgHolaglowHand, SvgStethoscope } from 'icons/Icons';
@@ -10,21 +11,18 @@ import { SvgHolaglowHand, SvgStethoscope } from 'icons/Icons';
 import Notification from './Notification';
 
 export default function ButtonMessage() {
-  const [clinicProfessionalId, setclinicProfessionalId] = useState('');
   const [medicClassName, setmedicClassName] = useState('bg-white');
   const [receptionClassName, setreceptionClassName] = useState('bg-white');
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-
+  const { storedClinicProfessionalId } = useGlobalPersistedStore(
+    state => state
+  );
   const [messageTimeout, setMessageTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
   const messageSocket = useMessageSocket(state => state);
-
-  useEffect(() => {
-    setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
-  }, []);
 
   useEffect(() => {
     const existMessageChatResponse = messageSocket.messageSocket.filter(
@@ -40,13 +38,19 @@ export default function ButtonMessage() {
   }, [messageSocket]);
 
   const sendMessageToMedic = () => {
-    messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
+    messageService.sendMessage(
+      storedClinicProfessionalId,
+      ProfessionalType.Medical
+    );
     setmedicClassName('bg-hg-primary');
     startTimeout();
   };
 
   const sendMessageToReception = () => {
-    messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
+    messageService.sendMessage(
+      storedClinicProfessionalId,
+      ProfessionalType.Others
+    );
     setreceptionClassName('bg-hg-primary');
     startTimeout();
   };
@@ -56,9 +60,8 @@ export default function ButtonMessage() {
     const professionalId = partsToCompare[0];
     const action = partsToCompare[1];
     const professionalType = partsToCompare[2];
-    const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
 
-    if (professionalId === clinicProfessionalId) {
+    if (professionalId === storedClinicProfessionalId) {
       if (action === '0') {
         if (professionalType == 'Medical') {
           setmedicClassName('bg-hg-green');

@@ -44,6 +44,8 @@ const AppointmentsListComponent: React.FC<{
     storedBoxId,
     ignoreMessages,
     setAppointmentId,
+    setClinicFlowwwId,
+    setClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
 
   const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -141,12 +143,8 @@ const AppointmentsListComponent: React.FC<{
       await ScheduleService.getClinicSchedule(appointmentId).then(
         async data => {
           if (data != null) {
-            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
-            localStorage.setItem(
-              'ClinicProfessionalId',
-              data.clinicProfessional.id
-            );
-            saveUserDetails(name, id, '');
+            setClinicFlowwwId(data.clinic.flowwwId);
+            setClinicProfessionalId(data.clinicProfessional.id);
 
             const startAppointmentData: StartAppointmentData = {
               clinicId: storedClinicId,
@@ -191,12 +189,6 @@ const AppointmentsListComponent: React.FC<{
     } catch (err) {
       Bugsnag.notify(ERROR_GETTING_DATA + err);
     }
-  }
-
-  function saveUserDetails(name: string, id: string, flowwwToken: string) {
-    localStorage.setItem('username', name);
-    localStorage.setItem('id', id);
-    localStorage.setItem('flowwwToken', flowwwToken);
   }
 
   const APPOINTMENT_STATUS = {

@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { useMessageSocket } from '@components/useMessageSocket';
+import { Status } from '@interface/appointment';
 import { Client } from '@interface/client';
+import { CrisalixUser } from '@interface/crisalix';
 import { MessageType } from '@interface/messageSocket';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -19,6 +21,7 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../components/common/RegistrationForm';
+import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
 
@@ -35,9 +38,8 @@ export default function Page({
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const messageSocket = useMessageSocket(state => state);
-  const { setCurrentUser, setAppointmentId } = useGlobalPersistedStore(
-    state => state
-  );
+  const { setCurrentUser, setAppointmentId, setBudgetId } =
+    useGlobalPersistedStore(state => state);
   const {
     remoteControl,
     storedBoxId,
@@ -46,7 +48,10 @@ export default function Page({
     setClinicId,
     setRemoteControl,
     setIgnoreMessages,
+    setClinicFlowwwId,
+    setClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
+  const userCrisalix = useCrisalix(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -116,6 +121,9 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
+    setBudgetId('');
+    setAppointmentId('');
+    setClinicProfessionalId('');
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
@@ -183,17 +191,15 @@ export default function Page({
         async data => {
           if (data != null) {
             setCurrentUser(data.lead.user);
-            localStorage.setItem('ClinicId', data.clinic.id);
-            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
-            localStorage.setItem(
-              'ClinicProfessionalId',
-              data.clinicProfessional.id
-            );
+            setClinicId(data.clinic.id);
+            setClinicFlowwwId(data.clinic.flowwwId);
+            setClinicProfessionalId(data.clinicProfessional.id);
+
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;
             }
-            saveUserDetails(name, id, '');
+
             if (remoteControl) {
               router.push('/dashboard/remoteControl');
             } else router.push('/dashboard/menu');
@@ -218,17 +224,35 @@ export default function Page({
           if (data != null) {
             setCurrentUser(data.lead.user);
             setAppointmentId(data.id);
-            localStorage.setItem('ClinicId', data.clinic.id);
-            localStorage.setItem('ClinicFlowwwId', data.clinic.flowwwId);
-            localStorage.setItem(
-              'ClinicProfessionalId',
-              data.clinicProfessional.id
-            );
+            setClinicId(data.clinic.id);
+            setClinicFlowwwId(data.clinic.flowwwId);
+            setClinicProfessionalId(data.clinicProfessional.id);
+
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;
             }
-            saveUserDetails(name, id, flowwwToken);
+
+            await ScheduleService.updatePatientStatusAppointment(
+              data.id,
+              data.lead.user.id || '',
+              Status.InProgress
+            );
+
+            await UserService.createCrisalixUser(
+              id,
+              data.id,
+              data.clinic.id
+            ).then(async x => {
+              const crisalixUser: CrisalixUser = {
+                id: x.id,
+                playerId: x.player_id,
+                playerToken: x.playerToken,
+                name: x.name,
+              };
+              userCrisalix.addCrisalixUser(crisalixUser);
+            });
+
             if (remoteControl) {
               router.push('/dashboard/remoteControl');
             } else router.push('/dashboard/menu');
@@ -240,12 +264,6 @@ export default function Page({
     } catch (err) {
       Bugsnag.notify(ERROR_GETTING_DATA + err);
     }
-  }
-
-  function saveUserDetails(name: string, id: string, flowwwToken: string) {
-    localStorage.setItem('username', name);
-    localStorage.setItem('id', id);
-    localStorage.setItem('flowwwToken', flowwwToken);
   }
 
   const handleFormFieldChange = (
