@@ -16,11 +16,11 @@ import { menuItems } from './MenuItems';
 const Page = () => {
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
-  const { remoteControl, setCheckSimulator, user } = useGlobalPersistedStore(
-    state => state
-  );
+  const { remoteControl, setCheckSimulator, user, setBudgetId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
+    setBudgetId('');
     setCheckSimulator(false);
   }, []);
 
