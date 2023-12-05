@@ -1,14 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useMessageSocket } from '@components/useMessageSocket';
 import { CrisalixUser } from '@interface/crisalix';
 import { MessageType } from '@interface/messageSocket';
+import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
+import { INITIAL_STATE } from '@utils/constants';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 
+import { useCartStore } from '../budgets/stores/userCartStore';
+import { usePaymentList } from '../checkout/components/payment/payments/usePaymentList';
 import { useCrisalix } from '../crisalix/useCrisalix';
 import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
@@ -21,6 +25,8 @@ const Page = () => {
 
   useEffect(() => {
     setBudgetId('');
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
   }, []);
 
