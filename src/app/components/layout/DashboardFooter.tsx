@@ -18,7 +18,7 @@ export default function DashboardFooter({
     useGlobalPersistedStore(state => state);
 
   function handleBackButton() {
-    if (window.location.pathname == '/dashboard/menu/') {
+    if (window.location.pathname == '/dashboard/menu') {
       if (remoteControl) {
         router.push(
           `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=true`
