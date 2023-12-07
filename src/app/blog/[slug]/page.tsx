@@ -111,7 +111,11 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             title="titulo del post"
           />
 
-          <BlogRelatedPosts className="pb-12" categories={post.categories} />
+          <BlogRelatedPosts
+            className="pb-12"
+            categories={post.categories}
+            posts={blogPosts}
+          />
         </Container>
 
         <BlogAppointment />

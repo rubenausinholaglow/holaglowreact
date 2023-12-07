@@ -44,7 +44,7 @@ export default function BlogRelatedPosts({
               href={`/blog/${post.slug}`}
               className="flex gap-4 items-start text-hg-secondary"
             >
-              <SvgArrow className="rotate-45 h-8 w-8 text-hg-black" />
+              <SvgArrow className="rotate-45 h-8 w-8 text-hg-black shrink-0" />
               <Text className="text-lg font-medium">{post.title}</Text>
             </Link>
           </li>
