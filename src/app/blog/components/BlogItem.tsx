@@ -33,7 +33,7 @@ export default function BlogItem({
 
   return (
     <div
-      className={`${className} ${
+      className={`w-full ${className} ${
         isHighlightedPost
           ? 'md:flex md:gap-16 border-b border-hg-black md:pb-8'
           : ''
@@ -41,7 +41,7 @@ export default function BlogItem({
     >
       <Link
         href={`/blog/${post.slug}`}
-        className={isHighlightedPost ? 'md:w-1/2 md:shrink-0' : ''}
+        className={isHighlightedPost ? 'w-full md:w-1/2 md:shrink-0' : ''}
       >
         <Image
           src={`/images/blog/post${index}.png`}
