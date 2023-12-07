@@ -18,7 +18,7 @@ export default function BlogItem({
   post: Post;
   index: number;
   isHighlightedPost?: boolean;
-  activeCategories: string[];
+  activeCategories?: string[];
 }) {
   if (!activeCategories) {
     return <></>;
