@@ -48,12 +48,11 @@ export default function ClinicsCheckout() {
 
   useEffect(() => {
     const discountedPrices: any = [];
-
     if (selectedTreatments && !isEmpty(selectedTreatments)) {
       selectedTreatments.map(product => {
         const discountedPrice = getDiscountedPrice(product);
 
-        if (discountedPrice !== product.price) {
+        if (discountedPrice && discountedPrice !== product.price) {
           discountedPrices.push(discountedPrice);
         }
       });
