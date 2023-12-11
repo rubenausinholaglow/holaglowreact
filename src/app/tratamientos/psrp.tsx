@@ -139,53 +139,57 @@ export default function PsrpPage({ slug }: { slug: string }) {
             <AnimateOnViewport
               origin={deviceSize.isMobile ? 'right' : 'bottom'}
             >
-              Nuestros{' '}
-              <Underlined color={HOLAGLOW_COLORS['secondary700']}>
-                tratamientos
-              </Underlined>
-            </Title>
-            <Image
-              src={'/images/products/productsBg.png'}
-              height={858}
-              width={1395}
-              alt="nuestros tratamientos"
-              className="hidden lg:block absolute right-[5%] top-[10%] h-full w-auto scale-[160%]"
-            />
-          </Container>
-          <Container className="px-0 md:px-4 pb-4 relative">
-            <div className="lg:flex lg:flex-row lg:justify-between">
-              <AnimateOnViewport
-                origin={deviceSize.isMobile ? 'right' : 'bottom'}
-              >
-                <CategorySelector className="mb-4 lg:mb-0" />
-              </AnimateOnViewport>
-              <PackTypeFilter className="ml-4 md:ml-0" />
-            </div>
-          </Container>
-        </div>
-        {isEmpty(filteredProducts) && (
-          <Flex layout="row-left" className="justify-center">
-            <SvgSpinner
-              fill={HOLAGLOW_COLORS['secondary']}
-              height={50}
-              width={50}
-            />
-          </Flex>
-        )}
-        {!isEmpty(filteredProducts) && (
-          <div className="bg-[#f7f3f0] pb-32 relative">
-            <Flex
-              layout="row-left"
-              className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
-            >
-              <Container>
-                <AnimateOnViewport>
-                  <Flex layout="row-left" className="w-full justify-between">
-                    <Button
-                      type="tertiary"
-                      size="sm"
-                      className="mr-2"
-                      customStyles="group-hover:bg-hg-secondary100"
+              <CategorySelector className="mb-4 lg:mb-0" />
+            </AnimateOnViewport>
+            <PackTypeFilter className="ml-4 md:ml-0" />
+          </div>
+        </Container>
+      </div>
+      {isEmpty(filteredProducts) && (
+        <Flex layout="row-left" className="justify-center">
+          <SvgSpinner
+            fill={HOLAGLOW_COLORS['secondary']}
+            height={50}
+            width={50}
+          />
+        </Flex>
+      )}
+      {!isEmpty(filteredProducts) && (
+        <div className="bg-[#f7f3f0] pb-32 relative">
+          <Flex
+            layout="row-left"
+            className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
+          >
+            <Container>
+              <AnimateOnViewport>
+                <Flex layout="row-left" className="w-full justify-between">
+                  <Button
+                    id={'tmevent_filters'}
+                    type="tertiary"
+                    size="sm"
+                    className="mr-2"
+                    customStyles="group-hover:bg-hg-secondary100"
+                    onClick={() => {
+                      deviceSize.isMobile
+                        ? setIsMobileFiltersVisible(true)
+                        : setShowDesktopFilters(
+                            showDesktopFilters === 'true' ? 'false' : 'true'
+                          );
+                    }}
+                  >
+                    <SvgFilters className="mr-2" />
+                    <Flex layout="col-center">Filtrar</Flex>
+                  </Button>
+
+                  <div className="mr-auto">
+                    <Text
+                      id={'tmevent_filters'}
+                      size="xs"
+                      className={`text-hg-secondary transition-opacity underline cursor-pointer ${
+                        filterCount(productFilters) === 0
+                          ? 'opacity-0'
+                          : 'opacity-100'
+                      }`}
                       onClick={() => {
                         setProductFilters({
                           isPack: false,

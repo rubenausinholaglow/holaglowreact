@@ -1,14 +1,9 @@
 'use client';
-
-import React, { useEffect, useRef, useState } from 'react';
-import { CrisalixUser } from '@interface/crisalix';
+import React, { useEffect, useState } from 'react';
 import UserService from '@services/UserService';
 import MainLayout from 'app/components/layout/MainLayout';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-
-import { useCrisalix } from './useCrisalix';
 
 const Page = () => {
   const [id, setId] = useState('');
@@ -17,33 +12,21 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
-
-  const userCrisalix = useCrisalix(state => state);
-  const {
-    storedClinicId,
-    user,
-    storedAppointmentId,
-    checkSimulator,
-    setCheckSimulator,
-    storedClinicFlowwwId,
-  } = useGlobalPersistedStore(state => state);
+  const username =
+    typeof window !== 'undefined' ? localStorage.getItem('username') : null;
 
   useEffect(() => {
-    setCheckSimulator(true);
-    const existsCrisalixUser =
-      userCrisalix.crisalixUser.length > 0
-        ? userCrisalix.crisalixUser[0]
-        : null;
+    const userId = localStorage.getItem('id');
+    const appointmentId = localStorage.getItem('appointmentId');
+    const clinicId = localStorage.getItem('ClinicId');
+    UserService.createCrisalixUser(userId!, appointmentId!, clinicId!).then(
+      x => {
+        setPlayerId(x.playerId);
+        setPlayerToken(x.playerToken);
+        setId(x.id);
+      }
+    );
 
-    if (existsCrisalixUser == null) {
-      createCrisalixUser(user?.id || '', storedAppointmentId, storedClinicId);
-    }
-
-    if (existsCrisalixUser != null) {
-      setId(existsCrisalixUser.id);
-      setPlayerToken(existsCrisalixUser.playerToken);
-      setPlayerId(existsCrisalixUser.playerId);
-    }
     setTimeout(
       () => {
         setAlmostReady(true);
@@ -52,49 +35,21 @@ const Page = () => {
     );
   }, []);
 
-  async function createCrisalixUser(
-    userId: string,
-    appointmentId: string,
-    clinicId: string
-  ) {
-    await UserService.createCrisalixUser(userId, appointmentId, clinicId).then(
-      async x => {
-        const crisalixUser: CrisalixUser = {
-          id: x.id,
-          playerId: x.player_id,
-          playerToken: x.playerToken,
-          name: x.name,
-        };
-        userCrisalix.addCrisalixUser(crisalixUser);
-        setId(x.id);
-        setPlayerToken(x.playerToken);
-        setPlayerId(x.player_Id);
+  const checksimulationReady = () => {
+    if (id == '' || playerToken == '') return;
+    const clinicId = localStorage.getItem('ClinicId');
+    UserService.getSimulationReady(id, clinicId!).then(x => {
+      setSimulationReady(x);
+      if (!x) {
+        setTimeout(() => {
+          checksimulationReady();
+        }, 15 * 1000);
       }
-    );
-  }
-
+    });
+  };
   useEffect(() => {
-    let timerId: NodeJS.Timeout;
-
-    const checksimulationReady = () => {
-      if (id === '' || playerToken === '') return;
-
-      UserService.getSimulationReady(id, storedClinicFlowwwId!).then(x => {
-        setSimulationReady(x);
-        if (!x && checkSimulator) {
-          timerId = setTimeout(checksimulationReady, 15 * 1000);
-        }
-      });
-    };
-
-    if (id !== '' && playerToken !== '') {
-      timerId = setTimeout(checksimulationReady, 15 * 1000);
-    }
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [id, playerToken, storedClinicFlowwwId, checkSimulator]);
+    checksimulationReady();
+  }, [playerId, playerToken]);
 
   useEffect(() => {
     if (playerId == '' || playerToken == '') return;
@@ -142,24 +97,24 @@ const Page = () => {
   };
 
   return (
-    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-      {user?.firstName && (
+    <MainLayout isDashboard>
+      {username && (
         <Container>
           <Flex layout="col-center">
             {!simulationReady && !loadPlayer && (
               <p className="font-bold text-4xl mb-2">
-                {user?.firstName}, estamos generando tu 3D/Avatar...
+                {username}, estamos generando tu 3D/Avatar...
               </p>
             )}
             {!simulationReady && !loadPlayer && almostReady && (
               <p className="font-bold text-4xl mb-2">
-                {user?.firstName}, en breve podrás ver tu 3D
+                {username}, en breves podrás ver tu 3D
               </p>
             )}
             {simulationReady && !loadPlayer && (
               <div>
                 <p className="font-bold text-4xl mb-2">
-                  {user?.firstName}, ¿Listo para ver tu 3D?
+                  {username}, ¿Listo para ver tu 3D?
                 </p>
 
                 <Button size="lg" style="primary" onClick={startPlayer}>

@@ -18,12 +18,10 @@ registerLocale('es', es);
 export default function MainLayout({
   isDashboard = false,
   isCheckout = false,
-  hideBottomBar = false,
+  hideTopBar = false,
   hideHeader = false,
   hideBackButton = false,
   hideContactButtons = false,
-  hasAnimatedBackground = false,
-  showCart = false,
   hideProfessionalSelector = false,
   hideFooter = false,
   children,
@@ -32,10 +30,8 @@ export default function MainLayout({
   isCheckout?: boolean;
   hideHeader?: boolean;
   hideBackButton?: boolean;
-  hideBottomBar?: boolean;
+  hideTopBar?: boolean;
   hideContactButtons?: boolean;
-  hasAnimatedBackground?: boolean;
-  showCart?: boolean;
   hideProfessionalSelector?: boolean;
   hideFooter?: boolean;
   children: React.ReactNode;
@@ -58,13 +54,10 @@ export default function MainLayout({
   if (isDashboard) {
     return (
       <DashboardLayout
-        hideBottomBar={hideBottomBar}
-        isCheckout={isCheckout}
+        hideTopBar={hideTopBar}
         hideBackButton={hideBackButton}
         hideContactButtons={hideContactButtons}
         hideProfessionalSelector={hideProfessionalSelector}
-        hasAnimatedBackground={hasAnimatedBackground}
-        showCart={showCart}
       >
         {children}
       </DashboardLayout>
@@ -74,10 +67,7 @@ export default function MainLayout({
   if (isCheckout) {
     return (
       <>
-        <CheckoutHeader
-          loadCookies={hideHeader && hideFooter}
-          hideHeader={hideHeader}
-        />
+        <CheckoutHeader loadCookies={hideHeader && hideFooter} />
         {children}
         <Analytics />
       </>

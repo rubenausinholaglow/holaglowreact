@@ -1,13 +1,9 @@
-import { useMessageSocket } from '@components/useMessageSocket';
-import { INITIAL_STATE_CRISALIXUSERLIST } from '@interface/crisalix';
-import { INITIAL_STATE_MESSAGESOCKETLIST } from '@interface/messageSocket';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
 import { CartItem } from '@interface/product';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
 import { usePaymentList } from '../(pages)/checkout/components/payment/payments/usePaymentList';
-import { useCrisalix } from '../(pages)/crisalix/useCrisalix';
 import { INITIAL_STATE } from './constants';
 
 export const handleGoBack = () => {
@@ -126,9 +122,19 @@ export function getPaymentBankText(bank: PaymentBank): string {
 }
 
 export function clearLocalStorage(allLocalStorage: boolean) {
-  localStorage.clear();
-  useCrisalix.setState(INITIAL_STATE_CRISALIXUSERLIST);
-  useMessageSocket.setState(INITIAL_STATE_MESSAGESOCKETLIST);
+  localStorage.removeItem('appointmentFlowwwId');
+  localStorage.removeItem('appointmentId');
+  localStorage.removeItem('ClinicProfessionalId');
+  localStorage.removeItem('username');
+  localStorage.removeItem('flowwwToken');
+  localStorage.removeItem('id');
+  localStorage.removeItem('BudgetId');
+  if (allLocalStorage) {
+    localStorage.removeItem('ClinicFlowwwId');
+    localStorage.removeItem('boxId');
+    localStorage.removeItem('ClinicId');
+    localStorage.removeItem('ClinicProfessionalId');
+  }
   usePaymentList.setState(INITIAL_STATE_PAYMENT);
   useCartStore.setState(INITIAL_STATE);
 }

@@ -1,14 +1,12 @@
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function PromoTopBar() {
-  const ROUTES = useRoutes();
-
   const { promo } = useGlobalPersistedStore(state => state);
 
   if (isEmpty(promo)) {

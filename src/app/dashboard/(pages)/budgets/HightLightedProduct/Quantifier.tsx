@@ -34,38 +34,34 @@ export const Quantifier: FunctionComponent<Props> = ({
     setValue(prevState => prevState + 1);
   };
   return (
-    <Flex
-      layout="row-left"
-      className="bg-hg-secondary500 rounded-3xl gap-1 py-1 px-2"
-    >
+    <Flex layout="row-left">
       <Button
-        type="tertiary"
+        type="primary"
         onClick={reduce}
         className="p-0"
-        customStyles={`p-0 ${
-          value === 0 ? '' : 'bg-hg-secondary300'
-        } p-0 h-8 w-8 border-none`}
+        customStyles="p-0 h-8 w-8"
       >
-        <Text size="md">-</Text>
+        <Text size="md" className="font-bold">
+          -
+        </Text>
       </Button>
-      <Text
+      <input
         type="number"
         step="0"
         max=""
         value={value}
-        onChange={(e: any) => setValue(parseInt(e.target.value))}
-        className="mx-2 py-2 px-2 appearance-none "
-        style={{ WebkitAppearance: 'none', margin: 0 }}
-      >
-        {value}
-      </Text>
+        onChange={e => setValue(parseInt(e.target.value))}
+        className="border border-hg-tertiary300 w-16 mx-2 rounded-lg py-4 px-2"
+      />
       <Button
-        type="tertiary"
+        type="primary"
         onClick={increase}
         className="p-0"
-        customStyles="p-0 h-8 w-8 border-none bg-hg-secondary300"
+        customStyles="p-0 h-8 w-8"
       >
-        <Text size="md">+</Text>
+        <Text size="md" className="font-bold">
+          +
+        </Text>
       </Button>
     </Flex>
   );

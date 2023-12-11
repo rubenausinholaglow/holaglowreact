@@ -8,19 +8,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
-  const updatedCart: CartItem[] = [...cart];
-
-  /* if (product.id.length == 0) {
-    product.id = createUniqueId();
-  }*/
-  updatedCart.push({
-    ...product,
-    percentageDiscount: 0,
-    priceDiscount: 0,
-    priceWithDiscount: Number(product.price),
-    uniqueId: createUniqueId(),
-  });
-  return updatedCart;
+  return [
+    ...cart,
+    {
+      ...product,
+      percentageDiscount: 0,
+      priceDiscount: 0,
+      priceWithDiscount: Number(product.price),
+      uniqueId: createUniqueId(),
+    },
+  ];
 }
 
 function recalculateCartItems(

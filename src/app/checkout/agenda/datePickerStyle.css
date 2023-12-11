@@ -99,25 +99,3 @@
 .loading {
   opacity: 0.25;
 }
-
-.pepper-datepicker .react-datepicker__navigation--years-upcoming::before {
-  content: '\2039';
-  position: absolute;
-  top: 20%;
-  left: 45%;
-  text-indent: 0;
-  font-size: 30px;
-  display: block;
-  transform: rotate(90deg);
-}
-
-.pepper-datepicker .react-datepicker__navigation--years-previous::before {
-  content: '\2039';
-  position: absolute;
-  bottom: 20%;
-  right: 45%;
-  text-indent: 0;
-  font-size: 30px;
-  display: block;
-  transform: rotate(-90deg);
-}

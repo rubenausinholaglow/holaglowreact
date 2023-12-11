@@ -4,7 +4,7 @@ export interface MessageSocketList {
 
 export interface MessageSocket {
   messageType: MessageType;
-  message: any;
+  message: string;
 }
 
 export enum MessageType {
@@ -12,10 +12,6 @@ export enum MessageType {
   PatientArrived,
   ChatResponse,
   PaymentResponse,
-  StartAppointment,
-  CrisalixUser,
-  PaymentCreate,
-  GoToPage,
 }
 
 export interface MessageSocketActions {

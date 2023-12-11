@@ -1,12 +1,16 @@
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+import Link from 'next/link';
+
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
 
 export default function HomeHero() {
-  const ROUTES = useRoutes();
+  const { deviceSize } = useSessionStore(state => state);
 
   return (
     <Container className="relative border-b border-hg-black overflow-hidden">

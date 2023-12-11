@@ -42,26 +42,11 @@ export interface User {
   firstName: string;
   flowwwToken: string;
   email: string;
+  phone: string;
   id: string;
-  dni?: string;
-  address?: string;
-  city?: string;
-  province?: string;
-  postalCode?: string;
-  birthday?: string;
-  phone?: string;
-  country?: string;
-  lastName?: string;
-  secondLastName?: string;
 }
 
 export interface RescheduleAppointmentRequest {
   previous: Appointment;
   next: Appointment;
-}
-
-export interface UserCheckin {
-  name: string;
-  hour: string;
-  professional: string;
 }

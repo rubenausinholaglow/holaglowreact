@@ -8,7 +8,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import {
   Accordion,
   AccordionContent,
@@ -22,14 +22,8 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { fetchProduct } from 'utils/fetch';
 
-interface ClinicsCheckoutProps {
-  isDashboard?: boolean;
-}
-
-const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
+export default function ClinicsCheckout() {
   const router = useRouter();
-  const ROUTES = useRoutes();
-
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const { setSelectedTreatments } = useSessionStore(state => state);
 
@@ -73,7 +67,7 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
   }, [stateProducts]);
 
   return (
-    <MainLayout isCheckout hideHeader={isDashboard}>
+    <MainLayout isCheckout>
       <Container className="mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
           <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
@@ -85,11 +79,7 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
                   className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
                   onClick={() => {
                     setSelectedTreatments([PVProduct] as Product[]);
-                    if (isDashboard) {
-                      router.push(ROUTES.dashboard.checkIn.agenda);
-                    } else {
-                      router.push(ROUTES.checkout.schedule);
-                    }
+                    router.push(ROUTES.checkout.schedule);
                   }}
                 >
                   <Flex className="">
@@ -148,13 +138,7 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
                                   onClick={() => {
                                     setSelectedProduct(product);
                                     setSelectedTreatments([product]);
-                                    if (isDashboard) {
-                                      router.push(
-                                        ROUTES.dashboard.checkIn.agenda
-                                      );
-                                    } else {
-                                      router.push(ROUTES.checkout.schedule);
-                                    }
+                                    router.push(ROUTES.checkout.schedule);
                                   }}
                                 >
                                   <div className="mr-4">
@@ -191,6 +175,4 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
       </Container>
     </MainLayout>
   );
-};
-
-export default ClinicsCheckout;
+}

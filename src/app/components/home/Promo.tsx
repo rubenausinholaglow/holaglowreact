@@ -4,17 +4,18 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
+
 function BlackFriday() {
   const { deviceSize } = useSessionStore(state => state);
   const router = useRouter();
-  const ROUTES = useRoutes();
 
   return (
     <Container className="px-0 pt-8 md:pt-12">

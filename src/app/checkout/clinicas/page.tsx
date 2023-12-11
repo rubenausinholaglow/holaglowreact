@@ -9,7 +9,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
@@ -18,8 +18,6 @@ import { useRouter } from 'next/navigation';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
-  const ROUTES = useRoutes();
-
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
     selectedClinic,

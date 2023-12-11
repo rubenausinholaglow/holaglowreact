@@ -32,7 +32,6 @@ export interface RegistrationFormProps {
   errors?: Array<string>;
   isLoading?: boolean;
   redirect?: boolean;
-  isDashboard?: boolean;
 }
 
 export interface CheckboxProps {
@@ -66,7 +65,6 @@ export interface FilterPageProps {
   onClickFilter: (id: string, inputText: string, tag: string) => void;
   showFilters: boolean;
   setShowFilters: (value: boolean) => void;
-  slug: string;
 }
 
 export interface FilterUtilsProps {

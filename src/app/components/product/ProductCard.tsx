@@ -46,15 +46,16 @@ export default function ProductCard({
     }
   }, [product]);
 
-  const imgHeight = isDashboard ? 'h-[200px]' : 'h-[250px]';
-
-  const productElement = (
-    <div
-      className="flex flex-col h-full pt-4 overflow-hidden"
-      onClick={() => {
-        if (isDashboard) setHighlightProduct(product);
-      }}
- 	id={'tmevent_click_product_card'}
+  return (
+    <Link
+      href={
+        isLanding
+          ? LANDINGS[pathName]
+          : `${ROUTES.treatments}/${product?.extraInformation?.slug}`
+      }
+      className={`text-inherit ${className}`}
+      {...rest}
+      id={'tmevent_click_product_card'}
     >
       <div className="flex flex-col h-full pt-4 overflow-hidden">
         <Flex layout="col-left" className="">
@@ -94,93 +95,58 @@ export default function ProductCard({
               </Flex>
             )}
 
-          {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
-            <Flex
-              layout="row-center"
-              className="bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
-            >
-              <SvgGlow
-                height={12}
-                width={12}
-                className="text-hg-primary mr-1"
-              />
-              <Text className="text-hg-secondary" size="xs">
-                B.<span className="text-hg-primary">Friday</span>
-              </Text>
-            </Flex>
-          )}
-        </div>
-      </Flex>
-      <Flex
-        layout="col-left"
-        className="p-3 flex-grow bg-white rounded-b-2xl z-10"
-      >
-        <AnimateOnViewport origin="bottom">
+            {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
+              <Flex
+                layout="row-center"
+                className="bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
+              >
+                <SvgGlow
+                  height={12}
+                  width={12}
+                  className="text-hg-primary mr-1"
+                />
+                <Text className="text-hg-secondary" size="xs">
+                  B.<span className="text-hg-primary">Friday</span>
+                </Text>
+              </Flex>
+            )}
+          </div>
+        </Flex>
+        <Flex
+          layout="col-left"
+          className="p-3 flex-grow bg-white rounded-b-2xl z-10"
+        >
           <Text className="mb-2 font-semibold">{product.title}</Text>
-          {!isDashboard && (
-            <Text size="xs" className="text-hg-black500 mb-8">
-              {product.description}
-            </Text>
-          )}
-        </AnimateOnViewport>
-        <AnimateOnViewport origin="bottom" className="w-full mt-auto">
-          <Flex
-            layout={isDashboard ? 'col-left' : 'row-left'}
-            className="mt-auto justify-between w-full"
-          >
-            <Flex
-              layout={isDashboard ? 'row-left' : 'col-left'}
-              className="gap-2 mb-2"
-            >
-              {discountedPrice > 0 && (
-                <Text
-                  className={`text-xs line-through text-hg-black500 ${
-                    isDashboard ? 'order-2 text-md' : ''
-                  }`}
-                >
+          <Text size="xs" className="text-hg-black500 mb-8">
+            {product.longDescription}
+          </Text>
+
+          <Flex className="mt-auto justify-between w-full">
+            <div>
+              {discountedPrice && (
+                <Text className="text-xs line-through text-hg-black500">
                   {product.price} €
                 </Text>
               )}
               {!discountedPrice && !product.isPack && (
                 <Text className="text-xs text-hg-secondary">desde</Text>
               )}
-              <Text
-                className={`text-hg-secondary font-semibold ${
-                  isDashboard ? 'text-xl' : 'text-lg'
-                }`}
-              >
+              <Text className=" text-hg-secondary font-semibold text-lg">
                 {discountedPrice ? discountedPrice : product.price} €{' '}
               </Text>
-            </Flex>
-            {isDashboard ? (
-              <Button
-                size="sm"
-                type="tertiary"
-                className="mt-auto"
-                bgColor="bg-hg-primary"
-                onClick={e => {
-                  e.stopPropagation();
-                  addToCart(product as CartItem);
-                  setPendingDiscount(true);
-                }}
-              >
-                <p className="mr-2">Añadir </p>
-                <SvgPlusSmall height={20} width={20} />
-              </Button>
-            ) : (
-              <Button
-                type="tertiary"
-                className="mt-auto ml-4"
-                bgColor="bg-hg-primary"
-                customStyles="hover:bg-hg-secondary100"
-              >
-                <p className="mr-2">Saber más</p>
-                <SvgArrow height={20} width={20} />
-              </Button>
-            )}
+            </div>
+            <Button
+              type="tertiary"
+              className="mt-auto ml-4"
+              bgColor="bg-hg-primary"
+              customStyles="hover:bg-hg-secondary100"
+            >
+              <p className="mr-2">Saber más</p>
+              <SvgArrow height={20} width={20} />
+            </Button>
           </Flex>
-        </AnimateOnViewport>
-      </Flex>
-    </div>
+        </Flex>
+      </div>
+    </Link>
   );
 }

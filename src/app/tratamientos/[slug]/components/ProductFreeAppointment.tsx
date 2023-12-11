@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -13,7 +13,6 @@ import { fetchProduct } from 'utils/fetch';
 
 export default function ProductPaymentOptions() {
   const router = useRouter();
-  const ROUTES = useRoutes();
   const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
 

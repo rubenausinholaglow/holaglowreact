@@ -137,4 +137,25 @@ export const filterItems = [
       },
     ],
   },
+  /* {
+      typeFilter: "Clinic",
+      textFilter: "Clinica",
+      buttons: [
+        {
+          id: "Barcelona",
+          value: "Barcelona",
+          tag: "Clinic",
+        },
+        {
+          id: "Madrid",
+          value: "Madrid",
+          tag: "Clinic",
+        },
+        {
+          id: "Valencia",
+          value: "Valencia",
+          tag: "Clinic",
+        },
+      ],
+    }, */
 ];

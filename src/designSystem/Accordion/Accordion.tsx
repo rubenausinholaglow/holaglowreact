@@ -53,32 +53,20 @@ export function SimpleAccordion({
 }
 
 export function Accordion({
-  type = 'single',
   className = '',
-  defaultValue,
-  value,
-  onValueChange,
-  collapsible = true,
+  value = '',
   children,
-  ...rest
 }: {
-  type?: 'single' | 'multiple';
   className?: string;
-  defaultValue?: string;
   value?: string;
-  onValueChange?: (value: string) => void;
-  collapsible?: boolean;
   children: ReactNode;
 }) {
   return (
     <AccordionPrimitive.Root
-      onValueChange={onValueChange}
-      type={type as 'single'}
+      type="single"
       className={twMerge(`w-full ${className}`)}
-      collapsible={collapsible}
-      {...(value && { value })}
-      {...(defaultValue && { defaultValue })}
-      {...rest}
+      collapsible
+      defaultValue={value ? value : ''}
     >
       {children}
     </AccordionPrimitive.Root>

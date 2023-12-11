@@ -48,54 +48,34 @@ export default function ProductSessionPriceCard({
               {product.sessions}{' '}
               {product.sessions === 1 ? 'sesión' : 'sesiones'}
             </Flex>
-            {!isDashboard && (
-              <Button
-                id={'click_book_button_prices'}
-                type="tertiary"
-                className="hidden md:block shrink-0"
-                customStyles="bg-hg-primary md:mt-4"
-                onClick={() => {
-                  setSelectedTreatments([product]);
-                }}
-                href={ROUTES.checkout.clinics}
-              >
-                Reservar cita
-                <SvgArrow height={16} width={16} className="ml-2" />
-              </Button>
-            )}
+            <Button
+              id={'click_book_button_prices'}
+              type="tertiary"
+              className="hidden md:block shrink-0"
+              customStyles="bg-hg-primary md:mt-4"
+              onClick={() => {
+                setSelectedTreatments([product]);
+              }}
+              href={ROUTES.checkout.clinics}
+            >
+              Reservar cita
+              <SvgArrow height={16} width={16} className="ml-2" />
+            </Button>
           </Flex>
-        {!isDashboard && (
-          <Button
-          	id={'click_book_button_prices'}
-            type="tertiary"
-            className="md:hidden shrink-0"
-            customStyles="bg-hg-primary md:mt-4"
-            onClick={() => {
-              setSelectedTreatments([product]);
-            }}
-            href={ROUTES.checkout.clinics}
-          >
-            Reservar cita
-            <SvgArrow height={16} width={16} className="ml-2" />
-          </Button>
-        )}
-
-        {isDashboard && (
-          <Button
-            size="sm"
-            type="tertiary"
-            className="mt-auto"
-            bgColor="bg-hg-primary"
-            onClick={e => {
-              e.stopPropagation();
-              addToCart(product as CartItem);
-              setPendingDiscount(true);
-            }}
-          >
-            <p className="mr-2">Añadir </p>
-            <SvgPlusSmall height={20} width={20} />
-          </Button>
-        )}
+        </div>
+        <Button
+          id={'click_book_button_prices'}
+          type="tertiary"
+          className="md:hidden shrink-0"
+          customStyles="bg-hg-primary md:mt-4"
+          onClick={() => {
+            setSelectedTreatments([product]);
+          }}
+          href={ROUTES.checkout.clinics}
+        >
+          Reservar cita
+          <SvgArrow height={16} width={16} className="ml-2" />
+        </Button>
       </Flex>
     </div>
   );

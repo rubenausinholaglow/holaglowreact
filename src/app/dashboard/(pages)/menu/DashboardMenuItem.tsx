@@ -1,8 +1,5 @@
 'use client';
 
-import { GoToPageData } from '@interface/FrontEndMessages';
-import { messageService } from '@services/MessageService';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,41 +12,16 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   link,
   target,
 }) => {
-  const {
-    storedBoxId,
-    storedClinicId,
-    ignoreMessages,
-    remoteControl,
-    setCheckSimulator,
-  } = useGlobalPersistedStore(state => state);
-  function goToPage(name: string) {
-    if (!remoteControl) return true;
-    let message: GoToPageData;
-    switch (name) {
-      case 'Simulador 3D':
-        message = {
-          clinicId: storedClinicId || '',
-          boxId: storedBoxId || '',
-          page: 'Crisalix',
-        };
-        if (!ignoreMessages) messageService.goToPage(message);
-        break;
-      default:
-        '';
-    }
-  }
   return (
-    <Link href={link} target={target} onClick={() => goToPage(title)}>
+    <Link href={link} target={target}>
       <Image
-        className="mx-auto w-full max-w-[200px]"
+        className="mx-auto"
         src={iconSrc}
-        height="180"
-        width="180"
+        height="30"
+        width="150"
         alt={altText}
       />
-      <p className="text-center text-lg -mt-4 text-hg-black font-medium">
-        {title}
-      </p>
+      <p className="text-center text-sm text-white">{title}</p>
     </Link>
   );
 };

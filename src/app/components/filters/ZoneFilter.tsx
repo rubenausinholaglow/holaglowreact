@@ -1,7 +1,15 @@
 'use client';
 
-import { useGlobalStore } from 'app/stores/globalStore';
-import { toggleFilter } from 'app/tratamientos/utils/filters';
+import { useEffect } from 'react';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/tratamientos/utils/filters';
 import { Text } from 'designSystem/Texts/Texts';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import Image from 'next/image';
@@ -13,7 +21,13 @@ export default function ZoneFilter({
   className?: string;
   isDesktop?: boolean;
 }) {
-  const { productFilters, setProductFilters } = useGlobalStore(state => state);
+  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const {
+    productFilters,
+    setProductFilters,
+    filteredProducts,
+    setFilteredProducts,
+  } = useGlobalStore(state => state);
 
   const ZONES = [
     {
@@ -31,37 +45,30 @@ export default function ZoneFilter({
       id: 2,
       icon: '/images/filters/tercioSuperior.svg',
     },
-    {
-      name: 'Cuerpo',
-      id: 1,
-      icon: '/images/filters/cuerpo.svg',
-    },
-    {
-      name: 'Pelo',
-      id: 6,
-      icon: '/images/filters/pelo.svg',
-    },
-    {
-      name: 'Piel',
-      id: 5,
-      icon: '/images/filters/piel.svg',
-    },
   ];
 
+  useEffect(() => {
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
+
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(stateProducts);
+    }
+  }, [productFilters]);
+
   return (
-    <ul
-      className={`grid grid-cols-3 gap-5 w-full ${className ? className : ''}`}
-    >
+    <ul className={`flex gap-5 w-full ${className ? className : ''}`}>
       {ZONES.map(zone => (
         <li
           id={'tmevent_filters'}
           key={zone.name}
-          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer gap-2 ${
+          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer ${
             isDesktop ? 'w-[120px]' : ''
           } ${
             productFilters.zone.includes(zone.id)
               ? 'bg-hg-primary500'
-              : 'bg-hg-black100'
+              : 'bg-hg-black50'
           }`}
           onClick={() =>
             setProductFilters(
@@ -79,9 +86,7 @@ export default function ZoneFilter({
             <SvgCheckSquare className="ml-auto" />
           )}
           <Image height={40} width={40} src={zone.icon} alt={zone.name} />
-          <Text size="xs" className="text-center">
-            {zone.name}
-          </Text>
+          <Text size="xs">{zone.name}</Text>
         </li>
       ))}
     </ul>

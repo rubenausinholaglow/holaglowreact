@@ -86,8 +86,8 @@ const UPGRADE_TYPES: Record<
     family: 'default',
     options: [
       {
-        label: 'Prevención arrugas - Baby botox',
-        value: 'Prevención arrugas - Baby botox',
+        label: 'Prevención arrugas',
+        value: 'Prevención arrugas',
       },
       {
         label: 'Arrugas entrecejo y patas de gallo',
@@ -182,6 +182,7 @@ function ProductPriceItemsCard({
         value: newValue,
       });
     }
+
     setSelectedPackOptions(newOptions);
   };
 
@@ -331,6 +332,7 @@ function ProductPriceItemsCard({
       )}
       {product.isPack && !showDropdown && (
         <Button
+          id={'tmevent_click_book_button_customize'}
           className="mt-8"
           type="tertiary"
           customStyles="hover:bg-hg-secondary50"
@@ -339,37 +341,20 @@ function ProductPriceItemsCard({
           Personalizar
         </Button>
       )}
-
-      {(!product.isPack || (!productHighlighted && showDropdown)) &&
-        !isDashboard && (
-          <Button
-            type="tertiary"
-            disabled={isDisabled}
-            onClick={() => {
-              setSelectedTreatment(product);
-            }}
-            customStyles="bg-hg-primary hover:bg-hg-secondary100"
-            className="mt-8"
-          >
-            Reservar cita
-            <SvgArrow height={16} width={16} className="ml-2" />
-          </Button>
-        )}
-      {productHighlighted && (
-        <div className="pt-1 mt-2">
-          <Quantifier
-            handleUpdateQuantity={function handleUpdateQuantity(
-              operation: Operation
-            ): void {
-              if (operation == 'increase') {
-                addItemToCart(product as CartItem);
-              } else {
-                removeSingleProduct(product as CartItem);
-              }
-            }}
-            quantity={getQuantityOfProduct(product)}
-          />
-        </div>
+      {(!product.isPack || showDropdown) && (
+        <Button
+          id={'click_book_button_prices'}
+          type="tertiary"
+          disabled={isDisabled}
+          onClick={() => {
+            setSelectedTreatment(product);
+          }}
+          customStyles="bg-hg-primary hover:bg-hg-secondary100"
+          className="mt-8"
+        >
+          Reservar cita
+          <SvgArrow height={16} width={16} className="ml-2" />
+        </Button>
       )}
     </Flex>
   );

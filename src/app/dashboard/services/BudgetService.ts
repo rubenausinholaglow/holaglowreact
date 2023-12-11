@@ -77,19 +77,4 @@ export const budgetService = {
       throw new Error(ERROR_CREATE_BUDGET);
     }
   },
-
-  async getLastBudgetCreated(id: string): Promise<Budget | undefined> {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_PATIENTS_API}Budget/user/${id}/latest`;
-      const res = await fetch(url);
-      if (res.ok) {
-        const data = await res.json();
-        return data;
-      } else {
-        return undefined;
-      }
-    } catch (err) {
-      return undefined;
-    }
-  },
 };

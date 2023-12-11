@@ -10,26 +10,23 @@ import {
 } from 'app/tratamientos/utils/filters';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { twMerge } from 'tailwind-merge';
 
 import CategoryIcon from '../common/CategoryIcon';
 
 export default function CategorySelector({
   className,
   isStacked,
-  isDashboard,
 }: {
   className?: string;
   isStacked?: boolean;
-  isDashboard?: boolean;
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
   const {
-    productFilters,
-    setProductFilters,
     filteredProducts,
     setFilteredProducts,
+    productFilters,
+    setProductFilters,
   } = useGlobalStore(state => state);
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
@@ -74,16 +71,15 @@ export default function CategorySelector({
           <li
             id={'tmevent_treatments_type'}
             key={category}
-            className={twMerge(`transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
+            className={`transition-all cursor-pointer flex rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
                 : isStacked
-                ? 'bg-hg-black100 mb-2'
+                ? 'bg-hg-black50'
                 : 'bg-white hover:bg-hg-secondary100'
-            }
+            } ${isStacked ? ' mb-2' : ''}
             ${i == 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
-            ${isDashboard ? 'py-2 px-4' : ''}
-            `)}
+            `}
             onClick={() => {
               setProductFilters(
                 toggleFilter({
@@ -95,9 +91,7 @@ export default function CategorySelector({
             }}
           >
             <Flex layout="row-left">
-              {!isDashboard && (
-                <CategoryIcon category={category} className="mr-2" />
-              )}
+              <CategoryIcon category={category} className="mr-2" />
               <Text size="xs" className="whitespace-nowrap font-medium">
                 {category}
               </Text>

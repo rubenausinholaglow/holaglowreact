@@ -4,13 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { Professional, ProfessionalType } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
-import { SvgLogout, SvgUserOctagon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
@@ -28,15 +24,13 @@ export const ClinicProfessional = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { storedClinicId, storedClinicProfessionalId } =
-    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     const fetchProfessionals = async () => {
       try {
         const professionalType = ProfessionalType.All;
         const professionalsData = await clinicService.getProfessionalsByClinic(
-          storedClinicId,
+          localStorage.getItem('ClinicId') || '',
           professionalType
         );
 
@@ -68,7 +62,8 @@ export const ClinicProfessional = () => {
 
       setSelectedProfessional(
         professionals.filter(
-          professional => professional.id === storedClinicProfessionalId
+          professional =>
+            professional.id === localStorage.getItem('ClinicProfessionalId')
         )[0]
       );
     }
@@ -86,7 +81,6 @@ export const ClinicProfessional = () => {
   const handleTimerColorChange = (newColor: string) => {
     setColor(newColor);
   };
-
   const handleToggleProfessionalList = () => {
     setShowProfessionalList(prevState => !prevState);
   };
@@ -106,71 +100,48 @@ export const ClinicProfessional = () => {
   }
 
   return (
-    <Flex layout="col-center" className="relative p-4">
+    <Flex layout="col-center" className="relative">
       <Flex
-        layout="col-left"
+        layout="row-left"
         className={`
-            transition-all pointer-events-none absolute top-0 right-0 w-[400px] rounded-b-3xl py-8
-            bg-white text-hg-black text-left -translate-y-full z-10
-            ${showProfessionalList && 'translate-y-0 pointer-events-auto'}`}
+            transition-all opacity-0 pointer-events-none absolute top-[20px] right-[20px] 
+            bg-white text-hg-black p-2 rounded-lg border border-hg-black/20 text-left 
+            ${showProfessionalList && 'opacity-1 pointer-events-auto'}`}
       >
-        <ul className="w-full flex flex-col my-8">
+        <ul className="w-[125px]">
           {beautyAdvisors.map(professional => (
             <li
               onClick={() => handleProfessionalClick(professional)}
               key={professional.name}
-              className=" py-4 cursor-pointer hover:font-semibold border-b border-hg-black300 text-sm"
+              className="px-2 py-1 cursor-pointer hover:font-semibold text-black"
             >
-              <Flex className="px-8 gap-2">
-                <SvgUserOctagon />
-                {professional.name}
-              </Flex>
+              {professional.name}
             </li>
           ))}
-
-          <li className="py-4 cursor-pointer hover:font-semibold text-sm">
-            <Flex className="px-8 gap-2">
-              <SvgLogout height={20} width={20} className="mr-1" />
-              Cerrar sesión
-            </Flex>
-          </li>
         </ul>
-        <Button
-          type="tertiary"
-          className="ml-8"
-          onClick={() => handleToggleProfessionalList()}
-        >
-          Cerrar
-        </Button>
       </Flex>
-
-      <Flex className="gap-2 z-10">
-        <Text className="text-sm font-semibold">
-          ¡Hola {selectedProfessional.name}!
-        </Text>
-        <Flex
-          layout="col-center"
-          onClick={() =>
-            beautyAdvisors.length > 1 && handleToggleProfessionalList()
-          }
-          className={`aspect-square h-[32px] rounded-full ${color} justify-center relative ${
-            beautyAdvisors.length > 1 && 'cursor-pointer'
-          }`}
-        >
-          <Text className="text-sm">
-            {selectedProfessional
-              ? selectedProfessional.name
-                  .split(' ')
-                  .map(word => word.charAt(0))
-                  .join('')
-              : professionals[0].name
-                  .split(' ')
-                  .map(word => word.charAt(0))
-                  .join('')}
-          </Text>
-        </Flex>
-        <Timer onColorChange={handleTimerColorChange} />
+      <Flex
+        layout="col-center"
+        onClick={() =>
+          beautyAdvisors.length > 1 && handleToggleProfessionalList()
+        }
+        className={`aspect-square h-[40px] rounded-full ${color}  text-white justify-center relative ${
+          beautyAdvisors.length > 1 && 'cursor-pointer'
+        }`}
+      >
+        <p style={{ margin: 0, fontWeight: 'bold' }}>
+          {selectedProfessional
+            ? selectedProfessional.name
+                .split(' ')
+                .map(word => word.charAt(0))
+                .join('')
+            : professionals[0].name
+                .split(' ')
+                .map(word => word.charAt(0))
+                .join('')}
+        </p>
       </Flex>
+      <Timer onColorChange={handleTimerColorChange} />
     </Flex>
   );
 };

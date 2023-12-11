@@ -1,53 +1,36 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import TextInputField from '@components/TextInputField';
-import { UserCheckin } from '@interface/appointment';
-import { messageService } from '@services/MessageService';
-import MainLayout from 'app/components/layout/MainLayout';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import useRoutes from 'app/utils/useRoutes';
+import clinicService from '@services/ClinicService';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgScanQR } from 'icons/Icons';
-import { SvgArrow } from 'icons/IconsDs';
-import { useRouter } from 'next/navigation';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
 import useFormHook from './useFormHook';
 
+const WELCOME_MESSAGE = 'Bienvenid@ a Holaglow!';
+const SCAN_QR_MESSAGE = '¡Escanea el QR que te hemos enviado!';
 const SCAN_QR = 'Escanear QR';
 const CHECKIN_BUTTON_TEXT = 'Checkin';
 const CHECKIN_LOADING_TEXT = 'Checking In...';
 
 export default function Page() {
   const [isScanning, setIsScanning] = useState(false);
-  const { setSelectedClinic, setSelectedSlot, setSelectedTreatments } =
-    useSessionStore(state => state);
-  const { clinics, user, setUserCheckIn, setCurrentUser, setClinicId } =
-    useGlobalPersistedStore(state => state);
-
-  const router = useRouter();
-  const ROUTES = useRoutes();
+  const [name, setName] = useState<string | null>(null);
+  const [hour, setHour] = useState<string | null>(null);
+  const [professional, setProfessional] = useState<string | null>(null);
 
   const onScanSuccess = (props: any) => {
     if (props) {
-      const user: UserCheckin = {
-        name: props.name,
-        hour: props.hour,
-        professional: props.professional,
-      };
-      setUserCheckIn(user);
-      messageService.patientArrived(props);
-      router.push(ROUTES.dashboard.checkIn.thankYou);
+      setName(props.name);
+      setHour(props.hour);
+      setProfessional(props.professional);
+      clinicService.PatientArrived(props);
+      reloadPageAfterDelay(30000);
     } else {
-      router.push(ROUTES.dashboard.checkIn.treatments);
+      reloadPageAfterDelay(5000);
     }
   };
 
@@ -58,12 +41,17 @@ export default function Page() {
     handleSubmit,
     isLoading,
     checkIn,
-    isChecked,
   } = useFormHook(onScanSuccess);
 
   const startScan = () => {
     setIsScanning(true);
   };
+
+  useEffect(() => {
+    if (name) {
+      reloadPageAfterDelay(30000);
+    }
+  }, [name]);
 
   const reloadPageAfterDelay = (delay: number) => {
     setTimeout(() => {
@@ -71,69 +59,29 @@ export default function Page() {
     }, delay);
   };
 
-  useEffect(() => {
-    if (isChecked == undefined) return;
-    if (!isChecked && user) {
-      router.push(ROUTES.dashboard.checkIn.treatments);
-    } else if (isChecked) {
-      router.push(ROUTES.dashboard.checkIn.thankYou);
-    } else {
-      router.push(ROUTES.dashboard.checkIn.badRequest);
-    }
-  }, [isChecked]);
-
-  useEffect(() => {
-    setUserCheckIn(undefined);
-    setCurrentUser(undefined);
-    setSelectedSlot(undefined);
-    setClinicId('');
-    setSelectedTreatments([]);
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-    const clinicId = params.get('clinicId') || '';
-    setClinicId(clinicId);
-    const currentClinic = clinics.find(
-      x => x.id.toUpperCase() === clinicId.toUpperCase()
-    );
-    if (currentClinic) {
-      setSelectedClinic(currentClinic);
-    }
-  }, [clinics]);
-
   return (
-    <MainLayout
-      isDashboard
-      hideBackButton
-      hideContactButtons
-      hideProfessionalSelector
-      hideBottomBar
-    >
-      <CheckHydration>
-        <Flex layout="col-center" className="w-full">
-          <Flex layout="col-center" className="gap-4 mb-12">
-            <Title className="font-bold text-5xl mb-8">
-              Te damos la <br />
-              <Underlined color={HOLAGLOW_COLORS['primary']}>
-                Bienvenid@
-              </Underlined>{' '}
-            </Title>
-            <Text className="mb-8 font-bold">
-              Escanea el QR que te hemos envíado para acceder a tu cita.
-            </Text>
-            {isScanning ? (
-              <ReadQr
-                onScanSuccess={onScanSuccess}
-                onErrorScan={reloadPageAfterDelay}
-              />
-            ) : (
-              <div onClick={startScan} className="justify-center items-center">
-                <SvgScanQR height={192} width={192} fill="white" />
-                <Text className="mb-8 text-center">{SCAN_QR}</Text>
-              </div>
-            )}
-          </Flex>
-
-          {!isScanning && (
+    <CheckHydration>
+      <Flex layout="col-center" className="w-full">
+        {name ? (
+          <WelcomeSection name={name} hour={hour} professional={professional} />
+        ) : (
+          <>
+            <Flex layout="col-center" className="gap-4 mb-12">
+              <Title size="xl" className="text-left">
+                {WELCOME_MESSAGE}
+              </Title>
+              <Text className="mb-8">{SCAN_QR_MESSAGE}</Text>
+              {isScanning ? (
+                <ReadQr
+                  onScanSuccess={onScanSuccess}
+                  onErrorScan={reloadPageAfterDelay}
+                />
+              ) : (
+                <Button size="lg" style="primary" onClick={startScan}>
+                  {SCAN_QR}
+                </Button>
+              )}
+            </Flex>
             <FormSection
               formData={formData}
               errors={errors}
@@ -142,10 +90,24 @@ export default function Page() {
               isLoading={isLoading}
               checkIn={checkIn}
             />
-          )}
-        </Flex>
-      </CheckHydration>
-    </MainLayout>
+          </>
+        )}
+      </Flex>
+    </CheckHydration>
+  );
+}
+
+function WelcomeSection({ name, hour, professional }: any) {
+  return (
+    <div>
+      <Title className="align-center">Bienvenid@ {name}</Title>
+      <Text size="lg" className="align-center">
+        Tu cita es a las {hour} para el Probador Virtual.
+      </Text>
+      <Text size="lg" className="align-center">
+        Por favor, toma asiento y en breves serás atendid@ por {professional}.
+      </Text>
+    </div>
   );
 }
 
@@ -159,48 +121,47 @@ function FormSection({
 }: any) {
   return (
     <>
+      <Text size="lg" className="font-semibold mb-4">
+        ...o identifícate con tu email y teléfono
+      </Text>
       <form onSubmit={handleSubmit} className="relative">
         <Flex
           layout="col-left"
-          className={`gap-4 px-12 py-8 bg-hg-secondary100 relative z-10 w-full ${
+          className={`gap-4 px-12 py-8 bg-hg-tertiary300 relative z-10 ${
             checkIn ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          <Text size="lg" className="font-semibold mb-4">
-            ...o identifícate con tu email y teléfono
-          </Text>
-          <div className="grid grid-cols-1 gap-4 w-full">
-            <TextInputField
-              placeholder="Correo Electrónico"
+          <Flex layout="col-left">
+            <label className="mb-2">Correo Electrónico:</label>
+            <input
+              className="py-3 px-2 rounded-md"
+              type="email"
               value={formData.email}
               onChange={e => handleInputChange('email', e.target.value)}
-              hasNoValidation
             />
             {errors.email && (
               <span style={{ color: 'red' }}>{errors.email}</span>
             )}
-
-            <TextInputField
-              placeholder="Teléfono"
+          </Flex>
+          <Flex layout="col-left">
+            <label className="mb-2">Teléfono:</label>
+            <input
+              className="py-3 px-2 rounded-md"
+              type="tel"
               value={formData.phone}
               onChange={e => handleInputChange('phone', e.target.value)}
-              hasNoValidation
             />
             {errors.phone && (
               <span style={{ color: 'red' }}>{errors.phone}</span>
             )}
-          </div>
+          </Flex>
           <Button
-            type="tertiary"
+            type="secondary"
             isSubmit
             disabled={isLoading}
             className="ml-auto"
-            customStyles="bg-hg-primary"
           >
-            <p className="mr-2">
-              {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
-            </p>
-            <SvgArrow height={20} width={20} />
+            {isLoading ? CHECKIN_LOADING_TEXT : CHECKIN_BUTTON_TEXT}
           </Button>
         </Flex>
         <Text

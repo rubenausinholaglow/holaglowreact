@@ -5,7 +5,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -24,8 +24,6 @@ export default function MobileNavigation({
   headerHeight: number;
   setIsMobileNavVisible: (value: boolean) => void;
 }) {
-  const ROUTES = useRoutes();
-
   const paddingBottom = headerHeight + 16;
   const { clinics, setClinics } = useGlobalPersistedStore(state => state);
   const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);

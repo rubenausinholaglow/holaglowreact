@@ -1,6 +1,6 @@
 import { User } from '@interface/appointment';
 
-import { Client, ClientUpdate } from '../interface/client';
+import { Client } from '../interface/client';
 
 export default class UserService {
   static async checkUser(email = ''): Promise<User | undefined> {
@@ -20,7 +20,6 @@ export default class UserService {
 
   static async getSimulationReady(id: string, clinicId: string) {
     try {
-      console.log('executed');
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_CONTACTS_API}Crisalix/SimulationReady?id=${id}&clinic=${clinicId}`,
         {
@@ -69,29 +68,6 @@ export default class UserService {
         `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        return data;
-      } else {
-        return undefined;
-      }
-    } catch (err) {
-      return undefined;
-    }
-  }
-
-  static async updateUser(formData: ClientUpdate) {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`,
-        {
-          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },

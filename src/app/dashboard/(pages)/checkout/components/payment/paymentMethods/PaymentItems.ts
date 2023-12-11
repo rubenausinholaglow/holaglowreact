@@ -3,13 +3,13 @@ import { PaymentBank, PaymentMethod } from '@interface/payment';
 export const paymentItems = [
   {
     key: 'alma',
-    label: 'Financiación Alma',
+    label: 'Alma',
     paymentBank: PaymentBank.Alma,
     paymentMethod: PaymentMethod.Financing,
   },
   {
     key: 'pepper',
-    label: 'Financiación Pepper',
+    label: 'Pepper',
     paymentBank: PaymentBank.Pepper,
     paymentMethod: PaymentMethod.Financing,
   },

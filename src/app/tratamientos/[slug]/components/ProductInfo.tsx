@@ -1,13 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CartItem, Product } from '@interface/product';
+import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
-import { Quantifier } from 'app/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
-import {
-  Operation,
-  useCartStore,
-} from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -18,27 +13,6 @@ import { isEmpty } from 'lodash';
 
 export default function ProductInfo({ product }: { product: Product }) {
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
-  const {
-    productHighlighted,
-    cart,
-    addItemToCart,
-    getQuantityOfProduct,
-    removeSingleProduct,
-    applyItemDiscount,
-  } = useCartStore(state => state);
-
-  const [pendingDiscount, setPendingDiscount] = useState(false);
-
-  useEffect(() => {
-    if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
-    }
-  }, [pendingDiscount]);
 
   useEffect(() => {
     if (product && !isEmpty(product.discounts)) {
@@ -47,8 +21,8 @@ export default function ProductInfo({ product }: { product: Product }) {
   }, [product]);
 
   return (
-    <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-auto w-full">
-      <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl w-full">
+    <Container className="p-0 md:px-4 md:pb-16">
+      <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl">
         <Container className="my-8 md:my-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
           <ul className="flex flex-col pb-4 w-full">
             <li className="mb-4 pb-4 border-b border-hg-black flex">
@@ -88,77 +62,34 @@ export default function ProductInfo({ product }: { product: Product }) {
                 <Text className="pl-9">Producto aplicado</Text>
               </div>
             </li>
-            {(product.sessions > 0 || product.applicationTimeMinutes > 0) && (
-              <li className="mb-4 pb-4 border-b border-hg-black flex">
-                <div
-                  className={`flex  gap-4 relative md:justify-center ${
-                    productHighlighted ? 'flex-row' : 'flex-col'
-                  } w-full`}
-                >
-                  {product.sessions > 0 && (
-                    <>
-                      <div className="flex-1 flex items-start pr-4 border-r border-hg-black w-full">
-                        <SvgTimeLeft
-                          height={24}
-                          width={24}
-                          className="text-hg-secondary mr-3 mt-1"
-                        />
-                        <div>
-                          <Text
-                            size="lg"
-                            className="font-semibold mb-1 md:mb-2"
-                          >
-                            {product.sessions.toString()}{' '}
-                            {product.sessions === 1 ? 'sesión' : 'sesiones'}
-                          </Text>
-                          <Text>Número de sesiones</Text>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                  {product.applicationTimeMinutes > 0 && (
-                    <div className="flex-1 w-full md:w-1/6">
-                      {productHighlighted && (
-                        <div className="flex items-start">
-                          <SvgTimer
-                            height={24}
-                            width={24}
-                            className="text-hg-secondary mr-3 mt-1"
-                          />
-                          <div>
-                            <Text
-                              size="lg"
-                              className="font-semibold mb-1 md:mb-2"
-                            >
-                              {product.applicationTimeMinutes.toString()}{' '}
-                              minutos
-                            </Text>
-                            <Text>Tiempo de aplicación</Text>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </li>
-            )}
-
-            {!productHighlighted && (
-              <li className="mb-4 pb-4 border-b border-hg-black flex">
-                <SvgTimer
-                  height={24}
-                  width={24}
-                  className="text-hg-secondary mr-3 mt-1"
-                />
-                <div>
-                  <Text size="lg" className="font-semibold mb-1 md:mb-2">
-                    {product.applicationTimeMinutes.toString()} minutos
-                  </Text>
-                  <Text>Tiempo de aplicación</Text>
-                </div>
-              </li>
-            )}
-            {product.durationMin >= 30 && (
+            <li className="mb-4 pb-4 border-b border-hg-black flex">
+              <SvgTimeLeft
+                height={24}
+                width={24}
+                className="text-hg-secondary mr-3 mt-1"
+              />
+              <div>
+                <Text size="lg" className="font-semibold mb-1 md:mb-2">
+                  {product.sessions.toString()}{' '}
+                  {product.sessions === 1 ? 'sesión' : 'sesiones'}
+                </Text>
+                <Text>Número de sesiones</Text>
+              </div>
+            </li>
+            <li className="mb-4 pb-4 border-b border-hg-black flex">
+              <SvgTimer
+                height={24}
+                width={24}
+                className="text-hg-secondary mr-3 mt-1"
+              />
+              <div>
+                <Text size="lg" className="font-semibold mb-1 md:mb-2">
+                  {product.applicationTimeMinutes.toString()} minutos
+                </Text>
+                <Text>Tiempo de aplicación</Text>
+              </div>
+            </li>
+            {product.durationMin > 30 && (
               <li className="pb-4 flex">
                 <SvgCalendar
                   height={24}
@@ -177,19 +108,9 @@ export default function ProductInfo({ product }: { product: Product }) {
               </li>
             )}
           </ul>
-          {!productHighlighted ? (
-            <Button
-              size="xl"
-              type="tertiary"
-              bgColor="bg-hg-primary"
-              className="hidden md:block md:mt-auto"
-              href="#prices"
-            >
-              <span className="inline-block mr-1">
-                Reserva cita {product.isPack ? '' : 'desde'}
-              </span>
 
           <Button
+            id={'tmevent_click_book_anchor_button'}
             size="xl"
             type="tertiary"
             bgColor="bg-hg-primary"
@@ -203,45 +124,22 @@ export default function ProductInfo({ product }: { product: Product }) {
               <span className="inline-block line-through font-normal mr-1">
                 {product.price} €
               </span>
-            </Button>
-          ) : (
-            <Flex className="bg-white inline-flex rounded-full gap-2 pl-4 pr-2 py-2 mb-2 ">
-              <span className="font-semibold text-hg-secondary text-xl">
-                {discountedPrice ? discountedPrice : product.price} €
-              </span>
-              {discountedPrice && (
-                <span className="inline-block line-through font-normal mr-1">
-                  {product.price} €
-                </span>
-              )}
-              <Quantifier
-                handleUpdateQuantity={function handleUpdateQuantity(
-                  operation: Operation
-                ): void {
-                  if (operation == 'increase') {
-                    addItemToCart(product as CartItem);
-                    setPendingDiscount(true);
-                  } else {
-                    removeSingleProduct(product as CartItem);
-                  }
-                }}
-                quantity={getQuantityOfProduct(product)}
-              />
-            </Flex>
-          )}
+            )}
+            <span className="font-semibold text-lg">
+              {discountedPrice ? discountedPrice : product.price} €
+            </span>
+          </Button>
         </Container>
-        {!productHighlighted && (
-          <div className="md:w-2/5 shrink-0">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              src="/videos/pdp.mp4"
-              className="w-full h-full block bg-black object-center md:rounded-xl"
-            />
-          </div>
-        )}
+        <div className="md:w-2/5 shrink-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            src="/videos/pdp.mp4"
+            className="w-full h-full block bg-black object-center md:rounded-xl"
+          />
+        </div>
       </div>
     </Container>
   );

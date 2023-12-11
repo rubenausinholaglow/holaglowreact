@@ -23,21 +23,6 @@ export interface AnalyticsMetrics {
   utmMedium: string;
   utmSource: string;
   utmTerm: string;
-  interestedTreatment: string;
-  treatmentPrice: number;
-  [key: string]: any;
-}
-export interface ClientUpdate {
-  id: string;
-  country: string;
-  province: string;
-  city: string;
-  address: string;
-  postalCode: string;
-  birthday: string;
-  dni: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
+  treatmentText: string;
+  externalReference: string;
 }

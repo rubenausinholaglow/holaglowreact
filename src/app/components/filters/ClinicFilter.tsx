@@ -5,7 +5,11 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { toggleFilter } from 'app/tratamientos/utils/filters';
+import {
+  applyFilters,
+  filterCount,
+  toggleFilter,
+} from 'app/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { fetchClinics } from 'utils/fetch';
@@ -13,7 +17,14 @@ import { fetchClinics } from 'utils/fetch';
 export default function ClinicFilter({ className }: { className?: string }) {
   const { clinics, setClinics } = useGlobalPersistedStore(state => state);
 
-  const { productFilters, setProductFilters } = useGlobalStore(state => state);
+  const { stateProducts } = useGlobalPersistedStore(state => state);
+
+  const {
+    productFilters,
+    setProductFilters,
+    filteredProducts,
+    setFilteredProducts,
+  } = useGlobalStore(state => state);
 
   useEffect(() => {
     async function initClinics() {
@@ -26,6 +37,16 @@ export default function ClinicFilter({ className }: { className?: string }) {
       initClinics();
     }
   }, [clinics]);
+
+  useEffect(() => {
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
+
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(stateProducts);
+    }
+  }, [productFilters]);
 
   return (
     <ul className={`flex flex-col ${className ? className : ''}`}>
