@@ -1,7 +1,7 @@
 'use client';
 
 import MainLayout from 'app/components/layout/MainLayout';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -14,6 +14,8 @@ export default function CanceledAppointment() {
   const hour = searchParams.get('hour');
   const month = searchParams.get('month');
 
+  const ROUTE = useRoutes();
+
   return (
     <MainLayout>
       <Container className="py-16 md:py-32">
@@ -21,14 +23,14 @@ export default function CanceledAppointment() {
         <Text className="text-lg mb-12">
           Hemos cancelado tu cita para el día {day} de {month} a las {hour}.
           Puedes reservar una nueva cita{' '}
-          <a href={ROUTES.checkout.clinics}>aquí.</a>
+          <a href={ROUTE.checkout.clinics}>aquí.</a>
         </Text>
 
         <Button
           size="lg"
           type="tertiary"
           customStyles="border-hg-black bg-hg-primary"
-          href={ROUTES.treatments}
+          href={ROUTE.treatments}
         >
           Ver tratamientos
         </Button>
