@@ -1,60 +1,50 @@
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { priceFormat } from 'utils/priceFormat';
 
-export default function PepperWidget({ totalPrice }: { totalPrice: number }) {
+const PEPPER_TABLE_CONFIG = {
+  periods: [
+    'En 3 meses',
+    'En 4 meses',
+    'En 6 meses',
+    'En 9 meses',
+    'En 12 meses',
+    'En 18 meses',
+  ],
+  values: [1 / 3, 1 / 4, 1 / 6, 1.055 / 9, 1.075 / 12, 1.117 / 18],
+};
+
+export default function PepperWidget({
+  totalPrice,
+  className,
+}: {
+  totalPrice: number;
+  className?: string;
+}) {
   return (
-    <section className="p-2 text-black">
-      <div className="flex gap-2 text-[11px] text-center">
-        <div className="flex flex-col gap-1">
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2">
+    <div className={`w-full ${className ? className : ''}`}>
+      <Flex layout="col-left" className="w-full gap-2 text-sm ">
+        <Flex className="w-full bg-hg-secondary100 rounded-lg font-semibold">
+          <p className=" py-1.5 px-3 w-1/2 text-left shrink-0">
             Pago financiado
           </p>
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-            En 3 meses
+          <p className="rounded-lg bg-white p-1.5 w-1/2 border border-hg-black">
+            {totalPrice} €
           </p>
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-            En 4 meses
-          </p>
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-            En 6 meses
-          </p>
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-            En 9 meses
-          </p>
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-            En 12 meses
-          </p>
-          <p className="bg-hg-primary rounded-md bg-[#FFC738]/20 py-1 px-2 font-semibold">
-            En 18 meses
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="rounded-md bg-white py-1 px-2 text-[#717D96]">
-            Importe mensual
-          </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat(totalPrice / 3)}`} €
-          </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat(totalPrice / 4)}`} €
-          </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat(totalPrice / 6)}`} €
-          </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat((totalPrice * 1.055) / 9)}`} €
-          </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat((totalPrice * 1.075) / 12)}`} €
-          </p>
-          <p className="rounded-md bg-white py-1 px-2">
-            {`${priceFormat((totalPrice * 1.117) / 18)}`} €
-          </p>
-        </div>
-      </div>
+        </Flex>
+        {PEPPER_TABLE_CONFIG.periods.map((period, index) => (
+          <Flex className="w-full bg-hg-secondary100 rounded-lg" key={index}>
+            <p className="rounded-lg py-1.5 px-3 w-1/2 text-left">{period}</p>
+            <p className="rounded-lg bg-white p-1.5 w-1/2 border border-hg-black">
+              {`${priceFormat(totalPrice * PEPPER_TABLE_CONFIG.values[index])}`}{' '}
+              €
+            </p>
+          </Flex>
+        ))}
+      </Flex>
       <Text size="xs" className="mt-2">
         * Cálculos aproximados
       </Text>
-    </section>
+    </div>
   );
 }

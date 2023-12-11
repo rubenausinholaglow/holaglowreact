@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
+import { CartItem, Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
+import { Quantifier } from 'app/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
+import {
+  Operation,
+  useCartStore,
+} from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import {
   Accordion,
   AccordionContent,
@@ -86,8 +91,8 @@ const UPGRADE_TYPES: Record<
     family: 'default',
     options: [
       {
-        label: 'Prevención arrugas',
-        value: 'Prevención arrugas',
+        label: 'Prevención arrugas - Baby botox',
+        value: 'Prevención arrugas - Baby botox',
       },
       {
         label: 'Arrugas entrecejo y patas de gallo',
@@ -146,12 +151,14 @@ export interface option {
 function ProductPriceItemsCard({
   product,
   parentProduct,
+  isDashboard = false,
   setAccordionOverflow,
   isOpen,
 }: {
   product: Product;
   parentProduct: Product;
   setAccordionOverflow: (value: string) => void;
+  isDashboard: boolean;
   isOpen?: boolean;
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
@@ -160,10 +167,17 @@ function ProductPriceItemsCard({
   );
 
   const router = useRouter();
+  const ROUTES = useRoutes();
   const [showDropdown, setShowDropdown] = useState(isOpen);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
   );
+  const {
+    productHighlighted,
+    addItemToCart,
+    getQuantityOfProduct,
+    removeSingleProduct,
+  } = useCartStore(state => state);
 
   const isDisabled =
     product.isPack &&
@@ -182,7 +196,6 @@ function ProductPriceItemsCard({
         value: newValue,
       });
     }
-
     setSelectedPackOptions(newOptions);
   };
 
@@ -273,8 +286,7 @@ function ProductPriceItemsCard({
             <Text>{product.description}</Text>
           </Flex>
         ))}
-
-      {showDropdown && (
+      {!productHighlighted && showDropdown && (
         <form className="w-full">
           {product.packUnities.map((item: any, index: number) => {
             return (
@@ -330,9 +342,8 @@ function ProductPriceItemsCard({
           </AccordionItem>
         </Accordion>
       )}
-      {product.isPack && !showDropdown && (
+      {!productHighlighted && product.isPack && !showDropdown && (
         <Button
-          id={'tmevent_click_book_button_customize'}
           className="mt-8"
           type="tertiary"
           customStyles="hover:bg-hg-secondary50"
@@ -341,20 +352,37 @@ function ProductPriceItemsCard({
           Personalizar
         </Button>
       )}
-      {(!product.isPack || showDropdown) && (
-        <Button
-          id={'click_book_button_prices'}
-          type="tertiary"
-          disabled={isDisabled}
-          onClick={() => {
-            setSelectedTreatment(product);
-          }}
-          customStyles="bg-hg-primary hover:bg-hg-secondary100"
-          className="mt-8"
-        >
-          Reservar cita
-          <SvgArrow height={16} width={16} className="ml-2" />
-        </Button>
+
+      {(!product.isPack || (!productHighlighted && showDropdown)) &&
+        !isDashboard && (
+          <Button
+            type="tertiary"
+            disabled={isDisabled}
+            onClick={() => {
+              setSelectedTreatment(product);
+            }}
+            customStyles="bg-hg-primary hover:bg-hg-secondary100"
+            className="mt-8"
+          >
+            Reservar cita
+            <SvgArrow height={16} width={16} className="ml-2" />
+          </Button>
+        )}
+      {productHighlighted && (
+        <div className="pt-1 mt-2">
+          <Quantifier
+            handleUpdateQuantity={function handleUpdateQuantity(
+              operation: Operation
+            ): void {
+              if (operation == 'increase') {
+                addItemToCart(product as CartItem);
+              } else {
+                removeSingleProduct(product as CartItem);
+              }
+            }}
+            quantity={getQuantityOfProduct(product)}
+          />
+        </div>
       )}
     </Flex>
   );
@@ -365,12 +393,14 @@ export default function ProductPriceCard({
   index,
   parentProduct,
   fullWidthPack = false,
+  isDashboard = false,
   className,
 }: {
   product: Product;
   index: number;
   parentProduct: Product;
   fullWidthPack?: boolean;
+  isDashboard?: boolean;
   className?: string;
 }) {
   const { deviceSize } = useSessionStore(state => state);
@@ -499,6 +529,7 @@ export default function ProductPriceCard({
               }`}
             >
               <ProductPriceItemsCard
+                isDashboard={isDashboard}
                 product={product}
                 parentProduct={parentProduct}
                 setAccordionOverflow={setAccordionOverflow}

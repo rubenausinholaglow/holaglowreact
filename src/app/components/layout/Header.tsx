@@ -7,10 +7,10 @@ import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
+import { SvgArrow, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
@@ -20,13 +20,15 @@ import PromoTopBar from './PromoTopBar';
 let isTicking = false;
 let scrollPos = 0;
 
-const NAV_ITEMS = [
-  { name: 'Tratamientos', link: ROUTES.treatments },
-  { name: 'Clínicas', link: ROUTES.clinics },
-  { name: 'Sobre nosotros', link: ROUTES.aboutUs },
-];
-
 function Navigation({ className }: { className: string }) {
+  const ROUTES = useRoutes();
+
+  const NAV_ITEMS = [
+    { name: 'Tratamientos', link: ROUTES.treatments },
+    { name: 'Clínicas', link: ROUTES.clinics },
+    { name: 'Sobre nosotros', link: ROUTES.aboutUs },
+  ];
+
   return (
     <nav className={className}>
       <ul className="flex flex-row gap-16">
@@ -45,6 +47,8 @@ function Navigation({ className }: { className: string }) {
 }
 
 export default function Header() {
+  const ROUTES = useRoutes();
+
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
 

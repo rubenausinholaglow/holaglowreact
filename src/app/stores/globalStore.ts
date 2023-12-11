@@ -1,4 +1,4 @@
-import { Appointment, User } from '@interface/appointment';
+import { Appointment, User, UserCheckin } from '@interface/appointment';
 import { AnalyticsMetrics } from '@interface/client';
 import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
@@ -45,6 +45,16 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   user?: User;
   promo: Promo | undefined;
+  remoteControl: boolean;
+  ignoreMessages: boolean;
+  storedClinicId: string | '';
+  storedBoxId: string | '';
+  storedAppointmentId: string | '';
+  userCheckin?: UserCheckin;
+  checkSimulator: boolean;
+  storedClinicFlowwwId: string | '';
+  storedClinicProfessionalId: string | '';
+  storedBudgetId: string | '';
 }
 
 interface GlobalPersistActions {
@@ -52,6 +62,16 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
+  setRemoteControl: (remoteControl: boolean) => void;
+  setIgnoreMessages: (ignoreMessages: boolean) => void;
+  setClinicId: (storedClinicId: string) => void;
+  setBoxId: (setBoxId: string) => void;
+  setAppointmentId: (storedAppointmentId: string) => void;
+  setUserCheckIn: (value?: UserCheckin) => void;
+  setCheckSimulator: (value?: boolean) => void;
+  setClinicFlowwwId: (value?: string) => void;
+  setClinicProfessionalId: (value?: string) => void;
+  setBudgetId: (value?: string) => void;
 }
 
 export const useSessionStore = create(
@@ -68,6 +88,8 @@ export const useSessionStore = create(
         utmTerm: '',
         treatmentText: '',
         externalReference: '',
+        interestedTreatment: '',
+        treatmentPrice: 0,
       },
       deviceSize: {
         isMobile: true,
@@ -75,13 +97,13 @@ export const useSessionStore = create(
         isDesktop: false,
         isWideScreen: false,
       },
-      isMobile: true,
       selectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
       selectedDay: dayjs(),
       selectedSlot: undefined,
       previousAppointment: undefined,
+      isMobile: true,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -112,7 +134,7 @@ export const useSessionStore = create(
     }),
     {
       name: 'session-storage',
-      version: 2,
+      version: 3,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -125,6 +147,7 @@ export const useGlobalPersistedStore = create(
       stateProducts: [],
       clinics: [],
       user: undefined,
+
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -134,8 +157,48 @@ export const useGlobalPersistedStore = create(
       setCurrentUser: value => {
         set({ user: value });
       },
+      userCheckin: undefined,
+      setUserCheckIn: value => {
+        set({ userCheckin: value });
+      },
       setPromos: (value: Promo) => {
         set({ promo: value });
+      },
+      remoteControl: false,
+      setRemoteControl: value => {
+        set({ remoteControl: value });
+      },
+      ignoreMessages: false,
+      setIgnoreMessages: value => {
+        set({ ignoreMessages: value });
+      },
+      storedClinicId: '',
+      setClinicId: value => {
+        set({ storedClinicId: value });
+      },
+      storedBoxId: '',
+      setBoxId: value => {
+        set({ storedBoxId: value });
+      },
+      storedAppointmentId: '',
+      setAppointmentId: value => {
+        set({ storedAppointmentId: value });
+      },
+      checkSimulator: false,
+      setCheckSimulator: value => {
+        set({ checkSimulator: value });
+      },
+      storedClinicFlowwwId: '',
+      setClinicFlowwwId: value => {
+        set({ storedClinicFlowwwId: value });
+      },
+      storedClinicProfessionalId: '',
+      setClinicProfessionalId: value => {
+        set({ storedClinicProfessionalId: value });
+      },
+      storedBudgetId: '',
+      setBudgetId: value => {
+        set({ storedBudgetId: value });
       },
     }),
     {

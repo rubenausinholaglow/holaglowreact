@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 import Notification from '@components/ui/Notification';
+import { PaymentCreatedData } from '@interface/FrontEndMessages';
 import { PaymentProductRequest } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
+import { messageService } from '@services/MessageService';
 import { getPaymentBankText, getPaymentMethodText } from '@utils/utils';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { SvgSpinner } from 'icons/Icons';
+import { SvgCheck, SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { usePaymentList } from './payments/usePaymentList';
@@ -23,14 +28,17 @@ interface Props {
 }
 
 export default function PaymentItem({ paymentRequest, status }: Props) {
-  const { removePayment } = usePaymentList();
-  const aviableBanks = [1, 4];
+  const { removePayment } = usePaymentList(state => state);
+  const availableBanks = [1, 2, 4];
+  const financialBanks = [1, 2];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
-  const [colorPayment, setColorPayment] = useState<string>('');
+  const [textPayment, setTextPayment] = useState<string>('');
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(false);
+  const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
+    useGlobalPersistedStore(state => state);
 
   if (status === undefined) {
     status = StatusPayment.Waiting;
@@ -39,22 +47,22 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   useEffect(() => {
     switch (status) {
       case StatusPayment.Paid:
-        setColorPayment('bg-green-500');
+        setTextPayment('Pagado');
         setDeleteEnabled(false);
         break;
       case StatusPayment.Rejected:
-        setColorPayment('bg-red-500');
+        setTextPayment('Rechazado');
         break;
       case StatusPayment.FinancingRejected:
-        setColorPayment('bg-orange-400');
+        setTextPayment('Financiación rechazada');
         break;
       case StatusPayment.FinancingAccepted:
-        setColorPayment('bg-blue-500');
+        setTextPayment('Financiación aceptada');
         break;
 
       case StatusPayment.Waiting:
       default:
-        setColorPayment('bg-gray-300');
+        setTextPayment('Pendiente');
         break;
     }
   }, [status]);
@@ -66,6 +74,7 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
       .then(async data => {
         if (data && !isEmpty(data)) {
           removePayment(paymentRequest);
+          sendPaymentDeleted(paymentRequest.id);
         } else {
           setMessageNotification('Error al eliminar pago');
         }
@@ -76,33 +85,51 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
     setIsLoading(false);
   };
 
+  const sendPaymentDeleted = async (paymentId: string) => {
+    const paymentCreatedRequest: PaymentCreatedData = {
+      clinicId: storedClinicId,
+      boxId: storedBoxId,
+      id: paymentId,
+      amount: 0,
+      paymentBank: 0,
+      paymentMethod: 0,
+      referenceId: '',
+      remoteControl: remoteControl,
+      budgetId: storedBudgetId || '',
+    };
+
+    await messageService.paymentCreated(paymentCreatedRequest);
+  };
+
   return (
-    <li className="text-hg-black">
-      <Flex layout="row-left">
-        <span className="font-bold mr-1">
-          {getPaymentMethodText(paymentRequest.method)}
+    <Flex className="gap-1 w-full">
+      <Text className="font-semibold">
+        {getPaymentMethodText(paymentRequest.method)}
+      </Text>
+      {financialBanks.includes(paymentRequest.bank) && (
+        <span className="mr-1 font-semibold">
+          {getPaymentBankText(paymentRequest.bank)}
         </span>
-        {paymentRequest.bank ? (
-          <span className="font-bold mr-1">
-            {getPaymentBankText(paymentRequest.bank)}
-          </span>
-        ) : null}{' '}
-        <span className="font-bold">{`- ${paymentRequest.amount}€`}</span>
-        {aviableBanks[paymentRequest.bank] && (
-          <div
-            key={paymentRequest.id}
-            className={`w-4 h-4 rounded-full inline-block ${colorPayment} mx-2`}
-          ></div>
-        )}
+      )}
+
+      {availableBanks[paymentRequest.bank] && (
+        <Text key={paymentRequest.id}>{textPayment}</Text>
+      )}
+      <Flex className="ml-auto gap-2">
+        <Text className="font-semibold text-lg">{paymentRequest.amount} €</Text>
         {isDeleteEnabled && (
           <Button
             size="sm"
-            type="secondary"
+            type="tertiary"
             isSubmit
-            className="ml-2"
+            customStyles="bg-white border-none p-2"
             onClick={() => handleRemoveAndDelete(paymentRequest)}
           >
-            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Eliminar'}
+            {isLoading ? (
+              <SvgSpinner height={24} width={24} />
+            ) : (
+              <SvgCross height={16} width={16} className="text-hg-black" />
+            )}
           </Button>
         )}
       </Flex>
@@ -111,6 +138,6 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
       ) : (
         <></>
       )}
-    </li>
+    </Flex>
   );
 }

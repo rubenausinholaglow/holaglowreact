@@ -17,6 +17,7 @@ export interface Budget {
 }
 
 export interface BudgetProduct {
+  id?: string;
   productId: string;
   price: number;
   priceDiscount: number;

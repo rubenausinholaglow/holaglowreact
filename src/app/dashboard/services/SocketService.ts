@@ -3,7 +3,7 @@ import { HttpTransportType, HubConnectionBuilder } from '@microsoft/signalr';
 
 interface Props {
   urlConnection: string;
-  onReceiveMessage(message: string): void;
+  onReceiveMessage(message: any): void;
 }
 
 class SocketService {
@@ -44,16 +44,7 @@ class SocketService {
       .start()
       .then(() => {
         newConnection.on('ReceiveMessage', message => {
-          const finalMessage = message.messageText;
-          if (finalMessage) {
-            if (finalMessage.startsWith('[PatientArrived]')) {
-              onReceiveMessage(finalMessage);
-            } else if (finalMessage.startsWith('[PaymentResponse]')) {
-              onReceiveMessage(finalMessage);
-            }
-          } else {
-            onReceiveMessage(message);
-          }
+          onReceiveMessage(message);
         });
       })
       .catch(e => Bugsnag.notify('Connection failed: ', e));
