@@ -59,6 +59,7 @@ export default function PromoTopBar() {
         <Container isHeader className="h-full">
           <Flex className="h-full justify-end items-center lg:absolute right-4 2xl:mr-20">
             <Button
+              id={'tmevent_promo_header_bar'}
               href={`${ROUTES.treatments}/packs`}
               size="sm"
               type="tertiary"

@@ -73,6 +73,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                   <AccordionTrigger className="w-full">
                     <AnimateOnViewport>
                       <div
+                        id={'tmevent_clinics_module'}
                         key="clinic.city"
                         className={
                           selectedAccordion === index.toString()
@@ -137,6 +138,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                 <Flex layout="col-left" className="gap-4 mr-24 w-full">
                   {clinics.map((clinic, index) => (
                     <Flex
+                      id={'tmevent_clinics_module'}
                       layout="row-center"
                       className={`transition-all w-full justify-between bg-hg-black100 p-4 cursor-pointer ${
                         selectedClinic && selectedClinic.city === clinic.city
