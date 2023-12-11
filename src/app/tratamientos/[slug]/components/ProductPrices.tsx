@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
@@ -27,7 +26,6 @@ export default function ProductPrices({
   const [groupedSessionProducts, setGroupedSessionProducts] = useState<
     Product[][] | null
   >([]);
-  const { productHighlighted } = useCartStore(state => state);
 
   useEffect(() => {
     if (product.upgrades) {
@@ -82,7 +80,7 @@ export default function ProductPrices({
       id="prices"
     >
       <Container className="py-12">
-        {!productHighlighted && (
+        {!isDashboard && (
           <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
             <Underlined color={HOLAGLOW_COLORS['primary']}>
               Personaliza

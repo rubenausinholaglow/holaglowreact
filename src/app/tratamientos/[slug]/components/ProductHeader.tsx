@@ -35,7 +35,7 @@ export default function ProductHeader({
           </Title>
 
           {product.type == 3 ? (
-            <Text isAnimated className="text-hg-black500">
+            <Text isAnimated className="text-hg-black500 mb-4">
               <p
                 dangerouslySetInnerHTML={{
                   __html: product?.extraInformation?.resultDescription,
@@ -43,7 +43,7 @@ export default function ProductHeader({
               />
             </Text>
           ) : (
-            <Text isAnimated className="text-hg-black500">
+            <Text isAnimated className="text-hg-black500 mb-4">
               {product.extraInformation?.resultDescription}
             </Text>
           )}
