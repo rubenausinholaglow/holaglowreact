@@ -61,8 +61,7 @@ export default function RescheduledAppointment() {
             </Text>
 
             <Text className="md:text-lg mb-8">
-              Te hemos enviado un email y un WhatsApp de confirmación para que
-              tengas toda la información.
+              Cita actualizada correctamente
             </Text>
 
             <div className="mb-8">

@@ -19,9 +19,9 @@ export default function CanceledAppointment() {
       <Container className="py-16 md:py-32">
         <Title className="mb-8">¡Ops! Tu cita ha sido cancelada</Title>
         <Text className="text-lg mb-12">
-          Hemos cancelado tu cita para el día {day} de {month} a las {hour}. Te
-          hemos enviado un email de cancelación. Si lo prefieres, puedes volver
-          a visitar nuestra web y reservar en otra fecha disponible.
+          Hemos cancelado tu cita para el día {day} de {month} a las {hour}.
+          Puedes reservar una nueva cita{' '}
+          <a href={ROUTES.checkout.clinics}>aquí.</a>
         </Text>
 
         <Button
