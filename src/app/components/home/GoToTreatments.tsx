@@ -39,6 +39,7 @@ export default function GoToTreatments() {
               size="xl"
               className="mx-auto md:mx-0 mb-10"
               href="https://holaglow.com/multi-step"
+              id={'tmevent_multistep_module'}
             >
               Hacer test
               <SvgArrow className="ml-4" height={24} width={24} />

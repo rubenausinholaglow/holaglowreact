@@ -97,6 +97,7 @@ export default function MobileFilters({
               <ClinicFilter className="mb-6" />
 
               <Button
+                id={'tmevent_filters'}
                 size="xl"
                 type="primary"
                 className="w-full"

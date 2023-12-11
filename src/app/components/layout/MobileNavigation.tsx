@@ -61,22 +61,31 @@ export default function MobileNavigation({
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
         >
-          <a href={ROUTES.treatments}>
+          <a href={ROUTES.treatments} id={'tmevent_nav_menu_click'}>
             <p className="font-semcibold">Ver Tratamientos</p>
           </a>
 
           <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/tratamientos/aumento-labios">
+              <a
+                href="/tratamientos/aumento-labios"
+                id={'tmevent_nav_menu_click'}
+              >
                 <li>Aumento de Labios</li>
               </a>
-              <a href="/tratamientos/relleno-ojeras">
+              <a
+                href="/tratamientos/relleno-ojeras"
+                id={'tmevent_nav_menu_click'}
+              >
                 <li>Relleno de ojeras</li>
               </a>
-              <a href="/tratamientos/proyeccion-pomulos">
+              <a
+                href="/tratamientos/proyeccion-pomulos"
+                id={'tmevent_nav_menu_click'}
+              >
                 <li>Proyección de pómulos</li>
               </a>
-              <a href="/tratamientos/relleno">
+              <a href="/tratamientos/relleno" id={'tmevent_nav_menu_click'}>
                 <li>Ver más</li>
               </a>
             </ul>
@@ -84,27 +93,34 @@ export default function MobileNavigation({
 
           <SimpleAccordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/tratamientos/prevencion-arrugas">
+              <a
+                href="/tratamientos/prevencion-arrugas"
+                id={'tmevent_nav_menu_click'}
+              >
                 <li>Prevención de arrugas</li>
               </a>
-              <a href="/tratamientos/arrugas-expresion-frente-entrecejo-patas-gallo">
+              <a
+                href="/tratamientos/arrugas-expresion-frente-entrecejo-patas-gallo"
+                id={'tmevent_nav_menu_click'}
+              >
                 <li>Arrugas frente</li>
               </a>
-              <a href="/tratamientos/arrugas">
+              <a href="/tratamientos/arrugas" id={'tmevent_nav_menu_click'}>
                 <li>Ver más</li>
               </a>
             </ul>
           </SimpleAccordion>
 
-          <a href="/tratamientos/hydrafacial">
+          <a href="/tratamientos/hydrafacial" id={'tmevent_nav_menu_click'}>
             <p className="font-semibold">Hydrafacial ®</p>
           </a>
 
-          <a href="/tratamientos/packs">
+          <a href="/tratamientos/packs" id={'tmevent_nav_menu_click'}>
             <p className="font-semibold">Packs Glow</p>
           </a>
 
           <Button
+            id={'tmevent_nav_menu_click'}
             type="tertiary"
             href={ROUTES.checkout.clinics}
             onClick={() => {
@@ -122,7 +138,7 @@ export default function MobileNavigation({
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
         >
           <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-            <a href="/clinicas">
+            <a href="/clinicas" id={'tmevent_nav_menu_click'}>
               <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
                 {clinics.map(clinic => (
                   <li key={clinic.city}>{clinic.city}</li>
@@ -133,23 +149,23 @@ export default function MobileNavigation({
 
           <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/quienes-somos">
+              <a href="/quienes-somos" id={'tmevent_nav_menu_click'}>
                 <li>Quiénes somos</li>
               </a>
-              <a href="/quienes-somos">
+              <a href="/quienes-somos" id={'tmevent_nav_menu_click'}>
                 <li>Equipo médico</li>
               </a>
             </ul>
           </SimpleAccordion>
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/politica-de-privacidad">
+              <a href="/politica-de-privacidad" id={'tmevent_nav_menu_click'}>
                 <li>Política de privacidad</li>
               </a>
-              <a href="/aviso-legal">
+              <a href="/aviso-legal" id={'tmevent_nav_menu_click'}>
                 <li>Términos y condiciones</li>
               </a>
-              <a href="/condiciones-black-friday">
+              <a href="/condiciones-black-friday" id={'tmevent_nav_menu_click'}>
                 <li>Condiciones Black Friday</li>
               </a>
             </ul>

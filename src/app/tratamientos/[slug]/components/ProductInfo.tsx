@@ -49,7 +49,7 @@ export default function ProductInfo({ product }: { product: Product }) {
   return (
     <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-auto w-full">
       <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl w-full">
-        <Container className="mt-8 md:mt-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
+        <Container className="my-8 md:my-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
           <ul className="flex flex-col pb-4 w-full">
             <li className="mb-4 pb-4 border-b border-hg-black flex">
               <div>
@@ -179,6 +179,7 @@ export default function ProductInfo({ product }: { product: Product }) {
           </ul>
           {!productHighlighted ? (
             <Button
+            id={'tmevent_click_book_anchor_button'}
               size="xl"
               type="tertiary"
               bgColor="bg-hg-primary"

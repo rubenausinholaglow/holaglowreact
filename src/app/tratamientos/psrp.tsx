@@ -242,6 +242,7 @@ export default function PsrpPage({
                 <AnimateOnViewport>
                   <Flex layout="row-left" className="w-full justify-between">
                     <Button
+                    id={'tmevent_filters'}
                       type="tertiary"
                       size="sm"
                       className="mr-2"
@@ -258,6 +259,7 @@ export default function PsrpPage({
 
                     <div className="mr-auto">
                       <Text
+                      id={'tmevent_filters'}
                         size="xs"
                         className={`text-hg-secondary transition-opacity underline cursor-pointer ${
                           filterCount(productFilters) === 0

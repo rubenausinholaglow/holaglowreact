@@ -91,8 +91,8 @@ const UPGRADE_TYPES: Record<
     family: 'default',
     options: [
       {
-        label: 'Prevención arrugas - Baby botox',
-        value: 'Prevención arrugas - Baby botox',
+        label: 'Prevención arrugas',
+        value: 'Prevención arrugas',
       },
       {
         label: 'Arrugas entrecejo y patas de gallo',
@@ -194,6 +194,7 @@ function ProductPriceItemsCard({
         value: newValue,
       });
     }
+
     setSelectedPackOptions(newOptions);
   };
 
@@ -343,6 +344,7 @@ function ProductPriceItemsCard({
       )}
       {!productHighlighted && product.isPack && !showDropdown && (
         <Button
+          id={'tmevent_click_book_button_customize'}
           className="mt-8"
           type="tertiary"
           customStyles="hover:bg-hg-secondary50"
@@ -353,6 +355,7 @@ function ProductPriceItemsCard({
       )}
       {(!product.isPack || (!productHighlighted && showDropdown)) && (
         <Button
+          id={'click_book_button_prices'}
           type="tertiary"
           disabled={isDisabled}
           onClick={() => {

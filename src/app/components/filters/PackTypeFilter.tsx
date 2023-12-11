@@ -24,6 +24,7 @@ export default function PackTypeFilter({
   return (
     <Button
       size={isDashboard ? 'xl' : 'md'}
+      id={'tmevent_filters'}
       isAnimated
       origin="right"
       className={className}

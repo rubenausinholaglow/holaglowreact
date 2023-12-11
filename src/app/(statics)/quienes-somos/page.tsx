@@ -13,10 +13,7 @@ export const metadata = {
 export default function StaticClinics() {
   return (
     <MainLayout>
-      <div
-        className="bg-gradient from-hg-secondary500 to-hg-primary300 py-12 md:py-20"
-        id="prices"
-      >
+      <div className="bg-[#F3EDE9] py-12 md:py-20" id="aboutus">
         <Container>
           <div className="md:flex md:flex-row gap-12 items-center">
             <Flex layout="col-left" className="md:w-1/2 mb-4 md:mb-0">
@@ -35,7 +32,7 @@ export default function StaticClinics() {
             <div className="md:w-1/2 aspect-square relative">
               <Image
                 alt="Sobre nosotros"
-                src="/images/statics/aboutUs.webp"
+                src="/images/statics/aboutus.jpg"
                 fill
                 className="object-cover rounded-2xl"
               />
