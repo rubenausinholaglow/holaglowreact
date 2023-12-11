@@ -49,8 +49,10 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
   }, []);
 
   function getProductsByCategory(category: string) {
-    const filteredProducts = stateProducts.filter(product =>
-      product.category.some(categoryItem => categoryItem.name === category)
+    const filteredProducts = stateProducts.filter(
+      product =>
+        product.category.some(categoryItem => categoryItem.name === category) &&
+        !product.isPack
     );
 
     return filteredProducts;
@@ -80,28 +82,26 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
             <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
 
             <Flex layout="col-left" className="gap-3 w-full">
-              {PVProduct && (
-                <div
-                  className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
-                  onClick={() => {
-                    setSelectedTreatments([PVProduct] as Product[]);
-                    if (isDashboard) {
-                      router.push(ROUTES.dashboard.checkIn.agenda);
-                    } else {
-                      router.push(ROUTES.checkout.schedule);
-                    }
-                  }}
-                >
-                  <Flex className="">
-                    <SvgUserScan className="shrink-0 mr-4" />
-                    <div>
-                      <Text className="font-semibold">Primera cita gratis</Text>
-                      <Text className="text-xs">Escáner 3D</Text>
-                    </div>
-                    <SvgAngle className="transition-all text-hg-black500 ml-auto" />
-                  </Flex>
-                </div>
-              )}
+              <div
+                className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
+                onClick={() => {
+                  setSelectedTreatments([PVProduct] as Product[]);
+                  if (isDashboard) {
+                    router.push(ROUTES.dashboard.checkIn.agenda);
+                  } else {
+                    router.push(ROUTES.checkout.schedule);
+                  }
+                }}
+              >
+                <Flex className="">
+                  <SvgUserScan className="shrink-0 mr-4" />
+                  <div>
+                    <Text className="font-semibold">Primera cita gratis</Text>
+                    <Text className="text-xs">Escáner 3D</Text>
+                  </div>
+                  <SvgAngle className="transition-all text-hg-black500 ml-auto" />
+                </Flex>
+              </div>
 
               {!isEmpty(productCategories) && (
                 <Accordion>
