@@ -20,14 +20,17 @@ export default function HightLightedProduct() {
   const [pendingDiscount, setPendingDiscount] = useState(false);
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const cart = useCartStore(state => state.cart);
+
   useEffect(() => {
     if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(productHighlighted!),
-        '€'
-      );
-      setPendingDiscount(false);
+      const discountedPrice = productHighlighted
+        ? getDiscountedPrice(productHighlighted)
+        : null;
+
+      if (discountedPrice !== null) {
+        applyItemDiscount(cart[cart.length - 1].uniqueId, discountedPrice, '€');
+        setPendingDiscount(false);
+      }
     }
   }, [pendingDiscount]);
 

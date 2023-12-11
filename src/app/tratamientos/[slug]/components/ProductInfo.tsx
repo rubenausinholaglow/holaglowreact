@@ -36,12 +36,12 @@ export default function ProductInfo({
 
   useEffect(() => {
     if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
+      const discountedPrice = getDiscountedPrice(product);
+
+      if (discountedPrice !== null) {
+        applyItemDiscount(cart[cart.length - 1].uniqueId, discountedPrice, '€');
+        setPendingDiscount(false);
+      }
     }
   }, [pendingDiscount]);
 

@@ -38,14 +38,15 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
   useEffect(() => {
     if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
+      const discountedPrice = getDiscountedPrice(product);
+
+      if (discountedPrice !== null) {
+        applyItemDiscount(cart[cart.length - 1].uniqueId, discountedPrice, '€');
+        setPendingDiscount(false);
+      }
     }
   }, [pendingDiscount]);
+
   return (
     <Flex layout="col-left" className="border-b border-hg-black">
       <Flex className="w-full justify-between items-start px-4 pt-4 mb-4">
