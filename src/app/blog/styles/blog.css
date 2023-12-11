@@ -93,6 +93,10 @@
   background: theme('colors.hg.secondary300');
 }
 
+.blog-post table td {
+  font-size: theme('fontSize.sm');
+}
+
 .blog-post table td,
 .blog-post table th {
   flex: 1 1 0;
