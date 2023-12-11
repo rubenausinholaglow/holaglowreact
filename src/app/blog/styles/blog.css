@@ -78,6 +78,8 @@
 }
 
 .blog-post table {
+  max-width: calc(100svw - 48px);
+  overflow-x: scroll;
   display: flex;
   margin-bottom: theme('spacing.8');
   text-align: left;

@@ -140,8 +140,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 <h3 class="title">Tratamientos de medicina estética para la papada
 </h3>
 
-<table>
-  <tr>
+<div class="table">
+  <table>
+    <tr>
     <th>Causa</th>
     <th>Tipo de papada</th>
     <th>Tratamiento sin cirugía</th>
@@ -154,7 +155,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     <td>Drenaje linfático Radiofrecuencia</td>
   </tr>
 </table>
+</div>
 
+<div class="table">
 <table>
   <tr>
     <th>Causa</th>
@@ -176,7 +179,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     <td>Barbilla retraída</td>
     <td>Proyección de mentón con ácido hialurónico</td>
   </tr>
-</table>`;
+</table>
+</div>`;
 
   return (
     <MainLayout>
