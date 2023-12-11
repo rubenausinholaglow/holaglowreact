@@ -1,18 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CartItem, Product } from '@interface/product';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { Product } from '@interface/product';
 import {
   getDiscountedPrice,
   getProductCardColor,
   useImageProps,
 } from 'app/utils/common';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgPlusSmall } from 'icons/Icons';
 import { SvgArrow, SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
@@ -26,41 +24,21 @@ export default function ProductCard({
   product,
   className = '',
   searchParams,
-  isDashboard,
   ...rest
 }: {
   product: Product;
   className?: string;
-  isDashboard?: boolean;
   [key: string]: any;
 }) {
-  const ROUTES = useRoutes();
-
   const pathName = usePathname();
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
-  const [discountedPrice, setDiscountedPrice] = useState<0 | number>(0);
-  const { setHighlightProduct, cart } = useCartStore(state => state);
-  const addToCart = useCartStore(state => state.addItemToCart);
+  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
   };
 
   const isLanding = Object.keys(LANDINGS).includes(usePathname());
-
-  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
-  const [pendingDiscount, setPendingDiscount] = useState(false);
-
-  useEffect(() => {
-    if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
-    }
-  }, [pendingDiscount]);
 
   useEffect(() => {
     if (!isEmpty(product.discounts)) {
@@ -76,43 +54,45 @@ export default function ProductCard({
       onClick={() => {
         if (isDashboard) setHighlightProduct(product);
       }}
+ 	id={'tmevent_click_product_card'}
     >
-      <Flex layout="col-left" className="">
-        <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
-          <div
-            className="absolute inset-0 top-[10%] rounded-t-2xl "
-            style={{
-              background: getProductCardColor(product.cardBackgroundColor),
-            }}
-          />
+      <div className="flex flex-col h-full pt-4 overflow-hidden">
+        <Flex layout="col-left" className="">
+          <div className="relative h-[250px] w-full rounded-t-2xl">
+            <div
+              className="absolute inset-0 top-[10%] rounded-t-2xl "
+              style={{
+                background: getProductCardColor(product.cardBackgroundColor),
+              }}
+            />
 
-          <Image
-            alt={product.title}
-            width={400}
-            height={300}
-            src={imgSrc}
-            onError={() => setNextImgSrc()}
-            className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
-          />
+            <Image
+              alt={product.title}
+              width={400}
+              height={300}
+              src={imgSrc}
+              onError={() => setNextImgSrc()}
+              className={`relative ${alignmentStyles} h-[250px] w-auto`}
+            />
 
-          {!isEmpty(product.category) && (
-            <Flex
-              layout="row-center"
-              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
-            >
-              {product.category.map(category => {
-                return (
-                  <Flex
-                    key={category.name}
-                    layout="row-left"
-                    className="flex rounded-full"
-                  >
-                    <CategoryIcon category={category.name} hasBackground />
-                  </Flex>
-                );
-              })}
-            </Flex>
-          )}
+            {!isEmpty(product.category) && (
+              <Flex
+                layout="row-center"
+                className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
+              >
+                {product.category.map(category => {
+                  return (
+                    <Flex
+                      key={category.name}
+                      layout="row-left"
+                      className="flex rounded-full"
+                    >
+                      <CategoryIcon category={category.name} hasBackground />
+                    </Flex>
+                  );
+                })}
+              </Flex>
+            )}
 
           {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
             <Flex
@@ -203,21 +183,4 @@ export default function ProductCard({
       </Flex>
     </div>
   );
-
-  if (!isDashboard)
-    return (
-      <Link
-        href={
-          isLanding
-            ? LANDINGS[pathName]
-            : `${ROUTES.treatments}/${product?.extraInformation?.slug}`
-        }
-        className={`text-inherit ${className}`}
-        {...rest}
-      >
-        {productElement}
-      </Link>
-    );
-
-  if (isDashboard) return productElement;
 }

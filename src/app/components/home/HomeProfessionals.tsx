@@ -67,7 +67,12 @@ export default function Profesionals() {
                 seguridad, eficacia y confianza
               </Text>
               <a href="/quienes-somos">
-                <Button type="secondary" size="xl" className="mx-auto lg:mx-0">
+                <Button
+                  type="secondary"
+                  size="xl"
+                  className="mx-auto lg:mx-0"
+                  id={'tmevent_about_us_module'}
+                >
                   Conoce al equipo
                 </Button>
               </a>

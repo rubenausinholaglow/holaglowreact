@@ -31,6 +31,7 @@ export interface Product {
   visibility: boolean;
   sessions: number;
   productCardImagePosition: string;
+  longDescription: string;
 }
 
 export interface BeforeAndAfterImages {

@@ -52,6 +52,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
             <Flex layout="col-center" className="mb-10">
               <ul className="inline-flex bg-hg-secondary500 p-1 rounded-full">
                 <li
+                  id={'tmevent_click_treatment_info'}
                   className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
                     activeSlider === 'pre'
                       ? 'bg-hg-primary text-hg-black'
@@ -62,6 +63,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                   Pretratamiento
                 </li>
                 <li
+                  id={'tmevent_click_treatment_info'}
                   className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
                     activeSlider === 'post'
                       ? 'bg-hg-primary text-hg-black'

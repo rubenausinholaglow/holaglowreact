@@ -1,42 +1,20 @@
-import { useEffect, useState } from 'react';
-import { CartItem, Product } from '@interface/product';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
+import { Product } from '@interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
-import { getDiscountedPrice } from 'app/utils/common';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgPlusSmall } from 'icons/Icons';
 import * as icon from 'icons/IconsDs';
 import { SvgArrow } from 'icons/IconsDs';
 
 export default function ProductSessionPriceCard({
   product,
-  isDashboard = false,
   index,
 }: {
   product: Product;
-  isDashboard: boolean;
   index: number;
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);
-  const ROUTES = useRoutes();
-  const { productHighlighted, cart } = useCartStore(state => state);
-  const addToCart = useCartStore(state => state.addItemToCart);
-  const [pendingDiscount, setPendingDiscount] = useState(false);
-  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
-
-  useEffect(() => {
-    if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
-    }
-  }, [pendingDiscount]);
 
   return (
     <div className="w-full">
@@ -72,6 +50,7 @@ export default function ProductSessionPriceCard({
             </Flex>
             {!isDashboard && (
               <Button
+                id={'click_book_button_prices'}
                 type="tertiary"
                 className="hidden md:block shrink-0"
                 customStyles="bg-hg-primary md:mt-4"
@@ -85,9 +64,9 @@ export default function ProductSessionPriceCard({
               </Button>
             )}
           </Flex>
-        </div>
         {!isDashboard && (
           <Button
+          	id={'click_book_button_prices'}
             type="tertiary"
             className="md:hidden shrink-0"
             customStyles="bg-hg-primary md:mt-4"

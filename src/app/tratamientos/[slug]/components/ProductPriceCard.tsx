@@ -1,18 +1,13 @@
 import { useEffect, useState } from 'react';
-import { CartItem, Product } from '@interface/product';
+import { Product } from '@interface/product';
 import DynamicIcon from 'app/components/common/DynamicIcon';
 import Dropdown from 'app/components/forms/Dropdown';
-import { Quantifier } from 'app/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
-import {
-  Operation,
-  useCartStore,
-} from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
-import useRoutes from 'app/utils/useRoutes';
+import { ROUTES } from 'app/utils/routes';
 import {
   Accordion,
   AccordionContent,
@@ -151,14 +146,12 @@ export interface option {
 function ProductPriceItemsCard({
   product,
   parentProduct,
-  isDashboard = false,
   setAccordionOverflow,
   isOpen,
 }: {
   product: Product;
   parentProduct: Product;
   setAccordionOverflow: (value: string) => void;
-  isDashboard: boolean;
   isOpen?: boolean;
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
@@ -167,17 +160,10 @@ function ProductPriceItemsCard({
   );
 
   const router = useRouter();
-  const ROUTES = useRoutes();
   const [showDropdown, setShowDropdown] = useState(isOpen);
   const [selectedPackOptions, setSelectedPackOptions] = useState(
     [] as option[]
   );
-  const {
-    productHighlighted,
-    addItemToCart,
-    getQuantityOfProduct,
-    removeSingleProduct,
-  } = useCartStore(state => state);
 
   const isDisabled =
     product.isPack &&
@@ -286,7 +272,8 @@ function ProductPriceItemsCard({
             <Text>{product.description}</Text>
           </Flex>
         ))}
-      {!productHighlighted && showDropdown && (
+
+      {showDropdown && (
         <form className="w-full">
           {product.packUnities.map((item: any, index: number) => {
             return (
@@ -342,7 +329,7 @@ function ProductPriceItemsCard({
           </AccordionItem>
         </Accordion>
       )}
-      {!productHighlighted && product.isPack && !showDropdown && (
+      {product.isPack && !showDropdown && (
         <Button
           className="mt-8"
           type="tertiary"
@@ -393,14 +380,12 @@ export default function ProductPriceCard({
   index,
   parentProduct,
   fullWidthPack = false,
-  isDashboard = false,
   className,
 }: {
   product: Product;
   index: number;
   parentProduct: Product;
   fullWidthPack?: boolean;
-  isDashboard?: boolean;
   className?: string;
 }) {
   const { deviceSize } = useSessionStore(state => state);
@@ -529,7 +514,6 @@ export default function ProductPriceCard({
               }`}
             >
               <ProductPriceItemsCard
-                isDashboard={isDashboard}
                 product={product}
                 parentProduct={parentProduct}
                 setAccordionOverflow={setAccordionOverflow}

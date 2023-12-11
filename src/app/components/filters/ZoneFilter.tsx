@@ -54,6 +54,7 @@ export default function ZoneFilter({
     >
       {ZONES.map(zone => (
         <li
+          id={'tmevent_filters'}
           key={zone.name}
           className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer gap-2 ${
             isDesktop ? 'w-[120px]' : ''
