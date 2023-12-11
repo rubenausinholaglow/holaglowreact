@@ -43,8 +43,10 @@ export default function ClinicsCheckout() {
   }, []);
 
   function getProductsByCategory(category: string) {
-    const filteredProducts = stateProducts.filter(product =>
-      product.category.some(categoryItem => categoryItem.name === category)
+    const filteredProducts = stateProducts.filter(
+      product =>
+        product.category.some(categoryItem => categoryItem.name === category) &&
+        !product.isPack
     );
 
     return filteredProducts;
@@ -74,24 +76,22 @@ export default function ClinicsCheckout() {
             <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
 
             <Flex layout="col-left" className="gap-3 w-full">
-              {PVProduct && (
-                <div
-                  className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
-                  onClick={() => {
-                    setSelectedTreatments([PVProduct] as Product[]);
-                    router.push(ROUTES.checkout.schedule);
-                  }}
-                >
-                  <Flex className="">
-                    <SvgUserScan className="shrink-0 mr-4" />
-                    <div>
-                      <Text className="font-semibold">Primera cita gratis</Text>
-                      <Text className="text-xs">Escáner 3D</Text>
-                    </div>
-                    <SvgAngle className="transition-all text-hg-black500 ml-auto" />
-                  </Flex>
-                </div>
-              )}
+              <div
+                className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
+                onClick={() => {
+                  setSelectedTreatments([PVProduct] as Product[]);
+                  router.push(ROUTES.checkout.schedule);
+                }}
+              >
+                <Flex className="">
+                  <SvgUserScan className="shrink-0 mr-4" />
+                  <div>
+                    <Text className="font-semibold">Primera cita gratis</Text>
+                    <Text className="text-xs">Escáner 3D</Text>
+                  </div>
+                  <SvgAngle className="transition-all text-hg-black500 ml-auto" />
+                </Flex>
+              </div>
 
               {!isEmpty(productCategories) && (
                 <Accordion>
