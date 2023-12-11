@@ -47,7 +47,7 @@ export default function PsrpPage({ slug }: { slug: string }) {
         let filterToApply = '';
         switch (slug) {
           case 'piel':
-            filterToApply = 'Calidad Piel';
+            filterToApply = 'Calidad de la Piel';
             break;
           case 'pelo':
             filterToApply = 'Caida del pelo';
@@ -68,6 +68,8 @@ export default function PsrpPage({ slug }: { slug: string }) {
           productFilters.category.indexOf(filterToApply) == -1 &&
           categoryExists
         ) {
+          if (filterToApply == 'Calidad de la Piel')
+            filterToApply = 'Calidad Piel';
           productFilters.category.push(filterToApply);
         }
       } else {
