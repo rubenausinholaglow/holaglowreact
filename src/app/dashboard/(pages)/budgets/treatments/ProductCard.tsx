@@ -44,16 +44,18 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const productHasPromoDiscount = !isEmpty(product.discounts);
   const productPricewithPromoDiscount = getDiscountedPrice(product);
   const [pendingDiscount, setPendingDiscount] = useState(false);
+
   useEffect(() => {
     if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
+      const discountedPrice = getDiscountedPrice(product);
+
+      if (discountedPrice !== null) {
+        applyItemDiscount(cart[cart.length - 1].uniqueId, discountedPrice, '€');
+        setPendingDiscount(false);
+      }
     }
   }, [pendingDiscount]);
+
   return (
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
@@ -141,11 +143,13 @@ export default function ProductCard({ product, isCheckout }: Props) {
           >
             {product.price.toFixed(2)}€
           </Text>
-          {productHasPromoDiscount && !isCheckout && (
-            <Text size="lg" className={`font-semibold text-red ml-2`}>
-              {productPricewithPromoDiscount.toFixed(2)}€
-            </Text>
-          )}
+          {productHasPromoDiscount &&
+            !isCheckout &&
+            productPricewithPromoDiscount && (
+              <Text size="lg" className={`font-semibold text-red ml-2`}>
+                {productPricewithPromoDiscount.toFixed(2)}€
+              </Text>
+            )}
         </Flex>
 
         {!isCheckout && (
