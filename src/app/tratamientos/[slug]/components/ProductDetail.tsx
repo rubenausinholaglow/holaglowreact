@@ -36,10 +36,11 @@ export default function ProductDetailPage({
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const { deviceSize } = useSessionStore(state => state);
+  const { productHighlighted } = useCartStore(state => state);
+
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
-  const { productHighlighted } = useCartStore(state => state);
 
   const { slug, isDashboard } = params;
 
@@ -109,7 +110,7 @@ export default function ProductDetailPage({
       <>
         <div className="bg-hg-cream500 rounded-t-3xl pt-8">
           <ProductHeader product={product} isDashboard={isDashboard} />
-          <ProductInfo product={product} />
+          <ProductInfo product={product} isDashboard={isDashboard} />
           {isDashboard && !product.isPack && product.type != 3 && (
             <div ref={productPriceRef as RefObject<HTMLDivElement>}>
               <ProductPrices product={product} isDashboard />
@@ -148,7 +149,7 @@ export default function ProductDetailPage({
             )}
             <Clinics />
             <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
-              <Professionals />
+              <Professionals isDashboard={isDashboard} />
             </div>
             {deviceSize.isMobile && (
               <FloatingBottomBar

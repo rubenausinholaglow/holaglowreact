@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
 import ProductCarousel from 'app/components/product/fullWidthCarousel';
-import { useCartStore } from 'app/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -18,12 +17,13 @@ import ProfessionalCard from './ProfessionalCard';
 
 export default function Professionals({
   className = '',
+  isDashboard = false,
 }: {
   className?: string;
+  isDashboard?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const { deviceSize } = useSessionStore(state => state);
-  const { productHighlighted } = useCartStore(state => state);
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 
   useEffect(() => {
@@ -48,12 +48,12 @@ export default function Professionals({
   return (
     <Container
       className={`p-0 md:px-4 gap-16   ${
-        productHighlighted ? '' : 'md:flex'
+        isDashboard ? '' : 'md:flex'
       } justify-between md:mb-16 ${className}`}
     >
       <Container
         className={`${
-          productHighlighted ? '' : 'md:w-1/2'
+          isDashboard ? '' : 'md:w-1/2'
         } md:px-0 md:flex md:flex-col md:justify-center md:items-start`}
       >
         <Title
@@ -71,7 +71,7 @@ export default function Professionals({
           literal y metafóricamente.
         </Text>
       </Container>
-      <div className={`${productHighlighted ? '' : 'md:w-1/2'}`}>
+      <div className={`${isDashboard ? '' : 'md:w-1/2'}`}>
         {deviceSize.isMobile && (
           <ProductCarousel type="professionals" items={professionals} />
         )}

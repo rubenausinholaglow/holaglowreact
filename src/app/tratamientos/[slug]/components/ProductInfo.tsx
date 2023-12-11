@@ -16,10 +16,15 @@ import { SvgCalendar } from 'icons/Icons';
 import { SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
-export default function ProductInfo({ product }: { product: Product }) {
+export default function ProductInfo({
+  product,
+  isDashboard = false,
+}: {
+  product: Product;
+  isDashboard?: boolean;
+}) {
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
   const {
-    productHighlighted,
     cart,
     addItemToCart,
     getQuantityOfProduct,
@@ -31,12 +36,12 @@ export default function ProductInfo({ product }: { product: Product }) {
 
   useEffect(() => {
     if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
+      const discountedPrice = getDiscountedPrice(product);
+
+      if (discountedPrice !== null) {
+        applyItemDiscount(cart[cart.length - 1].uniqueId, discountedPrice, '€');
+        setPendingDiscount(false);
+      }
     }
   }, [pendingDiscount]);
 
@@ -89,25 +94,26 @@ export default function ProductInfo({ product }: { product: Product }) {
               </div>
             </li>
             {(product.sessions > 0 || product.applicationTimeMinutes > 0) && (
-              <li className="mb-4 pb-4 border-b border-hg-black flex">
+              <li className="mb-4 pb-4 border-b border-hg-black flex ">
                 <div
-                  className={`flex  gap-4 relative md:justify-center ${
-                    productHighlighted ? 'flex-row' : 'flex-col'
+                  className={`flex relative md:justify-center ${
+                    isDashboard ? 'flex-row gap-4' : 'flex-col'
                   } w-full`}
                 >
                   {product.sessions > 0 && (
                     <>
-                      <div className="flex-1 flex items-start pr-4 border-r border-hg-black w-full">
+                      <div
+                        className={`flex-1 flex items-start pr-4 ${
+                          isDashboard ? 'border-r border-hg-black' : ''
+                        } w-full`}
+                      >
                         <SvgTimeLeft
                           height={24}
                           width={24}
                           className="text-hg-secondary mr-3 mt-1"
                         />
                         <div>
-                          <Text
-                            size="lg"
-                            className="font-semibold mb-1 md:mb-2"
-                          >
+                          <Text size="lg" className="font-semibold mb-1">
                             {product.sessions.toString()}{' '}
                             {product.sessions === 1 ? 'sesión' : 'sesiones'}
                           </Text>
@@ -118,7 +124,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                   )}
                   {product.applicationTimeMinutes > 0 && (
                     <div className="flex-1 w-full md:w-1/6">
-                      {productHighlighted && (
+                      {isDashboard && (
                         <div className="flex items-start">
                           <SvgTimer
                             height={24}
@@ -143,7 +149,7 @@ export default function ProductInfo({ product }: { product: Product }) {
               </li>
             )}
 
-            {!productHighlighted && (
+            {!isDashboard && (
               <li className="mb-4 pb-4 border-b border-hg-black flex">
                 <SvgTimer
                   height={24}
@@ -177,12 +183,12 @@ export default function ProductInfo({ product }: { product: Product }) {
               </li>
             )}
           </ul>
-          {!productHighlighted ? (
+          {!isDashboard ? (
             <Button
               size="xl"
               type="tertiary"
               bgColor="bg-hg-primary"
-              className="hidden md:block md:mt-auto"
+              className="mb-12 md:mb-0 hidden md:block md:mt-auto"
               href="#prices"
             >
               <span className="inline-block mr-1">
@@ -224,7 +230,7 @@ export default function ProductInfo({ product }: { product: Product }) {
             </Flex>
           )}
         </Container>
-        {!productHighlighted && (
+        {!isDashboard && (
           <div className="md:w-2/5 shrink-0">
             <video
               autoPlay

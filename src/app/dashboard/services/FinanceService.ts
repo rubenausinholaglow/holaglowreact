@@ -30,6 +30,8 @@ export default class FinanceService {
       paymentMethod: createPayment.paymentMethod,
       amount: createPayment.amount * 100,
       referenceId: createPayment.referenceId,
+      originOfPayment: createPayment.originOfPayment,
+      paymentBank: createPayment.paymentBank,
     };
     try {
       const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment`;

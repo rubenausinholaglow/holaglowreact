@@ -12,4 +12,11 @@ export interface CreatePayment {
   paymentMethod: PaymentMethod;
   amount: number;
   referenceId: string;
+  originOfPayment: OriginPayment;
+  paymentBank: PaymentBank;
+}
+
+export enum OriginPayment {
+  dashboard,
+  web,
 }
