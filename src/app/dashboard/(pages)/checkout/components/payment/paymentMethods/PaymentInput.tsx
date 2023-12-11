@@ -11,7 +11,11 @@ import TextInputField from '@components/TextInputField';
 import Notification from '@components/ui/Notification';
 import { ClientUpdate } from '@interface/client';
 import { PaymentCreatedData } from '@interface/FrontEndMessages';
-import { CreatePayment, InitializePayment } from '@interface/initializePayment';
+import {
+  CreatePayment,
+  InitializePayment,
+  OriginPayment,
+} from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
@@ -195,6 +199,8 @@ export default function PaymentInput(props: Props) {
       userId: user?.id || '',
       paymentMethod: props.paymentMethod,
       referenceId: props.paymentBank.toString(),
+      paymentBank: props.paymentBank,
+      originOfPayment: OriginPayment.dashboard,
     };
     await createPayment(paymentRequestApi);
     setIsLoading(false);
