@@ -1,13 +1,14 @@
 'use client';
 
 import MainLayout from 'app/components/layout/MainLayout';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { useSearchParams } from 'next/navigation';
 
 export default function CanceledAppointment() {
+  const ROUTES = useRoutes();
   const searchParams = useSearchParams();
 
   const day = searchParams.get('day');
