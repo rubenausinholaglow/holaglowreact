@@ -12,7 +12,9 @@ export default function PromoTopBar() {
   const { promo } = useGlobalPersistedStore(state => state);
 
   if (isEmpty(promo)) {
-    return <></>;
+    return (
+      <span className="hidden">isEmpty Promo: {isEmpty(promo).toString()}</span>
+    );
   }
 
   return (
