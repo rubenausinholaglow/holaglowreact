@@ -15,9 +15,6 @@ export default function Blog() {
   const { blogPosts, setBlogPosts } = useGlobalPersistedStore(state => state);
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
 
-  console.log(`${process.env.NEXT_PUBLIC_BLOG_API}Blog`);
-  console.log(blogPosts);
-
   useEffect(() => {
     async function initBlog() {
       const posts = await fetchBlogPosts();
