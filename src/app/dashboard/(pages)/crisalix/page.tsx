@@ -162,7 +162,7 @@ const Page = () => {
                   {user?.firstName}, ¿Listo para ver tu 3D?
                 </p>
 
-                <Button size="lg" style="primary" onClick={startPlayer}>
+                <Button size="lg" onClick={startPlayer}>
                   Ver 3D
                 </Button>
               </div>
