@@ -51,7 +51,6 @@ export default function Agenda({
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
-  const [maxDay, setMaxDay] = useState(dayjs());
   const [dateFormatted, setDateFormatted] = useState('');
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
@@ -96,7 +95,7 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
-
+  const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
   };
@@ -171,8 +170,6 @@ export default function Agenda({
     setLoadingMonth(false);
     if (availability.length != maxDays)
       setDateToCheck(dateToCheck.add(1, 'month'));
-    if (availability.length > 0)
-      setMaxDay(dayjs(availability[availability.length - 1].date));
   }
 
   useEffect(() => {
