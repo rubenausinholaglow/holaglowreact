@@ -14,9 +14,7 @@ export default function PromoTopBar() {
   console.log('promo', promo, isEmpty(promo));
 
   if (isEmpty(promo)) {
-    return (
-      <span className="hidden">isEmpty Promo: {isEmpty(promo).toString()}</span>
-    );
+    return <></>;
   }
 
   return (
