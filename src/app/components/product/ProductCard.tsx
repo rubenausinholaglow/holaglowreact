@@ -143,7 +143,7 @@ export default function ProductCard({
           <Text className="mb-2 font-semibold">{product.title}</Text>
           {!isDashboard && (
             <Text size="xs" className="text-hg-black500 mb-8">
-              {product.description}
+              {product.longDescription}
             </Text>
           )}
         </AnimateOnViewport>
