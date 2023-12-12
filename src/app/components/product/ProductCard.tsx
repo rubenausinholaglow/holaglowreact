@@ -17,7 +17,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({

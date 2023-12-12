@@ -45,8 +45,8 @@ export default function BlogItem({
       >
         <div className="aspect-[3/2] relative rounded-3xl overflow-hidden mb-8">
           <Image
-            src={`/images/blog/post${index}.png`}
-            alt="placeholder"
+            src={`${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}/post/${post.id}.jpg`}
+            alt={post.title}
             fill
             className="object-cover"
           />

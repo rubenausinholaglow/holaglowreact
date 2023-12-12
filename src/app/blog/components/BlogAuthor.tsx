@@ -16,8 +16,7 @@ export default function BlogAuthor({
       className={`rounded-3xl bg-hg-cream500 py-8 ${className} gap-4 md:p-16`}
     >
       <Text className="text-3xl font-bold mb-8 md:text-5xl">
-        Nuestra{' '}
-        <Underlined color={HOLAGLOW_COLORS['primary']}>autora</Underlined>
+        <Underlined color={HOLAGLOW_COLORS['primary']}>Escrito</Underlined> por:
       </Text>
       <Flex
         layout="col-left"
@@ -38,9 +37,11 @@ export default function BlogAuthor({
           <Text className="text-center md:text-left text-lg w-full">
             {professional.title}
           </Text>
-          <Text className="text-center md:text-left text-lg w-full">
-            Núm. Col. {professional.collegiateNumber}
-          </Text>
+          {professional.collegiateNumber && (
+            <Text className="text-center md:text-left text-lg w-full">
+              Núm. Col. {professional.collegiateNumber}
+            </Text>
+          )}
           <Text className="text-center md:text-left w-full">
             {professional.description}
           </Text>

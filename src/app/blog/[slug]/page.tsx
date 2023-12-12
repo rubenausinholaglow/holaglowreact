@@ -10,9 +10,11 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Post } from 'types/blog';
+import { fetchBlogPosts } from 'utils/fetch';
 
 import BlogAppointment from '../components/BlogAppointment';
 import BlogAuthor from '../components/BlogAuthor';
@@ -22,11 +24,31 @@ import BlogRelatedPosts from '../components/BlogRelatedPosts';
 import BlogShareBar from '../components/BlogShareBar';
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
-  const { clinics, blogPosts } = useGlobalPersistedStore(state => state);
+  const { clinics, blogPosts, setBlogPosts } = useGlobalPersistedStore(
+    state => state
+  );
 
-  const [professionals, setProfessionals] = useState<Professional[] | null>([]);
+  const [post, setPost] = useState<Post | undefined>(undefined);
+  const [author, setAuthor] = useState<Professional | null>(null);
 
   const route = usePathname();
+
+  useEffect(() => {
+    async function initBlog() {
+      const posts = await fetchBlogPosts();
+      setBlogPosts(posts);
+    }
+
+    if (!blogPosts) {
+      initBlog();
+    }
+
+    const post: Post | undefined = blogPosts?.filter(
+      post => post.slug === params.slug
+    )[0];
+
+    setPost(post);
+  }, [blogPosts]);
 
   useEffect(() => {
     const professionalsWithCity = clinics.flatMap(clinic =>
@@ -40,12 +62,12 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       })
     );
 
-    setProfessionals(professionalsWithCity);
-  }, [clinics]);
+    const postAuthor = professionalsWithCity.filter(
+      professional => professional.name === post?.author
+    )[0];
 
-  const post: Post | undefined = blogPosts?.filter(
-    post => post.slug === params.slug
-  )[0];
+    setAuthor(!isEmpty(postAuthor) ? postAuthor : professionalsWithCity[1]);
+  }, [clinics, post]);
 
   return (
     <MainLayout>
@@ -89,7 +111,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 <BlogShareBar
                   className="my-12"
                   url={`https://www.holaglow.com${route}`}
-                  title="titulo del post"
+                  title={post.title}
                 />
 
                 <BlogRelatedPosts
@@ -101,15 +123,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             </Flex>
           </Container>
 
-          {professionals && (
-            <BlogAuthor className="mb-12" professional={professionals[1]} />
-          )}
+          {author && <BlogAuthor className="mb-12" professional={author} />}
 
           <Container className="border-t border-hg-black md:hidden">
             <BlogShareBar
               className="my-12"
               url={`https://www.holaglow.com${route}`}
-              title="titulo del post"
+              title={post.title}
             />
 
             <BlogRelatedPosts
