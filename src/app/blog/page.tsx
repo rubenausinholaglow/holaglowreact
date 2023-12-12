@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import FullScreenLoading from 'app/components/common/FullScreenLayout';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -27,7 +28,7 @@ export default function Blog() {
   }, [blogPosts]);
 
   if (!blogPosts) {
-    return <>No encuentro posts</>;
+    return <FullScreenLoading />;
   }
 
   return (
