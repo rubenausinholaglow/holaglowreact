@@ -70,8 +70,9 @@ export default function PaymentRemoteControl() {
         priceDiscount: product.priceDiscount,
         percentageDiscount: product.percentageDiscount,
         uniqueId: product.id,
-        id: product.id,
+        id: product.product.id,
         price: product.price,
+        title: product.product.title,
       };
       addItemToCart(cartItem);
       applyItemDiscounts(product);

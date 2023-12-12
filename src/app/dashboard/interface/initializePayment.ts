@@ -5,6 +5,7 @@ export interface InitializePayment {
   installments: number;
   paymentBank: PaymentBank;
   amount: number;
+  productPaymentRequest?: ProductPaymentRequest[];
 }
 
 export interface CreatePayment {
@@ -19,4 +20,11 @@ export interface CreatePayment {
 export enum OriginPayment {
   dashboard,
   web,
+}
+
+export interface ProductPaymentRequest {
+  name: string;
+  price: string;
+  quantity: string;
+  id: string;
 }
