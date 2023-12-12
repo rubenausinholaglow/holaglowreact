@@ -15,6 +15,7 @@ import {
   CreatePayment,
   InitializePayment,
   OriginPayment,
+  ProductPaymentRequest,
 } from '@interface/initializePayment';
 import { PaymentBank, PaymentMethod } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
@@ -60,7 +61,7 @@ export default function PaymentInput(props: Props) {
   );
   const [showPepperModal, setShowPepperModal] = useState(false);
 
-  const { user } = useGlobalPersistedStore(state => state);
+  const { user, stateProducts } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
   const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
     useGlobalPersistedStore(state => state);
@@ -233,7 +234,22 @@ export default function PaymentInput(props: Props) {
         installments: 1,
         userId: user?.id || '',
         paymentBank: 2,
+        productPaymentRequest: [],
       };
+
+      cart.forEach(product => {
+        const matchingProduct = stateProducts.find(x => x.id === product.id);
+
+        if (matchingProduct) {
+          const productPayment: ProductPaymentRequest = {
+            name: matchingProduct.title,
+            price: product.price.toString(),
+            quantity: '1',
+            id: matchingProduct.id,
+          };
+          data.productPaymentRequest?.push(productPayment);
+        }
+      });
 
       await FinanceService.initializePayment(data).then(x => {
         setShowPepperModal(false);

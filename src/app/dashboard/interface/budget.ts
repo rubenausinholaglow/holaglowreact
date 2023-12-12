@@ -1,3 +1,5 @@
+import { Product } from './product';
+
 export interface Budget {
   id?: string;
   userId: string;
@@ -22,6 +24,7 @@ export interface BudgetProduct {
   price: number;
   priceDiscount: number;
   percentageDiscount: number;
+  product?: Product;
 }
 
 export interface TicketBudget extends Budget {
