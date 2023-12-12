@@ -108,7 +108,11 @@ export default function ProductDetailPage({
   if (product && product != undefined && !isEmpty(product)) {
     return (
       <>
-        <div className="bg-hg-cream500 rounded-t-3xl pt-8">
+        <div
+          className={`bg-hg-cream500 rounded-t-3xl pt-8 ${
+            !isDashboard ? 'pb-12' : ''
+          }`}
+        >
           <ProductHeader product={product} isDashboard={isDashboard} />
           <ProductInfo product={product} isDashboard={isDashboard} />
           {isDashboard && !product.isPack && product.type != 3 && (
