@@ -176,7 +176,7 @@ export default function ProductInfo({
                     {(product.durationMin / 30).toString()}
                     {product.durationMax == product.durationMin && ' meses'}
                     {product.durationMax != product.durationMin &&
-                      '- ' + (product.durationMax / 30).toString() + ' meses'}
+                      '-' + (product.durationMax / 30).toString() + ' meses'}
                   </Text>
                   <Text>Duración del tratamiento</Text>
                 </div>
