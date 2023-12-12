@@ -12,19 +12,23 @@ export default function BlogCategorySelector({
   activeCategories: string[];
   setActiveCategories: (value: string[]) => void;
 }) {
-  const uniqueCategories: Category[] = posts.reduce((accumulator, post) => {
-    post.categories.forEach((category: Category) => {
-      const exists = accumulator.some(
-        existingCategory => existingCategory.name === category.name
-      );
+  const uniqueCategories: Category[] = posts
+    .slice(1)
+    .reduce((accumulator, post) => {
+      post.categories.forEach((category: Category) => {
+        const exists = accumulator.some(
+          existingCategory => existingCategory.name === category.name
+        );
 
-      if (!exists) {
-        accumulator.push(category);
-      }
-    });
+        if (!exists) {
+          console.log(category);
 
-    return accumulator;
-  }, [] as Category[]);
+          accumulator.push(category);
+        }
+      });
+
+      return accumulator;
+    }, [] as Category[]);
 
   function handleCategory(category: string) {
     let updatedCategories = [...activeCategories];
@@ -43,7 +47,7 @@ export default function BlogCategorySelector({
   return (
     <ul
       id="blogCategorySelector"
-      className={`flex gap-4 overflow-x-scroll overflow-y-hidden md:overflow-auto ${
+      className={`flex gap-4 overflow-x-scroll overflow-y-hidden md:overflow-auto pr-4 ${
         className ? className : ''
       }`}
     >
@@ -59,7 +63,7 @@ export default function BlogCategorySelector({
       </li>
       {uniqueCategories.map((category: Category) => (
         <li
-          className={`cursor-pointer flex justify-center items-center  px-4 py-3 rounded-full text-xs shrink-0 border border-hg-black ${
+          className={`cursor-pointer flex justify-center items-center px-4 md:px-6 py-3 md:py-4 rounded-full text-xs md:text-sm shrink-0 border border-hg-black ${
             activeCategories.includes(category.name)
               ? 'bg-hg-primary border-hg-primary font-semibold'
               : ''

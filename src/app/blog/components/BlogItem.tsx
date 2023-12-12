@@ -43,17 +43,21 @@ export default function BlogItem({
         href={`/blog/${post.slug}`}
         className={isHighlightedPost ? 'w-full md:w-1/2 md:shrink-0' : ''}
       >
-        <Image
-          src={`/images/blog/post${index}.png`}
-          alt="placeholder"
-          height={400}
-          width={600}
-          className="w-full rounded-3xl mb-8"
-        />
+        <div className="aspect-[3/2] relative rounded-3xl overflow-hidden mb-8">
+          <Image
+            src={`/images/blog/post${index}.png`}
+            alt="placeholder"
+            fill
+            className="object-cover"
+          />
+        </div>
       </Link>
 
       <div className="w-full">
-        <BlogCategories className="mb-6" categories={post.categories} />
+        <BlogCategories
+          className={isHighlightedPost ? 'mb-6' : 'mb-4'}
+          categories={post.categories}
+        />
 
         <Link href={`/blog/${post.slug}`}>
           <Text
@@ -66,8 +70,8 @@ export default function BlogItem({
             {post.title}
           </Text>
         </Link>
-        <Text size="xs" className="mb-8">
-          Por Dr. {post.author}.{' '}
+        <Text size="xs" className={isHighlightedPost ? 'mb-4' : ''}>
+          Por Dr. {post.author}.
           <span className="text-hg-black500">
             {dayjs(post.creationDate).format('D MMMM, YYYY')}
           </span>

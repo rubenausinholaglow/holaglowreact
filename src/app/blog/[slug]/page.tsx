@@ -4,6 +4,7 @@ import '../styles/blog.css';
 
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
+import FullScreenLoading from 'app/components/common/FullScreenLayout';
 import MainLayout from 'app/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
@@ -46,80 +47,81 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     post => post.slug === params.slug
   )[0];
 
-  if (!post) {
-    return <></>;
-  }
-
   return (
     <MainLayout>
-      <div className="rounded-t-3xl shadow-centered-black-lg ">
-        <Container className="mb-8 py-6 md:py-12">
-          <BlogBreadcrumb title={post.title} />
+      {!post ? (
+        <FullScreenLoading />
+      ) : (
+        <div className="rounded-t-3xl shadow-centered-black-lg ">
+          <Container className="mb-8 py-6 md:py-12">
+            <BlogBreadcrumb title={post.title} />
 
-          <Image
-            src="/images/blog/post1.png"
-            alt="placeholder"
-            height={400}
-            width={600}
-            className="w-full rounded-3xl mb-8"
-          />
-
-          <Flex className="gap-20 items-start">
-            <div>
-              <BlogCategories className="mb-8" categories={post.categories} />
-
-              <Text className="font-bold mb-4 text-2xl md:text-5xl">
-                {post.title}
-              </Text>
-              <Text size="xs" className="mb-8">
-                Por Dr. {post.author}.{' '}
-                <span className="text-hg-black500">
-                  {dayjs(post.creationDate).format('D MMMM, YYYY')}
-                </span>
-              </Text>
-
-              <div
-                className="blog-post"
-                dangerouslySetInnerHTML={{ __html: post.html }}
+            <div className="aspect-[3/2] relative rounded-3xl overflow-hidden mb-8">
+              <Image
+                src="/images/blog/post1.png"
+                alt={post.title}
+                fill
+                className="object-cover"
               />
             </div>
 
-            <div className="hidden md:block shrink-0 w-[360px]">
-              <BlogShareBar
-                className="my-12"
-                url={`https://www.holaglow.com${route}`}
-                title="titulo del post"
-              />
+            <Flex className="gap-20 items-start">
+              <div>
+                <BlogCategories className="mb-8" categories={post.categories} />
 
-              <BlogRelatedPosts
-                className="pb-12"
-                categories={post.categories}
-                posts={blogPosts}
-              />
-            </div>
-          </Flex>
-        </Container>
+                <Text className="font-bold mb-4 text-2xl md:text-5xl">
+                  {post.title}
+                </Text>
+                <Text size="xs" className="mb-8">
+                  Por Dr. {post.author}.{' '}
+                  <span className="text-hg-black500">
+                    {dayjs(post.creationDate).format('D MMMM, YYYY')}
+                  </span>
+                </Text>
 
-        {professionals && (
-          <BlogAuthor className="mb-12" professional={professionals[1]} />
-        )}
+                <div
+                  className="blog-post"
+                  dangerouslySetInnerHTML={{ __html: post.html }}
+                />
+              </div>
 
-        <Container className="border-t border-hg-black md:hidden">
-          <BlogShareBar
-            className="my-12"
-            url={`https://www.holaglow.com${route}`}
-            title="titulo del post"
-          />
+              <div className="hidden md:block shrink-0 w-[360px]">
+                <BlogShareBar
+                  className="my-12"
+                  url={`https://www.holaglow.com${route}`}
+                  title="titulo del post"
+                />
 
-          <BlogRelatedPosts
-            className="pb-12"
-            categories={post.categories}
-            posts={blogPosts}
-          />
-        </Container>
+                <BlogRelatedPosts
+                  className="pb-12"
+                  categories={post.categories}
+                  posts={blogPosts}
+                />
+              </div>
+            </Flex>
+          </Container>
 
-        <BlogAppointment />
-      </div>
+          {professionals && (
+            <BlogAuthor className="mb-12" professional={professionals[1]} />
+          )}
+
+          <Container className="border-t border-hg-black md:hidden">
+            <BlogShareBar
+              className="my-12"
+              url={`https://www.holaglow.com${route}`}
+              title="titulo del post"
+            />
+
+            <BlogRelatedPosts
+              className="pb-12"
+              categories={post.categories}
+              posts={blogPosts}
+            />
+          </Container>
+
+          <BlogAppointment />
+        </div>
+      )}
     </MainLayout>
   );
 }
