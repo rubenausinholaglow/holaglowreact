@@ -25,6 +25,7 @@ export const usePaymentList = create(
           paymentRequest: state.paymentRequest.filter(
             item => item.id !== payment.id
           ),
+
           totalAmount: state.totalAmount - payment.amount,
         }));
       },

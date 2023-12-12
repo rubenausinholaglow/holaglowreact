@@ -32,7 +32,7 @@ export default function StaticClinics() {
             <div className="md:w-1/2 aspect-square relative">
               <Image
                 alt="Nuestras clínicas"
-                src="/images/statics/clinics.webp"
+                src="/images/statics/clinics.jpg"
                 fill
                 className="object-cover rounded-2xl"
               />

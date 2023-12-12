@@ -8,7 +8,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import {
   Accordion,
   AccordionContent,
@@ -22,8 +22,14 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { fetchProduct } from 'utils/fetch';
 
-export default function ClinicsCheckout() {
+interface ClinicsCheckoutProps {
+  isDashboard?: boolean;
+}
+
+const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
   const router = useRouter();
+  const ROUTES = useRoutes();
+
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const { setSelectedTreatments } = useSessionStore(state => state);
 
@@ -43,8 +49,10 @@ export default function ClinicsCheckout() {
   }, []);
 
   function getProductsByCategory(category: string) {
-    const filteredProducts = stateProducts.filter(product =>
-      product.category.some(categoryItem => categoryItem.name === category)
+    const filteredProducts = stateProducts.filter(
+      product =>
+        product.category.some(categoryItem => categoryItem.name === category) &&
+        !product.isPack
     );
 
     return filteredProducts;
@@ -67,31 +75,33 @@ export default function ClinicsCheckout() {
   }, [stateProducts]);
 
   return (
-    <MainLayout isCheckout>
+    <MainLayout isCheckout hideHeader={isDashboard}>
       <Container className="mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
           <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
             <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
 
             <Flex layout="col-left" className="gap-3 w-full">
-              {PVProduct && (
-                <div
-                  className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
-                  onClick={() => {
-                    setSelectedTreatments([PVProduct] as Product[]);
+              <div
+                className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
+                onClick={() => {
+                  setSelectedTreatments([PVProduct] as Product[]);
+                  if (isDashboard) {
+                    router.push(ROUTES.dashboard.checkIn.agenda);
+                  } else {
                     router.push(ROUTES.checkout.schedule);
-                  }}
-                >
-                  <Flex className="">
-                    <SvgUserScan className="shrink-0 mr-4" />
-                    <div>
-                      <Text className="font-semibold">Primera cita gratis</Text>
-                      <Text className="text-xs">Escáner 3D</Text>
-                    </div>
-                    <SvgAngle className="transition-all text-hg-black500 ml-auto" />
-                  </Flex>
-                </div>
-              )}
+                  }
+                }}
+              >
+                <Flex className="">
+                  <SvgUserScan className="shrink-0 mr-4" />
+                  <div>
+                    <Text className="font-semibold">Primera cita gratis</Text>
+                    <Text className="text-xs">Escáner 3D</Text>
+                  </div>
+                  <SvgAngle className="transition-all text-hg-black500 ml-auto" />
+                </Flex>
+              </div>
 
               {!isEmpty(productCategories) && (
                 <Accordion>
@@ -138,7 +148,13 @@ export default function ClinicsCheckout() {
                                   onClick={() => {
                                     setSelectedProduct(product);
                                     setSelectedTreatments([product]);
-                                    router.push(ROUTES.checkout.schedule);
+                                    if (isDashboard) {
+                                      router.push(
+                                        ROUTES.dashboard.checkIn.agenda
+                                      );
+                                    } else {
+                                      router.push(ROUTES.checkout.schedule);
+                                    }
                                   }}
                                 >
                                   <div className="mr-4">
@@ -175,4 +191,6 @@ export default function ClinicsCheckout() {
       </Container>
     </MainLayout>
   );
-}
+};
+
+export default ClinicsCheckout;

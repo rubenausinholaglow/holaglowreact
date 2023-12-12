@@ -8,7 +8,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { ROUTES } from 'app/utils/routes';
+import useRoutes from 'app/utils/useRoutes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -19,11 +19,13 @@ import { isEmpty } from 'lodash';
 
 export default function Confirmation({
   appointment,
+  isDashboard,
 }: {
   appointment?: Appointment;
+  isDashboard?: boolean;
 }) {
+  const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
-
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const {
     selectedTreatments,
@@ -66,6 +68,8 @@ export default function Confirmation({
       utmTerm: '',
       treatmentText: '',
       externalReference: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
   }, []);
@@ -211,20 +215,22 @@ export default function Confirmation({
             )}
           </div>
           <div className="pt-12">
-            <a href="/tratamientos">
-              <Button
-                type="tertiary"
-                size="md"
-                className="hidden md:inline"
-                customStyles="group-hover:bg-hg-secondary100"
-                href={ROUTES.treatments}
-              >
-                <Flex layout="row-center">
-                  <span className="font-semibold">Ver tratamientos</span>
-                  <SvgArrow height={18} width={18} className="ml-2" />
-                </Flex>
-              </Button>
-            </a>
+            {!isDashboard && (
+              <a href="/tratamientos">
+                <Button
+                  type="tertiary"
+                  size="md"
+                  className="hidden md:inline"
+                  customStyles="group-hover:bg-hg-secondary100"
+                  href={ROUTES.treatments}
+                >
+                  <Flex layout="row-center">
+                    <span className="font-semibold">Ver tratamientos</span>
+                    <SvgArrow height={18} width={18} className="ml-2" />
+                  </Flex>
+                </Button>
+              </a>
+            )}
           </div>
         </div>
 

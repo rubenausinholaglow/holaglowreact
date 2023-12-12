@@ -30,6 +30,7 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
 
   useEffect(() => {
     const html5QrCode = new Html5Qrcode('qr-reader');
+
     const qrCodeSuccessCallback = async (UserId: any, decodedResult: any) => {
       html5QrCode.stop();
       setScanResult(decodedResult);
@@ -94,8 +95,13 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
       ) : (
         <div>
           <div id="qr-reader" style={{ width: '600px' }}></div>
-          <Button style="primary" onClick={stopScan} className="mt-8">
-            Cancelar
+          <Button
+            type="tertiary"
+            className="ml-auto mt-4"
+            customStyles="bg-white"
+            onClick={stopScan}
+          >
+            <p>Cancelar</p>
           </Button>
         </div>
       )}

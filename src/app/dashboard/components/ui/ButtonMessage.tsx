@@ -3,28 +3,26 @@ import { useMessageSocket } from '@components/useMessageSocket';
 import { ProfessionalType } from '@interface/clinic';
 import { MessageType } from '@interface/messageSocket';
 import { messageService } from '@services/MessageService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgStethoscope } from 'icons/Icons';
-import { SvgUserSquare } from 'icons/IconsDs';
+import { SvgHolaglowHand, SvgStethoscope } from 'icons/Icons';
 
 import Notification from './Notification';
 
 export default function ButtonMessage() {
-  const [clinicProfessionalId, setclinicProfessionalId] = useState('');
   const [medicClassName, setmedicClassName] = useState('bg-white');
   const [receptionClassName, setreceptionClassName] = useState('bg-white');
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-
+  const { storedClinicProfessionalId } = useGlobalPersistedStore(
+    state => state
+  );
   const [messageTimeout, setMessageTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
   const messageSocket = useMessageSocket(state => state);
-
-  useEffect(() => {
-    setclinicProfessionalId(localStorage.getItem('ClinicProfessionalId') || '');
-  }, []);
 
   useEffect(() => {
     const existMessageChatResponse = messageSocket.messageSocket.filter(
@@ -40,14 +38,20 @@ export default function ButtonMessage() {
   }, [messageSocket]);
 
   const sendMessageToMedic = () => {
-    messageService.sendMessage(clinicProfessionalId, ProfessionalType.Medical);
-    setmedicClassName('bg-hg-tertiary');
+    messageService.sendMessage(
+      storedClinicProfessionalId,
+      ProfessionalType.Medical
+    );
+    setmedicClassName('bg-hg-primary');
     startTimeout();
   };
 
   const sendMessageToReception = () => {
-    messageService.sendMessage(clinicProfessionalId, ProfessionalType.Others);
-    setreceptionClassName('bg-hg-tertiary');
+    messageService.sendMessage(
+      storedClinicProfessionalId,
+      ProfessionalType.Others
+    );
+    setreceptionClassName('bg-hg-primary');
     startTimeout();
   };
 
@@ -56,8 +60,8 @@ export default function ButtonMessage() {
     const professionalId = partsToCompare[0];
     const action = partsToCompare[1];
     const professionalType = partsToCompare[2];
-    const clinicProfessionalId = localStorage.getItem('ClinicProfessionalId');
-    if (professionalId === clinicProfessionalId) {
+
+    if (professionalId === storedClinicProfessionalId) {
       if (action === '0') {
         if (professionalType == 'Medical') {
           setmedicClassName('bg-hg-green');
@@ -96,24 +100,27 @@ export default function ButtonMessage() {
   };
 
   return (
-    <Flex layout="row-left" className="gap-2 ml-4 overflow-hidden relative">
-      <div
-        className={`transition-all flex flex-row gap-2 translate-x-0  opacity-100`}
+    <Flex layout="row-left" className="gap-2 py-4 overflow-hidden">
+      <Button
+        size="sm"
+        type="tertiary"
+        customStyles={`border-none px-3 ${medicClassName}`}
+        onClick={() => sendMessageToMedic()}
       >
-        <div
-          className={`${medicClassName} rounded-full p-3 text-hg-tertiary cursor-pointer`}
-          onClick={sendMessageToMedic}
-        >
-          <SvgStethoscope height={16} width={16} />
-        </div>
+        <SvgStethoscope className="mr-2" height={16} width={16} />
+        Llamar
+      </Button>
 
-        <div
-          className={`${receptionClassName} rounded-full p-3 text-hg-tertiary cursor-pointer`}
-          onClick={sendMessageToReception}
-        >
-          <SvgUserSquare height={16} width={16} />
-        </div>
-      </div>
+      <Button
+        size="sm"
+        type="tertiary"
+        customStyles={`border-none px-3 ${receptionClassName}`}
+        onClick={() => sendMessageToReception()}
+      >
+        <SvgHolaglowHand className="mr-2" height={16} width={16} />
+        Llamar
+      </Button>
+
       {messageNotification ? (
         <Notification message={messageNotification} />
       ) : (
