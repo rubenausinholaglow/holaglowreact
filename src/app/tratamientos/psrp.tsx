@@ -75,6 +75,8 @@ export default function PsrpPage({
           productFilters.category.indexOf(filterToApply) == -1 &&
           categoryExists
         ) {
+          if (filterToApply == 'Calidad de la Piel')
+            filterToApply = 'Calidad Piel';
           productFilters.category.push(filterToApply);
         }
       } else {

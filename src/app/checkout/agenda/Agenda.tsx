@@ -103,7 +103,6 @@ export default function Agenda({
 
   function loadMonth() {
     if (selectedTreatmentsIds && availableDates.length < maxDays) {
-      setLoadingMonth(true);
       if (selectedTreatmentsIds != '902') {
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
@@ -121,7 +120,7 @@ export default function Agenda({
           callbackMonthAvailability(data);
         });
       }
-    }
+    } else setLoadingMonth(false);
   }
 
   function callbackGetSlots(data: Slot[]) {
@@ -170,14 +169,14 @@ export default function Agenda({
       setSelectedDay(selectedDay);
     }
     setLoadingMonth(false);
-    if (availability.length == maxDays)
-      setMaxDay(dayjs(availability[availability.length - 1].date));
-    else {
+    if (availability.length != maxDays)
       setDateToCheck(dateToCheck.add(1, 'month'));
-    }
+    if (availability.length > 0)
+      setMaxDay(dayjs(availability[availability.length - 1].date));
   }
 
   useEffect(() => {
+    setLoadingMonth(true);
     setSelectedDay(dayjs());
     setSelectedSlot(undefined);
     setEnableScheduler(true);
@@ -273,6 +272,7 @@ export default function Agenda({
   }, [selectedTreatmentsIds, dateToCheck]);
 
   const onMonthChange = (x: any) => {
+    setLoadingMonth(true);
     const date = dayjs(x);
     setDateToCheck(date);
   };
