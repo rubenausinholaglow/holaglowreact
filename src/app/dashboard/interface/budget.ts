@@ -24,7 +24,7 @@ export interface BudgetProduct {
   price: number;
   priceDiscount: number;
   percentageDiscount: number;
-  product: Product;
+  product?: Product;
 }
 
 export interface TicketBudget extends Budget {
