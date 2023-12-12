@@ -135,13 +135,6 @@ server.use(
   })
 );
 server.use(
-  '/appointment-cancel',
-  createProxyMiddleware({
-    target: 'https://practical-discussions-804147.framer.app',
-    changeOrigin: true,
-  })
-);
-server.use(
   '/appointment-confirmed/barcelona',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',

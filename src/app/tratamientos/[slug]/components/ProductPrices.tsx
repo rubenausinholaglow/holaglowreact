@@ -13,7 +13,13 @@ import ProductPriceCard from './ProductPriceCard';
 import ProductSessionGroupedPriceCard from './ProductSessionGroupedPriceCard';
 import ProductSessionPriceCard from './ProductSessionPriceCard';
 
-export default function ProductPrices({ product }: { product: Product }) {
+export default function ProductPrices({
+  product,
+  isDashboard = false,
+}: {
+  product: Product;
+  isDashboard?: boolean;
+}) {
   const { deviceSize } = useSessionStore(state => state);
   const [productItems, setProductITems] = useState<Product[]>([]);
   const [isSessionProduct, setIsSessionProduct] = useState<boolean>(false);
@@ -74,21 +80,24 @@ export default function ProductPrices({ product }: { product: Product }) {
       id="prices"
     >
       <Container className="py-12">
-        <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
-          <Underlined color={HOLAGLOW_COLORS['primary']}>
-            Personaliza
-          </Underlined>{' '}
-          tu experiencia
-        </Title>
+        {!isDashboard && (
+          <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
+            <Underlined color={HOLAGLOW_COLORS['primary']}>
+              Personaliza
+            </Underlined>{' '}
+            tu experiencia
+          </Title>
+        )}
 
         {!isSessionProduct && (
           <Flex layout="col-left" className="md:flex-row gap-8">
             <Accordion
-              value={deviceSize.isMobile ? 'accordion-0' : 'value'}
+              defaultValue={deviceSize.isMobile ? 'accordion-0' : 'value'}
               className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
             >
               {productItems.map((item: Product, index: number) => (
                 <ProductPriceCard
+                  isDashboard={isDashboard}
                   fullWidthPack={productItems.length === 1 && item.isPack}
                   key={item.title}
                   product={item}
@@ -125,6 +134,7 @@ export default function ProductPrices({ product }: { product: Product }) {
                   if (item.price > 0) {
                     return (
                       <ProductSessionPriceCard
+                        isDashboard={isDashboard}
                         key={item.title}
                         product={item}
                         index={index}

@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { CustomButtonFilter } from '@components/CustomButtonFilter';
 import { filterItems } from '@utils/filterItems';
 import { FilterPageProps } from '@utils/props';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgDoubleAngleLeft } from 'icons/Icons';
 
 export const Filters: React.FC<FilterPageProps> = ({
   onClickFilter,
   showFilters,
   setShowFilters,
+  slug,
 }) => {
   const [inputValue, setInputValue] = useState('');
 
@@ -31,16 +30,6 @@ export const Filters: React.FC<FilterPageProps> = ({
         showFilters ? 'ml-0' : '-ml-[16px]'
       }`}
     >
-      <SvgDoubleAngleLeft
-        height={34}
-        width={34}
-        className={`absolute top-0 -right-[17px] bg-hg-primary text-hg-tertiary rounded-full p-1 cursor-pointer transition-all ${
-          showFilters ? 'rotate-0' : 'rotate-180'
-        }`}
-        onClick={() => setShowFilters(!showFilters)}
-        fill={HOLAGLOW_COLORS['tertiary']}
-      />
-
       <div
         className={`transition-all overflow-hidden ${
           showFilters ? 'w-[200px]' : 'w-0'

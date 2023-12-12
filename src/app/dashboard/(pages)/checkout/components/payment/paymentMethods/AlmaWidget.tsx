@@ -5,6 +5,7 @@ import Bugsnag from '@bugsnag/js';
 import { InitializePayment } from '@interface/initializePayment';
 import { PaymentBank } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { SvgSpinner } from 'icons/Icons';
@@ -17,6 +18,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
 }) => {
   const parsedValue = parseFloat(amountFinance);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useGlobalPersistedStore(state => state);
   let resultValue = '';
   let installments = -1;
 
@@ -50,7 +52,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     resultValue = Math.round(parsedValue * 100).toString();
   }
   const script = `
-      var url = '../scripts/Alma/widget.js';
+      var url = '/scripts/Alma/widget.js';
       var scriptLoaded = false;
       if (!url) url = 'http://xxx.co.uk/xxx/script.js';
       var scripts = document.getElementsByTagName('script');
@@ -125,13 +127,13 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       }
     }
 
-    const GuidUser = localStorage.getItem('id') || '';
     const data: InitializePayment = {
       amount: Number(resultValue),
       installments: installmentsValue,
-      userId: GuidUser,
+      userId: user?.id || '',
       paymentBank: PaymentBank.Alma,
     };
+
     try {
       const urlPayment = await FinanceService.initializePayment(data);
       onUrlPayment(urlPayment.id, urlPayment.url, urlPayment.referenceId);
@@ -144,11 +146,12 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
 
   return (
     <>
-      <Flex layout="col-left" className="relative w-full flex-wrap pb-[150px]">
+      <Flex layout="col-left" className="relative w-full flex-wrap pb-[125px]">
         <section id="payment-plans" className="absolute inset-0"></section>
         <div className="absolute bottom-0">
           <Button
-            type="secondary"
+            type="tertiary"
+            customStyles="bg-hg-primary"
             onClick={async () => await handleClick(amountFinance)}
           >
             {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}

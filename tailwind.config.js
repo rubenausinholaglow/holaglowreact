@@ -36,6 +36,7 @@ module.exports = {
           tertiary300: '#D7DCED',
           tertiary100: '#F2F3F9',
           error: '#E81E61',
+          error300: '#f8bbd0',
           error100: '#fde8ef',
           turquoise: '#3AD5DD',
           magenta: '#D600BF',
@@ -44,7 +45,8 @@ module.exports = {
           pink300: '#ffeeee',
           cream: '#EFE8E2',
           cream500: '#f7f3f0',
-          green: '#B9DDB6',
+          green: '#73BC6D',
+          green300: '#B9DDB6',
           skyblue: '#B7F9F9',
           black: '#101828',
           black700: '#344054',
@@ -59,6 +61,8 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-15deg': 'linear-gradient(-15deg, var(--tw-gradient-stops))',
         gradient: 'linear-gradient(var(--tw-gradient-stops))',
+        'gradient-animated':
+          'linear-gradient(-45deg, #e6d4f8 0%, #F9FFB6 8.333%, #BCC4E1 16.666%, #B9DDB6 25%, #F5FF86 33.333%, #FFC7C7 41.666%, #c39bee 50%, #A2ADD6 58.333%, #FED6B9 66.666%, #E87BCC 75%, #BAF9F9 83.333%, #F8CBCB 91.666% );',
       },
       maxWidth: {
         sm: '640px',
@@ -85,11 +89,89 @@ module.exports = {
           from: { transform: 'translateX(0, 0, 0)' },
           to: { transform: 'translate3d(-50%, 0, 0)' },
         },
+        animateBG: {
+          '0%': {
+            backgroundPosition: '0% 8.333%',
+          },
+          '4.166%': {
+            backgroundPosition: '8.333% 16.664%',
+          },
+          '8.332%': {
+            backgroundPosition: '16.666% 25%',
+          },
+          '12.498%': {
+            backgroundPosition: '25% 33.333%',
+          },
+          '16.664%': {
+            backgroundPosition: '33.333% 41.666%',
+          },
+          '20.83%': {
+            backgroundPosition: '41.666% 50%',
+          },
+          '25%': {
+            backgroundPosition: '50% 58.333%',
+          },
+          '29.166%': {
+            backgroundPosition: '58.333% 66.666%',
+          },
+          '33.332%': {
+            backgroundPosition: '66.666% 75%',
+          },
+          '37.498%': {
+            backgroundPosition: '75% 83.333%',
+          },
+          '41.664%': {
+            backgroundPosition: '83.333% 91.666%',
+          },
+          '45.83%': {
+            backgroundPosition: '91.666% 100%',
+          },
+          '50%': {
+            backgroundPosition: '91.333% 100%',
+          },
+          '54.166%': {
+            backgroundPosition: '100% 91.333%',
+          },
+          '58.333%': {
+            backgroundPosition: '91.333% 83.333%',
+          },
+          '62.5%': {
+            backgroundPosition: '83.333% 75%',
+          },
+          '66.666%': {
+            backgroundPosition: '75% 66.666%',
+          },
+          '70.833%': {
+            backgroundPosition: '66.666% 58.333%',
+          },
+          '75%': {
+            backgroundPosition: '58.333% 50%',
+          },
+          '79.166%': {
+            backgroundPosition: '50% 41.666%',
+          },
+          '83.333%': {
+            backgroundPosition: '41.666% 33.333%',
+          },
+          '87.5%': {
+            backgroundPosition: '33.333% 25%',
+          },
+          '91.666%': {
+            backgroundPosition: '25% 16.666%',
+          },
+          '95.833%': {
+            backgroundPosition: '16.666% 8.333%',
+          },
+          '100%': {
+            backgroundPosition: '8.333% 0%',
+          },
+        },
       },
       animation: {
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         horizontalScroll: 'horizontalScroll 50s linear infinite',
+        animateBG: 'animateBG 180s ease infinite',
       },
     },
   },

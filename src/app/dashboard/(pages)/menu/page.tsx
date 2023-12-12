@@ -1,123 +1,94 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import ScheduleService from '@services/ScheduleService';
-import { clearLocalStorage } from '@utils/utils';
+import React, { useEffect } from 'react';
+import { useMessageSocket } from '@components/useMessageSocket';
+import { CrisalixUser } from '@interface/crisalix';
+import { MessageType } from '@interface/messageSocket';
+import { INITIAL_STATE_PAYMENT } from '@interface/paymentList';
+import { INITIAL_STATE } from '@utils/constants';
 import MainLayout from 'app/components/layout/MainLayout';
-import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { useRouter } from 'next/navigation';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Title, Underlined } from 'designSystem/Texts/Texts';
 
+import { useCartStore } from '../budgets/stores/userCartStore';
+import { usePaymentList } from '../checkout/components/payment/payments/usePaymentList';
+import { useCrisalix } from '../crisalix/useCrisalix';
 import DashboardMenuItem from './DashboardMenuItem';
 import { menuItems } from './MenuItems';
 
 const Page = () => {
-  const [username, setUserName] = useState('');
-  const [clinicId, setClinicId] = useState<string | null>(null);
-  const [boxId, setBoxId] = useState<string | null>(null);
-  const [appointmentId, setAppointmentId] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
-  const [flowwwToken, setFlowwwToken] = useState('');
-
-  const router = useRouter();
-  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-  const [comment, setComment] = useState('');
+  const messageSocket = useMessageSocket(state => state);
+  const userCrisalix = useCrisalix(state => state);
+  const { remoteControl, setCheckSimulator, user, setBudgetId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
-    const newCrisalix = localStorage.getItem('newCrisalix');
-    if (newCrisalix) {
-      menuItems[0].link = '/dashboard/crisalix';
-      menuItems[0].target = '';
-    }
-    const storedUsername = localStorage.getItem('username') || '';
-    setUserName(storedUsername);
-
-    if (!storedUsername) {
-      router.push('/dashboard');
-    }
-
-    setAppointmentId(localStorage.getItem('appointmentId') || '');
-    setClinicId(localStorage.getItem('ClinicId') || '');
-    setBoxId(localStorage.getItem('boxId') || '');
-    setUserId(localStorage.getItem('id') || '');
-    setFlowwwToken(localStorage.getItem('flowwwToken') || '');
+    setBudgetId('');
+    usePaymentList.setState(INITIAL_STATE_PAYMENT);
+    useCartStore.setState(INITIAL_STATE);
+    setCheckSimulator(false);
   }, []);
 
-  const handleClick = async () => {
-    setIsCommentModalOpen(true);
-  };
-  const handleCommentSubmit = async () => {
-    setIsCommentModalOpen(false);
-    const result = await ScheduleService.finish(
-      appointmentId ?? '',
-      comment ?? '',
-      userId || ''
-    );
-    if (result) {
-      clearLocalStorage(false);
-      router.push(`/dashboard?clinicId=${clinicId}&boxId=${boxId}`);
-    } else {
-      //TODO - MESSAGE!
+  useEffect(() => {
+    if (!remoteControl) {
+      const existsMessageCrisalixUser: any = messageSocket.messageSocket.filter(
+        x => x.messageType == MessageType.CrisalixUser
+      );
+      if (existsMessageCrisalixUser.length > 0) {
+        const crisalixUser = existsMessageCrisalixUser[0];
+        const data = {
+          ClinicId: crisalixUser.ClinicId,
+          BoxId: crisalixUser.BoxId,
+          id: crisalixUser.id,
+          playerId: crisalixUser.playerId,
+          playerToken: crisalixUser.playerToken,
+        };
+        saveCrisalixUser(data);
+        messageSocket.removeMessageSocket(existsMessageCrisalixUser[0]);
+      }
     }
-  };
-  return (
-    <MainLayout isDashboard>
-      {username && (
-        <Container>
-          <Flex layout="col-center">
-            <p className="font-bold text-4xl mb-2">¡Hola {username}!</p>
-            <p className="text-4xl mb-8">Tu glow, tus normas</p>
-            <div className="grid grid-cols-3">
-              {menuItems.map(item => (
-                <DashboardMenuItem
-                  key={item.title}
-                  iconSrc={item.iconSrc}
-                  altText={item.altText}
-                  title={item.title}
-                  link={
-                    item.link.includes('flowwwToken')
-                      ? item.link.replace('flowwwToken', flowwwToken)
-                      : item.link
-                  }
-                  target={item.target}
-                />
-              ))}
-            </div>
-          </Flex>
-          {!isCommentModalOpen && (
-            <Flex layout="col-center" className="mt-8">
-              <Button isSubmit onClick={handleClick} type="secondary">
-                Validar Cita
-              </Button>
-            </Flex>
-          )}
-          {isCommentModalOpen && (
-            <Flex layout="col-center" className="mt-8">
-              <textarea
-                value={comment}
-                onChange={e => setComment(e.target.value)}
-                placeholder="Escribe tu comentario..."
-                className="w-full h-40 p-2 resize-none border rounded-lg"
-              />
+  }, [messageSocket]);
 
-              <Button
-                isSubmit
-                onClick={handleCommentSubmit}
-                type="secondary"
-                className="mt-4"
-              >
-                Validar Cita
-              </Button>
-              <Button
-                onClick={() => setIsCommentModalOpen(false)}
-                type="secondary"
-                className="mt-4"
-              >
-                Cancelar
-              </Button>
-            </Flex>
-          )}
-        </Container>
+  async function saveCrisalixUser(props: any) {
+    const crisalixUser: CrisalixUser = {
+      id: props.id,
+      playerId: props.playerId,
+      playerToken: props.playerToken,
+      name: props.name,
+    };
+    userCrisalix.addCrisalixUser(crisalixUser);
+  }
+
+  return (
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
+      {user?.firstName && (
+        <div className="mt-8">
+          <Title className="text-xl mb-4">Tu glow, tus normas</Title>
+          <Title className="font-bold text-5xl mb-8">
+            ¡Hola{' '}
+            <Underlined color={HOLAGLOW_COLORS['primary']}>
+              {user?.firstName}
+            </Underlined>
+            !
+          </Title>
+          <div className="grid grid-cols-3 mb-12">
+            {menuItems.map(item => (
+              <DashboardMenuItem
+                key={item.title}
+                iconSrc={item.iconSrc}
+                altText={item.altText}
+                title={item.title}
+                link={
+                  item.link.includes('flowwwToken')
+                    ? item.link.replace('flowwwToken', user?.flowwwToken)
+                    : item.link
+                }
+                target={item.target}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </MainLayout>
   );

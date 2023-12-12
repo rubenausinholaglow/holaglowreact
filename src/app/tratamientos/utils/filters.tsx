@@ -7,6 +7,8 @@ export const INITIAL_FILTERS = {
   category: [],
   zone: [],
   clinic: [],
+  text: '',
+  price: [],
 };
 
 export const applyFilters = ({
@@ -18,42 +20,52 @@ export const applyFilters = ({
 }) => {
   let updatedProducts = products;
 
-  const hasArrayFilters =
-    filters.category.length > 0 ||
-    filters.zone.length > 0 ||
-    filters.clinic.length > 0;
-
   updatedProducts = products.map(product => {
-    const isVisibleByCategory = product.category.some(category =>
-      filters.category.includes(category.name)
-    );
-    const isVisibleByZone = filters.zone.includes(product.zone);
+    const isVisibleByCategory =
+      filters.category.length == 0 ||
+      product.category.some(category =>
+        filters.category.includes(category.name)
+      );
+    const isVisibleByZone =
+      filters.zone.length == 0 || filters.zone.includes(product.zone);
 
     const productClinics: Array<string> = product.clinicDetail.map(
       (item: ProductClinics) => item.clinic.internalName
     );
-    const isVisibleByClinic = filters.clinic.some(clinic =>
-      productClinics.includes(clinic)
-    );
-
-    let productVisibility = [
-      isVisibleByCategory,
-      isVisibleByZone,
-      isVisibleByClinic,
-    ].some(value => value === true);
+    const isVisibleByClinic =
+      filters.clinic.length == 0 ||
+      filters.clinic.some(clinic => productClinics.includes(clinic));
 
     const isVisibleByPack =
       (product.isPack && filters.isPack) || !filters.isPack;
-
-    if (!hasArrayFilters) {
-      productVisibility = true;
-    }
-
-    productVisibility = productVisibility && isVisibleByPack;
-
+    let isVisibleByPrice = filters.price.length == 0;
+    filters.price.forEach(x => {
+      switch (x) {
+        case 1:
+          isVisibleByPrice = isVisibleByPrice || product.price < 250;
+          break;
+        case 2:
+          isVisibleByPrice =
+            isVisibleByPrice || (product.price >= 250 && product.price < 500);
+          break;
+        case 3:
+          isVisibleByPrice = isVisibleByPrice || product.price >= 500;
+          break;
+      }
+    });
+    const isVisibleByText =
+      filters.text.length === 0 ||
+      product.title.toLowerCase().includes(filters.text.toLowerCase());
+    const productVisibility = [
+      isVisibleByCategory,
+      isVisibleByZone,
+      isVisibleByClinic,
+      isVisibleByPrice,
+      isVisibleByText,
+      isVisibleByPack,
+    ].every(value => value === true);
     return { ...product, visibility: productVisibility };
   });
-
   return updatedProducts;
 };
 
@@ -64,9 +76,13 @@ export const filterCount = (filters: ProductFilters) => {
     filterCount = 1;
   }
 
+  if (filters.text) {
+    filterCount += 1;
+  }
   filterCount = filterCount + filters.category.length;
   filterCount = filterCount + filters.zone.length;
   filterCount = filterCount + filters.clinic.length;
+  filterCount = filterCount + filters.price.length;
 
   return filterCount;
 };
@@ -122,21 +138,23 @@ export const toggleFilter = ({
   value,
   filters,
 }: {
-  filter: 'category' | 'zone' | 'clinic';
+  filter: 'category' | 'zone' | 'clinic' | 'text' | 'price';
   value: string | number;
   filters: ProductFilters;
 }) => {
   const updatedFilters: ProductFilters = { ...filters } || {};
-
-  const valueIndex = (updatedFilters[filter] as Array<string | number>).indexOf(
-    value
-  );
-
-  if (valueIndex === -1) {
-    (updatedFilters[filter] as Array<string | number>).push(value);
+  if (filter == 'text') {
+    updatedFilters.text = value.toString();
   } else {
-    updatedFilters[filter].splice(valueIndex, 1);
-  }
+    const valueIndex = (
+      updatedFilters[filter] as Array<string | number>
+    ).indexOf(value);
 
+    if (valueIndex === -1) {
+      (updatedFilters[filter] as Array<string | number>).push(value);
+    } else {
+      updatedFilters[filter].splice(valueIndex, 1);
+    }
+  }
   return updatedFilters;
 };

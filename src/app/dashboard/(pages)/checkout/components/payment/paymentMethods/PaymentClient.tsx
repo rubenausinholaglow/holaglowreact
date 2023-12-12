@@ -17,7 +17,7 @@ export default function PaymentClient({
   onPaymentClick,
 }: PaymentProps) {
   return (
-    <Flex layout="col-center" className="relative">
+    <Flex layout="col-center" className="relative w-full">
       <PaymentInput
         paymentBank={paymentBank}
         paymentMethod={paymentMethod}

@@ -3,7 +3,6 @@
 import {
   useGlobalPersistedStore,
   useGlobalStore,
-  useSessionStore,
 } from 'app/stores/globalStore';
 import { toggleIsPack } from 'app/tratamientos/utils/filters';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -17,7 +16,6 @@ export default function PackTypeFilter({
   className?: string;
   customStyles?: string;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
   const { promo } = useGlobalPersistedStore(state => state);
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
 

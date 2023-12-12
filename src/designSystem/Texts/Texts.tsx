@@ -54,7 +54,7 @@ export const Title = ({
 };
 
 export const Text = ({
-  size = 'md',
+  size = 'inherit',
   as = 'p',
   className = '',
   wrapperClassName = '',
@@ -64,7 +64,7 @@ export const Text = ({
   origin = 'bottom',
   rest,
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inherit';
   as?: 'h3' | 'p' | 'span';
   className?: string;
   wrapperClassName?: string;

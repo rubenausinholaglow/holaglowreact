@@ -23,12 +23,10 @@ interface Props {
 }
 
 export default function ProductCard({ product, isCheckout }: Props) {
-  const cart = useCartStore(state => state.cart);
-  const removeFromCart = useCartStore(state => state.removeFromCart);
-  const addToCart = useCartStore(state => state.addItemToCart);
-  const setHighlightProduct = useCartStore(state => state.setHighlightProduct);
-  const setIsModalOpen = useGlobalStore(state => state.setIsModalOpen);
-  const removeItemDiscount = useCartStore(state => state.removeItemDiscount);
+  const { cart, removeFromCart, addItemToCart, setHighlightProduct } =
+    useCartStore(state => state);
+
+  const { setIsModalOpen } = useGlobalStore(state => state);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
@@ -46,16 +44,18 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const productHasPromoDiscount = !isEmpty(product.discounts);
   const productPricewithPromoDiscount = getDiscountedPrice(product);
   const [pendingDiscount, setPendingDiscount] = useState(false);
+
   useEffect(() => {
     if (pendingDiscount) {
-      applyItemDiscount(
-        cart[cart.length - 1].uniqueId,
-        getDiscountedPrice(product),
-        '€'
-      );
-      setPendingDiscount(false);
+      const discountedPrice = getDiscountedPrice(product);
+
+      if (discountedPrice !== null) {
+        applyItemDiscount(cart[cart.length - 1].uniqueId, discountedPrice, '€');
+        setPendingDiscount(false);
+      }
     }
   }, [pendingDiscount]);
+
   return (
     <Flex
       layout={isCheckout ? 'row-left' : 'col-left'}
@@ -143,11 +143,13 @@ export default function ProductCard({ product, isCheckout }: Props) {
           >
             {product.price.toFixed(2)}€
           </Text>
-          {productHasPromoDiscount && !isCheckout && (
-            <Text size="lg" className={`font-semibold text-red ml-2`}>
-              {productPricewithPromoDiscount.toFixed(2)}€
-            </Text>
-          )}
+          {productHasPromoDiscount &&
+            !isCheckout &&
+            productPricewithPromoDiscount && (
+              <Text size="lg" className={`font-semibold text-red ml-2`}>
+                {productPricewithPromoDiscount.toFixed(2)}€
+              </Text>
+            )}
         </Flex>
 
         {!isCheckout && (
@@ -156,7 +158,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
             type="secondary"
             onClick={e => {
               e.stopPropagation();
-              addToCart(product);
+              addItemToCart(product);
               setPendingDiscount(true);
             }}
             className="w-full mt-auto"
@@ -171,35 +173,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
               productPrice={product.price}
               isCheckout={false}
             />
-            {productHasDiscount && (
-              <Flex layout="row-left" className="mt-2">
-                {productCartItem.priceDiscount < productCartItem.price &&
-                  productCartItem.priceDiscount !== 0 && (
-                    <Flex
-                      layout="row-left"
-                      className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                      onClick={() => removeItemDiscount(product.uniqueId, '€')}
-                    >
-                      <Text size="xs">
-                        total: {productCartItem.priceDiscount}€
-                      </Text>
-                      <SvgClose height={12} width={12} className="ml-1" />
-                    </Flex>
-                  )}
-                {productCartItem.percentageDiscount > 0 && (
-                  <Flex
-                    layout="row-left"
-                    className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                    onClick={() => removeItemDiscount(product.uniqueId, '%')}
-                  >
-                    <Text size="xs">
-                      -{productCartItem.percentageDiscount}%
-                    </Text>
-                    <SvgClose height={12} width={12} className="ml-1" />
-                  </Flex>
-                )}
-              </Flex>
-            )}
           </>
         )}
       </Flex>
