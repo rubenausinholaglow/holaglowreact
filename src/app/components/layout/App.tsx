@@ -61,6 +61,7 @@ export default function Html({ children }: { children: ReactNode }) {
     setShowModalBackground,
     setIsModalOpen,
     isMainScrollEnabled,
+    setFilteredProducts,
   } = useGlobalStore(state => state);
 
   const {
@@ -83,6 +84,7 @@ export default function Html({ children }: { children: ReactNode }) {
     async function initProducts() {
       const products = await fetchProducts();
       setStateProducts(products);
+      setFilteredProducts(products);
     }
 
     if (isEmpty(stateProducts)) {
