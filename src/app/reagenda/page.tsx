@@ -47,6 +47,7 @@ export default function Page({
     state => state
   );
 
+  const [currentToken, setCurrentToken] = useState('');
   let showPast = false;
   let token = '';
 
@@ -54,6 +55,7 @@ export default function Page({
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     token = params.get('token') ?? '';
+    setCurrentToken(token);
     showPast = params.get('showPast') == 'true';
 
     const getAppointments = async () => {
@@ -99,13 +101,14 @@ export default function Page({
   };
 
   const rescheduleAppointment = async (x: Appointment) => {
+    debugger;
     setCurrentUser({
-      flowwwToken: token,
+      flowwwToken: currentToken,
       firstName: '',
       email: '',
       id: '',
       phone: '',
-      clinicToken: token,
+      clinicToken: currentToken,
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];
@@ -153,7 +156,7 @@ export default function Page({
               {appointmentToCancel?.treatmentText}
             </Text>
             <Text className="text-sm text-center">
-              {dayjs(appointmentToCancel?.startTime).daysInMonth()} de{' '}
+              {dayjs(appointmentToCancel?.startTime).format('DD')} de{' '}
               {dayjs(appointmentToCancel?.startTime).format('MMMM')} a las {}
               {dayjs(appointmentToCancel?.startTime).format('HH:mm')}
             </Text>
@@ -205,7 +208,7 @@ export default function Page({
                   <Flex layout="row-left" className="">
                     <SvgCalendar className="mr-2" />
                     <div className="text-xs">
-                      {dayjs(appointment.startTime).daysInMonth()} de{' '}
+                      {dayjs(appointment.startTime).format('DD')} de{' '}
                       {dayjs(appointment.startTime).format('MMMM')} a las {}
                       {dayjs(appointment.startTime).format('HH:mm')}
                     </div>
