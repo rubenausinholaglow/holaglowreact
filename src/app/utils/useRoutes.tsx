@@ -21,7 +21,7 @@ const useRoutes = () => {
     aboutUs: '/quienes-somos',
     dashboard: {
       crisalix: '/dashboard/crisalix',
-      agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
+      agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
       menu: '/dashboard/menu',
       home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
       checkOut: '/dashboard/checkout',

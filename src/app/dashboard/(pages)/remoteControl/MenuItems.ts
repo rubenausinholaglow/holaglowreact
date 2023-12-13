@@ -17,7 +17,7 @@ export const menuItems = [
     iconSrc: '/images/dashboard/menu-icons/agenda.svg',
     altText: 'Agenda',
     title: 'Agenda',
-    link: 'https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken',
+    link: 'https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken',
     target: '_blank',
   },
   {
