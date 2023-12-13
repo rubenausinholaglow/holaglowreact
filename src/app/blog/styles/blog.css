@@ -1,12 +1,21 @@
 .blog-post p {
   margin-bottom: theme('spacing.6');
 }
-.bold {
+.blog-post .bold {
   font-weight: bold;
 }
-.italic {
+
+.blog-post .italic {
   font-style: italic;
 }
+
+.blog-post a {
+  color: theme('colors.hg.secondary');
+}
+.blog-post a:hover {
+  text-decoration: underline;
+}
+
 .blog-post .title {
   font-weight: 600;
   font-size: 24px;
@@ -83,7 +92,7 @@
 }
 
 .blog-post table {
-  max-width: calc(100svw - 48px);
+  max-width: calc(100svw - 32px);
   overflow-x: scroll;
   display: flex;
   margin-bottom: theme('spacing.8');

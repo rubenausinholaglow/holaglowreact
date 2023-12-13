@@ -61,6 +61,7 @@ export default function BlogItem({
 
         <Link href={`/blog/${post.slug}`}>
           <Text
+            as={isHighlightedPost ? 'h1' : 'h2'}
             className={`mb-4 transition-all ${
               isHighlightedPost
                 ? 'text-3xl md:text-5xl font-bold'
@@ -71,7 +72,7 @@ export default function BlogItem({
           </Text>
         </Link>
         <Text size="xs" className={isHighlightedPost ? 'mb-4' : ''}>
-          Por Dr. {post.author}.
+          Por {post.author}.{' '}
           <span className="text-hg-black500">
             {dayjs(post.creationDate).format('D MMMM, YYYY')}
           </span>

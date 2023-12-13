@@ -22,6 +22,7 @@ export interface Professional {
   name: string;
   professionalType: ProfessionalType;
   flowwwId: string;
+  authorDescription: string;
   city?: string;
 }
 

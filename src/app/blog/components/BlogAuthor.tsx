@@ -15,9 +15,6 @@ export default function BlogAuthor({
     <Container
       className={`rounded-3xl bg-hg-cream500 py-8 ${className} gap-4 md:p-16`}
     >
-      <Text className="text-3xl font-bold mb-8 md:text-5xl">
-        <Underlined color={HOLAGLOW_COLORS['primary']}>Escrito</Underlined> por:
-      </Text>
       <Flex
         layout="col-left"
         className="md:flex-row gap-8 md:gap-16 items-center"
@@ -31,19 +28,11 @@ export default function BlogAuthor({
         />
 
         <Flex layout="col-left" className="gap-3 items-center">
-          <Title size="xl" className="text-center md:text-left w-full">
-            {professional.tittleAbbreviation} {professional.name.split(' ')[1]}
-          </Title>
-          <Text className="text-center md:text-left text-lg w-full">
-            {professional.title}
+          <Text size="lg" className="text-center md:text-left w-full font-bold">
+            {professional.name}, {professional.title} en Holaglow
           </Text>
-          {professional.collegiateNumber && (
-            <Text className="text-center md:text-left text-lg w-full">
-              Núm. Col. {professional.collegiateNumber}
-            </Text>
-          )}
           <Text className="text-center md:text-left w-full">
-            {professional.description}
+            {professional.authorDescription}
           </Text>
         </Flex>
       </Flex>

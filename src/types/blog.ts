@@ -10,4 +10,7 @@ export interface Post {
   categories: Category[];
   creationDate: Date;
   active: boolean;
+  metaTitle: string;
+  metaDescription: string;
+  canonical: string;
 }

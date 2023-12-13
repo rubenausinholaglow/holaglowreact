@@ -55,14 +55,13 @@ export default function BlogAppointment() {
             isAnimated
             className="text-hg-primary font-gtUltraBold mb-6 text-3xl md:text-4xl md:pr-8"
           >
-            Brilla, consíguelo
+            Reserva tu cita
           </Text>
           <Text
             isAnimated
             className="mb-8 md:mb-12 text-white text-lg text-center md:pr-8"
           >
-            Programa una consulta gratuita para obtener más información sobre
-            nuestros tratamientos y cuidados
+            Encuentra tu tratamiento ideal y pon las reglas a tu belleza.
           </Text>
 
           <Button
@@ -76,7 +75,7 @@ export default function BlogAppointment() {
               router.push(ROUTES.checkout.clinics);
             }}
           >
-            Reservar cita
+            Ver disponibilidad
           </Button>
         </Flex>
       </Container>
