@@ -101,7 +101,6 @@ export default function Page({
   };
 
   const rescheduleAppointment = async (x: Appointment) => {
-    debugger;
     setCurrentUser({
       flowwwToken: currentToken,
       firstName: '',
