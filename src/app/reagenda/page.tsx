@@ -88,7 +88,7 @@ export default function Page({
     ScheduleService.cancel(x).then(y => {
       const startTime = new Date(x.startTime!);
       const url =
-        '/appointment-cancel?day=' +
+        '/cita-cancelada?day=' +
         startTime.getDate() +
         '&month=' +
         months[startTime.getMonth()] +
