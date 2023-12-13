@@ -55,17 +55,11 @@ export default function Agenda({
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  let maxDays = 10;
-  if (
-    selectedTreatments &&
-    selectedTreatments[0] &&
-    (selectedTreatments[0].type == 2 || selectedTreatments[0].type == 1)
-  )
-    maxDays = 15;
+  let maxDays = 15;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
-      '0': 7,
+      '0': 10,
     },
     '4': {
       //Barcelona
@@ -74,6 +68,7 @@ export default function Agenda({
     },
     '5': {
       //Valencia
+      '0': 10,
       '1': 15,
       '2': 15,
     },
