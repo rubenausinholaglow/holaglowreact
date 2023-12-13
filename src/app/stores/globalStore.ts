@@ -1,9 +1,13 @@
-import { Appointment, User, UserCheckin } from '@interface/appointment';
-import { AnalyticsMetrics } from '@interface/client';
-import { Clinic } from '@interface/clinic';
-import { Product } from '@interface/product';
-import { Slot } from '@interface/slot';
-import { INITIAL_FILTERS } from 'app/tratamientos/utils/filters';
+import {
+  Appointment,
+  User,
+  UserCheckin,
+} from 'app/(dashboard)/dashboard/interface/appointment';
+import { AnalyticsMetrics } from 'app/(dashboard)/dashboard/interface/client';
+import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
+import { Product } from 'app/(dashboard)/dashboard/interface/product';
+import { Slot } from 'app/(dashboard)/dashboard/interface/slot';
+import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import dayjs, { Dayjs } from 'dayjs';
 import { ProductFilters } from 'types/filters';
 import { Promo } from 'types/promo';

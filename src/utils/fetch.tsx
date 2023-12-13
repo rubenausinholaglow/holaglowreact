@@ -1,9 +1,9 @@
 import Bugsnag from '@bugsnag/js';
-import { Clinic } from '@interface/clinic';
-import { Product } from '@interface/product';
 import clinicService from '@services/ClinicService';
 import ProductService from '@services/ProductService';
 import promoService from '@services/PromoService';
+import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
+import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { Promo } from 'types/promo';
 
 export async function fetchProducts() {
