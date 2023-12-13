@@ -9,8 +9,8 @@ import {
   INVALID_PHONE_FORMAT,
   PHONE_REQUIRED,
 } from '@utils/textConstants';
-import { Status } from 'app/(dashboard)/dashboard/interface/appointment';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { Status } from 'app/types/appointment';
 
 interface FormData {
   email: string;

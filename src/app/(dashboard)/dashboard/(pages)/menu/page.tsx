@@ -3,11 +3,11 @@
 import React, { useEffect } from 'react';
 import { INITIAL_STATE } from '@utils/constants';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import { CrisalixUser } from 'app/(dashboard)/dashboard/interface/crisalix';
-import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
-import { INITIAL_STATE_PAYMENT } from 'app/(dashboard)/dashboard/interface/paymentList';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { CrisalixUser } from 'app/types/crisalix';
+import { MessageType } from 'app/types/messageSocket';
+import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 

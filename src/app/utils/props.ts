@@ -1,5 +1,5 @@
-import { Client } from 'app/(dashboard)/dashboard/interface/client';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
+import { Client } from 'app/types/client';
+import { Product } from 'app/types/product';
 
 export interface TextInputFieldProps {
   placeholder?: string;

@@ -4,23 +4,19 @@ import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
-import {
-  Appointment,
-  Status,
-  User,
-} from 'app/(dashboard)/dashboard/interface/appointment';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgArrow, SvgUserSquare } from 'app/icons/IconsDs';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { Appointment, Status, User } from 'app/types/appointment';
 import {
   CrisalixActions,
   CrisalixUser,
   CrisalixUserList,
-} from 'app/(dashboard)/dashboard/interface/crisalix';
+} from 'app/types/crisalix';
 import {
   CrisalixUserData,
   StartAppointmentData,
-} from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
-import { SvgSpinner } from 'app/icons/Icons';
-import { SvgArrow, SvgUserSquare } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+} from 'app/types/FrontEndMessages';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';

@@ -1,6 +1,5 @@
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-
-import { Client } from '../../interface/client';
+import { Client } from 'app/types/client';
 
 export default function Header({ client }: { client: Client }) {
   const { user } = useGlobalPersistedStore(state => state);

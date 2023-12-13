@@ -4,7 +4,6 @@ import { RefObject, useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import ProductService from '@services/ProductService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import Clinics from 'app/(web)/components/common/Clinics';
 import Professionals from 'app/(web)/components/common/Professionals';
 import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
@@ -13,6 +12,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Product } from 'app/types/product';
 import { useElementOnScreen } from 'app/utils/common';
 import { fetchProduct } from 'app/utils/fetch';
 import { isEmpty } from 'lodash';

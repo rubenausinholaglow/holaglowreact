@@ -1,7 +1,7 @@
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { SvgGlow } from 'app/icons/IconsDs';
+import { Product } from 'app/types/product';
 import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';

@@ -1,8 +1,8 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { Professional } from 'app/(dashboard)/dashboard/interface/clinic';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
+import { Professional } from 'app/types/clinic';
+import { Product } from 'app/types/product';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { isEmpty } from 'lodash';
 

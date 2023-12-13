@@ -1,5 +1,5 @@
-import { CartItem } from 'app/(dashboard)/dashboard/interface/product';
 import { SvgClose } from 'app/icons/Icons';
+import { CartItem } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 

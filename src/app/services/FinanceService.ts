@@ -1,5 +1,5 @@
 import Bugsnag from '@bugsnag/js';
-import { CreatePayment, InitializePayment } from '@interface/initializePayment';
+import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
   static async initializePayment(initializePayment: InitializePayment) {

@@ -1,5 +1,5 @@
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';

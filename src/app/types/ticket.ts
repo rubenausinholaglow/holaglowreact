@@ -1,4 +1,4 @@
-import { Budget } from 'app/(dashboard)/dashboard/interface/budget';
+import { Budget } from 'app/types/budget';
 
 import { PaymentProductRequest } from './payment';
 

@@ -4,12 +4,12 @@ import {
   RescheduleAppointmentRequest,
   Status,
   User,
-} from 'app/(dashboard)/dashboard/interface/appointment';
-import { AnalyticsMetrics } from 'app/(dashboard)/dashboard/interface/client';
-import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
-import { DayAvailability } from 'app/(dashboard)/dashboard/interface/dayAvailability';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
-import { Slot } from 'app/(dashboard)/dashboard/interface/slot';
+} from 'app/types/appointment';
+import { AnalyticsMetrics } from 'app/types/client';
+import { Clinic } from 'app/types/clinic';
+import { DayAvailability } from 'app/types/dayAvailability';
+import { Product } from 'app/types/product';
+import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
 
 export default class ScheduleService {

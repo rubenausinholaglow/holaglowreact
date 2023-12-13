@@ -6,14 +6,11 @@ import { messageService } from '@services/MessageService';
 import { ERROR_POST } from '@utils/textConstants';
 import CheckoutTotal from 'app/(dashboard)/dashboard/components/checkout/CheckoutTotal';
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
-import {
-  Budget,
-  StatusBudget,
-} from 'app/(dashboard)/dashboard/interface/budget';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { Budget, StatusBudget } from 'app/types/budget';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';

@@ -1,6 +1,6 @@
-import { ProductClinics } from 'app/(dashboard)/dashboard/interface/clinic';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
+import { ProductClinics } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
+import { Product } from 'app/types/product';
 
 export const INITIAL_FILTERS = {
   isPack: false,

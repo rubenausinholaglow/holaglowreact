@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
+import { MessageType } from 'app/types/messageSocket';
 
 interface TimerProps {
   onColorChange: (color: string) => void;

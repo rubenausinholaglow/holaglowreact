@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Professional } from 'app/(dashboard)/dashboard/interface/clinic';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Professional } from 'app/types/clinic';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';

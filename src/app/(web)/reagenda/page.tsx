@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react';
 import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
-import { Appointment } from 'app/(dashboard)/dashboard/interface/appointment';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCalendar, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import { SvgCross } from 'app/icons/IconsDs';
@@ -13,6 +11,8 @@ import {
   useGlobalStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Appointment } from 'app/types/appointment';
+import { Product } from 'app/types/product';
 import dayjs from 'dayjs';
 import es from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';

@@ -2,15 +2,15 @@ import {
   ERROR_RESPONSE_MESSAGE,
   ERROR_SEND_MESSAGE,
 } from '@utils/textConstants';
-import { ProfessionalType } from 'app/(dashboard)/dashboard/interface/clinic';
+import { ProfessionalType } from 'app/types/clinic';
 import {
   CrisalixUserData,
   GoToPageData,
   PatientArrivedData,
   PaymentCreatedData,
   StartAppointmentData,
-} from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
-import { MessageSent } from 'app/(dashboard)/dashboard/interface/message';
+} from 'app/types/FrontEndMessages';
+import { MessageSent } from 'app/types/message';
 
 class MessageService {
   private async sendRequest(url: string, data: object): Promise<any> {

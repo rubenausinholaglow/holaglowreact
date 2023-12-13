@@ -1,4 +1,4 @@
-import { State } from 'app/(dashboard)/dashboard/interface/cart';
+import { State } from 'app/types/cart';
 
 export const INITIAL_STATE: State = {
   cart: [],

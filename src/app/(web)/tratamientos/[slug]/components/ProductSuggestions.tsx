@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { useSessionStore } from 'app/stores/globalStore';
+import { Product } from 'app/types/product';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';

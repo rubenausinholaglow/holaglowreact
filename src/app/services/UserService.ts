@@ -1,5 +1,5 @@
-import { Client, ClientUpdate } from '@interface/client';
-import { User } from 'app/(dashboard)/dashboard/interface/appointment';
+import { User } from 'app/types/appointment';
+import { Client, ClientUpdate } from 'app/types/client';
 
 export default class UserService {
   static async checkUser(email = ''): Promise<User | undefined> {

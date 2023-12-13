@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { CartItem, Product } from 'app/(dashboard)/dashboard/interface/product';
 import { SvgPlusSmall } from 'app/icons/Icons';
 import { SvgArrow, SvgGlow } from 'app/icons/IconsDs';
+import { CartItem, Product } from 'app/types/product';
 import {
   getDiscountedPrice,
   getProductCardColor,

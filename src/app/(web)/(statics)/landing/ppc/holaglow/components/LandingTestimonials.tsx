@@ -1,9 +1,9 @@
 'use client';
 
-import { Testimonial } from 'app/(dashboard)/dashboard/interface/testimonial';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { Testimonial } from 'app/types/testimonial';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';

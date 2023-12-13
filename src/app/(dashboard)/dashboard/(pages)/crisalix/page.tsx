@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import UserService from '@services/UserService';
-import { CrisalixUser } from 'app/(dashboard)/dashboard/interface/crisalix';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { CrisalixUser } from 'app/types/crisalix';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 

@@ -8,16 +8,13 @@ import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import {
-  StatusBudget,
-  TicketBudget,
-} from 'app/(dashboard)/dashboard/interface/budget';
-import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
-import { INITIAL_STATE_PAYMENT } from 'app/(dashboard)/dashboard/interface/paymentList';
-import { Ticket } from 'app/(dashboard)/dashboard/interface/ticket';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { StatusBudget, TicketBudget } from 'app/types/budget';
+import { MessageType } from 'app/types/messageSocket';
+import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
+import { Ticket } from 'app/types/ticket';
 import { applyDiscountToCart } from 'app/utils/utils';
 import {
   AccordionContent,

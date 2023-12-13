@@ -4,14 +4,11 @@ import Bugsnag from '@bugsnag/js';
 import { budgetService } from '@services/BudgetService';
 import { INITIAL_STATE } from '@utils/constants';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
-import {
-  Budget,
-  BudgetProduct,
-} from 'app/(dashboard)/dashboard/interface/budget';
-import { INITIAL_STATE_PAYMENT } from 'app/(dashboard)/dashboard/interface/paymentList';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { Budget, BudgetProduct } from 'app/types/budget';
+import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
 import { useCartStore } from '../../budgets/stores/userCartStore';

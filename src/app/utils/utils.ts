@@ -1,12 +1,9 @@
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/(dashboard)/dashboard/interface/crisalix';
-import { INITIAL_STATE_MESSAGESOCKETLIST } from 'app/(dashboard)/dashboard/interface/messageSocket';
-import {
-  PaymentBank,
-  PaymentMethod,
-} from 'app/(dashboard)/dashboard/interface/payment';
-import { INITIAL_STATE_PAYMENT } from 'app/(dashboard)/dashboard/interface/paymentList';
-import { CartItem } from 'app/(dashboard)/dashboard/interface/product';
+import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/types/crisalix';
+import { INITIAL_STATE_MESSAGESOCKETLIST } from 'app/types/messageSocket';
+import { PaymentBank, PaymentMethod } from 'app/types/payment';
+import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
+import { CartItem } from 'app/types/product';
 
 import { useCartStore } from '../(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';

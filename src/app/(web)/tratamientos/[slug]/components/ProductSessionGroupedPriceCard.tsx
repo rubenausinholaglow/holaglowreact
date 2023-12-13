@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { CartItem, Product } from 'app/(dashboard)/dashboard/interface/product';
 import { SvgPlusSmall } from 'app/icons/Icons';
 import * as icon from 'app/icons/IconsDs';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
+import { CartItem, Product } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';

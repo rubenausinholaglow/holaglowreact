@@ -6,7 +6,6 @@ import './datePickerStyle.css';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ScheduleService from '@services/ScheduleService';
-import { Slot } from 'app/(dashboard)/dashboard/interface/slot';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon } from 'app/icons/IconsDs';
@@ -14,6 +13,8 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { DayAvailability } from 'app/types/dayAvailability';
+import { Slot } from 'app/types/slot';
 import useRoutes from 'app/utils/useRoutes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -22,8 +23,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-import { DayAvailability } from '../../../(dashboard)/dashboard/interface/dayAvailability';
 
 export default function Agenda({
   isDashboard = false,

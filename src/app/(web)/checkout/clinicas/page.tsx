@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCar, SvgRadioChecked } from 'app/icons/IconsDs';
@@ -9,6 +8,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Clinic } from 'app/types/clinic';
 import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';

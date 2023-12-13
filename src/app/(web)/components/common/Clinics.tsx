@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
 import { SvgAngle } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Clinic } from 'app/types/clinic';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   Accordion,

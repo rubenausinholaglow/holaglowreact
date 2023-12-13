@@ -10,7 +10,6 @@ import UserService from '@services/UserService';
 import * as errorsConfig from '@utils/textConstants';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
-import { Client } from 'app/(dashboard)/dashboard/interface/client';
 import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
@@ -18,6 +17,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Client } from 'app/types/client';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';

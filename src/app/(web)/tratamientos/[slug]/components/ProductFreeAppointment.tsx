@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
+import { Product } from 'app/types/product';
 import { fetchProduct } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';

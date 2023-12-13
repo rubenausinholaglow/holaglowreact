@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
-import { UserCheckin } from 'app/(dashboard)/dashboard/interface/appointment';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgScanQR } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -11,6 +10,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { UserCheckin } from 'app/types/appointment';
 import CheckHydration from 'app/utils/CheckHydration';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import useRoutes from 'app/utils/useRoutes';

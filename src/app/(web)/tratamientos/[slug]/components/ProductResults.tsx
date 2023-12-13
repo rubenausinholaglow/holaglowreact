@@ -1,5 +1,5 @@
 import { ImgComparisonSlider } from '@img-comparison-slider/react';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
+import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';

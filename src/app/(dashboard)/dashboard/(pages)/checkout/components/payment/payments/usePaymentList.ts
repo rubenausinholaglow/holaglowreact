@@ -1,9 +1,9 @@
-import { PaymentProductRequest } from 'app/(dashboard)/dashboard/interface/payment';
+import { PaymentProductRequest } from 'app/types/payment';
 import {
   INITIAL_STATE_PAYMENT,
   PaymentActions,
   PaymentList,
-} from 'app/(dashboard)/dashboard/interface/paymentList';
+} from 'app/types/paymentList';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

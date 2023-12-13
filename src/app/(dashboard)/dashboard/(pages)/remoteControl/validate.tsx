@@ -2,12 +2,12 @@
 import { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
-import { GoToPageData } from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
 import { SvgMessage } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import { GoToPageData } from 'app/types/FrontEndMessages';
 import { clearLocalStorage } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';

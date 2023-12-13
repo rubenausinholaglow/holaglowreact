@@ -1,7 +1,4 @@
-import {
-  Professional,
-  ProfessionalType,
-} from 'app/(dashboard)/dashboard/interface/clinic';
+import { Professional, ProfessionalType } from 'app/types/clinic';
 
 export default class clinicService {
   static async getProfessionalsByClinic(

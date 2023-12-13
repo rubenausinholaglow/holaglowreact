@@ -1,7 +1,7 @@
 import Bugsnag from '@bugsnag/js';
 import { ERROR_CREATE_BUDGET } from '@utils/textConstants';
-import { Budget } from 'app/(dashboard)/dashboard/interface/budget';
-import { Ticket } from 'app/(dashboard)/dashboard/interface/ticket';
+import { Budget } from 'app/types/budget';
+import { Ticket } from 'app/types/ticket';
 
 export const budgetService = {
   createBudget: async (budget: Budget) => {

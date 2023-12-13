@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
+import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';

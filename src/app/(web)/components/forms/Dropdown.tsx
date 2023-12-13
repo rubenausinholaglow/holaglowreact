@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import { Options } from 'app/(dashboard)/dashboard/interface/dropdown';
+import { Options } from 'app/types/dropdown';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 
 export default function Dropdown({

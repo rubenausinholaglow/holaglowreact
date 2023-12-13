@@ -13,24 +13,21 @@ import UserService from '@services/UserService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
-import { ClientUpdate } from 'app/(dashboard)/dashboard/interface/client';
-import { PaymentCreatedData } from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
-import {
-  CreatePayment,
-  InitializePayment,
-  OriginPayment,
-  ProductPaymentRequest,
-} from 'app/(dashboard)/dashboard/interface/initializePayment';
-import {
-  PaymentBank,
-  PaymentMethod,
-} from 'app/(dashboard)/dashboard/interface/payment';
 import { SvgClose, SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import { ClientUpdate } from 'app/types/client';
+import { PaymentCreatedData } from 'app/types/FrontEndMessages';
+import {
+  CreatePayment,
+  InitializePayment,
+  OriginPayment,
+  ProductPaymentRequest,
+} from 'app/types/initializePayment';
+import { PaymentBank, PaymentMethod } from 'app/types/payment';
 import { applyDiscountToCart } from 'app/utils/utils';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';

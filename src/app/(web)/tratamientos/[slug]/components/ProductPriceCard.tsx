@@ -4,7 +4,6 @@ import {
   Operation,
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { CartItem, Product } from 'app/(dashboard)/dashboard/interface/product';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import Dropdown from 'app/(web)/components/forms/Dropdown';
 import {
@@ -18,6 +17,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { CartItem, Product } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import {

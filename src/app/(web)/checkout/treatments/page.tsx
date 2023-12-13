@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgAngle, SvgRadioChecked, SvgUserScan } from 'app/icons/IconsDs';
@@ -9,6 +8,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Product } from 'app/types/product';
 import { fetchProduct } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
 import {

@@ -1,6 +1,6 @@
-import { Actions, State } from 'app/(dashboard)/dashboard/interface/cart';
-import { Professional } from 'app/(dashboard)/dashboard/interface/clinic';
-import { CartItem, Product } from 'app/(dashboard)/dashboard/interface/product';
+import { Actions, State } from 'app/types/cart';
+import { Professional } from 'app/types/clinic';
+import { CartItem, Product } from 'app/types/product';
 import { INITIAL_STATE } from 'app/utils/constants';
 import { applyDiscountToItem, deleteDiscountToItem } from 'app/utils/utils';
 import { v4 as createUniqueId } from 'uuid';

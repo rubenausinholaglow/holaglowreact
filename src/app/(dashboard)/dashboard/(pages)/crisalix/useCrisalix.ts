@@ -3,7 +3,7 @@ import {
   CrisalixUser,
   CrisalixUserList,
   INITIAL_STATE_CRISALIXUSERLIST,
-} from 'app/(dashboard)/dashboard/interface/crisalix';
+} from 'app/types/crisalix';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

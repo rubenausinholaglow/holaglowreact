@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CartItem } from 'app/(dashboard)/dashboard/interface/product';
 import { SvgAngleDown, SvgClose } from 'app/icons/Icons';
 import { SvgGlow } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
+import { CartItem } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';

@@ -2,13 +2,10 @@ import { useEffect } from 'react';
 import SocketService from '@services/SocketService';
 import { ClinicProfessional } from 'app/(dashboard)/dashboard/components/ClinicProfessional';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import { EventTypes } from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
-import {
-  MessageSocket,
-  MessageType,
-} from 'app/(dashboard)/dashboard/interface/messageSocket';
 import { SvgHolaglow } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { EventTypes } from 'app/types/FrontEndMessages';
+import { MessageSocket, MessageType } from 'app/types/messageSocket';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

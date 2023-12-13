@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import { ProfessionalType } from 'app/(dashboard)/dashboard/interface/clinic';
-import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
 import { SvgHolaglowHand, SvgStethoscope } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { ProfessionalType } from 'app/types/clinic';
+import { MessageType } from 'app/types/messageSocket';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 

@@ -1,7 +1,4 @@
-import {
-  PaymentBank,
-  PaymentMethod,
-} from 'app/(dashboard)/dashboard/interface/payment';
+import { PaymentBank, PaymentMethod } from 'app/types/payment';
 
 export const paymentItems = [
   {

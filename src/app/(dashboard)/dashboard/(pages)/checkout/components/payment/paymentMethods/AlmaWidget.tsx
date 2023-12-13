@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import FinanceService from '@services/FinanceService';
-import { InitializePayment } from 'app/(dashboard)/dashboard/interface/initializePayment';
-import { PaymentBank } from 'app/(dashboard)/dashboard/interface/payment';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { InitializePayment } from 'app/types/initializePayment';
+import { PaymentBank } from 'app/types/payment';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 

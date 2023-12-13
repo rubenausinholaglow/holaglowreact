@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Appointment } from 'app/(dashboard)/dashboard/interface/appointment';
-import { AnalyticsMetrics } from 'app/(dashboard)/dashboard/interface/client';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgCalendar, SvgHour, SvgLocation } from 'app/icons/Icons';
 import { SvgArrow, SvgCheck, SvgInjection } from 'app/icons/IconsDs';
@@ -10,6 +8,8 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Appointment } from 'app/types/appointment';
+import { AnalyticsMetrics } from 'app/types/client';
 import useRoutes from 'app/utils/useRoutes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';

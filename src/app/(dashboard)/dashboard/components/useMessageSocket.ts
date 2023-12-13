@@ -3,7 +3,7 @@ import {
   MessageSocket,
   MessageSocketActions,
   MessageSocketList,
-} from 'app/(dashboard)/dashboard/interface/messageSocket';
+} from 'app/types/messageSocket';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

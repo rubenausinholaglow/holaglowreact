@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { SvgWhatsapp } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
+import { Product } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
