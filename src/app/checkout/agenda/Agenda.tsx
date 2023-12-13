@@ -435,7 +435,9 @@ export default function Agenda({
             <Container>
               <Flex
                 layout="col-left"
-                className="items-start w-full mb-6 md:mb-0"
+                className={`items-start w-full mb-6 md:mb-0 ${
+                  loadingDays ? 'opacity-25' : 'opacity-100'
+                }`}
               >
                 {(afternoonHours.length > 0 || morningHours.length > 0) && (
                   <>
@@ -469,8 +471,10 @@ export default function Agenda({
                               <div
                                 className="w-full cursor-pointer flex justify-center"
                                 onClick={async () => {
-                                  setClickedHour(x.startTime);
-                                  await selectHour(x);
+                                  if (!loadingDays) {
+                                    setClickedHour(x.startTime);
+                                    await selectHour(x);
+                                  }
                                 }}
                               >
                                 {clickedHour === x.startTime && (
@@ -504,8 +508,10 @@ export default function Agenda({
                               <div
                                 className="w-full cursor-pointer flex justify-center"
                                 onClick={async () => {
-                                  setClickedHour(x.startTime);
-                                  await selectHour(x);
+                                  if (!loadingDays) {
+                                    setClickedHour(x.startTime);
+                                    await selectHour(x);
+                                  }
                                 }}
                               >
                                 {clickedHour === x.startTime && (
