@@ -189,10 +189,14 @@ export default function Agenda({
         await ScheduleService.reschedule({
           next: {
             box: selectedSlot!.box,
-            endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+            endTime:
+              selectedDay!.format(format) + ' ' + selectedSlot!.endTime + ':00',
             id: '0',
             startTime:
-              selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+              selectedDay!.format(format) +
+              ' ' +
+              selectedSlot!.startTime +
+              ':00',
             treatment: ids,
             clientId: user?.flowwwToken,
             comment: comment,
