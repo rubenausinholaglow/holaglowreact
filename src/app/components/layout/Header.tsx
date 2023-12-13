@@ -101,7 +101,7 @@ export default function Header() {
           !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
         }`}
       >
-        <PromoTopBar />
+        {/* <PromoTopBar /> */}
         <AnimateOnViewport origin="top">
           <Container isHeader>
             <Flex
