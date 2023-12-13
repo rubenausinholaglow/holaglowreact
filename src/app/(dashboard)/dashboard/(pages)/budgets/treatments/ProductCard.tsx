@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { CartItem } from 'app/(dashboard)/dashboard/interface/product';
+import { SvgAngleDown, SvgClose } from 'app/icons/Icons';
+import { SvgGlow } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgAngleDown, SvgClose } from 'icons/Icons';
-import { SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 

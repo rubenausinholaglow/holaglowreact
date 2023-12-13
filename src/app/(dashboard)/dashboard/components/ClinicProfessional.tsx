@@ -1,19 +1,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ERROR_FETCHING_PROFESSIONALS } from '@dashboardUtils/textConstants';
 import clinicService from '@services/ClinicService';
+import { ERROR_FETCHING_PROFESSIONALS } from '@utils/textConstants';
 import {
   Professional,
   ProfessionalType,
 } from 'app/(dashboard)/dashboard/interface/clinic';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgLogout, SvgUserOctagon } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgSpinner } from 'icons/Icons';
-import { SvgLogout, SvgUserOctagon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../(pages)/budgets/stores/userCartStore';

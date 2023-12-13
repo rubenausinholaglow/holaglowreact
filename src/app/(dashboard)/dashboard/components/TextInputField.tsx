@@ -2,7 +2,7 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 
-import { TextInputFieldProps } from '../utils/props';
+import { TextInputFieldProps } from '../../../utils/props';
 
 const TextInputField: React.FC<TextInputFieldProps> = ({
   label,

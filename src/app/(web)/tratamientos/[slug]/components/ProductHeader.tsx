@@ -1,11 +1,11 @@
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
+import { SvgGlow } from 'app/icons/IconsDs';
 import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgGlow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 

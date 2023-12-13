@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { Appointment } from 'app/(dashboard)/dashboard/interface/appointment';
 import { AnalyticsMetrics } from 'app/(dashboard)/dashboard/interface/client';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
+import { SvgCalendar, SvgHour, SvgLocation } from 'app/icons/Icons';
+import { SvgArrow, SvgCheck, SvgInjection } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -13,8 +15,6 @@ import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgCalendar, SvgHour, SvgLocation } from 'icons/Icons';
-import { SvgArrow, SvgCheck, SvgInjection } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 export default function Confirmation({

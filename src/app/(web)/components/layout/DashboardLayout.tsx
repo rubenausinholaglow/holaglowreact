@@ -7,9 +7,9 @@ import {
   MessageSocket,
   MessageType,
 } from 'app/(dashboard)/dashboard/interface/messageSocket';
+import { SvgHolaglow } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgHolaglow } from 'icons/IconsDs';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 

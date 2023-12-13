@@ -2,21 +2,21 @@
 
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import * as config from '@dashboardUtils/textConstants';
-import { ERROR_GETTING_DATA } from '@dashboardUtils/textConstants';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
+import * as config from '@utils/textConstants';
+import { ERROR_GETTING_DATA } from '@utils/textConstants';
+import * as utils from '@utils/validators';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { Status } from 'app/(dashboard)/dashboard/interface/appointment';
 import { Client } from 'app/(dashboard)/dashboard/interface/client';
 import { CrisalixUser } from 'app/(dashboard)/dashboard/interface/crisalix';
 import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
-import { clearLocalStorage } from 'app/(dashboard)/dashboard/utils/utils';
-import * as utils from 'app/(dashboard)/dashboard/utils/validators';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { clearLocalStorage } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { SvgSpinner } from 'icons/Icons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 

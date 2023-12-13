@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgAngle, SvgRadioChecked, SvgUserScan } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { fetchProduct } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
 import {
   Accordion,
@@ -17,10 +19,8 @@ import {
 } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgAngle, SvgRadioChecked, SvgUserScan } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
-import { fetchProduct } from 'utils/fetch';
 
 interface ClinicsCheckoutProps {
   isDashboard?: boolean;

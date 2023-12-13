@@ -3,10 +3,10 @@ import { messageService } from '@services/MessageService';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { ProfessionalType } from 'app/(dashboard)/dashboard/interface/clinic';
 import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
+import { SvgHolaglowHand, SvgStethoscope } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgHolaglowHand, SvgStethoscope } from 'icons/Icons';
 
 import Notification from './Notification';
 

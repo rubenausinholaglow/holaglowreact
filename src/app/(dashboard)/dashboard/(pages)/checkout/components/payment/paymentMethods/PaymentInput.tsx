@@ -25,18 +25,18 @@ import {
   PaymentBank,
   PaymentMethod,
 } from 'app/(dashboard)/dashboard/interface/payment';
-import { applyDiscountToCart } from 'app/(dashboard)/dashboard/utils/utils';
+import { SvgClose, SvgSpinner } from 'app/icons/Icons';
+import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import { applyDiscountToCart } from 'app/utils/utils';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
-import { SvgClose, SvgSpinner } from 'icons/Icons';
-import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 

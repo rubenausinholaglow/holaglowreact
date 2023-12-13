@@ -1,11 +1,11 @@
 'use client';
 import { useEffect } from 'react';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgCheck } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import useRoutes from 'app/utils/useRoutes';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCheck } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 export default function WelcomeSection() {

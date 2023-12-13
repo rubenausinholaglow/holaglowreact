@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { SvgAngleDown } from 'app/icons/Icons';
+import { SvgAdd } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgAngleDown } from 'icons/Icons';
-import { SvgAdd } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 

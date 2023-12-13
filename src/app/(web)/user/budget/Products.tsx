@@ -1,6 +1,6 @@
 'use client';
 
-import { priceFormat } from 'utils/priceFormat';
+import { priceFormat } from 'app/utils/priceFormat';
 
 import { type Product as ProductType } from '../types';
 import ProductItem from './ProductItem';

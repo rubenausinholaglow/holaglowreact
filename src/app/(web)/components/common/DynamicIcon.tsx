@@ -1,7 +1,7 @@
-import * as categoryIcons from 'icons/categoryIcons';
-import * as defaultIcons from 'icons/IconsDs';
-import * as serviceIcons from 'icons/serviceIcons';
-import * as suggestionIcons from 'icons/suggestionIcons';
+import * as categoryIcons from 'app/icons/categoryIcons';
+import * as defaultIcons from 'app/icons/IconsDs';
+import * as serviceIcons from 'app/icons/serviceIcons';
+import * as suggestionIcons from 'app/icons/suggestionIcons';
 
 export default function DynamicIcon({
   name = 'SvgCross',

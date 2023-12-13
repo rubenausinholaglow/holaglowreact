@@ -1,6 +1,6 @@
+import { priceFormat } from 'app/utils/priceFormat';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { priceFormat } from 'utils/priceFormat';
 
 const PEPPER_TABLE_CONFIG = {
   periods: [

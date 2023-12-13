@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgCar, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -12,7 +13,6 @@ import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCar, SvgRadioChecked } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 

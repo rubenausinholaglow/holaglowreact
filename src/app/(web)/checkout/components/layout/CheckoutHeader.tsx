@@ -1,7 +1,7 @@
+import { SvgArrowSmallLeft } from 'app/icons/Icons';
+import { SvgHolaglow } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrowSmallLeft } from 'icons/Icons';
-import { SvgHolaglow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 

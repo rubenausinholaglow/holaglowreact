@@ -5,19 +5,19 @@ import { messageService } from '@services/MessageService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
 import { UserCheckin } from 'app/(dashboard)/dashboard/interface/appointment';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgScanQR } from 'app/icons/Icons';
+import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import CheckHydration from 'app/utils/CheckHydration';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgScanQR } from 'icons/Icons';
-import { SvgArrow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
-import CheckHydration from 'utils/CheckHydration';
 
 import ReadQr from './ReadQr';
 import useFormHook from './useFormHook';

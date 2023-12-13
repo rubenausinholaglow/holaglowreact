@@ -1,5 +1,5 @@
+import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgGoogle, SvgStar } from 'icons/IconsDs';
 
 export default function GoogleStars({
   hideOnDesktop = true,

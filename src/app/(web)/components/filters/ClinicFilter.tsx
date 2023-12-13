@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
+import { fetchClinics } from 'app/utils/fetch';
 import { isEmpty } from 'lodash';
-import { fetchClinics } from 'utils/fetch';
 
 export default function ClinicFilter({ className }: { className?: string }) {
   const { clinics, setClinics } = useGlobalPersistedStore(state => state);

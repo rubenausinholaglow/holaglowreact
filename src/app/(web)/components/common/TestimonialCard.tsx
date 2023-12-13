@@ -1,9 +1,9 @@
 'use client';
 
 import { Testimonial } from 'app/(dashboard)/dashboard/interface/testimonial';
+import { SvgStar } from 'app/icons/IconsDs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgStar } from 'icons/IconsDs';
 import Image from 'next/image';
 
 export default function TestimonialCard({

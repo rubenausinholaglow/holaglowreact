@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgCalendar, SvgLocation } from 'app/icons/Icons';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCalendar, SvgLocation } from 'icons/Icons';
 
 dayjs.locale(spanishConf);
 

@@ -1,17 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Button } from 'designSystem/Buttons/Buttons';
-import { Carousel } from 'designSystem/Carousel/Carousel';
-import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
 import {
   SvgArrowSmallLeft,
   SvgCheck,
   SvgCircle,
   SvgHolaglow,
-} from 'icons/Icons';
+} from 'app/icons/Icons';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Carousel } from 'designSystem/Carousel/Carousel';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';

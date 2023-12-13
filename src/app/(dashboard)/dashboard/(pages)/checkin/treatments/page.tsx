@@ -1,8 +1,8 @@
 import ClinicsCheckout from 'app/(web)/checkout/treatments/page';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgSadIcon } from 'app/icons/IconsDs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
-import { SvgSadIcon } from 'icons/IconsDs';
 
 export default function treatmentsSection() {
   return (

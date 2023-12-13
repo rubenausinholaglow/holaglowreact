@@ -3,12 +3,12 @@ import CategorySelector from 'app/(web)/components/filters/CategorySelector';
 import ClinicFilter from 'app/(web)/components/filters/ClinicFilter';
 import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
 import ZoneFilter from 'app/(web)/components/filters/ZoneFilter';
+import { SvgCross } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { SwipeModal } from 'designSystem/Modals/Modal';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgCross } from 'icons/IconsDs';
 
 import { filterCount } from '../utils/filters';
 

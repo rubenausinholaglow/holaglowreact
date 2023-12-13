@@ -1,19 +1,19 @@
 'use client';
 
 import { useEffect } from 'react';
+import { SvgArrow, SvgCross } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { fetchClinics } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
-import { SvgArrow, SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
-import { fetchClinics } from 'utils/fetch';
 
 export default function MobileNavigation({
   isVisible,

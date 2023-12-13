@@ -1,4 +1,4 @@
-import { SvgCosmetic3, SvgEnvelopeOpen, SvgPhone } from 'icons/Icons';
+import { SvgCosmetic3, SvgEnvelopeOpen, SvgPhone } from 'app/icons/Icons';
 
 export default function Issues() {
   return (

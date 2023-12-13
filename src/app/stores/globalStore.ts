@@ -8,9 +8,9 @@ import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { Slot } from 'app/(dashboard)/dashboard/interface/slot';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
+import { ProductFilters } from 'app/types/filters';
+import { Promo } from 'app/types/promo';
 import dayjs, { Dayjs } from 'dayjs';
-import { ProductFilters } from 'types/filters';
-import { Promo } from 'types/promo';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 

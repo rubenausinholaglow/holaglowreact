@@ -1,6 +1,6 @@
 import React from 'react';
+import { ProductTableProps } from '@utils/props';
 import { CartItem } from 'app/(dashboard)/dashboard/interface/product';
-import { ProductTableProps } from 'app/(dashboard)/dashboard/utils/props';
 
 import ProductCard from './ProductCard';
 

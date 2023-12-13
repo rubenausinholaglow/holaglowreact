@@ -7,9 +7,9 @@ import {
   useGlobalStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { fetchClinics, fetchProducts, fetchPromos } from 'app/utils/fetch';
 import { ModalBackground } from 'designSystem/Modals/Modal';
 import { isEmpty } from 'lodash';
-import { fetchClinics, fetchProducts, fetchPromos } from 'utils/fetch';
 
 import { Breakpoint, DeviceSize } from './Breakpoint';
 

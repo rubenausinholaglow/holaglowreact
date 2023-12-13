@@ -8,9 +8,9 @@ import {
 import { INITIAL_STATE_PAYMENT } from 'app/(dashboard)/dashboard/interface/paymentList';
 import { CartItem } from 'app/(dashboard)/dashboard/interface/product';
 
-import { useCartStore } from '../(pages)/budgets/stores/userCartStore';
-import { usePaymentList } from '../(pages)/checkout/components/payment/payments/usePaymentList';
-import { useCrisalix } from '../(pages)/crisalix/useCrisalix';
+import { useCartStore } from '../(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
+import { useCrisalix } from '../(dashboard)/dashboard/(pages)/crisalix/useCrisalix';
 import { INITIAL_STATE } from './constants';
 
 export const handleGoBack = () => {

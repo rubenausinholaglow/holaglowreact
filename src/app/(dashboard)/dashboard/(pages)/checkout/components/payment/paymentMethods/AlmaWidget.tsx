@@ -5,12 +5,12 @@ import Bugsnag from '@bugsnag/js';
 import FinanceService from '@services/FinanceService';
 import { InitializePayment } from 'app/(dashboard)/dashboard/interface/initializePayment';
 import { PaymentBank } from 'app/(dashboard)/dashboard/interface/payment';
+import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgSpinner } from 'icons/Icons';
 
-import { AlmaProps } from '../../../../../utils/props';
+import { AlmaProps } from '../../../../../../../utils/props';
 
 export const AlmaWidget: React.FC<AlmaProps> = ({
   amountFinance,

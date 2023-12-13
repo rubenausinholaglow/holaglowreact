@@ -1,5 +1,5 @@
+import { SvgPlusSmall } from 'app/icons/Icons';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { SvgPlusSmall } from 'icons/Icons';
 
 import { Appointment } from '../types';
 

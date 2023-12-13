@@ -5,13 +5,13 @@ import ProductService from '@services/ProductService';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import PsrpPage from 'app/(web)/tratamientos/psrp';
+import { SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgSpinner } from 'icons/Icons';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { useCartStore } from './stores/userCartStore';

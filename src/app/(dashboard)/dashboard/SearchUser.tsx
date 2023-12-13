@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ERROR_EMAIL_NOT_VALID } from '@dashboardUtils/textConstants';
+import { ERROR_EMAIL_NOT_VALID } from '@utils/textConstants';
+import { SvgSpinner } from 'app/icons/Icons';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgSpinner } from 'icons/Icons';
 
-import { SearchBarProps } from './utils/props';
+import { SearchBarProps } from '../../utils/props';
 
 const SearchUser: React.FC<SearchBarProps> = ({
   email,

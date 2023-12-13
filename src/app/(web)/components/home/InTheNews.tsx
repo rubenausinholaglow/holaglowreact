@@ -1,11 +1,11 @@
 'use client';
 
+import { SvgHolaGlowStar } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgHolaGlowStar } from 'icons/IconsDs';
 import Image from 'next/image';
 
 const NEWS = [

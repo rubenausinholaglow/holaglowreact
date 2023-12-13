@@ -1,12 +1,12 @@
 'use client';
 
 import { toggleIsPack } from 'app/(web)/tratamientos/utils/filters';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { twMerge } from 'tailwind-merge';
 
 export default function PackTypeFilter({

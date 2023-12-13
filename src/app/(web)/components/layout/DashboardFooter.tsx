@@ -2,10 +2,10 @@
 
 import { Cart } from 'app/(dashboard)/dashboard/(pages)/budgets/minicart/Cart';
 import ButtonMessage from 'app/(dashboard)/dashboard/components/ui/ButtonMessage';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrow } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardFooter({

@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { INITIAL_STATE } from '@utils/constants';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { CrisalixUser } from 'app/(dashboard)/dashboard/interface/crisalix';
 import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
 import { INITIAL_STATE_PAYMENT } from 'app/(dashboard)/dashboard/interface/paymentList';
-import { INITIAL_STATE } from 'app/(dashboard)/dashboard/utils/constants';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';

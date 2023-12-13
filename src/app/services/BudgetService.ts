@@ -1,5 +1,5 @@
 import Bugsnag from '@bugsnag/js';
-import { ERROR_CREATE_BUDGET } from '@dashboardUtils/textConstants';
+import { ERROR_CREATE_BUDGET } from '@utils/textConstants';
 import { Budget } from 'app/(dashboard)/dashboard/interface/budget';
 import { Ticket } from 'app/(dashboard)/dashboard/interface/ticket';
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
-import { applyDiscountToCart } from 'app/(dashboard)/dashboard/utils/utils';
+import { SvgCart } from 'app/icons/IconsDs';
 import useRoutes from 'app/utils/useRoutes';
+import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgCart } from 'icons/IconsDs';
 
 import { useCartStore } from '../stores/userCartStore';
 

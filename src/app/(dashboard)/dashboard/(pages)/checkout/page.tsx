@@ -1,22 +1,22 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { ERROR_POST } from '@dashboardUtils/textConstants';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
+import { ERROR_POST } from '@utils/textConstants';
 import CheckoutTotal from 'app/(dashboard)/dashboard/components/checkout/CheckoutTotal';
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
 import {
   Budget,
   StatusBudget,
 } from 'app/(dashboard)/dashboard/interface/budget';
-import { applyDiscountToCart } from 'app/(dashboard)/dashboard/utils/utils';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgBag } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgSpinner } from 'icons/Icons';
-import { SvgBag } from 'icons/IconsDs';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';

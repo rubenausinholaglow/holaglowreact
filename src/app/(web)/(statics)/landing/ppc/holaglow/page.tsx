@@ -10,21 +10,21 @@ import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
 import Products from 'app/(web)/components/home/Products';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { SvgHolaglow } from 'app/icons/Icons';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
+import { fetchProduct } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgHolaglow } from 'icons/Icons';
-import { SvgArrow } from 'icons/IconsDs';
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchProduct } from 'utils/fetch';
 
 import ConsistOf from './components/ConsistOF';
 import LandingTestimonials from './components/LandingTestimonials';

@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
+import { SvgWhatsapp } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgWhatsapp } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 export default function FloatingBottomBar({

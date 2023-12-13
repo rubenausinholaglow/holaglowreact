@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import ProductDiscountForm from 'app/(dashboard)/dashboard/(pages)/checkout/components/ProductDiscountForm';
 import { CartItem } from 'app/(dashboard)/dashboard/interface/product';
+import { SvgClose } from 'app/icons/Icons';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgClose } from 'icons/Icons';
-import { SvgArrow } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 interface Props {

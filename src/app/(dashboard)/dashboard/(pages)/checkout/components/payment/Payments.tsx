@@ -4,6 +4,7 @@ import Bugsnag from '@bugsnag/js';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
+import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
@@ -14,9 +15,10 @@ import {
 import { MessageType } from 'app/(dashboard)/dashboard/interface/messageSocket';
 import { INITIAL_STATE_PAYMENT } from 'app/(dashboard)/dashboard/interface/paymentList';
 import { Ticket } from 'app/(dashboard)/dashboard/interface/ticket';
-import { INITIAL_STATE } from 'app/(dashboard)/dashboard/utils/constants';
-import { applyDiscountToCart } from 'app/(dashboard)/dashboard/utils/utils';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { applyDiscountToCart } from 'app/utils/utils';
 import {
   AccordionContent,
   AccordionItem,
@@ -25,8 +27,6 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgSpinner } from 'icons/Icons';
-import { SvgCheck, SvgRadioChecked, SvgTimer } from 'icons/IconsDs';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 

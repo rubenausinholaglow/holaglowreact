@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import { SvgCheckCircle } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgCheckCircle } from 'icons/IconsDs';
 import Image from 'next/image';
 
 export default function ProductExplanation({ product }: { product: Product }) {

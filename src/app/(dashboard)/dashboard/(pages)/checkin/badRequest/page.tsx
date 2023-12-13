@@ -2,11 +2,11 @@
 
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgSadIcon } from 'app/icons/IconsDs';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
-import { SvgSadIcon } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 export default function BadRequestSection() {

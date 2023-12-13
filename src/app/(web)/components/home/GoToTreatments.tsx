@@ -1,9 +1,9 @@
+import { SvgHolaglowHand } from 'app/icons/Icons';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgHolaglowHand } from 'icons/Icons';
-import { SvgArrow } from 'icons/IconsDs';
 import Image from 'next/image';
 
 export default function GoToTreatments() {

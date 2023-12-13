@@ -1,6 +1,11 @@
+import {
+  SvgDiamond,
+  SvgHolaglow,
+  SvgMapMarker,
+  SvgPhone,
+} from 'app/icons/Icons';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgDiamond, SvgHolaglow, SvgMapMarker, SvgPhone } from 'icons/Icons';
 import Image from 'next/image';
 
 import { Clinic } from '../types';

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { filterItems } from '@utils/filterItems';
+import { FilterPageProps } from '@utils/props';
 import { CustomButtonFilter } from 'app/(dashboard)/dashboard/components/CustomButtonFilter';
-import { filterItems } from 'app/(dashboard)/dashboard/utils/filterItems';
-import { FilterPageProps } from 'app/(dashboard)/dashboard/utils/props';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
 export const Filters: React.FC<FilterPageProps> = ({

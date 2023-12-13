@@ -8,6 +8,13 @@ import { CartItem, Product } from 'app/(dashboard)/dashboard/interface/product';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import Dropdown from 'app/(web)/components/forms/Dropdown';
 import {
+  SvgAdd,
+  SvgArrow,
+  SvgGlow,
+  SvgInjection,
+  SvgMinus,
+} from 'app/icons/IconsDs';
+import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
@@ -22,13 +29,6 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import {
-  SvgAdd,
-  SvgArrow,
-  SvgGlow,
-  SvgInjection,
-  SvgMinus,
-} from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';

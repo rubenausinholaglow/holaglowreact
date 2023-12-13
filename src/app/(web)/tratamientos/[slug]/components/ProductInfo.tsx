@@ -8,12 +8,12 @@ import {
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { CartItem, Product } from 'app/(dashboard)/dashboard/interface/product';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
+import { SvgCalendar } from 'app/icons/Icons';
+import { SvgTimeLeft, SvgTimer } from 'app/icons/IconsDs';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgCalendar } from 'icons/Icons';
-import { SvgTimeLeft, SvgTimer } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 export default function ProductInfo({

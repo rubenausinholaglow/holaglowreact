@@ -3,10 +3,10 @@ import Bugsnag from '@bugsnag/js';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { Status } from 'app/(dashboard)/dashboard/interface/appointment';
+import { SvgSpinner } from 'app/icons/Icons';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { Html5Qrcode } from 'html5-qrcode';
-import { SvgSpinner } from 'icons/Icons';
 
 interface props {
   name: string;

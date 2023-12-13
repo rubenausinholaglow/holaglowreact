@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
+import { fetchProduct } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
-import { fetchProduct } from 'utils/fetch';
 
 export default function ProductPaymentOptions() {
   const router = useRouter();

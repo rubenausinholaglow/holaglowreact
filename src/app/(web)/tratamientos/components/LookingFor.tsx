@@ -1,8 +1,8 @@
+import { SvgPhone, SvgWhatsapp } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgPhone, SvgWhatsapp } from 'icons/IconsDs';
 
 export default function LookingFor() {
   return (

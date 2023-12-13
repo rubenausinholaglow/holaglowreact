@@ -1,6 +1,6 @@
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { priceFormat } from 'app/utils/priceFormat';
 import { Text, Underlined } from 'designSystem/Texts/Texts';
-import { priceFormat } from 'utils/priceFormat';
 
 export function PaymentTable({
   totalPrice,

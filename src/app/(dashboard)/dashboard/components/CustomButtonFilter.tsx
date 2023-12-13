@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CustomButtonFilterProps } from 'app/(dashboard)/dashboard/utils/props';
+import { CustomButtonFilterProps } from '@utils/props';
 import { Button } from 'designSystem/Buttons/Buttons';
 
 export const CustomButtonFilter: React.FC<CustomButtonFilterProps> = ({

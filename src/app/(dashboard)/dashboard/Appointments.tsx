@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { ERROR_GETTING_DATA } from '@dashboardUtils/textConstants';
 import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
+import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import {
   Appointment,
   Status,
@@ -18,13 +18,13 @@ import {
   CrisalixUserData,
   StartAppointmentData,
 } from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgArrow, SvgUserSquare } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgSpinner } from 'icons/Icons';
-import { SvgArrow, SvgUserSquare } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 

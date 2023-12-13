@@ -8,6 +8,8 @@ import DatePicker from 'react-datepicker';
 import ScheduleService from '@services/ScheduleService';
 import { Slot } from 'app/(dashboard)/dashboard/interface/slot';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
+import { SvgCheck, SvgPhone, SvgSadIcon } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -17,8 +19,6 @@ import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgHour, SvgLocation, SvgSpinner } from 'icons/Icons';
-import { SvgCheck, SvgPhone, SvgSadIcon } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

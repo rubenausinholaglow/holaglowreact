@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
@@ -10,7 +11,6 @@ import {
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrow, SvgHolaglow, SvgMenu } from 'icons/IconsDs';
 import Link from 'next/link';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';

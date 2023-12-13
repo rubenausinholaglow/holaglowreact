@@ -6,6 +6,8 @@ import ScheduleService from '@services/ScheduleService';
 import { Appointment } from 'app/(dashboard)/dashboard/interface/appointment';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgCalendar, SvgLocation, SvgSpinner } from 'app/icons/Icons';
+import { SvgCross } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -17,8 +19,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { SvgCalendar, SvgLocation, SvgSpinner } from 'icons/Icons';
-import { SvgCross } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 export default function Page({

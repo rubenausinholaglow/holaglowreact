@@ -1,9 +1,9 @@
 'use client';
 
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 
 export default function PriceFilter({
   className,

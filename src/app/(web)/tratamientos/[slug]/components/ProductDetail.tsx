@@ -14,8 +14,8 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { useElementOnScreen } from 'app/utils/common';
+import { fetchProduct } from 'app/utils/fetch';
 import { isEmpty } from 'lodash';
-import { fetchProduct } from 'utils/fetch';
 
 import PsrpPage from '../../psrp';
 import ProductCrosselling from './ProductCrosselling';

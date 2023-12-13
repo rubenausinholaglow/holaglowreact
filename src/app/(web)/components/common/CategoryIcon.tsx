@@ -1,5 +1,5 @@
+import * as icon from 'app/icons/categoryIcons';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import * as icon from 'icons/categoryIcons';
 
 const CATEGORY_ICONS: any = {
   Relleno: {

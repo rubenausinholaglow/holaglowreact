@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import ProductDetail from 'app/(web)/tratamientos/[slug]/components/ProductDetail';
+import { SvgCross } from 'app/icons/IconsDs';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
-import { SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { useCartStore } from '../stores/userCartStore';

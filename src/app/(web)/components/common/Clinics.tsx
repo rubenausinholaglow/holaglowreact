@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
+import { SvgAngle } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -15,7 +16,6 @@ import {
 } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgAngle } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { AnimateOnViewport } from './AnimateOnViewport';

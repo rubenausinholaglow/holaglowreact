@@ -10,3 +10,6 @@ export const INITIAL_STATE: State = {
   productHighlighted: null,
   professionals: [],
 };
+
+export const HEADER_HEIGHT_MOBILE = 56;
+export const HEADER_HEIGHT_DESKTOP = 72;

@@ -4,7 +4,7 @@ import ProductService from '@services/ProductService';
 import promoService from '@services/PromoService';
 import { Clinic } from 'app/(dashboard)/dashboard/interface/clinic';
 import { Product } from 'app/(dashboard)/dashboard/interface/product';
-import { Promo } from 'types/promo';
+import { Promo } from 'app/types/promo';
 
 export async function fetchProducts() {
   // Esthetic = 1, Medical = 2

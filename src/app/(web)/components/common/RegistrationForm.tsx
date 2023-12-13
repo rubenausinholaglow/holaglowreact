@@ -5,16 +5,15 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import * as errorsConfig from '@dashboardUtils/textConstants';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
+import * as errorsConfig from '@utils/textConstants';
+import { phoneValidationRegex, validateEmail } from '@utils/validators';
+import * as utils from '@utils/validators';
 import { Client } from 'app/(dashboard)/dashboard/interface/client';
-import {
-  phoneValidationRegex,
-  validateEmail,
-} from 'app/(dashboard)/dashboard/utils/validators';
-import * as utils from 'app/(dashboard)/dashboard/utils/validators';
 import { poppins } from 'app/fonts';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -23,14 +22,12 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgSpinner } from 'icons/Icons';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
-import { RegistrationFormProps } from '../../../(dashboard)/dashboard/utils/props';
+import { RegistrationFormProps } from '../../../utils/props';
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,

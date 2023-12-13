@@ -3,16 +3,16 @@ import { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import { GoToPageData } from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
-import { clearLocalStorage } from 'app/(dashboard)/dashboard/utils/utils';
+import { SvgMessage } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
+import { clearLocalStorage } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgMessage } from 'icons/IconsDs';
 import { useRouter } from 'next/navigation';
 
 export default function ValidateComment() {

@@ -1,12 +1,12 @@
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Flex } from 'designSystem/Layouts/Layouts';
 import {
   SvgCalendar,
   SvgMapMarker,
   SvgMedicine,
   SvgReceipt,
   SvgStethoscope,
-} from 'icons/Icons';
+} from 'app/icons/Icons';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import Image from 'next/image';
 
 import { Appointment } from '../types';

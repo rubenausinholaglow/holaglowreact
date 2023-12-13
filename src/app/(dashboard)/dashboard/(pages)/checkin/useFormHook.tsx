@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import ScheduleService from '@services/ScheduleService';
+import UserService from '@services/UserService';
 import {
   CHECK_IN_INCORRECT,
   EMAIL_REQUIRED,
   INVALID_EMAIL_FORMAT,
   INVALID_PHONE_FORMAT,
   PHONE_REQUIRED,
-} from '@dashboardUtils/textConstants';
-import ScheduleService from '@services/ScheduleService';
-import UserService from '@services/UserService';
+} from '@utils/textConstants';
 import { Status } from 'app/(dashboard)/dashboard/interface/appointment';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 

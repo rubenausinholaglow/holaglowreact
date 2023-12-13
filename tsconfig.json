@@ -25,7 +25,7 @@
       "@dashboardComponents/*": ["./app/(dashboard)/dashboard/components/*"],
       "@interface/*": ["./app/(dashboard)/dashboard/interface/*"],
       "@services/*": ["./app/services/*"],
-      "@dashboardUtils/*": ["./app/(dashboard)/dashboard/utils/*"],
+      "@utils/*": ["./app/utils/*"],
       "@payment/*": ["./app/(dashboard)/dashboard/(pages)/checkout/payment/*"]
     },
     "checkJs": true,

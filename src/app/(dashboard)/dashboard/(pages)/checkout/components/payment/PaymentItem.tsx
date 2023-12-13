@@ -4,16 +4,13 @@ import { messageService } from '@services/MessageService';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { PaymentCreatedData } from 'app/(dashboard)/dashboard/interface/FrontEndMessages';
 import { PaymentProductRequest } from 'app/(dashboard)/dashboard/interface/payment';
-import {
-  getPaymentBankText,
-  getPaymentMethodText,
-} from 'app/(dashboard)/dashboard/utils/utils';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgCheck, SvgCross } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { getPaymentBankText, getPaymentMethodText } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgSpinner } from 'icons/Icons';
-import { SvgCheck, SvgCross } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 
 import { usePaymentList } from './payments/usePaymentList';

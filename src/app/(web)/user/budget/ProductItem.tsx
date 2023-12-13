@@ -1,8 +1,8 @@
 'use client';
 
 import { getProductCardColor, useImageProps } from 'app/utils/common';
+import { priceFormat } from 'app/utils/priceFormat';
 import Image from 'next/image';
-import { priceFormat } from 'utils/priceFormat';
 
 import { type Product as ProductType } from '../types';
 

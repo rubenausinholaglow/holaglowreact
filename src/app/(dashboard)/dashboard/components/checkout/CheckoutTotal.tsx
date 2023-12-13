@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import ProductDiscountForm from 'app/(dashboard)/dashboard/(pages)/checkout/components/ProductDiscountForm';
-import { applyDiscountToCart } from 'app/(dashboard)/dashboard/utils/utils';
+import { SvgClose } from 'app/icons/Icons';
+import { SvgArrow } from 'app/icons/IconsDs';
+import { applyDiscountToCart } from 'app/utils/utils';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { SvgClose } from 'icons/Icons';
-import { SvgArrow } from 'icons/IconsDs';
 
 export default function CheckoutTotal() {
   const {

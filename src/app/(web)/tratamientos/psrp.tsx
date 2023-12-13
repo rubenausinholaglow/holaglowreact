@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { filterItems } from 'app/(dashboard)/dashboard/utils/filterItems';
+import { filterItems } from '@utils/filterItems';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
 import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import ProductCard from 'app/(web)/components/product/ProductCard';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgFilters } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -17,8 +19,6 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { SvgSpinner } from 'icons/Icons';
-import { SvgFilters } from 'icons/IconsDs';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 

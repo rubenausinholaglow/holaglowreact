@@ -4,7 +4,7 @@ import {
   SvgDehydration,
   SvgHairCare,
   SvgSkinCare,
-} from 'icons/Icons';
+} from 'app/icons/Icons';
 
 export const MULTISTEP_QUESTIONS: any = [
   {

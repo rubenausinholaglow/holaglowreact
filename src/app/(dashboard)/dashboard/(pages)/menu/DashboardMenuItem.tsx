@@ -6,7 +6,7 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { DashboardMenuItemProps } from '../../utils/props';
+import { DashboardMenuItemProps } from '../../../../utils/props';
 
 const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   iconSrc,

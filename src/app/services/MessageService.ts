@@ -1,7 +1,7 @@
 import {
   ERROR_RESPONSE_MESSAGE,
   ERROR_SEND_MESSAGE,
-} from '@dashboardUtils/textConstants';
+} from '@utils/textConstants';
 import { ProfessionalType } from 'app/(dashboard)/dashboard/interface/clinic';
 import {
   CrisalixUserData,
