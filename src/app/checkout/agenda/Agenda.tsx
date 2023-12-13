@@ -177,6 +177,8 @@ export default function Agenda({
   useEffect(() => {
     async function schedule() {
       if (user?.flowwwToken && previousAppointment) {
+        setLoadingDays(true);
+        setLoadingMonth(true);
         let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
         if (selectedPacksTreatments && selectedPacksTreatments.length) {
           ids = selectedPacksTreatments!
