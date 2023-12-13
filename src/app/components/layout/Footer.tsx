@@ -153,6 +153,9 @@ export function Footer() {
               </a>
             </ul>
           </SimpleAccordion>
+          <a href="/blog" id={'tmevent_footer'}>
+            <p className="font-semibold">Blog</p>
+          </a>
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <a href="/politica-de-privacidad" id={'tmevent_footer'}>

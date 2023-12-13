@@ -10,4 +10,5 @@ export const ROUTES = {
   },
   clinics: '/clinicas',
   aboutUs: '/quienes-somos',
+  blog: '/blog',
 };

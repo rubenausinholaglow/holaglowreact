@@ -24,6 +24,7 @@ const NAV_ITEMS = [
   { name: 'Tratamientos', link: ROUTES.treatments },
   { name: 'Clínicas', link: ROUTES.clinics },
   { name: 'Sobre nosotros', link: ROUTES.aboutUs },
+  { name: 'Blog', link: ROUTES.blog },
 ];
 
 function Navigation({ className }: { className: string }) {
