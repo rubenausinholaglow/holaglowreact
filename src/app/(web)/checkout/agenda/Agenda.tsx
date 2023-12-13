@@ -55,17 +55,11 @@ export default function Agenda({
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  let maxDays = 10;
-  if (
-    selectedTreatments &&
-    selectedTreatments[0] &&
-    (selectedTreatments[0].type == 2 || selectedTreatments[0].type == 1)
-  )
-    maxDays = 15;
+  let maxDays = 15;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
-      '0': 7,
+      '0': 10,
     },
     '4': {
       //Barcelona
@@ -74,6 +68,7 @@ export default function Agenda({
     },
     '5': {
       //Valencia
+      '0': 10,
       '1': 15,
       '2': 15,
     },
@@ -182,6 +177,8 @@ export default function Agenda({
   useEffect(() => {
     async function schedule() {
       if (user?.flowwwToken && previousAppointment) {
+        setLoadingDays(true);
+        setLoadingMonth(true);
         let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
         if (selectedPacksTreatments && selectedPacksTreatments.length) {
           ids = selectedPacksTreatments!
@@ -194,10 +191,14 @@ export default function Agenda({
         await ScheduleService.reschedule({
           next: {
             box: selectedSlot!.box,
-            endTime: selectedDay!.format(format) + ' ' + selectedSlot!.endTime,
+            endTime:
+              selectedDay!.format(format) + ' ' + selectedSlot!.endTime + ':00',
             id: '0',
             startTime:
-              selectedDay!.format(format) + ' ' + selectedSlot!.startTime,
+              selectedDay!.format(format) +
+              ' ' +
+              selectedSlot!.startTime +
+              ':00',
             treatment: ids,
             clientId: user?.flowwwToken,
             comment: comment,
@@ -434,7 +435,9 @@ export default function Agenda({
             <Container>
               <Flex
                 layout="col-left"
-                className="items-start w-full mb-6 md:mb-0"
+                className={`items-start w-full mb-6 md:mb-0 ${
+                  loadingDays ? 'opacity-25' : 'opacity-100'
+                }`}
               >
                 {(afternoonHours.length > 0 || morningHours.length > 0) && (
                   <>
@@ -468,8 +471,10 @@ export default function Agenda({
                               <div
                                 className="w-full cursor-pointer flex justify-center"
                                 onClick={async () => {
-                                  setClickedHour(x.startTime);
-                                  await selectHour(x);
+                                  if (!loadingDays) {
+                                    setClickedHour(x.startTime);
+                                    await selectHour(x);
+                                  }
                                 }}
                               >
                                 {clickedHour === x.startTime && (
@@ -503,8 +508,10 @@ export default function Agenda({
                               <div
                                 className="w-full cursor-pointer flex justify-center"
                                 onClick={async () => {
-                                  setClickedHour(x.startTime);
-                                  await selectHour(x);
+                                  if (!loadingDays) {
+                                    setClickedHour(x.startTime);
+                                    await selectHour(x);
+                                  }
                                 }}
                               >
                                 {clickedHour === x.startTime && (

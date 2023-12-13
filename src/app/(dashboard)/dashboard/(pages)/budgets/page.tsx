@@ -42,6 +42,7 @@ export default function Page() {
         }));
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setStateProducts(products);
+        setFilteredProducts(products);
         setIsHydrated(true);
         productFilters.isPack = true;
         setProductFilters(productFilters);

@@ -47,7 +47,7 @@ export default function DashboardLayout({
 
   const routePages: Record<string, string | ''> = {
     Crisalix: '/dashboard/crisalix',
-    Agenda: `https://agenda.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
+    Agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
     Menu: '/dashboard/menu',
     Home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
     CheckOut: '/dashboard/remoteControl/Payment',

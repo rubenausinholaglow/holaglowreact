@@ -47,6 +47,7 @@ export default function Page({
     state => state
   );
 
+  const [currentToken, setCurrentToken] = useState('');
   let showPast = false;
   let token = '';
 
@@ -54,6 +55,7 @@ export default function Page({
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     token = params.get('token') ?? '';
+    setCurrentToken(token);
     showPast = params.get('showPast') == 'true';
 
     const getAppointments = async () => {
@@ -86,7 +88,7 @@ export default function Page({
     ScheduleService.cancel(x).then(y => {
       const startTime = new Date(x.startTime!);
       const url =
-        '/appointment-cancel?day=' +
+        '/cita-cancelada?day=' +
         startTime.getDate() +
         '&month=' +
         months[startTime.getMonth()] +
@@ -100,12 +102,12 @@ export default function Page({
 
   const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
-      flowwwToken: token,
+      flowwwToken: currentToken,
       firstName: '',
       email: '',
       id: '',
       phone: '',
-      clinicToken: token,
+      clinicToken: currentToken,
     });
     const treatments = x.treatment?.split(',');
     const products: Product[] = [];
@@ -153,7 +155,7 @@ export default function Page({
               {appointmentToCancel?.treatmentText}
             </Text>
             <Text className="text-sm text-center">
-              {dayjs(appointmentToCancel?.startTime).daysInMonth()} de{' '}
+              {dayjs(appointmentToCancel?.startTime).format('DD')} de{' '}
               {dayjs(appointmentToCancel?.startTime).format('MMMM')} a las {}
               {dayjs(appointmentToCancel?.startTime).format('HH:mm')}
             </Text>
