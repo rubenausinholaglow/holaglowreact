@@ -207,7 +207,7 @@ export default function Page({
                   <Flex layout="row-left" className="">
                     <SvgCalendar className="mr-2" />
                     <div className="text-xs">
-                      {dayjs(appointment.startTime).daysInMonth()} de{' '}
+                      {dayjs(appointment.startTime).format('DD')} de{' '}
                       {dayjs(appointment.startTime).format('MMMM')} a las {}
                       {dayjs(appointment.startTime).format('HH:mm')}
                     </div>
