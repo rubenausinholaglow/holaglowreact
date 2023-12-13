@@ -1,7 +1,12 @@
 .blog-post p {
   margin-bottom: theme('spacing.6');
 }
-
+.bold {
+  font-weight: bold;
+}
+.italic {
+  font-style: italic;
+}
 .blog-post .title {
   font-weight: 600;
   font-size: 24px;
