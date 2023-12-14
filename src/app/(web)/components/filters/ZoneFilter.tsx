@@ -43,7 +43,7 @@ export default function ZoneFilter({
     },
     {
       name: 'Piel',
-      id: 5,
+      id: 7,
       icon: '/images/filters/piel.svg',
     },
   ];
