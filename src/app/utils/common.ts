@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Product } from '@interface/product';
+import { Product } from 'app/types/product';
 import { isEmpty } from 'lodash';
 
 const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';

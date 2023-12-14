@@ -22,11 +22,11 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["./app/dashboard/components/*"],
-      "@interface/*": ["./app/dashboard/interface/*"],
-      "@services/*": ["./app/dashboard/services/*"],
-      "@utils/*": ["./app/dashboard/utils/*"],
-      "@payment/*": ["./app/dashboard/(pages)/checkout/payment/*"]
+      "@dashboardComponents/*": ["./app/(dashboard)/dashboard/components/*"],
+      "@interface/*": ["./app/(dashboard)/dashboard/interface/*"],
+      "@services/*": ["./app/services/*"],
+      "@utils/*": ["./app/utils/*"],
+      "@payment/*": ["./app/(dashboard)/dashboard/(pages)/checkout/payment/*"]
     },
     "checkJs": true,
     "types": ["node"]
@@ -39,7 +39,7 @@
     "tailwind.config.js",
     "src/utils/priceFormat.ts",
     "src/app/utils/colors.ts",
-    "src/app/dashboard/(pages)/budgets/filterUtils.js"
+    "src/app/(dashboard)/dashboard/(pages)/budgets/filterUtils.js"
   ],
   "exclude": ["node_modules"]
 }

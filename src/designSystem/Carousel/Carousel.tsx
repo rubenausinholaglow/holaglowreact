@@ -4,8 +4,8 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useEffect, useState } from 'react';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrow } from 'icons/IconsDs';
 import {
   ButtonBack,
   ButtonNext,
