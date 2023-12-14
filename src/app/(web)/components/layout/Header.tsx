@@ -27,6 +27,7 @@ function Navigation({ className }: { className: string }) {
     { name: 'Tratamientos', link: ROUTES.treatments },
     { name: 'Clínicas', link: ROUTES.clinics },
     { name: 'Sobre nosotros', link: ROUTES.aboutUs },
+    { name: 'Blog', link: ROUTES.blog },
   ];
 
   return (
@@ -51,6 +52,7 @@ export default function Header() {
 
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
+  const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
   const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
 
@@ -64,6 +66,7 @@ export default function Header() {
       window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
     );
     scrollPos = window.scrollY;
+    setIsScrollOnTop(scrollPos === 0);
 
     isTicking = false;
   };
@@ -97,9 +100,9 @@ export default function Header() {
 
       <header
         id="header"
-        className={`z-30 w-full bg-white top-0 sticky transition-transform ${
+        className={`z-30 w-full top-0 sticky transition-all ${
           !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
-        }`}
+        } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
       >
         {/* <PromoTopBar /> */}
         <AnimateOnViewport origin="top">
@@ -122,6 +125,7 @@ export default function Header() {
                 className="lg:absolute right-0 2xl:mr-20"
               >
                 <Button
+                  size="sm"
                   type="tertiary"
                   href={ROUTES.checkout.clinics}
                   className="hidden md:block"

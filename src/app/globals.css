@@ -4,6 +4,20 @@
 
 @config "./../../tailwind.config.js";
 
+@font-face {
+  font-family: 'gtUltraThin';
+  src: url('/fonts/gtultramedian-thin.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gtUltraBold';
+  src: url('/fonts/gtultramedian-bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -48,7 +62,7 @@ a {
   display: none;
 }
 
-#categorySelector {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+#categorySelector::-webkit-scrollbar,
+#blogCategorySelector::-webkit-scrollbar {
+  display: none;
 }
