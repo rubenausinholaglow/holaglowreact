@@ -1,12 +1,12 @@
-import { Appointment, User, UserCheckin } from '@interface/appointment';
-import { AnalyticsMetrics } from '@interface/client';
-import { Clinic } from '@interface/clinic';
-import { Product } from '@interface/product';
-import { Slot } from '@interface/slot';
-import { INITIAL_FILTERS } from 'app/tratamientos/utils/filters';
+import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
+import { Appointment, User, UserCheckin } from 'app/types/appointment';
+import { AnalyticsMetrics } from 'app/types/client';
+import { Clinic } from 'app/types/clinic';
+import { ProductFilters } from 'app/types/filters';
+import { Product } from 'app/types/product';
+import { Promo } from 'app/types/promo';
+import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
-import { ProductFilters } from 'types/filters';
-import { Promo } from 'types/promo';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 

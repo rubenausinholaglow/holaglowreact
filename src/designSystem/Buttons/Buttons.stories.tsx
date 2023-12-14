@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { SvgArrowSmallLeft } from 'app/icons/Icons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { SvgArrowSmallLeft } from 'icons/Icons';
 
 import { Button } from './Buttons';
 
