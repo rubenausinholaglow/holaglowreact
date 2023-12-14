@@ -27,10 +27,15 @@ export default function TypeFilter({
 
   return (
     <ul
-      className={`grid grid-cols-3 gap-5 w-full ${className ? className : ''}`}
+      className={`flex gap-2 items-center w-full ${className ? className : ''}`}
     >
       {PRODUCTTYPE.map(type => (
         <li
+          className={`flex items-center gap-2 py-2 px-4 rounded-full text-xs font-medium cursor-pointer ${
+            productFilters.type.includes(type.id)
+              ? 'bg-hg-primary500'
+              : 'bg-hg-black100'
+          }`}
           id={'tmevent_filters'}
           key={type.name}
           onClick={() =>
@@ -43,12 +48,6 @@ export default function TypeFilter({
             )
           }
         >
-          {productFilters.type.includes(type.id) ? (
-            <SvgCheckSquareActive className="ml-auto" />
-          ) : (
-            <SvgCheckSquare className="ml-auto" />
-          )}
-
           {type.name}
         </li>
       ))}
