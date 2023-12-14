@@ -23,6 +23,21 @@ export default function TypeFilter({
       id: 3,
       icon: '/images/filters/tercioInferior.svg',
     },
+    {
+      name: 'Tarjeta Regalo',
+      id: 6,
+      icon: '/images/filters/tercioInferior.svg',
+    },
+    {
+      name: 'Glow Box',
+      id: 7,
+      icon: '/images/filters/tercioInferior.svg',
+    },
+    {
+      name: 'Glow Gifts',
+      id: 8,
+      icon: '/images/filters/tercioInferior.svg',
+    },
   ];
 
   return (
