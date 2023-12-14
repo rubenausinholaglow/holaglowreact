@@ -6,6 +6,10 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx,mdx}',
   ],
   theme: {
+    fontFamily: {
+      gtUltraThin: ['gtUltraThin', 'Georgia', 'serif'],
+      gtUltraBold: ['gtUltraBold', 'Georgia', 'serif'],
+    },
     fontSize: {
       '6xl': ['78px', '92px'],
       '5xl': ['64px', '72px'],
@@ -75,6 +79,7 @@ module.exports = {
         'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.05)',
         'centered-black': '0 0 10px 10px rgba(0,0,0,0.1)',
         'centered-black-sm': '0 0 5px 5px rgba(0,0,0,0.1)',
+        'centered-black-lg': '0 0 50px 50px rgba(0,0,0,0.05)',
       },
       keyframes: {
         slideDown: {

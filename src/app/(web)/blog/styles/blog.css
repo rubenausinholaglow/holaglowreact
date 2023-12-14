@@ -1,0 +1,121 @@
+.blog-post p {
+  margin-bottom: theme('spacing.6');
+}
+.blog-post .bold {
+  font-weight: bold;
+}
+
+.blog-post .italic {
+  font-style: italic;
+}
+
+.blog-post a {
+  color: theme('colors.hg.secondary');
+}
+.blog-post a:hover {
+  text-decoration: underline;
+}
+
+.blog-post .title {
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: theme('spacing.8');
+  margin-top: theme('spacing.12');
+}
+
+.blog-post img {
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.blog-intro {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid theme('colors.hg.black');
+  margin-bottom: theme('spacing.6');
+  padding-bottom: theme('spacing.8');
+}
+
+.blog-intro p {
+  font-weight: 600;
+}
+
+.blog-intro p:last-child {
+  margin-bottom: 0;
+}
+
+.number-list {
+  display: flex;
+  flex-direction: column;
+  gap: theme('spacing.8');
+}
+
+.number-list li {
+  display: flex;
+  flex-direction: row;
+}
+
+.number-list li p {
+  margin-bottom: 0;
+}
+
+.number-list li span {
+  display: block;
+  border: 1px solid theme('colors.hg.secondary');
+  color: theme('colors.hg.secondary');
+  padding: theme('spacing.2');
+  border-radius: 100%;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin-right: theme('spacing.4');
+}
+
+.check-list {
+  margin-top: theme('spacing.8');
+  margin-bottom: theme('spacing.8');
+  display: flex;
+  flex-direction: column;
+  gap: theme('spacing.8');
+}
+
+.check-list li {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: theme('spacing.2');
+}
+
+.check-list li img {
+  flex-shrink: 0;
+}
+
+.blog-post table {
+  max-width: calc(100svw - 32px);
+  overflow-x: scroll;
+  display: flex;
+  margin-bottom: theme('spacing.8');
+  text-align: left;
+}
+
+.blog-post table tr {
+  display: flex;
+}
+
+.blog-post table th {
+  background: theme('colors.hg.secondary300');
+}
+
+.blog-post table td {
+  font-size: theme('fontSize.sm');
+}
+
+.blog-post table td,
+.blog-post table th {
+  flex: 1 1 0;
+  padding-top: theme('spacing.2');
+  padding-bottom: theme('spacing.2');
+  padding-left: theme('spacing.4');
+  padding-right: theme('spacing.4');
+}

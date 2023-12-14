@@ -1,5 +1,6 @@
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
+import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
@@ -45,6 +46,7 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   user?: User;
   promo: Promo | undefined;
+  blogPosts: Post[] | undefined;
   remoteControl: boolean;
   ignoreMessages: boolean;
   storedClinicId: string | '';
@@ -62,6 +64,7 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
+  setBlogPosts: (value: Post[]) => void;
   setRemoteControl: (remoteControl: boolean) => void;
   setIgnoreMessages: (ignoreMessages: boolean) => void;
   setClinicId: (storedClinicId: string) => void;
@@ -144,10 +147,10 @@ export const useGlobalPersistedStore = create(
   persist<GlobalPersistStore & GlobalPersistActions>(
     set => ({
       promo: undefined,
+      blogPosts: undefined,
       stateProducts: [],
       clinics: [],
       user: undefined,
-
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -163,6 +166,9 @@ export const useGlobalPersistedStore = create(
       },
       setPromos: (value: Promo) => {
         set({ promo: value });
+      },
+      setBlogPosts: (value: Post[]) => {
+        set({ blogPosts: value });
       },
       remoteControl: false,
       setRemoteControl: value => {

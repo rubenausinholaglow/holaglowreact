@@ -157,6 +157,9 @@ export default function MobileNavigation({
               </a>
             </ul>
           </SimpleAccordion>
+          <a href="/blog" id={'tmevent_nav_menu_click'}>
+            <p className="font-semibold">Blog</p>
+          </a>
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <a href="/politica-de-privacidad" id={'tmevent_nav_menu_click'}>
