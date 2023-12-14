@@ -18,6 +18,7 @@ export async function generateMetadata(
   return {
     title: postData.metaTitle,
     description: postData.metaDescription,
+    authors: [{ name: postData.author }],
     alternates: {
       canonical: postData.canonical,
     },
