@@ -141,4 +141,8 @@ export enum ProductType {
   Medical,
   Product,
   Voucher,
+  Dashboard,
+  GiftCard,
+  GlowBox,
+  GlowGifts,
 }

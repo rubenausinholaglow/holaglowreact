@@ -17,6 +17,7 @@ export default function ProductHeader({
   isDashboard?: boolean;
 }) {
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
+  const validTypes = [3, 6, 7, 8];
 
   return (
     <>
@@ -34,7 +35,7 @@ export default function ProductHeader({
             {product.title}
           </Title>
 
-          {product.type == 3 ? (
+          {validTypes.includes(product.type) ? (
             <Text isAnimated className="text-hg-black500 mb-4">
               <p
                 dangerouslySetInnerHTML={{
