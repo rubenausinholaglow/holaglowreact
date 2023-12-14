@@ -18,7 +18,7 @@ export const Title = ({
 }: {
   size?: '3xl' | '2xl' | 'xl';
   weight?: string;
-  as?: 'h3' | 'h1';
+  as?: 'h3' | 'h2' | 'h1';
   className?: string;
   wrapperClassName?: string;
   isAnimated?: boolean;
@@ -65,7 +65,7 @@ export const Text = ({
   rest,
 }: {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inherit';
-  as?: 'h3' | 'p' | 'span';
+  as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
   className?: string;
   wrapperClassName?: string;
   onClick?: (...args: any[]) => void;

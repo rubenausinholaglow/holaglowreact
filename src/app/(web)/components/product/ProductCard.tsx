@@ -19,7 +19,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
@@ -139,71 +138,67 @@ export default function ProductCard({
         layout="col-left"
         className="p-3 flex-grow bg-white rounded-b-2xl z-10"
       >
-        <AnimateOnViewport origin="bottom">
-          <Text className="mb-2 font-semibold">{product.title}</Text>
-          {!isDashboard && (
-            <Text size="xs" className="text-hg-black500 mb-8">
-              {product.longDescription}
-            </Text>
-          )}
-        </AnimateOnViewport>
-        <AnimateOnViewport origin="bottom" className="w-full mt-auto">
+        <Text className="mb-2 font-semibold">{product.title}</Text>
+        {!isDashboard && (
+          <Text size="xs" className="text-hg-black500 mb-8">
+            {product.longDescription}
+          </Text>
+        )}
+        <Flex
+          layout={isDashboard ? 'col-left' : 'row-left'}
+          className="mt-auto justify-between w-full"
+        >
           <Flex
-            layout={isDashboard ? 'col-left' : 'row-left'}
-            className="mt-auto justify-between w-full"
+            layout={isDashboard ? 'row-left' : 'col-left'}
+            className="gap-2 mb-2"
           >
-            <Flex
-              layout={isDashboard ? 'row-left' : 'col-left'}
-              className="gap-2 mb-2"
-            >
-              {discountedPrice > 0 && (
-                <Text
-                  className={`text-xs line-through text-hg-black500 ${
-                    isDashboard ? 'order-2 text-md' : ''
-                  }`}
-                >
-                  {product.price} €
-                </Text>
-              )}
-              {!discountedPrice && !product.isPack && (
-                <Text className="text-xs text-hg-secondary">desde</Text>
-              )}
+            {discountedPrice > 0 && (
               <Text
-                className={`text-hg-secondary font-semibold ${
-                  isDashboard ? 'text-xl' : 'text-lg'
+                className={`text-xs line-through text-hg-black500 ${
+                  isDashboard ? 'order-2 text-md' : ''
                 }`}
               >
-                {discountedPrice ? discountedPrice : product.price} €{' '}
+                {product.price} €
               </Text>
-            </Flex>
-            {isDashboard ? (
-              <Button
-                size="sm"
-                type="tertiary"
-                className="mt-auto"
-                bgColor="bg-hg-primary"
-                onClick={e => {
-                  e.stopPropagation();
-                  addToCart(product as CartItem);
-                  setPendingDiscount(true);
-                }}
-              >
-                <p className="mr-2">Añadir </p>
-                <SvgPlusSmall height={20} width={20} />
-              </Button>
-            ) : (
-              <Button
-                type="tertiary"
-                className="mt-auto ml-4"
-                bgColor="bg-hg-primary"
-                customStyles="hover:bg-hg-secondary100"
-              >
-                <p className="mr-2">Saber más</p>
-                <SvgArrow height={20} width={20} />
-              </Button>
             )}
+            {!discountedPrice && !product.isPack && (
+              <Text className="text-xs text-hg-secondary">desde</Text>
+            )}
+            <Text
+              className={`text-hg-secondary font-semibold ${
+                isDashboard ? 'text-xl' : 'text-lg'
+              }`}
+            >
+              {discountedPrice ? discountedPrice : product.price} €{' '}
+            </Text>
           </Flex>
-        </AnimateOnViewport>
+          {isDashboard ? (
+            <Button
+              size="sm"
+              type="tertiary"
+              className="mt-auto"
+              bgColor="bg-hg-primary"
+              onClick={e => {
+                e.stopPropagation();
+                addToCart(product as CartItem);
+                setPendingDiscount(true);
+              }}
+            >
+              <p className="mr-2">Añadir </p>
+              <SvgPlusSmall height={20} width={20} />
+            </Button>
+          ) : (
+            <Button
+              type="tertiary"
+              className="mt-auto ml-4"
+              bgColor="bg-hg-primary"
+              customStyles="hover:bg-hg-secondary100"
+            >
+              <p className="mr-2">Saber más</p>
+              <SvgArrow height={20} width={20} />
+            </Button>
+          )}
+        </Flex>
       </Flex>
     </div>
   );

@@ -1,6 +1,7 @@
 'use client';
 
-import { SvgHolaglow, SvgInstagram } from 'app/icons/IconsDs';
+import { SvgHolaglow } from 'app/icons/IconsDs';
+import { SvgInstagram } from 'app/icons/socialIcons';
 import {
   useGlobalPersistedStore,
   useSessionStore,
