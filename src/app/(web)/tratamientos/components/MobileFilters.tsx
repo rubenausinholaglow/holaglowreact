@@ -60,6 +60,7 @@ export default function MobileFilters({
                     clinic: [],
                     text: '',
                     price: [],
+                    type: [],
                   });
                   setModalVisibility(false);
                 }}

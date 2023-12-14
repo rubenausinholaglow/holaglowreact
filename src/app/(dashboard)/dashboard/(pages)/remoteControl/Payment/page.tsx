@@ -2,13 +2,18 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { budgetService } from '@services/BudgetService';
+import ProductService from '@services/ProductService';
 import { INITIAL_STATE } from '@utils/constants';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+} from 'app/stores/globalStore';
 import { Budget, BudgetProduct } from 'app/types/budget';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
+import { Product } from 'app/types/product';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
 import { useCartStore } from '../../budgets/stores/userCartStore';
@@ -21,10 +26,17 @@ export default function PaymentRemoteControl() {
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const [finalBudget, setFinalBudget] = useState<Budget | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState('');
   const [messageNotification, setMessageNotification] = useState<string | ''>(
     ''
   );
   const { user } = useGlobalPersistedStore(state => state);
+
+  const { setFilteredProducts, productFilters, setProductFilters } =
+    useGlobalStore(state => state);
+
+  const { setStateProducts } = useGlobalPersistedStore(state => state);
+
   useEffect(() => {
     const fetchData = async () => {
       await loadBudget();
@@ -109,6 +121,30 @@ export default function PaymentRemoteControl() {
   ) => {
     applyItemDiscount(id, value, discountType);
   };
+
+  useEffect(() => {
+    setStateProducts([]);
+    setFilteredProducts([]);
+    const fetchProducts = async () => {
+      try {
+        const data = await ProductService.getDashboardProducts();
+        const products = data.map((product: Product) => ({
+          ...product,
+          visibility: true,
+        }));
+        products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
+        setStateProducts(products);
+        setFilteredProducts(products);
+        productFilters.isPack = true;
+        setProductFilters(productFilters);
+      } catch (error: any) {
+        Bugsnag.notify(error);
+      }
+    };
+
+    fetchProducts();
+    setProductFilters(productFilters);
+  }, []);
 
   return (
     <MainLayout isDashboard isCheckout>

@@ -5,4 +5,5 @@ export interface ProductFilters {
   clinic: string[];
   text: string;
   price: number[];
+  type: number[];
 }
