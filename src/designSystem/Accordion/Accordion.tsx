@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { SvgAdd } from 'icons/IconsDs';
+import { SvgAdd } from 'app/icons/IconsDs';
 import { twMerge } from 'tailwind-merge';
 
 export function SimpleAccordion({

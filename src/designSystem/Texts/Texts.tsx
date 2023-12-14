@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { AnimateOnViewport } from 'app/components/common/AnimateOnViewport';
+import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { twMerge } from 'tailwind-merge';
 
