@@ -26,3 +26,12 @@ export const paymentItems = [
     paymentMethod: PaymentMethod.CreditCard,
   },
 ];
+
+export const checkoutPaymentItems = [
+  {
+    key: 'creditCard',
+    label: 'Tarjeta',
+    paymentBank: PaymentBank.CreditCard,
+    paymentMethod: PaymentMethod.CreditCard,
+  },
+];

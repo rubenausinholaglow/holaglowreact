@@ -10,6 +10,9 @@ import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
+import CheckoutPayment from '../components/CheckoutPayment';
+import AppointmentResume from '../confirmation/components/AppointmentResume';
+
 dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
@@ -40,6 +43,9 @@ export default function ConctactForm() {
     >
       <Container className="px-0 mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+          <div className="w-full md:w-1/2 md:order-2">
+            <AppointmentResume />
+          </div>
           <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
             <Flex layout="col-left" className="gap-4 mb-8">
               <Title size="xl" className="font-semibold">
@@ -90,9 +96,10 @@ export default function ConctactForm() {
               )}
             </Flex>
 
-            <RegistrationForm redirect={hideLayout} />
+            <RegistrationForm redirect={hideLayout} hasContinueButton={false} />
+
+            <CheckoutPayment className="mt-8" />
           </div>
-          <div className="w-full md:w-1/2"></div>
         </Flex>
       </Container>
     </MainLayout>

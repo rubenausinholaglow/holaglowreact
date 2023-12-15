@@ -32,9 +32,11 @@ import { RegistrationFormProps } from '../../../utils/props';
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
   isDashboard = false,
+  hasContinueButton = true,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
+  hasContinueButton?: boolean;
 }) => {
   const router = useRouter();
   const routes = useRoutes();
@@ -390,15 +392,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           )}
       </Flex>
 
-      <Button
-        disabled={isDisabled}
-        onClick={handleContinue}
-        type="primary"
-        size="xl"
-        className="w-full"
-      >
-        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
-      </Button>
+      {hasContinueButton && (
+        <Button
+          disabled={isDisabled}
+          onClick={handleContinue}
+          type="primary"
+          size="xl"
+          className="w-full"
+        >
+          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
+        </Button>
+      )}
       {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
         <p className="text-red-500 text-left text-sm mt-2">
           {errorsConfig.ERROR_MISSING_FIELDS}

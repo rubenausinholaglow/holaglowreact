@@ -17,6 +17,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import AppointmentResume from './AppointmentResume';
+
 export default function Confirmation({
   appointment,
   isDashboard,
@@ -130,6 +132,8 @@ export default function Confirmation({
           </Flex>
         </div>
         <div className="row-span-2 w-full">
+          <AppointmentResume appointment={appointment} />
+
           <Text className="hidden md:block mb-6 text-xs">
             Resumen de tu cita
           </Text>

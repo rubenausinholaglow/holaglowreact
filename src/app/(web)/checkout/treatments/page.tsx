@@ -45,7 +45,7 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
     }
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
-    setSelectedTreatments([]);
+    //setSelectedTreatments([]);
   }, []);
 
   function getProductsByCategory(category: string) {
