@@ -35,7 +35,9 @@ export default function PaymentRemoteControl() {
   const { setFilteredProducts, productFilters, setProductFilters } =
     useGlobalStore(state => state);
 
-  const { setStateProducts } = useGlobalPersistedStore(state => state);
+  const { setStateProducts, setBudgetId } = useGlobalPersistedStore(
+    state => state
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,6 +74,7 @@ export default function PaymentRemoteControl() {
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
     setFinalBudget(budget);
+    setBudgetId(budget.id);
     applyCartDiscounts(budget);
     await processBudgetItems(budget);
   }

@@ -70,7 +70,10 @@ export default function DashboardLayout({
           message.data.boxId,
           storedBoxId
         );
-        if (message.data.clinicId != storedClinicId || !isBoxIdInStoredBoxIds) {
+        if (
+          message.data.clinicId.toUpperCase() != storedClinicId.toUpperCase() ||
+          !isBoxIdInStoredBoxIds
+        ) {
           return true;
         }
         let messageData: any;
