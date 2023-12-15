@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
+import { User } from '@interface/appointment';
 import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import UserService from '@services/UserService';
@@ -63,8 +64,13 @@ export default function PaymentInput(props: Props) {
 
   const { user, stateProducts } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
-  const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
-    useGlobalPersistedStore(state => state);
+  const {
+    remoteControl,
+    storedBoxId,
+    storedClinicId,
+    storedBudgetId,
+    setCurrentUser,
+  } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
@@ -260,6 +266,18 @@ export default function PaymentInput(props: Props) {
           setMessageNotification('Error pagando con Pepper');
         }
       });
+
+      await UserService.checkUser(user?.email)
+        .then(async data => {
+          if (data && !isEmpty(data)) {
+            setCurrentUser(data);
+          } else {
+            //TODO - MESSAGE ERROR UI
+          }
+        })
+        .catch(error => {
+          Bugsnag.notify('Error handleCheckUser:', error);
+        });
     });
     setIsLoading(false);
   };
