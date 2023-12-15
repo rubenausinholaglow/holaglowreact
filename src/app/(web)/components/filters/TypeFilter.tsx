@@ -42,11 +42,13 @@ export default function TypeFilter({
 
   return (
     <ul
-      className={`flex gap-2 items-center w-full ${className ? className : ''}`}
+      className={`flex flex-wrap items-center w-full ${
+        className ? className : ''
+      }`}
     >
       {PRODUCTTYPE.map(type => (
         <li
-          className={`flex items-center gap-2 py-2 px-4 rounded-full text-xs font-medium cursor-pointer ${
+          className={`flexitems-center mr-3 mb-2 gap-2 py-2 px-4 rounded-full text-xs font-medium cursor-pointer ${
             productFilters.type.includes(type.id)
               ? 'bg-hg-primary500'
               : 'bg-hg-black100'
