@@ -7,11 +7,11 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
-import { useRouter } from 'next/router';
 
 dayjs.locale(spanishConf);
 
@@ -29,8 +29,10 @@ export default function Wait() {
   const router = useRouter();
 
   useEffect(() => {
+    let tries = 0;
     async function checkPaymentStatus(id: string) {
       await FinanceService.checkPaymentStatus(id).then(async x => {
+        tries++;
         if (x) {
           await ScheduleService.createAppointment(
             selectedTreatments,
@@ -43,6 +45,10 @@ export default function Wait() {
           ).then(x => {
             router.push('/checkout/confirmation');
           });
+        } else if (tries < 3) {
+          setTimeout(async () => {
+            await checkPaymentStatus(id);
+          }, 15000);
         }
       });
     }
