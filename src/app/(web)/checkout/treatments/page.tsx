@@ -93,7 +93,7 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
                   }
                 }}
               >
-                <Flex className="">
+                <Flex>
                   <SvgUserScan className="shrink-0 mr-4" />
                   <div>
                     <Text className="font-semibold">Primera cita gratis</Text>

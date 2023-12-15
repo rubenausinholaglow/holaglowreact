@@ -39,11 +39,13 @@ export default function ClinicsCheckout() {
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
 
-    router.push(
+    router.push(ROUTES.checkout.type);
+
+    /* router.push(
       isEmpty(selectedTreatments)
         ? ROUTES.checkout.treatments
         : ROUTES.checkout.schedule
-    );
+    ); */
   };
 
   useEffect(() => {
