@@ -120,7 +120,7 @@ export default function Html({ children }: { children: ReactNode }) {
 
   return (
     <body
-      className={`${poppins.className} ${
+      className={`relative min-h-full ${poppins.className} ${
         isModalOpen || !isMainScrollEnabled
           ? 'overflow-hidden'
           : 'overflow-auto'

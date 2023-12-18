@@ -328,7 +328,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         )}
       </div>
 
-      <Flex layout="col-left" className="my-2 mb-6">
+      <Flex layout="col-left" className="my-2 mb-4">
         <Flex layout="row-left">
           <label
             htmlFor="termsAndConditionsAccepted"

@@ -20,6 +20,7 @@ export default function ConctactForm() {
     useSessionStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
   const [hideLayout, setHideLayout] = useState(false);
+  const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
 
   const localSelectedDay = dayjs(selectedDay);
 
@@ -34,77 +35,45 @@ export default function ConctactForm() {
       const params = new URLSearchParams(queryString);
       setHideLayout(params.get('hideLayout') == 'true');
     }
+
+    setisProbadorVirtual(
+      selectedTreatments[0].id ===
+        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+    );
   }, []);
+
   return (
     <MainLayout
       isCheckout={!hideLayout}
       hideHeader={hideLayout}
       hideFooter={hideLayout}
     >
-      <Container className="px-0 mt-6 md:mt-16 pb-16">
+      <Container className="px-0 md:mt-8 md:pb-8">
         <Flex
           layout="col-left"
-          className="gap-8 md:gap-16 md:flex-row bg-hg-cream500 rounded-t-2xl pt-4"
+          className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
         >
           <div className="w-full md:w-1/2 md:order-2">
-            <AppointmentResume />
+            <AppointmentResume isProbadorVirtual={isProbadorVirtual} />
           </div>
-          <div className="w-full md:w-1/2 bg-hg-black50 px-4 py-6 md:p-8 rounded-3xl">
-            <Flex layout="col-left" className="gap-4 mb-8">
-              <Title size="xl" className="font-semibold">
-                Reserva tu cita
-              </Title>
-              {localSelectedDay != undefined && (
-                <>
-                  {!selectedSlot && (
-                    <Text size="sm">
-                      Introduce tus datos de contacto para acceder a la agenda
-                    </Text>
-                  )}
-                  {selectedSlot && (
-                    <Text size="sm">
-                      Introduce tus datos de contacto para la cita de{' '}
-                      <span className="font-semibold w-full">
-                        {selectedTreatmentsNames}
-                      </span>
-                    </Text>
-                  )}
-                  {selectedClinic && selectedSlot && (
-                    <Flex className="">
-                      <span>
-                        <SvgLocation />
-                      </span>
-                      <Text size="xs" className="w-full text-left pl-2">
-                        {selectedClinic.address}, {selectedClinic.city}
-                      </Text>
-                    </Flex>
-                  )}
-                  {selectedSlot && (
-                    <Flex>
-                      <span>
-                        <SvgCalendar />
-                      </span>
-                      <Text
-                        size="xs"
-                        className="w-full text-left pl-2 capitalize"
-                      >
-                        {localSelectedDay.format('dddd')},{' '}
-                        {localSelectedDay.format('D')} de{' '}
-                        {localSelectedDay.format('MMMM')}{' '}
-                        {selectedSlot?.startTime}
-                      </Text>
-                    </Flex>
-                  )}
-                </>
-              )}
-            </Flex>
 
-            <RegistrationForm redirect={hideLayout} hasContinueButton={false} />
+          <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
+            <Title size="xl" className="font-semibold mb-4">
+              Reserva tu cita
+            </Title>
 
-            <CheckoutPayment className="mt-8" />
+            <RegistrationForm
+              redirect={hideLayout}
+              hasContinueButton={isProbadorVirtual}
+            />
+
+            {!isProbadorVirtual && <CheckoutPayment className="mt-8" />}
           </div>
         </Flex>
       </Container>
+      <div className="hidden md:block absolute left-0 right-0 -z-50 top-0 bottom-0">
+        <div className="bg-hg-cream500 w-1/2 h-full"></div>
+      </div>
     </MainLayout>
   );
 }

@@ -14,7 +14,7 @@ export default function CheckoutPayment({
         Selecciona método de pago
       </Title>
 
-      <Text className="text-hg-black500 text-sm">
+      <Text className="text-hg-black500 text-sm mb-4">
         Paga ahora un anticipo del tratamiento de 49 € en concepto de reserva
       </Text>
 
