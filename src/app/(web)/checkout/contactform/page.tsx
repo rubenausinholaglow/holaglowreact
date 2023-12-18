@@ -3,12 +3,11 @@
 import { useEffect, useState } from 'react';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgCalendar, SvgLocation } from 'app/icons/Icons';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 
 import CheckoutPayment from '../components/CheckoutPayment';
 import AppointmentResume from '../confirmation/components/AppointmentResume';
@@ -16,20 +15,11 @@ import AppointmentResume from '../confirmation/components/AppointmentResume';
 dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
-  const { selectedTreatments, selectedSlot, selectedDay, selectedClinic } =
-    useSessionStore(state => state);
-  const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
+  const { selectedTreatments } = useSessionStore(state => state);
   const [hideLayout, setHideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
 
-  const localSelectedDay = dayjs(selectedDay);
-
   useEffect(() => {
-    if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatmentsNames(
-        selectedTreatments!.map(x => x.title).join(' + ')
-      );
-    }
     if (window) {
       const queryString = window.location.search;
       const params = new URLSearchParams(queryString);

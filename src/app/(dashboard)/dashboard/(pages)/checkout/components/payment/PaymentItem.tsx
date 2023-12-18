@@ -3,7 +3,7 @@ import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgCross } from 'app/icons/IconsDs';
+import { SvgCross } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { PaymentCreatedData } from 'app/types/FrontEndMessages';
 import { PaymentProductRequest } from 'app/types/payment';

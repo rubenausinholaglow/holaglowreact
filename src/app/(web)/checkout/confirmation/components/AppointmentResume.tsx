@@ -11,7 +11,7 @@ import {
   SvgHour,
   SvgLocation,
 } from 'app/icons/Icons';
-import { SvgBag, SvgInjection } from 'app/icons/IconsDs';
+import { SvgBag } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -44,10 +44,8 @@ export default function AppointmentResume({
     selectedDay,
     selectedClinic,
     selectedPacksTreatments,
-    setAnalyticsMetrics,
   } = useSessionStore(state => state);
 
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
 

@@ -3,44 +3,24 @@
 import { useEffect, useState } from 'react';
 import { fetchProduct } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
-import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHolaglowHand } from 'app/icons/Icons';
-import { SvgArrow, SvgRadioChecked, SvgUserScan } from 'app/icons/IconsDs';
+import { SvgArrow, SvgUserScan } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
-import { getDiscountedPrice } from 'app/utils/common';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function PVCitaMedica() {
   const router = useRouter();
   const ROUTES = useRoutes();
 
-  const { selectedPacksTreatments, selectedTreatments, setSelectedTreatments } =
-    useSessionStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
   const [PVProduct, setPVProduct] = useState<Product | null>(null);
-
-  useEffect(() => {
-    const discountedPrices: any = [];
-    if (selectedTreatments && !isEmpty(selectedTreatments)) {
-      selectedTreatments.map(product => {
-        const discountedPrice = getDiscountedPrice(product);
-
-        if (discountedPrice && discountedPrice !== product.price) {
-          discountedPrices.push(discountedPrice);
-        }
-      });
-    }
-
-    setDiscountedPrice(discountedPrices);
-  }, [selectedTreatments]);
 
   useEffect(() => {
     async function initProduct(productId: string) {

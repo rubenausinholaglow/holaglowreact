@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { SvgCalendar, SvgHour, SvgLocation } from 'app/icons/Icons';
-import { SvgArrow, SvgCheck, SvgInjection } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheck } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -15,7 +13,6 @@ import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 
 import AppointmentResume from './AppointmentResume';
 
@@ -29,34 +26,9 @@ export default function Confirmation({
   const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
-  const {
-    selectedTreatments,
-    selectedSlot,
-    selectedDay,
-    selectedClinic,
-    selectedPacksTreatments,
-    setAnalyticsMetrics,
-  } = useSessionStore(state => state);
-
-  const [city, setCity] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
-  const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
-
-  const localSelectedDay = dayjs(
-    appointment ? appointment.startTime : selectedDay
+  const { selectedClinic, setAnalyticsMetrics } = useSessionStore(
+    state => state
   );
-
-  const startTime = appointment
-    ? appointment?.startTime
-      ? appointment.startTime.slice(-5)
-      : ''
-    : selectedSlot?.startTime;
-
-  let selectedTreatmentsNames = '';
-
-  if (selectedTreatments) {
-    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
-  }
 
   useEffect(() => {
     setCurrentUser(undefined);
@@ -76,20 +48,6 @@ export default function Confirmation({
     };
     setAnalyticsMetrics(metrics);
   }, []);
-
-  useEffect(() => {
-    const appointmentClinic = appointment
-      ? clinics.filter(clinic => clinic.flowwwId === appointment?.clinicId)[0]
-      : undefined;
-
-    const appointmentCity = appointmentClinic ? appointmentClinic.city : '';
-    const appointmentAddress = appointmentClinic
-      ? appointmentClinic.address
-      : '';
-
-    setCity(appointmentCity || selectedClinic?.city || '');
-    setAddress(appointmentAddress || selectedClinic?.address || '');
-  }, [clinics]);
 
   return (
     <Container className="mt-12 mb-4 md:mt-16">
