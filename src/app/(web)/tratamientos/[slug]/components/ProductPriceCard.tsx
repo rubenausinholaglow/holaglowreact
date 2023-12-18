@@ -347,6 +347,7 @@ function ProductPriceItemsCard({
           className="mt-8"
           type="tertiary"
           customStyles="hover:bg-hg-secondary50"
+          id={'tmevent_click_book_button_customize'}
           onClick={() => setShowDropdown(true)}
         >
           Personalizar
@@ -363,6 +364,7 @@ function ProductPriceItemsCard({
             }}
             customStyles="bg-hg-primary hover:bg-hg-secondary100"
             className="mt-8"
+            id="tmevent_click_book_button_prices"
           >
             Reservar cita
             <SvgArrow height={16} width={16} className="ml-2" />
