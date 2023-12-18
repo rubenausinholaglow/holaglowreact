@@ -34,4 +34,10 @@ export const checkoutPaymentItems = [
     paymentBank: PaymentBank.CreditCard,
     paymentMethod: PaymentMethod.CreditCard,
   },
+  /* {
+    key: 'creditCard',
+    label: 'Pago rápido',
+    paymentBank: PaymentBank.CreditCard,
+    paymentMethod: PaymentMethod.CreditCard,
+  }, */
 ];

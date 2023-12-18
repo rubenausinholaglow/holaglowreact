@@ -41,8 +41,11 @@ export default function ConctactForm() {
       hideHeader={hideLayout}
       hideFooter={hideLayout}
     >
-      <Container className="px-0 mt-6 md:mt-16">
-        <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+      <Container className="px-0 mt-6 md:mt-16 pb-16">
+        <Flex
+          layout="col-left"
+          className="gap-8 md:gap-16 md:flex-row bg-hg-cream500 rounded-t-2xl pt-4"
+        >
           <div className="w-full md:w-1/2 md:order-2">
             <AppointmentResume />
           </div>

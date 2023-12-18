@@ -15,7 +15,7 @@ import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/compo
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheck, SvgRadioChecked } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { StatusBudget, TicketBudget } from 'app/types/budget';
 import { MessageType } from 'app/types/messageSocket';
@@ -253,46 +253,54 @@ export const PaymentMethods = () => {
     }
   };
 
-  const createTicket = async () => {
-    if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
-      alert('Hay cantidad pendiente de pagar');
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const result = await sendTicket();
-      if (result) {
-        setBudgetId('');
-        usePaymentList.setState(INITIAL_STATE_PAYMENT);
-        useCartStore.setState(INITIAL_STATE);
-        if (remoteControl) {
-          const message: any = {
-            clinicId: storedClinicId,
-            BoxId: storedBoxId,
-            Page: 'Menu',
-          };
-          messageService.goToPage(message);
-          router.push('/dashboard/remoteControl');
-        } else {
-          router.push('/dashboard/menu');
-        }
-
-        setMessageNotification('Ticket Creado Correctamente');
-      } else {
-        //TODO - ALERT MESSAGE
-      }
-    } catch (error: any) {
-      setIsLoading(false);
-      Bugsnag.notify(error);
-    }
-    setIsLoading(false);
-  };
-
   const PAYMENT_ICONS = {
     Alma: ['alma.svg'],
     Pepper: ['pepper.svg'],
     Efectivo: [],
     Tarjeta: ['visa.svg', 'mastercard.svg'],
+  };
+
+  const initializePayment = async () => {
+    setIsLoading(true);
+
+    // primer hem de guardar l'usuari
+    // després s'ha de pagar
+    // si el pagament és OK, guardar la cita
+
+    /* const resultValue = 4900;
+
+    const data: InitializePayment = {
+      amount: Number(resultValue),
+      installments: 1,
+      userId: user?.id || '',
+      paymentBank: 2,
+      productPaymentRequest: [],
+    };
+
+    cart.forEach(product => {
+      const matchingProduct = stateProducts.find(x => x.id === product.id);
+
+      if (matchingProduct) {
+        const productPayment: ProductPaymentRequest = {
+          name: matchingProduct.title,
+          price: product.price.toString(),
+          quantity: '1',
+          id: matchingProduct.id,
+        };
+        data.productPaymentRequest?.push(productPayment);
+      }
+    });
+
+    await FinanceService.initializePayment(data).then(x => {
+      setShowPepperModal(false);
+      if (x) {
+        openWindow(x.url);
+        handleUrlPayment(x.id, '', x.referenceId);
+      } else {
+        setMessageNotification('Error pagando con Pepper');
+      }
+    });
+    setIsLoading(false); */
   };
 
   return (
@@ -345,20 +353,28 @@ export const PaymentMethods = () => {
                 </Flex>
               </AccordionTrigger>
               <AccordionContent>
-                <Flex className="mt-4 pt-5 border-t border-hg-black w-full">
-                  {checkoutPaymentItems.map(method =>
-                    activePaymentMethod === method.key ? (
-                      <PaymentClient
-                        key={method.key}
-                        paymentBank={method.paymentBank}
-                        paymentMethod={method.paymentMethod}
-                        onPaymentClick={() => {
-                          setActivePaymentMethod('');
-                          setOnLoad(false);
-                        }}
-                      ></PaymentClient>
-                    ) : null
-                  )}
+                <Flex
+                  layout="col-left"
+                  className="mt-4 pt-5 border-t border-hg-black w-full"
+                >
+                  <Text className="mb-4">
+                    Serás redirigido/a a la pasarela para efectuar el pago.
+                  </Text>
+
+                  <Flex className="justify-between w-full bg-hg-black50 p-4 rounded-xl mb-8">
+                    <Text>Total pago</Text>
+                    <Text>49,00€</Text>
+                  </Flex>
+
+                  <Button
+                    className="self-end"
+                    type="tertiary"
+                    customStyles="bg-hg-primary gap-2"
+                    onClick={initializePayment}
+                  >
+                    Continuar
+                    <SvgArrow height={16} width={16} />
+                  </Button>
                 </Flex>
               </AccordionContent>
             </AccordionItem>
@@ -384,21 +400,6 @@ export const PaymentMethods = () => {
               />
             ))}
         </Flex>
-      )}
-
-      <Button
-        size="lg"
-        type="tertiary"
-        className="w-full mb-8"
-        customStyles="bg-hg-primary"
-        onClick={createTicket}
-      >
-        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
-      </Button>
-      {messageNotification ? (
-        <Notification message={messageNotification} />
-      ) : (
-        <></>
       )}
     </>
   );
