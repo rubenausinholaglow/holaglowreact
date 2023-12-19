@@ -28,7 +28,7 @@ dayjs.locale(spanishConf);
 export default function ConctactForm() {
   const searchParams = useSearchParams();
   const { selectedTreatments } = useSessionStore(state => state);
-  const { user, activePayment } = useGlobalPersistedStore(state => state);
+  const { activePayment } = useGlobalPersistedStore(state => state);
   const [hideLayout, setHideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -79,16 +79,11 @@ export default function ConctactForm() {
   }, []);
 
   async function checkout() {
-    await registerUser(client, false, false, false);
-  }
-
-  useEffect(() => {
-    async function initPayment() {
+    var user = await registerUser(client, false, false, false);
+    if (user) {
       await initializePayment(translateActivePayment(activePayment));
     }
-
-    initPayment();
-  }, [user]);
+  }
 
   function translateActivePayment(payment: any) {
     switch (payment) {

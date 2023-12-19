@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'next/navigation';
 
 import useRoutes from './useRoutes';
+import { User } from '@interface/appointment';
 
 const useRegistration = (
   formData: Client,
@@ -34,7 +35,7 @@ const useRegistration = (
     isDashboard: boolean,
     redirect: boolean,
     createAppointment: boolean
-  ) => {
+  ): Promise<User | undefined> => {
     const formDatacopy = { ...formData };
     formDatacopy.analyticsMetrics = analyticsMetrics;
     formDatacopy.phone = formData.phone
@@ -75,6 +76,7 @@ const useRegistration = (
         } else router.push(routes.dashboard.checkIn.treatments);
       }
     }
+    return user;
   };
   return registerUser;
 };
