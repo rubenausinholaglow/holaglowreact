@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Appointment } from '@interface/appointment';
-import { Accordion } from '@radix-ui/react-accordion';
+import {
+  Accordion,
+  AccordionItemProps,
+  AccordionSingleProps,
+} from '@radix-ui/react-accordion';
 import { getDiscountedPrice } from '@utils/common';
 import { priceFormat } from '@utils/priceFormat';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';

@@ -58,7 +58,8 @@ const useRegistration = (
             selectedClinic!,
             user,
             selectedPacksTreatments!,
-            analyticsMetrics
+            analyticsMetrics,
+            ''
           ).then(x => {
             if (isDashboard) {
               router.push(routes.dashboard.checkIn.treatments);

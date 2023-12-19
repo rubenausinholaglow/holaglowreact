@@ -77,7 +77,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     storedBudgetId,
     setBudgetId,
     storedAppointmentId,
- 	setCurrentUser,
+    setCurrentUser,
     stateProducts,
     setActivePayment,
   } = useGlobalPersistedStore(state => state);
@@ -280,7 +280,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     Efectivo: [],
     Tarjeta: ['visa.svg', 'mastercard.svg'],
   };
-
+  /*
   const initializePayment = async () => {
     setIsLoading(true);
 
@@ -288,7 +288,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     // després s'ha de pagar
     // si el pagament és OK, guardar la cita
 
-    /* const resultValue = 4900;
+     const resultValue = 4900;
 
     const data: InitializePayment = {
       amount: Number(resultValue),
@@ -321,9 +321,9 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
         setMessageNotification('Error pagando con Pepper');
       }
     });
-    setIsLoading(false); */
+    setIsLoading(false); 
   };
-
+*/
   return (
     <>
       {checkoutPaymentItems.length > 0 && (
