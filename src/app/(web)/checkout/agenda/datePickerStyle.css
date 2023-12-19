@@ -89,7 +89,9 @@
   color: #ffffff !important;
 }
 
-.react-datepicker__day:hover:not(.react-datepicker__day--disabled) {
+.react-datepicker__day:hover:not(.react-datepicker__day--disabled):not(
+    .react-datepicker__day--selected
+  ) {
   transition: background-color 0.3s ease;
   border-radius: 50% !important;
   background-color: #e6d4f8 !important;
