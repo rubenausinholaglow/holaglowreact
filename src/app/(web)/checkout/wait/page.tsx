@@ -23,6 +23,7 @@ export default function Wait() {
     selectedClinic,
     selectedPacksTreatments,
     analyticsMetrics,
+    paymentId,
   } = useSessionStore(state => state);
   const { user } = useGlobalPersistedStore(state => state);
 
@@ -42,7 +43,7 @@ export default function Wait() {
             user!,
             selectedPacksTreatments!,
             analyticsMetrics,
-            '' //TODO: Poner aqui la id del pago
+            paymentId
           ).then(x => {
             router.push('/checkout/confirmation');
           });

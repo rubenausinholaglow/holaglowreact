@@ -29,6 +29,7 @@ interface SessionStore {
   selectedSlot?: Slot;
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
+  paymentId: '';
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -40,6 +41,7 @@ interface SessionActions {
   setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
+  setPaymentId: (paymentId: '') => void;
 }
 
 interface GlobalPersistStore {
@@ -110,6 +112,7 @@ export const useSessionStore = create(
       selectedSlot: undefined,
       previousAppointment: undefined,
       isMobile: true,
+      paymentId: '',
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -136,6 +139,9 @@ export const useSessionStore = create(
       },
       setPreviousAppointment: value => {
         set({ previousAppointment: value });
+      },
+      setPaymentId: value => {
+        set({ paymentId: value });
       },
     }),
     {

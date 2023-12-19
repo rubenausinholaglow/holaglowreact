@@ -5,10 +5,14 @@ import {
 import { PaymentBank } from '@interface/payment';
 import FinanceService from '@services/FinanceService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 
 export const usePayments = () => {
   const { user, stateProducts } = useGlobalPersistedStore(state => state);
+  const { setPaymentId } = useSessionStore(state => state);
 
   const { cart } = useCartStore(state => state);
 
@@ -50,6 +54,7 @@ export const usePayments = () => {
 
     try {
       const x = await FinanceService.initializePayment(data);
+      setPaymentId(x.id);
       if (x) {
         openWindow(x.url);
       }
