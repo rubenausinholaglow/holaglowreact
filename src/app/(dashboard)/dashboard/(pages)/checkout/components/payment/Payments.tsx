@@ -59,6 +59,7 @@ export const PaymentModule = () => {
     storedClinicFlowwwId,
     storedClinicProfessionalId,
     storedBudgetId,
+    storedAppointmentId,
     setBudgetId,
   } = useGlobalPersistedStore(state => state);
 
@@ -223,6 +224,7 @@ export const PaymentModule = () => {
       clinicFlowwwId: storedClinicFlowwwId,
       professional: '',
       budget: finalBudget,
+      appointmentId: storedAppointmentId,
       paymentProductRequest: paymentList.map(payItem => ({
         amount: payItem.amount,
         bank: payItem.bank,

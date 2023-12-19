@@ -10,6 +10,6 @@ export interface Ticket {
   clinicFlowwwId: string;
   professional: string;
   appointmentId: string;
-  budget: Budget;
+  budget: Budget | null;
   paymentProductRequest: PaymentProductRequest[];
 }

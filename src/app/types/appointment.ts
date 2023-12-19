@@ -20,6 +20,7 @@ export interface Appointment {
   comment: string;
   referralId: string;
   externalReference: string;
+  paymentId: string;
 }
 
 export enum Status {
