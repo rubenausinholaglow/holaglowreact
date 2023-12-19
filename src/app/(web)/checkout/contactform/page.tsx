@@ -1,12 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Client } from '@interface/client';
+import { PaymentBank } from '@interface/payment';
+import { usePayments } from '@utils/paymentUtils';
+import useRegistration from '@utils/userUtils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCalendar, SvgLocation } from 'app/icons/Icons';
-import { useSessionStore } from 'app/stores/globalStore';
+import { SvgArrow } from 'app/icons/IconsDs';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
@@ -20,6 +30,39 @@ export default function ConctactForm() {
     useSessionStore(state => state);
   const [selectedTreatmentsNames, setSelectedTreatmentsNames] = useState('');
   const [hideLayout, setHideLayout] = useState(false);
+  const { activePayment, user } = useGlobalPersistedStore(state => state);
+
+  const [client, setClient] = useState<Client>({
+    email: '',
+    phone: '',
+    phonePrefix: '',
+    name: '',
+    surname: '',
+    secondSurname: '',
+    termsAndConditionsAccepted: false,
+    receiveCommunications: false,
+    page: '',
+    externalReference: '',
+    analyticsMetrics: {
+      device: 0,
+      locPhysicalMs: '',
+      utmAdgroup: '',
+      utmCampaign: '',
+      utmContent: '',
+      utmMedium: '',
+      utmSource: '',
+      utmTerm: '',
+      treatmentText: '',
+      externalReference: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
+    },
+    interestedTreatment: '',
+    treatmentPrice: 0,
+  });
+
+  const registerUser = useRegistration(client, false, false);
+  const initializePayment = usePayments();
 
   const localSelectedDay = dayjs(selectedDay);
 
@@ -35,6 +78,28 @@ export default function ConctactForm() {
       setHideLayout(params.get('hideLayout') == 'true');
     }
   }, []);
+
+  async function checkout() {
+    await registerUser(client, false, false, false);
+  }
+
+  useEffect(() => {
+    async function initPayment() {
+      await initializePayment(translateActivePayment(activePayment));
+    }
+
+    initPayment();
+  }, [user]);
+
+  function translateActivePayment(payment: any) {
+    switch (payment) {
+      case 'creditCard':
+        return PaymentBank.CreditCard;
+      default:
+        return PaymentBank.None;
+    }
+  }
+
   return (
     <MainLayout
       isCheckout={!hideLayout}
@@ -99,9 +164,25 @@ export default function ConctactForm() {
               )}
             </Flex>
 
-            <RegistrationForm redirect={hideLayout} hasContinueButton={false} />
+            <RegistrationForm
+              redirect={hideLayout}
+              hasContinueButton={false}
+              formData={client}
+              setClientData={setClient}
+            />
 
-            <CheckoutPayment className="mt-8" />
+            <CheckoutPayment className="mt-8" client={client} />
+          </div>
+          <div>
+            <Button
+              className="self-end"
+              type="tertiary"
+              customStyles="bg-hg-primary gap-2"
+              onClick={checkout}
+            >
+              Continuar
+              <SvgArrow height={16} width={16} />
+            </Button>
           </div>
         </Flex>
       </Container>

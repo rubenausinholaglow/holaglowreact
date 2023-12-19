@@ -1,10 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Bugsnag from '@bugsnag/js';
+import Bugsnag, { Client } from '@bugsnag/js';
+import {
+  InitializePayment,
+  ProductPaymentRequest,
+} from '@interface/initializePayment';
+import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
+import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
+import UserService from '@services/UserService';
 import { INITIAL_STATE } from '@utils/constants';
+import { usePayments } from '@utils/paymentUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import PaymentItem, {
   StatusPayment,
@@ -38,7 +46,10 @@ import { paymentItems } from './paymentMethods/PaymentItems';
 import PepperWidget from './paymentMethods/PepperWidget';
 import { usePaymentList } from './payments/usePaymentList'; */
 
-export const PaymentMethods = () => {
+interface PaymentMethodsProps {
+  client?: Client;
+}
+export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
   const router = useRouter();
 
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
@@ -65,10 +76,13 @@ export const PaymentMethods = () => {
     storedClinicProfessionalId,
     storedBudgetId,
     setBudgetId,
+    setCurrentUser,
+    stateProducts,
+    setActivePayment,
   } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
-
+  const initializePayment = usePayments();
   useEffect(() => {
     const { paymentCreatedMessages, paymentResponseMessages } =
       processPaymentMessages(messageSocket.messageSocket);
@@ -248,8 +262,10 @@ export const PaymentMethods = () => {
     if (activePaymentMethod === paymentKey) {
       setOnLoad(false);
       setActivePaymentMethod('');
+      setActivePayment(PaymentBank.None);
     } else {
       setActivePaymentMethod(paymentKey);
+      setActivePayment(paymentKey);
     }
   };
 
@@ -260,14 +276,9 @@ export const PaymentMethods = () => {
     Tarjeta: ['visa.svg', 'mastercard.svg'],
   };
 
-  const initializePayment = async () => {
+  /*const initializePayment = async () => {
     setIsLoading(true);
-
-    // primer hem de guardar l'usuari
-    // després s'ha de pagar
-    // si el pagament és OK, guardar la cita
-
-    /* const resultValue = 4900;
+    const resultValue = 4900;
 
     const data: InitializePayment = {
       amount: Number(resultValue),
@@ -292,16 +303,21 @@ export const PaymentMethods = () => {
     });
 
     await FinanceService.initializePayment(data).then(x => {
-      setShowPepperModal(false);
       if (x) {
         openWindow(x.url);
-        handleUrlPayment(x.id, '', x.referenceId);
       } else {
         setMessageNotification('Error pagando con Pepper');
       }
     });
-    setIsLoading(false); */
+    setIsLoading(false);
   };
+
+  const openWindow = (url: string) => {
+    const newWindow = window.open(url, '_blank');
+    if (newWindow) {
+      newWindow.opener = null;
+    }
+  };*/
 
   return (
     <>

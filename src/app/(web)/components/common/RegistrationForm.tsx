@@ -3,11 +3,12 @@
 import 'react-phone-input-2/lib/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as errorsConfig from '@utils/textConstants';
+import useRegistration from '@utils/userUtils';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
@@ -33,10 +34,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
   isDashboard = false,
   hasContinueButton = true,
+  setClientData,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
   hasContinueButton?: boolean;
+  setClientData?: Dispatch<SetStateAction<Client>>;
 }) => {
   const router = useRouter();
   const routes = useRoutes();
@@ -86,6 +89,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     treatmentPrice: 0,
   });
 
+  const registerUser = useRegistration(formData, isDashboard, redirect);
+
   useEffect(() => {
     if (
       !isEmpty(formData.name) &&
@@ -114,6 +119,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       [field]: value,
     }));
   };
+
+  useEffect(() => {
+    if (setClientData) setClientData(formData);
+  }, [formData]);
 
   const handleContinue = async () => {
     const requiredFields = ['email', 'phone', 'name', 'surname'];
@@ -171,7 +180,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   }
 
   const handleRegistration = async () => {
-    await registerUser(formData);
+    //await registerUser(formData);
+    await registerUser(formData, isDashboard, redirect, false);
   };
 
   const handleRequestError = (errors: Array<string>) => {
@@ -179,7 +189,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     setErrors(errors);
   };
 
-  const registerUser = async (formData: Client) => {
+  /* const registerUser = async (formData: Client) => {
     setIsLoading(true);
     const formDatacopy = { ...formData };
     formDatacopy.analyticsMetrics = analyticsMetrics;
@@ -218,7 +228,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         } else router.push(routes.dashboard.checkIn.treatments);
       }
     }
-  };
+  };*/
 
   return (
     <div className="grid grid-cols-1 gap-4 w-full">

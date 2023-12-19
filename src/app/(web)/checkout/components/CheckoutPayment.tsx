@@ -1,3 +1,4 @@
+import { Client } from '@interface/client';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
@@ -5,8 +6,10 @@ import { PaymentMethods } from './PaymentMethods';
 
 export default function CheckoutPayment({
   className = '',
+  client,
 }: {
   className?: string;
+  client?: Client;
 }) {
   return (
     <Flex layout="col-left" className={`w-full ${className}`}>

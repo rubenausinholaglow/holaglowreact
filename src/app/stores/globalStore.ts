@@ -1,3 +1,4 @@
+import { PaymentBank } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
 import { Post } from 'app/types/blog';
@@ -57,6 +58,7 @@ interface GlobalPersistStore {
   storedClinicFlowwwId: string | '';
   storedClinicProfessionalId: string | '';
   storedBudgetId: string | '';
+  activePayment: PaymentBank;
 }
 
 interface GlobalPersistActions {
@@ -75,6 +77,7 @@ interface GlobalPersistActions {
   setClinicFlowwwId: (value?: string) => void;
   setClinicProfessionalId: (value?: string) => void;
   setBudgetId: (value?: string) => void;
+  setActivePayment: (value?: PaymentBank) => void;
 }
 
 export const useSessionStore = create(
@@ -205,6 +208,10 @@ export const useGlobalPersistedStore = create(
       storedBudgetId: '',
       setBudgetId: value => {
         set({ storedBudgetId: value });
+      },
+      activePayment: PaymentBank.None,
+      setActivePayment: value => {
+        set({ activePayment: value });
       },
     }),
     {

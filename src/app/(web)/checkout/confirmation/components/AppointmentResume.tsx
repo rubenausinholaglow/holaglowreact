@@ -155,15 +155,15 @@ export default function AppointmentResume({
                   <Flex className="justify-between w-full">
                     <Text>Importe sin IVA</Text>
                     <Text className="font-semibold">
-                      {(selectedTreatments[0].price * 0.79).toFixed(2)}€
+                      {(selectedTreatments[0]?.price * 0.79).toFixed(2)}€
                     </Text>
                   </Flex>
                   <Flex className="justify-between w-full border-b border-hg-black300 pb-6 mb-6">
                     <Text>Impuestos</Text>
                     <Text className="font-semibold">
                       {(
-                        selectedTreatments[0].price -
-                        selectedTreatments[0].price * 0.79
+                        selectedTreatments[0]?.price -
+                        selectedTreatments[0]?.price * 0.79
                       ).toFixed(2)}
                       €
                     </Text>
@@ -177,7 +177,7 @@ export default function AppointmentResume({
                   <Flex className="justify-between w-full">
                     <Text>Total</Text>
                     <Text className="font-semibold">
-                      {selectedTreatments[0].price.toFixed(2)}€
+                      {selectedTreatments[0]?.price.toFixed(2)}€
                     </Text>
                   </Flex>
                 </Flex>

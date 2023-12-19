@@ -1,15 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgArrow, SvgRadioChecked, SvgUserScan } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
-import { Product } from 'app/types/product';
+import { CartItem, Product } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -22,6 +24,7 @@ export default function PVCitaMedica() {
 
   const { selectedPacksTreatments, selectedTreatments, setSelectedTreatments } =
     useSessionStore(state => state);
+  const { cart, addItemToCart } = useCartStore(state => state);
 
   const [isLoading, setIsLoading] = useState(false);
   const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
@@ -56,9 +59,21 @@ export default function PVCitaMedica() {
     }
   }, []);
 
+  async function initProductAdvance(productId: string) {
+    const productDetails = await fetchProduct(productId);
+    addItemToCart(productDetails as CartItem);
+  }
   function handleClick(product: Product) {
     setIsLoading(true);
     setSelectedTreatments([product]);
+    router.push(ROUTES.checkout.schedule);
+  }
+
+  function AdvanceProduct() {
+    useCartStore.setState(INITIAL_STATE);
+    setIsLoading(true);
+    setSelectedTreatments(selectedTreatments);
+    initProductAdvance(process.env.NEXT_PUBLIC_CITA_PREVIA_ID!);
 
     router.push(ROUTES.checkout.schedule);
   }
@@ -97,7 +112,7 @@ export default function PVCitaMedica() {
 
               <Flex
                 className="border border-hg-black300 p-4 rounded-2xl gap-4 w-full hover:bg-hg-secondary100 cursor-pointer"
-                onClick={() => router.push(ROUTES.checkout.schedule)}
+                onClick={() => AdvanceProduct()}
               >
                 <SvgHolaglowHand height={34} width={34} className="shrink-0" />
                 <div>
