@@ -1,6 +1,6 @@
 import { Budget } from 'app/types/budget';
 
-import { PaymentProductRequest } from './payment';
+import { PaymentTicketRequest, ProductTicketRequest } from './payment';
 
 export interface Ticket {
   promoCode: string;
@@ -11,5 +11,6 @@ export interface Ticket {
   professional: string;
   appointmentId: string;
   budget: Budget | null;
-  paymentProductRequest: PaymentProductRequest[];
+  paymentTicketRequest: PaymentTicketRequest[];
+  productTicketRequest: ProductTicketRequest[];
 }

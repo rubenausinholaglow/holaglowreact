@@ -225,12 +225,15 @@ export const PaymentModule = () => {
       professional: '',
       budget: finalBudget,
       appointmentId: storedAppointmentId,
-      paymentProductRequest: paymentList.map(payItem => ({
+      paymentTicketRequest: paymentList.map(payItem => ({
         amount: payItem.amount,
         bank: payItem.bank,
         method: payItem.method,
         paymentReference: payItem.paymentReference,
         id: payItem.id,
+      })),
+      productTicketRequest: cart.map(CartItem => ({
+        id: CartItem.id,
       })),
     };
     try {
@@ -376,7 +379,7 @@ export const PaymentModule = () => {
             paymentList?.map(paymentRequest => (
               <PaymentItem
                 key={paymentRequest.id}
-                paymentRequest={paymentRequest}
+                paymentTicketRequest={paymentRequest}
                 status={paymentStatus[paymentRequest.id]}
               />
             ))}

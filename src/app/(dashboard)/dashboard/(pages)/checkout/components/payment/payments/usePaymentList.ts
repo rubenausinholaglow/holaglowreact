@@ -1,4 +1,4 @@
-import { PaymentProductRequest } from 'app/types/payment';
+import { PaymentTicketRequest } from 'app/types/payment';
 import {
   INITIAL_STATE_PAYMENT,
   PaymentActions,
@@ -12,7 +12,7 @@ export const usePaymentList = create(
     (set, get) => ({
       paymentRequest: [],
       totalAmount: INITIAL_STATE_PAYMENT.totalAmount,
-      addPaymentToList: (newPayment: PaymentProductRequest) => {
+      addPaymentToList: (newPayment: PaymentTicketRequest) => {
         const updatedPaymentRequest = [...get().paymentRequest, newPayment];
 
         set(state => ({
@@ -20,7 +20,7 @@ export const usePaymentList = create(
           totalAmount: state.totalAmount + newPayment.amount,
         }));
       },
-      removePayment: (payment: PaymentProductRequest) => {
+      removePayment: (payment: PaymentTicketRequest) => {
         set(state => ({
           paymentRequest: state.paymentRequest.filter(
             item => item.id !== payment.id
