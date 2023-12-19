@@ -9,6 +9,7 @@ export interface Ticket {
   clientFlowwwToken: string;
   clinicFlowwwId: string;
   professional: string;
+  appointmentId: string;
   budget: Budget;
   paymentProductRequest: PaymentProductRequest[];
 }

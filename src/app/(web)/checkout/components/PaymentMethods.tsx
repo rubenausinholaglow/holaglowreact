@@ -57,14 +57,12 @@ export const PaymentMethods = () => {
   const { totalAmount } = usePaymentList(state => state);
   const messageSocket = useMessageSocket(state => state);
   const {
-    remoteControl,
-    storedBoxId,
     storedClinicId,
     user,
     storedClinicFlowwwId,
     storedClinicProfessionalId,
     storedBudgetId,
-    setBudgetId,
+    storedAppointmentId,
   } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
@@ -228,6 +226,7 @@ export const PaymentMethods = () => {
       clinicFlowwwId: storedClinicFlowwwId,
       professional: '',
       budget: finalBudget,
+      appointmentId: storedAppointmentId,
       paymentProductRequest: paymentList.map(payItem => ({
         amount: payItem.amount,
         bank: payItem.bank,
