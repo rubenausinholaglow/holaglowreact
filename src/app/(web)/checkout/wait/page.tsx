@@ -55,7 +55,7 @@ export default function Wait() {
       });
     }
 
-    checkPaymentStatus(''); //TODO: Id del pago
+    checkPaymentStatus(paymentId);
   }, []);
 
   return (
