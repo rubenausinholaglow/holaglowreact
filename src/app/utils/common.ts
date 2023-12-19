@@ -73,8 +73,6 @@ export function useElementOnScreen(options: IntersectionOptions) {
 }
 
 export function getDiscountedPrice(product: Product) {
-  console.log(product);
-
   let totalDiscountSum = 0;
   if (product.discounts.length > 0) {
     totalDiscountSum = product.discounts.reduce(

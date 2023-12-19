@@ -16,7 +16,10 @@ export const usePayments = () => {
 
   const { cart } = useCartStore(state => state);
 
-  const initializePayment = async (paymentBank: PaymentBank) => {
+  const initializePayment = async (
+    paymentBank: PaymentBank,
+    newTab: boolean = false
+  ) => {
     if (!user) return;
     const resultValue = 4900;
 
@@ -56,7 +59,9 @@ export const usePayments = () => {
       const x = await FinanceService.initializePayment(data);
       setPaymentId(x.id);
       if (x) {
-        openWindow(x.url);
+        if (newTab) {
+          openWindow(x.url);
+        } else window.document.location.href = x.url;
       }
     } catch (error) {
       console.error('Error initializing payment:', error);
@@ -64,7 +69,7 @@ export const usePayments = () => {
   };
 
   const openWindow = (url: string) => {
-    const newWindow = window.open(url, '');
+    const newWindow = window.open(url, '_blank');
     if (newWindow) {
       newWindow.opener = null;
     }

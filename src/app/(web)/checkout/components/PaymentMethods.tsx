@@ -95,6 +95,9 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
+  useEffect(() => {
+    setActivePayment(PaymentBank.None);
+  }, []);
 
   const processPaymentMessages = (paymentMessages: any) => {
     const paymentCreatedMessages = paymentMessages.filter(
@@ -267,10 +270,8 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     if (activePaymentMethod === paymentKey) {
       setOnLoad(false);
       setActivePaymentMethod('');
-      setActivePayment(PaymentBank.None);
     } else {
       setActivePaymentMethod(paymentKey);
-      setActivePayment(paymentKey);
     }
   };
 
@@ -343,10 +344,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
               className="bg-white py-6 px-8 rounded-xl w-full"
             >
               <AccordionTrigger className="text-left">
-                <Flex
-                  className="gap-2"
-                  onClick={() => handleOnButtonPaymentClick(method.key)}
-                >
+                <Flex className="gap-2">
                   <SvgRadioChecked
                     height={24}
                     width={24}
@@ -391,7 +389,9 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
                     className="self-end"
                     type="tertiary"
                     customStyles="bg-hg-primary gap-2"
-                    onClick={initializePayment}
+                    onClick={() => {
+                      setActivePayment(PaymentBank.CreditCard);
+                    }}
                   >
                     Continuar
                     <SvgArrow height={16} width={16} />

@@ -78,16 +78,19 @@ export default function ConctactForm() {
     setHasError(!isEmpty(searchParams.get('error')));
   }, []);
 
-  async function checkout() {
-    const user = await registerUser(client, false, false, false);
-    if (user) {
-      await initializePayment(translateActivePayment(activePayment));
+  useEffect(() => {
+    async function checkout() {
+      const user = await registerUser(client, false, false, false);
+      if (user) {
+        await initializePayment(translateActivePayment(activePayment));
+      }
     }
-  }
+    if (activePayment) checkout();
+  }, [activePayment]);
 
   function translateActivePayment(payment: any) {
     switch (payment) {
-      case 'creditCard':
+      case 5:
         return PaymentBank.CreditCard;
       default:
         return PaymentBank.None;
@@ -122,17 +125,6 @@ export default function ConctactForm() {
             {!isProbadorVirtual && (
               <CheckoutPayment hasError={hasError} className="mt-8" />
             )}
-          </div>
-          <div>
-            <Button
-              className="self-end"
-              type="tertiary"
-              customStyles="bg-hg-primary gap-2"
-              onClick={checkout}
-            >
-              Continuar
-              <SvgArrow height={16} width={16} />
-            </Button>
           </div>
         </Flex>
       </Container>
