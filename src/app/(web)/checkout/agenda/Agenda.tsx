@@ -207,6 +207,7 @@ export default function Agenda({
             isPast: false,
             clinicId: selectedClinic?.flowwwId,
             isCancelled: false,
+            paymentId: previousAppointment.paymentId,
           },
           previous: previousAppointment,
         }).then(x => {
@@ -226,7 +227,8 @@ export default function Agenda({
           selectedClinic!,
           user,
           selectedPacksTreatments!,
-          analyticsMetrics
+          analyticsMetrics,
+          ''
         ).then(x => {
           if (isDashboard) {
             router.push(ROUTE.dashboard.checkIn.confirmation);

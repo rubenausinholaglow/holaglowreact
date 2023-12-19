@@ -57,14 +57,12 @@ export const PaymentMethods = () => {
   const { totalAmount } = usePaymentList(state => state);
   const messageSocket = useMessageSocket(state => state);
   const {
-    remoteControl,
-    storedBoxId,
     storedClinicId,
     user,
     storedClinicFlowwwId,
     storedClinicProfessionalId,
     storedBudgetId,
-    setBudgetId,
+    storedAppointmentId,
   } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
@@ -228,12 +226,16 @@ export const PaymentMethods = () => {
       clinicFlowwwId: storedClinicFlowwwId,
       professional: '',
       budget: finalBudget,
-      paymentProductRequest: paymentList.map(payItem => ({
+      appointmentId: storedAppointmentId,
+      paymentTicketRequest: paymentList.map(payItem => ({
         amount: payItem.amount,
         bank: payItem.bank,
         method: payItem.method,
         paymentReference: payItem.paymentReference,
         id: payItem.id,
+      })),
+      productTicketRequest: cart.map(CartItem => ({
+        id: CartItem.id,
       })),
     };
     try {
@@ -263,9 +265,7 @@ export const PaymentMethods = () => {
   const initializePayment = async () => {
     setIsLoading(true);
 
-    // primer hem de guardar l'usuari
-    // després s'ha de pagar
-    // si el pagament és OK, guardar la cita
+    // TODO: DESCOMENTAR ESTO
 
     /* const resultValue = 4900;
 
@@ -395,7 +395,7 @@ export const PaymentMethods = () => {
             paymentList?.map(paymentRequest => (
               <PaymentItem
                 key={paymentRequest.id}
-                paymentRequest={paymentRequest}
+                paymentTicketRequest={paymentRequest}
                 status={paymentStatus[paymentRequest.id]}
               />
             ))}

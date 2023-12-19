@@ -41,7 +41,8 @@ export default function Wait() {
             selectedClinic!,
             user!,
             selectedPacksTreatments!,
-            analyticsMetrics
+            analyticsMetrics,
+            '' //TODO: Poner aqui la id del pago
           ).then(x => {
             router.push('/checkout/confirmation');
           });
