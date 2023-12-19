@@ -34,12 +34,10 @@ function Navigation({ className }: { className: string }) {
     <nav className={className}>
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
-          <li
-            className="font-medium"
-            key={navItem.name}
-            id={'tmevent_nav_menu_click'}
-          >
-            <Link href={navItem.link}>{navItem.name}</Link>
+          <li className="font-medium" key={navItem.name}>
+            <Link href={navItem.link} id={'tmevent_nav_menu_click'}>
+              {navItem.name}
+            </Link>
           </li>
         ))}
       </ul>

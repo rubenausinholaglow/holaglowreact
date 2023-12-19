@@ -190,6 +190,7 @@ export default function ProductInfo({
               bgColor="bg-hg-primary"
               className="mb-12 md:mb-0 hidden md:block md:mt-auto"
               href="#prices"
+              id="tmevent_click_book_anchor_button"
             >
               <span className="inline-block mr-1">
                 Reserva cita {product.isPack ? '' : 'desde'}

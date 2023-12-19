@@ -206,6 +206,7 @@ export default function ProductCard({
   if (!isDashboard)
     return (
       <Link
+        id="tmevent_click_product_card"
         href={
           isLanding
             ? LANDINGS[pathName]
