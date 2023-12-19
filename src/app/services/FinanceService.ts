@@ -24,6 +24,28 @@ export default class FinanceService {
     }
   }
 
+  static async checkPaymentStatus(id: string) {
+    try {
+      const url =
+        `${process.env.NEXT_PUBLIC_FINANCE_API}External/Status?id=` + id;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (error: any) {
+      Bugsnag.notify(error);
+    }
+  }
+
   static async createPayment(createPayment: CreatePayment) {
     const updatedCreatePayment: CreatePayment = {
       userId: createPayment.userId,

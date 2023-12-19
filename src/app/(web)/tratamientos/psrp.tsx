@@ -194,7 +194,7 @@ export default function PsrpPage({
           setModalVisibility={setIsMobileFiltersVisible}
         />
 
-        <div className="bg-[#F3EDE9] rounded-t-3xl">
+        <div className="bg-hg-cream rounded-t-3xl overflow-hidden">
           <Container className="relative pt-8 pb-4">
             <Title
               isAnimated

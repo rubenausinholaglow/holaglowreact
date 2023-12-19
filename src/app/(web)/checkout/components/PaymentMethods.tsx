@@ -76,7 +76,8 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     storedClinicProfessionalId,
     storedBudgetId,
     setBudgetId,
-    setCurrentUser,
+    storedAppointmentId,
+ 	setCurrentUser,
     stateProducts,
     setActivePayment,
   } = useGlobalPersistedStore(state => state);
@@ -242,12 +243,16 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
       clinicFlowwwId: storedClinicFlowwwId,
       professional: '',
       budget: finalBudget,
-      paymentProductRequest: paymentList.map(payItem => ({
+      appointmentId: storedAppointmentId,
+      paymentTicketRequest: paymentList.map(payItem => ({
         amount: payItem.amount,
         bank: payItem.bank,
         method: payItem.method,
         paymentReference: payItem.paymentReference,
         id: payItem.id,
+      })),
+      productTicketRequest: cart.map(CartItem => ({
+        id: CartItem.id,
       })),
     };
     try {
@@ -276,9 +281,14 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     Tarjeta: ['visa.svg', 'mastercard.svg'],
   };
 
-  /*const initializePayment = async () => {
+  const initializePayment = async () => {
     setIsLoading(true);
-    const resultValue = 4900;
+
+    // primer hem de guardar l'usuari
+    // després s'ha de pagar
+    // si el pagament és OK, guardar la cita
+
+    /* const resultValue = 4900;
 
     const data: InitializePayment = {
       amount: Number(resultValue),
@@ -303,21 +313,16 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     });
 
     await FinanceService.initializePayment(data).then(x => {
+      setShowPepperModal(false);
       if (x) {
         openWindow(x.url);
+        handleUrlPayment(x.id, '', x.referenceId);
       } else {
         setMessageNotification('Error pagando con Pepper');
       }
     });
-    setIsLoading(false);
+    setIsLoading(false); */
   };
-
-  const openWindow = (url: string) => {
-    const newWindow = window.open(url, '_blank');
-    if (newWindow) {
-      newWindow.opener = null;
-    }
-  };*/
 
   return (
     <>
@@ -411,7 +416,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
             paymentList?.map(paymentRequest => (
               <PaymentItem
                 key={paymentRequest.id}
-                paymentRequest={paymentRequest}
+                paymentTicketRequest={paymentRequest}
                 status={paymentStatus[paymentRequest.id]}
               />
             ))}

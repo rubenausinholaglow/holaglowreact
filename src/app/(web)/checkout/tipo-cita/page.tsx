@@ -87,7 +87,7 @@ export default function PVCitaMedica() {
           <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
             <Flex layout="col-left" className="gap-6 w-full md:w-1/2">
               <Title className="font-semibold hidden md:block">
-                ¿Qué tipo de cita quieres?
+                ¿Qué tipo de cita quieres reservar?
               </Title>
 
               <Flex
@@ -96,9 +96,9 @@ export default function PVCitaMedica() {
               >
                 <SvgUserScan className="shrink-0" />
                 <div>
-                  <Text className="font-semibold">Primera cita</Text>
+                  <Text className="font-semibold">Asesoramiento</Text>
                   <Text className="text-xs">
-                    Te asesoramos con nuestro Escáner 3D
+                    Te asesoramos con el escáner facial 3D
                   </Text>
                 </div>
 
@@ -116,15 +116,15 @@ export default function PVCitaMedica() {
               >
                 <SvgHolaglowHand height={34} width={34} className="shrink-0" />
                 <div>
-                  <Text className="font-semibold">Cita médica</Text>
+                  <Text className="font-semibold">Tratamiento</Text>
                   <Text className="text-xs">
-                    Reserva cita para aplicarte el tratamiento
+                    Te aplicamos el tratamiento seleccionado
                   </Text>
                 </div>
 
                 <Flex className="gap-2 ml-auto">
-                  <Text className="text-hg-secondary text-lg font-semibold shrink-0">
-                    <span className="hidden lg:inline-block">Anticipo</span> 49€
+                  <Text className="text-hg-secondary text-lg font-semibold shrink-0 text-right">
+                    Anticipo <br className="md:hidden" /> 49€
                   </Text>
                   <SvgArrow />
                 </Flex>

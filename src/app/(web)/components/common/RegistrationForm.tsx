@@ -213,7 +213,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           selectedClinic!,
           user,
           selectedPacksTreatments!,
-          analyticsMetrics
+          analyticsMetrics,
+          ''
         ).then(x => {
           if (isDashboard) {
             router.push(routes.dashboard.checkIn.treatments);
@@ -338,7 +339,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         )}
       </div>
 
-      <Flex layout="col-left" className="my-2 mb-6">
+      <Flex layout="col-left" className="my-2 mb-4">
         <Flex layout="row-left">
           <label
             htmlFor="termsAndConditionsAccepted"

@@ -1,6 +1,6 @@
 import { Budget } from 'app/types/budget';
 
-import { PaymentProductRequest } from './payment';
+import { PaymentTicketRequest, ProductTicketRequest } from './payment';
 
 export interface Ticket {
   promoCode: string;
@@ -9,6 +9,8 @@ export interface Ticket {
   clientFlowwwToken: string;
   clinicFlowwwId: string;
   professional: string;
-  budget: Budget;
-  paymentProductRequest: PaymentProductRequest[];
+  appointmentId: string;
+  budget: Budget | null;
+  paymentTicketRequest: PaymentTicketRequest[];
+  productTicketRequest: ProductTicketRequest[];
 }
