@@ -265,9 +265,7 @@ export const PaymentMethods = () => {
   const initializePayment = async () => {
     setIsLoading(true);
 
-    // primer hem de guardar l'usuari
-    // després s'ha de pagar
-    // si el pagament és OK, guardar la cita
+    // TODO: DESCOMENTAR ESTO
 
     /* const resultValue = 4900;
 
