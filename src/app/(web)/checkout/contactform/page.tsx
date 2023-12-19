@@ -79,7 +79,7 @@ export default function ConctactForm() {
   }, []);
 
   async function checkout() {
-    var user = await registerUser(client, false, false, false);
+    const user = await registerUser(client, false, false, false);
     if (user) {
       await initializePayment(translateActivePayment(activePayment));
     }

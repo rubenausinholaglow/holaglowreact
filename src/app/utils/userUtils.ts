@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
@@ -9,7 +10,6 @@ import {
 import { useRouter } from 'next/navigation';
 
 import useRoutes from './useRoutes';
-import { User } from '@interface/appointment';
 
 const useRegistration = (
   formData: Client,
