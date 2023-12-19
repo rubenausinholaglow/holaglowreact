@@ -235,7 +235,7 @@ export default function Confirmation({
         </div>
 
         {!appointment && (
-          <div className="w-full">
+          <div className="w-full pb-4">
             <div className="w-full mb-6">
               <Text className="font-semibold  text-left" size="xl">
                 A partir de ahora...
