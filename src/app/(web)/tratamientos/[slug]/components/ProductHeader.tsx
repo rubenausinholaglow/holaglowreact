@@ -1,6 +1,9 @@
+'use client';
+
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { SvgGlow } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import { getProductCardColor, useImageProps } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -16,6 +19,8 @@ export default function ProductHeader({
   product: Product;
   isDashboard?: boolean;
 }) {
+  const { deviceSize } = useSessionStore(state => state);
+
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const validTypes = [3, 6, 7, 8];
 
@@ -23,7 +28,7 @@ export default function ProductHeader({
     <>
       <Container
         className={`p-0 md:px-4 gap-4 md:gap-16 justify-between md:mb-16 flex ${
-          isDashboard ? ' flex-row' : ''
+          !isDashboard && deviceSize.isMobile ? ' flex-col' : 'flex-row'
         }`}
       >
         <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
@@ -69,7 +74,11 @@ export default function ProductHeader({
         <div className={`md:w-1/2 ${isDashboard ? 'pr-4' : ''}`}>
           <div className="relative aspect-[3/2] w-full">
             <div
-              className="absolute inset-0 top-[10%] rounded-3xl"
+              className={`absolute inset-0 top-[10%] ${alignmentStyles} ${
+                !isDashboard && deviceSize.isMobile
+                  ? 'rounded-t-3xl'
+                  : 'rounded-3xl'
+              }`}
               style={{
                 background: getProductCardColor(product.cardBackgroundColor),
               }}
@@ -81,7 +90,11 @@ export default function ProductHeader({
               height={400}
               src={imgSrc}
               onError={() => setNextImgSrc()}
-              className={`relative ${alignmentStyles} rounded-3xl w-[66%]`}
+              className={`relative ${alignmentStyles} ${
+                !isDashboard && deviceSize.isMobile
+                  ? 'rounded-t-3xl'
+                  : 'rounded-3xl'
+              } w-[66%]`}
             />
 
             {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
