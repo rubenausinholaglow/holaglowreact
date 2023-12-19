@@ -3,15 +3,15 @@
 import { useEffect } from 'react';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
+import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 dayjs.locale(spanishConf);
 
@@ -58,7 +58,7 @@ export default function Wait() {
 
   return (
     <MainLayout isCheckout={!false} hideHeader={false} hideFooter={false}>
-      <SvgSpinner className="w-full justify-center" />
+      <FullScreenLoading />
     </MainLayout>
   );
 }

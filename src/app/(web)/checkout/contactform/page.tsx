@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
+import { useSearchParams } from 'next/navigation';
 
 import CheckoutPayment from '../components/CheckoutPayment';
 import AppointmentResume from '../confirmation/components/AppointmentResume';
@@ -15,9 +17,11 @@ import AppointmentResume from '../confirmation/components/AppointmentResume';
 dayjs.locale(spanishConf);
 
 export default function ConctactForm() {
+  const searchParams = useSearchParams();
   const { selectedTreatments } = useSessionStore(state => state);
   const [hideLayout, setHideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
     if (window) {
@@ -30,6 +34,8 @@ export default function ConctactForm() {
       selectedTreatments[0].id ===
         process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
     );
+
+    setHasError(!isEmpty(searchParams.get('error')));
   }, []);
 
   return (
@@ -57,7 +63,9 @@ export default function ConctactForm() {
               hasContinueButton={isProbadorVirtual}
             />
 
-            {!isProbadorVirtual && <CheckoutPayment className="mt-8" />}
+            {!isProbadorVirtual && (
+              <CheckoutPayment hasError={hasError} className="mt-8" />
+            )}
           </div>
         </Flex>
       </Container>

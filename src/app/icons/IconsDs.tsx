@@ -652,3 +652,22 @@ export const SvgHome = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const SvgWarning = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height={26}
+    width={24}
+    fill="transparent"
+    stroke="currentColor"
+    viewBox="0 0 24 26"
+    {...props}
+  >
+    <path
+      d="M12.0061 7.89999V14.2M12.0061 18.0399V18.1599M23 8.89603V17.104C23 18.448 22.2735 19.696 21.0991 20.38L13.907 24.496C12.7325 25.168 11.2796 25.168 10.093 24.496L2.90094 20.38C1.72648 19.708 1 18.46 1 17.104V8.89603C1 7.55203 1.72648 6.30398 2.90094 5.61998L10.093 1.504C11.2675 0.832 12.7204 0.832 13.907 1.504L21.0991 5.61998C22.2735 6.30398 23 7.54003 23 8.89603Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
