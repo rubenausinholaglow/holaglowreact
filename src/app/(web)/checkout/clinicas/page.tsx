@@ -40,12 +40,6 @@ export default function ClinicsCheckout() {
     setSelectedClinic(clinic);
 
     router.push(ROUTES.checkout.type);
-
-    /* router.push(
-      isEmpty(selectedTreatments)
-        ? ROUTES.checkout.treatments
-        : ROUTES.checkout.type
-    ); */
   };
 
   useEffect(() => {
@@ -68,7 +62,10 @@ export default function ClinicsCheckout() {
       <Container className="mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
           {!isEmpty(selectedTreatments) && (
-            <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
+            <Flex
+              layout="col-left"
+              className="gap-4 w-full md:w-1/2 md:order-2"
+            >
               <Title className="font-semibold hidden md:block">
                 Detalle de tu pedido
               </Title>
