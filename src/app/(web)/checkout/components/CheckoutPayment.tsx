@@ -1,17 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Client } from '@interface/client';
+import {
+  phoneValidationRegex,
+  validateEmail,
+  validatePhone,
+} from '@utils/validators';
 import { SvgWarning } from 'app/icons/IconsDs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 
 import { PaymentMethods } from './PaymentMethods';
 
 export default function CheckoutPayment({
   className = '',
   hasError = false,
+  formData,
 }: {
   className?: string;
   hasError: boolean;
+  formData: Client;
 }) {
+  const [isPaymentActive, setIsPaymentActive] = useState(false);
+
   useEffect(() => {
     if (hasError) {
       const elementToScroll = document.getElementById('checkoutPaymentForm');
@@ -22,10 +33,44 @@ export default function CheckoutPayment({
     }
   }, []);
 
+  useEffect(() => {
+    setIsPaymentActive(checkFormData(formData));
+  }, [formData]);
+
+  function checkFormData(formData: Client) {
+    const { name, surname, email, phone, phonePrefix } = formData;
+
+    const cleanedPhoneNumber = phone
+      .replace(/^(\+\d+)\s*/g, '')
+      .replace(/\s/g, '');
+
+    const dataToCheck = {
+      name: !isEmpty(name),
+      surname: !isEmpty(surname),
+      email: validateEmail(email),
+      phone:
+        (phonePrefix === '+34' && validatePhone(cleanedPhoneNumber)) ||
+        (phonePrefix !== '+34' && !isEmpty(phone)),
+    };
+
+    for (const key in dataToCheck) {
+      if (
+        Object.prototype.hasOwnProperty.call(dataToCheck, key) &&
+        (dataToCheck as any)[key] !== true
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   return (
     <Flex
       layout="col-left"
-      className={`w-full ${className}`}
+      className={`w-full transition-all ${className} ${
+        !isPaymentActive ? 'opacity-20 pointer-events-none' : ''
+      }`}
       id="checkoutPaymentForm"
     >
       <Title size="xl" className="font-semibold mb-4">

@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Client } from '@bugsnag/js';
+import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
@@ -18,10 +18,15 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-interface PaymentMethodsProps {
-  client?: Client;
-}
-export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
+const PAYMENT_ICONS = {
+  alma: ['alma.svg'],
+  pepper: ['pepper.svg'],
+  Efectivo: [],
+  creditCard: ['visa.svg', 'mastercard.svg'],
+  direct: ['googlepay.svg', 'applepay.svg'],
+};
+
+export const PaymentMethods = () => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
 
@@ -31,14 +36,6 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
-
-  const PAYMENT_ICONS = {
-    alma: ['alma.svg'],
-    pepper: ['pepper.svg'],
-    Efectivo: [],
-    creditCard: ['visa.svg', 'mastercard.svg'],
-    direct: ['googlepay.svg', 'applepay.svg'],
-  };
 
   function scrollDown() {
     setTimeout(() => {
