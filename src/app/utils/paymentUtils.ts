@@ -18,9 +18,12 @@ export const usePayments = () => {
 
   const initializePayment = async (
     paymentBank: PaymentBank,
-    newTab: boolean = false
+    newTab?: boolean
   ) => {
     if (!user) return;
+
+    const useNewTab = newTab ?? false;
+
     const resultValue = 4900;
 
     const data: InitializePayment = {
@@ -59,7 +62,7 @@ export const usePayments = () => {
       const x = await FinanceService.initializePayment(data);
       setPaymentId(x.id);
       if (x) {
-        if (newTab) {
+        if (useNewTab) {
           openWindow(x.url);
         } else window.document.location.href = x.url;
       }

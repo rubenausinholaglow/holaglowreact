@@ -75,15 +75,11 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
     storedClinicFlowwwId,
     storedClinicProfessionalId,
     storedBudgetId,
-    setBudgetId,
     storedAppointmentId,
-    setCurrentUser,
-    stateProducts,
     setActivePayment,
   } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
-  const initializePayment = usePayments();
   useEffect(() => {
     const { paymentCreatedMessages, paymentResponseMessages } =
       processPaymentMessages(messageSocket.messageSocket);
@@ -95,9 +91,6 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
-  useEffect(() => {
-    setActivePayment(PaymentBank.None);
-  }, []);
 
   const processPaymentMessages = (paymentMessages: any) => {
     const paymentCreatedMessages = paymentMessages.filter(
