@@ -162,7 +162,7 @@ export default function Agenda({
       setSelectedDay(selectedDay);
     }
     setLoadingMonth(false);
-    if (availability.length != maxDays)
+    if (availability.length != maxDays && maxDays != 99)
       setDateToCheck(dateToCheck.add(1, 'month'));
   }
 
