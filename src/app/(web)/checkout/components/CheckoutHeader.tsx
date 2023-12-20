@@ -8,9 +8,11 @@ import Script from 'next/script';
 export default function CheckoutHeader({
   loadCookies = true,
   hideHeader = false,
+  hideBackButton = false,
 }: {
   loadCookies: boolean;
   hideHeader: boolean;
+  hideBackButton?: boolean;
 }) {
   const router = useRouter();
 
@@ -47,12 +49,15 @@ export default function CheckoutHeader({
       {!hideHeader && (
         <Flex layout="row-between" className="py-4 md:py-6">
           <SvgHolaglow className="text-hg-secondary md:h-[29px] md:w-[120px]" />
-          <Button size="sm" type="tertiary" onClick={() => router.back()}>
-            <SvgArrowSmallLeft className="mr-2" />
 
-            <span className="hidden md:block">Volver atrás</span>
-            <span className="md:hidden">Atrás</span>
-          </Button>
+          {!hideBackButton && (
+            <Button size="sm" type="tertiary" onClick={() => router.back()}>
+              <SvgArrowSmallLeft className="mr-2" />
+
+              <span className="hidden md:block">Volver atrás</span>
+              <span className="md:hidden">Atrás</span>
+            </Button>
+          )}
         </Flex>
       )}
     </Container>

@@ -77,6 +77,7 @@ export default function MainLayout({
         <CheckoutHeader
           loadCookies={hideHeader && hideFooter}
           hideHeader={hideHeader}
+          hideBackButton={hideBackButton}
         />
         {children}
         <Analytics />
