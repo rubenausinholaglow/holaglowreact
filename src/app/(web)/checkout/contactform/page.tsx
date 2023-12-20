@@ -7,14 +7,12 @@ import { usePayments } from '@utils/paymentUtils';
 import useRegistration from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -28,7 +26,9 @@ dayjs.locale(spanishConf);
 export default function ConctactForm() {
   const searchParams = useSearchParams();
   const { selectedTreatments } = useSessionStore(state => state);
-  const { activePayment } = useGlobalPersistedStore(state => state);
+  const { activePayment, setActivePayment } = useGlobalPersistedStore(
+    state => state
+  );
   const [hideLayout, setHideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -63,6 +63,7 @@ export default function ConctactForm() {
   });
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false);
+
   useEffect(() => {
     if (window) {
       const queryString = window.location.search;
@@ -76,6 +77,8 @@ export default function ConctactForm() {
     );
 
     setHasError(!isEmpty(searchParams.get('error')));
+
+    setActivePayment(PaymentBank.None);
   }, []);
 
   useEffect(() => {
@@ -85,7 +88,7 @@ export default function ConctactForm() {
         await initializePayment(translateActivePayment(activePayment));
       }
     }
-    if (activePayment) checkout();
+    if (activePayment != PaymentBank.None) checkout();
   }, [activePayment]);
 
   function translateActivePayment(payment: any) {

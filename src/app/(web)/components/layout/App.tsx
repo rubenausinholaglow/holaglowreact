@@ -71,7 +71,6 @@ export default function Html({ children }: { children: ReactNode }) {
     setClinics,
     promo,
     setPromos,
-    setActivePayment,
   } = useGlobalPersistedStore(state => state);
   const { setDeviceSize, analyticsMetrics, setAnalyticsMetrics } =
     useSessionStore(state => state);
@@ -79,7 +78,6 @@ export default function Html({ children }: { children: ReactNode }) {
   useEffect(() => {
     setDeviceSize(DeviceSize());
     getAnalyticsMetrics();
-    setActivePayment(undefined);
   }, []);
 
   useEffect(() => {
