@@ -35,13 +35,13 @@ export default function HightLightedProduct() {
   }, [pendingDiscount]);
 
   const params: paramsDetail = {
-    slug: productHighlighted?.extraInformation.slug || '',
+    slug: productHighlighted?.extraInformation?.slug || '',
     isDashboard: true,
   };
 
   useEffect(() => {
     (params.isDashboard = true),
-      (params.slug = productHighlighted?.extraInformation.slug || '');
+      (params.slug = productHighlighted?.extraInformation?.slug || '');
   }, [productHighlighted]);
 
   return (
