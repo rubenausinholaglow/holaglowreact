@@ -165,50 +165,13 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
     Efectivo: [],
     Tarjeta: ['visa.svg', 'mastercard.svg'],
   };
-  /*
-  const initializePayment = async () => {
-    setIsLoading(true);
 
-    // primer hem de guardar l'usuari
-    // després s'ha de pagar
-    // si el pagament és OK, guardar la cita
+  function scrollDown() {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 250);
+  }
 
-     const resultValue = 4900;
-
-    const data: InitializePayment = {
-      amount: Number(resultValue),
-      installments: 1,
-      userId: user?.id || '',
-      paymentBank: 2,
-      productPaymentRequest: [],
-    };
-
-    cart.forEach(product => {
-      const matchingProduct = stateProducts.find(x => x.id === product.id);
-
-      if (matchingProduct) {
-        const productPayment: ProductPaymentRequest = {
-          name: matchingProduct.title,
-          price: product.price.toString(),
-          quantity: '1',
-          id: matchingProduct.id,
-        };
-        data.productPaymentRequest?.push(productPayment);
-      }
-    });
-
-    await FinanceService.initializePayment(data).then(x => {
-      setShowPepperModal(false);
-      if (x) {
-        openWindow(x.url);
-        handleUrlPayment(x.id, '', x.referenceId);
-      } else {
-        setMessageNotification('Error pagando con Pepper');
-      }
-    });
-    setIsLoading(false); 
-  };
-*/
   return (
     <>
       {checkoutPaymentItems.length > 0 && (
@@ -228,7 +191,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
               className="bg-white py-6 px-8 rounded-xl w-full"
             >
               <AccordionTrigger className="text-left">
-                <Flex className="gap-2">
+                <Flex className="gap-2" onClick={() => scrollDown()}>
                   <SvgRadioChecked
                     height={24}
                     width={24}

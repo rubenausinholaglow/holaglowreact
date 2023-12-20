@@ -51,6 +51,8 @@ export default function AppointmentResume({
   } = useSessionStore(state => state);
 
   const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
+  console.log(selectedDay);
+
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
 
@@ -113,13 +115,6 @@ export default function AppointmentResume({
           layout="col-left"
           className="w-full gap-4 text-sm px-4 pt-4 md:p-0"
         >
-          <div className="w-full flex items-start">
-            <SvgLocation className="mr-2 mt-1" />
-            <div className="flex flex-col text-sm">
-              <Text className="font-semibold">{city}</Text>
-              <Text>{address}</Text>
-            </div>
-          </div>
           <div className="w-full flex items-center">
             <SvgCalendar className="mr-2" />
             <Text className="font-semibold capitalize">
@@ -128,20 +123,36 @@ export default function AppointmentResume({
               {localSelectedDay.format('YYYY')}
             </Text>{' '}
           </div>
-          <div className="w-full flex items-center border-b border-hg-black300  pb-6 mb-6">
+          <div className="w-full flex items-center ">
             <SvgHour className="mr-2" />
             <Text className="font-semibold">{startTime}h</Text>
+          </div>
+          <div className="w-full flex items-start border-b border-hg-black300  pb-6 mb-6">
+            <SvgLocation className="mr-2 mt-1" />
+            <div className="flex flex-col text-sm">
+              <Text className="font-semibold">{city}</Text>
+              <Text>{address}</Text>
+            </div>
           </div>
         </Flex>
         {!appointment && (
           <Accordion {...accordionProps}>
             <AccordionItem {...accordionItemProps}>
+              <AccordionTrigger className="group md:hidden">
+                <Flex className="transition-all bg-hg-secondary100 group-radix-state-open:bg-hg-secondary300 w-full justify-between px-4 py-3 border-x border-white">
+                  <Flex className="gap-2 text-sm">
+                    <SvgBag height={16} width={16} /> Ver resumen del pedido
+                  </Flex>
+                  <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
+                </Flex>
+              </AccordionTrigger>
+
               <AccordionContent>
                 <Flex
                   layout="col-left"
-                  className="w-full gap-4 text-sm px-4 md:px-0"
+                  className="w-full gap-4 text-sm pt-6 px-4 md:px-0 md:pt-0"
                 >
-                  <div className="flex flex-col border-b border-hg-black300 pb-6 mb-6 w-full">
+                  <div className="flex flex-col w-full mb-3">
                     <Text className="font-semibold mb-2">
                       {selectedTreatmentsNames}
                     </Text>
@@ -167,11 +178,6 @@ export default function AppointmentResume({
                       })
                     ) : (
                       <Flex className="items-start mb-2">
-                        <SvgInjection
-                          height={16}
-                          width={16}
-                          className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                        />
                         {selectedTreatments[0] && (
                           <Text>{selectedTreatments[0].description}</Text>
                         )}
@@ -217,7 +223,7 @@ export default function AppointmentResume({
               </AccordionContent>
 
               {!isProbadorVirtual && (
-                <Flex className="bg-hg-secondary100 w-full justify-between text-hg-secondary px-4 py-3 border border-white md:rounded-xl">
+                <Flex className="bg-hg-secondary100 w-full justify-between text-hg-secondary px-4 py-3 border border-white rounded-b-xl md:rounded-xl md:border-none">
                   <Text>
                     <span className="font-semibold">Pagar ahora</span>{' '}
                     (Anticipo)
@@ -225,14 +231,6 @@ export default function AppointmentResume({
                   <Text className="font-semibold">49€</Text>
                 </Flex>
               )}
-              <AccordionTrigger className="group md:hidden">
-                <Flex className="transition-all bg-hg-secondary100 group-radix-state-open:bg-hg-secondary300 w-full justify-between px-4 py-3 border border-white rounded-b-xl">
-                  <Flex className="gap-2 text-sm">
-                    <SvgBag height={16} width={16} /> Ver resumen del pedido
-                  </Flex>
-                  <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
-                </Flex>
-              </AccordionTrigger>
             </AccordionItem>
           </Accordion>
         )}

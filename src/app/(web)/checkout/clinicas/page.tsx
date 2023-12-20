@@ -44,7 +44,7 @@ export default function ClinicsCheckout() {
     /* router.push(
       isEmpty(selectedTreatments)
         ? ROUTES.checkout.treatments
-        : ROUTES.checkout.schedule
+        : ROUTES.checkout.type
     ); */
   };
 
