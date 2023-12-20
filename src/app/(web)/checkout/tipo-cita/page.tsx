@@ -85,7 +85,9 @@ export default function PVCitaMedica() {
     setSelectedTreatments(selectedTreatments);
     initProductAdvance(process.env.NEXT_PUBLIC_CITA_PREVIA_ID!);
 
-    router.push(ROUTES.checkout.schedule);
+    isEmpty(selectedTreatments)
+      ? router.push(ROUTES.checkout.treatments)
+      : router.push(ROUTES.checkout.schedule);
   }
 
   return (
