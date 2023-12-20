@@ -54,7 +54,7 @@ export default function Agenda({
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  let maxDays = 99;
+  let maxDays = 30;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
@@ -162,7 +162,7 @@ export default function Agenda({
       setSelectedDay(selectedDay);
     }
     setLoadingMonth(false);
-    if (availability.length != maxDays && maxDays != 99)
+    if (availability.length != maxDays)
       setDateToCheck(dateToCheck.add(1, 'month'));
   }
 
