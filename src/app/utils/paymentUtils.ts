@@ -22,6 +22,7 @@ export const usePayments = () => {
     createdUser: User,
     newTab = false
   ) => {
+    console.log('initializePayment');
     const useNewTab = newTab ?? false;
 
     const resultValue = 4900;
