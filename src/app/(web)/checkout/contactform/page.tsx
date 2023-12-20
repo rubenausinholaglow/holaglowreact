@@ -5,9 +5,9 @@ import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
 import useRegistration from '@utils/userUtils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   useGlobalPersistedStore,
   useSessionStore,
