@@ -22,6 +22,7 @@ export const usePayments = () => {
     createdUser: User,
     newTab = false
   ) => {
+    console.log(createdUser);
     if (!createdUser) return;
 
     const useNewTab = newTab ?? false;
@@ -60,8 +61,11 @@ export const usePayments = () => {
       }
     });
 
+    console.log(cart);
     try {
+      console.log('initializePayment');
       const x = await FinanceService.initializePayment(data);
+      console.log(x);
       setPaymentId(x.id);
       if (x) {
         if (useNewTab) {
