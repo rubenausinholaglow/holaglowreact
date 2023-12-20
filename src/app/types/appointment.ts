@@ -21,6 +21,7 @@ export interface Appointment {
   referralId: string;
   externalReference: string;
   paymentId: string;
+  paid: boolean;
 }
 
 export enum Status {

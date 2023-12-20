@@ -208,6 +208,7 @@ export default function Agenda({
             clinicId: selectedClinic?.flowwwId,
             isCancelled: false,
             paymentId: previousAppointment.paymentId,
+            paid: false,
           },
           previous: previousAppointment,
         }).then(x => {
