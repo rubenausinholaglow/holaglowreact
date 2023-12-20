@@ -225,14 +225,14 @@ export const PaymentModule = () => {
       professional: '',
       budget: finalBudget,
       appointmentId: storedAppointmentId,
-      paymentTicketRequest: paymentList.map(payItem => ({
+      payments: paymentList.map(payItem => ({
         amount: payItem.amount,
         bank: payItem.bank,
         method: payItem.method,
         paymentReference: payItem.paymentReference || '',
         id: payItem.id,
       })),
-      productTicketRequest: cart.map(CartItem => ({
+      products: cart.map(CartItem => ({
         id: CartItem.id,
       })),
     };
