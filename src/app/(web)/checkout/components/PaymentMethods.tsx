@@ -52,9 +52,6 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
-  useEffect(() => {
-    setActivePayment(PaymentBank.None);
-  }, []);
 
   const processPaymentMessages = (paymentMessages: any) => {
     const paymentCreatedMessages = paymentMessages.filter(

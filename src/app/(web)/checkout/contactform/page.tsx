@@ -26,7 +26,9 @@ dayjs.locale(spanishConf);
 export default function ConctactForm() {
   const searchParams = useSearchParams();
   const { selectedTreatments } = useSessionStore(state => state);
-  const { activePayment } = useGlobalPersistedStore(state => state);
+  const { activePayment, setActivePayment } = useGlobalPersistedStore(
+    state => state
+  );
   const [hideLayout, setHideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -61,6 +63,7 @@ export default function ConctactForm() {
   });
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false);
+
   useEffect(() => {
     if (window) {
       const queryString = window.location.search;
@@ -74,26 +77,19 @@ export default function ConctactForm() {
     );
 
     setHasError(!isEmpty(searchParams.get('error')));
+
+    setActivePayment(PaymentBank.None);
   }, []);
 
   useEffect(() => {
     async function checkout() {
       const user = await registerUser(client, false, false, false);
       if (user) {
-        await initializePayment(translateActivePayment(activePayment), user);
+        await initializePayment(activePayment, user);
       }
     }
-    if (activePayment) checkout();
+    if (activePayment != PaymentBank.None) checkout();
   }, [activePayment]);
-
-  function translateActivePayment(payment: any) {
-    switch (payment) {
-      case 5:
-        return PaymentBank.CreditCard;
-      default:
-        return PaymentBank.None;
-    }
-  }
 
   return (
     <MainLayout
