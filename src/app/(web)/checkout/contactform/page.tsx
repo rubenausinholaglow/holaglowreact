@@ -5,6 +5,7 @@ import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
 import useRegistration from '@utils/userUtils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
@@ -29,6 +30,7 @@ export default function ConctactForm() {
   const { activePayment, setActivePayment } = useGlobalPersistedStore(
     state => state
   );
+  const { cart } = useCartStore(state => state);
   const [hideLayout, setHideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -86,7 +88,7 @@ export default function ConctactForm() {
       const createdUser = await registerUser(client, false, false, false);
       await initializePayment(activePayment, createdUser!);
     }
-    if (activePayment != PaymentBank.None) checkout();
+    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
   }, [activePayment]);
 
   return (
