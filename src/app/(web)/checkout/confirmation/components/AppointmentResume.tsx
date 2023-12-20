@@ -95,7 +95,7 @@ export default function AppointmentResume({
   const accordionItemProps: AccordionItemProps = {
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
-
+  if (deviceSize.isMobile && isProbadorVirtual) return <></>;
   return (
     <Flex layout="col-left" className="w-full px-4 md:px-0 md:pr-8">
       <Text
@@ -135,7 +135,7 @@ export default function AppointmentResume({
             </div>
           </div>
         </Flex>
-        {!appointment && (
+        {!appointment && (!deviceSize.isMobile || !isProbadorVirtual) && (
           <Accordion {...accordionProps}>
             <AccordionItem {...accordionItemProps}>
               <AccordionTrigger className="group md:hidden">
@@ -209,17 +209,19 @@ export default function AppointmentResume({
                   </Flex>
                 )}
 
-                <Flex
-                  layout="col-left"
-                  className="w-full gap-4 text-sm px-4 pb-6 md:px-0"
-                >
-                  <Flex className="justify-between w-full">
-                    <Text>Total</Text>
-                    <Text className="font-semibold">
-                      {selectedTreatments[0].price.toFixed(2)}€
-                    </Text>
+                {!isProbadorVirtual && (
+                  <Flex
+                    layout="col-left"
+                    className="w-full gap-4 text-sm px-4 pb-6 md:px-0"
+                  >
+                    <Flex className="justify-between w-full">
+                      <Text>Total</Text>
+                      <Text className="font-semibold">
+                        {selectedTreatments[0].price.toFixed(2)}€
+                      </Text>
+                    </Flex>
                   </Flex>
-                </Flex>
+                )}
               </AccordionContent>
 
               {!isProbadorVirtual && (
