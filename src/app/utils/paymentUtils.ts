@@ -12,7 +12,7 @@ import {
 } from 'app/stores/globalStore';
 
 export const usePayments = () => {
-  const { user, stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts } = useGlobalPersistedStore(state => state);
   const { setPaymentId } = useSessionStore(state => state);
 
   const { cart } = useCartStore(state => state);
@@ -22,7 +22,7 @@ export const usePayments = () => {
     createdUser: User,
     newTab = false
   ) => {
-    if (!user) return;
+    if (!createdUser) return;
 
     const useNewTab = newTab ?? false;
 
