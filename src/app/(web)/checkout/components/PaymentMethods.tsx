@@ -1,35 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Bugsnag, { Client } from '@bugsnag/js';
-import {
-  InitializePayment,
-  ProductPaymentRequest,
-} from '@interface/initializePayment';
+import { Client } from '@bugsnag/js';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { budgetService } from '@services/BudgetService';
-import FinanceService from '@services/FinanceService';
-import { messageService } from '@services/MessageService';
-import UserService from '@services/UserService';
-import { INITIAL_STATE } from '@utils/constants';
-import { usePayments } from '@utils/paymentUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import PaymentItem, {
   StatusPayment,
 } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/PaymentItem';
-import PaymentClient from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentClient';
 import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
-import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgCheck, SvgRadioChecked } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { StatusBudget, TicketBudget } from 'app/types/budget';
 import { MessageType } from 'app/types/messageSocket';
-import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
-import { Ticket } from 'app/types/ticket';
-import { applyDiscountToCart } from 'app/utils/utils';
 import {
   AccordionContent,
   AccordionItem,
@@ -39,51 +22,25 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-
-/* import PaymentClient from './paymentMethods/PaymentClient';
-import { paymentItems } from './paymentMethods/PaymentItems';
-import PepperWidget from './paymentMethods/PepperWidget';
-import { usePaymentList } from './payments/usePaymentList'; */
 
 interface PaymentMethodsProps {
   client?: Client;
 }
-export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
-  const router = useRouter();
-
+export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
-  const [onLoad, setOnLoad] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [messageNotification, setMessageNotification] = useState<string | null>(
-    null
-  );
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
 
-  const { cart, totalPrice, priceDiscount, percentageDiscount, manualPrice } =
-    useCartStore(state => state);
+  const { cart } = useCartStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
   const { totalAmount } = usePaymentList(state => state);
   const messageSocket = useMessageSocket(state => state);
-  const {
-    remoteControl,
-    storedBoxId,
-    storedClinicId,
-    user,
-    storedClinicFlowwwId,
-    storedClinicProfessionalId,
-    storedBudgetId,
-    setBudgetId,
-    storedAppointmentId,
-    setCurrentUser,
-    stateProducts,
-    setActivePayment,
-  } = useGlobalPersistedStore(state => state);
+  const { storedBudgetId, setActivePayment } = useGlobalPersistedStore(
+    state => state
+  );
 
   const { addPaymentToList, removePayment } = usePaymentList();
-  const initializePayment = usePayments();
   useEffect(() => {
     const { paymentCreatedMessages, paymentResponseMessages } =
       processPaymentMessages(messageSocket.messageSocket);
@@ -204,76 +161,6 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({ client }) => {
       0
     );
   }
-  const cartTotalWithDiscount = applyDiscountToCart(
-    percentageDiscount,
-    priceDiscount,
-    manualPrice,
-    productsPriceTotalWithDiscounts
-  );
-  const missingAmount = Number(cartTotalWithDiscount) - Number(totalAmount);
-  const missingAmountFormatted = missingAmount.toFixed(2);
-
-  const sendTicket = async () => {
-    const finalBudget: TicketBudget = {
-      id: storedBudgetId,
-      discountAmount: '',
-      userId: user?.id || '',
-      discountCode: '',
-      priceDiscount: 0,
-      percentageDiscount: 0,
-      manualPrice: 0,
-      totalPrice: totalPrice,
-      totalPriceWithIva: totalPrice,
-      clinicInfoId: storedClinicId,
-      FlowwwId: '',
-      referenceId: '',
-      statusBudget: StatusBudget.Open,
-      professionalId: storedClinicProfessionalId,
-      products: cart.map(CartItem => ({
-        productId: CartItem.id,
-        price: CartItem.price,
-        percentageDiscount: CartItem.percentageDiscount,
-        priceDiscount: CartItem.priceDiscount,
-        name: CartItem.description,
-      })),
-    };
-
-    const ticket: Ticket = {
-      promoCode: '',
-      reference: '',
-      userId: user?.id || '',
-      clientFlowwwToken: user?.flowwwToken || '',
-      clinicFlowwwId: storedClinicFlowwwId,
-      professional: '',
-      budget: finalBudget,
-      appointmentId: storedAppointmentId,
-      paymentTicketRequest: paymentList.map(payItem => ({
-        amount: payItem.amount,
-        bank: payItem.bank,
-        method: payItem.method,
-        paymentReference: payItem.paymentReference,
-        id: payItem.id,
-      })),
-      productTicketRequest: cart.map(CartItem => ({
-        id: CartItem.id,
-      })),
-    };
-    try {
-      return await budgetService.createTicket(ticket);
-    } catch (error: any) {
-      Bugsnag.notify(error);
-    }
-  };
-
-  const handleOnButtonPaymentClick = (paymentKey: any) => {
-    setOnLoad(true);
-    if (activePaymentMethod === paymentKey) {
-      setOnLoad(false);
-      setActivePaymentMethod('');
-    } else {
-      setActivePaymentMethod(paymentKey);
-    }
-  };
 
   const PAYMENT_ICONS = {
     Alma: ['alma.svg'],

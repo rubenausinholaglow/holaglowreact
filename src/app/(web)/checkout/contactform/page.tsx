@@ -7,14 +7,12 @@ import { usePayments } from '@utils/paymentUtils';
 import useRegistration from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -82,7 +80,7 @@ export default function ConctactForm() {
     async function checkout() {
       const user = await registerUser(client, false, false, false);
       if (user) {
-        await initializePayment(translateActivePayment(activePayment));
+        await initializePayment(translateActivePayment(activePayment), user);
       }
     }
     if (activePayment) checkout();

@@ -1,3 +1,4 @@
+import { User } from '@interface/appointment';
 import {
   InitializePayment,
   ProductPaymentRequest,
@@ -18,7 +19,8 @@ export const usePayments = () => {
 
   const initializePayment = async (
     paymentBank: PaymentBank,
-    newTab: boolean = false
+    createdUser: User,
+    newTab = false
   ) => {
     if (!user) return;
     const resultValue = 4900;
@@ -26,7 +28,7 @@ export const usePayments = () => {
     const data: InitializePayment = {
       amount: Number(resultValue),
       installments: 1,
-      userId: user?.id || '',
+      userId: createdUser?.id || '',
       paymentBank: paymentBank,
       productPaymentRequest: [],
     };
