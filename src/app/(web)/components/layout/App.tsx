@@ -64,6 +64,10 @@ export default function Html({ children }: { children: ReactNode }) {
     setFilteredProducts,
   } = useGlobalStore(state => state);
 
+  const { storedClinicId, storedBoxId } = useGlobalPersistedStore(
+    state => state
+  );
+
   const {
     stateProducts,
     setStateProducts,
@@ -82,6 +86,7 @@ export default function Html({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     async function initProducts() {
+      if (storedBoxId && storedClinicId) return true;
       const products = await fetchProducts();
       setStateProducts(products);
       setFilteredProducts(products);

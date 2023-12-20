@@ -229,7 +229,7 @@ export const PaymentModule = () => {
         amount: payItem.amount,
         bank: payItem.bank,
         method: payItem.method,
-        paymentReference: payItem.paymentReference,
+        paymentReference: payItem.paymentReference || '',
         id: payItem.id,
       })),
       productTicketRequest: cart.map(CartItem => ({

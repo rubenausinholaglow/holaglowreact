@@ -104,7 +104,7 @@ export default function Confirmation({
 
           <div className="pt-12">
             {!isDashboard && (
-              <a href="/tratamientos">
+              <a href="/tratamientos" className="hidden md:block">
                 <Button
                   type="tertiary"
                   size="md"
@@ -123,7 +123,7 @@ export default function Confirmation({
         </div>
 
         {!appointment && (
-          <div className="w-full">
+          <div className="w-full pb-4">
             <div className="w-full mb-6">
               <Text className="font-semibold text-left" size="xl">
                 A partir de ahora...
@@ -177,6 +177,25 @@ export default function Confirmation({
                 </div>
               </Flex>
             </Flex>
+
+            <div className="pt-6 md:hidden">
+              {!isDashboard && (
+                <a href="/tratamientos">
+                  <Button
+                    type="tertiary"
+                    size="md"
+                    className="hidden md:inline"
+                    customStyles="group-hover:bg-hg-secondary100"
+                    href={ROUTES.treatments}
+                  >
+                    <Flex layout="row-center">
+                      <span className="font-semibold">Ver tratamientos</span>
+                      <SvgArrow height={18} width={18} className="ml-2" />
+                    </Flex>
+                  </Button>
+                </a>
+              )}
+            </div>
           </div>
         )}
       </div>

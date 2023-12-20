@@ -3,6 +3,7 @@ import ClinicFilter from 'app/(web)/components/filters/ClinicFilter';
 import FilterText from 'app/(web)/components/filters/FilterText';
 import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
 import PriceFilter from 'app/(web)/components/filters/PriceFilter';
+import TypeFilter from 'app/(web)/components/filters/TypeFilter';
 import ZoneFilter from 'app/(web)/components/filters/ZoneFilter';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -42,6 +43,9 @@ export default function DesktopFilters({
           </Flex>
           <Flex layout="col-left" className="w-full">
             <PackTypeFilter />
+          </Flex>
+          <Flex layout="col-left" className="w-full">
+            <TypeFilter />
           </Flex>
           <Button
             type="tertiary"
