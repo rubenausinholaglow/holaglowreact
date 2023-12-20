@@ -51,6 +51,8 @@ export default function Wait() {
           setTimeout(async () => {
             await checkPaymentStatus(id);
           }, 15000);
+        } else {
+          router.push('/checkout/contactform?error=true');
         }
       });
     }
