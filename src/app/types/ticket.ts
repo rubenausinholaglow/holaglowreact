@@ -11,6 +11,6 @@ export interface Ticket {
   professional: string;
   appointmentId: string;
   budget: Budget | null;
-  paymentTicketRequest: PaymentTicketRequest[];
-  productTicketRequest: ProductTicketRequest[];
+  payments: PaymentTicketRequest[];
+  products: ProductTicketRequest[];
 }

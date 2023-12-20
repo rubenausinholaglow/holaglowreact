@@ -117,7 +117,11 @@ export default function ConctactForm() {
             />
 
             {!isProbadorVirtual && (
-              <CheckoutPayment hasError={hasError} className="mt-8" />
+              <CheckoutPayment
+                hasError={hasError}
+                className="mt-8"
+                formData={client}
+              />
             )}
           </div>
         </Flex>

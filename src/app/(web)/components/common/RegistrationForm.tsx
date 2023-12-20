@@ -180,7 +180,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   }
 
   const handleRegistration = async () => {
-    //await registerUser(formData);
     await registerUser(formData, isDashboard, redirect, false);
   };
 
@@ -188,48 +187,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     localStorage.clear();
     setErrors(errors);
   };
-
-  /* const registerUser = async (formData: Client) => {
-    setIsLoading(true);
-    const formDatacopy = { ...formData };
-    formDatacopy.analyticsMetrics = analyticsMetrics;
-    formDatacopy.phone = formData.phone
-      .replace(formDatacopy.phonePrefix, '')
-      .replaceAll(' ', '');
-    formDatacopy.interestedTreatment = analyticsMetrics.treatmentText;
-    if (analyticsMetrics.externalReference)
-      formDatacopy.externalReference = analyticsMetrics.externalReference;
-    const user = await UserService.registerUser(formDatacopy);
-    if (user) {
-      user.flowwwToken = user.clinicToken;
-    }
-    if (user) {
-      setCurrentUser(user);
-      if (selectedSlot && selectedClinic) {
-        await ScheduleService.createAppointment(
-          selectedTreatments,
-          selectedSlot!,
-          selectedDay,
-          selectedClinic!,
-          user,
-          selectedPacksTreatments!,
-          analyticsMetrics,
-          ''
-        ).then(x => {
-          if (isDashboard) {
-            router.push(routes.dashboard.checkIn.treatments);
-          } else router.push('/checkout/confirmation');
-        });
-      } else {
-        if (!isDashboard) {
-          if (redirect) {
-            window.parent.location.href =
-              'https://holaglow.com/checkout/clinicas';
-          } else router.push('/checkout/clinicas');
-        } else router.push(routes.dashboard.checkIn.treatments);
-      }
-    }
-  };*/
 
   return (
     <div className="grid grid-cols-1 gap-4 w-full">
