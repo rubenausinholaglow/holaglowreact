@@ -3,16 +3,11 @@ import { useEffect, useState } from 'react';
 import { Client } from '@bugsnag/js';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import PaymentItem, {
-  StatusPayment,
-} from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/PaymentItem';
 import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
-import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import { SvgArrow, SvgCheck, SvgRadioChecked } from 'app/icons/IconsDs';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { MessageType } from 'app/types/messageSocket';
 import {
   AccordionContent,
   AccordionItem,
@@ -28,136 +23,14 @@ interface PaymentMethodsProps {
 }
 export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
-  const [paymentStatus, setPaymentStatus] = useState<
-    Record<string, StatusPayment>
-  >({});
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
 
-  const { cart } = useCartStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
-  const { totalAmount } = usePaymentList(state => state);
-  const messageSocket = useMessageSocket(state => state);
-  const { storedBudgetId, setActivePayment } = useGlobalPersistedStore(
-    state => state
-  );
-
-  const { addPaymentToList, removePayment } = usePaymentList();
-  useEffect(() => {
-    const { paymentCreatedMessages, paymentResponseMessages } =
-      processPaymentMessages(messageSocket.messageSocket);
-
-    paymentResponseMessages.forEach(handlePaymentResponse);
-    paymentCreatedMessages.forEach(handlePaymentCreate);
-  }, [messageSocket]);
+  const { setActivePayment } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
-
-  const processPaymentMessages = (paymentMessages: any) => {
-    const paymentCreatedMessages = paymentMessages.filter(
-      (x: any) => x.messageType === MessageType.PaymentCreate
-    );
-
-    const paymentResponseMessages = paymentMessages.filter(
-      (x: any) => x.messageType === MessageType.PaymentResponse
-    );
-
-    return { paymentCreatedMessages, paymentResponseMessages };
-  };
-
-  const handlePaymentCreate = (message: any) => {
-    if (storedBudgetId != message.budgetId) return true;
-    const existsPayment = paymentList.find(x => x.id == message.id);
-    if (!existsPayment) {
-      handleNewPayment(message);
-    } else {
-      handleExistingPayment(message, existsPayment);
-    }
-  };
-
-  const handleNewPayment = (message: any): void => {
-    const paymentRequest = createPaymentRequest(message);
-    if (message.amount > 0) {
-      addPaymentToList(paymentRequest);
-    }
-    messageSocket.removeMessageSocket(message);
-  };
-
-  const handleExistingPayment = (message: any, existsPayment: any): void => {
-    if (message.amount === 0) {
-      message.amount = existsPayment.amount;
-      const paymentRequest = createPaymentRequest(message);
-      if (existsPayment.amount > 0) {
-        removePayment(paymentRequest);
-      }
-      messageSocket.removeMessageSocket(message);
-    }
-  };
-
-  const createPaymentRequest = (message: any): any => {
-    return {
-      amount: message.amount,
-      method: message.paymentMethod,
-      bank: message.paymentBank,
-      paymentReference: message.ReferenceId,
-      id: message.id,
-    };
-  };
-
-  const handlePaymentResponse = (message: any) => {
-    const payment = {
-      referenceId: message.message.data.id,
-      paymentStatus: message.message.data.paymentStatus,
-    };
-
-    const existingPayment = paymentList.find(
-      x => x.paymentReference === payment.referenceId
-    );
-
-    if (existingPayment) {
-      switch (payment.paymentStatus) {
-        case 2:
-          setPaymentStatus(prevPaymentStatus => ({
-            ...prevPaymentStatus,
-            [existingPayment.id]: StatusPayment.Rejected,
-          }));
-          break;
-        case 1:
-          setPaymentStatus(prevPaymentStatus => ({
-            ...prevPaymentStatus,
-            [existingPayment.id]: StatusPayment.Paid,
-          }));
-          break;
-        case 5:
-          setPaymentStatus(prevPaymentStatus => ({
-            ...prevPaymentStatus,
-            [existingPayment.id]: StatusPayment.FinancingRejected,
-          }));
-          break;
-        case 4:
-          setPaymentStatus(prevPaymentStatus => ({
-            ...prevPaymentStatus,
-            [existingPayment.id]: StatusPayment.FinancingAccepted,
-          }));
-          break;
-        default:
-          setPaymentStatus(prevPaymentStatus => ({
-            ...prevPaymentStatus,
-            [existingPayment.id]: StatusPayment.Waiting,
-          }));
-      }
-      messageSocket.removeMessageSocket(message);
-    }
-  };
-
-  let productsPriceTotalWithDiscounts = 0;
-
-  if (cart) {
-    productsPriceTotalWithDiscounts = cart.reduce(
-      (acc, product) => acc + Number(product.priceWithDiscount),
-      0
-    );
-  }
 
   const PAYMENT_ICONS = {
     alma: ['alma.svg'],
@@ -236,37 +109,26 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = () => {
                     type="tertiary"
                     customStyles="bg-hg-primary gap-2"
                     onClick={() => {
+                      setIsLoadingButton(true);
                       setActivePayment(PaymentBank.CreditCard);
                     }}
                   >
-                    Continuar
-                    <SvgArrow height={16} width={16} />
+                    {isLoadingButton ? (
+                      <Flex className="w-20 justify-center">
+                        <SvgSpinner height={24} width={24} />
+                      </Flex>
+                    ) : (
+                      <>
+                        Continuar
+                        <SvgArrow height={16} width={16} />
+                      </>
+                    )}
                   </Button>
                 </Flex>
               </AccordionContent>
             </AccordionItem>
           ))}
         </AccordionPrimitive.Root>
-      )}
-
-      {paymentList.length > 0 && (
-        <Flex
-          layout="col-left"
-          className="bg-hg-black100 w-full p-6 rounded-xl gap-4 mb-8"
-        >
-          <Flex className="gap-2">
-            <SvgCheck height={24} width={24} className="text-hg-secondary" />
-            <Text className="text-hg-secondary">Pagado</Text>
-          </Flex>
-          {totalAmount > 0 &&
-            paymentList?.map(paymentRequest => (
-              <PaymentItem
-                key={paymentRequest.id}
-                paymentTicketRequest={paymentRequest}
-                status={paymentStatus[paymentRequest.id]}
-              />
-            ))}
-        </Flex>
       )}
     </>
   );

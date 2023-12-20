@@ -5,7 +5,7 @@ import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCalendar, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgCross } from 'app/icons/IconsDs';
+import { SvgCross, SvgWarning } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -146,19 +146,35 @@ export default function Page({
             ¿Estás segurx que quieres cancelar la cita?
           </Title>
 
-          <Flex
-            layout="col-center"
-            className="bg-hg-black100 w-full rounded-xl p-4 gap-4 mb-12"
-          >
-            <SvgCalendar height={32} width={32} className="text-hg-secondary" />
-            <Text className="font-semibold">
-              {appointmentToCancel?.treatmentText}
-            </Text>
-            <Text className="text-sm text-center">
-              {dayjs(appointmentToCancel?.startTime).format('DD')} de{' '}
-              {dayjs(appointmentToCancel?.startTime).format('MMMM')} a las {}
-              {dayjs(appointmentToCancel?.startTime).format('HH:mm')}
-            </Text>
+          <Flex layout="col-left" className="gap-4 w-full mb-8">
+            <Flex
+              layout="col-center"
+              className="bg-hg-black100 w-full rounded-xl p-4 gap-4"
+            >
+              <SvgCalendar
+                height={32}
+                width={32}
+                className="text-hg-secondary"
+              />
+              <Text className="font-semibold">
+                {appointmentToCancel?.treatmentText}
+              </Text>
+              <Text className="text-sm text-center">
+                {dayjs(appointmentToCancel?.startTime).format('DD')} de{' '}
+                {dayjs(appointmentToCancel?.startTime).format('MMMM')} a las {}
+                {dayjs(appointmentToCancel?.startTime).format('HH:mm')}
+              </Text>
+            </Flex>
+            {!appointmentToCancel?.paid && (
+              <Flex className="bg-hg-error100 text-hg-error text-xs gap-3 px-4 py-3 rounded-xl w-full mb-4">
+                <SvgWarning width={22} height={22} className="shrink-0" />
+                <div>
+                  <Text>
+                    La cancelación de la cita conlleva la pérdida del anticipo.
+                  </Text>
+                </div>
+              </Flex>
+            )}
           </Flex>
           <Flex layout="row-between" className="w-full">
             <Button
