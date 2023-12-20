@@ -22,9 +22,6 @@ export const usePayments = () => {
     createdUser: User,
     newTab = false
   ) => {
-    console.log(createdUser);
-    if (!createdUser) return;
-
     const useNewTab = newTab ?? false;
 
     const resultValue = 4900;
