@@ -85,20 +85,11 @@ export default function ConctactForm() {
     async function checkout() {
       const user = await registerUser(client, false, false, false);
       if (user) {
-        await initializePayment(translateActivePayment(activePayment));
+        await initializePayment(activePayment);
       }
     }
     if (activePayment != PaymentBank.None) checkout();
   }, [activePayment]);
-
-  function translateActivePayment(payment: any) {
-    switch (payment) {
-      case 5:
-        return PaymentBank.CreditCard;
-      default:
-        return PaymentBank.None;
-    }
-  }
 
   return (
     <MainLayout
