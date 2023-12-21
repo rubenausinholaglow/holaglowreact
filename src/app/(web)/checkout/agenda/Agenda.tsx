@@ -62,8 +62,8 @@ export default function Agenda({
     },
     '4': {
       //Barcelona
-      '1': 99,
-      '2': 99,
+      '1': 30,
+      '2': 30,
     },
     '5': {
       //Valencia
@@ -162,8 +162,6 @@ export default function Agenda({
       setSelectedDay(selectedDay);
     }
     setLoadingMonth(false);
-    if (availability.length != maxDays)
-      setDateToCheck(dateToCheck.add(1, 'month'));
   }
 
   useEffect(() => {
