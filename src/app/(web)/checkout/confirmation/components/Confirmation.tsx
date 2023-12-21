@@ -104,7 +104,6 @@ export default function Confirmation({
             isProbadorVirtual
             isConfirmation
           />
-
           <div className="pt-12">
             {!isDashboard && (
               <a href="/tratamientos" className="hidden md:block">
