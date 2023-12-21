@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgArrow, SvgCheck } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -9,13 +10,11 @@ import {
 import { Appointment } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import useRoutes from 'app/utils/useRoutes';
-import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 import AppointmentResume from './AppointmentResume';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 
 export default function Confirmation({
   appointment,
@@ -25,12 +24,9 @@ export default function Confirmation({
   isDashboard?: boolean;
 }) {
   const ROUTES = useRoutes();
-  const { clinics } = useGlobalPersistedStore(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { selectedClinic, setAnalyticsMetrics } = useSessionStore(
-    state => state
-  );
+  const { setAnalyticsMetrics } = useSessionStore(state => state);
 
   useEffect(() => {
     setCurrentUser(undefined);
