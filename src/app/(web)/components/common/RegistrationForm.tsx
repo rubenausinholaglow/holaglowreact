@@ -134,6 +134,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
       handleRequestError(errorMessages);
     }
+
+    setIsLoading(false);
   };
 
   function handlePhoneChange(
@@ -184,7 +186,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   }
 
   const handleRegistration = async () => {
-    await registerUser(formData, isDashboard, redirect, false);
+    await registerUser(formData, isDashboard, redirect, true);
   };
 
   const handleRequestError = (errors: Array<string>) => {
