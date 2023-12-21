@@ -386,7 +386,10 @@ export default function LegalAdvice() {
             realizado el procedimiento contratado. Asimismo, el mismo criterio
             aplicará si usted decide terminar un tratamiento que debe realizarse
             en múltiples sesiones si no lo notifica al centro con una antelación
-            de 30 días previas al siguiente tratamiento.
+            de 30 días previas al siguiente tratamiento. En el caso de haber
+            pagado el anticipo de 49€ para un tratamiento, solo se devolverá el
+            importe en caso de que existiera una contraindicación médica para
+            realizarse dicho tratamiento.
           </p>
         </Flex>
       </Container>
