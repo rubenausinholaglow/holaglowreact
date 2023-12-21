@@ -15,6 +15,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 import AppointmentResume from './AppointmentResume';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 
 export default function Confirmation({
   appointment,
@@ -26,6 +27,7 @@ export default function Confirmation({
   const ROUTES = useRoutes();
   const { clinics } = useGlobalPersistedStore(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
+  const { resetCart } = useCartStore(state => state);
   const { selectedClinic, setAnalyticsMetrics } = useSessionStore(
     state => state
   );
@@ -47,6 +49,7 @@ export default function Confirmation({
       treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
+    resetCart();
   }, []);
 
   return (
