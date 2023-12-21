@@ -138,12 +138,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     setIsLoading(false);
   };
 
-  function handlePhoneChange(
-    event: any,
-    country: any,
-    formattedValue: string,
-    value: string
-  ) {
+  function handlePhoneChange(event: any, country: any, value: string) {
     if (
       event &&
       event.nativeEvent &&
@@ -265,8 +260,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           country={'es'}
           preferredCountries={['es']}
           value={formData.phone}
-          onChange={(value, data, event, formattedValue) => {
-            handlePhoneChange(event, data, formattedValue, value);
+          onChange={(value, data, event) => {
+            handlePhoneChange(event, data, value);
           }}
         />
         {showPhoneError !== null && (
@@ -286,7 +281,16 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       </div>
 
       <Flex layout="col-left" className="my-2 mb-4">
-        <Flex layout="row-left">
+        <Flex
+          layout="row-left"
+          className={
+            !hasContinueButton &&
+            !isDisabled &&
+            !formData.termsAndConditionsAccepted
+              ? 'animate-shake'
+              : ''
+          }
+        >
           <label
             htmlFor="termsAndConditionsAccepted"
             className="flex items-center cursor-pointer"

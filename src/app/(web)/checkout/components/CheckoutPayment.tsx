@@ -43,7 +43,8 @@ export default function CheckoutPayment({
       termsAndConditionsAccepted,
     } = formData;
 
-    const cleanedPhoneNumber = phonePrefix === '+34' ? phone.slice(3) : phone;
+    const cleanedPhoneNumber =
+      phonePrefix === '+34' ? phone.slice(3).replace(/ /g, '') : phone;
 
     const dataToCheck = {
       name: !isEmpty(name),
