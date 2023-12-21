@@ -26,7 +26,7 @@ export default function Wait() {
     selectedClinic,
     selectedPacksTreatments,
     analyticsMetrics,
-    paymentId,
+    payment,
   } = useSessionStore(state => state);
   const { user } = useGlobalPersistedStore(state => state);
 
@@ -46,7 +46,7 @@ export default function Wait() {
             user!,
             selectedPacksTreatments!,
             analyticsMetrics,
-            paymentId
+            id
           ).then(x => {
             router.push('/checkout/confirmation');
           });
@@ -60,7 +60,7 @@ export default function Wait() {
       });
     }
 
-    checkPaymentStatus(paymentId);
+    checkPaymentStatus(payment!.id);
   }, []);
 
   return (

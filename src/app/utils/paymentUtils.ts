@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { User } from '@interface/appointment';
 import {
   InitializePayment,
@@ -10,7 +11,6 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { useEffect } from 'react';
 
 export const usePayments = () => {
   const { stateProducts } = useGlobalPersistedStore(state => state);

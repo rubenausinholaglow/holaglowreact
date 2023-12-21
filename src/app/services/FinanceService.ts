@@ -20,11 +20,11 @@ export default class FinanceService {
         const data = await res.json();
         return data;
       } else {
-        return { id: '', url: '' };
+        return { id: '', url: '', referenceId: '' };
       }
     } catch (error: any) {
       Bugsnag.notify(error);
-      return { id: '', url: '' };
+      return { id: '', url: '', referenceId: '' };
     }
   }
 
