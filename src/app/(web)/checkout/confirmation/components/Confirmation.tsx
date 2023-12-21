@@ -28,7 +28,7 @@ export default function Confirmation({
   const { clinics } = useGlobalPersistedStore(state => state);
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { selectedClinic, setAnalyticsMetrics } = useSessionStore(
+  const { selectedClinic, setAnalyticsMetrics, setPayment } = useSessionStore(
     state => state
   );
 
@@ -50,6 +50,7 @@ export default function Confirmation({
     };
     setAnalyticsMetrics(metrics);
     resetCart();
+    setPayment(undefined);
   }, []);
 
   return (

@@ -1,8 +1,11 @@
 import Bugsnag from '@bugsnag/js';
+import { PaymentInitResponse } from '@interface/payment';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
-  static async initializePayment(initializePayment: InitializePayment) {
+  static async initializePayment(
+    initializePayment: InitializePayment
+  ): Promise<PaymentInitResponse> {
     try {
       const url = `${process.env.NEXT_PUBLIC_FINANCE_API}External`;
       const res = await fetch(url, {
@@ -17,10 +20,11 @@ export default class FinanceService {
         const data = await res.json();
         return data;
       } else {
-        return '';
+        return { id: '', url: '' };
       }
     } catch (error: any) {
       Bugsnag.notify(error);
+      return { id: '', url: '' };
     }
   }
 

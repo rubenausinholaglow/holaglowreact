@@ -10,20 +10,20 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { useEffect } from 'react';
 
 export const usePayments = () => {
   const { stateProducts } = useGlobalPersistedStore(state => state);
-  const { setPaymentId } = useSessionStore(state => state);
+  const { setPayment, payment } = useSessionStore(state => state);
 
   const { cart } = useCartStore(state => state);
-
+  let useNewTab = false;
   const initializePayment = async (
     paymentBank: PaymentBank,
     createdUser: User,
     newTab = false
   ) => {
-    console.log('initializePayment');
-    const useNewTab = newTab ?? false;
+    useNewTab = newTab ?? false;
 
     const resultValue = 4900;
 
@@ -59,21 +59,21 @@ export const usePayments = () => {
       }
     });
 
-    console.log(cart);
     try {
-      console.log('initializePayment');
-      const x = await FinanceService.initializePayment(data);
-      console.log(x);
-      setPaymentId(x.id);
-      if (x) {
-        if (useNewTab) {
-          openWindow(x.url);
-        } else window.document.location.href = x.url;
-      }
+      const paymentResponse = await FinanceService.initializePayment(data);
+      setPayment(paymentResponse);
     } catch (error) {
       console.error('Error initializing payment:', error);
     }
   };
+
+  useEffect(() => {
+    if (payment && payment.url) {
+      if (useNewTab) {
+        openWindow(payment.url);
+      } else window.document.location.href = payment.url;
+    }
+  }, [payment]);
 
   const openWindow = (url: string) => {
     const newWindow = window.open(url, '_blank');

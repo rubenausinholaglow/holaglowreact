@@ -24,3 +24,8 @@ export enum PaymentBank {
   Stripe,
   CreditCard,
 }
+
+export interface PaymentInitResponse {
+  id: string;
+  url: string;
+}
