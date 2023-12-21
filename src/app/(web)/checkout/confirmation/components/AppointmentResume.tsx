@@ -95,7 +95,9 @@ export default function AppointmentResume({
   const accordionItemProps: AccordionItemProps = {
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
-  if (deviceSize.isMobile && isProbadorVirtual) return <></>;
+
+  if (deviceSize.isMobile && isProbadorVirtual && !isConfirmation) return <></>;
+
   return (
     <Flex layout="col-left" className="w-full px-4 md:px-0 md:pr-8">
       <Text
