@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
-import {
-  phoneValidationRegex,
-  validateEmail,
-  validatePhone,
-} from '@utils/validators';
+import { validateEmail, validatePhone } from '@utils/validators';
 import { SvgWarning } from 'app/icons/IconsDs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -38,7 +34,14 @@ export default function CheckoutPayment({
   }, [formData]);
 
   function checkFormData(formData: Client) {
-    const { name, surname, email, phone, phonePrefix } = formData;
+    const {
+      name,
+      surname,
+      email,
+      phonePrefix,
+      phone,
+      termsAndConditionsAccepted,
+    } = formData;
 
     const cleanedPhoneNumber = phone
       .replace(/^(\+\d+)\s*/g, '')
@@ -51,6 +54,7 @@ export default function CheckoutPayment({
       phone:
         (phonePrefix === '+34' && validatePhone(cleanedPhoneNumber)) ||
         (phonePrefix !== '+34' && !isEmpty(phone)),
+      termsAndConditionsAccepted: termsAndConditionsAccepted,
     };
 
     for (const key in dataToCheck) {

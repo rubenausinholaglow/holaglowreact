@@ -5,8 +5,6 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import ScheduleService from '@services/ScheduleService';
-import UserService from '@services/UserService';
 import * as errorsConfig from '@utils/textConstants';
 import useRegistration from '@utils/userUtils';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
@@ -14,18 +12,12 @@ import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
 import { Client } from 'app/types/client';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../../utils/props';
@@ -41,24 +33,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   hasContinueButton?: boolean;
   setClientData?: Dispatch<SetStateAction<Client>>;
 }) => {
-  const router = useRouter();
-  const routes = useRoutes();
-
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
-
-  const { setCurrentUser } = useGlobalPersistedStore(state => state);
-  const {
-    selectedTreatments,
-    selectedSlot,
-    selectedDay,
-    selectedClinic,
-    selectedPacksTreatments,
-    analyticsMetrics,
-  } = useSessionStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -125,6 +104,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   }, [formData]);
 
   const handleContinue = async () => {
+    setIsLoading(true);
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
@@ -176,6 +156,30 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       handleFieldChange(event, 'phone');
       event.target.value = '+34';
       handleFieldChange(event, 'phonePrefix');
+    }
+
+    validatePhoneInput(`+${value}`);
+  }
+
+  function validatePhoneInput(phoneNumber: string) {
+    if (
+      phoneNumber.length > 3 &&
+      phoneNumber.startsWith('+34') &&
+      phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
+    ) {
+      setShowPhoneError(false);
+    }
+
+    if (
+      phoneNumber.length > 3 &&
+      phoneNumber.startsWith('+34') &&
+      !phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
+    ) {
+      setShowPhoneError(true);
+    }
+
+    if (isEmpty(phoneNumber) || phoneNumber === '+' || phoneNumber === '+34') {
+      setShowPhoneError(true);
     }
   }
 
@@ -261,23 +265,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           value={formData.phone}
           onChange={(value, data, event, formattedValue) => {
             handlePhoneChange(event, data, formattedValue, value);
-          }}
-          onBlur={() => {
-            if (
-              formData.phone.length > 3 &&
-              formData.phone.startsWith('+34') &&
-              !phoneValidationRegex.test(
-                formData.phone.replace(/\D/g, '').slice(-9)
-              )
-            ) {
-              setShowPhoneError(true);
-            } else {
-              setShowPhoneError(false);
-            }
-
-            if (formData.phone === '+34') {
-              setShowPhoneError(null);
-            }
           }}
         />
         {showPhoneError !== null && (
