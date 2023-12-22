@@ -1,9 +1,12 @@
-export interface PaymentProductRequest {
+export interface PaymentTicketRequest {
   id: string;
   amount: number;
   method: PaymentMethod;
   bank: PaymentBank;
   paymentReference: string;
+}
+export interface ProductTicketRequest {
+  id: string;
 }
 
 export enum PaymentMethod {
@@ -20,4 +23,10 @@ export enum PaymentBank {
   Cash,
   Stripe,
   CreditCard,
+}
+
+export interface PaymentInitResponse {
+  id: string;
+  url: string;
+  referenceId: string;
 }

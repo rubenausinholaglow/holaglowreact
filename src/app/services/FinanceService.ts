@@ -1,8 +1,11 @@
 import Bugsnag from '@bugsnag/js';
+import { PaymentInitResponse } from '@interface/payment';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
-  static async initializePayment(initializePayment: InitializePayment) {
+  static async initializePayment(
+    initializePayment: InitializePayment
+  ): Promise<PaymentInitResponse> {
     try {
       const url = `${process.env.NEXT_PUBLIC_FINANCE_API}External`;
       const res = await fetch(url, {
@@ -11,6 +14,29 @@ export default class FinanceService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(initializePayment),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return { id: '', url: '', referenceId: '' };
+      }
+    } catch (error: any) {
+      Bugsnag.notify(error);
+      return { id: '', url: '', referenceId: '' };
+    }
+  }
+
+  static async checkPaymentStatus(id: string) {
+    try {
+      const url =
+        `${process.env.NEXT_PUBLIC_FINANCE_API}External/Status?id=` + id;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
       if (res.ok) {
