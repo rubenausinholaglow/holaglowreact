@@ -389,7 +389,8 @@ export default function LegalAdvice() {
             de 30 días previas al siguiente tratamiento. En el caso de haber
             pagado el anticipo de 49€ para un tratamiento, solo se devolverá el
             importe en caso de que existiera una contraindicación médica para
-            realizarse dicho tratamiento.
+            realizarse dicho tratamiento. La no asistencia a la cita acordada
+            implicará la pérdida del importe de la reserva
           </p>
         </Flex>
       </Container>
