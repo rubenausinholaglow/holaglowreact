@@ -165,7 +165,7 @@ export default function Page({
                 {dayjs(appointmentToCancel?.startTime).format('HH:mm')}
               </Text>
             </Flex>
-            {!appointmentToCancel?.paid && (
+            {appointmentToCancel?.paid && (
               <Flex className="bg-hg-error100 text-hg-error text-xs gap-3 px-4 py-3 rounded-xl w-full mb-4">
                 <SvgWarning width={22} height={22} className="shrink-0" />
                 <div>
