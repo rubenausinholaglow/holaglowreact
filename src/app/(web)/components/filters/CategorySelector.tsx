@@ -73,7 +73,6 @@ export default function CategorySelector({
       {productCategories.map((category, i) => {
         return (
           <li
-            id={'tmevent_treatments_type'}
             key={category}
             className={twMerge(`transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
@@ -95,7 +94,7 @@ export default function CategorySelector({
               );
             }}
           >
-            <Flex layout="row-left">
+            <Flex layout="row-left" id={'tmevent_treatments_type'}>
               {!isDashboard && (
                 <CategoryIcon category={category} className="mr-2" />
               )}
