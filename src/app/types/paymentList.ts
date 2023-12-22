@@ -1,13 +1,13 @@
-import { PaymentProductRequest } from './payment';
+import { PaymentTicketRequest } from './payment';
 
 export interface PaymentList {
-  paymentRequest: PaymentProductRequest[];
+  paymentRequest: PaymentTicketRequest[];
   totalAmount: number;
 }
 
 export interface PaymentActions {
-  addPaymentToList: (Item: PaymentProductRequest) => void;
-  removePayment: (Item: PaymentProductRequest) => void;
+  addPaymentToList: (Item: PaymentTicketRequest) => void;
+  removePayment: (Item: PaymentTicketRequest) => void;
 }
 
 export const INITIAL_STATE_PAYMENT: PaymentList = {

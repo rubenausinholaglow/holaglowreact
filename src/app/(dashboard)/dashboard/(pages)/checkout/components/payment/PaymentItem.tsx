@@ -3,10 +3,10 @@ import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgCross } from 'app/icons/IconsDs';
+import { SvgCross } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { PaymentCreatedData } from 'app/types/FrontEndMessages';
-import { PaymentProductRequest } from 'app/types/payment';
+import { PaymentTicketRequest } from 'app/types/payment';
 import { getPaymentBankText, getPaymentMethodText } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -23,11 +23,11 @@ export enum StatusPayment {
   FinancingRejected,
 }
 interface Props {
-  paymentRequest: PaymentProductRequest;
+  paymentTicketRequest: PaymentTicketRequest;
   status: StatusPayment;
 }
 
-export default function PaymentItem({ paymentRequest, status }: Props) {
+export default function PaymentItem({ paymentTicketRequest, status }: Props) {
   const { removePayment } = usePaymentList(state => state);
   const availableBanks = [1, 2, 4];
   const financialBanks = [1, 2];
@@ -37,8 +37,9 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
     null
   );
   const [isLoading, setIsLoading] = useState(false);
-  const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
-    useGlobalPersistedStore(state => state);
+  const { remoteControl, storedBudgetId, user } = useGlobalPersistedStore(
+    state => state
+  );
 
   if (status === undefined) {
     status = StatusPayment.Waiting;
@@ -87,8 +88,7 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
 
   const sendPaymentDeleted = async (paymentId: string) => {
     const paymentCreatedRequest: PaymentCreatedData = {
-      clinicId: storedClinicId,
-      boxId: storedBoxId,
+      userId: user?.id || '',
       id: paymentId,
       amount: 0,
       paymentBank: 0,
@@ -104,26 +104,28 @@ export default function PaymentItem({ paymentRequest, status }: Props) {
   return (
     <Flex className="gap-1 w-full">
       <Text className="font-semibold">
-        {getPaymentMethodText(paymentRequest.method)}
+        {getPaymentMethodText(paymentTicketRequest.method)}
       </Text>
-      {financialBanks.includes(paymentRequest.bank) && (
+      {financialBanks.includes(paymentTicketRequest.bank) && (
         <span className="mr-1 font-semibold">
-          {getPaymentBankText(paymentRequest.bank)}
+          {getPaymentBankText(paymentTicketRequest.bank)}
         </span>
       )}
 
-      {availableBanks[paymentRequest.bank] && (
-        <Text key={paymentRequest.id}>{textPayment}</Text>
+      {availableBanks[paymentTicketRequest.bank] && (
+        <Text key={paymentTicketRequest.id}>{textPayment}</Text>
       )}
       <Flex className="ml-auto gap-2">
-        <Text className="font-semibold text-lg">{paymentRequest.amount} €</Text>
+        <Text className="font-semibold text-lg">
+          {paymentTicketRequest.amount} €
+        </Text>
         {isDeleteEnabled && (
           <Button
             size="sm"
             type="tertiary"
             isSubmit
             customStyles="bg-white border-none p-2"
-            onClick={() => handleRemoveAndDelete(paymentRequest)}
+            onClick={() => handleRemoveAndDelete(paymentTicketRequest)}
           >
             {isLoading ? (
               <SvgSpinner height={24} width={24} />

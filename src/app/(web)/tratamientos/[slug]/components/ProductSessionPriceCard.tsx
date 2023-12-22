@@ -22,7 +22,7 @@ export default function ProductSessionPriceCard({
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);
   const ROUTES = useRoutes();
-  const { productHighlighted, cart } = useCartStore(state => state);
+  const { cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
   const [pendingDiscount, setPendingDiscount] = useState(false);
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);

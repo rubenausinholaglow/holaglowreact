@@ -195,7 +195,7 @@ export default function PsrpPage({
           setModalVisibility={setIsMobileFiltersVisible}
         />
 
-        <div className="bg-[#F3EDE9] rounded-t-3xl">
+        <div className="bg-hg-cream rounded-t-3xl overflow-hidden">
           <Container className="relative pt-8 pb-4">
             <Title
               isAnimated
@@ -236,7 +236,7 @@ export default function PsrpPage({
           </Flex>
         )}
         {!isEmpty(filteredProducts) && (
-          <div className="bg-[#f7f3f0] pb-32 relative">
+          <div className="bg-hg-cream500 pb-32 relative">
             <Flex
               layout="row-left"
               className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
