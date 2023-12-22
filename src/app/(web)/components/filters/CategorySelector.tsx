@@ -69,23 +69,6 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
-      <li id={'tmevent_treatments_type'}>Test Category 1</li>
-      <li id="tmevent_treatments_type">Test Category 2</li>
-      <li
-        id={'tmevent_treatments_type'}
-        onClick={() =>
-          setProductFilters(
-            toggleFilter({
-              filter: 'category',
-              value: productCategories[1],
-              filters: productFilters,
-            })
-          )
-        }
-      >
-        Test Category 1
-      </li>
-
       {productCategories.map((category, i) => {
         return (
           <li
