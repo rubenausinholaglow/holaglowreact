@@ -66,23 +66,25 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
-        const isBoxIdInStoredBoxIds = isBoxIdInStoredBoxId(
-          message.data.boxId,
-          storedBoxId
-        );
         if (
-          message.data.clinicId.toUpperCase() != storedClinicId.toUpperCase() ||
-          !isBoxIdInStoredBoxIds
+          message.event === EventTypes.PatientArrived &&
+          (message.data.clinicId.toUpperCase() !==
+            storedClinicId.toUpperCase() ||
+            !isBoxIdInStoredBoxId(message.data.boxId, storedBoxId))
         ) {
           return true;
         }
+        if (
+          message.data.userId.toUpperCase() !== user?.id?.toUpperCase() &&
+          message.event !== EventTypes.PatientArrived
+        ) {
+          return true;
+        }
+
         let messageData: any;
         switch (message.event) {
           case EventTypes.PatientArrived:
             messageData = handlePatientArrived(message);
-            break;
-          case EventTypes.StartAppointment:
-            messageData = handleStartAppointment(message);
             break;
           case EventTypes.CrisalixUser:
             messageData = handleCrisalixUser(message);
@@ -119,19 +121,6 @@ export default function DashboardLayout({
       messageType: MessageType.PatientArrived,
       ClinicId: message.data.clinicId,
       BoxId: message.data.boxId,
-    };
-
-    return messageData;
-  }
-
-  function handleStartAppointment(message: any) {
-    if (remoteControl) return true;
-
-    const messageData = {
-      messageType: MessageType.StartAppointment,
-      ClinicId: message.data.clinicId,
-      BoxId: storedBoxId,
-      AppointmentId: message.data.appointmentId,
     };
 
     return messageData;

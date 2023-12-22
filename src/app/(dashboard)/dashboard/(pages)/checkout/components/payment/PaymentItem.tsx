@@ -37,8 +37,9 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
     null
   );
   const [isLoading, setIsLoading] = useState(false);
-  const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
-    useGlobalPersistedStore(state => state);
+  const { remoteControl, storedBudgetId, user } = useGlobalPersistedStore(
+    state => state
+  );
 
   if (status === undefined) {
     status = StatusPayment.Waiting;
@@ -87,8 +88,7 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
 
   const sendPaymentDeleted = async (paymentId: string) => {
     const paymentCreatedRequest: PaymentCreatedData = {
-      clinicId: storedClinicId,
-      boxId: storedBoxId,
+      userId: user?.id || '',
       id: paymentId,
       amount: 0,
       paymentBank: 0,

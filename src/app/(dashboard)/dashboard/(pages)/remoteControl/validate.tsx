@@ -32,8 +32,7 @@ export default function ValidateComment() {
       user?.id || ''
     );
     const gotoPage: GoToPageData = {
-      clinicId: storedClinicId,
-      boxId: storedBoxId,
+      userId: user?.id || '',
       page: 'Home',
     };
     messageService.goToPage(gotoPage);

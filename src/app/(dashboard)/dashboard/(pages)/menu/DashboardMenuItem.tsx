@@ -15,16 +15,16 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   link,
   target,
 }) => {
-  const { storedBoxId, storedClinicId, ignoreMessages, remoteControl } =
-    useGlobalPersistedStore(state => state);
+  const { user, ignoreMessages, remoteControl } = useGlobalPersistedStore(
+    state => state
+  );
   function goToPage(name: string) {
     if (!remoteControl) return true;
     let message: GoToPageData;
     switch (name) {
       case 'Simulador 3D':
         message = {
-          clinicId: storedClinicId || '',
-          boxId: storedBoxId || '',
+          userId: user?.id || '',
           page: 'Crisalix',
         };
         if (!ignoreMessages) messageService.goToPage(message);

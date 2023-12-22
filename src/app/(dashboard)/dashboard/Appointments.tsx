@@ -13,10 +13,7 @@ import {
   CrisalixUser,
   CrisalixUserList,
 } from 'app/types/crisalix';
-import {
-  CrisalixUserData,
-  StartAppointmentData,
-} from 'app/types/FrontEndMessages';
+import { CrisalixUserData } from 'app/types/FrontEndMessages';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -128,8 +125,7 @@ const AppointmentsListComponent: React.FC<{
           id: crisalixUser.id,
           playerId: crisalixUser.playerId,
           playerToken: crisalixUser.playerToken,
-          boxId: boxId,
-          clinicId: clinicId,
+          userId: user?.id || '',
         };
         if (!ignoreMessages)
           await messageService.crisalixUser(crisalixUserData);
@@ -145,30 +141,7 @@ const AppointmentsListComponent: React.FC<{
             setClinicFlowwwId(data.clinic.flowwwId);
             setClinicProfessionalId(data.clinicProfessional.id);
 
-            const startAppointmentData: StartAppointmentData = {
-              clinicId: storedClinicId,
-              boxId: data.boxId,
-              appointmentId: appointmentId,
-            };
-            if (!ignoreMessages)
-              await messageService
-                .startAppointment(startAppointmentData)
-                .then(async info => {
-                  if (info != null) {
-                    await startAppointment(
-                      appointmentId,
-                      user,
-                      id,
-                      data,
-                      clinicId,
-                      userCrisalix,
-                      boxId,
-                      ignoreMessages,
-                      router
-                    );
-                  }
-                });
-            else
+            if (!ignoreMessages) {
               await startAppointment(
                 appointmentId,
                 user,
@@ -180,8 +153,7 @@ const AppointmentsListComponent: React.FC<{
                 ignoreMessages,
                 router
               );
-          } else {
-            //TODO - Poner un mensaje de Error en UI
+            }
           }
         }
       );
