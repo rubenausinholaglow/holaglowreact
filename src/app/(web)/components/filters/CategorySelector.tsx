@@ -69,10 +69,12 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
+      <li id={`tmevent_treatments_type`}> fuck it</li>
+
       {productCategories.map((category, i) => {
         return (
           <li
-            id={`tmevent_treatments_type_${category}`}
+            id={`tmevent_treatments_type`}
             key={category}
             className={twMerge(`transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
@@ -84,7 +86,7 @@ export default function CategorySelector({
             ${i == 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
             ${isDashboard ? 'py-2 px-4' : ''}
             `)}
-            onClick={() => {
+            /*             onClick={() => {
               setProductFilters(
                 toggleFilter({
                   filter: 'category',
@@ -92,7 +94,7 @@ export default function CategorySelector({
                   filters: productFilters,
                 })
               );
-            }}
+            }} */
           >
             <Flex layout="row-left">
               {!isDashboard && (
