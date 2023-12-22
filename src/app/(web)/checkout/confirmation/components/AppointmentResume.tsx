@@ -222,6 +222,12 @@ export default function AppointmentResume({
                         {selectedTreatments[0].price.toFixed(2)}€
                       </Text>
                     </Flex>
+                    <Flex className="justify-between w-full">
+                      <Text>Pendiente de pago en clínica</Text>
+                      <Text className="font-semibold">
+                        {(selectedTreatments[0].price - 49).toFixed(2)}€
+                      </Text>
+                    </Flex>
                   </Flex>
                 )}
               </AccordionContent>
