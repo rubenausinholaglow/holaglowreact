@@ -38,7 +38,6 @@ const AppointmentsListComponent: React.FC<{
     user,
     setCurrentUser,
     storedClinicId,
-    storedBoxId,
     ignoreMessages,
     setAppointmentId,
     setClinicFlowwwId,

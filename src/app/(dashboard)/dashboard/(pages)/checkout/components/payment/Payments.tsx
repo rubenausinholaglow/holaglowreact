@@ -59,6 +59,7 @@ export const PaymentModule = () => {
     storedClinicFlowwwId,
     storedClinicProfessionalId,
     storedBudgetId,
+    storedAppointmentId,
     setBudgetId,
   } = useGlobalPersistedStore(state => state);
 
@@ -223,12 +224,16 @@ export const PaymentModule = () => {
       clinicFlowwwId: storedClinicFlowwwId,
       professional: '',
       budget: finalBudget,
-      paymentProductRequest: paymentList.map(payItem => ({
+      appointmentId: storedAppointmentId,
+      payments: paymentList.map(payItem => ({
         amount: payItem.amount,
         bank: payItem.bank,
         method: payItem.method,
         paymentReference: payItem.paymentReference || '',
         id: payItem.id,
+      })),
+      products: cart.map(CartItem => ({
+        id: CartItem.id,
       })),
     };
     try {
@@ -374,7 +379,7 @@ export const PaymentModule = () => {
             paymentList?.map(paymentRequest => (
               <PaymentItem
                 key={paymentRequest.id}
-                paymentRequest={paymentRequest}
+                paymentTicketRequest={paymentRequest}
                 status={paymentStatus[paymentRequest.id]}
               />
             ))}

@@ -21,8 +21,6 @@ export default function BlogCategorySelector({
         );
 
         if (!exists) {
-          console.log(category);
-
           accumulator.push(category);
         }
       });

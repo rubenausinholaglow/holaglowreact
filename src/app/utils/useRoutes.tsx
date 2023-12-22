@@ -12,6 +12,7 @@ const useRoutes = () => {
     treatments: '/tratamientos',
     checkout: {
       clinics: '/checkout/clinicas',
+      type: '/checkout/tipo-cita',
       treatments: '/checkout/treatments',
       schedule: '/checkout/agenda',
       contactForm: '/checkout/contactform',
