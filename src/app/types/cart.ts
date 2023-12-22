@@ -26,4 +26,5 @@ export interface Actions {
   getQuantityOfProduct: (product: Product) => number;
   removeSingleProduct: (product: CartItem) => void;
   removeItemDiscount: (cartUniqueId: string, discountType: '%' | '€') => void;
+  resetCart: () => void;
 }

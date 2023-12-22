@@ -1,3 +1,4 @@
+import { PaymentBank, PaymentInitResponse } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
 import { Post } from 'app/types/blog';
@@ -28,6 +29,7 @@ interface SessionStore {
   selectedSlot?: Slot;
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
+  payment: PaymentInitResponse | undefined;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -39,6 +41,7 @@ interface SessionActions {
   setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
+  setPayment: (payment: PaymentInitResponse | undefined) => void;
 }
 
 interface GlobalPersistStore {
@@ -57,6 +60,7 @@ interface GlobalPersistStore {
   storedClinicFlowwwId: string | '';
   storedClinicProfessionalId: string | '';
   storedBudgetId: string | '';
+  activePayment: PaymentBank;
 }
 
 interface GlobalPersistActions {
@@ -75,6 +79,7 @@ interface GlobalPersistActions {
   setClinicFlowwwId: (value?: string) => void;
   setClinicProfessionalId: (value?: string) => void;
   setBudgetId: (value?: string) => void;
+  setActivePayment: (value?: PaymentBank) => void;
 }
 
 export const useSessionStore = create(
@@ -107,6 +112,7 @@ export const useSessionStore = create(
       selectedSlot: undefined,
       previousAppointment: undefined,
       isMobile: true,
+      payment: undefined,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -133,6 +139,9 @@ export const useSessionStore = create(
       },
       setPreviousAppointment: value => {
         set({ previousAppointment: value });
+      },
+      setPayment: value => {
+        set({ payment: value });
       },
     }),
     {
@@ -205,6 +214,10 @@ export const useGlobalPersistedStore = create(
       storedBudgetId: '',
       setBudgetId: value => {
         set({ storedBudgetId: value });
+      },
+      activePayment: PaymentBank.None,
+      setActivePayment: value => {
+        set({ activePayment: value });
       },
     }),
     {

@@ -42,7 +42,8 @@ export default class ScheduleService {
     selectedClinic: Clinic,
     user: User,
     selectedPacksTreatments: Product[],
-    analyticsMetrics: AnalyticsMetrics
+    analyticsMetrics: AnalyticsMetrics,
+    paymentId: string
   ) => {
     const appointments: Appointment[] = [];
     let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
@@ -56,6 +57,7 @@ export default class ScheduleService {
     }
     const format = 'YYYY-MM-DD';
     const comment = 'Tratamiento visto en web: ' + treatments;
+
     appointments.push({
       box: selectedSlot!.box,
       endTime:
@@ -78,6 +80,7 @@ export default class ScheduleService {
       isPast: false,
       clinicId: selectedClinic?.flowwwId,
       isCancelled: false,
+      paymentId: paymentId,
     } as Appointment);
     await ScheduleService.scheduleBulk(appointments);
   };

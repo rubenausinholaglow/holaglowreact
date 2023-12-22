@@ -156,6 +156,11 @@ export const useCartStore = create(
           }));
         }
       },
+      resetCart: () => {
+        set(() => ({
+          cart: INITIAL_STATE.cart,
+        }));
+      },
     }),
     {
       name: 'cart-storage',
