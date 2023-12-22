@@ -69,7 +69,21 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
-      <li id={`tmevent_treatments_type`}> fuck it</li>
+      <li id={`tmevent_treatments_type`}>this works</li>
+      <li
+        id={`tmevent_treatments_type`}
+        onClick={() => {
+          setProductFilters(
+            toggleFilter({
+              filter: 'category',
+              value: productCategories[0],
+              filters: productFilters,
+            })
+          );
+        }}
+      >
+        this works
+      </li>
 
       {productCategories.map((category, i) => {
         return (
@@ -86,7 +100,7 @@ export default function CategorySelector({
             ${i == 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
             ${isDashboard ? 'py-2 px-4' : ''}
             `)}
-            /*             onClick={() => {
+            onClick={() => {
               setProductFilters(
                 toggleFilter({
                   filter: 'category',
@@ -94,7 +108,7 @@ export default function CategorySelector({
                   filters: productFilters,
                 })
               );
-            }} */
+            }}
           >
             <Flex layout="row-left">
               {!isDashboard && (
