@@ -1,15 +1,10 @@
 import { PaymentBank, PaymentMethod } from './payment';
 
 interface BaseDataMessage {
-  clinicId: string;
-  boxId: string;
+  userId: string;
 }
 
 export type PatientArrivedData = BaseDataMessage;
-
-export interface StartAppointmentData extends BaseDataMessage {
-  appointmentId: string;
-}
 
 export interface CrisalixUserData extends BaseDataMessage {
   id: string;
@@ -33,7 +28,6 @@ export interface GoToPageData extends BaseDataMessage {
 
 export enum EventTypes {
   PatientArrived = 'PatientArrived',
-  StartAppointment = 'StartAppointment',
   CrisalixUser = 'CrisalixUser',
   PaymentCreate = 'PaymentCreate',
   GoToPage = 'GoToPage',

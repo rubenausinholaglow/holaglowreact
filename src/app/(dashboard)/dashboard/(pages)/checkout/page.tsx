@@ -156,8 +156,7 @@ const Page = () => {
                   setIsLoading(false);
                   setShowPaymentButtons(!showPaymentButtons);
                   const message: any = {
-                    clinicId: storedClinicId,
-                    boxId: storedBoxId,
+                    userId: user?.id,
                     page: 'CheckOut',
                   };
                   messageService.goToPage(message);

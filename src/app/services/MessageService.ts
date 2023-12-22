@@ -8,7 +8,6 @@ import {
   GoToPageData,
   PatientArrivedData,
   PaymentCreatedData,
-  StartAppointmentData,
 } from 'app/types/FrontEndMessages';
 import { MessageSent } from 'app/types/message';
 
@@ -52,13 +51,6 @@ class MessageService {
   ): Promise<boolean> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}PatientArrived`;
     return this.sendRequest(url, patientArrived);
-  }
-
-  public async startAppointment(
-    startAppontmentData: StartAppointmentData
-  ): Promise<boolean> {
-    const url = `${process.env.NEXT_PUBLIC_CLINICS_API}StartAppointment`;
-    return this.sendRequest(url, startAppontmentData);
   }
 
   public async crisalixUser(crisalixUserData: CrisalixUserData): Promise<any> {

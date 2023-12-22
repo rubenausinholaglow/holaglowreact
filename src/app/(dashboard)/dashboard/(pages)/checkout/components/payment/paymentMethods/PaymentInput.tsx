@@ -147,8 +147,7 @@ export default function PaymentInput(props: Props) {
     referenceId: string
   ) => {
     const paymentCreatedRequest: PaymentCreatedData = {
-      clinicId: storedClinicId,
-      boxId: storedBoxId,
+      userId: user?.id || '',
       id: paymentId,
       amount: amount,
       paymentBank: props.paymentBank,
