@@ -69,6 +69,7 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
+      <li id={'tmevent_treatments_type'}>this should be hidden</li>
       {productCategories.map((category, i) => {
         return (
           <li
