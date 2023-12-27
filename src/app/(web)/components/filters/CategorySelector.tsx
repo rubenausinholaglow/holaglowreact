@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Tracker from '@utils/tracker';
 import {
   applyFilters,
   filterCount,
@@ -11,7 +12,6 @@ import {
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
-import Tracker from '@utils/tracker';
 
 import CategoryIcon from '../common/CategoryIcon';
 
@@ -24,7 +24,7 @@ export default function CategorySelector({
   isStacked?: boolean;
   isDashboard?: boolean;
 }) {
-  const traker = Tracker;
+  const tracker = new Tracker();
 
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
@@ -72,22 +72,6 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
-      <li id={`tmevent_treatments_type`}>this works</li>
-      <li
-        id={`tmevent_treatments_type`}
-        onClick={() => {
-          setProductFilters(
-            toggleFilter({
-              filter: 'category',
-              value: productCategories[0],
-              filters: productFilters,
-            })
-          );
-        }}
-      >
-        this works
-      </li>
-
       {productCategories.map((category, i) => {
         return (
           <li
@@ -111,7 +95,7 @@ export default function CategorySelector({
                   filters: productFilters,
                 })
               );
-              onClick={() => tracker.track('Click', 'Hero', 'Medicina estética')}
+              tracker.track('Click', 'category selector', category);
             }}
           >
             <Flex layout="row-left">
