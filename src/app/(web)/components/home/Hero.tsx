@@ -1,3 +1,4 @@
+import Tracker from '@utils/tracker';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -7,6 +8,7 @@ import Image from 'next/image';
 
 export default function HomeHero() {
   const ROUTES = useRoutes();
+  const tracker = new Tracker();
 
   return (
     <Container className="relative border-b border-hg-black overflow-hidden">
@@ -22,7 +24,13 @@ export default function HomeHero() {
           layout="col-left"
           className="pb-10 z-10 w-full md:w-[45%] md:pl-8"
         >
-          <Text size="xl" className="mb-2" isAnimated origin="top">
+          <Text
+            size="xl"
+            className="mb-2"
+            isAnimated
+            origin="top"
+            onClick={() => tracker.track('Click', 'Hero', 'Medicina estética')}
+          >
             Medicina estética
           </Text>
           <Title
