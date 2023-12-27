@@ -21,7 +21,6 @@ export default function DashboardLayout({
   hasAnimatedBackground = false,
   showCart = false,
   children,
-  userSeted,
 }: {
   hideBottomBar?: boolean;
   isCheckout?: boolean;
@@ -31,11 +30,10 @@ export default function DashboardLayout({
   hasAnimatedBackground?: boolean;
   showCart?: boolean;
   children: React.ReactNode;
-  userSeted?: User;
 }) {
   const router = useRouter();
   const messageSocket = useMessageSocket(state => state);
-  const { remoteControl, storedBoxId, storedClinicId, user, setCurrentUser } =
+  const { remoteControl, storedBoxId, storedClinicId, user } =
     useGlobalPersistedStore(state => state);
   const SOCKET_URL_COMMUNICATIONS =
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications';
@@ -53,13 +51,7 @@ export default function DashboardLayout({
   };
 
   useEffect(() => {
-    console.log('userdata ' + JSON.stringify(userSeted));
-    setCurrentUser(userSeted);
-  }, []);
-
-  useEffect(() => {
-    console.log('--> seted' + JSON.stringify(userSeted));
-    console.log('--> user: ' + JSON.stringify(user));
+    if (!user) return;
     if (!hideContactButtons) {
       SocketService.getInstance({
         urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
@@ -75,8 +67,8 @@ export default function DashboardLayout({
     }
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
-      onReceiveMessage: (message, userData) => {
-        console.log('user userData->: ' + JSON.stringify(userData));
+      onReceiveMessage: message => {
+        console.log('user userData->: ' + JSON.stringify(user));
         if (
           message.event === EventTypes.PatientArrived ||
           (message.event === EventTypes.StartAppointment &&
@@ -86,9 +78,8 @@ export default function DashboardLayout({
         ) {
           return true;
         }
-
         if (
-          (message.data.userId.toUpperCase() !== userSeted?.id?.toUpperCase() &&
+          (message.data.userId.toUpperCase() !== user?.id?.toUpperCase() &&
             message.event !== EventTypes.PatientArrived) ||
           message.event !== EventTypes.StartAppointment
         ) {
@@ -131,7 +122,7 @@ export default function DashboardLayout({
       },
       user: user!,
     });
-  }, []);
+  }, [user]);
 
   function handlePatientArrived(message: any) {
     if (!remoteControl) return true;

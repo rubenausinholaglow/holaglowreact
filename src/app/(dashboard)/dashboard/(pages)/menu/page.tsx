@@ -29,7 +29,6 @@ const Page = () => {
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
-    console.log('Page; ' + JSON.stringify(user));
   }, []);
 
   useEffect(() => {
@@ -63,12 +62,7 @@ const Page = () => {
   }
 
   return (
-    <MainLayout
-      isDashboard
-      hideContactButtons
-      hideProfessionalSelector
-      userSeted={user}
-    >
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {user?.firstName && (
         <div className="mt-8">
           <Title className="text-xl mb-4">Tu glow, tus normas</Title>
