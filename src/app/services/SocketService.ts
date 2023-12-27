@@ -18,7 +18,7 @@ class SocketService {
   public static getInstance({
     urlConnection,
     onReceiveMessage,
-  }: Props & {user : User}): SocketService {
+  }: Props): SocketService {
     if (!SocketService.instances[urlConnection]) {
       SocketService.currentUrl = urlConnection;
       SocketService.instances[urlConnection] = new SocketService({
