@@ -26,11 +26,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
   isDashboard = false,
   hasContinueButton = true,
+  page = '',
   setClientData,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
   hasContinueButton?: boolean;
+  page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
 }) => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -48,7 +50,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     secondSurname: '',
     termsAndConditionsAccepted: false,
     receiveCommunications: false,
-    page: '',
+    page: page ?? '',
     externalReference: '',
     analyticsMetrics: {
       device: 0,

@@ -201,7 +201,7 @@ export default function LandingCaptacion() {
               className="w-full"
             >
               <div className="md:bg-hg-black50 md:p-8 rounded-2xl shrink-0 md:shadow-centered-secondary">
-                <RegistrationForm />
+                <RegistrationForm page="902" />
               </div>
             </AnimateOnViewport>
           </Flex>
