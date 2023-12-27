@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '@interface/appointment';
 import SocketService from '@services/SocketService';
 import { ClinicProfessional } from 'app/(dashboard)/dashboard/components/ClinicProfessional';
@@ -44,6 +44,8 @@ export default function DashboardLayout({
   const SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE =
     process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
 
+  const [userIntern, setUserInern] = useState<User | undefined>(undefined);
+
   const routePages: Record<string, string | ''> = {
     Crisalix: '/dashboard/crisalix',
     Agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
@@ -60,7 +62,7 @@ export default function DashboardLayout({
   useEffect(() => {
     console.log('-->seted' + JSON.stringify(userSeted));
     console.log('--> user: ' + JSON.stringify(user));
-
+    setUserInern(user);
     if (!hideContactButtons) {
       SocketService.getInstance({
         urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
@@ -77,7 +79,7 @@ export default function DashboardLayout({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
         console.log('seted ' + JSON.stringify(userSeted));
-        console.log('user Intern: ' + JSON.stringify(SocketService.userIntern));
+        console.log('user Intern->: ' + JSON.stringify(userIntern));
         if (
           message.event === EventTypes.PatientArrived ||
           (message.event === EventTypes.StartAppointment &&
