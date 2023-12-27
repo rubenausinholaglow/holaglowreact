@@ -60,7 +60,7 @@ export default function DashboardLayout({
   }, []);
 
   useEffect(() => {
-    console.log('-->seted' + JSON.stringify(userSeted));
+    console.log('--> seted' + JSON.stringify(userSeted));
     console.log('--> user: ' + JSON.stringify(user));
     setUserInern(user);
     if (!hideContactButtons) {
@@ -73,7 +73,7 @@ export default function DashboardLayout({
           };
           messageSocket.addMessageSocket(finalMessage);
         },
-        userData: userSeted,
+        userData: user,
       });
     }
     SocketService.getInstance({
@@ -121,7 +121,7 @@ export default function DashboardLayout({
         if (messageData && message.event != EventTypes.GoToPage)
           messageSocket.addMessageSocket(messageData);
       },
-      userData: userSeted,
+      userData: user,
     });
     SocketService.getInstance({
       urlConnection: SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
@@ -132,7 +132,7 @@ export default function DashboardLayout({
         };
         messageSocket.addMessageSocket(finalMessage);
       },
-      userData: userSeted,
+      userData: user,
     });
   }, []);
 
