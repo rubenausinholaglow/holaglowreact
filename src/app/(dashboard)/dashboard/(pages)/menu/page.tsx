@@ -29,7 +29,7 @@ const Page = () => {
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
-    console.log('Menu-Page; ' + user);
+    console.log('Page; ' + JSON.stringify(user));
   }, []);
 
   useEffect(() => {

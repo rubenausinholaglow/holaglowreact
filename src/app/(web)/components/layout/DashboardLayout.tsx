@@ -53,7 +53,7 @@ export default function DashboardLayout({
   };
 
   useEffect(() => {
-    console.log('userdata ' + userSeted);
+    console.log('userdata ' + JSON.stringify(userSeted));
   }, []);
 
   useEffect(() => {
