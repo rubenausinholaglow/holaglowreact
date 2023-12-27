@@ -59,7 +59,7 @@ export default function DashboardLayout({
 
   useEffect(() => {
     console.log('-->seted' + JSON.stringify(userSeted));
-    console.log('-->user: ' + JSON.stringify(user));
+    console.log('--> user: ' + JSON.stringify(user));
 
     if (!hideContactButtons) {
       SocketService.getInstance({
@@ -76,8 +76,8 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
-        console.log('seted' + JSON.stringify(userSeted));
-        console.log('user: ' + JSON.stringify(user));
+        console.log('seted ' + JSON.stringify(userSeted));
+        console.log('user Intern: ' + JSON.stringify(SocketService.userIntern));
         if (
           message.event === EventTypes.PatientArrived ||
           (message.event === EventTypes.StartAppointment &&
@@ -119,6 +119,7 @@ export default function DashboardLayout({
         if (messageData && message.event != EventTypes.GoToPage)
           messageSocket.addMessageSocket(messageData);
       },
+      userDefined: userSeted,
     });
     SocketService.getInstance({
       urlConnection: SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
