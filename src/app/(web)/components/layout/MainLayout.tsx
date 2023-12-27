@@ -52,7 +52,7 @@ export default function MainLayout({
     setIsModalOpen(false);
     setIsMainScrollEnabled(true);
     setIsHydrated(true);
-    console.log(userSeted);
+    console.log('MainLayout' + userSeted);
   }, []);
 
   if (!isHydrated) {
