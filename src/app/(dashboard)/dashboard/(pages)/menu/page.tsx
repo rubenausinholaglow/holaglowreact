@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { User } from '@interface/appointment';
 import { INITIAL_STATE } from '@utils/constants';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -28,6 +29,7 @@ const Page = () => {
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
+    console.log(user);
   }, []);
 
   useEffect(() => {
@@ -61,7 +63,12 @@ const Page = () => {
   }
 
   return (
-    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
+    <MainLayout
+      isDashboard
+      hideContactButtons
+      hideProfessionalSelector
+      userSeted={user}
+    >
       {user?.firstName && (
         <div className="mt-8">
           <Title className="text-xl mb-4">Tu glow, tus normas</Title>

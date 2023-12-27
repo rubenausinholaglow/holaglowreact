@@ -17,7 +17,7 @@ export default function RemoteControl({
   const { user } = useGlobalPersistedStore(state => state);
 
   return (
-    <MainLayout isDashboard>
+    <MainLayout isDashboard userSeted={user}>
       <div className="mt-8">
         <Title className="text-xl mb-4">¡Hola {user?.firstName}!</Title>
         <Title className="font-bold text-5xl mb-8">

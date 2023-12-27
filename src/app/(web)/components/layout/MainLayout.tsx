@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
+import { User } from '@interface/appointment';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/(web)/checkout/components/CheckoutHeader';
 import { useGlobalStore } from 'app/stores/globalStore';
@@ -27,6 +28,7 @@ export default function MainLayout({
   hideProfessionalSelector = false,
   hideFooter = false,
   children,
+  userSeted,
 }: {
   isDashboard?: boolean;
   isCheckout?: boolean;
@@ -39,6 +41,7 @@ export default function MainLayout({
   hideProfessionalSelector?: boolean;
   hideFooter?: boolean;
   children: React.ReactNode;
+  userSeted?: User;
 }) {
   const [isHydrated, setIsHydrated] = useState(false);
   const { setIsModalOpen, setIsMainScrollEnabled } = useGlobalStore(
@@ -49,6 +52,7 @@ export default function MainLayout({
     setIsModalOpen(false);
     setIsMainScrollEnabled(true);
     setIsHydrated(true);
+    console.log(userSeted);
   }, []);
 
   if (!isHydrated) {
@@ -65,6 +69,7 @@ export default function MainLayout({
         hideProfessionalSelector={hideProfessionalSelector}
         hasAnimatedBackground={hasAnimatedBackground}
         showCart={showCart}
+        userSeted={userSeted}
       >
         {children}
       </DashboardLayout>

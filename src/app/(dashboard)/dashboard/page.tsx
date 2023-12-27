@@ -169,7 +169,6 @@ export default function Page({
     await UserService.checkUser(userEmail)
       .then(async data => {
         if (data && !isEmpty(data)) {
-          setCurrentUser(data);
           await redirectPageByflowwwToken(
             data.firstName,
             data.id,
@@ -226,7 +225,7 @@ export default function Page({
             setClinicId(data.clinic.id);
             setClinicFlowwwId(data.clinic.flowwwId);
             setClinicProfessionalId(data.clinicProfessional.id);
-
+            setCurrentUser(data.lead.user);
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;

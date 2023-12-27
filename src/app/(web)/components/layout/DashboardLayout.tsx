@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { User } from '@interface/appointment';
 import SocketService from '@services/SocketService';
 import { ClinicProfessional } from 'app/(dashboard)/dashboard/components/ClinicProfessional';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
@@ -20,6 +21,7 @@ export default function DashboardLayout({
   hasAnimatedBackground = false,
   showCart = false,
   children,
+  userSeted,
 }: {
   hideBottomBar?: boolean;
   isCheckout?: boolean;
@@ -29,10 +31,11 @@ export default function DashboardLayout({
   hasAnimatedBackground?: boolean;
   showCart?: boolean;
   children: React.ReactNode;
+  userSeted?: User;
 }) {
   const router = useRouter();
   const messageSocket = useMessageSocket(state => state);
-  const { remoteControl, storedBoxId, storedClinicId, user } =
+  const { remoteControl, storedBoxId, storedClinicId, user, setCurrentUser } =
     useGlobalPersistedStore(state => state);
   const SOCKET_URL_COMMUNICATIONS =
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications';
@@ -65,6 +68,7 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
+        console.log(userSeted);
         if (
           message.event === EventTypes.PatientArrived ||
           (message.event === EventTypes.StartAppointment &&
@@ -76,8 +80,7 @@ export default function DashboardLayout({
         }
 
         if (
-          (user &&
-            message.data.userId.toUpperCase() !== user?.id?.toUpperCase() &&
+          (message.data.userId.toUpperCase() !== userSeted?.id?.toUpperCase() &&
             message.event !== EventTypes.PatientArrived) ||
           message.event !== EventTypes.StartAppointment
         ) {
