@@ -6,7 +6,7 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 
 import { useCrisalix } from './useCrisalix';
 
@@ -56,7 +56,7 @@ const Page = () => {
       existsCrisalixUser!.id,
       storedClinicFlowwwId!
     ).then(x => {
-      setSimulationReady(x.has_3d);
+      setSimulationReady(x.has3d);
       setLastSimulatorId(x.lastSimulatorId);
     });
   }, []);
@@ -89,7 +89,7 @@ const Page = () => {
       if (id === '' || playerToken === '') return;
 
       UserService.getSimulationReady(id, storedClinicFlowwwId!).then(x => {
-        setSimulationReady(x.has_3d);
+        setSimulationReady(x.has3d);
         setLastSimulatorId(x.lastSimulatorId);
         if (!x && checkSimulator) {
           timerId = setTimeout(checksimulationReady, 15 * 1000);
@@ -127,7 +127,9 @@ const Page = () => {
               reconstruction_type: 'face',
               player_id: '${playerId}'
             };
-            options['simulation_id'] = '${lastSimulatorId}';
+            if (${lastSimulatorId}) {
+              options['simulation_id'] = ${lastSimulatorId};
+            }
             options['locale'] = 'es';
             player.render('surgeon', options);
           });
@@ -141,7 +143,9 @@ const Page = () => {
             player_id: '${playerId}'
           };
           options['locale'] = 'es';
-          options['simulation_id'] = '${lastSimulatorId}';
+          if (${lastSimulatorId}) {
+            options['simulation_id'] = ${lastSimulatorId};
+          }
           player.render('surgeon', options);
         }
       `;
