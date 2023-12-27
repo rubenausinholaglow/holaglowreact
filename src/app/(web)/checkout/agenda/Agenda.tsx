@@ -62,14 +62,11 @@ export default function Agenda({
     },
     '4': {
       //Barcelona
-      '1': 30,
-      '2': 30,
+      '0': 15,
     },
     '5': {
       //Valencia
       '0': 10,
-      '1': 15,
-      '2': 15,
     },
   };
   if (
