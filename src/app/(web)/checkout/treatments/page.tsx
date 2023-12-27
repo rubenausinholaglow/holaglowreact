@@ -1,24 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
+import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgAngle, SvgRadioChecked, SvgUserScan } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
-import { fetchProduct } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
@@ -36,17 +28,6 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [PVProduct, setPVProduct] = useState<Product | null>(null);
-
-  useEffect(() => {
-    async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId);
-      setPVProduct(productDetails);
-    }
-
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
-    //setSelectedTreatments([]);
-  }, []);
 
   function getProductsByCategory(category: string) {
     const filteredProducts = stateProducts.filter(
@@ -82,111 +63,7 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({ isDashboard }) => {
             <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
 
             <Flex layout="col-left" className="gap-3 w-full">
-              {/* {!hidePV && (
-                <div
-                  className="bg-hg-primary300 p-4 w-full rounded-lg cursor-pointer"
-                  onClick={() => {
-                    setSelectedTreatments([PVProduct] as Product[]);
-                    if (isDashboard) {
-                      router.push(ROUTES.dashboard.checkIn.agenda);
-                    } else {
-                      router.push(ROUTES.checkout.schedule);
-                    }
-                  }}
-                >
-                  <Flex>
-                    <SvgUserScan className="shrink-0 mr-4" />
-                    <div>
-                      <Text className="font-semibold">Primera cita gratis</Text>
-                      <Text className="text-xs">Escáner 3D</Text>
-                    </div>
-                    <SvgAngle className="transition-all text-hg-black500 ml-auto" />
-                  </Flex>
-                </div>
-              )} */}
-
-              {!isEmpty(productCategories) && (
-                <Accordion>
-                  {productCategories.map(category => {
-                    return (
-                      <AccordionItem
-                        value={category}
-                        key={category}
-                        className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
-                          selectedCategory === category
-                            ? 'bg-hg-secondary100'
-                            : 'bg-hg-black50'
-                        }`}
-                      >
-                        <AccordionTrigger>
-                          <Flex
-                            className="p-4"
-                            onClick={() =>
-                              setSelectedCategory(
-                                selectedCategory !== category ? category : null
-                              )
-                            }
-                          >
-                            <CategoryIcon
-                              category={category}
-                              className="mr-4"
-                            />
-                            <Text className="font-semibold">{category}</Text>
-
-                            <SvgAngle
-                              className={`transition-all text-hg-black500 ml-auto ${
-                                selectedCategory === category ? 'rotate-90' : ''
-                              }`}
-                            />
-                          </Flex>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="border-t border-hg-secondary300">
-                            <ul className="flex flex-col w-full">
-                              {getProductsByCategory(category).map(product => (
-                                <li
-                                  className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
-                                  key={product.title}
-                                  onClick={() => {
-                                    setSelectedProduct(product);
-                                    setSelectedTreatments([product]);
-                                    if (isDashboard) {
-                                      router.push(
-                                        ROUTES.dashboard.checkIn.agenda
-                                      );
-                                    } else {
-                                      router.push(ROUTES.checkout.schedule);
-                                    }
-                                  }}
-                                >
-                                  <div className="mr-4">
-                                    <Text className="font-semibold">
-                                      {product.title}
-                                    </Text>
-                                    <Text className="text-xs">
-                                      {product.description}
-                                    </Text>
-                                  </div>
-
-                                  {selectedProduct?.title === product.title ? (
-                                    <SvgRadioChecked
-                                      height={24}
-                                      width={24}
-                                      className="shrink-0 ml-auto"
-                                    />
-                                  ) : (
-                                    <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
-                                  )}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    );
-                  })}
-                </Accordion>
-              )}
+              {!isEmpty(productCategories) && <TreatmentAccordionSelector />}
             </Flex>
           </Flex>
         </Flex>
