@@ -4,21 +4,22 @@ export default class Tracker {
   dataLayer: any[];
 
   constructor() {
-    this.dataLayer = isClient
-      ? (window.dataLayer = window.dataLayer || [])
-      : [];
+    this.dataLayer = (isClient ? (window as any).dataLayer || [] : []) as any[];
   }
 
   set(values = {}) {
     const context = {
       page_path: isClient ? window.location.pathname : null,
-      locale: isClient ? window.document.querySelector('html').lang : null,
+      locale: isClient ? window.document.querySelector('html')?.lang : null,
       pageId: isClient
-        ? window.document.querySelector('[data-tracker-page-id]') &&
-          window.document.querySelector('[data-tracker-page-id]').dataset
-            .trackerPageId
+        ? (
+            window.document.querySelector(
+              '[data-tracker-page-id]'
+            ) as HTMLElement | null
+          )?.dataset?.trackerPageId
         : null,
     };
+
     const valuesWithContext = {
       ...context,
       ...values,
