@@ -27,6 +27,7 @@ class SocketService {
       SocketService.instances[urlConnection] = new SocketService({
         urlConnection,
         onReceiveMessage,
+        userDefined
       });
     }
     return SocketService.instances[urlConnection];
