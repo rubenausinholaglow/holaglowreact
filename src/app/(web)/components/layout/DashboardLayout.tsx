@@ -58,6 +58,9 @@ export default function DashboardLayout({
   }, []);
 
   useEffect(() => {
+    console.log('-->seted' + JSON.stringify(userSeted));
+    console.log('-->user: ' + JSON.stringify(user));
+
     if (!hideContactButtons) {
       SocketService.getInstance({
         urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
