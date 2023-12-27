@@ -37,6 +37,8 @@ class SocketService {
     onReceiveMessage: Props['onReceiveMessage'],
     userData? : User
   ) {
+    console.log("userData; " + JSON.stringify(userData))
+    console.log("url; " + urlConnection)
     const newConnection = new HubConnectionBuilder()
       .withUrl(urlConnection, {
         skipNegotiation: true,
@@ -49,6 +51,7 @@ class SocketService {
       .start()
       .then(() => {
         newConnection.on('ReceiveMessage', message => {
+          console.log("DATA .->. " + userData)
           onReceiveMessage(message, userData!);
         });
       })
