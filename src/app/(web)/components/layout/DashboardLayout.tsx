@@ -54,6 +54,7 @@ export default function DashboardLayout({
 
   useEffect(() => {
     console.log('userdata ' + JSON.stringify(userSeted));
+    setCurrentUser(userSeted);
   }, []);
 
   useEffect(() => {
@@ -72,7 +73,8 @@ export default function DashboardLayout({
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
       onReceiveMessage: message => {
-        console.log(userSeted);
+        console.log('seted' + JSON.stringify(userSeted));
+        console.log('user: ' + JSON.stringify(user));
         if (
           message.event === EventTypes.PatientArrived ||
           (message.event === EventTypes.StartAppointment &&
