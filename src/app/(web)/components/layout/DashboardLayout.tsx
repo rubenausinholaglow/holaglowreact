@@ -53,6 +53,10 @@ export default function DashboardLayout({
   };
 
   useEffect(() => {
+    console.log('userdata ' + userSeted);
+  }, []);
+
+  useEffect(() => {
     if (!hideContactButtons) {
       SocketService.getInstance({
         urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
