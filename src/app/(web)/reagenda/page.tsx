@@ -133,6 +133,7 @@ export default function Page({
 
   return (
     <MainLayout isCheckout>
+      <meta name="robots" content="noindex,nofollow" />
       <Modal
         type="center"
         height="h-auto"
