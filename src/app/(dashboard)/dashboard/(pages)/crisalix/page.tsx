@@ -146,7 +146,7 @@ const Page = () => {
       {user?.firstName && (
         <Container>
           <Flex layout="col-center">
-            {!simulationReady && !loadPlayer && (
+            {!simulationReady && !loadPlayer && !almostReady && (
               <p className="font-bold text-4xl mb-2">
                 {user?.firstName}, estamos generando tu 3D/Avatar...
               </p>
