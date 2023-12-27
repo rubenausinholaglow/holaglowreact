@@ -11,6 +11,7 @@ import {
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
+import Tracker from '@utils/tracker';
 
 import CategoryIcon from '../common/CategoryIcon';
 
@@ -23,6 +24,8 @@ export default function CategorySelector({
   isStacked?: boolean;
   isDashboard?: boolean;
 }) {
+  const traker = Tracker;
+
   const { stateProducts } = useGlobalPersistedStore(state => state);
 
   const {
@@ -108,6 +111,7 @@ export default function CategorySelector({
                   filters: productFilters,
                 })
               );
+              onClick={() => tracker.track('Click', 'Hero', 'Medicina estética')}
             }}
           >
             <Flex layout="row-left">
