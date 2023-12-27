@@ -17,6 +17,7 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
+  const [lastSimulatorId, setLastSimulatorId] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
   const {
@@ -50,6 +51,14 @@ const Page = () => {
       },
       1 * 60 * 1000
     );
+
+    UserService.getSimulationReady(
+      existsCrisalixUser!.id,
+      storedClinicFlowwwId!
+    ).then(x => {
+      setSimulationReady(x.has_3d);
+      setLastSimulatorId(x.lastSimulatorId);
+    });
   }, []);
 
   async function createCrisalixUser(
@@ -80,7 +89,8 @@ const Page = () => {
       if (id === '' || playerToken === '') return;
 
       UserService.getSimulationReady(id, storedClinicFlowwwId!).then(x => {
-        setSimulationReady(x);
+        setSimulationReady(x.has_3d);
+        setLastSimulatorId(x.lastSimulatorId);
         if (!x && checkSimulator) {
           timerId = setTimeout(checksimulationReady, 15 * 1000);
         }
@@ -117,6 +127,7 @@ const Page = () => {
               reconstruction_type: 'face',
               player_id: '${playerId}'
             };
+            options['simulation_id'] = '${lastSimulatorId}';
             options['locale'] = 'es';
             player.render('surgeon', options);
           });
@@ -130,6 +141,7 @@ const Page = () => {
             player_id: '${playerId}'
           };
           options['locale'] = 'es';
+          options['simulation_id'] = '${lastSimulatorId}';
           player.render('surgeon', options);
         }
       `;
@@ -144,34 +156,38 @@ const Page = () => {
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {user?.firstName && (
-        <Container>
-          <Flex layout="col-center">
-            {!simulationReady && !loadPlayer && !almostReady && (
-              <p className="font-bold text-4xl mb-2">
-                {user?.firstName}, estamos generando tu 3D/Avatar...
-              </p>
-            )}
-            {!simulationReady && !loadPlayer && almostReady && (
-              <p className="font-bold text-4xl mb-2">
-                {user?.firstName}, en breve podrás ver tu 3D
-              </p>
-            )}
-            {simulationReady && !loadPlayer && (
-              <div>
-                <p className="font-bold text-4xl mb-2">
-                  {user?.firstName}, ¿Listo para ver tu 3D?
-                </p>
+        <div className="absolute inset-0">
+          <Container>
+            <div className="flex justify-center items-center">
+              <Flex layout="col-center">
+                {!simulationReady && !loadPlayer && !almostReady && (
+                  <p className="font-bold text-4xl mb-2">
+                    {user?.firstName}, estamos generando tu 3D/Avatar...
+                  </p>
+                )}
+                {!simulationReady && !loadPlayer && almostReady && (
+                  <p className="font-bold text-4xl mb-2">
+                    {user?.firstName}, en breve podrás ver tu 3D
+                  </p>
+                )}
+                {simulationReady && !loadPlayer && (
+                  <div>
+                    <p className="font-bold text-4xl mb-2">
+                      {user?.firstName}, ¿Listo para ver tu 3D?
+                    </p>
 
-                <Button size="lg" onClick={startPlayer}>
-                  Ver 3D
-                </Button>
-              </div>
-            )}
-            {simulationReady && loadPlayer && (
-              <div id="player" className="w-full h-[1000px]"></div>
-            )}
-          </Flex>
-        </Container>
+                    <Button size="lg" onClick={startPlayer}>
+                      Ver 3D
+                    </Button>
+                  </div>
+                )}
+                {simulationReady && loadPlayer && (
+                  <div id="player" className="w-full h-[1000px]"></div>
+                )}
+              </Flex>
+            </div>
+          </Container>
+        </div>
       )}
     </MainLayout>
   );
