@@ -9,6 +9,7 @@ interface Props {
   }
 
 class SocketService {
+  
   private static instances: { [url: string]: SocketService } = {};
   private static currentUrl: string | null = null;
   private static currentUser: User | null = null;
@@ -20,7 +21,7 @@ class SocketService {
     urlConnection,
     onReceiveMessage,
     userData,
-  }: Props): SocketService {
+  }: Props & {user : User}): SocketService {
     if (!SocketService.instances[urlConnection]) {
       SocketService.currentUrl = urlConnection;
       SocketService.currentUser = userData!;

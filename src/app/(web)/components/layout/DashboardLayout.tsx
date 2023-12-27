@@ -44,8 +44,6 @@ export default function DashboardLayout({
   const SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE =
     process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
 
-  const [userIntern, setUserInern] = useState<User | undefined>(undefined);
-
   const routePages: Record<string, string | ''> = {
     Crisalix: '/dashboard/crisalix',
     Agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
@@ -62,7 +60,6 @@ export default function DashboardLayout({
   useEffect(() => {
     console.log('--> seted' + JSON.stringify(userSeted));
     console.log('--> user: ' + JSON.stringify(user));
-    setUserInern(user);
     if (!hideContactButtons) {
       SocketService.getInstance({
         urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
@@ -73,7 +70,7 @@ export default function DashboardLayout({
           };
           messageSocket.addMessageSocket(finalMessage);
         },
-        userData: user,
+        user: user!,
       });
     }
     SocketService.getInstance({
@@ -121,7 +118,7 @@ export default function DashboardLayout({
         if (messageData && message.event != EventTypes.GoToPage)
           messageSocket.addMessageSocket(messageData);
       },
-      userData: user,
+      user: user!,
     });
     SocketService.getInstance({
       urlConnection: SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
@@ -132,7 +129,7 @@ export default function DashboardLayout({
         };
         messageSocket.addMessageSocket(finalMessage);
       },
-      userData: user,
+      user: user!,
     });
   }, []);
 
