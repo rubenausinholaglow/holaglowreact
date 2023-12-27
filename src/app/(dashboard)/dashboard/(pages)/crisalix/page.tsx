@@ -156,37 +156,33 @@ const Page = () => {
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {user?.firstName && (
-        <div className="absolute inset-0">
-          <Container>
-            <div className="flex justify-center items-center">
-              <Flex layout="col-center">
-                {!simulationReady && !loadPlayer && !almostReady && (
-                  <p className="font-bold text-4xl mb-2">
-                    {user?.firstName}, estamos generando tu 3D/Avatar...
-                  </p>
-                )}
-                {!simulationReady && !loadPlayer && almostReady && (
-                  <p className="font-bold text-4xl mb-2">
-                    {user?.firstName}, en breve podrás ver tu 3D
-                  </p>
-                )}
-                {simulationReady && !loadPlayer && (
-                  <div>
-                    <p className="font-bold text-4xl mb-2">
-                      {user?.firstName}, ¿Listo para ver tu 3D?
-                    </p>
+        <div className="absolute inset-0 flex justify-center items-center">
+          <Flex layout="col-center" className="max-w-[80%]">
+            {!simulationReady && !loadPlayer && !almostReady && (
+              <p className="font-bold text-4xl mb-2">
+                {user?.firstName}, estamos generando tu 3D/Avatar...
+              </p>
+            )}
+            {!simulationReady && !loadPlayer && almostReady && (
+              <p className="font-bold text-4xl mb-2">
+                {user?.firstName}, en breve podrás ver tu 3D
+              </p>
+            )}
+            {simulationReady && !loadPlayer && (
+              <div>
+                <p className="font-bold text-4xl mb-2">
+                  {user?.firstName}, ¿Listo para ver tu 3D?
+                </p>
 
-                    <Button size="lg" onClick={startPlayer}>
-                      Ver 3D
-                    </Button>
-                  </div>
-                )}
-                {simulationReady && loadPlayer && (
-                  <div id="player" className="w-full h-[1000px]"></div>
-                )}
-              </Flex>
-            </div>
-          </Container>
+                <Button size="lg" onClick={startPlayer}>
+                  Ver 3D
+                </Button>
+              </div>
+            )}
+            {simulationReady && loadPlayer && (
+              <div id="player" className="w-full h-[1000px]"></div>
+            )}
+          </Flex>
         </div>
       )}
     </MainLayout>
