@@ -4,30 +4,29 @@ import { HttpTransportType, HubConnectionBuilder } from '@microsoft/signalr';
 
 interface Props {
   urlConnection: string;
-  onReceiveMessage(message: any): void;
-  userDefined?: User | null
-}
+  onReceiveMessage(message: any, userData: User): void;
+  userData? : User;
+  }
 
 class SocketService {
   private static instances: { [url: string]: SocketService } = {};
   private static currentUrl: string | null = null;
-  static userIntern: User | null | undefined;
-  private constructor({ urlConnection, onReceiveMessage, userDefined}: Props) {
-    this.initializeConnection(urlConnection, onReceiveMessage, userDefined);
+  private static currentUser: User | null = null;
+  private constructor({ urlConnection, onReceiveMessage, userData }: Props) {
+    this.initializeConnection(urlConnection, onReceiveMessage, userData);
   }
 
   public static getInstance({
     urlConnection,
     onReceiveMessage,
-    userDefined
+    userData,
   }: Props): SocketService {
     if (!SocketService.instances[urlConnection]) {
       SocketService.currentUrl = urlConnection;
-      SocketService.userIntern = userDefined;
+      SocketService.currentUser = userData!;
       SocketService.instances[urlConnection] = new SocketService({
         urlConnection,
         onReceiveMessage,
-        userDefined
       });
     }
     return SocketService.instances[urlConnection];
@@ -36,7 +35,7 @@ class SocketService {
   private initializeConnection(
     urlConnection: string,
     onReceiveMessage: Props['onReceiveMessage'],
-    userDefined?: User | null
+    userData? : User
   ) {
     const newConnection = new HubConnectionBuilder()
       .withUrl(urlConnection, {
@@ -50,7 +49,7 @@ class SocketService {
       .start()
       .then(() => {
         newConnection.on('ReceiveMessage', message => {
-          onReceiveMessage(message);
+          onReceiveMessage(message, userData!);
         });
       })
       .catch(e => Bugsnag.notify('Connection failed: ', e));

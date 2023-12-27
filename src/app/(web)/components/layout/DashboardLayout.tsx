@@ -73,13 +73,13 @@ export default function DashboardLayout({
           };
           messageSocket.addMessageSocket(finalMessage);
         },
+        userData: userSeted,
       });
     }
     SocketService.getInstance({
       urlConnection: SOCKET_URL_COMMUNICATIONS,
-      onReceiveMessage: message => {
-        console.log('seted ' + JSON.stringify(userSeted));
-        console.log('user Intern->: ' + JSON.stringify(userIntern));
+      onReceiveMessage: (message, userData) => {
+        console.log('user userData->: ' + JSON.stringify(userData));
         if (
           message.event === EventTypes.PatientArrived ||
           (message.event === EventTypes.StartAppointment &&
@@ -121,7 +121,7 @@ export default function DashboardLayout({
         if (messageData && message.event != EventTypes.GoToPage)
           messageSocket.addMessageSocket(messageData);
       },
-      userDefined: userSeted,
+      userData: userSeted,
     });
     SocketService.getInstance({
       urlConnection: SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
@@ -132,6 +132,7 @@ export default function DashboardLayout({
         };
         messageSocket.addMessageSocket(finalMessage);
       },
+      userData: userSeted,
     });
   }, []);
 
