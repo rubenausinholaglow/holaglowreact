@@ -40,6 +40,8 @@ export default function DashboardLayout({
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
   const SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE =
     process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
+  const SOCKET_URL_START_APPOINTMENT =
+    process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/StartAppointment';
 
   const routePages: Record<string, string | ''> = {
     Crisalix: '/dashboard/crisalix',
@@ -116,6 +118,33 @@ export default function DashboardLayout({
           message: message,
         };
         messageSocket.addMessageSocket(finalMessage);
+      },
+    });
+  }, [user]);
+
+  useEffect(() => {
+    SocketService.getInstance({
+      urlConnection: SOCKET_URL_START_APPOINTMENT,
+      onReceiveMessage: message => {
+        if (
+          message.event != EventTypes.StartAppointment ||
+          (message.event == EventTypes.StartAppointment &&
+            (message.data.clinicId.toUpperCase() !==
+              storedClinicId.toUpperCase() ||
+              !isBoxIdInStoredBoxId(message.data.boxId, storedBoxId)))
+        ) {
+          return true;
+        }
+        let messageData: any;
+        switch (message.event) {
+          case EventTypes.StartAppointment:
+            messageData = handleStartAppointment(message);
+            break;
+          default:
+            throw new Error(`Unsupported event: ${message.Event}`);
+        }
+        if (messageData && message.event != EventTypes.GoToPage)
+          messageSocket.addMessageSocket(messageData);
       },
     });
   }, []);
