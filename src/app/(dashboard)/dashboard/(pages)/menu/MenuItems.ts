@@ -18,6 +18,6 @@ export const menuItems = [
     altText: 'Agenda',
     title: 'Agenda',
     link: '/dashboard/schedule?token=flowwwToken',
-    target: '_blank',
+    target: '',
   },
 ];

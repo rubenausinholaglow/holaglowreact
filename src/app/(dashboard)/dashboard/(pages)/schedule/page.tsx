@@ -13,13 +13,16 @@ import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function Page() {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, clinics, storedClinicId } = useGlobalPersistedStore(
+    state => state
+  );
   const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
-
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    setSelectedClinic(undefined);
+    const clinic = clinics.filter(clinic => clinic.id === storedClinicId);
+
+    setSelectedClinic(clinic[0]);
   }, []);
 
   useEffect(() => {
