@@ -55,6 +55,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
           {!isCheckout &&
             product.sessions > 1 &&
             !product.isPack &&
+            !product.title.includes('x') &&
             'x' + product.sessions}
         </Text>
         {isCheckout ? (

@@ -45,7 +45,12 @@ export default function CategorySelector({
       []
     );
 
-    const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
+    const filteredCategoryNames = allCategoryNames.filter(
+      categoryName =>
+        categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
+    );
+
+    const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
   }, [stateProducts]);
