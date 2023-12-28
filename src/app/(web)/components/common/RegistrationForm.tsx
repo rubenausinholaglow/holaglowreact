@@ -6,6 +6,7 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
+import useRoutes from '@utils/useRoutes';
 import useRegistration from '@utils/userUtils';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
@@ -37,6 +38,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
 }) => {
+  const routes = useRoutes();
+
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -366,7 +369,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       {hasContinueButton && (
         <Button
           disabled={isDisabled}
-          onClick={handleContinue}
+          onClick={() => {
+            handleContinue();
+            window.parent.postMessage(URL, routes.checkout.clinics);
+          }}
           type="primary"
           size="xl"
           className="w-full"
