@@ -65,9 +65,13 @@ const useRegistration = (
             analyticsMetrics,
             ''
           ).then(x => {
+            console.log('run A');
+
             if (isEmbed) {
               window.parent.postMessage(URL, routes.checkout.clinics);
-            } else if (isDashboard) {
+            }
+
+            if (isDashboard) {
               router.push(routes.dashboard.checkIn.treatments);
             } else {
               router.push('/checkout/confirmation');
@@ -75,6 +79,11 @@ const useRegistration = (
           });
         }
       } else {
+        console.log('run B');
+        if (isEmbed) {
+          window.parent.postMessage(URL, routes.checkout.clinics);
+        }
+
         if (!isDashboard) {
           if (redirect) {
             window.parent.location.href =
