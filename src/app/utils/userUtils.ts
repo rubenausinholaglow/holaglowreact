@@ -14,7 +14,8 @@ import useRoutes from './useRoutes';
 const useRegistration = (
   formData: Client,
   isDashboard: boolean,
-  redirect: boolean
+  redirect: boolean,
+  isEmbed: boolean
 ) => {
   const {
     selectedTreatments,
@@ -29,6 +30,8 @@ const useRegistration = (
   const routes = useRoutes();
 
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
+
+  console.log(isDashboard, isEmbed);
 
   const registerUser = async (
     formData: Client,
@@ -62,9 +65,13 @@ const useRegistration = (
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard) {
+            if (isEmbed) {
+              window.parent.postMessage(URL, routes.checkout.clinics);
+            } else if (isDashboard) {
               router.push(routes.dashboard.checkIn.treatments);
-            } else router.push('/checkout/confirmation');
+            } else {
+              router.push('/checkout/confirmation');
+            }
           });
         }
       } else {

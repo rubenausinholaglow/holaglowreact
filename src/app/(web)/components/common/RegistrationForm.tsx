@@ -26,12 +26,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
   isDashboard = false,
   hasContinueButton = true,
+  isEmbed = false,
   page = '',
   setClientData,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
   hasContinueButton?: boolean;
+  isEmbed?: boolean;
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
 }) => {
@@ -70,7 +72,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     treatmentPrice: 0,
   });
 
-  const registerUser = useRegistration(formData, isDashboard, redirect);
+  const registerUser = useRegistration(
+    formData,
+    isDashboard,
+    redirect,
+    isEmbed
+  );
 
   useEffect(() => {
     if (
@@ -107,6 +114,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
   const handleContinue = async () => {
     setIsLoading(true);
+
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
