@@ -18,7 +18,7 @@ export default function ConfirmationCheckIn() {
       router.push(
         remoteControl ? ROUTES.dashboard.home : ROUTES.dashboard.checkIn.root
       );
-    }, 1000000);
+    }, 10000);
 
     return () => clearTimeout(timerId);
   }, [router, ROUTES.dashboard.checkIn.root]);
