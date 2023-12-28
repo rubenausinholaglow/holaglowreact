@@ -68,7 +68,6 @@ export default function DashboardLayout({
       SocketService.getInstance({
         urlConnection: SOCKET_URL_COMMUNICATIONS,
         onReceiveMessage: message => {
-          debugger;
           if (
             message.event === EventTypes.PatientArrived ||
             (message.event === EventTypes.StartAppointment &&
