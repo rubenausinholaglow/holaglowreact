@@ -68,6 +68,7 @@ export default function DashboardLayout({
       SocketService.getInstance({
         urlConnection: SOCKET_URL_COMMUNICATIONS,
         onReceiveMessage: message => {
+          debugger;
           if (
             message.event === EventTypes.PatientArrived ||
             (message.event === EventTypes.StartAppointment &&
@@ -79,10 +80,8 @@ export default function DashboardLayout({
           }
 
           if (
-            (user &&
-              message.data.userId.toUpperCase() !== user?.id?.toUpperCase() &&
-              message.event !== EventTypes.PatientArrived) ||
-            message.event !== EventTypes.StartAppointment
+            message.data.userId.toUpperCase() != user?.id?.toUpperCase() &&
+            message.event !== EventTypes.PatientArrived
           ) {
             return true;
           }
