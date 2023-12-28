@@ -371,7 +371,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           disabled={isDisabled}
           onClick={() => {
             handleContinue();
-            window.parent.postMessage(url, routes.checkout.clinics);
+            window.parent.postMessage(URL, routes.checkout.clinics);
           }}
           type="primary"
           size="xl"
