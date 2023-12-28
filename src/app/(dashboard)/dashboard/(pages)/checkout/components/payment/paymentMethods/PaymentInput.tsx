@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
+import { User } from '@interface/appointment';
 import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import UserService from '@services/UserService';
@@ -63,8 +64,13 @@ export default function PaymentInput(props: Props) {
 
   const { user, stateProducts } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
-  const { remoteControl, storedBoxId, storedClinicId, storedBudgetId } =
-    useGlobalPersistedStore(state => state);
+  const {
+    remoteControl,
+    storedBoxId,
+    storedClinicId,
+    storedBudgetId,
+    setCurrentUser,
+  } = useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
@@ -141,8 +147,7 @@ export default function PaymentInput(props: Props) {
     referenceId: string
   ) => {
     const paymentCreatedRequest: PaymentCreatedData = {
-      clinicId: storedClinicId,
-      boxId: storedBoxId,
+      userId: user?.id || '',
       id: paymentId,
       amount: amount,
       paymentBank: props.paymentBank,
@@ -238,17 +243,13 @@ export default function PaymentInput(props: Props) {
       };
 
       cart.forEach(product => {
-        const matchingProduct = stateProducts.find(x => x.id === product.id);
-
-        if (matchingProduct) {
-          const productPayment: ProductPaymentRequest = {
-            name: matchingProduct.title,
-            price: product.price.toString(),
-            quantity: '1',
-            id: matchingProduct.id,
-          };
-          data.productPaymentRequest?.push(productPayment);
-        }
+        const productPayment: ProductPaymentRequest = {
+          name: product.title,
+          price: product.price.toString(),
+          quantity: '1',
+          id: product.id,
+        };
+        data.productPaymentRequest?.push(productPayment);
       });
 
       await FinanceService.initializePayment(data).then(x => {
@@ -260,6 +261,18 @@ export default function PaymentInput(props: Props) {
           setMessageNotification('Error pagando con Pepper');
         }
       });
+
+      await UserService.checkUser(user?.email)
+        .then(async data => {
+          if (data && !isEmpty(data)) {
+            setCurrentUser(data);
+          } else {
+            //TODO - MESSAGE ERROR UI
+          }
+        })
+        .catch(error => {
+          Bugsnag.notify('Error handleCheckUser:', error);
+        });
     });
     setIsLoading(false);
   };
@@ -462,15 +475,6 @@ export default function PaymentInput(props: Props) {
                 onClick={() => openPepper()}
               >
                 Abrir Pepper
-              </Button>
-              <Button
-                type="tertiary"
-                customStyles="bg-hg-primary"
-                isSubmit
-                className="ml-2"
-                onClick={() => pay()}
-              >
-                Pagar
               </Button>
             </Flex>
           </Flex>

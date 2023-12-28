@@ -54,7 +54,7 @@ export default function Agenda({
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const format = 'YYYY-MM-DD';
-  let maxDays = 15;
+  let maxDays = 30;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
@@ -62,14 +62,11 @@ export default function Agenda({
     },
     '4': {
       //Barcelona
-      '1': 20,
-      '2': 20,
+      '0': 15,
     },
     '5': {
       //Valencia
       '0': 10,
-      '1': 15,
-      '2': 15,
     },
   };
   if (
@@ -162,8 +159,6 @@ export default function Agenda({
       setSelectedDay(selectedDay);
     }
     setLoadingMonth(false);
-    if (availability.length != maxDays)
-      setDateToCheck(dateToCheck.add(1, 'month'));
   }
 
   useEffect(() => {
@@ -207,6 +202,8 @@ export default function Agenda({
             isPast: false,
             clinicId: selectedClinic?.flowwwId,
             isCancelled: false,
+            paymentId: previousAppointment.paymentId,
+            paid: false,
           },
           previous: previousAppointment,
         }).then(x => {
@@ -226,7 +223,8 @@ export default function Agenda({
           selectedClinic!,
           user,
           selectedPacksTreatments!,
-          analyticsMetrics
+          analyticsMetrics,
+          ''
         ).then(x => {
           if (isDashboard) {
             router.push(ROUTE.dashboard.checkIn.confirmation);

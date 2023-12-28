@@ -3,28 +3,21 @@
 import 'react-phone-input-2/lib/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import ScheduleService from '@services/ScheduleService';
-import UserService from '@services/UserService';
 import * as errorsConfig from '@utils/textConstants';
+import useRegistration from '@utils/userUtils';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
 import { Client } from 'app/types/client';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../../utils/props';
@@ -32,28 +25,21 @@ import { RegistrationFormProps } from '../../../utils/props';
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
   isDashboard = false,
+  hasContinueButton = true,
+  page = '',
+  setClientData,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
+  hasContinueButton?: boolean;
+  page?: string;
+  setClientData?: Dispatch<SetStateAction<Client>>;
 }) => {
-  const router = useRouter();
-  const routes = useRoutes();
-
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
-
-  const { setCurrentUser } = useGlobalPersistedStore(state => state);
-  const {
-    selectedTreatments,
-    selectedSlot,
-    selectedDay,
-    selectedClinic,
-    selectedPacksTreatments,
-    analyticsMetrics,
-  } = useSessionStore(state => state);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -64,7 +50,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     secondSurname: '',
     termsAndConditionsAccepted: false,
     receiveCommunications: false,
-    page: '',
+    page: page ?? '',
     externalReference: '',
     analyticsMetrics: {
       device: 0,
@@ -83,6 +69,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     interestedTreatment: '',
     treatmentPrice: 0,
   });
+
+  const registerUser = useRegistration(formData, isDashboard, redirect);
 
   useEffect(() => {
     if (
@@ -113,7 +101,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     }));
   };
 
+  useEffect(() => {
+    if (setClientData) setClientData(formData);
+  }, [formData]);
+
   const handleContinue = async () => {
+    setIsLoading(true);
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
@@ -143,14 +136,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
       handleRequestError(errorMessages);
     }
+
+    setIsLoading(false);
   };
 
-  function handlePhoneChange(
-    event: any,
-    country: any,
-    formattedValue: string,
-    value: string
-  ) {
+  function handlePhoneChange(event: any, country: any, value: string) {
     if (
       event &&
       event.nativeEvent &&
@@ -166,56 +156,39 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       event.target.value = '+34';
       handleFieldChange(event, 'phonePrefix');
     }
+
+    validatePhoneInput(`+${value}`);
+  }
+
+  function validatePhoneInput(phoneNumber: string) {
+    if (
+      phoneNumber.length > 3 &&
+      phoneNumber.startsWith('+34') &&
+      phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
+    ) {
+      setShowPhoneError(false);
+    }
+
+    if (
+      phoneNumber.length > 3 &&
+      phoneNumber.startsWith('+34') &&
+      !phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
+    ) {
+      setShowPhoneError(true);
+    }
+
+    if (isEmpty(phoneNumber) || phoneNumber === '+' || phoneNumber === '+34') {
+      setShowPhoneError(true);
+    }
   }
 
   const handleRegistration = async () => {
-    await registerUser(formData);
+    await registerUser(formData, isDashboard, redirect, true);
   };
 
   const handleRequestError = (errors: Array<string>) => {
     localStorage.clear();
     setErrors(errors);
-  };
-
-  const registerUser = async (formData: Client) => {
-    setIsLoading(true);
-    const formDatacopy = { ...formData };
-    formDatacopy.analyticsMetrics = analyticsMetrics;
-    formDatacopy.phone = formData.phone
-      .replace(formDatacopy.phonePrefix, '')
-      .replaceAll(' ', '');
-    formDatacopy.interestedTreatment = analyticsMetrics.treatmentText;
-    if (analyticsMetrics.externalReference)
-      formDatacopy.externalReference = analyticsMetrics.externalReference;
-    const user = await UserService.registerUser(formDatacopy);
-    if (user) {
-      user.flowwwToken = user.clinicToken;
-    }
-    if (user) {
-      setCurrentUser(user);
-      if (selectedSlot && selectedClinic) {
-        await ScheduleService.createAppointment(
-          selectedTreatments,
-          selectedSlot!,
-          selectedDay,
-          selectedClinic!,
-          user,
-          selectedPacksTreatments!,
-          analyticsMetrics
-        ).then(x => {
-          if (isDashboard) {
-            router.push(routes.dashboard.checkIn.treatments);
-          } else router.push('/checkout/confirmation');
-        });
-      } else {
-        if (!isDashboard) {
-          if (redirect) {
-            window.parent.location.href =
-              'https://holaglow.com/checkout/clinicas';
-          } else router.push('/checkout/clinicas');
-        } else router.push(routes.dashboard.checkIn.treatments);
-      }
-    }
   };
 
   return (
@@ -289,25 +262,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           country={'es'}
           preferredCountries={['es']}
           value={formData.phone}
-          onChange={(value, data, event, formattedValue) => {
-            handlePhoneChange(event, data, formattedValue, value);
-          }}
-          onBlur={() => {
-            if (
-              formData.phone.length > 3 &&
-              formData.phone.startsWith('+34') &&
-              !phoneValidationRegex.test(
-                formData.phone.replace(/\D/g, '').slice(-9)
-              )
-            ) {
-              setShowPhoneError(true);
-            } else {
-              setShowPhoneError(false);
-            }
-
-            if (formData.phone === '+34') {
-              setShowPhoneError(null);
-            }
+          onChange={(value, data, event) => {
+            handlePhoneChange(event, data, value);
           }}
         />
         {showPhoneError !== null && (
@@ -326,8 +282,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         )}
       </div>
 
-      <Flex layout="col-left" className="my-2 mb-6">
-        <Flex layout="row-left">
+      <Flex layout="col-left" className="my-2 mb-4">
+        <Flex
+          layout="row-left"
+          className={
+            !hasContinueButton &&
+            !isDisabled &&
+            !formData.termsAndConditionsAccepted
+              ? 'animate-shake'
+              : ''
+          }
+        >
           <label
             htmlFor="termsAndConditionsAccepted"
             className="flex items-center cursor-pointer"
@@ -390,15 +355,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           )}
       </Flex>
 
-      <Button
-        disabled={isDisabled}
-        onClick={handleContinue}
-        type="primary"
-        size="xl"
-        className="w-full"
-      >
-        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
-      </Button>
+      {hasContinueButton && (
+        <Button
+          disabled={isDisabled}
+          onClick={handleContinue}
+          type="primary"
+          size="xl"
+          className="w-full"
+        >
+          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
+        </Button>
+      )}
       {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
         <p className="text-red-500 text-left text-sm mt-2">
           {errorsConfig.ERROR_MISSING_FIELDS}

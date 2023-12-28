@@ -1,5 +1,7 @@
+import { PaymentBank, PaymentInitResponse } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
+import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
@@ -27,6 +29,7 @@ interface SessionStore {
   selectedSlot?: Slot;
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
+  payment: PaymentInitResponse | undefined;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -38,6 +41,7 @@ interface SessionActions {
   setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
+  setPayment: (payment: PaymentInitResponse | undefined) => void;
 }
 
 interface GlobalPersistStore {
@@ -45,6 +49,7 @@ interface GlobalPersistStore {
   clinics: Clinic[];
   user?: User;
   promo: Promo | undefined;
+  blogPosts: Post[] | undefined;
   remoteControl: boolean;
   ignoreMessages: boolean;
   storedClinicId: string | '';
@@ -55,6 +60,7 @@ interface GlobalPersistStore {
   storedClinicFlowwwId: string | '';
   storedClinicProfessionalId: string | '';
   storedBudgetId: string | '';
+  activePayment: PaymentBank;
 }
 
 interface GlobalPersistActions {
@@ -62,6 +68,7 @@ interface GlobalPersistActions {
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
+  setBlogPosts: (value: Post[]) => void;
   setRemoteControl: (remoteControl: boolean) => void;
   setIgnoreMessages: (ignoreMessages: boolean) => void;
   setClinicId: (storedClinicId: string) => void;
@@ -72,6 +79,7 @@ interface GlobalPersistActions {
   setClinicFlowwwId: (value?: string) => void;
   setClinicProfessionalId: (value?: string) => void;
   setBudgetId: (value?: string) => void;
+  setActivePayment: (value?: PaymentBank) => void;
 }
 
 export const useSessionStore = create(
@@ -104,6 +112,7 @@ export const useSessionStore = create(
       selectedSlot: undefined,
       previousAppointment: undefined,
       isMobile: true,
+      payment: undefined,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -131,10 +140,13 @@ export const useSessionStore = create(
       setPreviousAppointment: value => {
         set({ previousAppointment: value });
       },
+      setPayment: value => {
+        set({ payment: value });
+      },
     }),
     {
       name: 'session-storage',
-      version: 3,
+      version: 4,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -144,10 +156,10 @@ export const useGlobalPersistedStore = create(
   persist<GlobalPersistStore & GlobalPersistActions>(
     set => ({
       promo: undefined,
+      blogPosts: undefined,
       stateProducts: [],
       clinics: [],
       user: undefined,
-
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -163,6 +175,9 @@ export const useGlobalPersistedStore = create(
       },
       setPromos: (value: Promo) => {
         set({ promo: value });
+      },
+      setBlogPosts: (value: Post[]) => {
+        set({ blogPosts: value });
       },
       remoteControl: false,
       setRemoteControl: value => {
@@ -200,10 +215,14 @@ export const useGlobalPersistedStore = create(
       setBudgetId: value => {
         set({ storedBudgetId: value });
       },
+      activePayment: PaymentBank.None,
+      setActivePayment: value => {
+        set({ activePayment: value });
+      },
     }),
     {
       name: 'global-storage',
-      version: 13,
+      version: 19,
     }
   )
 );

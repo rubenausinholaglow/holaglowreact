@@ -54,13 +54,6 @@ class MessageService {
     return this.sendRequest(url, patientArrived);
   }
 
-  public async startAppointment(
-    startAppontmentData: StartAppointmentData
-  ): Promise<boolean> {
-    const url = `${process.env.NEXT_PUBLIC_CLINICS_API}StartAppointment`;
-    return this.sendRequest(url, startAppontmentData);
-  }
-
   public async crisalixUser(crisalixUserData: CrisalixUserData): Promise<any> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}CrisalixUser`;
     return this.sendRequest(url, crisalixUserData);
@@ -76,6 +69,13 @@ class MessageService {
   public async goToPage(goToPageData: GoToPageData): Promise<any> {
     const url = `${process.env.NEXT_PUBLIC_CLINICS_API}GoToPage`;
     return this.sendRequest(url, goToPageData);
+  }
+
+  public async startAppointment(
+    startAppontmentData: StartAppointmentData
+  ): Promise<boolean> {
+    const url = `${process.env.NEXT_PUBLIC_CLINICS_API}StartAppointment`;
+    return this.sendRequest(url, startAppontmentData);
   }
 }
 

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Client } from 'app/types/client';
 import { Product } from 'app/types/product';
 
@@ -33,6 +34,9 @@ export interface RegistrationFormProps {
   isLoading?: boolean;
   redirect?: boolean;
   isDashboard?: boolean;
+  hasContinueButton?: boolean;
+  page?: string;
+  setClientData?: Dispatch<SetStateAction<Client>>;
 }
 
 export interface CheckboxProps {

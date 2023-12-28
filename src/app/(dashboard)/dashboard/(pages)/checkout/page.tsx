@@ -27,7 +27,6 @@ const Page = () => {
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
   const [showPaymentButtons, setShowPaymentButtons] = useState(true);
-  const [showProductDiscount, setShowProductDiscount] = useState(false);
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
   const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
@@ -83,7 +82,6 @@ const Page = () => {
     try {
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
-        setShowProductDiscount(false);
         budget.id = storedBudgetId;
         await budgetService.updateBudget(budget);
       } else {
@@ -156,8 +154,7 @@ const Page = () => {
                   setIsLoading(false);
                   setShowPaymentButtons(!showPaymentButtons);
                   const message: any = {
-                    clinicId: storedClinicId,
-                    boxId: storedBoxId,
+                    userId: user?.id,
                     page: 'CheckOut',
                   };
                   messageService.goToPage(message);

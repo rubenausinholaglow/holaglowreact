@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserService from '@services/UserService';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 
 import { useCrisalix } from './useCrisalix';
 
@@ -17,6 +17,7 @@ const Page = () => {
   const [simulationReady, setSimulationReady] = useState(false);
   const [almostReady, setAlmostReady] = useState(false);
   const [loadPlayer, setLoadPlayer] = useState(false);
+  const [lastSimulatorId, setLastSimulatorId] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
   const {
@@ -50,6 +51,14 @@ const Page = () => {
       },
       1 * 60 * 1000
     );
+
+    UserService.getSimulationReady(
+      existsCrisalixUser!.id,
+      storedClinicFlowwwId!
+    ).then(x => {
+      setSimulationReady(x.has3d);
+      setLastSimulatorId(x.lastSimulatorId);
+    });
   }, []);
 
   async function createCrisalixUser(
@@ -80,7 +89,8 @@ const Page = () => {
       if (id === '' || playerToken === '') return;
 
       UserService.getSimulationReady(id, storedClinicFlowwwId!).then(x => {
-        setSimulationReady(x);
+        setSimulationReady(x.has3d);
+        setLastSimulatorId(x.lastSimulatorId);
         if (!x && checkSimulator) {
           timerId = setTimeout(checksimulationReady, 15 * 1000);
         }
@@ -117,6 +127,9 @@ const Page = () => {
               reconstruction_type: 'face',
               player_id: '${playerId}'
             };
+            if (${lastSimulatorId}) {
+              options['simulation_id'] = ${lastSimulatorId};
+            }
             options['locale'] = 'es';
             player.render('surgeon', options);
           });
@@ -130,6 +143,9 @@ const Page = () => {
             player_id: '${playerId}'
           };
           options['locale'] = 'es';
+          if (${lastSimulatorId}) {
+            options['simulation_id'] = ${lastSimulatorId};
+          }
           player.render('surgeon', options);
         }
       `;
@@ -144,9 +160,9 @@ const Page = () => {
   return (
     <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
       {user?.firstName && (
-        <Container>
-          <Flex layout="col-center">
-            {!simulationReady && !loadPlayer && (
+        <div className="absolute inset-0 flex justify-center items-center">
+          <Flex layout="col-center" className="max-w-[80%]">
+            {!simulationReady && !loadPlayer && !almostReady && (
               <p className="font-bold text-4xl mb-2">
                 {user?.firstName}, estamos generando tu 3D/Avatar...
               </p>
@@ -171,7 +187,7 @@ const Page = () => {
               <div id="player" className="w-full h-[1000px]"></div>
             )}
           </Flex>
-        </Container>
+        </div>
       )}
     </MainLayout>
   );

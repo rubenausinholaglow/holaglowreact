@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import ProductDetail from 'app/(web)/tratamientos/[slug]/components/ProductDetail';
 import { SvgCross } from 'app/icons/IconsDs';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
@@ -20,6 +21,7 @@ export default function HightLightedProduct() {
   const [pendingDiscount, setPendingDiscount] = useState(false);
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const cart = useCartStore(state => state.cart);
+  const { setIsModalOpen } = useGlobalStore(state => state);
 
   useEffect(() => {
     if (pendingDiscount) {
@@ -35,13 +37,13 @@ export default function HightLightedProduct() {
   }, [pendingDiscount]);
 
   const params: paramsDetail = {
-    slug: productHighlighted?.extraInformation.slug || '',
+    slug: productHighlighted?.extraInformation?.slug || '',
     isDashboard: true,
   };
 
   useEffect(() => {
     (params.isDashboard = true),
-      (params.slug = productHighlighted?.extraInformation.slug || '');
+      (params.slug = productHighlighted?.extraInformation?.slug || '');
   }, [productHighlighted]);
 
   return (
@@ -51,6 +53,7 @@ export default function HightLightedProduct() {
           <SvgCross
             onClick={() => {
               setHighlightProduct(null);
+              setIsModalOpen(false);
             }}
           />
         </Flex>

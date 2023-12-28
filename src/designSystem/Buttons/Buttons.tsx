@@ -39,6 +39,7 @@ export const Button = ({
   disabled = false,
   isAnimated = false,
   origin = 'bottom',
+  id = '',
   ...rest
 }: ButtonProps) => {
   if (href && isAnimated) {
@@ -46,6 +47,7 @@ export const Button = ({
       <AnimateOnViewport origin={origin} className={wrapperClassName}>
         <Link
           href={href}
+          id={id}
           target={rest?.target}
           className={twMerge(
             `relative group overflow-visible ${className} inline-block`
@@ -71,6 +73,7 @@ export const Button = ({
     return (
       <Link
         href={href}
+        id={id}
         target={rest?.target}
         className={twMerge(
           `relative group overflow-visible ${className} inline-block`
@@ -95,6 +98,7 @@ export const Button = ({
     return (
       <AnimateOnViewport origin={origin}>
         <button
+          id={id}
           className={twMerge(
             `transition-all relative group overflow-visible ${
               ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -120,6 +124,7 @@ export const Button = ({
 
   return (
     <button
+      id={id}
       className={twMerge(
         `transition-all relative group overflow-visible ${
           ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''

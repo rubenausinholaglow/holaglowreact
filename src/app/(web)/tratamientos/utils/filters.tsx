@@ -9,6 +9,7 @@ export const INITIAL_FILTERS = {
   clinic: [],
   text: '',
   price: [],
+  type: [],
 };
 
 export const applyFilters = ({
@@ -26,6 +27,13 @@ export const applyFilters = ({
       product.category.some(category =>
         filters.category.includes(category.name)
       );
+
+    const isVisibleByType =
+      filters.type.length === 0 ||
+      (product.type === 2
+        ? [1, 2, 5].some(value => filters.type.includes(value))
+        : filters.type.includes(product.type));
+
     const isVisibleByZone =
       filters.zone.length == 0 || filters.zone.includes(product.zone);
 
@@ -63,6 +71,7 @@ export const applyFilters = ({
       isVisibleByPrice,
       isVisibleByText,
       isVisibleByPack,
+      isVisibleByType,
     ].every(value => value === true);
     return { ...product, visibility: productVisibility };
   });
@@ -138,7 +147,7 @@ export const toggleFilter = ({
   value,
   filters,
 }: {
-  filter: 'category' | 'zone' | 'clinic' | 'text' | 'price';
+  filter: 'category' | 'zone' | 'clinic' | 'text' | 'price' | 'type';
   value: string | number;
   filters: ProductFilters;
 }) => {

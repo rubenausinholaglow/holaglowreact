@@ -6,6 +6,10 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx,mdx}',
   ],
   theme: {
+    fontFamily: {
+      gtUltraThin: ['gtUltraThin', 'Georgia', 'serif'],
+      gtUltraBold: ['gtUltraBold', 'Georgia', 'serif'],
+    },
     fontSize: {
       '6xl': ['78px', '92px'],
       '5xl': ['64px', '72px'],
@@ -75,6 +79,7 @@ module.exports = {
         'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.05)',
         'centered-black': '0 0 10px 10px rgba(0,0,0,0.1)',
         'centered-black-sm': '0 0 5px 5px rgba(0,0,0,0.1)',
+        'centered-black-lg': '0 0 50px 50px rgba(0,0,0,0.05)',
       },
       keyframes: {
         slideDown: {
@@ -166,12 +171,23 @@ module.exports = {
             backgroundPosition: '8.333% 0%',
           },
         },
+        shake: {
+          '0%': { transform: 'translateX(0%)' },
+          '5%': { transform: 'translateX(-2.5%)' },
+          '10%': { transform: 'translateX(2%)' },
+          '15%': { transform: 'translateX(-1.5%)' },
+          '20%': { transform: 'translateX(1%)' },
+          '25%': { transform: 'translateX(-0.5%)' },
+          '30%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
       },
       animation: {
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
         horizontalScroll: 'horizontalScroll 50s linear infinite',
         animateBG: 'animateBG 180s ease infinite',
+        shake: 'shake 3s ease infinite',
       },
     },
   },

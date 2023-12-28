@@ -60,6 +60,7 @@ export default function Form() {
   return (
     <>
       <header className="py-4 border-b border-hg-black50 mb-6 relative">
+        <meta name="robots" content="noindex,nofollow" />
         <Flex layout="row-left" className="max-w-[624px] mx-auto px-4">
           {activeSlideIndex > 0 && (
             <div className="w-[30px] mr-2 sm:hidden">

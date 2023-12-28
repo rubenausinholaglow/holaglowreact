@@ -17,7 +17,9 @@ import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { useCartStore } from './stores/userCartStore';
 
 export default function Page() {
-  const { setHighlightProduct } = useCartStore(state => state);
+  const { setHighlightProduct, productHighlighted } = useCartStore(
+    state => state
+  );
   const { setStateProducts, stateProducts } = useGlobalPersistedStore(
     state => state
   );
@@ -71,7 +73,7 @@ export default function Page() {
     <Flex layout="col-center" className="w-full gap-1">
       {stateProducts.length > 0 ? (
         <>
-          <HightLightedProduct />
+          {productHighlighted != null && <HightLightedProduct />}
           <PsrpPage isDashboard />
         </>
       ) : (

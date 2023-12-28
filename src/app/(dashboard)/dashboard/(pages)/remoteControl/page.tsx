@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';

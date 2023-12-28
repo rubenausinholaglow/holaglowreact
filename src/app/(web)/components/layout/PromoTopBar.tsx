@@ -11,8 +11,6 @@ export default function PromoTopBar() {
 
   const { promo } = useGlobalPersistedStore(state => state);
 
-  console.log('promo', promo, isEmpty(promo));
-
   if (isEmpty(promo)) {
     return <></>;
   }

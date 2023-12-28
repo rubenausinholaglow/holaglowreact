@@ -12,6 +12,7 @@ const useRoutes = () => {
     treatments: '/tratamientos',
     checkout: {
       clinics: '/checkout/clinicas',
+      type: '/checkout/tipo-cita',
       treatments: '/checkout/treatments',
       schedule: '/checkout/agenda',
       contactForm: '/checkout/contactform',
@@ -19,6 +20,7 @@ const useRoutes = () => {
     },
     clinics: '/clinicas',
     aboutUs: '/quienes-somos',
+    blog: '/blog',
     dashboard: {
       crisalix: '/dashboard/crisalix',
       agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,

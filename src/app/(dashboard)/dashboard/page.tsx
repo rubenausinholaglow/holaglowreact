@@ -124,6 +124,7 @@ export default function Page({
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');
+    setCurrentUser(undefined);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
@@ -131,6 +132,38 @@ export default function Page({
     setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
   }, []);
+
+  async function redirectPageByAppointmentId(
+    name: string,
+    id: string,
+    appointmentId: string
+  ) {
+    try {
+      await ScheduleService.getClinicSchedule(appointmentId).then(
+        async data => {
+          if (data != null) {
+            setCurrentUser(data.lead.user);
+            setClinicId(data.clinic.id);
+            setClinicFlowwwId(data.clinic.flowwwId);
+            setClinicProfessionalId(data.clinicProfessional.id);
+
+            if (name == '') {
+              name = data.lead.user.firstName;
+              id = data.lead.user.id;
+            }
+
+            if (remoteControl) {
+              router.push('/dashboard/remoteControl');
+            } else router.push('/dashboard/menu');
+          } else {
+            //TODO - Poner un mensaje de Error en UI
+          }
+        }
+      );
+    } catch (err) {
+      Bugsnag.notify(ERROR_GETTING_DATA + err);
+    }
+  }
 
   const handleCheckUser = async () => {
     setIsLoading(true);
@@ -181,38 +214,6 @@ export default function Page({
     }
   };
 
-  async function redirectPageByAppointmentId(
-    name: string,
-    id: string,
-    appointmentId: string
-  ) {
-    try {
-      await ScheduleService.getClinicSchedule(appointmentId).then(
-        async data => {
-          if (data != null) {
-            setCurrentUser(data.lead.user);
-            setClinicId(data.clinic.id);
-            setClinicFlowwwId(data.clinic.flowwwId);
-            setClinicProfessionalId(data.clinicProfessional.id);
-
-            if (name == '') {
-              name = data.lead.user.firstName;
-              id = data.lead.user.id;
-            }
-
-            if (remoteControl) {
-              router.push('/dashboard/remoteControl');
-            } else router.push('/dashboard/menu');
-          } else {
-            //TODO - Poner un mensaje de Error en UI
-          }
-        }
-      );
-    } catch (err) {
-      Bugsnag.notify(ERROR_GETTING_DATA + err);
-    }
-  }
-
   async function redirectPageByflowwwToken(
     name: string,
     id: string,
@@ -222,7 +223,6 @@ export default function Page({
       await ScheduleService.getClinicScheduleByToken(flowwwToken).then(
         async data => {
           if (data != null) {
-            setCurrentUser(data.lead.user);
             setAppointmentId(data.id);
             setClinicId(data.clinic.id);
             setClinicFlowwwId(data.clinic.flowwwId);

@@ -23,7 +23,7 @@
     "baseUrl": "./src",
     "paths": {
       "@dashboardComponents/*": ["./app/(dashboard)/dashboard/components/*"],
-      "@interface/*": ["./app/(dashboard)/dashboard/interface/*"],
+      "@interface/*": ["./app/types/*"],
       "@services/*": ["./app/services/*"],
       "@utils/*": ["./app/utils/*"],
       "@payment/*": ["./app/(dashboard)/dashboard/(pages)/checkout/payment/*"]

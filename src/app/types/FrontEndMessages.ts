@@ -1,20 +1,21 @@
 import { PaymentBank, PaymentMethod } from './payment';
 
 interface BaseDataMessage {
-  clinicId: string;
-  boxId: string;
+  clinicId?: string;
+  boxId?: string;
+  userId?: string;
 }
 
 export type PatientArrivedData = BaseDataMessage;
-
-export interface StartAppointmentData extends BaseDataMessage {
-  appointmentId: string;
-}
 
 export interface CrisalixUserData extends BaseDataMessage {
   id: string;
   playerId: string;
   playerToken: string;
+}
+
+export interface StartAppointmentData extends BaseDataMessage {
+  appointmentId: string;
 }
 
 export interface PaymentCreatedData extends BaseDataMessage {

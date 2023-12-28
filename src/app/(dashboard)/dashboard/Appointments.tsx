@@ -41,7 +41,6 @@ const AppointmentsListComponent: React.FC<{
     user,
     setCurrentUser,
     storedClinicId,
-    storedBoxId,
     ignoreMessages,
     setAppointmentId,
     setClinicFlowwwId,
@@ -129,8 +128,7 @@ const AppointmentsListComponent: React.FC<{
           id: crisalixUser.id,
           playerId: crisalixUser.playerId,
           playerToken: crisalixUser.playerToken,
-          boxId: boxId,
-          clinicId: clinicId,
+          userId: user?.id || '',
         };
         if (!ignoreMessages)
           await messageService.crisalixUser(crisalixUserData);
@@ -151,7 +149,8 @@ const AppointmentsListComponent: React.FC<{
               boxId: data.boxId,
               appointmentId: appointmentId,
             };
-            if (!ignoreMessages)
+
+            if (!ignoreMessages) {
               await messageService
                 .startAppointment(startAppointmentData)
                 .then(async info => {
@@ -169,7 +168,7 @@ const AppointmentsListComponent: React.FC<{
                     );
                   }
                 });
-            else
+            } else {
               await startAppointment(
                 appointmentId,
                 user,
@@ -181,8 +180,7 @@ const AppointmentsListComponent: React.FC<{
                 ignoreMessages,
                 router
               );
-          } else {
-            //TODO - Poner un mensaje de Error en UI
+            }
           }
         }
       );
