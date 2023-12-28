@@ -124,6 +124,7 @@ export default function Page({
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');
+    setCurrentUser(undefined);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     setBoxId(params.get('boxId') || '');
