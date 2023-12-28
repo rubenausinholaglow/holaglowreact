@@ -372,8 +372,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           onClick={() => {
             handleContinue();
             //window.parent.postMessage(URL, routes.checkout.clinics);
+            const currentURL = window.location.href;
             window.parent.postMessage(
-              { url: URL, route: routes.checkout.clinics },
+              { url: currentURL, route: routes.checkout.clinics },
               '*'
             );
           }}
