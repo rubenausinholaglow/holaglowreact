@@ -4,15 +4,23 @@ import { useEffect, useState } from 'react';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function Page() {
   const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedClinic(undefined);
+  }, []);
 
   useEffect(() => {
     const allCategoryNames: string[] = stateProducts.reduce(
@@ -33,17 +41,24 @@ export default function Page() {
   return (
     <MainLayout isDashboard>
       <Container className="mt-4">
-        <Title className="font-semibold mb-8">
-          Selecciona clínica y tratamiento
-        </Title>
+        {!selectedClinic && (
+          <>
+            <Title className="font-semibold mb-8">Selecciona clínica</Title>
 
-        <CheckoutClinicSelector isDashboard />
+            <CheckoutClinicSelector isDashboard className="mb-8" />
+          </>
+        )}
 
-        <Flex layout="col-left" className="gap-3 w-full">
-          {!isEmpty(productCategories) && (
-            <TreatmentAccordionSelector isDashboard />
-          )}
-        </Flex>
+        {selectedClinic && (
+          <>
+            <Title className="font-semibold mb-8">Selecciona tratamiento</Title>
+            <Flex layout="col-left" className="gap-3 w-full">
+              {!isEmpty(productCategories) && (
+                <TreatmentAccordionSelector isDashboard />
+              )}
+            </Flex>
+          </>
+        )}
       </Container>
     </MainLayout>
   );

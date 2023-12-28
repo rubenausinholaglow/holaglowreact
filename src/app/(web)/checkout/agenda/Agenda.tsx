@@ -30,7 +30,7 @@ export default function Agenda({
   isDashboard?: boolean;
 }) {
   const router = useRouter();
-  const ROUTE = useRoutes();
+  const ROUTES = useRoutes();
   const { user } = useGlobalPersistedStore(state => state);
 
   const {
@@ -208,9 +208,9 @@ export default function Agenda({
           previous: previousAppointment,
         }).then(x => {
           if (isDashboard) {
-            router.push(ROUTE.dashboard.checkIn.confirmation);
+            router.push(ROUTES.dashboard.checkIn.confirmation);
           } else {
-            router.push('/checkout/confirmation');
+            router.push(ROUTES.checkout.thankYou);
           }
         });
       } else if (user) {
@@ -227,9 +227,9 @@ export default function Agenda({
           ''
         ).then(x => {
           if (isDashboard) {
-            router.push(ROUTE.dashboard.checkIn.confirmation);
+            router.push(ROUTES.dashboard.checkIn.confirmation);
           } else {
-            router.push('/checkout/confirmation');
+            router.push(ROUTES.checkout.thankYou);
           }
         });
       } else {
@@ -365,7 +365,11 @@ export default function Agenda({
                         {selectedClinic.address}, {selectedClinic.city}
                       </Text>
                       <Link
-                        href="/checkout/clinicas"
+                        href={
+                          isDashboard
+                            ? ROUTES.dashboard.schedule
+                            : ROUTES.checkout.clinics
+                        }
                         className="text-xs ml-auto text-hg-secondary font-semibold"
                       >
                         Cambiar
@@ -544,7 +548,7 @@ export default function Agenda({
                     </Text>
                   </Flex>
                 )}
-              {!loadingMonth && !loadingDays && (
+              {!loadingMonth && !loadingDays && !isDashboard && (
                 <Flex
                   layout="col-left"
                   className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"

@@ -13,8 +13,10 @@ import { useRouter } from 'next/navigation';
 
 export default function CheckoutClinicSelector({
   isDashboard = false,
+  className = '',
 }: {
   isDashboard?: boolean;
+  className?: string;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -32,7 +34,7 @@ export default function CheckoutClinicSelector({
   };
 
   return (
-    <>
+    <Flex layout="col-left" className={`gap-4 w-full ${className}`}>
       {clinics.map((clinic, index) => (
         <Flex
           layout="row-center"
@@ -59,6 +61,6 @@ export default function CheckoutClinicSelector({
           )}
         </Flex>
       ))}
-    </>
+    </Flex>
   );
 }
