@@ -476,15 +476,6 @@ export default function PaymentInput(props: Props) {
               >
                 Abrir Pepper
               </Button>
-              <Button
-                type="tertiary"
-                customStyles="bg-hg-primary"
-                isSubmit
-                className="ml-2"
-                onClick={() => pay()}
-              >
-                Pagar
-              </Button>
             </Flex>
           </Flex>
         )}
