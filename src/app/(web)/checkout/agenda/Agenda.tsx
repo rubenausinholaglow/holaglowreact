@@ -8,7 +8,7 @@ import DatePicker from 'react-datepicker';
 import ScheduleService from '@services/ScheduleService';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgPhone, SvgSadIcon } from 'app/icons/IconsDs';
+import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -30,7 +30,7 @@ export default function Agenda({
   isDashboard?: boolean;
 }) {
   const router = useRouter();
-  const ROUTE = useRoutes();
+  const ROUTES = useRoutes();
   const { user } = useGlobalPersistedStore(state => state);
 
   const {
@@ -53,6 +53,8 @@ export default function Agenda({
   const [dateFormatted, setDateFormatted] = useState('');
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
   const format = 'YYYY-MM-DD';
   let maxDays = 30;
   const maxDaysByClinicAndType: any = {
@@ -170,70 +172,77 @@ export default function Agenda({
 
   useEffect(() => {
     async function schedule() {
-      if (user?.flowwwToken && previousAppointment) {
-        setLoadingDays(true);
-        setLoadingMonth(true);
-        let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
-        if (selectedPacksTreatments && selectedPacksTreatments.length) {
-          ids = selectedPacksTreatments!
-            .slice(0, 2)
-            .map(x => x.flowwwId)
-            .join(',');
+      try {
+        if (user?.flowwwToken && previousAppointment) {
+          setLoadingDays(true);
+          setLoadingMonth(true);
+          let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
+          if (selectedPacksTreatments && selectedPacksTreatments.length) {
+            ids = selectedPacksTreatments!
+              .slice(0, 2)
+              .map(x => x.flowwwId)
+              .join(',');
+          }
+          const treatments = selectedTreatments!.map(x => x.title).join(', ');
+          const comment = 'Tratamiento visto en web: ' + treatments;
+          await ScheduleService.reschedule({
+            next: {
+              box: selectedSlot!.box,
+              endTime:
+                selectedDay!.format(format) +
+                ' ' +
+                selectedSlot!.endTime +
+                ':00',
+              id: '0',
+              startTime:
+                selectedDay!.format(format) +
+                ' ' +
+                selectedSlot!.startTime +
+                ':00',
+              treatment: ids,
+              clientId: user?.flowwwToken,
+              comment: comment,
+              treatmentText: treatments,
+              referralId: '',
+              externalReference: '',
+              isPast: false,
+              clinicId: selectedClinic?.flowwwId,
+              isCancelled: false,
+              paymentId: previousAppointment.paymentId,
+              paid: false,
+            },
+            previous: previousAppointment,
+          }).then(x => {
+            if (isDashboard) {
+              router.push(ROUTES.dashboard.checkIn.confirmation);
+            } else {
+              router.push(ROUTES.checkout.thankYou);
+            }
+          });
+        } else if (user) {
+          setLoadingDays(true);
+          setLoadingMonth(true);
+          await ScheduleService.createAppointment(
+            selectedTreatments,
+            selectedSlot!,
+            selectedDay,
+            selectedClinic!,
+            user,
+            selectedPacksTreatments!,
+            analyticsMetrics,
+            ''
+          ).then(x => {
+            if (isDashboard) {
+              router.push(ROUTES.dashboard.checkIn.confirmation);
+            } else {
+              router.push(ROUTES.checkout.thankYou);
+            }
+          });
+        } else {
+          router.push('/checkout/contactform');
         }
-        const treatments = selectedTreatments!.map(x => x.title).join(', ');
-        const comment = 'Tratamiento visto en web: ' + treatments;
-        await ScheduleService.reschedule({
-          next: {
-            box: selectedSlot!.box,
-            endTime:
-              selectedDay!.format(format) + ' ' + selectedSlot!.endTime + ':00',
-            id: '0',
-            startTime:
-              selectedDay!.format(format) +
-              ' ' +
-              selectedSlot!.startTime +
-              ':00',
-            treatment: ids,
-            clientId: user?.flowwwToken,
-            comment: comment,
-            treatmentText: treatments,
-            referralId: '',
-            externalReference: '',
-            isPast: false,
-            clinicId: selectedClinic?.flowwwId,
-            isCancelled: false,
-            paymentId: previousAppointment.paymentId,
-            paid: false,
-          },
-          previous: previousAppointment,
-        }).then(x => {
-          if (isDashboard) {
-            router.push(ROUTE.dashboard.checkIn.confirmation);
-          } else {
-            router.push('/checkout/confirmation');
-          }
-        });
-      } else if (user) {
-        setLoadingDays(true);
-        setLoadingMonth(true);
-        await ScheduleService.createAppointment(
-          selectedTreatments,
-          selectedSlot!,
-          selectedDay,
-          selectedClinic!,
-          user,
-          selectedPacksTreatments!,
-          analyticsMetrics,
-          ''
-        ).then(x => {
-          if (isDashboard) {
-            router.push(ROUTE.dashboard.checkIn.confirmation);
-          } else {
-            router.push('/checkout/confirmation');
-          }
-        });
-      } else {
-        router.push('/checkout/contactform');
+      } catch {
+        setShowErrorMessage(true);
       }
     }
 
@@ -323,261 +332,294 @@ export default function Agenda({
 
   return (
     <MainLayout isCheckout hideHeader={isDashboard}>
-      <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
-        <Title size="xl" className="font-semibold">
-          Selecciona día y hora
-        </Title>
-      </Container>
-      <Container className="px-0">
-        <Flex layout="col-left" className="md:gap-16 md:flex-row items-stretch">
-          <div className="md:w-1/2">
-            <Container className="pb-4">
-              <Flex
-                layout="row-between"
-                className="block gap-16 items-start md:flex"
-              >
-                <div className="w-full">
-                  {selectedTreatments &&
-                    Array.isArray(selectedTreatments) &&
-                    selectedTreatments.map(product => (
-                      <div key={product.id}>
-                        <Text
-                          size="sm"
-                          className="w-full text-left to-hg-black500 mb-4"
-                        >
-                          Agenda cita para{' '}
-                          <span className="font-semibold w-full">
-                            {product.title}
-                          </span>
-                          , en tu clínica preferida
-                        </Text>
-                      </div>
-                    ))}
+      {showErrorMessage ? (
+        <>
+          <Flex className="gap-2 bg-white/50 rounded-xl p-4 text-hg-error">
+            <SvgWarning className="" />
+            Ups! Ha ocurrido un error
+          </Flex>
 
-                  {selectedClinic && (
-                    <Flex className="mb-4">
-                      <SvgLocation
-                        height={16}
-                        width={16}
-                        className="shrink-0 mr-2"
-                      />
-                      <Text size="xs" className="w-full text-left">
-                        {selectedClinic.address}, {selectedClinic.city}
-                      </Text>
-                      <Link
-                        href="/checkout/clinicas"
-                        className="text-xs ml-auto text-hg-secondary font-semibold"
-                      >
-                        Cambiar
-                      </Link>
-                    </Flex>
-                  )}
-                  <Flex>
-                    <SvgHour height={16} width={16} className="mr-2" />
-                    {selectedTreatments &&
-                      Array.isArray(selectedTreatments) &&
-                      selectedTreatments.map(product => (
-                        <Flex key={product.id}>
-                          <Flex
-                            layout="row-between"
-                            className="items-start w-full"
-                          >
-                            <div>
-                              <Text size="xs" className="w-full text-left">
-                                {product.applicationTimeMinutes} minutos
-                              </Text>
-                            </div>
-                          </Flex>
-                        </Flex>
-                      ))}
-                  </Flex>
-                </div>
-              </Flex>
-            </Container>
-            <Container className="px-0 md:px-4 relative">
-              {loadingDays && (
-                <SvgSpinner
-                  height={48}
-                  width={48}
-                  className="absolute text-hg-secondary left-1/2 top-1/2 -ml-6 -mt-6"
-                />
-              )}
-              <Flex
-                className={`transition-opacity w-full mb-6 md:mb-0 ${
-                  loadingDays ? 'opacity-25' : 'opacity-100'
-                }`}
-                id="datepickerWrapper"
-              >
-                <DatePicker
-                  inline
-                  onChange={selectDate}
-                  filterDate={filterDate}
-                  onMonthChange={onMonthChange}
-                  maxDate={maxDay.toDate()}
-                  minDate={new Date()}
-                  useWeekdaysShort
-                  calendarStartDay={1}
-                  locale="es"
-                  className="w-full"
-                  fixedHeight
-                  selected={localDateSelected}
-                  disabledKeyboardNavigation
-                  calendarClassName={`${loadingMonth ? 'loading' : ''}`}
-                ></DatePicker>
-              </Flex>
-            </Container>
-          </div>
-
-          <div className="w-full md:w-1/2 flex flex-col justify-between">
-            <Container>
-              <Flex
-                layout="col-left"
-                className={`items-start w-full mb-6 md:mb-0 ${
-                  loadingDays ? 'opacity-25' : 'opacity-100'
-                }`}
-              >
-                {(afternoonHours.length > 0 || morningHours.length > 0) && (
-                  <>
-                    <Text
-                      size="sm"
-                      className="w-full text-left to-hg-black500 mb-6"
-                    >
-                      Selecciona hora para el{' '}
-                      <span className="font-semibold">
-                        {dateFormatted.toString()}
-                      </span>
-                    </Text>
-                    {morningHours.length > 0 && (
-                      <Text size="sm" className="font-semibold mb-4">
-                        Horario de mañana
-                      </Text>
-                    )}
-                    {morningHours.length > 0 && (
-                      <Flex className="flex-wrap  mb-3 md:mb-0">
-                        {morningHours.map(x => {
-                          return (
-                            <Flex
-                              key={x.startTime}
-                              layout="row-between"
-                              className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                clickedHour === x.startTime
-                                  ? 'bg-hg-secondary text-white'
-                                  : ''
-                              }`}
+          <Button
+            className="mr-4"
+            type="tertiary"
+            customStyles="bg-hg-primary"
+            href={isDashboard ? ROUTES.dashboard.menu : ROUTES.checkout.clinics}
+          >
+            Intentar de nuevo
+          </Button>
+        </>
+      ) : (
+        <>
+          <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
+            <Title size="xl" className="font-semibold">
+              Selecciona día y hora
+            </Title>
+          </Container>
+          <Container className="px-0">
+            <Flex
+              layout="col-left"
+              className="md:gap-16 md:flex-row items-stretch"
+            >
+              <div className="md:w-1/2">
+                <Container className="pb-4">
+                  <Flex
+                    layout="row-between"
+                    className="block gap-16 items-start md:flex"
+                  >
+                    <div className="w-full">
+                      {selectedTreatments &&
+                        Array.isArray(selectedTreatments) &&
+                        selectedTreatments.map(product => (
+                          <div key={product.id}>
+                            <Text
+                              size="sm"
+                              className="w-full text-left to-hg-black500 mb-4"
                             >
-                              <div
-                                className="w-full cursor-pointer flex justify-center"
-                                onClick={async () => {
-                                  if (!loadingDays) {
-                                    setClickedHour(x.startTime);
-                                    await selectHour(x);
-                                  }
-                                }}
-                              >
-                                {clickedHour === x.startTime && (
-                                  <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
-                                )}
-                                {x.startTime}
-                              </div>
-                            </Flex>
-                          );
-                        })}
-                      </Flex>
-                    )}
-                    {afternoonHours.length > 0 && (
-                      <Text size="sm" className="font-semibold mb-4">
-                        Horario de tarde
-                      </Text>
-                    )}
-                    {afternoonHours.length > 0 && (
-                      <Flex className="flex-wrap mb-6 md:mb-0">
-                        {afternoonHours.map(x => {
-                          return (
-                            <Flex
-                              key={x.startTime}
-                              layout="row-between"
-                              className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                clickedHour === x.startTime
-                                  ? 'bg-hg-secondary text-white'
-                                  : 'bg-white'
-                              }`}
-                            >
-                              <div
-                                className="w-full cursor-pointer flex justify-center"
-                                onClick={async () => {
-                                  if (!loadingDays) {
-                                    setClickedHour(x.startTime);
-                                    await selectHour(x);
-                                  }
-                                }}
-                              >
-                                {clickedHour === x.startTime && (
-                                  <SvgCheck className="text-hg-primary mr-1" />
-                                )}
-                                {x.startTime}
-                              </div>
-                            </Flex>
-                          );
-                        })}
-                      </Flex>
-                    )}
-                  </>
-                )}
-              </Flex>
-            </Container>
-
-            <div className="mt-auto">
-              {isEmpty(afternoonHours) &&
-                isEmpty(morningHours) &&
-                !loadingMonth &&
-                !loadingDays && (
-                  <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
-                    <SvgSadIcon className="mb-5 text-hg-secondary" />
-                    <Title size="xl" className="font-semibold">
-                      ¡Lo sentimos!
-                    </Title>
-                    <Text size="sm" className="font-semibold mb-4 text-center">
-                      No hay citas para el dia seleccionado
-                    </Text>
-                    <Text size="xs" className="text-center">
-                      Selecciona otro día para ver la disponibilidad
-                    </Text>
-                  </Flex>
-                )}
-              {!loadingMonth && !loadingDays && (
-                <Flex
-                  layout="col-left"
-                  className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"
-                >
-                  <Text className="font-semibold">
-                    ¿La cita que necesitas no está disponible?
-                  </Text>
-                  <Flex layout="row-left" className="gap-4 items-center w-full">
-                    <a href="tel:+34 682 417 208">
-                      <Button size="xl" type="tertiary">
-                        <SvgPhone className="mr-2" />
-                        {selectedClinic && (
-                          <div>
-                            <Text size="xs" className="whitespace-nowrap">
-                              Llamanos al
-                            </Text>
-                            <Text size="lg" className="whitespace-nowrap">
-                              {selectedClinic.phone}
+                              Agenda cita para{' '}
+                              <span className="font-semibold w-full">
+                                {product.title}
+                              </span>
+                              , en tu clínica preferida
                             </Text>
                           </div>
-                        )}
-                      </Button>
-                    </a>
-                    <Text size="xs">
-                      Te ayudaremos a agendar tu tratamiento
-                    </Text>
+                        ))}
+
+                      {selectedClinic && (
+                        <Flex className="mb-4">
+                          <SvgLocation
+                            height={16}
+                            width={16}
+                            className="shrink-0 mr-2"
+                          />
+                          <Text size="xs" className="w-full text-left">
+                            {selectedClinic.address}, {selectedClinic.city}
+                          </Text>
+                          <Link
+                            href={
+                              isDashboard
+                                ? ROUTES.dashboard.schedule
+                                : ROUTES.checkout.clinics
+                            }
+                            className="text-xs ml-auto text-hg-secondary font-semibold"
+                          >
+                            Cambiar
+                          </Link>
+                        </Flex>
+                      )}
+                      <Flex>
+                        <SvgHour height={16} width={16} className="mr-2" />
+                        {selectedTreatments &&
+                          Array.isArray(selectedTreatments) &&
+                          selectedTreatments.map(product => (
+                            <Flex key={product.id}>
+                              <Flex
+                                layout="row-between"
+                                className="items-start w-full"
+                              >
+                                <div>
+                                  <Text size="xs" className="w-full text-left">
+                                    {product.applicationTimeMinutes} minutos
+                                  </Text>
+                                </div>
+                              </Flex>
+                            </Flex>
+                          ))}
+                      </Flex>
+                    </div>
                   </Flex>
-                </Flex>
-              )}
-            </div>
-          </div>
-        </Flex>
-      </Container>
+                </Container>
+                <Container className="px-0 md:px-4 relative">
+                  {loadingDays && (
+                    <SvgSpinner
+                      height={48}
+                      width={48}
+                      className="absolute text-hg-secondary left-1/2 top-1/2 -ml-6 -mt-6"
+                    />
+                  )}
+                  <Flex
+                    className={`transition-opacity w-full mb-6 md:mb-0 ${
+                      loadingDays ? 'opacity-25' : 'opacity-100'
+                    }`}
+                    id="datepickerWrapper"
+                  >
+                    <DatePicker
+                      inline
+                      onChange={selectDate}
+                      filterDate={filterDate}
+                      onMonthChange={onMonthChange}
+                      maxDate={maxDay.toDate()}
+                      minDate={new Date()}
+                      useWeekdaysShort
+                      calendarStartDay={1}
+                      locale="es"
+                      className="w-full"
+                      fixedHeight
+                      selected={localDateSelected}
+                      disabledKeyboardNavigation
+                      calendarClassName={`${loadingMonth ? 'loading' : ''}`}
+                    ></DatePicker>
+                  </Flex>
+                </Container>
+              </div>
+
+              <div className="w-full md:w-1/2 flex flex-col justify-between">
+                <Container>
+                  <Flex
+                    layout="col-left"
+                    className={`items-start w-full mb-6 md:mb-0 ${
+                      loadingDays ? 'opacity-25' : 'opacity-100'
+                    }`}
+                  >
+                    {(afternoonHours.length > 0 || morningHours.length > 0) && (
+                      <>
+                        <Text
+                          size="sm"
+                          className="w-full text-left to-hg-black500 mb-6"
+                        >
+                          Selecciona hora para el{' '}
+                          <span className="font-semibold">
+                            {dateFormatted.toString()}
+                          </span>
+                        </Text>
+                        {morningHours.length > 0 && (
+                          <Text size="sm" className="font-semibold mb-4">
+                            Horario de mañana
+                          </Text>
+                        )}
+                        {morningHours.length > 0 && (
+                          <Flex className="flex-wrap  mb-3 md:mb-0">
+                            {morningHours.map(x => {
+                              return (
+                                <Flex
+                                  key={x.startTime}
+                                  layout="row-between"
+                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                    clickedHour === x.startTime
+                                      ? 'bg-hg-secondary text-white'
+                                      : 'bg-white'
+                                  }`}
+                                >
+                                  <div
+                                    className="w-full cursor-pointer flex justify-center"
+                                    onClick={async () => {
+                                      if (!loadingDays) {
+                                        setClickedHour(x.startTime);
+                                        await selectHour(x);
+                                      }
+                                    }}
+                                  >
+                                    {clickedHour === x.startTime && (
+                                      <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
+                                    )}
+                                    {x.startTime}
+                                  </div>
+                                </Flex>
+                              );
+                            })}
+                          </Flex>
+                        )}
+                        {afternoonHours.length > 0 && (
+                          <Text size="sm" className="font-semibold mb-4">
+                            Horario de tarde
+                          </Text>
+                        )}
+                        {afternoonHours.length > 0 && (
+                          <Flex className="flex-wrap mb-6 md:mb-0">
+                            {afternoonHours.map(x => {
+                              return (
+                                <Flex
+                                  key={x.startTime}
+                                  layout="row-between"
+                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                    clickedHour === x.startTime
+                                      ? 'bg-hg-secondary text-white'
+                                      : 'bg-white'
+                                  }`}
+                                >
+                                  <div
+                                    className="w-full cursor-pointer flex justify-center"
+                                    onClick={async () => {
+                                      if (!loadingDays) {
+                                        setClickedHour(x.startTime);
+                                        await selectHour(x);
+                                      }
+                                    }}
+                                  >
+                                    {clickedHour === x.startTime && (
+                                      <SvgCheck className="text-hg-primary mr-1" />
+                                    )}
+                                    {x.startTime}
+                                  </div>
+                                </Flex>
+                              );
+                            })}
+                          </Flex>
+                        )}
+                      </>
+                    )}
+                  </Flex>
+                </Container>
+
+                <div className="mt-auto">
+                  {isEmpty(afternoonHours) &&
+                    isEmpty(morningHours) &&
+                    !loadingMonth &&
+                    !loadingDays && (
+                      <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+                        <SvgSadIcon className="mb-5 text-hg-secondary" />
+                        <Title size="xl" className="font-semibold">
+                          ¡Lo sentimos!
+                        </Title>
+                        <Text
+                          size="sm"
+                          className="font-semibold mb-4 text-center"
+                        >
+                          No hay citas para el dia seleccionado
+                        </Text>
+                        <Text size="xs" className="text-center">
+                          Selecciona otro día para ver la disponibilidad
+                        </Text>
+                      </Flex>
+                    )}
+                  {!loadingMonth && !loadingDays && !isDashboard && (
+                    <Flex
+                      layout="col-left"
+                      className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"
+                    >
+                      <Text className="font-semibold">
+                        ¿La cita que necesitas no está disponible?
+                      </Text>
+                      <Flex
+                        layout="row-left"
+                        className="gap-4 items-center w-full"
+                      >
+                        <a href="tel:+34 682 417 208">
+                          <Button size="xl" type="tertiary">
+                            <SvgPhone className="mr-2" />
+                            {selectedClinic && (
+                              <div>
+                                <Text size="xs" className="whitespace-nowrap">
+                                  Llamanos al
+                                </Text>
+                                <Text size="lg" className="whitespace-nowrap">
+                                  {selectedClinic.phone}
+                                </Text>
+                              </div>
+                            )}
+                          </Button>
+                        </a>
+                        <Text size="xs">
+                          Te ayudaremos a agendar tu tratamiento
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  )}
+                </div>
+              </div>
+            </Flex>
+          </Container>
+        </>
+      )}
     </MainLayout>
   );
 }
