@@ -45,17 +45,13 @@ export const usePayments = () => {
         };
         data.productPaymentRequest?.push(productPayment);
       } else {
-        const matchingProduct = stateProducts.find(x => x.id === product.id);
-
-        if (matchingProduct) {
           const productPayment: ProductPaymentRequest = {
-            name: matchingProduct.title,
+            name: product.title,
             price: product.price.toString(),
             quantity: '1',
-            id: matchingProduct.id,
+            id: product.id,
           };
           data.productPaymentRequest?.push(productPayment);
-        }
       }
     });
 
