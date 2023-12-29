@@ -23,7 +23,7 @@ const useRoutes = () => {
     blog: '/blog',
     dashboard: {
       crisalix: '/dashboard/crisalix',
-      schedule: `/dashboard/schedule?flowwwToken=${user?.flowwwToken}`,
+      agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
       menu: '/dashboard/menu',
       home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
       checkOut: '/dashboard/checkout',

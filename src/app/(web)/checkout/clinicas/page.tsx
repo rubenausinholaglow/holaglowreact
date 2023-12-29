@@ -16,8 +16,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
-import CheckoutClinicSelector from '../components/CheckoutClinicSelector';
-
 export default function ClinicsCheckout() {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -154,8 +152,36 @@ export default function ClinicsCheckout() {
           <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
             <Title className="font-semibold">Selecciona tu clínica</Title>
 
-            <CheckoutClinicSelector />
-
+            {clinics.map((clinic, index) => (
+              <Flex
+                layout="row-center"
+                className={`transition-all w-full justify-between p-3 cursor-pointer rounded-xl ${
+                  selectedClinic && selectedClinic.city === clinic.city
+                    ? 'bg-hg-secondary100'
+                    : 'bg-hg-black50'
+                } `}
+                key={clinic.city}
+                onClick={() => selectClinic(clinics[index])}
+              >
+                <Flex layout="col-left">
+                  <Text size="lg" className="font-semibold mb-2">
+                    {clinic.city}
+                  </Text>
+                  <address className="not-italic mb-2 text-xs">
+                    {clinic.address}
+                  </address>
+                </Flex>
+                {selectedClinic && selectedClinic.city === clinic.city ? (
+                  <SvgRadioChecked
+                    height={24}
+                    width={24}
+                    className="shrink-0 ml-4"
+                  />
+                ) : (
+                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-4"></div>
+                )}
+              </Flex>
+            ))}
             <Flex
               layout="row-left"
               className="bg-hg-primary100 p-6 gap-3 rounded-t-2xl md:rounded-2xl w-full items-start relative bottom-0 left-0 right-0 md:relative"
