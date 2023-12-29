@@ -42,7 +42,7 @@ export default function ConfirmationCheckIn() {
           type="tertiary"
           customStyles="bg-hg-primary"
           className="mb-8"
-          href={ROUTES.dashboard.home}
+          href={ROUTES.dashboard.menu}
         >
           <SvgArrowSmallLeft />
           Volver

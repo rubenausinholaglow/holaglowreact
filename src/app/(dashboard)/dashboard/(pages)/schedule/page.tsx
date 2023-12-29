@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
