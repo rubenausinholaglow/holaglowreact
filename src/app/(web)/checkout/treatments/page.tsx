@@ -8,15 +8,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
-interface ClinicsCheckoutProps {
-  isDashboard?: boolean;
-  isCheckin?: boolean;
-}
-
-const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({
-  isDashboard,
-  isCheckin,
-}) => {
+export default function Page() {
   const { stateProducts } = useGlobalPersistedStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
@@ -37,22 +29,18 @@ const ClinicsCheckout: React.FC<ClinicsCheckoutProps> = ({
   }, [stateProducts]);
 
   return (
-    <MainLayout isCheckout hideHeader={isDashboard}>
+    <MainLayout isCheckout>
       <Container className="mt-6 md:mt-16">
         <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
           <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
             <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
 
             <Flex layout="col-left" className="gap-3 w-full">
-              {!isEmpty(productCategories) && (
-                <TreatmentAccordionSelector isCheckin={isCheckin} />
-              )}
+              {!isEmpty(productCategories) && <TreatmentAccordionSelector />}
             </Flex>
           </Flex>
         </Flex>
       </Container>
     </MainLayout>
   );
-};
-
-export default ClinicsCheckout;
+}
