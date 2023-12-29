@@ -371,11 +371,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           disabled={isDisabled}
           onClick={() => {
             handleContinue();
-            //window.parent.postMessage(URL, routes.checkout.clinics);
-            const currentURL = window.location.href;
             window.parent.postMessage(
-              { url: currentURL, route: routes.checkout.clinics },
-              '*'
+              routes.checkout.clinics,
+              'https://www.holaglow.com'
             );
           }}
           type="primary"
