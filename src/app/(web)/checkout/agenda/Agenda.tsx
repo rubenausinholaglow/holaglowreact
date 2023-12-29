@@ -26,8 +26,10 @@ import { useRouter } from 'next/navigation';
 
 export default function Agenda({
   isDashboard = false,
+  isCheckin = false,
 }: {
   isDashboard?: boolean;
+  isCheckin?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -214,7 +216,9 @@ export default function Agenda({
             previous: previousAppointment,
           }).then(x => {
             if (isDashboard) {
-              router.push(ROUTES.dashboard.checkIn.confirmation);
+              router.push(
+                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
+              );
             } else {
               router.push(ROUTES.checkout.thankYou);
             }
@@ -233,7 +237,9 @@ export default function Agenda({
             ''
           ).then(x => {
             if (isDashboard) {
-              router.push(ROUTES.dashboard.checkIn.confirmation);
+              router.push(
+                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
+              );
             } else {
               router.push(ROUTES.checkout.thankYou);
             }

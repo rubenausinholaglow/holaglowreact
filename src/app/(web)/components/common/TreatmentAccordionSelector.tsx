@@ -20,8 +20,10 @@ import CategoryIcon from './CategoryIcon';
 
 export default function TreatmentAccordionSelector({
   isDashboard = false,
+  isCheckin = false,
 }: {
   isDashboard?: boolean;
+  isCheckin?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -103,7 +105,9 @@ export default function TreatmentAccordionSelector({
                         setSelectedProduct(product);
                         setSelectedTreatments([product]);
                         if (isDashboard) {
-                          router.push(ROUTES.dashboard.checkIn.agenda);
+                          router.push(
+                            `${ROUTES.dashboard.checkIn.agenda}?isCheckin=${isCheckin}`
+                          );
                         } else {
                           router.push(ROUTES.checkout.schedule);
                         }

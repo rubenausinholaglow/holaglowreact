@@ -4,11 +4,14 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function AgendaCheckIn() {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const routes = useRoutes();
+
+  const isCheckin = searchParams.get('isCheckin') === 'true';
 
   return (
     <MainLayout
@@ -19,7 +22,7 @@ export default function AgendaCheckIn() {
       hideBottomBar
     >
       <Container>
-        <Agenda isDashboard />
+        <Agenda isDashboard isCheckin={isCheckin} />
         <Button
           type="tertiary"
           isSubmit
