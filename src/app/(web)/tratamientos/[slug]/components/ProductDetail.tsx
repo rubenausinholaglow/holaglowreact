@@ -43,7 +43,6 @@ export default function ProductDetailPage({
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
-
   const { slug, isDashboard } = params;
 
   const [productPriceRef, isProductPriceVisible] = useElementOnScreen({
@@ -65,6 +64,23 @@ export default function ProductDetailPage({
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
+
+      document.title = productDetails.extraInformation.seoTitle;
+      const metaDescriptionTag = document.querySelector(
+        'meta[name="description"]'
+      );
+
+      if (metaDescriptionTag) {
+        metaDescriptionTag.setAttribute(
+          'content',
+          productDetails.extraInformation.seoMetaDescription
+        );
+      } else {
+        const newMetaTag = document.createElement('meta');
+        newMetaTag.name = 'description';
+        newMetaTag.content = productDetails.extraInformation.seoMetaDescription;
+        document.head.appendChild(newMetaTag);
+      }
     }
     let product = undefined;
     if (isDashboard) {

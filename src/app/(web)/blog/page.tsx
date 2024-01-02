@@ -17,6 +17,12 @@ export default function Blog() {
 
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
 
+  const metadata = {
+    title: 'Glow Getter - El blog sobre medicina estética de Holaglow',
+    description:
+      'Resuelve tus dudas y descubre todo sobre la medicina estética contada por profesionales del sector de una manera clara y honesta.',
+  };
+
   useEffect(() => {
     async function initBlog() {
       const posts = await fetchBlogPosts();
@@ -25,6 +31,20 @@ export default function Blog() {
 
     if (!blogPosts) {
       initBlog();
+    }
+
+    document.title = metadata.title;
+    const metaDescriptionTag = document.querySelector(
+      'meta[name="description"]'
+    );
+
+    if (metaDescriptionTag) {
+      metaDescriptionTag.setAttribute('content', metadata.description);
+    } else {
+      const newMetaTag = document.createElement('meta');
+      newMetaTag.name = 'description';
+      newMetaTag.content = metadata.description;
+      document.head.appendChild(newMetaTag);
     }
   }, [blogPosts]);
 
