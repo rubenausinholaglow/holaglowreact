@@ -142,7 +142,7 @@ export default function Form() {
           {values &&
             MULTISTEP_QUESTIONS.map((item: any, question: number) => {
               return (
-                <div className="bg-white px-4">
+                <div className="bg-white px-4" key={question}>
                   Paso {question + 1}, {item.section}
                   <section className="mb-6">
                     <Text size="xl" className="mb-2 font-semibold">
