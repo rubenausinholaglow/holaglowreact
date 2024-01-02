@@ -1,13 +1,13 @@
 import { Analytics } from '@vercel/analytics/react';
+import { SvgArrow } from 'app/icons/IconsDs';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text,Title } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
 
+import HomeBlocksDerma from '../../../components/dermahome/HomeBlocksDerma';
 import { DermaFooter } from '../../../components/layout/DermaFooter';
 import DermaHeader from '../../../components/layout/DermaHeader';
-import HomeBlocksDerma from '../../../components/dermahome/HomeBlocksDerma';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Title, Text } from 'designSystem/Texts/Texts';
-import { Button } from 'designSystem/Buttons/Buttons';
-import { SvgArrow } from 'app/icons/IconsDs';
 
 export const metadata: Metadata = {
   title: 'Holaglow - La nueva cara de la medicina estética',

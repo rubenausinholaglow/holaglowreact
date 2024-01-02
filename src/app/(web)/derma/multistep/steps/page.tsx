@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Client } from '@interface/client';
+import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import {
   SvgArrowSmallLeft,
   SvgCheck,
@@ -15,8 +17,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import { MULTISTEP_QUESTIONS, MULTISTEP_TREATMENTS } from './mockedData';
-import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
-import { Client } from '@interface/client';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
