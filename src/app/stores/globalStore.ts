@@ -46,6 +46,7 @@ interface SessionActions {
 
 interface GlobalPersistStore {
   stateProducts: Product[];
+  dashboardProducts: Product[];
   clinics: Clinic[];
   user?: User;
   promo: Promo | undefined;
@@ -65,6 +66,7 @@ interface GlobalPersistStore {
 
 interface GlobalPersistActions {
   setStateProducts: (value: Product[]) => void;
+  setDashboardProducts: (value: Product[]) => void;
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
   setPromos: (value: Promo) => void;
@@ -158,10 +160,14 @@ export const useGlobalPersistedStore = create(
       promo: undefined,
       blogPosts: undefined,
       stateProducts: [],
+      dashboardProducts: [],
       clinics: [],
       user: undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
+      },
+      setDashboardProducts: (value: Product[]) => {
+        set({ dashboardProducts: value });
       },
       setClinics: (value: Clinic[]) => {
         set({ clinics: value });

@@ -34,7 +34,9 @@ export default function ProductDetailPage({
 }: {
   params: { slug: string; isDashboard: boolean };
 }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const { deviceSize } = useSessionStore(state => state);
   const { productHighlighted } = useCartStore(state => state);
 
@@ -54,7 +56,10 @@ export default function ProductDetailPage({
     if (!isEmpty(stateProducts)) {
       setProductsAreLoaded(true);
     }
-  }, [stateProducts]);
+    if (!isEmpty(dashboardProducts)) {
+      setProductsAreLoaded(true);
+    }
+  }, [stateProducts, dashboardProducts]);
 
   useEffect(() => {
     async function initProduct(productId: string) {
@@ -63,7 +68,7 @@ export default function ProductDetailPage({
     }
     let product = undefined;
     if (isDashboard) {
-      product = stateProducts.filter(
+      product = dashboardProducts.filter(
         product =>
           product?.id.toUpperCase() === productHighlighted?.id.toUpperCase()
       )[0];

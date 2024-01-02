@@ -34,7 +34,9 @@ export default function PsrpPage({
   slug?: string;
   isDashboard?: boolean;
 }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const { deviceSize } = useSessionStore(state => state);
   const {
     filteredProducts,
@@ -342,15 +344,28 @@ export default function PsrpPage({
     );
 
   function processFilters() {
-    if (isEmpty(filteredProducts)) {
-      setFilteredProducts(stateProducts);
-      setFilteredProducts(
-        applyFilters({ products: stateProducts, filters: productFilters })
-      );
+    if (isDashboard) {
+      if (isEmpty(filteredProducts)) {
+        setFilteredProducts(dashboardProducts);
+        setFilteredProducts(
+          applyFilters({ products: dashboardProducts, filters: productFilters })
+        );
+      } else {
+        setFilteredProducts(
+          applyFilters({ products: filteredProducts, filters: productFilters })
+        );
+      }
     } else {
-      setFilteredProducts(
-        applyFilters({ products: filteredProducts, filters: productFilters })
-      );
+      if (isEmpty(filteredProducts)) {
+        setFilteredProducts(stateProducts);
+        setFilteredProducts(
+          applyFilters({ products: stateProducts, filters: productFilters })
+        );
+      } else {
+        setFilteredProducts(
+          applyFilters({ products: filteredProducts, filters: productFilters })
+        );
+      }
     }
   }
 }
