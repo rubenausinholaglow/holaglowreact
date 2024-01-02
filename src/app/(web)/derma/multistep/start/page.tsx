@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text,Title } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
 
 import HomeBlocksDerma from '../../../components/dermahome/HomeBlocksDerma';
@@ -46,7 +46,7 @@ export default function Home() {
         type="secondary"
         size="xl"
         className="mx-auto md:mx-0 mb-10"
-        href="https://derma.holaglow.com/derma/multistep/steps"
+        href="/derma/multistep/steps"
         id={'tmevent_multistep_module'}
       >
         Empezar
