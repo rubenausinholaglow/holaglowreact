@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ImgComparisonSlider } from '@img-comparison-slider/react';
 import { Professional } from '@interface/clinic';
 import { Testimonial } from '@interface/testimonial';
+import { fetchClinics } from '@utils/fetch';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { FAQ } from 'app/(web)/tratamientos/[slug]/components/faqs';
 import { SvgArrow, SvgTimeLeft } from 'app/icons/IconsDs';
@@ -12,6 +13,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 import {
@@ -29,7 +31,7 @@ export default function HomeBlocksDerma() {
   const { deviceSize } = useSessionStore(state => state);
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 
-  const { clinics } = useGlobalPersistedStore(state => state);
+  const { clinics, setClinics } = useGlobalPersistedStore(state => state);
   const [floatingBarThreshold, setFloatingBarThreshold] = useState(0);
   const dermaImages: any[] = [];
 
@@ -100,18 +102,30 @@ export default function HomeBlocksDerma() {
   }, []);
 
   useEffect(() => {
-    const professionalsWithCity = clinics.flatMap(clinic =>
-      clinic.professionals.filter(professional => {
-        if (professional.professionalType === 1) {
-          return {
-            ...professional,
-            city: clinic.city,
-          };
-        }
-      })
-    );
+    if (clinics) {
+      const professionalsWithCity = clinics.flatMap(clinic =>
+        clinic.professionals.filter(professional => {
+          if (professional.professionalType === 1) {
+            return {
+              ...professional,
+              city: clinic.city,
+            };
+          }
+        })
+      );
 
-    setProfessionals(professionalsWithCity);
+      setProfessionals(professionalsWithCity);
+    }
+
+    async function initClinics() {
+      const clinics = await fetchClinics();
+
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
   }, [clinics]);
   return (
     <>
