@@ -51,7 +51,6 @@ export default function AppointmentResume({
   } = useSessionStore(state => state);
 
   const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
-  console.log(selectedDay);
 
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');

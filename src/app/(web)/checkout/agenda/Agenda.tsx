@@ -280,7 +280,7 @@ export default function Agenda({
   };
 
   const selectDate = (x: Date) => {
-    if (!selectedTreatmentsIds) return;
+    if (!selectedTreatmentsIds || !selectedClinic) return;
     setSelectedDay(dayjs(x));
     setLocalDateSelected(x);
     setLoadingDays(true);

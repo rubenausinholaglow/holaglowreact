@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
+import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import {
   SvgArrowSmallLeft,
@@ -15,14 +16,14 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-
   const [values, setValues] = useState<Array<Array<number>>>([[]]);
+  const [textAreaOne, setTextAreasOne] = useState<string>('');
+  const [textAreaTwo, setTextAreasTwo] = useState<string>('');
   const [client, setClient] = useState<Client>({
     email: '',
     phone: '',
@@ -52,7 +53,7 @@ export default function Form() {
     treatmentPrice: 0,
   });
 
-  const STEPS = 4;
+  const STEPS = 5;
   const progressBarWith: number = activeSlideIndex * (100 / STEPS);
 
   const goBack = (index: number) => {
@@ -72,7 +73,11 @@ export default function Form() {
       newValues[question].splice(index, 1);
     }
     setValues(newValues);
-    setActiveSlideIndex(activeSlideIndex);
+  };
+
+  const setTextAreasValue = (value: string, question: number) => {
+    if (question == 2) setTextAreasOne(value);
+    else setTextAreasTwo(value);
   };
 
   return (
@@ -207,9 +212,34 @@ export default function Form() {
                         })}
                     </ul>
                   </section>
+                  {item.showTextArea && (
+                    <section>
+                      <textarea
+                        value={question == 2 ? textAreaOne : textAreaTwo}
+                        onChange={e =>
+                          setTextAreasValue(e.target.value, question)
+                        }
+                        placeholder="Escribe tu comentario..."
+                        className="w-full h-40 p-2 resize-none border rounded-lg mb-6"
+                      />
+                    </section>
+                  )}
                 </div>
               );
             })}
+
+          <div className="bg-white px-4">
+            Paso 5, agenda
+            <section className="mb-6">
+              <Text size="xl" className="mb-2 font-semibold">
+                Please select your preferred time slot
+              </Text>
+              <Text>Agenda</Text>
+            </section>
+            <section>
+              <Agenda isDashboard={true}></Agenda>
+            </section>
+          </div>
         </Carousel>
         {activeSlideIndex > 0 && (
           <Button

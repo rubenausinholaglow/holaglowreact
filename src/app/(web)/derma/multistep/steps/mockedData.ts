@@ -4,6 +4,7 @@ export const MULTISTEP_QUESTIONS: any = [
     section: 'Cositas',
     title: 'Title Cositas',
     description: 'Descripcion Cositas',
+    showTextArea: false,
     questions: [
       {
         text: 'Text 1',
@@ -24,6 +25,7 @@ export const MULTISTEP_QUESTIONS: any = [
     section: 'Preocupación',
     title: 'Preocupación',
     description: 'Descripcion Preocupacion',
+    showTextArea: true,
     questions: [
       {
         text: 'Text 1',
@@ -38,5 +40,13 @@ export const MULTISTEP_QUESTIONS: any = [
         title: 'Title 2',
       },
     ],
+  },
+  {
+    step: 3,
+    section: 'Tercero',
+    title: 'Tercero',
+    description: 'Descripcion Tercero',
+    showTextArea: true,
+    questions: [],
   },
 ];
