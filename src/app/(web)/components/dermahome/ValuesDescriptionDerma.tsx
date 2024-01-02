@@ -17,7 +17,7 @@ export default function ValuesDescriptionDerma() {
           <Title
             isAnimated
             size="2xl"
-            className="font-bold mb-12 md:mb-6 lg:pr-[20%]"
+            className="text-hg-secondary font-bold mb-12 md:mb-6 lg:pr-[20%]"
           >
             Cuidado de la piel personalizado
           </Title>

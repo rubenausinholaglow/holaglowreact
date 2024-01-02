@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@config "./../../tailwind.derma.config.js";
+
+@font-face {
+  font-family: 'gtUltraThin';
+  src: url('/fonts/gtultramedian-thin.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gtUltraBold';
+  src: url('/fonts/gtultramedian-bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  color-scheme: light only;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: theme('colors.hg.black');
+}
+
+a {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+a:hover {
+  color: theme('colors.hg.secondary');
+}
+
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+#categorySelector::-webkit-scrollbar {
+  display: none;
+}
+
+#categorySelector::-webkit-scrollbar,
+#blogCategorySelector::-webkit-scrollbar {
+  display: none;
+}

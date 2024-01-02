@@ -25,11 +25,11 @@ module.exports = {
     extend: {
       colors: {
         hg: {
-          primary: '#EBFF0D',
+          primary: '#73BC6D',
           primary500: '#F5FF86',
           primary300: '#F9FFB6',
           primary100: '#FDFFE7',
-          secondary: '#A96FE7',
+          secondary: '#73BC6D',
           secondary700: '#c39bee',
           secondary500: '#d4b7f3',
           secondary300: '#e6d4f8',

@@ -224,7 +224,7 @@ export default function HomeBlocksDerma() {
           <Title
             isAnimated
             size="2xl"
-            className="text-left font-bold mb-6 md:mb-8"
+            className="text-hg-secondary text-left font-bold mb-6 md:mb-8"
           >
             Nuestros expertos en dermatología estética
           </Title>
@@ -268,7 +268,7 @@ export default function HomeBlocksDerma() {
             <Title
               isAnimated
               size="2xl"
-              className="font-bold mb-12 md:mb-6 lg:pr-[20%]"
+              className="text-hg-secondary font-bold mb-12 md:mb-6 lg:pr-[20%]"
             >
               Historias de Derma
             </Title>
@@ -331,7 +331,7 @@ export default function HomeBlocksDerma() {
             <Title
               isAnimated
               size="2xl"
-              className="font-bold mb-12 md:mb-6 lg:pr-[20%]"
+              className="text-hg-secondary font-bold mb-12 md:mb-6 lg:pr-[20%]"
             >
               Resultados reales
             </Title>
@@ -352,7 +352,11 @@ export default function HomeBlocksDerma() {
         </FullWidthCarousel>
       </AnimateOnViewport>
       <Container className="py-12">
-        <Title isAnimated size="2xl" className="font-bold mb-8 md:mb-12">
+        <Title
+          isAnimated
+          size="2xl"
+          className="text-hg-secondary font-bold mb-8 md:mb-12"
+        >
           Preguntas frecuentes
         </Title>
 
