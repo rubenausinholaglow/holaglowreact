@@ -1,37 +1,29 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ImgComparisonSlider } from '@img-comparison-slider/react';
+import { Professional } from '@interface/clinic';
+import { Testimonial } from '@interface/testimonial';
+import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { FAQ } from 'app/(web)/tratamientos/[slug]/components/faqs';
+import { SvgArrow, SvgTimeLeft } from 'app/icons/IconsDs';
+import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Carousel } from 'designSystem/Carousel/Carousel';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
+import Image from 'next/image';
 
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from '../../../stores/globalStore';
-import Clinics from '../common/Clinics';
-import FloatingBottomBar from './FloatingBottomBar';
-import GoogleStars from './GoogleStars';
-import GoToTreatments from './GoToTreatments';
-import HeroDerma from './HeroDerma';
-import Products from './Products';
-import Testimonials from './Testimonials';
-import ValuesDescriptionDerma from './ValuesDescriptionDerma';
-import { Button } from 'designSystem/Buttons/Buttons';
-import { SvgArrow, SvgTimeLeft, SvgTimer } from 'app/icons/IconsDs';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { DERMA_COLORS } from '@utils/colors.derma';
-import { Carousel } from 'designSystem/Carousel/Carousel';
-import ProfessionalCard from '../common/ProfessionalCard';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import { Professional } from '@interface/clinic';
-import { ImgComparisonSlider } from '@img-comparison-slider/react';
-import Image from 'next/image';
-import { Testimonial } from '@interface/testimonial';
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
-import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import ProfessionalCard from '../common/ProfessionalCard';
 import TestimonialCard from '../common/TestimonialCard';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
-import { FAQ } from 'app/(web)/tratamientos/[slug]/components/faqs';
-import { SvgCalendar } from 'app/icons/Icons';
+import GoogleStars from './GoogleStars';
+import HeroDerma from './HeroDerma';
+import ValuesDescriptionDerma from './ValuesDescriptionDerma';
 
 export default function HomeBlocksDerma() {
   const { deviceSize } = useSessionStore(state => state);
@@ -237,7 +229,7 @@ export default function HomeBlocksDerma() {
         </Container>
         <div className={'md:w-1/2'}>
           {deviceSize.isMobile && (
-            <ProductCarousel type="professionals" items={professionals} />
+            <FullWidthCarousel type="professionals" items={professionals} />
           )}
           {!deviceSize.isMobile && (
             <Carousel
