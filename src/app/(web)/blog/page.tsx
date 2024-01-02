@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { setSeoMetaData } from '@utils/common';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -33,19 +34,7 @@ export default function Blog() {
       initBlog();
     }
 
-    document.title = metadata.title;
-    const metaDescriptionTag = document.querySelector(
-      'meta[name="description"]'
-    );
-
-    if (metaDescriptionTag) {
-      metaDescriptionTag.setAttribute('content', metadata.description);
-    } else {
-      const newMetaTag = document.createElement('meta');
-      newMetaTag.name = 'description';
-      newMetaTag.content = metadata.description;
-      document.head.appendChild(newMetaTag);
-    }
+    setSeoMetaData(metadata.title, metadata.description);
   }, [blogPosts]);
 
   return (

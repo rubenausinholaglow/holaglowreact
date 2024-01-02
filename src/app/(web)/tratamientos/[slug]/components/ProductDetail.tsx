@@ -13,7 +13,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
-import { useElementOnScreen } from 'app/utils/common';
+import { setSeoMetaData, useElementOnScreen } from 'app/utils/common';
 import { fetchProduct } from 'app/utils/fetch';
 import { isEmpty } from 'lodash';
 
@@ -64,23 +64,10 @@ export default function ProductDetailPage({
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
-
-      document.title = productDetails.extraInformation.seoTitle;
-      const metaDescriptionTag = document.querySelector(
-        'meta[name="description"]'
+      setSeoMetaData(
+        productDetails.extraInformation.seoTitle,
+        productDetails.extraInformation.seoMetaDescription
       );
-
-      if (metaDescriptionTag) {
-        metaDescriptionTag.setAttribute(
-          'content',
-          productDetails.extraInformation.seoMetaDescription
-        );
-      } else {
-        const newMetaTag = document.createElement('meta');
-        newMetaTag.name = 'description';
-        newMetaTag.content = productDetails.extraInformation.seoMetaDescription;
-        document.head.appendChild(newMetaTag);
-      }
     }
     let product = undefined;
     if (isDashboard) {
