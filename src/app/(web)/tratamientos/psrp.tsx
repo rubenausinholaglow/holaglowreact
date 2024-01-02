@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
@@ -50,6 +51,12 @@ export default function PsrpPage({
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
 
+  const metadataPacks = {
+    title: 'Packs de tratamientos de medicina estética - Holaglow',
+    description:
+      'Elige uno de los packs para tratar de manera global tus objetivos estéticos y conseguir el resultado que deseas',
+  };
+
   useEffect(() => {
     if (slug !== '') {
       if (slug !== 'packs') {
@@ -82,6 +89,7 @@ export default function PsrpPage({
           productFilters.category.push(filterToApply);
         }
       } else {
+        setSeoMetaData(metadataPacks.title, metadataPacks.description);
         productFilters.isPack = true;
       }
       setProductFilters(productFilters);
@@ -190,7 +198,7 @@ export default function PsrpPage({
     );
   else
     return (
-      <MainLayout>
+      <MainLayout hideHeader={slug == 'packs'}>
         <link rel="canonical" href="https://holaglow.com/tratamientos/" />
         <MobileFilters
           isVisible={isMobileFiltersVisible}
