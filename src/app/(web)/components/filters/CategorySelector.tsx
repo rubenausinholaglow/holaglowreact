@@ -44,11 +44,15 @@ export default function CategorySelector({
       },
       []
     );
-
-    const filteredCategoryNames = allCategoryNames.filter(
-      categoryName =>
-        categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
-    );
+    let filteredCategoryNames;
+    if (isDashboard) {
+      filteredCategoryNames = allCategoryNames.filter(
+        categoryName =>
+          categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
+      );
+    } else {
+      filteredCategoryNames = allCategoryNames;
+    }
 
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
 
