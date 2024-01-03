@@ -115,22 +115,6 @@ export default function DermaHeader() {
                   className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
                 />
               </Link>
-
-              <Navigation className="hidden lg:block 2xl:mr-20" />
-
-              <Flex
-                layout="row-center"
-                className="lg:absolute right-0 2xl:mr-20"
-              >
-                <SvgMenu
-                  height={24}
-                  width={24}
-                  className="ml-2 lg:hidden"
-                  onClick={() => {
-                    setIsMobileNavVisible(true);
-                  }}
-                />
-              </Flex>
             </Flex>
           </Container>
         </AnimateOnViewport>

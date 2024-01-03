@@ -137,7 +137,7 @@ export default function HomeBlocksDerma() {
         type="secondary"
         size="xl"
         className="mx-auto md:mx-0 mb-10"
-        href="https://holaglow.com/multi-step"
+        href="/derma/multistep/start"
         id={'tmevent_multistep_module'}
       >
         Reserva tu cita online
