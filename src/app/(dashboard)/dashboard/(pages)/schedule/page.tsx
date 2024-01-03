@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchClinics, fetchProducts } from '@utils/fetch';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -13,19 +14,40 @@ import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function Page() {
-  const { stateProducts, clinics, storedClinicId } = useGlobalPersistedStore(
-    state => state
-  );
+  const {
+    stateProducts,
+    clinics,
+    storedClinicId,
+    setClinics,
+    setStateProducts,
+  } = useGlobalPersistedStore(state => state);
   const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    async function initClinics() {
+      const clinics = await fetchClinics();
+
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
     const clinic = clinics.filter(clinic => clinic.id === storedClinicId);
 
     setSelectedClinic(clinic[0]);
-  }, []);
+  }, [clinics]);
 
   useEffect(() => {
+    async function initProducts() {
+      const products = await fetchProducts();
+      setStateProducts(products);
+    }
+
+    if (isEmpty(stateProducts)) {
+      initProducts();
+    }
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(

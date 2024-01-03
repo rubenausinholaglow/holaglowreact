@@ -17,8 +17,6 @@ export default function ConfirmationCheckIn() {
 
   useEffect(() => {
     if (isCheckin) {
-      console.log('redirect');
-
       const timerId = setTimeout(() => {
         router.push(ROUTES.dashboard.checkIn.root);
       }, 10000);
