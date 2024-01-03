@@ -1,7 +1,9 @@
-import ClinicsCheckout from 'app/(web)/checkout/treatments/page';
+'use client';
+
+import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSadIcon } from 'app/icons/IconsDs';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 
 export default function treatmentsSection() {
@@ -13,20 +15,22 @@ export default function treatmentsSection() {
       hideProfessionalSelector
       hideBottomBar
     >
-      <Flex layout="col-center" className="w-full">
-        <SvgSadIcon
-          width={96}
-          height={96}
-          className="text-hg-primary bg-hg-secondary rounded-full"
-        />
-        <Title className="align-center font-bold mt-8" size="xl">
-          ¡Ups!
-        </Title>
-        <Title className="align-center font-bold">
-          No tienes ninguna cita prevista
-        </Title>
-        <ClinicsCheckout isDashboard={true} />
-      </Flex>
+      <Container>
+        <Flex layout="col-center" className="w-full">
+          <SvgSadIcon
+            width={96}
+            height={96}
+            className="text-hg-primary bg-hg-secondary rounded-full"
+          />
+          <Title className="align-center font-bold mt-8" size="xl">
+            ¡Ups!
+          </Title>
+          <Title className="align-center font-bold mb-8">
+            No tienes ninguna cita prevista
+          </Title>
+          <TreatmentAccordionSelector isDashboard isCheckin />
+        </Flex>
+      </Container>
     </MainLayout>
   );
 }

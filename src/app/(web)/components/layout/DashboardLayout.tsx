@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import SocketService from '@services/SocketService';
+import useRoutes from '@utils/useRoutes';
 import { ClinicProfessional } from 'app/(dashboard)/dashboard/components/ClinicProfessional';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { SvgHolaglow } from 'app/icons/IconsDs';
@@ -31,6 +32,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const ROUTES = useRoutes();
+
   const messageSocket = useMessageSocket(state => state);
   const { remoteControl, storedBoxId, storedClinicId, user } =
     useGlobalPersistedStore(state => state);
@@ -44,10 +47,10 @@ export default function DashboardLayout({
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/StartAppointment';
 
   const routePages: Record<string, string | ''> = {
-    Crisalix: '/dashboard/crisalix',
-    Agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
-    Menu: '/dashboard/menu',
-    Home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
+    Crisalix: ROUTES.dashboard.crisalix,
+    Agenda: `${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`,
+    Menu: ROUTES.dashboard.menu,
+    Home: ROUTES.dashboard.home,
     CheckOut: '/dashboard/remoteControl/Payment',
   };
 
