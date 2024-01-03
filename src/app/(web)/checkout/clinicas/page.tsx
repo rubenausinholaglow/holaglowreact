@@ -38,7 +38,7 @@ export default function ClinicsCheckout() {
 
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
-    var redirect = ROUTES.checkout.type;
+    let redirect = ROUTES.checkout.type;
     if (
       selectedTreatments &&
       !isEmpty(selectedTreatments) &&
