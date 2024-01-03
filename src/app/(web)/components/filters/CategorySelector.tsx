@@ -87,11 +87,12 @@ export default function CategorySelector({
               productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
                 : isStacked
-                ? 'bg-hg-black100 mb-2'
+                ? 'bg-hg-black100'
                 : 'bg-white hover:bg-hg-secondary100'
             }
             ${i == 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
             ${isDashboard ? 'py-2 px-4' : ''}
+            ${isStacked ? 'mb-2' : ''}
             `)}
             onClick={() => {
               setProductFilters(
