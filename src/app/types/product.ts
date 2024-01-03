@@ -32,6 +32,8 @@ export interface Product {
   sessions: number;
   productCardImagePosition: string;
   longDescription: string;
+  numProductCardPhotos: number;
+
 }
 
 export interface BeforeAndAfterImages {
