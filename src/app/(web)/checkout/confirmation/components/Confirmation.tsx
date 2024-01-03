@@ -31,24 +31,26 @@ export default function Confirmation({
   );
 
   useEffect(() => {
-    setCurrentUser(undefined);
-    const metrics: AnalyticsMetrics = {
-      device: 0,
-      locPhysicalMs: '',
-      utmAdgroup: '',
-      utmCampaign: '',
-      utmContent: '',
-      utmMedium: '',
-      utmSource: '',
-      utmTerm: '',
-      treatmentText: '',
-      externalReference: '',
-      interestedTreatment: '',
-      treatmentPrice: 0,
-    };
-    setAnalyticsMetrics(metrics);
-    resetCart();
-    setPayment(undefined);
+    if (!isDashboard) {
+      setCurrentUser(undefined);
+      const metrics: AnalyticsMetrics = {
+        device: 0,
+        locPhysicalMs: '',
+        utmAdgroup: '',
+        utmCampaign: '',
+        utmContent: '',
+        utmMedium: '',
+        utmSource: '',
+        utmTerm: '',
+        treatmentText: '',
+        externalReference: '',
+        interestedTreatment: '',
+        treatmentPrice: 0,
+      };
+      setAnalyticsMetrics(metrics);
+      resetCart();
+      setPayment(undefined);
+    }
   }, []);
 
   return (
