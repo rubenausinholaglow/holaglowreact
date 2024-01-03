@@ -1,7 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import './datePickerStyle.css';
+
+import { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import TextInputField from '@dashboardComponents/TextInputField';
 import { Client } from '@interface/client';
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
@@ -11,17 +14,15 @@ import {
   SvgCircle,
   SvgHolaglow,
 } from 'app/icons/Icons';
-import dayjs from 'dayjs';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
-import TextInputField from '@dashboardComponents/TextInputField';
-import DatePicker from 'react-datepicker';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -103,9 +104,9 @@ export default function Form() {
     }));
   };
   const selectDate = (x: Date) => {
-    var dayjsDate = dayjs(x);
-    var today = dayjs();
-    var years = today.diff(dayjsDate, 'years');
+    const dayjsDate = dayjs(x);
+    const today = dayjs();
+    const years = today.diff(dayjsDate, 'years');
     setLocalDateSelected(dayjsDate.toDate());
     setContinueDisabled(years < 18);
   };
