@@ -82,3 +82,23 @@ export function getDiscountedPrice(product: Product) {
   }
   return totalDiscountSum === 0 ? null : product.price - totalDiscountSum;
 }
+
+export const setSeoMetaData = (title: string, description: string) => {
+
+    document.title = title;
+    const metaDescriptionTag = document.querySelector(
+      'meta[name="description"]'
+    );
+
+    if (metaDescriptionTag) {
+      metaDescriptionTag.setAttribute(
+        'content',
+        description
+      );
+    } else {
+      const newMetaTag = document.createElement('meta');
+      newMetaTag.name = 'description';
+      newMetaTag.content = description;
+      document.head.appendChild(newMetaTag);
+    }
+}
