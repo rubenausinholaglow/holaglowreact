@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import './datePickerStyle.css';
 import { Client } from '@interface/client';
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
@@ -10,6 +11,7 @@ import {
   SvgCircle,
   SvgHolaglow,
 } from 'app/icons/Icons';
+import dayjs from 'dayjs';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -18,13 +20,18 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
+import TextInputField from '@dashboardComponents/TextInputField';
+import DatePicker from 'react-datepicker';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [values, setValues] = useState<Array<Array<number>>>([[]]);
   const [textAreaOne, setTextAreasOne] = useState<string>('');
   const [textAreaTwo, setTextAreasTwo] = useState<string>('');
-  const [client, setClient] = useState<Client>({
+  const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
+  const [localDateSelected, setLocalDateSelected] = useState(new Date());
+
+  const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
     phonePrefix: '',
@@ -61,6 +68,7 @@ export default function Form() {
   };
   const goNext = (index: number) => {
     setActiveSlideIndex(index + 1);
+    setContinueDisabled(true);
   };
 
   const setSelectedQuestionValue = (question: number, value: number) => {
@@ -73,11 +81,33 @@ export default function Form() {
       newValues[question].splice(index, 1);
     }
     setValues(newValues);
+    setContinueDisabled(newValues[question].length == 0);
   };
 
   const setTextAreasValue = (value: string, question: number) => {
     if (question == 2) setTextAreasOne(value);
     else setTextAreasTwo(value);
+  };
+
+  const handleFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    const value =
+      event.target.type === 'checkbox'
+        ? event.target.checked
+        : event.target.value;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [field]: value,
+    }));
+  };
+  const selectDate = (x: Date) => {
+    var dayjsDate = dayjs(x);
+    var today = dayjs();
+    var years = today.diff(dayjsDate, 'years');
+    setLocalDateSelected(dayjsDate.toDate());
+    setContinueDisabled(years < 18);
   };
 
   return (
@@ -136,12 +166,27 @@ export default function Form() {
               </Text>
             </section>
             <section>
-              <RegistrationForm
-                redirect={false}
-                hasContinueButton={false}
-                formData={client}
-                setClientData={setClient}
-              />
+              <div className="grid grid-cols-1 gap-4 w-full">
+                <TextInputField
+                  placeholder="Nombre"
+                  value={formData.name}
+                  onChange={event => handleFieldChange(event, 'name')}
+                  hasNoValidation
+                />
+                <Flex id="datepickerWrapper">
+                  <DatePicker
+                    onChange={selectDate}
+                    maxDate={new Date()}
+                    useWeekdaysShort
+                    calendarStartDay={1}
+                    locale="es"
+                    className="w-full"
+                    fixedHeight
+                    disabledKeyboardNavigation
+                    selected={localDateSelected}
+                  ></DatePicker>
+                </Flex>
+              </div>
             </section>
           </div>
           {values &&
@@ -156,7 +201,7 @@ export default function Form() {
                     <Text>{item.description}</Text>
                   </section>
                   <section>
-                    <ul className="grid grid-cols-3 gap-4">
+                    <ul className="grid grid-cols-1 gap-4">
                       {values &&
                         item.questions.map((item: any, index: number) => {
                           const isActive =
@@ -257,7 +302,10 @@ export default function Form() {
           <Button
             className="mt-8 ml-3"
             type="secondary"
-            onClick={() => goNext(activeSlideIndex)}
+            disabled={continueDisabled}
+            onClick={() => {
+              if (!continueDisabled) goNext(activeSlideIndex);
+            }}
           >
             <Flex layout="row-right">
               <span className="ml-2">Siguiente</span>
