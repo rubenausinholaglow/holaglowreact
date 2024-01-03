@@ -38,8 +38,16 @@ export default function ClinicsCheckout() {
 
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
-
-    router.push(ROUTES.checkout.type);
+    var redirect = ROUTES.checkout.type;
+    if (
+      selectedTreatments &&
+      !isEmpty(selectedTreatments) &&
+      selectedTreatments[0].id ===
+        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+    ) {
+      redirect = ROUTES.checkout.schedule;
+    }
+    router.push(redirect);
   };
 
   useEffect(() => {
