@@ -13,7 +13,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
-import { useElementOnScreen } from 'app/utils/common';
+import { setSeoMetaData, useElementOnScreen } from 'app/utils/common';
 import { fetchProduct } from 'app/utils/fetch';
 import { isEmpty } from 'lodash';
 
@@ -43,7 +43,6 @@ export default function ProductDetailPage({
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
-
   const { slug, isDashboard } = params;
 
   const [productPriceRef, isProductPriceVisible] = useElementOnScreen({
@@ -65,6 +64,10 @@ export default function ProductDetailPage({
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
+      setSeoMetaData(
+        productDetails.extraInformation.seoTitle,
+        productDetails.extraInformation.seoMetaDescription
+      );
     }
     let product = undefined;
     if (isDashboard) {
