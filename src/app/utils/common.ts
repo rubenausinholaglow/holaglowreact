@@ -22,9 +22,9 @@ export function getImageProperties(product: Product, photoNumber: number, isCaro
   }
 
   const imgSrc = isCarousel
-    photoNumber > 0
     ? `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard${photoNumber}-${product.productCardImagePosition}.png`
     : `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`;
+
 
   return { imgSrc, alignmentStyles, defaultImage: DEFAULT_IMG_SRC };
 }
