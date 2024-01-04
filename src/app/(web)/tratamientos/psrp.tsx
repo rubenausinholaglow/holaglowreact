@@ -22,7 +22,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { redirect,RedirectType } from 'next/navigation';
 
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
@@ -59,7 +58,6 @@ export default function PsrpPage({
   };
 
   useEffect(() => {
-    let categoryExists = false;
     if (slug !== '') {
       if (slug !== 'packs') {
         let filterToApply = '';
@@ -75,7 +73,7 @@ export default function PsrpPage({
               slug[0].toUpperCase() + slug.substr(1).toLowerCase();
             break;
         }
-        categoryExists = filterItems.some(x => {
+        const categoryExists = filterItems.some(x => {
           const exists = x.buttons.some(y => {
             if (y.value == filterToApply) return true;
           });
@@ -93,12 +91,8 @@ export default function PsrpPage({
       } else {
         setSeoMetaData(metadataPacks.title, metadataPacks.description);
         productFilters.isPack = true;
-        categoryExists = true;
       }
       setProductFilters(productFilters);
-      if (!categoryExists) {
-        redirect('/tratamientos', RedirectType.replace);
-      }
     }
   }, [slug, stateProducts]);
 
@@ -204,7 +198,7 @@ export default function PsrpPage({
     );
   else
     return (
-      <MainLayout>
+      <MainLayout hideHeader={slug == 'packs'}>
         <link rel="canonical" href="https://holaglow.com/tratamientos/" />
         <MobileFilters
           isVisible={isMobileFiltersVisible}

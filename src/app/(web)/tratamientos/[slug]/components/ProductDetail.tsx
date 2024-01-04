@@ -8,7 +8,6 @@ import Clinics from 'app/(web)/components/common/Clinics';
 import Professionals from 'app/(web)/components/common/Professionals';
 import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
 import Testimonials from 'app/(web)/components/home/Testimonials';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -116,7 +115,7 @@ export default function ProductDetailPage({
 
   if (product && product != undefined && !isEmpty(product)) {
     return (
-      <MainLayout>
+      <>
         <div
           className={`bg-hg-cream500 rounded-t-3xl pt-8 ${
             !isDashboard ? 'pb-12' : ''
@@ -172,7 +171,7 @@ export default function ProductDetailPage({
             )}
           </>
         )}
-      </MainLayout>
+      </>
     );
   } else if (productId == '') {
     return <PsrpPage slug={params.slug} isDashboard={false} />;
