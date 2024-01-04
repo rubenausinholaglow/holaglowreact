@@ -22,12 +22,12 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { redirect,RedirectType } from 'next/navigation';
 
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
 import { applyFilters, filterCount } from './utils/filters';
-import { RedirectType, redirect } from 'next/navigation';
 
 export default function PsrpPage({
   slug = '',
