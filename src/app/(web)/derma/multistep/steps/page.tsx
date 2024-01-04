@@ -99,10 +99,11 @@ export default function Form() {
     } else if (question == 2) {
       dermaQuestions.skinConcerns = [];
       newValues[question].forEach(x => {
-        dermaQuestions.skinConcerns.push(
-          MULTISTEP_QUESTIONS[0].questions[value].title
-        );
+        dermaQuestions.skinConcerns.push({
+          concern: MULTISTEP_QUESTIONS[0].questions[value].title,
+        });
       });
+      dermaQuestions.skinConcerns.push({ concern: textAreaOne });
     }
     setDermaQuestions(dermaQuestions);
   };
