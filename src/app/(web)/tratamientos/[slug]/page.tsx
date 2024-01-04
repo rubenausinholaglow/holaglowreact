@@ -9,9 +9,5 @@ export default function ProductPage({
 }: {
   params: { slug: string; isDashboard: boolean };
 }) {
-  return (
-    <MainLayout>
-      <ProductDetail params={params}></ProductDetail>
-    </MainLayout>
-  );
+  return <ProductDetail params={params}></ProductDetail>;
 }
