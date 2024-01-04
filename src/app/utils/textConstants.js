@@ -18,3 +18,4 @@ export const INVALID_EMAIL_FORMAT = 'Invalid email format';
 export const PHONE_REQUIRED = 'Phone is required';
 export const INVALID_PHONE_FORMAT = 'Invalid phone format (10 digits)';
 export const CHECK_IN_INCORRECT = 'Check-in Incorrecto';
+export const ERROR_UPDATE_DERMAQUESTIONS = 'Error updating derma questions';

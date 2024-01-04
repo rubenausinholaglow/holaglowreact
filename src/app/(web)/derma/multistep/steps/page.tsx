@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import TextInputField from '@dashboardComponents/TextInputField';
 import { Client } from '@interface/client';
+import { DermaQuestions } from '@interface/dermaquestions';
+import { dermaService } from '@services/DermaService';
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import {
@@ -32,6 +34,9 @@ export default function Form() {
   const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
 
+  const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
+    name: '',
+  } as DermaQuestions);
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -68,8 +73,14 @@ export default function Form() {
     setActiveSlideIndex(index - 1);
   };
   const goNext = (index: number) => {
-    setActiveSlideIndex(index + 1);
-    setContinueDisabled(true);
+    dermaQuestions.extraInfo = textAreaTwo;
+    setDermaQuestions(dermaQuestions);
+    dermaService.update(dermaQuestions).then(x => {
+      setActiveSlideIndex(index + 1);
+      setContinueDisabled(true);
+      dermaQuestions.id = x!.toString();
+      setDermaQuestions(dermaQuestions);
+    });
   };
 
   const setSelectedQuestionValue = (question: number, value: number) => {
@@ -83,6 +94,17 @@ export default function Form() {
     }
     setValues(newValues);
     setContinueDisabled(newValues[question].length == 0);
+    if (question == 1) {
+      dermaQuestions.scenario = MULTISTEP_QUESTIONS[1].questions[value].title;
+    } else if (question == 2) {
+      dermaQuestions.skinConcerns = [];
+      newValues[question].forEach(x => {
+        dermaQuestions.skinConcerns.push(
+          MULTISTEP_QUESTIONS[0].questions[value].title
+        );
+      });
+    }
+    setDermaQuestions(dermaQuestions);
   };
 
   const setTextAreasValue = (value: string, question: number) => {
@@ -94,13 +116,9 @@ export default function Form() {
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    const value =
-      event.target.type === 'checkbox'
-        ? event.target.checked
-        : event.target.value;
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [field]: value,
+    setDermaQuestions(prevDermaQuestions => ({
+      ...prevDermaQuestions,
+      [field]: event.target.value,
     }));
   };
   const selectDate = (x: Date) => {
@@ -109,6 +127,8 @@ export default function Form() {
     const years = today.diff(dayjsDate, 'years');
     setLocalDateSelected(dayjsDate.toDate());
     setContinueDisabled(years < 18);
+    dermaQuestions.birthDate = dayjsDate.format('YYYY-MM-DD');
+    setDermaQuestions(dermaQuestions);
   };
 
   return (
@@ -170,7 +190,7 @@ export default function Form() {
               <div className="grid grid-cols-1 gap-4 w-full">
                 <TextInputField
                   placeholder="Nombre"
-                  value={formData.name}
+                  value={dermaQuestions.name!}
                   onChange={event => handleFieldChange(event, 'name')}
                   hasNoValidation
                 />
