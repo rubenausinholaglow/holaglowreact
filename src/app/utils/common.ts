@@ -22,17 +22,16 @@ export function getImageProperties(product: Product, photoNumber: number, isCaro
   }
 
   const imgSrc = isCarousel
-    ? `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard${photoNumber}-${product.productCardImagePosition}.png`
-    : `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`;
-
+    ? `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard${photoNumber === 1 ? '' : photoNumber}-${product.productCardImagePosition}.png`
+    : `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard${photoNumber === 1 ? '' : photoNumber}-${product.productCardImagePosition}.png`;
 
   return { imgSrc, alignmentStyles, defaultImage: DEFAULT_IMG_SRC };
 }
 
-export const useImageProps = (product: Product, photoNumber = 0) => {
+export const useImageProps = (product: Product, photoNumber = 1) => {
   const { imgSrc, alignmentStyles, defaultImage } = getImageProperties(product, photoNumber, false);
 
-   const [imgSrcDefault, setImgSrc] = useState(
+  const [imgSrcDefault, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`
   );
 
