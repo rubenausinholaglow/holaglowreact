@@ -198,7 +198,7 @@ export default function PsrpPage({
     );
   else
     return (
-      <MainLayout hideHeader={slug == 'packs'}>
+      <MainLayout hideHeader={slug != ''}>
         <link rel="canonical" href="https://holaglow.com/tratamientos/" />
         <MobileFilters
           isVisible={isMobileFiltersVisible}
