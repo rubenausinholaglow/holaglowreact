@@ -4,19 +4,10 @@ import { isEmpty } from 'lodash';
 
 const DEFAULT_IMG_SRC = '/images/product/fakeProduct.png';
 
-export const useImageProps = (product: Product) => {
-  const [imgAligment] = useState<string>(product.productCardImagePosition);
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`
-  );
-
-  const setNextImgSrc = () => {
-    setImgSrc(DEFAULT_IMG_SRC);
-  };
-
+export function getImageProperties(product: Product, photoNumber: number, isCarousel: boolean) {
   let alignmentStyles = '';
 
-  switch (imgAligment) {
+  switch (product.productCardImagePosition) {
     case 'left':
       alignmentStyles = 'mr-auto';
       break;
@@ -30,8 +21,34 @@ export const useImageProps = (product: Product) => {
       break;
   }
 
-  return { imgSrc, alignmentStyles, setNextImgSrc };
+  const imgSrc = isCarousel
+    ? photoNumber === 1
+      ? `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`
+      : `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard${photoNumber}-${product.productCardImagePosition}.png`
+    : photoNumber > 0
+    ? `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard${photoNumber}-${product.productCardImagePosition}.png`
+    : `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`;
+
+  return { imgSrc, alignmentStyles, defaultImage: DEFAULT_IMG_SRC };
+}
+
+export const useImageProps = (product: Product, photoNumber = 0) => {
+  const { imgSrc, alignmentStyles, defaultImage } = getImageProperties(product, photoNumber, false);
+
+   const [imgSrcDefault, setImgSrc] = useState(
+    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`
+  );
+
+  const setNextImgSrc = () => {
+    setImgSrc(DEFAULT_IMG_SRC);
+  };
+
+  return { imgSrc , alignmentStyles, setNextImgSrc, defaultImage };
 };
+export function getImageProductsCarousel(product: Product, photoNumber = 0) {
+  return getImageProperties(product, photoNumber, true);
+}
+
 
 export function getProductCardColor(color: string) {
   if (isEmpty(color)) {
