@@ -15,13 +15,13 @@ export const dermaService = {
           body: JSON.stringify(derma),
         }
       );
-
+      console.log(response);
       if (!response.ok) {
         Bugsnag.notify(ERROR_UPDATE_DERMAQUESTIONS);
         throw new Error(ERROR_UPDATE_DERMAQUESTIONS);
       }
 
-      return await response.body;
+      return await response.text();
     } catch (error) {
       Bugsnag.notify(error + ERROR_UPDATE_DERMAQUESTIONS);
       throw new Error(ERROR_UPDATE_DERMAQUESTIONS);

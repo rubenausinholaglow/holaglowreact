@@ -77,8 +77,10 @@ export default function Form() {
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
+      debugger;
       setContinueDisabled(true);
       dermaQuestions.id = x!.toString();
+      console.log(dermaQuestions);
       setDermaQuestions(dermaQuestions);
     });
   };
@@ -94,9 +96,7 @@ export default function Form() {
     }
     setValues(newValues);
     setContinueDisabled(newValues[question].length == 0);
-    if (question == 1) {
-      dermaQuestions.scenario = MULTISTEP_QUESTIONS[1].questions[value].title;
-    } else if (question == 2) {
+    if (question == 0) {
       dermaQuestions.skinConcerns = [];
       newValues[question].forEach(x => {
         dermaQuestions.skinConcerns.push({
@@ -104,6 +104,8 @@ export default function Form() {
         });
       });
       dermaQuestions.skinConcerns.push({ concern: textAreaOne });
+    } else if (question == 1) {
+      dermaQuestions.scenario = MULTISTEP_QUESTIONS[1].questions[value].title;
     }
     setDermaQuestions(dermaQuestions);
   };
