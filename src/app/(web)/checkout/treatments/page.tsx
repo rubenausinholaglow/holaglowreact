@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchProducts } from '@utils/fetch';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
-import { fetchProducts } from '@utils/fetch';
 
 export default function Page() {
   const { stateProducts, setStateProducts } = useGlobalPersistedStore(
