@@ -36,8 +36,8 @@ export const MULTISTEP_QUESTIONS: any = [
         title: 'Title 2',
       },
       {
-        text: 'Text 2',
-        title: 'Title 2',
+        text: 'Text 3',
+        title: 'Title 3',
       },
     ],
   },
