@@ -221,6 +221,158 @@ export default function HomeBlocksDerma() {
           </ul>
         </Container>
       </Container>
+
+      <Container className="py-12 overflow-hidden">
+        <Flex
+          layout="col-left"
+          className="gap-4 items-center relative md:justify-center md:flex-row"
+        >
+          <Flex layout="col-left" className="relative z-10 md:w-1/2">
+            <Title
+              isAnimated
+              size="2xl"
+              className="text-hg-secondary font-bold mb-12 md:mb-6 lg:pr-[20%]"
+            >
+              Qué incluye el precio
+            </Title>
+            <Text isAnimated className="text-hg-black500 md:w-full md:text-lg">
+              Para una piel mejor cuidada, tus médicos te están esperando
+            </Text>
+            <Title
+              isAnimated
+              size="2xl"
+              className="text-left font-bold mb-6 md:mb-8"
+            >
+              Pago único
+            </Title>
+            <ul className="flex flex-col pb-4 w-full">
+              <li className="mb-4 pb-4 border-hg-black flex ">
+                <div
+                  className={`flex relative md:justify-center flex-col w-full`}
+                >
+                  <div className={`flex-1 flex items-start pr-4 w-full`}>
+                    <SvgTimeLeft
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary mr-3 mt-1"
+                    />
+                    <div>
+                      <Text>Consulta de 12 min con el dermatólogo</Text>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li className="mb-4 pb-4 border-hg-black flex ">
+                <div
+                  className={`flex relative md:justify-center flex-col w-full`}
+                >
+                  <div className={`flex-1 flex items-start pr-4 w-full`}>
+                    <SvgTimeLeft
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary mr-3 mt-1"
+                    />
+                    <div>
+                      <Text>
+                        Receta online para crema formulada especialmente para tu
+                        piel 59 €
+                      </Text>
+                      <div className="relative aspect-square">
+                        <Image
+                          fill
+                          src={'/images/derma/cream.png'}
+                          alt="Cremas"
+                        ></Image>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <Button
+              isAnimated
+              type="secondary"
+              size="xl"
+              className="mx-auto md:mx-0 mb-10"
+              href="/derma/multistep/start"
+              id={'tmevent_multistep_module'}
+            >
+              ¡Comienza ahora!
+            </Button>
+            <Title
+              isAnimated
+              size="2xl"
+              className="text-left font-bold mb-6 md:mb-8"
+            >
+              Suscripción
+            </Title>
+            <ul className="flex flex-col pb-4 w-full">
+              <li className="mb-4 pb-4 border-hg-black flex ">
+                <div
+                  className={`flex relative md:justify-center flex-col w-full`}
+                >
+                  <div className={`flex-1 flex items-start pr-4 w-full`}>
+                    <SvgTimeLeft
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary mr-3 mt-1"
+                    />
+                    <div>
+                      <Text>Consulta de 12 min con el dermatólogo</Text>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li className="mb-4 pb-4 border-hg-black flex ">
+                <div
+                  className={`flex relative md:justify-center flex-col w-full`}
+                >
+                  <div className={`flex-1 flex items-start pr-4 w-full`}>
+                    <SvgTimeLeft
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary mr-3 mt-1"
+                    />
+                    <div>
+                      <Text>
+                        Receta online para crema formulada especialmente para tu
+                        piel
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li className="mb-4 pb-4 border-hg-black flex ">
+                <div
+                  className={`flex relative md:justify-center flex-col w-full`}
+                >
+                  <div className={`flex-1 flex items-start pr-4 w-full`}>
+                    <SvgTimeLeft
+                      height={24}
+                      width={24}
+                      className="text-hg-secondary mr-3 mt-1"
+                    />
+                    <div>
+                      <Text>
+                        Rutina de cuidado diario de la piel para 3 meses con una
+                        suscripción de 49 €/mes (Total 147€)
+                      </Text>
+                      <div className="relative aspect-square">
+                        <Image
+                          fill
+                          src={'/images/derma/suscription.png'}
+                          alt="Cremas"
+                        ></Image>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </Flex>
+        </Flex>
+      </Container>
+
       <Container
         className={`p-0 md:px-4 gap-16 md:flex justify-between md:mb-16`}
       >
