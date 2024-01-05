@@ -7,9 +7,12 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import { fetchProducts } from '@utils/fetch';
 
 export default function Page() {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, setStateProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -26,6 +29,14 @@ export default function Page() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
+    async function initProducts() {
+      const products = await fetchProducts();
+      setStateProducts(products);
+    }
+
+    if (isEmpty(stateProducts)) {
+      initProducts();
+    }
   }, [stateProducts]);
 
   return (
