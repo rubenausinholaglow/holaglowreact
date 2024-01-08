@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchClinics, fetchProducts } from '@utils/fetch';
+import useRoutes from '@utils/useRoutes';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -9,9 +10,11 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const {
@@ -23,6 +26,9 @@ export default function Page() {
   } = useGlobalPersistedStore(state => state);
   const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
+
+  const router = useRouter();
+  const ROUTES = useRoutes();
 
   useEffect(() => {
     async function initClinics() {
@@ -82,6 +88,16 @@ export default function Page() {
                 <TreatmentAccordionSelector isDashboard />
               )}
             </Flex>
+
+            <Button
+              onClick={() => {
+                router.push(
+                  `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
+                );
+              }}
+            >
+              Continuar
+            </Button>
           </>
         )}
       </Container>
