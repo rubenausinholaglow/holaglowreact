@@ -30,3 +30,4 @@ export interface PaymentInitResponse {
   url: string;
   referenceId: string;
 }
+

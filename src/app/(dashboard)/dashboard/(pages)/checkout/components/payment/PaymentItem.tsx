@@ -29,7 +29,6 @@ interface Props {
 
 export default function PaymentItem({ paymentTicketRequest, status }: Props) {
   const { removePayment } = usePaymentList(state => state);
-  const availableBanks = [1, 2, 4];
   const financialBanks = [1, 2];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
   const [textPayment, setTextPayment] = useState<string>('');
@@ -111,8 +110,7 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
           {getPaymentBankText(paymentTicketRequest.bank)}
         </span>
       )}
-
-      {availableBanks[paymentTicketRequest.bank] && (
+      {paymentTicketRequest.bank != 3 && (
         <Text key={paymentTicketRequest.id}>{textPayment}</Text>
       )}
       <Flex className="ml-auto gap-2">
