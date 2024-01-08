@@ -31,6 +31,7 @@ export const Carousel = ({
   sliderStyles = '',
   isFullWidth = false,
   isPlaying = false,
+  isDashboard = false,
   ...rest
 }: {
   children: ReactNode;
@@ -49,6 +50,7 @@ export const Carousel = ({
   sliderStyles?: string;
   isFullWidth?: boolean;
   isPlaying?: boolean;
+  isDashboard?: boolean;
   [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -73,6 +75,29 @@ export const Carousel = ({
     }
   }, [children]);
 
+  const renderControls = () => (
+    <Container className={`${isFullWidth ? '' : 'px-0'}`}>
+      <Flex layout="row-right" className="gap-6">
+        <ButtonBack
+          className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+          onClick={() => {
+            handleBackButton();
+          }}
+        >
+          <SvgArrow height={16} width={16} className="rotate-180" />
+        </ButtonBack>
+        <ButtonNext
+          className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
+          onClick={() => {
+            handleNextButton();
+          }}
+        >
+          <SvgArrow height={16} width={16} />
+        </ButtonNext>
+      </Flex>
+    </Container>
+  );
+
   return (
     <CarouselProvider
       className={`relative w-full  ${className}`}
@@ -92,49 +117,50 @@ export const Carousel = ({
       interval={2000}
       {...rest}
     >
-      <div style={sliderWidth}>
+      <div style={sliderWidth} className="relative">
         <Slider classNameTray={sliderStyles}>
           {childrens.map((children, i) => (
-            // eslint-disable-next-line react/no-array-index-key
             <Slide index={i} key={i}>
               {children}
             </Slide>
           ))}
         </Slider>
+        {hasControls && isDashboard && (
+          <div className="absolute inset-0 flex items-center justify-between">
+            <ButtonBack
+              className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default ml-2"
+              onClick={() => {
+                handleBackButton();
+              }}
+            >
+              <SvgArrow height={16} width={16} className="rotate-180" />
+            </ButtonBack>
+            <ButtonNext
+              className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default mr-2"
+              onClick={() => {
+                handleNextButton();
+              }}
+            >
+              <SvgArrow height={16} width={16} />
+            </ButtonNext>
+          </div>
+        )}
       </div>
 
-      <Flex layout="row-center" className="mt-8 relative items-center">
-        {hasDots && (
-          <ul className="p-2 spacing flex gap-2 text-xs absolute">
-            <li>{currentSlideIndex + 1}</li>
-            <li>/</li>
-            <li>{childrens.length}</li>
-          </ul>
-        )}
-
-        {hasControls && (
-          <Container className={`${isFullWidth ? '' : 'px-0'}`}>
-            <Flex layout="row-right" className="gap-6">
-              <ButtonBack
-                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
-                onClick={() => {
-                  handleBackButton();
-                }}
-              >
-                <SvgArrow height={16} width={16} className="rotate-180" />
-              </ButtonBack>
-              <ButtonNext
-                className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
-                onClick={() => {
-                  handleNextButton();
-                }}
-              >
-                <SvgArrow height={16} width={16} />
-              </ButtonNext>
-            </Flex>
-          </Container>
-        )}
-      </Flex>
+      {hasControls && !isDashboard && (
+        <>
+          <Flex layout="row-center" className="mt-8 relative">
+            {hasDots && (
+              <ul className="p-2 spacing flex gap-2 text-xs absolute">
+                <li>{currentSlideIndex + 1}</li>
+                <li>/</li>
+                <li>{childrens.length}</li>
+              </ul>
+            )}
+          </Flex>
+          {renderControls()}
+        </>
+      )}
     </CarouselProvider>
   );
 };
