@@ -371,10 +371,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           disabled={isDisabled}
           onClick={() => {
             handleContinue();
-            window.parent.postMessage(
-              routes.checkout.clinics,
-              'https://www.holaglow.com'
-            );
+            if (isEmbed) {
+              window.parent.postMessage(
+                routes.checkout.clinics,
+                'https://www.holaglow.com'
+              );
+            }
           }}
           type="primary"
           size="xl"

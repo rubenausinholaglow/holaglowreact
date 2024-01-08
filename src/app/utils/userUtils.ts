@@ -31,8 +31,6 @@ const useRegistration = (
 
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
 
-  console.log(isDashboard, isEmbed);
-
   const registerUser = async (
     formData: Client,
     isDashboard: boolean,
@@ -65,8 +63,6 @@ const useRegistration = (
             analyticsMetrics,
             ''
           ).then(x => {
-            console.log('run A');
-
             if (isEmbed) {
               window.parent.postMessage(URL, routes.checkout.clinics);
             }
@@ -79,7 +75,6 @@ const useRegistration = (
           });
         }
       } else {
-        console.log('run B');
         if (isEmbed) {
           window.parent.postMessage(URL, routes.checkout.clinics);
         }
