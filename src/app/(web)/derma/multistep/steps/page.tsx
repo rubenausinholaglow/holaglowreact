@@ -79,7 +79,6 @@ export default function Form() {
       setActiveSlideIndex(index + 1);
       setContinueDisabled(true);
       dermaQuestions.id = x!.toString();
-      console.log(dermaQuestions);
       setDermaQuestions(dermaQuestions);
     });
   };
@@ -112,6 +111,7 @@ export default function Form() {
   const setTextAreasValue = (value: string, question: number) => {
     if (question == 2) setTextAreasOne(value);
     else setTextAreasTwo(value);
+    if (value) setContinueDisabled(false);
   };
 
   const handleFieldChange = (
