@@ -147,65 +147,71 @@ export default function PVCitaMedica() {
                 </Title>
 
                 {Array.isArray(selectedTreatments) &&
-                  selectedTreatments.map((product, index) => (
-                    <Flex
-                      layout="col-left"
-                      className="w-full bg-hg-secondary100 p-3 gap-3 rounded-xl mb-12"
-                      key={product.id}
-                    >
-                      <Flex layout="row-between" className="items-start w-full">
-                        <div>
-                          <Text className="font-semibold text-left mb-2">
-                            {product.title}
-                          </Text>
+                  selectedTreatments.map(
+                    (product, index) =>
+                      product && (
+                        <Flex
+                          layout="col-left"
+                          className="w-full bg-hg-secondary100 p-3 gap-3 rounded-xl mb-12"
+                          key={product.id}
+                        >
+                          <Flex
+                            layout="row-between"
+                            className="items-start w-full"
+                          >
+                            <div>
+                              <Text className="font-semibold text-left mb-2">
+                                {product.title}
+                              </Text>
 
-                          {product.isPack ? (
-                            <ul className="p-1">
-                              {selectedPacksTreatments &&
-                                selectedPacksTreatments.map(item => {
+                              {product.isPack ? (
+                                <ul className="p-1">
+                                  {selectedPacksTreatments &&
+                                    selectedPacksTreatments.map(item => {
+                                      return (
+                                        <li key={item.title}>- {item.title}</li>
+                                      );
+                                    })}
+                                </ul>
+                              ) : !isEmpty(product.appliedProducts) ? (
+                                product.appliedProducts.map(item => {
                                   return (
-                                    <li key={item.title}>- {item.title}</li>
+                                    <Flex
+                                      key={item.titlte}
+                                      className="items-start mb-2"
+                                    >
+                                      <Text>{item.titlte}</Text>
+                                    </Flex>
                                   );
-                                })}
-                            </ul>
-                          ) : !isEmpty(product.appliedProducts) ? (
-                            product.appliedProducts.map(item => {
-                              return (
-                                <Flex
-                                  key={item.titlte}
-                                  className="items-start mb-2"
-                                >
-                                  <Text>{item.titlte}</Text>
+                                })
+                              ) : (
+                                <Flex className="items-start mb-2">
+                                  <Text>{product.description}</Text>
                                 </Flex>
-                              );
-                            })
-                          ) : (
-                            <Flex className="items-start mb-2">
-                              <Text>{product.description}</Text>
-                            </Flex>
-                          )}
-                        </div>
-                        <SvgRadioChecked
-                          className="mt-[2px] shrink-0"
-                          height={24}
-                          width={24}
-                        />
-                      </Flex>
-                      <div>
-                        {discountedPrice && discountedPrice.length > 0 && (
-                          <Text className="line-through text-hg-black500">
-                            {product.price} €
-                          </Text>
-                        )}
-                        <Text className=" text-hg-secondary font-semibold text-2xl">
-                          {discountedPrice && discountedPrice.length > 0
-                            ? discountedPrice[index]
-                            : product.price}{' '}
-                          €
-                        </Text>
-                      </div>
-                    </Flex>
-                  ))}
+                              )}
+                            </div>
+                            <SvgRadioChecked
+                              className="mt-[2px] shrink-0"
+                              height={24}
+                              width={24}
+                            />
+                          </Flex>
+                          <div>
+                            {discountedPrice && discountedPrice.length > 0 && (
+                              <Text className="line-through text-hg-black500">
+                                {product.price} €
+                              </Text>
+                            )}
+                            <Text className=" text-hg-secondary font-semibold text-2xl">
+                              {discountedPrice && discountedPrice.length > 0
+                                ? discountedPrice[index]
+                                : product.price}{' '}
+                              €
+                            </Text>
+                          </div>
+                        </Flex>
+                      )
+                  )}
               </Flex>
             )}
           </Flex>

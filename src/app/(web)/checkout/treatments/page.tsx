@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchProducts } from '@utils/fetch';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -9,7 +10,9 @@ import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function Page() {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, setStateProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -26,6 +29,14 @@ export default function Page() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
+    async function initProducts() {
+      const products = await fetchProducts();
+      setStateProducts(products);
+    }
+
+    if (isEmpty(stateProducts)) {
+      initProducts();
+    }
   }, [stateProducts]);
 
   return (

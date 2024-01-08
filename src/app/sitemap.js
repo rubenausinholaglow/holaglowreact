@@ -23,13 +23,18 @@ export default async function sitemap() {
       priority: 0.7,
     }));
 
-  const allSitemapData = [...sitemapData, ...blog, ...filteredProducts];
+  const allSitemapData = [...sitemapData, ...filteredProducts, ...blog];
 
   return allSitemapData;
 }
 
 function generateSitemap() {
   const pages = [
+    {
+      url: 'https://www.holaglow.com',
+      changefreq: 'monthly',
+      priority: 0.5,
+    },
     {
       url: 'https://www.holaglow.com/tratamientos',
       changefreq: 'monthly',
