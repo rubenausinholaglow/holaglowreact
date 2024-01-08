@@ -6,6 +6,7 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
+import useRoutes from '@utils/useRoutes';
 import useRegistration from '@utils/userUtils';
 import { phoneValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
@@ -26,15 +27,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
   isDashboard = false,
   hasContinueButton = true,
+  isEmbed = false,
   page = '',
   setClientData,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
   hasContinueButton?: boolean;
+  isEmbed?: boolean;
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
 }) => {
+  const routes = useRoutes();
+
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -70,7 +75,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     treatmentPrice: 0,
   });
 
-  const registerUser = useRegistration(formData, isDashboard, redirect);
+  const registerUser = useRegistration(
+    formData,
+    isDashboard,
+    redirect,
+    isEmbed
+  );
 
   useEffect(() => {
     if (
@@ -107,6 +117,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
   const handleContinue = async () => {
     setIsLoading(true);
+
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
     const areAllFieldsFilled = requiredFields.every(
@@ -358,7 +369,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       {hasContinueButton && (
         <Button
           disabled={isDisabled}
-          onClick={handleContinue}
+          onClick={() => {
+            handleContinue();
+            if (isEmbed) {
+              window.parent.postMessage(
+                routes.checkout.clinics,
+                'https://www.holaglow.com'
+              );
+            }
+          }}
           type="primary"
           size="xl"
           className="w-full"

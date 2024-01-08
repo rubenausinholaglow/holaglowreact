@@ -14,7 +14,8 @@ import useRoutes from './useRoutes';
 const useRegistration = (
   formData: Client,
   isDashboard: boolean,
-  redirect: boolean
+  redirect: boolean,
+  isEmbed: boolean
 ) => {
   const {
     selectedTreatments,
@@ -62,12 +63,22 @@ const useRegistration = (
             analyticsMetrics,
             ''
           ).then(x => {
+            if (isEmbed) {
+              window.parent.postMessage(URL, routes.checkout.clinics);
+            }
+
             if (isDashboard) {
               router.push(routes.dashboard.checkIn.treatments);
-            } else router.push('/checkout/confirmation');
+            } else {
+              router.push('/checkout/confirmation');
+            }
           });
         }
       } else {
+        if (isEmbed) {
+          window.parent.postMessage(URL, routes.checkout.clinics);
+        }
+
         if (!isDashboard) {
           if (redirect) {
             window.parent.location.href =
