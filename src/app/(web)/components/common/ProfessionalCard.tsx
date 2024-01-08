@@ -20,7 +20,7 @@ export default function ProfessionalCard({
             alt={professional.name}
             fill
             src={professional.urlPhoto}
-            className="object-contain"
+            className="object-cover"
           />
         </div>
 
