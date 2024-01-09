@@ -106,10 +106,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                   </span>
                 </Text>
 
-                <div
-                  className="blog-post"
-                  dangerouslySetInnerHTML={{ __html: post.html }}
-                />
+                <div dangerouslySetInnerHTML={{ __html: post.html }} />
               </div>
 
               <div className="hidden sticky top-0 md:block shrink-0 w-[360px]">
