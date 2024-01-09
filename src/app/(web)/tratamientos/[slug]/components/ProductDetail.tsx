@@ -123,11 +123,14 @@ export default function ProductDetailPage({
         >
           <ProductHeader product={product} isDashboard={isDashboard} />
           <ProductInfo product={product} isDashboard={isDashboard} />
-          {isDashboard && !product.isPack && product.type != 3 && (
-            <div ref={productPriceRef as RefObject<HTMLDivElement>}>
-              <ProductPrices product={product} isDashboard />
-            </div>
-          )}
+          {isDashboard &&
+            !product.isPack &&
+            product.type != 3 &&
+            product.upgrades?.length > 1 && (
+              <div ref={productPriceRef as RefObject<HTMLDivElement>}>
+                <ProductPrices product={product} isDashboard />
+              </div>
+            )}
         </div>
 
         {product.beforeAndAfterImages?.length > 0 && (

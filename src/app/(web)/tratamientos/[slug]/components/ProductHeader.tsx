@@ -120,6 +120,7 @@ export default function ProductHeader({
                 isIntrinsicHeight
                 visibleSlides={1}
                 infinite={false}
+                isDashboard={isDashboard}
               >
                 {renderCarouselItems()}
               </Carousel>

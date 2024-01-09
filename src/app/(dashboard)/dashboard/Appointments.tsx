@@ -128,7 +128,7 @@ const AppointmentsListComponent: React.FC<{
           id: crisalixUser.id,
           playerId: crisalixUser.playerId,
           playerToken: crisalixUser.playerToken,
-          userId: user?.id || '',
+          userId: id,
         };
         if (!ignoreMessages)
           await messageService.crisalixUser(crisalixUserData);

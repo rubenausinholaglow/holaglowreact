@@ -35,6 +35,7 @@ export interface RegistrationFormProps {
   redirect?: boolean;
   isDashboard?: boolean;
   hasContinueButton?: boolean;
+  isEmbed?: boolean;
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
 }

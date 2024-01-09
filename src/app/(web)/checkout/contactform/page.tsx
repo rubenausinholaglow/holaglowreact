@@ -64,7 +64,7 @@ export default function ConctactForm() {
     treatmentPrice: 0,
   });
   const initializePayment = usePayments();
-  const registerUser = useRegistration(client, false, false);
+  const registerUser = useRegistration(client, false, false, false);
 
   useEffect(() => {
     if (window) {
