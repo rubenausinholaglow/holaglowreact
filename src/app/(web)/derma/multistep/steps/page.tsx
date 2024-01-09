@@ -77,7 +77,6 @@ export default function Form() {
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
-      debugger;
       setContinueDisabled(true);
       dermaQuestions.id = x!.toString();
       console.log(dermaQuestions);
