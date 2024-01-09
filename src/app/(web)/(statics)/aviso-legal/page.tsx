@@ -376,18 +376,18 @@ export default function LegalAdvice() {
           </p>
 
           <p>
-            En caso de que realice un pago por adelantado por el precio total de
-            los servicios que desea contratar a través, GLOW LAB, S.L,. En el
-            supuesto de que usted deseara cancelar su cita o el tratamiento
-            adquirido, por el motivo que fuere, y de no cancelar con una
-            antelación mínima de 10 días, GLOW LAB, S.L, se quedará con el
-            importe íntegro del pago realizado por adelantado, equivalente al
-            coste del tratamiento, tal y como si usted se hubiera realizado el
-            procedimiento contratado. Asimismo, el mismo criterio aplicará si
-            usted decide terminar un tratamiento que debe realizarse en
-            múltiples sesiones si no lo notifica al centro con una antelación de
-            30 días previas al siguiente tratamiento. En el caso de haber pagado
-            el anticipo de 49€ para un tratamiento, solo se devolverá el importe
+            En caso de que realice un pago por adelantado, del precio total o
+            parcial, de los servicios que desea contratar y deseara cancelar su
+            cita o el tratamiento adquirido, por el motivo que fuere, y de no
+            cancelar con una antelación mínima de 10 días, GLOW LAB, S.L, se
+            reserva el derecho de quedarse con el importe íntegro del pago
+            realizado por adelantado, equivalente al coste del tratamiento, tal
+            y como si usted se hubiera realizado el procedimiento contratado.
+            Asimismo, el mismo criterio aplicará si usted decide terminar un
+            tratamiento que debe realizarse en múltiples sesiones si no lo
+            notifica al centro con una antelación de 30 días previas al
+            siguiente tratamiento. En el caso de haber pagado el anticipo de 49€
+            a través de la web para un tratamiento, solo se devolverá el importe
             en caso de que existiera una contraindicación médica para realizarse
             dicho tratamiento. La no asistencia a la cita acordada implicará la
             pérdida del importe de la reserva
