@@ -26,6 +26,7 @@
 .blog-post img {
   border-radius: 24px;
   overflow: hidden;
+  margin-bottom: theme('spacing.8');
 }
 
 .blog-intro {
@@ -48,6 +49,7 @@
   display: flex;
   flex-direction: column;
   gap: theme('spacing.8');
+  margin-bottom: theme('spacing.8');
 }
 
 .number-list li {
@@ -59,7 +61,7 @@
   margin-bottom: 0;
 }
 
-.number-list li span {
+.number-list > li > span {
   display: block;
   border: 1px solid theme('colors.hg.secondary');
   color: theme('colors.hg.secondary');
@@ -81,13 +83,21 @@
 }
 
 .check-list li {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
   gap: theme('spacing.2');
 }
 
 .check-list li img {
+  flex-shrink: 0;
+}
+
+.check-list li p {
+  margin-bottom: 0;
+}
+
+.check-list li svg {
   flex-shrink: 0;
 }
 
