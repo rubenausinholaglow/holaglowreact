@@ -222,7 +222,7 @@ export const PaymentModule = () => {
       userId: user?.id || '',
       clientFlowwwToken: user?.flowwwToken || '',
       clinicFlowwwId: storedClinicFlowwwId,
-      professional: '',
+      professional: storedClinicProfessionalId,
       budget: finalBudget,
       appointmentId: storedAppointmentId,
       payments: paymentList.map(payItem => ({

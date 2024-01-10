@@ -2,7 +2,34 @@ export const phoneValidationRegex = /^[679]{1}[0-9]{8}$/;
 
 export const validateEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+  const validDomains = [
+    'gmail.com',
+    'hotmail.com',
+    'hotmail.es',
+    'hotmail.fr',
+    'hotmail.it',
+    'yahoo.es',
+    'yahoo.com',
+    'icloud.com',
+    'holaglow.com',
+    'outlook.com',
+    'outlook.es',
+    'live.com',
+    'me.com',
+    'msn.com',
+    'telefonica.net',
+  ];
+
+  const isValidFormat = emailRegex.test(email);
+
+  if (!isValidFormat) {
+    return false;
+  }
+
+  const [, domain] = email.split('@');
+  const isDomainValid = validDomains.includes(domain);
+
+  return isDomainValid;
 };
 
 export const validatePhone = (phone: string) => {

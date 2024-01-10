@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
@@ -34,7 +35,9 @@ export default function PsrpPage({
   slug?: string;
   isDashboard?: boolean;
 }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const { deviceSize } = useSessionStore(state => state);
   const {
     filteredProducts,
@@ -47,6 +50,12 @@ export default function PsrpPage({
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
+
+  const metadataPacks = {
+    title: 'Packs de tratamientos de medicina estética - Holaglow',
+    description:
+      'Elige uno de los packs para tratar de manera global tus objetivos estéticos y conseguir el resultado que deseas',
+  };
 
   useEffect(() => {
     if (slug !== '') {
@@ -80,6 +89,7 @@ export default function PsrpPage({
           productFilters.category.push(filterToApply);
         }
       } else {
+        setSeoMetaData(metadataPacks.title, metadataPacks.description);
         productFilters.isPack = true;
       }
       setProductFilters(productFilters);
@@ -188,7 +198,7 @@ export default function PsrpPage({
     );
   else
     return (
-      <MainLayout>
+      <MainLayout hideHeader={slug != ''}>
         <link rel="canonical" href="https://holaglow.com/tratamientos/" />
         <MobileFilters
           isVisible={isMobileFiltersVisible}
@@ -342,15 +352,28 @@ export default function PsrpPage({
     );
 
   function processFilters() {
-    if (isEmpty(filteredProducts)) {
-      setFilteredProducts(stateProducts);
-      setFilteredProducts(
-        applyFilters({ products: stateProducts, filters: productFilters })
-      );
+    if (isDashboard) {
+      if (isEmpty(filteredProducts)) {
+        setFilteredProducts(dashboardProducts);
+        setFilteredProducts(
+          applyFilters({ products: dashboardProducts, filters: productFilters })
+        );
+      } else {
+        setFilteredProducts(
+          applyFilters({ products: filteredProducts, filters: productFilters })
+        );
+      }
     } else {
-      setFilteredProducts(
-        applyFilters({ products: filteredProducts, filters: productFilters })
-      );
+      if (isEmpty(filteredProducts)) {
+        setFilteredProducts(stateProducts);
+        setFilteredProducts(
+          applyFilters({ products: stateProducts, filters: productFilters })
+        );
+      } else {
+        setFilteredProducts(
+          applyFilters({ products: filteredProducts, filters: productFilters })
+        );
+      }
     }
   }
 }

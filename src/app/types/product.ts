@@ -32,6 +32,8 @@ export interface Product {
   sessions: number;
   productCardImagePosition: string;
   longDescription: string;
+  numProductCardPhotos: number;
+
 }
 
 export interface BeforeAndAfterImages {
@@ -41,6 +43,8 @@ export interface BeforeAndAfterImages {
 }
 
 export interface ExtraInformation {
+  seoTitle : string;
+  seoMetaDescription : string;
   slug: string;
   resultDescription: string;
   procedimentDescription: string;

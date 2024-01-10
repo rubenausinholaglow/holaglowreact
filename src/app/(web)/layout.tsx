@@ -1,6 +1,7 @@
 import 'app/globals.css';
 import '../../../public/styles/Alma/widgets.min.css';
 
+import React from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
 

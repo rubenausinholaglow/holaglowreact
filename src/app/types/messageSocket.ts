@@ -12,6 +12,7 @@ export enum MessageType {
   PatientArrived,
   ChatResponse,
   PaymentResponse,
+  StartAppointment,
   CrisalixUser,
   PaymentCreate,
   GoToPage,
