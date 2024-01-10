@@ -1,7 +1,9 @@
 import { PaymentBank, PaymentMethod } from './payment';
 
 interface BaseDataMessage {
-  userId: string;
+  clinicId?: string;
+  boxId?: string;
+  userId?: string;
 }
 
 export type PatientArrivedData = BaseDataMessage;
@@ -10,6 +12,10 @@ export interface CrisalixUserData extends BaseDataMessage {
   id: string;
   playerId: string;
   playerToken: string;
+}
+
+export interface StartAppointmentData extends BaseDataMessage {
+  appointmentId: string;
 }
 
 export interface PaymentCreatedData extends BaseDataMessage {
@@ -28,6 +34,7 @@ export interface GoToPageData extends BaseDataMessage {
 
 export enum EventTypes {
   PatientArrived = 'PatientArrived',
+  StartAppointment = 'StartAppointment',
   CrisalixUser = 'CrisalixUser',
   PaymentCreate = 'PaymentCreate',
   GoToPage = 'GoToPage',

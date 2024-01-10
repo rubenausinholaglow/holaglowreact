@@ -13,7 +13,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
-import { useElementOnScreen } from 'app/utils/common';
+import { setSeoMetaData, useElementOnScreen } from 'app/utils/common';
 import { fetchProduct } from 'app/utils/fetch';
 import { isEmpty } from 'lodash';
 
@@ -34,14 +34,15 @@ export default function ProductDetailPage({
 }: {
   params: { slug: string; isDashboard: boolean };
 }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const { deviceSize } = useSessionStore(state => state);
   const { productHighlighted } = useCartStore(state => state);
 
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
-
   const { slug, isDashboard } = params;
 
   const [productPriceRef, isProductPriceVisible] = useElementOnScreen({
@@ -54,16 +55,23 @@ export default function ProductDetailPage({
     if (!isEmpty(stateProducts)) {
       setProductsAreLoaded(true);
     }
-  }, [stateProducts]);
+    if (!isEmpty(dashboardProducts)) {
+      setProductsAreLoaded(true);
+    }
+  }, [stateProducts, dashboardProducts]);
 
   useEffect(() => {
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
+      setSeoMetaData(
+        productDetails.extraInformation.seoTitle,
+        productDetails.extraInformation.seoMetaDescription
+      );
     }
     let product = undefined;
     if (isDashboard) {
-      product = stateProducts.filter(
+      product = dashboardProducts.filter(
         product =>
           product?.id.toUpperCase() === productHighlighted?.id.toUpperCase()
       )[0];
@@ -115,11 +123,14 @@ export default function ProductDetailPage({
         >
           <ProductHeader product={product} isDashboard={isDashboard} />
           <ProductInfo product={product} isDashboard={isDashboard} />
-          {isDashboard && !product.isPack && product.type != 3 && (
-            <div ref={productPriceRef as RefObject<HTMLDivElement>}>
-              <ProductPrices product={product} isDashboard />
-            </div>
-          )}
+          {isDashboard &&
+            !product.isPack &&
+            product.type != 3 &&
+            product.upgrades?.length > 1 && (
+              <div ref={productPriceRef as RefObject<HTMLDivElement>}>
+                <ProductPrices product={product} isDashboard />
+              </div>
+            )}
         </div>
 
         {product.beforeAndAfterImages?.length > 0 && (

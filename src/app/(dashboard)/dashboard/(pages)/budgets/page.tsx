@@ -17,10 +17,11 @@ import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
 import { useCartStore } from './stores/userCartStore';
 
 export default function Page() {
-  const { setHighlightProduct } = useCartStore(state => state);
-  const { setStateProducts, stateProducts } = useGlobalPersistedStore(
+  const { setHighlightProduct, productHighlighted } = useCartStore(
     state => state
   );
+  const { setStateProducts, dashboardProducts, setDashboardProducts } =
+    useGlobalPersistedStore(state => state);
   const {
     setFilteredProducts,
     setProductFilters,
@@ -33,6 +34,7 @@ export default function Page() {
   useEffect(() => {
     setStateProducts([]);
     setFilteredProducts([]);
+    setDashboardProducts([]);
     const fetchProducts = async () => {
       try {
         const data = await ProductService.getDashboardProducts();
@@ -41,7 +43,7 @@ export default function Page() {
           visibility: true,
         }));
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
-        setStateProducts(products);
+        setDashboardProducts(products);
         setFilteredProducts(products);
         setIsHydrated(true);
         productFilters.isPack = true;
@@ -69,9 +71,9 @@ export default function Page() {
 
   return (
     <Flex layout="col-center" className="w-full gap-1">
-      {stateProducts.length > 0 ? (
+      {dashboardProducts.length > 0 ? (
         <>
-          <HightLightedProduct />
+          {productHighlighted != null && <HightLightedProduct />}
           <PsrpPage isDashboard />
         </>
       ) : (

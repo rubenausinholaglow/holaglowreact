@@ -45,7 +45,7 @@ export default function DashboardFooter({
         {remoteControl && <ButtonMessage />}
       </Flex>
 
-      {showCart && !remoteControl && <Cart />}
+      {showCart && <Cart />}
     </Flex>
   );
 }

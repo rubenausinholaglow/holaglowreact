@@ -4,6 +4,7 @@ import Bugsnag from '@bugsnag/js';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
 import { ERROR_POST } from '@utils/textConstants';
+import useRoutes from '@utils/useRoutes';
 import CheckoutTotal from 'app/(dashboard)/dashboard/components/checkout/CheckoutTotal';
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -20,6 +21,8 @@ import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { PaymentModule } from './components/payment/Payments';
 
 const Page = () => {
+  const ROUTES = useRoutes();
+
   const cart = useCartStore(state => state.cart);
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
@@ -172,7 +175,7 @@ const Page = () => {
               className="w-full"
               size="md"
               target="_blank"
-              href={`https://agenda2.holaglow.com/schedule?mode=dashboard&token=${user?.flowwwToken}`}
+              href={`${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`}
               type="tertiary"
             >
               <span className="font-semibold">Agendar Cita</span>

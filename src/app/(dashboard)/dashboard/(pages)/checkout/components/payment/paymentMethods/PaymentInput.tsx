@@ -243,17 +243,13 @@ export default function PaymentInput(props: Props) {
       };
 
       cart.forEach(product => {
-        const matchingProduct = stateProducts.find(x => x.id === product.id);
-
-        if (matchingProduct) {
-          const productPayment: ProductPaymentRequest = {
-            name: matchingProduct.title,
-            price: product.price.toString(),
-            quantity: '1',
-            id: matchingProduct.id,
-          };
-          data.productPaymentRequest?.push(productPayment);
-        }
+        const productPayment: ProductPaymentRequest = {
+          name: product.title,
+          price: product.price.toString(),
+          quantity: '1',
+          id: product.id,
+        };
+        data.productPaymentRequest?.push(productPayment);
       });
 
       await FinanceService.initializePayment(data).then(x => {
@@ -479,15 +475,6 @@ export default function PaymentInput(props: Props) {
                 onClick={() => openPepper()}
               >
                 Abrir Pepper
-              </Button>
-              <Button
-                type="tertiary"
-                customStyles="bg-hg-primary"
-                isSubmit
-                className="ml-2"
-                onClick={() => pay()}
-              >
-                Pagar
               </Button>
             </Flex>
           </Flex>

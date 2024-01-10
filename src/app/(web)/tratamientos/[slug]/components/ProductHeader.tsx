@@ -5,8 +5,13 @@ import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { SvgGlow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
-import { getProductCardColor, useImageProps } from 'app/utils/common';
+import {
+  getImageProductsCarousel,
+  getProductCardColor,
+  useImageProps,
+} from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -20,9 +25,34 @@ export default function ProductHeader({
   isDashboard?: boolean;
 }) {
   const { deviceSize } = useSessionStore(state => state);
-
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
+  const imageUrls: any[] = [];
+  for (let i = 1; i <= product.numProductCardPhotos; i++) {
+    const imageComponent = getImageProductsCarousel(product, i);
+    imageUrls.push(imageComponent);
+  }
   const validTypes = [3, 6, 7, 8];
+
+  const renderCarouselItems = () => {
+    return imageUrls.map((url, index) => (
+      <Flex key={index} layout="col-center" className="items-stretch">
+        <div className="relative">
+          <Image
+            src={url.imgSrc}
+            height={140}
+            width={140}
+            alt={`Placeholder ${index + 1}`}
+            onError={url.defaultImage}
+            className={`relative ${url.alignmentStyles} ${
+              !isDashboard && deviceSize.isMobile
+                ? 'rounded-t-3xl'
+                : 'rounded-3xl'
+            } w-[66%]`}
+          />
+        </div>
+      </Flex>
+    ));
+  };
 
   return (
     <>
@@ -83,19 +113,31 @@ export default function ProductHeader({
                 background: getProductCardColor(product.cardBackgroundColor),
               }}
             />
-
-            <Image
-              alt={product.title}
-              width={600}
-              height={400}
-              src={imgSrc}
-              onError={() => setNextImgSrc()}
-              className={`relative ${alignmentStyles} ${
-                !isDashboard && deviceSize.isMobile
-                  ? 'rounded-t-3xl'
-                  : 'rounded-3xl'
-              } w-[66%]`}
-            />
+            {product.numProductCardPhotos > 0 ? (
+              <Carousel
+                hasControls
+                className="relative mt-8"
+                isIntrinsicHeight
+                visibleSlides={1}
+                infinite={false}
+                isDashboard={isDashboard}
+              >
+                {renderCarouselItems()}
+              </Carousel>
+            ) : (
+              <Image
+                alt={product.title}
+                width={600}
+                height={400}
+                src={imgSrc}
+                onError={() => setNextImgSrc()}
+                className={`relative ${alignmentStyles} ${
+                  !isDashboard && deviceSize.isMobile
+                    ? 'rounded-t-3xl'
+                    : 'rounded-3xl'
+                } w-[66%]`}
+              />
+            )}
 
             {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
               <Flex

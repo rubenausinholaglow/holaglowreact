@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import SocketService from '@services/SocketService';
+import useRoutes from '@utils/useRoutes';
 import { ClinicProfessional } from 'app/(dashboard)/dashboard/components/ClinicProfessional';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { SvgHolaglow } from 'app/icons/IconsDs';
@@ -31,85 +32,122 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const ROUTES = useRoutes();
+
   const messageSocket = useMessageSocket(state => state);
   const { remoteControl, storedBoxId, storedClinicId, user } =
     useGlobalPersistedStore(state => state);
-
   const SOCKET_URL_COMMUNICATIONS =
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/Communications';
   const SOCKET_URL_PROFESSIONAL_RESPONSE =
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
   const SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE =
     process.env.NEXT_PUBLIC_FINANCE_API + 'Hub/PaymentConfirmationResponse';
+  const SOCKET_URL_START_APPOINTMENT =
+    process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/StartAppointment';
 
   const routePages: Record<string, string | ''> = {
-    Crisalix: '/dashboard/crisalix',
-    Agenda: `https://agenda2.holaglow.com/schedule?mode=dashboard&token=flowwwToken${user?.flowwwToken}`,
-    Menu: '/dashboard/menu',
-    Home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
+    Crisalix: ROUTES.dashboard.crisalix,
+    Agenda: `${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`,
+    Menu: ROUTES.dashboard.menu,
+    Home: ROUTES.dashboard.home,
     CheckOut: '/dashboard/remoteControl/Payment',
   };
 
   useEffect(() => {
-    if (!hideContactButtons) {
+    if (user) {
+      if (!hideContactButtons) {
+        SocketService.getInstance({
+          urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
+          onReceiveMessage: message => {
+            const finalMessage: MessageSocket = {
+              messageType: MessageType.ChatResponse,
+              message: message,
+            };
+            messageSocket.addMessageSocket(finalMessage);
+          },
+        });
+      }
       SocketService.getInstance({
-        urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
+        urlConnection: SOCKET_URL_COMMUNICATIONS,
+        onReceiveMessage: message => {
+          if (
+            message.event === EventTypes.PatientArrived ||
+            (message.event === EventTypes.StartAppointment &&
+              (message.data.clinicId.toUpperCase() !==
+                storedClinicId.toUpperCase() ||
+                !isBoxIdInStoredBoxId(message.data.boxId, storedBoxId)))
+          ) {
+            return true;
+          }
+
+          if (
+            message.data.userId.toUpperCase() != user?.id?.toUpperCase() &&
+            message.event !== EventTypes.PatientArrived
+          ) {
+            return true;
+          }
+
+          let messageData: any;
+          switch (message.event) {
+            case EventTypes.PatientArrived:
+              messageData = handlePatientArrived(message);
+              break;
+            case EventTypes.CrisalixUser:
+              messageData = handleCrisalixUser(message);
+              break;
+            case EventTypes.PaymentCreate:
+              messageData = handlePaymentCreate(message);
+              break;
+            case EventTypes.GoToPage:
+              handleGoToPage(message);
+              break;
+            case EventTypes.StartAppointment:
+              messageData = handleStartAppointment(message);
+              break;
+            default:
+              throw new Error(`Unsupported event: ${message.Event}`);
+          }
+          if (messageData && message.event != EventTypes.GoToPage)
+            messageSocket.addMessageSocket(messageData);
+        },
+      });
+      SocketService.getInstance({
+        urlConnection: SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
         onReceiveMessage: message => {
           const finalMessage: MessageSocket = {
-            messageType: MessageType.ChatResponse,
+            messageType: MessageType.PaymentResponse,
             message: message,
           };
           messageSocket.addMessageSocket(finalMessage);
         },
       });
     }
+  }, [user]);
+
+  useEffect(() => {
     SocketService.getInstance({
-      urlConnection: SOCKET_URL_COMMUNICATIONS,
+      urlConnection: SOCKET_URL_START_APPOINTMENT,
       onReceiveMessage: message => {
         if (
-          message.event === EventTypes.PatientArrived &&
-          (message.data.clinicId.toUpperCase() !==
-            storedClinicId.toUpperCase() ||
-            !isBoxIdInStoredBoxId(message.data.boxId, storedBoxId))
+          message.event != EventTypes.StartAppointment ||
+          (message.event == EventTypes.StartAppointment &&
+            (message.data.clinicId.toUpperCase() !==
+              storedClinicId.toUpperCase() ||
+              !isBoxIdInStoredBoxId(message.data.boxId, storedBoxId)))
         ) {
           return true;
         }
-        if (
-          message.data.userId.toUpperCase() !== user?.id?.toUpperCase() &&
-          message.event !== EventTypes.PatientArrived
-        ) {
-          return true;
-        }
-
         let messageData: any;
         switch (message.event) {
-          case EventTypes.PatientArrived:
-            messageData = handlePatientArrived(message);
-            break;
-          case EventTypes.CrisalixUser:
-            messageData = handleCrisalixUser(message);
-            break;
-          case EventTypes.PaymentCreate:
-            messageData = handlePaymentCreate(message);
-            break;
-          case EventTypes.GoToPage:
-            handleGoToPage(message);
+          case EventTypes.StartAppointment:
+            messageData = handleStartAppointment(message);
             break;
           default:
             throw new Error(`Unsupported event: ${message.Event}`);
         }
         if (messageData && message.event != EventTypes.GoToPage)
           messageSocket.addMessageSocket(messageData);
-      },
-    });
-    SocketService.getInstance({
-      urlConnection: SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE,
-      onReceiveMessage: message => {
-        const finalMessage: MessageSocket = {
-          messageType: MessageType.PaymentResponse,
-          message: message,
-        };
-        messageSocket.addMessageSocket(finalMessage);
       },
     });
   }, []);
@@ -121,6 +159,19 @@ export default function DashboardLayout({
       messageType: MessageType.PatientArrived,
       ClinicId: message.data.clinicId,
       BoxId: message.data.boxId,
+    };
+
+    return messageData;
+  }
+
+  function handleStartAppointment(message: any) {
+    if (remoteControl) return true;
+
+    const messageData = {
+      messageType: MessageType.StartAppointment,
+      ClinicId: message.data.clinicId,
+      BoxId: storedBoxId,
+      AppointmentId: message.data.appointmentId,
     };
 
     return messageData;

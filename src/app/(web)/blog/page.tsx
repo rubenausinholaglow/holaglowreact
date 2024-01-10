@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { setSeoMetaData } from '@utils/common';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -17,6 +18,12 @@ export default function Blog() {
 
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
 
+  const metadata = {
+    title: 'Glow Getter - El blog sobre medicina estética de Holaglow',
+    description:
+      'Resuelve tus dudas y descubre todo sobre la medicina estética contada por profesionales del sector de una manera clara y honesta.',
+  };
+
   useEffect(() => {
     async function initBlog() {
       const posts = await fetchBlogPosts();
@@ -26,6 +33,8 @@ export default function Blog() {
     if (!blogPosts) {
       initBlog();
     }
+
+    setSeoMetaData(metadata.title, metadata.description);
   }, [blogPosts]);
 
   return (
