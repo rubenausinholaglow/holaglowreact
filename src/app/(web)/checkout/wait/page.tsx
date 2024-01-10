@@ -60,7 +60,15 @@ export default function Wait() {
       });
     }
 
-    checkPaymentStatus(payment!.id);
+    if (payment) {
+      checkPaymentStatus(payment!.id);
+    } else {
+      setTimeout(() => {
+        // Code to execute after the timeout
+        // For example, you can redirect to another page
+        router.push('www.holaglow.com');
+      }, 5000);
+    }
   }, []);
 
   return (

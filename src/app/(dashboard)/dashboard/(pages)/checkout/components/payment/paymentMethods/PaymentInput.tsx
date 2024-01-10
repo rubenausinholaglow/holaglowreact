@@ -287,6 +287,7 @@ export default function PaymentInput(props: Props) {
   }, [isModalOpen]);
 
   const initializeStripePayment = async () => {
+    setIsLoading(true);
     setPaymentStripe(true);
     const initializePayment = constructInitializePayment(PaymentBank.Stripe);
     await FinanceService.initializePayment(initializePayment).then(x => {
@@ -296,6 +297,7 @@ export default function PaymentInput(props: Props) {
         setMessageNotification('Error pagando con tarjeta');
       }
     });
+    setIsLoading(false);
   };
 
   function constructInitializePayment(
@@ -542,8 +544,14 @@ export default function PaymentInput(props: Props) {
                     isSubmit
                     onClick={() => activateAlma()}
                   >
-                    Continuar
-                    <SvgArrow height={16} width={16} className="ml-2" />
+                    {isLoading ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      <>
+                        Continuar
+                        <SvgArrow height={16} width={16} className="ml-2" />
+                      </>
+                    )}
                   </Button>
                 )}
                 {props.paymentBank === PaymentBank.Pepper && (
@@ -562,8 +570,14 @@ export default function PaymentInput(props: Props) {
                     isSubmit
                     onClick={() => initializeStripePayment()}
                   >
-                    Continuar
-                    <SvgArrow height={16} width={16} className="ml-2" />
+                    {isLoading ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      <>
+                        Continuar
+                        <SvgArrow height={16} width={16} className="ml-2" />
+                      </>
+                    )}
                   </Button>
                 )}
                 {props.paymentBank != PaymentBank.Alma &&
