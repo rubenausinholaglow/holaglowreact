@@ -66,7 +66,7 @@ export default function Wait() {
       setTimeout(() => {
         // Code to execute after the timeout
         // For example, you can redirect to another page
-        router.push('www.holaglow.com');
+        router.push('https://www.holaglow.com');
       }, 5000);
     }
   }, []);
@@ -90,7 +90,10 @@ export default function Wait() {
           />
         </div>
         <Flex className="text-hg-secondary text-xl font-semibold gap-1">
-          Procesando pago
+          {payment !== null && payment !== undefined
+            ? 'Procesando pago'
+            : 'Pago procesado'}
+
           <SvgEllipsis
             className="text-hg-secondary mt-2"
             height={28}
