@@ -9,12 +9,14 @@ module.exports = {
     fontFamily: {
       gtUltraThin: ['gtUltraThin', 'Georgia', 'serif'],
       gtUltraBold: ['gtUltraBold', 'Georgia', 'serif'],
+      DMSerif: ['DMSerif', 'Georgia', 'serif'],
     },
     fontSize: {
       '6xl': ['78px', '92px'],
       '5xl': ['64px', '72px'],
       '4xl': ['56px', '60px'],
       '3xl': ['36px', '44px'],
+      '35xl': ['40px', '48px'],
       '2xl': ['32px', '40px'],
       xl: ['24px', '32px'],
       lg: ['21px', '28px'],
@@ -47,6 +49,7 @@ module.exports = {
           orange: '#FF7514',
           pink: '#FFC7C7',
           pink300: '#ffeeee',
+          pink400: '#fde6e1',
           cream: '#EFE8E2',
           cream500: '#f7f3f0',
           green: '#73BC6D',
@@ -59,6 +62,11 @@ module.exports = {
           black300: '#D0D5DD',
           black100: '#F2F4F7',
           black50: '#F9FAFB',
+        },
+        derma: {
+          primary: '#73BC6D',
+          primary300: '#edf4e6',
+          primary100: '#fbfaf3',
         },
       },
       backgroundImage: {

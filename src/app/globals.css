@@ -18,6 +18,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'DMSerif';
+  src: url('/fonts/DMSerif.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -56,6 +63,12 @@ button,
 select,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+@layer components {
+  .font-gtUltraBold {
+    @apply tracking-tight;
+  }
 }
 
 #categorySelector::-webkit-scrollbar {

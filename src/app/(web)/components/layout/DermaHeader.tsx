@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { SvgHolaglowHand } from 'app/icons/Icons';
+import { SvgBy, SvgDerma } from 'app/icons/iconsDerma';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { DERMA_COLORS } from 'app/utils/colors.derma';
@@ -52,7 +54,7 @@ export default function DermaHeader() {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { deviceSize } = useSessionStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE
@@ -102,7 +104,6 @@ export default function DermaHeader() {
           !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
         } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
       >
-        {/* <PromoTopBar /> */}
         <AnimateOnViewport origin="top">
           <Container isHeader>
             <Flex
@@ -110,10 +111,11 @@ export default function DermaHeader() {
               className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
             >
               <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
-                <SvgHolaglow
-                  fill={DERMA_COLORS['secondary']}
-                  className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
-                />
+                <Flex layout="row-left" className="gap-1">
+                  <SvgDerma className="text-hg-black700" />
+                  <SvgBy className="text-hg-black700" />
+                  <SvgHolaglowHand className="w-5 text-hg-black700" />
+                </Flex>
               </Link>
             </Flex>
           </Container>

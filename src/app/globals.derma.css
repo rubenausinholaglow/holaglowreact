@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@config "./../../tailwind.derma.config.js";
+@config "./../../tailwind.config.js";
 
 @font-face {
   font-family: 'gtUltraThin';
