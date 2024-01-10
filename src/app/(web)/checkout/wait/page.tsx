@@ -5,7 +5,7 @@ import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
+import { SvgCheck, SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -64,12 +64,48 @@ export default function Wait() {
       checkPaymentStatus(payment!.id);
     } else {
       setTimeout(() => {
-        // Code to execute after the timeout
-        // For example, you can redirect to another page
         router.push('https://www.holaglow.com');
       }, 5000);
     }
   }, []);
+
+  const renderWeb = () => (
+    <>
+      <div className="rounded-full overflow-hidden">
+        <SvgTimer
+          className="text-hg-primary bg-hg-secondary p-4"
+          width={88}
+          height={88}
+        />
+      </div>
+      <Flex className="text-hg-secondary text-xl font-semibold gap-1">
+        {payment !== null && payment !== undefined
+          ? 'Procesando pago'
+          : 'Pago procesado'}
+
+        <SvgEllipsis
+          className="text-hg-secondary mt-2"
+          height={28}
+          width={28}
+        />
+      </Flex>
+    </>
+  );
+
+  const renderDash = () => (
+    <>
+      <div className="rounded-full overflow-hidden">
+        <SvgCheck
+          className="text-hg-primary bg-hg-secondary p-4"
+          width={88}
+          height={88}
+        />
+      </div>
+      <Flex className="text-hg-secondary text-xl font-semibold gap-1">
+        Pago procesado correctamente
+      </Flex>
+    </>
+  );
 
   return (
     <MainLayout
@@ -82,24 +118,7 @@ export default function Wait() {
         layout="col-center"
         className="absolute flex inset-0 justify-center items-center gap-4"
       >
-        <div className="rounded-full overflow-hidden">
-          <SvgTimer
-            className="text-hg-primary bg-hg-secondary p-4"
-            width={88}
-            height={88}
-          />
-        </div>
-        <Flex className="text-hg-secondary text-xl font-semibold gap-1">
-          {payment !== null && payment !== undefined
-            ? 'Procesando pago'
-            : 'Pago procesado'}
-
-          <SvgEllipsis
-            className="text-hg-secondary mt-2"
-            height={28}
-            width={28}
-          />
-        </Flex>
+        {payment !== null && payment !== undefined ? renderWeb() : renderDash()}
       </Flex>
     </MainLayout>
   );
