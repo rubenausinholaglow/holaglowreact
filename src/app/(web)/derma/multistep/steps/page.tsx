@@ -25,6 +25,8 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
+import { useSessionStore } from 'app/stores/globalStore';
+import { fetchProduct } from '@utils/fetch';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -37,6 +39,9 @@ export default function Form() {
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
   } as DermaQuestions);
+  const { setSelectedClinic, setSelectedTreatments } = useSessionStore(
+    state => state
+  );
   const [formData, setFormData] = useState<Client>({
     email: '',
     phone: '',
@@ -68,6 +73,29 @@ export default function Form() {
 
   const STEPS = 5;
   const progressBarWith: number = activeSlideIndex * (100 / STEPS);
+
+  useEffect(() => {
+    async function initProduct(productId: string) {
+      const productDetails = await fetchProduct(productId);
+      productDetails.id = '2e9bd0e8-ffa6-4fa1-ae1f-5bfc4cd17187';
+      productDetails.flowwwId = 5;
+      productDetails.title = 'Consulta personalizada de dermatología';
+      productDetails.price = 59;
+      setSelectedTreatments([productDetails]);
+    }
+
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
+
+    setSelectedClinic({
+      id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
+      address: '',
+      city: '',
+      flowwwId: '1',
+      internalName: '',
+      phone: '',
+      professionals: [],
+    });
+  }, []);
 
   const goBack = (index: number) => {
     setActiveSlideIndex(index - 1);
