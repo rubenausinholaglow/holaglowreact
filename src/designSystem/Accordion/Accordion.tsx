@@ -31,7 +31,7 @@ export function SimpleAccordion({
         {!isOpen ? (
           <AccordionPrimitive.Trigger
             className={twMerge(
-              `group flex items-center justify-between w-full ${triggerStyles}`
+              `group flex gap-2 items-center justify-between w-full ${triggerStyles}`
             )}
           >
             {trigger}

@@ -18,20 +18,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <div className="bg-gradient-15deg from-10% from-hg-secondary300 to-hg-pink">
-        <DermaHeader />
-        <HeroDerma />
-      </div>
-      <Container>
-        <Flex layout="row-between">
-          <Flex className="gap-2 items-center">
-            <SvgStar className="-mt-1" />
-            <span>4,7</span>
-            <SvgGoogle />
-          </Flex>
-          <Text className="text-hg-black400 text-xs">Powered by Holaglow</Text>
-        </Flex>
-      </Container>
+      <DermaHeader />
+      <HeroDerma />
       <HomeBlocksDerma />
       <DermaFooter />
       <Analytics />

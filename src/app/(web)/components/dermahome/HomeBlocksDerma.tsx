@@ -5,28 +5,27 @@ import { ImgComparisonSlider } from '@img-comparison-slider/react';
 import { Professional } from '@interface/clinic';
 import { fetchClinics } from '@utils/fetch';
 import { FAQ } from 'app/(web)/tratamientos/[slug]/components/faqs';
-import { SvgArrow } from 'app/icons/IconsDs';
+import { SvgArrow, SvgGoogle, SvgStar } from 'app/icons/IconsDs';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
-import { useGlobalPersistedStore } from '../../../stores/globalStore';
 import ProfessionalsDerma from '../common/ProfessionalsDerma';
 import DescriptionDerma from './DescriptionDerma';
+import FaqsDerma from './FaqsDerma';
 import TestimonialsDerma from './TestimonialsDerma';
 
 export default function HomeBlocksDerma() {
-  const { clinics, setClinics } = useGlobalPersistedStore(state => state);
   const [floatingBarThreshold, setFloatingBarThreshold] = useState(0);
   const dermaImages: any[] = [];
 
   const faqs: FAQ[] = [
     { description: 'TEST DESCRIPTION', title: 'test title' },
   ];
+
   useEffect(() => {
     const professionals = document.getElementById('professionals');
 
@@ -39,20 +38,19 @@ export default function HomeBlocksDerma() {
     }
   }, []);
 
-  /*   useEffect(() => {
-
-    async function initClinics() {
-      const clinics = await fetchClinics();
-
-      setClinics(clinics);
-    }
-
-    if (isEmpty(clinics)) {
-      initClinics();
-    }
-  }, [clinics]); */
   return (
     <>
+      <Container>
+        <Flex layout="row-between">
+          <Flex className="gap-2 items-center">
+            <SvgStar className="-mt-1" />
+            <span>4,7</span>
+            <SvgGoogle />
+          </Flex>
+          <Text className="text-hg-black400 text-xs">Powered by Holaglow</Text>
+        </Flex>
+      </Container>
+
       <DescriptionDerma />
 
       <div className="bg-hg-pink400">
@@ -291,32 +289,8 @@ export default function HomeBlocksDerma() {
       </Container>
 
       <TestimonialsDerma />
-      <Container className="py-12">
-        <Title
-          isAnimated
-          size="2xl"
-          className="text-hg-secondary font-bold mb-8 md:mb-12"
-        >
-          Preguntas frecuentes
-        </Title>
 
-        <div className="md:grid md:grid-cols-2 md:gap-6">
-          {faqs.map(faq => {
-            return (
-              <SimpleAccordion
-                key={faq.title}
-                className="border-b border-hg-black pb-6 mb-6 md:mb-0"
-                trigger={faq.title}
-                triggerStyles="text-left items-start font-semibold"
-              >
-                <Text size="sm" className="text-hg-black500 py-4">
-                  {faq.description}
-                </Text>
-              </SimpleAccordion>
-            );
-          })}
-        </div>
-      </Container>
+      <FaqsDerma />
     </>
   );
 }
