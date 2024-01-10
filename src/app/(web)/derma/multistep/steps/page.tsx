@@ -8,6 +8,7 @@ import TextInputField from '@dashboardComponents/TextInputField';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { dermaService } from '@services/DermaService';
+import { fetchProduct } from '@utils/fetch';
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import {
@@ -17,6 +18,7 @@ import {
   SvgHolaglow,
 } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -25,8 +27,6 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
-import { useSessionStore } from 'app/stores/globalStore';
-import { fetchProduct } from '@utils/fetch';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
