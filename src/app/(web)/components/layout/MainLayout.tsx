@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
+import Bugsnag from '@bugsnag/js';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/(web)/checkout/components/CheckoutHeader';
 import { useGlobalStore } from 'app/stores/globalStore';
@@ -12,8 +13,6 @@ import spanishConf from 'dayjs/locale/es';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
-import React from 'react';
-import Bugsnag from '@bugsnag/js';
 
 dayjs.locale(spanishConf);
 registerLocale('es', es);
@@ -23,7 +22,7 @@ Bugsnag.start({
   appVersion: '1.0.1',
 });
 class ErrorBoundary extends React.Component<any, any> {
-  constructor(props: {} | Readonly<any>) {
+  constructor(props: any | Readonly<any>) {
     super(props);
     this.state = { hasError: false };
   }
