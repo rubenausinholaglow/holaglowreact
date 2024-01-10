@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 
 import App from './components/layout/App';
+import React from 'react';
 
 export const metadata = {
   title: 'Holaglow - Medicina estética',
