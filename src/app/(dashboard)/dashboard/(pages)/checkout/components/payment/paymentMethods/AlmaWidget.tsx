@@ -5,7 +5,7 @@ import Bugsnag from '@bugsnag/js';
 import FinanceService from '@services/FinanceService';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { InitializePayment } from 'app/types/initializePayment';
+import { InitializePayment, OriginPayment } from 'app/types/initializePayment';
 import { PaymentBank } from 'app/types/payment';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -132,6 +132,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       installments: installmentsValue,
       userId: user?.id || '',
       paymentBank: PaymentBank.Alma,
+      originPayment: OriginPayment.dashboard,
     };
 
     try {
