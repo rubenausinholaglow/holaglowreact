@@ -392,12 +392,7 @@ export default class ScheduleService {
         },
         body: JSON.stringify(appointment),
       });
-      if (res.ok) {
-        const data = await res.json();
-        return data;
-      } else {
-        return [];
-      }
+      return [];
     } catch (err: any) {
       Bugsnag.notify('Error cancel', err);
       return [];
@@ -421,7 +416,7 @@ export default class ScheduleService {
         return [];
       }
     } catch (err: any) {
-      Bugsnag.notify('Error cancel', err);
+      Bugsnag.notify('Error reschedule', err);
       return [];
     }
   }
