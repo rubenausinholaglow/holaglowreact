@@ -59,7 +59,7 @@ export default function ProfessionalsDerma({
         <Title
           isAnimated
           size="2xl"
-          className="font-gtUltraBold mb-6 md:mb-8 text-hg-secondary"
+          className="font-gtUltraBold mb-6 md:mb-8 text-derma-primary"
         >
           Nuestros expertos en dermatología estética
         </Title>
@@ -82,6 +82,7 @@ export default function ProfessionalsDerma({
             visibleSlides={2}
             infinite={false}
             sliderStyles="gap-8"
+            isDerma
           >
             {professionals?.map(professional => (
               <ProfessionalCard

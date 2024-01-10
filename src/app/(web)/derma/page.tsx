@@ -1,13 +1,6 @@
-import { Analytics } from '@vercel/analytics/react';
-import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
-import type { Metadata } from 'next';
+import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface';
 
-import HeroDerma from '../components/dermahome/HeroDerma';
-import { DermaFooter } from '../components/layout/DermaFooter';
-import DermaHeader from '../components/layout/DermaHeader';
-import HomeBlocksDerma from './../components/dermahome/HomeBlocksDerma';
+import DermaHome from '../components/dermahome/DermaHome';
 
 export const metadata: Metadata = {
   title: 'Holaglow - La nueva cara de la medicina estética',
@@ -16,13 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return (
-    <main>
-      <DermaHeader />
-      <HeroDerma />
-      <HomeBlocksDerma />
-      <DermaFooter />
-      <Analytics />
-    </main>
-  );
+  return <DermaHome />;
 }

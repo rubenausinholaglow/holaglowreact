@@ -14,7 +14,7 @@ export default function DescriptionDerma() {
         <Flex layout="col-left" className="relative z-10 md:w-1/2">
           <Text
             isAnimated
-            className="font-gtUltraBold text-35xl text-hg-secondary font-normal mb-4 md:mb-6 lg:pr-[20%]"
+            className="font-gtUltraBold text-35xl text-derma-primary font-normal mb-4 md:mb-6 lg:pr-[20%]"
           >
             Cuidado de la piel personalizado
           </Text>
@@ -33,7 +33,7 @@ export default function DescriptionDerma() {
               type="tertiary"
               size="xl"
               className="mx-auto"
-              customStyles="border-none bg-hg-secondary text-hg-secondary300"
+              customStyles="border-none bg-derma-primary text-derma-primary300"
               href="/derma/multistep/start"
               id={'tmevent_multistep_module'}
             >

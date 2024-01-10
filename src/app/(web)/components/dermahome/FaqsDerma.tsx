@@ -30,41 +30,43 @@ const FAQS = [
 
 export default function FaqsDerma() {
   return (
-    <>
-      <Container>
-        <Flex layout="row-left" className="w-full gap-2 mb-4">
+    <Container>
+      <Flex layout="row-left" className="w-full gap-2 mb-4">
+        <div className="w-1/2">
           <Title
             isAnimated
             size="2xl"
-            className="font-gtUltraBold text-hg-secondary font-bold mb-4"
+            className="font-gtUltraBold text-derma-primary font-bold mb-4"
           >
             Preguntas frecuentes
           </Title>
+        </div>
 
+        <div className="w-1/2 px-4">
           <Image
             src="/images/derma/home/faqsDerma.png"
             alt="Holaglow"
             width={286}
             height={176}
           />
-        </Flex>
-        <Flex layout="col-left" className="w-full gap-4">
-          {FAQS.map(faq => {
-            return (
-              <SimpleAccordion
-                key={faq.title}
-                className="p-4 md:mb-0 bg-hg-secondary100 rounded-2xl"
-                trigger={faq.title}
-                triggerStyles="text-left items-start font-semibold"
-              >
-                <Text size="sm" className="text-hg-black500 pt-4">
-                  {faq.description}
-                </Text>
-              </SimpleAccordion>
-            );
-          })}
-        </Flex>
-      </Container>
-    </>
+        </div>
+      </Flex>
+      <Flex layout="col-left" className="w-full gap-4">
+        {FAQS.map(faq => {
+          return (
+            <SimpleAccordion
+              key={faq.title}
+              className="p-4 md:mb-0 bg-derma-secondary100 rounded-2xl"
+              trigger={faq.title}
+              triggerStyles="text-left items-start font-semibold"
+            >
+              <Text size="sm" className="text-hg-black500 pt-4">
+                {faq.description}
+              </Text>
+            </SimpleAccordion>
+          );
+        })}
+      </Flex>
+    </Container>
   );
 }

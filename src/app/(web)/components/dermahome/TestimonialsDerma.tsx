@@ -66,7 +66,7 @@ export default function TestimonialsDerma() {
         <Title
           isAnimated
           size="2xl"
-          className="font-gtUltraBold text-hg-secondary font-bold mb-4"
+          className="font-gtUltraBold text-derma-primary font-bold mb-4"
         >
           Resultados Reales
         </Title>
@@ -76,7 +76,6 @@ export default function TestimonialsDerma() {
           {TESTIMONIALS.map((testimonial: Testimonial | any) => {
             return (
               <TestimonialCard
-                key={testimonial.name}
                 testimonial={testimonial}
                 className="h-full flex flex-col mr-4 border border-hg-black300"
               />

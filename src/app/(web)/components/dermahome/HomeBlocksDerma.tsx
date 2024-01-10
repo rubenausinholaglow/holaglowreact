@@ -14,13 +14,13 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import ProfessionalsDerma from '../common/ProfessionalsDerma';
+import StoriesDerma from '../common/StoriesDerma';
 import DescriptionDerma from './DescriptionDerma';
 import FaqsDerma from './FaqsDerma';
 import TestimonialsDerma from './TestimonialsDerma';
 
 export default function HomeBlocksDerma() {
   const [floatingBarThreshold, setFloatingBarThreshold] = useState(0);
-  const dermaImages: any[] = [];
 
   const faqs: FAQ[] = [
     { description: 'TEST DESCRIPTION', title: 'test title' },
@@ -40,25 +40,29 @@ export default function HomeBlocksDerma() {
 
   return (
     <>
-      <Container>
-        <Flex layout="row-between">
-          <Flex className="gap-2 items-center">
-            <SvgStar className="-mt-1" />
-            <span>4,7</span>
-            <SvgGoogle />
+      <div className="bg-derma-secondary100">
+        <Container>
+          <Flex layout="row-between">
+            <Flex className="gap-2 items-center">
+              <SvgStar className="-mt-1" />
+              <span>4,7</span>
+              <SvgGoogle />
+            </Flex>
+            <Text className="text-hg-black400 text-xs">
+              Powered by Holaglow
+            </Text>
           </Flex>
-          <Text className="text-hg-black400 text-xs">Powered by Holaglow</Text>
-        </Flex>
-      </Container>
+        </Container>
 
-      <DescriptionDerma />
+        <DescriptionDerma />
+      </div>
 
-      <div className="bg-hg-pink400">
+      <div className="bg-derma-primary100">
         <Container className="py-12">
           <Title
             isAnimated
             size="2xl"
-            className="font-gtUltraBold text-hg-tertiary text-left font-bold mb-8"
+            className="font-gtUltraBold text-derma-primary text-left font-bold mb-8"
           >
             Cómo funciona
           </Title>
@@ -92,7 +96,7 @@ export default function HomeBlocksDerma() {
                     />
                     <Flex layout="col-left" className="gap-4 w-full">
                       <Text className="text-sm">Paso {index + 1}</Text>
-                      <Text className="text-lg text-hg-tertiary font-semibold">
+                      <Text className="text-lg text-derma-primary font-semibold">
                         {item.text}
                       </Text>
                       <Text>{item.description}</Text>
@@ -222,75 +226,14 @@ export default function HomeBlocksDerma() {
         />
       </Container>
 
-      <ProfessionalsDerma />
-
-      <Container className="py-12 overflow-hidden">
-        <Flex
-          layout="col-left"
-          className="gap-4 items-center relative md:justify-center md:flex-row"
-        >
-          <Flex layout="col-left" className="relative z-10 md:w-1/2">
-            <Title
-              isAnimated
-              size="2xl"
-              className="text-hg-secondary font-bold mb-12 md:mb-6 lg:pr-[20%]"
-            >
-              Historias de Derma
-            </Title>
-            <Text isAnimated className="text-hg-black500 md:w-full md:text-lg">
-              Conectamos a personas con médicos experimentados para un
-              descubrimiento personalizado de productos y tratamientos para el
-              acné hasta el envejecimiento.
-            </Text>
-            <div className="md:w-1/2">
-              <Carousel
-                hasControls={dermaImages?.length > 1}
-                dragEnabled={false}
-                touchEnabled={false}
-                hasDots
-                className="px-4 md:px-0 rounded-xl aspect-square"
-              >
-                {dermaImages?.map(item => (
-                  <div key={item.id} className="overflow-hidden relative">
-                    <ImgComparisonSlider className="outline-none w-full">
-                      <figure slot="first" className="before">
-                        <div className="relative aspect-square">
-                          <Image
-                            src={item.urlBefore || ''}
-                            alt=""
-                            fill
-                            className="object-cover rounded-3xl"
-                          />
-                        </div>
-                        <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
-                          Antes
-                        </span>
-                      </figure>
-                      <figure slot="second" className="after">
-                        <div className="relative aspect-square">
-                          <Image
-                            src={item.urlAfter || ''}
-                            alt=""
-                            fill
-                            className="object-cover rounded-3xl"
-                          />
-                        </div>
-                        <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
-                          Después
-                        </span>
-                      </figure>
-                    </ImgComparisonSlider>
-                  </div>
-                ))}
-              </Carousel>
-            </div>
-          </Flex>
-        </Flex>
-      </Container>
-
-      <TestimonialsDerma />
-
-      <FaqsDerma />
+      <div className="bg-derma-secondary100 pt-12">
+        <ProfessionalsDerma />
+        <StoriesDerma />
+        <TestimonialsDerma />
+      </div>
+      <div className="bg-derma-secondary300 py-12">
+        <FaqsDerma />
+      </div>
     </>
   );
 }

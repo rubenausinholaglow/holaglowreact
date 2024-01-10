@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import CheckHydration from '@utils/CheckHydration';
 import { SvgHolaglowHand } from 'app/icons/Icons';
-import { SvgBy, SvgDerma } from 'app/icons/iconsDerma';
+import { SvgBy, SvgDerma, SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { DERMA_COLORS } from 'app/utils/colors.derma';
@@ -91,7 +92,7 @@ export default function DermaHeader() {
   }, []);
 
   return (
-    <>
+    <CheckHydration>
       <MobileNavigation
         isVisible={isMobileNavVisible}
         headerHeight={HEADER_HEIGHT}
@@ -111,16 +112,12 @@ export default function DermaHeader() {
               className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
             >
               <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
-                <Flex layout="row-left" className="gap-1">
-                  <SvgDerma className="text-hg-black700" />
-                  <SvgBy className="text-hg-black700" />
-                  <SvgHolaglowHand className="w-5 text-hg-black700" />
-                </Flex>
+                <SvgHolaglowDerma width={92} height={32} className="mt-1" />
               </Link>
             </Flex>
           </Container>
         </AnimateOnViewport>
       </header>
-    </>
+    </CheckHydration>
   );
 }

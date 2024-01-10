@@ -5,7 +5,7 @@ export default function HomeHeroDerma() {
   return (
     <Flex
       layout="col-center"
-      className="bg-gradient-15deg from-10% from-hg-secondary300 to-hg-pink pt-16 -mt-16"
+      className="bg-gradient-30deg from-[#23D9B74D] to-[#FFC7C74D] pt-16 -mt-16"
     >
       <Image
         src="/images/derma/home/homeDerma.png"
