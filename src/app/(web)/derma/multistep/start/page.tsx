@@ -5,7 +5,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
 
-import { DermaFooter } from '../../../components/layout/DermaFooter';
+import DermaFooter from '../../../components/layout/DermaFooter';
 import DermaHeader from '../../../components/layout/DermaHeader';
 
 export const metadata: Metadata = {

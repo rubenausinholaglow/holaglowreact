@@ -1,27 +1,16 @@
 'use client';
 
-import {
-  SvgHolaglowDerma,
-  SvgHolaglowDermaUnicolor,
-} from 'app/icons/iconsDerma';
-import { SvgHolaglow } from 'app/icons/IconsDs';
+import { SvgHolaglowDermaUnicolor } from 'app/icons/iconsDerma';
 import { SvgInstagram } from 'app/icons/socialIcons';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
-import useRoutes from 'app/utils/useRoutes';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { usePathname } from 'next/navigation';
 
-export function DermaFooter({ className = '' }: { className?: string }) {
-  const ROUTES = useRoutes();
-
-  const { clinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+export default function DermaFooter({
+  className = '',
+}: {
+  className?: string;
+}) {
   const isHome = usePathname() === '/';
 
   return (

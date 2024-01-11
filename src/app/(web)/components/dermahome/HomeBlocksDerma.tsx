@@ -9,8 +9,8 @@ import Image from 'next/image';
 
 import ProfessionalsDerma from '../common/ProfessionalsDerma';
 import StoriesDerma from '../common/StoriesDerma';
-import DescriptionDerma from './DescriptionDerma';
 import FaqsDerma from './FaqsDerma';
+import HeroDerma from './HeroDerma';
 import HowItWorksDerma from './HowItWorksDerma';
 import TestimonialsDerma from './TestimonialsDerma';
 import TreatmentsDerma from './TreatmentsDerma';
@@ -33,23 +33,6 @@ export default function HomeBlocksDerma() {
 
   return (
     <>
-      <div className="bg-derma-secondary100">
-        <Container>
-          <Flex layout="row-between">
-            <Flex className="gap-2 items-center">
-              <SvgStar className="-mt-1" />
-              <span>4,7</span>
-              <SvgGoogle />
-            </Flex>
-            <Text className="text-hg-black400 text-xs">
-              Powered by Holaglow
-            </Text>
-          </Flex>
-        </Container>
-
-        <DescriptionDerma />
-      </div>
-
       <TreatmentsDerma />
       <HowItWorksDerma />
 
