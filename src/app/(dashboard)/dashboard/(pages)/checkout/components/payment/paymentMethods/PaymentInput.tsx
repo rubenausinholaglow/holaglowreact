@@ -297,6 +297,7 @@ export default function PaymentInput(props: Props) {
       if (x) {
         handleUrlPayment(x.id, '', x.referenceId);
       } else {
+        Bugsnag.notify('Error payment with Stripe');
         setMessageNotification('Error pagando con tarjeta');
       }
     });
