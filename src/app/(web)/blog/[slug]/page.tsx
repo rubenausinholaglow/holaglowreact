@@ -13,7 +13,6 @@ export async function generateMetadata(
   ).then(res => res.json());
 
   const postData: Post = posts.filter((post: Post) => post.slug === slug)[0];
-  if (!postData) return { title: slug + posts.length };
   return {
     title: postData.metaTitle,
     description: postData.metaDescription,
