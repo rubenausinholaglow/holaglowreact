@@ -13,7 +13,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
-import MobileNavigation from './MobileNavigation';
 
 let isTicking = false;
 let scrollPos = 0;
@@ -22,7 +21,6 @@ export default function DermaHeader() {
   const ROUTES = useRoutes();
 
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
   const { deviceSize } = useSessionStore(state => state);
@@ -63,12 +61,6 @@ export default function DermaHeader() {
 
   return (
     <CheckHydration>
-      <MobileNavigation
-        isVisible={isMobileNavVisible}
-        headerHeight={HEADER_HEIGHT}
-        setIsMobileNavVisible={setIsMobileNavVisible}
-      />
-
       <header
         id="header"
         className={`z-30 w-full top-0 sticky transition-all ${
@@ -90,4 +82,36 @@ export default function DermaHeader() {
       </header>
     </CheckHydration>
   );
+}
+
+{
+  /* <header
+      id="header"
+      className={`z-30 w-full top-0 sticky transition-all ${
+        !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
+      } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
+    >
+      <AnimateOnViewport origin="top">
+        <Container>
+          <Flex
+            layout="row-between"
+            className={`w-full relative ${HEADER_HEIGHT_CLASS}`}
+          >
+            <Link href={ROUTES.home}>
+              <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
+            </Link>
+
+            <Button
+              type="tertiary"
+              customStyles="bg-transparent border-derma-primary"
+            >
+              <Text className="font-semibold text-derma-primary mr-2">
+                Reservar cita
+              </Text>
+              <SvgArrow className="h-5 w-5" />
+            </Button>
+          </Flex>
+        </Container>
+      </AnimateOnViewport>
+    </header> */
 }
