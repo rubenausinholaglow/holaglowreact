@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useSessionStore } from '../../../stores/globalStore';
 import Clinics from '../common/Clinics';
+import MainLayout from '../layout/MainLayout';
 import FloatingBottomBar from './FloatingBottomBar';
 import GoogleStars from './GoogleStars';
 import GoToTreatments from './GoToTreatments';
@@ -19,6 +20,7 @@ export default function HomeBlocks() {
   const { deviceSize } = useSessionStore(state => state);
 
   const [floatingBarThreshold, setFloatingBarThreshold] = useState(0);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     const professionals = document.getElementById('professionals');
@@ -30,10 +32,16 @@ export default function HomeBlocks() {
 
       setFloatingBarThreshold(elementTop);
     }
+
+    setIsHydrated(true);
   }, []);
 
+  if (!isHydrated) {
+    return <></>;
+  }
+
   return (
-    <>
+    <MainLayout>
       <Hero />
       <GoogleStars />
       <ValuesCarousel />
@@ -49,6 +57,6 @@ export default function HomeBlocks() {
       {deviceSize.isMobile && floatingBarThreshold !== 0 && (
         <FloatingBottomBar threshold={floatingBarThreshold} />
       )}
-    </>
+    </MainLayout>
   );
 }
