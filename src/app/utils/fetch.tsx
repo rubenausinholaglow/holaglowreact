@@ -26,7 +26,9 @@ export async function fetchProducts() {
 
     return products;
   } catch (error: any) {
-    Bugsnag.notify('Error fetching products:', error);
+    Bugsnag.notify(
+      'Error fetching products ' + error + '. Products: ' + fetchProducts.length
+    );
   }
 
   return [] as Product[];
