@@ -20,15 +20,16 @@ export default class FinanceService {
         const data = await res.json();
         return data;
       } else {
+        Bugsnag.notify('Error initializePayment ' + res);
         return { id: '', url: '', referenceId: '' };
       }
     } catch (error: any) {
-      Bugsnag.notify(error);
+      Bugsnag.notify('Error initializePayment ' + error);
       return { id: '', url: '', referenceId: '' };
     }
   }
 
-  static async checkPaymentStatus(id: string) {
+  static async checkPaymentStatus(id: string): Promise<boolean> {
     try {
       const url =
         `${process.env.NEXT_PUBLIC_FINANCE_API}External/Status?id=` + id;
@@ -43,10 +44,12 @@ export default class FinanceService {
         const data = await res.json();
         return data;
       } else {
-        return '';
+        Bugsnag.notify('Error checkPaymentStatus ' + res);
+        return false;
       }
     } catch (error: any) {
-      Bugsnag.notify(error);
+      Bugsnag.notify('Error checkPaymentStatus ' + error);
+      return false;
     }
   }
 
@@ -70,13 +73,13 @@ export default class FinanceService {
       });
 
       if (!res.ok) {
-        Bugsnag.notify('Error creating Payment');
+        Bugsnag.notify('Error creating Payment ' + res);
         throw new Error('Erro creating Payment');
       }
       const data = await res.text();
       return data;
     } catch (error: any) {
-      Bugsnag.notify(error);
+      Bugsnag.notify('Error creating Payment ' + error);
     }
   }
 

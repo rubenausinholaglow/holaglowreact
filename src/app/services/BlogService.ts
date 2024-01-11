@@ -1,5 +1,8 @@
+import Bugsnag from '@bugsnag/js';
+import { Post } from '@interface/blog';
+
 export default class blogService {
-  static async getBlogPosts() {
+  static async getBlogPosts(): Promise<Post[]> {
     try {
       const url = `${process.env.NEXT_PUBLIC_BLOG_API}Blog`;
 
@@ -9,10 +12,12 @@ export default class blogService {
 
         return data;
       } else {
-        return '';
+        Bugsnag.notify('Error getBlogPosts' + res);
+        return [];
       }
     } catch (err) {
-      return err;
+      Bugsnag.notify('Error getBlogPosts' + err);
+      return [];
     }
   }
 }
