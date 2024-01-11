@@ -2,51 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import CheckHydration from '@utils/CheckHydration';
-import { SvgHolaglowHand } from 'app/icons/Icons';
-import { SvgBy, SvgDerma, SvgHolaglowDerma } from 'app/icons/iconsDerma';
-import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
+import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { useSessionStore } from 'app/stores/globalStore';
-import { DERMA_COLORS } from 'app/utils/colors.derma';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
 import useRoutes from 'app/utils/useRoutes';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
-import PromoTopBar from './PromoTopBar';
 
 let isTicking = false;
 let scrollPos = 0;
-
-function Navigation({ className }: { className: string }) {
-  const ROUTES = useRoutes();
-
-  const NAV_ITEMS = [
-    { name: 'Tratamientos', link: ROUTES.treatments },
-    { name: 'Clínicas', link: ROUTES.clinics },
-    { name: 'Sobre nosotros', link: ROUTES.aboutUs },
-    { name: 'Blog', link: ROUTES.blog },
-  ];
-
-  return (
-    <nav className={className}>
-      <ul className="flex flex-row gap-16">
-        {NAV_ITEMS.map(navItem => (
-          <li className="font-medium" key={navItem.name}>
-            <Link href={navItem.link} id={'tmevent_nav_menu_click'}>
-              {navItem.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
 
 export default function DermaHeader() {
   const ROUTES = useRoutes();

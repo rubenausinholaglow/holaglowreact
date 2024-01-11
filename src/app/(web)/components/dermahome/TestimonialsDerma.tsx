@@ -76,6 +76,7 @@ export default function TestimonialsDerma() {
           {TESTIMONIALS.map((testimonial: Testimonial | any) => {
             return (
               <TestimonialCard
+                key={testimonial.name}
                 testimonial={testimonial}
                 className="h-full flex flex-col mr-4 border border-hg-black300"
               />

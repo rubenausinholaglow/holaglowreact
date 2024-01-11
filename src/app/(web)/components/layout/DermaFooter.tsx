@@ -17,7 +17,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { usePathname } from 'next/navigation';
 
-export function DermaFooter({ className = '' }: { className: string }) {
+export function DermaFooter({ className = '' }: { className?: string }) {
   const ROUTES = useRoutes();
 
   const { clinics } = useGlobalPersistedStore(state => state);
