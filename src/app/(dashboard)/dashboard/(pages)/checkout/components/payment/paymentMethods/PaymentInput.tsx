@@ -103,8 +103,11 @@ export default function PaymentInput(props: Props) {
     productsPriceTotalWithDiscounts
   );
 
+  const cartTotalWithDiscountFixed =
+    Math.ceil(cartTotalWithDiscount * 100) / 100;
+
   const MaxValue =
-    parseFloat(cartTotalWithDiscount.toFixed(2)) -
+    parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
@@ -320,7 +323,10 @@ export default function PaymentInput(props: Props) {
     cart.forEach(product => {
       const productPayment: ProductPaymentRequest = {
         name: product.title,
-        price: product.price.toString(),
+        price:
+          product.priceWithDiscount > 0
+            ? product.priceWithDiscount.toFixed(2)
+            : product.price.toString(),
         quantity: '1',
         id: product.id,
       };

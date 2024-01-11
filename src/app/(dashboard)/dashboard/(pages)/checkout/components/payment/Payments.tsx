@@ -188,7 +188,10 @@ export const PaymentModule = () => {
     manualPrice,
     productsPriceTotalWithDiscounts
   );
-  const missingAmount = Number(cartTotalWithDiscount) - Number(totalAmount);
+  const cartTotalWithDiscountFixed =
+    Math.ceil(cartTotalWithDiscount * 100) / 100;
+  const missingAmount =
+    Number(cartTotalWithDiscountFixed) - Number(totalAmount);
   const missingAmountFormatted = missingAmount.toFixed(2);
 
   const sendTicket = async () => {
