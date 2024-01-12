@@ -41,7 +41,7 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { MULTISTEP_QUESTIONS } from './mockedData';
 
 export default function Form() {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(6); //PONER 0
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [values, setValues] = useState<Array<Array<number>>>([[]]);
   const [textAreaOne, setTextAreasOne] = useState<string>('');
   const [textAreaTwo, setTextAreasTwo] = useState<string>('');
