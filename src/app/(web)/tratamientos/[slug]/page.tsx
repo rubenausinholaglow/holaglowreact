@@ -17,5 +17,6 @@ export default function ProductPage({
     description: description,
   };
 
-  return <ProductMetaDataPage params={metadata}></ProductMetaDataPage>;
+  if (metadata.title != '')
+    return <ProductMetaDataPage params={metadata}></ProductMetaDataPage>;
 }

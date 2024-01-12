@@ -64,10 +64,10 @@ export default function ProductDetailPage({
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
-      setSeoMetaData(
+      /*setSeoMetaData(
         productDetails.extraInformation.seoTitle,
         productDetails.extraInformation.seoMetaDescription
-      );
+      );*/
     }
     let product = undefined;
     if (isDashboard) {
