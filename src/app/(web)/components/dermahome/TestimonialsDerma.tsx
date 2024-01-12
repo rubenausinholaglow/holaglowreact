@@ -3,6 +3,7 @@
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Testimonial } from 'app/types/testimonial';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
@@ -60,6 +61,8 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export default function TestimonialsDerma() {
+  const { deviceSize } = useSessionStore(store => store);
+
   return (
     <>
       <Container>
@@ -72,13 +75,16 @@ export default function TestimonialsDerma() {
         </Title>
       </Container>
       <AnimateOnViewport>
-        <FullWidthCarousel className="pb-8">
+        <FullWidthCarousel
+          className="pb-8"
+          visibleSlides={deviceSize.isMobile ? 1.5 : 3.5}
+        >
           {TESTIMONIALS.map((testimonial: Testimonial | any) => {
             return (
               <TestimonialCard
                 key={testimonial.name}
                 testimonial={testimonial}
-                className="h-full flex flex-col mr-4 border border-hg-black300"
+                className="h-full flex flex-col mr-4 border border-hg-black300 bg-transparent"
               />
             );
           })}

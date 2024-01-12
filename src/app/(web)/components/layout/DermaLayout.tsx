@@ -39,7 +39,7 @@ export default function DermaLayout({ children }: { children: ReactNode }) {
       <main>
         <DermaHeader />
         {children}
-        <DermaFooter className="pb-24" />
+        <DermaFooter className="pb-24 md:pb-0" />
         <Analytics />
       </main>
     </ErrorBoundary>

@@ -1,5 +1,3 @@
-'use client';
-
 import CheckHydration from '@utils/CheckHydration';
 
 import DermaLayout from '../layout/DermaLayout';
