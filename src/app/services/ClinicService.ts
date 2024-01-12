@@ -1,3 +1,4 @@
+import Bugsnag from '@bugsnag/js';
 import { Professional, ProfessionalType } from 'app/types/clinic';
 
 export default class clinicService {
@@ -16,10 +17,12 @@ export default class clinicService {
         const data = await res.json();
         return data as Professional[];
       } else {
-        throw new Error('Error fetching data from the API');
+        Bugsnag.notify('Error getProfessionalsByClinic' + res);
+        return [];
       }
     } catch (err) {
-      throw err;
+      Bugsnag.notify('Error getProfessionalsByClinic: ' + err);
+      return [];
     }
   }
 
@@ -31,10 +34,12 @@ export default class clinicService {
         const data = await res.json();
         return data;
       } else {
-        return '';
+        Bugsnag.notify('Error getClinics' + res);
+        return [];
       }
     } catch (err) {
-      return err;
+      Bugsnag.notify('Error getting clinics: ' + err);
+      return [];
     }
   }
 }

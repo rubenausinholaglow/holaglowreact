@@ -14,19 +14,24 @@ export async function fetchProducts() {
 
   try {
     const fetchedProducts = await ProductService.getAllProducts();
-    const filteredProducts = fetchedProducts.filter(
-      (product: Product) =>
-        allowedProductType.includes(product.type) && product.price > 0
-    );
+    if (fetchedProducts && fetchedProducts.length) {
+      const filteredProducts = fetchedProducts.filter(
+        (product: Product) =>
+          allowedProductType.includes(product.type) && product.price > 0
+      );
 
-    const products = filteredProducts.map((product: Product) => ({
-      ...product,
-      visibility: true,
-    }));
+      const products = filteredProducts.map((product: Product) => ({
+        ...product,
+        visibility: true,
+      }));
 
-    return products;
+      return products;
+    }
+    return [];
   } catch (error: any) {
-    Bugsnag.notify('Error fetching products:', error);
+    Bugsnag.notify(
+      'Error fetching products ' + error + '. Products: ' + fetchProducts.length
+    );
   }
 
   return [] as Product[];
