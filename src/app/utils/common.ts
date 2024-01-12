@@ -121,6 +121,8 @@ export const setSeoMetaData = (title: string, description: string) => {
     document.head.appendChild(newMetaTag);
   }
 
+  const ogUrlTag = document.querySelector('meta[property="og:url"]') as HTMLMetaElement;
+  const ogTypeTag = document.querySelector('meta[property="og:type"]') as HTMLMetaElement;
   const ogTitleTag = document.querySelector('meta[property="og:title"]') as HTMLMetaElement;
   const ogDescriptionTag = document.querySelector('meta[property="og:description"]') as HTMLMetaElement;
   const ogImageTag = document.querySelector('meta[property="og:image"]') as HTMLMetaElement;
@@ -145,10 +147,27 @@ export const setSeoMetaData = (title: string, description: string) => {
   
   if (ogImageTag) {
       ogImageTag.setAttribute('content', imageUrl);
-    } else {
+  } else {
       const newOgImageTag = document.createElement('meta');
       newOgImageTag.setAttribute('property', 'og:image');
       newOgImageTag.content = imageUrl;
       document.head.appendChild(newOgImageTag);
-    }
+  }
+  if (ogUrlTag) {
+    ogUrlTag.setAttribute('content', "https://holaglowreact-git-dev-966-hola-glow.vercel.app/" || '');
+  } else {
+    const newOgUrlTag = document.createElement('meta');
+    newOgUrlTag.setAttribute('property', 'og:url');
+    newOgUrlTag.content = "https://holaglowreact-git-dev-966-hola-glow.vercel.app/" || '';
+    document.head.appendChild(newOgUrlTag);
+  }
+
+  if (ogTypeTag) {
+    ogTypeTag.setAttribute('content', 'website');
+  } else {
+    const newOgTypeTag = document.createElement('meta');
+    newOgTypeTag.setAttribute('property', 'og:type');
+    newOgTypeTag.content = 'website';
+    document.head.appendChild(newOgTypeTag);
+  }
 };
