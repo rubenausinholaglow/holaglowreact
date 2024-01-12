@@ -61,7 +61,7 @@ export const applyDiscountToItem = (
     price = price - (price * percentageDiscountValue) / 100;
   }
 
-  return price;
+  return Number(price);
 };
 
 export const deleteDiscountToItem = (
