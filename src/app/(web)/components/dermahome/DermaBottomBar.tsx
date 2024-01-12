@@ -58,7 +58,7 @@ export default function DermaBottomBar({
 
   return (
     <div
-      className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none ${
+      className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none md:hidden ${
         showBottomBar && isVisible ? 'translate-y-[0%]' : 'translate-y-[105%]'
       }`}
     >

@@ -34,9 +34,9 @@ export default function HomeBlocksDerma() {
   return (
     <>
       <TreatmentsDerma />
-      <HowItWorksDerma />
 
-      <div className="bg-derma-primary500 rounded-3xl -mt-4 -mb-4 relative">
+      <div className="bg-derma-primary100">
+        <HowItWorksDerma />
         <WhatsIncludedDerma />
       </div>
 

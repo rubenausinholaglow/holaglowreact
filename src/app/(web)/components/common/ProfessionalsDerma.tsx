@@ -53,8 +53,8 @@ export default function ProfessionalsDerma({
     >
       <Container
         className={`${
-          isDashboard ? '' : 'md:w-1/2'
-        } md:px-0 md:flex md:flex-col md:justify-center md:items-start`}
+          isDashboard ? '' : 'md:w-[55%]'
+        } md:px-0 md:flex md:flex-col md:justify-center md:items-start md:order-2`}
       >
         <Title
           isAnimated
@@ -70,7 +70,7 @@ export default function ProfessionalsDerma({
           literal y metafóricamente.
         </Text>
       </Container>
-      <div className={`${isDashboard ? '' : 'md:w-1/2'}`}>
+      <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>
         {deviceSize.isMobile && (
           <ProductCarousel type="professionals" items={professionals} />
         )}
