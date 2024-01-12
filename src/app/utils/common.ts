@@ -109,8 +109,16 @@ export function getDiscountedPrice(product: Product) {
 
 export const setSeoMetaData = (title: string, description: string) => {
   document.title = title;
-  const metaDescriptionTag = document.querySelector('meta[name="description"]') as HTMLMetaElement;
   const imageUrl = "https://holaglowreact-git-dev-966-hola-glow.vercel.app/images/home/OGimagen_Holaglow.jpg"
+  
+  const metaDescriptionTag = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+  const ogUrlTag = document.querySelector('meta[property="og:url"]') as HTMLMetaElement;
+  const ogTypeTag = document.querySelector('meta[property="og:type"]') as HTMLMetaElement;
+  const ogTitleTag = document.querySelector('meta[property="og:title"]') as HTMLMetaElement;
+  const ogDescriptionTag = document.querySelector('meta[property="og:description"]') as HTMLMetaElement;
+  const ogImageTag = document.querySelector('meta[property="og:image"]') as HTMLMetaElement;
+
+  
 
   if (metaDescriptionTag) {
     metaDescriptionTag.setAttribute('content', description);
@@ -121,11 +129,7 @@ export const setSeoMetaData = (title: string, description: string) => {
     document.head.appendChild(newMetaTag);
   }
 
-  const ogUrlTag = document.querySelector('meta[property="og:url"]') as HTMLMetaElement;
-  const ogTypeTag = document.querySelector('meta[property="og:type"]') as HTMLMetaElement;
-  const ogTitleTag = document.querySelector('meta[property="og:title"]') as HTMLMetaElement;
-  const ogDescriptionTag = document.querySelector('meta[property="og:description"]') as HTMLMetaElement;
-  const ogImageTag = document.querySelector('meta[property="og:image"]') as HTMLMetaElement;
+  
 
   if (ogTitleTag) {
     ogTitleTag.setAttribute('content', title);
