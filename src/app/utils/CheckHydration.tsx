@@ -9,7 +9,11 @@ const CheckHydration = ({ children }: { children: ReactNode }) => {
     setIsHydrated(true);
   }, []);
 
-  return isHydrated ? children : null;
+  if (!isHydrated) {
+    return <></>;
+  }
+
+  return children;
 };
 
 export default CheckHydration;

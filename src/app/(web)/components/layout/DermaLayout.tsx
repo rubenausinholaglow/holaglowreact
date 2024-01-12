@@ -33,13 +33,23 @@ class ErrorBoundary extends Component<any, any> {
   }
 }
 
-export default function DermaLayout({ children }: { children: ReactNode }) {
+export default function DermaLayout({
+  children,
+  hideButton = false,
+  hideFooter = false,
+  className = '',
+}: {
+  children: ReactNode;
+  hideButton?: boolean;
+  hideFooter?: boolean;
+  className?: string;
+}) {
   return (
     <ErrorBoundary>
-      <main>
-        <DermaHeader />
+      <main className={className}>
+        <DermaHeader hideButton={hideButton} />
         {children}
-        <DermaFooter className="pb-24 md:pb-0" />
+        <DermaFooter className="pb-24 md:pb-0" hideFooter={hideFooter} />
         <Analytics />
       </main>
     </ErrorBoundary>

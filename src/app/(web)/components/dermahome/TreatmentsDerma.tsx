@@ -59,7 +59,7 @@ export default function TreatmentsDerma() {
               <Flex
                 layout="col-center"
                 key={item.name}
-                className="bg-[#F3EDE9] aspect-square shrink-0 rounded-3xl mr-4 justify-between py-4"
+                className="bg-derma-secondary400 aspect-square shrink-0 rounded-3xl mr-4 justify-between py-4"
               >
                 <Image
                   src={item.imgUrl}
@@ -84,7 +84,7 @@ export default function TreatmentsDerma() {
                 <Flex
                   layout="col-center"
                   key={item.name}
-                  className="bg-[#F3EDE9] aspect-square shrink-0 rounded-[50px] justify-center py-4 w-[15%] gap-4"
+                  className="bg-derma-secondary400 aspect-square shrink-0 rounded-[50px] justify-center py-4 w-[15%] gap-4"
                 >
                   <Image
                     src={item.imgUrl}

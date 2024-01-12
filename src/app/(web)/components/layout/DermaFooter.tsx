@@ -8,10 +8,16 @@ import { usePathname } from 'next/navigation';
 
 export default function DermaFooter({
   className = '',
+  hideFooter = false,
 }: {
   className?: string;
+  hideFooter?: boolean;
 }) {
   const isHome = usePathname() === '/';
+
+  if (hideFooter) {
+    return <></>;
+  }
 
   return (
     <div className={`bg-derma-tertiary ${className}`}>

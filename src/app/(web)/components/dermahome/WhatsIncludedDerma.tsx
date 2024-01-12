@@ -43,7 +43,7 @@ export default function WhatsIncludedDerma() {
           <Flex layout="col-left" className="relative z-10 md:w-1/2">
             <Flex
               layout="col-left"
-              className="bg-[#F7F3F0] rounded-2xl p-4 shadow-centered-black"
+              className="bg-derma-secondary300 rounded-2xl p-4 shadow-centered-black"
             >
               <Text className="text-lg font-bold text-hg-black700 mb-4">
                 Pago único

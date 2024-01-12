@@ -20,7 +20,11 @@ import { AnimateOnViewport } from '../common/AnimateOnViewport';
 let isTicking = false;
 let scrollPos = 0;
 
-export default function DermaHeader() {
+export default function DermaHeader({
+  hideButton = false,
+}: {
+  hideButton: boolean;
+}) {
   const ROUTES = useRoutes();
 
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -82,16 +86,18 @@ export default function DermaHeader() {
                 <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
               </Link>
 
-              <Button
-                className="lg:absolute right-0 2xl:mr-20"
-                type="tertiary"
-                customStyles="bg-transparent border-derma-primary"
-              >
-                <Text className="font-semibold text-derma-primary mr-2">
-                  Reservar cita
-                </Text>
-                <SvgArrow className="h-5 w-5" />
-              </Button>
+              {!hideButton && (
+                <Button
+                  className="lg:absolute right-0 2xl:mr-20"
+                  type="tertiary"
+                  customStyles="bg-transparent border-derma-primary"
+                >
+                  <Text className="font-semibold text-derma-primary mr-2">
+                    Reservar cita
+                  </Text>
+                  <SvgArrow className="h-5 w-5" />
+                </Button>
+              )}
             </Flex>
           </Container>
         </AnimateOnViewport>

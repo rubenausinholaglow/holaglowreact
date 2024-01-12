@@ -10,6 +10,7 @@ import { DermaQuestions } from '@interface/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
 import { dermaService } from '@services/DermaService';
+import CheckHydration from '@utils/CheckHydration';
 import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
 import { usePayments } from '@utils/paymentUtils';
@@ -204,7 +205,7 @@ export default function Form() {
   };
 
   return (
-    <>
+    <CheckHydration>
       <header className="py-4 border-b border-hg-black50 mb-6 relative">
         <Flex layout="row-left" className="max-w-[624px] mx-auto px-4">
           {activeSlideIndex > 0 && (
@@ -434,6 +435,6 @@ export default function Form() {
           </Button>
         )}
       </main>
-    </>
+    </CheckHydration>
   );
 }

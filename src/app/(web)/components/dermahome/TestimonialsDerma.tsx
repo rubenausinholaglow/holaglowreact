@@ -77,7 +77,7 @@ export default function TestimonialsDerma() {
       <AnimateOnViewport>
         <FullWidthCarousel
           className="pb-8"
-          visibleSlides={deviceSize.isMobile ? 1.5 : 3.5}
+          visibleSlides={deviceSize.isMobile ? 1.2 : 3.5}
         >
           {TESTIMONIALS.map((testimonial: Testimonial | any) => {
             return (
