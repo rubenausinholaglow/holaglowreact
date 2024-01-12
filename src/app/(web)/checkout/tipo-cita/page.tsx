@@ -8,7 +8,7 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
+import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { CartItem, Product } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -21,8 +21,12 @@ export default function PVCitaMedica() {
   const ROUTES = useRoutes();
 
   const { addItemToCart } = useCartStore(state => state);
-  const { selectedPacksTreatments, selectedTreatments, setSelectedTreatments } =
-    useSessionStore(state => state);
+  const {
+    selectedPacksTreatments,
+    selectedTreatments,
+    setSelectedTreatments,
+    setTypeOfPayment,
+  } = useSessionStore(state => state);
 
   const [isLoading, setIsLoading] = useState(false);
   const [PVProduct, setPVProduct] = useState<Product | null>(null);
@@ -76,15 +80,17 @@ export default function PVCitaMedica() {
   function handleClick(product: Product) {
     setIsLoading(true);
     setSelectedTreatments([product]);
+    setTypeOfPayment(TypeOfPayment.Free);
     router.push(ROUTES.checkout.schedule);
   }
 
-  function AdvanceProduct() {
+  async function AdvanceProduct() {
     useCartStore.setState(INITIAL_STATE);
     setIsLoading(true);
     setSelectedTreatments(selectedTreatments);
-    initProductAdvance(process.env.NEXT_PUBLIC_CITA_PREVIA_ID!);
+    await initProductAdvance(process.env.NEXT_PUBLIC_CITA_PREVIA_ID!);
 
+    setTypeOfPayment(TypeOfPayment.Reservation);
     isEmpty(selectedTreatments)
       ? router.push(ROUTES.checkout.treatments)
       : router.push(ROUTES.checkout.schedule);
@@ -123,7 +129,7 @@ export default function PVCitaMedica() {
 
               <Flex
                 className="border border-hg-black300 p-4 rounded-2xl gap-4 w-full hover:bg-hg-secondary100 cursor-pointer"
-                onClick={() => AdvanceProduct()}
+                onClick={async () => await AdvanceProduct()}
               >
                 <div>
                   <Text className="font-semibold">Tratamiento</Text>

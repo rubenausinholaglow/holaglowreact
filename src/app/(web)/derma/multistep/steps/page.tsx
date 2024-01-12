@@ -20,7 +20,7 @@ import {
   SvgHolaglow,
 } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
+import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -41,8 +41,12 @@ export default function Form() {
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
   } as DermaQuestions);
-  const { setSelectedClinic, setSelectedTreatments, selectedSlot } =
-    useSessionStore(state => state);
+  const {
+    setSelectedClinic,
+    setSelectedTreatments,
+    selectedSlot,
+    setTypeOfPayment,
+  } = useSessionStore(state => state);
   const [client, setClient] = useState<Client>({
     email: '',
     phone: '',
@@ -82,7 +86,7 @@ export default function Form() {
       productDetails.id = '2e9bd0e8-ffa6-4fa1-ae1f-5bfc4cd17187';
       productDetails.flowwwId = 5;
       productDetails.title = 'Consulta personalizada de dermatología';
-      productDetails.price = 59;
+      productDetails.price = 49;
       setSelectedTreatments([productDetails]);
     }
 
@@ -90,13 +94,14 @@ export default function Form() {
 
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
-      address: '',
+      address: 'Consulta online',
       city: '',
       flowwwId: '1',
       internalName: '',
       phone: '',
       professionals: [],
     });
+    setTypeOfPayment(TypeOfPayment.Full);
   }, []);
 
   useEffect(() => {
