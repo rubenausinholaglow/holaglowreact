@@ -10,6 +10,8 @@ import { DermaQuestions } from '@interface/dermaquestions';
 import { dermaService } from '@services/DermaService';
 import { fetchProduct } from '@utils/fetch';
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
+import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
+import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import {
   SvgArrowSmallLeft,
@@ -27,8 +29,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
-import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
-import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(6); //PONER 0
@@ -112,7 +112,7 @@ export default function Form() {
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
-      var continueDisabled = true;
+      let continueDisabled = true;
       if (index == 2) continueDisabled = false;
       setContinueDisabled(continueDisabled);
       dermaQuestions.id = x!.toString();
