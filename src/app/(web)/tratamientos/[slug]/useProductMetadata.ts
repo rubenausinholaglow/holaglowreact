@@ -15,10 +15,10 @@ export const useProductMetadata = (slug: string) => {
 
   useEffect(() => {
     const fetchProductDetails = async () => {
-      const details = await ProductService.getProduct(product.id).then((res) =>
-        res.json()
+      await ProductService.getProduct(product.id).then((res) =>
+        setProductDetails(res)
       );
-      setProductDetails(details);
+      
     };
 
     if (product) {

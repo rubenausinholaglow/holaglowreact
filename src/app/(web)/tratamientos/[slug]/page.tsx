@@ -1,57 +1,21 @@
-import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { Metadata, ResolvingMetadata } from 'next';
+'use client';
 
-import ProductDetail from './components/ProductDetail';
+import ProductMetaDataPage from './productMetaData';
 import { useProductMetadata } from './useProductMetadata';
-
-/*
-type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const { title, description } = useProductMetadata(params.slug);
-
-  return {
-    title: title,
-    description: description,
-    openGraph: {
-      url: 'https://holaglowreact-git-dev-966-hola-glow.vercel.app/',
-      type: 'website',
-      title: title,
-      description: description,
-      images: ['/images/home/OGimagen_Holaglow.jpg'],
-    },
-  };
-}
-*/
 
 export default function ProductPage({
   params,
 }: {
-  params: { slug: string; isDashboard: boolean };
+  params: { slug: string; isDashboard: boolean; id: string };
 }) {
   const { title, description } = useProductMetadata(params.slug);
 
   const metadata = {
+    slug: params.slug,
+    isDashboard: params.isDashboard,
     title: title,
     description: description,
-    openGraph: {
-      url: 'https://holaglowreact-git-dev-966-hola-glow.vercel.app/',
-      type: 'website',
-      title: title,
-      description: description,
-      images: ['/images/home/OGimagen_Holaglow.jpg'],
-    },
   };
 
-  return (
-    <MainLayout>
-      <ProductDetail params={params}></ProductDetail>
-    </MainLayout>
-  );
+  return <ProductMetaDataPage params={metadata}></ProductMetaDataPage>;
 }
