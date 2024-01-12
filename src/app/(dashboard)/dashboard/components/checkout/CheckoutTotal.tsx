@@ -44,10 +44,10 @@ export default function CheckoutTotal() {
     manualPrice,
     productsPriceTotalWithDiscounts
   );
-  const cartTotalWithDiscountFixed =
+  /*const cartTotalWithDiscountFixed =
     Math.ceil(cartTotalWithDiscount * 100) / 100;
   const productsPriceTotalWithDiscountsFixed =
-    Math.ceil(productsPriceTotalWithDiscounts * 100) / 100;
+    Math.ceil(productsPriceTotalWithDiscounts * 100) / 100;*/
   return (
     <div>
       <Flex layout="col-left" className="p-4">
@@ -58,13 +58,9 @@ export default function CheckoutTotal() {
               {(hasProductsDiscount || hasCartDiscount) && (
                 <Text className="text-hg-black">
                   {hasCartDiscount ? (
-                    <>
-                      {Number(productsPriceTotalWithDiscountsFixed).toFixed(2)}€
-                    </>
+                    <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
                   ) : (
-                    <>
-                      {Number(productsPriceTotalWithDiscountsFixed).toFixed(2)}€
-                    </>
+                    <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
                   )}
                 </Text>
               )}
@@ -139,9 +135,9 @@ export default function CheckoutTotal() {
         {(hasProductsDiscount || hasCartDiscount) && (
           <Text className="text-hg-secondary text-xl font-semibold">
             {hasCartDiscount ? (
-              <>{Number(cartTotalWithDiscountFixed).toFixed(2)}€</>
+              <>{Number(cartTotalWithDiscount).toFixed(2)}€</>
             ) : (
-              <>{Number(productsPriceTotalWithDiscountsFixed).toFixed(2)}€</>
+              <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
             )}
           </Text>
         )}

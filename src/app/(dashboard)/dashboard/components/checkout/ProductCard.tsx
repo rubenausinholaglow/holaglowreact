@@ -26,6 +26,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
 
+  debugger;
   const productCartItem = cart.filter(
     item =>
       item.uniqueId === product.uniqueId &&
@@ -79,7 +80,10 @@ export default function ProductCard({ product, isCheckout }: Props) {
       <Flex className="px-4 pb-4 w-full items-end">
         {(productHasDiscount || productHasPromoDiscount) && (
           <Text className="text-hg-secondary font-semibold text-lg mr-2 self-end">
-            {Number(product.priceWithDiscount).toFixed(2)}€
+            {Number(product.priceWithDiscount) % 1 === 0
+              ? Number(product.priceWithDiscount)
+              : Number(Number(product.priceWithDiscount).toFixed(2))}
+            €
           </Text>
         )}
         <Text
