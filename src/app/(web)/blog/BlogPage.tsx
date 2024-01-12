@@ -18,12 +18,6 @@ export default function BlogPage() {
 
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
 
-  const metadata = {
-    title: 'Glow Getter - El blog sobre medicina estética de Holaglow',
-    description:
-      'Resuelve tus dudas y descubre todo sobre la medicina estética contada por profesionales del sector de una manera clara y honesta.',
-  };
-
   useEffect(() => {
     async function initBlog() {
       const posts = await fetchBlogPosts();
@@ -33,8 +27,6 @@ export default function BlogPage() {
     if (!blogPosts) {
       initBlog();
     }
-
-    //setSeoMetaData(metadata.title, metadata.description);
   }, [blogPosts]);
 
   return (

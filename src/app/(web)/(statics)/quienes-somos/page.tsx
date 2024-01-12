@@ -3,13 +3,23 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Sobre nosotros - Holaglow',
   description:
     'Queremos cambiar el significado de la medicina estética como una opción más de autocuidado y de la expresión personal.',
+  openGraph: {
+    url: 'https://holaglowreact-git-dev-966-hola-glow.vercel.app/',
+    type: 'website',
+    title: 'Sobre nosotros - Holaglow',
+    description:
+      'Queremos cambiar el significado de la medicina estética como una opción más de autocuidado y de la expresión personal.',
+    images: ['/images/home/OGimagen_Holaglow.jpg'],
+  },
 };
+
 export default function StaticClinics() {
   return (
     <MainLayout>

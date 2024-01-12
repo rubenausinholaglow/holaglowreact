@@ -109,7 +109,8 @@ export function getDiscountedPrice(product: Product) {
 
 export const setSeoMetaData = (title: string, description: string) => {
   document.title = title;
-  const metaDescriptionTag = document.querySelector('meta[name="description"]');
+  const metaDescriptionTag = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+  const imageUrl = "/images/home/OGimagen_Holaglow.jpg"
 
   if (metaDescriptionTag) {
     metaDescriptionTag.setAttribute('content', description);
@@ -119,4 +120,35 @@ export const setSeoMetaData = (title: string, description: string) => {
     newMetaTag.content = description;
     document.head.appendChild(newMetaTag);
   }
+
+  const ogTitleTag = document.querySelector('meta[property="og:title"]') as HTMLMetaElement;
+  const ogDescriptionTag = document.querySelector('meta[property="og:description"]') as HTMLMetaElement;
+  const ogImageTag = document.querySelector('meta[property="og:image"]') as HTMLMetaElement;
+
+  if (ogTitleTag) {
+    ogTitleTag.setAttribute('content', title);
+  } else {
+    const newOgTitleTag = document.createElement('meta');
+    newOgTitleTag.setAttribute('property', 'og:title');
+    newOgTitleTag.content = title;
+    document.head.appendChild(newOgTitleTag);
+  }
+
+  if (ogDescriptionTag) {
+    ogDescriptionTag.setAttribute('content', description);
+  } else {
+    const newOgDescriptionTag = document.createElement('meta');
+    newOgDescriptionTag.setAttribute('property', 'og:description');
+    newOgDescriptionTag.content = description;
+    document.head.appendChild(newOgDescriptionTag);
+  }
+  
+  if (ogImageTag) {
+      ogImageTag.setAttribute('content', imageUrl);
+    } else {
+      const newOgImageTag = document.createElement('meta');
+      newOgImageTag.setAttribute('property', 'og:image');
+      newOgImageTag.content = imageUrl;
+      document.head.appendChild(newOgImageTag);
+    }
 };
