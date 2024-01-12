@@ -292,10 +292,11 @@ export const PaymentModule = () => {
   };
 
   const PAYMENT_ICONS = {
-    Alma: ['alma.svg'],
-    Pepper: ['pepper.svg'],
+    alma: ['alma.svg'],
+    pepper: ['pepper.svg'],
     Efectivo: [],
-    Tarjeta: ['visa.svg', 'mastercard.svg'],
+    creditCard: ['visa.svg', 'mastercard.svg'],
+    stripe: ['visa.svg', 'mastercard.svg'],
   };
 
   return (
@@ -329,11 +330,9 @@ export const PaymentModule = () => {
                   <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
                   <Text>{method.label}</Text>
                   <Flex className="ml-auto gap-2">
-                    {PAYMENT_ICONS[
-                      method.label as keyof typeof PAYMENT_ICONS
-                    ] &&
+                    {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
                       PAYMENT_ICONS[
-                        method.label as keyof typeof PAYMENT_ICONS
+                        method.key as keyof typeof PAYMENT_ICONS
                       ].map((icon: string) => (
                         <Image
                           src={`/images/dashboard/payment/${icon}`}
