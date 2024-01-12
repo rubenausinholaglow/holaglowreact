@@ -25,10 +25,6 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=no"
         />
-        <meta
-          property="og:image"
-          content="/images/home/OGimagen_Holaglow.jpg"
-        />
       </Head>
       <head>
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
