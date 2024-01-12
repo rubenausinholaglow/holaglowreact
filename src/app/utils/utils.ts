@@ -37,7 +37,7 @@ export const applyDiscountToItem = (
   discountType: string,
   cartItem: CartItem
 ) => {
-  debugger;
+
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 

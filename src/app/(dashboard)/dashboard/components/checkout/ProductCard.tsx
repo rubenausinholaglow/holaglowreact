@@ -26,7 +26,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
 
-  debugger;
   const productCartItem = cart.filter(
     item =>
       item.uniqueId === product.uniqueId &&
