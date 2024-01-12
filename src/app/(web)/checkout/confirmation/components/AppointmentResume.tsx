@@ -231,7 +231,7 @@ export default function AppointmentResume({
                 )}
               </AccordionContent>
 
-              {!isProbadorVirtual && (
+              {!isProbadorVirtual && selectedTreatments[0] && (
                 <Flex className="bg-hg-secondary100 w-full justify-between text-hg-secondary px-4 py-3 border border-white rounded-b-xl md:rounded-xl md:border-none">
                   <Text>
                     <span className="font-semibold">Pagar ahora</span>

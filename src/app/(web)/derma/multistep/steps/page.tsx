@@ -7,8 +7,14 @@ import DatePicker from 'react-datepicker';
 import TextInputField from '@dashboardComponents/TextInputField';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/dermaquestions';
+import { PaymentBank } from '@interface/payment';
+import { CartItem } from '@interface/product';
 import { dermaService } from '@services/DermaService';
+import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
+import { usePayments } from '@utils/paymentUtils';
+import useRegistration from '@utils/userUtils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
@@ -20,7 +26,11 @@ import {
   SvgHolaglow,
 } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
+import {
+  TypeOfPayment,
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -47,6 +57,9 @@ export default function Form() {
     selectedSlot,
     setTypeOfPayment,
   } = useSessionStore(state => state);
+  const { activePayment, setActivePayment } = useGlobalPersistedStore(
+    state => state
+  );
   const [client, setClient] = useState<Client>({
     email: '',
     phone: '',
@@ -74,13 +87,27 @@ export default function Form() {
     },
     interestedTreatment: '',
     treatmentPrice: 0,
+    postalCode: '',
   });
 
   const [hasError] = useState<boolean>(false);
+  const { cart, addItemToCart } = useCartStore(state => state);
   const STEPS = 6;
   const progressBarWith: number = activeSlideIndex * (100 / STEPS);
 
+  const initializePayment = usePayments();
+  const registerUser = useRegistration(client, false, false, false);
   useEffect(() => {
+    async function checkout() {
+      const createdUser = await registerUser(client, false, false, false);
+      await initializePayment(activePayment, createdUser!);
+    }
+    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
+  }, [activePayment]);
+
+  useEffect(() => {
+    setActivePayment(PaymentBank.None);
+    useCartStore.setState(INITIAL_STATE);
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       productDetails.id = '2e9bd0e8-ffa6-4fa1-ae1f-5bfc4cd17187';
@@ -88,6 +115,7 @@ export default function Form() {
       productDetails.title = 'Consulta personalizada de dermatología';
       productDetails.price = 49;
       setSelectedTreatments([productDetails]);
+      addItemToCart(productDetails as CartItem);
     }
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
