@@ -47,6 +47,7 @@ export default function PsrpPage({
     isModalOpen,
   } = useGlobalStore(state => state);
 
+  const [isHydrated, setIsHydrated] = useState(false);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
@@ -56,6 +57,10 @@ export default function PsrpPage({
     description:
       'Elige uno de los packs para tratar de manera global tus objetivos estéticos y conseguir el resultado que deseas',
   };
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
     if (slug !== '') {
@@ -105,6 +110,10 @@ export default function PsrpPage({
       setIsMobileFiltersVisible(false);
     }
   }, [isModalOpen]);
+
+  if (!isHydrated) {
+    return <></>;
+  }
 
   if (isDashboard)
     return (

@@ -28,7 +28,11 @@ export default function AgendaCheckIn() {
           isSubmit
           className="ml-auto"
           customStyles="bg-hg-primary mt-8 align-center"
-          onClick={() => router.push(routes.dashboard.checkIn.root)}
+          onClick={() => {
+            if (isCheckin) {
+              router.push(routes.dashboard.checkIn.root);
+            } else router.back();
+          }}
         >
           Volver
         </Button>

@@ -29,11 +29,12 @@ export default function TreatmentAccordionSelector({
   const ROUTES = useRoutes();
 
   const { stateProducts } = useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, selectedTreatments } = useSessionStore(
+    state => state
+  );
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   function getProductsByCategory(category: string) {
     const filteredProducts = stateProducts.filter(
@@ -102,13 +103,24 @@ export default function TreatmentAccordionSelector({
                       className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                       key={product.title}
                       onClick={() => {
-                        setSelectedProduct(product);
-                        setSelectedTreatments([product]);
-                        if (isDashboard) {
-                          router.push(
-                            `${ROUTES.dashboard.checkIn.agenda}?isCheckin=${isCheckin}`
+                        const isSelected = selectedTreatments.some(
+                          selectedProduct =>
+                            selectedProduct.title === product.title
+                        );
+
+                        if (isSelected) {
+                          const updatedSelection = selectedTreatments.filter(
+                            selectedProduct => selectedProduct.id !== product.id
                           );
+                          setSelectedTreatments(updatedSelection);
                         } else {
+                          setSelectedTreatments([
+                            ...selectedTreatments,
+                            product,
+                          ]);
+                        }
+
+                        if (!isDashboard) {
                           router.push(ROUTES.checkout.schedule);
                         }
                       }}
@@ -118,7 +130,9 @@ export default function TreatmentAccordionSelector({
                         <Text className="text-xs">{product.description}</Text>
                       </div>
 
-                      {selectedProduct?.title === product.title ? (
+                      {selectedTreatments.some(
+                        selectedProduct => selectedProduct.id === product.id
+                      ) ? (
                         <SvgRadioChecked
                           height={24}
                           width={24}

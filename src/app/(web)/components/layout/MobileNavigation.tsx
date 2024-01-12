@@ -140,9 +140,10 @@ export default function MobileNavigation({
           <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
             <a href="/clinicas" id={'tmevent_nav_menu_click'}>
               <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-                {clinics.map(clinic => (
-                  <li key={clinic.city}>{clinic.city}</li>
-                ))}
+                {clinics &&
+                  clinics.map(clinic => (
+                    <li key={clinic.city}>{clinic.city}</li>
+                  ))}
               </ul>
             </a>
           </SimpleAccordion>
