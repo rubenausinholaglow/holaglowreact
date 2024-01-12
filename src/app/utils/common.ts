@@ -110,7 +110,7 @@ export function getDiscountedPrice(product: Product) {
 export const setSeoMetaData = (title: string, description: string) => {
   document.title = title;
   const metaDescriptionTag = document.querySelector('meta[name="description"]') as HTMLMetaElement;
-  const imageUrl = "/images/home/OGimagen_Holaglow.jpg"
+  const imageUrl = "https://holaglowreact-git-dev-966-hola-glow.vercel.app/images/home/OGimagen_Holaglow.jpg"
 
   if (metaDescriptionTag) {
     metaDescriptionTag.setAttribute('content', description);
