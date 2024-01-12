@@ -27,9 +27,11 @@ import { useRouter } from 'next/navigation';
 export default function Agenda({
   isDashboard = false,
   isCheckin = false,
+  isDerma = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
+  isDerma?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -228,11 +230,11 @@ export default function Agenda({
             },
             previous: previousAppointment,
           }).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
@@ -249,15 +251,15 @@ export default function Agenda({
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else {
+        } else if (!isDerma) {
           router.push('/checkout/contactform');
         }
       } catch {

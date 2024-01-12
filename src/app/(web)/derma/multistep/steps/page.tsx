@@ -23,13 +23,15 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
-import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
+import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
+import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 
 export default function Form() {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(6); //PONER 0
   const [values, setValues] = useState<Array<Array<number>>>([[]]);
   const [textAreaOne, setTextAreasOne] = useState<string>('');
   const [textAreaTwo, setTextAreasTwo] = useState<string>('');
@@ -39,10 +41,9 @@ export default function Form() {
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
   } as DermaQuestions);
-  const { setSelectedClinic, setSelectedTreatments } = useSessionStore(
-    state => state
-  );
-  const [formData, setFormData] = useState<Client>({
+  const { setSelectedClinic, setSelectedTreatments, selectedSlot } =
+    useSessionStore(state => state);
+  const [client, setClient] = useState<Client>({
     email: '',
     phone: '',
     phonePrefix: '',
@@ -71,7 +72,8 @@ export default function Form() {
     treatmentPrice: 0,
   });
 
-  const STEPS = 5;
+  const [hasError] = useState<boolean>(false);
+  const STEPS = 6;
   const progressBarWith: number = activeSlideIndex * (100 / STEPS);
 
   useEffect(() => {
@@ -97,15 +99,22 @@ export default function Form() {
     });
   }, []);
 
+  useEffect(() => {
+    if (selectedSlot) setContinueDisabled(false);
+  }, [selectedSlot]);
+
   const goBack = (index: number) => {
     setActiveSlideIndex(index - 1);
+    setContinueDisabled(false);
   };
   const goNext = (index: number) => {
     dermaQuestions.extraInfo = textAreaTwo;
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
-      setContinueDisabled(true);
+      var continueDisabled = true;
+      if (index == 2) continueDisabled = false;
+      setContinueDisabled(continueDisabled);
       dermaQuestions.id = x!.toString();
       setDermaQuestions(dermaQuestions);
     });
@@ -326,14 +335,41 @@ export default function Form() {
 
           <div className="bg-white px-4">
             Paso 5, agenda
-            <section className="mb-6">
-              <Text size="xl" className="mb-2 font-semibold">
-                Please select your preferred time slot
-              </Text>
-              <Text>Agenda</Text>
-            </section>
             <section>
-              <Agenda isDashboard={true}></Agenda>
+              <Agenda isDashboard={true} isDerma={true}></Agenda>
+            </section>
+          </div>
+          <div className="bg-white px-4">
+            Paso 6, confirmacion
+            <section>
+              <Container className="px-0 md:mt-8 md:pb-8">
+                <Flex
+                  layout="col-left"
+                  className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
+                >
+                  <div className="w-full md:w-1/2 md:order-2">
+                    <AppointmentResume isProbadorVirtual={false} />
+                  </div>
+                  <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
+                    <Title size="xl" className="font-semibold mb-4">
+                      Reserva tu cita
+                    </Title>
+                    <RegistrationForm
+                      showPostalCode={true}
+                      redirect={false}
+                      hasContinueButton={false}
+                      formData={client}
+                      setClientData={setClient}
+                    />
+
+                    <CheckoutPayment
+                      hasError={hasError}
+                      className="mt-8"
+                      formData={client}
+                    />
+                  </div>
+                </Flex>
+              </Container>
             </section>
           </div>
         </Carousel>

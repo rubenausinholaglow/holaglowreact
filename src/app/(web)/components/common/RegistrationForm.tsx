@@ -8,7 +8,11 @@ import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import useRegistration from '@utils/userUtils';
-import { phoneValidationRegex, validateEmail } from '@utils/validators';
+import {
+  phoneValidationRegex,
+  postalCodeValidationRegex,
+  validateEmail,
+} from '@utils/validators';
 import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -30,6 +34,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   isEmbed = false,
   page = '',
   setClientData,
+  showPostalCode = false,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -37,6 +42,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   isEmbed?: boolean;
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
+  showPostalCode?: boolean;
 }) => {
   const routes = useRoutes();
 
@@ -45,6 +51,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
+  const [showPostalCodeError, setShowPostalCodeError] = useState<
+    null | boolean
+  >(null);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -73,6 +82,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     },
     interestedTreatment: '',
     treatmentPrice: 0,
+    postalCode: '',
   });
 
   const registerUser = useRegistration(
@@ -292,7 +302,26 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </p>
         )}
       </div>
-
+      {showPostalCode && (
+        <>
+          <TextInputField
+            placeholder="Código Postal"
+            value={formData.postalCode!}
+            onChange={event => {
+              handleFieldChange(event, 'postalCode');
+              setShowPostalCodeError(
+                !postalCodeValidationRegex.test(event.target.value)
+              );
+            }}
+            hasNoValidation
+          />
+          {showPostalCodeError && (
+            <p className="text-hg-error text-sm p-2">
+              {errorsConfig.ERROR_POSTALCODE_NOT_VALID}
+            </p>
+          )}
+        </>
+      )}
       <Flex layout="col-left" className="my-2 mb-4">
         <Flex
           layout="row-left"
@@ -365,7 +394,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             </Flex>
           )}
       </Flex>
-
       {hasContinueButton && (
         <Button
           disabled={isDisabled}
