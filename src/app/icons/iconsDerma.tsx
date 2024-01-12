@@ -4,9 +4,9 @@ import { SVGProps } from 'react';
 export const SvgHolaglowDerma = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={115}
-    height={40}
-    viewBox="0 0 115 40"
+    width={92}
+    height={32}
+    viewBox="0 0 92 32"
     {...props}
   >
     <path

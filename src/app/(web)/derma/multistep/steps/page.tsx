@@ -9,6 +9,7 @@ import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
+import { Accordion } from '@radix-ui/react-accordion';
 import { dermaService } from '@services/DermaService';
 import CheckHydration from '@utils/CheckHydration';
 import { INITIAL_STATE } from '@utils/constants';
@@ -19,13 +20,15 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
+import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import {
   SvgArrowSmallLeft,
+  SvgCalendar,
   SvgCheck,
   SvgCircle,
-  SvgHolaglow,
 } from 'app/icons/Icons';
+import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow } from 'app/icons/IconsDs';
 import {
   TypeOfPayment,
@@ -34,6 +37,11 @@ import {
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -92,12 +100,14 @@ export default function Form() {
   });
 
   const [hasError] = useState<boolean>(false);
+  const [birthDay, setBirthDay] = useState<string | undefined>(undefined);
   const { cart, addItemToCart } = useCartStore(state => state);
   const STEPS = 6;
-  const progressBarWith: number = activeSlideIndex * (100 / STEPS);
+  const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
+
   useEffect(() => {
     async function checkout() {
       const createdUser = await registerUser(client, false, false, false);
@@ -109,6 +119,7 @@ export default function Form() {
   useEffect(() => {
     setActivePayment(PaymentBank.None);
     useCartStore.setState(INITIAL_STATE);
+
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       productDetails.id = '2e9bd0e8-ffa6-4fa1-ae1f-5bfc4cd17187';
@@ -194,6 +205,7 @@ export default function Form() {
       [field]: event.target.value,
     }));
   };
+
   const selectDate = (x: Date) => {
     const dayjsDate = dayjs(x);
     const today = dayjs();
@@ -204,237 +216,288 @@ export default function Form() {
     setDermaQuestions(dermaQuestions);
   };
 
+  const selectBirthday = (date: Date) => {
+    console.log(date);
+
+    setBirthDay(dayjs(date).format('DD-MM-YYYY'));
+  };
+
   return (
     <CheckHydration>
-      <header className="py-4 border-b border-hg-black50 mb-6 relative">
-        <Flex layout="row-left" className="max-w-[624px] mx-auto px-4">
-          {activeSlideIndex > 0 && (
-            <div className="w-[30px] mr-2 sm:hidden">
-              <SvgArrowSmallLeft
-                height={30}
-                width={30}
-                fill={HOLAGLOW_COLORS['tertiary']}
-                className="cursor-pointer self-center"
-                onClick={() => goBack(activeSlideIndex)}
-              />
-            </div>
-          )}
-          <SvgHolaglow
-            width={125}
-            height={30}
-            fill={HOLAGLOW_COLORS['tertiary']}
-          />
-        </Flex>
-      </header>
-      <main
-        id="multistep"
-        className="max-w-[624px] mx-auto relative overflow-hidden text-hg-black"
-      >
-        <div className="px-4 mb-12">
-          <ul className="flex bg-hg-tertiary500/40 h-[4px] w-full rounded-full">
+      <div className="bg-derma-secondary100 min-h-screen">
+        <header className="py-4 relative">
+          <Flex layout="row-left" className="max-w-[624px] mx-auto px-4">
+            {activeSlideIndex > 0 && (
+              <div className="w-[30px] mr-2 sm:hidden">
+                <SvgArrowSmallLeft
+                  height={30}
+                  width={30}
+                  fill={HOLAGLOW_COLORS['tertiary']}
+                  className="cursor-pointer self-center"
+                  onClick={() => goBack(activeSlideIndex)}
+                />
+              </div>
+            )}
+            <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
+          </Flex>
+        </header>
+
+        <main
+          id="multistep"
+          className="mx-auto relative overflow-hidden text-hg-black"
+        >
+          <ul className="flex bg-derma-primary/20 h-[4px] w-full rounded-full mb-6">
             <li
               className="h-[4px] rounded-full bg-hg-tertiary transition-all"
               style={{ width: `${progressBarWith}%` }}
             ></li>
           </ul>
-        </div>
 
-        <Carousel
-          totalSlides={STEPS}
-          currentSlide={activeSlideIndex}
-          dragEnabled={false}
-          touchEnabled={false}
-        >
-          <div className="bg-white px-4">
-            Paso 1, validación de usuario
-            <section className="mb-6">
-              <Text size="xl" className="mb-2 font-semibold">
-                Primero, comencemos con tu información básica
-              </Text>
-              <Text>
-                Ten en cuenta que nuestros profesionales de la salud no podrán
-                recetar antibióticos orales o medicamentos, como Roaccutane y
-                Spironolactone, en línea, ya que esto requiere una consulta en
-                persona. Nuestros médicos solo pueden abordar preocupaciones
-                relacionadas con tu piel.
-              </Text>
-            </section>
-            <section>
-              <div className="grid grid-cols-1 gap-4 w-full">
-                <TextInputField
-                  placeholder="Nombre"
-                  value={dermaQuestions.name!}
-                  onChange={event => handleFieldChange(event, 'name')}
-                  hasNoValidation
-                />
-                <Flex id="datepickerWrapper">
-                  <DatePicker
-                    onChange={selectDate}
-                    maxDate={new Date()}
-                    useWeekdaysShort
-                    calendarStartDay={1}
-                    locale="es"
-                    className="w-full"
-                    fixedHeight
-                    disabledKeyboardNavigation
-                    selected={localDateSelected}
-                  ></DatePicker>
-                </Flex>
+          <Carousel
+            totalSlides={STEPS}
+            currentSlide={activeSlideIndex}
+            dragEnabled={false}
+            touchEnabled={false}
+          >
+            <AnimateOnViewport>
+              <div className="px-4">
+                <Text className="text-sm text-derma-primary500 mb-2">
+                  Paso 1, validación de usuario
+                </Text>
+                <Text className="font-gtUltraThin mb-2 font-bold text-xl text-derma-primary">
+                  Primero, comencemos con tu información básica
+                </Text>
+                <Text className="text-hg-black500 text-sm mb-8">
+                  Ten en cuenta que nuestros profesionales de la salud no podrán
+                  recetar antibióticos orales o medicamentos, como Roaccutane y
+                  Spironolactone, en línea, ya que esto requiere una consulta en
+                  persona. Nuestros médicos solo pueden abordar preocupaciones
+                  relacionadas con tu piel.
+                </Text>
+                <section>
+                  <Flex layout="col-left" className="w-full gap-4">
+                    <TextInputField
+                      placeholder="¿Cuál es tu nombre?"
+                      value={dermaQuestions.name!}
+                      onChange={event => handleFieldChange(event, 'name')}
+                      hasNoValidation
+                    />
+                    <TextInputField
+                      placeholder="¿Cuál es tu fecha de nacimiento?"
+                      value={birthDay ? birthDay : ''}
+                      hasNoValidation
+                      onChange={event => console.log(values)}
+                    />
+
+                    <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem>
+                        <AccordionTrigger>
+                          <SvgCalendar className="h-6 w-6 text-derma-primary" />
+                        </AccordionTrigger>
+
+                        <AccordionContent>
+                          <div id="datepickerWrapper" className="w-full">
+                            <DatePicker
+                              inline
+                              onChange={selectBirthday}
+                              onMonthChange={selectBirthday}
+                              onYearChange={selectBirthday}
+                              useWeekdaysShort
+                              calendarStartDay={1}
+                              locale="es"
+                              className="w-full"
+                              fixedHeight
+                              selected={localDateSelected}
+                              disabledKeyboardNavigation
+                              showYearDropdown
+                              showMonthDropdown
+                              dropdownMode="select"
+                            />
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </Flex>
+                </section>
               </div>
-            </section>
-          </div>
-          {values &&
-            MULTISTEP_QUESTIONS.map((item: any, question: number) => {
-              return (
-                <div className="bg-white px-4" key={question}>
-                  Paso {question + 1}, {item.section}
-                  <section className="mb-6">
-                    <Text size="xl" className="mb-2 font-semibold">
-                      {item.title}
-                    </Text>
-                    <Text>{item.description}</Text>
-                  </section>
-                  <section>
-                    <ul className="grid grid-cols-1 gap-4">
-                      {values &&
-                        item.questions.map((item: any, index: number) => {
-                          const isActive =
-                            values[question]?.indexOf(index) > -1;
-                          return (
-                            <div
-                              key={index}
-                              className={`w-full mb-4 ${
-                                isActive
-                                  ? 'bg-hg-tertiary500/25 text-hg-black'
-                                  : 'text-hg-tertiary'
-                              } bg-hg-tertiary500/10 hover:bg-hg-tertiary500/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
-                              onClick={() => {
-                                setSelectedQuestionValue(question, index);
-                              }}
-                            >
-                              <Flex
-                                layout="col-center"
-                                className="justify-start h-full"
-                              >
-                                {isActive ? (
-                                  <SvgCheck
-                                    height={16}
-                                    width={16}
-                                    fill={HOLAGLOW_COLORS['tertiary']}
-                                    className="self-end mb-4"
-                                  />
-                                ) : (
-                                  <SvgCircle
-                                    height={16}
-                                    width={16}
-                                    stroke={HOLAGLOW_COLORS['black']}
-                                    className="self-end mb-4"
-                                  />
+            </AnimateOnViewport>
+
+            {values &&
+              MULTISTEP_QUESTIONS.map(
+                (item: any, question: number, index: number) => {
+                  return (
+                    <div className="bg-white px-4" key={question}>
+                      {activeSlideIndex === question + 1 && (
+                        <>
+                          Paso {question + 1}, {item.section}
+                          <section className="mb-6">
+                            <Text size="xl" className="mb-2 font-semibold">
+                              {item.title}
+                            </Text>
+                            <Text>{item.description}</Text>
+                          </section>
+                          <section>
+                            <ul className="grid grid-cols-1 gap-4">
+                              {values &&
+                                item.questions.map(
+                                  (item: any, index: number) => {
+                                    const isActive =
+                                      values[question]?.indexOf(index) > -1;
+                                    return (
+                                      <div
+                                        key={index}
+                                        className={`w-full mb-4 ${
+                                          isActive
+                                            ? 'bg-hg-tertiary500/25 text-hg-black'
+                                            : 'text-hg-tertiary'
+                                        } bg-hg-tertiary500/10 hover:bg-hg-tertiary500/20 hover:text-hg-black group rounded-lg py-2 px-3 cursor-pointer`}
+                                        onClick={() => {
+                                          setSelectedQuestionValue(
+                                            question,
+                                            index
+                                          );
+                                        }}
+                                      >
+                                        <Flex
+                                          layout="col-center"
+                                          className="justify-start h-full"
+                                        >
+                                          {isActive ? (
+                                            <SvgCheck
+                                              height={16}
+                                              width={16}
+                                              fill={HOLAGLOW_COLORS['tertiary']}
+                                              className="self-end mb-4"
+                                            />
+                                          ) : (
+                                            <SvgCircle
+                                              height={16}
+                                              width={16}
+                                              stroke={HOLAGLOW_COLORS['black']}
+                                              className="self-end mb-4"
+                                            />
+                                          )}
+                                          <div className="grow flex items-center">
+                                            <Text
+                                              size="xs"
+                                              className="py-2 font-semibold text-center"
+                                            >
+                                              {item.title}
+                                            </Text>
+                                            <Text
+                                              size="xs"
+                                              className="py-2 font-semibold text-center"
+                                            >
+                                              {item.text}
+                                            </Text>
+                                          </div>
+                                        </Flex>
+                                      </div>
+                                    );
+                                  }
                                 )}
-                                <div className="grow flex items-center">
-                                  <Text
-                                    size="xs"
-                                    className="py-2 font-semibold text-center"
-                                  >
-                                    {item.title}
-                                  </Text>
-                                  <Text
-                                    size="xs"
-                                    className="py-2 font-semibold text-center"
-                                  >
-                                    {item.text}
-                                  </Text>
-                                </div>
-                              </Flex>
-                            </div>
-                          );
-                        })}
-                    </ul>
+                            </ul>
+                          </section>
+                          {item.showTextArea && (
+                            <section>
+                              <textarea
+                                value={
+                                  question == 2 ? textAreaOne : textAreaTwo
+                                }
+                                onChange={e =>
+                                  setTextAreasValue(e.target.value, question)
+                                }
+                                placeholder="Escribe tu comentario..."
+                                className="w-full h-40 p-2 resize-none border rounded-lg mb-6"
+                              />
+                            </section>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  );
+                }
+              )}
+
+            <div className="bg-white px-4">
+              {activeSlideIndex === 4 && (
+                <>
+                  Paso 5, agenda
+                  <section>
+                    <Agenda isDashboard={true} isDerma={true}></Agenda>
                   </section>
-                  {item.showTextArea && (
-                    <section>
-                      <textarea
-                        value={question == 2 ? textAreaOne : textAreaTwo}
-                        onChange={e =>
-                          setTextAreasValue(e.target.value, question)
-                        }
-                        placeholder="Escribe tu comentario..."
-                        className="w-full h-40 p-2 resize-none border rounded-lg mb-6"
-                      />
-                    </section>
-                  )}
-                </div>
-              );
-            })}
+                </>
+              )}
+            </div>
 
-          <div className="bg-white px-4">
-            Paso 5, agenda
-            <section>
-              <Agenda isDashboard={true} isDerma={true}></Agenda>
-            </section>
-          </div>
-          <div className="bg-white px-4">
-            Paso 6, confirmacion
-            <section>
-              <Container className="px-0 md:mt-8 md:pb-8">
-                <Flex
-                  layout="col-left"
-                  className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
-                >
-                  <div className="w-full md:w-1/2 md:order-2">
-                    <AppointmentResume isProbadorVirtual={false} />
-                  </div>
-                  <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
-                    <Title size="xl" className="font-semibold mb-4">
-                      Reserva tu cita
-                    </Title>
-                    <RegistrationForm
-                      showPostalCode={true}
-                      redirect={false}
-                      hasContinueButton={false}
-                      formData={client}
-                      setClientData={setClient}
-                    />
+            <div className="bg-white px-4">
+              {activeSlideIndex === 5 && (
+                <>
+                  Paso 6, confirmacion
+                  <section>
+                    <Container className="px-0 md:mt-8 md:pb-8">
+                      <Flex
+                        layout="col-left"
+                        className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
+                      >
+                        <div className="w-full md:w-1/2 md:order-2">
+                          <AppointmentResume isProbadorVirtual={false} />
+                        </div>
+                        <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
+                          <Title size="xl" className="font-semibold mb-4">
+                            Reserva tu cita
+                          </Title>
+                          <RegistrationForm
+                            showPostalCode={true}
+                            redirect={false}
+                            hasContinueButton={false}
+                            formData={client}
+                            setClientData={setClient}
+                          />
 
-                    <CheckoutPayment
-                      hasError={hasError}
-                      className="mt-8"
-                      formData={client}
-                    />
-                  </div>
-                </Flex>
-              </Container>
-            </section>
-          </div>
-        </Carousel>
-        {activeSlideIndex > 0 && (
-          <Button
-            className="mt-8 ml-3"
-            type="secondary"
-            onClick={() => goBack(activeSlideIndex)}
-          >
-            <Flex layout="row-left">
-              <SvgArrowSmallLeft height={20} width={20} />
-              <span className="ml-2">Atrás</span>
-            </Flex>
-          </Button>
-        )}
-        {activeSlideIndex < STEPS && (
-          <Button
-            className="mt-8 ml-3"
-            type="secondary"
-            disabled={continueDisabled}
-            onClick={() => {
-              if (!continueDisabled) goNext(activeSlideIndex);
-            }}
-          >
-            <Flex layout="row-right">
-              <span className="ml-2">Siguiente</span>
-              <SvgArrow height={16} width={16} className="ml-2" />
-            </Flex>
-          </Button>
-        )}
-      </main>
+                          <CheckoutPayment
+                            hasError={hasError}
+                            className="mt-8"
+                            formData={client}
+                          />
+                        </div>
+                      </Flex>
+                    </Container>
+                  </section>
+                </>
+              )}
+            </div>
+          </Carousel>
+
+          {activeSlideIndex > 0 && (
+            <Button
+              className="mt-8 ml-3"
+              type="secondary"
+              onClick={() => goBack(activeSlideIndex)}
+            >
+              <Flex layout="row-left">
+                <SvgArrowSmallLeft height={20} width={20} />
+                <span className="ml-2">Atrás</span>
+              </Flex>
+            </Button>
+          )}
+          {activeSlideIndex < STEPS && (
+            <Button
+              className="mt-8 ml-3"
+              type="secondary"
+              disabled={continueDisabled}
+              onClick={() => {
+                if (!continueDisabled) goNext(activeSlideIndex);
+              }}
+            >
+              <Flex layout="row-right">
+                <span className="ml-2">Siguiente</span>
+                <SvgArrow height={16} width={16} className="ml-2" />
+              </Flex>
+            </Button>
+          )}
+        </main>
+      </div>
     </CheckHydration>
   );
 }
