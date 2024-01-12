@@ -186,7 +186,7 @@ export default function AppointmentResume({
                     )}
                   </div>
                 </Flex>
-                {selectedTreatments[0].price > 0 && (
+                {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
                   <Flex
                     layout="col-left"
                     className="w-full gap-4 text-sm text-hg-black400 px-4 md:px-0"
@@ -210,7 +210,7 @@ export default function AppointmentResume({
                   </Flex>
                 )}
 
-                {!isProbadorVirtual && (
+                {!isProbadorVirtual && selectedTreatments[0] && (
                   <Flex
                     layout="col-left"
                     className="w-full gap-4 text-sm px-4 pb-6 md:px-0"
