@@ -129,8 +129,6 @@ export const setSeoMetaData = (title: string, description: string) => {
     document.head.appendChild(newMetaTag);
   }
 
-  
-
   if (ogTitleTag) {
     ogTitleTag.setAttribute('content', title);
   } else {
