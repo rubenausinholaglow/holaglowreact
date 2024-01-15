@@ -42,7 +42,7 @@ export default function DashboardLayout({
   const SOCKET_URL_PROFESSIONAL_RESPONSE =
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/ProfessionalResponse';
   const SOCKET_URL_PAYMENT_CONFIRMATION_RESPONSE =
-    process.env.NEXT_PUBLIC_CLINICS_API + '/Hub/PaymentConfirmationResponse';
+    process.env.NEXT_PUBLIC_FINANCE_API + '/Hub/PaymentConfirmationResponse';
   const SOCKET_URL_START_APPOINTMENT =
     process.env.NEXT_PUBLIC_CLINICS_API + 'Hub/StartAppointment';
 
