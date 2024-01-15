@@ -10,6 +10,7 @@ export const metadata = {
   title: 'Holaglow - Medicina estética',
   description:
     'La nueva cara de la medicina estética. Tratamientos sin cirugía para conseguir resultados reales',
+  image: '/images/home/OGimagen_Holaglow.jpg',
 };
 
 export default function RootLayout({
@@ -24,6 +25,7 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=no"
         />
+        <meta property="og:image" content={metadata.image} />
       </Head>
       <head>
         <noscript>

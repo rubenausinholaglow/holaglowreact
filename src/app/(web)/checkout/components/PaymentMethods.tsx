@@ -107,7 +107,7 @@ export const PaymentMethods = () => {
                     customStyles="bg-hg-primary gap-2"
                     onClick={() => {
                       setIsLoadingButton(true);
-                      setActivePayment(PaymentBank.CreditCard);
+                      setActivePayment(PaymentBank.Stripe);
                     }}
                   >
                     {isLoadingButton ? (

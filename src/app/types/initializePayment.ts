@@ -6,6 +6,7 @@ export interface InitializePayment {
   paymentBank: PaymentBank;
   amount: number;
   productPaymentRequest?: ProductPaymentRequest[];
+  originPayment: OriginPayment;
 }
 
 export interface CreatePayment {

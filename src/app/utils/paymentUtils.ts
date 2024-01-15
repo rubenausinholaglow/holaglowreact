@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { User } from '@interface/appointment';
 import {
   InitializePayment,
+  OriginPayment,
   ProductPaymentRequest,
 } from '@interface/initializePayment';
 import { PaymentBank } from '@interface/payment';
@@ -33,6 +34,7 @@ export const usePayments = () => {
       userId: createdUser?.id || '',
       paymentBank: paymentBank,
       productPaymentRequest: [],
+      originPayment : OriginPayment.web
     };
 
     cart.forEach(product => {

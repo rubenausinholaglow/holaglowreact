@@ -3,13 +3,23 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Las ciudades donde te subimos el glow',
   description:
     'Ven a visitar las clínicas Holaglow, un espacio de confianza, profesionalidad e innovación donde podrás expresar tu belleza libremente.',
+  openGraph: {
+    url: 'https://holaglowreact-git-dev-966-hola-glow.vercel.app/',
+    type: 'website',
+    title: 'Las ciudades donde te subimos el glow',
+    description:
+      'Ven a visitar las clínicas Holaglow, un espacio de confianza, profesionalidad e innovación donde podrás expresar tu belleza libremente.',
+    images: ['/images/home/OGimagen_Holaglow.jpg'],
+  },
 };
+
 export default function StaticClinics() {
   return (
     <MainLayout>

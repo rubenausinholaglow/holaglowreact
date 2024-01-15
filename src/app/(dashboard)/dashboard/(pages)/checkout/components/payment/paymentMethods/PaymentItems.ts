@@ -21,8 +21,14 @@ export const paymentItems = [
   },
   {
     key: 'creditCard',
-    label: 'Tarjeta',
+    label: 'Tarjeta (Datáfono)',
     paymentBank: PaymentBank.CreditCard,
+    paymentMethod: PaymentMethod.CreditCard,
+  },
+  {
+    key: 'stripe',
+    label: 'Tarjeta (Online)',
+    paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
 ];
@@ -31,13 +37,13 @@ export const checkoutPaymentItems = [
   {
     key: 'creditCard',
     label: 'Tarjeta',
-    paymentBank: PaymentBank.CreditCard,
+    paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
   {
     key: 'direct',
     label: 'Pago rápido',
-    paymentBank: PaymentBank.CreditCard,
+    paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
 ];
