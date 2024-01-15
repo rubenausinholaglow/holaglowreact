@@ -33,10 +33,5 @@
       "source": "/appointment-confirmed/valencia",
       "destination": "/api/server"
     }
-  ],
-  "functions": {
-    "app/**/*": {
-      "maxDuration": 300
-    }
-  }
+  ]
 }
