@@ -217,9 +217,8 @@ export default function Form() {
   };
 
   const selectBirthday = (date: Date) => {
-    console.log(date);
-
     setBirthDay(dayjs(date).format('DD-MM-YYYY'));
+    selectDate(date);
   };
 
   return (
