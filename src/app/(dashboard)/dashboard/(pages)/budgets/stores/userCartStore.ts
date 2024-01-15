@@ -98,13 +98,15 @@ export const useCartStore = create(
         set(() => ({ cart: updatedCart }));
       },
       applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {
+        const roundedValue = Number(value.toFixed(2));
         set(state => ({
+          
           manualPrice:
-            discountType === '€' ? Number(value) : state.priceDiscount,
+            discountType === '€' ? Number(roundedValue) : state.priceDiscount,
           percentageDiscount:
-            discountType === '%' ? Number(value) : state.percentageDiscount,
+            discountType === '%' ? Number(roundedValue) : state.percentageDiscount,
           priceDiscount:
-            discountType === 'total' ? Number(value) : state.manualPrice,
+            discountType === 'total' ? Number(roundedValue) : state.manualPrice,
         }));
       },
       removeItemDiscount: (cartUniqueId: string, discountType: '%' | '€') => {

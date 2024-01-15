@@ -36,14 +36,22 @@ const Page = () => {
         ? userCrisalix.crisalixUser[0]
         : null;
 
-    if (existsCrisalixUser == null) {
+    if (!existsCrisalixUser) {
       createCrisalixUser(user?.id || '', storedAppointmentId, storedClinicId);
     }
 
-    if (existsCrisalixUser != null) {
+    if (existsCrisalixUser) {
       setId(existsCrisalixUser.id);
       setPlayerToken(existsCrisalixUser.playerToken);
       setPlayerId(existsCrisalixUser.playerId);
+
+      UserService.getSimulationReady(
+        existsCrisalixUser.id,
+        storedClinicFlowwwId!
+      ).then(x => {
+        setSimulationReady(x.has3d);
+        setLastSimulatorId(x.lastSimulatorId);
+      });
     }
     setTimeout(
       () => {
@@ -51,14 +59,6 @@ const Page = () => {
       },
       1 * 60 * 1000
     );
-
-    UserService.getSimulationReady(
-      existsCrisalixUser!.id,
-      storedClinicFlowwwId!
-    ).then(x => {
-      setSimulationReady(x.has3d);
-      setLastSimulatorId(x.lastSimulatorId);
-    });
   }, []);
 
   async function createCrisalixUser(

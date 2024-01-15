@@ -61,16 +61,11 @@ export default function PaymentInput(props: Props) {
     null
   );
   const [showPepperModal, setShowPepperModal] = useState(false);
-
+  const [paymentStripe, setPaymentStripe] = useState(false);
   const { user, stateProducts } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
-  const {
-    remoteControl,
-    storedBoxId,
-    storedClinicId,
-    storedBudgetId,
-    setCurrentUser,
-  } = useGlobalPersistedStore(state => state);
+  const { remoteControl, storedBudgetId, setCurrentUser } =
+    useGlobalPersistedStore(state => state);
 
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
@@ -108,8 +103,11 @@ export default function PaymentInput(props: Props) {
     productsPriceTotalWithDiscounts
   );
 
+  const cartTotalWithDiscountFixed =
+    Math.ceil(cartTotalWithDiscount * 100) / 100;
+
   const MaxValue =
-    parseFloat(cartTotalWithDiscount.toFixed(2)) -
+    parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
@@ -212,7 +210,7 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
-    if (showAlma || messageNotification || showPepper) {
+    if (showAlma || messageNotification || showPepper || paymentStripe) {
       return;
     }
     await addPayment(data.number);
@@ -230,29 +228,8 @@ export default function PaymentInput(props: Props) {
       ['id']: user?.id,
     }));
     await UserService.updateUser(formData).then(async x => {
-      let resultValue = '';
-      if (!isNaN(Number(inputValue))) {
-        resultValue = Math.round(Number(inputValue) * 100).toString();
-      }
-      const data: InitializePayment = {
-        amount: Number(resultValue),
-        installments: 1,
-        userId: user?.id || '',
-        paymentBank: 2,
-        productPaymentRequest: [],
-      };
-
-      cart.forEach(product => {
-        const productPayment: ProductPaymentRequest = {
-          name: product.title,
-          price: product.price.toString(),
-          quantity: '1',
-          id: product.id,
-        };
-        data.productPaymentRequest?.push(productPayment);
-      });
-
-      await FinanceService.initializePayment(data).then(x => {
+      const initializePayment = constructInitializePayment(PaymentBank.Pepper);
+      await FinanceService.initializePayment(initializePayment).then(x => {
         setShowPepperModal(false);
         if (x) {
           openWindow(x.url);
@@ -311,6 +288,54 @@ export default function PaymentInput(props: Props) {
       setShowPepperModal(false);
     }
   }, [isModalOpen]);
+
+  const initializeStripePayment = async () => {
+    setIsLoading(true);
+    setPaymentStripe(true);
+    const initializePayment = constructInitializePayment(PaymentBank.Stripe);
+    await FinanceService.initializePayment(initializePayment).then(x => {
+      if (x) {
+        handleUrlPayment(x.id, '', x.referenceId);
+      } else {
+        Bugsnag.notify('Error payment with Stripe');
+        setMessageNotification('Error pagando con tarjeta');
+      }
+    });
+    setIsLoading(false);
+  };
+
+  function constructInitializePayment(
+    paymentBank: PaymentBank
+  ): InitializePayment {
+    let resultValue = '';
+    if (!isNaN(Number(inputValue))) {
+      resultValue = Math.round(Number(inputValue) * 100).toString();
+    }
+
+    const data: InitializePayment = {
+      amount: Number(resultValue),
+      installments: 1,
+      userId: user?.id || '',
+      paymentBank: paymentBank,
+      productPaymentRequest: [],
+      originPayment: OriginPayment.dashboard,
+    };
+
+    cart.forEach(product => {
+      const productPayment: ProductPaymentRequest = {
+        name: product.title,
+        price:
+          product.priceWithDiscount > 0
+            ? product.priceWithDiscount.toFixed(2)
+            : product.price.toString(),
+        quantity: '1',
+        id: product.id,
+      };
+      data.productPaymentRequest?.push(productPayment);
+    });
+
+    return data;
+  }
 
   const renderFinance = () => {
     return (
@@ -526,8 +551,14 @@ export default function PaymentInput(props: Props) {
                     isSubmit
                     onClick={() => activateAlma()}
                   >
-                    Continuar
-                    <SvgArrow height={16} width={16} className="ml-2" />
+                    {isLoading ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      <>
+                        Continuar
+                        <SvgArrow height={16} width={16} className="ml-2" />
+                      </>
+                    )}
                   </Button>
                 )}
                 {props.paymentBank === PaymentBank.Pepper && (
@@ -540,8 +571,25 @@ export default function PaymentInput(props: Props) {
                     <SvgArrow height={16} width={16} className="ml-2" />
                   </Button>
                 )}
+                {props.paymentBank === PaymentBank.Stripe && (
+                  <Button
+                    type="tertiary"
+                    isSubmit
+                    onClick={() => initializeStripePayment()}
+                  >
+                    {isLoading ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      <>
+                        Continuar
+                        <SvgArrow height={16} width={16} className="ml-2" />
+                      </>
+                    )}
+                  </Button>
+                )}
                 {props.paymentBank != PaymentBank.Alma &&
-                  props.paymentBank != PaymentBank.Pepper && (
+                  props.paymentBank != PaymentBank.Pepper &&
+                  props.paymentBank != PaymentBank.Stripe && (
                     <Button
                       type="tertiary"
                       customStyles="bg-hg-primary"

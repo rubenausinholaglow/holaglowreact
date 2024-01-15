@@ -37,6 +37,7 @@ export const applyDiscountToItem = (
   discountType: string,
   cartItem: CartItem
 ) => {
+
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 
@@ -61,7 +62,7 @@ export const applyDiscountToItem = (
     price = price - (price * percentageDiscountValue) / 100;
   }
 
-  return price;
+  return value % 1 === 0 ? price : Number(price.toFixed(2));
 };
 
 export const deleteDiscountToItem = (
