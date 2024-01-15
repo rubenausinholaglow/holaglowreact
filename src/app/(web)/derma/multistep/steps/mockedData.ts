@@ -7,16 +7,16 @@ export const MULTISTEP_QUESTIONS: any = [
     showTextArea: false,
     questions: [
       {
-        text: 'Text 1',
-        title: 'Title 1',
+        title: 'Preocupaciones específicas de la piel',
+        text: 'Tengo preocupaciones específicas de la piel que quiero abordar como el acné, la pigmentación, las cicatrices, etc.',
       },
       {
-        text: 'Text 2',
-        title: 'Title 2',
+        title: 'Embarazo y lactancia',
+        text: 'Deseo cuidar mejor de mi piel asegurándome de que mi rutina sea segura para mi bebé.',
       },
       {
-        text: 'Text 2',
-        title: 'Title 2',
+        title: 'Envejecimiento saludable de la piel',
+        text: 'Deseo cuidar mejor de mi piel y planificar mi rutina para un envejecimiento saludable.',
       },
     ],
   },

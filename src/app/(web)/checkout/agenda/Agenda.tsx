@@ -407,7 +407,7 @@ export default function Agenda({
                           </div>
                         ))}
 
-                      {selectedClinic && (
+                      {selectedClinic && !isDerma && (
                         <Flex className="mb-4">
                           <SvgLocation
                             height={16}
@@ -429,6 +429,7 @@ export default function Agenda({
                           </Link>
                         </Flex>
                       )}
+
                       <Flex>
                         <SvgHour height={16} width={16} className="mr-2" />
                         {selectedTreatments &&
@@ -441,7 +442,10 @@ export default function Agenda({
                               >
                                 <div>
                                   <Text size="xs" className="w-full text-left">
-                                    {product.applicationTimeMinutes} minutos
+                                    {isDerma
+                                      ? '12'
+                                      : product.applicationTimeMinutes}{' '}
+                                    minutos
                                   </Text>
                                 </div>
                               </Flex>
@@ -456,13 +460,16 @@ export default function Agenda({
                     <SvgSpinner
                       height={48}
                       width={48}
-                      className="absolute text-hg-secondary left-1/2 top-1/2 -ml-6 -mt-6"
+                      className={`absolute ${
+                        isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                      } left-1/2 top-1/2 -ml-6 -mt-6`}
                     />
                   )}
                   <Flex
                     className={`transition-opacity w-full mb-6 md:mb-0 ${
                       loadingDays ? 'opacity-25' : 'opacity-100'
-                    }`}
+                    }
+                    ${isDerma ? 'datepickerDerma' : ''}`}
                     id="datepickerWrapper"
                   >
                     <DatePicker
@@ -516,10 +523,18 @@ export default function Agenda({
                                 <Flex
                                   key={x.startTime}
                                   layout="row-between"
-                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                    isDerma
+                                      ? 'border-none bg-derma-secondary400'
+                                      : 'border border-hg-black bg-white'
+                                  } ${
                                     clickedHour === x.startTime
-                                      ? 'bg-hg-secondary text-white'
-                                      : 'bg-white'
+                                      ? `${
+                                          isDerma
+                                            ? 'bg-derma-primary'
+                                            : 'bg-hg-secondary'
+                                        } text-white`
+                                      : ''
                                   }`}
                                 >
                                   <div
@@ -553,10 +568,18 @@ export default function Agenda({
                                 <Flex
                                   key={x.startTime}
                                   layout="row-between"
-                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                    isDerma
+                                      ? 'border-none bg-derma-secondary400'
+                                      : 'border border-hg-black bg-white'
+                                  } ${
                                     clickedHour === x.startTime
-                                      ? 'bg-hg-secondary text-white'
-                                      : 'bg-white'
+                                      ? `${
+                                          isDerma
+                                            ? 'bg-derma-primary'
+                                            : 'bg-hg-secondary'
+                                        } text-white`
+                                      : ''
                                   }`}
                                 >
                                   <div
@@ -569,7 +592,7 @@ export default function Agenda({
                                     }}
                                   >
                                     {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-hg-primary mr-1" />
+                                      <SvgCheck className="text-white mr-1" />
                                     )}
                                     {x.startTime}
                                   </div>
@@ -589,7 +612,11 @@ export default function Agenda({
                     !loadingMonth &&
                     !loadingDays && (
                       <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
-                        <SvgSadIcon className="mb-5 text-hg-secondary" />
+                        <SvgSadIcon
+                          className={`mb-5 ${
+                            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                          }`}
+                        />
                         <Title size="xl" className="font-semibold">
                           ¡Lo sentimos!
                         </Title>

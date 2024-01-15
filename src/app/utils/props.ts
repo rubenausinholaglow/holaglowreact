@@ -8,6 +8,7 @@ export interface TextInputFieldProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   hasNoValidation?: boolean;
 }
