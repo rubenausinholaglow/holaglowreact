@@ -6,7 +6,6 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Flex } from 'designSystem/Layouts/Layouts';
 
 import { useCrisalix } from './useCrisalix';
 
@@ -37,7 +36,7 @@ const Page = () => {
         : null;
 
     if (!existsCrisalixUser) {
-      createCrisalixUser(user?.id || '', storedAppointmentId, storedClinicId);
+      createCrisalixUser(user?.id || '', storedClinicId);
     }
 
     if (existsCrisalixUser) {
@@ -61,25 +60,19 @@ const Page = () => {
     );
   }, []);
 
-  async function createCrisalixUser(
-    userId: string,
-    appointmentId: string,
-    clinicId: string
-  ) {
-    await UserService.createCrisalixUser(userId, appointmentId, clinicId).then(
-      async x => {
-        const crisalixUser: CrisalixUser = {
-          id: x.id,
-          playerId: x.player_id,
-          playerToken: x.playerToken,
-          name: x.name,
-        };
-        userCrisalix.addCrisalixUser(crisalixUser);
-        setId(x.id);
-        setPlayerToken(x.playerToken);
-        setPlayerId(x.player_Id);
-      }
-    );
+  async function createCrisalixUser(userId: string, clinicId: string) {
+    await UserService.createCrisalixUser(userId, clinicId).then(async x => {
+      const crisalixUser: CrisalixUser = {
+        id: x.id,
+        playerId: x.player_id,
+        playerToken: x.playerToken,
+        name: x.name,
+      };
+      userCrisalix.addCrisalixUser(crisalixUser);
+      setId(x.id);
+      setPlayerToken(x.playerToken);
+      setPlayerId(x.player_Id);
+    });
   }
 
   useEffect(() => {

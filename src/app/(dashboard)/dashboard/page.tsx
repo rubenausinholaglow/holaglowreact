@@ -239,19 +239,17 @@ export default function Page({
               Status.InProgress
             );
 
-            await UserService.createCrisalixUser(
-              id,
-              data.id,
-              data.clinic.id
-            ).then(async x => {
-              const crisalixUser: CrisalixUser = {
-                id: x.id,
-                playerId: x.player_id,
-                playerToken: x.playerToken,
-                name: x.name,
-              };
-              userCrisalix.addCrisalixUser(crisalixUser);
-            });
+            await UserService.createCrisalixUser(id, data.clinic.id).then(
+              async x => {
+                const crisalixUser: CrisalixUser = {
+                  id: x.id,
+                  playerId: x.player_id,
+                  playerToken: x.playerToken,
+                  name: x.name,
+                };
+                userCrisalix.addCrisalixUser(crisalixUser);
+              }
+            );
 
             if (remoteControl) {
               router.push('/dashboard/remoteControl');
