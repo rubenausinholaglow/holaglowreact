@@ -226,6 +226,8 @@ export default function Agenda({
         } else if (user) {
           setLoadingDays(true);
           setLoadingMonth(true);
+          if (isDashboard || isCheckin)
+            analyticsMetrics.externalReference = '14';
           await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
