@@ -27,9 +27,11 @@ import { useRouter } from 'next/navigation';
 export default function Agenda({
   isDashboard = false,
   isCheckin = false,
+  isDerma = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
+  isDerma?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -125,8 +127,14 @@ export default function Agenda({
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
       if (
-        (minutes == '00' || minutes == '30') &&
-        !(hour == '10' && minutes == '00')
+        ((minutes == '00' || minutes == '30') &&
+          !(hour == '10' && minutes == '00')) ||
+        (selectedTreatmentsIds != '902' &&
+          (minutes == '00' ||
+            minutes == '12' ||
+            minutes == '24' ||
+            minutes == '36' ||
+            minutes == '48'))
       ) {
         hours.push(x);
         if (parseInt(hour) < 16) {
@@ -165,12 +173,19 @@ export default function Agenda({
     setLoadingMonth(false);
   }
 
-  useEffect(() => {
+  function initialize() {
     setLoadingMonth(true);
     setSelectedDay(dayjs());
     setSelectedSlot(undefined);
     setEnableScheduler(true);
+  }
+  useEffect(() => {
+    initialize();
   }, []);
+
+  useEffect(() => {
+    initialize();
+  }, [selectedTreatments]);
 
   useEffect(() => {
     async function schedule() {
@@ -215,11 +230,11 @@ export default function Agenda({
             },
             previous: previousAppointment,
           }).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
@@ -238,15 +253,15 @@ export default function Agenda({
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else {
+        } else if (!isDerma) {
           router.push('/checkout/contactform');
         }
       } catch {
@@ -272,7 +287,7 @@ export default function Agenda({
         selectedTreatments!.map(x => x.flowwwId).join(',')
       );
     } else setSelectedTreatmentsIds('674');
-  }, [dateToCheck]);
+  }, [dateToCheck, selectedTreatments]);
 
   useEffect(() => {
     selectDate(dayjs(selectedDay).toDate());
@@ -294,7 +309,7 @@ export default function Agenda({
   };
 
   const selectDate = (x: Date) => {
-    if (!selectedTreatmentsIds) return;
+    if (!selectedTreatmentsIds || !selectedClinic) return;
     setSelectedDay(dayjs(x));
     setLocalDateSelected(x);
     setLoadingDays(true);

@@ -38,6 +38,7 @@ export interface RegistrationFormProps {
   isEmbed?: boolean;
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
+  showPostalCode?: boolean;
 }
 
 export interface CheckboxProps {

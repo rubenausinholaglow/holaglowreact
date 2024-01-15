@@ -5,17 +5,15 @@ import {
   AccordionItemProps,
   AccordionSingleProps,
 } from '@radix-ui/react-accordion';
-import { getDiscountedPrice } from '@utils/common';
-import { priceFormat } from '@utils/priceFormat';
-import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import {
   SvgAngleDown,
   SvgCalendar,
   SvgHour,
   SvgLocation,
 } from 'app/icons/Icons';
-import { SvgBag, SvgInjection } from 'app/icons/IconsDs';
+import { SvgBag } from 'app/icons/IconsDs';
 import {
+  TypeOfPayment,
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
@@ -47,11 +45,10 @@ export default function AppointmentResume({
     selectedDay,
     selectedClinic,
     selectedPacksTreatments,
-    setAnalyticsMetrics,
+    typeOfPayment,
   } = useSessionStore(state => state);
 
   const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
-  console.log(selectedDay);
 
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
@@ -187,7 +184,7 @@ export default function AppointmentResume({
                     )}
                   </div>
                 </Flex>
-                {selectedTreatments[0].price > 0 && (
+                {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
                   <Flex
                     layout="col-left"
                     className="w-full gap-4 text-sm text-hg-black400 px-4 md:px-0"
@@ -211,7 +208,7 @@ export default function AppointmentResume({
                   </Flex>
                 )}
 
-                {!isProbadorVirtual && (
+                {!isProbadorVirtual && selectedTreatments[0] && (
                   <Flex
                     layout="col-left"
                     className="w-full gap-4 text-sm px-4 pb-6 md:px-0"
@@ -222,23 +219,27 @@ export default function AppointmentResume({
                         {selectedTreatments[0].price.toFixed(2)}€
                       </Text>
                     </Flex>
-                    <Flex className="justify-between w-full">
-                      <Text>Pendiente de pago en clínica</Text>
-                      <Text className="font-semibold">
-                        {(selectedTreatments[0].price - 49).toFixed(2)}€
-                      </Text>
-                    </Flex>
+                    {typeOfPayment == TypeOfPayment.Reservation && (
+                      <Flex className="justify-between w-full">
+                        <Text>Pendiente de pago en clínica</Text>
+                        <Text className="font-semibold">
+                          {(selectedTreatments[0].price - 49).toFixed(2)}€
+                        </Text>
+                      </Flex>
+                    )}
                   </Flex>
                 )}
               </AccordionContent>
 
-              {!isProbadorVirtual && (
+              {!isProbadorVirtual && selectedTreatments[0] && (
                 <Flex className="bg-hg-secondary100 w-full justify-between text-hg-secondary px-4 py-3 border border-white rounded-b-xl md:rounded-xl md:border-none">
                   <Text>
-                    <span className="font-semibold">Pagar ahora</span>{' '}
-                    (Anticipo)
+                    <span className="font-semibold">Pagar ahora</span>
+                    {typeOfPayment == TypeOfPayment.Reservation && ' Anticipo'}
                   </Text>
-                  <Text className="font-semibold">49€</Text>
+                  <Text className="font-semibold">
+                    {selectedTreatments[0].price.toFixed(2)}€
+                  </Text>
                 </Flex>
               )}
             </AccordionItem>

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function StaticClinics() {
   return (
     <MainLayout>
-      <div className="bg-[#F3EDE9] py-12 md:py-20" id="clinics">
+      <div className="bg-derma-secondary400 py-12 md:py-20" id="clinics">
         <Container className={'max-w-[1300px]'}>
           <div className="md:flex md:flex-row gap-12 items-center">
             <Flex layout="col-left" className="md:w-1/2 mb-4 md:mb-0">
