@@ -143,6 +143,7 @@ export default function Page({
         async data => {
           if (data != null) {
             setCurrentUser(data.lead.user);
+            setAppointmentId(appointmentId);
             setClinicId(data.clinic.id);
             setClinicFlowwwId(data.clinic.flowwwId);
             setClinicProfessionalId(data.clinicProfessional.id);
