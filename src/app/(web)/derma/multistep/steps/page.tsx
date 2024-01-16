@@ -87,8 +87,11 @@ export default function Form() {
 
   useEffect(() => {
     async function checkout() {
-      const createdUser = await registerUser(client, false, false, false);
-      await initializePayment(activePayment, createdUser!);
+      if (client.email) {
+        client.origin = 'Derma';
+        const createdUser = await registerUser(client, false, false, false);
+        await initializePayment(activePayment, createdUser!);
+      }
     }
     if (activePayment != PaymentBank.None && cart.length > 0) checkout();
   }, [activePayment]);
@@ -99,7 +102,7 @@ export default function Form() {
 
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
-      productDetails.id = '2e9bd0e8-ffa6-4fa1-ae1f-5bfc4cd17187';
+      productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA!;
       productDetails.flowwwId = 5;
       productDetails.title = 'Consulta personalizada de dermatología';
       productDetails.price = 49;
