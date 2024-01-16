@@ -21,7 +21,7 @@ export default function WhatsIncludedDerma() {
               Qué incluye el precio
             </Title>
             <Text className="text-hg-black500 md:w-full md:text-lg mb-6 md:mb-12 md:text-white">
-              Para una piel mejor cuidada, tus médicos te están esperando
+              Tu piel merece un cuidado experto y personalizado
             </Text>
 
             <Flex
@@ -46,12 +46,13 @@ export default function WhatsIncludedDerma() {
               className="bg-derma-secondary300 rounded-2xl p-4 shadow-centered-black"
             >
               <Text className="text-lg font-bold text-hg-black700 mb-4">
-                Pago único
+                Pago único 49€
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">
                 {[
-                  'Consulta de <b class="text-hg-black700">12 min</b> con el dermatólogo',
-                  'Receta online para crema formulada especialmente para tu piel <b class="text-hg-black700">59 €</b>',
+                  '<b class="text-hg-black700">Consulta online</b> con tu dermatólogo',
+                  'Receta de la crema formulada exclusivamente para ti',
+                  'Recomendación de rutina facial complementaria',
                 ].map(item => (
                   <li className="border-hg-black flex" key={item}>
                     <div className="flex relative md:justify-center flex-col w-full">

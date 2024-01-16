@@ -71,7 +71,7 @@ export default function TestimonialsDerma() {
           size="2xl"
           className="font-gtUltraBold text-derma-primary font-bold mb-4"
         >
-          Resultados Reales
+          Opiniones verificadas
         </Title>
       </Container>
       <AnimateOnViewport>

@@ -35,15 +35,15 @@ export default function StoriesDerma() {
             size="2xl"
             className="font-gtUltraBold text-derma-primary font-bold mb-4"
           >
-            Historias de Derma
+            Historias inspiradoras
           </Title>
           <Text
             isAnimated
             className="text-hg-black500 mb-8 md:w-full md:text-lg"
           >
-            Conectamos a personas con médicos experimentados para un
-            descubrimiento personalizado de productos y tratamientos para el
-            acné hasta el envejecimiento.
+            No hay dos pieles iguales. Por eso, todas las experiencias son
+            diferentes, solo coinciden en la satisfacción de los objetivos
+            conseguidos.
           </Text>
         </Flex>
         <Flex layout="col-left" className="md:w-1/2 w-full">

@@ -61,13 +61,12 @@ export default function ProfessionalsDerma({
           size="2xl"
           className="font-gtUltraBold mb-6 md:mb-8 text-derma-primary"
         >
-          Nuestros expertos en dermatología estética
+          Nuestra red de profesionales en dermatología
         </Title>
         <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
-          En Holaglow defendemos una medicina estética que cuida y, para ello,
-          la profesionalidad y la empatía son fundamentales. Todos nuestros
-          doctores comparten el mismo compromiso: ponerse en tu piel, de manera
-          literal y metafóricamente.
+          Dermatólogos experimentados escucharán todas tus inquietudes para
+          acompañarte en el cuidado óptimo de tu piel y ayudarte a lograr tus
+          objetivos con tratamientos eficaces clínicamente testados.
         </Text>
       </Container>
       <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>

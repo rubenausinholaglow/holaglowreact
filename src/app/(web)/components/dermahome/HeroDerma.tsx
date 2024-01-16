@@ -49,7 +49,7 @@ export default function HeroDerma() {
                   <SvgGoogle />
                 </Flex>
                 <Text className="text-hg-black400 text-xs">
-                  Powered by Holaglow
+                  Impulsado por Holaglow
                 </Text>
               </Flex>
               <Flex
@@ -61,15 +61,15 @@ export default function HeroDerma() {
                     isAnimated
                     className="font-gtUltraBold text-35xl text-derma-primary font-normal mb-4 lg:mb-8 lg:text-5xl xl:mr-[20%]"
                   >
-                    Cuidado de la piel personalizado
+                    Cuidado facial personalizado
                   </Text>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
                   >
-                    Conectamos a personas con médicos experimentados para un
-                    descubrimiento personalizado de productos y tratamientos
-                    para el acné hasta el envejecimiento.
+                    Reserva tu consulta online con un dermatólogo experimentado
+                    y encuentra el mejor tratamiento para las necesidades
+                    específicas de tu piel.
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
@@ -82,7 +82,7 @@ export default function HeroDerma() {
                       href="/derma/multistep/start"
                       id={'tmevent_multistep_module'}
                     >
-                      Reserva tu cita online
+                      Pide tu cita
                     </Button>
                   </Flex>
                 </Flex>
