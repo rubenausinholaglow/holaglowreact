@@ -37,7 +37,7 @@ export default function DermaFooter({
               className="text-white mb-4"
             />
             <Text size="xs" className="text-white font-semibold mb-3">
-              Centro de medicina estética
+              Asesoramiento personalizado para el cuidado facial de grado médico
             </Text>
             <Text size="xs" className="text-white mb-12">
               La información de este sitio web, incluidos los artículos escritos

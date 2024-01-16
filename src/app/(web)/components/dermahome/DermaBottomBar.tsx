@@ -66,11 +66,12 @@ export default function DermaBottomBar({
         <Button
           size="xl"
           type="tertiary"
+          href="/derma/multistep/start"
           className="mr-4 pointer-events-auto w-full"
           customStyles="px-2 bg-derma-primary border-none text-derma-primary300"
           id={'tmevent_click_floating_button'}
         >
-          Reservar tu cita online
+          Reserva tu consulta online
         </Button>
       </div>
     </div>

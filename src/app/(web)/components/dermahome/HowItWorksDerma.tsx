@@ -15,18 +15,21 @@ export default function HowItWorksDerma() {
       <ul className="flex flex-col w-full gap-8 md:flex-row md:mb-16">
         {[
           {
-            text: 'Reserva tu consulta',
-            description: 'Loren Ipsum',
+            text: 'Cuestionario y reserva',
+            description:
+              'Cuéntanos cómo es tu piel y agenda una cita con el médico según tu disponibilidad.',
             icon: '/images/derma/home/calendar.svg',
           },
           {
-            text: 'Visita médica online',
-            description: 'Loren Ipsum',
+            text: 'Consulta médica online',
+            description:
+              'Reúnete con tu médico en una videollamada para analizar tus necesidades y evaluar el posible tratamiento.',
             icon: '/images/derma/home/online.svg',
           },
           {
-            text: 'Plan de cuidado en casa',
-            description: 'Loren Ipsum',
+            text: 'Tratamiento personalizado',
+            description:
+              'Obtén tu plan de cuidado facial y la receta de una crema formulada exclusivamente para ti, cuando sea necesario.',
             icon: '/images/derma/home/box.svg',
           },
         ].map((item, index) => (

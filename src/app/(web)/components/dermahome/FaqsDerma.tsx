@@ -13,19 +13,24 @@ import Image from 'next/image';
 
 const FAQS = [
   {
-    title: '¿Podré ver los resultados de manera instantánea?',
+    title: '¿Qué precio tiene una consulta online?',
     description:
-      'Los resultados son inmediatos y visibles desde el primer momento, aunque pueden estar condicionados por la posible inflamación. El resultado óptimo del tratamiento se verá a las tres semanas de la aplicación',
+      'La consulta online con un dermatólogo cuesta 49 € e incluye el asesoramiento personalizado y la prescripción de una crema formulada exclusivamente para ti siempre que sea necesario.',
   },
   {
-    title: '¿Cuánto tiempo duran los resultados del ácido hialurónico?',
+    title: '¿Qué es el cuidado facial de grado médico o farmacéutico?',
     description:
-      'Cada uno de nosotros es único y también lo es nuestra piel. Generalmente, el ácido hialurónico se reabsorbe durante los seis o doce meses posteriores a su aplicación.',
+      'El cuidado facial de grado médico o farmacéutico es aquél que se adapta a las necesidades de cada paciente y que combina productos cosméticos con fármacos que únicamente pueden ser recetados por un doctor, como es el caso de la formulación magistral.',
   },
   {
-    title: '¿La aplicación de ácido hialurónico es dolorosa?',
+    title: '¿En qué tipo de afecciones pueden ayudarme?',
     description:
-      'La aplicación de ácido hialurónico no es dolorosa. De todos modos, el umbral del dolor es distinto para cada persona por lo que estaremos encantados de aplicar anestésico tópico, si lo deseas. ',
+      'Contamos con una amplia red de dermatólogos experimentados para ofrecer un cuidado facial integral y atender cualquier afección o necesidad de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza o rosácea, entre muchas más.',
+  },
+  {
+    title: '¿Qué significa un cuidado facial personalizado?',
+    description:
+      'El cuidado facial personalizado consiste, en primer lugar, de una consulta médica para analizar las necesidades específicas de tu piel y, en segundo lugar, de la prescripción de una crema formulada exclusivamente para ti con tal de asegurar su eficacia y lograr resultados más notables y duraderos.',
   },
 ];
 

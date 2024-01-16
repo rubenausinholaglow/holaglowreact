@@ -32,7 +32,7 @@ const TREATMENTS = [
     imgUrl: '/images/derma/treatments/lineasFinas.svg',
   },
   {
-    name: 'Firmeza',
+    name: 'Flacidez',
     imgUrl: '/images/derma/treatments/firmeza.svg',
   },
   {
@@ -48,7 +48,7 @@ export default function TreatmentsDerma() {
     <div className="bg-[#F7F3F0B2]">
       <Container className="pt-12 pb-4 overflow-hidden">
         <Text className="font-gtUltraThin mb-4 text-xl md:text-2xl">
-          Nuestros expertos en dermatología pueden tratar
+          Soluciones para cada tipo de piel
         </Text>
       </Container>
 
