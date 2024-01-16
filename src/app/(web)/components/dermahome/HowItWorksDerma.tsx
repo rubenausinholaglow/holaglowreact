@@ -23,7 +23,7 @@ export default function HowItWorksDerma() {
           {
             text: 'Consulta médica online',
             description:
-              'Reúnete con tu médico en una videollamada para analizar tus necesidades y evaluar el posible tratamiento.',
+              'Reúnete con tu médico en una videollamada para analizar tus objetivos y evaluar el posible tratamiento.',
             icon: '/images/derma/home/online.svg',
           },
           {

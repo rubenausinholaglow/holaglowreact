@@ -83,6 +83,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     interestedTreatment: '',
     treatmentPrice: 0,
     postalCode: '',
+    origin: '',
   });
 
   const registerUser = useRegistration(

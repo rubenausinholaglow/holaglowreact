@@ -10,7 +10,6 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   value,
   onChange = undefined,
   onBlur = undefined,
-  onClick = undefined,
   hasNoValidation,
   error = '',
 }) => {
