@@ -79,6 +79,7 @@ export default function Form() {
     interestedTreatment: '',
     treatmentPrice: 0,
     postalCode: '',
+    origin: 'Derma',
   });
 
   const { cart, addItemToCart } = useCartStore(state => state);
