@@ -40,6 +40,7 @@ export default function ProductDetailPage({
   const { deviceSize } = useSessionStore(state => state);
   const { productHighlighted } = useCartStore(state => state);
 
+  const [isHydrated, setIsHydrated] = useState(false);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
@@ -68,6 +69,7 @@ export default function ProductDetailPage({
         productDetails.extraInformation.seoTitle,
         productDetails.extraInformation.seoMetaDescription
       );
+      setIsHydrated(true);
     }
     let product = undefined;
     if (isDashboard) {
@@ -100,6 +102,7 @@ export default function ProductDetailPage({
           const data = await ProductService.getProduct(productHighlighted.id);
           setProductId(productHighlighted.id);
           setProduct(data);
+          setIsHydrated(true);
         }
       } catch (error: any) {
         Bugsnag.notify(error);
@@ -109,7 +112,7 @@ export default function ProductDetailPage({
     fetchProduct();
   }, [productHighlighted]);
 
-  if (!productsAreLoaded) {
+  if (!productsAreLoaded || !isHydrated) {
     return <></>;
   }
 

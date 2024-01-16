@@ -111,14 +111,16 @@ export const Carousel = ({
       naturalSlideWidth={naturalSlideWidth}
       visibleSlides={visibleSlides}
       orientation="horizontal"
-      preventVerticalScrollOnTouch={true}
-      verticalPixelThreshold={1000}
       isPlaying={isPlaying}
       interval={2000}
       {...rest}
     >
       <div style={sliderWidth} className="relative">
-        <Slider classNameTray={sliderStyles}>
+        <Slider
+          classNameTray={sliderStyles}
+          preventVerticalScrollOnTouch={true}
+          verticalPixelThreshold={1000}
+        >
           {childrens.map((children, i) => (
             <Slide index={i} key={i}>
               {children}
