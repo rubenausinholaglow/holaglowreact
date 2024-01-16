@@ -31,10 +31,12 @@ export default function AppointmentResume({
   appointment,
   isProbadorVirtual,
   isConfirmation = false,
+  isDerma = false,
 }: {
   appointment?: Appointment;
   isProbadorVirtual: boolean;
   isConfirmation?: boolean;
+  isDerma?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
 
@@ -47,8 +49,6 @@ export default function AppointmentResume({
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
-
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
 
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
@@ -137,14 +137,16 @@ export default function AppointmentResume({
         {!appointment && (!deviceSize.isMobile || !isProbadorVirtual) && (
           <Accordion {...accordionProps}>
             <AccordionItem {...accordionItemProps}>
-              <AccordionTrigger className="group md:hidden">
-                <Flex className="transition-all bg-hg-secondary100 group-radix-state-open:bg-hg-secondary300 w-full justify-between px-4 py-3 border-x border-white">
-                  <Flex className="gap-2 text-sm">
-                    <SvgBag height={16} width={16} /> Ver resumen del pedido
+              {!isDerma && (
+                <AccordionTrigger className="group md:hidden">
+                  <Flex className="transition-all bg-hg-secondary100 group-radix-state-open:bg-hg-secondary300 w-full justify-between px-4 py-3 border-x border-white">
+                    <Flex className="gap-2 text-sm">
+                      <SvgBag height={16} width={16} /> Ver resumen del pedido
+                    </Flex>
+                    <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
                   </Flex>
-                  <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
-                </Flex>
-              </AccordionTrigger>
+                </AccordionTrigger>
+              )}
 
               <AccordionContent>
                 <Flex
