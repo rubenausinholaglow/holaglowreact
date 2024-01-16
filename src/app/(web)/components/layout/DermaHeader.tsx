@@ -90,10 +90,11 @@ export default function DermaHeader({
                 <Button
                   className="lg:absolute right-0 2xl:mr-20"
                   type="tertiary"
+                  href="/derma/multistep/start"
                   customStyles="bg-transparent border-derma-primary"
                 >
                   <Text className="font-semibold text-derma-primary mr-2">
-                    Reservar cita
+                    Pide cita
                   </Text>
                   <SvgArrow className="h-5 w-5" />
                 </Button>
