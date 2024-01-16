@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { HOLAGLOW_COLORS } from '@utils/colors';
 import { SvgCheck, SvgCircle } from 'app/icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
@@ -67,61 +68,66 @@ export default function SecondStep({
 
   return (
     <>
-      <Text className="text-sm text-derma-primary500 mb-2">
-        Paso {question + 2}, {item.section}
-      </Text>
-      <Text className="font-gtUltraThin mb-2 font-bold text-xl text-derma-primary">
-        {item.title}
-      </Text>
-      <Text className="text-hg-black500 text-sm mb-8">{item.description}</Text>
+      <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
+        <Flex layout="col-left" className="w-full gap-4 md:w-1/2">
+          <Text className="text-sm text-derma-primary500">
+            Paso {question + 2}, {item.section}
+          </Text>
+          <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
+            {item.title}
+          </Text>
+          <Text className="text-hg-black500 text-sm mb-8 md:text-md">
+            {item.description}
+          </Text>
+        </Flex>
 
-      <section>
-        <ul className="flex flex-col gap-4">
-          {secondStepValues &&
-            item.questions.map((item: any, index: number) => {
-              const isActive = secondStepValues[question]?.indexOf(index) > -1;
-              return (
-                <li
-                  key={index}
-                  className={`flex flex-col gap-2 relative p-4 pr-12 w-full ${
-                    isActive ? 'bg-derma-primary300' : 'bg-derma-secondary400'
-                  } rounded-lg cursor-pointer`}
-                  onClick={() => {
-                    setSelectedQuestionValue(question, index);
-                  }}
-                >
-                  {isActive && (
-                    <SvgCheck
+        <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
+          <ul className="flex flex-col gap-4 w-full">
+            {secondStepValues &&
+              item.questions.map((item: any, index: number) => {
+                const isActive =
+                  secondStepValues[question]?.indexOf(index) > -1;
+                return (
+                  <li
+                    key={index}
+                    className={`flex flex-col gap-2 relative p-4 pr-12 w-full ${
+                      isActive ? 'bg-derma-primary300' : 'bg-derma-secondary400'
+                    } rounded-lg cursor-pointer`}
+                    onClick={() => {
+                      setSelectedQuestionValue(question, index);
+                    }}
+                  >
+                    {isActive && (
+                      <SvgCheck
+                        height={16}
+                        width={16}
+                        className="absolute top-3 right-3 h-7 w-7 p-1"
+                      />
+                    )}
+                    <SvgCircle
                       height={16}
                       width={16}
-                      className="absolute top-3 right-3 h-7 w-7 p-1"
+                      stroke={HOLAGLOW_COLORS['black']}
+                      className="absolute top-3 right-3 h-7 w-7"
                     />
-                  )}
-                  <SvgCircle
-                    height={16}
-                    width={16}
-                    stroke={HOLAGLOW_COLORS['black']}
-                    className="absolute top-3 right-3 h-7 w-7"
-                  />
-                  <Text>{item.title}</Text>
-                  <Text size="xs" className="text-hg-black500">
-                    {item.text}
-                  </Text>
-                </li>
-              );
-            })}
-        </ul>
-      </section>
-      {item.showTextArea && (
-        <section>
-          <textarea
-            value={question == 2 ? textAreaOne : textAreaTwo}
-            onChange={e => setTextAreasValue(e.target.value, question)}
-            placeholder="Escribe tu comentario..."
-            className="w-full h-40 p-2 resize-none border rounded-lg"
-          />
-        </section>
-      )}
+                    <Text>{item.title}</Text>
+                    <Text size="xs" className="text-hg-black500">
+                      {item.text}
+                    </Text>
+                  </li>
+                );
+              })}
+          </ul>
+          {item.showTextArea && (
+            <textarea
+              value={question == 2 ? textAreaOne : textAreaTwo}
+              onChange={e => setTextAreasValue(e.target.value, question)}
+              placeholder="Escribe tu comentario..."
+              className="w-full h-40 p-2 resize-none border rounded-lg"
+            />
+          )}
+        </Flex>
+      </Flex>
     </>
   );
 }

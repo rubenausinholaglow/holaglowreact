@@ -1,4 +1,5 @@
 import CheckHydration from '@utils/CheckHydration';
+import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -33,32 +34,31 @@ export default function StartMultistep() {
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
-                <Text
-                  isAnimated
-                  className="font-gtUltraThin text-derma-primary mb-6 md:mb-6 text-xl md:text-5xl md:font-gtUltraBold"
-                >
-                  Tu camino hacia una piel más saludable y feliz comienza aquí
-                </Text>
-                <Text
-                  isAnimated
-                  className="text-hg-black500 md:w-full md:text-lg mb-8"
-                >
-                  Conectamos a personas con médicos experimentados para un
-                  descubrimiento personalizado de productos y tratamientos para
-                  el acné hasta el envejecimiento.
-                </Text>
-                <Button
-                  isAnimated
-                  type="tertiary"
-                  size="xl"
-                  className="mx-auto md:mx-0 mb-10"
-                  href="/derma/multistep/steps"
-                  id={'tmevent_multistep_module'}
-                  customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary"
-                >
-                  Empezar
-                  <SvgArrow className="ml-4" height={24} width={24} />
-                </Button>
+                <AnimateOnViewport>
+                  <Text className="font-gtUltraThin text-derma-primary mb-6 md:mb-6 text-xl md:text-5xl md:font-gtUltraBold">
+                    Tu camino hacia una piel más saludable y feliz comienza aquí
+                  </Text>
+                  <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
+                    Obtenga una rutina diaria personalizada de cuidado de la
+                    piel adaptada a sus preocupaciones u objetivos específicos
+                    de la piel del rostro.
+                    <br />
+                    <br />
+                    Debes tener al menos 18 años para utilizar el servicio.
+                  </Text>
+                  <Button
+                    isAnimated
+                    type="tertiary"
+                    size="xl"
+                    className="mx-auto md:mx-0 mb-10"
+                    href="/derma/multistep/steps"
+                    id={'tmevent_multistep_module'}
+                    customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary"
+                  >
+                    Empezar
+                    <SvgArrow className="ml-4" height={24} width={24} />
+                  </Button>
+                </AnimateOnViewport>
               </Flex>
             </Flex>
           </Container>

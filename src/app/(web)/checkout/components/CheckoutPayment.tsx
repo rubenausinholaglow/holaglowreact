@@ -14,10 +14,12 @@ export default function CheckoutPayment({
   className = '',
   hasError = false,
   formData,
+  isDerma = false,
 }: {
   className?: string;
   hasError: boolean;
   formData: Client;
+  isDerma?: boolean;
 }) {
   const [isPaymentActive, setIsPaymentActive] = useState(false);
   const { typeOfPayment } = useSessionStore(state => state);
@@ -79,7 +81,12 @@ export default function CheckoutPayment({
       }`}
       id="checkoutPaymentForm"
     >
-      <Title size="xl" className="font-semibold mb-4">
+      <Title
+        size="xl"
+        className={`font-semibold mb-4 ${
+          isDerma ? 'font-gtUltraThin text-derma-tertiary' : ''
+        }`}
+      >
         Selecciona método de pago
       </Title>
 

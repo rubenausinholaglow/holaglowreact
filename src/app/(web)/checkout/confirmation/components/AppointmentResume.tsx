@@ -96,14 +96,19 @@ export default function AppointmentResume({
   if (deviceSize.isMobile && isProbadorVirtual && !isConfirmation) return <></>;
 
   return (
-    <Flex layout="col-left" className="w-full px-4 md:px-0 md:pr-8">
-      <Text
-        className={`mb-4 hidden md:block ${
-          isConfirmation ? 'text-sm' : 'text-lg font-semibold'
-        }`}
-      >
-        Detalle de tu tratamiento
-      </Text>
+    <Flex
+      layout="col-left"
+      className={`w-full px-4 md:px-0 ${!isDerma ? 'md:pr-8' : ''}`}
+    >
+      {!isDerma && (
+        <Text
+          className={`mb-4 hidden md:block ${
+            isConfirmation ? 'text-sm' : 'text-lg font-semibold'
+          }`}
+        >
+          Detalle de tu tratamiento
+        </Text>
+      )}
 
       <div
         className={`w-full rounded-xl overflow-hidden ${
@@ -112,7 +117,9 @@ export default function AppointmentResume({
       >
         <Flex
           layout="col-left"
-          className="w-full gap-4 text-sm px-4 pt-4 md:p-0"
+          className={`w-full gap-4 text-sm px-4 pt-4 ${
+            !isDerma ? 'md:p-0' : ''
+          }`}
         >
           <div className="w-full flex items-center">
             <SvgCalendar className="mr-2" />
@@ -239,10 +246,10 @@ export default function AppointmentResume({
 
               {!isProbadorVirtual && selectedTreatments[0] && (
                 <Flex
-                  className={`w-full justify-between px-4 py-3 border border-white rounded-b-xl md:rounded-xl md:border-none ${
+                  className={`w-full justify-between px-4 py-3 border border-white rounded-b-xl md:border-none ${
                     isDerma
                       ? 'bg-derma-primary500/20 text-derma-primary'
-                      : 'bg-hg-secondary100 text-hg-secondary'
+                      : 'bg-hg-secondary100 text-hg-secondary md:rounded-xl'
                   } `}
                 >
                   <Text>

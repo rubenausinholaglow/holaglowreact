@@ -147,22 +147,25 @@ export default function Form() {
     <CheckHydration>
       <div className="bg-derma-secondary100 min-h-screen">
         <header className="py-4 relative">
-          <Flex layout="row-left" className="max-w-[624px] mx-auto px-4">
-            <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
-          </Flex>
+          <Container>
+            <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px] mb-4" />
+          </Container>
+          <Container className="px-0 md:px-4 md:pt-12">
+            <div className="md:w-1/2 md:pr-8">
+              <ul className="flex bg-derma-primary/20 h-[4px] w-full rounded-full mb-6">
+                <li
+                  className="h-[4px] rounded-full bg-hg-tertiary transition-all"
+                  style={{ width: `${progressBarWith}%` }}
+                ></li>
+              </ul>
+            </div>
+          </Container>
         </header>
 
         <main
           id="multistep"
           className="mx-auto relative overflow-hidden text-hg-black"
         >
-          <ul className="flex bg-derma-primary/20 h-[4px] w-full rounded-full mb-6">
-            <li
-              className="h-[4px] rounded-full bg-hg-tertiary transition-all"
-              style={{ width: `${progressBarWith}%` }}
-            ></li>
-          </ul>
-
           <Carousel
             totalSlides={STEPS}
             currentSlide={activeSlideIndex}
@@ -195,7 +198,7 @@ export default function Form() {
             <ThirdStep activeSlideIndex={activeSlideIndex} />
 
             <FourthStep
-              name={dermaQuestions.name}
+              name={dermaQuestions?.name || ''}
               activeSlideIndex={activeSlideIndex}
               client={client}
               setClient={setClient}
@@ -203,34 +206,36 @@ export default function Form() {
           </Carousel>
 
           <Container className="my-8">
-            <Flex layout="row-between">
-              {activeSlideIndex > 0 && (
-                <Button
-                  onClick={() => goBack(activeSlideIndex)}
-                  type="tertiary"
-                  customStyles="bg-transparent border-none text-derma-primary"
-                >
-                  <Flex layout="row-left" className="gap-2">
-                    <SvgArrow height={16} width={16} className="rotate-180" />
-                    Atrás
-                  </Flex>
-                </Button>
-              )}
+            <div className="md:w-1/2 md:pl-8 md:ml-auto">
+              <Flex layout="row-between">
+                {activeSlideIndex > 0 && (
+                  <Button
+                    onClick={() => goBack(activeSlideIndex)}
+                    type="tertiary"
+                    customStyles="bg-transparent border-none text-derma-primary"
+                  >
+                    <Flex layout="row-left" className="gap-2">
+                      <SvgArrow height={16} width={16} className="rotate-180" />
+                      Atrás
+                    </Flex>
+                  </Button>
+                )}
 
-              {activeSlideIndex < STEPS && (
-                <Button
-                  className="ml-auto"
-                  type="tertiary"
-                  customStyles="bg-transparent border-derma-primary text-derma-primary"
-                  disabled={continueDisabled}
-                  onClick={() => {
-                    if (!continueDisabled) goNext(activeSlideIndex);
-                  }}
-                >
-                  <Flex layout="row-right">Siguiente</Flex>
-                </Button>
-              )}
-            </Flex>
+                {activeSlideIndex < STEPS && (
+                  <Button
+                    className="ml-auto"
+                    type="tertiary"
+                    customStyles="bg-transparent border-derma-primary text-derma-primary"
+                    disabled={continueDisabled}
+                    onClick={() => {
+                      if (!continueDisabled) goNext(activeSlideIndex);
+                    }}
+                  >
+                    <Flex layout="row-right">Siguiente</Flex>
+                  </Button>
+                )}
+              </Flex>
+            </div>
           </Container>
         </main>
       </div>

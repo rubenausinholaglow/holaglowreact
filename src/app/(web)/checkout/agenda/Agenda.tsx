@@ -373,11 +373,13 @@ export default function Agenda({
         </>
       ) : (
         <>
-          <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
-            <Title size="xl" className="font-semibold">
-              Selecciona día y hora
-            </Title>
-          </Container>
+          {!isDerma && (
+            <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
+              <Title size="xl" className="font-semibold">
+                Selecciona día y hora
+              </Title>
+            </Container>
+          )}
           <Container className="px-0">
             <Flex
               layout="col-left"
@@ -391,6 +393,7 @@ export default function Agenda({
                   >
                     <div className="w-full">
                       {selectedTreatments &&
+                        !isDerma &&
                         Array.isArray(selectedTreatments) &&
                         selectedTreatments.map(product => (
                           <div key={product.id}>
@@ -430,28 +433,30 @@ export default function Agenda({
                         </Flex>
                       )}
 
-                      <Flex>
-                        <SvgHour height={16} width={16} className="mr-2" />
-                        {selectedTreatments &&
-                          Array.isArray(selectedTreatments) &&
-                          selectedTreatments.map(product => (
-                            <Flex key={product.id}>
-                              <Flex
-                                layout="row-between"
-                                className="items-start w-full"
-                              >
-                                <div>
-                                  <Text size="xs" className="w-full text-left">
-                                    {isDerma
-                                      ? '12'
-                                      : product.applicationTimeMinutes}{' '}
-                                    minutos
-                                  </Text>
-                                </div>
+                      {!isDerma && (
+                        <Flex>
+                          <SvgHour height={16} width={16} className="mr-2" />
+                          {selectedTreatments &&
+                            Array.isArray(selectedTreatments) &&
+                            selectedTreatments.map(product => (
+                              <Flex key={product.id}>
+                                <Flex
+                                  layout="row-between"
+                                  className="items-start w-full"
+                                >
+                                  <div>
+                                    <Text
+                                      size="xs"
+                                      className="w-full text-left"
+                                    >
+                                      product.applicationTimeMinutes minutos
+                                    </Text>
+                                  </div>
+                                </Flex>
                               </Flex>
-                            </Flex>
-                          ))}
-                      </Flex>
+                            ))}
+                        </Flex>
+                      )}
                     </div>
                   </Flex>
                 </Container>
