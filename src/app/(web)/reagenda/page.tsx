@@ -42,6 +42,7 @@ export default function Page({
     useState<Appointment | null>(null);
   const [cancelling, setCancelling] = useState(false);
 
+  const [isHydrated, setIsHydrated] = useState(false);
   const { isModalOpen } = useGlobalStore(state => state);
   const { clinics, setCurrentUser, stateProducts } = useGlobalPersistedStore(
     state => state
@@ -63,6 +64,7 @@ export default function Page({
         const res = await ScheduleService.next(token);
         setAppointments(res);
         setLoading(false);
+        setIsHydrated(true);
       }
     };
 
@@ -131,6 +133,9 @@ export default function Page({
     }
   }, [isModalOpen]);
 
+  if (!isHydrated) {
+    return <></>;
+  }
   return (
     <MainLayout isCheckout>
       <meta name="robots" content="noindex,nofollow" />
