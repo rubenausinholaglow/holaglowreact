@@ -126,7 +126,11 @@ export default function AppointmentResume({
             <SvgHour className="mr-2" />
             <Text className="font-semibold">{startTime}h</Text>
           </div>
-          <div className="w-full flex items-start border-b border-hg-black300  pb-6 mb-6">
+          <div
+            className={`w-full flex items-start pb-6 ${
+              !isDerma ? 'border-b border-hg-black300 mb-6' : ''
+            }`}
+          >
             <SvgLocation className="mr-2 mt-1" />
             <div className="flex flex-col text-sm">
               <Text className="font-semibold">{city}</Text>
@@ -234,9 +238,17 @@ export default function AppointmentResume({
               </AccordionContent>
 
               {!isProbadorVirtual && selectedTreatments[0] && (
-                <Flex className="bg-hg-secondary100 w-full justify-between text-hg-secondary px-4 py-3 border border-white rounded-b-xl md:rounded-xl md:border-none">
+                <Flex
+                  className={`w-full justify-between px-4 py-3 border border-white rounded-b-xl md:rounded-xl md:border-none ${
+                    isDerma
+                      ? 'bg-derma-primary500/20 text-derma-primary'
+                      : 'bg-hg-secondary100 text-hg-secondary'
+                  } `}
+                >
                   <Text>
-                    <span className="font-semibold">Pagar ahora</span>
+                    <span className="font-semibold">
+                      {isDerma ? 'Pago único' : 'Pagar ahora'}
+                    </span>
                     {typeOfPayment == TypeOfPayment.Reservation && ' Anticipo'}
                   </Text>
                   <Text className="font-semibold">

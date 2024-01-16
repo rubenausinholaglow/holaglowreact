@@ -11,36 +11,33 @@ import { MULTISTEP_QUESTIONS } from './mockedData';
 export default function SecondStep({
   question,
   item,
-  activeSlideIndex,
   dermaQuestions,
   setDermaQuestions,
   setContinueDisabled,
 }: {
   question: number;
   item: any;
-  activeSlideIndex: number;
   dermaQuestions: DermaQuestions;
   setDermaQuestions: any;
   setContinueDisabled: any;
 }) {
-  const [values, setValues] = useState<Array<Array<number>>>([[]]);
-  const [textAreaOne, setTextAreasOne] = useState<string>('');
-  const [textAreaTwo, setTextAreasTwo] = useState<string>('');
+  const [secondStepValues, setSecondStepValues] = useState<
+    Array<Array<number>>
+  >([[]]);
+  const [textAreaOne, setTextAreaOne] = useState<string>('');
+  const [textAreaTwo, setTextAreaTwo] = useState<string>('');
 
   const setSelectedQuestionValue = (question: number, value: number) => {
-    console.log(question, value);
-    const newValues = [...values];
+    const newValues = [...secondStepValues];
     if (!newValues[question]) newValues.push([]);
     const index = newValues[question].indexOf(value);
-
-    console.log(index);
 
     if (index === -1) {
       newValues[question].push(value);
     } else {
       newValues[question].splice(index, 1);
     }
-    setValues(newValues);
+    setSecondStepValues(newValues);
     setContinueDisabled(newValues[question].length === 0);
 
     if (question == 0) {
@@ -58,8 +55,13 @@ export default function SecondStep({
   };
 
   const setTextAreasValue = (value: string, question: number) => {
-    if (question == 2) setTextAreasOne(value);
-    else setTextAreasTwo(value);
+    if (question == 2) {
+      setTextAreaOne(value);
+    } else {
+      setTextAreaTwo(value);
+      dermaQuestions.extraInfo = value;
+    }
+
     if (value) setContinueDisabled(false);
   };
 
@@ -75,9 +77,9 @@ export default function SecondStep({
 
       <section>
         <ul className="flex flex-col gap-4">
-          {values &&
+          {secondStepValues &&
             item.questions.map((item: any, index: number) => {
-              const isActive = values[question]?.indexOf(index) > -1;
+              const isActive = secondStepValues[question]?.indexOf(index) > -1;
               return (
                 <li
                   key={index}

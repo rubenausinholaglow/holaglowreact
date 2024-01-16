@@ -24,7 +24,6 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
 
 import FirstStep from './FirstStep';
 import FourthStep from './FourthStep';
@@ -34,14 +33,11 @@ import ThirdStep from './ThirdStep';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const [values, setValues] = useState<Array<Array<number>>>([[]]);
-  const [textAreaOne, setTextAreasOne] = useState<string>('');
-  const [textAreaTwo, setTextAreasTwo] = useState<string>('');
   const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
-
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
   } as DermaQuestions);
+
   const {
     setSelectedClinic,
     setSelectedTreatments,
@@ -134,7 +130,7 @@ export default function Form() {
   };
 
   const goNext = (index: number) => {
-    dermaQuestions.extraInfo = textAreaTwo;
+    //dermaQuestions.extraInfo = textAreaTwo;
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
@@ -179,27 +175,26 @@ export default function Form() {
               setContinueDisabled={setContinueDisabled}
             />
 
-            {values &&
-              MULTISTEP_QUESTIONS.map((item: any, question: number) => {
-                return (
-                  <Container key={question}>
-                    {activeSlideIndex === question + 1 && (
-                      <SecondStep
-                        question={question}
-                        item={item}
-                        activeSlideIndex={activeSlideIndex}
-                        dermaQuestions={dermaQuestions}
-                        setDermaQuestions={setDermaQuestions}
-                        setContinueDisabled={setContinueDisabled}
-                      />
-                    )}
-                  </Container>
-                );
-              })}
+            {MULTISTEP_QUESTIONS.map((item: any, question: number) => {
+              return (
+                <Container key={question}>
+                  {activeSlideIndex === question + 1 && (
+                    <SecondStep
+                      question={question}
+                      item={item}
+                      dermaQuestions={dermaQuestions}
+                      setDermaQuestions={setDermaQuestions}
+                      setContinueDisabled={setContinueDisabled}
+                    />
+                  )}
+                </Container>
+              );
+            })}
 
             <ThirdStep activeSlideIndex={activeSlideIndex} />
 
             <FourthStep
+              name={dermaQuestions.name}
               activeSlideIndex={activeSlideIndex}
               client={client}
               setClient={setClient}
