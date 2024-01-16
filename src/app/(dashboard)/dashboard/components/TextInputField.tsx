@@ -39,7 +39,6 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        onClick={onClick}
         style={{
           background: getBackgroundIcon(),
         }}
