@@ -15,15 +15,17 @@ module.exports = {
       '6xl': ['78px', '92px'],
       '5xl': ['64px', '72px'],
       '4xl': ['56px', '60px'],
+      dr4xl: ['48px', '56px'],
       '3xl': ['36px', '44px'],
-      '35xl': ['44px', '52px'],
       '2xl': ['32px', '40px'],
       xl: ['24px', '32px'],
+      drxl: ['28px', '36px'],
       lg: ['21px', '28px'],
       md: ['16px', '24px'],
       sm: ['14px', '20px'],
       xs: ['12px', '16px'],
     },
+
     extend: {
       colors: {
         hg: {
@@ -67,7 +69,6 @@ module.exports = {
           primary: '#1FA6A6',
           primary500: '#23D9B7',
           primary300: '#99F2E2',
-          primary200: '#5DE5CC',
           primary100: '#e5f7ed',
           secondary500: '#EFE8E2',
           secondary400: '#F3EDE9',

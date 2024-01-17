@@ -119,7 +119,9 @@ export default function BenefitsApplicationResultsDerma() {
           </div>
         </Flex>
 
-        <Text className="font-gtUltraThin text-xl mb-8">Resultados</Text>
+        <Text className="font-gtUltraThin font-semibold text-xl md:text-2xl">
+          Resultados
+        </Text>
 
         <Flex layout="col-left" className="w-full md:flex-row">
           <div className="relative pb-8 mb-4 md:w-[80%]">

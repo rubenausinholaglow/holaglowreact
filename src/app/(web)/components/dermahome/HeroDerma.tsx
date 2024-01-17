@@ -8,7 +8,7 @@ import {
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function HeroDerma() {
@@ -57,12 +57,12 @@ export default function HeroDerma() {
                 className="gap-4 items-center relative md:justify-center md:flex-row"
               >
                 <Flex layout="col-left" className="relative z-10">
-                  <Text
-                    isAnimated
-                    className="font-gtUltraBold text-35xl text-derma-primary font-normal mb-4 lg:mb-8 lg:text-5xl xl:mr-[20%]"
+                  <TitleDerma
+                    size="3xl"
+                    className="text-derma-primary text-left mb-4"
                   >
                     Cuidado facial personalizado
-                  </Text>
+                  </TitleDerma>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
@@ -82,7 +82,7 @@ export default function HeroDerma() {
                       href="/derma/multistep/start"
                       id={'tmevent_multistep_module'}
                     >
-                      Pide tu cita
+                      Pide tu cita online
                     </Button>
                   </Flex>
                 </Flex>

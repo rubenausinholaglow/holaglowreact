@@ -4,7 +4,7 @@ import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import FullWidthCarousel from '../product/fullWidthCarousel';
@@ -47,9 +47,9 @@ export default function TreatmentsDerma() {
   return (
     <div className="bg-[#F7F3F0B2]">
       <Container className="pt-12 pb-4 overflow-hidden">
-        <Text className="font-gtUltraThin mb-4 text-xl md:text-2xl">
+        <TitleDerma size="xl" className="mb-4">
           Soluciones para cada tipo de piel
-        </Text>
+        </TitleDerma>
       </Container>
 
       {deviceSize.isMobile && (
