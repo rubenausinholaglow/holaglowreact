@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useLayoutEffect, useState } from 'react';
 import { Professional } from 'app/types/clinic';
 import { Product } from 'app/types/product';
 import { Carousel } from 'designSystem/Carousel/Carousel';
@@ -29,8 +29,11 @@ export default function FullWidthCarousel({
   children?: ReactNode;
 }) {
   const randomId = Math.random().toString().slice(2, 5);
+  const [slidesToShow, setSlidesToShow] = useState(
+    visibleSlides ? visibleSlides : 1.5
+  );
 
-  const CONTAINER_WIDTH = 1152;
+  /* const CONTAINER_WIDTH = 1152;
   const CONTAINER_PADDING = 16;
   let firstItemLeftMargin = 16;
   let slidesToShow = visibleSlides ? visibleSlides : 1.5;
@@ -44,7 +47,39 @@ export default function FullWidthCarousel({
     if (!visibleSlides) {
       slidesToShow = (document.body.clientWidth - firstItemLeftMargin) / 304;
     }
-  }
+  } */
+
+  useLayoutEffect(() => {
+    if (typeof window !== 'undefined') {
+      const CONTAINER_WIDTH = 1152;
+      const CONTAINER_PADDING = 16;
+      let firstItemLeftMargin = 16;
+
+      if (document && document.body.clientWidth > CONTAINER_WIDTH) {
+        firstItemLeftMargin =
+          (document.body.clientWidth - CONTAINER_WIDTH) / 2 + CONTAINER_PADDING;
+      }
+
+      if (!visibleSlides) {
+        setSlidesToShow(
+          (document.body.clientWidth - firstItemLeftMargin) / 304
+        );
+      }
+
+      const styleTag = document.createElement('style');
+      styleTag.innerHTML = `
+        #productCarousel${randomId} [aria-label="slider"] {
+          padding-left: ${
+            disableLeftMargin ? '0' : firstItemLeftMargin
+          }px !important;
+        }
+      `;
+
+      document.head.appendChild(styleTag);
+    }
+  }, [randomId, disableLeftMargin, visibleSlides]);
+
+  console.log('test2');
 
   if (isEmpty(items) && !children) {
     return <></>;
@@ -52,15 +87,6 @@ export default function FullWidthCarousel({
 
   return (
     <>
-      <style>
-        {`
-          #productCarousel${randomId} [aria-label="slider"] {
-            padding-left: ${
-              disableLeftMargin ? '0' : firstItemLeftMargin
-            }px !important;
-          }
-        `}
-      </style>
       <Carousel
         id={`productCarousel${randomId}`}
         hasControls={hasControls && !isPlaying}

@@ -5,21 +5,32 @@ import { useGlobalStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { twMerge } from 'tailwind-merge';
 
-export const ModalBackground = ({
-  isVisible,
-  onClick,
-}: {
-  isVisible: boolean;
-  onClick: () => void;
-}) => {
+export const ModalBackground = () => {
+  const {
+    isModalOpen,
+    showModalBackground,
+    setShowModalBackground,
+    setIsModalOpen,
+    //isMainScrollEnabled,
+  } = useGlobalStore(state => state);
+
+  useEffect(() => {
+    setShowModalBackground(isModalOpen);
+
+    //TODO - toggle overflow-hidden class to disable scroll if a modal is visible
+  }, [isModalOpen]);
+
   return (
     <div
       className={`${
-        isVisible
+        showModalBackground
           ? 'opacity-1 pointer-events-auto'
           : 'opacity-0 pointer-events-none'
       } transition-all fixed top-0 right-0 bottom-0 w-full bg-hg-black/50 z-40 `}
-      onClick={onClick}
+      onClick={() => {
+        setIsModalOpen(false);
+        setShowModalBackground(false);
+      }}
     ></div>
   );
 };

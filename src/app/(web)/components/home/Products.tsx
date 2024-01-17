@@ -1,12 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Product } from '@interface/product';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { SvgArrow } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
@@ -17,24 +14,11 @@ import CategorySelector from '../filters/CategorySelector';
 
 export default function HomeProducts({
   hideCategorySelector,
+  products,
 }: {
   hideCategorySelector?: boolean;
+  products: Product[];
 }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
-  const { filteredProducts, setFilteredProducts } = useGlobalStore(
-    state => state
-  );
-
-  useEffect(() => {
-    if (isEmpty(filteredProducts)) {
-      setFilteredProducts(stateProducts);
-    }
-  }, [stateProducts]);
-
-  if (isEmpty(filteredProducts)) {
-    return <></>;
-  }
-
   return (
     <div className="bg-hg-cream500 overflow-hidden py-12">
       <Container>
@@ -61,11 +45,7 @@ export default function HomeProducts({
           </AnimateOnViewport>
         </Container>
       )}
-      <FullWidthCarousel
-        className="pb-8"
-        type="products"
-        items={filteredProducts}
-      />
+      <FullWidthCarousel className="pb-8" type="products" items={products} />
     </div>
   );
 }
