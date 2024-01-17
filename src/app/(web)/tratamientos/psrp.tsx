@@ -59,10 +59,6 @@ export default function PsrpPage({
   };
 
   useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  useEffect(() => {
     if (slug !== '') {
       if (slug !== 'packs') {
         let filterToApply = '';
@@ -103,6 +99,7 @@ export default function PsrpPage({
 
   useEffect(() => {
     processFilters();
+    setIsHydrated(true);
   }, [productFilters]);
 
   useEffect(() => {
