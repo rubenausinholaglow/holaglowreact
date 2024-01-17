@@ -168,29 +168,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       handleFieldChange(event, 'phonePrefix');
     }
 
-    validatePhoneInput(`+${value}`);
-  }
-
-  function validatePhoneInput(phoneNumber: string) {
-    if (
-      phoneNumber.length > 3 &&
-      phoneNumber.startsWith('+34') &&
-      phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
-    ) {
-      setShowPhoneError(false);
-    }
-
-    if (
-      phoneNumber.length > 3 &&
-      phoneNumber.startsWith('+34') &&
-      !phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
-    ) {
-      setShowPhoneError(true);
-    }
-
-    if (isEmpty(phoneNumber) || phoneNumber === '+' || phoneNumber === '+34') {
-      setShowPhoneError(true);
-    }
+    setShowPhoneError(utils.validatePhoneInput(`+${value}`));
   }
 
   const handleRegistration = async () => {
