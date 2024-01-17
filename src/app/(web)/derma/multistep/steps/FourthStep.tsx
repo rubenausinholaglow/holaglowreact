@@ -21,7 +21,7 @@ export default function FourthStep({
   return (
     <div>
       {activeSlideIndex === 5 && (
-        <Container>
+        <Container className="px-0 md:px-4">
           <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
             <div>
               <Container className="md:px-0">
@@ -47,12 +47,9 @@ export default function FourthStep({
               <AppointmentResume isProbadorVirtual={false} isDerma />
             </div>
             <Container className="mt-8">
-              <Title
-                size="xl"
-                className="font-gtUltraThin mb-4 text-derma-tertiary"
-              >
+              <Text className="font-gtUltraThin font-semibold mb-4 text-derma-tertiary text-xl md:text-2xl">
                 Reserva tu cita
-              </Title>
+              </Text>
               <RegistrationForm
                 showPostalCode={true}
                 redirect={false}

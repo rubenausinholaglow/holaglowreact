@@ -9,6 +9,7 @@ import Image from 'next/image';
 
 import ProfessionalsDerma from '../common/ProfessionalsDerma';
 import StoriesDerma from '../common/StoriesDerma';
+import BenefitsApplicationResultsDerma from './BenefitsApplicationResultsDerma';
 import FaqsDerma from './FaqsDerma';
 import HeroDerma from './HeroDerma';
 import HowItWorksDerma from './HowItWorksDerma';
@@ -38,6 +39,7 @@ export default function HomeBlocksDerma() {
       <div className="bg-derma-primary100">
         <HowItWorksDerma />
         <WhatsIncludedDerma />
+        <BenefitsApplicationResultsDerma />
       </div>
 
       <div className="bg-derma-secondary100 pt-12">

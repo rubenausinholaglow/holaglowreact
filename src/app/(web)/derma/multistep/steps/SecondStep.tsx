@@ -110,7 +110,7 @@ export default function SecondStep({
                       stroke={HOLAGLOW_COLORS['black']}
                       className="absolute top-3 right-3 h-7 w-7"
                     />
-                    <Text>{item.title}</Text>
+                    <Text className="text-derma-tertiary">{item.title}</Text>
                     <Text size="xs" className="text-hg-black500">
                       {item.text}
                     </Text>

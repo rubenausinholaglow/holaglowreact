@@ -46,7 +46,7 @@ export default function DermaLayout({
 }) {
   return (
     <ErrorBoundary>
-      <main className={className}>
+      <main className={`${className} text-derma-tertiary`}>
         <DermaHeader hideButton={hideButton} />
         {children}
         <DermaFooter className="pb-24 md:pb-0" hideFooter={hideFooter} />
