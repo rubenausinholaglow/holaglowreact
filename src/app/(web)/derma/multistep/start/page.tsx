@@ -39,12 +39,12 @@ export default function StartMultistep() {
                     Tu camino hacia una piel más saludable y feliz comienza aquí
                   </Text>
                   <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
-                    Obtenga una rutina diaria personalizada de cuidado de la
-                    piel adaptada a sus preocupaciones u objetivos específicos
-                    de la piel del rostro.
+                    El primer paso es identificar tus necesidades. Responde
+                    estas preguntas para orientar tu consulta médica y obtener
+                    un tratamiento personalizado.
                     <br />
                     <br />
-                    Debes tener al menos 18 años para utilizar el servicio.
+                    Debes tener, al menos, 18 años para utilizar este servicio
                   </Text>
                   <Button
                     isAnimated

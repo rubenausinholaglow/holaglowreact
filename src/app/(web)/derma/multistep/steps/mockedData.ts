@@ -1,52 +1,89 @@
 export const MULTISTEP_QUESTIONS: any = [
   {
     step: 1,
-    section: 'Cositas',
-    title: 'Title Cositas',
-    description: 'Descripcion Cositas',
+    section: 'Contexto de la consulta médica',
+    title: 'Contexto de la consulta médica',
+    description:
+      'Selecciona el escenario que mejor describa tu situación actual',
     showTextArea: false,
     questions: [
       {
-        title: 'Preocupaciones específicas de la piel',
-        text: 'Tengo preocupaciones específicas de la piel que quiero abordar como el acné, la pigmentación, las cicatrices, etc.',
+        title:
+          'Busco un tratamiento efectivo para <b>preocupaciones específicas</b> de mi piel',
       },
       {
-        title: 'Embarazo y lactancia',
-        text: 'Deseo cuidar mejor de mi piel asegurándome de que mi rutina sea segura para mi bebé.',
+        title:
+          'Quiero una rutina facial compatible con el <b>embarazo y/o lactancia</b>',
       },
       {
-        title: 'Envejecimiento saludable de la piel',
-        text: 'Deseo cuidar mejor de mi piel y planificar mi rutina para un envejecimiento saludable.',
+        title: 'Me preocupa el <b>envejecimiento saludable</b> de mi piel',
+      },
+      {
+        title:
+          'Deseo cuidar mi piel mientras vivo <b>cambios hormonales y/o la menopausia<b/>',
+      },
+      {
+        title:
+          'Quiero preparar mi piel para <b>un evento o una ocasión especial</b>',
       },
     ],
   },
   {
     step: 2,
-    section: 'Preocupación',
-    title: 'Preocupación',
-    description: 'Descripcion Preocupacion',
+    section: 'Necesidades personales',
+    title: 'Necesidades personales',
+    description:
+      'Selecciona las inquietudes que te gustaría resolver en tu consulta',
     showTextArea: true,
+    placeholder: 'Otros',
     questions: [
       {
-        text: 'Text 1',
-        title: 'Title 1',
+        title: 'Acné',
       },
       {
-        text: 'Text 2',
-        title: 'Title 2',
+        title: 'Cicatrices',
       },
       {
-        text: 'Text 3',
-        title: 'Title 3',
+        title: 'Enrojecimiento',
+      },
+      {
+        title: 'Sensibilidad',
+      },
+      {
+        title: 'Pigmentación',
+      },
+      {
+        title: 'Sequedad',
+      },
+      {
+        title: 'Exceso de sebo/grasa',
+      },
+      {
+        title: 'Pérdida de firmeza',
+      },
+      {
+        title: 'Líneas finas',
+      },
+      {
+        title: 'Arrugas',
+      },
+      {
+        title: 'Rosácea',
+      },
+      {
+        title: 'Textura de la piel',
       },
     ],
   },
   {
     step: 3,
-    section: 'Tercero',
-    title: 'Tercero',
-    description: 'Descripcion Tercero',
+    section: 'Información adicional',
+    title: '¿Te gustaría contarnos algo más?',
+    description:
+      'Cuanta más información nos proporciones, mejor podremos asesorarte sobre tus objetivos y preocupaciones de la piel.',
     showTextArea: true,
     questions: [],
+    placeholder:
+      'Por ejemplo: cualquier medicación (ten en cuenta que nuestros médicos no pueden recetar online antibióticos orales ni medicamentos, como Roaccutane y Spironolactone), tratamientos recibidos anteriormente, alergias, características de su estilo de vida, etc.',
   },
 ];

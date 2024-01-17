@@ -71,7 +71,7 @@ export default function SecondStep({
       <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
         <Flex layout="col-left" className="w-full gap-4 md:w-1/2">
           <Text className="text-sm text-derma-primary500">
-            Paso {question + 2}, {item.section}
+            Paso {question + 2}. {item.section}
           </Text>
           <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
             {item.title}
@@ -110,9 +110,10 @@ export default function SecondStep({
                       stroke={HOLAGLOW_COLORS['black']}
                       className="absolute top-3 right-3 h-7 w-7"
                     />
-                    <Text>{item.title}</Text>
-                    <Text size="xs" className="text-hg-black500">
-                      {item.text}
+                    <Text>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: item.title }}
+                      ></div>
                     </Text>
                   </li>
                 );
@@ -122,7 +123,7 @@ export default function SecondStep({
             <textarea
               value={question == 2 ? textAreaOne : textAreaTwo}
               onChange={e => setTextAreasValue(e.target.value, question)}
-              placeholder="Escribe tu comentario..."
+              placeholder={item.placeholder}
               className="w-full h-40 p-2 resize-none border rounded-lg"
             />
           )}

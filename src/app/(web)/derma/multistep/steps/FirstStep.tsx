@@ -53,17 +53,10 @@ export default function FirstStep({
             <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
               <Flex layout="col-left" className="w-full gap-4 md:w-1/2">
                 <Text className="text-sm text-derma-primary500">
-                  Paso {activeSlideIndex + 1}, validación de usuario
+                  Paso {activeSlideIndex + 1}. Información básica del paciente
                 </Text>
                 <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
-                  Primero, comencemos con tu información básica
-                </Text>
-                <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                  Ten en cuenta que nuestros profesionales de la salud no podrán
-                  recetar antibióticos orales o medicamentos, como Roaccutane y
-                  Spironolactone, en línea, ya que esto requiere una consulta en
-                  persona. Nuestros médicos solo pueden abordar preocupaciones
-                  relacionadas con tu piel.
+                  Empecemos por ti
                 </Text>
               </Flex>
 
@@ -81,7 +74,7 @@ export default function FirstStep({
                 </div>
                 <div className="w-full">
                   <label className="text-sm text-hg-black500 pl-2">
-                    ¿Cuál es tu fecha de nacimiento?
+                    ¿Cuándo naciste?
                   </label>
                   <Flex
                     layout="row-between"
