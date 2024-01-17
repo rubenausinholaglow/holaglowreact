@@ -28,21 +28,17 @@ export default function ThirdStep({
                   <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
                     Selecciona el día y la hora
                   </Text>
-                  <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                    Después de la confirmación de la reserva, te enviaremos un
-                    whatsapp con los detalles para conectarte a tu consulta.
-                  </Text>
                 </Flex>
 
                 <ul className="flex flex-col gap-4 mb-8 text-xs text-hg-black500 px-0 md:w-1/2 md:mt-8 md:text-sm">
                   <li className="flex gap-2">
-                    <SvgVideo />
-                    Los detalles del vídeo se proporcionarán por correo
-                    electrónico tras la confirmación
+                    <SvgStethoscope />
+                    Consulta online con dermatólogo especializado.
                   </li>
                   <li className="flex gap-2">
-                    <SvgStethoscope />
-                    Consulta online con dermatólogo especializado
+                    <SvgVideo />
+                    Te enviaremos un whatsapp con los detalles para conectarte a
+                    tu consulta.
                   </li>
                 </ul>
               </Flex>
