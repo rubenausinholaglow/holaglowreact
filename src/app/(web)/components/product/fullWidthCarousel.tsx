@@ -79,8 +79,6 @@ export default function FullWidthCarousel({
     }
   }, [randomId, disableLeftMargin, visibleSlides]);
 
-  console.log('test2');
-
   if (isEmpty(items) && !children) {
     return <></>;
   }

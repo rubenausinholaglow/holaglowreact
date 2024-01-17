@@ -7437,10 +7437,12 @@ export default function SSRWrapper({ children }: { children: ReactNode }) {
 
       {React.Children.map(children, child => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child, { data: products });
+          return React.cloneElement(child, { data: products } as any);
         }
         return child;
       })}
+
+      {children}
     </body>
   );
 }

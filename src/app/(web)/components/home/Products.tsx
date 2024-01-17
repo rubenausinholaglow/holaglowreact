@@ -1,5 +1,3 @@
-'use client';
-
 import { Product } from '@interface/product';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { SvgArrow } from 'app/icons/IconsDs';

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomeSSR({ data }: { data: { products: Product[] } }) {
+export default function HomeSSR({ data }: { data: Product[] }) {
   return (
     <SSRWrapper>
       <Home data={data} />
