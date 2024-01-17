@@ -1,9 +1,7 @@
 import { SvgArrowSmallLeft } from 'app/icons/Icons';
-import { SvgArrow, SvgCheckCircle } from 'app/icons/IconsDs';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
@@ -12,13 +10,13 @@ export default function BenefitsApplicationResultsDerma() {
   return (
     <div className="pt-12 pb-16">
       <Container>
-        <Title
+        <TitleDerma
           isAnimated
           size="2xl"
-          className="font-gtUltraBold mb-6 md:mb-8 text-derma-primary"
+          className="mb-6 md:mb-8 text-derma-primary"
         >
           Crema facial recetada
-        </Title>
+        </TitleDerma>
         <Text className="text-hg-black500 mb-8">
           Una crema facial personalizada formulada con ingredientes que han sido
           testados médicamente y cuya eficacia se ha demostrado empíricamente
@@ -26,9 +24,7 @@ export default function BenefitsApplicationResultsDerma() {
 
         <Flex layout="col-center" className="md:flex-row gap-4 md:gap-16 mb-16">
           <Flex layout="col-left" className="gap-4 w-full mb-4 md:w-1/2">
-            <Text className="font-gtUltraThin font-semibold text-xl md:text-2xl">
-              Qué significa
-            </Text>
+            <TitleDerma size="xl">Qué significa</TitleDerma>
             {[
               {
                 title: 'Prescripción médica',
@@ -76,9 +72,7 @@ export default function BenefitsApplicationResultsDerma() {
             layout="col-left"
             className="gap-4 w-full mb-4 md:w-1/2 md:order-2"
           >
-            <Text className="font-gtUltraThin font-semibold text-xl md:text-2xl">
-              Aplicación
-            </Text>
+            <TitleDerma size="xl">Aplicación</TitleDerma>
             {[
               {
                 title: '¿Cuándo? Por la noche.',
@@ -119,9 +113,9 @@ export default function BenefitsApplicationResultsDerma() {
           </div>
         </Flex>
 
-        <Text className="font-gtUltraThin font-semibold text-xl md:text-2xl">
+        <TitleDerma size="xl" className="mb-6 md:mb-16">
           Resultados
-        </Text>
+        </TitleDerma>
 
         <Flex layout="col-left" className="w-full md:flex-row">
           <div className="relative pb-8 mb-4 md:w-[80%]">

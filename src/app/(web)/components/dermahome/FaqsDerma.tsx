@@ -58,14 +58,14 @@ export default function FaqsDerma() {
 
       <Flex
         layout="col-left"
-        className="w-full gap-4 md:grid md:grid-cols-2 md:gap-16"
+        className="w-full gap-6 md:grid md:grid-cols-2 md:gap-16"
       >
         {deviceSize.isMobile &&
           FAQS.map((faq, index) => {
             return (
               <SimpleAccordion
                 key={faq.title}
-                className="p-4 md:mb-0 bg-white rounded-2xl"
+                className="pb-4 md:mb-0 border-b border-derma-tertiary"
                 trigger={faq.title}
                 triggerStyles="text-left items-start font-semibold"
               >

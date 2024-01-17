@@ -7,10 +7,9 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Professional } from 'app/types/clinic';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import ProfessionalCard from './ProfessionalCard';
@@ -56,13 +55,13 @@ export default function ProfessionalsDerma({
           isDashboard ? '' : 'md:w-[55%]'
         } md:px-0 md:flex md:flex-col md:justify-center md:items-start md:order-2`}
       >
-        <Title
+        <TitleDerma
           isAnimated
           size="2xl"
-          className="font-gtUltraBold mb-6 md:mb-8 text-derma-primary"
+          className="mb-6 md:mb-8 text-derma-primary"
         >
           Nuestra red de profesionales en dermatología
-        </Title>
+        </TitleDerma>
         <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
           Dermatólogos experimentados escucharán todas tus inquietudes para
           acompañarte en el cuidado óptimo de tu piel y ayudarte a lograr tus

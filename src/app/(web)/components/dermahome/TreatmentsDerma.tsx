@@ -1,10 +1,8 @@
 'use client';
 
-import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import FullWidthCarousel from '../product/fullWidthCarousel';

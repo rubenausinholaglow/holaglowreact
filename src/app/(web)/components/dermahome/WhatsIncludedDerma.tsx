@@ -1,7 +1,7 @@
 import { SvgArrow, SvgCheckCircle } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function WhatsIncludedDerma() {
@@ -13,13 +13,13 @@ export default function WhatsIncludedDerma() {
           className="items-center relative md:justify-center md:flex-row md:gap-12 md:items-start"
         >
           <Flex layout="col-left" className="relative z-10 md:w-1/2">
-            <Title
+            <TitleDerma
               isAnimated
               size="2xl"
-              className="text-white font-gtUltraBold font-bold mb-4 md:mb-8"
+              className="text-white mb-4 md:mb-8"
             >
               Qué incluye el precio
-            </Title>
+            </TitleDerma>
             <Text className="text-hg-black500 md:w-full md:text-lg mb-6 md:mb-12 md:text-white">
               Tu piel merece un cuidado experto y personalizado
             </Text>
