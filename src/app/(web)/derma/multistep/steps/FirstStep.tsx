@@ -93,6 +93,8 @@ export default function FirstStep({
 
                     <SvgCalendar className="h-6 w-6 text-derma-primary" />
                   </Flex>
+
+                  <input type="date"></input>
                 </div>
 
                 <Flex

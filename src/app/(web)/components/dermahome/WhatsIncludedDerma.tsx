@@ -1,4 +1,4 @@
-import { SvgArrow } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheckCircle } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -41,13 +41,30 @@ export default function WhatsIncludedDerma() {
             </Flex>
           </Flex>
 
-          <Flex layout="col-left" className="relative z-10 md:w-1/2">
+          <Flex layout="col-left" className="relative z-10 w-full md:w-1/2">
             <Flex
               layout="col-left"
-              className="bg-derma-secondary300 rounded-2xl p-4 shadow-centered-black"
+              className="bg-derma-secondary300 rounded-2xl p-4 shadow-centered-black w-full"
             >
-              <Text className="text-lg font-bold text-hg-black700 mb-4">
-                Pago único 49€
+              <Flex className="gap-4 mb-6">
+                <Image
+                  src="/images/derma/home/firstAppointment.svg"
+                  alt="Primera cita"
+                  height={64}
+                  width={64}
+                />
+                <div>
+                  <Text className="text-xs text-hg-black400">
+                    Plan rutina facial
+                  </Text>
+                  <Text className="text-lg font-semibold">
+                    Primera consulta
+                  </Text>
+                </div>
+              </Flex>
+              <Text className="text-sm font-semibold mb-6">
+                <span className="text-2xl md:text-4xl font-bold">49 €</span>{' '}
+                /pago único
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">
                 {[
@@ -58,10 +75,10 @@ export default function WhatsIncludedDerma() {
                   <li className="border-hg-black flex" key={item}>
                     <div className="flex relative md:justify-center flex-col w-full">
                       <div className="flex-1 flex items-start pr-4 w-full">
-                        <SvgArrow
+                        <SvgCheckCircle
                           height={20}
                           width={20}
-                          className="text-derma-primary500 mr-3 shrink-0 rotate-45"
+                          className="text-derma-primary500 mr-3 shrink-0"
                         />
                         <p
                           className="text-sm"

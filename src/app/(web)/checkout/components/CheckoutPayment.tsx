@@ -81,14 +81,13 @@ export default function CheckoutPayment({
       }`}
       id="checkoutPaymentForm"
     >
-      <Title
-        size="xl"
-        className={`font-semibold mb-4 ${
+      <Text
+        className={`font-semibold mb-4 text-xl md:text-2xl ${
           isDerma ? 'font-gtUltraThin text-derma-tertiary' : ''
         }`}
       >
         Selecciona método de pago
-      </Title>
+      </Text>
 
       {hasError && (
         <Flex className="bg-hg-error100 text-hg-error text-xs gap-3 px-4 py-3 rounded-xl w-full mb-4">

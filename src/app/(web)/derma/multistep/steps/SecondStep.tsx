@@ -110,11 +110,7 @@ export default function SecondStep({
                       stroke={HOLAGLOW_COLORS['black']}
                       className="absolute top-3 right-3 h-7 w-7"
                     />
-                    <Text>
-                      <div
-                        dangerouslySetInnerHTML={{ __html: item.title }}
-                      ></div>
-                    </Text>
+                    <p dangerouslySetInnerHTML={{ __html: item.title }}></p>
                   </li>
                 );
               })}
