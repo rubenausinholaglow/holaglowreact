@@ -28,18 +28,20 @@ export default function FourthStep({
                 <Flex layout="col-left" className="w-full">
                   <Flex layout="col-left" className="w-full gap-4">
                     <Text className="text-sm text-derma-primary500 mb-2">
-                      Último paso formulario y pago
+                      Último paso. Formulario y pago
                     </Text>
                     <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
-                      Bien hecho {name}, Estás a un paso de tener una piel más
-                      saludable
+                      ¡Ya casi lo tienes, {name}! <br></br> Estás a punto de
+                      conseguir tu tratamiento personalizado
                     </Text>
                     <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                      Después de tu consulta, tu médico te recomendará una
-                      rutina personalizada de cuidado de la piel adaptada a tus
-                      metas, que podrás recibir en tu puerta según tu
-                      preferencia. Los detalles de tu cita online con el médico
-                      se proporcionarán por correo electrónico al pagar.
+                      Durante tu consulta, tu médico analizará las
+                      características de tu piel y te recomendará un plan de
+                      cuidado facial eficaz para conseguir tus objetivos.
+                      Además, en caso de que sea necesario, te facilitará la
+                      receta de una crema formulada exclusivamente para ti.{' '}
+                      <br></br>Los detalles de tu cita online se proporcionarán
+                      por Whatsapp al pagar.
                     </Text>
                   </Flex>
                 </Flex>

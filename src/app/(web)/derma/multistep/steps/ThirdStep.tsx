@@ -23,17 +23,14 @@ export default function ThirdStep({
               <Flex layout="col-left" className="px-4 md:flex-row md:gap-16">
                 <Flex layout="col-left" className="w-full gap-4 md:w-1/2">
                   <Text className="text-sm text-derma-primary500 mb-2">
-                    Paso {activeSlideIndex + 1}, Agenda madre {activeSlideIndex}
+                    Paso {activeSlideIndex + 1}. Agenda
                   </Text>
                   <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
-                    Selecciona tu horario preferida
+                    Selecciona el día y la hora
                   </Text>
                   <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                    Después de tu consulta, tu médico te recomendará una rutina
-                    personalizada de cuidado de la piel adaptada a tus metas,
-                    que podrás recibir en tu puerta según tu preferencia. Los
-                    detalles de tu cita online con el médico se proporcionarán
-                    por correo electrónico al pagar.
+                    Después de la confirmación de la reserva, te enviaremos un
+                    whatsapp con los detalles para conectarte a tu consulta.
                   </Text>
                 </Flex>
 
