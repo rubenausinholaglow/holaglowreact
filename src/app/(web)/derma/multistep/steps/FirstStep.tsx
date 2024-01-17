@@ -101,44 +101,46 @@ export default function FirstStep({
                     <SvgCalendar className="h-6 w-6 text-derma-primary" />
                   </Flex>
                 </div>
+
+                <Flex
+                  layout="col-center"
+                  className={`w-full ${
+                    showBirthDateCalendar ? 'block' : 'hidden'
+                  }`}
+                >
+                  <div
+                    id="datepickerWrapper"
+                    className={`datepickerDerma w-full mt-2 pb-2 ${
+                      showBirthDateCalendar ? 'block' : 'hidden'
+                    }`}
+                  >
+                    <DatePicker
+                      inline
+                      onChange={selectDate}
+                      onMonthChange={selectDate}
+                      onYearChange={selectDate}
+                      useWeekdaysShort
+                      calendarStartDay={1}
+                      locale="es"
+                      className="w-full"
+                      fixedHeight
+                      selected={localDateSelected}
+                      disabledKeyboardNavigation
+                      showYearDropdown
+                      showMonthDropdown
+                      dropdownMode="select"
+                    />
+                  </div>
+                  {(dermaQuestions?.birthDate || showBirthDateCalendar) && (
+                    <SvgClose
+                      className="bg-derma-primary p-1 rounded-full text-white h-10 w-10 mx-auto -mt-5 relative"
+                      onClick={() => setShowBirthDateCalendar(false)}
+                    />
+                  )}
+                </Flex>
               </Flex>
             </Flex>
           </Container>
-
-          <Flex
-            layout="col-center"
-            className={`w-full ${showBirthDateCalendar ? 'block' : 'hidden'}`}
-          >
-            <div
-              id="datepickerWrapper"
-              className={`datepickerDerma w-full mt-2 pb-2 ${
-                showBirthDateCalendar ? 'block' : 'hidden'
-              }`}
-            >
-              <DatePicker
-                inline
-                onChange={selectDate}
-                onMonthChange={selectDate}
-                onYearChange={selectDate}
-                useWeekdaysShort
-                calendarStartDay={1}
-                locale="es"
-                className="w-full"
-                fixedHeight
-                selected={localDateSelected}
-                disabledKeyboardNavigation
-                showYearDropdown
-                showMonthDropdown
-                dropdownMode="select"
-              />
-            </div>
-            {(dermaQuestions?.birthDate || showBirthDateCalendar) && (
-              <SvgClose
-                className="bg-derma-primary p-1 rounded-full text-white h-10 w-10 mx-auto -mt-5 relative"
-                onClick={() => setShowBirthDateCalendar(false)}
-              />
-            )}
-          </Flex>
         </>
       )}
     </div>
