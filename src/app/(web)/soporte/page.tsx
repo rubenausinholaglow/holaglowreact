@@ -65,7 +65,7 @@ export default function SupportPage() {
     if (phoneNumber.length > 9) {
       finalPhoneNumber = phoneNumber.substring(2);
     }
-    await AuthenticationService.getAuthenticationNumber(finalPhoneNumber)
+    await AuthenticationService.isValidLoginSupport24Hours(finalPhoneNumber)
       .then(response => {
         if (response) {
           setIstokenSended(true);

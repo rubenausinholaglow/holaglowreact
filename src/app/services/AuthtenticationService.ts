@@ -1,7 +1,7 @@
 import Bugsnag from '@bugsnag/js';
 
 export default class AuthenticationService {
-    static async getAuthenticationNumber(phoneNumber: string): Promise<boolean> {
+    static async isValidLoginSupport24Hours(phoneNumber: string): Promise<boolean> {
         try {
             const url = `${process.env.NEXT_PUBLIC_AUTHENTICATION_API}Authenticator?phoneNumber=${phoneNumber}`;
             const res = await fetch(url);
