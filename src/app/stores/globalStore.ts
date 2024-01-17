@@ -148,7 +148,7 @@ export const useSessionStore = create(
     }),
     {
       name: 'session-storage',
-      version: 6,
+      version: 7,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
