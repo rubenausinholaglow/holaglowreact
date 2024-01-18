@@ -1,3 +1,4 @@
+import Bugsnag from '@bugsnag/js';
 import { User } from 'app/types/appointment';
 import { Client, ClientUpdate } from 'app/types/client';
 
@@ -116,5 +117,23 @@ export default class UserService {
     } catch (err) {
       return '';
     }
+  }
+
+  static async getAccessToken(token: string): Promise<string> {
+      try {
+          const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Mediquo/UserACcessToken?userToken=${token}`;
+          const res = await fetch(url);
+          if (res.ok) {
+              
+              const data = await res.text();
+              return data;
+          } else {
+              Bugsnag.notify('Error getAccessToken' + res);
+          return "";
+          }
+      } catch (err) {
+          Bugsnag.notify('Error getAccessToken' + err);
+          return "";
+      }
   }
 }

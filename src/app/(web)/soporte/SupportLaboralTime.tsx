@@ -11,6 +11,8 @@ const SupportLaboralTime = () => {
         <br />
         De 10 a 14h y de 15 a 19h
         <br />
+        <a href="tel:+34 682 417 208">(+34) 682 417 208</a>
+        <br />
         <Button
           type="secondary"
           size="xl"

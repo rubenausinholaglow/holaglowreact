@@ -8,6 +8,7 @@ import PhoneInput from 'react-phone-input-2';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@dashboardComponents/TextInputField';
 import AuthenticationService from '@services/AuthtenticationService';
+import UserService from '@services/UserService';
 import * as errorsConfig from '@utils/textConstants';
 import { validatePhoneInput } from '@utils/validators';
 import { poppins } from 'app/fonts';
@@ -82,7 +83,7 @@ export default function SupportPage() {
 
   const getAccessToken = async () => {
     try {
-      const response = await AuthenticationService.getAccessToken(token);
+      const response = await UserService.getAccessToken(token);
       if (response) {
         setAccessToken(response);
         setAuthSuccesfully(true);

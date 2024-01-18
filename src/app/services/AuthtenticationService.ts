@@ -35,22 +35,4 @@ export default class AuthenticationService {
             return false;
         }
     }
-
-    static async getAccessToken(token: string): Promise<string> {
-        try {
-            const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}TwoAuthentication?userToken=${token}`;
-            const res = await fetch(url);
-            if (res.ok) {
-                
-                const data = await res.text();
-                return data;
-            } else {
-                Bugsnag.notify('Error getAccessToken' + res);
-            return "";
-            }
-        } catch (err) {
-            Bugsnag.notify('Error getAccessToken' + err);
-            return "";
-        }
-    }
 }
