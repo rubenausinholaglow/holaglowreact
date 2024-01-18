@@ -121,7 +121,7 @@ export default class UserService {
 
   static async getAccessToken(token: string): Promise<string> {
       try {
-          const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Mediquo/UserACcessToken?userToken=${token}`;
+          const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Mediquo/UserAccessToken?userToken=${token}`;
           const res = await fetch(url);
           if (res.ok) {
               
