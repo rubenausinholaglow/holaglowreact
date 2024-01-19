@@ -45,6 +45,16 @@ export default function MainLayout({ token }: { token: string }) {
           accessToken: "${accessToken}",
         });
       }
+
+      window.addEventListener(
+        "message",
+        ({ data: { command } }) => {
+          if (command === 'started') {
+            MediquoWidget.open_list();
+          }
+        }
+      );  
+
     `;
   return (
     <div className="mt-6 justify-center items-center">
