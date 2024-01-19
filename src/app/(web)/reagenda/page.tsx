@@ -259,7 +259,7 @@ export default function Page({
                       <div>Reagendar</div>
                     </Button>
                     {appointment.treatment?.toUpperCase() !=
-                      process.env.NEXT_PUBLIC_VISITA_EVALUACION_ID && (
+                      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID && (
                       <>
                         {!appointment.isPast && !appointment.isCancelled && (
                           <>
