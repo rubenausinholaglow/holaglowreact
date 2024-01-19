@@ -259,30 +259,28 @@ export default function Page({
                       <div>Reagendar</div>
                     </Button>
                     {appointment.treatment?.toUpperCase() !=
-                      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID && (
-                      <>
-                        {!appointment.isPast && !appointment.isCancelled && (
-                          <>
-                            <Button
-                              size={deviceSize.isMobile ? 'sm' : 'md'}
-                              type="tertiary"
-                              id="button-addon2"
-                              onClick={() => {
-                                setAppointmentToCancel(appointment);
-                                setShowCancelModal(true);
-                              }}
-                            >
-                              {!cancelling && (
-                                <div id="cancelText">Cancelar</div>
-                              )}
-                              {cancelling && (
-                                <SvgSpinner height={24} width={24} />
-                              )}
-                            </Button>
-                          </>
-                        )}
-                      </>
-                    )}
+                      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID &&
+                      appointment.treatment?.toUpperCase() !=
+                        process.env.NEXT_PUBLIC_VISITA_EVALUACION_ID &&
+                      !appointment.isPast &&
+                      !appointment.isCancelled && (
+                        <>
+                          <Button
+                            size={deviceSize.isMobile ? 'sm' : 'md'}
+                            type="tertiary"
+                            id="button-addon2"
+                            onClick={() => {
+                              setAppointmentToCancel(appointment);
+                              setShowCancelModal(true);
+                            }}
+                          >
+                            {!cancelling && <div id="cancelText">Cancelar</div>}
+                            {cancelling && (
+                              <SvgSpinner height={24} width={24} />
+                            )}
+                          </Button>
+                        </>
+                      )}
                   </Flex>
                 </Flex>
               );
