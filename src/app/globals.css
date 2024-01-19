@@ -65,6 +65,12 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
 @layer components {
   .font-gtUltraBold {
     @apply tracking-tight;

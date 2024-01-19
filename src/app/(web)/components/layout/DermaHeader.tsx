@@ -96,7 +96,7 @@ export default function DermaHeader({
                   <Text className="font-semibold text-derma-primary mr-2">
                     Pide cita
                   </Text>
-                  <SvgArrow className="h-5 w-5" />
+                  <SvgArrow className="text-derma-primary h-5 w-5" />
                 </Button>
               )}
             </Flex>

@@ -26,11 +26,11 @@ export default function FourthStep({
             <div>
               <Container className="md:px-0">
                 <Flex layout="col-left" className="w-full">
-                  <Flex layout="col-left" className="w-full gap-4">
+                  <Flex layout="col-left" className="w-full">
                     <Text className="text-sm text-derma-primary500 mb-2">
                       Último paso. Formulario y pago
                     </Text>
-                    <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
+                    <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
                       ¡Ya casi lo tienes, {name}! <br></br> Estás a punto de
                       conseguir tu tratamiento personalizado
                     </Text>

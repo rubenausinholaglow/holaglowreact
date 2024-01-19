@@ -39,6 +39,7 @@ export default function Form() {
   } as DermaQuestions);
 
   const {
+    deviceSize,
     setSelectedClinic,
     setSelectedTreatments,
     selectedSlot,
@@ -155,9 +156,9 @@ export default function Form() {
           </Container>
           <Container className="px-0 md:px-4 md:pt-12">
             <div className="md:w-1/2 md:pr-8">
-              <ul className="flex bg-derma-primary/20 h-[4px] w-full rounded-full mb-6">
+              <ul className="flex bg-derma-primary500/20 h-[4px] w-full rounded-full mb-6">
                 <li
-                  className="h-[4px] rounded-full bg-hg-tertiary transition-all"
+                  className="h-[4px] rounded-full bg-derma-primary transition-all"
                   style={{ width: `${progressBarWith}%` }}
                 ></li>
               </ul>
@@ -179,7 +180,6 @@ export default function Form() {
               activeSlideIndex={activeSlideIndex}
               dermaQuestions={dermaQuestions}
               setDermaQuestions={setDermaQuestions}
-              setContinueDisabled={setContinueDisabled}
             />
 
             {MULTISTEP_QUESTIONS.map((item: any, question: number) => {
@@ -226,6 +226,7 @@ export default function Form() {
 
                 {activeSlideIndex < STEPS && (
                   <Button
+                    size={deviceSize.isMobile ? 'md' : 'lg'}
                     className="ml-auto"
                     type="tertiary"
                     customStyles="bg-transparent border-derma-primary text-derma-primary"

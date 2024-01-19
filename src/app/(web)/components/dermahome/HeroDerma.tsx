@@ -29,15 +29,15 @@ export default function HeroDerma() {
         <Image
           src="/images/derma/home/homeDerma.png"
           alt="Holaglow"
-          width={790}
-          height={780}
-          className="scale-125 translate-y-[10%] md:w-1/3 lg:w-2/5 md:scale-100 md:translate-y-0"
+          width={912}
+          height={894}
+          className="md:w-2/5 xl:ml-[5%]"
         />
         <Flex
           layout="col-center"
-          className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end"
+          className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end lg:mr-[5%]"
         >
-          <Container className="pb-12 md:pb-0 overflow-hidden">
+          <Container className="pb-12 md:p-0 overflow-hidden">
             <Flex layout="col-left" className="md:ml-8">
               <Flex
                 layout="row-between"

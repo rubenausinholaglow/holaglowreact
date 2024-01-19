@@ -60,9 +60,9 @@ export default function BenefitsApplicationResultsDerma() {
             <Image
               src="/images/derma/home/benefits.png"
               alt="Beneficios de las cremas formuladas"
-              height={464}
-              width={432}
-              className="md:w-[66%]"
+              height={648}
+              width={648}
+              className="w-2/3 md:w-[80%]"
             />
           </div>
         </Flex>
@@ -108,7 +108,7 @@ export default function BenefitsApplicationResultsDerma() {
               alt="Beneficios de las cremas formuladas"
               height={572}
               width={432}
-              className="md:w-[66%]"
+              className="w-2/3 md:w-[80%]"
             />
           </div>
         </Flex>

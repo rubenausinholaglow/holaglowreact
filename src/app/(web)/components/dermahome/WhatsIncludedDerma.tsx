@@ -12,24 +12,24 @@ export default function WhatsIncludedDerma() {
           layout="col-left"
           className="items-center relative md:justify-center md:flex-row md:gap-12 md:items-start"
         >
-          <Flex layout="col-left" className="relative z-10 md:w-1/2">
+          <Flex layout="col-left" className="relative z-10 md:w-[55%]">
             <TitleDerma
               isAnimated
               size="2xl"
-              className="text-white mb-4 md:mb-8"
+              className="text-white mb-4 md:mb-6"
             >
               Qué incluye el precio
             </TitleDerma>
-            <Text className="text-hg-black500 md:w-full md:text-lg mb-6 md:mb-12 md:text-white">
+            <Text className="text-hg-black500 md:w-full md:text-lg mb-6 md:text-white">
               Tu piel merece un cuidado experto y personalizado
             </Text>
 
             <Flex
               layout="row-between"
-              className="p-8 bg-derma-primary300 rounded-full w-full hidden md:flex"
+              className="p-6 bg-derma-primary300 rounded-full w-full hidden md:flex"
             >
               <Button
-                size="lg"
+                size="xl"
                 type="tertiary"
                 href="/derma/multistep/start"
                 customStyles="bg-derma-primary text-derma-primary100 border-none"
@@ -37,14 +37,14 @@ export default function WhatsIncludedDerma() {
                 Comienza ahora
               </Button>
 
-              <SvgArrow className="h-10 w-10 text-derma-primary" />
+              <SvgArrow className="h-12 w-12 text-derma-primary" />
             </Flex>
           </Flex>
 
-          <Flex layout="col-left" className="relative z-10 w-full md:w-1/2">
+          <Flex layout="col-left" className="relative z-10 w-full md:w-[45%]">
             <Flex
               layout="col-left"
-              className="bg-derma-secondary300 rounded-2xl p-4 shadow-centered-black w-full"
+              className="bg-derma-secondary300 rounded-2xl p-4 md:p-6 shadow-centered-black w-full"
             >
               <Flex className="gap-4 mb-6">
                 <Image
@@ -63,14 +63,14 @@ export default function WhatsIncludedDerma() {
                 </div>
               </Flex>
               <Text className="text-sm font-semibold mb-6">
-                <span className="text-2xl md:text-4xl font-bold">49 €</span>{' '}
+                <span className="text-2xl md:text-4xl font-bold">59 €</span>{' '}
                 /pago único
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">
                 {[
-                  '<b class="text-hg-black700">Consulta online</b> con tu dermatólogo',
-                  'Receta de la crema formulada exclusivamente para ti',
-                  'Recomendación de rutina facial complementaria',
+                  '<b class="text-derma-tertiary">Consulta online</b> con tu dermatólogo',
+                  'Receta de la <b class="text-derma-tertiary">crema formulada</b> exclusivamente para ti',
+                  'Recomendación de <b class="text-derma-tertiary">rutina facial complementaria</b>',
                 ].map(item => (
                   <li className="border-hg-black flex" key={item}>
                     <div className="flex relative md:justify-center flex-col w-full">
@@ -81,7 +81,7 @@ export default function WhatsIncludedDerma() {
                           className="text-derma-primary500 mr-3 shrink-0"
                         />
                         <p
-                          className="text-sm"
+                          className="text-sm md:text-md"
                           dangerouslySetInnerHTML={{
                             __html: item,
                           }}

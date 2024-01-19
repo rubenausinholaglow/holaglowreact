@@ -44,6 +44,7 @@ export default function HomeBlocksDerma() {
 
       <div className="bg-derma-secondary100 pt-12">
         <ProfessionalsDerma />
+        <StoriesDerma />
         <TestimonialsDerma />
       </div>
       <div className="bg-derma-secondary300 py-12">

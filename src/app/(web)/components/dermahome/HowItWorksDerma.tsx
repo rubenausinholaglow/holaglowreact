@@ -12,7 +12,7 @@ export default function HowItWorksDerma() {
       >
         Cómo funciona
       </TitleDerma>
-      <ul className="flex flex-col w-full gap-8 md:flex-row md:mb-16">
+      <ul className="flex flex-col w-full gap-8 md:gap-16 md:flex-row md:mb-16">
         {[
           {
             text: 'Cuestionario y reserva',

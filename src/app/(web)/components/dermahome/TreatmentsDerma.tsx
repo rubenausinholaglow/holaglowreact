@@ -51,7 +51,11 @@ export default function TreatmentsDerma() {
       </Container>
 
       {deviceSize.isMobile && (
-        <FullWidthCarousel visibleSlides={2.25} className="pb-8">
+        <FullWidthCarousel
+          visibleSlides={2.25}
+          className="pb-8"
+          hasControls={false}
+        >
           {TREATMENTS.map((item: DermaTreatment) => {
             return (
               <Flex

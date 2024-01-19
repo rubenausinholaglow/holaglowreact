@@ -26,7 +26,7 @@ const PAYMENT_ICONS = {
   direct: ['googlepay.svg', 'applepay.svg'],
 };
 
-export const PaymentMethods = () => {
+export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
 
@@ -98,13 +98,17 @@ export const PaymentMethods = () => {
 
                   <Flex className="justify-between w-full bg-hg-black50 p-4 rounded-xl mb-8">
                     <Text>Total pago</Text>
-                    <Text>49,00€</Text>
+                    <Text>{isDerma ? '59,00€' : '49,00€'}</Text>
                   </Flex>
 
                   <Button
                     className="self-end"
                     type="tertiary"
-                    customStyles="bg-hg-primary gap-2"
+                    customStyles={`gap-2 ${
+                      isDerma
+                        ? 'bg-derma-primary border-none text-derma-primary300'
+                        : 'bg-hg-primary '
+                    }`}
                     onClick={() => {
                       setIsLoadingButton(true);
                       setActivePayment(PaymentBank.Stripe);

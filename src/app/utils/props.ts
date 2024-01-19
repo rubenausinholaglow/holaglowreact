@@ -5,7 +5,10 @@ import { Product } from 'app/types/product';
 export interface TextInputFieldProps {
   placeholder?: string;
   label?: string;
+  labelClassName?: string;
+  inputClassName?: string;
   value: string;
+  type?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;

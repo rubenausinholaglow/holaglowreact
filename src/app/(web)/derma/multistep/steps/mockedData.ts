@@ -9,22 +9,21 @@ export const MULTISTEP_QUESTIONS: any = [
     questions: [
       {
         title:
-          'Busco un tratamiento efectivo para <b>preocupaciones específicas</b> de mi piel',
+          'Busco un tratamiento efectivo para preocupaciones específicas de mi piel',
       },
       {
         title:
-          'Quiero una rutina facial compatible con el <b>embarazo y/o lactancia</b>',
+          'Quiero una rutina facial compatible con el embarazo y/o lactancia',
       },
       {
-        title: 'Me preocupa el <b>envejecimiento saludable</b> de mi piel',
-      },
-      {
-        title:
-          'Deseo cuidar mi piel mientras vivo <b>cambios hormonales y/o la menopausia<b/>',
+        title: 'Me preocupa el envejecimiento saludable de mi piel',
       },
       {
         title:
-          'Quiero preparar mi piel para <b>un evento o una ocasión especial</b>',
+          'Deseo cuidar mi piel mientras vivo cambios hormonales y/o la menopausia<b/>',
+      },
+      {
+        title: 'Quiero preparar mi piel para un evento o una ocasión especial',
       },
     ],
   },
@@ -35,7 +34,7 @@ export const MULTISTEP_QUESTIONS: any = [
     description:
       'Selecciona las inquietudes que te gustaría resolver en tu consulta',
     showTextArea: true,
-    placeholder: 'Otros',
+    placeholder: 'Escribe aquí tu preocupación de piel facial',
     questions: [
       {
         title: 'Acné',
@@ -72,6 +71,9 @@ export const MULTISTEP_QUESTIONS: any = [
       },
       {
         title: 'Textura de la piel',
+      },
+      {
+        title: 'Otros',
       },
     ],
   },

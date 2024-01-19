@@ -48,7 +48,7 @@ export default function ProfessionalsDerma({
     <Container
       className={`p-0 md:px-4 gap-16 ${
         isDashboard ? '' : 'md:flex'
-      } justify-between md:mb-16 ${className}`}
+      } justify-between md:mb-4 ${className}`}
     >
       <Container
         className={`${
@@ -70,11 +70,15 @@ export default function ProfessionalsDerma({
       </Container>
       <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>
         {deviceSize.isMobile && (
-          <ProductCarousel type="professionals" items={professionals} />
+          <ProductCarousel
+            hasControls={false}
+            type="professionals"
+            items={professionals}
+          />
         )}
         {!deviceSize.isMobile && (
           <Carousel
-            hasControls={professionals?.map && professionals?.map.length > 2}
+            hasControls={false}
             className="relative"
             isIntrinsicHeight
             visibleSlides={2}

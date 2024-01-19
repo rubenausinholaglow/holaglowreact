@@ -69,11 +69,11 @@ export default function SecondStep({
   return (
     <>
       <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
-        <Flex layout="col-left" className="w-full gap-4 md:w-1/2">
+        <Flex layout="col-left" className="w-full md:w-1/2">
           <Text className="text-sm text-derma-primary500">
             Paso {question + 2}. {item.section}
           </Text>
-          <Text className="font-gtUltraThin font-bold text-xl text-derma-primary md:text-2xl">
+          <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
             {item.title}
           </Text>
           <Text className="text-hg-black500 text-sm mb-8 md:text-md">
@@ -84,13 +84,13 @@ export default function SecondStep({
         <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
           <ul className="flex flex-col gap-4 w-full">
             {secondStepValues &&
-              item.questions.map((item: any, index: number) => {
+              item.questions.map((listItem: any, index: number) => {
                 const isActive =
                   secondStepValues[question]?.indexOf(index) > -1;
                 return (
                   <li
                     key={index}
-                    className={`flex flex-col gap-2 relative p-4 pr-12 w-full ${
+                    className={`flex flex-col gap-2 relative p-4 w-full ${
                       isActive ? 'bg-derma-primary300' : 'bg-derma-secondary400'
                     } rounded-lg cursor-pointer`}
                     onClick={() => {
@@ -110,18 +110,39 @@ export default function SecondStep({
                       stroke={HOLAGLOW_COLORS['black']}
                       className="absolute top-3 right-3 h-7 w-7"
                     />
-                    <p dangerouslySetInnerHTML={{ __html: item.title }}></p>
+                    <p
+                      className="text-derma-tertiary pr-12"
+                      dangerouslySetInnerHTML={{ __html: listItem.title }}
+                    />
+                    {listItem.title === 'Otros' &&
+                      item.showTextArea &&
+                      question == 1 && (
+                        <textarea
+                          value={textAreaTwo}
+                          onChange={e =>
+                            setTextAreasValue(e.target.value, question)
+                          }
+                          placeholder={item.placeholder}
+                          className="w-full h-40 p-2 resize-none border rounded-lg placeholder-hg-black300"
+                        />
+                      )}
                   </li>
                 );
               })}
           </ul>
-          {item.showTextArea && (
-            <textarea
-              value={question == 2 ? textAreaOne : textAreaTwo}
-              onChange={e => setTextAreasValue(e.target.value, question)}
-              placeholder={item.placeholder}
-              className="w-full h-40 p-2 resize-none border rounded-lg"
-            />
+
+          {item.showTextArea && question === 2 && (
+            <div className="relative w-full h-[300px] md:h-[400px]">
+              <label className="absolute left-4 top-4 text-sm text-hg-black500">
+                Haznos saber
+              </label>
+              <textarea
+                value={textAreaOne}
+                onChange={e => setTextAreasValue(e.target.value, question)}
+                placeholder={item.placeholder}
+                className="w-full h-[300px] md:h-[400px] p-4 pt-12 resize-none border rounded-lg placeholder-hg-black300"
+              />
+            </div>
           )}
         </Flex>
       </Flex>
