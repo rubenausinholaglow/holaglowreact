@@ -1,5 +1,3 @@
-'use client';
-
 export function DeviceSize() {
   const breakpoint = window.document.querySelector('#breakpoint');
 

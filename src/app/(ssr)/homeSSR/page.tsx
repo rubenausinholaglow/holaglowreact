@@ -1,8 +1,7 @@
-import { Product } from '@interface/product';
+import MainLayout from 'app/(web)/components/layout/MainLayout';
 import type { Metadata } from 'next';
 
 import Home from './components/Home';
-import SSRWrapper from './components/SSRWrapper';
 
 export const metadata: Metadata = {
   title: 'Holaglow - La nueva cara de la medicina estética',
@@ -18,10 +17,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomeSSR({ data }: { data: Product[] }) {
-  return (
-    <SSRWrapper>
-      <Home data={data} />
-    </SSRWrapper>
-  );
+export default function HomeSSR() {
+  return <Home />;
 }

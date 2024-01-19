@@ -1,11 +1,5 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import { fetchClinics } from '@utils/fetch';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
 import { Professional } from 'app/types/clinic';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
@@ -15,35 +9,27 @@ import { isEmpty } from 'lodash';
 
 import ProfessionalCard from './ProfessionalCard';
 
-export default function Professionals({
+async function getClinics() {
+  const clinics = await fetchClinics();
+
+  return clinics;
+}
+
+export default async function Professionals({
   className = '',
   isDashboard = false,
 }: {
   className?: string;
   isDashboard?: boolean;
 }) {
-  const { clinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize } = useSessionStore(state => state);
-  const [professionals, setProfessionals] = useState<Professional[] | null>([]);
+  const clinics = await getClinics();
 
-  useEffect(() => {
-    const professionalsWithCity = clinics.flatMap(clinic =>
-      clinic.professionals.filter(professional => {
-        if (professional.professionalType === 1) {
-          return {
-            ...professional,
-            city: clinic.city,
-          };
-        }
-      })
-    );
-
-    setProfessionals(professionalsWithCity);
-  }, [clinics]);
-
-  if (isEmpty(professionals)) {
-    return <></>;
-  }
+  const professionals = clinics.flatMap(clinic =>
+    clinic.professionals.map((professional: Professional) => ({
+      ...professional,
+      city: clinic.city,
+    }))
+  );
 
   return (
     <Container
@@ -71,28 +57,30 @@ export default function Professionals({
           literal y metafóricamente.
         </Text>
       </Container>
+
       <div className={`${isDashboard ? '' : 'md:w-1/2'}`}>
-        {deviceSize.isMobile && (
-          <ProductCarousel type="professionals" items={professionals} />
-        )}
-        {!deviceSize.isMobile && (
-          <Carousel
-            hasControls={professionals?.map && professionals?.map.length > 2}
-            className="relative"
-            isIntrinsicHeight
-            visibleSlides={2}
-            infinite={false}
-            sliderStyles="gap-8"
-          >
-            {professionals?.map(professional => (
-              <ProfessionalCard
-                key={professional.name}
-                professional={professional}
-                className="h-full flex flex-col"
-              />
-            ))}
-          </Carousel>
-        )}
+        <ProductCarousel
+          type="professionals"
+          items={professionals}
+          className="md:hidden"
+        />
+
+        <Carousel
+          hasControls={professionals?.map && professionals?.map.length > 2}
+          className="relative hidden md:block"
+          isIntrinsicHeight
+          visibleSlides={2}
+          infinite={false}
+          sliderStyles="gap-8"
+        >
+          {professionals?.map(professional => (
+            <ProfessionalCard
+              key={professional.name}
+              professional={professional}
+              className="h-full flex flex-col"
+            />
+          ))}
+        </Carousel>
       </div>
     </Container>
   );

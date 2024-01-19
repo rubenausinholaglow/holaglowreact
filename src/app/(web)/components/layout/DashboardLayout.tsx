@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import SocketService from '@services/SocketService';
 import useRoutes from '@utils/useRoutes';

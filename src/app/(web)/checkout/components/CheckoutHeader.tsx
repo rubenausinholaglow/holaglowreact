@@ -1,3 +1,5 @@
+'use client';
+
 import { SvgArrowSmallLeft } from 'app/icons/Icons';
 import { SvgHolaglow } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';

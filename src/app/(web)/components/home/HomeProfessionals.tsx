@@ -1,6 +1,4 @@
-'use client';
-
-import { useSessionStore } from 'app/stores/globalStore';
+import { middleware } from '@utils/utils';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -9,9 +7,7 @@ import Image from 'next/image';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
 
-export default function Profesionals() {
-  const { deviceSize } = useSessionStore(state => state);
-
+export default function HomeProfessionals() {
   return (
     <div className="bg-hg-skyblue/20 overflow-hidden">
       <Container className="py-12">
@@ -21,7 +17,7 @@ export default function Profesionals() {
         >
           <AnimateOnViewport
             className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2"
-            origin={deviceSize.isMobile ? 'bottom' : 'left'}
+            //origin={deviceSize.isMobile ? 'bottom' : 'left'}
           >
             <Image
               src="/images/home/profesionales.jpg"

@@ -4,6 +4,7 @@ import { INITIAL_STATE_MESSAGESOCKETLIST } from 'app/types/messageSocket';
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
 import { CartItem } from 'app/types/product';
+import { NextRequest, NextResponse, userAgent } from 'next/server';
 
 import { useCartStore } from '../(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
@@ -37,7 +38,6 @@ export const applyDiscountToItem = (
   discountType: string,
   cartItem: CartItem
 ) => {
-
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 
@@ -132,4 +132,12 @@ export function clearLocalStorage(allLocalStorage: boolean) {
   useMessageSocket.setState(INITIAL_STATE_MESSAGESOCKETLIST);
   usePaymentList.setState(INITIAL_STATE_PAYMENT);
   useCartStore.setState(INITIAL_STATE);
+}
+
+export function middleware(request: NextRequest) {
+  const url = request.nextUrl;
+  const { device } = userAgent(request);
+  const viewport = device.type === 'mobile' ? 'mobile' : 'desktop';
+  url.searchParams.set('viewport', viewport);
+  return NextResponse.rewrite(url);
 }

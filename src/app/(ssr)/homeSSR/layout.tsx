@@ -2,6 +2,9 @@ import 'app/globals.css';
 import '../../../../public/styles/Alma/widgets.min.css';
 
 import React from 'react';
+import { Breakpoint } from 'app/(web)/components/layout/Breakpoint';
+import { poppins } from 'app/fonts';
+import { ModalBackground } from 'designSystem/Modals/Modal';
 import Head from 'next/head';
 import Script from 'next/script';
 
@@ -53,7 +56,11 @@ export default function RootLayout({
           }}
         ></Script>
       </head>
-      {children}
+      <body id="body" className={`relative min-h-full ${poppins.className}`}>
+        <ModalBackground />
+        <Breakpoint />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,7 +1,5 @@
-import { Product } from '@interface/product';
-import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { fetchProducts } from '@utils/fetch';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useGlobalStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
@@ -9,14 +7,21 @@ import { isEmpty } from 'lodash';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import CategorySelector from '../filters/CategorySelector';
+import FullWidthCarousel from '../product/fullWidthCarousel';
 
-export default function HomeProducts({
+async function getProducts() {
+  const products = await fetchProducts();
+
+  return products;
+}
+
+export default async function HomeProducts({
   hideCategorySelector,
-  products,
 }: {
   hideCategorySelector?: boolean;
-  products: Product[];
 }) {
+  const products = await getProducts();
+
   return (
     <div className="bg-hg-cream500 overflow-hidden py-12">
       <Container>
@@ -43,7 +48,9 @@ export default function HomeProducts({
           </AnimateOnViewport>
         </Container>
       )}
-      <FullWidthCarousel className="pb-8" type="products" items={products} />
+      {!isEmpty(products) && (
+        <FullWidthCarousel className="pb-8" type="products" items={products} />
+      )}
     </div>
   );
 }
