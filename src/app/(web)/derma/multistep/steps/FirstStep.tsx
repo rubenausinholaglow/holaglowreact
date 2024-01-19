@@ -14,10 +14,12 @@ export default function FirstStep({
   activeSlideIndex,
   dermaQuestions,
   setDermaQuestions,
+  setContinueDisabled,
 }: {
   activeSlideIndex: number;
   dermaQuestions: DermaQuestions;
   setDermaQuestions: any;
+  setContinueDisabled: any;
 }) {
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -65,8 +67,10 @@ export default function FirstStep({
                     placeholder="Escribe aquí"
                     type="date"
                     value={dermaQuestions?.birthDate || ''}
-                    onChange={event => handleFieldChange(event, 'birthDate')}
-                    hasNoValidation
+                    onChange={event => {
+                      handleFieldChange(event, 'birthDate');
+                      setContinueDisabled(false);
+                    }}
                   />
                 </div>
               </Flex>

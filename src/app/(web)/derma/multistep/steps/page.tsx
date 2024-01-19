@@ -180,6 +180,7 @@ export default function Form() {
               activeSlideIndex={activeSlideIndex}
               dermaQuestions={dermaQuestions}
               setDermaQuestions={setDermaQuestions}
+              setContinueDisabled={setContinueDisabled}
             />
 
             {MULTISTEP_QUESTIONS.map((item: any, question: number) => {
