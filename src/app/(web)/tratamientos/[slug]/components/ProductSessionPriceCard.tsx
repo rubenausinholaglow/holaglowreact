@@ -86,20 +86,6 @@ export default function ProductSessionPriceCard({
             )}
           </Flex>
         </div>
-        {!isDashboard && (
-          <Button
-            type="tertiary"
-            className="md:hidden shrink-0"
-            customStyles="bg-hg-primary md:mt-4"
-            onClick={() => {
-              setSelectedTreatments([product]);
-            }}
-            href={ROUTES.checkout.clinics}
-          >
-            Reservar cita
-            <SvgArrow height={16} width={16} className="ml-2" />
-          </Button>
-        )}
 
         {isDashboard && (
           <Button
