@@ -29,7 +29,7 @@ export default function StartMultistep() {
                   alt="Holaglow"
                   width={816}
                   height={1014}
-                  className="w-full shrink-0"
+                  className="w-2/3 md:w-full shrink-0"
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
@@ -42,7 +42,6 @@ export default function StartMultistep() {
                   tratamiento personalizado.
                 </Text>
                 <Button
-                  isAnimated
                   type="tertiary"
                   size="xl"
                   className="mx-auto md:mx-0 mb-10"

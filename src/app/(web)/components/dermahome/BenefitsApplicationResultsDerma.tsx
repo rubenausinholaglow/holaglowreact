@@ -75,17 +75,18 @@ export default function BenefitsApplicationResultsDerma() {
             <TitleDerma size="xl">Aplicación</TitleDerma>
             {[
               {
-                title: '¿Cuándo? Por la noche.',
+                title:
+                  '<span class="font-semibold">¿Cuándo?</span> Por la noche.',
                 text: 'Comienza aplicando una o dos veces por semana, aumentando gradualmente según la recomendación de tu médico.',
               },
               {
                 title:
-                  '¿Cómo? Sobre la piel limpia y seca (antes de la crema hidratante).',
+                  '<span class="font-semibold">¿Cómo?</span> Sobre la piel limpia y seca (antes de la crema hidratante).',
                 text: 'A la mañana siguiente, lava bien tu rostro, aplica crema hidratante y protege tu piel con un SPF de amplio espectro.',
               },
               {
                 title:
-                  '¿Cuánto? La cantidad del tamaño de un guisante/grano de arroz.',
+                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante/grano de arroz.',
                 text: 'Este tipo de cremas son poderosas y eficaces, por eso, no necesitarás aplicar más cantidad para experimentar sus beneficios.',
               },
             ].map(item => (
@@ -93,7 +94,8 @@ export default function BenefitsApplicationResultsDerma() {
                 key={item.title}
                 className="p-4 md:mb-0 bg-white/50 rounded-2xl"
                 trigger={item.title}
-                triggerStyles="text-left items-start font-semibold"
+                triggerHasHtml
+                triggerStyles="text-left items-start"
                 iconStyles="text-derma-primary500"
               >
                 <Text size="sm" className="text-hg-black500 pt-4">

@@ -135,7 +135,6 @@ export default function Form() {
   };
 
   const goNext = (index: number) => {
-    //dermaQuestions.extraInfo = textAreaTwo;
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
@@ -214,6 +213,7 @@ export default function Form() {
               <Flex layout="row-between">
                 {activeSlideIndex > 0 && (
                   <Button
+                    size="lg"
                     onClick={() => goBack(activeSlideIndex)}
                     type="tertiary"
                     customStyles="bg-transparent border-none text-derma-primary"
@@ -227,7 +227,7 @@ export default function Form() {
 
                 {activeSlideIndex < STEPS && (
                   <Button
-                    size={deviceSize.isMobile ? 'md' : 'lg'}
+                    size="lg"
                     className="ml-auto"
                     type="tertiary"
                     customStyles="bg-transparent border-derma-primary text-derma-primary"

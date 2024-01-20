@@ -83,7 +83,7 @@ export default function FaqsDerma() {
                 return (
                   <SimpleAccordion
                     key={faq.title}
-                    className="p-4 md:mb-0 bg-white rounded-2xl"
+                    className="pb-4 md:mb-0 border-b border-derma-tertiary"
                     trigger={faq.title}
                     triggerStyles="text-left items-start font-semibold"
                   >
@@ -105,7 +105,7 @@ export default function FaqsDerma() {
                 return (
                   <SimpleAccordion
                     key={faq.title}
-                    className="p-4 md:mb-0 bg-white rounded-2xl"
+                    className="pb-4 md:mb-0 border-b border-derma-tertiary"
                     trigger={faq.title}
                     triggerStyles="text-left items-start font-semibold"
                   >

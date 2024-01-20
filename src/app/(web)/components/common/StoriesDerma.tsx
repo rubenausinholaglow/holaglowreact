@@ -27,9 +27,9 @@ export default function StoriesDerma() {
     <Container className="py-12 overflow-hidden">
       <Flex
         layout="col-left"
-        className="gap-4 items-center relative md:justify-center md:flex-row"
+        className="gap-4 items-center md:items-start relative md:justify-center md:flex-row md:gap-16"
       >
-        <Flex layout="col-left" className="md:w-1/2">
+        <Flex layout="col-left" className="md:w-3/5">
           <Title
             isAnimated
             size="2xl"
@@ -46,7 +46,7 @@ export default function StoriesDerma() {
             conseguidos.
           </Text>
         </Flex>
-        <Flex layout="col-left" className="md:w-1/2 w-full">
+        <Flex layout="col-left" className="md:w-2/5 w-full">
           <Carousel
             hasControls={dermaImages?.length > 1}
             dragEnabled={false}

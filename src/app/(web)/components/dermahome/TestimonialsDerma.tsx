@@ -60,6 +60,7 @@ export default function TestimonialsDerma() {
       </Container>
       <AnimateOnViewport>
         <FullWidthCarousel
+          hasControls={false}
           className="pb-8"
           visibleSlides={deviceSize.isMobile ? 1.2 : 3.5}
         >

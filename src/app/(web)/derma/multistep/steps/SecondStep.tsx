@@ -29,7 +29,10 @@ export default function SecondStep({
   const [textAreaTwo, setTextAreaTwo] = useState<string>('');
 
   const setSelectedQuestionValue = (question: number, value: number) => {
+    console.log(question);
+
     const newValues = [...secondStepValues];
+
     if (!newValues[question]) newValues.push([]);
     const index = newValues[question].indexOf(value);
 
@@ -41,7 +44,7 @@ export default function SecondStep({
     setSecondStepValues(newValues);
     setContinueDisabled(newValues[question].length === 0);
 
-    if (question == 0) {
+    if (question === 0) {
       dermaQuestions.skinConcerns = [];
       newValues[question].forEach(x => {
         dermaQuestions.skinConcerns.push({
@@ -49,6 +52,8 @@ export default function SecondStep({
         });
       });
       dermaQuestions.skinConcerns.push({ concern: textAreaOne });
+
+      console.log(dermaQuestions);
     } else if (question == 1) {
       dermaQuestions.scenario = MULTISTEP_QUESTIONS[1].questions[value].title;
     }

@@ -1,14 +1,10 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
+import { useEffect } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
 import { DermaQuestions } from '@interface/dermaquestions';
-import { SvgCalendar, SvgClose } from 'app/icons/Icons';
-import { useGlobalStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 
 export default function FirstStep({
   activeSlideIndex,
@@ -30,6 +26,19 @@ export default function FirstStep({
       [field]: event.target.value,
     }));
   };
+
+  useEffect(() => {
+    const name = dermaQuestions?.name;
+    const birthDate = dermaQuestions?.birthDate;
+
+    if (!isEmpty(name) && !isEmpty(birthDate)) {
+      const today = dayjs();
+      const years = today.diff(dayjs(birthDate), 'years');
+      setContinueDisabled(years < 18);
+    } else {
+      setContinueDisabled(true);
+    }
+  }, [dermaQuestions]);
 
   return (
     <div>
@@ -63,14 +72,11 @@ export default function FirstStep({
                   <TextInputField
                     label="¿Cuándo naciste?"
                     labelClassName="absolute top-3 left-4 text-xs text-hg-black500"
-                    inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300"
+                    inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full"
                     placeholder="Escribe aquí"
                     type="date"
                     value={dermaQuestions?.birthDate || ''}
-                    onChange={event => {
-                      handleFieldChange(event, 'birthDate');
-                      setContinueDisabled(false);
-                    }}
+                    onChange={event => handleFieldChange(event, 'birthDate')}
                   />
                 </div>
               </Flex>
