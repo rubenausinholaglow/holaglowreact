@@ -60,7 +60,7 @@ export default function ProfessionalsDerma({
           size="2xl"
           className="mb-6 md:mb-8 text-derma-primary"
         >
-          Nuestra red de profesionales en dermatología
+          Nuestra red de dermatólogos estéticos
         </TitleDerma>
         <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
           Dermatólogos experimentados escucharán todas tus inquietudes para
