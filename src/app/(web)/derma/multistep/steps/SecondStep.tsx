@@ -22,43 +22,55 @@ export default function SecondStep({
   setDermaQuestions: any;
   setContinueDisabled: any;
 }) {
-  const [secondStepValues, setSecondStepValues] = useState<
-    Array<Array<number>>
-  >([[]]);
+  const [secondStepValues, setSecondStepValues] = useState<any>([[], []]);
   const [textAreaOne, setTextAreaOne] = useState<string>('');
   const [textAreaTwo, setTextAreaTwo] = useState<string>('');
 
   const setSelectedQuestionValue = (question: number, value: number) => {
-    console.log(question);
-
     const newValues = [...secondStepValues];
 
-    if (!newValues[question]) newValues.push([]);
-    const index = newValues[question].indexOf(value);
-
-    if (index === -1) {
-      newValues[question].push(value);
-    } else {
-      newValues[question].splice(index, 1);
+    if (question === 0) {
+      newValues[question] = [value];
     }
+
+    if (question === 1) {
+      const index = newValues[question].indexOf(value);
+
+      console.log(index);
+      if (index === -1) {
+        newValues[question].push(value);
+      } else {
+        newValues[question].splice(index, 1);
+      }
+    }
+
     setSecondStepValues(newValues);
-    setContinueDisabled(newValues[question].length === 0);
 
     if (question === 0) {
-      dermaQuestions.skinConcerns = [];
-      newValues[question].forEach(x => {
-        dermaQuestions.skinConcerns.push({
-          concern: MULTISTEP_QUESTIONS[0].questions[value].title,
-        });
-      });
-      dermaQuestions.skinConcerns.push({ concern: textAreaOne });
+      dermaQuestions.scenario = MULTISTEP_QUESTIONS[0].questions[value].title;
+      setContinueDisabled(false);
+    } else if (question === 1) {
+      const selectedConcern = MULTISTEP_QUESTIONS[1].questions[value].title;
 
-      console.log(dermaQuestions);
-    } else if (question == 1) {
-      dermaQuestions.scenario = MULTISTEP_QUESTIONS[1].questions[value].title;
+      dermaQuestions.skinConcerns = dermaQuestions.skinConcerns || [];
+
+      const existingIndex = dermaQuestions.skinConcerns.findIndex(
+        item => item.concern === selectedConcern
+      );
+
+      if (existingIndex === -1) {
+        dermaQuestions.skinConcerns.push({ concern: selectedConcern });
+      } else {
+        dermaQuestions.skinConcerns.splice(existingIndex, 1);
+      }
+
+      setContinueDisabled(false);
     }
-    setDermaQuestions(dermaQuestions);
+
+    setDermaQuestions({ ...dermaQuestions });
   };
+
+  console.log(dermaQuestions);
 
   const setTextAreasValue = (value: string, question: number) => {
     if (question == 2) {
@@ -88,10 +100,11 @@ export default function SecondStep({
 
         <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
           <ul className="flex flex-col gap-4 w-full">
-            {secondStepValues &&
+            {dermaQuestions &&
               item.questions.map((listItem: any, index: number) => {
                 const isActive =
                   secondStepValues[question]?.indexOf(index) > -1;
+
                 return (
                   <li
                     key={index}
@@ -124,6 +137,7 @@ export default function SecondStep({
                       question == 1 && (
                         <textarea
                           value={textAreaTwo}
+                          onClick={e => e.stopPropagation()}
                           onChange={e =>
                             setTextAreasValue(e.target.value, question)
                           }

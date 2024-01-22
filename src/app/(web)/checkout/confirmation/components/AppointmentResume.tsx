@@ -8,8 +8,6 @@ import {
 import {
   SvgAngleDown,
   SvgCalendar,
-  SvgCream,
-  SvgCreams,
   SvgHour,
   SvgLocation,
 } from 'app/icons/Icons';
@@ -101,7 +99,7 @@ export default function AppointmentResume({
   return (
     <Flex
       layout="col-left"
-      className={`w-full px-4 md:px-0 ${!isDerma ? 'md:pr-8' : ''}`}
+      className={`w-full md:px-0 ${!isDerma ? 'px-4 md:pr-8' : ''}`}
     >
       {!isDerma && (
         <Text
@@ -177,7 +175,7 @@ export default function AppointmentResume({
                     >
                       <div className="flex flex-col w-full mb-3">
                         <Text className="font-semibold mb-2">
-                          {selectedTreatmentsNames} oaoao
+                          {selectedTreatmentsNames}
                         </Text>
                         {selectedTreatments &&
                         selectedTreatments[0] &&

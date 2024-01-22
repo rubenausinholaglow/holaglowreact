@@ -3,7 +3,6 @@
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import { SvgStethoscope } from 'app/icons/Icons';
 import { SvgVideo } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
@@ -12,8 +11,6 @@ export default function ThirdStep({
 }: {
   activeSlideIndex: number;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
-
   return (
     <div>
       {activeSlideIndex === 4 && (

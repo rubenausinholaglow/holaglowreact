@@ -20,7 +20,7 @@ export const MULTISTEP_QUESTIONS: any = [
       },
       {
         title:
-          'Deseo cuidar mi piel mientras vivo cambios hormonales y/o la menopausia<b/>',
+          'Deseo cuidar mi piel mientras vivo cambios hormonales y/o la menopausia',
       },
       {
         title: 'Quiero preparar mi piel para un evento o una ocasión especial',

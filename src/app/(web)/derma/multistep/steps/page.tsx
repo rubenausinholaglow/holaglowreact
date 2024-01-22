@@ -39,7 +39,6 @@ export default function Form() {
   } as DermaQuestions);
 
   const {
-    deviceSize,
     setSelectedClinic,
     setSelectedTreatments,
     selectedSlot,
@@ -144,6 +143,8 @@ export default function Form() {
       dermaQuestions.id = x!.toString();
       setDermaQuestions(dermaQuestions);
     });
+
+    window.scrollTo(0, 0);
   };
 
   return (
