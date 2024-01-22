@@ -3,7 +3,7 @@
 import './datePickerDermaStyle.css';
 
 import { useEffect, useState } from 'react';
-import { Client } from '@interface/client';
+import { AnalyticsMetrics, Client } from '@interface/client';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
@@ -43,10 +43,11 @@ export default function Form() {
     setSelectedTreatments,
     selectedSlot,
     setTypeOfPayment,
+    setAnalyticsMetrics,
+    setPayment,
   } = useSessionStore(state => state);
-  const { activePayment, setActivePayment } = useGlobalPersistedStore(
-    state => state
-  );
+  const { activePayment, setActivePayment, setCurrentUser } =
+    useGlobalPersistedStore(state => state);
   const [client, setClient] = useState<Client>({
     email: '',
     phone: '',
@@ -78,7 +79,7 @@ export default function Form() {
     origin: 'Derma',
   });
 
-  const { cart, addItemToCart } = useCartStore(state => state);
+  const { cart, addItemToCart, resetCart } = useCartStore(state => state);
   const STEPS = 6;
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
@@ -122,6 +123,25 @@ export default function Form() {
       professionals: [],
     });
     setTypeOfPayment(TypeOfPayment.Full);
+
+    setCurrentUser(undefined);
+    const metrics: AnalyticsMetrics = {
+      device: 0,
+      locPhysicalMs: '',
+      utmAdgroup: '',
+      utmCampaign: '',
+      utmContent: '',
+      utmMedium: '',
+      utmSource: '',
+      utmTerm: '',
+      treatmentText: '',
+      externalReference: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
+    };
+    setAnalyticsMetrics(metrics);
+    resetCart();
+    setPayment(undefined);
   }, []);
 
   useEffect(() => {
