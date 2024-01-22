@@ -34,15 +34,12 @@ export default function AuthenticationPage() {
 
     await AuthenticationService.userLogin(userLogin).then(async data => {
       if (data.token != '') {
-        // todo crear mensaje de alerta
         localStorage.setItem('token', data.token);
         localStorage.setItem(
           'refreshTokenExpiryTime',
           data.refreshTokenExpiryTime
         );
         localStorage.setItem('agentId', data.agentId);
-        //navigate('/dashboard');
-        alert('logeado!');
         setIsLoading(false);
         router.push(ROUTES.crm.menu);
       } else {
