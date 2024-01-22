@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
-import { userLogin } from '@interface/Login';
+import { LoginResponse, UserLogin } from '@interface/Login';
 import AuthenticationService from '@services/AuthenticationService';
 import useRoutes from '@utils/useRoutes';
 import { SvgSpinner } from 'app/icons/Icons';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
@@ -18,6 +19,8 @@ export default function AuthenticationPage() {
   const ROUTES = useRoutes();
   const [errorMessage, setErrorMessage] = useState<string | undefined>('');
 
+  const { setUserLoginResponse } = useSessionStore(state => state);
+
   const handleChangeUsername = (event: any) => {
     setUsername(event.target.value);
   };
@@ -28,19 +31,21 @@ export default function AuthenticationPage() {
 
   const login = async () => {
     setIsLoading(true);
-    const userLogin: userLogin = {
+    const userLogin: UserLogin = {
       user: username,
       password: password,
     };
 
     await AuthenticationService.userLogin(userLogin).then(async data => {
       if (data.token != '') {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem(
-          'refreshTokenExpiryTime',
-          data.refreshTokenExpiryTime
-        );
-        localStorage.setItem('agentId', data.agentId);
+        const userLoginResponse: LoginResponse = {
+          token: data.token,
+          agentId: data.agentId,
+          refreshToken: data.refreshToken,
+          refreshTokenExpiryTime: data.refreshTokenExpiryTime,
+        };
+        setUserLoginResponse(userLoginResponse);
+
         setIsLoading(false);
         router.push(ROUTES.crm.menu);
       } else {

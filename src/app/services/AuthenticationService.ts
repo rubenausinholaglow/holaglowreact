@@ -1,5 +1,5 @@
 import Bugsnag from '@bugsnag/js';
-import { LoginResponse, userLogin } from '@interface/Login';
+import { LoginResponse, UserLogin } from '@interface/Login';
 
 export default class AuthenticationService {
     static async isValidLoginSupport24Hours(phoneNumber: string): Promise<boolean> {
@@ -38,7 +38,7 @@ export default class AuthenticationService {
     }
 
 
-    static async userLogin(user: userLogin): Promise<LoginResponse> {
+    static async userLogin(user: UserLogin): Promise<LoginResponse> {
         try {
             const url = `${process.env.NEXT_PUBLIC_AUTHENTICATION_API}Login`;
             const response = await fetch(
