@@ -32,7 +32,7 @@ export const getValidSubdomain = (host?: string | null) => {
   }
   if (host && host.includes('.')) {
     const candidate = host.split('.')[0];
-    if (candidate == 'dermaglow') {
+    if (candidate == 'derma') {
       // Valid candidate
       subdomain = candidate;
     }
