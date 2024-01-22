@@ -5,9 +5,8 @@ import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Testimonial } from 'app/types/testimonial';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Title, Underlined } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 
 const TESTIMONIALS: Testimonial[] = [
   {
@@ -32,7 +31,7 @@ const TESTIMONIALS: Testimonial[] = [
     imgUrl: '/images/statics/landings/captacion/LlunaSantiago.jpg',
     value: 4.7,
     testimonial:
-      'He luchado contra la rosácea durante muchos años y he probado muchísimos médicos y métodos, incluso láseres, pero solo con la crema formulada estoy consiguiendo resultados realmente duraderos!! ',
+      'He luchado contra la rosácea durante muchos años y he probado muchísimos médicos y métodos, incluso láseres, pero solo con mi cremafacial personalizada estoy consiguiendo resultados realmente duraderos!! ',
   },
   {
     city: 'Tarragona',

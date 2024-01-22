@@ -1,36 +1,42 @@
 'use client';
 
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
-import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
-import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { useSessionStore } from 'app/stores/globalStore';
-import { Testimonial } from 'app/types/testimonial';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 const FAQS = [
   {
     title: '¿Qué precio tiene una consulta online?',
     description:
-      'La consulta online con un dermatólogo cuesta 49 € e incluye el asesoramiento personalizado y la prescripción de una crema formulada exclusivamente para ti siempre que sea necesario.',
+      'La consulta online con un dermatólogo estético cuesta 59€ e incluye el asesoramiento médico y la prescripción de una crema facial personalizada formulada exclusivamente para ti, siempre que sea necesario.',
   },
   {
     title: '¿Qué es el cuidado facial de grado médico o farmacéutico?',
     description:
-      'El cuidado facial de grado médico o farmacéutico es aquél que se adapta a las necesidades de cada paciente y que combina productos cosméticos con fármacos que únicamente pueden ser recetados por un doctor, como es el caso de la formulación magistral.',
+      'El cuidado facial de grado médico o farmacéutico es aquél que se adapta a las necesidades de cada paciente y que combina productos cosméticos con fármacos que únicamente pueden ser obtenidos mediante una receta, como es el caso de la formulación magistral.',
   },
   {
     title: '¿En qué tipo de afecciones pueden ayudarme?',
     description:
-      'Contamos con una amplia red de dermatólogos experimentados para ofrecer un cuidado facial integral y atender cualquier afección o necesidad de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza o rosácea, entre muchas más.',
+      'Contamos con una amplia red de dermatólogos experimentados para ofrecer un cuidado facial integral y atender cualquier necesitat estética de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza, mancas o rosácea, entre muchas más.',
   },
   {
     title: '¿Qué significa un cuidado facial personalizado?',
     description:
       'El cuidado facial personalizado consiste, en primer lugar, de una consulta médica para analizar las necesidades específicas de tu piel y, en segundo lugar, de la prescripción de una crema formulada exclusivamente para ti con tal de asegurar su eficacia y lograr resultados más notables y duraderos.',
+  },
+  {
+    title:
+      'Una vez tengo la receta, ¿cómo consigo mi crema facial personalizada?',
+    description:
+      'Las cremas faciales personalizadas son una combinación de fármacos exclusiva para un paciente específico, por tanto, se deben preparar de manera individual en un laboratorio. Así pues, deberás llevar tu receta a una farmacia para que encarguen su elaboración. Según los plazos establecidos, podrás recogerla en la farmacia por un precio de entre 25 y 35 €. Este precio lo establece cada laboratorio, no depende de nosotros, y puede variar dependiendo de las cantidades de cada ingrediente de la formulación magistral.',
+  },
+  {
+    title: '¿Qué productos incluye la rutina facial complementaria?',
+    description:
+      'Todas las rutinas faciales complementarias contienen una espuma limpiadora, un contorno de ojos y una crema de protección solar de alto espectro e hidratante indicada para todo tipo de pieles. Además, cada una de las rutinas incluye una crema para tratar el objetivo facial específico de cada paciente, desde las arrugas y el acné hasta las manchas o la rosácea.',
   },
 ];
 

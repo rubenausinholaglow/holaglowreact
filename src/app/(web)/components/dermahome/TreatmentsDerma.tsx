@@ -18,11 +18,11 @@ const TREATMENTS = [
     imgUrl: '/images/derma/treatments/acne.svg',
   },
   {
-    name: 'Poros obstruidos',
+    name: 'Pieles secas',
     imgUrl: '/images/derma/treatments/porosObstruidos.svg',
   },
   {
-    name: 'Puntos negros',
+    name: 'Pieles grasas',
     imgUrl: '/images/derma/treatments/puntosNegros.svg',
   },
   {
@@ -35,6 +35,18 @@ const TREATMENTS = [
   },
   {
     name: 'Rosácea',
+    imgUrl: '/images/derma/treatments/rosacea.svg',
+  },
+  {
+    name: 'Melasma',
+    imgUrl: '/images/derma/treatments/rosacea.svg',
+  },
+  {
+    name: 'Manchas',
+    imgUrl: '/images/derma/treatments/rosacea.svg',
+  },
+  {
+    name: 'Fotoenvejecimiento',
     imgUrl: '/images/derma/treatments/rosacea.svg',
   },
 ];

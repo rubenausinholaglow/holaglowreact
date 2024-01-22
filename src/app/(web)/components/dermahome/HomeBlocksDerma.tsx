@@ -1,17 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { SvgArrow, SvgGoogle, SvgStar } from 'app/icons/IconsDs';
-import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
 
 import ProfessionalsDerma from '../common/ProfessionalsDerma';
 import StoriesDerma from '../common/StoriesDerma';
 import BenefitsApplicationResultsDerma from './BenefitsApplicationResultsDerma';
 import FaqsDerma from './FaqsDerma';
-import HeroDerma from './HeroDerma';
 import HowItWorksDerma from './HowItWorksDerma';
 import TestimonialsDerma from './TestimonialsDerma';
 import TreatmentsDerma from './TreatmentsDerma';

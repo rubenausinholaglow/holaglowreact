@@ -18,17 +18,18 @@ export default function BenefitsApplicationResultsDerma() {
           Crema facial recetada
         </TitleDerma>
         <Text className="text-hg-black500 mb-8">
-          Una crema facial personalizada formulada con ingredientes que han sido
-          testados médicamente y cuya eficacia se ha demostrado empíricamente
+          Una crema facial formulada exclusivamente para ti con ingredientes que
+          han sido testados médicamente y cuya eficacia se ha demostrado
+          empíricamente.
         </Text>
 
         <Flex layout="col-center" className="md:flex-row gap-4 md:gap-16 mb-16">
           <Flex layout="col-left" className="gap-4 w-full mb-4 md:w-1/2">
-            <TitleDerma size="xl">Qué significa</TitleDerma>
+            <TitleDerma size="xl">Ventajas</TitleDerma>
             {[
               {
                 title: 'Prescripción médica',
-                text: 'Los principios activos farmacológicos que contiene la formulación únicamente pueden ser recetados por un doctor.',
+                text: 'Los principios activos farmacológicos que contiene la formulación únicamente pueden ser recetados por un médico.',
               },
               {
                 title: 'Formulación magistral',
@@ -77,7 +78,7 @@ export default function BenefitsApplicationResultsDerma() {
               {
                 title:
                   '<span class="font-semibold">¿Cuándo?</span> Por la noche.',
-                text: 'Comienza aplicando una o dos veces por semana, aumentando gradualmente según la recomendación de tu médico.',
+                text: 'Comienza aplicando una o dos veces por semana, aumentando la periodicidad gradualmente según la recomendación de tu médico.',
               },
               {
                 title:
@@ -86,7 +87,7 @@ export default function BenefitsApplicationResultsDerma() {
               },
               {
                 title:
-                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante/grano de arroz.',
+                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante',
                 text: 'Este tipo de cremas son poderosas y eficaces, por eso, no necesitarás aplicar más cantidad para experimentar sus beneficios.',
               },
             ].map(item => (
