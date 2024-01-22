@@ -16,6 +16,7 @@ export default function AuthenticationPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const ROUTES = useRoutes();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>('');
 
   const handleChangeUsername = (event: any) => {
     setUsername(event.target.value);
@@ -43,8 +44,11 @@ export default function AuthenticationPage() {
         setIsLoading(false);
         router.push(ROUTES.crm.menu);
       } else {
-        //Todo create error message
-        alert('Login incorrecto');
+        setIsLoading(false);
+        setErrorMessage('Login Incorrecto');
+        setTimeout(() => {
+          setErrorMessage(undefined);
+        }, 3000);
       }
     });
   };
@@ -68,6 +72,8 @@ export default function AuthenticationPage() {
           type="password"
           value={password}
           onChange={handleChangePassword}
+          hasNoValidation
+          style={false}
         />
       </div>
       <div
@@ -85,12 +91,17 @@ export default function AuthenticationPage() {
             onChange={handleSetRememberMe}
             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer transition-all duration-300 ease-in-out transform scale-110 hover:scale-125"
           />
-          <span className="text-sm text-gray-600 ml-2">Recuerdame</span>
+          <span className="text-sm text-gray-600 ml-2">Recuérdame</span>
         </label>
       </div>
-      <Button onClick={login}>
+      <Button onClick={login} className="mb-4">
         {isLoading ? <SvgSpinner className="w-full justify-center" /> : 'Login'}
       </Button>
+      {errorMessage && (
+        <p className="text-hg-error text-left text-sm ml-2 mt-2">
+          {errorMessage}
+        </p>
+      )}
     </Flex>
   );
 }

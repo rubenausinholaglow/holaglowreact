@@ -11,6 +11,7 @@ export interface TextInputFieldProps {
   error?: string;
   hasNoValidation?: boolean;
   type? : string
+  style? : boolean
 }
 
 export interface SearchBarProps {
