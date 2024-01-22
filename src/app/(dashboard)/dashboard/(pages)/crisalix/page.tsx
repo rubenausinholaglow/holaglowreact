@@ -84,20 +84,27 @@ const Page = () => {
       UserService.getSimulationReady(id, storedClinicFlowwwId!).then(x => {
         setSimulationReady(x.has3d);
         setLastSimulatorId(x.lastSimulatorId);
-        if (!x && checkSimulator) {
-          timerId = setTimeout(checksimulationReady, 15 * 1000);
+        if (x.has3d) {
+          clearTimeout(timerId);
         }
       });
     };
 
+    const startTimer = () => {
+      timerId = setTimeout(() => {
+        checksimulationReady();
+        startTimer();
+      }, 15 * 1000);
+    };
+
     if (id !== '' && playerToken !== '') {
-      timerId = setTimeout(checksimulationReady, 15 * 1000);
+      startTimer();
     }
 
     return () => {
       clearTimeout(timerId);
     };
-  }, [id, playerToken, storedClinicFlowwwId, checkSimulator]);
+  }, [id, playerToken, storedClinicFlowwwId]);
 
   useEffect(() => {
     if (playerId == '' || playerToken == '') return;
