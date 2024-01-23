@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import Bugsnag from '@bugsnag/js';
-import { Analytics } from '@vercel/analytics/react';
-import CheckoutHeader from 'app/(web)/checkout/components/CheckoutHeader';
 import { useGlobalStore } from 'app/stores/globalStore';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
