@@ -13,10 +13,13 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   type = 'text',
   onChange = undefined,
   onBlur = undefined,
-  hasNoValidation,
+  disableBgIcons = false,
   error = '',
 }) => {
   function getBackgroundIcon() {
+    if (disableBgIcons) {
+      return '';
+    }
     if (!isEmpty(error)) {
       return 'url("/images/forms/error.svg") #ffffff no-repeat center right 12px';
     }

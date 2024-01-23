@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { HOLAGLOW_COLORS } from '@utils/colors';
 import { SvgCheck, SvgCircle } from 'app/icons/Icons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
 
@@ -74,14 +75,25 @@ export default function SecondStep({
 
   const setTextAreasValue = (value: string, question: number) => {
     if (question == 2) {
-      setTextAreaOne(value);
-    } else {
       setTextAreaTwo(value);
-      dermaQuestions.extraInfo = value;
+    } else {
+      setTextAreaOne(value);
     }
 
+    //dermaQuestions.extraInfo = value;
     if (value) setContinueDisabled(false);
   };
+
+  console.log(textAreaOne);
+  console.log(textAreaTwo);
+
+  useEffect(() => {
+    console.log(question);
+
+    if (question === 3) {
+      // guardar textAreaTwo
+    }
+  }, [question]);
 
   return (
     <>
@@ -136,7 +148,7 @@ export default function SecondStep({
                       item.showTextArea &&
                       question == 1 && (
                         <textarea
-                          value={textAreaTwo}
+                          value={textAreaOne}
                           onClick={e => e.stopPropagation()}
                           onChange={e =>
                             setTextAreasValue(e.target.value, question)
@@ -156,7 +168,7 @@ export default function SecondStep({
                 Haznos saber
               </label>
               <textarea
-                value={textAreaOne}
+                value={textAreaTwo}
                 onChange={e => setTextAreasValue(e.target.value, question)}
                 placeholder={item.placeholder}
                 className="w-full h-[300px] md:h-[400px] p-4 pt-12 resize-none border rounded-lg placeholder-hg-black300"

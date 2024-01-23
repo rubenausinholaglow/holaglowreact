@@ -62,59 +62,26 @@ export default function TreatmentsDerma() {
         </TitleDerma>
       </Container>
 
-      {deviceSize.isMobile && (
-        <FullWidthCarousel
-          visibleSlides={2.25}
-          className="pb-8"
-          hasControls={false}
-        >
-          {TREATMENTS.map((item: DermaTreatment) => {
-            return (
-              <Flex
-                layout="col-center"
-                key={item.name}
-                className="bg-derma-secondary400 aspect-square shrink-0 rounded-3xl mr-4 justify-between py-4"
-              >
-                <Image
-                  src={item.imgUrl}
-                  alt={item.name}
-                  height={64}
-                  width={64}
-                />
-                <Text className="text-md font-semibold text-derma-primary500 px-4 text-center">
-                  {item.name}
-                </Text>
-              </Flex>
-            );
-          })}
-        </FullWidthCarousel>
-      )}
-
-      {!deviceSize.isMobile && (
-        <Container className="overflow-hidden pb-12">
-          <Flex layout="row-left" className="gap-4">
-            {TREATMENTS.map((item: DermaTreatment) => {
-              return (
-                <Flex
-                  layout="col-center"
-                  key={item.name}
-                  className="bg-derma-secondary400 aspect-square shrink-0 rounded-[50px] justify-center py-4 w-[15%] gap-4"
-                >
-                  <Image
-                    src={item.imgUrl}
-                    alt={item.name}
-                    height={48}
-                    width={48}
-                  />
-                  <Text className="text-md font-semibold text-derma-primary500 px-4 text-center">
-                    {item.name}
-                  </Text>
-                </Flex>
-              );
-            })}
-          </Flex>
-        </Container>
-      )}
+      <FullWidthCarousel
+        visibleSlides={deviceSize.isMobile ? 2.25 : 8}
+        className="pb-8"
+        hasControls={false}
+      >
+        {TREATMENTS.map((item: DermaTreatment) => {
+          return (
+            <Flex
+              layout="col-center"
+              key={item.name}
+              className="bg-derma-secondary400 aspect-square shrink-0 rounded-[50px] mr-4 justify-center py-4 gap-4"
+            >
+              <Image src={item.imgUrl} alt={item.name} height={64} width={64} />
+              <Text className="text-md font-semibold text-derma-primary500 px-4 text-center">
+                {item.name}
+              </Text>
+            </Flex>
+          );
+        })}
+      </FullWidthCarousel>
     </div>
   );
 }

@@ -167,6 +167,8 @@ export default function Form() {
     window.scrollTo(0, 0);
   };
 
+  console.log(dermaQuestions);
+
   return (
     <CheckHydration>
       <div className="bg-derma-secondary100 min-h-screen">

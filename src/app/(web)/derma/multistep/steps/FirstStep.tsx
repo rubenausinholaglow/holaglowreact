@@ -64,7 +64,6 @@ export default function FirstStep({
                     placeholder="Escribe aquí"
                     value={dermaQuestions?.name || ''}
                     onChange={event => handleFieldChange(event, 'name')}
-                    hasNoValidation
                   />
                 </div>
 
@@ -77,6 +76,7 @@ export default function FirstStep({
                     type="date"
                     value={dermaQuestions?.birthDate || ''}
                     onChange={event => handleFieldChange(event, 'birthDate')}
+                    disableBgIcons
                   />
                 </div>
               </Flex>

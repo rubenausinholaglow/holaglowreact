@@ -67,8 +67,11 @@ a {
 
 input[type='date']::-webkit-inner-spin-button,
 input[type='date']::-webkit-calendar-picker-indicator {
-  display: none;
-  -webkit-appearance: none;
+  margin-top: -12px;
+  margin-right: -4px;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
 }
 
 @layer components {
