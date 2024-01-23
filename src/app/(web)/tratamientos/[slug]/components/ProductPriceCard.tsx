@@ -215,7 +215,8 @@ function ProductPriceItemsCard({
 
     if (
       selectedPackOptions.filter(x => x.value != '').length ==
-      product.packUnities.length
+        product.packUnities.length ||
+      !product.isPack
     ) {
       router.push(ROUTES.checkout.clinics);
     }
