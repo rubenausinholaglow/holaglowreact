@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { LoginResponse, UserLogin } from '@interface/Login';
+import { LoginResponse, UserLogin } from '@interface/login';
 import AuthenticationService from '@services/AuthenticationService';
 import useRoutes from '@utils/useRoutes';
 import { validateEmail } from '@utils/validators';
@@ -44,7 +44,6 @@ export default function AuthenticationPage() {
       if (data.token !== '') {
         const userLoginResponse: LoginResponse = {
           token: data.token,
-          agentId: data.agentId,
           refreshToken: data.refreshToken,
           refreshTokenExpiryTime: data.refreshTokenExpiryTime,
         };

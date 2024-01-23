@@ -1,5 +1,5 @@
 import Bugsnag from '@bugsnag/js';
-import { LoginResponse, UserLogin } from '@interface/Login';
+import { LoginResponse, UserLogin } from '@interface/login';
 
 export default class AuthenticationService {
     static async isValidLoginSupport24Hours(phoneNumber: string): Promise<boolean> {
@@ -57,11 +57,11 @@ export default class AuthenticationService {
                 return data as LoginResponse;
             } else {
                 Bugsnag.notify('Error userLogin' + response);
-                return { token: '', refreshToken: '', refreshTokenExpiryTime: '', agentId:'' };
+                return { token: '', refreshToken: '', refreshTokenExpiryTime: '' };
             }
         } catch (err) {
             Bugsnag.notify('Error userLogin' + err);
-            return { token: '', refreshToken: '', refreshTokenExpiryTime: '', agentId:'' };
+            return { token: '', refreshToken: '', refreshTokenExpiryTime: ''};
         }
     }
 }

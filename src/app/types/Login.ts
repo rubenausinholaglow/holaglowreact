@@ -8,5 +8,4 @@ export interface LoginResponse {
     token : string;
     refreshToken : string;
     refreshTokenExpiryTime : string;
-    agentId : string;
 }
