@@ -8,9 +8,13 @@ import { useRouter } from 'next/navigation';
 
 interface LoginCheckerProps {
   children: ReactNode;
+  isLoginPage?: boolean;
 }
 
-const LoginChecker: React.FC<LoginCheckerProps> = ({ children }) => {
+const LoginChecker: React.FC<LoginCheckerProps> = ({
+  children,
+  isLoginPage = false,
+}) => {
   const router = useRouter();
   const ROUTES = useRoutes();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,10 +23,18 @@ const LoginChecker: React.FC<LoginCheckerProps> = ({ children }) => {
   useEffect(() => {
     if (!isValidToken()) {
       clearUserLoginResponse();
+      if (!isLoginPage) {
+        router.push(ROUTES.crm.authentication);
+        return;
+      }
+      setIsLoaded(true);
     } else {
-      router.push(ROUTES.crm.menu);
+      if (isLoginPage) {
+        router.push(ROUTES.crm.menu);
+        return;
+      }
+      setIsLoaded(true);
     }
-    setIsLoaded(true);
   }, []);
 
   if (isLoaded) return <>{children}</>;
