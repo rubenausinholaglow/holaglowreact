@@ -27,14 +27,13 @@ const LoginChecker: React.FC<LoginCheckerProps> = ({
         router.push(ROUTES.crm.authentication);
         return;
       }
-      setIsLoaded(true);
     } else {
       if (isLoginPage) {
         router.push(ROUTES.crm.menu);
         return;
       }
-      setIsLoaded(true);
     }
+    setIsLoaded(true);
   }, []);
 
   if (isLoaded) return <>{children}</>;
