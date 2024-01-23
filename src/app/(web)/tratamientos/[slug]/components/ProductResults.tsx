@@ -34,7 +34,6 @@ export default function ProductResults({ product }: { product: Product }) {
         >
           {product.beforeAndAfterImages?.map(item => (
             <div key={item.id} className="overflow-hidden relative">
-              {item.urlBefore}
               <ImgComparisonSlider className="outline-none w-full">
                 <figure slot="first" className="before">
                   <div className="relative aspect-square">
@@ -45,7 +44,6 @@ export default function ProductResults({ product }: { product: Product }) {
                       className="object-cover rounded-3xl"
                     />
                   </div>
-                  {item.urlBefore}
                   <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
                     Antes
                   </span>

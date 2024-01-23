@@ -1,7 +1,6 @@
 /* datepicker Derma */
 
 #datepickerWrapper.datepickerDerma {
-  /* font-family: 'Poppins', sans-serif !important; */
   font-family: var(--font-poppins);
 }
 
@@ -22,7 +21,7 @@
   .react-datepicker__quarter-text--keyboard-selected,
 #datepickerWrapper.datepickerDerma
   .react-datepicker__year-text--keyboard-selected {
-  background-color: #1fa6a6 !important;
+  background-color: theme('colors.derma.primary') !important;
 }
 
 #datepickerWrapper.datepickerDerma.datepickerDerma

@@ -37,10 +37,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "tailwind.config.js",
-    //"tailwind.derma.config.js",
     "src/utils/priceFormat.ts",
     "src/app/utils/colors.ts",
-    "src/app/utils/colors.derma.ts",
     "src/app/(dashboard)/dashboard/(pages)/budgets/filterUtils.js"
   ],
   "exclude": ["node_modules"]

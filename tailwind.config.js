@@ -9,7 +9,6 @@ module.exports = {
     fontFamily: {
       gtUltraThin: ['gtUltraThin', 'Georgia', 'serif'],
       gtUltraBold: ['gtUltraBold', 'Georgia', 'serif'],
-      DMSerif: ['DMSerif', 'Georgia', 'serif'],
     },
     fontSize: {
       '6xl': ['78px', '92px'],
