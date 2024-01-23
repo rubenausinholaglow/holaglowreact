@@ -35,14 +35,10 @@ export default class UserService {
       return false;
     }
   }
-  static async createCrisalixUser(
-    userId: string,
-    appointmentId: string,
-    clinicId: string
-  ) {
+  static async createCrisalixUser(userId: string, clinicId: string) {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}Crisalix/Patients?userId=${userId}&appointmentId=${appointmentId}&clinicId=${clinicId}`,
+        `${process.env.NEXT_PUBLIC_CONTACTS_API}Crisalix/Patients?userId=${userId}&clinicId=${clinicId}`,
         {
           method: 'POST',
           headers: {

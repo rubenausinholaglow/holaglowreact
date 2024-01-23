@@ -28,6 +28,7 @@ export default function PVCitaMedica() {
     setTypeOfPayment,
   } = useSessionStore(state => state);
 
+  const [isHydrated, setIsHydrated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [PVProduct, setPVProduct] = useState<Product | null>(null);
   const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
@@ -45,6 +46,7 @@ export default function PVCitaMedica() {
     }
 
     setDiscountedPrice(discountedPrices);
+    setIsHydrated(true);
   }, [selectedTreatments]);
 
   useEffect(() => {
@@ -53,6 +55,7 @@ export default function PVCitaMedica() {
 
       if (productId === process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID) {
         setPVProduct(productDetails);
+        setIsHydrated(true);
       }
     }
 
@@ -69,6 +72,7 @@ export default function PVCitaMedica() {
         process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID.toLowerCase()
     ) {
       setSelectedTreatments([]);
+      setIsHydrated(true);
     }
   }, []);
 
@@ -94,6 +98,10 @@ export default function PVCitaMedica() {
     isEmpty(selectedTreatments)
       ? router.push(ROUTES.checkout.treatments)
       : router.push(ROUTES.checkout.schedule);
+  }
+
+  if (!isHydrated) {
+    return <></>;
   }
 
   return (

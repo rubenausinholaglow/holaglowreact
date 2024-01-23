@@ -60,7 +60,7 @@ export default function Agenda({
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const format = 'YYYY-MM-DD';
-  let maxDays = 30;
+  let maxDays = 60;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid

@@ -6,7 +6,6 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Flex } from 'designSystem/Layouts/Layouts';
 
 import { useCrisalix } from './useCrisalix';
 
@@ -37,7 +36,7 @@ const Page = () => {
         : null;
 
     if (!existsCrisalixUser) {
-      createCrisalixUser(user?.id || '', storedAppointmentId, storedClinicId);
+      createCrisalixUser(user?.id || '', storedClinicId);
     }
 
     if (existsCrisalixUser) {
@@ -61,25 +60,19 @@ const Page = () => {
     );
   }, []);
 
-  async function createCrisalixUser(
-    userId: string,
-    appointmentId: string,
-    clinicId: string
-  ) {
-    await UserService.createCrisalixUser(userId, appointmentId, clinicId).then(
-      async x => {
-        const crisalixUser: CrisalixUser = {
-          id: x.id,
-          playerId: x.player_id,
-          playerToken: x.playerToken,
-          name: x.name,
-        };
-        userCrisalix.addCrisalixUser(crisalixUser);
-        setId(x.id);
-        setPlayerToken(x.playerToken);
-        setPlayerId(x.player_Id);
-      }
-    );
+  async function createCrisalixUser(userId: string, clinicId: string) {
+    await UserService.createCrisalixUser(userId, clinicId).then(async x => {
+      const crisalixUser: CrisalixUser = {
+        id: x.id,
+        playerId: x.player_id,
+        playerToken: x.playerToken,
+        name: x.name,
+      };
+      userCrisalix.addCrisalixUser(crisalixUser);
+      setId(x.id);
+      setPlayerToken(x.playerToken);
+      setPlayerId(x.player_Id);
+    });
   }
 
   useEffect(() => {
@@ -91,20 +84,27 @@ const Page = () => {
       UserService.getSimulationReady(id, storedClinicFlowwwId!).then(x => {
         setSimulationReady(x.has3d);
         setLastSimulatorId(x.lastSimulatorId);
-        if (!x && checkSimulator) {
-          timerId = setTimeout(checksimulationReady, 15 * 1000);
+        if (x.has3d) {
+          clearTimeout(timerId);
         }
       });
     };
 
+    const startTimer = () => {
+      timerId = setTimeout(() => {
+        checksimulationReady();
+        startTimer();
+      }, 15 * 1000);
+    };
+
     if (id !== '' && playerToken !== '') {
-      timerId = setTimeout(checksimulationReady, 15 * 1000);
+      startTimer();
     }
 
     return () => {
       clearTimeout(timerId);
     };
-  }, [id, playerToken, storedClinicFlowwwId, checkSimulator]);
+  }, [id, playerToken, storedClinicFlowwwId]);
 
   useEffect(() => {
     if (playerId == '' || playerToken == '') return;

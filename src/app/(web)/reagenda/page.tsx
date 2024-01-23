@@ -42,6 +42,7 @@ export default function Page({
     useState<Appointment | null>(null);
   const [cancelling, setCancelling] = useState(false);
 
+  const [isHydrated, setIsHydrated] = useState(false);
   const { isModalOpen } = useGlobalStore(state => state);
   const { clinics, setCurrentUser, stateProducts } = useGlobalPersistedStore(
     state => state
@@ -63,6 +64,7 @@ export default function Page({
         const res = await ScheduleService.next(token);
         setAppointments(res);
         setLoading(false);
+        setIsHydrated(true);
       }
     };
 
@@ -131,6 +133,9 @@ export default function Page({
     }
   }, [isModalOpen]);
 
+  if (!isHydrated) {
+    return <></>;
+  }
   return (
     <MainLayout isCheckout>
       <meta name="robots" content="noindex,nofollow" />
@@ -253,23 +258,29 @@ export default function Page({
                     >
                       <div>Reagendar</div>
                     </Button>
-
-                    {!appointment.isPast && !appointment.isCancelled && (
-                      <>
-                        <Button
-                          size={deviceSize.isMobile ? 'sm' : 'md'}
-                          type="tertiary"
-                          id="button-addon2"
-                          onClick={() => {
-                            setAppointmentToCancel(appointment);
-                            setShowCancelModal(true);
-                          }}
-                        >
-                          {!cancelling && <div id="cancelText">Cancelar</div>}
-                          {cancelling && <SvgSpinner height={24} width={24} />}
-                        </Button>
-                      </>
-                    )}
+                    {appointment.treatment?.toUpperCase() !=
+                      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID &&
+                      appointment.treatment?.toUpperCase() !=
+                        process.env.NEXT_PUBLIC_VISITA_EVALUACION_ID &&
+                      !appointment.isPast &&
+                      !appointment.isCancelled && (
+                        <>
+                          <Button
+                            size={deviceSize.isMobile ? 'sm' : 'md'}
+                            type="tertiary"
+                            id="button-addon2"
+                            onClick={() => {
+                              setAppointmentToCancel(appointment);
+                              setShowCancelModal(true);
+                            }}
+                          >
+                            {!cancelling && <div id="cancelText">Cancelar</div>}
+                            {cancelling && (
+                              <SvgSpinner height={24} width={24} />
+                            )}
+                          </Button>
+                        </>
+                      )}
                   </Flex>
                 </Flex>
               );

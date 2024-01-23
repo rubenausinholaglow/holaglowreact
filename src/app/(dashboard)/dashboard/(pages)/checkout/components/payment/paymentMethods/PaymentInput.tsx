@@ -326,7 +326,7 @@ export default function PaymentInput(props: Props) {
         name: product.title,
         price:
           product.priceWithDiscount > 0
-            ? product.priceWithDiscount.toFixed(2)
+            ? (product.priceWithDiscount * 1).toFixed(2)
             : product.price.toString(),
         quantity: '1',
         id: product.id,
