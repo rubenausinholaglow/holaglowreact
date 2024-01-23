@@ -16,6 +16,17 @@ export default function Page() {
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    async function initProducts() {
+      const products = await fetchProducts();
+      setStateProducts(products);
+    }
+
+    if (isEmpty(stateProducts)) {
+      initProducts();
+    }
+  }, []);
+
+  useEffect(() => {
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
