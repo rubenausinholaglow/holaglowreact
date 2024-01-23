@@ -32,7 +32,7 @@ const AuthenticationComponent: React.FC<AuthenticationProps> = ({
           fill={HOLAGLOW_COLORS['secondary']}
           className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
         />
-        <p className={`ml-4 font-bold text-xl text-hg-secondary`}>CRM</p>
+        <p className={`ml-4 font-bold text-xl text-hg-secondary`}>CRM </p>
       </div>
 
       <div className="mb-4">
