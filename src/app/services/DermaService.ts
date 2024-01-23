@@ -6,7 +6,7 @@ export const dermaService = {
   update: async (derma: DermaQuestions) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}Derma`,
+        `${process.env.NEXT_PUBLIC_DERMACONTACTS_API}Derma`,
         {
           method: 'POST',
           headers: {
