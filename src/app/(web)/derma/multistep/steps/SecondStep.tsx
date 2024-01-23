@@ -71,8 +71,6 @@ export default function SecondStep({
     setDermaQuestions({ ...dermaQuestions });
   };
 
-  console.log(dermaQuestions);
-
   const setTextAreasValue = (value: string, question: number) => {
     if (question == 2) {
       setTextAreaTwo(value);
@@ -80,20 +78,28 @@ export default function SecondStep({
       setTextAreaOne(value);
     }
 
-    //dermaQuestions.extraInfo = value;
     if (value) setContinueDisabled(false);
   };
 
-  console.log(textAreaOne);
-  console.log(textAreaTwo);
+  useEffect(() => {
+    dermaQuestions.extraInfo = textAreaTwo;
+  }, [question]);
 
   useEffect(() => {
-    console.log(question);
+    const filteredSkinConcerns = dermaQuestions?.skinConcerns
+      ? dermaQuestions.skinConcerns.filter(item => {
+          return !item.concern.startsWith('Otros:');
+        })
+      : [];
 
-    if (question === 3) {
-      // guardar textAreaTwo
+    dermaQuestions.skinConcerns = filteredSkinConcerns;
+
+    if (!isEmpty(textAreaOne)) {
+      dermaQuestions.skinConcerns.push({ concern: `Otros: ${textAreaOne}` });
     }
-  }, [question]);
+
+    setDermaQuestions({ ...dermaQuestions });
+  }, [textAreaOne]);
 
   return (
     <>
@@ -150,9 +156,10 @@ export default function SecondStep({
                         <textarea
                           value={textAreaOne}
                           onClick={e => e.stopPropagation()}
-                          onChange={e =>
-                            setTextAreasValue(e.target.value, question)
-                          }
+                          onChange={e => {
+                            setTextAreasValue(e.target.value, question);
+                            setSelectedQuestionValue(3, 1);
+                          }}
                           placeholder={item.placeholder}
                           className="w-full h-40 p-2 resize-none border rounded-lg placeholder-hg-black300"
                         />
@@ -160,6 +167,38 @@ export default function SecondStep({
                   </li>
                 );
               })}
+
+            {item.showTextArea && question === 1 && (
+              <li
+                className={`flex flex-col gap-2 relative p-4 w-full ${
+                  !isEmpty(textAreaOne)
+                    ? 'bg-derma-primary300'
+                    : 'bg-derma-secondary400'
+                } rounded-lg cursor-pointer`}
+              >
+                {!isEmpty(textAreaOne) && (
+                  <SvgCheck
+                    height={16}
+                    width={16}
+                    className="absolute top-3 right-3 h-7 w-7 p-1"
+                  />
+                )}
+                <SvgCircle
+                  height={16}
+                  width={16}
+                  stroke={HOLAGLOW_COLORS['black']}
+                  className="absolute top-3 right-3 h-7 w-7"
+                />
+                <p className="text-derma-tertiary pr-12">Otros</p>
+                <textarea
+                  value={textAreaOne}
+                  onClick={e => e.stopPropagation()}
+                  onChange={e => setTextAreasValue(e.target.value, question)}
+                  placeholder={item.placeholder}
+                  className="w-full h-40 p-2 resize-none border rounded-lg placeholder-hg-black300"
+                />
+              </li>
+            )}
           </ul>
 
           {item.showTextArea && question === 2 && (
