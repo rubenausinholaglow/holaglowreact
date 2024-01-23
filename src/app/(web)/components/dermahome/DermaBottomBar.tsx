@@ -68,7 +68,7 @@ export default function DermaBottomBar({
           type="tertiary"
           href="/derma/multistep/start"
           className="mr-4 pointer-events-auto w-full"
-          customStyles="px-2 bg-derma-primary border-none text-derma-primary300"
+          customStyles="px-2 bg-derma-primary border-none text-white"
           id={'tmevent_click_floating_button'}
         >
           Reserva tu consulta online

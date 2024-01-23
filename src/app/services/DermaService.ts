@@ -15,7 +15,6 @@ export const dermaService = {
           body: JSON.stringify(derma),
         }
       );
-      console.log(response);
       if (!response.ok) {
         Bugsnag.notify(ERROR_UPDATE_DERMAQUESTIONS);
         throw new Error(ERROR_UPDATE_DERMAQUESTIONS);

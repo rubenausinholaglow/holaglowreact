@@ -107,8 +107,6 @@ export const Carousel = ({
     </ButtonNext>
   );
 
-  console.log(hasControls);
-
   return (
     <CarouselProvider
       className={`relative w-full  ${className}`}
