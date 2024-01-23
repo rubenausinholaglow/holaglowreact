@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
 import { LoginResponse, UserLogin } from '@interface/Login';
 import AuthenticationService from '@services/AuthenticationService';
+import { HOLAGLOW_COLORS } from '@utils/colors';
 import useRoutes from '@utils/useRoutes';
 import { useToken } from 'app/crm/utils/token';
-import { SvgSpinner } from 'app/icons/Icons';
+import { SvgHolaglow, SvgSpinner } from 'app/icons/Icons';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -101,8 +102,15 @@ export default function AuthenticationPage() {
     );
   else
     return (
-      <Flex className="items-center justify-center flex-col p-4  h-[800px]">
-        <div className="mb-4">Login CRM</div>
+      <Flex className="items-center justify-center flex-col p-4 h-[800px]">
+        <div className="flex mb-4">
+          <SvgHolaglow
+            fill={HOLAGLOW_COLORS['secondary']}
+            className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
+          />
+          <p className={`ml-4 font-bold text-xl text-hg-secondary`}>CRM</p>
+        </div>
+
         <div className="mb-4">
           <TextInputField
             placeholder="Email"
@@ -116,8 +124,9 @@ export default function AuthenticationPage() {
         </div>
         <div className="mb-4">
           <TextInputField
-            label="Password"
+            label="Contraseña"
             type="password"
+            placeholder="Contraseña"
             value={password}
             onChange={handleChangePassword}
             hasNoValidation
@@ -128,7 +137,7 @@ export default function AuthenticationPage() {
           {isLoading ? (
             <SvgSpinner className="w-full justify-center" />
           ) : (
-            'Login'
+            'Entrar'
           )}
         </Button>
         {errorMessage && (
