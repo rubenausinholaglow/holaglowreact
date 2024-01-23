@@ -1,4 +1,3 @@
-import { LoginResponse } from '@interface/Login';
 import { useSessionStore } from 'app/stores/globalStore';
 
 export const useToken = () => {
