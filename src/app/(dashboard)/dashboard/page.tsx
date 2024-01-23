@@ -256,7 +256,7 @@ export default function Page({
               router.push('/dashboard/remoteControl');
             } else router.push('/dashboard/menu');
           } else {
-            //TODO - Poner un mensaje de Error en UI Commit
+            //TODO - Poner un mensaje de Error en UI
           }
         }
       );
