@@ -12,13 +12,13 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 export default function AuthenticationPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const ROUTES = useRoutes();
   const [errorMessage, setErrorMessage] = useState<string | undefined>('');
+  const [errorEmail, setErrorEmail] = useState<string | undefined>('');
   const [isHydrated, setIsHydrated] = useState(false);
   const { setUserLoginResponse } = useSessionStore(state => state);
   const { isValidToken, clearUserLoginResponse } = useToken();
@@ -32,18 +32,24 @@ export default function AuthenticationPage() {
     }
   }, []);
 
-  const handleChangeUsername = (event: any) => {
-    setUsername(event.target.value);
+  const handleEmailChange = (event: any) => {
+    const emailValue = event.target.value.trim();
+    setErrorEmail(isValidEmailFormat(emailValue) ? '' : 'Email no válido');
+    setEmail(emailValue);
   };
   const handleChangePassword = (event: any) => {
     setPassword(event.target.value);
   };
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   const login = async () => {
     setIsLoading(true);
+    if (!userDataIsCorrect()) {
+      handleErrorMessage('Datos Incorrectos');
+      return;
+    }
+
     const userLogin: UserLogin = {
-      user: username,
+      email: email,
       password: password,
     };
 
@@ -61,13 +67,31 @@ export default function AuthenticationPage() {
         router.push(ROUTES.crm.menu);
       } else {
         setIsLoading(false);
-        setErrorMessage('Login Incorrecto');
-        setTimeout(() => {
-          setErrorMessage(undefined);
-        }, 3000);
+        handleErrorMessage('Login Incorrecto');
+        setEmail('');
+        setPassword('');
       }
     });
   };
+
+  function handleErrorMessage(error: string): void {
+    setIsLoading(false);
+    setErrorMessage(error);
+    setTimeout(() => {
+      setErrorMessage(undefined);
+    }, 3000);
+  }
+
+  function userDataIsCorrect(): boolean {
+    const isValidEmail = isValidEmailFormat(email);
+    const isValidPassword = !!password.trim();
+
+    return isValidEmail && isValidPassword;
+  }
+
+  function isValidEmailFormat(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  }
 
   if (!isHydrated)
     return (
@@ -84,9 +108,10 @@ export default function AuthenticationPage() {
             placeholder="Email"
             label="Email"
             type="email"
-            value={username}
-            onChange={handleChangeUsername}
+            value={email}
+            onChange={handleEmailChange}
             hasNoValidation
+            error={errorEmail}
           />
         </div>
         <div className="mb-4">
@@ -98,24 +123,6 @@ export default function AuthenticationPage() {
             hasNoValidation
             style={false}
           />
-        </div>
-        <div
-          className="flex items-center ml-[-1rem] mb-4"
-          onClick={handleSetRememberMe}
-        >
-          <label
-            htmlFor="rememberMe"
-            className="text-sm text-gray-600 cursor-pointer ml-2"
-          >
-            <input
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={handleSetRememberMe}
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer transition-all duration-300 ease-in-out transform scale-110 hover:scale-125"
-            />
-            <span className="text-sm text-gray-600 ml-2">Recuérdame</span>
-          </label>
         </div>
         <Button onClick={login} className="mb-4">
           {isLoading ? (

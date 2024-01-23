@@ -48,7 +48,7 @@ export default class AuthenticationService {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: user.user, password: user.password }),
+                body: JSON.stringify({ username: user.email, password: user.password }),
                 }
             );
 
