@@ -238,7 +238,11 @@ export default function ProductInfo({
               muted
               loop
               playsInline
-              src="/videos/pdp.mp4"
+              src={
+                product.title.toLowerCase().indexOf('hydrafacial') >= 0
+                  ? '/videos/HydraFacial PDP.mp4'
+                  : '/videos/pdp.mp4'
+              }
               className="w-full h-full block bg-black object-center md:rounded-xl"
             />
           </div>
