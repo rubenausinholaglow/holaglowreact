@@ -34,7 +34,7 @@ const LoginChecker: React.FC<LoginCheckerProps> = ({
       }
     }
     setIsLoaded(true);
-  }, []);
+  }, [isLoaded]);
 
   if (isLoaded) return <>{children}</>;
   else

@@ -1,5 +1,6 @@
 import 'app/globals.css';
 
+import App from 'app/(web)/components/layout/App';
 import Head from 'next/head';
 
 export const metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, user-scalable=no"
         />
       </Head>
-      {children}
+      <body>{children}</body>
     </html>
   );
 }
