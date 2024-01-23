@@ -449,7 +449,7 @@ export default function Agenda({
                                       size="xs"
                                       className="w-full text-left"
                                     >
-                                      product.applicationTimeMinutes minutos
+                                      {product.applicationTimeMinutes} minutos
                                     </Text>
                                   </div>
                                 </Flex>

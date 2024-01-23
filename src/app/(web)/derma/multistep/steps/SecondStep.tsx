@@ -37,7 +37,6 @@ export default function SecondStep({
     if (question === 1) {
       const index = newValues[question].indexOf(value);
 
-      console.log(index);
       if (index === -1) {
         newValues[question].push(value);
       } else {

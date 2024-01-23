@@ -271,10 +271,13 @@ export default function AppointmentResume({
                     <span className="font-semibold">
                       {isDerma ? 'Pago único' : 'Pagar ahora'}
                     </span>
-                    {typeOfPayment == TypeOfPayment.Reservation && ' Anticipo'}
+                    {typeOfPayment == TypeOfPayment.Reservation &&
+                      ' (Anticipo)'}
                   </Text>
                   <Text className="font-semibold">
-                    {selectedTreatments[0].price.toFixed(2)}€
+                    {isDerma
+                      ? `${selectedTreatments[0].price.toFixed(2)}€`
+                      : '49€'}
                   </Text>
                 </Flex>
               )}
