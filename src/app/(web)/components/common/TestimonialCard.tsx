@@ -5,6 +5,7 @@ import { Testimonial } from 'app/types/testimonial';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+import { twMerge } from 'tailwind-merge';
 
 export default function TestimonialCard({
   testimonial,
@@ -15,7 +16,9 @@ export default function TestimonialCard({
 }) {
   return (
     <div
-      className={`flex flex-col bg-white rounded-xl p-4 overflow-hidden h-full ${className}`}
+      className={twMerge(
+        `flex flex-col bg-white rounded-xl p-4 overflow-hidden h-full ${className}`
+      )}
     >
       <Flex className="gap-4 mb-4">
         <Image

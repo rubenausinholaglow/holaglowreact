@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
-import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
+import CheckHydration from '@utils/CheckHydration';
+import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCheck, SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
 import {
@@ -12,8 +13,7 @@ import {
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
-import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 dayjs.locale(spanishConf);
@@ -28,9 +28,11 @@ export default function Wait() {
     analyticsMetrics,
     payment,
   } = useSessionStore(state => state);
-  const { user } = useGlobalPersistedStore(state => state);
 
   const router = useRouter();
+  const [isDerma, setIsDerma] = useState(false);
+
+  const { user } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     let tries = 0;
@@ -67,24 +69,36 @@ export default function Wait() {
         router.push('https://www.holaglow.com');
       }, 5000);
     }
+
+    setIsDerma(window.location.href.includes('derma'));
   }, []);
 
-  const renderWeb = () => (
+  const renderWeb = (isDerma: boolean) => (
     <>
       <div className="rounded-full overflow-hidden">
         <SvgTimer
-          className="text-hg-primary bg-hg-secondary p-4"
+          className={`${
+            isDerma
+              ? 'text-derma-primary bg-derma-primary300'
+              : 'text-hg-primary bg-hg-secondary'
+          } p-4`}
           width={88}
           height={88}
         />
       </div>
-      <Flex className="text-hg-secondary text-xl font-semibold gap-1">
+      <Flex
+        className={`${
+          isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+        } text-xl font-semibold gap-1`}
+      >
         {payment !== null && payment !== undefined
           ? 'Procesando pago'
           : 'Pago procesado'}
 
         <SvgEllipsis
-          className="text-hg-secondary mt-2"
+          className={`${
+            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+          } mt-2`}
           height={28}
           width={28}
         />
@@ -92,20 +106,49 @@ export default function Wait() {
     </>
   );
 
-  const renderDash = () => (
+  const renderDash = (isDerma: boolean) => (
     <>
       <div className="rounded-full overflow-hidden">
         <SvgCheck
-          className="text-hg-primary bg-hg-secondary p-4"
+          className={`${
+            isDerma
+              ? 'text-derma-primary300 bg-derma-primary'
+              : 'text-hg-primary bg-hg-secondary'
+          } p-4`}
           width={88}
           height={88}
         />
       </div>
-      <Flex className="text-hg-secondary text-xl font-semibold gap-1">
+      <Flex
+        className={`${
+          isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+        } text-xl font-semibold gap-1`}
+      >
         Pago procesado correctamente
       </Flex>
     </>
   );
+
+  if (isDerma) {
+    return (
+      <CheckHydration>
+        <div className="bg-derma-secondary100 min-h-screen">
+          <DermaLayout hideButton hideFooter>
+            <Container>
+              <Flex
+                layout="col-center"
+                className="absolute flex inset-0 justify-center items-center gap-4"
+              >
+                {payment !== null && payment !== undefined
+                  ? renderWeb(isDerma)
+                  : renderDash(isDerma)}
+              </Flex>
+            </Container>
+          </DermaLayout>
+        </div>
+      </CheckHydration>
+    );
+  }
 
   return (
     <MainLayout
@@ -114,12 +157,16 @@ export default function Wait() {
       hideFooter={false}
       hideBackButton
     >
-      <Flex
-        layout="col-center"
-        className="absolute flex inset-0 justify-center items-center gap-4"
-      >
-        {payment !== null && payment !== undefined ? renderWeb() : renderDash()}
-      </Flex>
+      <Container>
+        <Flex
+          layout="col-center"
+          className="absolute flex inset-0 justify-center items-center gap-4"
+        >
+          {payment !== null && payment !== undefined
+            ? renderWeb(isDerma)
+            : renderDash(isDerma)}
+        </Flex>
+      </Container>
     </MainLayout>
   );
 }

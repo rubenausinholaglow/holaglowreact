@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: 'gtUltraThin';
-  src: url('/fonts/gtultramedian-thin.woff2') format('woff2');
+  src: url('/fonts/gtultramedian-light.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -56,6 +56,21 @@ button,
 select,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  margin-top: -12px;
+  margin-right: -4px;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+}
+
+@layer components {
+  .font-gtUltraBold {
+    @apply tracking-tight;
+  }
 }
 
 #categorySelector::-webkit-scrollbar {

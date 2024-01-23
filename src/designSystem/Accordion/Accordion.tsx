@@ -5,6 +5,7 @@ import { twMerge } from 'tailwind-merge';
 
 export function SimpleAccordion({
   trigger,
+  triggerHasHtml = false,
   triggerStyles,
   iconSize = 24,
   iconStyles,
@@ -13,6 +14,7 @@ export function SimpleAccordion({
   isOpen = false,
 }: {
   trigger: string;
+  triggerHasHtml?: boolean;
   triggerStyles?: string;
   iconSize?: number;
   iconStyles?: string;
@@ -31,10 +33,14 @@ export function SimpleAccordion({
         {!isOpen ? (
           <AccordionPrimitive.Trigger
             className={twMerge(
-              `group flex items-center justify-between w-full ${triggerStyles}`
+              `group flex gap-2 items-center justify-between w-full ${triggerStyles}`
             )}
           >
-            {trigger}
+            {triggerHasHtml ? (
+              <p dangerouslySetInnerHTML={{ __html: trigger }}></p>
+            ) : (
+              trigger
+            )}
             <SvgAdd
               height={iconSize}
               width={iconSize}

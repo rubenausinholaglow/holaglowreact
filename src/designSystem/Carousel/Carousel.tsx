@@ -32,6 +32,7 @@ export const Carousel = ({
   isFullWidth = false,
   isPlaying = false,
   isDashboard = false,
+  isDerma = false,
   ...rest
 }: {
   children: ReactNode;
@@ -51,6 +52,7 @@ export const Carousel = ({
   isFullWidth?: boolean;
   isPlaying?: boolean;
   isDashboard?: boolean;
+  isDerma?: boolean;
   [key: string]: any;
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -75,28 +77,37 @@ export const Carousel = ({
     }
   }, [children]);
 
-  const renderControls = () => (
-    <Container className={`${isFullWidth ? '' : 'px-0'}`}>
-      <Flex layout="row-right" className="gap-6">
-        <ButtonBack
-          className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
-          onClick={() => {
-            handleBackButton();
-          }}
-        >
-          <SvgArrow height={16} width={16} className="rotate-180" />
-        </ButtonBack>
-        <ButtonNext
-          className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default"
-          onClick={() => {
-            handleNextButton();
-          }}
-        >
-          <SvgArrow height={16} width={16} />
-        </ButtonNext>
-      </Flex>
-    </Container>
+  const buttonBack = () => (
+    <ButtonBack
+      className={`transition-opacity ${
+        isDerma
+          ? 'bg-hg-secondary text-hg-primary'
+          : 'bg-derma-primary text-derma-primary100'
+      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
+      onClick={() => {
+        handleBackButton();
+      }}
+    >
+      <SvgArrow height={16} width={16} className="rotate-180" />
+    </ButtonBack>
   );
+
+  const buttonNext = () => (
+    <ButtonNext
+      className={`transition-opacity ${
+        isDerma
+          ? 'bg-hg-secondary text-hg-primary'
+          : 'bg-derma-primary text-derma-primary100'
+      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
+      onClick={() => {
+        handleNextButton();
+      }}
+    >
+      <SvgArrow height={16} width={16} />
+    </ButtonNext>
+  );
+
+  console.log(hasControls);
 
   return (
     <CarouselProvider
@@ -118,8 +129,8 @@ export const Carousel = ({
       <div style={sliderWidth} className="relative">
         <Slider
           classNameTray={sliderStyles}
-          preventVerticalScrollOnTouch={true}
           verticalPixelThreshold={1000}
+          preventVerticalScrollOnTouch={true}
         >
           {childrens.map((children, i) => (
             <Slide index={i} key={i}>
@@ -129,22 +140,8 @@ export const Carousel = ({
         </Slider>
         {hasControls && isDashboard && (
           <div className="absolute inset-0 flex items-center justify-between">
-            <ButtonBack
-              className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default ml-2"
-              onClick={() => {
-                handleBackButton();
-              }}
-            >
-              <SvgArrow height={16} width={16} className="rotate-180" />
-            </ButtonBack>
-            <ButtonNext
-              className="transition-opacity bg-hg-secondary text-hg-primary rounded-full p-2 disabled:opacity-10 disabled:cursor-default mr-2"
-              onClick={() => {
-                handleNextButton();
-              }}
-            >
-              <SvgArrow height={16} width={16} />
-            </ButtonNext>
+            {buttonBack()}
+            {buttonNext()}
           </div>
         )}
       </div>
@@ -160,7 +157,12 @@ export const Carousel = ({
               </ul>
             )}
           </Flex>
-          {renderControls()}
+          <Container className={`${isFullWidth ? '' : 'px-0'}`}>
+            <Flex layout="row-right" className="gap-6">
+              {buttonBack()}
+              {buttonNext()}
+            </Flex>
+          </Container>
         </>
       )}
     </CarouselProvider>
