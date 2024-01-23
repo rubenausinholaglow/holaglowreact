@@ -12,6 +12,8 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   onBlur = undefined,
   hasNoValidation,
   error = '',
+  type = 'text',
+  setBackgroundIcon = true,
 }) => {
   function getBackgroundIcon() {
     if (!isEmpty(error)) {
@@ -34,13 +36,17 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
             value.length > 0 ? 'border-hg-black' : ''
           }`
         )}
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        style={{
-          background: getBackgroundIcon(),
-        }}
+        style={
+          setBackgroundIcon
+            ? {
+                background: getBackgroundIcon(),
+              }
+            : {}
+        }
       />
       {error.length > 0 && (
         <p className="text-hg-error text-left text-sm ml-2 mt-2">{error}</p>

@@ -1,3 +1,4 @@
+
 import { PaymentBank, PaymentInitResponse } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
@@ -5,6 +6,7 @@ import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
+import { LoginResponse } from 'app/types/login';
 import { Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
@@ -30,6 +32,7 @@ interface SessionStore {
   selectedDay: Dayjs;
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
+  userLoginResponse : LoginResponse | undefined;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -42,6 +45,7 @@ interface SessionActions {
   setSelectedDay: (day: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
+  setUserLoginResponse: (userLoginResponse: LoginResponse | undefined) => void;
 }
 
 interface GlobalPersistStore {
@@ -115,6 +119,7 @@ export const useSessionStore = create(
       previousAppointment: undefined,
       isMobile: true,
       payment: undefined,
+      userLoginResponse : undefined,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -144,6 +149,9 @@ export const useSessionStore = create(
       },
       setPayment: value => {
         set({ payment: value });
+      },
+      setUserLoginResponse: value => {
+        set({ userLoginResponse: value });
       },
     }),
     {

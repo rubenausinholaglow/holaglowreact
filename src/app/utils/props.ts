@@ -10,6 +10,8 @@ export interface TextInputFieldProps {
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   hasNoValidation?: boolean;
+  type? : string
+  setBackgroundIcon? : boolean
 }
 
 export interface SearchBarProps {
