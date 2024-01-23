@@ -74,32 +74,27 @@ export default function SecondStep({
   const setTextAreasValue = (value: string, question: number) => {
     if (question == 2) {
       setTextAreaTwo(value);
+      dermaQuestions.extraInfo = textAreaTwo;
+      setDermaQuestions({ ...dermaQuestions });
     } else {
+      const filteredSkinConcerns = dermaQuestions?.skinConcerns
+        ? dermaQuestions.skinConcerns.filter(item => {
+            return !item.concern.startsWith('Otros:');
+          })
+        : [];
+
+      dermaQuestions.skinConcerns = filteredSkinConcerns;
+
+      if (!isEmpty(value)) {
+        dermaQuestions.skinConcerns.push({ concern: `Otros: ${value}` });
+      }
+
+      setDermaQuestions({ ...dermaQuestions });
       setTextAreaOne(value);
     }
 
     if (value) setContinueDisabled(false);
   };
-
-  useEffect(() => {
-    dermaQuestions.extraInfo = textAreaTwo;
-  }, [question]);
-
-  useEffect(() => {
-    const filteredSkinConcerns = dermaQuestions?.skinConcerns
-      ? dermaQuestions.skinConcerns.filter(item => {
-          return !item.concern.startsWith('Otros:');
-        })
-      : [];
-
-    dermaQuestions.skinConcerns = filteredSkinConcerns;
-
-    if (!isEmpty(textAreaOne)) {
-      dermaQuestions.skinConcerns.push({ concern: `Otros: ${textAreaOne}` });
-    }
-
-    setDermaQuestions({ ...dermaQuestions });
-  }, [textAreaOne]);
 
   return (
     <>
