@@ -23,17 +23,8 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=no"
         />
-        <meta property="og:image" content={metadata.image} />
       </Head>
       <head>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-K3NZR8P"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          ></iframe>
-        </noscript>
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script
           id="gtm-script"

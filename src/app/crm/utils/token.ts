@@ -6,6 +6,7 @@ export const useToken = () => {
   const isValidToken = () => userLoginResponse && !isTokenExpired();
 
   const isTokenExpired = () => {
+    if(!userLoginResponse) return true;
     const refreshTokenExpiryTimestamp = getRefreshTokenExpiryTimestamp();
     const currentTimestamp = Date.now();
     return refreshTokenExpiryTimestamp <= currentTimestamp;
