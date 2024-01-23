@@ -20,7 +20,7 @@ const FAQS = [
   {
     title: '¿En qué tipo de afecciones pueden ayudarme?',
     description:
-      'Contamos con una amplia red de dermatólogos experimentados para ofrecer un cuidado facial integral y atender cualquier necesitat estética de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza, mancas o rosácea, entre muchas más.',
+      'Contamos con una amplia red de dermatólogos experimentados para ofrecer un cuidado facial integral y atender cualquier necesitat estética de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza, manchas o rosácea, entre muchas más.',
   },
   {
     title: '¿Qué significa un cuidado facial personalizado?',

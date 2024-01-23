@@ -63,9 +63,9 @@ export default function ProfessionalsDerma({
           Nuestra red de dermatólogos estéticos
         </TitleDerma>
         <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
-          Dermatólogos experimentados escucharán todas tus inquietudes para
-          acompañarte en el cuidado óptimo de tu piel y ayudarte a lograr tus
-          objetivos con tratamientos eficaces clínicamente testados.
+          Dermatólogos experimentados escucharán todas tus inquietudes estéticas
+          para acompañarte en el cuidado óptimo de tu piel y ayudarte a lograr
+          tus objetivos con tratamientos eficaces clínicamente testados.
         </Text>
       </Container>
       <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>

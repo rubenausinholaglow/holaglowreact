@@ -72,6 +72,9 @@ export const MULTISTEP_QUESTIONS: any = [
       {
         title: 'Textura de la piel',
       },
+      {
+        title: 'Manchas',
+      },
     ],
   },
   {

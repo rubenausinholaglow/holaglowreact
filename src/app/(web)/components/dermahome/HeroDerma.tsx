@@ -78,7 +78,7 @@ export default function HeroDerma() {
                       type="tertiary"
                       size="xl"
                       className="lg:mb-12"
-                      customStyles="border-none bg-derma-primary text-white"
+                      customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
                       href="/derma/multistep/start"
                       id={'tmevent_multistep_module'}
                     >

@@ -34,7 +34,7 @@ export default function StartMultistep() {
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
                 <Text className="font-gtUltraThin text-derma-primary mb-6 md:mb-6 text-xl md:text-5xl md:font-gtUltraBold">
-                  Tu camino hacia una piel más saludable y feliz comienza aquí
+                  Tu camino hacia una piel más saludable comienza aquí
                 </Text>
                 <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
                   El primer paso es identificar tus necesidades. Responde estas

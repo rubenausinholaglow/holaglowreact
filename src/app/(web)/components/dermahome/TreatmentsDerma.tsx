@@ -15,39 +15,35 @@ interface DermaTreatment {
 const TREATMENTS = [
   {
     name: 'Acné',
-    imgUrl: '/images/derma/treatments/acne.svg',
-  },
-  {
-    name: 'Pieles secas',
-    imgUrl: '/images/derma/treatments/porosObstruidos.svg',
-  },
-  {
-    name: 'Pieles grasas',
-    imgUrl: '/images/derma/treatments/puntosNegros.svg',
-  },
-  {
-    name: 'Líneas finas',
-    imgUrl: '/images/derma/treatments/lineasFinas.svg',
-  },
-  {
-    name: 'Flacidez',
-    imgUrl: '/images/derma/treatments/firmeza.svg',
-  },
-  {
-    name: 'Rosácea',
-    imgUrl: '/images/derma/treatments/rosacea.svg',
+    imgUrl: 'images/derma/icons/acne.svg',
   },
   {
     name: 'Melasma',
-    imgUrl: '/images/derma/treatments/rosacea.svg',
+    imgUrl: 'images/derma/icons/melasma.svg',
   },
   {
-    name: 'Manchas',
-    imgUrl: '/images/derma/treatments/rosacea.svg',
+    name: 'Rosácea',
+    imgUrl: 'images/derma/icons/rosacea.svg',
   },
   {
-    name: 'Fotoenvejecimiento',
-    imgUrl: '/images/derma/treatments/rosacea.svg',
+    name: 'Antiaging',
+    imgUrl: 'images/derma/icons/antiaging.svg',
+  },
+  {
+    name: 'Pieles secas',
+    imgUrl: 'images/derma/icons/pielesSecas.svg',
+  },
+  {
+    name: 'Pieles grasas',
+    imgUrl: 'images/derma/icons/pielesGrasas.svg',
+  },
+  {
+    name: 'Líneas finas',
+    imgUrl: 'images/derma/icons/lineasFinas.svg',
+  },
+  {
+    name: 'Firmeza',
+    imgUrl: 'images/derma/icons/firmeza.svg',
   },
 ];
 
@@ -57,7 +53,7 @@ export default function TreatmentsDerma() {
   const { deviceSize } = useSessionStore(state => state);
 
   return (
-    <div className="bg-derma-secondary300/70 overflow-hidden">
+    <div className="bg-derma-secondary300/70 pb-12 overflow-hidden">
       <Container className="pt-12 pb-4 overflow-hidden">
         <TitleDerma size="xl" className="mb-4">
           Soluciones para cada tipo de piel
@@ -67,7 +63,6 @@ export default function TreatmentsDerma() {
       {deviceSize.isMobile && (
         <FullWidthCarousel
           visibleSlides={deviceSize.isMobile ? 2.25 : 8}
-          className="pb-8"
           hasControls={false}
         >
           {TREATMENTS.map((item: DermaTreatment) => {
@@ -83,7 +78,7 @@ export default function TreatmentsDerma() {
                   height={64}
                   width={64}
                 />
-                <Text className="text-md font-semibold text-derma-primary500 px-4 text-center">
+                <Text className="text-md text-derma-primary font-semibold px-4 text-center">
                   {item.name}
                 </Text>
               </Flex>
@@ -111,7 +106,7 @@ export default function TreatmentsDerma() {
                       height={64}
                       width={64}
                     />
-                    <Text className="text-md font-semibold text-derma-primary500 px-4 text-center">
+                    <Text className="text-md font-semibold text-derma-primary px-4 text-center">
                       {item.name}
                     </Text>
                   </Flex>
