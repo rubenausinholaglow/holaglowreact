@@ -26,16 +26,16 @@ const AuthenticationComponent: React.FC<AuthenticationProps> = ({
   errorEmail,
 }) => {
   return (
-    <Flex className="items-center justify-center flex-col p-4 h-[800px]">
+    <Flex className="items-center justify-center flex-col p-4 h-[800px] gap-4">
       <div className="flex mb-4">
         <SvgHolaglow
           fill={HOLAGLOW_COLORS['secondary']}
           className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
         />
-        <p className={`ml-4 font-bold text-xl text-hg-secondary`}>CRM </p>
+        <p className={`ml-4 font-bold text-xl text-hg-secondary`}>CRM</p>
       </div>
 
-      <div className="mb-4">
+      <div>
         <TextInputField
           placeholder="Email"
           label="Email"
@@ -46,7 +46,7 @@ const AuthenticationComponent: React.FC<AuthenticationProps> = ({
           error={errorEmail}
         />
       </div>
-      <div className="mb-4">
+      <div>
         <TextInputField
           label="Contraseña"
           type="password"
@@ -57,7 +57,7 @@ const AuthenticationComponent: React.FC<AuthenticationProps> = ({
           setBackgroundIcon={false}
         />
       </div>
-      <Button onClick={handleLogin} className="mb-4">
+      <Button onClick={handleLogin}>
         {isLoading ? (
           <SvgSpinner className="w-full justify-center" />
         ) : (

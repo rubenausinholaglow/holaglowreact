@@ -1,9 +1,7 @@
 import 'app/globals.css';
-import '../../../public/styles/Alma/widgets.min.css';
 
+import App from 'app/(web)/components/layout/App';
 import Head from 'next/head';
-
-import App from '../(web)/components/layout/App';
 
 export const metadata = {
   title: 'Holaglow - CRM',
@@ -23,7 +21,7 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, user-scalable=no"
         />
       </Head>
-      <App>{children}</App>
+      <body>{children}</body>
     </html>
   );
 }

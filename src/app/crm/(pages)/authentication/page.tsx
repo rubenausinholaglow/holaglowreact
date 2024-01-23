@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { LoginResponse, UserLogin } from '@interface/Login';
 import AuthenticationService from '@services/AuthenticationService';
 import useRoutes from '@utils/useRoutes';
 import { validateEmail } from '@utils/validators';
 import { useSessionStore } from 'app/stores/globalStore';
-import { LoginResponse, UserLogin } from 'app/types/login';
 import { useRouter } from 'next/navigation';
 
 import AuthenticationComponent from './authentication';
@@ -21,7 +21,7 @@ export default function AuthenticationPage() {
 
   const handleEmailChange = (event: any) => {
     const emailValue = event.target.value.trim();
-    setErrorEmail(isValidEmailFormat(emailValue) ? '' : 'Email no válido');
+    setErrorEmail(validateEmail(emailValue) ? '' : 'Email no válido');
     setEmail(emailValue);
   };
   const handleChangePassword = (event: any) => {
@@ -69,14 +69,10 @@ export default function AuthenticationPage() {
   }
 
   function userDataIsCorrect(): boolean {
-    const isValidEmail = isValidEmailFormat(email);
+    const isValidEmail = validateEmail(email);
     const isValidPassword = !!password.trim();
 
     return isValidEmail && isValidPassword;
-  }
-
-  function isValidEmailFormat(email: string): boolean {
-    return validateEmail(email);
   }
 
   return (
