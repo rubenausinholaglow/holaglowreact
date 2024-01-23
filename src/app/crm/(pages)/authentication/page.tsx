@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { LoginResponse, UserLogin } from '@interface/Login';
 import AuthenticationService from '@services/AuthenticationService';
 import useRoutes from '@utils/useRoutes';
 import { validateEmail } from '@utils/validators';
 import { useSessionStore } from 'app/stores/globalStore';
-import { LoginResponse, UserLogin } from 'app/types/login';
 import { useRouter } from 'next/navigation';
 
 import AuthenticationComponent from './authentication';

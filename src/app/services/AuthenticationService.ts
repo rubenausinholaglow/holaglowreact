@@ -1,5 +1,5 @@
 import Bugsnag from '@bugsnag/js';
-import { LoginResponse, UserLogin } from 'app/types/login';
+import { LoginResponse, UserLogin } from '@interface/Login';
 
 export default class AuthenticationService {
     static async isValidLoginSupport24Hours(phoneNumber: string): Promise<boolean> {
