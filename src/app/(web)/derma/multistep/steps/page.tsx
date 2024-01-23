@@ -106,7 +106,7 @@ export default function Form() {
       productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA!;
       productDetails.flowwwId = 5;
       productDetails.title = 'Consulta personalizada de dermatología';
-      productDetails.price = 49;
+      productDetails.price = 59;
       setSelectedTreatments([productDetails]);
       if (cart.length == 0) addItemToCart(productDetails as CartItem);
     }
