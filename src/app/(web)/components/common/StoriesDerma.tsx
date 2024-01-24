@@ -1,4 +1,3 @@
-import { ImgComparisonSlider } from '@img-comparison-slider/react';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -6,21 +5,10 @@ import Image from 'next/image';
 
 export default function StoriesDerma() {
   const dermaImages: any[] = [
-    {
-      id: 1,
-      urlBefore: '/images/derma/home/before1.webp',
-      urlAfter: '/images/derma/home/after1.webp',
-    },
-    {
-      id: 2,
-      urlBefore: '/images/derma/home/before1.webp',
-      urlAfter: '/images/derma/home/after1.webp',
-    },
-    {
-      id: 3,
-      urlBefore: '/images/derma/home/before1.webp',
-      urlAfter: '/images/derma/home/after1.webp',
-    },
+    '/images/derma/beforeAfter/beforeAfter1.webp',
+    '/images/derma/beforeAfter/beforeAfter2.webp',
+    '/images/derma/beforeAfter/beforeAfter3.webp',
+    '/images/derma/beforeAfter/beforeAfter4.webp',
   ];
 
   return (
@@ -29,7 +17,7 @@ export default function StoriesDerma() {
         layout="col-left"
         className="gap-4 items-center md:items-start relative md:justify-center md:flex-row md:gap-16"
       >
-        <Flex layout="col-left" className="md:w-3/5">
+        <Flex layout="col-left" className="md:w-1/2">
           <Title
             isAnimated
             size="2xl"
@@ -46,48 +34,35 @@ export default function StoriesDerma() {
             conseguidos.
           </Text>
         </Flex>
-        <Flex layout="col-left" className="md:w-2/5 w-full">
+        <Flex layout="col-left" className="md:w-1/2 w-full relative">
           <Carousel
             hasControls={dermaImages?.length > 1}
             dragEnabled={false}
             touchEnabled={false}
             hasDots
-            className="rounded-xl aspect-square"
+            className="rounded-xl"
             isDerma
           >
             {dermaImages?.map(item => (
-              <div key={item.id} className="overflow-hidden relative">
-                <ImgComparisonSlider className="outline-none w-full">
-                  <figure slot="first" className="before">
-                    <div className="relative aspect-square">
-                      <Image
-                        src={item.urlBefore}
-                        alt=""
-                        fill
-                        className="object-cover rounded-3xl"
-                      />
-                    </div>
-                    <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
-                      Antes
-                    </span>
-                  </figure>
-                  <figure slot="second" className="after">
-                    <div className="relative aspect-square">
-                      <Image
-                        src={item.urlAfter}
-                        alt=""
-                        fill
-                        className="object-cover rounded-3xl"
-                      />
-                    </div>
-                    <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
-                      Después
-                    </span>
-                  </figure>
-                </ImgComparisonSlider>
+              <div
+                key={item.id}
+                className="overflow-hidden relative rounded-2xl"
+              >
+                <Image
+                  height={400}
+                  width={600}
+                  src={item}
+                  alt="Antes y después Derma by Holaglow"
+                />
               </div>
             ))}
           </Carousel>
+          <Text className="absolute bottom-20 left-4 bg-derma-primary500/80 text-derma-tertiary py-1 px-2 rounded-full text-sm">
+            Antes
+          </Text>
+          <Text className="absolute bottom-20 right-4 bg-derma-primary500/80 text-derma-tertiary py-1 px-2 rounded-full text-sm">
+            Después
+          </Text>
         </Flex>
       </Flex>
     </Container>
