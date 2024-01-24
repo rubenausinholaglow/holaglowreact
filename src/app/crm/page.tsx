@@ -4,7 +4,7 @@ import LoginChecker from './components/login/LoginChecker';
 
 export default function Page() {
   return (
-    <MainLayoutCRM hideHeader>
+    <MainLayoutCRM hideHeader hideFooter>
       <LoginChecker isLoginPage>
         <AuthenticationPage />
       </LoginChecker>
