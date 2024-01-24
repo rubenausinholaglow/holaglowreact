@@ -9,7 +9,10 @@ import { usePathname } from 'next/navigation';
 
 const SideNav = () => {
   return (
-    <div className="md:w-56 bg-hg-primary300  h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex flex-col m-4 rounded-xl">
+    <div
+      className="md:w-56 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex flex-col m-4 rounded-xl"
+      style={{ height: 'calc(100vh - 2rem)' }}
+    >
       <div className="flex flex-col space-y-6 w-full">
         <Link
           href="/crm/menu"
@@ -50,7 +53,9 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
             }`}
           >
             <div className="flex flex-row space-x-4 items-center">
-              <span className="font-semibold text-xl  flex">{item.title}</span>
+              <span className="font-semibold text-ms flex hover:text-hg-secondary">
+                {item.title}
+              </span>
             </div>
           </button>
 
@@ -81,7 +86,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
               : ''
           }`}
         >
-          <span className="font-semibold text-xl flex">{item.title}</span>
+          <span className="font-semibold text-ms flex">{item.title}</span>
         </Link>
       )}
     </div>
