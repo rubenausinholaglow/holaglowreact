@@ -13,3 +13,6 @@ export const INITIAL_STATE: State = {
 
 export const HEADER_HEIGHT_MOBILE = 56;
 export const HEADER_HEIGHT_DESKTOP = 72;
+
+export const DERMA_HEADER_HEIGHT_MOBILE = 68;
+export const DERMA_HEADER_HEIGHT_DESKTOP = 80;

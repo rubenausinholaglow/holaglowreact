@@ -35,6 +35,12 @@ export default class ScheduleService {
     }
   }
 
+  static getScheduleUrl(): string {
+    let url = process.env.NEXT_PUBLIC_SCHEDULE_API;
+    if (window.location.href.includes('derma'))
+      url = process.env.NEXT_PUBLIC_DERMASCHEDULE_API;
+    return url!;
+  }
   static createAppointment = async (
     selectedTreatments: Product[],
     selectedSlot: Slot,
@@ -89,7 +95,7 @@ export default class ScheduleService {
     flowwwToken: string
   ): Promise<any | undefined> {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/v2/Next?token=${flowwwToken}`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment/v2/Next?token=${flowwwToken}`;
       const res = await fetch(url);
       if (res.status === 204) {
         return undefined;
@@ -109,7 +115,7 @@ export default class ScheduleService {
 
   static async getClinicSchedule(appointmentId: string) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/${appointmentId}/Start`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment/${appointmentId}/Start`;
       const res = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -135,7 +141,7 @@ export default class ScheduleService {
     status: Status
   ) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Status`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment/Status`;
       const requestBody = {
         appointmentId: appointmentId,
         userId: id,
@@ -163,7 +169,7 @@ export default class ScheduleService {
   }
   static async getAppointmentsPerClinic(clinicId: string, boxId: string) {
     try {
-      let url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/PerClinic?clinicId=${clinicId}`;
+      let url = `${ScheduleService.getScheduleUrl()}Appointment/PerClinic?clinicId=${clinicId}`;
       if (boxId) {
         url = `${url}&boxId=${boxId}`;
       }
@@ -182,7 +188,7 @@ export default class ScheduleService {
 
   static async finish(appointmentId: string, comments: string, userId: string) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Finish`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment/Finish`;
       const requestBody = {
         appointmentId: appointmentId,
         userId: userId,
@@ -209,7 +215,7 @@ export default class ScheduleService {
   }
   static async confirm(appointmentId: string) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Confirm`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment/Confirm`;
       const requestBody = {
         appointmentId: appointmentId,
       };
@@ -240,7 +246,7 @@ export default class ScheduleService {
   ): Promise<Array<DayAvailability>> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/MonthAvailability?date=` +
+        `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailability?date=` +
         date +
         `&treatment=` +
         treatment +
@@ -265,7 +271,7 @@ export default class ScheduleService {
   ): Promise<Array<DayAvailability>> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/MonthAvailabilityv2?date=` +
+        `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailabilityv2?date=` +
         date +
         `&treatment=` +
         treatment +
@@ -291,7 +297,7 @@ export default class ScheduleService {
   ): Promise<Array<Slot>> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Slots?date=` +
+        `${ScheduleService.getScheduleUrl()}Appointment/Slots?date=` +
         date +
         `&treatment=` +
         treatment +
@@ -317,7 +323,7 @@ export default class ScheduleService {
   ): Promise<Array<Slot>> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Slotsv2?date=` +
+        `${ScheduleService.getScheduleUrl()}Appointment/Slotsv2?date=` +
         date +
         `&treatment=` +
         treatment +
@@ -338,7 +344,7 @@ export default class ScheduleService {
 
   static async scheduleBulk(appointments: Appointment[]) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Bulk`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment/Bulk`;
 
       const res = await fetch(url, {
         method: 'POST',
@@ -361,8 +367,7 @@ export default class ScheduleService {
   static async next(token: string): Promise<Appointment[]> {
     try {
       const url =
-        `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Next?token=` +
-        token;
+        `${ScheduleService.getScheduleUrl()}Appointment/Next?token=` + token;
 
       const res = await fetch(url, {
         method: 'GET',
@@ -383,7 +388,7 @@ export default class ScheduleService {
   }
   static async cancel(appointment: Appointment) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment`;
 
       const res = await fetch(url, {
         method: 'DELETE',
@@ -400,7 +405,7 @@ export default class ScheduleService {
   }
   static async reschedule(reschedule: RescheduleAppointmentRequest) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Reschedule`;
+      const url = `${ScheduleService.getScheduleUrl()}Appointment/Reschedule`;
 
       const res = await fetch(url, {
         method: 'POST',

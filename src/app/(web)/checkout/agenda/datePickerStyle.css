@@ -1,9 +1,12 @@
+#datepickerWrapper {
+}
+
 #datepickerWrapper > div {
   width: 100%;
 }
 
 #datepickerWrapper .react-datepicker {
-  font-family: 'Poppins', sans-serif;
+  font-family: inherit;
   padding: 12px 0;
   width: 100%;
   background-color: theme('colors.hg.secondary100');
