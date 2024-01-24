@@ -117,4 +117,25 @@ export default class UserService {
       return '';
     }
   }
+
+  static async getAllUsers(token : string) : Promise<User[] | undefined> {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/All`;
+      const res = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return undefined;
+      }
+    } catch (err) {
+      return undefined;
+    }
+  }
 }
