@@ -91,12 +91,10 @@ export default function DermaHeader({
                   className="lg:absolute right-0 2xl:mr-20"
                   type="tertiary"
                   href="/derma/multistep/start"
-                  customStyles="bg-transparent border-derma-primary"
+                  customStyles="bg-transparent text-derma-primary border-derma-primary hover:border-derma-primary500 hover:text-derma-primary500"
                 >
-                  <Text className="font-semibold text-derma-primary mr-2">
-                    Pide cita
-                  </Text>
-                  <SvgArrow className="text-derma-primary h-5 w-5" />
+                  <Text className="font-semibold mr-2">Pide cita</Text>
+                  <SvgArrow className="h-5 w-5" />
                 </Button>
               )}
             </Flex>
