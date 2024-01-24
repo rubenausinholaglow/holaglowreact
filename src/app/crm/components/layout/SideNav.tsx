@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 
 const SideNav = () => {
   return (
-    <div className="md:w-60 bg-hg-primary300  h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex flex-col m-4 rounded-xl">
+    <div className="md:w-56 bg-hg-primary300  h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex flex-col m-4 rounded-xl">
       <div className="flex flex-col space-y-6 w-full">
         <Link
           href="/crm/menu"
