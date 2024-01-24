@@ -122,7 +122,7 @@ const DataTable: React.FC<DataTableProps> = ({
           {currentData.map((rowData, rowIndex) => (
             <tr
               key={rowIndex}
-              className={rowIndex % 2 === 0 ? 'even:bg-blue-gray-50/50' : ''}
+              className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
             >
               {columns.map(column => (
                 <td key={column.key} className="p-4">
