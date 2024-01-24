@@ -91,8 +91,8 @@ const UPGRADE_TYPES: Record<
     family: 'default',
     options: [
       {
-        label: 'Prevención arrugas - Baby botox',
-        value: 'Prevención arrugas - Baby botox',
+        label: 'Prevención arrugas',
+        value: 'Prevención arrugas',
       },
       {
         label: 'Arrugas entrecejo y patas de gallo',
