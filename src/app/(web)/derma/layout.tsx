@@ -26,12 +26,6 @@ export default function RootLayout({
       </Head>
       <head>
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-        <Script
-          id="cookieyes"
-          type="text/javascript"
-          strategy="beforeInteractive"
-          src="https://cdn-cookieyes.com/client_data/358786368d84a68230dff524/script.js"
-        ></Script>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-K3NZR8P"
