@@ -62,6 +62,10 @@ input[type='date'] {
   appearance: none;
 }
 
+input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
 input[type='date']::-webkit-inner-spin-button,
 input[type='date']::-webkit-calendar-picker-indicator {
   margin-top: -12px;

@@ -80,7 +80,7 @@ export const Carousel = ({
   const buttonBack = () => (
     <ButtonBack
       className={`transition-opacity ${
-        isDerma
+        !isDerma
           ? 'bg-hg-secondary text-hg-primary'
           : 'bg-derma-primary text-derma-primary100'
       }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
@@ -95,7 +95,7 @@ export const Carousel = ({
   const buttonNext = () => (
     <ButtonNext
       className={`transition-opacity ${
-        isDerma
+        !isDerma
           ? 'bg-hg-secondary text-hg-primary'
           : 'bg-derma-primary text-derma-primary100'
       }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}

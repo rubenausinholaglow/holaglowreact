@@ -45,8 +45,8 @@ export default function FourthStep({
                     </Text>
                   </Flex>
                 </Flex>
+                <AppointmentResume isProbadorVirtual={false} isDerma />
               </Container>
-              <AppointmentResume isProbadorVirtual={false} isDerma />
             </div>
             <Container className="mt-8">
               <Text className="font-gtUltraThin font-semibold mb-4 text-derma-tertiary text-xl md:text-2xl">

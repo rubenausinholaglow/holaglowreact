@@ -251,7 +251,7 @@ export default function Form() {
                     size="lg"
                     className="ml-auto"
                     type="tertiary"
-                    customStyles="bg-transparent border-derma-primary text-derma-primary"
+                    customStyles="bg-derma-secondary300 border-derma-primary text-derma-primary hover:text-derma-primary500 hover:border-derma-primary500 hover:bg-transparent"
                     disabled={continueDisabled}
                     onClick={() => {
                       if (!continueDisabled) goNext(activeSlideIndex);

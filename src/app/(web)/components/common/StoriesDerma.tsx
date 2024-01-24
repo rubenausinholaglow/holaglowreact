@@ -53,6 +53,7 @@ export default function StoriesDerma() {
             touchEnabled={false}
             hasDots
             className="rounded-xl aspect-square"
+            isDerma
           >
             {dermaImages?.map(item => (
               <div key={item.id} className="overflow-hidden relative">
