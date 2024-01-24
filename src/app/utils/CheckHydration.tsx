@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 const CheckHydration = ({ children }: { children: ReactNode }) => {
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(true);
 
   useEffect(() => {
     setIsHydrated(true);
