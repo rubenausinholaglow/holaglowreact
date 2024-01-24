@@ -198,7 +198,7 @@ export default function SecondStep({
           {item.showTextArea && question === 2 && (
             <div className="relative w-full h-[300px] md:h-[400px]">
               <label className="absolute left-4 top-4 text-sm text-hg-black500">
-                Haznos saber
+                Cuéntanos:
               </label>
               <textarea
                 value={textAreaTwo}

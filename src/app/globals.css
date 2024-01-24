@@ -58,6 +58,10 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+input[type='date'] {
+  appearance: none;
+}
+
 input[type='date']::-webkit-inner-spin-button,
 input[type='date']::-webkit-calendar-picker-indicator {
   margin-top: -12px;

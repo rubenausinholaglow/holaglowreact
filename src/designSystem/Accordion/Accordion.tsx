@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { SvgAdd } from 'app/icons/IconsDs';
+import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
 export function SimpleAccordion({
@@ -48,7 +49,7 @@ export function SimpleAccordion({
             />
           </AccordionPrimitive.Trigger>
         ) : (
-          <>{trigger}</>
+          <Text className={triggerStyles}>{trigger}</Text>
         )}
         <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
           {children}
