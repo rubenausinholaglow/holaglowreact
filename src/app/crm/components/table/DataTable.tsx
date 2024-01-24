@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { Card, Typography } from '@material-tailwind/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import Pagination from './Pagination';
 
@@ -16,6 +18,7 @@ const DataTable: React.FC<DataTableProps> = ({
   columns,
   itemsPerPageOptions = [5, 10, 15, 20, 25, 50],
 }) => {
+  const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -132,16 +135,11 @@ const DataTable: React.FC<DataTableProps> = ({
                   </Typography>
                 </td>
               ))}
+
               <td className="p-4">
-                <Typography
-                  as="a"
-                  href="#"
-                  variant="small"
-                  color="blue-gray"
-                  className="font-medium"
-                >
-                  Editar
-                </Typography>
+                <Link href={`${pathName}/${rowData[columns[0].key]}`}>
+                  <p className="font-medium text-blue-gray">Editar</p>
+                </Link>
               </td>
             </tr>
           ))}
