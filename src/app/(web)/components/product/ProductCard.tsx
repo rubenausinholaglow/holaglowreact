@@ -209,7 +209,9 @@ export default function ProductCard({
     return (
       <Link
         id="tmevent_click_product_card"
-        onClick={() => tracker.track('Click', 'ProductCard', product.slug)}
+        onClick={() =>
+          tracker.track('Click', 'ProductCard', product?.extraInformation?.slug)
+        }
         href={
           isLanding
             ? LANDINGS[pathName]
