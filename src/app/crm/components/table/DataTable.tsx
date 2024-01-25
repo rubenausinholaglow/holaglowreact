@@ -63,7 +63,7 @@ const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage(1);
   };
 
-  return <div>Entra</div>;
+  return <Card className="h-full w-full">Entra 2</Card>;
 };
 
 export default DataTable;
