@@ -1,4 +1,4 @@
-import Reagenda from './reagenda';
+import Reagenda from 'app/(web)/reagenda/reagenda';
 
 export default function Page({
   searchParams,
