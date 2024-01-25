@@ -24,11 +24,12 @@ const DataTable: React.FC<DataTableProps> = ({
   const [sortedData, setSortedData] = useState([...data]);
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
+  const [filteredData, setFilteredData] = useState<any[]>(sortedData);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const currentData = sortedData.slice(startIndex, endIndex);
+  //const currentData = sortedData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
 
   const handlePageChange = (page: number) => {
@@ -54,15 +55,28 @@ const DataTable: React.FC<DataTableProps> = ({
     });
 
     setCurrentPage(1);
-    setSortedData(sortedData);
+    setFilteredData(sortedData);
   };
 
   const handleItemsPerPageChange = (value: number) => {
     setItemsPerPage(value);
     setCurrentPage(1);
   };
-
-  if (currentData?.length || 0 > 0)
+  useEffect(() => {
+    console.log(filters);
+    if (filters.search || 0 > 0) {
+      const filtered = data.filter(item =>
+        Object.values(item).some(
+          value =>
+            value &&
+            typeof value === 'string' &&
+            value.toLowerCase().includes(filters.search.toLowerCase())
+        )
+      );
+      setFilteredData(filtered);
+    }
+  }, [filters]);
+  if (data)
     return (
       <div className="h-full w-full">
         <div className="gap-4 mt-4 ml-2 w-full">
@@ -84,8 +98,11 @@ const DataTable: React.FC<DataTableProps> = ({
             <div className="">
               <input
                 type="text"
-                placeholder="filtro"
+                placeholder="Filtrar"
                 className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
+                onChange={e =>
+                  setFilters({ ...filters, search: e.target.value })
+                }
               />
             </div>
           </div>
@@ -118,26 +135,31 @@ const DataTable: React.FC<DataTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {currentData!.map((rowData, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
-              >
-                {columns.map(column => (
-                  <td key={column.key} className="p-4">
-                    <label color="blue-gray" className="font-normal">
-                      {rowData[column.key]}
-                    </label>
-                  </td>
-                ))}
+            {filteredData
+              .slice(
+                (currentPage - 1) * itemsPerPage,
+                currentPage * itemsPerPage
+              )
+              .map((rowData, rowIndex) => (
+                <tr
+                  key={rowIndex}
+                  className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
+                >
+                  {columns.map(column => (
+                    <td key={column.key} className="p-4">
+                      <label color="blue-gray" className="font-normal">
+                        {rowData[column.key]}
+                      </label>
+                    </td>
+                  ))}
 
-                <td className="p-4">
-                  <Link href={`${pathName}/${rowData[columns[0].key]}`}>
-                    <p className="font-medium text-blue-gray">Editar</p>
-                  </Link>
-                </td>
-              </tr>
-            ))}
+                  <td className="p-4">
+                    <Link href={`${pathName}/${rowData[columns[0].key]}`}>
+                      <p className="font-medium text-blue-gray">Editar</p>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <Pagination
@@ -147,7 +169,7 @@ const DataTable: React.FC<DataTableProps> = ({
         />
       </div>
     );
-  else return <>Cargando.......!</>;
+  else return <>No results</>;
 };
 
 export default DataTable;
