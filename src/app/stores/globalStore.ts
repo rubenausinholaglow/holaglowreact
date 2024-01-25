@@ -1,4 +1,3 @@
-
 import { LoginResponse } from '@interface/Login';
 import { PaymentBank, PaymentInitResponse } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
@@ -21,6 +20,12 @@ type DeviceSize = {
   isWideScreen: boolean;
 };
 
+export enum TypeOfPayment {
+  Free,
+  Reservation,
+  Full,
+}
+
 interface SessionStore {
   analyticsMetrics: AnalyticsMetrics;
   isMobile: boolean;
@@ -33,6 +38,7 @@ interface SessionStore {
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
   userLoginResponse : LoginResponse | undefined;
+  typeOfPayment: TypeOfPayment;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -46,6 +52,8 @@ interface SessionActions {
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
   setUserLoginResponse: (userLoginResponse: LoginResponse | undefined) => void;
+  setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
+
 }
 
 interface GlobalPersistStore {
@@ -119,7 +127,8 @@ export const useSessionStore = create(
       previousAppointment: undefined,
       isMobile: true,
       payment: undefined,
-      userLoginResponse : undefined,
+	  userLoginResponse : undefined,
+	  typeOfPayment: TypeOfPayment.Free,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -149,9 +158,12 @@ export const useSessionStore = create(
       },
       setPayment: value => {
         set({ payment: value });
-      },
+   },
       setUserLoginResponse: value => {
         set({ userLoginResponse: value });
+      },
+      setTypeOfPayment: value => {
+        set({ typeOfPayment: value });
       },
     }),
     {

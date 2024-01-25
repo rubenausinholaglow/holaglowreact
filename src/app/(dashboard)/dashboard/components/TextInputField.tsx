@@ -6,6 +6,8 @@ import { TextInputFieldProps } from '../../../utils/props';
 
 const TextInputField: React.FC<TextInputFieldProps> = ({
   label,
+  labelClassName = '',
+  inputClassName = '',
   placeholder,
   value,
   onChange = undefined,
@@ -13,7 +15,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   hasNoValidation,
   error = '',
   type = 'text',
-  setBackgroundIcon = true,
+  disableBgIcons = false,
 }) => {
   function getBackgroundIcon() {
     if (!isEmpty(error)) {
@@ -27,27 +29,25 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   }
 
   return (
-    <div className="flex flex-col">
-      {label && <label className="text-gray-700 text-left">{label}</label>}
-      <input
+   <div className="flex flex-col relative">
+      {label && (
+        <label className={`text-gray-700 text-left ${labelClassName}`}>
+          {label}
+        </label>
+      )}      <input
         placeholder={placeholder ? placeholder : ''}
         className={twMerge(
           `border border-hg-black300 rounded-2xl px-4 py-2 mr-4 w-full text-hg-black h-16 focus:outline-none ${
             value.length > 0 ? 'border-hg-black' : ''
           }`
         )}
-        type={type}
+        type="text"
         value={value}
         onChange={onChange}
+            onChange={onChange}
         onBlur={onBlur}
-        style={
-          setBackgroundIcon
-            ? {
-                background: getBackgroundIcon(),
-              }
-            : {}
-        }
-      />
+        style={{ background: getBackgroundIcon() }}
+           />
       {error.length > 0 && (
         <p className="text-hg-error text-left text-sm ml-2 mt-2">{error}</p>
       )}

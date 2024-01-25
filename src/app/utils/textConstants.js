@@ -5,6 +5,7 @@ export const ERROR_TERMS_CONDITIONS_UNACCEPTED =
   'Debes aceptar los términos y las condiciones';
 export const ERROR_EMAIL_NOT_VALID = 'El correo electrónico no es válido.';
 export const ERROR_PHONE_NOT_VALID = 'El número de teléfono no es válido.';
+export const ERROR_POSTALCODE_NOT_VALID = 'El código postal no es válido.';
 export const ERROR_CREATE_BUDGET = 'Error al crear el presupuesto.';
 export const ERROR_FETCHING_DATA = 'Error fetching data from the API';
 export const ERROR_FETCHING_PROFESSIONALS = 'Error fetching professionals: ';
@@ -18,3 +19,4 @@ export const INVALID_EMAIL_FORMAT = 'Invalid email format';
 export const PHONE_REQUIRED = 'Phone is required';
 export const INVALID_PHONE_FORMAT = 'Invalid phone format (10 digits)';
 export const CHECK_IN_INCORRECT = 'Check-in Incorrecto';
+export const ERROR_UPDATE_DERMAQUESTIONS = 'Error updating derma questions';
