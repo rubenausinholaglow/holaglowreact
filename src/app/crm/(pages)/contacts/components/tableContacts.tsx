@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { User } from '@interface/appointment';
-import UserService from '@services/UserService';
 import DataTable from 'app/crm/components/table/DataTable';
+import ContactService from 'app/crm/services/ContactService';
 import { useSessionStore } from 'app/stores/globalStore';
 
 export default function TableContacts() {
@@ -23,7 +23,7 @@ export default function TableContacts() {
   ];
 
   const fetchContacts = async () => {
-    await UserService.getAllUsers(userLoginResponse!.token).then(
+    await ContactService.ContactsAll(userLoginResponse?.token ?? '').then(
       usersResponse => {
         if (usersResponse) {
           setUsers(usersResponse);
