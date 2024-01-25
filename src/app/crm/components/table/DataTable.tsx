@@ -40,7 +40,7 @@ const DataTable: React.FC<DataTableProps> = ({
   const handleSort = (columnKey: string) => {
     const order =
       sortColumn === columnKey && sortOrder === 'asc' ? 'desc' : 'asc';
-    setSortColumn(columnKey);
+
     setSortOrder(order);
 
     const sortedData = [...data].sort((a, b) => {
@@ -53,9 +53,9 @@ const DataTable: React.FC<DataTableProps> = ({
         return valueB > valueA ? 1 : valueB < valueA ? -1 : 0;
       }
     });
-
-    setCurrentPage(1);
+    setSortColumn(columnKey);
     setSortedData(sortedData);
+    setCurrentPage(1);
   };
 
   const handleItemsPerPageChange = (value: number) => {
@@ -63,41 +63,7 @@ const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage(1);
   };
 
-  return (
-    <Card className="h-full w-full">
-      <div className="gap-4 mt-4 ml-2 w-full">
-        <div className="flex gap-4 mt-4 ml-2 w-full justify-between">
-          <div className="flex items-center">
-            <select
-              value={itemsPerPage}
-              onChange={e => handleItemsPerPageChange(Number(e.target.value))}
-              className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
-            >
-              {itemsPerPageOptions.map(option => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <p className="ml-2">registros por página</p>
-          </div>
-          <div className="">
-            <input
-              type="text"
-              placeholder="filtro"
-              className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
-            />
-          </div>
-        </div>
-      </div>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
-    </Card>
-  );
+  return <div>Entra</div>;
 };
 
 export default DataTable;
