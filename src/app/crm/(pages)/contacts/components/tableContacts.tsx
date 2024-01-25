@@ -22,24 +22,26 @@ export default function TableContacts() {
     { label: 'Email', key: 'email' },
   ];
 
-  const fetchContacts = async () => {
-    await UserService.getAllUsers(userLoginResponse!.token).then(
-      usersResponse => {
-        if (usersResponse) {
-          setUsers(usersResponse);
-        } else {
-          setErrorMessage(
-            'Error cargando usuarios - Contacte con el administrador'
-          );
-          Bugsnag.notify('Error getting users CRM');
-        }
-      }
-    );
-  };
-
   useEffect(() => {
-    fetchContacts();
+    const fetchContacts = async () => {
+      await UserService.getAllUsers(userLoginResponse!.token).then(
+        usersResponse => {
+          if (usersResponse) {
+            setUsers(usersResponse);
+          } else {
+            setErrorMessage(
+              'Error cargando usuarios - Contacte con el administrador'
+            );
+            Bugsnag.notify('Error getting users CRM');
+          }
+        }
+      );
+    };
+    if (!users) {
+      fetchContacts();
+    }
   }, []);
+
   if (!users)
     return (
       <>
