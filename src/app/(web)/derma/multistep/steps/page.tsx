@@ -162,9 +162,8 @@ export default function Form() {
       setContinueDisabled(continueDisabled);
       dermaQuestions.id = x!.toString();
       setDermaQuestions(dermaQuestions);
+      window.scrollTo(0, 0);
     });
-
-    window.scrollTo(0, 0);
   };
 
   return (

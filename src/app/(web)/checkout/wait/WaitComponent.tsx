@@ -50,9 +50,11 @@ export default function WaitComponent() {
             selectedPacksTreatments!,
             analyticsMetrics,
             id
-          ).then(x => {
-            if (x && isDerma && x.length > 0) {
-              setAppointmentUrl(x[0].url);
+          ).then(y => {
+            console.log(y);
+            console.log(y.length);
+            if (y && y.length > 0) {
+              setAppointmentUrl(y[0].url);
             }
             router.push('/checkout/confirmation');
           });
