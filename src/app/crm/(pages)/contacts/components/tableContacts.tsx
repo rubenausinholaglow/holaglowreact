@@ -52,11 +52,5 @@ export default function TableContacts() {
         )}
       </>
     );
-  else
-    return (
-      <DataTable
-        data={users.filter(x => x.firstName == 'Anna')}
-        columns={columns}
-      />
-    );
+  else return <DataTable data={users} columns={columns} />;
 }

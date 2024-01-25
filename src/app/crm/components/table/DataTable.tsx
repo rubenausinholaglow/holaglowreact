@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Card, Typography } from '@material-tailwind/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -25,12 +24,11 @@ const DataTable: React.FC<DataTableProps> = ({
   const [sortedData, setSortedData] = useState([...data]);
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
-  const [filteredData, setFilteredData] = useState<any[] | undefined>(
-    undefined
-  );
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+  const currentData = sortedData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
 
   const handlePageChange = (page: number) => {
@@ -38,12 +36,10 @@ const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage(page);
   };
 
-  /* 
-
   const handleSort = (columnKey: string) => {
     const order =
       sortColumn === columnKey && sortOrder === 'asc' ? 'desc' : 'asc';
-
+    setSortColumn(columnKey);
     setSortOrder(order);
 
     const sortedData = [...data].sort((a, b) => {
@@ -56,21 +52,17 @@ const DataTable: React.FC<DataTableProps> = ({
         return valueB > valueA ? 1 : valueB < valueA ? -1 : 0;
       }
     });
-    setSortColumn(columnKey);
-    setSortedData(sortedData);
+
     setCurrentPage(1);
+    setSortedData(sortedData);
   };
 
   const handleItemsPerPageChange = (value: number) => {
     setItemsPerPage(value);
     setCurrentPage(1);
-  };*/
+  };
 
-  useEffect(() => {
-    setFilteredData(data.slice(startIndex, endIndex));
-  }, []);
-
-  if (filteredData?.length || 0 > 0)
+  if (currentData?.length || 0 > 0)
     return (
       <div className="h-full w-full">
         <div className="gap-4 mt-4 ml-2 w-full">
@@ -78,6 +70,7 @@ const DataTable: React.FC<DataTableProps> = ({
             <div className="flex items-center">
               <select
                 value={itemsPerPage}
+                onChange={e => handleItemsPerPageChange(Number(e.target.value))}
                 className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
               >
                 {itemsPerPageOptions.map(option => (
@@ -106,7 +99,7 @@ const DataTable: React.FC<DataTableProps> = ({
                   key={column.key}
                   className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
                 >
-                  <div className="flex">
+                  <div className="flex" onClick={() => handleSort(column.key)}>
                     <label
                       color="blue-gray"
                       className="font-normal leading-none opacity-70"
@@ -125,7 +118,7 @@ const DataTable: React.FC<DataTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {filteredData!.map((rowData, rowIndex) => (
+            {currentData!.map((rowData, rowIndex) => (
               <tr
                 key={rowIndex}
                 className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
