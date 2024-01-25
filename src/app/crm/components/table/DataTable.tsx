@@ -72,7 +72,7 @@ const DataTable: React.FC<DataTableProps> = ({
   useEffect(() => {
     console.log(data);
     setFilteredData(data.slice(startIndex, endIndex));
-  }, [data]);
+  }, []);
 
   if (filteredData?.length || 0 > 0)
     return (
