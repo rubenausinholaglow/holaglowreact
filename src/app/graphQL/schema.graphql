@@ -1,0 +1,11 @@
+type Product {
+  id: ID!
+  title: String!
+  description: String!
+  price: Float!
+  isPack: Boolean!
+}
+
+type Query {
+  products(name: String): [Product!]!
+}
