@@ -9,7 +9,7 @@ export default function Page() {
     GetData();
 
     async function GetData() {
-      const client = createApolloClient('');
+      const client = createApolloClient('https://localhost:7096/');
       const { data } = await client.query({
         query: gql`
           query {
