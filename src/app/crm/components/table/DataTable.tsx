@@ -76,71 +76,31 @@ const DataTable: React.FC<DataTableProps> = ({
 
   if (filteredData?.length || 0 > 0)
     return (
-      <div>
-        <div className="h-full w-full">
-          <div className="gap-4 mt-4 ml-2 w-full">
-            <div className="flex gap-4 mt-4 ml-2 w-full justify-between">
-              <div className="flex items-center">
-                <select
-                  value={itemsPerPage}
-                  className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
-                >
-                  {itemsPerPageOptions.map(option => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <p className="ml-2">registros por página</p>
-              </div>
-              <div className="">
-                <input
-                  type="text"
-                  placeholder="filtro"
-                  className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
-                />
-              </div>
+      <div className="h-full w-full">
+        <div className="gap-4 mt-4 ml-2 w-full">
+          <div className="flex gap-4 mt-4 ml-2 w-full justify-between">
+            <div className="flex items-center">
+              <select
+                value={itemsPerPage}
+                className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
+              >
+                {itemsPerPageOptions.map(option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <p className="ml-2">registros por página</p>
+            </div>
+            <div className="">
+              <input
+                type="text"
+                placeholder="filtro"
+                className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
+              />
             </div>
           </div>
         </div>
-        <table className="w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {columns.map(column => (
-                <th
-                  key={column.key}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
-                >
-                  <div className="flex">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
-                    >
-                      {column.label}
-                    </Typography>
-                    {sortColumn === column.key && (
-                      <span className="ml-2">
-                        {sortOrder === 'asc' ? '↑' : '↓'}
-                      </span>
-                    )}
-                  </div>
-                </th>
-              ))}
-              <th className="p-4">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-              <td>6</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     );
   else return <>Cargando.......!</>;
