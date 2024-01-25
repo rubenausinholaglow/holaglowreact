@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Typography } from '@material-tailwind/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -25,11 +25,13 @@ const DataTable: React.FC<DataTableProps> = ({
   const [sortedData, setSortedData] = useState([...data]);
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
+  const [filteredData, setFilteredData] = useState<any[] | undefined>(
+    undefined
+  );
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentData = data.slice(startIndex, endIndex);
-  console.log(currentData);
+
   /* 
  
 
@@ -67,90 +69,95 @@ const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage(1);
   };*/
 
-  return (
-    <div>
-      <div className="h-full w-full">
-        <div className="gap-4 mt-4 ml-2 w-full">
-          <div className="flex gap-4 mt-4 ml-2 w-full justify-between">
-            <div className="flex items-center">
-              <select
-                value={itemsPerPage}
-                className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
-              >
-                {itemsPerPageOptions.map(option => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-              <p className="ml-2">registros por página</p>
-            </div>
-            <div className="">
-              <input
-                type="text"
-                placeholder="filtro"
-                className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
-              />
+  useEffect(() => {
+    setFilteredData(data.slice(startIndex, endIndex));
+  }, [data]);
+
+  if (filteredData)
+    return (
+      <div>
+        <div className="h-full w-full">
+          <div className="gap-4 mt-4 ml-2 w-full">
+            <div className="flex gap-4 mt-4 ml-2 w-full justify-between">
+              <div className="flex items-center">
+                <select
+                  value={itemsPerPage}
+                  className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
+                >
+                  {itemsPerPageOptions.map(option => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <p className="ml-2">registros por página</p>
+              </div>
+              <div className="">
+                <input
+                  type="text"
+                  placeholder="filtro"
+                  className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <table className="w-full min-w-max table-auto text-left">
-        <thead>
-          <tr>
-            {columns.map(column => (
-              <th
-                key={column.key}
-                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
-              >
-                <div className="flex">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {column.label}
-                  </Typography>
-                  {sortColumn === column.key && (
-                    <span className="ml-2">
-                      {sortOrder === 'asc' ? '↑' : '↓'}
-                    </span>
-                  )}
-                </div>
-              </th>
-            ))}
-            <th className="p-4">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentData.map((rowData, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
-            >
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
               {columns.map(column => (
-                <td key={column.key} className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {rowData[column.key]}
-                  </Typography>
-                </td>
+                <th
+                  key={column.key}
+                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
+                >
+                  <div className="flex">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {column.label}
+                    </Typography>
+                    {sortColumn === column.key && (
+                      <span className="ml-2">
+                        {sortOrder === 'asc' ? '↑' : '↓'}
+                      </span>
+                    )}
+                  </div>
+                </th>
               ))}
-
-              <td className="p-4">
-                <Link href={`${pathName}/${rowData[columns[0].key]}`}>
-                  <p className="font-medium text-blue-gray">Editar</p>
-                </Link>
-              </td>
+              <th className="p-4">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+          </thead>
+          <tbody>
+            {filteredData.map((rowData, rowIndex) => (
+              <tr
+                key={rowIndex}
+                className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
+              >
+                {columns.map(column => (
+                  <td key={column.key} className="p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {rowData[column.key]}
+                    </Typography>
+                  </td>
+                ))}
+
+                <td className="p-4">
+                  <Link href={`${pathName}/${rowData[columns[0].key]}`}>
+                    <p className="font-medium text-blue-gray">Editar</p>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
 };
 
 export default DataTable;
