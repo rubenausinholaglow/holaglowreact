@@ -1,5 +1,4 @@
 import 'app/globals.css';
-import '@fortawesome/fontawesome-free/css/all.css';
 
 import Head from 'next/head';
 
