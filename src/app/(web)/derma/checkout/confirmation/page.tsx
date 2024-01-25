@@ -1,8 +1,8 @@
 'use client';
 
 import CheckHydration from '@utils/CheckHydration';
-import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import Confirmation from 'app/(web)/checkout/confirmation/components/Confirmation';
+import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 
 export default function ConfirmationCheckout() {
   return (
