@@ -70,10 +70,11 @@ const DataTable: React.FC<DataTableProps> = ({
   };*/
 
   useEffect(() => {
+    console.log(data);
     setFilteredData(data.slice(startIndex, endIndex));
   }, [data]);
 
-  if (filteredData)
+  if (filteredData?.length || 0 > 0)
     return (
       <div>
         <div className="h-full w-full">
@@ -142,6 +143,7 @@ const DataTable: React.FC<DataTableProps> = ({
         </table>
       </div>
     );
+  else return <>Cargando.......!</>;
 };
 
 export default DataTable;
