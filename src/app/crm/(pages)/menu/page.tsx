@@ -4,8 +4,10 @@ import LoginChecker from 'app/crm/components/login/LoginChecker';
 
 export default function MenuPage() {
   return (
-    <LoginChecker>
-      <ContainerCRM>Welcome !</ContainerCRM>
-    </LoginChecker>
+    <MainLayoutCRM>
+      <LoginChecker>
+        <ContainerCRM>Welcome !</ContainerCRM>
+      </LoginChecker>
+    </MainLayoutCRM>
   );
 }
