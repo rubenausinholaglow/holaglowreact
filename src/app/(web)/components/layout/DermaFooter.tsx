@@ -73,7 +73,7 @@ export default function DermaFooter({
             <Text size="xs" className="mb-6">
               Para dudas y pedidos, escríbenos a{' '}
               <a href="mailto:hola@holaglow.com" className="text-derma-primary">
-                info@derma.com
+                derma@holaglow.com
               </a>
             </Text>
             <Text size="xs" className="leading-6 mb-10">

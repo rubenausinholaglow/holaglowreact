@@ -60,62 +60,33 @@ export default function TreatmentsDerma() {
         </TitleDerma>
       </Container>
 
-      {deviceSize.isMobile && (
-        <FullWidthCarousel
-          visibleSlides={deviceSize.isMobile ? 2.25 : 8}
-          hasControls={false}
-        >
-          {TREATMENTS.map((item: DermaTreatment) => {
+      <div className="whitespace-nowrap overflow-hidden inline-block animate-horizontalScroll">
+        <ul>
+          {repeatedTreatments.map((item: DermaTreatment) => {
             return (
-              <Flex
-                layout="col-center"
+              <li
+                className="inline-block px-6 w-36 h-36 md:w-48 md:h-48 shrink-0 bg-derma-secondary400 rounded-[50px] mr-6"
                 key={item.name}
-                className="bg-derma-secondary400 aspect-square shrink-0 rounded-[50px] mr-4 justify-center py-4 gap-4"
               >
-                <Image
-                  src={item.imgUrl}
-                  alt={item.name}
-                  height={64}
-                  width={64}
-                />
-                <Text className="text-md text-derma-primary font-semibold px-4 text-center">
-                  {item.name}
-                </Text>
-              </Flex>
+                <Flex
+                  layout="col-center"
+                  className="justify-center gap-4 h-full"
+                >
+                  <Image
+                    src={item.imgUrl}
+                    alt={item.name}
+                    height={64}
+                    width={64}
+                  />
+                  <Text className="text-md font-semibold text-derma-primary px-4 text-center">
+                    {item.name}
+                  </Text>
+                </Flex>
+              </li>
             );
           })}
-        </FullWidthCarousel>
-      )}
-
-      {!deviceSize.isMobile && (
-        <div className="whitespace-nowrap overflow-hidden inline-block animate-horizontalScroll">
-          <ul>
-            {repeatedTreatments.map((item: DermaTreatment) => {
-              return (
-                <li
-                  className="inline-block px-6 w-36 h-36 md:w-48 md:h-48 shrink-0 bg-derma-secondary400 rounded-[50px] mr-6"
-                  key={item.name}
-                >
-                  <Flex
-                    layout="col-center"
-                    className="justify-center gap-4 h-full"
-                  >
-                    <Image
-                      src={item.imgUrl}
-                      alt={item.name}
-                      height={64}
-                      width={64}
-                    />
-                    <Text className="text-md font-semibold text-derma-primary px-4 text-center">
-                      {item.name}
-                    </Text>
-                  </Flex>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
+        </ul>
+      </div>
     </div>
   );
 }
