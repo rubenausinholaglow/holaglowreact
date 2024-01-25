@@ -136,13 +136,9 @@ const DataTable: React.FC<DataTableProps> = ({
               >
                 {columns.map(column => (
                   <td key={column.key} className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
+                    <label color="blue-gray" className="font-normal">
                       {rowData[column.key]}
-                    </Typography>
+                    </label>
                   </td>
                 ))}
 
