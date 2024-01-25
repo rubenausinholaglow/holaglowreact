@@ -29,9 +29,8 @@ export default function Confirmation({
   const ROUTES = useRoutes();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { selectedClinic, setAnalyticsMetrics, setPayment } = useSessionStore(
-    state => state
-  );
+  const { selectedClinic, setAnalyticsMetrics, setPayment, appointmentUrl } =
+    useSessionStore(state => state);
 
   useEffect(() => {
     if (!isDashboard) {
@@ -132,41 +131,28 @@ export default function Confirmation({
               layout="col-left"
               className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
             >
-              <Button
-                size="xl"
-                type="tertiary"
-                className="w-full"
-                customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
-              >
-                <Flex
-                  layout="row-center"
-                  className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
+              <a href={appointmentUrl}>
+                <Button
+                  size="xl"
+                  type="tertiary"
+                  className="w-full"
+                  customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
                 >
-                  <SvgVideo />
-                </Flex>
-                Acceso a consulta oline
-              </Button>
+                  <Flex
+                    layout="row-center"
+                    className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
+                  >
+                    <SvgVideo />
+                  </Flex>
+                  Acceso a consulta online
+                </Button>
+              </a>
 
               <Text className="text-hg-black500 text-xs mb-2">
                 Te acabamos de enviar este enlace de acceso a la cita a tu
-                Whatsapp y email. Si no lo recibes en los próximos minutos,
-                puedes volver a enviarlo.
+                Whatsapp y email.
               </Text>
 
-              <Button
-                size="md"
-                type="tertiary"
-                className="w-full"
-                customStyles="border-none bg-derma-secondary100 text-derma-primary font-normal justify-start pl-2"
-              >
-                <Flex
-                  layout="row-center"
-                  className="bg-derma-primary500/20 rounded-full h-8 w-8 mr-2"
-                >
-                  <SvgSend className="h-4 w-4" />
-                </Flex>
-                Volver a enviar por correo electrónico
-              </Button>
               <Button
                 size="md"
                 type="tertiary"

@@ -27,6 +27,7 @@ export default function WaitComponent() {
     selectedPacksTreatments,
     analyticsMetrics,
     payment,
+    setAppointmentUrl,
   } = useSessionStore(state => state);
 
   const router = useRouter();
@@ -50,6 +51,9 @@ export default function WaitComponent() {
             analyticsMetrics,
             id
           ).then(x => {
+            if (x && isDerma && x.length > 0) {
+              setAppointmentUrl(x[0].url);
+            }
             router.push('/checkout/confirmation');
           });
         } else if (tries < 3) {

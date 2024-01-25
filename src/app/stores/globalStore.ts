@@ -37,6 +37,7 @@ interface SessionStore {
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
   typeOfPayment: TypeOfPayment;
+  appointmentUrl: string;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -50,6 +51,7 @@ interface SessionActions {
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
+  setAppointmentUrl: (url: string) => void;
 }
 
 interface GlobalPersistStore {
@@ -124,6 +126,10 @@ export const useSessionStore = create(
       isMobile: true,
       payment: undefined,
       typeOfPayment: TypeOfPayment.Free,
+      appointmentUrl: '',
+      setAppointmentUrl: value => {
+        set({ appointmentUrl: value });
+      },
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
