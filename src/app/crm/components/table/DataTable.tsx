@@ -130,30 +130,14 @@ const DataTable: React.FC<DataTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((rowData, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
-              >
-                {columns.map(column => (
-                  <td key={column.key} className="p-4">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {rowData[column.key]}
-                    </Typography>
-                  </td>
-                ))}
-
-                <td className="p-4">
-                  <Link href={`${pathName}/${rowData[columns[0].key]}`}>
-                    <p className="font-medium text-blue-gray">Editar</p>
-                  </Link>
-                </td>
-              </tr>
-            ))}
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td>6</td>
+            </tr>
           </tbody>
         </table>
       </div>
