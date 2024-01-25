@@ -100,12 +100,13 @@ const DataTable: React.FC<DataTableProps> = ({
                 className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
               >
                 <div className="flex">
-                  <label
+                  <Typography
+                    variant="small"
                     color="blue-gray"
                     className="font-normal leading-none opacity-70"
                   >
                     {column.label}
-                  </label>
+                  </Typography>
                   {sortColumn === column.key && (
                     <span className="ml-2">
                       {sortOrder === 'asc' ? '↑' : '↓'}
