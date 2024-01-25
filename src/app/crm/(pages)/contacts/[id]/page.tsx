@@ -24,8 +24,6 @@ export default function ContactDetailPage({ params }: ContactDetailProps) {
     error,
   } = useAsync<any>(ContactService.ContactDetail(params.id));
 
-  console.log(contactDetail);
-
   const data = [
     {
       label: 'Tareas',
