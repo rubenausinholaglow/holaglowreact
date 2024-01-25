@@ -44,15 +44,13 @@ const DataTable: React.FC<DataTableProps> = ({
     setSortOrder(order);
 
     const sortedData = [...data].sort((a, b) => {
-      const valueA = a[columnKey];
-      const valueB = b[columnKey];
-
-      if (order === 'asc') {
-        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
-      } else {
-        return valueB > valueA ? 1 : valueB < valueA ? -1 : 0;
-      }
+      const valueA = a[sortColumn];
+      const valueB = b[sortColumn];
+      return sortOrder === 'asc'
+        ? valueA.localeCompare(valueB)
+        : valueB.localeCompare(valueA);
     });
+
     setSortColumn(columnKey);
     setSortedData(sortedData);
     setCurrentPage(1);
@@ -119,32 +117,7 @@ const DataTable: React.FC<DataTableProps> = ({
             <th className="p-4">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          {currentData.map((rowData, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
-            >
-              {columns.map(column => (
-                <td key={column.key} className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {rowData[column.key]}
-                  </Typography>
-                </td>
-              ))}
-
-              <td className="p-4">
-                <Link href={`${pathName}/${rowData[columns[0].key]}`}>
-                  <p className="font-medium text-blue-gray">Editar</p>
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody></tbody>
       </table>
 
       <Pagination
