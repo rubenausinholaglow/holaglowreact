@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useAsync = <T>(apiCall: () => Promise<T>) => {
+const useAsync = <T>(apiCall: Promise<T>) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -12,7 +12,7 @@ const useAsync = <T>(apiCall: () => Promise<T>) => {
 
   const fetchData = async () => {
     try {
-      const result = await apiCall();
+      const result = await apiCall;
       setData(result);
     } catch (error) {
       setError(getErrorMessage(error));

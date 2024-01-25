@@ -7,54 +7,61 @@ import {
   TabsBody,
   TabsHeader,
 } from '@material-tailwind/react';
+import ContactService from '@services/ContactService';
+import useAsync from '@utils/useAsync';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
 import { SvgCalendar, SvgMedicine, SvgPhone } from 'app/icons/Icons';
-import { useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
 interface ContactDetailProps {
-  params: any;
+  params: { id: string };
 }
 
 export default function ContactDetailPage({ params }: ContactDetailProps) {
-  const { userLoginResponse } = useSessionStore(state => state);
+  const {
+    data: contactDetail,
+    isLoading,
+    error,
+  } = useAsync<any>(ContactService.ContactDetail(params.id));
+
+  console.log(contactDetail);
 
   const data = [
     {
       label: 'Tareas',
       value: 'Tareas',
       icon: <SvgPhone />,
-      desc: 'Hola',
+      desc: 'Test',
     },
     {
       label: 'Datos personales',
       value: 'Datos personales',
       icon: <SvgMedicine />,
-      desc: 'Hola1',
+      desc: 'Test1',
     },
     {
       label: 'Comentarios',
       value: 'Comentarios',
       icon: <SvgPhone />,
-      desc: 'Hola2',
+      desc: 'Test2',
     },
     {
       label: 'Llamadas',
       value: 'Llamadas',
       icon: <SvgPhone />,
-      desc: 'Hola3',
+      desc: 'Test3',
     },
     {
       label: 'Citas',
       value: 'Citas',
       icon: <SvgCalendar />,
-      desc: 'Hola4',
+      desc: 'Test4',
     },
     {
       label: 'Presupuestos',
       value: 'Presupuestos',
       icon: <SvgPhone />,
-      desc: 'Hola5',
+      desc: 'Test5',
     },
   ];
 
