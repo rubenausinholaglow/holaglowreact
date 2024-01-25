@@ -8,6 +8,6 @@ export const metadata: Metadata = {
     'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
 };
 
-export default function Home() {
+export default function DerHome() {
   return <DermaHome />;
 }

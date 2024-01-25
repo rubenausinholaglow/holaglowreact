@@ -37,7 +37,12 @@ export default class ScheduleService {
 
   static getScheduleUrl(): string {
     let url = process.env.NEXT_PUBLIC_SCHEDULE_API;
-    if (window.location.href.includes('derma'))
+    if (
+      window &&
+      window.location &&
+      window.location.href &&
+      window.location.href.includes('derma')
+    )
       url = process.env.NEXT_PUBLIC_DERMASCHEDULE_API;
     return url!;
   }
