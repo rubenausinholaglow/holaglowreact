@@ -127,8 +127,8 @@ export const useSessionStore = create(
       previousAppointment: undefined,
       isMobile: true,
       payment: undefined,
-	  userLoginResponse : undefined,
-	  typeOfPayment: TypeOfPayment.Free,
+	    userLoginResponse : undefined,
+	    typeOfPayment: TypeOfPayment.Free,
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -158,7 +158,7 @@ export const useSessionStore = create(
       },
       setPayment: value => {
         set({ payment: value });
-   },
+      },
       setUserLoginResponse: value => {
         set({ userLoginResponse: value });
       },
