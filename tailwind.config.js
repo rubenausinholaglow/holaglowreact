@@ -1,6 +1,8 @@
 import tailwindcssRadix from 'tailwindcss-radix';
 
-module.exports = {
+const withMT = require('@material-tailwind/react/utils/withMT');
+
+module.exports = withMT({
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{js,jsx,ts,tsx,mdx}',
@@ -192,4 +194,4 @@ module.exports = {
     },
   },
   plugins: [tailwindcssRadix],
-};
+});

@@ -15,7 +15,6 @@
     "@bugsnag/plugin-react": "^7.19.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@fortawesome/fontawesome-free": "^6.5.1",
     "@heroicons/react": "^2.1.1",
     "@img-comparison-slider/react": "^8.0.0",
     "@material-tailwind/react": "^2.1.8",
