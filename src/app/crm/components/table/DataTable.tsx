@@ -101,6 +101,45 @@ const DataTable: React.FC<DataTableProps> = ({
             </div>
           </div>
         </div>
+
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {columns.map(column => (
+                <th
+                  key={column.key}
+                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
+                >
+                  <div className="flex">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {column.label}
+                    </Typography>
+                    {sortColumn === column.key && (
+                      <span className="ml-2">
+                        {sortOrder === 'asc' ? '↑' : '↓'}
+                      </span>
+                    )}
+                  </div>
+                </th>
+              ))}
+              <th className="p-4">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td>6</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   else return <>Cargando.......!</>;
