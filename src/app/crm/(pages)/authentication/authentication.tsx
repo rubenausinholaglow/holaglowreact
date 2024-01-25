@@ -54,7 +54,7 @@ const AuthenticationComponent: React.FC<AuthenticationProps> = ({
           value={password}
           onChange={handleChangePassword}
           hasNoValidation
-          setBackgroundIcon={false}
+          disableBgIcons={false}
         />
       </div>
       <Button onClick={handleLogin}>

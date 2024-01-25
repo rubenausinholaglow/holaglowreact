@@ -14,8 +14,7 @@ export interface TextInputFieldProps {
   onClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   hasNoValidation?: boolean;
-  type? : string
-    disableBgIcons?: boolean;
+  disableBgIcons?: boolean;
 }
 
 export interface SearchBarProps {
