@@ -18,7 +18,7 @@ export default function Page({
     }
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
-    var id = params.get('id');
+    const id = params.get('id');
     if (id) getAppointment(id);
   }, []);
   if (!appointment) return <></>;
