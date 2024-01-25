@@ -92,6 +92,12 @@ const DataTable: React.FC<DataTableProps> = ({
           </div>
         </div>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
