@@ -31,17 +31,14 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-
-  /* 
- 
-
-  const currentData = sortedData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page < 1) return;
     setCurrentPage(page);
   };
+
+  /* 
 
   const handleSort = (columnKey: string) => {
     const order =
@@ -70,7 +67,6 @@ const DataTable: React.FC<DataTableProps> = ({
   };*/
 
   useEffect(() => {
-    console.log(data);
     setFilteredData(data.slice(startIndex, endIndex));
   }, []);
 
@@ -142,11 +138,20 @@ const DataTable: React.FC<DataTableProps> = ({
                   </td>
                 ))}
 
-                <td className="p-4">Editar</td>
+                <td className="p-4">
+                  <Link href={`${pathName}/${rowData[columns[0].key]}`}>
+                    <p className="font-medium text-blue-gray">Editar</p>
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     );
   else return <>Cargando.......!</>;
