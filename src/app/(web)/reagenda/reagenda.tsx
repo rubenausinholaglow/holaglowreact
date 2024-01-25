@@ -21,7 +21,7 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { useRouter } from 'next/navigation';
 
-export default function Page({
+export default function Reagenda({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
