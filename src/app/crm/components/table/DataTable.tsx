@@ -26,8 +26,12 @@ const DataTable: React.FC<DataTableProps> = ({
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
 
-  /* const startIndex = (currentPage - 1) * itemsPerPage;
+  const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+  const currentData = data.slice(startIndex, endIndex);
+  console.log(currentData);
+  /* 
+ 
 
   const currentData = sortedData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
@@ -119,7 +123,7 @@ const DataTable: React.FC<DataTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {data.map((rowData, rowIndex) => (
+          {currentData.map((rowData, rowIndex) => (
             <tr
               key={rowIndex}
               className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
