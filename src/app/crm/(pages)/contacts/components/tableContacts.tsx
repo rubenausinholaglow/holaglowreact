@@ -50,5 +50,5 @@ export default function TableContacts() {
         )}
       </>
     );
-  else return <>Cargados!</>;
+  else return <DataTable data={users} columns={columns} />;
 }

@@ -91,60 +91,6 @@ const DataTable: React.FC<DataTableProps> = ({
         </div>
       </div>
 
-      <table className="w-full min-w-max table-auto text-left">
-        <thead>
-          <tr>
-            {columns.map(column => (
-              <th
-                key={column.key}
-                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
-              >
-                <div className="flex" onClick={() => handleSort(column.key)}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {column.label}
-                  </Typography>
-                  {sortColumn === column.key && (
-                    <span className="ml-2">
-                      {sortOrder === 'asc' ? '↑' : '↓'}
-                    </span>
-                  )}
-                </div>
-              </th>
-            ))}
-            <th className="p-4">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentData.map((rowData, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
-            >
-              {columns.map(column => (
-                <td key={column.key} className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {rowData[column.key]}
-                  </Typography>
-                </td>
-              ))}
-
-              <td className="p-4">
-                <Link href={`${pathName}/${rowData[columns[0].key]}`}>
-                  <p className="font-medium text-blue-gray">Editar</p>
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
