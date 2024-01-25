@@ -16,7 +16,10 @@ export default function Page({
 
       setAppointment(res);
     }
-    getAppointment(searchParams.id as string);
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    var id = params.get('id');
+    if (id) getAppointment(id);
   }, []);
   if (!appointment) return <></>;
   return (
