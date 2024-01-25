@@ -1,8 +1,8 @@
 'use client';
+import { useEffect, useState } from 'react';
 import ScheduleService from '@services/ScheduleService';
 import Confirmation from 'app/(web)/checkout/confirmation/components/Confirmation';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { useEffect, useState } from 'react';
 
 export default function Page({
   searchParams,
