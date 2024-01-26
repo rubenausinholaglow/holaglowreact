@@ -1,5 +1,6 @@
 import React from 'react';
 import useAsyncServer from '@utils/useAsyncServer';
+import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
 import ContactService from 'app/crm/services/ContactService';
 
 import ContactDetailPageBase from './ContactDetailPageBase';
@@ -13,7 +14,9 @@ export default function ContactDetailPage({ params }: ContactDetailProps) {
 
   return (
     <>
-      <ContactDetailPageBase contactDetail={contactDetail} />
+      <MainLayoutCRM>
+        <ContactDetailPageBase contactDetail={contactDetail} />
+      </MainLayoutCRM>
     </>
   );
 }
