@@ -102,6 +102,7 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
                   </Flex>
 
                   <Button
+                    id={isDerma ? 'tmevent_derma_step6' : ''}
                     className="self-end"
                     type="tertiary"
                     customStyles={`gap-2 ${

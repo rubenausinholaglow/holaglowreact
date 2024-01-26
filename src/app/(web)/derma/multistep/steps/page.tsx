@@ -262,6 +262,7 @@ export default function Form() {
                     onClick={() => {
                       if (!continueDisabled) goNext(activeSlideIndex);
                     }}
+                    id={`tmevent_dermaStep_${activeSlideIndex}`}
                   >
                     <Flex layout="row-right">Siguiente</Flex>
                   </Button>

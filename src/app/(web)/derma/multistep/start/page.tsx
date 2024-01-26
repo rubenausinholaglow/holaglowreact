@@ -46,7 +46,7 @@ export default function StartMultistep() {
                   size="xl"
                   className="mx-auto md:mx-0 mb-10"
                   href="/derma/multistep/steps"
-                  id={'tmevent_multistep_module'}
+                  id={'tmevent_derma_start'}
                   customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent"
                 >
                   Empezar
