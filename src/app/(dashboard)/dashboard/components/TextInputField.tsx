@@ -42,7 +42,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
             value.length > 0 ? 'border-hg-black' : ''
           }`
         )}
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
