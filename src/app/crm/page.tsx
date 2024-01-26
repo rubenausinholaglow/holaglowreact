@@ -1,3 +1,5 @@
+'use client';
+
 import { ThemeProvider } from '@material-tailwind/react';
 
 import AuthenticationPage from './(pages)/authentication/page';
