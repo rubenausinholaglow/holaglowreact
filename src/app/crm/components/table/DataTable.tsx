@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, Typography } from '@material-tailwind/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -64,7 +63,7 @@ const DataTable: React.FC<DataTableProps> = ({
   };
 
   return (
-    <Card className="h-full w-full">
+    <>
       <div className="gap-4 mt-4 ml-2 w-full">
         <div className="flex gap-4 mt-4 ml-2 w-full justify-between">
           <div className="flex items-center">
@@ -100,13 +99,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
               >
                 <div className="flex" onClick={() => handleSort(column.key)}>
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {column.label}
-                  </Typography>
+                  {column.label}
                   {sortColumn === column.key && (
                     <span className="ml-2">
                       {sortOrder === 'asc' ? '↑' : '↓'}
@@ -126,13 +119,7 @@ const DataTable: React.FC<DataTableProps> = ({
             >
               {columns.map(column => (
                 <td key={column.key} className="p-4">
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal"
-                  >
-                    {rowData[column.key]}
-                  </Typography>
+                  {rowData[column.key]}
                 </td>
               ))}
 
@@ -150,7 +137,7 @@ const DataTable: React.FC<DataTableProps> = ({
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
-    </Card>
+    </>
   );
 };
 
