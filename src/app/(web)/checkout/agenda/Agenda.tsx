@@ -27,9 +27,11 @@ import { useRouter } from 'next/navigation';
 export default function Agenda({
   isDashboard = false,
   isCheckin = false,
+  isDerma = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
+  isDerma?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -125,8 +127,14 @@ export default function Agenda({
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
       if (
-        (minutes == '00' || minutes == '30') &&
-        !(hour == '10' && minutes == '00')
+        ((minutes == '00' || minutes == '30') &&
+          !(hour == '10' && minutes == '00')) ||
+        (selectedTreatmentsIds != '902' &&
+          (minutes == '00' ||
+            minutes == '12' ||
+            minutes == '24' ||
+            minutes == '36' ||
+            minutes == '48'))
       ) {
         if (x.box != '7' || (x.box == '7' && (!isDashboard || !user))) {
           hours.push(x);
@@ -167,12 +175,19 @@ export default function Agenda({
     setLoadingMonth(false);
   }
 
-  useEffect(() => {
+  function initialize() {
     setLoadingMonth(true);
     setSelectedDay(dayjs());
     setSelectedSlot(undefined);
     setEnableScheduler(true);
+  }
+  useEffect(() => {
+    initialize();
   }, []);
+
+  useEffect(() => {
+    initialize();
+  }, [selectedTreatments]);
 
   useEffect(() => {
     async function schedule() {
@@ -217,11 +232,11 @@ export default function Agenda({
             },
             previous: previousAppointment,
           }).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
@@ -240,15 +255,15 @@ export default function Agenda({
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else {
+        } else if (!isDerma) {
           router.push('/checkout/contactform');
         }
       } catch {
@@ -274,7 +289,7 @@ export default function Agenda({
         selectedTreatments!.map(x => x.flowwwId).join(',')
       );
     } else setSelectedTreatmentsIds('674');
-  }, [dateToCheck]);
+  }, [dateToCheck, selectedTreatments]);
 
   useEffect(() => {
     selectDate(dayjs(selectedDay).toDate());
@@ -296,7 +311,7 @@ export default function Agenda({
   };
 
   const selectDate = (x: Date) => {
-    if (!selectedTreatmentsIds) return;
+    if (!selectedTreatmentsIds || !selectedClinic) return;
     setSelectedDay(dayjs(x));
     setLocalDateSelected(x);
     setLoadingDays(true);
@@ -360,11 +375,13 @@ export default function Agenda({
         </>
       ) : (
         <>
-          <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
-            <Title size="xl" className="font-semibold">
-              Selecciona día y hora
-            </Title>
-          </Container>
+          {!isDerma && (
+            <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
+              <Title size="xl" className="font-semibold">
+                Selecciona día y hora
+              </Title>
+            </Container>
+          )}
           <Container className="px-0">
             <Flex
               layout="col-left"
@@ -378,6 +395,7 @@ export default function Agenda({
                   >
                     <div className="w-full">
                       {selectedTreatments &&
+                        !isDerma &&
                         Array.isArray(selectedTreatments) &&
                         selectedTreatments.map(product => (
                           <div key={product.id}>
@@ -394,7 +412,7 @@ export default function Agenda({
                           </div>
                         ))}
 
-                      {selectedClinic && (
+                      {selectedClinic && !isDerma && (
                         <Flex className="mb-4">
                           <SvgLocation
                             height={16}
@@ -416,25 +434,31 @@ export default function Agenda({
                           </Link>
                         </Flex>
                       )}
-                      <Flex>
-                        <SvgHour height={16} width={16} className="mr-2" />
-                        {selectedTreatments &&
-                          Array.isArray(selectedTreatments) &&
-                          selectedTreatments.map(product => (
-                            <Flex key={product.id}>
-                              <Flex
-                                layout="row-between"
-                                className="items-start w-full"
-                              >
-                                <div>
-                                  <Text size="xs" className="w-full text-left">
-                                    {product.applicationTimeMinutes} minutos
-                                  </Text>
-                                </div>
+
+                      {!isDerma && (
+                        <Flex>
+                          <SvgHour height={16} width={16} className="mr-2" />
+                          {selectedTreatments &&
+                            Array.isArray(selectedTreatments) &&
+                            selectedTreatments.map(product => (
+                              <Flex key={product.id}>
+                                <Flex
+                                  layout="row-between"
+                                  className="items-start w-full"
+                                >
+                                  <div>
+                                    <Text
+                                      size="xs"
+                                      className="w-full text-left"
+                                    >
+                                      {product.applicationTimeMinutes} minutos
+                                    </Text>
+                                  </div>
+                                </Flex>
                               </Flex>
-                            </Flex>
-                          ))}
-                      </Flex>
+                            ))}
+                        </Flex>
+                      )}
                     </div>
                   </Flex>
                 </Container>
@@ -443,13 +467,16 @@ export default function Agenda({
                     <SvgSpinner
                       height={48}
                       width={48}
-                      className="absolute text-hg-secondary left-1/2 top-1/2 -ml-6 -mt-6"
+                      className={`absolute ${
+                        isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                      } left-1/2 top-1/2 -ml-6 -mt-6`}
                     />
                   )}
                   <Flex
                     className={`transition-opacity w-full mb-6 md:mb-0 ${
                       loadingDays ? 'opacity-25' : 'opacity-100'
-                    }`}
+                    }
+                    ${isDerma ? 'datepickerDerma' : ''}`}
                     id="datepickerWrapper"
                   >
                     <DatePicker
@@ -503,10 +530,18 @@ export default function Agenda({
                                 <Flex
                                   key={x.startTime}
                                   layout="row-between"
-                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                    isDerma
+                                      ? 'border-none bg-derma-secondary400'
+                                      : 'border border-hg-black bg-white'
+                                  } ${
                                     clickedHour === x.startTime
-                                      ? 'bg-hg-secondary text-white'
-                                      : 'bg-white'
+                                      ? `${
+                                          isDerma
+                                            ? 'bg-derma-primary'
+                                            : 'bg-hg-secondary'
+                                        } text-white`
+                                      : ''
                                   }`}
                                 >
                                   <div
@@ -540,10 +575,18 @@ export default function Agenda({
                                 <Flex
                                   key={x.startTime}
                                   layout="row-between"
-                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                                    isDerma
+                                      ? 'border-none bg-derma-secondary400'
+                                      : 'border border-hg-black bg-white'
+                                  } ${
                                     clickedHour === x.startTime
-                                      ? 'bg-hg-secondary text-white'
-                                      : 'bg-white'
+                                      ? `${
+                                          isDerma
+                                            ? 'bg-derma-primary'
+                                            : 'bg-hg-secondary'
+                                        } text-white`
+                                      : ''
                                   }`}
                                 >
                                   <div
@@ -556,7 +599,7 @@ export default function Agenda({
                                     }}
                                   >
                                     {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-hg-primary mr-1" />
+                                      <SvgCheck className="text-white mr-1" />
                                     )}
                                     {x.startTime}
                                   </div>
@@ -576,7 +619,11 @@ export default function Agenda({
                     !loadingMonth &&
                     !loadingDays && (
                       <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
-                        <SvgSadIcon className="mb-5 text-hg-secondary" />
+                        <SvgSadIcon
+                          className={`mb-5 ${
+                            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                          }`}
+                        />
                         <Title size="xl" className="font-semibold">
                           ¡Lo sentimos!
                         </Title>

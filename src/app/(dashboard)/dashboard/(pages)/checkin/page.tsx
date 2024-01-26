@@ -174,7 +174,6 @@ function FormSection({
               placeholder="Correo Electrónico"
               value={formData.email}
               onChange={e => handleInputChange('email', e.target.value)}
-              hasNoValidation
             />
             {errors.email && (
               <span style={{ color: 'red' }}>{errors.email}</span>
@@ -184,7 +183,6 @@ function FormSection({
               placeholder="Teléfono"
               value={formData.phone}
               onChange={e => handleInputChange('phone', e.target.value)}
-              hasNoValidation
             />
             {errors.phone && (
               <span style={{ color: 'red' }}>{errors.phone}</span>
