@@ -9,8 +9,11 @@ export default function Issues() {
         <p className="w-1/2 text-md text-center mb-8">
           Si tienes molestias excesivas, presentas una inflamación que va en
           aumento después del tercer día o te aparece fiebre,
-          <span className="font-semibold">visita holaglow.com/urgencias</span> y
-          te atenderemos lo antes posible.
+          <span className="font-semibold">
+            {' '}
+            visita holaglow.com/urgencias
+          </span>{' '}
+          y te atenderemos lo antes posible.
         </p>
         <div className="flex">
           <div className="flex items-center">
