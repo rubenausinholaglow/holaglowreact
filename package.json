@@ -18,7 +18,6 @@
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@heroicons/react": "^2.1.1",
     "@img-comparison-slider/react": "^8.0.0",
-    "@material-tailwind/react": "^2.1.8",
     "@microsoft/signalr": "^7.0.9",
     "@radix-ui/react-accordion": "^1.1.2",
     "@types/react": "18.2.8",
