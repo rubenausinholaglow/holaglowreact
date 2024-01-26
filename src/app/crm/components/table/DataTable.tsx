@@ -63,7 +63,6 @@ const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage(1);
   };
   useEffect(() => {
-    console.log(filters);
     if (filters.search || 0 > 0) {
       const filtered = data.filter(item =>
         Object.values(item).some(
