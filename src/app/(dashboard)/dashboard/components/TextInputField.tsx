@@ -18,6 +18,9 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   disableBgIcons = false,
 }) => {
   function getBackgroundIcon() {
+    if (disableBgIcons) {
+      return '';
+    }
     if (!isEmpty(error)) {
       return 'url("/images/forms/error.svg") #ffffff no-repeat center right 12px';
     }
@@ -27,7 +30,6 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
 
     return '';
   }
-
   return (
     <div className="flex flex-col relative">
       {label && (
