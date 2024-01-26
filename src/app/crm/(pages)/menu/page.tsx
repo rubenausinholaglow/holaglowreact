@@ -7,7 +7,7 @@ export default function MenuPage() {
     <MainLayoutCRM>
       <LoginChecker>
         <Flex className="items-center justify-center flex-col p-4 ">
-          <div className="mb-4">Menú CRM</div>
+          <div className="mb-4">Menú a CRM</div>
         </Flex>
       </LoginChecker>
     </MainLayoutCRM>
