@@ -47,7 +47,7 @@ export default function StartMultistep() {
                   className="mx-auto md:mx-0 mb-10"
                   href="/derma/multistep/steps"
                   id={'tmevent_multistep_module'}
-                  customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary"
+                  customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent"
                 >
                   Empezar
                   <SvgArrow className="ml-4" height={24} width={24} />

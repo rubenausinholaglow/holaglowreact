@@ -253,10 +253,10 @@ export default function Form() {
                     size="lg"
                     className="ml-auto"
                     type="tertiary"
-                    customStyles={`bg-derma-secondary300 border-derma-primary text-derma-primary hover:text-derma-primary500 ${
+                    customStyles={`bg-derma-secondary300 border-derma-primary text-derma-primary ${
                       continueDisabled
                         ? ''
-                        : 'hover:border-derma-primary500 hover:bg-transparent'
+                        : 'hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent'
                     }`}
                     disabled={continueDisabled}
                     onClick={() => {

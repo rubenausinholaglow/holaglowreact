@@ -106,8 +106,8 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
                     type="tertiary"
                     customStyles={`gap-2 ${
                       isDerma
-                        ? 'bg-derma-primary border-none text-derma-primary300'
-                        : 'bg-hg-primary '
+                        ? 'bg-derma-primary border-none text-white'
+                        : 'bg-hg-primary'
                     }`}
                     onClick={() => {
                       setIsLoadingButton(true);
