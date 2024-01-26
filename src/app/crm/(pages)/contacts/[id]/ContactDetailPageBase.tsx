@@ -6,7 +6,7 @@ import Tabs from '../components/tabs';
 export default function ContactDetailPageBase({ contactDetail }: any) {
   const tabs = [
     {
-      label: 'Tareas',
+      label: 'Tareas', 
     },
     {
       label: 'Datos personales',
