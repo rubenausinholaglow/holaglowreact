@@ -8,7 +8,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="transition-all h-screen overflow-hidden flex flex-col w-full bg-gradient-15deg from-hg-primary300 to-hg-secondary500">
+    <main className="transition-all h-screen overflow-hidden flex-col w-full bg-gradient-15deg from-hg-primary300 to-hg-secondary500">
       {children}
     </main>
   );
