@@ -6,7 +6,7 @@ export default function MenuPage() {
     <MainLayoutCRM>
       <LoginChecker>
         <div className="rounded-xl bg-white ml-72 mt-24 mr-4 h-screen">
-          test menu
+          test a menu
         </div>
       </LoginChecker>
     </MainLayoutCRM>
