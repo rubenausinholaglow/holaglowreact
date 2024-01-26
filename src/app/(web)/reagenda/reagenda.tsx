@@ -23,8 +23,10 @@ import { useRouter } from 'next/navigation';
 
 export default function Reagenda({
   searchParams,
+  isDerma,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
+  isDerma: boolean;
 }) {
   dayjs.locale(es);
 
@@ -61,7 +63,12 @@ export default function Reagenda({
 
     const getAppointments = async () => {
       if (token) {
-        const res = await ScheduleService.next(token);
+        let res = await ScheduleService.next(token);
+        if (isDerma) {
+          res = res.filter(x => {
+            dayjs(x?.startTime) > dayjs().add(3, 'day');
+          });
+        }
         setAppointments(res);
         setLoading(false);
         setIsHydrated(true);
