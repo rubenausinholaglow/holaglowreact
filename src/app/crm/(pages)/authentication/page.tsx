@@ -31,7 +31,7 @@ export default function AuthenticationPage() {
   const handleLogin = async () => {
     setIsLoading(true);
     if (!userDataIsCorrect()) {
-      handleErrorMessage('Datos Incorrectos');
+      handleErrorMessage('Datos  Incorrectos');
       return;
     }
 
