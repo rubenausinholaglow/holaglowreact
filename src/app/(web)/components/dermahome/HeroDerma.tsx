@@ -79,7 +79,7 @@ export default function HeroDerma() {
                       size="xl"
                       className="lg:mb-12"
                       customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
-                      href="/multistep/start"
+                      href="/derma/multistep/start"
                       id={'tmevent_multistep_module'}
                     >
                       Pide tu cita online

@@ -162,7 +162,10 @@ export default function Form() {
       setContinueDisabled(continueDisabled);
       dermaQuestions.id = x!.toString();
       setDermaQuestions(dermaQuestions);
-      window.scrollTo(0, 0);
+
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 500);
     });
   };
 
@@ -250,7 +253,11 @@ export default function Form() {
                     size="lg"
                     className="ml-auto"
                     type="tertiary"
-                    customStyles="bg-derma-secondary300 border-derma-primary text-derma-primary hover:text-derma-primary500 hover:border-derma-primary500 hover:bg-transparent"
+                    customStyles={`bg-derma-secondary300 border-derma-primary text-derma-primary hover:text-derma-primary500 ${
+                      continueDisabled
+                        ? ''
+                        : 'hover:border-derma-primary500 hover:bg-transparent'
+                    }`}
                     disabled={continueDisabled}
                     onClick={() => {
                       if (!continueDisabled) goNext(activeSlideIndex);

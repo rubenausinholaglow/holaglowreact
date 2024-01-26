@@ -66,7 +66,7 @@ export default function DermaBottomBar({
         <Button
           size="xl"
           type="tertiary"
-          href="/multistep/start"
+          href="/derma/multistep/start"
           className="mr-4 pointer-events-auto w-full"
           customStyles="px-2 bg-derma-primary border-none text-white hover:bg-derma-primary500 hover:text-derma-primary"
           id={'tmevent_click_floating_button'}

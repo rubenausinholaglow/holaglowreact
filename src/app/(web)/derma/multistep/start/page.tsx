@@ -29,7 +29,7 @@ export default function StartMultistep() {
                   alt="Holaglow"
                   width={816}
                   height={1014}
-                  className="w-2/3 md:w-full shrink-0"
+                  className="w-2/3 md:w-auto md:max-h-[500px] shrink-0 md:ml-auto"
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
@@ -45,7 +45,7 @@ export default function StartMultistep() {
                   type="tertiary"
                   size="xl"
                   className="mx-auto md:mx-0 mb-10"
-                  href="/multistep/steps"
+                  href="/derma/multistep/steps"
                   id={'tmevent_multistep_module'}
                   customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary"
                 >

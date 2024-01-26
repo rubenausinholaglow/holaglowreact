@@ -95,6 +95,10 @@ export default function SecondStep({
     if (value) setContinueDisabled(false);
   };
 
+  useEffect(() => {
+    setContinueDisabled([0, 1].includes(question));
+  }, [question]);
+
   return (
     <>
       <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
