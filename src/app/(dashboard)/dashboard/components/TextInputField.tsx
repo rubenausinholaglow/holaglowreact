@@ -18,6 +18,9 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   disableBgIcons = false,
 }) => {
   function getBackgroundIcon() {
+    if (disableBgIcons) {
+      return '';
+    }
     if (!isEmpty(error)) {
       return 'url("/images/forms/error.svg") #ffffff no-repeat center right 12px';
     }
@@ -42,7 +45,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
             value.length > 0 ? 'border-hg-black' : ''
           }`
         )}
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
