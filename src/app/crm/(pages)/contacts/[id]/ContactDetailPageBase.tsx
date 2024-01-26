@@ -1,5 +1,7 @@
 'use client';
 import React from 'react';
+import { SvgCalendar, SvgMedicine, SvgPhone } from 'app/icons/Icons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 
 import Tabs from '../components/tabs';
 

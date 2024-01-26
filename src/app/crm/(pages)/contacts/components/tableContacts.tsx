@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { User } from '@interface/appointment';
-import UserService from '@services/UserService';
 import DataTable from 'app/crm/components/table/DataTable';
+import ContactService from 'app/crm/services/ContactService';
 import { useSessionStore } from 'app/stores/globalStore';
 
 export default function TableContacts() {
@@ -22,26 +22,24 @@ export default function TableContacts() {
     { label: 'Email', key: 'email' },
   ];
 
-  useEffect(() => {
-    const fetchContacts = async () => {
-      await UserService.getAllUsers(userLoginResponse!.token).then(
-        usersResponse => {
-          if (usersResponse) {
-            setUsers(usersResponse);
-          } else {
-            setErrorMessage(
-              'Error cargando usuarios - Contacte con el administrador'
-            );
-            Bugsnag.notify('Error getting users CRM');
-          }
+  const fetchContacts = async () => {
+    await ContactService.ContactsAll(userLoginResponse?.token ?? '').then(
+      usersResponse => {
+        if (usersResponse) {
+          setUsers(usersResponse);
+        } else {
+          setErrorMessage(
+            'Error cargando usuarios - Contacte con el administrador'
+          );
+          Bugsnag.notify('Error getting users CRM');
         }
-      );
-    };
-    if (!users) {
-      fetchContacts();
-    }
-  }, []);
+      }
+    );
+  };
 
+  useEffect(() => {
+    fetchContacts();
+  }, []);
   if (!users)
     return (
       <>

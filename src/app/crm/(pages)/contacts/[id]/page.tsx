@@ -1,7 +1,7 @@
 import React from 'react';
-import ContactService from '@services/ContactService';
 import useAsyncServer from '@utils/useAsyncServer';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
+import ContactService from 'app/crm/services/ContactService';
 
 import ContactDetailPageBase from './ContactDetailPageBase';
 

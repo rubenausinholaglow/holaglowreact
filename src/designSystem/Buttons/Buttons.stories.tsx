@@ -15,7 +15,7 @@ type Story = StoryObj<typeof Button>;
 
 export const ButtonDefault: Story = {
   args: {
-    style: 'primary',
+    type: 'primary',
     children: 'Button',
   },
 };
@@ -31,7 +31,7 @@ const buttonWithIconContent = () => {
 
 export const ButtonWithIcon: Story = {
   args: {
-    style: 'primary',
+    type: 'primary',
     children: buttonWithIconContent(),
   },
 };

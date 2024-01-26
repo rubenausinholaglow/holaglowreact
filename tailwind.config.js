@@ -1,5 +1,6 @@
 import tailwindcssRadix from 'tailwindcss-radix';
 
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
