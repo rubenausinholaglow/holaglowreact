@@ -5,5 +5,5 @@ export default function Page({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  return <Reagenda searchParams={searchParams}></Reagenda>;
+  return <Reagenda searchParams={searchParams} isDerma={true}></Reagenda>;
 }
