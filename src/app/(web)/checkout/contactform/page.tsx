@@ -62,6 +62,7 @@ export default function ConctactForm() {
     },
     interestedTreatment: '',
     treatmentPrice: 0,
+    origin: '',
   });
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);

@@ -3,11 +3,18 @@ import { PaymentInitResponse } from '@interface/payment';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
+  static getFinanceUrl(): string {
+    let url = process.env.NEXT_PUBLIC_FINANCE_API;
+    if (window.location.href.includes('derma'))
+      url = process.env.NEXT_PUBLIC_DERMAFINANCE_API;
+    return url!;
+  }
+
   static async initializePayment(
     initializePayment: InitializePayment
   ): Promise<PaymentInitResponse> {
     try {
-      const url = `${process.env.NEXT_PUBLIC_FINANCE_API}External`;
+      const url = `${FinanceService.getFinanceUrl()}External`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -31,8 +38,7 @@ export default class FinanceService {
 
   static async checkPaymentStatus(id: string): Promise<boolean> {
     try {
-      const url =
-        `${process.env.NEXT_PUBLIC_FINANCE_API}External/Status?id=` + id;
+      const url = `${FinanceService.getFinanceUrl()}External/Status?id=` + id;
       const res = await fetch(url, {
         method: 'GET',
         headers: {
@@ -63,7 +69,7 @@ export default class FinanceService {
       paymentBank: createPayment.paymentBank,
     };
     try {
-      const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment`;
+      const url = `${FinanceService.getFinanceUrl()}Payment`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -85,7 +91,7 @@ export default class FinanceService {
 
   static async deletePayment(id: string) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_FINANCE_API}Payment?id=${id}`;
+      const url = `${FinanceService.getFinanceUrl()}Payment?id=${id}`;
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

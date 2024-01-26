@@ -11,7 +11,6 @@ interface ContactDetailProps {
 
 export default function ContactDetailPage({ params }: ContactDetailProps) {
   const contactDetail = useAsyncServer(ContactService.ContactDetail(params.id));
-
   return (
     <>
       <MainLayoutCRM>

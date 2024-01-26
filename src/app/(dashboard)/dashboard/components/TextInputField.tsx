@@ -6,6 +6,8 @@ import { TextInputFieldProps } from '../../../utils/props';
 
 const TextInputField: React.FC<TextInputFieldProps> = ({
   label,
+  labelClassName = '',
+  inputClassName = '',
   placeholder,
   value,
   onChange = undefined,
@@ -13,7 +15,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   hasNoValidation,
   error = '',
   type = 'text',
-  setBackgroundIcon = true,
+  disableBgIcons = false,
 }) => {
   function getBackgroundIcon() {
     if (!isEmpty(error)) {
@@ -27,8 +29,12 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   }
 
   return (
-    <div className="flex flex-col">
-      {label && <label className="text-gray-700 text-left">{label}</label>}
+    <div className="flex flex-col relative">
+      {label && (
+        <label className={`text-gray-700 text-left ${labelClassName}`}>
+          {label}
+        </label>
+      )}{' '}
       <input
         placeholder={placeholder ? placeholder : ''}
         className={twMerge(
@@ -40,13 +46,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        style={
-          setBackgroundIcon
-            ? {
-                background: getBackgroundIcon(),
-              }
-            : {}
-        }
+        style={{ background: getBackgroundIcon() }}
       />
       {error.length > 0 && (
         <p className="text-hg-error text-left text-sm ml-2 mt-2">{error}</p>
