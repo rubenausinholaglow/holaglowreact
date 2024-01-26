@@ -5,7 +5,7 @@ interface TabsProps {
   defaultTab: string;
 }
 
-const Tabs: React.FC<TabsProps> = ({ tabs, defaultTab }) => {
+const Tabs: React.FC<TabsProps> = ({ tabs, defaultTab }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
 
   const handleTabClick = (tab: string) => {
