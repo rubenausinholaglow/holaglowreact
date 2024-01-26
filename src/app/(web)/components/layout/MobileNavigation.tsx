@@ -137,16 +137,18 @@ export default function MobileNavigation({
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
         >
-          <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-            <a href="/clinicas" id={'tmevent_nav_menu_click'}>
-              <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+          {!isEmpty(clinics) && (
+            <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
+              <a href="/clinicas" id={'tmevent_nav_menu_click'}>
+                <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
                 {clinics &&
                   clinics.map(clinic => (
                     <li key={clinic.city}>{clinic.city}</li>
                   ))}
-              </ul>
-            </a>
-          </SimpleAccordion>
+                </ul>
+              </a>
+            </SimpleAccordion>
+          )}
 
           <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">

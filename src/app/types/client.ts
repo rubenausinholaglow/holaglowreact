@@ -12,6 +12,8 @@ export interface Client {
   interestedTreatment: string;
   treatmentPrice: number;
   [key: string]: any;
+  postalCode?: string;
+  origin: string;
 }
 
 export interface AnalyticsMetrics {
