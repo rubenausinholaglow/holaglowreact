@@ -21,16 +21,11 @@ const DataTable: React.FC<DataTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [sortedData, setSortedData] = useState([...data]);
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
-  const [filteredData, setFilteredData] = useState<any[]>(sortedData);
+  const [filteredData, setFilteredData] = useState<any[]>([...data]);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  //const currentData = sortedData.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page < 1) return;
