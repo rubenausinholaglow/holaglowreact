@@ -18,7 +18,7 @@ export default function StartMultistep() {
     <CheckHydration>
       <div className="bg-derma-secondary100 min-h-screen">
         <DermaLayout hideButton hideFooter>
-          <Container>
+          <Container id="tm_derma_step0">
             <Flex
               layout="col-left"
               className="gap-8 md:gap-16 items-center relative md:justify-center md:flex-row md:mt-12"
@@ -46,7 +46,7 @@ export default function StartMultistep() {
                   size="xl"
                   className="mx-auto md:mx-0 mb-10"
                   href="/derma/multistep/steps"
-                  id={'tmevent_derma_start'}
+                  id="tmevent_derma_start"
                   customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent"
                 >
                   Empezar

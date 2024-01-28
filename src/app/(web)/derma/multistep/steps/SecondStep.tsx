@@ -101,7 +101,11 @@ export default function SecondStep({
 
   return (
     <>
-      <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
+      <Flex
+        layout="col-left"
+        className="w-full md:flex-row md:gap-16"
+        id="tm_derma_step1"
+      >
         <Flex layout="col-left" className="w-full md:w-1/2">
           <Text className="text-sm text-derma-primary500">
             Paso {question + 2}. {item.section}

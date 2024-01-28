@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
 import { DermaQuestions } from '@interface/dermaquestions';
+import { SvgWarning } from 'app/icons/IconsDs';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -11,11 +12,15 @@ export default function FirstStep({
   dermaQuestions,
   setDermaQuestions,
   setContinueDisabled,
+  continueDisabled,
+  showFirstStepErrors,
 }: {
   activeSlideIndex: number;
   dermaQuestions: DermaQuestions;
   setDermaQuestions: any;
   setContinueDisabled: any;
+  continueDisabled: boolean;
+  showFirstStepErrors: boolean;
 }) {
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -79,6 +84,20 @@ export default function FirstStep({
                     disableBgIcons
                   />
                 </div>
+
+                {showFirstStepErrors && continueDisabled && (
+                  <Flex
+                    layout="row-left"
+                    className="gap-2 p-3 text-sm rounded-xl bg-hg-error300 text-hg-error w-full"
+                  >
+                    <SvgWarning className="w-4 h-4" />
+
+                    {isEmpty(dermaQuestions.name) ||
+                    isEmpty(dermaQuestions.birthDate)
+                      ? 'Completa todos los campos para continuar'
+                      : 'Debes ser mayor de edad para utilizar este servicio'}
+                  </Flex>
+                )}
               </Flex>
             </Flex>
           </Container>
