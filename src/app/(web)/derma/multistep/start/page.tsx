@@ -45,7 +45,7 @@ export default function StartMultistep() {
                   type="tertiary"
                   size="xl"
                   className="mx-auto md:mx-0 mb-10"
-                  href="/derma/multistep/steps"
+                  href="/multistep/steps"
                   id="tmevent_derma_start"
                   customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent"
                 >
