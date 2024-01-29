@@ -33,7 +33,7 @@ export interface Product {
   productCardImagePosition: string;
   longDescription: string;
   numProductCardPhotos: number;
-
+  videoUrl: string;
 }
 
 export interface BeforeAndAfterImages {
@@ -43,8 +43,8 @@ export interface BeforeAndAfterImages {
 }
 
 export interface ExtraInformation {
-  seoTitle : string;
-  seoMetaDescription : string;
+  seoTitle: string;
+  seoMetaDescription: string;
   slug: string;
   resultDescription: string;
   procedimentDescription: string;
