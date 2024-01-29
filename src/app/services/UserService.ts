@@ -122,6 +122,7 @@ export default class UserService {
   static async getAllUsers(token : string) : Promise<User[] | undefined> {
     try {
       const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/All`;
+      debugger;
       const res = await fetch(url, {
           method: 'GET',
           headers: {
