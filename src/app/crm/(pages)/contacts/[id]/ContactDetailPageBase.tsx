@@ -1,9 +1,15 @@
 'use client';
 import React from 'react';
+import { ClientDetails } from 'app/crm/types/Contact';
 
+import CardContact from '../components/cardContact';
 import Tabs from '../components/tabs';
 
-export default function ContactDetailPageBase({ contactDetail }: any) {
+interface ContactDetailPageProps {
+  contactDetail: ClientDetails;
+}
+
+export default function ContactDetailPageBase({ contactDetail }: ContactDetailPageProps) {
   const tabs = [
     {
       label: 'Tareas',
@@ -27,7 +33,12 @@ export default function ContactDetailPageBase({ contactDetail }: any) {
 
   return (
     <div className="rounded-xl bg-white ml-64 mt-2 mr-4 h-screen">
-      <Tabs tabs={tabs} defaultTab="Tareas" />
+      <div>
+        <CardContact contactInfo={contactDetail} />
+      </div>
+      <div>
+        <Tabs tabs={tabs} defaultTab="Tareas" />
+      </div>
     </div>
   );
 }

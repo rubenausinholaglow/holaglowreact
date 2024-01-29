@@ -9,12 +9,19 @@ interface ContactDetailProps {
   params: { id: string };
 }
 
-export default function ContactDetailPage({ params }: ContactDetailProps) {
-  const contactDetail = useAsyncServer(ContactService.ContactDetail(params.id));
+export default async function ContactDetailPage({params}: ContactDetailProps) {
+  const contactDetail = await useAsyncServer( ContactService.ContactDetail(params.id) );
+
   return (
     <>
       <MainLayoutCRM>
-        <ContactDetailPageBase contactDetail={contactDetail} />
+        {contactDetail ? (
+          <ContactDetailPageBase contactDetail={contactDetail} />
+        ) : (
+          <div className="flex rounded-xl bg-white ml-64 mt-2 mr-4 h-screen justify-center items-center">
+            No se ha encontrado el contacto solicitado
+          </div>
+        )}
       </MainLayoutCRM>
     </>
   );
