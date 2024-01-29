@@ -278,8 +278,7 @@ export default function Form() {
                     disabled={continueDisabled}
                     onClick={() => {
                       if (!continueDisabled) goNext(activeSlideIndex);
-
-                      //if (activeSlideIndex === 0) checkFirstStepErrors();
+                      if (activeSlideIndex === 0) checkFirstStepErrors();
                     }}
                     id={`tmevent_dermaStep_${activeSlideIndex}`}
                   >
