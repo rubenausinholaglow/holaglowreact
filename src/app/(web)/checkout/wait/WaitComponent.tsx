@@ -81,6 +81,7 @@ export default function WaitComponent() {
 
   const renderWeb = (isDerma: boolean) => (
     <>
+      <meta name="robots" content="noindex,follow" />
       <div className="rounded-full overflow-hidden">
         <SvgTimer
           className={`${
