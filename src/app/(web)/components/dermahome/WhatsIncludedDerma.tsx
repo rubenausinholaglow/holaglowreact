@@ -31,7 +31,7 @@ export default function WhatsIncludedDerma() {
               <Button
                 size="xl"
                 type="tertiary"
-                href="/derma/multistep/start"
+                href="/multistep/start"
                 customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
               >
                 Comienza ahora
@@ -96,7 +96,7 @@ export default function WhatsIncludedDerma() {
                 <Button
                   type="tertiary"
                   size="lg"
-                  href="/derma/multistep/start"
+                  href="/multistep/start"
                   customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary md:hidden"
                 >
                   Comienza ahora
