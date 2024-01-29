@@ -33,6 +33,7 @@ import ThirdStep from './ThirdStep';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [showFirstStepErrors, setShowFirstStepErrors] = useState(false);
   const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
@@ -162,8 +163,15 @@ export default function Form() {
       setContinueDisabled(continueDisabled);
       dermaQuestions.id = x!.toString();
       setDermaQuestions(dermaQuestions);
-      window.scrollTo(0, 0);
+
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 500);
     });
+  };
+
+  const checkFirstStepErrors = () => {
+    setShowFirstStepErrors(continueDisabled);
   };
 
   return (
@@ -195,16 +203,24 @@ export default function Form() {
             dragEnabled={false}
             touchEnabled={false}
           >
-            <FirstStep
-              activeSlideIndex={activeSlideIndex}
-              dermaQuestions={dermaQuestions}
-              setDermaQuestions={setDermaQuestions}
-              setContinueDisabled={setContinueDisabled}
-            />
+            <div id="tm_derma_step1" className="min-h-[100px]">
+              <FirstStep
+                activeSlideIndex={activeSlideIndex}
+                dermaQuestions={dermaQuestions}
+                setDermaQuestions={setDermaQuestions}
+                setContinueDisabled={setContinueDisabled}
+                continueDisabled={continueDisabled}
+                showFirstStepErrors={showFirstStepErrors}
+              />
+            </div>
 
             {MULTISTEP_QUESTIONS.map((item: any, question: number) => {
               return (
-                <Container key={question}>
+                <Container
+                  key={question}
+                  id={`tm_derma_step${question + 2}`}
+                  className="min-h-[100px]"
+                >
                   {activeSlideIndex === question + 1 && (
                     <SecondStep
                       question={question}
@@ -218,14 +234,18 @@ export default function Form() {
               );
             })}
 
-            <ThirdStep activeSlideIndex={activeSlideIndex} />
+            <div id="tm_derma_step5" className="min-h-[100px]">
+              <ThirdStep activeSlideIndex={activeSlideIndex} />
+            </div>
 
-            <FourthStep
-              name={dermaQuestions?.name || ''}
-              activeSlideIndex={activeSlideIndex}
-              client={client}
-              setClient={setClient}
-            />
+            <div id="tm_derma_step6" className="min-h-[100px]">
+              <FourthStep
+                name={dermaQuestions?.name || ''}
+                activeSlideIndex={activeSlideIndex}
+                client={client}
+                setClient={setClient}
+              />
+            </div>
           </Carousel>
 
           <Container className="my-8">
@@ -250,11 +270,18 @@ export default function Form() {
                     size="lg"
                     className="ml-auto"
                     type="tertiary"
-                    customStyles="bg-derma-secondary300 border-derma-primary text-derma-primary hover:text-derma-primary500 hover:border-derma-primary500 hover:bg-transparent"
+                    customStyles={`bg-derma-secondary300 border-derma-primary text-derma-primary ${
+                      continueDisabled
+                        ? ''
+                        : 'hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent'
+                    }`}
                     disabled={continueDisabled}
                     onClick={() => {
                       if (!continueDisabled) goNext(activeSlideIndex);
+
+                      //if (activeSlideIndex === 0) checkFirstStepErrors();
                     }}
+                    id={`tmevent_dermaStep_${activeSlideIndex}`}
                   >
                     <Flex layout="row-right">Siguiente</Flex>
                   </Button>
