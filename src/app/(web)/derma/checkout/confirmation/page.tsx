@@ -7,7 +7,7 @@ import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 export default function ConfirmationCheckout() {
   return (
     <CheckHydration>
-      <div className="bg-derma-secondary100 min-h-screen">
+      <div className="bg-derma-secondary100 min-h-screen" id="tm_derma_step8">
         <DermaLayout hideButton hideFooter>
           <Confirmation isDerma />
         </DermaLayout>
