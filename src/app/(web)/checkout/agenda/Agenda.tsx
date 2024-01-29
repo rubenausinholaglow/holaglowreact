@@ -308,6 +308,14 @@ export default function Agenda({
   const selectHour = async (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
+
+    if (isDerma) {
+      window.scrollTo({
+        left: 0,
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const selectDate = (x: Date) => {
