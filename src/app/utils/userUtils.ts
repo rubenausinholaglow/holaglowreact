@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';

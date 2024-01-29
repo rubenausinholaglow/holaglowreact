@@ -2,7 +2,6 @@
 
 import { SvgHolaglowDermaUnicolor } from 'app/icons/iconsDerma';
 import { SvgInstagram, SvgTikTok } from 'app/icons/socialIcons';
-import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -15,7 +14,6 @@ export default function DermaFooter({
   className?: string;
   hideFooter?: boolean;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
   const isHome = usePathname() === '/';
 
   if (hideFooter) {
