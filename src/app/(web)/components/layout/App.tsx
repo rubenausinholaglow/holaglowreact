@@ -107,7 +107,7 @@ export default function Html({ children }: { children: ReactNode }) {
       setClinics(clinics);
     }
 
-    if (isEmpty(clinics) && clinicsLoaded) {
+    if (isEmpty(clinics) && !clinicsLoaded) {
       initClinics();
       setClinicsLoaded(true);
     }
