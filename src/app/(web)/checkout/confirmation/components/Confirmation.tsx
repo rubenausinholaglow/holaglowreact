@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { atcb_action } from 'add-to-calendar-button';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCalendar } from 'app/icons/Icons';
-import { SvgArrow, SvgCheck, SvgSend, SvgVideo } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheck, SvgVideo } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -29,8 +30,11 @@ export default function Confirmation({
   const ROUTES = useRoutes();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { selectedClinic, setAnalyticsMetrics, setPayment, appointmentUrl } =
-    useSessionStore(state => state);
+  const { setAnalyticsMetrics, setPayment, appointmentUrl } = useSessionStore(
+    state => state
+  );
+
+  const addToCalendarRef = useRef(null);
 
   useEffect(() => {
     if (!isDashboard) {
@@ -54,6 +58,8 @@ export default function Confirmation({
       setPayment(undefined);
     }
   }, []);
+
+  console.log(appointment);
 
   return (
     <Container className="mt-12 mb-4 md:mt-16">
@@ -154,17 +160,34 @@ export default function Confirmation({
               </Text>
 
               <Button
+                ref={addToCalendarRef}
                 size="md"
                 type="tertiary"
                 className="w-full"
                 customStyles="border-none bg-derma-secondary100 text-derma-primary font-normal justify-start pl-2"
+                onClick={() =>
+                  atcb_action(
+                    {
+                      name: 'Añadir a mi calendario',
+                      description:
+                        'Añade tu cita para no olvidarte en tu calendario',
+                      startDate: '2024-02-02',
+                      startTime: '10:15',
+                      endTime: '23:30',
+                      options: [
+                        'Apple',
+                        'Google',
+                        'iCal',
+                        'Outlook.com',
+                        'Yahoo',
+                      ],
+                      timeZone: 'Europe/Madrid',
+                    },
+                    addToCalendarRef.current || undefined
+                  )
+                }
               >
-                <Flex
-                  layout="row-center"
-                  className="bg-derma-primary500/20 rounded-full h-8 w-8 mr-2"
-                >
-                  <SvgCalendar className="h-4 w-4" />
-                </Flex>
+                <SvgCalendar className="h-4 w-4" />
                 Añadir a mi calendario
               </Button>
             </Flex>
