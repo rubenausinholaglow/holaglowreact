@@ -33,7 +33,7 @@ interface SessionStore {
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
-  selectedDay: Dayjs;
+  selectedDay: Dayjs | undefined;
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
   typeOfPayment: TypeOfPayment;
@@ -47,7 +47,7 @@ interface SessionActions {
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
-  setSelectedDay: (day: Dayjs) => void;
+  setSelectedDay: (day?: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
@@ -120,7 +120,7 @@ export const useSessionStore = create(
       selectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
-      selectedDay: dayjs(),
+      selectedDay: undefined,
       selectedSlot: undefined,
       previousAppointment: undefined,
       isMobile: true,
