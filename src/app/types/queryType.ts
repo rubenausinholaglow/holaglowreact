@@ -1,20 +1,30 @@
 export class GraphQLQueryBuilder {
-  constructor(private fields: string[], private after?: string,  private before?: string, private limit?: number) {}
+  constructor(
+    private first: boolean,
+    private fields: string[],
+    private after?: string,
+    private before?: string,
+    private limit?: number
+  ) {}
 
-  buildQuery(entity: string): string {
+  buildQuery(entity: string, filters?: string): string {
     const fieldsString = this.fields.join('\n');
     const afterString = this.after ? `, after: "${this.after}"` : '';
     const beforeString = this.before ? `, before: "${this.before}"` : '';
-    const limit = this.limit ? this.limit : 10;
+    const limitString = this.limit ? `${this.first ? 'first' : 'last'}: ${this.limit}` : 'first: 10';
 
-    const allFields = [...this.fields]; 
-    if (this.fields && this.fields.length > 0) {
-      allFields.push(...this.fields);
-    }
+    const filterString =
+      filters &&
+      this.fields
+        .filter(field => field !== 'id')
+        .map(field => `${field}.contains(\\"${filters}\\")`)
+        .join(' || ');
 
-    const query =`
+    const query = `
       query {
-        ${entity}(first:${limit}${afterString}${beforeString}) {
+        ${entity}(${limitString}${afterString}${beforeString}${
+      filterString ? `, filter: "${filterString}"` : ''
+    }) {
           edges {
             node {
               ${fieldsString}

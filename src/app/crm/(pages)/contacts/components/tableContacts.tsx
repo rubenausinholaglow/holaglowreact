@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { gql } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
 import { GraphQLQueryBuilder } from '@interface/queryType';
@@ -19,9 +19,8 @@ export default function TableContacts() {
   const [hasPreviousPage, setHasPreviousPage] = useState<boolean>(false);
   const [hasNextPage, setHasNextPage] = useState<boolean>(false);
   const [startCursor, setStartCursor] = useState<string>('');
-  const [previousCursor, setPreviousCursor] = useState<string>('');
   const [endCursor, setEndCursor] = useState<string>('');
-  const wasAlreadyRequested = useRef(false);
+  const [previousCursor, setPreviousCursor] = useState<string>('');
 
   const columns = [
     { label: 'ID', key: 'id' },
@@ -31,79 +30,24 @@ export default function TableContacts() {
     { label: 'Email', key: 'email' },
   ];
   const columnKeys = columns.map(column => column.key);
+  const entity = 'users';
+  const client = createApolloClient(
+    process.env.NEXT_PUBLIC_CONTACTS_API || '',
+    userLoginResponse?.token || ''
+  );
 
-  useEffect(() => {
-    const client = createApolloClient(
-      process.env.NEXT_PUBLIC_CONTACTS_API || '',
-      userLoginResponse?.token || ''
-    );
-
-    const queryBuilder = new GraphQLQueryBuilder(
-      columnKeys,
-      '',
-      '',
-      itemsPerPage
-    );
-    const queryString = queryBuilder.buildQuery('users');
-    const queryBuilders = gql(queryString);
-    const fetchContacts = async () => {
-      try {
-        const { data } = await client.query({ query: queryBuilders });
-        if (data.users.edges) {
-          setUsers(data.users.edges.map((edge: any) => edge.node));
-          if (startCursor == '')
-            setStartCursor(data.users.pageInfo.hasNextPage);
-          setHasPreviousPage(data.users.pageInfo.hasPreviousPage);
-          setHasNextPage(data.users.pageInfo.hasNextPage);
-          setEndCursor(data.users.pageInfo.endCursor);
-          const totalCountPages = Math.ceil(
-            data.users.totalCount / itemsPerPage
-          );
-          setTotalCount(totalCountPages);
-        } else {
-          setErrorMessage(
-            'Error cargando usuarios - Contacte con el administrador'
-          );
-          Bugsnag.notify('Error getting users CRM');
-        }
-      } catch (error) {
-        console.error('Error fetching contacts:', error);
-        setErrorMessage(
-          'Error cargando usuarios - Contacte con el administrador'
-        );
-        Bugsnag.notify('Error getting users CRM');
-      }
-    };
-
-    if (!wasAlreadyRequested.current) {
-      fetchContacts();
-      wasAlreadyRequested.current = true;
-    }
-  }, []);
-
-  const handleNextPage = async () => {
-    const client = createApolloClient(
-      process.env.NEXT_PUBLIC_CONTACTS_API || '',
-      userLoginResponse?.token || ''
-    );
-
-    const queryBuilder = new GraphQLQueryBuilder(
-      columnKeys,
-      endCursor,
-      '',
-      itemsPerPage
-    );
-    const queryString = queryBuilder.buildQuery('users');
-    const queryBuilders = gql(queryString);
-
+  const fetchContacts = async (queryString: any) => {
     try {
-      const { data } = await client.query({ query: queryBuilders });
+      const { data } = await client.query({ query: queryString });
       if (data.users.edges) {
         setPreviousCursor(endCursor);
         setUsers(data.users.edges.map((edge: any) => edge.node));
+        setStartCursor(data.users.pageInfo.startCursor);
         setHasPreviousPage(data.users.pageInfo.hasPreviousPage);
         setHasNextPage(data.users.pageInfo.hasNextPage);
         setEndCursor(data.users.pageInfo.endCursor);
+        const totalCountPages = Math.ceil(data.users.totalCount / itemsPerPage);
+        setTotalCount(totalCountPages);
       } else {
         setErrorMessage(
           'Error cargando usuarios - Contacte con el administrador'
@@ -117,86 +61,54 @@ export default function TableContacts() {
       );
       Bugsnag.notify('Error getting users CRM');
     }
+  };
+
+  useEffect(() => {
+    const queryBuilders = createQuery(true);
+    fetchContacts(queryBuilders);
+  }, []);
+
+  const handleNextPage = async () => {
+    const queryBuilders = createQuery(true);
+    fetchContacts(queryBuilders);
   };
 
   const handlePreviousPage = async () => {
     if (!hasPreviousPage) return;
-    const client = createApolloClient(
-      process.env.NEXT_PUBLIC_CONTACTS_API || '',
-      userLoginResponse?.token || ''
-    );
-
-    const queryBuilder = new GraphQLQueryBuilder(
-      columnKeys,
-      endCursor,
-      '',
-      itemsPerPage
-    );
-    const queryString = queryBuilder.buildQuery('users');
-    const queryBuilders = gql(queryString);
-
-    try {
-      const { data } = await client.query({ query: queryBuilders });
-      if (data.users.edges) {
-        setUsers(data.users.edges.map((edge: any) => edge.node));
-        setHasNextPage(data.users.pageInfo.hasNextPage);
-        setEndCursor(data.users.pageInfo.endCursor);
-      } else {
-        setErrorMessage(
-          'Error cargando usuarios - Contacte con el administrador'
-        );
-        Bugsnag.notify('Error getting users CRM');
-      }
-    } catch (error) {
-      console.error('Error fetching contacts:', error);
-      setErrorMessage(
-        'Error cargando usuarios - Contacte con el administrador'
-      );
-      Bugsnag.notify('Error getting users CRM');
-    }
+    const queryBuilders = createQuery(false);
+    fetchContacts(queryBuilders);
   };
 
   const handleItemsPerPageChange = async (value: number) => {
     if (startCursor == endCursor) return;
-
     setItemsPerPage(value);
-
-    const client = createApolloClient(
-      process.env.NEXT_PUBLIC_CONTACTS_API || '',
-      userLoginResponse?.token || ''
-    );
-
-    const queryBuilder = new GraphQLQueryBuilder(
-      columnKeys,
-      previousCursor,
-      '',
-      value
-    );
-    const queryString = queryBuilder.buildQuery('users');
-    const queryBuilders = gql(queryString);
-
-    try {
-      const { data } = await client.query({ query: queryBuilders });
-      if (data.users.edges) {
-        const totalCountPages = Math.ceil(data.users.totalCount / value);
-        setTotalCount(totalCountPages);
-        setUsers(data.users.edges.map((edge: any) => edge.node));
-        setHasNextPage(data.users.pageInfo.hasNextPage);
-        setEndCursor(data.users.pageInfo.endCursor);
-      } else {
-        setErrorMessage(
-          'Error cargando usuarios - Contacte con el administrador'
-        );
-        Bugsnag.notify('Error getting users CRM');
-      }
-    } catch (error) {
-      console.error('Error fetching contacts:', error);
-      setErrorMessage(
-        'Error cargando usuarios - Contacte con el administrador'
-      );
-      Bugsnag.notify('Error getting users CRM');
-    }
+    const queryBuilders = createQuery(true, '', value);
+    fetchContacts(queryBuilders);
   };
+
+  const handleOnFilterChange = async (stringFilter: string) => {
+    if (stringFilter == '') return;
+    const queryBuilders = createQuery(true, stringFilter);
+    fetchContacts(queryBuilders);
+  };
+
+  function createQuery(
+    nextPage: boolean,
+    stringFilter?: string,
+    numberPerPage?: number
+  ) {
+    const queryBuilder = new GraphQLQueryBuilder(
+      !nextPage ? false : true,
+      columnKeys,
+      nextPage ? endCursor : '',
+      !nextPage ? previousCursor : '',
+      numberPerPage ? numberPerPage : itemsPerPage
+    );
+
+    const queryString = queryBuilder.buildQuery(entity, stringFilter);
+
+    return gql(queryString);
+  }
 
   return (
     <div>
@@ -212,6 +124,7 @@ export default function TableContacts() {
             endCursor: endCursor,
           }}
           totalPages={totalCount}
+          onFilterChange={handleOnFilterChange}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>

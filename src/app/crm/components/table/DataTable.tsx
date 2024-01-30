@@ -14,6 +14,7 @@ interface DataTableProps {
   onNextPage: () => void;
   onPreviousPage: () => void;
   onItemsPerPageChange: (value: number) => void;
+  onFilterChange: (filter: string) => void;
   totalPages: number;
 }
 
@@ -25,13 +26,14 @@ const DataTable: React.FC<DataTableProps> = ({
   onNextPage,
   onPreviousPage,
   onItemsPerPageChange,
+  onFilterChange,
   totalPages = 1,
 }) => {
   const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [filters, setFilters] = useState<{ [key: string]: string }>({});
+  const [filters, setFilters] = useState<string>('');
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
   const [filteredData, setFilteredData] = useState<any[]>([...data]);
 
@@ -71,17 +73,7 @@ const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage(1);
   };
   useEffect(() => {
-    if (filters.search || 0 > 0) {
-      const filtered = data.filter(item =>
-        Object.values(item).some(
-          value =>
-            value &&
-            typeof value === 'string' &&
-            value.toLowerCase().includes(filters.search.toLowerCase())
-        )
-      );
-      setFilteredData(filtered);
-    }
+    onFilterChange(filters);
   }, [filters]);
   if (filteredData)
     return (
@@ -107,9 +99,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 type="text"
                 placeholder="Filtrar"
                 className="mt-2 p-1 text-sm bg-blue-gray-100 rounded-lg border border-gray-500"
-                onChange={e =>
-                  setFilters({ ...filters, search: e.target.value })
-                }
+                onChange={e => setFilters(e.target.value)}
               />
             </div>
           </div>
