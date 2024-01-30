@@ -32,11 +32,9 @@ const Tabs: React.FC<TabsProps> = ({ tabs, defaultTab }) => {
 
       <div className="mt-4">
         {tabs.map(tab =>
-          activeTab === tab.label && !tab.component ? (
-            <div key={tab}>{tab.label}</div>
-          ) : (
-            <div key={tab-tab}>{tab.component}</div>
-          )
+          activeTab === tab.label && tab.component ? (
+            <div key={tab}>{tab.component}</div>
+          ) : null
         )}
       </div>
     </>
