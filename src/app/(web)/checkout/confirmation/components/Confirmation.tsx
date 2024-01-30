@@ -31,11 +31,13 @@ export default function Confirmation({
   const ROUTES = useRoutes();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { setAnalyticsMetrics, setPayment, appointmentUrl } = useSessionStore(
-    state => state
-  );
-
-  const { selectedSlot, selectedDay } = useSessionStore(state => state);
+  const {
+    setAnalyticsMetrics,
+    setPayment,
+    appointmentUrl,
+    selectedSlot,
+    selectedDay,
+  } = useSessionStore(state => state);
 
   const addToCalendarRef = useRef(null);
 
