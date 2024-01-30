@@ -107,6 +107,9 @@ export default function AppointmentList({
       <Flex layout="col-left" className="gap-4">
         {appointments.map(appointment => {
           if (!appointment.isPast || (appointment.isPast && showPast)) {
+            const hideButtons =
+              isDerma && dayjs(appointment.startTime) < dayjs().add(3, 'day');
+
             return (
               <Flex
                 layout="col-left"
@@ -138,56 +141,63 @@ export default function AppointmentList({
                     {dayjs(appointment.startTime).format('HH:mm')}
                   </div>
                 </Flex>
-                <Flex layout="row-left">
-                  <SvgLocation height={16} width={16} className="mr-2" />
-                  {clinics.length > 0 && (
-                    <div className="text-xs">
-                      {
-                        clinics.filter(
-                          clinic => clinic.flowwwId == appointment.clinicId
-                        )[0].address
-                      }
-                    </div>
-                  )}
-                </Flex>
-                <Flex layout="row-between" className="w-full mt-6">
-                  <Button
-                    size={deviceSize.isMobile ? 'sm' : 'md'}
-                    type="tertiary"
-                    id="button-addon2"
-                    customStyles={
-                      isDerma
-                        ? 'border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary'
-                        : 'bg-hg-primary'
-                    }
-                    onClick={() => {
-                      rescheduleAppointment(appointment);
-                    }}
-                  >
-                    <div>Reagendar</div>
-                  </Button>
-                  {appointment.treatment?.toUpperCase() !=
-                    process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID &&
-                    appointment.treatment?.toUpperCase() !=
-                      process.env.NEXT_PUBLIC_VISITA_EVALUACION_ID &&
-                    !appointment.isPast &&
-                    !appointment.isCancelled && (
-                      <>
-                        <Button
-                          size={deviceSize.isMobile ? 'sm' : 'md'}
-                          type="tertiary"
-                          id="button-addon2"
-                          onClick={() => {
-                            setAppointmentToCancel(appointment);
-                            setShowCancelModal(true);
-                          }}
-                        >
-                          {!cancelling && <div id="cancelText">Cancelar</div>}
-                          {cancelling && <SvgSpinner height={24} width={24} />}
-                        </Button>
-                      </>
+                {!isDerma && (
+                  <Flex layout="row-left">
+                    <SvgLocation height={16} width={16} className="mr-2" />
+                    {clinics.length > 0 && (
+                      <div className="text-xs">
+                        {
+                          clinics.filter(
+                            clinic => clinic.flowwwId == appointment.clinicId
+                          )[0].address
+                        }
+                      </div>
                     )}
-                </Flex>
+                  </Flex>
+                )}
+
+                {!hideButtons && (
+                  <Flex layout="row-between" className="w-full mt-6">
+                    <Button
+                      size={deviceSize.isMobile ? 'sm' : 'md'}
+                      type="tertiary"
+                      id="button-addon2"
+                      customStyles={
+                        isDerma
+                          ? 'border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary'
+                          : 'bg-hg-primary'
+                      }
+                      onClick={() => {
+                        rescheduleAppointment(appointment);
+                      }}
+                    >
+                      <div>Reagendar</div>
+                    </Button>
+                    {appointment.treatment?.toUpperCase() !=
+                      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID &&
+                      appointment.treatment?.toUpperCase() !=
+                        process.env.NEXT_PUBLIC_VISITA_EVALUACION_ID &&
+                      !appointment.isPast &&
+                      !appointment.isCancelled && (
+                        <>
+                          <Button
+                            size={deviceSize.isMobile ? 'sm' : 'md'}
+                            type="tertiary"
+                            id="button-addon2"
+                            onClick={() => {
+                              setAppointmentToCancel(appointment);
+                              setShowCancelModal(true);
+                            }}
+                          >
+                            {!cancelling && <div id="cancelText">Cancelar</div>}
+                            {cancelling && (
+                              <SvgSpinner height={24} width={24} />
+                            )}
+                          </Button>
+                        </>
+                      )}
+                  </Flex>
+                )}
               </Flex>
             );
           }
