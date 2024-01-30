@@ -42,7 +42,7 @@ const UPGRADE_TYPES: Record<
     options: { label: string; value: string }[];
   }
 > = {
-  '0': {
+  '1': {
     title: '1 vial de ácido hialurónico',
     icon: 'SvgInjection',
     family: 'default',
@@ -85,7 +85,7 @@ const UPGRADE_TYPES: Record<
       },
     ],
   },
-  '1': {
+  '2': {
     title: '0,5 viales de inyectable antiarrugas',
     icon: 'SvgInjection',
     family: 'default',
@@ -100,7 +100,7 @@ const UPGRADE_TYPES: Record<
       },
     ],
   },
-  '2': {
+  '3': {
     title: '1 vial de inyectable antiarrugas',
     icon: 'SvgInjection',
     family: 'default',
@@ -111,7 +111,7 @@ const UPGRADE_TYPES: Record<
       },
     ],
   },
-  '3': {
+  '4': {
     title: 'Piel',
     icon: 'SvgInjection',
     family: 'default',
@@ -126,7 +126,7 @@ const UPGRADE_TYPES: Record<
       },
     ],
   },
-  '4': {
+  '5': {
     title: 'Piel Profunda',
     icon: 'SvgInjection',
     family: 'default',

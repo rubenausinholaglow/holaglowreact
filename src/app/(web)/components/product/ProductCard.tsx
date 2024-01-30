@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Tracker from '@utils/tracker';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgPlusSmall } from 'app/icons/Icons';
 import { SvgArrow, SvgGlow } from 'app/icons/IconsDs';
@@ -33,6 +34,7 @@ export default function ProductCard({
   isDashboard?: boolean;
   [key: string]: any;
 }) {
+  const tracker = new Tracker();
   const ROUTES = useRoutes();
 
   const pathName = usePathname();
@@ -207,6 +209,9 @@ export default function ProductCard({
     return (
       <Link
         id="tmevent_click_product_card"
+        onClick={() =>
+          tracker.track('Click', 'ProductCard', product?.extraInformation?.slug)
+        }
         href={
           isLanding
             ? LANDINGS[pathName]

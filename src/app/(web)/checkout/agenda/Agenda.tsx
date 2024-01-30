@@ -136,10 +136,12 @@ export default function Agenda({
             minutes == '36' ||
             minutes == '48'))
       ) {
-        hours.push(x);
-        if (parseInt(hour) < 16) {
-          morning.push(x);
-        } else afternoon.push(x);
+        if (x.box != '7' || (x.box == '7' && (!isDashboard || !user))) {
+          hours.push(x);
+          if (parseInt(hour) < 16) {
+            morning.push(x);
+          } else afternoon.push(x);
+        }
       }
     });
     setMorningHours(morning);
