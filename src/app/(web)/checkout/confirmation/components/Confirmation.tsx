@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { atcb_action } from 'add-to-calendar-button';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCalendar } from 'app/icons/Icons';
-import { SvgArrow, SvgCheck, SvgSend, SvgVideo } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheck, SvgVideo } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -11,6 +12,7 @@ import {
 import { Appointment } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import useRoutes from 'app/utils/useRoutes';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -29,8 +31,15 @@ export default function Confirmation({
   const ROUTES = useRoutes();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { selectedClinic, setAnalyticsMetrics, setPayment, appointmentUrl } =
-    useSessionStore(state => state);
+  const {
+    setAnalyticsMetrics,
+    setPayment,
+    appointmentUrl,
+    selectedSlot,
+    selectedDay,
+  } = useSessionStore(state => state);
+
+  const addToCalendarRef = useRef(null);
 
   useEffect(() => {
     if (!isDashboard) {
@@ -154,17 +163,36 @@ export default function Confirmation({
               </Text>
 
               <Button
+                ref={addToCalendarRef}
                 size="md"
                 type="tertiary"
                 className="w-full"
                 customStyles="border-none bg-derma-secondary100 text-derma-primary font-normal justify-start pl-2"
+                onClick={() =>
+                  atcb_action(
+                    {
+                      name: 'Cita online - Derma by Holaglow',
+                      description:
+                        'Consulta online con un dermatólogo estético',
+                      startDate: dayjs(selectedDay).format('YYYY-MM-DD'),
+                      startTime: selectedSlot?.startTime,
+                      endTime: selectedSlot?.endTime,
+                      options: [
+                        'Apple',
+                        'Google',
+                        'iCal',
+                        'Outlook.com',
+                        'Yahoo',
+                      ],
+                      timeZone: 'Europe/Madrid',
+                    },
+                    addToCalendarRef.current
+                      ? addToCalendarRef.current
+                      : undefined
+                  )
+                }
               >
-                <Flex
-                  layout="row-center"
-                  className="bg-derma-primary500/20 rounded-full h-8 w-8 mr-2"
-                >
-                  <SvgCalendar className="h-4 w-4" />
-                </Flex>
+                <SvgCalendar className="h-4 w-4 mr-2" />
                 Añadir a mi calendario
               </Button>
             </Flex>
