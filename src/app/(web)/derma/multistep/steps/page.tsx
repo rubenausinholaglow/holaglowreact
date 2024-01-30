@@ -176,6 +176,7 @@ export default function Form() {
 
   return (
     <CheckHydration>
+      <meta name="robots" content="noindex,follow" />
       <div className="bg-derma-secondary100 min-h-screen">
         <header className="py-4 relative">
           <Container>
