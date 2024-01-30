@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { gql } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
-import TaskService from '@services/TaskService';
 import DataTable from 'app/crm/components/table/DataTable';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
@@ -116,16 +115,4 @@ export default function TableTasks() {
       });
     });
   }
-
-  if (!tasks)
-    return (
-      <>
-        {errorMessage ? (
-          <p className="text-red-500"> {errorMessage}</p>
-        ) : (
-          <p>Cargando Tareas...</p>
-        )}
-      </>
-    );
-  else return <DataTable data={tasks} columns={columns} />;
 }
