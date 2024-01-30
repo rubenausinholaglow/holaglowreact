@@ -1,8 +1,11 @@
 'use client';
 import React from 'react';
 import { ClientDetails } from 'app/crm/types/Contact';
+import { TaskColumns } from 'app/crm/utils/contactColumns';
+import { mappingTasks } from 'app/crm/utils/mappingColumns';
 
 import CardContact from '../components/cardContact';
+import DataTableContact from '../components/dataTableContact';
 import Tabs from '../components/tabs';
 
 interface ContactDetailPageProps {
@@ -10,9 +13,16 @@ interface ContactDetailPageProps {
 }
 
 export default function ContactDetailPageBase({ contactDetail }: ContactDetailPageProps) {
+  
   const tabs = [
     {
       label: 'Tareas',
+      component: (
+        <DataTableContact
+          columns={TaskColumns}
+          rows={mappingTasks(contactDetail.taskInstances)}
+        />
+      ),
     },
     {
       label: 'Datos personales',
