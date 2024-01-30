@@ -58,7 +58,7 @@ export default function Agenda({
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  let currentMonth = dayjs();
+  const [currentMonth, setcurrentMonth] = useState(dayjs());
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
   const maxDaysByClinicAndType: any = {
@@ -310,7 +310,7 @@ export default function Agenda({
   const onMonthChange = (x: any) => {
     setLoadingMonth(true);
     const date = dayjs(x);
-    currentMonth = date;
+    setcurrentMonth(date);
     setDateToCheck(date);
   };
   const selectHour = async (x: Slot) => {
