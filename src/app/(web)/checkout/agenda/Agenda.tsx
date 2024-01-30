@@ -16,7 +16,7 @@ import {
 import { DayAvailability } from 'app/types/dayAvailability';
 import { Slot } from 'app/types/slot';
 import useRoutes from 'app/utils/useRoutes';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -58,7 +58,7 @@ export default function Agenda({
   const [localDateSelected, setLocalDateSelected] = useState(new Date());
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-
+  const [currentMonth, setcurrentMonth] = useState(dayjs());
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
   const maxDaysByClinicAndType: any = {
@@ -105,7 +105,7 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic?.flowwwId || ''
         ).then(data => {
-          callbackMonthAvailability(data);
+          callbackMonthAvailability(data, dateToCheck);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -113,7 +113,7 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic!.flowwwId
         ).then(data => {
-          callbackMonthAvailability(data);
+          callbackMonthAvailability(data, dateToCheck);
         });
       }
     } else setLoadingMonth(false);
@@ -153,9 +153,14 @@ export default function Agenda({
     });
   }
 
-  function callbackMonthAvailability(data: DayAvailability[]) {
+  function callbackMonthAvailability(
+    data: DayAvailability[],
+    dateToCheck: Dayjs
+  ) {
+    const endOfMonth = dateToCheck.endOf('month');
     const availability = availableDates ?? [];
     const today = dayjs();
+    const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
@@ -167,12 +172,14 @@ export default function Agenda({
       }
     });
     setAvailableDates(availability);
-    if (!selectedDay) {
+    if (!selectedDay && availability.length > 0) {
       setSelectedDay(dayjs(availability[0].date));
     } else {
       setSelectedDay(selectedDay);
     }
-    setLoadingMonth(false);
+    if (loadedCurrentMonth) {
+      setDateToCheck(dateToCheck.add(1, 'month'));
+    } else setLoadingMonth(false);
   }
 
   function initialize() {
@@ -303,6 +310,7 @@ export default function Agenda({
   const onMonthChange = (x: any) => {
     setLoadingMonth(true);
     const date = dayjs(x);
+    setcurrentMonth(date);
     setDateToCheck(date);
   };
   const selectHour = async (x: Slot) => {

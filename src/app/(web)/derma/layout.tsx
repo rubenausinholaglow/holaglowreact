@@ -6,9 +6,9 @@ import Script from 'next/script';
 import App from './../components/layout/App';
 
 export const metadata = {
-  title: 'Holaglow - Medicina estética',
+  title: 'Cuidado facial personalizado - Holaglow Derma',
   description:
-    'La nueva cara de la medicina estética. Tratamientos sin cirugía para conseguir resultados reales',
+    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para las necesidades específicas de tu piel.',
 };
 
 export default function RootLayout({

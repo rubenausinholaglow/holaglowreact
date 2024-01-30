@@ -8,14 +8,14 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'Holaglow - La nueva cara de la medicina estética',
+  title: 'Cuidado facial personalizado - Holaglow Derma',
   description:
-    'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
+    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para las necesidades específicas de tu piel.',
 };
-
 export default function StartMultistep() {
   return (
     <CheckHydration>
+      <meta name="robots" content="noindex,follow" />
       <div className="bg-derma-secondary100 min-h-screen">
         <DermaLayout hideButton hideFooter>
           <Container id="tm_derma_step0">
