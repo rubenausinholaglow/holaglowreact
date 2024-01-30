@@ -10,12 +10,22 @@ interface DataTableProps {
   data: any[];
   columns: { label: string; key: string }[];
   itemsPerPageOptions?: number[];
+  pageInfo: { hasNextPage: boolean; endCursor: string };
+  onNextPage: () => void;
+  onPreviousPage: () => void;
+  onItemsPerPageChange: (value: number) => void;
+  totalPages: number;
 }
 
 const DataTable: React.FC<DataTableProps> = ({
   data,
   columns,
   itemsPerPageOptions = [5, 10, 15, 20, 25, 50],
+  pageInfo,
+  onNextPage,
+  onPreviousPage,
+  onItemsPerPageChange,
+  totalPages = 1,
 }) => {
   const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,8 +34,6 @@ const DataTable: React.FC<DataTableProps> = ({
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
   const [filteredData, setFilteredData] = useState<any[]>([...data]);
-
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page < 1) return;
@@ -53,7 +61,12 @@ const DataTable: React.FC<DataTableProps> = ({
     setFilteredData(sortedData);
   };
 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
   const handleItemsPerPageChange = (value: number) => {
+    onItemsPerPageChange(value);
     setItemsPerPage(value);
     setCurrentPage(1);
   };
@@ -70,7 +83,7 @@ const DataTable: React.FC<DataTableProps> = ({
       setFilteredData(filtered);
     }
   }, [filters]);
-  if (data)
+  if (filteredData)
     return (
       <div className="h-full w-full">
         <div className="gap-4 mt-4 ml-2 w-full">
@@ -129,37 +142,36 @@ const DataTable: React.FC<DataTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {filteredData
-              .slice(
-                (currentPage - 1) * itemsPerPage,
-                currentPage * itemsPerPage
-              )
-              .map((rowData, rowIndex) => (
-                <tr
-                  key={rowIndex}
-                  className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
-                >
-                  {columns.map(column => (
-                    <td key={column.key} className="p-4">
-                      <label color="blue-gray" className="font-normal">
-                        {rowData[column.key]}
-                      </label>
-                    </td>
-                  ))}
-
-                  <td className="p-4">
-                    <Link href={`${pathName}/${rowData[columns[0].key]}`}>
-                      <p className="font-medium text-blue-gray">Editar</p>
-                    </Link>
+            {filteredData.map((rowData, rowIndex) => (
+              <tr
+                key={rowIndex}
+                className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
+              >
+                {columns.map(column => (
+                  <td key={column.key} className="p-4">
+                    <label color="blue-gray" className="font-normal">
+                      {rowData[column.key]}
+                    </label>
                   </td>
-                </tr>
-              ))}
+                ))}
+
+                <td className="p-4">
+                  <Link href={`${pathName}/${rowData[columns[0].key]}`}>
+                    <p className="font-medium text-blue-gray">Editar</p>
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
+          hasNextPage={pageInfo.hasNextPage}
+          endCursor={pageInfo.endCursor}
+          onNextPage={onNextPage}
+          onPreviousPage={onPreviousPage}
         />
       </div>
     );
