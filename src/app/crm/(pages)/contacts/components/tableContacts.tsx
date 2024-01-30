@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { gql } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
+import { User } from '@interface/appointment';
 import { GraphQLQueryBuilder } from '@interface/queryType';
 import DataTable from 'app/crm/components/table/DataTable';
 import { useSessionStore } from 'app/stores/globalStore';
@@ -9,7 +10,7 @@ import { createApolloClient } from 'lib/client';
 
 export default function TableContacts() {
   const { userLoginResponse } = useSessionStore(state => state);
-  const [users, setUsers] = useState<any[] | undefined>(undefined);
+  const [users, setUsers] = useState<User[] | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
