@@ -1,11 +1,8 @@
 'use client';
 
-import { useSessionStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-
-import FullWidthCarousel from '../product/fullWidthCarousel';
 
 interface DermaTreatment {
   name: string;
@@ -50,8 +47,6 @@ const TREATMENTS = [
 const repeatedTreatments = Array(4).fill(TREATMENTS).flat();
 
 export default function TreatmentsDerma() {
-  const { deviceSize } = useSessionStore(state => state);
-
   return (
     <div className="bg-derma-secondary300/70 pb-12 overflow-hidden">
       <Container className="pt-12 pb-4 overflow-hidden">
