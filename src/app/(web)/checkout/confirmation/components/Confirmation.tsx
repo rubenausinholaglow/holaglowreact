@@ -12,6 +12,7 @@ import {
 import { Appointment } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import useRoutes from 'app/utils/useRoutes';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -168,12 +169,14 @@ export default function Confirmation({
                 onClick={() =>
                   atcb_action(
                     {
-                      name: 'Añadir a mi calendario',
+                      name: 'Cita online - Derma by Holaglow',
                       description:
-                        'Añade tu cita para no olvidarte en tu calendario',
-                      startDate: '2024-02-02',
-                      startTime: '10:15',
-                      endTime: '23:30',
+                        'Consulta online con un dermatólogo estético',
+                      startDate: appointment?.startTime,
+                      startTime: appointment?.startTime?.slice(-5),
+                      endTime: dayjs(appointment?.startTime)
+                        .add(12, 'minutes')
+                        .format('HH:mm'),
                       options: [
                         'Apple',
                         'Google',
@@ -183,11 +186,13 @@ export default function Confirmation({
                       ],
                       timeZone: 'Europe/Madrid',
                     },
-                    addToCalendarRef.current || undefined
+                    addToCalendarRef.current
+                      ? addToCalendarRef.current
+                      : undefined
                   )
                 }
               >
-                <SvgCalendar className="h-4 w-4" />
+                <SvgCalendar className="h-4 w-4 mr-2" />
                 Añadir a mi calendario
               </Button>
             </Flex>
