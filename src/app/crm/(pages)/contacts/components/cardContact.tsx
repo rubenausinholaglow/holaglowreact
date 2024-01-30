@@ -33,9 +33,9 @@ export default function CardContact({ contactInfo }: CardContactProps) {
           <div className="mt-4">
             <input
               className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="comentarios"
+              id="comentario"
               type="text"
-              placeholder="Agregar comentarios"
+              placeholder="Agregar comentario"
             />
           </div>
 
