@@ -35,6 +35,8 @@ export default function Confirmation({
     state => state
   );
 
+  const { selectedSlot, selectedDay } = useSessionStore(state => state);
+
   const addToCalendarRef = useRef(null);
 
   useEffect(() => {
@@ -59,8 +61,6 @@ export default function Confirmation({
       setPayment(undefined);
     }
   }, []);
-
-  console.log(appointment);
 
   return (
     <Container className="mt-12 mb-4 md:mt-16">
@@ -172,11 +172,9 @@ export default function Confirmation({
                       name: 'Cita online - Derma by Holaglow',
                       description:
                         'Consulta online con un dermatólogo estético',
-                      startDate: appointment?.startTime,
-                      startTime: appointment?.startTime?.slice(-5),
-                      endTime: dayjs(appointment?.startTime)
-                        .add(12, 'minutes')
-                        .format('HH:mm'),
+                      startDate: dayjs(selectedDay).format('YYYY-MM-DD'),
+                      startTime: selectedSlot?.startTime,
+                      endTime: selectedSlot?.endTime,
                       options: [
                         'Apple',
                         'Google',
