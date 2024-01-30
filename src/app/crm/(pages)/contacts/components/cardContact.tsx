@@ -1,7 +1,6 @@
 import React from 'react';
 import { ClientDetails } from 'app/crm/types/Contact';
 
-
 interface CardContactProps {
   contactInfo: ClientDetails;
 }
@@ -12,7 +11,7 @@ export default function CardContact({ contactInfo }: CardContactProps) {
     <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-md">
       <div className="bg-gray-200 px-6 py-4">
         <h3 className="text-xl font-semibold text-gray-800">
-          {`${firstName} ${lastName} ${secondLastName} (${flowwwToken})`}
+          {`${firstName} ${lastName} ${secondLastName} (${flowwwToken.substring(0, flowwwToken.length - 32)})`}
         </h3>
       </div>
 
