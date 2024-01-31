@@ -156,6 +156,7 @@ const ButtonBody = ({
   bgColor,
   disabled = false,
   children,
+  id,
   ...rest
 }: {
   type: ButtonTypes;
@@ -165,6 +166,7 @@ const ButtonBody = ({
   bgColor?: string;
   disabled?: boolean;
   children: ReactNode;
+  id?: string;
 }) => {
   const DISABLED_STYLES: any = {
     primary:
