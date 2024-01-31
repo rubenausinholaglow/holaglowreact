@@ -3,9 +3,15 @@ import { ClientDetails } from 'app/crm/types/Contact';
 
 interface CardContactProps {
   contactInfo: ClientDetails;
+  isVisibleModal: boolean
+  setIsVisibleModal: (modal : boolean) => void;
 }
 
-export default function CardContact({ contactInfo }: CardContactProps) {
+export default function CardContact({
+  contactInfo,
+  isVisibleModal,
+  setIsVisibleModal,
+}: CardContactProps) {
   const { firstName, lastName, secondLastName, flowwwToken } = contactInfo;
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-md">
@@ -17,7 +23,12 @@ export default function CardContact({ contactInfo }: CardContactProps) {
 
       <div className="px-6 py-4">
         <div className="flex space-x-4">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => {
+              setIsVisibleModal(!isVisibleModal);
+            }}
+          >
             Recordatorio
           </button>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

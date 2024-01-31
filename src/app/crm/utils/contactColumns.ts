@@ -6,7 +6,7 @@ export const TaskColumns = [
 ];
 
 export const CommentsColumns = [
-  { name: 'Fecha Creación', key: 'creationDate' },
+  { name: 'Fecha de Creación', key: 'creationDate' },
   { name: 'Texto', key: 'text' },
   { name: 'Agente', key: 'agent' },
 ];
@@ -20,7 +20,15 @@ export const CallsColumns = [
 export const AppointmentsColumns = [
   { name: 'Fecha', key: 'dateAppointment' },
   { name: 'Hora', key: 'startTimeAppointment' },
-  { name: 'Ciudad', key: 'City' },
+  { name: 'Ciudad', key: 'city' },
   { name: 'Tratamientos', key: 'treatments' },
   { name: 'Estado', key: 'status' },
+];
+
+export const BudgetColumns = [
+  { name: 'Fecha', key: 'date' },
+  { name: 'Productos', key: 'productsText' },
+  { name: 'Precio', key: 'totalPrice' },
+  { name: 'Estado', key: 'statusBudget' },
+  { name: 'Acciones', key: 'actions' },
 ];
