@@ -5,30 +5,33 @@ interface DataTableContactProps {
   rows: any[];
 }
 
-function DataTableContact({
-  columns,
-  rows,
-}: DataTableContactProps) {
+function DataTableContact({ columns, rows }: DataTableContactProps) {
   return (
-    <div>
-      <table className="table">
-        <thead>
-          <tr>
-            {columns.map(column => (
-              <th key={column.key}>{column.name}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, index) => (
-            <tr key={index}>
+    <div className="container mx-auto">
+      <div className="overflow-x-auto">
+        <table className="table min-w-full border shadow">
+          <thead>
+            <tr>
               {columns.map(column => (
-                <td key={column.key}>{row[column.key]}</td>
+                <th className="border p-2" key={column.key}>
+                  {column.name}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr key={index}>
+                {columns.map(column => (
+                  <td className="border p-2" key={column.key}>
+                    {row[column.key]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
