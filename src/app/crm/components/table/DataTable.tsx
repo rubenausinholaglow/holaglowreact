@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { getStatus } from '@utils/utils';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -158,10 +159,15 @@ const DataTable: React.FC<DataTableProps> = ({
                   .filter(column => column.key.toLocaleUpperCase() !== 'ID')
                   .map(column => {
                     const value = getNestedFieldValue(rowData, column.key);
+                    const formatColumn = column.format.toLocaleUpperCase();
+
                     const formattedValue =
-                      column.format.toLocaleUpperCase() == 'DATE'
+                      column.key === 'status'
+                        ? getStatus(value)
+                        : formatColumn === 'DATE'
                         ? dayjs(value).format('DD-MM-YYYY HH:mm:ss')
                         : value;
+
                     return (
                       <td key={column.key} className="p-4">
                         <label color="blue-gray" className="font-normal">
@@ -170,6 +176,7 @@ const DataTable: React.FC<DataTableProps> = ({
                       </td>
                     );
                   })}
+
                 {showActionsColumn && (
                   <td className="p-4">
                     <Link href={`${pathName}/${rowData[columns[0].key]}`}>

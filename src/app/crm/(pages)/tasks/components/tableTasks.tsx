@@ -26,7 +26,7 @@ export default function TableTasks() {
     { label: 'id', key: 'id', format: 'string' },
 
     { label: 'Tarea', key: 'taskTemplate.name', format: 'string' },
-    { label: 'Estado', key: 'status', format: 'string' },
+    { label: 'Estado', key: 'status', format: 'Statustype' },
     {
       label: 'Nombre',
       key: 'user.firstName',
