@@ -1,6 +1,6 @@
 import { User } from "./appointment";
 
-export interface Task 
+export interface TaskInstances
 {
     id: string;
     user : User;

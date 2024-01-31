@@ -4,7 +4,7 @@ export class GraphQLQueryBuilder {
     private fields: string[],
     private after?: string,
     private before?: string,
-    private limit?: number
+    private limit?: number,
   ) {}
 
   buildQuery(entity: string, filters?: string, sortedBy?: string): string {

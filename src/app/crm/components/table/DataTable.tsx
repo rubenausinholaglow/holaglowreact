@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -8,7 +9,7 @@ import Pagination from './Pagination';
 
 interface DataTableProps {
   data: any[];
-  columns: { label: string; key: string }[];
+  columns: { label: string; key: string; format: string }[];
   itemsPerPageOptions?: number[];
   hasNextPage: boolean;
   onNextPage: () => void;
@@ -66,6 +67,23 @@ const DataTable: React.FC<DataTableProps> = ({
   useEffect(() => {
     onFilterChange(filters);
   }, [filters]);
+
+  const getNestedFieldValue = (rowData: any, key: string) => {
+    const keys = key.split('.');
+    let value = rowData;
+    for (const k of keys) {
+      if (Array.isArray(value)) {
+        value = value[0];
+      }
+      if (value && Object.prototype.hasOwnProperty.call(value, k)) {
+        value = value[k];
+      } else {
+        return '';
+      }
+    }
+    return value;
+  };
+
   if (filteredData)
     return (
       <div className="h-full w-full">
@@ -134,17 +152,22 @@ const DataTable: React.FC<DataTableProps> = ({
                 key={rowIndex}
                 className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
               >
-                {columns.map(
-                  column =>
-                    column.key.toLocaleUpperCase() !== 'ID' && (
+                {columns
+                  .filter(column => column.key.toLocaleUpperCase() !== 'ID')
+                  .map(column => {
+                    const value = getNestedFieldValue(rowData, column.key);
+                    const formattedValue =
+                      column.format.toLocaleUpperCase() == 'DATE'
+                        ? dayjs(value).format('DD-MM-YYYY HH:mm:ss')
+                        : value;
+                    return (
                       <td key={column.key} className="p-4">
                         <label color="blue-gray" className="font-normal">
-                          {rowData[column.key]}
+                          {formattedValue}
                         </label>
                       </td>
-                    )
-                )}
-
+                    );
+                  })}
                 <td className="p-4">
                   <Link href={`${pathName}/${rowData[columns[0].key]}`}>
                     <p className="font-medium text-blue-gray">Editar</p>

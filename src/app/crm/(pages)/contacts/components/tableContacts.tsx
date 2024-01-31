@@ -23,16 +23,16 @@ export default function TableContacts() {
   const [cursors, setCursors] = useState<Cursor[]>([]);
 
   const columns = [
-    { label: 'ID', key: 'id' },
-    { label: 'Nombre', key: 'firstName' },
-    { label: 'Apellido', key: 'lastName' },
-    { label: 'Teléfono', key: 'phone' },
-    { label: 'Email', key: 'email' },
+    { label: 'ID', key: 'id', format: 'string' },
+    { label: 'Nombre', key: 'firstName', format: 'string' },
+    { label: 'Apellido', key: 'lastName', format: 'string' },
+    { label: 'Teléfono', key: 'phone', format: 'string' },
+    { label: 'Email', key: 'email', format: 'string' },
   ];
   const columnKeys = columns.map(column => column.key);
   const entity = 'users';
   const client = createApolloClient(
-    process.env.NEXT_PUBLIC_CONTACTS_API || '',
+    process.env.NEXT_PUBLIC_CONTACTS_API!,
     userLoginResponse?.token || ''
   );
 
