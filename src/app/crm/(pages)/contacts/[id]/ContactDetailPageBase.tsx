@@ -4,8 +4,9 @@ import '../components/datePicker.css';
 
 import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { useForm } from 'react-hook-form';
 import { ClientDetails } from 'app/crm/types/Contact';
+import getAppointmentStatusText from 'app/crm/types/ContactAppointmentsEnum';
+import getTaskStatusText from 'app/crm/types/ContactTaskEnum';
 import {
   AppointmentsColumns,
   BudgetColumns,
@@ -23,6 +24,7 @@ import {
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
 import CardContact from '../components/cardContact';
@@ -50,6 +52,7 @@ export default function ContactDetailPageBase({
         <DataTableContact
           columns={TaskColumns}
           rows={mappingTasks(contactDetail.taskInstances)}
+          statusTypeSwitch={getTaskStatusText}
         />
       ),
     },
@@ -94,6 +97,7 @@ export default function ContactDetailPageBase({
         <DataTableContact
           columns={AppointmentsColumns}
           rows={mappingAppointments(contactDetail.appointments)}
+          statusTypeSwitch={getAppointmentStatusText}
         />
       ),
     },
@@ -163,19 +167,19 @@ export default function ContactDetailPageBase({
               />
             </div>
             <div className="p-4 flex-row">
-              <button
-                type="button"
-                className="text-black font-bold py-2 px-4 rounded"
+              <Button
+                type="primary"
+                className="mr-4"
                 onClick={() => setIsVisibleModal(!isVisibleModal)}
               >
                 Cancelar
-              </button>
-              <button
-                type="submit"
-                className=" text-black font-bold py-2 px-4 rounded"
+              </Button>
+              <Button
+                type="primary"
+                isSubmit
               >
                 Añadir
-              </button>
+              </Button>
             </div>
           </div>
         </form>
