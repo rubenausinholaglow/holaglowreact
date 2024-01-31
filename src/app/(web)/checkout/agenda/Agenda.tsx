@@ -100,6 +100,7 @@ export default function Agenda({
   };
 
   function loadMonth() {
+    setLoadingMonth(true);
     if (
       selectedTreatmentsIds &&
       availableDates.length < maxDays &&
