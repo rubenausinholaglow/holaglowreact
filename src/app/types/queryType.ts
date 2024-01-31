@@ -7,11 +7,12 @@ export class GraphQLQueryBuilder {
     private limit?: number
   ) {}
 
-  buildQuery(entity: string, filters?: string): string {
+  buildQuery(entity: string, filters?: string, sortedBy?: string): string {
     const fieldsString = this.fields.join('\n');
     const afterString = this.after ? `, after: "${this.after}"` : '';
     const beforeString = this.before ? `, before: "${this.before}"` : '';
     const limitString = this.limit ? `${this.first ? 'first' : 'last'}: ${this.limit}` : 'first: 10';
+    const sortString = sortedBy ? `${sortedBy}` : `creationDate: DESC`
 
     const filterString =
       filters &&
@@ -21,8 +22,8 @@ export class GraphQLQueryBuilder {
         .join(' || ');
 
     const query = `
-      query {
-        ${entity}(${limitString}${afterString}${beforeString}${
+      query { 
+        ${entity}(sort: [{ ${sortString} }] ${limitString}${afterString}${beforeString}${
       filterString ? `, filter: "${filterString}"` : ''
     }) {
           edges {

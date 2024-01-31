@@ -10,11 +10,12 @@ interface DataTableProps {
   data: any[];
   columns: { label: string; key: string }[];
   itemsPerPageOptions?: number[];
-  pageInfo: { hasNextPage: boolean; endCursor: string };
+  hasNextPage: boolean;
   onNextPage: () => void;
   onPreviousPage: () => void;
   onItemsPerPageChange: (value: number) => void;
   onFilterChange: (filter: string) => void;
+  onSortedChange: (sortedText: string) => void;
   totalPages: number;
 }
 
@@ -22,17 +23,18 @@ const DataTable: React.FC<DataTableProps> = ({
   data,
   columns,
   itemsPerPageOptions = [5, 10, 15, 20, 25, 50],
-  pageInfo,
+  hasNextPage,
   onNextPage,
   onPreviousPage,
   onItemsPerPageChange,
   onFilterChange,
+  onSortedChange,
   totalPages = 1,
 }) => {
   const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
   const [filters, setFilters] = useState<string>('');
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
   const [filteredData, setFilteredData] = useState<any[]>([...data]);
@@ -44,23 +46,12 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const handleSort = (columnKey: string) => {
     const order =
-      sortColumn === columnKey && sortOrder === 'asc' ? 'desc' : 'asc';
+      sortColumn === columnKey && sortOrder === 'ASC' ? 'DESC' : 'ASC';
     setSortColumn(columnKey);
     setSortOrder(order);
 
-    const sortedData = [...data].sort((a, b) => {
-      const valueA = a[columnKey];
-      const valueB = b[columnKey];
-
-      if (order === 'asc') {
-        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
-      } else {
-        return valueB > valueA ? 1 : valueB < valueA ? -1 : 0;
-      }
-    });
-
-    setCurrentPage(1);
-    setFilteredData(sortedData);
+    const sortText = columnKey + ' : ' + order;
+    onSortedChange(sortText);
   };
 
   useEffect(() => {
@@ -108,42 +99,51 @@ const DataTable: React.FC<DataTableProps> = ({
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
-              {columns.map(column => (
-                <th
-                  key={column.key}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
-                >
-                  <div className="flex" onClick={() => handleSort(column.key)}>
-                    <label
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
+              {columns.map(
+                column =>
+                  column.key.toLocaleUpperCase() !== 'ID' && (
+                    <th
+                      key={column.key}
+                      className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 cursor-pointer"
                     >
-                      {column.label}
-                    </label>
-                    {sortColumn === column.key && (
-                      <span className="ml-2">
-                        {sortOrder === 'asc' ? '↑' : '↓'}
-                      </span>
-                    )}
-                  </div>
-                </th>
-              ))}
+                      <div
+                        className="flex"
+                        onClick={() => handleSort(column.key)}
+                      >
+                        <label
+                          color="blue-gray"
+                          className="font-normal leading-none opacity-70"
+                        >
+                          {column.label}
+                        </label>
+                        {sortColumn === column.key && (
+                          <span className="ml-2">
+                            {sortOrder === 'ASC' ? '↑' : '↓'}
+                          </span>
+                        )}
+                      </div>
+                    </th>
+                  )
+              )}
               <th className="p-4">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((rowData, rowIndex) => (
+            {filteredData.slice(0, itemsPerPage).map((rowData, rowIndex) => (
               <tr
                 key={rowIndex}
                 className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
               >
-                {columns.map(column => (
-                  <td key={column.key} className="p-4">
-                    <label color="blue-gray" className="font-normal">
-                      {rowData[column.key]}
-                    </label>
-                  </td>
-                ))}
+                {columns.map(
+                  column =>
+                    column.key.toLocaleUpperCase() !== 'ID' && (
+                      <td key={column.key} className="p-4">
+                        <label color="blue-gray" className="font-normal">
+                          {rowData[column.key]}
+                        </label>
+                      </td>
+                    )
+                )}
 
                 <td className="p-4">
                   <Link href={`${pathName}/${rowData[columns[0].key]}`}>
@@ -158,8 +158,7 @@ const DataTable: React.FC<DataTableProps> = ({
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
-          hasNextPage={pageInfo.hasNextPage}
-          endCursor={pageInfo.endCursor}
+          hasNextPage={hasNextPage}
           onNextPage={onNextPage}
           onPreviousPage={onPreviousPage}
         />

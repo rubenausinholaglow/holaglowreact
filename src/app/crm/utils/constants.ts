@@ -13,7 +13,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: 'Tareas',
     path: '/crm/tasks',
   },
-  {
+  /*{
     title: 'Test Sumbenu',
     path: '/crm/tasks',
     submenu: true,
@@ -27,5 +27,5 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         path: '/',
       },
     ],
-  },
+  },*/
 ];

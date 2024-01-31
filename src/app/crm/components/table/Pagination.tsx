@@ -5,7 +5,6 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   hasNextPage: boolean;
-  endCursor: string;
   onPageChange: (page: number) => void;
   onNextPage: () => void;
   onPreviousPage: () => void;
@@ -15,7 +14,6 @@ const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   hasNextPage,
-  endCursor,
   onPageChange,
   onNextPage,
   onPreviousPage,
@@ -24,6 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="flex justify-end mt-8 gap-4 mr-4">
       <Button
         onClick={() => {
+          if (currentPage === 1) return;
           onPageChange(currentPage - 1);
           onPreviousPage();
         }}
