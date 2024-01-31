@@ -6,6 +6,8 @@ const CheckHydration = ({ children }: { children: ReactNode }) => {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    console.log('olakease');
+
     setIsHydrated(true);
   }, []);
 

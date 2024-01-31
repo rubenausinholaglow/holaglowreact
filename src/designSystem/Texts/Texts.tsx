@@ -34,7 +34,9 @@ export const Title = ({
     xl: 'text-xl lg:text-2xl',
   };
 
-  const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
+  const styles = twMerge(
+    `text-balance ${STYLES[size]} font-${weight} ${className}`
+  );
 
   if (isAnimated) {
     return (
@@ -80,7 +82,7 @@ export const TitleDerma = ({
     xl: 'text-drxl lg:text-2xl',
   };
 
-  const styles = `${className} ${STYLES[size]} ${
+  const styles = `text-balance ${className} ${STYLES[size]} ${
     size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltraBold'
   }`;
 
@@ -125,7 +127,7 @@ export const Text = ({
   const HtmlComponent = as;
 
   const styles = twMerge(
-    `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
+    `text-pretty text-left ${size ? `text-${size}` : 'text-md'} ${className}`
   );
 
   if (isAnimated) {
