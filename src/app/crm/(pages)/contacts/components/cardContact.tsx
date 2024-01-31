@@ -14,7 +14,7 @@ export default function CardContact({
 }: CardContactProps) {
   const { firstName, lastName, secondLastName, flowwwToken } = contactInfo;
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-md">
+    <div className="max-w-md bg-white rounded-xl overflow-hidden shadow-md m-4">
       <div className="bg-gray-200 px-6 py-4">
         <h3 className="text-xl font-semibold text-gray-800">
           {`${firstName} ${lastName} ${secondLastName} (${flowwwToken.substring(0, flowwwToken.length - 32)})`}

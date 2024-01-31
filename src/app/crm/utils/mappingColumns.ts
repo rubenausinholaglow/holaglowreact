@@ -32,7 +32,7 @@ export const mappingComments = (contactDetailComments: any) => {
   contactDetailComments.forEach((comment: Comment) => {
     const newModel: CommentDataTableContact = {
       agent: comment.agent ? comment.agent.username : '',
-      creationDate: comment.creationDate,
+      creationDate: dayjs(comment.creationDate).format('DD-MM-YYYY HH:mm:ss'),
       text: comment.text,
     };
     model.push(newModel);
@@ -54,7 +54,7 @@ export const mappingAppointments = (contactDetailAppointments: any) => {
     const newModel: AppointmentsDataTableContact = {
       status: appointment.status,
       city: appointment.clinic.city,
-      dateAppointment: appointment.date,
+      dateAppointment: dayjs(appointment.date).format('DD-MM-YYYY'),
       treatments: appointment.appointmentProducts[0].product.title,
       startTimeAppointment: appointment.startTime,
     };

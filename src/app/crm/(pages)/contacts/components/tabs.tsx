@@ -14,7 +14,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, defaultTab }) => {
 
   return (
     <>
-      <div className="flex bg-gray-200 p-2 rounded">
+      <div className="flex bg-gray-200 p-2 rounded m-4">
         {tabs.map(tab => (
           <button
             key={tab.label}

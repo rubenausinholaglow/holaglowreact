@@ -37,7 +37,9 @@ interface ContactDetailPageProps {
   contactDetail: ClientDetails;
 }
 
-export default function ContactDetailPageBase({ contactDetail }: ContactDetailPageProps) {
+export default function ContactDetailPageBase({
+  contactDetail,
+}: ContactDetailPageProps) {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [startDate, setStartDate] = useState<Date>(new Date());
 
@@ -111,7 +113,7 @@ export default function ContactDetailPageBase({ contactDetail }: ContactDetailPa
 
   return (
     <>
-      <div className="rounded-xl bg-white ml-64 mt-2 mr-4 h-screen">
+      <div className="rounded-xl bg-white ml-64 mt-2 mr-4 mb-10 h-screen">
         <CardContact
           contactInfo={contactDetail}
           isVisibleModal={isVisibleModal}
