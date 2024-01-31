@@ -45,6 +45,10 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const handlePageChange = (page: number) => {
     if (page < 1) return;
+    if (page > currentPage) {
+      onNextPage();
+    } else onPreviousPage();
+
     setCurrentPage(page);
   };
 
@@ -193,8 +197,6 @@ const DataTable: React.FC<DataTableProps> = ({
           totalPages={totalPages}
           onPageChange={handlePageChange}
           hasNextPage={hasNextPage}
-          onNextPage={onNextPage}
-          onPreviousPage={onPreviousPage}
         />
       </div>
     );

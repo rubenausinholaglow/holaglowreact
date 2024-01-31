@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { DocumentNode } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
 import { User } from '@interface/appointment';
 import DataTable from 'app/crm/components/table/DataTable';
@@ -35,9 +36,9 @@ export default function TableContacts() {
     userLoginResponse?.token || ''
   );
 
-  const fetchContacts = async (queryString: any, nextPage?: boolean) => {
+  const fetchContacts = async (query: DocumentNode, nextPage?: boolean) => {
     try {
-      const { data } = await client.query({ query: queryString });
+      const { data } = await client.query({ query: query });
       if (data.users.edges) {
         updateState(data, nextPage);
         setUsers(data.users.edges.map((edge: any) => edge.node));

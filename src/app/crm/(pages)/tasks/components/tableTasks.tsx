@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { DocumentNode } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
 import { TaskInstances } from '@interface/task';
 import DataTable from 'app/crm/components/table/DataTable';
@@ -85,9 +86,9 @@ export default function TableTasks() {
     userLoginResponse?.token || ''
   );
 
-  const fetchTasks = async (queryString: any, nextPage?: boolean) => {
+  const fetchTasks = async (query: DocumentNode, nextPage?: boolean) => {
     try {
-      const { data } = await client.query({ query: queryString });
+      const { data } = await client.query({ query: query });
       if (data.taskInstances.edges) {
         updateState(data, nextPage);
         setTasks(data.taskInstances.edges.map((edge: any) => edge.node));
