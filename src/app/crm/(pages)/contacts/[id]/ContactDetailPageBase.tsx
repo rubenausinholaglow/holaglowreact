@@ -48,13 +48,16 @@ export default function ContactDetailPageBase({
   const tabs = [
     {
       label: 'Tareas',
-      component: (
-        <DataTableContact
-          columns={TaskColumns}
-          rows={mappingTasks(contactDetail.taskInstances)}
-          statusTypeSwitch={getTaskStatusText}
-        />
-      ),
+      component:
+        contactDetail.taskInstances.length === 0 ? (
+          <div className="pl-5">No se han encontrado Tareas.</div>
+        ) : (
+          <DataTableContact
+            columns={TaskColumns}
+            rows={mappingTasks(contactDetail.taskInstances)}
+            statusTypeSwitch={getTaskStatusText}
+          />
+        ),
     },
     {
       label: 'Datos personales',
@@ -72,18 +75,23 @@ export default function ContactDetailPageBase({
     },
     {
       label: 'Comentarios',
-      component: (
-        <DataTableContact
-          columns={CommentsColumns}
-          rows={mappingComments(contactDetail.comments)}
-        />
-      ),
+      component:
+        contactDetail.comments.length === 0 ? (
+          <div className="pl-5">No se ha encontrado Comentarios.</div>
+        ) : (
+          <DataTableContact
+            columns={CommentsColumns}
+            rows={mappingComments(contactDetail.comments)}
+          />
+        ),
     },
     {
       label: 'Llamadas',
       component:
         contactDetail.calls.length === 0 ? (
-          <div>No se ha encontrado información de llamadas.</div>
+          <div className="pl-5">
+            No se ha encontrado información de llamadas.
+          </div>
         ) : (
           <DataTableContact
             columns={CallsColumns}
@@ -93,19 +101,24 @@ export default function ContactDetailPageBase({
     },
     {
       label: 'Citas',
-      component: (
-        <DataTableContact
-          columns={AppointmentsColumns}
-          rows={mappingAppointments(contactDetail.appointments)}
-          statusTypeSwitch={getAppointmentStatusText}
-        />
-      ),
+      component:
+        contactDetail.appointments.length === 0 ? (
+          <div className="pl-5">No se ha encontrado información de citas.</div>
+        ) : (
+          <DataTableContact
+            columns={AppointmentsColumns}
+            rows={mappingAppointments(contactDetail.appointments)}
+            statusTypeSwitch={getAppointmentStatusText}
+          />
+        ),
     },
     {
       label: 'Presupuestos',
       component:
         contactDetail.calls.length === 0 ? (
-          <div>No se ha encontrado información de presupuestos.</div>
+          <div className="pl-5">
+            No se ha encontrado información de presupuestos.
+          </div>
         ) : (
           <DataTableContact
             columns={BudgetColumns}
@@ -174,10 +187,7 @@ export default function ContactDetailPageBase({
               >
                 Cancelar
               </Button>
-              <Button
-                type="primary"
-                isSubmit
-              >
+              <Button type="primary" isSubmit>
                 Añadir
               </Button>
             </div>
