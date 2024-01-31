@@ -48,11 +48,13 @@ export default function ClinicFilter({ className }: { className?: string }) {
             )
           }
         >
-          {productFilters.clinic.includes(clinic.internalName) ? (
-            <SvgCheckSquareActive className="mr-2" />
-          ) : (
-            <SvgCheckSquare className="mr-2" />
-          )}
+          <div className="pointer-events-none">
+            {productFilters.clinic.includes(clinic.internalName) ? (
+              <SvgCheckSquareActive className="mr-2" />
+            ) : (
+              <SvgCheckSquare className="mr-2" />
+            )}
+          </div>
           {clinic.city}
         </li>
       ))}
