@@ -44,7 +44,7 @@ export default function WaitComponent() {
           await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
-            selectedDay,
+            selectedDay!,
             selectedClinic!,
             user!,
             selectedPacksTreatments!,
