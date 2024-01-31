@@ -114,10 +114,14 @@ export default function TreatmentAccordionSelector({
                           );
                           setSelectedTreatments(updatedSelection);
                         } else {
-                          setSelectedTreatments([
-                            ...selectedTreatments,
-                            product,
-                          ]);
+                          if (isDashboard) {
+                            setSelectedTreatments([
+                              ...selectedTreatments,
+                              product,
+                            ]);
+                          } else {
+                            setSelectedTreatments([product]);
+                          }
                         }
 
                         if (!isDashboard) {
