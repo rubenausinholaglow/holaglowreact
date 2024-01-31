@@ -92,7 +92,6 @@ export default function FloatingBottomBar({
               )}
             </Button>
           </div>
-          OLAKEASE
           <Button
             type="primary"
             size="xl"
