@@ -18,6 +18,7 @@ interface DataTableProps {
   onFilterChange: (filter: string) => void;
   onSortedChange: (sortedText: string) => void;
   totalPages: number;
+  showActionsColumn: boolean;
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -31,6 +32,7 @@ const DataTable: React.FC<DataTableProps> = ({
   onFilterChange,
   onSortedChange,
   totalPages = 1,
+  showActionsColumn = true,
 }) => {
   const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
@@ -143,7 +145,7 @@ const DataTable: React.FC<DataTableProps> = ({
                     </th>
                   )
               )}
-              <th className="p-4">Acciones</th>
+              {showActionsColumn && <th className="p-4">Acciones</th>}
             </tr>
           </thead>
           <tbody>
@@ -168,11 +170,13 @@ const DataTable: React.FC<DataTableProps> = ({
                       </td>
                     );
                   })}
-                <td className="p-4">
-                  <Link href={`${pathName}/${rowData[columns[0].key]}`}>
-                    <p className="font-medium text-blue-gray">Editar</p>
-                  </Link>
-                </td>
+                {showActionsColumn && (
+                  <td className="p-4">
+                    <Link href={`${pathName}/${rowData[columns[0].key]}`}>
+                      <p className="font-medium text-blue-gray">Editar</p>
+                    </Link>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

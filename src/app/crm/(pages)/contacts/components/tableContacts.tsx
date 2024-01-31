@@ -17,9 +17,8 @@ export default function TableContacts() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
-
-  const [itemsPerPage, setItemsPerPage] = useState<number | 0>(10);
-  const [totalCount, setTotalCount] = useState<number | 0>(0);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [totalCount, setTotalCount] = useState<number>(0);
   const [cursors, setCursors] = useState<Cursor[]>([]);
 
   const columns = [
@@ -134,6 +133,7 @@ export default function TableContacts() {
           totalPages={totalCount}
           onFilterChange={handleOnFilterChange}
           onSortedChange={handleSortChange}
+          showActionsColumn={true}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>

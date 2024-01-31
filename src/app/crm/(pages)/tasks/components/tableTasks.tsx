@@ -198,6 +198,7 @@ export default function TableTasks() {
           totalPages={totalCount}
           onFilterChange={handleOnFilterChange}
           onSortedChange={handleSortChange}
+          showActionsColumn={false}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>
