@@ -1,4 +1,3 @@
-import MainLayout from 'app/(web)/components/layout/MainLayout';
 import type { Metadata } from 'next';
 
 import Home from './components/Home';

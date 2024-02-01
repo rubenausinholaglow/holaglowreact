@@ -1,11 +1,5 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import { fetchClinics } from '@utils/fetch';
 import { SvgAngle } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
 import { Clinic } from 'app/types/clinic';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
@@ -16,20 +10,37 @@ import {
 } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 
 import { AnimateOnViewport } from './AnimateOnViewport';
+/* import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore'; */
+import ClinicsSelector from './ClinicsSelector';
 
-export default function Clinics({ className = '' }: { className?: string }) {
-  const { clinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize } = useSessionStore(state => state);
+async function getClinics() {
+  const clinics = await fetchClinics();
 
-  const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
+  return clinics;
+}
+
+export default async function Clinics({
+  className = '',
+}: {
+  className?: string;
+}) {
+  const clinics = await getClinics();
+
+  //const { deviceSize } = useSessionStore(state => state);
+
+  const selectedAccordion = 0;
+
+  /* const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
-  const [googleMapAddress, setGoogleMapAddress] = useState('');
+  const [googleMapAddress, setGoogleMapAddress] = useState(''); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!deviceSize.isMobile && clinics.length > 0)
       setSelectedClinic(clinics[0]);
   }, [clinics]);
@@ -48,7 +59,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
 
       setGoogleMapAddress(`${formattedAddress},${formattedCity}`);
     }
-  }, [selectedClinic]);
+  }, [selectedClinic]); */
 
   return (
     <div className={className}>
@@ -58,15 +69,17 @@ export default function Clinics({ className = '' }: { className?: string }) {
             Nuestras <br className="hidden md:block" />
             <Underlined color={HOLAGLOW_COLORS['primary']}>clínicas</Underlined>
           </Title>
-          <Accordion
+
+          {clinics && <ClinicsSelector clinics={clinics} />}
+          {/* <Accordion
             className={`w-full flex flex-col gap-4`}
-            value={selectedAccordion}
+            //value={selectedAccordion}
+            value="0"
           >
-            {deviceSize.isMobile &&
-              clinics &&
+            {clinics &&
               clinics.map((clinic, index) => (
                 <AccordionItem
-                  className="w-full"
+                  className="w-full md:hidden"
                   key={index}
                   value={index.toString()}
                 >
@@ -129,10 +142,10 @@ export default function Clinics({ className = '' }: { className?: string }) {
                   </AccordionContent>
                 </AccordionItem>
               ))}
-          </Accordion>
+          </Accordion> */}
 
           {/* desktop clinic selector */}
-          {!deviceSize.isMobile && clinics && (
+          {/* {clinics && (
             <>
               <div className="hidden md:flex w-1/2">
                 <Flex layout="col-left" className="gap-4 mr-24 w-full">
@@ -178,7 +191,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                 </div>
               </div>
             </>
-          )}
+          )} */}
         </Container>
       </div>
     </div>
