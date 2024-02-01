@@ -17,7 +17,7 @@ export default function getBudgetStatusText(
     case BudgetStatusEnum.PENDIENTE:
       return { text: 'PENDIENTE', color: 'blue' };
     case BudgetStatusEnum.ACEPTADO:
-      return { text: 'ACEPTADO', color: 'green-light' };
+      return { text: 'ACEPTADO', color: 'green' };
     case BudgetStatusEnum.RECHAZADO:
       return { text: 'RECHAZADO', color: 'red' };
     case BudgetStatusEnum.PAGADO:

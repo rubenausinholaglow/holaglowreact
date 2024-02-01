@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Badge from './badge';
+
 interface DataTableContactProps {
   columns: any[];
   rows: any[];
@@ -35,9 +37,10 @@ function DataTableContact({
                     key={column.key}
                   >
                     {column.key === 'status' && statusTypeSwitch ? (
-                      <span className={`inline-flex items-center rounded-md bg-${statusTypeSwitch(row[column.key]).color}-50 px-2 py-1 text-xs font-medium text-${statusTypeSwitch(row[column.key]).color}-600 ring-1 ring-inset ring-${statusTypeSwitch(row[column.key]).color}-500/10`}>
-                        {statusTypeSwitch(row[column.key]).text}
-                      </span>
+                      <Badge
+                        text={statusTypeSwitch(row[column.key]).text}
+                        color={statusTypeSwitch(row[column.key]).color}
+                      />
                     ) : (
                       row[column.key]
                     )}

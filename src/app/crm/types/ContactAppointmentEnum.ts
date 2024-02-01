@@ -26,7 +26,7 @@ export default function getAppointmentStatusText(
     case AppointmentStatusEnum.REAGENDA:
       return { text: 'Reagenda', color: 'yellow' };
     case AppointmentStatusEnum.CONFIRMADA:
-      return { text: 'Confirmada', color: 'green-light' };
+      return { text: 'Confirmada', color: 'green' };
     case AppointmentStatusEnum.FINALIZADA:
       return { text: 'Finalizada', color: 'green' };
     case AppointmentStatusEnum.EN_CURSO:
