@@ -9,6 +9,7 @@ type ButtonTypes =
   | 'secondary'
   | 'tertiary'
   | 'transparent'
+  | 'derma'
   | 'disabled';
 type ButtonSizes = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -184,6 +185,8 @@ const ButtonBody = ({
     tertiary: `${bgColor ? bgColor : 'bg-white'} ${
       color ? color : 'text-hg-black border border-hg-black'
     }`,
+    derma:
+      'bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary',
     transparent:
       'bg-white text-hg-black border border-transparent group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100',
     disabled: 'bg-hg-black100 text-hg-black300 cursor-default',

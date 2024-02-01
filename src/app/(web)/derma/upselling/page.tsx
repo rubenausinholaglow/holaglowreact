@@ -5,20 +5,20 @@ import UpsellingIntro from './components/UpsellingIntro';
 import UpsellingPharmacies from './components/UpsellingPharmacies';
 import UpsellingRoutines from './components/UpsellingRoutines';
 
-export default function Upselling() {
-  const fakeAPIResponse: UpsellingData = {
-    userName: 'Pepito de los palotes',
-    userPostalCode: '08013',
-    expeditionDate: '2014-12-10',
-    rutineType: 3,
-    receiptUrl: 'https://www.google.com',
-  };
+const fakeAPIResponse: UpsellingData = {
+  userName: 'Pepito de los palotes',
+  userPostalCode: '08013',
+  expeditionDate: '2014-12-10',
+  rutineType: 2,
+  receiptUrl: 'https://www.google.com',
+};
 
+export default function Upselling() {
   return (
     <DermaLayout hideButton>
       <UpsellingIntro data={fakeAPIResponse} />
-      <UpsellingRoutines />
-      <UpsellingPharmacies />
+      <UpsellingRoutines data={fakeAPIResponse} />
+      <UpsellingPharmacies data={fakeAPIResponse} />
     </DermaLayout>
   );
 }

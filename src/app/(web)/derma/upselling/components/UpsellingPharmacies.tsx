@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
+import { UpsellingData } from '@interface/upselling';
 import { SvgSend } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { TitleDerma } from 'designSystem/Texts/Texts';
 
-export default function UpsellingPharmacies() {
+export default function UpsellingPharmacies({ data }: { data: UpsellingData }) {
   const [pharmacyPostalCode, setPharmacyPostalCode] = useState<
     string | undefined
-  >('08013');
+  >(data.userPostalCode);
   const [googleMapSrc, setGoogleMapSrc] = useState<string | undefined>(
     undefined
   );

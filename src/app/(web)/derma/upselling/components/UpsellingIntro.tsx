@@ -47,15 +47,15 @@ export default function UpsellingIntro({ data }: { data: UpsellingData }) {
 
           <Button
             size="xl"
-            type="tertiary"
+            type="derma"
             className="w-full mb-4"
-            customStyles="border-none bg-derma-primary text-white font-normal justify-start pl-2 pr-4"
+            customStyles="group font-normal justify-start pl-2 pr-4"
             href={data.receiptUrl}
             target="_blank"
           >
             <Flex
               layout="row-center"
-              className="h-12 w-12 mr-2 bg-derma-primary500 rounded-full p-2"
+              className="transition-all h-12 w-12 mr-2 bg-derma-primary500 rounded-full p-2 group-hover:bg-white"
             >
               <SvgReceiptEdit className="h-6 w-6" />
             </Flex>

@@ -38,10 +38,10 @@ export default function DermaBottomBar({
       <div className="p-4 mx-w-xl bg-derma-secondary400 rounded-t-[40px]">
         <Button
           size="xl"
-          type="tertiary"
+          type="derma"
           href="/multistep/start"
           className="mr-4 pointer-events-auto w-full"
-          customStyles="px-2 bg-derma-primary border-none text-white hover:bg-derma-primary500 hover:text-derma-primary"
+          customStyles="px-2"
           id={'tmevent_click_floating_button'}
         >
           Reserva tu consulta online

@@ -75,10 +75,9 @@ export default function HeroDerma() {
                   <Flex layout="row-center" className="w-full md:justify-start">
                     <Button
                       isAnimated
-                      type="tertiary"
+                      type="derma"
                       size="xl"
                       className="lg:mb-12"
-                      customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
                       href="/multistep/start"
                       id={'tmevent_multistep_module'}
                     >

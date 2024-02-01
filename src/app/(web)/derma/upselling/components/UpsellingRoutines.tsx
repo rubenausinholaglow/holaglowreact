@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { UpsellingData } from '@interface/upselling';
 import { SvgCheckCircle, SvgCross, SvgWarning } from 'app/icons/IconsDs';
 import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -9,23 +10,28 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-export default function UpsellingRoutines() {
+import { DERMA_PRODUCTS, DERMA_ROUTINES, DERMA_TYPES } from '../mockedData';
+
+export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const { showModalBackground } = useGlobalStore(state => state);
-
   const { deviceSize } = useSessionStore(state => state);
-  const [showModal, setShowModal] = useState(false);
 
-  console.log(showModalBackground, showModal);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRoutine, setSelectedRoutine] = useState(0);
 
   useEffect(() => {
     setShowModal(showModalBackground);
   }, [showModalBackground]);
 
+  const filteredProducts = DERMA_PRODUCTS.filter(product =>
+    product.type.includes(data.rutineType)
+  );
+
   return (
     <>
       <Modal
         isVisible={showModal}
-        width={deviceSize.isMobile ? 'w-full' : 'w-[400px]'}
+        width={deviceSize.isMobile ? 'w-full' : 'max-w-[550px]'}
         className="shadow-none"
         type="right"
         hideModalBackground
@@ -40,22 +46,23 @@ export default function UpsellingRoutines() {
 
           <Container>
             <Image
-              src="/images/derma/upselling/seguimiento.png"
-              alt="Seguimiento online con tu dermatólogo"
+              src={DERMA_ROUTINES[selectedRoutine].imgSrc}
+              alt={DERMA_ROUTINES[selectedRoutine].name}
               height={516}
               width={360}
-              className="w-1/2 shrink-0 mx-auto"
+              className="w-1/2 shrink-0 mx-auto mb-8"
             />
-            <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-              Rutina personalizada antiaging
-            </Text>
+            {selectedRoutine !== 0 && (
+              <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
+                Rutina personalizada {DERMA_TYPES[data.rutineType]}
+              </Text>
+            )}
             <TitleDerma className="text-derma-primary mb-4">
-              Tu rutina facial completa
+              {DERMA_ROUTINES[selectedRoutine].name}
             </TitleDerma>
-
             <Flex
               layout="col-left"
-              className="rounded-2xl bg-derma-secondary400 p-4 py-6 w-full gap-2 mb-8"
+              className="rounded-2xl bg-derma-secondary400 p-4 py-6 w-full gap-4 mb-8"
             >
               {[
                 '<span class="font-semibold text-derma-tertiary">Revisión online</span> con tu dermatólogo tras aplicar la formula magistral, para de aquí 3 meses.',
@@ -74,34 +81,16 @@ export default function UpsellingRoutines() {
                 );
               })}
             </Flex>
-
             <Flex layout="col-left" className="w-full">
-              {[
-                {
-                  title: 'Espuma limpiadora',
-                  subTitle: '150ml',
-                  text: 'Este mousse limpiador para todo tipo de pieles emulsiona perfectamente los residuos de la superficie de la piel y favorece la renovación celular gracias a su composición con ácido glicólico.',
-                },
-                {
-                  title: 'Crema contorno de ojos',
-                  subTitle: '30ml',
-                  text: 'La zona periocular es especialmente vulnerable, por eso, el objetivo principal de este contorno con ácido hialurónico es regular la hidratación y redensificar la piel mejorando su firmeza.',
-                },
-                {
-                  title: 'Protector solar 50+',
-                  subTitle: '50ml',
-                  text: 'Un protector de alto espectro como este te ayudará a prevenir el envejecimiento prematuro de tu piel protegiéndola de los efectos dañinos del sol y aportando hidratación dejando un tacto aterciopelado.',
-                },
-                {
-                  title: 'Crema antiaging Plus day',
-                  subTitle: '50ml',
-                  text: 'Esta crema es un tratamiento diurno específico para atenuar el envejecimiento de la piel y lograr la redensificación cutánea suavizando las arrugas y mejorando la textura.',
-                },
-              ].map((item, index) => {
+              {filteredProducts.map((item, index) => {
                 return (
                   <Flex
                     layout="col-left"
-                    className="w-full text-derma-tertiary mb-6 pb-8 border-b border-hg-black300"
+                    className={`w-full text-derma-tertiary mb-6 pb-8 ${
+                      filteredProducts.length !== index + 1
+                        ? 'border-b border-hg-black300'
+                        : ''
+                    }`}
                     key={index}
                   >
                     <Text className="text-derma-tertiary mb-2 font-semibold text-lg">
@@ -116,6 +105,22 @@ export default function UpsellingRoutines() {
               })}
             </Flex>
           </Container>
+          <Flex className="bg-derma-tertiary justify-between rounded-t-2xl sticky bottom-0 py-4 px-6 text-white w-full">
+            <div>
+              <Text className="text-3xl font-bold">
+                {DERMA_ROUTINES[selectedRoutine].price}
+              </Text>
+              {DERMA_ROUTINES[selectedRoutine].price !==
+                DERMA_ROUTINES[selectedRoutine].discountedPrice && (
+                <Text className="text-sm text-hg-error font-medium line-through">
+                  PVP {DERMA_ROUTINES[selectedRoutine].discountedPrice}
+                </Text>
+              )}
+            </div>
+            <Button size="lg" type="derma">
+              Quiero el pack
+            </Button>
+          </Flex>
         </div>
       </Modal>
 
@@ -146,141 +151,62 @@ export default function UpsellingRoutines() {
             layout="col-left"
             className="w-full gap-6 md:grid md:grid-flow-col md:auto-cols-auto"
           >
-            <Flex
-              layout="col-left"
-              className="bg-derma-secondary400 py-6 px-4 md:px-6 rounded-3xl h-full"
-            >
-              <Flex className="gap-6 mb-4 md:mb-8 md:flex-col h-full">
-                <Image
-                  src="/images/derma/upselling/seguimiento.png"
-                  alt="Seguimiento online con tu dermatólogo"
-                  height={516}
-                  width={360}
-                  className="w-1/2 shrink-0"
-                />
+            {DERMA_ROUTINES.map((routine, index) => (
+              <Flex
+                key={index}
+                layout="col-left"
+                className={` py-6 px-4 md:px-6 rounded-3xl h-full w-full ${
+                  index === 2
+                    ? 'bg-derma-tertiary text-white'
+                    : 'bg-derma-secondary400'
+                }`}
+              >
+                <Flex className="gap-6 mb-4 md:mb-8 md:flex-col h-full w-full">
+                  <div className="relative aspect-square w-1/2 shrink-0 md:w-full">
+                    <Image
+                      src={routine.imgSrc}
+                      alt="Seguimiento online con tu dermatólogo"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
 
-                <Flex layout="col-left" className="w-full">
-                  <Text className="text-md mb-3 md:text-lg md:font-semibold">
-                    Seguimiento online con tu dermatólogo
-                  </Text>
-                  <Text className="text-3xl font-bold">49€</Text>
-                  <Text className="text-sm text-hg-error font-medium line-through">
-                    PVP 59 €
-                  </Text>
+                  <Flex layout="col-left" className="w-full">
+                    <Text className="text-md mb-3 md:text-lg md:font-semibold">
+                      {routine.name}
+                    </Text>
+                    <Text className="text-3xl font-bold">{routine.price}</Text>
+                    {routine.price !== routine.discountedPrice && (
+                      <Text className="text-sm text-hg-error font-medium line-through">
+                        PVP {routine.discountedPrice}
+                      </Text>
+                    )}
+                  </Flex>
+                </Flex>
+
+                <Flex layout="row-center" className="justify-between w-full">
+                  <Button
+                    size="sm"
+                    type="tertiary"
+                    customStyles={`border-none  text-derma-tertiary ${
+                      index !== 2
+                        ? 'bg-derma-secondary100'
+                        : 'bg-white/10 text-white'
+                    }`}
+                    onClick={() => {
+                      console.log(index);
+                      setSelectedRoutine(index);
+                      setShowModal(true);
+                    }}
+                  >
+                    Saber más
+                  </Button>
+                  <Button type="derma" size="lg">
+                    Reservar cita
+                  </Button>
                 </Flex>
               </Flex>
-
-              <Flex layout="row-center" className="justify-between w-full">
-                <Button
-                  size="sm"
-                  type="tertiary"
-                  customStyles="border-none bg-derma-secondary100 text-derma-tertiary"
-                  onClick={() => setShowModal(true)}
-                >
-                  Saber más
-                </Button>
-                <Button
-                  type="tertiary"
-                  size="lg"
-                  customStyles="border-none text-white bg-derma-primary"
-                >
-                  Reservar cita
-                </Button>
-              </Flex>
-            </Flex>
-
-            <Flex
-              layout="col-left"
-              className="bg-derma-secondary400 py-6 px-4 md:px-6 rounded-3xl h-full"
-            >
-              <Flex className="gap-6 mb-4 md:mb-8 md:flex-col h-full">
-                <Image
-                  src="/images/derma/upselling/rutinaFacial.png"
-                  alt="Rutina Facial Derma by Holaglow"
-                  height={448}
-                  width={392}
-                  className="w-1/2 shrink-0"
-                />
-
-                <Flex layout="col-left" className="w-full">
-                  <Text className="mb-4 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs">
-                    Rutina{' '}
-                    <span className="hidden md:inline">personalizada</span>{' '}
-                    antiaging
-                  </Text>
-                  <Text className="text-md mb-3 md:text-lg md:font-semibold">
-                    Tu rutina facial completa
-                  </Text>
-                  <Text className="text-3xl font-bold">129€</Text>
-                </Flex>
-              </Flex>
-
-              <Flex layout="row-center" className="justify-between w-full">
-                <Button
-                  size="sm"
-                  type="tertiary"
-                  customStyles="border-none bg-derma-secondary100 text-derma-tertiary"
-                  onClick={() => setShowModal(true)}
-                >
-                  Saber más
-                </Button>
-                <Button
-                  type="tertiary"
-                  size="lg"
-                  customStyles="border-none text-white bg-derma-primary"
-                >
-                  Comprar rutina
-                </Button>
-              </Flex>
-            </Flex>
-
-            <Flex
-              layout="col-left"
-              className="bg-derma-tertiary text-white py-6 px-4 md:px-6 rounded-3xl h-full"
-            >
-              <Flex className="gap-2 mb-4 md:mb-8 md:flex-col">
-                <Image
-                  src="/images/derma/upselling/packDerma.png?1"
-                  alt="Solución completa. Rutina facial y revisión médica."
-                  height={482}
-                  width={426}
-                  className="w-[60%] shrink-0"
-                />
-
-                <Flex layout="col-left" className="w-full">
-                  <Text className="mb-4 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs">
-                    Rutina{' '}
-                    <span className="hidden md:inline">personalizada</span>{' '}
-                    antiaging
-                  </Text>
-                  <Text className="text-md mb-3 md:text-lg md:font-semibold">
-                    Solución completa. Tu rutina facial más revisión médica
-                  </Text>
-                  <Text className="text-3xl font-bold">139€</Text>
-                  <Text className="text-sm text-hg-error font-medium line-through">
-                    PVP 198 €
-                  </Text>
-                </Flex>
-              </Flex>
-
-              <Flex layout="row-center" className="justify-between w-full">
-                <Button
-                  size="sm"
-                  type="tertiary"
-                  customStyles="border-none bg-white/10 text-white"
-                  onClick={() => setShowModal(true)}
-                >
-                  Saber más
-                </Button>
-                <Button
-                  type="tertiary"
-                  size="lg"
-                  customStyles="border-none text-white bg-derma-primary"
-                >
-                  Comprar rutina
-                </Button>
-              </Flex>
-            </Flex>
+            ))}
           </Flex>
         </Container>
       </div>

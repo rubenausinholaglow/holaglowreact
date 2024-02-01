@@ -28,12 +28,7 @@ export default function WhatsIncludedDerma() {
               layout="row-between"
               className="p-6 bg-derma-primary300 rounded-full w-full hidden md:flex"
             >
-              <Button
-                size="xl"
-                type="tertiary"
-                href="/multistep/start"
-                customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
-              >
+              <Button size="xl" type="derma" href="/multistep/start">
                 Comienza ahora
               </Button>
 
@@ -94,10 +89,10 @@ export default function WhatsIncludedDerma() {
                 />
 
                 <Button
-                  type="tertiary"
+                  type="derma"
                   size="lg"
                   href="/multistep/start"
-                  customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary md:hidden"
+                  customStyles="md:hidden"
                 >
                   Comienza ahora
                 </Button>
