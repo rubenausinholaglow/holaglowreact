@@ -97,9 +97,12 @@ export default function FloatingBottomBar({
             size="xl"
             className="pointer-events-auto"
             customStyles="h-[64px] p-0 w-[64px] shrink-0"
-            id={'tmevent_click_floating_button'}
           >
-            <a href={url} target="_blank">
+            <a
+              href={url}
+              target="_blank"
+              id="tmevent_click_floating_button_whatsapp"
+            >
               <SvgWhatsapp className="text-hg-primary" />
             </a>
           </Button>

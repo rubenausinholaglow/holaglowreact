@@ -21,14 +21,13 @@ export default function PackTypeFilter({
 
   return (
     <Button
-      id={'tmevent_filters'}
       isAnimated
       origin="right"
       className={className}
       type="tertiary"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
       customStyles={twMerge(`
-        border-none group-hover:bg-hg-secondary100 ${
+        border-none group-hover:bg-hg-secondary100 pointer-events-none ${
           customStyles ? customStyles : ''
         } 
         ${
@@ -38,6 +37,7 @@ export default function PackTypeFilter({
         }
         ${productFilters.isPack ? 'bg-hg-primary500' : ''}
       `)}
+      id="tmevent_treatments_type"
     >
       {productFilters.isPack ? (
         <SvgCheckSquareActive
