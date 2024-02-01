@@ -1,5 +1,15 @@
-import { DocumentNode,gql } from '@apollo/client'; 
+import { ApolloClient, DocumentNode,gql } from '@apollo/client'; 
+import Bugsnag from '@bugsnag/js';
 import GraphQLQueryBuilder from '@interface/queryType';
+import { createApolloClient } from 'lib/client';
+
+class TableFunctions{
+    columnKeys: string[] | undefined;
+    entity?: string;
+
+
+
+}
 
 export interface Cursor {
   startCursor: string;
@@ -8,36 +18,61 @@ export interface Cursor {
   hasPreviousPage: boolean;
 }
 
-export interface CreateQuery {
+export interface TableQuery {
   nextPage: boolean;
+  queryToExecute: string[]| string;
+  entity?: string;
   stringFilter?: string;
   numberPerPage?: number;
   sortedBy?: string;
-  columnKeys: string[];
-  entity: string;
+  lastCursor? : string;
+  nextCursor? : string;
 }
 
 export function createQuery(
-  params: CreateQuery,
-  cursors: Cursor[],
+  params: TableQuery,
 ): DocumentNode {
-  const { nextPage, columnKeys, entity, stringFilter, numberPerPage, sortedBy } = params;
-
-  const lastCursor = cursors[cursors.length - 2]?.endCursor || '';
-  const nextCursor = cursors[cursors.length - 1]?.endCursor || '';
+  const { nextPage, queryToExecute, entity, stringFilter, numberPerPage, sortedBy, lastCursor, nextCursor } = params;
 
 
   const nextPageFlag = nextPage ? true : false;
 
   const queryBuilder = new GraphQLQueryBuilder(
     nextPageFlag,
-    columnKeys,
+    queryToExecute,
     nextPage && !stringFilter && !sortedBy && !numberPerPage ? nextCursor : '',
     !nextPage && !stringFilter && !sortedBy && !numberPerPage ? lastCursor : '',
     numberPerPage ? numberPerPage : 10
   );
 
-  const queryString = queryBuilder.buildQuery(entity, stringFilter, sortedBy);
+  const queryString = queryBuilder.buildQuery(entity!, stringFilter, sortedBy);
 
   return gql(queryString);
 }
+
+
+export async function executeQuery(params: TableQuery){
+  const query = createQuery(params);
+  try {
+    const client = createApolloClient(process.env.NEXT_PUBLIC_CONTACTS_API!, "");
+    const response = await fetchData(query, client);
+    return response;
+  } catch (error) {
+    console.error('Error executing query:', error);
+    return undefined;
+  }
+}
+
+const fetchData = async (query: DocumentNode, client: ApolloClient<any>) => {
+  try {
+    const { data } = await client.query({ query });
+    if (data) {
+      return data;
+    } else {
+      Bugsnag.notify('Error getting data');
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    Bugsnag.notify('Error fetching data');
+  }
+};

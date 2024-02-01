@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getStatus } from '@utils/utils';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -13,13 +13,14 @@ interface DataTableProps {
   columns: { label: string; key: string; format: string }[];
   itemsPerPageOptions?: number[];
   hasNextPage: boolean;
-  onNextPage: () => void;
-  onPreviousPage: () => void;
-  onItemsPerPageChange: (value: number) => void;
-  onFilterChange: (filter: string) => void;
-  onSortedChange: (sortedText: string) => void;
   totalPages: number;
   showActionsColumn: boolean;
+  executeQuery: (
+    nextPage: boolean,
+    stringFilter?: string,
+    numberPerPage?: number,
+    sortedBy?: string
+  ) => void;
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -27,14 +28,10 @@ const DataTable: React.FC<DataTableProps> = ({
   columns,
   itemsPerPageOptions = [5, 10, 15, 20, 25, 50],
   hasNextPage,
-  onNextPage,
-  onPreviousPage,
-  onItemsPerPageChange,
-  onFilterChange,
-  onSortedChange,
   totalPages = 1,
   showActionsColumn = true,
-}) => {
+  executeQuery,
+}: DataTableProps) => {
   const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState('');
@@ -42,14 +39,50 @@ const DataTable: React.FC<DataTableProps> = ({
   const [filters, setFilters] = useState<string>('');
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
   const [filteredData, setFilteredData] = useState<any[]>([...data]);
+  const [sendFilter, setSendFilter] = useState(true);
+
+  const debounce = <T extends (...args: any[]) => ReturnType<T>>(
+    callback: T,
+    timeout: number
+  ): ((...args: Parameters<T>) => void) => {
+    let timer: ReturnType<typeof setTimeout>;
+
+    return (...args: Parameters<T>) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        callback(...args);
+      }, timeout);
+    };
+  };
+  const myDebouncedFunction = debounce(e => {
+    console.log(e);
+  }, 3000);
 
   const handlePageChange = (page: number) => {
     if (page < 1) return;
     if (page > currentPage) {
-      onNextPage();
-    } else onPreviousPage();
+      handleNextPage();
+    } else handlePreviousPage();
 
     setCurrentPage(page);
+  };
+
+  const handleNextPage = async () => {
+    executeQuery(true);
+  };
+
+  const handlePreviousPage = async () => {
+    executeQuery(false);
+  };
+
+  const handleOnFilterChange = async (stringFilter: string) => {
+    if (stringFilter == '') return;
+    if (sendFilter) myDebouncedFunction(stringFilter);
+  };
+
+  const handleSortChange = async (sortedBy: string) => {
+    if (sortedBy == '') return;
+    executeQuery(true, '', 10000, sortedBy);
   };
 
   const handleSort = (columnKey: string) => {
@@ -59,21 +92,21 @@ const DataTable: React.FC<DataTableProps> = ({
     setSortOrder(order);
 
     const sortText = columnKey + ' : ' + order;
-    onSortedChange(sortText);
+    handleSortChange(sortText);
   };
 
-  useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
-
   const handleItemsPerPageChange = (value: number) => {
-    onItemsPerPageChange(value);
+    executeQuery(true, '', value);
     setItemsPerPage(value);
     setCurrentPage(1);
   };
   useEffect(() => {
-    onFilterChange(filters);
+    handleOnFilterChange(filters);
   }, [filters]);
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
 
   const getNestedFieldValue = (rowData: any, key: string) => {
     const keys = key.split('.');

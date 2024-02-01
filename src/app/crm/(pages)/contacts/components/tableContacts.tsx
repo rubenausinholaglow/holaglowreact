@@ -5,10 +5,14 @@ import Bugsnag from '@bugsnag/js';
 import { User } from '@interface/appointment';
 import DataTable from 'app/crm/components/table/DataTable';
 import {
-  CreateQuery,
   createQuery,
   Cursor,
+  TableQuery,
 } from 'app/crm/components/table/TableFunctions';
+import {
+  UserQueryResponse,
+  UsersResponse,
+} from 'app/GraphQL/UserQueryResponse';
 import { useSessionStore } from 'app/stores/globalStore';
 import { createApolloClient } from 'lib/client';
 
@@ -29,7 +33,7 @@ export default function TableContacts() {
     { label: 'Teléfono', key: 'phone', format: 'string' },
     { label: 'Email', key: 'email', format: 'string' },
   ];
-  const columnKeys = columns.map(column => column.key);
+  const queryToExecute = columns.map(column => column.key);
   const entity = 'users';
   const client = createApolloClient(
     process.env.NEXT_PUBLIC_CONTACTS_API!,
@@ -38,9 +42,9 @@ export default function TableContacts() {
 
   const fetchContacts = async (query: DocumentNode, nextPage?: boolean) => {
     try {
-      const { data } = await client.query({ query: query });
+      const { data } = await client.query<UserQueryResponse>({ query: query });
       if (data.users.edges) {
-        updateState(data, nextPage);
+        updateState(data.users, nextPage);
         setUsers(data.users.edges.map((edge: any) => edge.node));
       } else {
         setErrorMessage(
@@ -57,19 +61,19 @@ export default function TableContacts() {
     }
   };
 
-  const updateState = (userData: any, nextPage = false) => {
+  const updateState = (userData: UsersResponse, nextPage = false) => {
     const createCursor = (): Cursor => {
       return {
-        startCursor: userData.users.pageInfo.startCursor,
-        endCursor: userData.users.pageInfo.endCursor,
-        hasNextPage: userData.users.pageInfo.hasNextPage,
-        hasPreviousPage: userData.users.pageInfo.hasPreviousPage,
+        startCursor: userData.pageInfo.startCursor,
+        endCursor: userData.pageInfo.endCursor,
+        hasNextPage: userData.pageInfo.hasNextPage,
+        hasPreviousPage: userData.pageInfo.hasPreviousPage,
       };
     };
     if (nextPage) {
       setCursors(prev => [...prev, createCursor()]);
     }
-    const totalCountPages = Math.ceil(userData.users.totalCount / itemsPerPage);
+    const totalCountPages = Math.ceil(userData.totalCount / itemsPerPage);
     setTotalCount(totalCountPages);
   };
 
@@ -77,47 +81,29 @@ export default function TableContacts() {
     executeQuery(true);
   }, []);
 
-  const handleNextPage = async () => {
-    executeQuery(true);
-  };
-
-  const handlePreviousPage = async () => {
-    executeQuery(false);
-  };
-
-  const handleItemsPerPageChange = async (value: number) => {
-    setItemsPerPage(value);
-    executeQuery(true, '', value);
-  };
-
-  const handleOnFilterChange = async (stringFilter: string) => {
-    if (stringFilter == '') return;
-    executeQuery(true, stringFilter);
-  };
-
-  const handleSortChange = async (sortedBy: string) => {
-    if (sortedBy == '') return;
-    executeQuery(true, '', 10000, sortedBy);
-  };
-
   const executeQuery = async (
     nextPage: boolean,
     stringFilter?: string,
     numberPerPage?: number,
     sortedBy?: string
   ) => {
+    if (numberPerPage || 0 > 0) setItemsPerPage(numberPerPage!);
     if (!nextPage) {
       setCursors(prev => prev.slice(0, -1));
     }
-    const params: CreateQuery = {
+    const lastCursor = cursors[cursors.length - 2]?.endCursor || '';
+    const nextCursor = cursors[cursors.length - 1]?.endCursor || '';
+    const params: TableQuery = {
       nextPage,
+      queryToExecute,
+      entity,
       stringFilter,
       numberPerPage,
       sortedBy,
-      columnKeys,
-      entity,
+      lastCursor,
+      nextCursor,
     };
-    const queryBuilders = createQuery(params, cursors);
+    const queryBuilders = createQuery(params);
     await fetchContacts(queryBuilders, nextPage);
   };
 
@@ -127,14 +113,10 @@ export default function TableContacts() {
         <DataTable
           data={users}
           columns={columns}
-          onNextPage={handleNextPage}
-          onPreviousPage={handlePreviousPage}
-          onItemsPerPageChange={handleItemsPerPageChange}
           hasNextPage={cursors[cursors.length - 1]?.hasNextPage || false}
           totalPages={totalCount}
-          onFilterChange={handleOnFilterChange}
-          onSortedChange={handleSortChange}
-          showActionsColumn={true}
+          showActionsColumn={false}
+          executeQuery={executeQuery}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>

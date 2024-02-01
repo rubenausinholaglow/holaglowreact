@@ -6,10 +6,11 @@ import Bugsnag from '@bugsnag/js';
 import { TaskInstances } from '@interface/task';
 import DataTable from 'app/crm/components/table/DataTable';
 import {
-  CreateQuery,
   createQuery,
   Cursor,
+  TableQuery,
 } from 'app/crm/components/table/TableFunctions';
+import { TaskQueryResponse } from 'app/GraphQL/TaskQueryResponse';
 import { useSessionStore } from 'app/stores/globalStore';
 import { createApolloClient } from 'lib/client';
 
@@ -55,7 +56,7 @@ export default function TableTasks() {
     { label: 'Fecha Finzaliación', key: 'completedTime', format: 'date' },
     { label: 'Fecha Creación', key: 'creationDate', format: 'date' },
   ];
-  const columnKeys = [
+  const queryToExecute = [
     `
       id
         creationDate
@@ -88,7 +89,7 @@ export default function TableTasks() {
 
   const fetchTasks = async (query: DocumentNode, nextPage?: boolean) => {
     try {
-      const { data } = await client.query({ query: query });
+      const { data } = await client.query<TaskQueryResponse>({ query: query });
       if (data.taskInstances.edges) {
         updateState(data, nextPage);
         setTasks(data.taskInstances.edges.map((edge: any) => edge.node));
@@ -107,7 +108,7 @@ export default function TableTasks() {
     }
   };
 
-  const updateState = (taskData: any, nextPage = false) => {
+  const updateState = (taskData: TaskQueryResponse, nextPage = false) => {
     const createCursor = (): Cursor => {
       return {
         startCursor: taskData.taskInstances.pageInfo.startCursor,
@@ -134,15 +135,19 @@ export default function TableTasks() {
     if (!nextPage) {
       setCursors(prev => prev.slice(0, -1));
     }
-    const params: CreateQuery = {
+    const lastCursor = cursors[cursors.length - 2]?.endCursor || '';
+    const nextCursor = cursors[cursors.length - 1]?.endCursor || '';
+    const params: TableQuery = {
       nextPage,
+      queryToExecute,
+      entity,
       stringFilter,
       numberPerPage,
       sortedBy,
-      columnKeys,
-      entity,
+      lastCursor,
+      nextCursor,
     };
-    const queryBuilders = createQuery(params, cursors);
+    const queryBuilders = createQuery(params);
     await fetchTasks(queryBuilders, nextPage);
   };
 
@@ -150,56 +155,16 @@ export default function TableTasks() {
     executeQuery(true);
   }, []);
 
-  function getStatusLabel(status: number) {
-    switch (status) {
-      case 0:
-        return <label>Pendiente</label>;
-      case 1:
-        return <label>Cancelada</label>;
-      case 2:
-        return <label>Finalizada</label>;
-      default:
-        return null;
-    }
-  }
-
-  const handleNextPage = async () => {
-    executeQuery(true);
-  };
-
-  const handlePreviousPage = async () => {
-    executeQuery(false);
-  };
-
-  const handleItemsPerPageChange = async (value: number) => {
-    setItemsPerPage(value);
-    executeQuery(true, '', value);
-  };
-
-  const handleOnFilterChange = async (stringFilter: string) => {
-    if (stringFilter == '') return;
-    executeQuery(true, stringFilter);
-  };
-
-  const handleSortChange = async (sortedBy: string) => {
-    if (sortedBy == '') return;
-    executeQuery(true, '', 10000, sortedBy);
-  };
-
   return (
     <div>
       {tasks ? (
         <DataTable
           data={tasks}
           columns={columns}
-          onNextPage={handleNextPage}
-          onPreviousPage={handlePreviousPage}
-          onItemsPerPageChange={handleItemsPerPageChange}
           hasNextPage={cursors[cursors.length - 1]?.hasNextPage || false}
           totalPages={totalCount}
-          onFilterChange={handleOnFilterChange}
-          onSortedChange={handleSortChange}
           showActionsColumn={false}
+          executeQuery={executeQuery}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>
