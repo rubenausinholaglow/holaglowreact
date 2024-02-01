@@ -133,3 +133,15 @@ export function clearLocalStorage(allLocalStorage: boolean) {
   usePaymentList.setState(INITIAL_STATE_PAYMENT);
   useCartStore.setState(INITIAL_STATE);
 }
+
+
+export function getStatus(statusText: string): string {
+  switch (statusText.toLowerCase()) {
+    case 'pending':
+      return 'Pendiente';
+    case 'cancelled':
+      return 'Cancelado';
+    default:
+      throw new Error(`Unknown status: ${statusText}`);
+  }
+}
