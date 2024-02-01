@@ -21,8 +21,8 @@ export default function TableTasks() {
     undefined
   );
   const [cursors, setCursors] = useState<Cursor[]>([]);
-  const [totalCount, setTotalCount] = useState<number | 0>(0);
-  const [itemsPerPage, setItemsPerPage] = useState<number | 0>(10);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
   const columns: any[] = [
     { label: 'id', key: 'id', format: 'string' },
@@ -132,6 +132,8 @@ export default function TableTasks() {
     numberPerPage?: number,
     sortedBy?: string
   ) => {
+    if (numberPerPage || 0 > 0) setItemsPerPage(numberPerPage!);
+
     if (!nextPage) {
       setCursors(prev => prev.slice(0, -1));
     }
