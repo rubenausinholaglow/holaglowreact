@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SvgCheckCircle, SvgCross, SvgWarning } from 'app/icons/IconsDs';
+import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
@@ -9,13 +10,22 @@ import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function UpsellingRoutines() {
+  const { showModalBackground } = useGlobalStore(state => state);
+
+  const { deviceSize } = useSessionStore(state => state);
   const [showModal, setShowModal] = useState(false);
+
+  console.log(showModalBackground, showModal);
+
+  useEffect(() => {
+    setShowModal(showModalBackground);
+  }, [showModalBackground]);
 
   return (
     <>
       <Modal
         isVisible={showModal}
-        width="w-full"
+        width={deviceSize.isMobile ? 'w-full' : 'w-[400px]'}
         className="shadow-none"
         type="right"
         hideModalBackground

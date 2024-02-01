@@ -1,3 +1,4 @@
+import { UpsellingData } from '@interface/upselling';
 import { SvgReceipt2, SvgReceiptEdit } from 'app/icons/Icons';
 import { SvgArrow, SvgUserSquare } from 'app/icons/IconsDs';
 import dayjs from 'dayjs';
@@ -5,7 +6,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
-export default function UpsellingIntro() {
+export default function UpsellingIntro({ data }: { data: UpsellingData }) {
   return (
     <Container>
       <Flex layout="col-left" className="w-full md:flex-row py-6 md:py-12">
@@ -24,7 +25,7 @@ export default function UpsellingIntro() {
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Paciente</Text>
               <Text className="text-derma-primary font-medium">
-                Lluís Tallada Crespí
+                {data.userName}
               </Text>
             </Flex>
           </Button>
@@ -39,7 +40,7 @@ export default function UpsellingIntro() {
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Fecha expedición receta</Text>
               <Text className="text-derma-primary font-medium">
-                {dayjs().format('DD/MM/YYYY')}
+                {dayjs(data.expeditionDate).format('DD/MM/YYYY')}
               </Text>
             </Flex>
           </Button>
@@ -49,6 +50,8 @@ export default function UpsellingIntro() {
             type="tertiary"
             className="w-full mb-4"
             customStyles="border-none bg-derma-primary text-white font-normal justify-start pl-2 pr-4"
+            href={data.receiptUrl}
+            target="_blank"
           >
             <Flex
               layout="row-center"
