@@ -16,6 +16,30 @@ export default function Page() {
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    initializeCategories();
+  }, []);
+
+  useEffect(() => {
+    initializeCategories();
+  }, [stateProducts]);
+
+  return (
+    <MainLayout isCheckout>
+      <Container className="mt-6 md:mt-16">
+        <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+          <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
+            <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
+
+            <Flex layout="col-left" className="gap-3 w-full">
+              {!isEmpty(productCategories) && <TreatmentAccordionSelector />}
+            </Flex>
+          </Flex>
+        </Flex>
+      </Container>
+    </MainLayout>
+  );
+
+  function initializeCategories() {
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
@@ -37,21 +61,5 @@ export default function Page() {
     if (isEmpty(stateProducts)) {
       initProducts();
     }
-  }, [stateProducts]);
-
-  return (
-    <MainLayout isCheckout>
-      <Container className="mt-6 md:mt-16">
-        <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
-          <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
-            <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
-
-            <Flex layout="col-left" className="gap-3 w-full">
-              {!isEmpty(productCategories) && <TreatmentAccordionSelector />}
-            </Flex>
-          </Flex>
-        </Flex>
-      </Container>
-    </MainLayout>
-  );
+  }
 }

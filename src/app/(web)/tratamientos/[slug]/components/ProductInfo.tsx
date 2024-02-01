@@ -238,7 +238,7 @@ export default function ProductInfo({
               muted
               loop
               playsInline
-              src="/videos/pdp.mp4"
+              src={product.videoUrl ? product.videoUrl : '/videos/pdp.mp4'}
               className="w-full h-full block bg-black object-center md:rounded-xl"
             />
           </div>

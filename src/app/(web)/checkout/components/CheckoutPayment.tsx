@@ -1,7 +1,9 @@
+'use client';
 import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { validateEmail, validatePhone } from '@utils/validators';
 import { SvgWarning } from 'app/icons/IconsDs';
+import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -12,12 +14,15 @@ export default function CheckoutPayment({
   className = '',
   hasError = false,
   formData,
+  isDerma = false,
 }: {
   className?: string;
   hasError: boolean;
   formData: Client;
+  isDerma?: boolean;
 }) {
   const [isPaymentActive, setIsPaymentActive] = useState(false);
+  const { typeOfPayment } = useSessionStore(state => state);
 
   useEffect(() => {
     if (hasError) {
@@ -76,9 +81,13 @@ export default function CheckoutPayment({
       }`}
       id="checkoutPaymentForm"
     >
-      <Title size="xl" className="font-semibold mb-4">
+      <Text
+        className={`font-semibold mb-4 text-xl md:text-2xl ${
+          isDerma ? 'font-gtUltraThin text-derma-tertiary' : ''
+        }`}
+      >
         Selecciona método de pago
-      </Title>
+      </Text>
 
       {hasError && (
         <Flex className="bg-hg-error100 text-hg-error text-xs gap-3 px-4 py-3 rounded-xl w-full mb-4">
@@ -90,11 +99,13 @@ export default function CheckoutPayment({
         </Flex>
       )}
 
-      <Text className="text-hg-black500 text-sm mb-4">
-        Paga ahora un anticipo del tratamiento de 49 € en concepto de reserva
-      </Text>
+      {typeOfPayment == TypeOfPayment.Reservation && (
+        <Text className="text-hg-black500 text-sm mb-4">
+          Paga ahora un anticipo del tratamiento de 49 € en concepto de reserva
+        </Text>
+      )}
 
-      <PaymentMethods />
+      <PaymentMethods isDerma={isDerma} />
     </Flex>
   );
 }

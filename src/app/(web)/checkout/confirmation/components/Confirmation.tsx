@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { atcb_action } from 'add-to-calendar-button';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { SvgArrow, SvgCheck } from 'app/icons/IconsDs';
+import { SvgCalendar } from 'app/icons/Icons';
+import { SvgArrow, SvgCheck, SvgVideo } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -10,6 +12,7 @@ import {
 import { Appointment } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import useRoutes from 'app/utils/useRoutes';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -19,16 +22,24 @@ import AppointmentResume from './AppointmentResume';
 export default function Confirmation({
   appointment,
   isDashboard,
+  isDerma,
 }: {
   appointment?: Appointment;
   isDashboard?: boolean;
+  isDerma?: boolean;
 }) {
   const ROUTES = useRoutes();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { selectedClinic, setAnalyticsMetrics, setPayment } = useSessionStore(
-    state => state
-  );
+  const {
+    setAnalyticsMetrics,
+    setPayment,
+    appointmentUrl,
+    selectedSlot,
+    selectedDay,
+  } = useSessionStore(state => state);
+
+  const addToCalendarRef = useRef(null);
 
   useEffect(() => {
     if (!isDashboard) {
@@ -59,7 +70,11 @@ export default function Confirmation({
         <SvgCheck
           height={88}
           width={88}
-          className="bg-hg-secondary text-hg-primary rounded-full p-3 mx-auto mb-8"
+          className={`${
+            isDerma
+              ? 'bg-derma-primary text-derma-primary100'
+              : 'bg-hg-secondary text-hg-primary'
+          } rounded-full p-3 mx-auto mb-8`}
         />
       </div>
       <div className="md:grid grid-cols-2 gap-16">
@@ -68,7 +83,11 @@ export default function Confirmation({
             {appointment ? (
               <>
                 <Text
-                  className="font-semibold text-hg-secondary text-center mb-4"
+                  className={`${
+                    isDerma
+                      ? 'text-derma-primary font-gtUltraThin'
+                      : 'text-hg-secondary font-semibold'
+                  } text-center mb-4`}
                   size="xl"
                 >
                   ¡Gracias por confirmar tu cita!
@@ -82,7 +101,11 @@ export default function Confirmation({
             ) : (
               <>
                 <Text
-                  className="font-semibold text-hg-secondary text-center mb-4"
+                  className={`${
+                    isDerma
+                      ? 'text-derma-primary font-gtUltraThin'
+                      : 'text-hg-secondary font-semibold'
+                  } text-center mb-4`}
                   size="xl"
                 >
                   ¡Gracias!
@@ -100,13 +123,83 @@ export default function Confirmation({
           </Flex>
         </div>
         <div className="row-span-2 w-full">
-          <AppointmentResume
-            appointment={appointment}
-            isProbadorVirtual
-            isConfirmation
-          />
-          <div className="pt-12">
-            {!isDashboard && (
+          <div className="mb-8">
+            {isDerma ? (
+              <AppointmentResume isProbadorVirtual={false} isDerma />
+            ) : (
+              <AppointmentResume
+                appointment={appointment}
+                isProbadorVirtual
+                isConfirmation
+              />
+            )}
+          </div>
+
+          {isDerma && (
+            <Flex
+              layout="col-left"
+              className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
+            >
+              <a href={appointmentUrl}>
+                <Button
+                  size="xl"
+                  type="tertiary"
+                  className="w-full"
+                  customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
+                >
+                  <Flex
+                    layout="row-center"
+                    className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
+                  >
+                    <SvgVideo />
+                  </Flex>
+                  Acceso a consulta online
+                </Button>
+              </a>
+
+              <Text className="text-hg-black500 text-xs mb-2">
+                Te acabamos de enviar este enlace de acceso a la cita a tu
+                Whatsapp y email.
+              </Text>
+
+              <Button
+                ref={addToCalendarRef}
+                size="md"
+                type="tertiary"
+                className="w-full"
+                customStyles="border-none bg-derma-secondary100 text-derma-primary font-normal justify-start pl-2"
+                onClick={() =>
+                  atcb_action(
+                    {
+                      name: 'Cita online - Derma by Holaglow',
+                      description:
+                        'Consulta online con un dermatólogo estético',
+                      startDate: dayjs(selectedDay).format('YYYY-MM-DD'),
+                      startTime: selectedSlot?.startTime,
+                      endTime: selectedSlot?.endTime,
+                      options: [
+                        'Apple',
+                        'Google',
+                        'iCal',
+                        'Outlook.com',
+                        'Yahoo',
+                      ],
+                      timeZone: 'Europe/Madrid',
+                    },
+                    addToCalendarRef.current
+                      ? addToCalendarRef.current
+                      : undefined
+                  )
+                }
+              >
+                <SvgCalendar className="h-4 w-4 mr-2" />
+                Añadir a mi calendario
+              </Button>
+            </Flex>
+          )}
+
+          {!isDashboard && !isDerma && (
+            <div className="pt-12">
               <a href="/tratamientos" className="hidden md:block">
                 <Button
                   type="tertiary"
@@ -121,8 +214,8 @@ export default function Confirmation({
                   </Flex>
                 </Button>
               </a>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {!appointment && (
@@ -136,49 +229,41 @@ export default function Confirmation({
               layout="col-left"
               className="bg-hg-cream500 p-4 rounded-xl gap-4"
             >
-              <Flex className="border-b border-hg-secondary300 pb-4 items-start">
-                <Text className="bg-hg-black w-6 h-6 font-semibold items-center text-hg-primary shrink-0 rounded-full text-center mr-2">
-                  1
-                </Text>
-                <div className="flex flex-col">
-                  <Text className="font-semibold text-sm">
-                    Confirmación de tu cita
+              {[
+                {
+                  title: 'Confirmación de tu cita',
+                  text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
+                },
+                {
+                  title: 'Recomendaciones pretratamiento',
+                  text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
+                },
+                {
+                  title: 'Distintos métodos de pago',
+                  text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
+                },
+              ].map((item, index) => (
+                <Flex
+                  className="border-b border-hg-secondary300 pb-4 items-start"
+                  key={item.title}
+                >
+                  <Text
+                    className={`${
+                      isDerma
+                        ? 'bg-derma-secondary500 text-derma-primary500'
+                        : 'bg-hg-black text-hg-primary'
+                    } w-6 h-6 font-semibold items-center  shrink-0 rounded-full text-center mr-2`}
+                  >
+                    {index + 1}
                   </Text>
-                  <Text className="text-sm text-hg-black500">
-                    Desde este momento, estaremos en contacto contigo por
-                    teléfono para resolver todas tus dudas y confirmar la cita.
-                  </Text>
-                </div>
-              </Flex>
-              <Flex className="border-b border-hg-secondary300 pb-4 items-start">
-                <Text className="bg-hg-black w-6 h-6 font-semibold items-center text-hg-primary shrink-0 rounded-full text-center mr-2">
-                  2
-                </Text>
-                <div className="flex flex-col">
-                  <Text className="font-semibold text-sm">
-                    Recomendaciones pretratamiento
-                  </Text>
-                  <Text className="text-sm text-hg-black500">
-                    En la página web podrás consultar algunos consejos del
-                    equipo médico para tener en cuenta antes de tu cita.
-                  </Text>
-                </div>
-              </Flex>
-              <Flex className="items-start">
-                <Text className="bg-hg-black w-6 h-6 font-semibold items-center text-hg-primary shrink-0 rounded-full text-center mr-2">
-                  3
-                </Text>
-                <div className="flex flex-col">
-                  <Text className="font-semibold text-sm">
-                    Distintos métodos de pago
-                  </Text>
-                  <Text className="text-sm text-hg-black500">
-                    El día de tu visita a la clínica, podrás elegir el método de
-                    pago que mejor se adapte a ti, incluso financiación sin
-                    intereses.
-                  </Text>
-                </div>
-              </Flex>
+                  <div className="flex flex-col">
+                    <Text className="font-semibold text-sm">{item.title}</Text>
+                    <Text className="text-sm text-hg-black500">
+                      {item.text}
+                    </Text>
+                  </div>
+                </Flex>
+              ))}
             </Flex>
 
             <div className="pt-6 md:hidden">

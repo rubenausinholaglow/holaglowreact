@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { poppins } from 'app/fonts';
 import {
   useGlobalPersistedStore,
@@ -55,6 +55,9 @@ export default function Html({ children }: { children: ReactNode }) {
     setAnalyticsMetrics(analyticsMetrics);
   }
 
+  const [productsLoaded, setProductsLoaded] = useState(false);
+  const [clinicsLoaded, setClinicsLoaded] = useState(false);
+
   const {
     isModalOpen,
     showModalBackground,
@@ -92,8 +95,9 @@ export default function Html({ children }: { children: ReactNode }) {
       setFilteredProducts(products);
     }
 
-    if (isEmpty(stateProducts)) {
+    if (isEmpty(stateProducts) && !productsLoaded) {
       initProducts();
+      setProductsLoaded(true);
     }
   }, [stateProducts]);
 
@@ -103,8 +107,9 @@ export default function Html({ children }: { children: ReactNode }) {
       setClinics(clinics);
     }
 
-    if (isEmpty(clinics)) {
+    if (isEmpty(clinics) && !clinicsLoaded) {
       initClinics();
+      setClinicsLoaded(true);
     }
   }, [clinics]);
 

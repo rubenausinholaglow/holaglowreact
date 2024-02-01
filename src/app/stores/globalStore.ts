@@ -19,6 +19,12 @@ type DeviceSize = {
   isWideScreen: boolean;
 };
 
+export enum TypeOfPayment {
+  Free,
+  Reservation,
+  Full,
+}
+
 interface SessionStore {
   analyticsMetrics: AnalyticsMetrics;
   isMobile: boolean;
@@ -27,9 +33,11 @@ interface SessionStore {
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
-  selectedDay: Dayjs;
+  selectedDay: Dayjs | undefined;
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
+  typeOfPayment: TypeOfPayment;
+  appointmentUrl: string;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -39,9 +47,11 @@ interface SessionActions {
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
-  setSelectedDay: (day: Dayjs) => void;
+  setSelectedDay: (day?: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
+  setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
+  setAppointmentUrl: (url: string) => void;
 }
 
 interface GlobalPersistStore {
@@ -110,11 +120,16 @@ export const useSessionStore = create(
       selectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
-      selectedDay: dayjs(),
+      selectedDay: undefined,
       selectedSlot: undefined,
       previousAppointment: undefined,
       isMobile: true,
       payment: undefined,
+      typeOfPayment: TypeOfPayment.Free,
+      appointmentUrl: '',
+      setAppointmentUrl: value => {
+        set({ appointmentUrl: value });
+      },
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -145,10 +160,13 @@ export const useSessionStore = create(
       setPayment: value => {
         set({ payment: value });
       },
+      setTypeOfPayment: value => {
+        set({ typeOfPayment: value });
+      },
     }),
     {
       name: 'session-storage',
-      version: 7,
+      version: 8,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -228,7 +246,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 22,
+      version: 30,
     }
   )
 );

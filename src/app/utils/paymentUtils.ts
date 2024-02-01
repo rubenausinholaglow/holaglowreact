@@ -34,16 +34,18 @@ export const usePayments = () => {
       userId: createdUser?.id || '',
       paymentBank: paymentBank,
       productPaymentRequest: [],
-      originPayment : OriginPayment.web
+      originPayment: OriginPayment.web,
     };
-
     cart.forEach(product => {
-      if (product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_PREVIA_ID) {
+      if (
+        product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_PREVIA_ID ||
+        product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_DERMA
+      ) {
         const productPayment: ProductPaymentRequest = {
           name: product.title,
           price: product.price.toString(),
           quantity: '1',
-          id: process.env.NEXT_PUBLIC_CITA_PREVIA_ID,
+          id: product.id.toUpperCase(),
         };
         data.productPaymentRequest?.push(productPayment);
       } else {
