@@ -13,13 +13,22 @@ import {
   TaskDataTableContact,
 } from '../types/Contact';
 
+const concatenateProductName = (array: any[]) => {
+  const result = array.map(element => element.product.title).join(', ');
+  return result;
+};
+
+const getLastTaskExecution = (executions: any) => {
+  return executions.slice(-1)[0];
+};
+
 export const mappingTasks = (contactDetailTasks: any) => {
   const model: TaskDataTableContact[] = [];
   contactDetailTasks.forEach((task: Task) => {
     const newModel: TaskDataTableContact = {
       creationDate: dayjs(task.creationDate).format('DD-MM-YYYY HH:mm:ss'),
       name: task.taskTemplate.name,
-      status: task.executions[0].status,
+      status: getLastTaskExecution(task.executions).status,
       endDateTask: dayjs(task.completedTime).format('DD-MM-YYYY HH:mm:ss'),
     };
     model.push(newModel);
@@ -43,7 +52,12 @@ export const mappingComments = (contactDetailComments: any) => {
 export const mappingCalls = (contactDetailCalls: any) => {
   const model: CallDataTableContact[] = [];
   contactDetailCalls.forEach((call: Call) => {
-    model.push(call);
+    const newModel: CallDataTableContact = {
+      startTimeCalls: dayjs(call.startTime).format('DD-MM-YYYY hh:mm'),
+      endTimeCalls: dayjs(call.endTime).format('DD-MM-YYYY hh:mm'),
+      status: call.status,
+    };
+    model.push(newModel);
   });
   return model;
 };
@@ -55,7 +69,7 @@ export const mappingAppointments = (contactDetailAppointments: any) => {
       status: appointment.status,
       city: appointment.clinic.city,
       dateAppointment: dayjs(appointment.date).format('DD-MM-YYYY'),
-      treatments: appointment.appointmentProducts[0].product.title,
+      treatments: concatenateProductName(appointment.appointmentProducts),
       startTimeAppointment: appointment.startTime,
     };
     model.push(newModel);
@@ -66,7 +80,14 @@ export const mappingAppointments = (contactDetailAppointments: any) => {
 export const mappingBudgets = (contactDetailBudgets: any) => {
   const model: BudgetsDataTableContact[] = [];
   contactDetailBudgets.forEach((budget: Budget) => {
-    model.push(budget);
+    const newModel: BudgetsDataTableContact = {
+      creationDate: dayjs(budget.creationDate).format('DD-MM-YYYY'),
+      productsText: concatenateProductName(budget.products),
+      actions: '>',
+      statusBudget: budget.statusBudget,
+      totalPrice: budget.totalPrice,
+    };
+    model.push(newModel);
   });
   return model;
 };

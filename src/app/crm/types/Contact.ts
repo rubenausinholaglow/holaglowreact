@@ -38,9 +38,9 @@ export interface CommentDataTableContact {
 }
 
 export interface CallDataTableContact {
-  startTime: string;
+  startTimeCalls: string;
   status: number;
-  endTime: string;
+  endTimeCalls: string;
 }
 
 export interface AppointmentsDataTableContact {
@@ -52,10 +52,10 @@ export interface AppointmentsDataTableContact {
 }
 
 export interface BudgetsDataTableContact {
-  date: string;
+  creationDate: string;
   productsText: string;
-  totalPrice: string;
-  statusBudget: string;
+  totalPrice: number;
+  statusBudget: number;
   actions: string;
 }
 
@@ -81,18 +81,22 @@ export interface Task {
 }
 
 export interface Call {
+  id: string;
+  creationDate: string;
   startTime: string;
-  status: number;
   endTime: string;
+  status: number;
+  active: boolean;
+  agent: Agent;
 }
 
 export interface Appointment {
   active: boolean;
   agent: Agent | null;
-  appointmentProducts: ProductAppointment[];
+  appointmentProducts: Product[];
   boxId: string;
   cancelDate: string;
-  clinic: Clinic;  
+  clinic: Clinic;
   creationDate: string;
   date: string;
   endTime: string;
@@ -104,11 +108,25 @@ export interface Appointment {
 }
 
 export interface Budget {
-  date: string;
+  active: boolean;
+  creationDate: string;
+  discountAmount: number;
+  discountCode: string;
+  flowwwId: string;
+  id: string;
+  manualPrice: number;
+  percentageDiscount: number;
+  priceDiscount: number;
+  products: Product[];
+  referenceId: string;
+  statusBudget: number;
+  totalPrice: number;
+  totalPriceWithIVA: number;
+  /*date: string;
   productsText: string;
   totalPrice: string;
   statusBudget: string;
-  actions: string;
+  actions: string;*/
 }
 
 interface Agent {
@@ -145,7 +163,7 @@ interface Clinic {
   city: string;
 }
 
-interface ProductAppointment {
+interface Product {
   product: {
     title: string;
   };

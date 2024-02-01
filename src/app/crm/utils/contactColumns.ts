@@ -26,7 +26,7 @@ export const AppointmentsColumns = [
 ];
 
 export const BudgetColumns = [
-  { name: 'Fecha', key: 'date' },
+  { name: 'Fecha', key: 'creationDate' },
   { name: 'Productos', key: 'productsText' },
   { name: 'Precio', key: 'totalPrice' },
   { name: 'Estado', key: 'statusBudget' },

@@ -5,7 +5,9 @@ import '../components/datePicker.css';
 import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ClientDetails } from 'app/crm/types/Contact';
-import getAppointmentStatusText from 'app/crm/types/ContactAppointmentsEnum';
+import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
+import getBudgetStatusText from 'app/crm/types/ContactBudgetEnum';
+import getCallStatusText from 'app/crm/types/ContactCallEnum';
 import getTaskStatusText from 'app/crm/types/ContactTaskEnum';
 import {
   AppointmentsColumns,
@@ -42,6 +44,7 @@ interface ContactDetailPageProps {
 export default function ContactDetailPageBase({
   contactDetail,
 }: ContactDetailPageProps) {
+  console.log(contactDetail);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [startDate, setStartDate] = useState<Date>(new Date());
 
@@ -96,6 +99,7 @@ export default function ContactDetailPageBase({
           <DataTableContact
             columns={CallsColumns}
             rows={mappingCalls(contactDetail.calls)}
+            statusTypeSwitch={getCallStatusText}
           />
         ),
     },
@@ -123,6 +127,7 @@ export default function ContactDetailPageBase({
           <DataTableContact
             columns={BudgetColumns}
             rows={mappingBudgets(contactDetail.budgets)}
+            statusTypeSwitch={getBudgetStatusText}
           />
         ),
     },
