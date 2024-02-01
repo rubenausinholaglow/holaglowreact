@@ -52,7 +52,7 @@ export default function TableTasks() {
     },
     {
       label: 'Agente',
-      key: 'executions.agent.username',
+      key: 'agent.username',
       nestedField: 'executions',
       format: 'string',
     },
@@ -70,14 +70,11 @@ export default function TableTasks() {
             lastName
             email
         }
-        taskTemplate
-        {
+        taskTemplate {
             name
         }
-        executions
-        {
-            agent
-            {
+        executions {
+            agent {
                 username
             }
         }

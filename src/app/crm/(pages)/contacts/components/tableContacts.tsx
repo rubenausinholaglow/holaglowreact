@@ -36,8 +36,28 @@ export default function TableContacts() {
     { label: 'Apellido', key: 'lastName', format: 'string' },
     { label: 'Teléfono', key: 'phone', format: 'string' },
     { label: 'Email', key: 'email', format: 'string' },
+    { label: 'Fecha Creación', key: 'creationDate', format: 'date' },
+    {
+      label: 'Agente',
+      key: 'agent.username',
+      nestedField: 'executions',
+      format: 'string',
+    },
   ];
-  const queryToExecute = columns.map(column => column.key);
+  const queryToExecute = [
+    `
+      id
+      creationDate
+      firstName
+      lastName
+      phone
+      email
+      agent {
+          username
+      }
+    `,
+  ];
+
   const entity = 'users';
   const client = createApolloClient(
     process.env.NEXT_PUBLIC_CONTACTS_API!,

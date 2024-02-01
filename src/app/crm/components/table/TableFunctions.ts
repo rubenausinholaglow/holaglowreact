@@ -26,7 +26,6 @@ export function createQuery(
 ): DocumentNode {
   const { nextPage, queryToExecute, entity, stringFilter, numberPerPage, sortedBy, lastCursor, nextCursor } = params;
 
-
   const nextPageFlag = nextPage ? true : false;
 
   const queryBuilder = new GraphQLQueryBuilder(
