@@ -84,7 +84,7 @@ export const mappingBudgets = (contactDetailBudgets: any) => {
       creationDate: dayjs(budget.creationDate).format('DD-MM-YYYY'),
       productsText: concatenateProductName(budget.products),
       actions: '>',
-      statusBudget: budget.statusBudget,
+      status: budget.statusBudget,
       totalPrice: budget.totalPrice,
     };
     model.push(newModel);

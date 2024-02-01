@@ -23,6 +23,6 @@ export default function getBudgetStatusText(
     case BudgetStatusEnum.PAGADO:
       return { text: 'PAGADO', color: 'green' };
     default:
-      return { text: 'Desconocido', color: 'white' };
+      return { text: 'DESCONOCIDO', color: 'white' };
   }
 }

@@ -1,7 +1,7 @@
 enum TaskStatusEnum {
-  Pendiente = 0,
-  Cancelada = 1,
-  Finalizada = 2,
+  PENDIENTE = 0,
+  CANCELADA = 1,
+  FINALIZADA = 2,
 }
 
 interface GetTaskStatusProps {
@@ -13,13 +13,13 @@ export default function getTaskStatusText(
   status: TaskStatusEnum
 ): GetTaskStatusProps {
   switch (status) {
-    case TaskStatusEnum.Pendiente:
-      return { text: 'Pendiente', color: 'blue' };
-    case TaskStatusEnum.Cancelada:
-      return { text: 'Cancelada', color: 'red' };
-    case TaskStatusEnum.Finalizada:
-      return { text: 'Finalizada', color: 'green' };
+    case TaskStatusEnum.PENDIENTE:
+      return { text: 'PENDIENTE', color: 'blue' };
+    case TaskStatusEnum.CANCELADA:
+      return { text: 'CANCELADA', color: 'red' };
+    case TaskStatusEnum.FINALIZADA:
+      return { text: 'FINALIZADA', color: 'green' };
     default:
-      return { text: 'Desconocido', color: 'white' };
+      return { text: 'DESCONOCIDO', color: 'white' };
   }
 }

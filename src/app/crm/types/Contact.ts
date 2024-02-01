@@ -55,7 +55,7 @@ export interface BudgetsDataTableContact {
   creationDate: string;
   productsText: string;
   totalPrice: number;
-  statusBudget: number;
+  status: number;
   actions: string;
 }
 

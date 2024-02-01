@@ -29,6 +29,6 @@ export const BudgetColumns = [
   { name: 'Fecha', key: 'creationDate' },
   { name: 'Productos', key: 'productsText' },
   { name: 'Precio', key: 'totalPrice' },
-  { name: 'Estado', key: 'statusBudget' },
+  { name: 'Estado', key: 'status' },
   { name: 'Acciones', key: 'actions' },
 ];
