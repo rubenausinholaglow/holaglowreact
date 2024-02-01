@@ -210,8 +210,24 @@ const DataTable: React.FC<DataTableProps> = ({
                             rowData,
                             column.key
                           );
+                          let className = 'font-normal';
+
                           const formatColumn =
                             column.format.toLocaleUpperCase();
+
+                          if (column.key === 'status') {
+                            const status = getStatus(value).toLocaleUpperCase();
+
+                            if (status === 'CANCELADO') {
+                              className =
+                                'bg-hg-error text-white rounded-full py-1 px-2 text-sm';
+                            } else if (status === 'PENDIENTE') {
+                              className =
+                                'bg-hg-black500 text-white rounded-full py-1 px-2 text-sm';
+                            }
+                          } else if (formatColumn === 'DATE') {
+                            className += '';
+                          }
 
                           const formattedValue =
                             column.key === 'status'
@@ -222,7 +238,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
                           return (
                             <td key={column.key} className="p-4">
-                              <label color="blue-gray" className="font-normal">
+                              <label color="blue-gray" className={className}>
                                 {formattedValue}
                               </label>
                             </td>
