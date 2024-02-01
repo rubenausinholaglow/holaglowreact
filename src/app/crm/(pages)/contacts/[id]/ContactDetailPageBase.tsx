@@ -4,6 +4,7 @@ import '../components/datePicker.css';
 
 import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import { reminderAction } from 'app/crm/actions/ContactReminderAction';
 import { ClientDetails } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
 import getBudgetStatusText from 'app/crm/types/ContactBudgetEnum';
@@ -44,9 +45,10 @@ interface ContactDetailPageProps {
 export default function ContactDetailPageBase({
   contactDetail,
 }: ContactDetailPageProps) {
-  console.log(contactDetail);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [startDate, setStartDate] = useState<Date>(new Date());
+  const [identifier, setIdentifier] = useState<string>('');
+  const [commentReminder, setCommentReminder] = useState<string>('');
 
   const tabs = [
     {
@@ -133,6 +135,11 @@ export default function ContactDetailPageBase({
     },
   ];
 
+  const handleContactReminder = (event: any) => {
+    event.preventDefault();
+    reminderAction(startDate, commentReminder, contactDetail.id, identifier);
+  };
+
   return (
     <>
       <div className="rounded-xl bg-white ml-64 mt-2 mr-4 mb-10 h-screen">
@@ -140,15 +147,16 @@ export default function ContactDetailPageBase({
           contactInfo={contactDetail}
           isVisibleModal={isVisibleModal}
           setIsVisibleModal={setIsVisibleModal}
+          setIdentifier={setIdentifier}
         />
 
         <Tabs tabs={tabs} defaultTab="Tareas" />
       </div>
       <ModalContact isOpen={isVisibleModal} closeModal={setIsVisibleModal}>
-        <form>
+        <form onSubmit={handleContactReminder}>
           <div className="flex flex-wrap flex-col align-middle">
             <div className="p-4">
-              <h3 className="font-bold">Recordatorio</h3>
+              <h3 className="font-bold">{identifier}</h3>
             </div>
             <div className="p-4">
               <label htmlFor="datePicker">Fecha y hora del recordatorio</label>
@@ -175,6 +183,7 @@ export default function ContactDetailPageBase({
                 ></DatePicker>
               </Flex>
             </Container>
+
             <div className="p-4">
               <label htmlFor="comment">Comentario</label>
               <input
@@ -182,6 +191,9 @@ export default function ContactDetailPageBase({
                 placeholder="Comentario"
                 name="comment"
                 className="border border-hg-tertiary rounded px-2 py-1 mt-2 text-black w-full mb-6"
+                onChange={event =>
+                  setCommentReminder(event.currentTarget.value)
+                }
               />
             </div>
             <div className="p-4 flex-row">

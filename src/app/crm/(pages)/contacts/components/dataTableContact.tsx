@@ -15,7 +15,7 @@ function DataTableContact({
 }: DataTableContactProps) {
   return (
     <div className="container mx-auto">
-      <div className="overflow-x-auto">
+      <div className="overflow-y-auto max-h-80 overflow-x-auto">
         <table className="table min-w-full border shadow">
           <thead>
             <tr>

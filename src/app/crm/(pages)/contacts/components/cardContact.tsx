@@ -3,21 +3,26 @@ import { ClientDetails } from 'app/crm/types/Contact';
 
 interface CardContactProps {
   contactInfo: ClientDetails;
-  isVisibleModal: boolean
-  setIsVisibleModal: (modal : boolean) => void;
+  isVisibleModal: boolean;
+  setIsVisibleModal: (modal: boolean) => void;
+  setIdentifier: (identifier: string) => void;
 }
 
 export default function CardContact({
   contactInfo,
   isVisibleModal,
   setIsVisibleModal,
+  setIdentifier,
 }: CardContactProps) {
   const { firstName, lastName, secondLastName, flowwwToken } = contactInfo;
   return (
     <div className="max-w-md bg-white rounded-xl overflow-hidden shadow-md m-4">
       <div className="bg-gray-200 px-6 py-4">
         <h3 className="text-xl font-semibold text-gray-800">
-          {`${firstName} ${lastName} ${secondLastName} (${flowwwToken.substring(0, flowwwToken.length - 32)})`}
+          {`${firstName} ${lastName} ${secondLastName} (${flowwwToken.substring(
+            0,
+            flowwwToken.length - 32
+          )})`}
         </h3>
       </div>
 
@@ -27,15 +32,31 @@ export default function CardContact({
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={() => {
               setIsVisibleModal(!isVisibleModal);
+              setIdentifier('Recordatorio');
             }}
           >
             Recordatorio
           </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => {
+              setIsVisibleModal(!isVisibleModal);
+              setIdentifier('Agendar Llamada');
+            }}
+          >
             Agendar Llamada
           </button>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Nueva Cita
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={
+                'https://agenda.holaglow.com/schedule?mode=dashboard&token=' +
+                flowwwToken
+              }
+            >
+              Nueva cita
+            </a>
           </button>
         </div>
 
