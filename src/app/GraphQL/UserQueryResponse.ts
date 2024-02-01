@@ -14,7 +14,7 @@ export type UserResponsesEdges = {
     node : UsersResponseNode;
 }
 
-type UsersResponseNode = {
+export type UsersResponseNode = {
     id : string;
     email : string;
     firstName : string;

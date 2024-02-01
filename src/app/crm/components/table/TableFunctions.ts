@@ -3,14 +3,6 @@ import Bugsnag from '@bugsnag/js';
 import GraphQLQueryBuilder from '@interface/queryType';
 import { createApolloClient } from 'lib/client';
 
-class TableFunctions{
-    columnKeys: string[] | undefined;
-    entity?: string;
-
-
-
-}
-
 export interface Cursor {
   startCursor: string;
   endCursor: string;

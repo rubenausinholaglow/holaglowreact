@@ -5,19 +5,23 @@ export interface TaskQueryResponse
     taskInstances : TaskInstancesResponse
 }
 
-interface TaskInstancesResponse
+export interface TaskInstancesResponse
 {
     edges : TaskResponseEdge[];
     pageInfo : PageInfo;
     totalCount : number;
 }
 
-interface TaskResponseEdge{
+export interface TaskResponseEdge{
+   node : TaskResponseNode;
+}
+export interface TaskResponseNode{
     id: string;
     user : UserTask;
     taskTemplate : TaskTemplate;
     execution : Executions;
 }
+
 interface UserTask
 {
     firstName : string;

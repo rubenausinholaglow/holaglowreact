@@ -9,20 +9,24 @@ import {
   Cursor,
   TableQuery,
 } from 'app/crm/components/table/TableFunctions';
+import { PageInfo } from 'app/GraphQL/PageInfo';
 import {
   UserQueryResponse,
   UsersResponse,
+  UsersResponseNode,
 } from 'app/GraphQL/UserQueryResponse';
 import { useSessionStore } from 'app/stores/globalStore';
 import { createApolloClient } from 'lib/client';
 
 export default function TableContacts() {
   const { userLoginResponse } = useSessionStore(state => state);
-  const [users, setUsers] = useState<User[] | undefined>(undefined);
+  const [users, setUsers] = useState<UsersResponseNode[] | undefined>(
+    undefined
+  );
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [pageInfo, setPageInfo] = useState<PageInfo>();
   const [totalCount, setTotalCount] = useState<number>(0);
   const [cursors, setCursors] = useState<Cursor[]>([]);
 
@@ -44,8 +48,11 @@ export default function TableContacts() {
     try {
       const { data } = await client.query<UserQueryResponse>({ query: query });
       if (data.users.edges) {
-        updateState(data.users, nextPage);
-        setUsers(data.users.edges.map((edge: any) => edge.node));
+        updateCursor(data.users, nextPage);
+        setPageInfo(data.users.pageInfo);
+        setTotalCount(data.users.totalCount);
+        const users = data.users.edges.map(edge => edge.node);
+        setUsers(users);
       } else {
         setErrorMessage(
           'Error cargando usuarios - Contacte con el administrador'
@@ -61,7 +68,7 @@ export default function TableContacts() {
     }
   };
 
-  const updateState = (userData: UsersResponse, nextPage = false) => {
+  const updateCursor = (userData: UsersResponse, nextPage = false) => {
     const createCursor = (): Cursor => {
       return {
         startCursor: userData.pageInfo.startCursor,
@@ -73,8 +80,6 @@ export default function TableContacts() {
     if (nextPage) {
       setCursors(prev => [...prev, createCursor()]);
     }
-    const totalCountPages = Math.ceil(userData.totalCount / itemsPerPage);
-    setTotalCount(totalCountPages);
   };
 
   useEffect(() => {
@@ -87,7 +92,6 @@ export default function TableContacts() {
     numberPerPage?: number,
     sortedBy?: string
   ) => {
-    if (numberPerPage || 0 > 0) setItemsPerPage(numberPerPage!);
     if (!nextPage) {
       setCursors(prev => prev.slice(0, -1));
     }
@@ -113,10 +117,10 @@ export default function TableContacts() {
         <DataTable
           data={users}
           columns={columns}
-          hasNextPage={cursors[cursors.length - 1]?.hasNextPage || false}
-          totalPages={totalCount}
           showActionsColumn={false}
           executeQuery={executeQuery}
+          pageInfo={pageInfo!}
+          totalCount={totalCount}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>

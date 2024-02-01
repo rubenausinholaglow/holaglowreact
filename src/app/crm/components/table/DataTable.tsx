@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { getStatus } from '@utils/utils';
+import { PageInfo } from 'app/GraphQL/PageInfo';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,9 +12,6 @@ import Pagination from './Pagination';
 interface DataTableProps {
   data: any[];
   columns: { label: string; key: string; format: string }[];
-  itemsPerPageOptions?: number[];
-  hasNextPage: boolean;
-  totalPages: number;
   showActionsColumn: boolean;
   executeQuery: (
     nextPage: boolean,
@@ -21,17 +19,19 @@ interface DataTableProps {
     numberPerPage?: number,
     sortedBy?: string
   ) => void;
+  pageInfo: PageInfo;
+  totalCount: number;
 }
 
 const DataTable: React.FC<DataTableProps> = ({
   data,
   columns,
-  itemsPerPageOptions = [5, 10, 15, 20, 25, 50],
-  hasNextPage,
-  totalPages = 1,
   showActionsColumn = true,
   executeQuery,
+  pageInfo,
+  totalCount,
 }: DataTableProps) => {
+  const itemsPerPageOptions = [5, 10, 15, 20, 25, 50];
   const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState('');
@@ -39,6 +39,8 @@ const DataTable: React.FC<DataTableProps> = ({
   const [filters, setFilters] = useState<string>('');
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
   const [filteredData, setFilteredData] = useState<any[]>([...data]);
+
+  totalCount = Math.ceil(totalCount / itemsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page < 1) return;
@@ -64,7 +66,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const handleSortChange = async (sortedBy: string) => {
     if (sortedBy == '') return;
-    executeQuery(true, '', 10000, sortedBy);
+    executeQuery(true, '', itemsPerPage, sortedBy);
   };
 
   const handleSort = (columnKey: string) => {
@@ -209,9 +211,9 @@ const DataTable: React.FC<DataTableProps> = ({
         </table>
         <Pagination
           currentPage={currentPage}
-          totalPages={totalPages}
+          totalPages={totalCount}
           onPageChange={handlePageChange}
-          hasNextPage={hasNextPage}
+          hasNextPage={pageInfo.hasNextPage}
         />
       </div>
     );
