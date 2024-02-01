@@ -9,7 +9,7 @@ const fakeAPIResponse: UpsellingData = {
   userName: 'Pepito de los palotes',
   userPostalCode: '08013',
   expeditionDate: '2014-12-10',
-  rutineType: 2,
+  rutineType: 0,
   receiptUrl: 'https://www.google.com',
 };
 

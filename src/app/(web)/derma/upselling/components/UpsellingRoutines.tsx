@@ -172,6 +172,11 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                   </div>
 
                   <Flex layout="col-left" className="w-full">
+                    {index !== 0 && (
+                      <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
+                        Rutina personalizada {DERMA_TYPES[data.rutineType]}
+                      </Text>
+                    )}
                     <Text className="text-md mb-3 md:text-lg md:font-semibold">
                       {routine.name}
                     </Text>
