@@ -40,17 +40,6 @@ const DataTable: React.FC<DataTableProps> = ({
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
   const [filteredData, setFilteredData] = useState<any[]>([...data]);
 
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const debouncedFilterChange = (value: string) => {
-    if (debounceTimeoutRef.current) {
-      clearTimeout(debounceTimeoutRef.current);
-    }
-    debounceTimeoutRef.current = setTimeout(() => {
-      setFilters(value);
-    }, 300);
-  };
-
   const handlePageChange = (page: number) => {
     if (page < 1) return;
     if (page > currentPage) {
@@ -70,7 +59,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const handleOnFilterChange = async (stringFilter: string) => {
     if (stringFilter == '') return;
-    debouncedFilterChange(stringFilter);
+    executeQuery(true, stringFilter);
   };
 
   const handleSortChange = async (sortedBy: string) => {
