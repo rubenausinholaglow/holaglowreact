@@ -61,6 +61,7 @@
     "@storybook/react": "^7.0.24",
     "@storybook/testing-library": "^0.0.14-next.2",
     "@svgr/webpack": "^8.0.1",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.2.3",
     "@types/react-datepicker": "^4.15.0",
     "@types/uuid": "^9.0.2",
