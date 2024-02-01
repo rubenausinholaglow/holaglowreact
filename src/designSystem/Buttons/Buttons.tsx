@@ -98,7 +98,6 @@ export const Button = ({
     return (
       <AnimateOnViewport origin={origin}>
         <button
-          id={id}
           className={twMerge(
             `transition-all relative group overflow-visible ${
               ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -140,7 +139,6 @@ export const Button = ({
         size={size}
         customStyles={customStyles}
         disabled={disabled}
-        {...rest}
       >
         {children}
       </ButtonBody>
@@ -205,7 +203,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles} {...rest}>
+    <Flex layout="row-center" className={styles} id={id}>
       {children}
     </Flex>
   );
