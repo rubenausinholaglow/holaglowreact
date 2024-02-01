@@ -39,24 +39,17 @@ const DataTable: React.FC<DataTableProps> = ({
   const [filters, setFilters] = useState<string>('');
   const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageOptions[1]);
   const [filteredData, setFilteredData] = useState<any[]>([...data]);
-  const [sendFilter, setSendFilter] = useState(true);
 
-  const debounce = <T extends (...args: any[]) => ReturnType<T>>(
-    callback: T,
-    timeout: number
-  ): ((...args: Parameters<T>) => void) => {
-    let timer: ReturnType<typeof setTimeout>;
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    return (...args: Parameters<T>) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        callback(...args);
-      }, timeout);
-    };
+  const debouncedFilterChange = (value: string) => {
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+    debounceTimeoutRef.current = setTimeout(() => {
+      setFilters(value);
+    }, 300);
   };
-  const myDebouncedFunction = debounce(e => {
-    console.log(e);
-  }, 3000);
 
   const handlePageChange = (page: number) => {
     if (page < 1) return;
@@ -77,7 +70,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const handleOnFilterChange = async (stringFilter: string) => {
     if (stringFilter == '') return;
-    if (sendFilter) myDebouncedFunction(stringFilter);
+    debouncedFilterChange(stringFilter);
   };
 
   const handleSortChange = async (sortedBy: string) => {
