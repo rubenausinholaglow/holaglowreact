@@ -148,16 +148,21 @@ export function getStatusText(statusText: string): string {
   throw new Error(`Unknown status: ${statusText}`);
 }
 
+const statusColorStyles: Record<string, string> = {
+  GREEN : 'bg-hg-green',
+  ERROR : 'bg-hg-error',
+  BLACK : 'bg-hg-black500',
+}
 
 
 const statusStyles: Record<string, string> = {
-  CANCELLED: 'bg-hg-error text-white',
-  PENDING: 'bg-hg-black500 text-white',
-  FINISHED: 'bg-hg-green text-white',
+  CANCELLED: statusColorStyles.ERROR,
+  PENDING: statusColorStyles.BLACK,
+  FINISHED: statusColorStyles.GREEN,
 };
 
 export const getStatusClassName = (status: string): string => {
   const uppercaseStatus = status.toUpperCase();
   const style = statusStyles[uppercaseStatus];
-  return style ? `rounded-full py-1 px-2 text-sm ${style}` : '';
+  return style ? `text-white rounded-full py-1 px-2 text-sm ${style}` : '';
 };
