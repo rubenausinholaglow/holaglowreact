@@ -232,9 +232,9 @@ export default function PaymentInput(props: Props) {
 
   const initializePepper = async () => {
     if (isLoading) return;
-    setErrorMessage(undefined);
     if (!validateFormData(formData)) {
       setErrorMessage('Faltan datos para la financiación');
+      setTimeout(() => setErrorMessage(undefined), 5000);
       return;
     }
     setIsLoading(true);
