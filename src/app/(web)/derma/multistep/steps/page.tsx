@@ -85,7 +85,7 @@ export default function Form() {
 
   const { cart, addItemToCart, resetCart } = useCartStore(state => state);
   const STEPS = 7;
-  const [activeSlideIndex, setActiveSlideIndex] = useState(6);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
