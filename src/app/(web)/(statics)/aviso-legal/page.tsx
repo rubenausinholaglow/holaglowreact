@@ -1,4 +1,5 @@
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+
 import LegalAdviceContent from './LegalAdviceContent';
 
 export default function LegalAdvice() {
