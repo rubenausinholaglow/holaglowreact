@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
+import CheckHydration from '@utils/CheckHydration';
 import { Professional } from 'app/types/clinic';
 import { Product } from 'app/types/product';
 import { Carousel } from 'designSystem/Carousel/Carousel';
@@ -51,7 +52,7 @@ export default function FullWidthCarousel({
   }
 
   return (
-    <>
+    <CheckHydration>
       <style>
         {`
           #productCarousel${randomId} [aria-label="slider"] {
@@ -102,6 +103,6 @@ export default function FullWidthCarousel({
 
         {children}
       </Carousel>
-    </>
+    </CheckHydration>
   );
 }

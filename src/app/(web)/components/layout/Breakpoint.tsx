@@ -25,6 +25,26 @@ export function DeviceSize() {
   };
 }
 
+export function DeviceSizeSSR() {
+  const breakpoint = window.document.querySelector('#breakpoint');
+
+  console.log(breakpoint);
+
+  if (breakpoint) {
+    const content = getComputedStyle(breakpoint, ':after').content.replace(
+      /["']/g,
+      ''
+    );
+
+    return {
+      isMobile: content === 'sm',
+      isTablet: content === 'md',
+      isDesktop: content === 'lg',
+      isWideScreen: content === 'xl',
+    };
+  }
+}
+
 export function Breakpoint() {
   return (
     <div

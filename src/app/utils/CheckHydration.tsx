@@ -10,12 +10,9 @@ const CheckHydration = ({ children }: { children: ReactNode }) => {
   }, []);
 
   if (!isHydrated) {
-    console.log('is not hydrated!');
-
     return <></>;
   }
 
-  console.log('is hydrated!');
   return children;
 };
 

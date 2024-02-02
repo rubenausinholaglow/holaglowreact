@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import CheckHydration from '@utils/CheckHydration';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -89,7 +90,7 @@ export default function Header() {
   }, []);
 
   return (
-    <>
+    <CheckHydration>
       <MobileNavigation
         isVisible={isMobileNavVisible}
         headerHeight={HEADER_HEIGHT}
@@ -148,6 +149,6 @@ export default function Header() {
           </Container>
         </AnimateOnViewport>
       </header>
-    </>
+    </CheckHydration>
   );
 }
