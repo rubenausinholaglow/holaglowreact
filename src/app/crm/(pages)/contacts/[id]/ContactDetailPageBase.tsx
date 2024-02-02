@@ -50,6 +50,11 @@ export default function ContactDetailPageBase({
   const [identifier, setIdentifier] = useState<string>('');
   const [commentReminder, setCommentReminder] = useState<string>('');
 
+  const checkIfHasAgent = () => {
+    const result = contactDetail['agent'] !== null;
+    return result;
+  };
+
   const tabs = [
     {
       label: 'Tareas',
@@ -72,9 +77,11 @@ export default function ContactDetailPageBase({
             Telefono: {contactDetail.phonePrefix} {contactDetail.phone}
           </div>
           <div className="px-4 mb-4">Email: {contactDetail.email}</div>
-          <div className="px-4 mb-4">
-            Agente: {contactDetail.agent.username}
-          </div>
+          {checkIfHasAgent() && (
+            <div className="px-4 mb-4">
+              Agente: {contactDetail.agent.username}
+            </div>
+          )}
         </div>
       ),
     },
