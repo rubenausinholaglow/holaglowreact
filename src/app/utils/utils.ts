@@ -140,13 +140,13 @@ const statusNaming: Record<string, string> = {
   finished: 'Finalizada',
 };
 
-export function getStatusText(statusText: string): string {
+/*export function getStatusText(statusText: string): string {
   const lowercaseStatus = statusText.toLowerCase();
   if (lowercaseStatus in statusNaming) {
     return statusNaming[lowercaseStatus];
   }
   throw new Error(`Unknown status: ${statusText}`);
-}
+}*/
 
 const statusColorStyles: Record<string, string> = {
   GREEN : 'bg-hg-green',
@@ -161,8 +161,61 @@ const statusStyles: Record<string, string> = {
   FINISHED: statusColorStyles.GREEN,
 };
 
-export const getStatusClassName = (status: string): string => {
+/*export const getStatusClassName = (status: string, entity : string): string => {
   const uppercaseStatus = status.toUpperCase();
   const style = statusStyles[uppercaseStatus];
   return style ? `text-white rounded-full py-1 px-2 text-sm ${style}` : '';
+};*/
+
+interface StatusConfig {
+  names: Record<string, string>;
+  colors: Record<string, string>;
+}
+
+// Configuration object for entities
+const entityStatusConfig: Record<string, StatusConfig> = {
+  tasks: {
+    names: {
+      pending: 'Pendiente',
+      cancelled: 'Cancelada',
+      finished: 'Finalizada',
+    },
+    colors: {
+      GREEN: 'bg-hg-green',
+      ERROR: 'bg-hg-error',
+      BLACK: 'bg-hg-black500',
+    },
+  },
+  users: {
+    names: {
+      active: 'Activo',
+      inactive: 'Inactivo',
+      suspended: 'Suspendido',
+    },
+    colors: {
+      RED: 'bg-hg-red', 
+      BLUE: 'bg-hg-blue', 
+      YELLOW: 'bg-hg-yellow',
+    },
+  },
+  
+};
+
+export function getStatusText(statusText: string, entity: string): string {
+  const lowercaseStatus = statusText.toLowerCase();
+  const config = entityStatusConfig[entity];
+  if (config && lowercaseStatus in config.names) {
+    return config.names[lowercaseStatus];
+  }
+  throw new Error(`Unknown status: ${statusText}`);
+}
+
+export const getStatusClassName = (status: string, entity: string): string => {
+  const uppercaseStatus = status.toUpperCase();
+  const config = entityStatusConfig[entity];
+  if (config && uppercaseStatus in config.colors) {
+    const style = config.colors[uppercaseStatus];
+    return `text-white rounded-full py-1 px-2 text-sm ${style}`;
+  }
+  return '';
 };

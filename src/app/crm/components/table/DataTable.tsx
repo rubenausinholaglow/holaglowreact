@@ -24,6 +24,7 @@ interface DataTableProps {
   ) => void;
   pageInfo: PageInfo;
   totalCount: number;
+  entity: string;
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -33,6 +34,7 @@ const DataTable: React.FC<DataTableProps> = ({
   executeQuery,
   pageInfo,
   totalCount,
+  entity,
 }: DataTableProps) => {
   const itemsPerPageOptions = [5, 10, 15, 20, 25, 50];
   const pathName = usePathname();
@@ -217,14 +219,14 @@ const DataTable: React.FC<DataTableProps> = ({
                             column.format.toLocaleUpperCase();
 
                           if (column.key === 'status') {
-                            className = getStatusClassName(value);
+                            className = getStatusClassName(value, entity);
                           } else if (formatColumn === 'DATE') {
                             className += '';
                           }
 
                           const formattedValue =
                             column.key === 'status'
-                              ? getStatusText(value)
+                              ? getStatusText(value, entity)
                               : formatColumn === 'DATE' && !isValidDate(value)
                               ? ''
                               : dayjs(value).isValid()

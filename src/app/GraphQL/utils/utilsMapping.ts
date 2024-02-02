@@ -1,37 +1,42 @@
 import {  TaskResponseNode } from "../TaskQueryResponse";
 import { UsersResponseNode } from "../UserQueryResponse";
 
-    export const mapUserData = (usersData: UsersResponseNode[]): UsersResponseNode[] => {
-        return usersData.map(user => {
-           
-            const lastName = user.secondLastName
-            ? `${user.lastName} ${user.secondLastName}`
-            : user.lastName;
+    export const mapUserData = (usersData: UsersResponseNode[]): UsersResponseNode[] | undefined => {
+        try{
+            return usersData.map(user => {
+                const lastName = user.secondLastName
+                ? `${user.lastName} ${user.secondLastName}`
+                : user.lastName;
 
-          
-            let lastAppointment = null;
-            let lastLead = null;
+            
+                let lastAppointment = null;
+                let lastLead = null;
 
-            if (user.leads && user.leads.length > 0) {
-                const sortedLeads = user.leads.sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
-                const leadWithAppointments = sortedLeads.find(lead => lead.appointments && lead.appointments.length > 0); 
+                if (user.leads && user.leads.length > 0) {
+                    const sortedLeads = [...user.leads].sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
+                    const leadWithAppointments = sortedLeads.find(lead => lead.appointments && lead.appointments.length > 0); 
 
-                if (leadWithAppointments && leadWithAppointments?.appointments.length > 0) {
-                    lastLead = leadWithAppointments;
-                    const sortedAppointments = leadWithAppointments.appointments.sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
-                    lastAppointment = sortedAppointments[0];
-                } else {
-                    lastLead = sortedLeads[0];
+                    if (leadWithAppointments && leadWithAppointments?.appointments.length > 0) {
+                        lastLead = leadWithAppointments;
+                        const sortedAppointments = [...leadWithAppointments.appointments].sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
+                        lastAppointment = sortedAppointments[0];
+                    } else {
+                        lastLead = sortedLeads[0];
+                    }
                 }
-            }
 
-            return {
-                ...user,
-                lastName,
-                lastLead,
-                lastAppointment,
-                };
-        });
+                return {
+                    ...user,
+                    lastName,
+                    lastLead,
+                    lastAppointment,
+                    };
+            });
+        } catch (e)
+        {
+            console.log('Error mapping ' + e)
+        }
+  
     };
 
     export const isValidDate = (dateString: string): boolean => {
@@ -68,7 +73,7 @@ import { UsersResponseNode } from "../UserQueryResponse";
             return {
                 ...task,
                 lastName,
-                durationTime: durationtime || '' // Set to empty string if durationTime is falsy
+                durationTime: durationtime || '' 
             };
         });
     }

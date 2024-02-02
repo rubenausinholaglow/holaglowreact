@@ -168,6 +168,7 @@ export default function TableTasks() {
           executeQuery={executeQuery}
           pageInfo={pageInfo!}
           totalCount={totalCount}
+          entity={entity}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>
