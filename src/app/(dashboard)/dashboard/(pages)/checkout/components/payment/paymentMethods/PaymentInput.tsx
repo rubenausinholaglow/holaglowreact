@@ -67,6 +67,10 @@ export default function PaymentInput(props: Props) {
   const { remoteControl, storedBudgetId, setCurrentUser } =
     useGlobalPersistedStore(state => state);
 
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
+
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
     address: user?.address ?? '',
@@ -220,7 +224,19 @@ export default function PaymentInput(props: Props) {
     await addPayment(inputValue);
   };
 
+  function validateFormData(formData: ClientUpdate): boolean {
+    return (Object.keys(formData) as Array<keyof ClientUpdate>).every(
+      key => !!formData[key]
+    );
+  }
+
   const initializePepper = async () => {
+    if (isLoading) return;
+    setErrorMessage(undefined);
+    if (!validateFormData(formData)) {
+      setErrorMessage('Faltan datos para la financiación');
+      return;
+    }
     setIsLoading(true);
 
     setFormData((prevFormData: any) => ({
@@ -481,6 +497,9 @@ export default function PaymentInput(props: Props) {
             >
               {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
             </Button>
+            {errorMessage && (
+              <span className="text-hg-error">{errorMessage}</span>
+            )}
           </Flex>
         </Modal>
         {showAlma && (
