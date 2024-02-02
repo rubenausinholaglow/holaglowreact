@@ -288,7 +288,12 @@ export default function Agenda({
   }, [selectedSlot]);
 
   useEffect(() => {
-    if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
+    if (
+      selectedPacksTreatments &&
+      selectedPacksTreatments.length > 0 &&
+      selectedTreatments[0].id !=
+        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+    ) {
       setSelectedTreatmentsIds(
         selectedPacksTreatments!
           .slice(0, 2)
