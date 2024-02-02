@@ -1,13 +1,13 @@
 enum AppointmentStatusEnum {
-  AGENDADA = 0,
-  CANCELADA = 1,
-  NOSHOW = 2,
-  REAGENDA = 3,
-  CONFIRMADA = 4,
-  FINALIZADA = 5,
-  EN_CURSO = 6,
-  CHECKIN = 7,
-  AUTOMATICCANCEL = 8,
+  Open = 0,
+  ManualCanceled = 1,
+  NoShow = 2,
+  Moved = 3,
+  Confirmed = 4,
+  Finished = 5,
+  InProgress = 6,
+  CheckIn = 7,
+  AutomaticCancel = 8,
 }
 
 interface GetAppointmentStatusProps {
@@ -19,23 +19,23 @@ export default function getAppointmentStatusText(
   status: AppointmentStatusEnum
 ): GetAppointmentStatusProps {
   switch (status) {
-    case AppointmentStatusEnum.AGENDADA:
+    case AppointmentStatusEnum.Open:
       return { text: 'AGENDADA', color: 'blue' };
-    case AppointmentStatusEnum.CANCELADA:
+    case AppointmentStatusEnum.ManualCanceled:
       return { text: 'CANCELADA', color: 'red' };
-    case AppointmentStatusEnum.NOSHOW:
+    case AppointmentStatusEnum.NoShow:
       return { text: 'NOSHOW', color: 'yellow' };
-    case AppointmentStatusEnum.REAGENDA:
+    case AppointmentStatusEnum.Moved:
       return { text: 'REAGENDA', color: 'yellow' };
-    case AppointmentStatusEnum.CONFIRMADA:
+    case AppointmentStatusEnum.Confirmed:
       return { text: 'CONFIRMADA', color: 'green' };
-    case AppointmentStatusEnum.FINALIZADA:
+    case AppointmentStatusEnum.Finished:
       return { text: 'FINALIZADA', color: 'green' };
-    case AppointmentStatusEnum.EN_CURSO:
+    case AppointmentStatusEnum.InProgress:
       return { text: 'EN CURSO', color: 'grey' };
-    case AppointmentStatusEnum.CHECKIN:
+    case AppointmentStatusEnum.CheckIn:
       return { text: 'CHECK IN', color: 'green' };
-    case AppointmentStatusEnum.AUTOMATICCANCEL:
+    case AppointmentStatusEnum.AutomaticCancel:
       return { text: 'CANCELADO AUTOMATICAMENTE', color: 'yellow' };
     default:
       return { text: 'Desconocido', color: 'white' };

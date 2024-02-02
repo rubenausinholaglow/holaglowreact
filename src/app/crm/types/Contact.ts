@@ -122,11 +122,6 @@ export interface Budget {
   statusBudget: number;
   totalPrice: number;
   totalPriceWithIVA: number;
-  /*date: string;
-  productsText: string;
-  totalPrice: string;
-  statusBudget: string;
-  actions: string;*/
 }
 
 interface Agent {

@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 import {
   Appointment,
   AppointmentsDataTableContact,
@@ -12,6 +10,7 @@ import {
   Task,
   TaskDataTableContact,
 } from '../types/Contact';
+import { getDateDayMonthYear, getDateWithTime } from './dateFormat';
 
 const concatenateProductName = (array: any[]) => {
   const result = array.map(element => element.product.title).join(', ');
@@ -26,10 +25,10 @@ export const mappingTasks = (contactDetailTasks: any) => {
   const model: TaskDataTableContact[] = [];
   contactDetailTasks.forEach((task: Task) => {
     const newModel: TaskDataTableContact = {
-      creationDate: dayjs(task.creationDate).format('DD-MM-YYYY HH:mm:ss'),
+      creationDate: getDateWithTime(task.creationDate, '-'),
       name: task.taskTemplate.name,
       status: getLastTaskExecution(task.executions).status,
-      endDateTask: dayjs(task.completedTime).format('DD-MM-YYYY HH:mm:ss'),
+      endDateTask: getDateWithTime(task.completedTime, '-'),
     };
     model.push(newModel);
   });
@@ -41,7 +40,7 @@ export const mappingComments = (contactDetailComments: any) => {
   contactDetailComments.forEach((comment: Comment) => {
     const newModel: CommentDataTableContact = {
       agent: comment.agent ? comment.agent.username : '',
-      creationDate: dayjs(comment.creationDate).format('DD-MM-YYYY HH:mm:ss'),
+      creationDate: getDateWithTime(comment.creationDate, '-'),
       text: comment.text,
     };
     model.push(newModel);
@@ -53,8 +52,8 @@ export const mappingCalls = (contactDetailCalls: any) => {
   const model: CallDataTableContact[] = [];
   contactDetailCalls.forEach((call: Call) => {
     const newModel: CallDataTableContact = {
-      startTimeCalls: dayjs(call.startTime).format('DD-MM-YYYY hh:mm'),
-      endTimeCalls: dayjs(call.endTime).format('DD-MM-YYYY hh:mm'),
+      startTimeCalls: getDateWithTime(call.startTime, '-'),
+      endTimeCalls: getDateWithTime(call.endTime, '-'),
       status: call.status,
     };
     model.push(newModel);
@@ -68,7 +67,7 @@ export const mappingAppointments = (contactDetailAppointments: any) => {
     const newModel: AppointmentsDataTableContact = {
       status: appointment.status,
       city: appointment.clinic.city,
-      dateAppointment: dayjs(appointment.date).format('DD-MM-YYYY'),
+      dateAppointment: getDateDayMonthYear(appointment.date, '-'),
       treatments: concatenateProductName(appointment.appointmentProducts),
       startTimeAppointment: appointment.startTime,
     };
@@ -81,7 +80,7 @@ export const mappingBudgets = (contactDetailBudgets: any) => {
   const model: BudgetsDataTableContact[] = [];
   contactDetailBudgets.forEach((budget: Budget) => {
     const newModel: BudgetsDataTableContact = {
-      creationDate: dayjs(budget.creationDate).format('DD-MM-YYYY'),
+      creationDate: getDateDayMonthYear(budget.creationDate, '-'),
       productsText: concatenateProductName(budget.products),
       actions: '>',
       status: budget.statusBudget,
