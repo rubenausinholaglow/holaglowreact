@@ -1,9 +1,9 @@
-enum CallStatusEnum {
-  NOCONTESTADO = 0,
-  CONTESTADA = 1,
-  OCUPADO = 2,
-  PENDIENTE = 3,
-  COMPLETADA = 4,
+enum CallStatus {
+  NotAnswered = 0,
+  Answered = 1,
+  Busy = 2,
+  Pending = 3,
+  Completed = 4,
 }
 
 interface GetCallStatusProps {
@@ -12,18 +12,18 @@ interface GetCallStatusProps {
 }
 
 export default function getCallStatusText(
-  status: CallStatusEnum
+  status: CallStatus
 ): GetCallStatusProps {
   switch (status) {
-    case CallStatusEnum.NOCONTESTADO:
+    case CallStatus.NotAnswered:
       return { text: 'NO CONTESTADO', color: 'blue' };
-    case CallStatusEnum.CONTESTADA:
+    case CallStatus.Answered:
       return { text: 'CONTESTADA', color: 'blue' };
-    case CallStatusEnum.OCUPADO:
+    case CallStatus.Busy:
       return { text: 'OCUPADO', color: 'red' };
-    case CallStatusEnum.PENDIENTE:
+    case CallStatus.Pending:
       return { text: 'PENDIENTE', color: 'blue' };
-    case CallStatusEnum.COMPLETADA:
+    case CallStatus.Completed:
       return { text: 'COMPLETADA', color: 'green' };
     default:
       return { text: 'Desconocido', color: 'white' };

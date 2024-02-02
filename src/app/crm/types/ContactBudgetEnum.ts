@@ -1,8 +1,8 @@
-enum BudgetStatusEnum {
-  PENDIENTE = 0,
-  ACEPTADO = 1,
-  RECHAZADO = 2,
-  PAGADO = 3,
+enum BudgetStatus {
+  Open = 1,
+  Finish = 2,
+  Rejected = 3,
+  Paid = 4,
 }
 
 interface GetBudgetStatusProps {
@@ -11,16 +11,16 @@ interface GetBudgetStatusProps {
 }
 
 export default function getBudgetStatusText(
-  status: BudgetStatusEnum
+  status: BudgetStatus
 ): GetBudgetStatusProps {
   switch (status) {
-    case BudgetStatusEnum.PENDIENTE:
+    case BudgetStatus.Open:
       return { text: 'PENDIENTE', color: 'blue' };
-    case BudgetStatusEnum.ACEPTADO:
+    case BudgetStatus.Finish:
       return { text: 'ACEPTADO', color: 'green' };
-    case BudgetStatusEnum.RECHAZADO:
+    case BudgetStatus.Rejected:
       return { text: 'RECHAZADO', color: 'red' };
-    case BudgetStatusEnum.PAGADO:
+    case BudgetStatus.Paid:
       return { text: 'PAGADO', color: 'green' };
     default:
       return { text: 'DESCONOCIDO', color: 'white' };
