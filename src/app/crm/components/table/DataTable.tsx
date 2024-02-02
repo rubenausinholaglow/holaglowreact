@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { getStatus } from '@utils/utils';
+import { getStatusClassName, getStatusText } from '@utils/utils';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import { isValidDate } from 'app/GraphQL/utils/utilsMapping';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -217,25 +217,14 @@ const DataTable: React.FC<DataTableProps> = ({
                             column.format.toLocaleUpperCase();
 
                           if (column.key === 'status') {
-                            const status = getStatus(value).toLocaleUpperCase();
-
-                            if (status === 'CANCELADA') {
-                              className =
-                                'bg-hg-error text-white rounded-full py-1 px-2 text-sm';
-                            } else if (status === 'PENDIENTE') {
-                              className =
-                                'bg-hg-black500 text-white rounded-full py-1 px-2 text-sm';
-                            } else if (status === 'FINALIZADA') {
-                              className =
-                                'bg-hg-green text-white rounded-full py-1 px-2 text-sm';
-                            }
+                            className = getStatusClassName(value);
                           } else if (formatColumn === 'DATE') {
                             className += '';
                           }
 
                           const formattedValue =
                             column.key === 'status'
-                              ? getStatus(value)
+                              ? getStatusText(value)
                               : formatColumn === 'DATE' && !isValidDate(value)
                               ? ''
                               : dayjs(value).isValid()

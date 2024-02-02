@@ -134,16 +134,30 @@ export function clearLocalStorage(allLocalStorage: boolean) {
   useCartStore.setState(INITIAL_STATE);
 }
 
+const statusNaming: Record<string, string> = {
+  pending: 'Pendiente',
+  cancelled: 'Cancelada',
+  finished: 'Finalizada',
+};
 
-export function getStatus(statusText: string): string {
-  switch (statusText.toLowerCase()) {
-    case 'pending':
-      return 'Pendiente';
-    case 'cancelled':
-      return 'Cancelada';
-    case 'finished':
-      return 'Finalizada';
-    default:
-      throw new Error(`Unknown status: ${statusText}`);
+export function getStatusText(statusText: string): string {
+  const lowercaseStatus = statusText.toLowerCase();
+  if (lowercaseStatus in statusNaming) {
+    return statusNaming[lowercaseStatus];
   }
+  throw new Error(`Unknown status: ${statusText}`);
 }
+
+
+
+const statusStyles: Record<string, string> = {
+  CANCELLED: 'bg-hg-error text-white',
+  PENDING: 'bg-hg-black500 text-white',
+  FINISHED: 'bg-hg-green text-white',
+};
+
+export const getStatusClassName = (status: string): string => {
+  const uppercaseStatus = status.toUpperCase();
+  const style = statusStyles[uppercaseStatus];
+  return style ? `rounded-full py-1 px-2 text-sm ${style}` : '';
+};

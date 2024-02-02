@@ -45,7 +45,7 @@ export default function TableContacts() {
       format: 'string',
     },
     {
-      label: 'Clínica Última Cita',
+      label: 'Clínica',
       key: 'leads.appointments.clinic.city',
       nestedField: 'executions',
       format: 'string',

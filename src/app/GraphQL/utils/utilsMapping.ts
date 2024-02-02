@@ -3,20 +3,34 @@ import { UsersResponseNode } from "../UserQueryResponse";
 
     export const mapUserData = (usersData: UsersResponseNode[]): UsersResponseNode[] => {
         return usersData.map(user => {
-            const lastLead = user.leads[user.leads.length - 1];
-            const lastAppointment = lastLead
-            ? lastLead.appointments[lastLead.appointments.length - 1]
-            : null;
+           
             const lastName = user.secondLastName
             ? `${user.lastName} ${user.secondLastName}`
             : user.lastName;
 
+          
+            let lastAppointment = null;
+            let lastLead = null;
+
+            if (user.leads && user.leads.length > 0) {
+                const sortedLeads = user.leads.sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
+                const leadWithAppointments = sortedLeads.find(lead => lead.appointments && lead.appointments.length > 0); 
+
+                if (leadWithAppointments && leadWithAppointments?.appointments.length > 0) {
+                    lastLead = leadWithAppointments;
+                    const sortedAppointments = leadWithAppointments.appointments.sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
+                    lastAppointment = sortedAppointments[0];
+                } else {
+                    lastLead = sortedLeads[0];
+                }
+            }
+
             return {
-            ...user,
-            lastName,
-            lastLead,
-            lastAppointment,
-            };
+                ...user,
+                lastName,
+                lastLead,
+                lastAppointment,
+                };
         });
     };
 
