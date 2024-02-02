@@ -35,7 +35,6 @@ import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
 
 export default function Form() {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [showFirstStepErrors, setShowFirstStepErrors] = useState(false);
   const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
   const [createdUser, setCreatedUser] = useState<User | undefined>(undefined);
@@ -86,6 +85,7 @@ export default function Form() {
 
   const { cart, addItemToCart, resetCart } = useCartStore(state => state);
   const STEPS = 7;
+  const [activeSlideIndex, setActiveSlideIndex] = useState(6);
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
@@ -109,7 +109,8 @@ export default function Form() {
       productDetails.title = 'Consulta personalizada de dermatología';
       productDetails.price = 59;
       setSelectedTreatments([productDetails]);
-      if (cart.length == 0) addItemToCart(productDetails as CartItem);
+      resetCart();
+      addItemToCart(productDetails as CartItem);
     }
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
@@ -141,7 +142,6 @@ export default function Form() {
       treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
-    resetCart();
     setPayment(undefined);
   }, []);
 
