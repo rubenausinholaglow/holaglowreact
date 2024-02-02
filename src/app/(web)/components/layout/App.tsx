@@ -137,11 +137,11 @@ export default function Html({ children }: { children: ReactNode }) {
       }`}
     >
       <ModalBackground
-        isVisible={showModalBackground}
+      /* isVisible={showModalBackground}
         onClick={() => {
           setIsModalOpen(false);
           setShowModalBackground(false);
-        }}
+        }} */
       />
       <Breakpoint />
       {children}
