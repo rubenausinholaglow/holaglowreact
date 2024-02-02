@@ -14,7 +14,8 @@ const useRegistration = (
   formData: Client,
   isDashboard: boolean,
   redirect: boolean,
-  isEmbed: boolean
+  isEmbed: boolean,
+  lastStep = false
 ) => {
   const {
     selectedTreatments,
@@ -77,13 +78,14 @@ const useRegistration = (
         if (isEmbed) {
           window.parent.postMessage(URL, routes.checkout.clinics);
         }
-
-        if (!isDashboard) {
-          if (redirect) {
-            window.parent.location.href =
-              'https://holaglow.com/checkout/clinicas';
-          } else router.push('/checkout/clinicas');
-        } else router.push(routes.dashboard.checkIn.treatments);
+        if (lastStep) {
+          if (!isDashboard) {
+            if (redirect) {
+              window.parent.location.href =
+                'https://holaglow.com/checkout/clinicas';
+            } else router.push('/checkout/clinicas');
+          } else router.push(routes.dashboard.checkIn.treatments);
+        }
       }
     }
     return user;

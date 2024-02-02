@@ -3,6 +3,7 @@
 import './datePickerDermaStyle.css';
 
 import { useEffect, useState } from 'react';
+import { User } from '@interface/appointment';
 import { AnalyticsMetrics, Client } from '@interface/client';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { PaymentBank } from '@interface/payment';
@@ -24,17 +25,20 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { create } from 'lodash';
 
+import FifthStep from './FifthStep';
 import FirstStep from './FirstStep';
+import FourthStep from './FourthStep';
 import { MULTISTEP_QUESTIONS } from './mockedData';
 import SecondStep from './SecondStep';
-import FourthStep from './FourthStep';
-import FifthStep from './FifthStep';
+import ThirdStep from './ThirdStep';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [showFirstStepErrors, setShowFirstStepErrors] = useState(false);
   const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
+  const [createdUser, setCreatedUser] = useState<User | undefined>(undefined);
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
   } as DermaQuestions);
@@ -81,7 +85,7 @@ export default function Form() {
   });
 
   const { cart, addItemToCart, resetCart } = useCartStore(state => state);
-  const STEPS = 6;
+  const STEPS = 7;
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
@@ -89,11 +93,7 @@ export default function Form() {
 
   useEffect(() => {
     async function checkout() {
-      if (client.email) {
-        client.origin = 'Derma';
-        const createdUser = await registerUser(client, false, false, false);
-        await initializePayment(activePayment, createdUser!);
-      }
+      await initializePayment(activePayment, createdUser!);
     }
     if (activePayment != PaymentBank.None && cart.length > 0) checkout();
   }, [activePayment]);
@@ -146,8 +146,8 @@ export default function Form() {
   }, []);
 
   useEffect(() => {
-    if (selectedSlot) setContinueDisabled(false);
-  }, [selectedSlot]);
+    if (selectedSlot || client) setContinueDisabled(false);
+  }, [selectedSlot, client]);
 
   const goBack = (index: number) => {
     setActiveSlideIndex(index - 1);
@@ -155,6 +155,16 @@ export default function Form() {
   };
 
   const goNext = (index: number) => {
+    if (client && client.email && !createdUser) {
+      client.origin = 'Derma';
+      registerUser(client, false, false, false).then(x => {
+        setCreatedUser(x);
+      });
+    }
+    if (!client.name && dermaQuestions.name) {
+      client.name = dermaQuestions.name!;
+      setClient(client);
+    }
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
@@ -235,25 +245,23 @@ export default function Form() {
               );
             })}
 
-            <div id="tm_derma_step5" className="min-h-[100px]">
-              <ThirdStep activeSlideIndex={activeSlideIndex} />
-            </div>
-
-            <div id="tm_derma_step6" className="min-h-[100px]">
-              <FourthStep
-                name={dermaQuestions?.name || ''}
+            <div id="tm_derma_step3" className="min-h-[100px]">
+              <ThirdStep
                 activeSlideIndex={activeSlideIndex}
                 client={client}
                 setClient={setClient}
               />
             </div>
 
-            <div id="tm_derma_step6" className="min-h-[100px]">
+            <div id="tm_derma_step4" className="min-h-[100px]">
+              <FourthStep activeSlideIndex={activeSlideIndex} />
+            </div>
+
+            <div id="tm_derma_step5" className="min-h-[100px]">
               <FifthStep
                 name={dermaQuestions?.name || ''}
                 activeSlideIndex={activeSlideIndex}
                 client={client}
-                setClient={setClient}
               />
             </div>
           </Carousel>

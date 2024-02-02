@@ -13,7 +13,7 @@ export default function FourthStep({
 }) {
   return (
     <div>
-      {activeSlideIndex === 4 && (
+      {activeSlideIndex === 5 && (
         <>
           <Container className="px-0">
             <Flex layout="col-left" className="w-full">
