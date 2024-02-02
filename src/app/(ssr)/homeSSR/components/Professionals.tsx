@@ -1,12 +1,11 @@
 import { fetchClinics } from '@utils/fetch';
+import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { Professional } from 'app/types/clinic';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-
-import ProfessionalCard from './ProfessionalCard';
 
 async function getClinics() {
   const clinics = await fetchClinics();
