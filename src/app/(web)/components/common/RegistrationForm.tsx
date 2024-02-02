@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
-import useRegistration from '@utils/userUtils';
+import useRegistration, { validFormData } from '@utils/userUtils';
 import {
   phoneValidationRegex,
   postalCodeValidationRegex,
@@ -26,6 +26,7 @@ import Image from 'next/image';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../../utils/props';
+import userUtils from '@utils/userUtils';
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
@@ -131,16 +132,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
-    const areAllFieldsFilled = requiredFields.every(
-      field => formData[field] !== ''
-    );
 
-    if (
-      areAllFieldsFilled &&
-      isEmailValid &&
-      formData.termsAndConditionsAccepted &&
-      errors.length == 0
-    ) {
+    if (validFormData(formData, errors)) {
       setErrors([]);
       await handleRegistration();
     } else {

@@ -7,8 +7,24 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { useRouter } from 'next/navigation';
+import * as utils from '@utils/validators';
 
 import useRoutes from './useRoutes';
+
+export const validFormData = (client: Client, errors: string[]): boolean => {
+  const requiredFields = ['email', 'phone', 'name', 'surname'];
+  const isEmailValid = utils.validateEmail(client.email);
+  const areAllFieldsFilled = requiredFields.every(
+    field => client[field] !== ''
+  );
+
+  var res =
+    areAllFieldsFilled &&
+    isEmailValid &&
+    client.termsAndConditionsAccepted &&
+    errors.length == 0;
+  return res;
+};
 
 const useRegistration = (
   formData: Client,
