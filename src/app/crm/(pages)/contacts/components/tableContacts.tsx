@@ -2,19 +2,20 @@
 import { useEffect, useState } from 'react';
 import { DocumentNode } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
-import { User } from '@interface/appointment';
 import DataTable from 'app/crm/components/table/DataTable';
 import {
   createQuery,
   Cursor,
   TableQuery,
 } from 'app/crm/components/table/TableFunctions';
+import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import {
   UserQueryResponse,
   UsersResponse,
   UsersResponseNode,
 } from 'app/GraphQL/UserQueryResponse';
+import { mapUserData } from 'app/GraphQL/utils/utilsMapping';
 import { useSessionStore } from 'app/stores/globalStore';
 import { createApolloClient } from 'lib/client';
 
@@ -30,7 +31,7 @@ export default function TableContacts() {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [cursors, setCursors] = useState<Cursor[]>([]);
 
-  const columns = [
+  const columns: ColumnDataTable[] = [
     { label: 'ID', key: 'id', format: 'string' },
     { label: 'Nombre', key: 'firstName', format: 'string' },
     { label: 'Apellido', key: 'lastName', format: 'string' },
@@ -43,6 +44,12 @@ export default function TableContacts() {
       nestedField: 'executions',
       format: 'string',
     },
+    {
+      label: 'Clínica',
+      key: 'leads.appointments.clinic.city',
+      nestedField: 'executions',
+      format: 'string',
+    },
   ];
   const queryToExecute = [
     `
@@ -50,10 +57,22 @@ export default function TableContacts() {
       creationDate
       firstName
       lastName
+      secondLastName
       phone
       email
       agent {
-          username
+        username
+      }
+      leads {
+          id
+          creationDate
+          appointments {
+              id
+              creationDate
+              clinic {
+                  city
+              }
+          }
       }
     `,
   ];
@@ -71,8 +90,9 @@ export default function TableContacts() {
         updateCursor(data.users, nextPage);
         setPageInfo(data.users.pageInfo);
         setTotalCount(data.users.totalCount);
-        const users = data.users.edges.map(edge => edge.node);
-        setUsers(users);
+        const usersData = data.users.edges.map(edge => edge.node);
+        const mappedUsers = mapUserData(usersData);
+        setUsers(mappedUsers);
       } else {
         setErrorMessage(
           'Error cargando usuarios - Contacte con el administrador'
@@ -141,6 +161,7 @@ export default function TableContacts() {
           executeQuery={executeQuery}
           pageInfo={pageInfo!}
           totalCount={totalCount}
+          entity={entity}
         />
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>
