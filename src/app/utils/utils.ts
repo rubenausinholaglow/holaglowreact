@@ -1,4 +1,5 @@
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import { entityStatusConfig } from 'app/crm/components/table/EntityStatusConfig';
 import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/types/crisalix';
 import { INITIAL_STATE_MESSAGESOCKETLIST } from 'app/types/messageSocket';
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
@@ -133,3 +134,22 @@ export function clearLocalStorage(allLocalStorage: boolean) {
   usePaymentList.setState(INITIAL_STATE_PAYMENT);
   useCartStore.setState(INITIAL_STATE);
 }
+
+export function getStatusText(statusText: string, entity: string): string {
+  const lowercaseStatus = statusText.toUpperCase();
+  const config = entityStatusConfig[entity];
+  if (config && lowercaseStatus in config.names) {
+    return config.names[lowercaseStatus];
+  }
+  return statusText;
+}
+
+export const getStatusClassName = (status: string, entity: string): string => {
+  const uppercaseStatus = status.toUpperCase();
+  const config = entityStatusConfig[entity];
+  if (config && uppercaseStatus in config.colors) {
+    const style = config.colors[uppercaseStatus];
+    return `text-white rounded-full py-1 px-2 text-sm ${style}`;
+  }
+  return '';
+};
