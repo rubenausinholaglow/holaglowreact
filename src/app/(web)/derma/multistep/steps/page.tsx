@@ -26,10 +26,10 @@ import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
 import FirstStep from './FirstStep';
-import FourthStep from './FourthStep';
 import { MULTISTEP_QUESTIONS } from './mockedData';
 import SecondStep from './SecondStep';
-import ThirdStep from './ThirdStep';
+import FourthStep from './FourthStep';
+import FifthStep from './FifthStep';
 
 export default function Form() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -241,6 +241,15 @@ export default function Form() {
 
             <div id="tm_derma_step6" className="min-h-[100px]">
               <FourthStep
+                name={dermaQuestions?.name || ''}
+                activeSlideIndex={activeSlideIndex}
+                client={client}
+                setClient={setClient}
+              />
+            </div>
+
+            <div id="tm_derma_step6" className="min-h-[100px]">
+              <FifthStep
                 name={dermaQuestions?.name || ''}
                 activeSlideIndex={activeSlideIndex}
                 client={client}
