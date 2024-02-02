@@ -126,7 +126,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
 
       {!deviceSize.isMobile && (
         <>
-          <div className="w-1/2">
+          <div className="flex w-1/2">
             <Flex layout="col-left" className="gap-4 mr-24 w-full">
               {clinics.map((clinic, index) => (
                 <Flex

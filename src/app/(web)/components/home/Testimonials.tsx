@@ -1,5 +1,6 @@
 'use client';
 
+import CheckHydration from '@utils/CheckHydration';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
@@ -112,33 +113,35 @@ export default function Testimonials() {
   const shuffledTestimonials = shuffleArray(TESTIMONIALS);
 
   return (
-    <Container className="py-12">
-      <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-8">
-        Si tú estás{' '}
-        <Underlined color={HOLAGLOW_COLORS['primary']}>feliz</Underlined>,
-        nosotros también
-      </Title>
-      <Text className="text-hg-black500 mb-6 md:mb-12">
-        Sabemos que nada transmite más confianza que una historia real. Te
-        presentamos a las personas que ya han confiado en Holaglow.
-      </Text>
-      <Carousel
-        hasControls
-        className="relative mb-12"
-        isIntrinsicHeight
-        visibleSlides={visibleTestimonials()}
-        infinite={false}
-        sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
-      >
-        {shuffledTestimonials.map((item: Testimonial) => (
-          <Testimonial
-            key={item.name}
-            imgUrl={item.imgUrl}
-            name={item.name}
-            testimonial={item.testimonial}
-          />
-        ))}
-      </Carousel>
-    </Container>
+    <CheckHydration>
+      <Container className="py-12">
+        <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-8">
+          Si tú estás{' '}
+          <Underlined color={HOLAGLOW_COLORS['primary']}>feliz</Underlined>,
+          nosotros también
+        </Title>
+        <Text className="text-hg-black500 mb-6 md:mb-12">
+          Sabemos que nada transmite más confianza que una historia real. Te
+          presentamos a las personas que ya han confiado en Holaglow.
+        </Text>
+        <Carousel
+          hasControls
+          className="relative mb-12"
+          isIntrinsicHeight
+          visibleSlides={visibleTestimonials()}
+          infinite={false}
+          sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
+        >
+          {shuffledTestimonials.map((item: Testimonial) => (
+            <Testimonial
+              key={item.name}
+              imgUrl={item.imgUrl}
+              name={item.name}
+              testimonial={item.testimonial}
+            />
+          ))}
+        </Carousel>
+      </Container>
+    </CheckHydration>
   );
 }

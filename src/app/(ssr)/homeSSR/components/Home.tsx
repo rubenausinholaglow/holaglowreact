@@ -1,5 +1,6 @@
 import Clinics from 'app/(web)/components/common/Clinics';
 import GoogleStars from 'app/(web)/components/home/GoogleStars';
+import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
 import HomeHero from 'app/(web)/components/home/Hero';
 import HomeProfessionals from 'app/(web)/components/home/HomeProfessionals';
 import HomeProducts from 'app/(web)/components/home/Products';
@@ -16,29 +17,10 @@ export default function Home() {
       <ValuesCarousel />
       <ValuesDescription />
       <HomeProducts />
-      <div id="professionals">
-        <HomeProfessionals />
-      </div>
+      <HomeProfessionals />
       <Testimonials />
       <Clinics />
+      <GoToTreatments />
     </MainLayoutSSR>
   );
-}
-
-{
-  /* <Hero />
-<GoogleStars />
-<ValuesCarousel />
-<HomePromo />
-<ValuesDescription />
-<Products />
-<div id="professionals">
-  <Professionals />
-</div>
-<Testimonials />
-<Clinics />
-<GoToTreatments />
-{deviceSize.isMobile && floatingBarThreshold !== 0 && (
-  <FloatingBottomBar threshold={floatingBarThreshold} />
-)} */
 }
