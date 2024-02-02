@@ -92,13 +92,6 @@ export default function Form() {
   const registerUser = useRegistration(client, false, false, false);
 
   useEffect(() => {
-    async function checkout() {
-      await initializePayment(activePayment, createdUser!);
-    }
-    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
-  }, [activePayment]);
-
-  useEffect(() => {
     setActivePayment(PaymentBank.None);
     useCartStore.setState(INITIAL_STATE);
 
@@ -112,9 +105,6 @@ export default function Form() {
       resetCart();
       addItemToCart(productDetails as CartItem);
     }
-
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
-
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
       address: 'Consulta online',
@@ -143,8 +133,15 @@ export default function Form() {
     };
     setAnalyticsMetrics(metrics);
     setPayment(undefined);
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
   }, []);
 
+  useEffect(() => {
+    async function checkout() {
+      await initializePayment(activePayment, createdUser!);
+    }
+    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
+  }, [activePayment]);
   useEffect(() => {
     if (selectedSlot || client) setContinueDisabled(false);
   }, [selectedSlot, client]);
