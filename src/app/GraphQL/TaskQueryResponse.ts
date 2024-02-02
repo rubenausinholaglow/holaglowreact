@@ -17,6 +17,9 @@ export interface TaskResponseEdge{
 }
 export interface TaskResponseNode{
     id: string;
+    creationDate : Date;
+    completedTime : Date;
+    durationtime : string;
     user : UserTask;
     taskTemplate : TaskTemplate;
     execution : Executions;
@@ -25,6 +28,8 @@ export interface TaskResponseNode{
 interface UserTask
 {
     firstName : string;
+    lastName : string;
+    secondLastName : string
 }
 
 interface TaskTemplate {
@@ -32,7 +37,6 @@ interface TaskTemplate {
     name : string;
     description :string;
     order : number;
-
 }
 
 

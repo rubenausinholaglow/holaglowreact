@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { getStatus } from '@utils/utils';
 import { PageInfo } from 'app/GraphQL/PageInfo';
+import { isValidDate } from 'app/GraphQL/utils/utilsMapping';
 import { SvgSpinner } from 'app/icons/Icons';
 import dayjs from 'dayjs';
 import debouce from 'lodash.debounce';
@@ -218,12 +219,15 @@ const DataTable: React.FC<DataTableProps> = ({
                           if (column.key === 'status') {
                             const status = getStatus(value).toLocaleUpperCase();
 
-                            if (status === 'CANCELADO') {
+                            if (status === 'CANCELADA') {
                               className =
                                 'bg-hg-error text-white rounded-full py-1 px-2 text-sm';
                             } else if (status === 'PENDIENTE') {
                               className =
                                 'bg-hg-black500 text-white rounded-full py-1 px-2 text-sm';
+                            } else if (status === 'FINALIZADA') {
+                              className =
+                                'bg-hg-green text-white rounded-full py-1 px-2 text-sm';
                             }
                           } else if (formatColumn === 'DATE') {
                             className += '';
@@ -232,7 +236,9 @@ const DataTable: React.FC<DataTableProps> = ({
                           const formattedValue =
                             column.key === 'status'
                               ? getStatus(value)
-                              : formatColumn === 'DATE'
+                              : formatColumn === 'DATE' && !isValidDate(value)
+                              ? ''
+                              : dayjs(value).isValid()
                               ? dayjs(value).format('DD-MM-YYYY HH:mm:ss')
                               : value;
 

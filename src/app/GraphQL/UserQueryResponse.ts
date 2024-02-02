@@ -19,5 +19,28 @@ export type UsersResponseNode = {
     email : string;
     firstName : string;
     lastName : string;
+    secondLastName :string;
     phone : string;
+    agent : AgentUserResponse;
+    leads : LeadsUserResponse[];
+}
+
+type AgentUserResponse = {
+    username : string;
+}
+
+type LeadsUserResponse = {
+    id : string;
+    creationDate : Date;
+    appointments : AppointmentUserResponse[];
+}
+
+type AppointmentUserResponse = {
+    id : string;
+    creationDate : Date;
+    clinic : ClinicUserResponse;
+}
+
+type ClinicUserResponse = {
+    city : string;
 }

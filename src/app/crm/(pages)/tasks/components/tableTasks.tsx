@@ -9,11 +9,13 @@ import {
   Cursor,
   TableQuery,
 } from 'app/crm/components/table/TableFunctions';
+import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import {
   TaskQueryResponse,
   TaskResponseNode,
 } from 'app/GraphQL/TaskQueryResponse';
+import { mapTasksData } from 'app/GraphQL/utils/utilsMapping';
 import { useSessionStore } from 'app/stores/globalStore';
 import { createApolloClient } from 'lib/client';
 
@@ -27,7 +29,7 @@ export default function TableTasks() {
   const [pageInfo, setPageInfo] = useState<PageInfo>();
   const [totalCount, setTotalCount] = useState<number>(0);
 
-  const columns: any[] = [
+  const columns: ColumnDataTable[] = [
     { label: 'id', key: 'id', format: 'string' },
 
     { label: 'Tarea', key: 'taskTemplate.name', format: 'string' },
@@ -56,28 +58,29 @@ export default function TableTasks() {
       nestedField: 'executions',
       format: 'string',
     },
-    { label: 'Fecha Finalización', key: 'completedTime', format: 'date' },
     { label: 'Fecha Creación', key: 'creationDate', format: 'date' },
+    { label: 'Tiempo Tarea', key: 'durationTime', format: 'date' },
   ];
   const queryToExecute = [
     `
       id
-        creationDate
-        status
-        completedTime
-        user {
-            firstName
-            lastName
-            email
-        }
-        taskTemplate {
-            name
-        }
-        executions {
-            agent {
-                username
-            }
-        }
+      creationDate
+      status
+      completedTime
+      user {
+          firstName
+          lastName
+          secondLastName
+          email
+      }
+      taskTemplate {
+          name
+      }
+      executions {
+          agent {
+              username
+          }
+      }
     `,
   ];
 
@@ -95,7 +98,8 @@ export default function TableTasks() {
         setPageInfo(data.taskInstances.pageInfo);
         setTotalCount(data.taskInstances.totalCount);
         const tasks = data.taskInstances.edges.map(edge => edge.node);
-        setTasks(tasks);
+        const mappedTasks = mapTasksData(tasks);
+        setTasks(mappedTasks);
       } else {
         setErrorMessage(
           'Error cargando usuarios - Contacte con el administrador'

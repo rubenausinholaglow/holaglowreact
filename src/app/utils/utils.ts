@@ -140,7 +140,9 @@ export function getStatus(statusText: string): string {
     case 'pending':
       return 'Pendiente';
     case 'cancelled':
-      return 'Cancelado';
+      return 'Cancelada';
+    case 'finished':
+      return 'Finalizada';
     default:
       throw new Error(`Unknown status: ${statusText}`);
   }
