@@ -2,12 +2,12 @@ import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
+import * as utils from '@utils/validators';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { useRouter } from 'next/navigation';
-import * as utils from '@utils/validators';
 
 import useRoutes from './useRoutes';
 
@@ -18,7 +18,7 @@ export const validFormData = (client: Client, errors: string[]): boolean => {
     field => client[field] !== ''
   );
 
-  var res =
+  const res =
     areAllFieldsFilled &&
     isEmailValid &&
     client.termsAndConditionsAccepted &&

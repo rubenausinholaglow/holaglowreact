@@ -26,7 +26,6 @@ import Image from 'next/image';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../../utils/props';
-import userUtils from '@utils/userUtils';
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
