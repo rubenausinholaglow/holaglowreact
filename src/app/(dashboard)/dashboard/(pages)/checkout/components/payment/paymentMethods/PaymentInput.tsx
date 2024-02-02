@@ -214,6 +214,7 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
+    if (isLoading) return;
     if (showAlma || messageNotification || showPepper || paymentStripe) {
       return;
     }
@@ -306,6 +307,7 @@ export default function PaymentInput(props: Props) {
   }, [isModalOpen]);
 
   const initializeStripePayment = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     setPaymentStripe(true);
     const initializePayment = constructInitializePayment(PaymentBank.Stripe);
