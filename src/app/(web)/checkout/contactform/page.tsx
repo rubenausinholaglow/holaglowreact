@@ -89,7 +89,12 @@ export default function ConctactForm() {
       const createdUser = await registerUser(client, false, false, false);
       await initializePayment(activePayment, createdUser!);
     }
-    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
+    if (
+      activePayment != PaymentBank.None &&
+      cart.length > 0 &&
+      client.email != ''
+    )
+      checkout();
   }, [activePayment]);
 
   return (

@@ -89,7 +89,7 @@ export default function Form() {
 
   useEffect(() => {
     async function checkout() {
-      if (client.email) {
+      if (client.email != '') {
         client.origin = 'Derma';
         const createdUser = await registerUser(client, false, false, false);
         await initializePayment(activePayment, createdUser!);
