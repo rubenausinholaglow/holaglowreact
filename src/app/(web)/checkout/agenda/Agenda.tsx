@@ -91,6 +91,7 @@ export default function Agenda({
         selectedTreatments[0].type
       ];
   }
+  if (isDerma) maxDays = 365;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -252,7 +253,7 @@ export default function Agenda({
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else if (user && selectedDay) {
+        } else if (user && selectedDay && !isDerma) {
           setLoadingDays(true);
           setLoadingMonth(true);
           if (isDashboard || isCheckin)

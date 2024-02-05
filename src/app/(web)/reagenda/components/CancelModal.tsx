@@ -51,12 +51,23 @@ export default function CancelModal({
               {dayjs(appointmentToCancel?.startTime).format('HH:mm')}
             </Text>
           </Flex>
-          {appointmentToCancel?.paid && (
+          {appointmentToCancel?.paid && !isDerma && (
             <Flex className="bg-hg-error100 text-hg-error text-xs gap-3 px-4 py-3 rounded-xl w-full mb-4">
               <SvgWarning width={22} height={22} className="shrink-0" />
               <div>
                 <Text>
                   La cancelación de la cita conlleva la pérdida del anticipo.
+                </Text>
+              </div>
+            </Flex>
+          )}
+          {isDerma && (
+            <Flex className="bg-hg-error100 text-hg-error text-xs gap-3 px-4 py-3 rounded-xl w-full mb-4">
+              <SvgWarning width={22} height={22} className="shrink-0" />
+              <div>
+                <Text>
+                  Servicio no reembolsable sin contraindicación médica (ver
+                  <a href="/aviso-legal">términos y condiciones</a>)
                 </Text>
               </div>
             </Flex>

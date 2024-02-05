@@ -98,7 +98,6 @@ export const Button = ({
     return (
       <AnimateOnViewport origin={origin}>
         <button
-          id={id}
           className={twMerge(
             `transition-all relative group overflow-visible ${
               ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -109,6 +108,7 @@ export const Button = ({
         >
           <ButtonBase type={type} disabled={disabled} />
           <ButtonBody
+            id={id}
             type={type}
             size={size}
             customStyles={customStyles}
@@ -124,7 +124,6 @@ export const Button = ({
 
   return (
     <button
-      id={id}
       className={twMerge(
         `transition-all relative group overflow-visible ${
           ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -135,11 +134,11 @@ export const Button = ({
     >
       <ButtonBase type={type} disabled={disabled} />
       <ButtonBody
+        id={id}
         type={type}
         size={size}
         customStyles={customStyles}
         disabled={disabled}
-        {...rest}
       >
         {children}
       </ButtonBody>
@@ -155,6 +154,7 @@ const ButtonBody = ({
   bgColor,
   disabled = false,
   children,
+  id,
   ...rest
 }: {
   type: ButtonTypes;
@@ -164,6 +164,7 @@ const ButtonBody = ({
   bgColor?: string;
   disabled?: boolean;
   children: ReactNode;
+  id?: string;
 }) => {
   const DISABLED_STYLES: any = {
     primary:
@@ -202,7 +203,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles} {...rest}>
+    <Flex layout="row-center" className={styles} id={id}>
       {children}
     </Flex>
   );
@@ -231,7 +232,7 @@ const ButtonBase = ({
 
   return (
     <div
-      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full ${styles} `}
+      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full pointer-events-none ${styles}`}
     ></div>
   );
 };

@@ -105,6 +105,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     `;
 
   const handleClick = async (amountFinance: string) => {
+    if (isLoading) return;
     setIsLoading(true);
 
     const parsedValue = parseFloat(amountFinance);

@@ -92,7 +92,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                       >
                         <Flex
                           layout="row-center"
-                          className="w-full text-xs transition-all justify-between cursor-pointer p-3 "
+                          className="w-full text-xs transition-all justify-between cursor-pointer p-3 pointer-events-none"
                         >
                           <Flex layout="col-left">
                             <Text size="lg" className="font-semibold mb-2">
@@ -148,7 +148,7 @@ export default function Clinics({ className = '' }: { className?: string }) {
                       key={clinic.city}
                       onClick={() => setSelectedClinic(clinics[index])}
                     >
-                      <Flex layout="col-left">
+                      <Flex layout="col-left" className="pointer-events-none">
                         <Text size="lg" className="font-semibold mb-2">
                           {clinic.city}
                         </Text>
