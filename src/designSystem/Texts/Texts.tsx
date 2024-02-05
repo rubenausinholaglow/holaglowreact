@@ -104,7 +104,7 @@ export const TitleDerma = ({
 };
 
 export const Text = ({
-  size = 'inherit',
+  size = 'default',
   as = 'p',
   className = '',
   wrapperClassName = '',
@@ -114,7 +114,7 @@ export const Text = ({
   origin = 'bottom',
   rest,
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inherit';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'drxl' | '2xl' | 'default';
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
   className?: string;
   wrapperClassName?: string;
@@ -126,9 +126,9 @@ export const Text = ({
 }) => {
   const HtmlComponent = as;
 
-  const styles = twMerge(
-    `text-pretty text-left ${size ? `text-${size}` : 'text-md'} ${className}`
-  );
+  const styles = `text-pretty text-left ${
+    size !== 'default' ? `text-${size}` : ''
+  } ${className}`;
 
   if (isAnimated) {
     return (

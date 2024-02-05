@@ -8,6 +8,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 import { DERMA_PRODUCTS, DERMA_ROUTINES, DERMA_TYPES } from '../mockedData';
@@ -100,6 +101,14 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                     <Text className="text-sm text-hg-black400">
                       {item.text}
                     </Text>
+                    {!isEmpty(item.info) && (
+                      <Text
+                        size="sm"
+                        className="mt-4 bg-white text-hg-black400 p-2"
+                      >
+                        {item.info}
+                      </Text>
+                    )}
                   </Flex>
                 );
               })}
@@ -132,7 +141,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
               <Text>
                 <span className="font-semibold">Recuerda:</span>{' '}
                 <br className="md:hidden" />
-                Las recetas tienen una validez de 10 días desde la fecha de
+                Esta receta tiene una validez de 10 días desde la fecha de
                 prescripción
               </Text>
             </Flex>
@@ -141,10 +150,11 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
 
         <Container className="bg-derma-primary500 rounded-3xl py-6 -mt-5 md:mt-0 md:mb-8">
           <TitleDerma size="2xl" className="text-white mb-4">
-            Selecciona tu rutina
+            Completa tu plan de cuidado facial
           </TitleDerma>
           <Text className="mb-8">
-            Según tu consulta con el Dr. Pepito, estos productos pueden ayudarte
+            Según tu consulta, estas opciones pueden ayudarte a mejorar la salud
+            de tu piel
           </Text>
 
           <Flex
@@ -173,9 +183,9 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
 
                   <Flex layout="col-left" className="w-full">
                     {index !== 0 && (
-                      <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-                        Rutina personalizada {DERMA_TYPES[data.rutineType]}
-                      </Text>
+                      <p className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
+                        {DERMA_TYPES[data.rutineType]}
+                      </p>
                     )}
                     <Text className="text-md mb-3 md:text-lg md:font-semibold">
                       {routine.name}
@@ -193,13 +203,12 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                   <Button
                     size="sm"
                     type="tertiary"
-                    customStyles={`border-none  text-derma-tertiary ${
+                    customStyles={`border-none text-derma-tertiary ${
                       index !== 2
                         ? 'bg-derma-secondary100'
                         : 'bg-white/10 text-white'
                     }`}
                     onClick={() => {
-                      console.log(index);
                       setSelectedRoutine(index);
                       setShowModal(true);
                     }}
@@ -207,7 +216,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                     Saber más
                   </Button>
                   <Button type="derma" size="lg">
-                    Reservar cita
+                    {routine.cta}
                   </Button>
                 </Flex>
               </Flex>

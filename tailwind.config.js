@@ -24,7 +24,6 @@ module.exports = {
       sm: ['14px', '20px'],
       xs: ['12px', '16px'],
     },
-
     extend: {
       colors: {
         hg: {

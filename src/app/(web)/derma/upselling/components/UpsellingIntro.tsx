@@ -10,8 +10,8 @@ export default function UpsellingIntro({ data }: { data: UpsellingData }) {
   return (
     <Container>
       <Flex layout="col-left" className="w-full md:flex-row py-6 md:py-12">
-        <Text className="font-gtUltraThin text-xl text-derma-primary text-center mb-8 md:text-left md:w-1/2 md:text-5xl md:font-gtUltraBold">
-          ¡Ya tenemos tu fórmula personalizada!
+        <Text className="font-gtUltraThin mb-8 text-center text-derma-primary md:w-1/2 text-drxl md:text-5xl md:font-gtUltraBold md:text-left">
+          ¡Ya tenemos la fórmula de tu crema personalizada!
         </Text>
 
         <div className="md:w-1/2">
@@ -59,7 +59,7 @@ export default function UpsellingIntro({ data }: { data: UpsellingData }) {
             >
               <SvgReceiptEdit className="h-6 w-6" />
             </Flex>
-            <Text>Ver receta (PDF)</Text>
+            <Text>Descarga tu receta (PDF)</Text>
             <SvgArrow className="ml-auto" />
           </Button>
         </div>
