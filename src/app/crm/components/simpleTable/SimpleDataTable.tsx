@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Badge from './badge';
+import Badge from '../badge/badge';
 
 interface DataTableContactProps {
   columns: any[];
@@ -8,7 +8,7 @@ interface DataTableContactProps {
   statusTypeSwitch?: (status: number) => any;
 }
 
-function DataTableContact({
+export default function SimpleDataTable({
   columns,
   rows,
   statusTypeSwitch,
@@ -54,5 +54,3 @@ function DataTableContact({
     </div>
   );
 }
-
-export default DataTableContact;

@@ -30,8 +30,8 @@ import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
+import SimpleDataTable from '../../../components/simpleTable/SimpleDataTable';
 import CardContact from '../components/cardContact';
-import DataTableContact from '../components/dataTableContact';
 import ModalContact from '../components/modalContact';
 import Tabs from '../components/tabs';
 
@@ -62,7 +62,7 @@ export default function ContactDetailPageBase({
         contactDetail.taskInstances.length === 0 ? (
           <div className="pl-5">No se han encontrado Tareas.</div>
         ) : (
-          <DataTableContact
+          <SimpleDataTable
             columns={TaskColumns}
             rows={mappingTasks(contactDetail.taskInstances)}
             statusTypeSwitch={getTaskStatusText}
@@ -91,7 +91,7 @@ export default function ContactDetailPageBase({
         contactDetail.comments.length === 0 ? (
           <div className="pl-5">No se ha encontrado Comentarios.</div>
         ) : (
-          <DataTableContact
+          <SimpleDataTable
             columns={CommentsColumns}
             rows={mappingComments(contactDetail.comments)}
           />
@@ -105,7 +105,7 @@ export default function ContactDetailPageBase({
             No se ha encontrado información de llamadas.
           </div>
         ) : (
-          <DataTableContact
+          <SimpleDataTable
             columns={CallsColumns}
             rows={mappingCalls(contactDetail.calls)}
             statusTypeSwitch={getCallStatusText}
@@ -118,7 +118,7 @@ export default function ContactDetailPageBase({
         contactDetail.appointments.length === 0 ? (
           <div className="pl-5">No se ha encontrado información de citas.</div>
         ) : (
-          <DataTableContact
+          <SimpleDataTable
             columns={AppointmentsColumns}
             rows={mappingAppointments(contactDetail.appointments)}
             statusTypeSwitch={getAppointmentStatusText}
@@ -133,7 +133,7 @@ export default function ContactDetailPageBase({
             No se ha encontrado información de presupuestos.
           </div>
         ) : (
-          <DataTableContact
+          <SimpleDataTable
             columns={BudgetColumns}
             rows={mappingBudgets(contactDetail.budgets)}
             statusTypeSwitch={getBudgetStatusText}
