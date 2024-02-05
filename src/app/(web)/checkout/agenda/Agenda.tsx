@@ -423,23 +423,41 @@ export default function Agenda({
                     className="block gap-16 items-start md:flex"
                   >
                     <div className="w-full">
-                      {selectedTreatments &&
-                        !isDerma &&
-                        Array.isArray(selectedTreatments) &&
-                        selectedTreatments.map(product => (
-                          <div key={product.id}>
-                            <Text
-                              size="sm"
-                              className="w-full text-left to-hg-black500 mb-4"
-                            >
-                              Agenda cita para{' '}
-                              <span className="font-semibold w-full">
-                                {product.title}
+                      {isDashboard ? (
+                        <Text
+                          size="sm"
+                          className="w-full text-left to-hg-black500 mb-4"
+                        >
+                          Agenda cita para{' '}
+                          {Array.isArray(selectedTreatments) &&
+                            selectedTreatments.map(product => (
+                              <span key={product.id} className="font-semibold">
+                                {product.title},{' '}
                               </span>
-                              , en tu clínica preferida
-                            </Text>
-                          </div>
-                        ))}
+                            ))}
+                          en tu clínica preferida
+                        </Text>
+                      ) : (
+                        <>
+                          {selectedTreatments &&
+                            !isDerma &&
+                            Array.isArray(selectedTreatments) &&
+                            selectedTreatments.map(product => (
+                              <div key={product.id}>
+                                <Text
+                                  size="sm"
+                                  className="w-full text-left to-hg-black500 mb-4"
+                                >
+                                  Agenda cita para{' '}
+                                  <span className="font-semibold w-full">
+                                    {product.title}
+                                  </span>
+                                  , en tu clínica preferida
+                                </Text>
+                              </div>
+                            ))}
+                        </>
+                      )}
 
                       {selectedClinic && !isDerma && (
                         <Flex className="mb-4">
