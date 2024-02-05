@@ -19,20 +19,9 @@ import ValuesDescription from './ValuesDescription';
 export default function HomeBlocks() {
   const { deviceSize } = useSessionStore(state => state);
 
-  const [floatingBarThreshold, setFloatingBarThreshold] = useState(0);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    const professionals = document.getElementById('professionals');
-
-    if (professionals && floatingBarThreshold === 0) {
-      const rect = professionals.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const elementTop = rect.top + scrollTop + 125;
-
-      setFloatingBarThreshold(elementTop);
-    }
-
     setIsHydrated(true);
   }, []);
 
@@ -54,9 +43,7 @@ export default function HomeBlocks() {
       <Testimonials />
       <Clinics />
       <GoToTreatments />
-      {deviceSize.isMobile && floatingBarThreshold !== 0 && (
-        <FloatingBottomBar threshold={floatingBarThreshold} />
-      )}
+      {deviceSize.isMobile && <FloatingBottomBar threshold={1200} />}
     </MainLayout>
   );
 }
