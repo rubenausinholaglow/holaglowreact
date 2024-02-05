@@ -67,6 +67,10 @@ export default function PaymentInput(props: Props) {
   const { remoteControl, storedBudgetId, setCurrentUser } =
     useGlobalPersistedStore(state => state);
 
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
+
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
     address: user?.address ?? '',
@@ -210,6 +214,7 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
+    if (isLoading) return;
     if (showAlma || messageNotification || showPepper || paymentStripe) {
       return;
     }
@@ -220,7 +225,19 @@ export default function PaymentInput(props: Props) {
     await addPayment(inputValue);
   };
 
+  function validateFormData(formData: ClientUpdate): boolean {
+    return (Object.keys(formData) as Array<keyof ClientUpdate>).every(
+      key => !!formData[key]
+    );
+  }
+
   const initializePepper = async () => {
+    if (isLoading) return;
+    if (!validateFormData(formData)) {
+      setErrorMessage('Faltan datos para la financiación');
+      setTimeout(() => setErrorMessage(undefined), 5000);
+      return;
+    }
     setIsLoading(true);
 
     setFormData((prevFormData: any) => ({
@@ -290,6 +307,7 @@ export default function PaymentInput(props: Props) {
   }, [isModalOpen]);
 
   const initializeStripePayment = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     setPaymentStripe(true);
     const initializePayment = constructInitializePayment(PaymentBank.Stripe);
@@ -481,6 +499,9 @@ export default function PaymentInput(props: Props) {
             >
               {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
             </Button>
+            {errorMessage && (
+              <span className="text-hg-error">{errorMessage}</span>
+            )}
           </Flex>
         </Modal>
         {showAlma && (
