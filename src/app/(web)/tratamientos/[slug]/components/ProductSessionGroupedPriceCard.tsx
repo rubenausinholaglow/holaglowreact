@@ -66,7 +66,7 @@ export default function ProductSessionGroupedPriceCard({
             size="sm"
             type="tertiary"
             className="mt-auto"
-            bgColor="bg-hg-primary"
+            customStyles="bg-hg-primary"
             onClick={e => {
               e.stopPropagation();
               addToCart(product as CartItem);

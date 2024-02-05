@@ -139,6 +139,7 @@ export const Button = ({
         size={size}
         customStyles={customStyles}
         disabled={disabled}
+        {...rest}
       >
         {children}
       </ButtonBody>
@@ -151,7 +152,6 @@ const ButtonBody = ({
   size,
   customStyles,
   color,
-  bgColor,
   disabled = false,
   children,
   id,
@@ -161,7 +161,6 @@ const ButtonBody = ({
   size: ButtonSizes;
   customStyles?: string;
   color?: string;
-  bgColor?: string;
   disabled?: boolean;
   children: ReactNode;
   id?: string;
@@ -182,7 +181,7 @@ const ButtonBody = ({
       'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
     secondary:
       'bg-white text-hg-secondary border border-hg-black group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
-    tertiary: `${bgColor ? bgColor : 'bg-white'} ${
+    tertiary: `bg-white ${
       color ? color : 'text-hg-black border border-hg-black'
     }`,
     transparent:
@@ -203,7 +202,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles} id={id}>
+    <Flex layout="row-center" className={styles} id={id} {...rest}>
       {children}
     </Flex>
   );
