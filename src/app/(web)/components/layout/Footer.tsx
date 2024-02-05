@@ -14,7 +14,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { usePathname } from 'next/navigation';
 
-export function Footer() {
+export default function Footer() {
   const ROUTES = useRoutes();
 
   const { clinics } = useGlobalPersistedStore(state => state);

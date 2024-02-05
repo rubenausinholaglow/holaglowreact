@@ -1,6 +1,6 @@
 import 'app/globals.css';
 
-import React from 'react';
+import { ReactNode } from 'react';
 import { Breakpoint } from 'app/(web)/components/layout/Breakpoint';
 import { poppins } from 'app/fonts';
 import Head from 'next/head';
@@ -14,11 +14,7 @@ export const metadata = {
     'La nueva cara de la medicina estética. Tratamientos sin cirugía para conseguir resultados reales',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="max-h-screen h-full bg-white text-hg-black">
       <Head>
