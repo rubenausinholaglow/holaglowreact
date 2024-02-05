@@ -179,7 +179,7 @@ export default function ProductCard({
               size="sm"
               type="tertiary"
               className="mt-auto"
-              bgColor="bg-hg-primary"
+              customStyles="bg-hg-primary"
               onClick={e => {
                 e.stopPropagation();
                 addToCart(product as CartItem);
@@ -193,8 +193,7 @@ export default function ProductCard({
             <Button
               type="tertiary"
               className="mt-auto ml-4"
-              bgColor="bg-hg-primary"
-              customStyles="hover:bg-hg-secondary100"
+              customStyles="bg-hg-primary hover:bg-hg-secondary100"
             >
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />

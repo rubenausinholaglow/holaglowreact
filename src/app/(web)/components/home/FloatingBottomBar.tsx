@@ -68,11 +68,10 @@ export default function FloatingBottomBar({
             <Button
               size="xl"
               type="tertiary"
-              bgColor="bg-hg-primary"
               className="mr-4 pointer-events-auto w-full"
               href={product ? '#prices' : ROUTES.checkout.clinics}
               onClick={() => (!product ? setSelectedTreatments([]) : null)}
-              customStyles="px-2"
+              customStyles="bg-hg-primary px-2"
               id={'tmevent_click_floating_button'}
             >
               {product ? (

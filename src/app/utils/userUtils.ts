@@ -1,5 +1,6 @@
 import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
+import { Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as utils from '@utils/validators';
@@ -26,7 +27,28 @@ export const validFormData = (client: Client, errors: string[]): boolean => {
   return res;
 };
 
-const useRegistration = (
+export const getTreatmentId = (
+  selectedTreatments: Product[],
+  selectedPacksTreatments: Product[]
+) => {
+  let ids = '';
+  if (
+    selectedPacksTreatments &&
+    selectedPacksTreatments.length > 0 &&
+    selectedTreatments[0].id !=
+      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+  ) {
+    ids = selectedPacksTreatments!
+      .slice(0, 2)
+      .map(x => x.flowwwId)
+      .join(',');
+  } else if (selectedTreatments && selectedTreatments.length > 0) {
+    ids = selectedTreatments!.map(x => x.flowwwId).join(',');
+  } else ids = '902';
+  return ids;
+};
+
+export const useRegistration = (
   formData: Client,
   isDashboard: boolean,
   redirect: boolean,
@@ -108,5 +130,3 @@ const useRegistration = (
   };
   return registerUser;
 };
-
-export default useRegistration;
