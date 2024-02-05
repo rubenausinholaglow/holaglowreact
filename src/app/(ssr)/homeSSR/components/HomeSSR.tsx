@@ -1,38 +1,29 @@
 import GoogleStars from 'app/(web)/components/home/GoogleStars';
+import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
 import HomeHero from 'app/(web)/components/home/Hero';
 import ValuesCarousel from 'app/(web)/components/home/ValuesCarousel';
 import ValuesDescription from 'app/(web)/components/home/ValuesDescription';
-import dynamic from 'next/dynamic';
 
+import Clinics from './Clinics';
+import FloatingBottomBar from './FloatingBottomBar';
+import HomeProfessionals from './HomeProfessionals';
 import MainLayoutSSR from './MainLayout';
-
-/*
-const HomeProducts = dynamic(() => import('./Products'));
-const HomeProfessionals = dynamic(() => import('./HomeProfessionals'));
-const Clinics = dynamic(() => import('./Clinics'));
-const Testimonials = dynamic(() => import('./Testimonials'));
-const GoToTreatments = dynamic(
-  () => import('app/(web)/components/home/GoToTreatments')
-  );
-  */
+import Products from './Products';
+import Testimonials from './Testimonials';
 
 export default function Home() {
   return (
     <MainLayoutSSR>
-      <p>pepito</p>
-      {/* 
       <HomeHero />
       <GoogleStars />
-      <ValuesDescription />
       <ValuesCarousel />
-
-      Load bottom components on client
-      <HomeProducts />
+      <ValuesDescription />
+      <Products />
       <HomeProfessionals />
       <Testimonials />
       <Clinics />
       <GoToTreatments />
-       */}
+      <FloatingBottomBar />
     </MainLayoutSSR>
   );
 }

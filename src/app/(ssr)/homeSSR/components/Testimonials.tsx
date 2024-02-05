@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import CheckHydration from '@utils/CheckHydration';
-import { DeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -89,12 +89,9 @@ const Testimonial = ({
 };
 
 export default function Testimonials() {
-  const [deviceSize, setDeviceSize] = useState<any>({});
-  const [visibleTestimonials, setVisibleTestimonials] = useState(1);
+  const deviceSize = useDeviceSizeSSR();
 
-  useEffect(() => {
-    setDeviceSize(DeviceSizeSSR());
-  }, []);
+  const [visibleTestimonials, setVisibleTestimonials] = useState(1);
 
   useEffect(() => {
     setVisibleTestimonials(calculateVisibleTestimonials());

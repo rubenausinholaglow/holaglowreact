@@ -1,25 +1,51 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { ProductFilters } from '@interface/filters';
+import { Product } from '@interface/product';
 import { fetchProducts } from '@utils/fetch';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
-import CategorySelector from 'app/(web)/components/filters/CategorySelector';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import {
+  applyFilters,
+  filterCount,
+  INITIAL_FILTERS,
+} from 'app/(web)/tratamientos/utils/filters';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
-async function getProducts() {
-  const products = await fetchProducts();
+import CategorySelectorSSR from './CategorySelectorSSR';
 
-  return products;
-}
+export default function HomeProducts() {
+  const [initialProducts, setInitialProducts] = useState<Product[]>([]);
+  const [productFilters, setProductFilters] =
+    useState<ProductFilters>(INITIAL_FILTERS);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
-export default async function HomeProducts({
-  hideCategorySelector,
-}: {
-  hideCategorySelector?: boolean;
-}) {
-  const products = await getProducts();
+  useEffect(() => {
+    async function initProducts() {
+      const products = await fetchProducts();
+      setInitialProducts(products);
+      setFilteredProducts(products);
+    }
+
+    if (isEmpty(initialProducts)) {
+      initProducts();
+    }
+  }, []);
+
+  useEffect(() => {
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
+
+    if (filterCount(productFilters) === 0) {
+      setFilteredProducts(initialProducts);
+    }
+  }, [productFilters]);
 
   return (
     <div className="bg-hg-cream500 overflow-hidden py-12">
@@ -40,15 +66,23 @@ export default async function HomeProducts({
           </span>
         </Title>
       </Container>
-      {!hideCategorySelector && (
-        <Container className="px-0 mb-8 md:px-4">
-          <AnimateOnViewport origin="right">
-            <CategorySelector />
-          </AnimateOnViewport>
-        </Container>
-      )}
-      {!isEmpty(products) && (
-        <FullWidthCarousel className="pb-8" type="products" items={products} />
+      {!isEmpty(initialProducts) && (
+        <>
+          <Container className="px-0 mb-8 md:px-4">
+            <AnimateOnViewport origin="right">
+              <CategorySelectorSSR
+                products={initialProducts}
+                productFilters={productFilters}
+                setProductFilters={setProductFilters}
+              />
+            </AnimateOnViewport>
+          </Container>
+          <FullWidthCarousel
+            className="pb-8"
+            type="products"
+            items={filteredProducts}
+          />
+        </>
       )}
     </div>
   );

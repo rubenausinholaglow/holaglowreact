@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
-import { DeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgAngle } from 'app/icons/IconsDs';
 import {
   Accordion,
@@ -17,15 +17,12 @@ import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
-  const [deviceSize, setDeviceSize] = useState<any>({});
+  const deviceSize = useDeviceSizeSSR();
+
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
   const [googleMapAddress, setGoogleMapAddress] = useState('');
-
-  useEffect(() => {
-    setDeviceSize(DeviceSizeSSR());
-  }, []);
 
   useEffect(() => {
     if (!deviceSize.isMobile && clinics.length > 0)
