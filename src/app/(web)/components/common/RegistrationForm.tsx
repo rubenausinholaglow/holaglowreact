@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
-import useRegistration, { validFormData } from '@utils/userUtils';
+import { useRegistration, validFormData } from '@utils/userUtils';
 import {
   phoneValidationRegex,
   postalCodeValidationRegex,
