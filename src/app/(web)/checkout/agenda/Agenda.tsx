@@ -6,6 +6,7 @@ import './datePickerStyle.css';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ScheduleService from '@services/ScheduleService';
+import { getTreatmentId } from '@utils/userUtils';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
@@ -288,23 +289,8 @@ export default function Agenda({
   }, [selectedSlot]);
 
   useEffect(() => {
-    if (
-      selectedPacksTreatments &&
-      selectedPacksTreatments.length > 0 &&
-      selectedTreatments[0].id !=
-        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
-    ) {
-      setSelectedTreatmentsIds(
-        selectedPacksTreatments!
-          .slice(0, 2)
-          .map(x => x.flowwwId)
-          .join(',')
-      );
-    } else if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatmentsIds(
-        selectedTreatments!.map(x => x.flowwwId).join(',')
-      );
-    } else setSelectedTreatmentsIds('674');
+    const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
+    setSelectedTreatmentsIds(ids);
   }, [dateToCheck, selectedTreatments]);
 
   useEffect(() => {
