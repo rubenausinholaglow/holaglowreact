@@ -6,9 +6,9 @@ import Script from 'next/script';
 import App from './../components/layout/App';
 
 export const metadata = {
-  title: 'Holaglow - Medicina estética',
+  title: 'Cuidado facial personalizado - Holaglow Derma',
   description:
-    'La nueva cara de la medicina estética. Tratamientos sin cirugía para conseguir resultados reales',
+    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para las necesidades específicas de tu piel.',
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-K3NZR8P"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-KMG5BW3L"
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
@@ -43,9 +43,10 @@ export default function RootLayout({
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-K3NZR8P');`,
+        })(window,document,'script','dataLayer','GTM-KMG5BW3L');`,
           }}
         ></Script>
+        <link rel="icon" href="/derma_favicon.ico" />
       </head>
       <App>{children}</App>
     </html>

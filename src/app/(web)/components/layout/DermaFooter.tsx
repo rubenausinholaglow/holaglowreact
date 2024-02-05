@@ -2,7 +2,6 @@
 
 import { SvgHolaglowDermaUnicolor } from 'app/icons/iconsDerma';
 import { SvgInstagram, SvgTikTok } from 'app/icons/socialIcons';
-import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -15,7 +14,6 @@ export default function DermaFooter({
   className?: string;
   hideFooter?: boolean;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
   const isHome = usePathname() === '/';
 
   if (hideFooter) {
@@ -73,7 +71,7 @@ export default function DermaFooter({
             <Text size="xs" className="mb-6">
               Para dudas y pedidos, escríbenos a{' '}
               <a href="mailto:hola@holaglow.com" className="text-derma-primary">
-                info@derma.com
+                derma@holaglow.com
               </a>
             </Text>
             <Text size="xs" className="leading-6 mb-10">

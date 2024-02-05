@@ -16,7 +16,7 @@ import {
 import { DayAvailability } from 'app/types/dayAvailability';
 import { Slot } from 'app/types/slot';
 import useRoutes from 'app/utils/useRoutes';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -50,15 +50,17 @@ export default function Agenda({
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
-  const [dateToCheck, setDateToCheck] = useState(dayjs());
+  const [dateToCheck, setDateToCheck] = useState<Dayjs | undefined>(undefined);
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
   const [dateFormatted, setDateFormatted] = useState('');
-  const [localDateSelected, setLocalDateSelected] = useState(new Date());
+  const [localDateSelected, setLocalDateSelected] = useState<Date | undefined>(
+    undefined
+  );
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-
+  const [currentMonth, setcurrentMonth] = useState(dayjs());
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
   const maxDaysByClinicAndType: any = {
@@ -88,6 +90,7 @@ export default function Agenda({
         selectedTreatments[0].type
       ];
   }
+  if (isDerma) maxDays = 365;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -98,14 +101,19 @@ export default function Agenda({
   };
 
   function loadMonth() {
-    if (selectedTreatmentsIds && availableDates.length < maxDays) {
+    setLoadingMonth(true);
+    if (
+      selectedTreatmentsIds &&
+      availableDates.length < maxDays &&
+      dateToCheck
+    ) {
       if (selectedTreatmentsIds != '902') {
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
           selectedClinic?.flowwwId || ''
         ).then(data => {
-          callbackMonthAvailability(data);
+          callbackMonthAvailability(data, dateToCheck);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -113,7 +121,7 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic!.flowwwId
         ).then(data => {
-          callbackMonthAvailability(data);
+          callbackMonthAvailability(data, dateToCheck);
         });
       }
     } else setLoadingMonth(false);
@@ -136,10 +144,12 @@ export default function Agenda({
             minutes == '36' ||
             minutes == '48'))
       ) {
-        hours.push(x);
-        if (parseInt(hour) < 16) {
-          morning.push(x);
-        } else afternoon.push(x);
+        if (x.box != '7' || (x.box == '7' && (!isDashboard || !user))) {
+          hours.push(x);
+          if (parseInt(hour) < 16) {
+            morning.push(x);
+          } else afternoon.push(x);
+        }
       }
     });
     setMorningHours(morning);
@@ -151,9 +161,14 @@ export default function Agenda({
     });
   }
 
-  function callbackMonthAvailability(data: DayAvailability[]) {
+  function callbackMonthAvailability(
+    data: DayAvailability[],
+    dateToCheck: Dayjs
+  ) {
+    const endOfMonth = dateToCheck.endOf('month');
     const availability = availableDates ?? [];
     const today = dayjs();
+    const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
@@ -165,19 +180,18 @@ export default function Agenda({
       }
     });
     setAvailableDates(availability);
-    if (!selectedDay) {
-      setSelectedDay(dayjs(availability[0].date));
-    } else {
-      setSelectedDay(selectedDay);
-    }
-    setLoadingMonth(false);
+    setSelectedDay(selectedDay);
+    if (loadedCurrentMonth) {
+      setDateToCheck(dateToCheck.add(1, 'month'));
+    } else setLoadingMonth(false);
   }
 
   function initialize() {
     setLoadingMonth(true);
-    setSelectedDay(dayjs());
+    setSelectedDay(undefined);
     setSelectedSlot(undefined);
     setEnableScheduler(true);
+    setDateToCheck(dayjs());
   }
   useEffect(() => {
     initialize();
@@ -190,7 +204,7 @@ export default function Agenda({
   useEffect(() => {
     async function schedule() {
       try {
-        if (user?.flowwwToken && previousAppointment) {
+        if (user?.flowwwToken && previousAppointment && selectedDay) {
           setLoadingDays(true);
           setLoadingMonth(true);
           let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
@@ -238,7 +252,7 @@ export default function Agenda({
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else if (user) {
+        } else if (user && selectedDay && !isDerma) {
           setLoadingDays(true);
           setLoadingMonth(true);
           if (isDashboard || isCheckin)
@@ -275,7 +289,12 @@ export default function Agenda({
   }, [selectedSlot]);
 
   useEffect(() => {
-    if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
+    if (
+      selectedPacksTreatments &&
+      selectedPacksTreatments.length > 0 &&
+      selectedTreatments[0].id !=
+        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+    ) {
       setSelectedTreatmentsIds(
         selectedPacksTreatments!
           .slice(0, 2)
@@ -290,8 +309,12 @@ export default function Agenda({
   }, [dateToCheck, selectedTreatments]);
 
   useEffect(() => {
-    selectDate(dayjs(selectedDay).toDate());
-    setLocalDateSelected(dayjs(selectedDay).toDate());
+    if (selectedDay) {
+      selectDate(dayjs(selectedDay).toDate());
+      setLocalDateSelected(dayjs(selectedDay).toDate());
+    } else {
+      setLocalDateSelected(undefined);
+    }
   }, [selectedTreatmentsIds]);
 
   useEffect(() => {
@@ -301,11 +324,20 @@ export default function Agenda({
   const onMonthChange = (x: any) => {
     setLoadingMonth(true);
     const date = dayjs(x);
+    setcurrentMonth(date);
     setDateToCheck(date);
   };
   const selectHour = async (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
+
+    if (isDerma) {
+      window.scrollTo({
+        left: 0,
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const selectDate = (x: Date) => {
@@ -615,7 +647,8 @@ export default function Agenda({
                   {isEmpty(afternoonHours) &&
                     isEmpty(morningHours) &&
                     !loadingMonth &&
-                    !loadingDays && (
+                    !loadingDays &&
+                    selectedDay && (
                       <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
                         <SvgSadIcon
                           className={`mb-5 ${

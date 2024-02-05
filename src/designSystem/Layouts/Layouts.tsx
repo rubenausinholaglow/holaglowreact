@@ -4,10 +4,12 @@ import { twMerge } from 'tailwind-merge';
 export const Container = ({
   isHeader = false,
   className,
+  id,
   children,
 }: {
   isHeader?: boolean;
   className?: string;
+  id?: string;
   children: ReactNode;
 }) => {
   return (
@@ -17,6 +19,7 @@ export const Container = ({
           className ? className : ''
         } `
       )}
+      {...(id && { id })}
     >
       {children}
     </div>

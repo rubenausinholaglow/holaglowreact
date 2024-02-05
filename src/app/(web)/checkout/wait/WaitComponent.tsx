@@ -27,6 +27,7 @@ export default function WaitComponent() {
     selectedPacksTreatments,
     analyticsMetrics,
     payment,
+    setAppointmentUrl,
   } = useSessionStore(state => state);
 
   const router = useRouter();
@@ -43,13 +44,16 @@ export default function WaitComponent() {
           await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
-            selectedDay,
+            selectedDay!,
             selectedClinic!,
             user!,
             selectedPacksTreatments!,
             analyticsMetrics,
             id
-          ).then(x => {
+          ).then(y => {
+            if (y && y.length > 0) {
+              setAppointmentUrl(y[0].url);
+            }
             router.push('/checkout/confirmation');
           });
         } else if (tries < 3) {
@@ -75,6 +79,7 @@ export default function WaitComponent() {
 
   const renderWeb = (isDerma: boolean) => (
     <>
+      <meta name="robots" content="noindex,follow" />
       <div className="rounded-full overflow-hidden">
         <SvgTimer
           className={`${

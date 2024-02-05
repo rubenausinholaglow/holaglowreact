@@ -93,7 +93,7 @@ export default class ScheduleService {
       isCancelled: false,
       paymentId: paymentId,
     } as Appointment);
-    await ScheduleService.scheduleBulk(appointments);
+    return await ScheduleService.scheduleBulk(appointments);
   };
 
   static async getClinicScheduleByToken(

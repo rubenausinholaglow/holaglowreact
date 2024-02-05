@@ -34,11 +34,12 @@ interface SessionStore {
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
-  selectedDay: Dayjs;
+  selectedDay: Dayjs | undefined;
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
   userLoginResponse : LoginResponse | undefined;
   typeOfPayment: TypeOfPayment;
+  appointmentUrl: string;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -48,12 +49,12 @@ interface SessionActions {
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
-  setSelectedDay: (day: Dayjs) => void;
+  setSelectedDay: (day?: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
   setUserLoginResponse: (userLoginResponse: LoginResponse | undefined) => void;
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
-
+  setAppointmentUrl: (url: string) => void;
 }
 
 interface GlobalPersistStore {
@@ -122,13 +123,17 @@ export const useSessionStore = create(
       selectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
-      selectedDay: dayjs(),
+      selectedDay: undefined,
       selectedSlot: undefined,
       previousAppointment: undefined,
       isMobile: true,
       payment: undefined,
       userLoginResponse: undefined,
-      typeOfPayment : TypeOfPayment.Free,
+      typeOfPayment: TypeOfPayment.Free,
+      appointmentUrl: '',
+      setAppointmentUrl: value => {
+        set({ appointmentUrl: value });
+      },
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });
       },
@@ -248,7 +253,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 25,
+      version: 30,
     }
   )
 );

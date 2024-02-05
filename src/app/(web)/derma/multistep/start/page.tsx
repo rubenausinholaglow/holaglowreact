@@ -8,17 +8,17 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'Holaglow - La nueva cara de la medicina estética',
+  title: 'Cuidado facial personalizado - Holaglow Derma',
   description:
-    'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
+    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para las necesidades específicas de tu piel.',
 };
-
 export default function StartMultistep() {
   return (
     <CheckHydration>
+      <meta name="robots" content="noindex,follow" />
       <div className="bg-derma-secondary100 min-h-screen">
         <DermaLayout hideButton hideFooter>
-          <Container>
+          <Container id="tm_derma_step0">
             <Flex
               layout="col-left"
               className="gap-8 md:gap-16 items-center relative md:justify-center md:flex-row md:mt-12"
@@ -29,7 +29,7 @@ export default function StartMultistep() {
                   alt="Holaglow"
                   width={816}
                   height={1014}
-                  className="w-2/3 md:w-full shrink-0"
+                  className="w-2/3 md:w-auto md:max-h-[500px] shrink-0 md:ml-auto"
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
@@ -46,8 +46,8 @@ export default function StartMultistep() {
                   size="xl"
                   className="mx-auto md:mx-0 mb-10"
                   href="/multistep/steps"
-                  id={'tmevent_multistep_module'}
-                  customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary"
+                  id="tmevent_derma_start"
+                  customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent"
                 >
                   Empezar
                   <SvgArrow className="ml-4" height={24} width={24} />

@@ -3,6 +3,7 @@
 import './datePickerDermaStyle.css';
 
 import { useEffect, useState } from 'react';
+import { User } from '@interface/appointment';
 import { AnalyticsMetrics, Client } from '@interface/client';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { PaymentBank } from '@interface/payment';
@@ -12,7 +13,7 @@ import CheckHydration from '@utils/CheckHydration';
 import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
 import { usePayments } from '@utils/paymentUtils';
-import useRegistration from '@utils/userUtils';
+import useRegistration, { validFormData } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -24,7 +25,9 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { create } from 'lodash';
 
+import FifthStep from './FifthStep';
 import FirstStep from './FirstStep';
 import FourthStep from './FourthStep';
 import { MULTISTEP_QUESTIONS } from './mockedData';
@@ -32,8 +35,9 @@ import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
 
 export default function Form() {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [showFirstStepErrors, setShowFirstStepErrors] = useState(false);
   const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
+  const [createdUser, setCreatedUser] = useState<User | undefined>(undefined);
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
   } as DermaQuestions);
@@ -80,22 +84,12 @@ export default function Form() {
   });
 
   const { cart, addItemToCart, resetCart } = useCartStore(state => state);
-  const STEPS = 6;
+  const STEPS = 7;
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
-
-  useEffect(() => {
-    async function checkout() {
-      if (client.email) {
-        client.origin = 'Derma';
-        const createdUser = await registerUser(client, false, false, false);
-        await initializePayment(activePayment, createdUser!);
-      }
-    }
-    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
-  }, [activePayment]);
 
   useEffect(() => {
     setActivePayment(PaymentBank.None);
@@ -108,11 +102,9 @@ export default function Form() {
       productDetails.title = 'Consulta personalizada de dermatología';
       productDetails.price = 59;
       setSelectedTreatments([productDetails]);
-      if (cart.length == 0) addItemToCart(productDetails as CartItem);
+      resetCart();
+      addItemToCart(productDetails as CartItem);
     }
-
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
-
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
       address: 'Consulta online',
@@ -140,13 +132,21 @@ export default function Form() {
       treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
-    resetCart();
     setPayment(undefined);
+    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
   }, []);
 
   useEffect(() => {
-    if (selectedSlot) setContinueDisabled(false);
-  }, [selectedSlot]);
+    async function checkout() {
+      await initializePayment(activePayment, createdUser!);
+    }
+    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
+  }, [activePayment]);
+
+  useEffect(() => {
+    if (selectedSlot || (client && validFormData(client, [])))
+      setContinueDisabled(false);
+  }, [selectedSlot, client]);
 
   const goBack = (index: number) => {
     setActiveSlideIndex(index - 1);
@@ -154,6 +154,16 @@ export default function Form() {
   };
 
   const goNext = (index: number) => {
+    if (client && client.email && !createdUser) {
+      client.origin = 'Derma';
+      registerUser(client, false, false, false).then(x => {
+        setCreatedUser(x);
+      });
+    }
+    if (!client.name && dermaQuestions.name) {
+      client.name = dermaQuestions.name!;
+      setClient(client);
+    }
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       setActiveSlideIndex(index + 1);
@@ -162,13 +172,20 @@ export default function Form() {
       setContinueDisabled(continueDisabled);
       dermaQuestions.id = x!.toString();
       setDermaQuestions(dermaQuestions);
-    });
 
-    window.scrollTo(0, 0);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 500);
+    });
+  };
+
+  const checkFirstStepErrors = () => {
+    setShowFirstStepErrors(continueDisabled);
   };
 
   return (
     <CheckHydration>
+      <meta name="robots" content="noindex,follow" />
       <div className="bg-derma-secondary100 min-h-screen">
         <header className="py-4 relative">
           <Container>
@@ -196,16 +213,24 @@ export default function Form() {
             dragEnabled={false}
             touchEnabled={false}
           >
-            <FirstStep
-              activeSlideIndex={activeSlideIndex}
-              dermaQuestions={dermaQuestions}
-              setDermaQuestions={setDermaQuestions}
-              setContinueDisabled={setContinueDisabled}
-            />
+            <div id="tm_derma_step1" className="min-h-[100px]">
+              <FirstStep
+                activeSlideIndex={activeSlideIndex}
+                dermaQuestions={dermaQuestions}
+                setDermaQuestions={setDermaQuestions}
+                setContinueDisabled={setContinueDisabled}
+                continueDisabled={continueDisabled}
+                showFirstStepErrors={showFirstStepErrors}
+              />
+            </div>
 
             {MULTISTEP_QUESTIONS.map((item: any, question: number) => {
               return (
-                <Container key={question}>
+                <Container
+                  key={question}
+                  id={`tm_derma_step${question + 2}`}
+                  className="min-h-[100px]"
+                >
                   {activeSlideIndex === question + 1 && (
                     <SecondStep
                       question={question}
@@ -219,14 +244,25 @@ export default function Form() {
               );
             })}
 
-            <ThirdStep activeSlideIndex={activeSlideIndex} />
+            <div id="tm_derma_step3" className="min-h-[100px]">
+              <ThirdStep
+                activeSlideIndex={activeSlideIndex}
+                client={client}
+                setClient={setClient}
+              />
+            </div>
 
-            <FourthStep
-              name={dermaQuestions?.name || ''}
-              activeSlideIndex={activeSlideIndex}
-              client={client}
-              setClient={setClient}
-            />
+            <div id="tm_derma_step4" className="min-h-[100px]">
+              <FourthStep activeSlideIndex={activeSlideIndex} />
+            </div>
+
+            <div id="tm_derma_step5" className="min-h-[100px]">
+              <FifthStep
+                name={dermaQuestions?.name || ''}
+                activeSlideIndex={activeSlideIndex}
+                client={client}
+              />
+            </div>
           </Carousel>
 
           <Container className="my-8">
@@ -251,11 +287,17 @@ export default function Form() {
                     size="lg"
                     className="ml-auto"
                     type="tertiary"
-                    customStyles="bg-derma-secondary300 border-derma-primary text-derma-primary hover:text-derma-primary500 hover:border-derma-primary500 hover:bg-transparent"
+                    customStyles={`bg-derma-secondary300 border-derma-primary text-derma-primary ${
+                      continueDisabled
+                        ? ''
+                        : 'hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent'
+                    }`}
                     disabled={continueDisabled}
                     onClick={() => {
                       if (!continueDisabled) goNext(activeSlideIndex);
+                      if (activeSlideIndex === 0) checkFirstStepErrors();
                     }}
+                    id={`tmevent_dermaStep_${activeSlideIndex}`}
                   >
                     <Flex layout="row-right">Siguiente</Flex>
                   </Button>
