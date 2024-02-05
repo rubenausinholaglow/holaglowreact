@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 
 import DashboardLayout from './DashboardLayout';
-import Footer from './Footer';
+import { Footer } from './Footer';
 import Header from './Header';
 
 dayjs.locale(spanishConf);
