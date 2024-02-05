@@ -23,7 +23,7 @@ export default function ThirdStep({
               layout="col-left"
               className="px-4 md:flex-row md:gap-16 w-full"
             >
-              <Flex layout="col-left" className="w-full">
+              <Flex layout="col-left" className="w-full md:w-1/2">
                 <Text className="text-sm text-derma-primary500 mb-2">
                   Paso {activeSlideIndex + 1}. Formulario
                 </Text>
@@ -33,6 +33,8 @@ export default function ThirdStep({
                 <Text className="text-hg-black500 text-sm mb-8 md:text-md">
                   Rellena tus datos de contacto para reservar tu consulta
                 </Text>
+              </Flex>
+              <Flex layout="col-left" className="w-full md:w-1/2">
                 <RegistrationForm
                   showPostalCode={true}
                   redirect={false}
