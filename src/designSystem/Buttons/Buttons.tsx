@@ -98,7 +98,6 @@ export const Button = ({
     return (
       <AnimateOnViewport origin={origin}>
         <button
-          id={id}
           className={twMerge(
             `transition-all relative group overflow-visible ${
               ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -109,6 +108,7 @@ export const Button = ({
         >
           <ButtonBase type={type} disabled={disabled} />
           <ButtonBody
+            id={id}
             type={type}
             size={size}
             customStyles={customStyles}
@@ -124,7 +124,6 @@ export const Button = ({
 
   return (
     <button
-      id={id}
       className={twMerge(
         `transition-all relative group overflow-visible ${
           ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -135,6 +134,7 @@ export const Button = ({
     >
       <ButtonBase type={type} disabled={disabled} />
       <ButtonBody
+        id={id}
         type={type}
         size={size}
         customStyles={customStyles}
@@ -152,18 +152,18 @@ const ButtonBody = ({
   size,
   customStyles,
   color,
-  bgColor,
   disabled = false,
   children,
+  id,
   ...rest
 }: {
   type: ButtonTypes;
   size: ButtonSizes;
   customStyles?: string;
   color?: string;
-  bgColor?: string;
   disabled?: boolean;
   children: ReactNode;
+  id?: string;
 }) => {
   const DISABLED_STYLES: any = {
     primary:
@@ -181,7 +181,7 @@ const ButtonBody = ({
       'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
     secondary:
       'bg-white text-hg-secondary border border-hg-black group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
-    tertiary: `${bgColor ? bgColor : 'bg-white'} ${
+    tertiary: `bg-white ${
       color ? color : 'text-hg-black border border-hg-black'
     }`,
     transparent:
@@ -202,7 +202,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles} {...rest}>
+    <Flex layout="row-center" className={styles} id={id} {...rest}>
       {children}
     </Flex>
   );
@@ -231,7 +231,7 @@ const ButtonBase = ({
 
   return (
     <div
-      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full ${styles} `}
+      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full pointer-events-none ${styles}`}
     ></div>
   );
 };

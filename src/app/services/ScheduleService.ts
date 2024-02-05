@@ -1,4 +1,5 @@
 import Bugsnag from '@bugsnag/js';
+import { getTreatmentId } from '@utils/userUtils';
 import {
   Appointment,
   RescheduleAppointmentRequest,
@@ -57,15 +58,15 @@ export default class ScheduleService {
     paymentId: string
   ) => {
     const appointments: Appointment[] = [];
-    let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
     let treatments = selectedTreatments!.map(x => x.title).join(',');
-    if (selectedPacksTreatments && selectedPacksTreatments.length) {
-      ids = selectedPacksTreatments!
-        .slice(0, 2)
-        .map(x => x.flowwwId)
-        .join(',');
+    if (
+      selectedPacksTreatments &&
+      selectedPacksTreatments.length &&
+      treatments.indexOf('Probador') < 0
+    ) {
       treatments = selectedPacksTreatments!.map(x => x.title).join(',');
     }
+    const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
     const format = 'YYYY-MM-DD';
     const comment = 'Tratamiento visto en web: ' + treatments;
 

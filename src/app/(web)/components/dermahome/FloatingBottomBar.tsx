@@ -68,11 +68,10 @@ export default function FloatingBottomBar({
             <Button
               size="xl"
               type="tertiary"
-              bgColor="bg-hg-primary"
               className="mr-4 pointer-events-auto w-full"
               href={product ? '#prices' : ROUTES.checkout.clinics}
               onClick={() => (!product ? setSelectedTreatments([]) : null)}
-              customStyles="px-2"
+              customStyles="bg-hg-primary px-2"
               id={'tmevent_click_floating_button'}
             >
               {product ? (
@@ -97,9 +96,12 @@ export default function FloatingBottomBar({
             size="xl"
             className="pointer-events-auto"
             customStyles="h-[64px] p-0 w-[64px] shrink-0"
-            id={'tmevent_click_floating_button'}
           >
-            <a href={url} target="_blank">
+            <a
+              href={url}
+              target="_blank"
+              id={'tmevent_click_floating_button_whatsapp'}
+            >
               <SvgWhatsapp className="text-hg-primary" />
             </a>
           </Button>

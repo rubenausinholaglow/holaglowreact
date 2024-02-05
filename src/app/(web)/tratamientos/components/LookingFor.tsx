@@ -38,8 +38,7 @@ export default function LookingFor() {
             isAnimated
             type="tertiary"
             className="mt-auto"
-            bgColor="bg-hg-primary"
-            customStyles="hover:bg-hg-secondary100"
+            customStyles="bg-hg-primary hover:bg-hg-secondary100"
             size="xl"
             href="https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20y%20vuestros%20tratamientos"
           >

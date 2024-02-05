@@ -13,6 +13,7 @@ export interface TextInputFieldProps {
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  hasNoValidation?: boolean;
   disableBgIcons?: boolean;
 }
 

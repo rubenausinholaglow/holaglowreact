@@ -6,6 +6,7 @@ import './datePickerStyle.css';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ScheduleService from '@services/ScheduleService';
+import { getTreatmentId } from '@utils/userUtils';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
@@ -90,6 +91,7 @@ export default function Agenda({
         selectedTreatments[0].type
       ];
   }
+  if (isDerma) maxDays = 365;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -143,7 +145,7 @@ export default function Agenda({
             minutes == '36' ||
             minutes == '48'))
       ) {
-        if (x.box != '7' || (x.box == '7' && (!isDashboard || !user))) {
+        if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
           if (parseInt(hour) < 16) {
             morning.push(x);
@@ -251,7 +253,7 @@ export default function Agenda({
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else if (user && selectedDay) {
+        } else if (user && selectedDay && !isDerma) {
           setLoadingDays(true);
           setLoadingMonth(true);
           if (isDashboard || isCheckin)
@@ -288,18 +290,8 @@ export default function Agenda({
   }, [selectedSlot]);
 
   useEffect(() => {
-    if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
-      setSelectedTreatmentsIds(
-        selectedPacksTreatments!
-          .slice(0, 2)
-          .map(x => x.flowwwId)
-          .join(',')
-      );
-    } else if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatmentsIds(
-        selectedTreatments!.map(x => x.flowwwId).join(',')
-      );
-    } else setSelectedTreatmentsIds('674');
+    const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
+    setSelectedTreatmentsIds(ids);
   }, [dateToCheck, selectedTreatments]);
 
   useEffect(() => {

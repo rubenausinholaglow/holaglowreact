@@ -51,8 +51,6 @@ export default function WaitComponent() {
             analyticsMetrics,
             id
           ).then(y => {
-            console.log(y);
-            console.log(y.length);
             if (y && y.length > 0) {
               setAppointmentUrl(y[0].url);
             }

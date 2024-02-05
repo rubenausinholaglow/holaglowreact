@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
-import useRegistration from '@utils/userUtils';
+import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -89,7 +89,12 @@ export default function ConctactForm() {
       const createdUser = await registerUser(client, false, false, false);
       await initializePayment(activePayment, createdUser!);
     }
-    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
+    if (
+      activePayment != PaymentBank.None &&
+      cart.length > 0 &&
+      client.email != ''
+    )
+      checkout();
   }, [activePayment]);
 
   return (

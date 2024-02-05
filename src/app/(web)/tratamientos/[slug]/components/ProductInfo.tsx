@@ -187,7 +187,7 @@ export default function ProductInfo({
             <Button
               size="xl"
               type="tertiary"
-              bgColor="bg-hg-primary"
+              customStyles="bg-hg-primary"
               className="mb-12 md:mb-0 hidden md:block md:mt-auto"
               href="#prices"
               id="tmevent_click_book_anchor_button"

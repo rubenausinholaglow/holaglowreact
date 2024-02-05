@@ -124,6 +124,7 @@ export default function Header() {
                 className="lg:absolute right-0 2xl:mr-20"
               >
                 <Button
+                  id="tmevents_nav_menu_appointment"
                   size="sm"
                   type="tertiary"
                   href={ROUTES.checkout.clinics}
@@ -133,7 +134,11 @@ export default function Header() {
                   }}
                 >
                   Reservar cita
-                  <SvgArrow height={16} width={16} className="ml-2" />
+                  <SvgArrow
+                    height={16}
+                    width={16}
+                    className="ml-2 pointer-events-none"
+                  />
                 </Button>
 
                 <SvgMenu

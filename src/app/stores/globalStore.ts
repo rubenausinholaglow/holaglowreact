@@ -1,3 +1,4 @@
+import { LoginResponse } from '@interface/Login';
 import { PaymentBank, PaymentInitResponse } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
@@ -36,6 +37,7 @@ interface SessionStore {
   selectedDay: Dayjs | undefined;
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
+  userLoginResponse: LoginResponse | undefined;
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
 }
@@ -50,6 +52,7 @@ interface SessionActions {
   setSelectedDay: (day?: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
+  setUserLoginResponse: (userLoginResponse: LoginResponse | undefined) => void;
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
 }
@@ -125,6 +128,7 @@ export const useSessionStore = create(
       previousAppointment: undefined,
       isMobile: true,
       payment: undefined,
+      userLoginResponse: undefined,
       typeOfPayment: TypeOfPayment.Free,
       appointmentUrl: '',
       setAppointmentUrl: value => {
@@ -159,6 +163,9 @@ export const useSessionStore = create(
       },
       setPayment: value => {
         set({ payment: value });
+      },
+      setUserLoginResponse: value => {
+        set({ userLoginResponse: value });
       },
       setTypeOfPayment: value => {
         set({ typeOfPayment: value });
@@ -246,7 +253,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 30,
+      version: 31,
     }
   )
 );
