@@ -96,6 +96,7 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
+  //const [loadingDays, setLoadingDays] = useState(false);
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -479,16 +480,15 @@ export default function Agenda({
                   </Flex>
                 </Container>
                 <Container className="px-0 md:px-4 relative">
-                  {loadingDays ||
-                    (loadingMonth && (
-                      <SvgSpinner
-                        height={48}
-                        width={48}
-                        className={`absolute ${
-                          isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-                        } left-1/2 top-1/2 -ml-6 -mt-6`}
-                      />
-                    ))}
+                  {(loadingMonth || loadingDays) && (
+                    <SvgSpinner
+                      height={48}
+                      width={48}
+                      className={`absolute ${
+                        isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                      } left-1/2 top-1/2 -ml-6 -mt-6`}
+                    />
+                  )}
                   <Flex
                     className={`transition-opacity w-full mb-6 md:mb-0 ${
                       loadingDays ? 'opacity-25' : 'opacity-100'
