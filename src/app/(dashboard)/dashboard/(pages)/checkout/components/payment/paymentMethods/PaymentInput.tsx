@@ -230,9 +230,10 @@ export default function PaymentInput(props: Props) {
   };
 
   function validateFormData(formData: ClientUpdate): boolean {
-    return (Object.keys(formData) as Array<keyof ClientUpdate>).every(
-      key => !!formData[key]
-    );
+    const keysToValidate = Object.keys(formData).filter(
+      key => key.toLocaleUpperCase() !== 'COUNTRY'
+    ) as Array<keyof ClientUpdate>;
+    return keysToValidate.every(key => !!formData[key]);
   }
 
   const initializePepper = async () => {
