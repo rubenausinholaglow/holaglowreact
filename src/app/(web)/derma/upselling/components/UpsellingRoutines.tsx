@@ -20,6 +20,8 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState(0);
 
+  const modalBottomBarHeight = '97px';
+
   useEffect(() => {
     setShowModal(showModalBackground);
   }, [showModalBackground]);
@@ -37,85 +39,84 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
         type="right"
         hideModalBackground
       >
-        <div className="bg-derma-secondary100 border-b border-hg-black pt-12 relative min-h-screen">
+        <div className="bg-derma-secondary100 border-b border-hg-black relative min-h-screen">
           <SvgCross
             height={20}
             width={20}
             className="absolute top-4 right-4"
             onClick={() => setShowModal(false)}
           />
-
-          <Container
-            className="md:p-6"
-            style={{ minHeight: 'calc(100vh - 48px - 98px)' }}
-          >
-            <Image
-              src={DERMA_ROUTINES[selectedRoutine].imgSrc}
-              alt={DERMA_ROUTINES[selectedRoutine].name}
-              height={516}
-              width={360}
-              className="w-1/2 shrink-0 mx-auto mb-8"
-            />
-            {selectedRoutine !== 0 && (
-              <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-                {DERMA_TYPES[data.rutineType]}
-              </Text>
-            )}
-            <TitleDerma className="text-derma-primary mb-4">
-              {DERMA_ROUTINES[selectedRoutine].name}
-            </TitleDerma>
-            <Flex
-              layout="col-left"
-              className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
-            >
-              {DERMA_ROUTINES[selectedRoutine].bullets.map((item, index) => {
-                return (
-                  <Flex className="w-full gap-4 items-start" key={index}>
-                    <SvgCheckCircle className="text-derma-primary500 shrink-0 w-5 h-5" />
-                    <p
-                      className="text-hg-black500 text-sm md:text-md"
-                      dangerouslySetInnerHTML={{ __html: item }}
-                    />
-                  </Flex>
-                );
-              })}
-            </Flex>
-
-            {selectedRoutine !== 0 && (
-              <Flex layout="col-left" className="w-full">
-                {filteredProducts.map((item, index) => {
+          <div style={{ minHeight: `calc(100dvh - ${modalBottomBarHeight})` }}>
+            <Container className="pt-12 md:p-6">
+              <Image
+                src={DERMA_ROUTINES[selectedRoutine].modalImgSrc}
+                alt={DERMA_ROUTINES[selectedRoutine].name}
+                width={324}
+                height={396}
+                className="w-2/3 shrink-0 mx-auto mb-8"
+              />
+              {selectedRoutine !== 0 && (
+                <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
+                  {DERMA_TYPES[data.rutineType]}
+                </Text>
+              )}
+              <TitleDerma className="text-derma-primary mb-4">
+                {DERMA_ROUTINES[selectedRoutine].name}
+              </TitleDerma>
+              <Flex
+                layout="col-left"
+                className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
+              >
+                {DERMA_ROUTINES[selectedRoutine].bullets.map((item, index) => {
                   return (
-                    <Flex
-                      layout="col-left"
-                      className={`w-full text-derma-tertiary mb-6 pb-8 ${
-                        filteredProducts.length !== index + 1
-                          ? 'border-b border-hg-black300'
-                          : ''
-                      }`}
-                      key={index}
-                    >
-                      <Text className="text-derma-tertiary mb-2 font-semibold text-lg">
-                        {item.title}
-                      </Text>
-                      <Text className="text-sm mb-4">{item.subTitle}</Text>
-                      <Text className="text-sm text-hg-black400">
-                        {item.text}
-                      </Text>
-                      {!isEmpty(item.info) && (
-                        <Text
-                          size="sm"
-                          className="mt-4 bg-white text-hg-black400 p-2"
-                        >
-                          {item.info}
-                        </Text>
-                      )}
+                    <Flex className="w-full gap-4 items-start" key={index}>
+                      <SvgCheckCircle className="text-derma-primary500 shrink-0 w-5 h-5" />
+                      <p
+                        className="text-hg-black500 text-sm md:text-md"
+                        dangerouslySetInnerHTML={{ __html: item }}
+                      />
                     </Flex>
                   );
                 })}
               </Flex>
-            )}
-          </Container>
-          <Flex className="bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full">
+              {selectedRoutine !== 0 && (
+                <Flex layout="col-left" className="w-full">
+                  {filteredProducts.map((item, index) => {
+                    return (
+                      <Flex
+                        layout="col-left"
+                        className={`w-full text-derma-tertiary mb-6 pb-8 ${
+                          filteredProducts.length !== index + 1
+                            ? 'border-b border-hg-black300'
+                            : ''
+                        }`}
+                        key={index}
+                      >
+                        <Text className="text-derma-tertiary mb-2 font-semibold text-lg">
+                          {item.title}
+                        </Text>
+                        <Text className="text-sm mb-4">{item.subTitle}</Text>
+                        <Text className="text-sm text-hg-black400">
+                          {item.text}
+                        </Text>
+                        {!isEmpty(item.info) && (
+                          <Text
+                            size="sm"
+                            className="mt-4 bg-white text-hg-black400 p-2"
+                          >
+                            {item.info}
+                          </Text>
+                        )}
+                      </Flex>
+                    );
+                  })}
+                </Flex>
+              )}
+            </Container>
+          </div>
+          <Flex
+            className={`bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full h-[${modalBottomBarHeight}]`}
+          >
             <div>
               <Text className="text-3xl font-bold">
                 {DERMA_ROUTINES[selectedRoutine].price}
@@ -172,17 +173,14 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                     : 'bg-derma-secondary400'
                 }`}
               >
-                <Flex className="gap-6 mb-4 md:mb-8 md:flex-col h-full w-full items-start">
-                  <div className="relative aspect-square w-1/2 shrink-0 md:w-full bg-hg-black300">
-                    {/* <Image
-                      src={routine.imgSrc}
-                      alt="Seguimiento online con tu dermatólogo"
-                      fill
-                      className={`object-contain ${
-                        index === 0 ? 'scale-[120%] md:scale-100' : ''
-                      }`}
-                    /> */}
-                  </div>
+                <Flex className="gap-6 mt-2 mb-6 md:flex-col h-full w-full items-start md:items-center">
+                  <Image
+                    src={routine.imgSrc}
+                    alt="Seguimiento online con tu dermatólogo"
+                    width={324}
+                    height={396}
+                    className="w-[55%]"
+                  />
 
                   <Flex layout="col-left" className="w-full">
                     <p

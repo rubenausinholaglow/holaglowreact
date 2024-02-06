@@ -3,6 +3,7 @@ export const DERMA_TYPES = ['Antiaging', 'Acné', 'Rosácea', 'Manchas'];
 export const DERMA_ROUTINES = [
   {
     imgSrc: '/images/derma/upselling/seguimiento.png',
+    modalImgSrc: '/images/derma/upselling/seguimiento.png',
     name: 'Revisión online con tu dermatólogo estético',
     price: '49€',
     discountedPrice: '59€',
@@ -15,6 +16,7 @@ export const DERMA_ROUTINES = [
   },
   {
     imgSrc: '/images/derma/upselling/rutinaFacial.png',
+    modalImgSrc: '/images/derma/upselling/rutinaFacial.png',
     name: 'Rutina facial',
     price: '129€',
     discountedPrice: '129€',
@@ -26,7 +28,8 @@ export const DERMA_ROUTINES = [
     ],
   },
   {
-    imgSrc: '/images/derma/upselling/packDerma.png?v=45354',
+    imgSrc: '/images/derma/upselling/packDerma.png',
+    modalImgSrc: '/images/derma/upselling/packDermaModal.png',
     name: 'Programa completo: Rutina facial + Revisión online',
     price: '139€',
     discountedPrice: '198€',

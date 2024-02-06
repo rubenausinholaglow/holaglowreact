@@ -53,7 +53,7 @@ export default function UpsellingPharmacies({ data }: { data: UpsellingData }) {
     <div className="bg-derma-secondary300 pb-12">
       <Container>
         <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
-          <div className="md:w-2/5">
+          <div className="w-full md:w-2/5">
             <TitleDerma size="2xl" className="text-derma-primary mb-8">
               Buscador de farmacia
             </TitleDerma>
