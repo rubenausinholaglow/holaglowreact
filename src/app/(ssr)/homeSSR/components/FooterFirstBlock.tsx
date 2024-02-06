@@ -37,6 +37,7 @@ export default async function Footer() {
       } pt-12 md:pt-16 md:pb-16 px-0 md:px-4`}
     >
       <Flex layout="col-left" className="gap-12 md:flex-row">
+        <FooterFirstBlock />
         <Flex
           layout="col-left"
           className="md:w-1/2 order-3 md:-order-[1] px-4 md:px-0"

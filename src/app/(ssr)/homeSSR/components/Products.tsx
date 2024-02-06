@@ -1,51 +1,19 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { ProductFilters } from '@interface/filters';
-import { Product } from '@interface/product';
 import { fetchProducts } from '@utils/fetch';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
-import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import {
-  applyFilters,
-  filterCount,
-  INITIAL_FILTERS,
-} from 'app/(web)/tratamientos/utils/filters';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 
-import CategorySelectorSSR from './CategorySelectorSSR';
+import ProductList from './ProductList';
 
-export default function HomeProducts() {
-  const [initialProducts, setInitialProducts] = useState<Product[]>([]);
-  const [productFilters, setProductFilters] =
-    useState<ProductFilters>(INITIAL_FILTERS);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+async function getProducts() {
+  const products = await fetchProducts();
 
-  useEffect(() => {
-    async function initProducts() {
-      const products = await fetchProducts();
-      setInitialProducts(products);
-      setFilteredProducts(products);
-    }
+  return products;
+}
 
-    if (isEmpty(initialProducts)) {
-      initProducts();
-    }
-  }, []);
-
-  useEffect(() => {
-    setFilteredProducts(
-      applyFilters({ products: filteredProducts, filters: productFilters })
-    );
-
-    if (filterCount(productFilters) === 0) {
-      setFilteredProducts(initialProducts);
-    }
-  }, [productFilters]);
+export default async function HomeProducts() {
+  const products = await getProducts();
 
   return (
     <div className="bg-hg-cream500 overflow-hidden py-12">
@@ -66,24 +34,8 @@ export default function HomeProducts() {
           </span>
         </Title>
       </Container>
-      {!isEmpty(initialProducts) && (
-        <>
-          <Container className="px-0 mb-8 md:px-4">
-            <AnimateOnViewport origin="right">
-              <CategorySelectorSSR
-                products={initialProducts}
-                productFilters={productFilters}
-                setProductFilters={setProductFilters}
-              />
-            </AnimateOnViewport>
-          </Container>
-          <FullWidthCarousel
-            className="pb-8"
-            type="products"
-            items={filteredProducts}
-          />
-        </>
-      )}
+
+      <ProductList products={products} />
     </div>
   );
 }
