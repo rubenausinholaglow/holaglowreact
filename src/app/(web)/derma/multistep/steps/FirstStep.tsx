@@ -76,7 +76,7 @@ export default function FirstStep({
                   <TextInputField
                     label="¿Cuándo naciste?"
                     labelClassName="absolute top-3 left-4 text-xs text-hg-black500"
-                    inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full"
+                    inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full bg-white shadow-none"
                     placeholder="Escribe aquí"
                     type="date"
                     value={dermaQuestions?.birthDate || ''}
