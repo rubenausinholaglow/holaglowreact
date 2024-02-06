@@ -479,15 +479,16 @@ export default function Agenda({
                   </Flex>
                 </Container>
                 <Container className="px-0 md:px-4 relative">
-                  {loadingDays && (
-                    <SvgSpinner
-                      height={48}
-                      width={48}
-                      className={`absolute ${
-                        isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-                      } left-1/2 top-1/2 -ml-6 -mt-6`}
-                    />
-                  )}
+                  {loadingDays ||
+                    (loadingMonth && (
+                      <SvgSpinner
+                        height={48}
+                        width={48}
+                        className={`absolute ${
+                          isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                        } left-1/2 top-1/2 -ml-6 -mt-6`}
+                      />
+                    ))}
                   <Flex
                     className={`transition-opacity w-full mb-6 md:mb-0 ${
                       loadingDays ? 'opacity-25' : 'opacity-100'
