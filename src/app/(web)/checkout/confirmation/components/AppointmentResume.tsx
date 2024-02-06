@@ -40,7 +40,6 @@ export default function AppointmentResume({
   isDerma?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
-
   const {
     deviceSize,
     selectedTreatments,
@@ -93,8 +92,6 @@ export default function AppointmentResume({
   const accordionItemProps: AccordionItemProps = {
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
-
-  if (deviceSize.isMobile && isProbadorVirtual && !isConfirmation) return <></>;
 
   return (
     <Flex
@@ -154,7 +151,7 @@ export default function AppointmentResume({
           )}
         </Flex>
 
-        {!appointment && (!deviceSize.isMobile || !isProbadorVirtual) && (
+        {!appointment && (
           <Accordion {...accordionProps}>
             <AccordionItem {...accordionItemProps}>
               {!isDerma && (
