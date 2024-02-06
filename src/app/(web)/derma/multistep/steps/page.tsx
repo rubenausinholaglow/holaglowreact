@@ -25,7 +25,6 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { create } from 'lodash';
 
 import FifthStep from './FifthStep';
 import FirstStep from './FirstStep';
@@ -49,6 +48,7 @@ export default function Form() {
     setTypeOfPayment,
     setAnalyticsMetrics,
     setPayment,
+    deviceSize,
   } = useSessionStore(state => state);
   const { activePayment, setActivePayment, setCurrentUser } =
     useGlobalPersistedStore(state => state);
@@ -270,10 +270,10 @@ export default function Form() {
               <Flex layout="row-between">
                 {activeSlideIndex > 0 && (
                   <Button
-                    size="lg"
+                    size={deviceSize.isMobile ? 'md' : 'xl'}
                     onClick={() => goBack(activeSlideIndex)}
                     type="tertiary"
-                    customStyles="bg-transparent border-none text-derma-primary"
+                    customStyles="bg-transparent border-none text-derma-tertiary"
                   >
                     <Flex layout="row-left" className="gap-2">
                       <SvgArrow height={16} width={16} className="rotate-180" />
@@ -284,14 +284,10 @@ export default function Form() {
 
                 {activeSlideIndex < STEPS && (
                   <Button
-                    size="lg"
+                    size={deviceSize.isMobile ? 'md' : 'xl'}
                     className="ml-auto"
-                    type="tertiary"
-                    customStyles={`bg-derma-secondary300 border-derma-primary text-derma-primary ${
-                      continueDisabled
-                        ? ''
-                        : 'hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent'
-                    }`}
+                    type="dermaDark"
+                    //customStyles={` ${continueDisabled ? '' : ''}`}
                     disabled={continueDisabled}
                     onClick={() => {
                       if (!continueDisabled) goNext(activeSlideIndex);
