@@ -1,11 +1,11 @@
 import CheckHydration from '@utils/CheckHydration';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgArrow } from 'app/icons/IconsDs';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+
+import StartButton from './StartButton';
 
 export const metadata: Metadata = {
   title: 'Cuidado facial personalizado - Holaglow Derma',
@@ -41,17 +41,8 @@ export default function StartMultistep() {
                   preguntas para orientar tu consulta médica y obtener un
                   tratamiento personalizado.
                 </Text>
-                <Button
-                  type="tertiary"
-                  size="xl"
-                  className="mx-auto md:mx-0 mb-10"
-                  href="/multistep/steps"
-                  id="tmevent_derma_start"
-                  customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary hover:border-derma-primary500 hover:text-derma-primary500 hover:bg-transparent"
-                >
-                  Empezar
-                  <SvgArrow className="ml-4" height={24} width={24} />
-                </Button>
+
+                <StartButton />
               </Flex>
             </Flex>
           </Container>
