@@ -8,6 +8,9 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { headers } from 'next/headers';
 
+import FooterFirstBlock from './FooterFirstBlock';
+import FooterSecondBlock from './FooterSecondBlock';
+
 async function getClinics() {
   const clinics = await fetchClinics();
 
@@ -18,16 +21,7 @@ export default async function Footer() {
   const clinics = await getClinics();
 
   const headersList = headers();
-
   const path = headersList.get('next-url') || '';
-
-  const deviceSize = {
-    isMobile: true,
-    isTablet: false,
-    isDesktop: false,
-    isWideScreen: false,
-  };
-
   const isHome = path === '/homeSSR';
 
   return (
@@ -79,107 +73,8 @@ export default async function Footer() {
           </Flex>
         </Flex>
 
-        {/* <Flex
-          layout="col-left"
-          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6 border-b border-hg-black md:border-none"
-        >
-          <a href={ROUTES.treatments} id={'tmevent_footer'}>
-            <p className="font-semibold">Ver Tratamientos</p>
-          </a>
-
-          <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/tratamientos/aumento-labios" id={'tmevent_footer'}>
-                <li>Aumento de Labios</li>
-              </a>
-              <a href="/tratamientos/relleno-ojeras" id={'tmevent_footer'}>
-                <li>Relleno de ojeras</li>
-              </a>
-              <a href="/tratamientos/proyeccion-pomulos" id={'tmevent_footer'}>
-                <li>Proyección de pómulos</li>
-              </a>
-              <a href="/tratamientos/relleno" id={'tmevent_footer'}>
-                <li>Ver más</li>
-              </a>
-            </ul>
-          </SimpleAccordion>
-
-          <SimpleAccordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/tratamientos/prevencion-arrugas" id={'tmevent_footer'}>
-                <li>Prevención de arrugas</li>
-              </a>
-              <a
-                href="/tratamientos/arrugas-expresion-frente-entrecejo-patas-gallo"
-                id={'tmevent_footer'}
-              >
-                <li>Arrugas frente</li>
-              </a>
-              <a href="/tratamientos/arrugas" id={'tmevent_footer'}>
-                <li>Ver más</li>
-              </a>
-            </ul>
-          </SimpleAccordion>
-
-          <a href="/tratamientos/hydrafacial" id={'tmevent_footer'}>
-            <p className="font-semibold">Hydrafacial ®</p>
-          </a>
-
-          <a href="/tratamientos/packs" id={'tmevent_footer'}>
-            <p className="font-semibold">Packs Glow</p>
-          </a>
-
-          <Button
-            id={'tmevent_footer'}
-            type="tertiary"
-            href={ROUTES.checkout.clinics}
-            onClick={() => {
-              setSelectedTreatments([]);
-            }}
-          >
-            Reservar Cita
-          </Button>
-        </Flex>
-
-        <Flex
-          layout="col-left"
-          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6"
-        >
-          <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-            <a href="/clinicas" id={'tmevent_footer'}>
-              <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-                {clinics &&
-                  clinics.map(clinic => (
-                    <li key={clinic.city}>{clinic.city}</li>
-                  ))}
-              </ul>
-            </a>
-          </SimpleAccordion>
-
-          <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/quienes-somos" id={'tmevent_footer'}>
-                <li>Quiénes somos</li>
-              </a>
-              <a href="/quienes-somos" id={'tmevent_footer'}>
-                <li>Equipo médico</li>
-              </a>
-            </ul>
-          </SimpleAccordion>
-          <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/politica-de-privacidad" id={'tmevent_footer'}>
-                <li>Política de privacidad</li>
-              </a>
-              <a href="/aviso-legal" id={'tmevent_footer'}>
-                <li>Términos y condiciones</li>
-              </a>
-              <a href="/condiciones-black-friday" id={'tmevent_footer'}>
-                <li>Condiciones Black Friday</li>
-              </a>
-            </ul>
-          </SimpleAccordion>
-        </Flex> */}
+        <FooterFirstBlock />
+        <FooterSecondBlock clinics={clinics} />
       </Flex>
     </Container>
   );
