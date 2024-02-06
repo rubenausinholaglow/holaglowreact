@@ -410,23 +410,19 @@ export default function Agenda({
                     className="block gap-16 items-start md:flex"
                   >
                     <div className="w-full">
-                      {selectedTreatments &&
-                        !isDerma &&
-                        Array.isArray(selectedTreatments) &&
-                        selectedTreatments.map(product => (
-                          <div key={product.id}>
-                            <Text
-                              size="sm"
-                              className="w-full text-left to-hg-black500 mb-4"
-                            >
-                              Agenda cita para{' '}
-                              <span className="font-semibold w-full">
-                                {product.title}
-                              </span>
-                              , en tu clínica preferida
-                            </Text>
-                          </div>
-                        ))}
+                      <Text
+                        size="sm"
+                        className="w-full text-left to-hg-black500 mb-4"
+                      >
+                        Agenda cita para{' '}
+                        {Array.isArray(selectedTreatments) &&
+                          selectedTreatments.map(product => (
+                            <span key={product.id} className="font-semibold">
+                              {product.title},{' '}
+                            </span>
+                          ))}
+                        en tu clínica preferida
+                      </Text>
 
                       {selectedClinic && !isDerma && (
                         <Flex className="mb-4">
@@ -479,7 +475,7 @@ export default function Agenda({
                   </Flex>
                 </Container>
                 <Container className="px-0 md:px-4 relative">
-                  {loadingDays && (
+                  {(loadingMonth || loadingDays) && (
                     <SvgSpinner
                       height={48}
                       width={48}
