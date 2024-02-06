@@ -19,9 +19,11 @@ export default function UpsellingIntro({ data }: { data: UpsellingData }) {
             size="lg"
             type="tertiary"
             className="w-full mb-4"
-            customStyles="border-none bg-hg-black50 text-derma-primary font-normal justify-start p-5 pl-2"
+            customStyles="border-none bg-hg-black50 text-derma-primary font-normal justify-start p-5 pl-2 cursor-default"
           >
-            <SvgUserSquare className="h-8 w-8 mr-2 bg-derma-primary500/20 rounded-full p-1.5" />
+            <div className=" mr-2 bg-derma-primary500/20 rounded-full p-1.5">
+              <SvgUserSquare className="h-[18px] w-[18px]" />
+            </div>
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Paciente</Text>
               <Text className="text-derma-primary font-medium">
@@ -34,9 +36,11 @@ export default function UpsellingIntro({ data }: { data: UpsellingData }) {
             size="lg"
             type="tertiary"
             className="w-full mb-4"
-            customStyles="border-none bg-hg-black50 text-derma-primary font-normal justify-start p-5 pl-2"
+            customStyles="border-none bg-hg-black50 text-derma-primary font-normal justify-start p-5 pl-2 cursor-default"
           >
-            <SvgReceipt2 className="h-8 w-8 mr-2 bg-derma-primary500/20 rounded-full p-1.5" />
+            <div className=" mr-2 bg-derma-primary500/20 rounded-full p-1.5">
+              <SvgReceipt2 className="h-[18px] w-[18px]" />
+            </div>
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Fecha expedición receta</Text>
               <Text className="text-derma-primary font-medium">

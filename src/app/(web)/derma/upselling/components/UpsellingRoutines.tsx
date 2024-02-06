@@ -55,7 +55,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
             />
             {selectedRoutine !== 0 && (
               <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-                Rutina personalizada {DERMA_TYPES[data.rutineType]}
+                {DERMA_TYPES[data.rutineType]}
               </Text>
             )}
             <TitleDerma className="text-derma-primary mb-4">
@@ -177,16 +177,22 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                       src={routine.imgSrc}
                       alt="Seguimiento online con tu dermatólogo"
                       fill
-                      className="object-contain"
+                      className={`object-contain ${
+                        index === 0 ? 'scale-[120%] md:scale-100' : ''
+                      }`}
                     />
                   </div>
 
                   <Flex layout="col-left" className="w-full">
-                    {index !== 0 && (
-                      <p className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-                        {DERMA_TYPES[data.rutineType]}
-                      </p>
-                    )}
+                    <p
+                      className={`mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block ${
+                        index !== 0
+                          ? 'bg-hg-secondary300 text-hg-secondary'
+                          : 'bg-transparent text-transparent h-6'
+                      }`}
+                    >
+                      {index !== 0 && DERMA_TYPES[data.rutineType]}
+                    </p>
                     <Text className="text-md mb-3 md:text-lg md:font-semibold">
                       {routine.name}
                     </Text>
@@ -210,12 +216,14 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                     }`}
                     onClick={() => {
                       setSelectedRoutine(index);
-                      setShowModal(true);
+                      setTimeout(() => {
+                        setShowModal(true);
+                      }, 100);
                     }}
                   >
                     Saber más
                   </Button>
-                  <Button type="derma" size="lg">
+                  <Button type="derma" size={deviceSize.isMobile ? 'lg' : 'xl'}>
                     {routine.cta}
                   </Button>
                 </Flex>

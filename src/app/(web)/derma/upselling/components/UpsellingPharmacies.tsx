@@ -36,7 +36,7 @@ export default function UpsellingPharmacies({ data }: { data: UpsellingData }) {
   function renderGoogleMap() {
     return (
       <div
-        className={`overflow-hidden max-w-full w-full md:w-3/5`}
+        className={`overflow-hidden max-w-full w-full rounded-3xl md:w-3/5`}
         style={{ height: '450px' }}
       >
         <div id="g-mapdisplay" className="h-full w-full max-w-full">

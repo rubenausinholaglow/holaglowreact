@@ -7,6 +7,11 @@ export const DERMA_ROUTINES = [
     price: '49€',
     discountedPrice: '59€',
     cta: 'Reservar cita',
+    bullets: [
+      'Evalúa la tolerancia de tu piel a la crema personalizada',
+      'Valora los resultados obtenidos y define próximos pasos',
+      'Prevén efectos indeseados, como sequedad o irritación',
+    ],
   },
   {
     imgSrc: '/images/derma/upselling/rutinaFacial.png',
@@ -14,13 +19,24 @@ export const DERMA_ROUTINES = [
     price: '129€',
     discountedPrice: '129€',
     cta: 'Comprar tu rutina',
+    bullets: [
+      'Potencia los resultados de tu crema personalizada',
+      'Cuatro productos seleccionados por dermatólogos estéticos',
+      'Envío gratis (de 3 a 5 días naturales)',
+    ],
   },
   {
-    imgSrc: '/images/derma/upselling/packDerma.png',
+    imgSrc: '/images/derma/upselling/packDerma.png?v=45354',
     name: 'Programa completo: Rutina facial + Revisión online',
     price: '139€',
     discountedPrice: '198€',
     cta: 'Lo quiero todo',
+    bullets: [
+      'Potencia los resultados de tu crema personalizada',
+      'Cuatro productos seleccionados por dermatólogos',
+      'Envío gratis (de 3 a 5 días naturales)',
+      'Valora los resultados obtenidos y define próximos pasos con tu dermatólogo',
+    ],
   },
 ];
 
