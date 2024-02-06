@@ -475,7 +475,7 @@ export default function Agenda({
                   </Flex>
                 </Container>
                 <Container className="px-0 md:px-4 relative">
-                  {loadingDays && (
+                  {(loadingMonth || loadingDays) && (
                     <SvgSpinner
                       height={48}
                       width={48}
