@@ -88,7 +88,6 @@ export default function AppointmentResume({
     collapsible: true,
     ...(deviceSize.isMobile ? {} : { defaultValue: 'item-1' }),
   };
-  if (!isConfirmation) return <></>;
 
   const accordionItemProps: AccordionItemProps = {
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
