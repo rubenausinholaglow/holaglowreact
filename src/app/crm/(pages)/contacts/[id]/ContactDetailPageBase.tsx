@@ -5,6 +5,7 @@ import '../components/datePicker.css';
 import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
+import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
 import { ClientDetails } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
 import getBudgetStatusText from 'app/crm/types/ContactBudgetEnum';
@@ -45,6 +46,7 @@ interface ContactDetailPageProps {
 export default function ContactDetailPageBase({
   contactDetail,
 }: ContactDetailPageProps) {
+  console.log(contactDetail);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [identifier, setIdentifier] = useState<string>('');
@@ -149,15 +151,20 @@ export default function ContactDetailPageBase({
 
   return (
     <>
-      <div className="rounded-xl bg-white ml-64 mt-2 mr-4 mb-10 h-screen">
-        <CardContact
-          contactInfo={contactDetail}
-          isVisibleModal={isVisibleModal}
-          setIsVisibleModal={setIsVisibleModal}
-          setIdentifier={setIdentifier}
-        />
+      <div className="flex">
+        <div className="w-2/3 rounded-xl bg-white ml-64 mt-2 mr-4 mb-10 h-screen">
+          <CardContact
+            contactInfo={contactDetail}
+            isVisibleModal={isVisibleModal}
+            setIsVisibleModal={setIsVisibleModal}
+            setIdentifier={setIdentifier}
+          />
 
-        <Tabs tabs={tabs} defaultTab="Tareas" />
+          <Tabs tabs={tabs} defaultTab="Tareas" />
+        </div>
+        <div className="w-1/3 rounded-xl bg-white  mt-2  h-screen">
+          <WhatsApp contactDetail={contactDetail} />
+        </div>
       </div>
       <ModalContact isOpen={isVisibleModal} closeModal={setIsVisibleModal}>
         <form onSubmit={handleContactReminder}>

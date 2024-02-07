@@ -22,6 +22,7 @@ export interface ClientDetails {
   calls: Call[];
   appointments: Appointment[];
   budgets: Budget[];
+  whatsapps: WhatsappMessages[];
 }
 
 export interface TaskDataTableContact {
@@ -122,6 +123,15 @@ export interface Budget {
   statusBudget: number;
   totalPrice: number;
   totalPriceWithIVA: number;
+}
+
+export interface WhatsappMessages {
+  time: string;
+  agent: Agent;
+  text: string;
+  id: string;
+  creationDate: string;
+  active: boolean;
 }
 
 interface Agent {
