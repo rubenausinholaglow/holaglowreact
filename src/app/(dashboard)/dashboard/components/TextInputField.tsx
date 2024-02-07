@@ -15,14 +15,23 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
   onBlur = undefined,
   disableBgIcons = false,
   error = '',
+  customValidation,
 }) => {
   function getBackgroundIcon() {
     if (disableBgIcons) {
       return '';
     }
+
+    if (customValidation) {
+      return customValidation()
+        ? 'url("/images/forms/formCheck.svg") #ffffff no-repeat center right 12px'
+        : '';
+    }
+
     if (!isEmpty(error)) {
       return 'url("/images/forms/error.svg") #ffffff no-repeat center right 12px';
     }
+
     if (value.length > 0) {
       return 'url("/images/forms/formCheck.svg") #ffffff no-repeat center right 12px';
     }

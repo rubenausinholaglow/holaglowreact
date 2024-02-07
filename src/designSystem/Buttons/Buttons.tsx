@@ -166,14 +166,8 @@ const ButtonBody = ({
   disabled?: boolean;
   children: ReactNode;
 }) => {
-  const DISABLED_STYLES: any = {
-    primary:
-      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
-    secondary:
-      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
-    tertiary:
-      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
-  };
+  const DISABLED_STYLES =
+    'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default';
 
   const STYLES: any = {
     common: 'transition-all relative bottom-[1px] text-center rounded-full',
@@ -201,7 +195,7 @@ const ButtonBody = ({
   const styles = twMerge(
     `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
       isAnimated ? STYLES.animations : ''
-    }${disabled ? DISABLED_STYLES[type] : ''}`
+    } ${disabled ? DISABLED_STYLES : ''}`
   );
 
   return (
