@@ -40,40 +40,22 @@ export const MULTISTEP_QUESTIONS: any = [
         title: 'Acné',
       },
       {
-        title: 'Cicatrices',
+        title: 'Manchas',
       },
       {
-        title: 'Enrojecimiento',
+        title: 'Enrojecimiento/Rosácea',
       },
       {
-        title: 'Sensibilidad',
+        title: 'Piel Seca',
       },
       {
-        title: 'Pigmentación',
-      },
-      {
-        title: 'Sequedad',
-      },
-      {
-        title: 'Exceso de sebo/grasa',
-      },
-      {
-        title: 'Pérdida de firmeza',
-      },
-      {
-        title: 'Líneas finas',
+        title: 'Piel Grasa',
       },
       {
         title: 'Arrugas',
       },
       {
-        title: 'Rosácea',
-      },
-      {
-        title: 'Textura de la piel',
-      },
-      {
-        title: 'Manchas',
+        title: 'Cicatrices',
       },
     ],
   },
