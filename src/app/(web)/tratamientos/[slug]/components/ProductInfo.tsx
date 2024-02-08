@@ -164,24 +164,29 @@ export default function ProductInfo({
                 </div>
               </li>
             )}
-            {product.durationMin >= 30 && (
-              <li className="pb-4 flex">
-                <SvgCalendar
-                  height={24}
-                  width={24}
-                  className="text-hg-secondary mr-3 mt-1"
-                />
-                <div>
+
+            <li className="pb-4 flex">
+              <SvgCalendar
+                height={24}
+                width={24}
+                className="text-hg-secondary mr-3 mt-1"
+              />
+              <div className="flex flex-col">
+                {product.durationMin >= 30 ? (
                   <Text size="lg" className="font-semibold mb-1 md:mb-2">
                     {(product.durationMin / 30).toString()}
                     {product.durationMax == product.durationMin && ' meses'}
                     {product.durationMax != product.durationMin &&
                       '-' + (product.durationMax / 30).toString() + ' meses'}
                   </Text>
-                  <Text>Duración del tratamiento</Text>
-                </div>
-              </li>
-            )}
+                ) : (
+                  <Text size="lg" className="font-semibold mb-1 md:mb-2">
+                    Permanente
+                  </Text>
+                )}
+                <Text>Duración del tratamiento</Text>
+              </div>
+            </li>
           </ul>
           {!isDashboard ? (
             <Button
