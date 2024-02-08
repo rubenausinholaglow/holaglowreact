@@ -50,6 +50,10 @@ a:hover {
   color: theme('colors.hg.secondary');
 }
 
+.derma a:hover {
+  color: theme('colors.derma.primary');
+}
+
 input,
 textarea,
 button,

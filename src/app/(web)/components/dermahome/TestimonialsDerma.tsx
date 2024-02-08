@@ -12,7 +12,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     city: 'Barcelona',
     name: 'Carmen Ausín',
-    imgUrl: '/images/statics/landings/captacion/YolandaPérez.jpg',
+    imgUrl: '/images/derma/testimonials/carmenAusin.png',
     value: 4.7,
     testimonial:
       'Ya no sabía qué hacer con mi acné, hasta que descubrí la crema formulada!!! Ya llevo unos meses usándola y empiezo a ver cambios en mi piel, cosa que no había notado con ninguna otra crema… ya no me da vergüenza salir a la calle sin maquillaje! Gracias!!',
@@ -20,7 +20,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     city: 'Toledo',
     name: 'Marta Gil',
-    imgUrl: '/images/statics/landings/captacion/MíaGC.jpg',
+    imgUrl: '/images/derma/testimonials/martaGil.png',
     value: 4.7,
     testimonial:
       'Además de haberme ayudado mucho con mi piel, siempre me han apoyado, los médicos son muy amables y profesionales. Da gusto recibir asesoramiento de esta calidad desde casa!',
@@ -28,7 +28,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     city: 'Alicante',
     name: 'Rubén Zamora',
-    imgUrl: '/images/statics/landings/captacion/LlunaSantiago.jpg',
+    imgUrl: '/images/derma/testimonials/rubenZamora.png',
     value: 4.7,
     testimonial:
       'He luchado contra la rosácea durante muchos años y he probado muchísimos médicos y métodos, incluso láseres, pero solo con mi cremafacial personalizada estoy consiguiendo resultados realmente duraderos!! ',
@@ -36,7 +36,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     city: 'Tarragona',
     name: 'Amalia Rodriguez',
-    imgUrl: '/images/statics/landings/captacion/NoemiClemente.jpg',
+    imgUrl: '/images/derma/testimonials/amaliaRodriguez.png',
     value: 4.7,
     testimonial:
       'Estaba cansada de los videos de tiktok recomendando soluciones milagrosas que luego no funcionan… Tener una consulta con un dermatólogo y una crema formulada para mi me ha ayudado a simplificar mi rutina facial y a escuchar lo que realmente necesita mi piel. Lo recomiendo mucho!!!',
@@ -54,7 +54,7 @@ export default function TestimonialsDerma() {
           size="2xl"
           className="font-gtUltraBold text-derma-primary font-bold mb-8 md:mb-12"
         >
-          Opiniones verificadas
+          Opiniones sobre Derma
         </Title>
       </Container>
       <AnimateOnViewport>

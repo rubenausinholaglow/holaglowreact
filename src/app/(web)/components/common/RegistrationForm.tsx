@@ -33,6 +33,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   hasContinueButton = true,
   isEmbed = false,
   page = '',
+  initialValues,
   setClientData,
   showPostalCode = false,
 }: {
@@ -41,6 +42,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   hasContinueButton?: boolean;
   isEmbed?: boolean;
   page?: string;
+  initialValues?: Client;
   setClientData?: Dispatch<SetStateAction<Client>>;
   showPostalCode?: boolean;
 }) => {
@@ -85,6 +87,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     postalCode: '',
     origin: '',
   });
+
+  useEffect(() => {
+    if (initialValues) {
+      setFormData(initialValues);
+    }
+  }, []);
 
   const registerUser = useRegistration(
     formData,

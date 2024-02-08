@@ -18,14 +18,16 @@ export default function BenefitsApplicationResultsDerma() {
           Crema facial recetada
         </TitleDerma>
         <Text className="text-hg-black500 mb-8">
-          Una crema facial formulada exclusivamente para ti con ingredientes que
-          han sido testados médicamente y cuya eficacia se ha demostrado
-          empíricamente.
+          Una crema facial personalizada formulada con ingredientes que han sido
+          testados médicamente y cuya eficacia se ha demostrado empíricamente.
         </Text>
 
-        <Flex layout="col-center" className="md:flex-row gap-4 md:gap-16 mb-16">
+        <Flex
+          layout="col-center"
+          className="md:flex-row gap-4 md:gap-16 mb-16 items-start"
+        >
           <Flex layout="col-left" className="gap-4 w-full mb-4 md:w-1/2">
-            <TitleDerma size="xl">Ventajas</TitleDerma>
+            <TitleDerma size="xl">Beneficios</TitleDerma>
             {[
               {
                 title: 'Prescripción médica',
@@ -87,7 +89,7 @@ export default function BenefitsApplicationResultsDerma() {
               },
               {
                 title:
-                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante',
+                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante/grano de arroz',
                 text: 'Este tipo de cremas son poderosas y eficaces, por eso, no necesitarás aplicar más cantidad para experimentar sus beneficios.',
               },
             ].map(item => (
@@ -117,7 +119,7 @@ export default function BenefitsApplicationResultsDerma() {
         </Flex>
 
         <TitleDerma size="xl" className="mb-6 md:mb-16">
-          Resultados
+          Resultados de una formulación antiaging
         </TitleDerma>
 
         <Flex layout="col-left" className="w-full md:flex-row">

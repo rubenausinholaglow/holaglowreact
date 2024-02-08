@@ -29,6 +29,7 @@ export interface SearchBarProps {
 }
 
 export interface RegistrationFormProps {
+  initialValues?: Client;
   formData?: Client;
   handleFieldChange?: (
     event: React.ChangeEvent<HTMLInputElement>,

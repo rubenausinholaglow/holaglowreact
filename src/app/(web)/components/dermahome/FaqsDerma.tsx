@@ -45,7 +45,7 @@ export default function FaqsDerma() {
 
   return (
     <Container>
-      <Flex layout="row-between" className="w-full gap-2 mb-4 md:mb-8">
+      <Flex layout="row-between" className="w-full gap-2 mb-12">
         <Title
           isAnimated
           size="2xl"
@@ -64,7 +64,7 @@ export default function FaqsDerma() {
 
       <Flex
         layout="col-left"
-        className="w-full gap-6 md:grid md:grid-cols-2 md:gap-16"
+        className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
       >
         {deviceSize.isMobile &&
           FAQS.map((faq, index) => {
@@ -83,7 +83,7 @@ export default function FaqsDerma() {
           })}
 
         {!deviceSize.isMobile && (
-          <Flex layout="col-left" className="w-full gap-4">
+          <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 === 0) {
                 return (
@@ -91,7 +91,7 @@ export default function FaqsDerma() {
                     key={faq.title}
                     className="pb-4 md:mb-0 border-b border-derma-tertiary"
                     trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold"
+                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
                   >
                     <Text size="sm" className="text-hg-black500 pt-4">
                       {faq.description}
@@ -105,7 +105,7 @@ export default function FaqsDerma() {
         )}
 
         {!deviceSize.isMobile && (
-          <Flex layout="col-left" className="w-full gap-4">
+          <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 !== 0) {
                 return (
@@ -113,7 +113,7 @@ export default function FaqsDerma() {
                     key={faq.title}
                     className="pb-4 md:mb-0 border-b border-derma-tertiary"
                     trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold"
+                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
                   >
                     <Text size="sm" className="text-hg-black500 pt-4">
                       {faq.description}
