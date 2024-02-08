@@ -17,6 +17,18 @@ export default function ThirdStep({
   setClient: any;
   dermaQuestions: DermaQuestions;
 }) {
+  const initialName = dermaQuestions.name;
+  const spaceIndex = initialName?.indexOf(' ');
+  let name, surName;
+
+  if (spaceIndex !== undefined && spaceIndex !== -1) {
+    name = initialName?.substring(0, spaceIndex) || '';
+    surName = initialName?.substring(spaceIndex + 1) || '';
+  } else {
+    name = initialName || '';
+    surName = '';
+  }
+
   return (
     <div>
       {activeSlideIndex === 4 && (
@@ -42,7 +54,7 @@ export default function ThirdStep({
                   showPostalCode={true}
                   redirect={false}
                   hasContinueButton={false}
-                  initialValues={{ ...client, name: dermaQuestions.name || '' }}
+                  initialValues={{ ...client, name: name, surname: surName }}
                   setClientData={setClient}
                 />
               </Flex>

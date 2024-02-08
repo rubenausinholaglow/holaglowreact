@@ -373,6 +373,47 @@ export default function Agenda({
     );
   };
 
+  const SlotList = ({ slots = [] }: { slots: Slot[] }) => {
+    return (
+      <Flex className="flex-wrap  mb-3 md:mb-0">
+        {slots.map((slot: Slot) => {
+          return (
+            <Flex
+              key={slot.startTime}
+              layout="row-between"
+              className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                isDerma
+                  ? 'border-none bg-derma-secondary400'
+                  : 'border border-hg-black bg-white'
+              } ${
+                clickedHour === slot.startTime
+                  ? `${
+                      isDerma ? 'bg-derma-primary' : 'bg-hg-secondary'
+                    } text-white`
+                  : ''
+              }`}
+            >
+              <div
+                className="w-full cursor-pointer flex justify-center"
+                onClick={async () => {
+                  if (!loadingDays) {
+                    setClickedHour(slot.startTime);
+                    await selectHour(slot);
+                  }
+                }}
+              >
+                {clickedHour === slot.startTime && (
+                  <SvgCheck className="text-white mr-1 h-5 w-5" />
+                )}
+                {slot.startTime}
+              </div>
+            </Flex>
+          );
+        })}
+      </Flex>
+    );
+  };
+
   return (
     <MainLayout isCheckout hideHeader={isDashboard}>
       {showErrorMessage ? (
@@ -532,95 +573,23 @@ export default function Agenda({
                             {dateFormatted.toString()}
                           </span>
                         </Text>
+
                         {morningHours.length > 0 && (
-                          <Text size="sm" className="font-semibold mb-4">
-                            Horario de mañana
-                          </Text>
+                          <>
+                            <Text size="sm" className="font-semibold mb-4">
+                              Horario de mañana
+                            </Text>
+                            <SlotList slots={morningHours} />
+                          </>
                         )}
-                        {morningHours.length > 0 && (
-                          <Flex className="flex-wrap  mb-3 md:mb-0">
-                            {morningHours.map(x => {
-                              return (
-                                <Flex
-                                  key={x.startTime}
-                                  layout="row-between"
-                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                    isDerma
-                                      ? 'border-none bg-derma-secondary400'
-                                      : 'border border-hg-black bg-white'
-                                  } ${
-                                    clickedHour === x.startTime
-                                      ? `${
-                                          isDerma
-                                            ? 'bg-derma-primary'
-                                            : 'bg-hg-secondary'
-                                        } text-white`
-                                      : ''
-                                  }`}
-                                >
-                                  <div
-                                    className="w-full cursor-pointer flex justify-center"
-                                    onClick={async () => {
-                                      if (!loadingDays) {
-                                        setClickedHour(x.startTime);
-                                        await selectHour(x);
-                                      }
-                                    }}
-                                  >
-                                    {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
-                                    )}
-                                    {x.startTime}
-                                  </div>
-                                </Flex>
-                              );
-                            })}
-                          </Flex>
-                        )}
+
                         {afternoonHours.length > 0 && (
-                          <Text size="sm" className="font-semibold mb-4">
-                            Horario de tarde
-                          </Text>
-                        )}
-                        {afternoonHours.length > 0 && (
-                          <Flex className="flex-wrap mb-6 md:mb-0">
-                            {afternoonHours.map(x => {
-                              return (
-                                <Flex
-                                  key={x.startTime}
-                                  layout="row-between"
-                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                    isDerma
-                                      ? 'border-none bg-derma-secondary400'
-                                      : 'border border-hg-black bg-white'
-                                  } ${
-                                    clickedHour === x.startTime
-                                      ? `${
-                                          isDerma
-                                            ? 'bg-derma-primary'
-                                            : 'bg-hg-secondary'
-                                        } text-white`
-                                      : ''
-                                  }`}
-                                >
-                                  <div
-                                    className="w-full cursor-pointer flex justify-center"
-                                    onClick={async () => {
-                                      if (!loadingDays) {
-                                        setClickedHour(x.startTime);
-                                        await selectHour(x);
-                                      }
-                                    }}
-                                  >
-                                    {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-white mr-1" />
-                                    )}
-                                    {x.startTime}
-                                  </div>
-                                </Flex>
-                              );
-                            })}
-                          </Flex>
+                          <>
+                            <Text size="sm" className="font-semibold mb-4">
+                              Horario de tarde
+                            </Text>
+                            <SlotList slots={afternoonHours} />
+                          </>
                         )}
                       </>
                     )}
