@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
 import { DermaQuestions } from '@interface/dermaquestions';
-import { SvgWarning } from 'app/icons/IconsDs';
+import {
+  SvgCheckSquare,
+  SvgCheckSquareActive,
+  SvgWarning,
+} from 'app/icons/IconsDs';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -13,14 +17,18 @@ export default function FirstStep({
   setDermaQuestions,
   setContinueDisabled,
   continueDisabled,
-  showFirstStepErrors,
+  is18YearsOld,
+  setIs18YearsOld,
+  setErrorMessage,
 }: {
   activeSlideIndex: number;
   dermaQuestions: DermaQuestions;
   setDermaQuestions: any;
   setContinueDisabled: any;
   continueDisabled: boolean;
-  showFirstStepErrors: boolean;
+  is18YearsOld: boolean;
+  setIs18YearsOld: (value: boolean) => void;
+  setErrorMessage: (value: string) => void;
 }) {
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -34,16 +42,8 @@ export default function FirstStep({
 
   useEffect(() => {
     const name = dermaQuestions?.name;
-    const birthDate = dermaQuestions?.birthDate;
-
-    if (!isEmpty(name) && !isEmpty(birthDate)) {
-      const today = dayjs();
-      const years = today.diff(dayjs(birthDate), 'years');
-      setContinueDisabled(years < 18);
-    } else {
-      setContinueDisabled(true);
-    }
-  }, [dermaQuestions]);
+    setContinueDisabled(!(!isEmpty(name) && is18YearsOld));
+  }, [is18YearsOld]);
 
   return (
     <div>
@@ -73,7 +73,7 @@ export default function FirstStep({
                 </div>
 
                 <div className="w-full">
-                  <TextInputField
+                  {/* <TextInputField
                     label="¿Cuándo naciste?"
                     labelClassName="absolute top-3 left-4 text-xs text-hg-black500"
                     inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full bg-white shadow-none"
@@ -82,22 +82,31 @@ export default function FirstStep({
                     value={dermaQuestions?.birthDate || ''}
                     onChange={event => handleFieldChange(event, 'birthDate')}
                     disableBgIcons
-                  />
-                </div>
+                  /> */}
 
-                {showFirstStepErrors && continueDisabled && (
-                  <Flex
-                    layout="row-left"
-                    className="gap-2 p-3 text-sm rounded-xl bg-hg-error300 text-hg-error w-full"
+                  <label
+                    htmlFor="termsAndConditionsAccepted"
+                    className="flex items-center cursor-pointer"
                   >
-                    <SvgWarning className="w-4 h-4" />
-
-                    {isEmpty(dermaQuestions.name) ||
-                    isEmpty(dermaQuestions.birthDate)
-                      ? 'Completa todos los campos para continuar'
-                      : 'Debes ser mayor de edad para utilizar este servicio'}
-                  </Flex>
-                )}
+                    <input
+                      type="checkbox"
+                      id="termsAndConditionsAccepted"
+                      checked={is18YearsOld}
+                      onChange={() => {
+                        setIs18YearsOld(!is18YearsOld);
+                      }}
+                      className="hidden"
+                    />
+                    {is18YearsOld ? (
+                      <SvgCheckSquareActive className="mr-2" />
+                    ) : (
+                      <SvgCheckSquare className="mr-2" />
+                    )}
+                    <span className="text-sm text-hg-black500">
+                      Sí, confirmo que soy mayor de 18 años.
+                    </span>
+                  </label>
+                </div>
               </Flex>
             </Flex>
           </Container>

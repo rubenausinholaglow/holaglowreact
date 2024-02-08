@@ -118,7 +118,7 @@ export default function ConctactForm() {
             <RegistrationForm
               redirect={hideLayout}
               hasContinueButton={isProbadorVirtual}
-              formData={client}
+              initialValues={client}
               setClientData={setClient}
             />
 

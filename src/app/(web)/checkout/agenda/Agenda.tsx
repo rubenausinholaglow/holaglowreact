@@ -129,6 +129,8 @@ export default function Agenda({
   }
 
   function callbackGetSlots(data: Slot[]) {
+    setClickedHour(null);
+
     const hours = Array<Slot>();
     const morning = Array<Slot>();
     const afternoon = Array<Slot>();
@@ -190,7 +192,6 @@ export default function Agenda({
   function initialize() {
     setLoadingMonth(true);
     setSelectedDay(undefined);
-    setSelectedSlot(undefined);
     setEnableScheduler(true);
     setDateToCheck(dayjs());
   }
@@ -329,6 +330,7 @@ export default function Agenda({
   const selectDate = (x: Date) => {
     if (!selectedTreatmentsIds || !selectedClinic) return;
     setSelectedDay(dayjs(x));
+    setSelectedSlot(undefined);
     setLocalDateSelected(x);
     setLoadingDays(true);
     setMorningHours([]);
