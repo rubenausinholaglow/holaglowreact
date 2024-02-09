@@ -268,7 +268,7 @@ export default function Form() {
               );
             })}
 
-            <div id="tm_derma_step3" className="min-h-[100px]">
+            <div id="tm_derma_step5" className="min-h-[100px]">
               <ThirdStep
                 activeSlideIndex={activeSlideIndex}
                 client={client}
@@ -277,11 +277,11 @@ export default function Form() {
               />
             </div>
 
-            <div id="tm_derma_step4" className="min-h-[100px]">
+            <div id="tm_derma_step6" className="min-h-[100px]">
               <FourthStep activeSlideIndex={activeSlideIndex} />
             </div>
 
-            <div id="tm_derma_step5" className="min-h-[100px]">
+            <div id="tm_derma_step7" className="min-h-[100px]">
               <FifthStep
                 name={dermaQuestions?.name || ''}
                 activeSlideIndex={activeSlideIndex}
