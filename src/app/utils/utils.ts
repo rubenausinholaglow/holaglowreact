@@ -153,3 +153,35 @@ export const getStatusClassName = (status: string, entity: string): string => {
   }
   return '';
 };
+
+
+export const formatDate = (dateString: Date, includeHours = true) => {
+
+  
+
+  if (dateString === null) {
+    return "";
+  }
+  const options: any = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: includeHours ? "2-digit" : undefined,
+    minute: includeHours ? "2-digit" : undefined,
+    second: includeHours ? "2-digit" : undefined,
+    hour12: false, 
+  };
+  
+  
+  const date = new Date(dateString);
+  if (date.getFullYear() === 1) {
+    return "";
+  }
+  
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+
+  const formattedDate = date.toLocaleDateString("es-ES", options);
+  return `${formattedDate.replace(",", "")}`;
+};

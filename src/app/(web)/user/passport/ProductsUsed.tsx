@@ -1,3 +1,5 @@
+import { formatDate } from '@utils/utils';
+
 import { ProductsUsed } from '../types';
 
 export default function Treatments({
@@ -5,7 +7,6 @@ export default function Treatments({
 }: {
   productsUsed: ProductsUsed[];
 }) {
-  console.log(productsUsed);
   return (
     <>
       {productsUsed?.length > 0 && (
@@ -34,8 +35,7 @@ export default function Treatments({
                     <td className="py-3 pr-6">{productUsed.productUsed}</td>
                     <td className="py-3 pr-6">{productUsed.lotReference}</td>
                     <td className="py-3 pr-6">
-                      {productUsed.expiryDate != undefined ??
-                        productUsed.expiryDate}
+                      {formatDate(productUsed.expiryDate, false)}
                     </td>
                   </tr>
                 );

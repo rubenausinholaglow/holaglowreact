@@ -77,7 +77,7 @@ export interface ProductsUsed {
   productUsed : string;
   quantity : number;
   lotReference : string;
-  expiryDate? : Date | undefined;
+  expiryDate : Date;
 
 }
 export interface Tip {
