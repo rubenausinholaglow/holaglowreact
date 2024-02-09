@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { useSearchParams } from 'next/navigation';
-import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 
 export default function RescheduledAppointment() {
   const searchParams = useSearchParams();
