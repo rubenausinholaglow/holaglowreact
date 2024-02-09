@@ -11,6 +11,9 @@ import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/compon
 import { useCrisalix } from '../(dashboard)/dashboard/(pages)/crisalix/useCrisalix';
 import { INITIAL_STATE } from './constants';
 
+const DEFAULT_LOCALE = "es-ES";
+
+
 export const handleGoBack = () => {
   window.history.back();
 };
@@ -155,14 +158,15 @@ export const getStatusClassName = (status: string, entity: string): string => {
 };
 
 
-export const formatDate = (dateString: Date, includeHours = true) => {
+export const formatDate = (date: Date, includeHours = true) => {
 
-  
+  const finalDate = new Date(date);
 
-  if (dateString === null) {
+  if (finalDate.getFullYear() === 1) {
     return "";
   }
-  const options: any = {
+
+  const options:  Intl.DateTimeFormatOptions = {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -172,16 +176,6 @@ export const formatDate = (dateString: Date, includeHours = true) => {
     hour12: false, 
   };
   
-  
-  const date = new Date(dateString);
-  if (date.getFullYear() === 1) {
-    return "";
-  }
-  
-  if (isNaN(date.getTime())) {
-    return null;
-  }
-
-  const formattedDate = date.toLocaleDateString("es-ES", options);
+  const formattedDate = finalDate.toLocaleDateString("es-ES", options);
   return `${formattedDate.replace(",", "")}`;
 };
