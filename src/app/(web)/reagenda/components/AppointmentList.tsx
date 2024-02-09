@@ -114,8 +114,7 @@ export default function AppointmentList({
       <Flex layout="col-left" className="gap-4">
         {appointments.map(appointment => {
           if (!appointment.isPast || (appointment.isPast && showPast)) {
-            const hideButtons =
-              isDerma && dayjs(appointment.startTime) < dayjs().add(3, 'day');
+            const hideButtons = isDerma; //&& dayjs(appointment.startTime) < dayjs().add(3, 'day');
 
             return (
               <Flex
