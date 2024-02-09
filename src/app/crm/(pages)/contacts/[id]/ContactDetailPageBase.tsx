@@ -40,13 +40,16 @@ dayjs.locale(spanishConf);
 registerLocale('es', es);
 
 interface ContactDetailPageProps {
-  contactDetail: ClientDetails;
+  contactInfo: ClientDetails;
 }
 
 export default function ContactDetailPageBase({
-  contactDetail,
+  contactInfo,
 }: ContactDetailPageProps) {
-  console.log(contactDetail);
+  
+
+  const contactDetail  = contactInfo;
+  
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [identifier, setIdentifier] = useState<string>('');
@@ -57,16 +60,18 @@ export default function ContactDetailPageBase({
     return result;
   };
 
+  
+
   const tabs = [
     {
       label: 'Tareas',
       component:
-        contactDetail.taskInstances.length === 0 ? (
+        contactDetail?.taskInstances?.length === 0 ? (
           <div className="pl-5">No se han encontrado Tareas.</div>
         ) : (
           <SimpleDataTable
             columns={TaskColumns}
-            rows={mappingTasks(contactDetail.taskInstances)}
+            rows={mappingTasks(contactDetail?.taskInstances)}
             statusTypeSwitch={getTaskStatusText}
           />
         ),
@@ -76,12 +81,12 @@ export default function ContactDetailPageBase({
       component: (
         <div className="py-10 max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-xl">
           <div className="px-4 mb-4">
-            Telefono: {contactDetail.phonePrefix} {contactDetail.phone}
+            Telefono: {contactDetail?.phonePrefix} {contactDetail?.phone}
           </div>
-          <div className="px-4 mb-4">Email: {contactDetail.email}</div>
+          <div className="px-4 mb-4">Email: {contactDetail?.email}</div>
           {checkIfHasAgent() && (
             <div className="px-4 mb-4">
-              Agente: {contactDetail.agent.username}
+              Agente: {contactDetail?.agent?.username}
             </div>
           )}
         </div>
@@ -90,26 +95,26 @@ export default function ContactDetailPageBase({
     {
       label: 'Comentarios',
       component:
-        contactDetail.comments.length === 0 ? (
+        contactDetail?.comments?.length === 0 ? (
           <div className="pl-5">No se ha encontrado Comentarios.</div>
         ) : (
           <SimpleDataTable
             columns={CommentsColumns}
-            rows={mappingComments(contactDetail.comments)}
+            rows={mappingComments(contactDetail?.comments)}
           />
         ),
     },
     {
       label: 'Llamadas',
       component:
-        contactDetail.calls.length === 0 ? (
+        contactDetail?.calls?.length === 0 ? (
           <div className="pl-5">
             No se ha encontrado información de llamadas.
           </div>
         ) : (
           <SimpleDataTable
             columns={CallsColumns}
-            rows={mappingCalls(contactDetail.calls)}
+            rows={mappingCalls(contactDetail?.calls)}
             statusTypeSwitch={getCallStatusText}
           />
         ),
@@ -117,12 +122,12 @@ export default function ContactDetailPageBase({
     {
       label: 'Citas',
       component:
-        contactDetail.appointments.length === 0 ? (
+        contactDetail?.appointments?.length === 0 ? (
           <div className="pl-5">No se ha encontrado información de citas.</div>
         ) : (
           <SimpleDataTable
             columns={AppointmentsColumns}
-            rows={mappingAppointments(contactDetail.appointments)}
+            rows={mappingAppointments(contactDetail?.appointments)}
             statusTypeSwitch={getAppointmentStatusText}
           />
         ),
@@ -130,14 +135,14 @@ export default function ContactDetailPageBase({
     {
       label: 'Presupuestos',
       component:
-        contactDetail.calls.length === 0 ? (
+        contactDetail?.calls?.length === 0 ? (
           <div className="pl-5">
             No se ha encontrado información de presupuestos.
           </div>
         ) : (
           <SimpleDataTable
             columns={BudgetColumns}
-            rows={mappingBudgets(contactDetail.budgets)}
+            rows={mappingBudgets(contactDetail?.budgets)}
             statusTypeSwitch={getBudgetStatusText}
           />
         ),
@@ -146,7 +151,7 @@ export default function ContactDetailPageBase({
 
   const handleContactReminder = (event: any) => {
     event.preventDefault();
-    reminderAction(startDate, commentReminder, contactDetail.id, identifier);
+    reminderAction(startDate, commentReminder, contactDetail?.id, identifier);
   };
 
   return (
