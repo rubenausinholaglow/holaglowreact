@@ -22,14 +22,13 @@ export const usePayments = () => {
   const initializePayment = async (
     paymentBank: PaymentBank,
     createdUser: User,
-    newTab = false
+    newTab = false,
+    price = 4900
   ) => {
     useNewTab = newTab ?? false;
 
-    const resultValue = 4900;
-
     const data: InitializePayment = {
-      amount: Number(resultValue),
+      amount: Number(price),
       installments: 1,
       userId: createdUser?.id || '',
       paymentBank: paymentBank,
