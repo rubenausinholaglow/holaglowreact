@@ -5,6 +5,7 @@ import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
+import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import { SvgCalendar, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
@@ -14,6 +15,7 @@ import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function AppointmentList({
@@ -31,12 +33,13 @@ export default function AppointmentList({
 
   const [isHydrated, setIsHydrated] = useState(false);
   const [appointments, setAppointments] = useState([] as Appointment[]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentToken, setCurrentToken] = useState('');
 
   const { clinics, setCurrentUser, stateProducts } = useGlobalPersistedStore(
     state => state
   );
+
   const {
     deviceSize,
     setSelectedTreatments,
@@ -58,13 +61,17 @@ export default function AppointmentList({
       if (token) {
         const res = await ScheduleService.next(token);
         setAppointments(res);
-        setLoading(false);
+        setIsLoading(false);
         setIsHydrated(true);
       }
     };
 
     getAppointments();
   }, []);
+
+  useEffect(() => {
+    setIsLoading(isEmpty(appointments));
+  }, [appointments]);
 
   const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
@@ -91,8 +98,8 @@ export default function AppointmentList({
     router.push('/checkout/agenda');
   };
 
-  if (!isHydrated) {
-    return <></>;
+  if (!isHydrated || isLoading) {
+    return <FullScreenLoading isDerma />;
   }
 
   return (
@@ -203,8 +210,7 @@ export default function AppointmentList({
           }
         })}
 
-        {loading && <SvgSpinner height={24} width={24} />}
-        {appointments.length == 0 && !loading && (
+        {appointments.length == 0 && !isLoading && (
           <div>
             ¡Ups! Parece que no tienes ninguna cita reservada. Para más dudas{' '}
             <a href="tel:682417208">llámanos</a>.
