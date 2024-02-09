@@ -23,6 +23,7 @@ export interface ClientDetails {
   appointments: Appointment[];
   budgets: Budget[];
   whatsapps: WhatsappMessages[];
+  leads: Leads[];
 }
 
 export interface TaskDataTableContact {
@@ -132,6 +133,10 @@ export interface WhatsappMessages {
   id: string;
   creationDate: string;
   active: boolean;
+}
+
+interface Leads {
+  appointments: Appointment[];
 }
 
 interface Agent {

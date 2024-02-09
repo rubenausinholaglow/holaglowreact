@@ -19,7 +19,7 @@ export default async function ContactDetailPage({
       {
         <MainLayoutCRM>
           {contactDetail ? (
-            <ContactDetailPageBase contactInfo={contactDetail?.user} />
+            <ContactDetailPageBase contactDetail={contactDetail?.user} />
           ) : (
             <div className="flex rounded-xl bg-white ml-64 mt-2 mr-4 h-screen justify-center items-center">
               No se ha encontrado el contacto solicitado

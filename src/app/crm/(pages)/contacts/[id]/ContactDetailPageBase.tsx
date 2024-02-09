@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
 import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
-import { ClientDetails } from 'app/crm/types/Contact';
+import { Appointment, ClientDetails } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
 import getBudgetStatusText from 'app/crm/types/ContactBudgetEnum';
 import getCallStatusText from 'app/crm/types/ContactCallEnum';
@@ -40,16 +40,12 @@ dayjs.locale(spanishConf);
 registerLocale('es', es);
 
 interface ContactDetailPageProps {
-  contactInfo: ClientDetails;
+  contactDetail: ClientDetails;
 }
 
 export default function ContactDetailPageBase({
-  contactInfo,
+  contactDetail,
 }: ContactDetailPageProps) {
-  
-
-  const contactDetail  = contactInfo;
-  
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [identifier, setIdentifier] = useState<string>('');
@@ -59,8 +55,6 @@ export default function ContactDetailPageBase({
     const result = contactDetail['agent'] !== null;
     return result;
   };
-
-  
 
   const tabs = [
     {
@@ -122,12 +116,12 @@ export default function ContactDetailPageBase({
     {
       label: 'Citas',
       component:
-        contactDetail?.appointments?.length === 0 ? (
+        contactDetail?.leads?.length === 0 ? (
           <div className="pl-5">No se ha encontrado información de citas.</div>
         ) : (
           <SimpleDataTable
             columns={AppointmentsColumns}
-            rows={mappingAppointments(contactDetail?.appointments)}
+            rows={mappingAppointments(contactDetail?.leads?.map(lead => lead.appointments.map((appointment : Appointment) => appointment)))}
             statusTypeSwitch={getAppointmentStatusText}
           />
         ),
@@ -135,7 +129,7 @@ export default function ContactDetailPageBase({
     {
       label: 'Presupuestos',
       component:
-        contactDetail?.calls?.length === 0 ? (
+        contactDetail?.budgets?.length === 0 ? (
           <div className="pl-5">
             No se ha encontrado información de presupuestos.
           </div>

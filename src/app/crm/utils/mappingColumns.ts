@@ -17,6 +17,11 @@ const concatenateProductName = (array: any[]) => {
   return result;
 };
 
+const concatenateTreatment = (treatments: any[]) => {
+  const result = treatments?.map(treatment => treatment.treatment.product.title).join(', ');
+  return result;
+}
+
 const getLastTaskExecution = (executions: any) => {
   return executions?.slice(-1)[0];
 };
@@ -63,12 +68,13 @@ export const mappingCalls = (contactDetailCalls: any) => {
 
 export const mappingAppointments = (contactDetailAppointments: any) => {
   const model: AppointmentsDataTableContact[] = [];
-  contactDetailAppointments?.forEach((appointment: Appointment) => {
+  const concatenatedArray = [].concat(...contactDetailAppointments);
+  concatenatedArray?.forEach((appointment: Appointment) => {
     const newModel: AppointmentsDataTableContact = {
       status: appointment?.status,
       city: appointment?.clinic?.city,
       dateAppointment: getDateDayMonthYear(appointment?.date, '-'),
-      treatments: concatenateProductName(appointment?.appointmentProducts),
+      treatments: concatenateTreatment(appointment?.treatments),
       startTimeAppointment: appointment?.startTime,
     };
     model.push(newModel);

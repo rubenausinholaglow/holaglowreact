@@ -91,6 +91,36 @@ export default function getContactDetail(id: string) {
             creationDate
             active
           }
+          leads {
+            appointments {
+                date
+                startTime
+                endTime
+                status
+                cancelDate
+                arrival
+                finished
+                boxId
+                flowwwId
+                doctoraliaId
+                url
+                id
+                creationDate
+                active
+                clinic {
+                  city
+                }
+                treatments {
+                  treatment {
+                      product {
+                          title
+                          description
+                          longDescription
+                      }
+                  }
+              }
+            }
+        }
         }
       }
     `;
