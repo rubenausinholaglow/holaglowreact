@@ -140,7 +140,7 @@ export default function Confirmation({
               layout="col-left"
               className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
             >
-              <a href={appointmentUrl}>
+              <a href={appointmentUrl} target="_blank">
                 <Button
                   size="xl"
                   type="tertiary"
