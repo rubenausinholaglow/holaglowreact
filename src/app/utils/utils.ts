@@ -11,8 +11,6 @@ import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/compon
 import { useCrisalix } from '../(dashboard)/dashboard/(pages)/crisalix/useCrisalix';
 import { INITIAL_STATE } from './constants';
 
-const DEFAULT_LOCALE = "es-ES";
-
 
 export const handleGoBack = () => {
   window.history.back();
