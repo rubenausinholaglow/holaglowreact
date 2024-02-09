@@ -90,6 +90,7 @@ export default function Agenda({
         selectedTreatments[0].type
       ];
   }
+  if (isDerma) maxDays = 90;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);

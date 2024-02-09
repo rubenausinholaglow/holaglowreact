@@ -13,6 +13,7 @@ export const DERMA_ROUTINES = [
       'Valora los resultados obtenidos y define próximos pasos',
       'Prevén efectos indeseados, como sequedad o irritación',
     ],
+    id: 1,
   },
   {
     imgSrc: '/images/derma/upselling/rutinaFacial.png',
@@ -26,6 +27,7 @@ export const DERMA_ROUTINES = [
       'Cuatro productos seleccionados por dermatólogos estéticos',
       'Envío gratis (de 3 a 5 días naturales)',
     ],
+    id: 2,
   },
   {
     imgSrc: '/images/derma/upselling/packDerma.png',
@@ -40,6 +42,7 @@ export const DERMA_ROUTINES = [
       'Envío gratis (de 3 a 5 días naturales)',
       'Valora los resultados obtenidos y define próximos pasos con tu dermatólogo',
     ],
+    id: 3,
   },
 ];
 

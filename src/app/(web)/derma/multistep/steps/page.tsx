@@ -112,6 +112,7 @@ export default function Form() {
       if (cart.length == 0) addItemToCart(productDetails as CartItem);
     }
 
+    resetCart();
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
 
     setSelectedClinic({
@@ -141,7 +142,6 @@ export default function Form() {
       treatmentPrice: 0,
     };
     setAnalyticsMetrics(metrics);
-    resetCart();
     setPayment(undefined);
   }, []);
 

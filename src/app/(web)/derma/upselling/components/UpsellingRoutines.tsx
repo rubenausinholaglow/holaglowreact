@@ -3,7 +3,12 @@
 import { useEffect, useState } from 'react';
 import { UpsellingData } from '@interface/upselling';
 import { SvgCheckCircle, SvgCross, SvgWarning } from 'app/icons/IconsDs';
-import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
+import {
+  TypeOfPayment,
+  useGlobalPersistedStore,
+  useGlobalStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
@@ -12,6 +17,13 @@ import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 import { DERMA_PRODUCTS, DERMA_ROUTINES, DERMA_TYPES } from '../mockedData';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { PaymentBank } from '@interface/payment';
+import { INITIAL_STATE } from '@utils/constants';
+import { CartItem, Product } from '@interface/product';
+import { fetchProduct } from '@utils/fetch';
+import { AnalyticsMetrics } from '@interface/client';
+import { useRouter } from 'next/navigation';
 
 export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const { showModalBackground } = useGlobalStore(state => state);
@@ -20,7 +32,20 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState(0);
 
+  const { cart, addItemToCart, resetCart } = useCartStore(state => state);
+  const {
+    setSelectedClinic,
+    setSelectedTreatments,
+    selectedTreatments,
+    selectedSlot,
+    setTypeOfPayment,
+    setAnalyticsMetrics,
+    setPayment,
+  } = useSessionStore(state => state);
+  const { activePayment, setActivePayment, setCurrentUser } =
+    useGlobalPersistedStore(state => state);
   const modalBottomBarHeight = '97px';
+  const router = useRouter();
 
   useEffect(() => {
     setShowModal(showModalBackground);
@@ -29,6 +54,77 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const filteredProducts = DERMA_PRODUCTS.filter(product =>
     product.type.includes(data.rutineType)
   );
+
+  async function addRevisionProduct(productDetails: Product) {
+    productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!;
+    productDetails.flowwwId = 6;
+    productDetails.title = 'Revisión personalizada de dermatología';
+    productDetails.price = 49;
+    setSelectedTreatments([...selectedTreatments, productDetails]);
+    if (cart.length == 0) addItemToCart(productDetails as CartItem);
+  }
+
+  async function addRoutineProduct(productDetails: Product) {
+    productDetails.id = '';
+    productDetails.flowwwId = 0;
+    productDetails.title = 'Rutina facial ' + DERMA_TYPES[data.rutineType];
+    productDetails.price = 129;
+    setSelectedTreatments([...selectedTreatments, productDetails]);
+    if (cart.length == 0) addItemToCart(productDetails as CartItem);
+  }
+
+  const selectProduct = async (id: number) => {
+    setActivePayment(PaymentBank.None);
+    useCartStore.setState(INITIAL_STATE);
+
+    resetCart();
+    setSelectedClinic({
+      id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
+      address: 'Consulta online',
+      city: '',
+      flowwwId: '1',
+      internalName: '',
+      phone: '',
+      professionals: [],
+    });
+    setTypeOfPayment(TypeOfPayment.Full);
+
+    setCurrentUser(undefined);
+    const metrics: AnalyticsMetrics = {
+      device: 0,
+      locPhysicalMs: '',
+      utmAdgroup: '',
+      utmCampaign: '',
+      utmContent: '',
+      utmMedium: '',
+      utmSource: '',
+      utmTerm: '',
+      treatmentText: '',
+      externalReference: '',
+      interestedTreatment: '',
+      treatmentPrice: 0,
+    };
+    setAnalyticsMetrics(metrics);
+    setPayment(undefined);
+    const productDetails = await fetchProduct(
+      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+    );
+    switch (id) {
+      case 1:
+        await addRevisionProduct(productDetails);
+        router.push('/planes/agenda');
+        break;
+      case 2:
+        await addRoutineProduct(productDetails);
+        router.push('/planes/contactform');
+        break;
+      case 3:
+        await addRevisionProduct(productDetails);
+        await addRoutineProduct(productDetails);
+        router.push('/planes/agenda');
+        break;
+    }
+  };
 
   return (
     <>
@@ -222,7 +318,11 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                   >
                     Saber más
                   </Button>
-                  <Button type="derma" size={deviceSize.isMobile ? 'lg' : 'xl'}>
+                  <Button
+                    type="derma"
+                    size={deviceSize.isMobile ? 'lg' : 'xl'}
+                    onClick={() => selectProduct(routine.id)}
+                  >
                     {routine.cta}
                   </Button>
                 </Flex>
