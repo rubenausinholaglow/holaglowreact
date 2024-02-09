@@ -144,7 +144,9 @@ export default function AppointmentResume({
           {isDerma && (
             <div className="w-full flex items-start pb-6">
               <SvgCrema className="mr-2 mt-1 h-4 w-4 shrink-0" />
-              <Text>Receta para crema facial personalizada</Text>
+              <Text>
+                Videoconsulta y receta para crema facial personalizada
+              </Text>
             </div>
           )}
         </Flex>
