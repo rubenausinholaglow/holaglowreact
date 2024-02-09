@@ -5,6 +5,7 @@ export default function Treatments({
 }: {
   productsUsed: ProductsUsed[];
 }) {
+  console.log(productsUsed);
   return (
     <>
       {productsUsed?.length > 0 && (
@@ -18,7 +19,9 @@ export default function Treatments({
                 <th className="py-3 pr-6 text-left font-normal">
                   Número de lote
                 </th>
-                <th className="py-3 pr-6 text-left font-normal">Cantidad</th>
+                <th className="py-3 pr-6 text-left font-normal">
+                  Fecha de Caducidad
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -30,7 +33,10 @@ export default function Treatments({
                   >
                     <td className="py-3 pr-6">{productUsed.productUsed}</td>
                     <td className="py-3 pr-6">{productUsed.lotReference}</td>
-                    <td className="py-3 pr-6">{productUsed.quantity}</td>
+                    <td className="py-3 pr-6">
+                      {productUsed.expiryDate != undefined ??
+                        productUsed.expiryDate}
+                    </td>
                   </tr>
                 );
               })}
