@@ -1,6 +1,6 @@
 'use client';
 
-import MainLayout from 'app/(web)/components/layout/MainLayout';
+import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
@@ -17,7 +17,7 @@ export default function CanceledAppointment() {
   const ROUTE = useRoutes();
 
   return (
-    <MainLayout>
+    <DermaLayout>
       <Container className="py-16 md:py-32">
         <Title className="mb-8">¡Ops! Tu cita ha sido cancelada</Title>
         <Text className="text-lg mb-12">
@@ -35,6 +35,6 @@ export default function CanceledAppointment() {
           Ver tratamientos
         </Button>
       </Container>
-    </MainLayout>
+    </DermaLayout>
   );
 }
