@@ -3,14 +3,12 @@ import Doubts from './Doubts';
 import Header from './Header';
 import Issues from './Issues';
 import PendingBonus from './PendingBonus';
-import ProductsUsed from './ProductsUsed';
 import Recomendations from './Recomendations';
 import Treatments from './Treatments';
 
 const fetchPassportData = async (id: string) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}/BeautyPass?id=${id}`;
-    console.log(url);
     const passportResponse = await fetch(
       url,
 
@@ -18,9 +16,6 @@ const fetchPassportData = async (id: string) => {
         cache: 'no-store',
       }
     );
-
-    console.log(passportResponse);
-
     if (!passportResponse) {
       throw new Error('Network response was not OK');
     }
@@ -40,7 +35,6 @@ export default async function Passport({
 }) {
   const passportID = searchParams.id as string;
   const passportData = await fetchPassportData(passportID);
-  console.log(passportData);
 
   const {
     appointment = null,

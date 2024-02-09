@@ -1,10 +1,4 @@
-import {
-  SvgCalendar,
-  SvgMapMarker,
-  SvgMedicine,
-  SvgReceipt,
-  SvgStethoscope,
-} from 'app/icons/Icons';
+import { SvgMapMarker, SvgStethoscope } from 'app/icons/Icons';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Image from 'next/image';
@@ -70,58 +64,6 @@ export default function Treatments({
                   </p>
                   <p>{treatment.product.description}</p>
                 </li>
-                {treatment.quantity > 0 ? (
-                  <li className="border-b border-hg-secondary/10 p-4">
-                    <ul className="flex gap-4">
-                      <li className="w-1/3">
-                        <SvgMedicine
-                          className="mb-2"
-                          height={18}
-                          width={22}
-                          fill={HOLAGLOW_COLORS['tertiary500']}
-                        />
-                        <p className="text-hg-tertiary500 text-xs mb-1">
-                          Cantidad
-                        </p>
-                        <p>{treatment.quantity} Vial</p>
-                      </li>
-                      {treatment.lotReference !== '' && (
-                        <li className="w-1/3">
-                          <SvgReceipt
-                            className="mb-2"
-                            height={18}
-                            width={22}
-                            fill={HOLAGLOW_COLORS['tertiary500']}
-                          />
-                          <p className="text-hg-tertiary500 text-xs mb-1">
-                            Número de lote
-                          </p>
-                          <p>{treatment.lotReference}</p>
-                        </li>
-                      )}
-                      {treatment.product.durationMin > 0 && (
-                        <li className="w-1/3">
-                          <SvgCalendar
-                            className="mb-2"
-                            height={18}
-                            width={22}
-                            fill={HOLAGLOW_COLORS['tertiary500']}
-                          />
-                          <p className="text-hg-tertiary500 text-xs mb-1">
-                            Duración
-                          </p>
-                          <p>{`de ${Math.floor(
-                            treatment.product.durationMin / 30
-                          )} a ${Math.floor(
-                            treatment.product.durationMax / 30
-                          )} meses`}</p>
-                        </li>
-                      )}
-                    </ul>
-                  </li>
-                ) : (
-                  <></>
-                )}
                 <li className="p-4">
                   <ul className="flex flex-col gap-4">
                     <li className="flex content-center">
