@@ -31,7 +31,7 @@ export default function FourthStep({
                   <ul className="flex flex-col gap-4 mb-4 text-xs text-hg-black500 px-0 md:w-1/2 md:text-sm">
                     <li className="flex gap-2">
                       <SvgStethoscope className="h-5 w-5" />
-                      Consulta online con dermatólogo especializado.
+                      Consulta online con dermatólogo estético.
                     </li>
                     <li className="flex gap-2">
                       <SvgVideo className="h-6 w-6" />
