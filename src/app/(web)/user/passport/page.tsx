@@ -8,13 +8,17 @@ import Treatments from './Treatments';
 
 const fetchPassportData = async (id: string) => {
   try {
+    const url = `https://localhost:7103/BeautyPass?id=${id}`;
+    console.log(url);
     const passportResponse = await fetch(
-      `https://holaglowcontactsapi.azurewebsites.net/BeautyPass?id=${id}`,
+      `https://localhost:7103/BeautyPass?id=${id}`,
 
       {
         cache: 'no-store',
       }
     );
+
+    console.log(passportResponse);
 
     if (!passportResponse) {
       throw new Error('Network response was not OK');
@@ -35,6 +39,7 @@ export default async function Passport({
 }) {
   const passportID = searchParams.id as string;
   const passportData = await fetchPassportData(passportID);
+  console.log(passportData);
 
   const {
     appointment = null,

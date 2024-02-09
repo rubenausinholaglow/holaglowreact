@@ -10,6 +10,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import Image from 'next/image';
 
 import { Appointment } from '../types';
+import ProductsUsed from './ProductsUsed';
 
 export default function Treatments({
   appointment,
@@ -69,7 +70,7 @@ export default function Treatments({
                   </p>
                   <p>{treatment.product.description}</p>
                 </li>
-                {treatment.quantity > 0 && (
+                {treatment.quantity > 0 ? (
                   <li className="border-b border-hg-secondary/10 p-4">
                     <ul className="flex gap-4">
                       <li className="w-1/3">
@@ -118,6 +119,8 @@ export default function Treatments({
                       )}
                     </ul>
                   </li>
+                ) : (
+                  <ProductsUsed productsUsed={appointment.producsUsed} />
                 )}
                 <li className="p-4">
                   <ul className="flex flex-col gap-4">
