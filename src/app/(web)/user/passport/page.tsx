@@ -3,15 +3,16 @@ import Doubts from './Doubts';
 import Header from './Header';
 import Issues from './Issues';
 import PendingBonus from './PendingBonus';
+import ProductsUsed from './ProductsUsed';
 import Recomendations from './Recomendations';
 import Treatments from './Treatments';
 
 const fetchPassportData = async (id: string) => {
   try {
-    const url = `https://localhost:7103/BeautyPass?id=${id}`;
+    const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}/BeautyPass?id=${id}`;
     console.log(url);
     const passportResponse = await fetch(
-      `https://localhost:7103/BeautyPass?id=${id}`,
+      url,
 
       {
         cache: 'no-store',
@@ -56,6 +57,7 @@ export default async function Passport({
             appointment={appointment}
             previousAppointments={previousAppointments}
           />
+          <ProductsUsed productsUsed={appointment.productsUsed} />
           <Recomendations appointment={appointment} />
           <Issues appointment={appointment} />
           <PendingBonus pendingVouchers={pendingVouchers} />

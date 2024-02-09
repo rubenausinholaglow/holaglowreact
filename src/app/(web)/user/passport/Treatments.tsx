@@ -120,7 +120,7 @@ export default function Treatments({
                     </ul>
                   </li>
                 ) : (
-                  <ProductsUsed productsUsed={appointment.producsUsed} />
+                  <></>
                 )}
                 <li className="p-4">
                   <ul className="flex flex-col gap-4">
