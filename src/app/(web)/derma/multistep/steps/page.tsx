@@ -282,11 +282,7 @@ export default function Form() {
             </div>
 
             <div id="tm_derma_step7" className="min-h-[100px]">
-              <FifthStep
-                name={dermaQuestions?.name || ''}
-                activeSlideIndex={activeSlideIndex}
-                client={client}
-              />
+              <FifthStep activeSlideIndex={activeSlideIndex} client={client} />
             </div>
           </Carousel>
 

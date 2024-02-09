@@ -8,11 +8,9 @@ import { Text } from 'designSystem/Texts/Texts';
 
 export default function FifthStep({
   activeSlideIndex,
-  name,
   client,
 }: {
   activeSlideIndex: number;
-  name: string;
   client: Client;
 }) {
   return (
@@ -28,8 +26,9 @@ export default function FifthStep({
                       Último paso. Pago
                     </Text>
                     <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
-                      ¡Ya casi lo tienes, {name}! <br></br> Estás a punto de
-                      conseguir tu tratamiento personalizado
+                      ¡Ya casi lo tienes, {client.name}
+                      <br></br> Estás a punto de conseguir tu tratamiento
+                      personalizado
                     </Text>
                     <Text className="text-hg-black500 text-sm mb-8 md:text-md">
                       Durante tu consulta, tu médico analizará las
