@@ -18,12 +18,20 @@ export default function WhatsApp({ contactDetail }: WhatsAppProps) {
   return (
     <WhatsAppContainer>
       {whatsappList.map((whatsappMessage, index) => (
+        <>
         <MessageLeft
           key={`${firstName}_${index}`}
           clientName={`${firstName} ${lastName}`}
           clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
           clientMessage={whatsappMessage.text}
         />
+
+        <MessageRight
+          key={`${index}`}
+          clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
+          clientMessage={whatsappMessage.text}
+        />
+        </>
       ))}
       <InputWpp setWhatsappList={setWhatsappList} userId={contactDetail.id} />
     </WhatsAppContainer>
