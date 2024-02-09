@@ -82,8 +82,8 @@ export default function HeroDerma() {
                     isAnimated
                     className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
                   >
-                    Reserva tu consulta online con un dermatólogo experimentado
-                    y encuentra el mejor tratamiento para las necesidades
+                    Reserva tu consulta online con un dermatólogo estético y
+                    encuentra el mejor tratamiento para las necesidades
                     específicas de tu piel.
                   </Text>
 

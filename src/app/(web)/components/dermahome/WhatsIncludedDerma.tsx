@@ -53,14 +53,7 @@ export default function WhatsIncludedDerma() {
                   height={48}
                   width={48}
                 />
-                <div>
-                  <Text className="text-xs text-hg-black400">
-                    Plan rutina facial
-                  </Text>
-                  <Text className="text-lg font-semibold">
-                    Primera consulta
-                  </Text>
-                </div>
+                <Text className="text-lg font-semibold">Primera consulta</Text>
               </Flex>
               <Text className="text-sm font-semibold mb-6">
                 <span className="text-2xl md:text-4xl font-bold">59 €</span>{' '}
@@ -68,8 +61,8 @@ export default function WhatsIncludedDerma() {
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">
                 {[
-                  '<span class="font-semibold text-derma-tertiary">Consulta online</span> con tu dermatólogo',
-                  'Receta de la <span class="font-semibold text-derma-tertiary">crema formulada</span> exclusivamente para ti',
+                  '<span class="font-semibold text-derma-tertiary">Consulta online</span> con tu dermatólogo estético',
+                  'Receta de la <span class="font-semibold text-derma-tertiary">crema facial personalizada</span>',
                   'Recomendación de <span class="font-semibold text-derma-tertiary">rutina facial complementaria</span>',
                 ].map(item => (
                   <li className="border-hg-black flex" key={item}>

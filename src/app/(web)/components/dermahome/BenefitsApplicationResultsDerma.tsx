@@ -15,11 +15,12 @@ export default function BenefitsApplicationResultsDerma() {
           size="2xl"
           className="mb-6 md:mb-8 text-derma-primary"
         >
-          Crema facial recetada
+          Crema facial personalizada
         </TitleDerma>
         <Text className="text-hg-black500 mb-8">
-          Una crema facial personalizada formulada con ingredientes que han sido
-          testados médicamente y cuya eficacia se ha demostrado empíricamente.
+          Una crema facial formulada exclusivamente para ti con ingredientes que
+          han sido testados médicamente y cuya eficacia se ha demostrado
+          empíricamente.
         </Text>
 
         <Flex
@@ -89,7 +90,7 @@ export default function BenefitsApplicationResultsDerma() {
               },
               {
                 title:
-                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante/grano de arroz',
+                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante',
                 text: 'Este tipo de cremas son poderosas y eficaces, por eso, no necesitarás aplicar más cantidad para experimentar sus beneficios.',
               },
             ].map(item => (

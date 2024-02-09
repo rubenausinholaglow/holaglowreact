@@ -17,7 +17,7 @@ export default function HowItWorksDerma() {
           {
             text: 'Cuestionario y reserva',
             description:
-              'Cuéntanos cómo es tu piel y agenda una cita con el médico estético según tu disponibilidad.',
+              'Cuéntanos cómo es tu piel y agenda una cita con el dermatólogo estético según tu disponibilidad.',
             icon: '/images/derma/home/calendar.svg',
           },
           {
@@ -29,7 +29,7 @@ export default function HowItWorksDerma() {
           {
             text: 'Tratamiento personalizado',
             description:
-              'Obtén tu plan de cuidado facial y la receta de una crema personalizada formulada exclusivamente para ti, cuando sea necesario.',
+              'Obtén tu plan de cuidado facial y la receta de una crema personalizada formulada exclusivamente para ti.',
             icon: '/images/derma/home/box.svg',
           },
         ].map((item, index) => (
