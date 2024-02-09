@@ -388,12 +388,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <Button
           disabled={isDisabled}
           onClick={() => {
-            handleContinue();
-            if (isEmbed) {
-              window.parent.postMessage(
-                routes.checkout.clinics,
-                'https://www.holaglow.com'
-              );
+            if (!isLoading && !isDisabled) {
+              handleContinue();
+              if (isEmbed) {
+                window.parent.postMessage(
+                  routes.checkout.clinics,
+                  'https://www.holaglow.com'
+                );
+              }
             }
           }}
           type="primary"
