@@ -53,11 +53,11 @@ export default async function Passport({
       {appointment ? (
         <>
           <Header />
+
           <Treatments
             appointment={appointment}
             previousAppointments={previousAppointments}
           />
-          <ProductsUsed productsUsed={appointment.productsUsed} />
           <Recomendations appointment={appointment} />
           <Issues appointment={appointment} />
           <PendingBonus pendingVouchers={pendingVouchers} />

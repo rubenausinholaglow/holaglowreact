@@ -1,6 +1,3 @@
-import { HOLAGLOW_COLORS } from '@utils/colors';
-import { SvgMedicine, SvgReceipt } from 'app/icons/Icons';
-
 import { ProductsUsed } from '../types';
 
 export default function Treatments({
@@ -9,46 +6,38 @@ export default function Treatments({
   productsUsed: ProductsUsed[];
 }) {
   return (
-    <section className="p-12 text-hg-black">
-      <h3 className="bg-[#F1F4FE] rounded-t-[25px] py-6 text-xl font-semibold text-center -mb-4">
-        Productos usados
-      </h3>
+    <>
       {productsUsed?.length > 0 && (
         <>
-          {productsUsed.map((item, index) => (
-            <div key={index} className="bg-[#F1F4FE] rounded-[25px] p-8 mb-12">
-              <li className="border-b border-hg-secondary/10 p-4">
-                <ul className="flex gap-4">
-                  <li className="w-1/3">
-                    <SvgMedicine
-                      className="mb-2"
-                      height={18}
-                      width={22}
-                      fill={HOLAGLOW_COLORS['tertiary500']}
-                    />
-                    <p className="text-hg-tertiary500 text-xs mb-1">Cantidad</p>
-                    <p>{item.quantity} Vial</p>
-                  </li>
-                  {item.lotReference !== '' && (
-                    <li className="w-1/3">
-                      <SvgReceipt
-                        className="mb-2"
-                        height={18}
-                        width={22}
-                        fill={HOLAGLOW_COLORS['tertiary500']}
-                      />
-                      <p className="text-hg-tertiary500 text-xs mb-1">
-                        Número de lote
-                      </p>
-                      <p>{item.lotReference}</p>
-                    </li>
-                  )}
-                </ul>
-              </li>
-            </div>
-          ))}
+          <h3 className="mb-4 font-semibold">Productos utilizados</h3>
+
+          <table className="text-hg-black text-[11px] mb-12 w-full">
+            <thead>
+              <tr className="text-hg-tertiary500 mb-4">
+                <th className="py-3 pr-6 text-left font-normal">Consumos</th>
+                <th className="py-3 pr-6 text-left font-normal">
+                  Número de lote
+                </th>
+                <th className="py-3 pr-6 text-left font-normal">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productsUsed.map((productUsed, index) => {
+                return (
+                  <tr
+                    key={index}
+                    className="mb-4 border-b border-hg-secondary/10"
+                  >
+                    <td className="py-3 pr-6">{productUsed.productUsed}</td>
+                    <td className="py-3 pr-6">{productUsed.lotReference}</td>
+                    <td className="py-3 pr-6">{productUsed.quantity}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </>
       )}
-    </section>
+    </>
   );
 }

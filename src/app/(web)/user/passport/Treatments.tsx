@@ -164,7 +164,7 @@ export default function Treatments({
           </div>
         );
       })}
-
+      <ProductsUsed productsUsed={appointment.productsUsed} />
       {previousAppointments.length > 0 && (
         <>
           <h3 className="mb-4 font-semibold">Histórico de tratamientos</h3>
