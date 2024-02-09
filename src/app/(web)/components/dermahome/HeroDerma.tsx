@@ -89,7 +89,6 @@ export default function HeroDerma() {
 
                   <Flex layout="row-center" className="w-full md:justify-start">
                     <Button
-                      isAnimated
                       type="tertiary"
                       size="xl"
                       className="lg:mb-12"
