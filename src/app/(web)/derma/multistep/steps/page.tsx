@@ -179,17 +179,16 @@ export default function Form() {
     }
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
-      setActiveSlideIndex(index + 1);
-      let continueDisabled = true;
-      if (index === 2) continueDisabled = false;
-      setContinueDisabled(continueDisabled);
       dermaQuestions.id = x!.toString();
       setDermaQuestions(dermaQuestions);
-
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 500);
     });
+    setActiveSlideIndex(index + 1);
+    let continueDisabled = true;
+    if (index === 2) continueDisabled = false;
+    setContinueDisabled(continueDisabled);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 500);
   };
 
   const checkErrors = () => {
