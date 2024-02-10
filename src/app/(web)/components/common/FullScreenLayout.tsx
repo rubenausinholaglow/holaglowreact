@@ -3,7 +3,7 @@ import { SvgSpinner } from 'app/icons/Icons';
 export default function FullScreenLoading({
   isDerma = false,
 }: {
-  isDerma: boolean;
+  isDerma?: boolean;
 }) {
   const classes = isDerma ? 'text-derma-primary' : 'text-hg-secondary';
 
