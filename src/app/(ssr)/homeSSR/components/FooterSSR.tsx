@@ -1,9 +1,6 @@
 import { fetchClinics } from '@utils/fetch';
-import { ROUTES } from '@utils/routes';
 import { SvgHolaglow } from 'app/icons/IconsDs';
 import { SvgInstagram } from 'app/icons/socialIcons';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { headers } from 'next/headers';

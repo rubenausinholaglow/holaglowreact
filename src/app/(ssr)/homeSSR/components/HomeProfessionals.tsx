@@ -13,10 +13,7 @@ export default function HomeProfessionals() {
           layout="col-left"
           className="gap-8 lg:gap-16 w-full items-stretch lg:flex-row"
         >
-          <AnimateOnViewport
-            className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2"
-            //origin={deviceSize.isMobile ? 'bottom' : 'left'}
-          >
+          <AnimateOnViewport className="relative overflow-hidden aspect-square lg:aspect-auto lg:w-1/2">
             <Image
               src="/images/home/profesionales.jpg"
               alt="profesionales"

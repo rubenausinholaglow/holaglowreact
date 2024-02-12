@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
+import Header from 'app/(web)/components/layout/Header';
 
 import Footer from './FooterSSR';
-import Header from './Header';
 
 export default function MainLayoutSSR({
   hideHeader = false,
