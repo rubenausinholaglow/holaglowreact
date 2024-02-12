@@ -125,8 +125,8 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
         router.push('/planes/contactform');
         break;
       case 3:
-        await addRevisionProduct(product);
         await addRoutineProduct(product);
+        await addRevisionProduct(product);
         router.push('/planes/agenda');
         break;
     }

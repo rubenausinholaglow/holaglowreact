@@ -21,7 +21,7 @@ export default function CheckoutPayment({
   hasError: boolean;
   formData: Client;
   isDerma?: boolean;
-  checkAddress: boolean;
+  checkAddress?: boolean;
 }) {
   const [isPaymentActive, setIsPaymentActive] = useState(false);
   const { typeOfPayment } = useSessionStore(state => state);

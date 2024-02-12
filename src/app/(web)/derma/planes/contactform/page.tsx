@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
+import UserService from '@services/UserService';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
@@ -89,7 +90,20 @@ export default function ConctactForm() {
 
   useEffect(() => {
     async function checkout() {
-      const createdUser = await registerUser(client, false, false, false);
+      const createdUser = await UserService.updateUser({
+        address: client.address,
+        birthday: '',
+        city: client.city,
+        country: '',
+        dni: '',
+        email: client.email,
+        firstName: client.name,
+        id: user!.id,
+        lastName: client.surname,
+        phone: client.phone,
+        postalCode: client.postalCode!,
+        province: '',
+      });
       await initializePayment(activePayment, createdUser!);
     }
     if (
@@ -109,7 +123,10 @@ export default function ConctactForm() {
           className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
         >
           <div className="w-full md:w-1/2 md:order-2">
-            <AppointmentResume isProbadorVirtual={isProbadorVirtual} />
+            <AppointmentResume
+              isProbadorVirtual={isProbadorVirtual}
+              isDerma={true}
+            />
           </div>
           <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
             <Title size="xl" className="font-semibold mb-4">
@@ -131,6 +148,7 @@ export default function ConctactForm() {
                 hasError={hasError}
                 className="mt-8"
                 formData={client}
+                isDerma={true}
               />
             )}
           </div>
