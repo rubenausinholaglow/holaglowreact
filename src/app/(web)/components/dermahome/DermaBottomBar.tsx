@@ -44,7 +44,7 @@ export default function DermaBottomBar({
           customStyles="px-2 bg-derma-primary border-none text-white hover:bg-derma-primary500 hover:text-derma-primary"
           id={'tmevent_click_floating_button'}
         >
-          Reserva tu consulta online
+          Reserva tu videollamada
         </Button>
       </div>
     </div>
