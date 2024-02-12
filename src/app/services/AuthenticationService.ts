@@ -57,7 +57,7 @@ export default class AuthenticationService {
 
   static async isDermaValidPIN(pin: number): Promise<boolean> {
     try {
-      const url = `${process.env.NEXT_PUBLIC_DERMA_AUTH_API}Authenticator/Derma?phoneNumber=${pin}`;
+      const url = `${process.env.NEXT_PUBLIC_DERMA_AUTH_API}IsValidToken?token=${pin}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
