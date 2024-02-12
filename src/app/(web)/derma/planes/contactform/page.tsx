@@ -104,7 +104,11 @@ export default function ConctactForm() {
         postalCode: client.postalCode!,
         province: '',
       });
-      await initializePayment(activePayment, createdUser!);
+      let price = 0;
+      cart.forEach(x => {
+        price += x.price;
+      });
+      await initializePayment(activePayment, user!, false, price * 100);
     }
     if (
       activePayment != PaymentBank.None &&
