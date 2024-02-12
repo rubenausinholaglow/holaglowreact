@@ -2,126 +2,147 @@ import { gql } from '@apollo/client';
 
 export default function getContactDetail(id: string) {
   return gql`
-      query User {
-        user(id: "${id}") {
-          flowwwToken
-          firstName
-          lastName
-          secondLastName
-          phone
-          email
-          blockCommunications
-          country
-          commercialCheck
-          privacyCheck
-          phonePrefix
-          city
-          province
-          address
-          birthday
-          dni
-          postalCode
+    query User {
+      user(id: "${id}") {
+        flowwwToken
+        firstName
+        lastName
+        secondLastName
+        phone
+        email
+        blockCommunications
+        country
+        commercialCheck
+        privacyCheck
+        phonePrefix
+        city
+        province
+        address
+        birthday
+        dni
+        postalCode
+        id
+        creationDate
+        active
+        taskInstances {
+          status
+          completedTime
+          reason
           id
           creationDate
           active
-          taskInstances {
+          taskTemplate {
+            name
+            description
+            identifier
+            order
+            cancellationPolicy
+            agentPolicy
+            skills
+            id
+            creationDate
+            active
+          }
+          executions {
             status
-            completedTime
-            reason
+            startTime
+            endTime
             id
             creationDate
             active
-            taskTemplate {
-              name
-              description
-              identifier
+          }
+        }
+        whatsapps {
+          time
+          text
+          received
+          id
+          creationDate
+          active
+        }
+        comments {
+          time
+          text
+          id
+          creationDate
+          active
+        }
+        budgets {
+          flowwwId
+          referenceId
+          statusBudget
+          id
+          creationDate
+          active
+          products {
+            quantity
+            price
+            priceDiscount
+            percentageDiscount
+            id
+            creationDate
+            active
+            product {
+              title
+              isPack
+              type
+              firstRecurrency
+              secondRecurrency
               order
-              cancellationPolicy
-              agentPolicy
-              skills
+              cardBackgroundColor
+              unityType
+              packMoreInformation
+              productCardImagePosition
+              emlaType
+              numProductCardPhotos
+              stripeId
+              videoUrl
               id
               creationDate
               active
-            }
-            executions {
-              status
-              startTime
-              endTime
-              id
-              creationDate
-              active
+              description
+              longDescription
+              detail
             }
           }
-          whatsapps {
-            time
-            text
-            received
-            id
-            creationDate
-            active
-          }
-          comments {
-            time
-            text
-            id
-            creationDate
-            active
-          }
-          calls {
+          totalPriceWithIVA
+          manualPrice
+          totalPrice
+          percentageDiscount
+          priceDiscount
+          discountCode
+        }
+        leads {
+          appointments {
+            date
             startTime
             endTime
             status
-            referenceId
-            received
-            id
-            creationDate
-            active
-          }
-          budgets {
-            discountCode
-            priceDiscount
-            percentageDiscount
-            totalPrice
-            manualPrice
-            totalPriceWithIVA
+            cancelDate
+            arrival
+            finished
+            boxId
             flowwwId
-            referenceId
-            statusBudget
+            doctoraliaId
+            url
             id
             creationDate
             active
-          }
-          leads {
-            appointments {
-                date
-                startTime
-                endTime
-                status
-                cancelDate
-                arrival
-                finished
-                boxId
-                flowwwId
-                doctoraliaId
-                url
-                id
-                creationDate
-                active
-                clinic {
-                  city
+            clinic {
+              city
+            }
+            treatments {
+              treatment {
+                product {
+                  title
+                  description
+                  longDescription
                 }
-                treatments {
-                  treatment {
-                      product {
-                          title
-                          description
-                          longDescription
-                      }
-                  }
               }
             }
-        }
+          }
         }
       }
-    `;
+    }
+  `;
 }

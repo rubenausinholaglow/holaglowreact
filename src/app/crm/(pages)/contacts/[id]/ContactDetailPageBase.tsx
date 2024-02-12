@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
 import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
-import { Appointment, ClientDetails } from 'app/crm/types/Contact';
+import { Appointment, ClientDetails, Lead } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
 import getBudgetStatusText from 'app/crm/types/ContactBudgetEnum';
 import getCallStatusText from 'app/crm/types/ContactCallEnum';
@@ -121,7 +121,7 @@ export default function ContactDetailPageBase({
         ) : (
           <SimpleDataTable
             columns={AppointmentsColumns}
-            rows={mappingAppointments(contactDetail?.leads?.map(lead => lead.appointments.map((appointment : Appointment) => appointment)))}
+            rows={mappingAppointments(contactDetail?.leads?.map((lead: Lead) => lead.appointments.map((appointment : Appointment) => appointment)))}
             statusTypeSwitch={getAppointmentStatusText}
           />
         ),

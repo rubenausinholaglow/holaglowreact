@@ -1,4 +1,6 @@
+"use client";
 import React, { useState } from 'react';
+import { useSessionStore } from 'app/stores/globalStore';
 
 import {
   SvgEmojiFace,
@@ -13,16 +15,16 @@ interface InputWppProps {
 }
 
 export default function InputWpp({ setWhatsappList, userId }: InputWppProps) {
+  const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
 
   async function sendWhatsApp() {
-    const agentId = localStorage.getItem('agentId');
-    const token = localStorage.getItem('token');
+    const token = userLoginResponse?.token;
     const body = JSON.stringify({
       userId: userId,
       text: input,
       taskId: '',
-      agentId: agentId,
+      agentId: "",
     });
 
     try {
