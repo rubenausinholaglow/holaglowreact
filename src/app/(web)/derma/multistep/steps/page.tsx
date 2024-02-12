@@ -63,6 +63,8 @@ const CLIENT_INITIAL_VALUES = {
   treatmentPrice: 0,
   postalCode: '',
   origin: 'Derma',
+  city: '',
+  address: '',
 };
 
 export default function Form() {

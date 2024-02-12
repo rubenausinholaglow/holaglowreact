@@ -37,46 +37,20 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     setSelectedClinic,
     setSelectedTreatments,
     selectedTreatments,
-    selectedSlot,
     setTypeOfPayment,
     setAnalyticsMetrics,
     setPayment,
   } = useSessionStore(state => state);
-  const { activePayment, setActivePayment, setCurrentUser } =
-    useGlobalPersistedStore(state => state);
+  const { setActivePayment, setCurrentUser } = useGlobalPersistedStore(
+    state => state
+  );
   const modalBottomBarHeight = '97px';
   const router = useRouter();
 
   useEffect(() => {
-    setShowModal(showModalBackground);
-  }, [showModalBackground]);
-
-  const filteredProducts = DERMA_PRODUCTS.filter(product =>
-    product.type.includes(data.routine)
-  );
-
-  async function addRevisionProduct(productDetails: Product) {
-    productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!;
-    productDetails.flowwwId = 6;
-    productDetails.title = 'Revisión personalizada de dermatología';
-    productDetails.price = 49;
-    setSelectedTreatments([...selectedTreatments, productDetails]);
-    if (cart.length == 0) addItemToCart(productDetails as CartItem);
-  }
-
-  async function addRoutineProduct(productDetails: Product) {
-    productDetails.id = '';
-    productDetails.flowwwId = 0;
-    productDetails.title = 'Rutina facial ' + DERMA_TYPES[data.routine];
-    productDetails.price = 129;
-    setSelectedTreatments([...selectedTreatments, productDetails]);
-    if (cart.length == 0) addItemToCart(productDetails as CartItem);
-  }
-
-  const selectProduct = async (id: number) => {
     setActivePayment(PaymentBank.None);
     useCartStore.setState(INITIAL_STATE);
-
+    setSelectedTreatments([]);
     resetCart();
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
@@ -106,21 +80,50 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     };
     setAnalyticsMetrics(metrics);
     setPayment(undefined);
-    const productDetails = await fetchProduct(
-      process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
-    );
+  }, []);
+  useEffect(() => {
+    setShowModal(showModalBackground);
+  }, [showModalBackground]);
+
+  const filteredProducts = DERMA_PRODUCTS.filter(product =>
+    product.type.includes(data.routine)
+  );
+
+  async function addRevisionProduct(productDetails: Product) {
+    productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!;
+    productDetails.flowwwId = 6;
+    productDetails.title = 'Revisión personalizada de dermatología';
+    productDetails.price = 49;
+    setSelectedTreatments([...selectedTreatments, productDetails]);
+    if (cart.length == 0) addItemToCart(productDetails as CartItem);
+  }
+
+  async function addRoutineProduct(productDetails: Product) {
+    productDetails.id = '';
+    productDetails.flowwwId = 0;
+    productDetails.title = 'Rutina facial ' + DERMA_TYPES[data.routine];
+    productDetails.price = 129;
+    setSelectedTreatments([...selectedTreatments, productDetails]);
+    if (cart.length == 0) addItemToCart(productDetails as CartItem);
+  }
+
+  const productDetails = fetchProduct(
+    process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
+  );
+  const selectProduct = async (id: number) => {
+    const product = await productDetails;
     switch (id) {
       case 1:
-        await addRevisionProduct(productDetails);
+        await addRevisionProduct(product);
         router.push('/planes/agenda');
         break;
       case 2:
-        await addRoutineProduct(productDetails);
+        await addRoutineProduct(product);
         router.push('/planes/contactform');
         break;
       case 3:
-        await addRevisionProduct(productDetails);
-        await addRoutineProduct(productDetails);
+        await addRevisionProduct(product);
+        await addRoutineProduct(product);
         router.push('/planes/agenda');
         break;
     }

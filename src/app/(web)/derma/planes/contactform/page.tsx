@@ -6,7 +6,10 @@ import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
+import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
+import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
@@ -18,9 +21,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
-import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
-import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
-import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 
 dayjs.locale(spanishConf);
 
@@ -36,12 +36,12 @@ export default function ConctactForm() {
   const [hasError, setHasError] = useState<boolean>(false);
 
   const [client, setClient] = useState<Client>({
-    email: user!.email,
-    phone: user!.phone ?? '',
-    phonePrefix: '34',
-    name: user!.firstName,
-    surname: user!.lastName ?? '',
-    secondSurname: user!.secondLastName ?? '',
+    email: user?.email ?? '',
+    phone: '+34' + user?.phone ?? '',
+    phonePrefix: '',
+    name: user?.firstName ?? '',
+    surname: user?.lastName ?? '',
+    secondSurname: user?.secondLastName ?? '',
     termsAndConditionsAccepted: true,
     receiveCommunications: false,
     page: '',
@@ -63,6 +63,9 @@ export default function ConctactForm() {
     interestedTreatment: '',
     treatmentPrice: 0,
     origin: '',
+    city: user?.city ?? '',
+    address: user?.address ?? '',
+    postalCode: user?.postalCode ?? '',
   });
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
@@ -116,6 +119,13 @@ export default function ConctactForm() {
               hasContinueButton={isProbadorVirtual}
               initialValues={client}
               setClientData={setClient}
+              showPostalCode={true}
+              showCity={
+                cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1
+              }
+              showAddress={
+                cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1
+              }
             />
 
             {!isProbadorVirtual && (

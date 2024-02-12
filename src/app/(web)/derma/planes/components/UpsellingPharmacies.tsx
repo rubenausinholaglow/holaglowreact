@@ -10,7 +10,7 @@ import { TitleDerma } from 'designSystem/Texts/Texts';
 export default function UpsellingPharmacies({ data }: { data: UpsellingData }) {
   const [pharmacyPostalCode, setPharmacyPostalCode] = useState<
     string | undefined
-  >(data.userPostalCode);
+  >(data.user.postalCode);
   const [googleMapSrc, setGoogleMapSrc] = useState<string | undefined>(
     undefined
   );

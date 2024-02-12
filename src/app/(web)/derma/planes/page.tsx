@@ -1,8 +1,9 @@
+import { dermaService } from '@services/DermaService';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
+
 import UpsellingIntro from './components/UpsellingIntro';
 import UpsellingPharmacies from './components/UpsellingPharmacies';
 import UpsellingRoutines from './components/UpsellingRoutines';
-import { dermaService } from '@services/DermaService';
 
 export default async function Upselling() {
   const apiResponse = await dermaService.getRoutine('617628726');
