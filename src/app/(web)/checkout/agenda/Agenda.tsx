@@ -136,14 +136,12 @@ export default function Agenda({
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
       if (
-        ((minutes == '00' || minutes == '30') &&
-          !(hour == '10' && minutes == '00')) ||
         (selectedTreatmentsIds != '902' &&
           (minutes == '00' ||
-            minutes == '12' ||
-            minutes == '24' ||
-            minutes == '36' ||
-            minutes == '48'))
+            minutes == '15' ||
+            minutes == '30' ||
+            minutes == '45')) ||
+        (selectedTreatmentsIds == '902' && (minutes == '00' || minutes == '30'))
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
