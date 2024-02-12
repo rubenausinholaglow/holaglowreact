@@ -33,6 +33,8 @@ export default function Login() {
   const [isLoadingPIN, setIsLoadingPIN] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
+  const [showResendPINMessage, setShowResendPINMessage] = useState(false);
+  const [showUpselling, setShowUpselling] = useState(false);
 
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -43,6 +45,10 @@ export default function Login() {
       ...prevFormData,
       [field]: value,
     }));
+
+    if (field === 'pin') {
+      setErrorMessage('');
+    }
   };
 
   function handlePhoneChange(event: any, country: any, value: string) {
@@ -65,44 +71,64 @@ export default function Login() {
     validatePhoneInput(`+${value}`);
   }
 
+  async function resendPIN() {
+    let phone = formData.phone.replace(formData.phonePrefix, '');
+    phone = phone.replace(/\s/g, '');
+
+    await AuthenticationService.isDermaValidPhone(phone)
+      .then(async response => {
+        setShowResendPINMessage(true);
+
+        setTimeout(() => {
+          setShowResendPINMessage(false);
+        }, 10000);
+      })
+      .catch(error => {
+        Bugsnag.notify('Error during token validation: ' + error);
+        setErrorMessage(errorsConfig.ERROR_TRY_AGAIN_LATER);
+      });
+  }
+
   async function isDermaValidPhone() {
-    setActiveSlide(activeSlide + 1);
+    setIsLoadingPhone(true);
 
     let phone = formData.phone.replace(formData.phonePrefix, '');
     phone = phone.replace(/\s/g, '');
 
-    setIsLoadingPhone(true);
-    //setErrorMessage('');
+    setErrorMessage('');
     await AuthenticationService.isDermaValidPhone(phone)
       .then(async response => {
         if (response) {
           setActiveSlide(activeSlide + 1);
-          setIsLoadingPhone(false);
         } else {
+          console.log('error');
           setErrorMessage(errorsConfig.ERROR_PHONE_NOT_VALID);
+          setActiveSlide(activeSlide + 1);
         }
       })
       .catch(error => {
         Bugsnag.notify('Error during token validation: ' + error);
-        //setErrorMessage('Error durante la validación del token: ' + error);
+        setErrorMessage(errorsConfig.ERROR_TRY_AGAIN_LATER);
+        console.log('error random');
       });
     setIsLoadingPhone(false);
   }
 
   async function isDermaValidPIN() {
     setIsLoadingPIN(true);
-    //setErrorMessage('');
+    setErrorMessage('');
     await AuthenticationService.isDermaValidPIN(Number.parseInt(formData.pin))
       .then(async response => {
         if (response) {
           setIsLoadingPIN(false);
+          setShowUpselling(true);
         } else {
-          setErrorMessage(errorsConfig.ERROR_PHONE_NOT_VALID);
+          setErrorMessage(errorsConfig.ERROR_PIN_NOT_VALID);
         }
       })
       .catch(error => {
         Bugsnag.notify('Error during token validation: ' + error);
-        //setErrorMessage('Error durante la validación del token: ' + error);
+        setErrorMessage(errorsConfig.ERROR_TRY_AGAIN_LATER);
       });
     setIsLoadingPIN(false);
   }
@@ -131,130 +157,162 @@ export default function Login() {
 
   return (
     <DermaLayout className="bg-derma-secondary100" hideButton hideFooter>
-      <Carousel
-        className="mt-12"
-        totalSlides={2}
-        dragEnabled={false}
-        currentSlide={activeSlide}
-        touchEnabled={false}
-      >
-        <Container>
-          <Text className="font-gtUltraThin text-drxl text-derma-primary text-center mb-4">
-            Verificación de identidad
-          </Text>
-          <Text className="text-hg-black500 text-center text-sm mb-12">
-            Escribe tu número de teléfono para validar por Whatsapp el acceso a
-            tu receta
-          </Text>
+      {!showUpselling && (
+        <Carousel
+          className="mt-12"
+          totalSlides={2}
+          dragEnabled={false}
+          currentSlide={activeSlide}
+          touchEnabled={false}
+          disableKeyboard
+        >
+          <Container>
+            <Text className="font-gtUltraThin text-drxl text-derma-primary text-center mb-4">
+              Verificación de identidad
+            </Text>
+            <Text className="text-hg-black500 text-center text-sm mb-12">
+              Escribe tu número de teléfono para validar por Whatsapp el acceso
+              a tu receta
+            </Text>
 
-          <div className="relative mb-8">
-            <label className="absolute left-20 top-[10px] z-10 pointer-events-none text-xs text-hg-black500">
-              Número de teléfono
-            </label>
-            <PhoneInput
-              disableSearchIcon={true}
-              countryCodeEditable={true}
-              inputClass={`${poppins.className}`}
-              inputStyle={{
-                borderColor: 'white',
-                width: '100%',
-                height: '44px',
-                paddingLeft: '65px',
-                paddingTop: '12px',
-                fontSize: '16px',
-                lineHeight: '16px',
-                fontStyle: 'normal',
-                fontWeight: '400',
-                touchAction: 'manipulation',
-              }}
-              containerStyle={{
-                background: 'white',
-                border: '1px solid',
-                borderColor:
-                  showPhoneError !== null && !showPhoneError
-                    ? HOLAGLOW_COLORS['black']
-                    : HOLAGLOW_COLORS['black300'],
-                borderRadius: '1rem',
-                paddingLeft: '16px',
-                paddingRight: '12px',
-                paddingBottom: '8px',
-                paddingTop: '8px',
-                height: '60px',
-              }}
-              placeholder="Número de teléfono"
-              country={'es'}
-              preferredCountries={['es']}
-              value={formData.phone}
-              onChange={(value, data, event) => {
-                handlePhoneChange(event, data, value);
-              }}
-            />
-            {showPhoneError !== null && (
-              <Image
-                src={`/images/forms/${
-                  showPhoneError ? 'error' : 'formCheck'
-                }.svg`}
-                alt="error"
-                height={26}
-                width={24}
-                className="absolute top-4 right-3"
+            <div className="relative mb-8">
+              <label className="absolute left-20 top-[10px] z-10 pointer-events-none text-xs text-hg-black500">
+                Número de teléfono
+              </label>
+              <PhoneInput
+                disableSearchIcon={true}
+                countryCodeEditable={true}
+                inputClass={`${poppins.className}`}
+                inputStyle={{
+                  borderColor: 'white',
+                  width: '100%',
+                  height: '44px',
+                  paddingLeft: '65px',
+                  paddingTop: '12px',
+                  fontSize: '16px',
+                  lineHeight: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: '400',
+                  touchAction: 'manipulation',
+                }}
+                containerStyle={{
+                  background: 'white',
+                  border: '1px solid',
+                  borderColor:
+                    showPhoneError !== null && !showPhoneError
+                      ? HOLAGLOW_COLORS['black']
+                      : HOLAGLOW_COLORS['black300'],
+                  borderRadius: '1rem',
+                  paddingLeft: '16px',
+                  paddingRight: '12px',
+                  paddingBottom: '8px',
+                  paddingTop: '8px',
+                  height: '60px',
+                }}
+                placeholder="Número de teléfono"
+                country={'es'}
+                preferredCountries={['es']}
+                value={formData.phone}
+                onChange={(value, data, event) => {
+                  handlePhoneChange(event, data, value);
+                }}
               />
-            )}
-            {showPhoneError && (
-              <p className="text-hg-error text-sm p-2">
-                {errorsConfig.ERROR_PHONE_NOT_VALID}
-              </p>
-            )}
-          </div>
+              {(showPhoneError !== null || errorMessage !== '') && (
+                <Image
+                  src={`/images/forms/${
+                    showPhoneError ? 'error' : 'formCheck'
+                  }.svg`}
+                  alt="error"
+                  height={26}
+                  width={24}
+                  className="absolute top-4 right-3"
+                />
+              )}
+              {showPhoneError && errorMessage === '' && (
+                <p className="text-hg-error text-sm p-2">
+                  {errorsConfig.ERROR_PHONE_NOT_VALID}
+                </p>
+              )}
+              {errorMessage !== '' && (
+                <p className="text-hg-error text-sm p-2">{errorMessage}</p>
+              )}
+            </div>
 
-          <Button
-            size="lg"
-            type="derma"
-            disabled={
-              isEmpty(formData.phone) ||
-              isEmpty(formData.phonePrefix) ||
-              showPhoneError === true
-            }
-            className="w-full"
-            onClick={() => {
-              setActiveSlide(activeSlide + 1);
-              isDermaValidPhone();
-            }}
-          >
-            {isLoadingPIN ? <SvgSpinner /> : 'Continuar'}
-          </Button>
-        </Container>
+            <Button
+              size="lg"
+              type="derma"
+              disabled={
+                isEmpty(formData.phone) ||
+                isEmpty(formData.phonePrefix) ||
+                showPhoneError === true
+              }
+              className="w-full"
+              onClick={() => {
+                if (
+                  !(
+                    isEmpty(formData.phone) ||
+                    isEmpty(formData.phonePrefix) ||
+                    showPhoneError === true
+                  )
+                ) {
+                  isDermaValidPhone();
+                }
+              }}
+            >
+              {isLoadingPhone ? <SvgSpinner /> : 'Continuar'}
+            </Button>
+          </Container>
 
-        <Container>
-          <Text className="font-gtUltraThin text-drxl text-derma-primary text-center mt-12 md:mt-16 mb-4">
-            Te hemos enviado un PIN
-          </Text>
-          <Text className="text-hg-black500 text-center text-sm mb-12">
-            Al introducir el código recibido por Whatsapp al {formData.phone},
-            confirmas tu autorización de acceso a la receta personalizada
-          </Text>
-          <TextInputField
-            inputClassName="text-derma-tertiary placeholder-hg-black300 text-lg tracking-widest font-bold"
-            placeholder="______"
-            value={formData.pin}
-            onChange={event => handleFieldChange(event, 'pin')}
-            customValidation={() => formData.pin.length === 6}
-          />
-          <Text className="mt-2 mb-8 text-hg-black500 text-xs text-center">
-            ¿No has recibido el código PIN?{' '}
-            <span className="text-derma-primary">Reenviar PIN</span>
-          </Text>
-          <Button
-            size="lg"
-            type="derma"
-            disabled={formData.pin.length !== 6}
-            className="w-full"
-            onClick={() => isDermaValidPhone()}
-          >
-            {isLoadingPIN ? <SvgSpinner /> : 'Continuar'}
-          </Button>
-        </Container>
-      </Carousel>
+          <Container>
+            <Text className="font-gtUltraThin text-drxl text-derma-primary text-center mt-12 md:mt-16 mb-4">
+              Te hemos enviado un PIN
+            </Text>
+            <Text className="text-hg-black500 text-center text-sm mb-12">
+              Al introducir el código recibido por Whatsapp al {formData.phone},
+              confirmas tu autorización de acceso a la receta personalizada
+            </Text>
+            <TextInputField
+              inputClassName="text-derma-tertiary placeholder-hg-black300 text-lg tracking-widest font-bold mb-2"
+              placeholder="______"
+              disableBgIcons
+              value={formData.pin}
+              onChange={event => handleFieldChange(event, 'pin')}
+              customValidation={() => formData.pin.length === 6}
+            />
+            {errorMessage !== '' && (
+              <p className="text-hg-error text-sm p-2 -mt-2">{errorMessage}</p>
+            )}
+
+            {showResendPINMessage && (
+              <Text className="bg-white rounded-2xl p-4 text-xs text-hg-black500">
+                Te hemos reenviado el PIN al {formData.phone}.<br />
+                Revisa tu teléfono móvil.
+              </Text>
+            )}
+            <Text className="mt-2 mb-8 text-hg-black500 text-xs text-center">
+              ¿No has recibido el código PIN?{' '}
+              <span
+                className="text-derma-primary cursor-pointer"
+                onClick={() => resendPIN()}
+              >
+                Reenviar PIN
+              </span>
+            </Text>
+
+            <Button
+              size="lg"
+              type="derma"
+              disabled={formData.pin.length !== 6}
+              className="w-full"
+              onClick={() => isDermaValidPIN()}
+            >
+              {isLoadingPIN ? <SvgSpinner /> : 'Continuar'}
+            </Button>
+          </Container>
+        </Carousel>
+      )}
+
+      {showUpselling && <Container>Upselling</Container>}
     </DermaLayout>
   );
 }
