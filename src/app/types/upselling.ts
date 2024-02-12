@@ -1,7 +1,8 @@
+import { User } from './appointment';
+
 export interface UpsellingData {
-  userName: string;
-  userPostalCode: string;
-  expeditionDate: string;
-  rutineType: number;
+  user: User;
+  creationDate: Date;
+  routine: number;
   receiptUrl: string;
 }

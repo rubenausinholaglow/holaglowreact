@@ -279,12 +279,13 @@ export default function Agenda({
           });
         } else if (!isDerma) {
           router.push('/checkout/contactform');
+        } else {
+          router.push('/planes/contactform');
         }
       } catch {
         setShowErrorMessage(true);
       }
     }
-
     if (selectedSlot && enableScheduler && !loadingDays && !loadingMonth) {
       schedule();
     }

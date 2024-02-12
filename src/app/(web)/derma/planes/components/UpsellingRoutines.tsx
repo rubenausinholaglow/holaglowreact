@@ -52,7 +52,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   }, [showModalBackground]);
 
   const filteredProducts = DERMA_PRODUCTS.filter(product =>
-    product.type.includes(data.rutineType)
+    product.type.includes(data.routine)
   );
 
   async function addRevisionProduct(productDetails: Product) {
@@ -67,7 +67,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   async function addRoutineProduct(productDetails: Product) {
     productDetails.id = '';
     productDetails.flowwwId = 0;
-    productDetails.title = 'Rutina facial ' + DERMA_TYPES[data.rutineType];
+    productDetails.title = 'Rutina facial ' + DERMA_TYPES[data.routine];
     productDetails.price = 129;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
@@ -89,7 +89,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     });
     setTypeOfPayment(TypeOfPayment.Full);
 
-    setCurrentUser(undefined);
+    setCurrentUser(data.user);
     const metrics: AnalyticsMetrics = {
       device: 0,
       locPhysicalMs: '',
@@ -153,7 +153,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
               />
               {selectedRoutine !== 0 && (
                 <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-                  {DERMA_TYPES[data.rutineType]}
+                  {DERMA_TYPES[data.routine]}
                 </Text>
               )}
               <TitleDerma className="text-derma-primary mb-4">
@@ -286,7 +286,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                           : 'bg-transparent text-transparent h-6'
                       }`}
                     >
-                      {index !== 0 && DERMA_TYPES[data.rutineType]}
+                      {index !== 0 && DERMA_TYPES[data.routine]}
                     </p>
                     <Text className="text-md mb-3 md:text-lg md:font-semibold">
                       {routine.name}
