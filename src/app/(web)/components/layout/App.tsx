@@ -90,7 +90,7 @@ export default function Html({ children }: { children: ReactNode }) {
   }, []);
 
   const isDerma =
-    window &&
+    typeof window !== 'undefined' &&
     window.location &&
     window.location.href &&
     window.location.href.includes('derma');

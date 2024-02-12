@@ -5,6 +5,8 @@ import {
   AccordionItemProps,
   AccordionSingleProps,
 } from '@radix-ui/react-accordion';
+import { getTotalFromCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   SvgAngleDown,
   SvgCalendar,
@@ -27,8 +29,6 @@ import {
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
-import { getTotalFromCart } from '@utils/utils';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 
 export default function AppointmentResume({
   appointment,

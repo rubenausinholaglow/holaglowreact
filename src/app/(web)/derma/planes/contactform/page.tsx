@@ -6,6 +6,7 @@ import { PaymentBank } from '@interface/payment';
 import UserService from '@services/UserService';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
+import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
@@ -22,7 +23,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
-import { getTotalFromCart } from '@utils/utils';
 
 dayjs.locale(spanishConf);
 
@@ -112,7 +112,6 @@ export default function ConctactForm() {
         priceDiscount,
         manualPrice
       );
-      debugger;
       await initializePayment(activePayment, user!, false, price * 100, true);
     }
     if (

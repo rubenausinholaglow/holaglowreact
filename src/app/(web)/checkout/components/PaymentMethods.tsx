@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { getTotalFromCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -20,8 +22,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import { getTotalFromCart } from '@utils/utils';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 
 const PAYMENT_ICONS = {
   alma: ['alma.svg'],

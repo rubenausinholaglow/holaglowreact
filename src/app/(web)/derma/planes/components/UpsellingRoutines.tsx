@@ -104,20 +104,14 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     const productDetails = await fetchProduct(
       process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!
     );
-    productDetails.id = productDetails.id;
     productDetails.flowwwId = 6;
-    productDetails.title = productDetails.title;
-    productDetails.price = productDetails.price;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
   }
 
   async function addRoutineProduct() {
     const productDetails = await fetchProduct(DERMA_TYPES_IDS[data.routine]);
-    productDetails.id = DERMA_TYPES_IDS[data.routine];
     productDetails.flowwwId = 0;
-    productDetails.title = productDetails.title;
-    productDetails.price = productDetails.price;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
   }
@@ -125,10 +119,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     const productDetails = await fetchProduct(
       DERMA_BUNDLE_TYPES_IDS[data.routine]
     );
-    productDetails.id = DERMA_BUNDLE_TYPES_IDS[data.routine];
     productDetails.flowwwId = 6;
-    productDetails.title = productDetails.title;
-    productDetails.price = productDetails.price;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
   }
