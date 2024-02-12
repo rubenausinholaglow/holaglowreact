@@ -39,6 +39,8 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     selectedTreatments,
     setTypeOfPayment,
     setAnalyticsMetrics,
+    setSelectedDay,
+    setSelectedSlot,
     setPayment,
   } = useSessionStore(state => state);
   const { setActivePayment, setCurrentUser } = useGlobalPersistedStore(
@@ -62,7 +64,8 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
       professionals: [],
     });
     setTypeOfPayment(TypeOfPayment.Full);
-
+    setSelectedSlot(undefined);
+    setSelectedDay(undefined);
     setCurrentUser(data.user);
     const metrics: AnalyticsMetrics = {
       device: 0,
@@ -122,8 +125,8 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
         router.push('/planes/contactform');
         break;
       case 3:
-        await addRevisionProduct(product);
         await addRoutineProduct(product);
+        await addRevisionProduct(product);
         router.push('/planes/agenda');
         break;
     }

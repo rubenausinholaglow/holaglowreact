@@ -15,24 +15,26 @@ export default function CheckoutPayment({
   hasError = false,
   formData,
   isDerma = false,
+  checkAddress = false,
 }: {
   className?: string;
   hasError: boolean;
   formData: Client;
   isDerma?: boolean;
+  checkAddress?: boolean;
 }) {
   const [isPaymentActive, setIsPaymentActive] = useState(false);
   const { typeOfPayment } = useSessionStore(state => state);
 
   useEffect(() => {
-    if (hasError) {
+    if (!hasError && isPaymentActive) {
       const elementToScroll = document.getElementById('checkoutPaymentForm');
 
       if (elementToScroll) {
         elementToScroll.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  }, []);
+  }, [hasError]);
 
   useEffect(() => {
     setIsPaymentActive(checkFormData(formData));
@@ -46,21 +48,37 @@ export default function CheckoutPayment({
       phonePrefix,
       phone,
       termsAndConditionsAccepted,
+      address,
+      city,
     } = formData;
 
     const cleanedPhoneNumber =
       phonePrefix === '+34' ? phone.slice(3).replace(/ /g, '') : phone;
 
-    const dataToCheck = {
-      name: !isEmpty(name),
-      surname: !isEmpty(surname),
-      email: validateEmail(email),
-      phone:
-        (phonePrefix === '+34' && validatePhone(cleanedPhoneNumber)) ||
-        (phonePrefix !== '+34' && !isEmpty(phone)),
-      termsAndConditionsAccepted: termsAndConditionsAccepted,
-    };
-
+    let dataToCheck: any;
+    if (checkAddress) {
+      dataToCheck = {
+        name: !isEmpty(name),
+        surname: !isEmpty(surname),
+        email: validateEmail(email),
+        phone:
+          (phonePrefix === '+34' && validatePhone(cleanedPhoneNumber)) ||
+          (phonePrefix !== '+34' && !isEmpty(phone)),
+        termsAndConditionsAccepted: termsAndConditionsAccepted,
+        address: !isEmpty(address),
+        city: !isEmpty(city),
+      };
+    } else {
+      dataToCheck = {
+        name: !isEmpty(name),
+        surname: !isEmpty(surname),
+        email: validateEmail(email),
+        phone:
+          (phonePrefix === '+34' && validatePhone(cleanedPhoneNumber)) ||
+          (phonePrefix !== '+34' && !isEmpty(phone)),
+        termsAndConditionsAccepted: termsAndConditionsAccepted,
+      };
+    }
     for (const key in dataToCheck) {
       if (
         Object.prototype.hasOwnProperty.call(dataToCheck, key) &&

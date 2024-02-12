@@ -56,13 +56,6 @@ export default function HeroDerma() {
                   />
                   <span className="mt-2">4,4</span>
                 </Link>
-                {/* <Image
-                    src="/images/derma/home/trustPilotStarts.svg"
-                    alt="TrustPilot Derma by Holaglow"
-                    height={96}
-                    width={512}
-                    className="h-4 w-auto"
-                  /> */}
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
                 </Text>

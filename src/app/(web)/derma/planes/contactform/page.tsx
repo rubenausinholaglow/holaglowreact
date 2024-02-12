@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
+import UserService from '@services/UserService';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
@@ -89,8 +90,25 @@ export default function ConctactForm() {
 
   useEffect(() => {
     async function checkout() {
-      const createdUser = await registerUser(client, false, false, false);
-      await initializePayment(activePayment, createdUser!);
+      const createdUser = await UserService.updateUser({
+        address: client.address,
+        birthday: '1990-01-01',
+        city: client.city,
+        country: '',
+        dni: '',
+        email: client.email,
+        firstName: client.name,
+        id: user!.id,
+        lastName: client.surname,
+        phone: client.phone,
+        postalCode: client.postalCode!,
+        province: '',
+      });
+      let price = 0;
+      cart.forEach(x => {
+        price += x.price;
+      });
+      await initializePayment(activePayment, user!, false, price * 100);
     }
     if (
       activePayment != PaymentBank.None &&
@@ -99,7 +117,8 @@ export default function ConctactForm() {
     )
       checkout();
   }, [activePayment]);
-
+  const showExtraFields =
+    cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1;
   return (
     <DermaLayout hideButton={true} hideFooter={hideLayout}>
       <Container className="px-0 md:mt-8 md:pb-8">
@@ -108,7 +127,10 @@ export default function ConctactForm() {
           className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
         >
           <div className="w-full md:w-1/2 md:order-2">
-            <AppointmentResume isProbadorVirtual={isProbadorVirtual} />
+            <AppointmentResume
+              isProbadorVirtual={isProbadorVirtual}
+              isDerma={true}
+            />
           </div>
           <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
             <Title size="xl" className="font-semibold mb-4">
@@ -120,19 +142,17 @@ export default function ConctactForm() {
               initialValues={client}
               setClientData={setClient}
               showPostalCode={true}
-              showCity={
-                cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1
-              }
-              showAddress={
-                cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1
-              }
+              showCity={showExtraFields}
+              showAddress={showExtraFields}
             />
 
             {!isProbadorVirtual && (
               <CheckoutPayment
+                checkAddress={showExtraFields}
                 hasError={hasError}
                 className="mt-8"
                 formData={client}
+                isDerma={true}
               />
             )}
           </div>
