@@ -113,43 +113,46 @@ export default function AppointmentResume({
           isConfirmation ? 'bg-hg-secondary100 p-4' : 'bg-white'
         }`}
       >
-        <Flex
-          layout="col-left"
-          className={`w-full gap-4 text-sm px-4 pt-4 ${
-            !isDerma ? 'md:p-0' : ''
-          }`}
-        >
-          <div className="w-full flex items-center">
-            <SvgCalendar className="mr-2" />
-            <Text className="font-semibold capitalize">
-              {localSelectedDay.format('dddd')}, {localSelectedDay.format('D')}{' '}
-              de {localSelectedDay.format('MMMM')} de{' '}
-              {localSelectedDay.format('YYYY')}
-            </Text>{' '}
-          </div>
-          <div className="w-full flex items-center ">
-            <SvgHour className="mr-2" />
-            <Text className="font-semibold">{startTime}h</Text>
-          </div>
-          {!isDerma && (
-            <div className="w-full flex items-start pb-6 border-b border-hg-black300 mb-6">
-              <SvgLocation className="mr-2 mt-1" />
-              <div className="flex flex-col text-sm">
-                <Text className="font-semibold">{city}</Text>
-                <Text>{address}</Text>
+        {startTime && (
+          <Flex
+            layout="col-left"
+            className={`w-full gap-4 text-sm px-4 pt-4 ${
+              !isDerma ? 'md:p-0' : ''
+            }`}
+          >
+            <div className="w-full flex items-center">
+              <SvgCalendar className="mr-2" />
+              <Text className="font-semibold capitalize">
+                {localSelectedDay.format('dddd')},{' '}
+                {localSelectedDay.format('D')} de{' '}
+                {localSelectedDay.format('MMMM')} de{' '}
+                {localSelectedDay.format('YYYY')}
+              </Text>{' '}
+            </div>
+            <div className="w-full flex items-center ">
+              <SvgHour className="mr-2" />
+              <Text className="font-semibold">{startTime}h</Text>
+            </div>
+            {!isDerma && (
+              <div className="w-full flex items-start pb-6 border-b border-hg-black300 mb-6">
+                <SvgLocation className="mr-2 mt-1" />
+                <div className="flex flex-col text-sm">
+                  <Text className="font-semibold">{city}</Text>
+                  <Text>{address}</Text>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {isDerma && (
-            <div className="w-full flex items-start pb-6">
-              <SvgCrema className="mr-2 mt-1 h-4 w-4 shrink-0" />
-              <Text>
-                Videoconsulta y receta para crema facial personalizada
-              </Text>
-            </div>
-          )}
-        </Flex>
+            {isDerma && (
+              <div className="w-full flex items-start pb-6">
+                <SvgCrema className="mr-2 mt-1 h-4 w-4 shrink-0" />
+                <Text>
+                  Videoconsulta y receta para crema facial personalizada
+                </Text>
+              </div>
+            )}
+          </Flex>
+        )}
 
         {!appointment && (
           <Accordion {...accordionProps}>

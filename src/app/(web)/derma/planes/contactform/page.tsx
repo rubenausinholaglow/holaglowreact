@@ -99,7 +99,8 @@ export default function ConctactForm() {
     )
       checkout();
   }, [activePayment]);
-
+  const showExtraFields =
+    cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1;
   return (
     <DermaLayout hideButton={true} hideFooter={hideLayout}>
       <Container className="px-0 md:mt-8 md:pb-8">
@@ -120,16 +121,13 @@ export default function ConctactForm() {
               initialValues={client}
               setClientData={setClient}
               showPostalCode={true}
-              showCity={
-                cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1
-              }
-              showAddress={
-                cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1
-              }
+              showCity={showExtraFields}
+              showAddress={showExtraFields}
             />
 
             {!isProbadorVirtual && (
               <CheckoutPayment
+                checkAddress={showExtraFields}
                 hasError={hasError}
                 className="mt-8"
                 formData={client}

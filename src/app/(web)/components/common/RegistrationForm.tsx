@@ -340,7 +340,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       {showAddress && (
         <>
           <TextInputField
-            placeholder="Dirección"
+            placeholder="Dirección de entrega"
             value={formData.address!}
             onChange={event => {
               handleFieldChange(event, 'address');
