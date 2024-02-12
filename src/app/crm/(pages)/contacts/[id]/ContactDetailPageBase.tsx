@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
 import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
-import { Appointment, ClientDetails, Lead } from 'app/crm/types/Contact';
+import { ClientDetails } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
 import getBudgetStatusText from 'app/crm/types/ContactBudgetEnum';
 import getCallStatusText from 'app/crm/types/ContactCallEnum';
@@ -25,16 +25,23 @@ import {
   mappingComments,
   mappingTasks,
 } from 'app/crm/utils/mappingColumns';
+import {
+  getContactAppointment,
+  getContactBudget,
+  getContactCalls,
+  getContactComments,
+  getContactTasks,
+} from 'app/GraphQL/query/ContactDetailQuery';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
-import SimpleDataTable from '../../../components/simpleTable/SimpleDataTable';
 import CardContact from '../components/cardContact';
 import ModalContact from '../components/modalContact';
 import Tabs from '../components/tabs';
+import GraphQLComponentBase from './GraphQLComponentBase';
 
 dayjs.locale(spanishConf);
 registerLocale('es', es);
@@ -59,16 +66,15 @@ export default function ContactDetailPageBase({
   const tabs = [
     {
       label: 'Tareas',
-      component:
-        contactDetail?.taskInstances?.length === 0 ? (
-          <div className="pl-5">No se han encontrado Tareas.</div>
-        ) : (
-          <SimpleDataTable
-            columns={TaskColumns}
-            rows={mappingTasks(contactDetail?.taskInstances)}
-            statusTypeSwitch={getTaskStatusText}
-          />
-        ),
+      component: (
+        <GraphQLComponentBase
+          columns={TaskColumns}
+          mapping={mappingTasks}
+          gqlName={getContactTasks(contactDetail?.id)}
+          statusTypeSwitch={getTaskStatusText}
+          tabName={'Tareas'}
+        />
+      ),
     },
     {
       label: 'Datos personales',
@@ -88,58 +94,50 @@ export default function ContactDetailPageBase({
     },
     {
       label: 'Comentarios',
-      component:
-        contactDetail?.comments?.length === 0 ? (
-          <div className="pl-5">No se ha encontrado Comentarios.</div>
-        ) : (
-          <SimpleDataTable
-            columns={CommentsColumns}
-            rows={mappingComments(contactDetail?.comments)}
-          />
-        ),
+      component: (
+        <GraphQLComponentBase
+          columns={CommentsColumns}
+          mapping={mappingComments}
+          gqlName={getContactComments(contactDetail?.id)}
+          tabName={'Comentarios'}
+        />
+      ),
     },
     {
       label: 'Llamadas',
-      component:
-        contactDetail?.calls?.length === 0 ? (
-          <div className="pl-5">
-            No se ha encontrado información de llamadas.
-          </div>
-        ) : (
-          <SimpleDataTable
-            columns={CallsColumns}
-            rows={mappingCalls(contactDetail?.calls)}
-            statusTypeSwitch={getCallStatusText}
-          />
-        ),
+      component: (
+        <GraphQLComponentBase
+          columns={CallsColumns}
+          mapping={mappingCalls}
+          gqlName={getContactCalls(contactDetail?.id)}
+          statusTypeSwitch={getCallStatusText}
+          tabName={'Llamadas'}
+        />
+      ),
     },
     {
       label: 'Citas',
-      component:
-        contactDetail?.leads?.length === 0 ? (
-          <div className="pl-5">No se ha encontrado información de citas.</div>
-        ) : (
-          <SimpleDataTable
-            columns={AppointmentsColumns}
-            rows={mappingAppointments(contactDetail?.leads?.map((lead: Lead) => lead.appointments.map((appointment : Appointment) => appointment)))}
-            statusTypeSwitch={getAppointmentStatusText}
-          />
-        ),
+      component: (
+        <GraphQLComponentBase
+          columns={AppointmentsColumns}
+          mapping={mappingAppointments}
+          gqlName={getContactAppointment(contactDetail?.id)}
+          statusTypeSwitch={getAppointmentStatusText}
+          tabName={'Citas'}
+        />
+      ),
     },
     {
       label: 'Presupuestos',
-      component:
-        contactDetail?.budgets?.length === 0 ? (
-          <div className="pl-5">
-            No se ha encontrado información de presupuestos.
-          </div>
-        ) : (
-          <SimpleDataTable
-            columns={BudgetColumns}
-            rows={mappingBudgets(contactDetail?.budgets)}
-            statusTypeSwitch={getBudgetStatusText}
-          />
-        ),
+      component: (
+        <GraphQLComponentBase
+          columns={BudgetColumns}
+          mapping={mappingBudgets}
+          gqlName={getContactBudget(contactDetail?.id)}
+          statusTypeSwitch={getBudgetStatusText}
+          tabName={'Presupuestos'}
+        />
+      ),
     },
   ];
 

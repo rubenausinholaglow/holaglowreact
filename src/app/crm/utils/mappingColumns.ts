@@ -68,17 +68,19 @@ export const mappingCalls = (contactDetailCalls: any) => {
 
 export const mappingAppointments = (contactDetailAppointments: any) => {
   const model: AppointmentsDataTableContact[] = [];
-  const concatenatedArray = [].concat(...contactDetailAppointments);
-  concatenatedArray?.forEach((appointment: Appointment) => {
-    const newModel: AppointmentsDataTableContact = {
-      status: appointment?.status,
-      city: appointment?.clinic?.city,
-      dateAppointment: getDateDayMonthYear(appointment?.date, '-'),
-      treatments: concatenateTreatment(appointment?.treatments),
-      startTimeAppointment: appointment?.startTime,
-    };
-    model.push(newModel);
-  });
+  if(contactDetailAppointments){
+    const concatenatedArray = []?.concat(...contactDetailAppointments);
+    concatenatedArray?.forEach((appointment: Appointment) => {
+      const newModel: AppointmentsDataTableContact = {
+        status: appointment?.status,
+        city: appointment?.clinic?.city,
+        dateAppointment: getDateDayMonthYear(appointment?.date, '-'),
+        treatments: concatenateTreatment(appointment?.treatments),
+        startTimeAppointment: appointment?.startTime,
+      };
+      model.push(newModel);
+    });
+  }
   return model;
 };
 

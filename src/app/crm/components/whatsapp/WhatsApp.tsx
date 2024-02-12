@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { ClientDetails } from 'app/crm/types/Contact';
+import React, { useEffect, useState } from 'react';
+import useAsyncClientGQL from '@utils/useAsyncClientGQL';
+import { ClientDetails, WhatsappMessages } from 'app/crm/types/Contact';
 import { getDateOnlyTime } from 'app/crm/utils/dateFormat';
+import { getContactWhatsapps } from 'app/GraphQL/query/ContactDetailQuery';
 
 import InputWpp from './InputWpp';
 import MessageLeft from './MessageLeft';
@@ -12,28 +14,35 @@ interface WhatsAppProps {
 }
 
 export default function WhatsApp({ contactDetail }: WhatsAppProps) {
-  const { firstName, lastName, whatsapps } = contactDetail;
-  const [whatsappList, setWhatsappList] = useState(whatsapps);
-  
+  const { firstName, lastName } = contactDetail;
+  const [whatsappList, setWhatsappList] = useState<any>(null);
+  const { data: dataWhatsapp } = useAsyncClientGQL(getContactWhatsapps(contactDetail?.id));
+
+  useEffect(() => {
+    setWhatsappList(dataWhatsapp);
+  }, [dataWhatsapp]);
+
   return (
     <WhatsAppContainer>
-      {whatsappList.map((whatsappMessage, index) => (
-        <>
-        <MessageLeft
-          key={`${firstName}_${index}`}
-          clientName={`${firstName} ${lastName}`}
-          clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
-          clientMessage={whatsappMessage.text}
-        />
+      {whatsappList?.user?.whatsapps?.map(
+        (whatsappMessage: WhatsappMessages, index: string) => (
+          <>
+            <MessageLeft
+              key={`${firstName}_${index}`}
+              clientName={`${firstName} ${lastName}`}
+              clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
+              clientMessage={whatsappMessage.text}
+            />
 
-        <MessageRight
-          key={`${index}`}
-          clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
-          clientMessage={whatsappMessage.text}
-        />
-        </>
-      ))}
-      <InputWpp setWhatsappList={setWhatsappList} userId={contactDetail.id} />
+            <MessageRight
+              key={`${index}`}
+              clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
+              clientMessage={whatsappMessage.text}
+            />
+          </>
+        )
+      )}
+      <InputWpp setWhatsappList={() => {}} userId={contactDetail.id} />
     </WhatsAppContainer>
   );
 }

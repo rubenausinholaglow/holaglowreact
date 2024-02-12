@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
 
-export default function getContactDetail(id: string) {
+export function getContactTasks(id: string) {
   return gql`
-    query User {
-      user(id: "${id}") {
+  query User {
+    user(id: "${id}") {
         flowwwToken
         firstName
         lastName
@@ -25,124 +25,185 @@ export default function getContactDetail(id: string) {
         creationDate
         active
         taskInstances {
-          status
-          completedTime
-          reason
-          id
-          creationDate
-          active
-          taskTemplate {
-            name
-            description
-            identifier
-            order
-            cancellationPolicy
-            agentPolicy
-            skills
-            id
-            creationDate
-            active
-          }
-          executions {
             status
-            startTime
-            endTime
+            completedTime
+            reason
             id
             creationDate
             active
-          }
-        }
-        whatsapps {
-          time
-          text
-          received
-          id
-          creationDate
-          active
-        }
-        comments {
-          time
-          text
-          id
-          creationDate
-          active
-        }
-        budgets {
-          flowwwId
-          referenceId
-          statusBudget
-          id
-          creationDate
-          active
-          products {
-            quantity
-            price
-            priceDiscount
-            percentageDiscount
-            id
-            creationDate
-            active
-            product {
-              title
-              isPack
-              type
-              firstRecurrency
-              secondRecurrency
-              order
-              cardBackgroundColor
-              unityType
-              packMoreInformation
-              productCardImagePosition
-              emlaType
-              numProductCardPhotos
-              stripeId
-              videoUrl
-              id
-              creationDate
-              active
-              description
-              longDescription
-              detail
+            taskTemplate {
+                name
+                description
+                identifier
+                order
+                cancellationPolicy
+                agentPolicy
+                skills
+                id
+                creationDate
+                active
             }
-          }
-          totalPriceWithIVA
-          manualPrice
-          totalPrice
-          percentageDiscount
-          priceDiscount
-          discountCode
-        }
-        leads {
-          appointments {
-            date
-            startTime
-            endTime
-            status
-            cancelDate
-            arrival
-            finished
-            boxId
-            flowwwId
-            doctoraliaId
-            url
-            id
-            creationDate
-            active
-            clinic {
-              city
+            executions {
+                status
+                startTime
+                endTime
+                id
+                creationDate
+                active
             }
-            treatments {
-              treatment {
-                product {
-                  title
-                  description
-                  longDescription
-                }
-              }
-            }
-          }
         }
+    }
+}
+  `;
+}
+
+export function getContactComments(id: string) {
+  return gql`
+  query User {
+    user(id: "${id}") {
+      comments {
+        time
+        text
+        id
+        creationDate
+        active
       }
     }
+  }
+  `;
+}
+
+export function getContactCalls(id: string) {
+  return gql`
+  query User {
+    user(id: "${id}") {
+        calls {
+            startTime
+            endTime
+            status
+            referenceId
+            received
+            id
+            creationDate
+            active
+        }
+    }
+}
+  `;
+}
+
+export function getContactBudget(id: string) {
+  return gql`
+  query User {
+    user(id: "${id}") {
+      budgets {
+        flowwwId
+        referenceId
+        statusBudget
+        id
+        creationDate
+        active
+        products {
+          quantity
+          price
+          priceDiscount
+          percentageDiscount
+          id
+          creationDate
+          active
+          product {
+            title
+            isPack
+            type
+            firstRecurrency
+            secondRecurrency
+            order
+            cardBackgroundColor
+            unityType
+            packMoreInformation
+            productCardImagePosition
+            emlaType
+            numProductCardPhotos
+            stripeId
+            videoUrl
+            id
+            creationDate
+            active
+            description
+            longDescription
+            detail
+        }
+    }
+    totalPriceWithIVA
+    manualPrice
+    totalPrice
+    percentageDiscount
+    priceDiscount
+    discountCode
+  }
+}
+}
+  `;
+}
+
+export function getContactWhatsapps(id: string) {
+  return gql`
+  query User {
+    user(id: "${id}") {
+      whatsapps {
+        time
+        text
+        received
+        id
+        creationDate
+        active
+    }
+  }
+}
+  `;
+}
+
+export function getContactAppointment(id: string) {
+  return gql`
+  query User {
+    user(id: "${id}") {
+        leads {
+            appointments {
+                date
+                startTime
+                endTime
+                status
+                cancelDate
+                arrival
+                finished
+                boxId
+                flowwwId
+                doctoraliaId
+                url
+                id
+                creationDate
+                active
+                treatments {
+                    id
+                    creationDate
+                    active
+                    treatment {
+                        id
+                        creationDate
+                        active
+                        product {
+                            title
+                            description
+                            longDescription
+                        }
+                    }
+                }
+                clinic {
+                    city
+                }
+            }
+        }
+    }
+}
   `;
 }

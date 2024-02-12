@@ -1,7 +1,7 @@
 import React from 'react';
 import useAsyncGQL from '@utils/useAsyncGQL';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
-import getContactDetail from 'app/GraphQL/query/ContactDetailQuery';
+import { getContactTasks } from 'app/GraphQL/query/ContactDetailQuery';
 
 import ContactDetailPageBase from './ContactDetailPageBase';
 
@@ -12,7 +12,7 @@ interface ContactDetailProps {
 export default async function ContactDetailPage({
   params,
 }: ContactDetailProps) {
-  const contactDetail = await useAsyncGQL(getContactDetail(params.id));
+  const contactDetail = await useAsyncGQL(getContactTasks(params.id));
 
   return (
     <>
