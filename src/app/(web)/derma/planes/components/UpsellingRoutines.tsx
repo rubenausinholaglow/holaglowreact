@@ -23,7 +23,13 @@ import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { DERMA_PRODUCTS, DERMA_ROUTINES, DERMA_TYPES } from '../mockedData';
+import {
+  DERMA_BUNDLE_TYPES_IDS,
+  DERMA_PRODUCTS,
+  DERMA_ROUTINES,
+  DERMA_TYPES,
+  DERMA_TYPES_IDS,
+} from '../mockedData';
 
 export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const { showModalBackground } = useGlobalStore(state => state);
@@ -32,7 +38,9 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState(0);
 
-  const { cart, addItemToCart, resetCart } = useCartStore(state => state);
+  const { cart, addItemToCart, resetCart, applyCartDiscount } = useCartStore(
+    state => state
+  );
   const {
     setSelectedClinic,
     setSelectedTreatments,
@@ -92,41 +100,51 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     product.type.includes(data.routine)
   );
 
-  async function addRevisionProduct(productDetails: Product) {
-    productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!;
+  async function addRevisionProduct() {
+    const productDetails = await fetchProduct(
+      process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!
+    );
+    productDetails.id = productDetails.id;
     productDetails.flowwwId = 6;
-    productDetails.title = 'Revisión personalizada de dermatología';
-    productDetails.price = 49;
+    productDetails.title = productDetails.title;
+    productDetails.price = productDetails.price;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
   }
 
-  async function addRoutineProduct(productDetails: Product) {
-    productDetails.id = '';
+  async function addRoutineProduct() {
+    const productDetails = await fetchProduct(DERMA_TYPES_IDS[data.routine]);
+    productDetails.id = DERMA_TYPES_IDS[data.routine];
     productDetails.flowwwId = 0;
-    productDetails.title = 'Rutina facial ' + DERMA_TYPES[data.routine];
-    productDetails.price = 129;
+    productDetails.title = productDetails.title;
+    productDetails.price = productDetails.price;
+    setSelectedTreatments([...selectedTreatments, productDetails]);
+    if (cart.length == 0) addItemToCart(productDetails as CartItem);
+  }
+  async function addRoutineWithProduct() {
+    const productDetails = await fetchProduct(
+      DERMA_BUNDLE_TYPES_IDS[data.routine]
+    );
+    productDetails.id = DERMA_BUNDLE_TYPES_IDS[data.routine];
+    productDetails.flowwwId = 6;
+    productDetails.title = productDetails.title;
+    productDetails.price = productDetails.price;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
   }
 
-  const productDetails = fetchProduct(
-    process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!
-  );
   const selectProduct = async (id: number) => {
-    const product = await productDetails;
     switch (id) {
       case 1:
-        await addRevisionProduct(product);
+        await addRevisionProduct();
         router.push('/planes/agenda');
         break;
       case 2:
-        await addRoutineProduct(product);
+        await addRoutineProduct();
         router.push('/planes/contactform');
         break;
       case 3:
-        await addRoutineProduct(product);
-        await addRevisionProduct(product);
+        await addRoutineWithProduct();
         router.push('/planes/agenda');
         break;
     }

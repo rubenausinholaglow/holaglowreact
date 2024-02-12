@@ -15,6 +15,32 @@ export const handleGoBack = () => {
   window.history.back();
 };
 
+export const getTotalFromCart = (
+  cart: CartItem[],
+  percentageDiscount: number,
+  priceDiscount: number,
+  manualPrice: number
+) => {
+  let productsPriceTotal = 0;
+  let productsPriceTotalWithDiscounts = 0;
+
+  if (cart) {
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
+    productsPriceTotalWithDiscounts = cart.reduce(
+      (acc, product) => acc + Number(product.priceWithDiscount),
+      0
+    );
+  }
+
+  const cartTotalWithDiscount = applyDiscountToCart(
+    percentageDiscount,
+    priceDiscount,
+    manualPrice,
+    productsPriceTotalWithDiscounts
+  );
+  return cartTotalWithDiscount;
+};
+
 export const applyDiscountToCart = (
   percentageDiscount: number,
   priceDiscount: number,
@@ -38,7 +64,6 @@ export const applyDiscountToItem = (
   discountType: string,
   cartItem: CartItem
 ) => {
-
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 

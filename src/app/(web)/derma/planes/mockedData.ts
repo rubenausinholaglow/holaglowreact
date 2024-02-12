@@ -1,4 +1,16 @@
 export const DERMA_TYPES = ['Antiaging', 'Acné', 'Rosácea', 'Manchas'];
+export const DERMA_TYPES_IDS = [
+  'eba8be72-269d-4b02-8e08-76f96ccd2fd9',
+  'cb4afcbd-ae49-4e5e-839f-9d854bf498c8',
+  'f0b521ba-d2dd-4254-8f30-e47c7f8c87b2',
+  '2aecd538-4012-4dab-9499-ed37b0cfa28f',
+];
+export const DERMA_BUNDLE_TYPES_IDS = [
+  '3a87dc89-a933-4afa-bb2d-74822c9f8674',
+  '95979be2-f753-4030-a2b7-e7f876de36ea',
+  '74a587fb-32df-45c0-ba1e-f6b57d2442ce',
+  '351abfc1-d6b7-4141-9c7c-2ade9d8aca8a',
+];
 
 export const DERMA_ROUTINES = [
   {

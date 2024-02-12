@@ -7,7 +7,10 @@ import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import {
   AccordionContent,
   AccordionItem,
@@ -17,6 +20,8 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+import { getTotalFromCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 
 const PAYMENT_ICONS = {
   alma: ['alma.svg'],
@@ -32,6 +37,9 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
 
   const paymentList = usePaymentList(state => state.paymentRequest);
   const { setActivePayment } = useGlobalPersistedStore(state => state);
+  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
+    state => state
+  );
 
   useEffect(() => {
     setActivePaymentMethod('');
@@ -98,7 +106,16 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
 
                   <Flex className="justify-between w-full bg-hg-black50 p-4 rounded-xl mb-8">
                     <Text>Total pago</Text>
-                    <Text>{isDerma ? '59,00€' : '49,00€'}</Text>
+                    <Text>
+                      {isDerma
+                        ? getTotalFromCart(
+                            cart,
+                            percentageDiscount,
+                            priceDiscount,
+                            manualPrice
+                          )
+                        : '49,00€'}
+                    </Text>
                   </Flex>
 
                   <Button

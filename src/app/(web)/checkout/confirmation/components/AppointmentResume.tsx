@@ -27,6 +27,8 @@ import {
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import { getTotalFromCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 
 export default function AppointmentResume({
   appointment,
@@ -50,6 +52,9 @@ export default function AppointmentResume({
     typeOfPayment,
   } = useSessionStore(state => state);
 
+  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
+    state => state
+  );
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
 
@@ -276,7 +281,12 @@ export default function AppointmentResume({
                   </Text>
                   <Text className="font-semibold">
                     {isDerma
-                      ? `${selectedTreatments[0].price.toFixed(2)}€`
+                      ? getTotalFromCart(
+                          cart,
+                          percentageDiscount,
+                          priceDiscount,
+                          manualPrice
+                        )
                       : '49€'}
                   </Text>
                 </Flex>

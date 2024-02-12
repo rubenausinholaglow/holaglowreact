@@ -73,7 +73,9 @@ export default function Html({ children }: { children: ReactNode }) {
 
   const {
     stateProducts,
+    dermaProducts,
     setStateProducts,
+    setDermaProducts,
     clinics,
     setClinics,
     promo,
@@ -87,15 +89,26 @@ export default function Html({ children }: { children: ReactNode }) {
     getAnalyticsMetrics();
   }, []);
 
+  const isDerma =
+    window &&
+    window.location &&
+    window.location.href &&
+    window.location.href.includes('derma');
+
   useEffect(() => {
     async function initProducts() {
       if (storedBoxId && storedClinicId) return true;
       const products = await fetchProducts();
-      setStateProducts(products);
+      if (!isDerma) setStateProducts(products);
+      else setDermaProducts(products);
       setFilteredProducts(products);
     }
 
-    if (isEmpty(stateProducts) && !productsLoaded) {
+    if (
+      ((isEmpty(stateProducts) && !isDerma) ||
+        (isEmpty(dermaProducts) && isDerma)) &&
+      !productsLoaded
+    ) {
       initProducts();
       setProductsLoaded(true);
     }

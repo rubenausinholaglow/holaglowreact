@@ -22,6 +22,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
+import { getTotalFromCart } from '@utils/utils';
 
 dayjs.locale(spanishConf);
 
@@ -31,7 +32,9 @@ export default function ConctactForm() {
   const { activePayment, setActivePayment, user } = useGlobalPersistedStore(
     state => state
   );
-  const { cart } = useCartStore(state => state);
+  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
+    state => state
+  );
   const [hideLayout, setHideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -69,7 +72,6 @@ export default function ConctactForm() {
     postalCode: user?.postalCode ?? '',
   });
   const initializePayment = usePayments();
-  const registerUser = useRegistration(client, false, false, false);
 
   useEffect(() => {
     if (window) {
@@ -90,7 +92,7 @@ export default function ConctactForm() {
 
   useEffect(() => {
     async function checkout() {
-      const createdUser = await UserService.updateUser({
+      await UserService.updateUser({
         address: client.address,
         birthday: '1990-01-01',
         city: client.city,
@@ -104,11 +106,14 @@ export default function ConctactForm() {
         postalCode: client.postalCode!,
         province: '',
       });
-      let price = 0;
-      cart.forEach(x => {
-        price += x.price;
-      });
-      await initializePayment(activePayment, user!, false, price * 100);
+      const price = getTotalFromCart(
+        cart,
+        percentageDiscount,
+        priceDiscount,
+        manualPrice
+      );
+      debugger;
+      await initializePayment(activePayment, user!, false, price * 100, true);
     }
     if (
       activePayment != PaymentBank.None &&
