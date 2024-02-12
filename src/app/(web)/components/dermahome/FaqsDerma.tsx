@@ -20,7 +20,7 @@ const FAQS = [
   {
     title: '¿En qué tipo de afecciones pueden ayudarme?',
     description:
-      'Contamos con una amplia red de dermatólogos experimentados para ofrecer un cuidado facial integral y atender cualquier necesidad estética de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza, manchas o rosácea, entre muchas más.',
+      'Contamos con una amplia red de dermatólogos estéticos para ofrecer un cuidado facial integral y atender cualquier necesidad estética de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza, manchas o rosácea, entre muchas más.',
   },
   {
     title: '¿Qué significa un cuidado facial personalizado?',
@@ -31,7 +31,7 @@ const FAQS = [
     title:
       'Una vez tengo la receta, ¿cómo consigo mi crema facial personalizada?',
     description:
-      'Las cremas faciales personalizadas son una combinación de fármacos exclusiva para un paciente específico, por tanto, se deben preparar de manera individual en un laboratorio. Así pues, deberás llevar tu receta a una farmacia para que encarguen su elaboración. Según los plazos establecidos, podrás recogerla en la farmacia por un precio de entre 25 y 35 €. Este precio lo establece cada laboratorio, no depende de nosotros, y puede variar dependiendo de las cantidades de cada ingrediente de la formulación magistral.',
+      'Las cremas faciales personalizadas son una combinación de fármacos exclusiva para un paciente específico, por tanto, se deben preparar de manera individual en un laboratorio. Así pues, deberás llevar tu receta a una farmacia para que encarguen su elaboración. Según los plazos establecidos, podrás recogerla en la farmacia por un precio de entre 25 y 40 €. Este precio lo establece cada laboratorio, no depende de nosotros, y puede variar dependiendo de las cantidades de cada ingrediente de la formulación magistral.',
   },
   {
     title: '¿Qué productos incluye la rutina facial complementaria?',
@@ -45,7 +45,7 @@ export default function FaqsDerma() {
 
   return (
     <Container>
-      <Flex layout="row-between" className="w-full gap-2 mb-4 md:mb-8">
+      <Flex layout="row-between" className="w-full gap-2 mb-12">
         <Title
           isAnimated
           size="2xl"
@@ -64,7 +64,7 @@ export default function FaqsDerma() {
 
       <Flex
         layout="col-left"
-        className="w-full gap-6 md:grid md:grid-cols-2 md:gap-16"
+        className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
       >
         {deviceSize.isMobile &&
           FAQS.map((faq, index) => {
@@ -83,7 +83,7 @@ export default function FaqsDerma() {
           })}
 
         {!deviceSize.isMobile && (
-          <Flex layout="col-left" className="w-full gap-4">
+          <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 === 0) {
                 return (
@@ -91,7 +91,7 @@ export default function FaqsDerma() {
                     key={faq.title}
                     className="pb-4 md:mb-0 border-b border-derma-tertiary"
                     trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold"
+                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
                   >
                     <Text size="sm" className="text-hg-black500 pt-4">
                       {faq.description}
@@ -105,7 +105,7 @@ export default function FaqsDerma() {
         )}
 
         {!deviceSize.isMobile && (
-          <Flex layout="col-left" className="w-full gap-4">
+          <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 !== 0) {
                 return (
@@ -113,7 +113,7 @@ export default function FaqsDerma() {
                     key={faq.title}
                     className="pb-4 md:mb-0 border-b border-derma-tertiary"
                     trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold"
+                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
                   >
                     <Text size="sm" className="text-hg-black500 pt-4">
                       {faq.description}

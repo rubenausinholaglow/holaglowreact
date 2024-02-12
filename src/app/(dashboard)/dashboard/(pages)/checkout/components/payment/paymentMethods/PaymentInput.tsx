@@ -180,19 +180,23 @@ export default function PaymentInput(props: Props) {
     props.onButtonClick(false);
   };
 
+  function validateFinancePrice() {
+    if (parseFloat(inputValue) <= 50) {
+      setMessageNotification('La cifra a financiar debe ser superior a 50€');
+      return false;
+    }
+    return true;
+  }
+
   const activateAlma = async () => {
-    if (parseFloat(inputValue) >= 50) {
+    if (validateFinancePrice()) {
       setShowAlma(!showAlma);
       setMessageNotification('');
-    } else {
-      setMessageNotification(
-        'La cifra a financiar por alma debe ser igual o superior a 50€'
-      );
     }
   };
 
   const activatePepper = async () => {
-    setshowPepper(true);
+    if (validateFinancePrice()) setshowPepper(true);
   };
 
   const openPepper = () => {
@@ -226,9 +230,10 @@ export default function PaymentInput(props: Props) {
   };
 
   function validateFormData(formData: ClientUpdate): boolean {
-    return (Object.keys(formData) as Array<keyof ClientUpdate>).every(
-      key => !!formData[key]
-    );
+    const keysToValidate = Object.keys(formData).filter(
+      key => key.toLocaleUpperCase() !== 'COUNTRY'
+    ) as Array<keyof ClientUpdate>;
+    return keysToValidate.every(key => !!formData[key]);
   }
 
   const initializePepper = async () => {
@@ -592,6 +597,7 @@ export default function PaymentInput(props: Props) {
                     <SvgArrow height={16} width={16} className="ml-2" />
                   </Button>
                 )}
+                <div className="bg-hg-"></div>
                 {props.paymentBank === PaymentBank.Stripe && (
                   <Button
                     type="tertiary"

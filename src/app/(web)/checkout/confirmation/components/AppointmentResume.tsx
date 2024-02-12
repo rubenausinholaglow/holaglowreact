@@ -40,7 +40,6 @@ export default function AppointmentResume({
   isDerma?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
-
   const {
     deviceSize,
     selectedTreatments,
@@ -94,8 +93,6 @@ export default function AppointmentResume({
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
 
-  if (deviceSize.isMobile && isProbadorVirtual && !isConfirmation) return <></>;
-
   return (
     <Flex
       layout="col-left"
@@ -148,13 +145,13 @@ export default function AppointmentResume({
             <div className="w-full flex items-start pb-6">
               <SvgCrema className="mr-2 mt-1 h-4 w-4 shrink-0" />
               <Text>
-                Receta para crema formulada especialmente para tu piel
+                Videoconsulta y receta para crema facial personalizada
               </Text>
             </div>
           )}
         </Flex>
 
-        {!appointment && (!deviceSize.isMobile || !isProbadorVirtual) && (
+        {!appointment && (
           <Accordion {...accordionProps}>
             <AccordionItem {...accordionItemProps}>
               {!isDerma && (

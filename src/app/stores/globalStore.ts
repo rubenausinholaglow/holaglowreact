@@ -37,7 +37,7 @@ interface SessionStore {
   selectedDay: Dayjs | undefined;
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
-  userLoginResponse : LoginResponse | undefined;
+  userLoginResponse: LoginResponse | undefined;
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
 }
@@ -173,7 +173,7 @@ export const useSessionStore = create(
     }),
     {
       name: 'session-storage',
-      version: 8,
+      version: 9,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -253,7 +253,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 30,
+      version: 33,
     }
   )
 );

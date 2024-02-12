@@ -6,6 +6,7 @@ import './datePickerStyle.css';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ScheduleService from '@services/ScheduleService';
+import { getTreatmentId } from '@utils/userUtils';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
@@ -128,6 +129,8 @@ export default function Agenda({
   }
 
   function callbackGetSlots(data: Slot[]) {
+    setClickedHour(null);
+
     const hours = Array<Slot>();
     const morning = Array<Slot>();
     const afternoon = Array<Slot>();
@@ -135,7 +138,7 @@ export default function Agenda({
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
       if (
-        ((minutes == '00' || minutes == '30') &&
+        ((minutes == '00' || (minutes == '30' && !isDerma)) &&
           !(hour == '10' && minutes == '00')) ||
         (selectedTreatmentsIds != '902' &&
           (minutes == '00' ||
@@ -144,7 +147,7 @@ export default function Agenda({
             minutes == '36' ||
             minutes == '48'))
       ) {
-        if (x.box != '7' || (x.box == '7' && (!isDashboard || !user))) {
+        if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
           if (parseInt(hour) < 16) {
             morning.push(x);
@@ -189,7 +192,6 @@ export default function Agenda({
   function initialize() {
     setLoadingMonth(true);
     setSelectedDay(undefined);
-    setSelectedSlot(undefined);
     setEnableScheduler(true);
     setDateToCheck(dayjs());
   }
@@ -289,23 +291,8 @@ export default function Agenda({
   }, [selectedSlot]);
 
   useEffect(() => {
-    if (
-      selectedPacksTreatments &&
-      selectedPacksTreatments.length > 0 &&
-      selectedTreatments[0].id !=
-        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
-    ) {
-      setSelectedTreatmentsIds(
-        selectedPacksTreatments!
-          .slice(0, 2)
-          .map(x => x.flowwwId)
-          .join(',')
-      );
-    } else if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatmentsIds(
-        selectedTreatments!.map(x => x.flowwwId).join(',')
-      );
-    } else setSelectedTreatmentsIds('674');
+    const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
+    setSelectedTreatmentsIds(ids);
   }, [dateToCheck, selectedTreatments]);
 
   useEffect(() => {
@@ -343,6 +330,7 @@ export default function Agenda({
   const selectDate = (x: Date) => {
     if (!selectedTreatmentsIds || !selectedClinic) return;
     setSelectedDay(dayjs(x));
+    setSelectedSlot(undefined);
     setLocalDateSelected(x);
     setLoadingDays(true);
     setMorningHours([]);
@@ -385,6 +373,47 @@ export default function Agenda({
     );
   };
 
+  const SlotList = ({ slots = [] }: { slots: Slot[] }) => {
+    return (
+      <Flex className="flex-wrap  mb-3 md:mb-0">
+        {slots.map((slot: Slot) => {
+          return (
+            <Flex
+              key={slot.startTime}
+              layout="row-between"
+              className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                isDerma
+                  ? 'border-none bg-derma-secondary400'
+                  : 'border border-hg-black bg-white'
+              } ${
+                clickedHour === slot.startTime
+                  ? `${
+                      isDerma ? 'bg-derma-primary' : 'bg-hg-secondary'
+                    } text-white`
+                  : ''
+              }`}
+            >
+              <div
+                className="w-full cursor-pointer flex justify-center"
+                onClick={async () => {
+                  if (!loadingDays) {
+                    setClickedHour(slot.startTime);
+                    await selectHour(slot);
+                  }
+                }}
+              >
+                {clickedHour === slot.startTime && (
+                  <SvgCheck className="text-white mr-1 h-5 w-5" />
+                )}
+                {slot.startTime}
+              </div>
+            </Flex>
+          );
+        })}
+      </Flex>
+    );
+  };
+
   return (
     <MainLayout isCheckout hideHeader={isDashboard}>
       {showErrorMessage ? (
@@ -424,23 +453,20 @@ export default function Agenda({
                     className="block gap-16 items-start md:flex"
                   >
                     <div className="w-full">
-                      {selectedTreatments &&
-                        !isDerma &&
-                        Array.isArray(selectedTreatments) &&
-                        selectedTreatments.map(product => (
-                          <div key={product.id}>
-                            <Text
-                              size="sm"
-                              className="w-full text-left to-hg-black500 mb-4"
-                            >
-                              Agenda cita para{' '}
-                              <span className="font-semibold w-full">
-                                {product.title}
-                              </span>
-                              , en tu clínica preferida
-                            </Text>
-                          </div>
-                        ))}
+                      <Text
+                        size="sm"
+                        className="w-full text-left to-hg-black500 mb-4"
+                      >
+                        Agenda cita para{' '}
+                        {Array.isArray(selectedTreatments) &&
+                          selectedTreatments.map(product => (
+                            <span key={product.id} className="font-semibold">
+                              {product.title},{' '}
+                            </span>
+                          ))}
+                        {!isDerma && <>en tu clínica preferida</>}
+                        {isDerma && <>online</>}
+                      </Text>
 
                       {selectedClinic && !isDerma && (
                         <Flex className="mb-4">
@@ -493,7 +519,7 @@ export default function Agenda({
                   </Flex>
                 </Container>
                 <Container className="px-0 md:px-4 relative">
-                  {loadingDays && (
+                  {(loadingMonth || loadingDays) && (
                     <SvgSpinner
                       height={48}
                       width={48}
@@ -548,95 +574,23 @@ export default function Agenda({
                             {dateFormatted.toString()}
                           </span>
                         </Text>
+
                         {morningHours.length > 0 && (
-                          <Text size="sm" className="font-semibold mb-4">
-                            Horario de mañana
-                          </Text>
+                          <>
+                            <Text size="sm" className="font-semibold mb-4">
+                              Horario de mañana
+                            </Text>
+                            <SlotList slots={morningHours} />
+                          </>
                         )}
-                        {morningHours.length > 0 && (
-                          <Flex className="flex-wrap  mb-3 md:mb-0">
-                            {morningHours.map(x => {
-                              return (
-                                <Flex
-                                  key={x.startTime}
-                                  layout="row-between"
-                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                    isDerma
-                                      ? 'border-none bg-derma-secondary400'
-                                      : 'border border-hg-black bg-white'
-                                  } ${
-                                    clickedHour === x.startTime
-                                      ? `${
-                                          isDerma
-                                            ? 'bg-derma-primary'
-                                            : 'bg-hg-secondary'
-                                        } text-white`
-                                      : ''
-                                  }`}
-                                >
-                                  <div
-                                    className="w-full cursor-pointer flex justify-center"
-                                    onClick={async () => {
-                                      if (!loadingDays) {
-                                        setClickedHour(x.startTime);
-                                        await selectHour(x);
-                                      }
-                                    }}
-                                  >
-                                    {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
-                                    )}
-                                    {x.startTime}
-                                  </div>
-                                </Flex>
-                              );
-                            })}
-                          </Flex>
-                        )}
+
                         {afternoonHours.length > 0 && (
-                          <Text size="sm" className="font-semibold mb-4">
-                            Horario de tarde
-                          </Text>
-                        )}
-                        {afternoonHours.length > 0 && (
-                          <Flex className="flex-wrap mb-6 md:mb-0">
-                            {afternoonHours.map(x => {
-                              return (
-                                <Flex
-                                  key={x.startTime}
-                                  layout="row-between"
-                                  className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                    isDerma
-                                      ? 'border-none bg-derma-secondary400'
-                                      : 'border border-hg-black bg-white'
-                                  } ${
-                                    clickedHour === x.startTime
-                                      ? `${
-                                          isDerma
-                                            ? 'bg-derma-primary'
-                                            : 'bg-hg-secondary'
-                                        } text-white`
-                                      : ''
-                                  }`}
-                                >
-                                  <div
-                                    className="w-full cursor-pointer flex justify-center"
-                                    onClick={async () => {
-                                      if (!loadingDays) {
-                                        setClickedHour(x.startTime);
-                                        await selectHour(x);
-                                      }
-                                    }}
-                                  >
-                                    {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-white mr-1" />
-                                    )}
-                                    {x.startTime}
-                                  </div>
-                                </Flex>
-                              );
-                            })}
-                          </Flex>
+                          <>
+                            <Text size="sm" className="font-semibold mb-4">
+                              Horario de tarde
+                            </Text>
+                            <SlotList slots={afternoonHours} />
+                          </>
                         )}
                       </>
                     )}

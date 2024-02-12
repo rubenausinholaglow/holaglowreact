@@ -166,12 +166,21 @@ export default function LegalAdviceContent() {
         </p>
         <p>
           El usuario es conocedor y consciente que el derecho de desistimiento
-          no será de aplicación a la prestación de servicios de estética y
-          medicina estética, una vez que el servicio haya sido completamente
-          ejecutado o cuando la ejecución haya comenzado. Igualmente, por
-          razones de protección de la salud e higiene, tampoco se aplicará el
-          derecho de desistimiento en la venta de productos de cosmética que
-          hayan sido desprecintados tras la entrega.
+          no será de aplicación a la prestación de consultas médicas, servicios
+          de estética y medicina estética, una vez que el servicio haya sido
+          completamente ejecutado o cuando la ejecución haya comenzado. En el
+          caso de haber reservado cita física o telemática con un profesional de
+          la salud, el cliente tras haber abonado el precio del servicio podrá
+          desistir o cambiar la cita sin coste alguno si lo hace con
+          anterioridad a las 72h (3 días) de la cita. En el caso que lo hiciera
+          dentro de las 72h previas a la cita se considerará el servicio como
+          iniciado puesto que la ejecución interna (gestión de agenda médica,
+          reserva de slot médico) habría comenzado. En el caso de querer
+          modificar la cita con más de 72h de antelación el interesado podrá
+          efectuar dicho cambio telemáticamente Igualmente, por razones de
+          protección de la salud e higiene, tampoco se aplicará el derecho de
+          desistimiento en la venta de productos de cosmética que hayan sido
+          desprecintados tras la entrega.
         </p>
         <p>
           El plazo de desistimiento concluirá a los 14 días naturales contados a
@@ -220,15 +229,21 @@ export default function LegalAdviceContent() {
           paciente.
         </p>
         <p>
-          Los tratamientos consisten en una sesión, una revisión no obligatoria
-          y un retoque si procede. El paciente tiene derecho a dicho retoque
-          dentro de las primeras 4 semanas después de la realización del
-          tratamiento. Dicho retoque se realizará utilizando el mismo producto y
-          lote de la primera sesión. Una vez pasadas las 4 semanas o habiendo
-          finalizado el producto restante del lote utilizado, el paciente dejará
-          de tener derecho a retoques gratuitos y deberá comprar un vial o
-          tratamiento nuevo, debido a, entre otras cosas, la pérdida de
-          propiedades del producto.
+          En medicina estética (Holaglow Clinics) y tras el diagnóstico médico,
+          los tratamientos pueden consistir en una sesión, una revisión no
+          obligatoria y un retoque si procede (en el caso de medicina estética;
+          El paciente tiene derecho a dicho retoque dentro de las primeras 4
+          semanas después de la realización del tratamiento. Dicho retoque se
+          realizará utilizando el mismo producto y lote de la primera sesión.
+          Una vez pasadas las 4 semanas o habiendo finalizado el producto
+          restante del lote utilizado, el paciente dejará de tener derecho a
+          retoques gratuitos y deberá comprar un vial o tratamiento nuevo,
+          debido a, entre otras cosas, la pérdida de propiedades del producto.
+          En el caso de las recomendaciones de tratamientos dermatológicos
+          (Holaglow Derma) y tras el diagnóstico médico, los tratamientos pueden
+          consistir en la recomendación del uso de un conjunto de productos
+          recetados o no siendo algunos de ellos susceptibles de ser
+          comercializados por Glow Lab S.L.
         </p>
 
         <p className="font-semibold pt-6 mt-6 border-t border-hg-black300 w-full">
@@ -369,21 +384,21 @@ export default function LegalAdviceContent() {
         </p>
 
         <p>
-          En caso de que realice un pago por adelantado, del precio total o
-          parcial, de los servicios que desea contratar y deseara cancelar su
-          cita o el tratamiento adquirido, por el motivo que fuere, y de no
-          cancelar con una antelación mínima de 10 días, GLOW LAB, S.L, se
-          reserva el derecho de quedarse con el importe íntegro del pago
-          realizado por adelantado, equivalente al coste del tratamiento, tal y
-          como si usted se hubiera realizado el procedimiento contratado.
-          Asimismo, el mismo criterio aplicará si usted decide terminar un
-          tratamiento que debe realizarse en múltiples sesiones si no lo
-          notifica al centro con una antelación de 30 días previas al siguiente
-          tratamiento. En el caso de haber pagado el anticipo de 49€ a través de
-          la web para un tratamiento, solo se devolverá el importe en caso de
-          que existiera una contraindicación médica para realizarse dicho
-          tratamiento. La no asistencia a la cita acordada implicará la pérdida
-          del importe de la reserva
+          En medicina estética (Holaglow Clinics): En caso de que realice un
+          pago por adelantado, del precio total o parcial, de los servicios que
+          desea contratar y deseara cancelar su cita o el tratamiento adquirido,
+          por el motivo que fuere, y de no cancelar con una antelación mínima de
+          10 días, GLOW LAB, S.L, se reserva el derecho de quedarse con el
+          importe íntegro del pago realizado por adelantado, equivalente al
+          coste del tratamiento, tal y como si usted se hubiera realizado el
+          procedimiento contratado. Asimismo, el mismo criterio aplicará si
+          usted decide terminar un tratamiento que debe realizarse en múltiples
+          sesiones si no lo notifica al centro con una antelación de 30 días
+          previas al siguiente tratamiento. En el caso de haber pagado el
+          anticipo de 49€ a través de la web para un tratamiento, solo se
+          devolverá el importe en caso de que existiera una contraindicación
+          médica para realizarse dicho tratamiento. La no asistencia a la cita
+          acordada implicará la pérdida del importe de la reserva
         </p>
       </Flex>
     </Container>
