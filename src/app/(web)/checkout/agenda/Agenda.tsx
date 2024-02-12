@@ -464,7 +464,8 @@ export default function Agenda({
                               {product.title},{' '}
                             </span>
                           ))}
-                        en tu clínica preferida
+                        {!isDerma && <>en tu clínica preferida</>}
+                        {isDerma && <>online</>}
                       </Text>
 
                       {selectedClinic && !isDerma && (
