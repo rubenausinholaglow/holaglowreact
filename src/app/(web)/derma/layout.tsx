@@ -8,7 +8,7 @@ import App from './../components/layout/App';
 export const metadata = {
   title: 'Cuidado facial personalizado - Holaglow Derma',
   description:
-    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para las necesidades específicas de tu piel.',
+    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para tu piel sin salir de casa.',
 };
 
 export default function RootLayout({
