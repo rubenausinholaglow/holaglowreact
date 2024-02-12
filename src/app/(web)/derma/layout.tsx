@@ -46,6 +46,7 @@ export default function RootLayout({
         })(window,document,'script','dataLayer','GTM-KMG5BW3L');`,
           }}
         ></Script>
+        <link rel="icon" href="/derma_favicon.ico" />
       </head>
       <App>{children}</App>
     </html>

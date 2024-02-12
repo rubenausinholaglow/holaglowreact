@@ -37,6 +37,10 @@ const useRoutes = () => {
         confirmation: '/dashboard/checkin/confirmation',
       },
     },
+    crm: {
+      authentication: '/crm',
+      menu: '/crm/menu',
+    },
   };
 };
 

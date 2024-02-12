@@ -40,7 +40,36 @@ export default function Confirmation({
   } = useSessionStore(state => state);
 
   const addToCalendarRef = useRef(null);
-
+  let tips = [
+    {
+      title: 'Confirmación de tu cita',
+      text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
+    },
+    {
+      title: 'Recomendaciones pretratamiento',
+      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
+    },
+    {
+      title: 'Distintos métodos de pago',
+      text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
+    },
+  ];
+  if (isDerma) {
+    tips = [
+      {
+        title: 'Detalles de videollamada',
+        text: 'Antes de tu consulta, te enviaremos un whatsapp y un correo electrónico para recordarte el enlace de acceso a la videollamada.',
+      },
+      {
+        title: 'Consejos para tu consulta',
+        text: 'Te damos tres tips para que aproveches al máximo tu cita online con el médico: Buena conexión, buena luz y cara lavada.',
+      },
+      {
+        title: 'Solución personalizada',
+        text: 'Después, recibirás el plan de cuidado facial que el dermatólogo haya diseñado para ti y la receta de la crema formulada, si corresponde.',
+      },
+    ];
+  }
   useEffect(() => {
     if (!isDashboard) {
       setCurrentUser(undefined);
@@ -112,12 +141,23 @@ export default function Confirmation({
                   <br />
                   Tu cita ha sido realizada con éxito
                 </Text>
-                <Text className="text-center text-hg-black500 hidden md:block">
-                  Nos alegramos de que confíes en nosotros para acompañarte,
-                  aconsejarte y ayudarte a conseguir el efecto glow que deseas.
-                  Nuestro propósito es que te mires bonito para que te sientas
-                  aún mejor. ¡Qué ganas de verte!
-                </Text>
+                {!isDerma && (
+                  <Text className="text-center text-hg-black500 hidden md:block">
+                    Nos alegramos de que confíes en nosotros para acompañarte,
+                    aconsejarte y ayudarte a conseguir el efecto glow que
+                    deseas. Nuestro propósito es que te mires bonito para que te
+                    sientas aún mejor. ¡Qué ganas de verte!
+                  </Text>
+                )}
+                {isDerma && (
+                  <Text className="text-center text-hg-black500 hidden md:block">
+                    Nos alegramos de que confíes en nosotros para asesorarte y
+                    acompañarte en este camino hacia una piel más sana. Nuestro
+                    propósito es atender tus necesidades de manera personalizada
+                    para garantizarte unos resultados efectivos y duraderos.
+                    ¡Qué ganas de verte!
+                  </Text>
+                )}
               </>
             )}
           </Flex>
@@ -140,7 +180,7 @@ export default function Confirmation({
               layout="col-left"
               className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
             >
-              <a href={appointmentUrl}>
+              <a href={appointmentUrl} target="_blank">
                 <Button
                   size="xl"
                   type="tertiary"
@@ -229,20 +269,7 @@ export default function Confirmation({
               layout="col-left"
               className="bg-hg-cream500 p-4 rounded-xl gap-4"
             >
-              {[
-                {
-                  title: 'Confirmación de tu cita',
-                  text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
-                },
-                {
-                  title: 'Recomendaciones pretratamiento',
-                  text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
-                },
-                {
-                  title: 'Distintos métodos de pago',
-                  text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
-                },
-              ].map((item, index) => (
+              {tips.map((item, index) => (
                 <Flex
                   className="border-b border-hg-secondary300 pb-4 items-start"
                   key={item.title}

@@ -1,4 +1,5 @@
 import Bugsnag from '@bugsnag/js';
+import { LoginResponse, UserLogin } from '@interface/Login';
 
 export default class AuthenticationService {
   static async isValidLoginSupport24Hours(
@@ -68,6 +69,29 @@ export default class AuthenticationService {
     } catch (err) {
       Bugsnag.notify('Error getAuthenticationNumber' + err);
       return false;
+    }
+  }
+  static async userLogin(user: UserLogin): Promise<LoginResponse> {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_AUTHENTICATION_API}Login`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: user.email, password: user.password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data as LoginResponse;
+      } else {
+        Bugsnag.notify('Error userLogin' + response);
+        return { token: '', refreshToken: '', refreshTokenExpiryTime: '' };
+      }
+    } catch (err) {
+      Bugsnag.notify('Error userLogin' + err);
+      return { token: '', refreshToken: '', refreshTokenExpiryTime: '' };
     }
   }
 }

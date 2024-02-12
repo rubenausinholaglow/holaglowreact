@@ -73,6 +73,7 @@ module.exports = {
           secondary300: '#F7F3F0',
           secondary100: '#FBFAF3',
           tertiary: '#112959',
+          tertiaryDark: '#030140',
         },
       },
       backgroundImage: {

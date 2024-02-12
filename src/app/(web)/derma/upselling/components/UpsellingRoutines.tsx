@@ -1,7 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { AnalyticsMetrics } from '@interface/client';
+import { PaymentBank } from '@interface/payment';
+import { CartItem, Product } from '@interface/product';
 import { UpsellingData } from '@interface/upselling';
+import { INITIAL_STATE } from '@utils/constants';
+import { fetchProduct } from '@utils/fetch';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCheckCircle, SvgCross, SvgWarning } from 'app/icons/IconsDs';
 import {
   TypeOfPayment,
@@ -15,15 +21,9 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { DERMA_PRODUCTS, DERMA_ROUTINES, DERMA_TYPES } from '../mockedData';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { PaymentBank } from '@interface/payment';
-import { INITIAL_STATE } from '@utils/constants';
-import { CartItem, Product } from '@interface/product';
-import { fetchProduct } from '@utils/fetch';
-import { AnalyticsMetrics } from '@interface/client';
-import { useRouter } from 'next/navigation';
 
 export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   const { showModalBackground } = useGlobalStore(state => state);

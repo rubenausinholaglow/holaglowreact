@@ -1,6 +1,7 @@
 'use client';
 
 import './datePickerDermaStyle.css';
+
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgStethoscope } from 'app/icons/Icons';

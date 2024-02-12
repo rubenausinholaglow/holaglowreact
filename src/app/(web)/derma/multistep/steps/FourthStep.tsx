@@ -1,73 +1,51 @@
 'use client';
 
-import { Client } from '@interface/client';
-import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
-import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
-import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
+import Agenda from 'app/(web)/checkout/agenda/Agenda';
+import { SvgStethoscope } from 'app/icons/Icons';
+import { SvgVideo } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 
 export default function FourthStep({
   activeSlideIndex,
-  name,
-  client,
-  setClient,
 }: {
   activeSlideIndex: number;
-  name: string;
-  client: Client;
-  setClient: any;
 }) {
   return (
     <div>
       {activeSlideIndex === 5 && (
-        <Container className="px-0 md:px-4">
-          <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
-            <div>
-              <Container className="md:px-0">
+        <>
+          <Container className="px-0">
+            <Flex layout="col-left" className="w-full">
+              <Flex
+                layout="col-left"
+                className="px-4 md:flex-row md:gap-16 w-full"
+              >
                 <Flex layout="col-left" className="w-full">
-                  <Flex layout="col-left" className="w-full">
-                    <Text className="text-sm text-derma-primary500 mb-2">
-                      Último paso. Formulario y pago
-                    </Text>
-                    <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
-                      ¡Ya casi lo tienes, {name}! <br></br> Estás a punto de
-                      conseguir tu tratamiento personalizado
-                    </Text>
-                    <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                      Durante tu consulta, tu médico analizará las
-                      características de tu piel y te recomendará un plan de
-                      cuidado facial eficaz para conseguir tus objetivos.
-                      Además, en caso de que sea necesario, te facilitará la
-                      receta de una crema formulada exclusivamente para ti.{' '}
-                      <br></br>Los detalles de tu cita online se proporcionarán
-                      por Whatsapp al pagar.
-                    </Text>
-                  </Flex>
+                  <Text className="text-sm text-derma-primary500 mb-2">
+                    Paso {activeSlideIndex + 1}. Agenda
+                  </Text>
+                  <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
+                    Selecciona el día y la hora
+                  </Text>
+                  <ul className="flex flex-col gap-4 mb-4 text-xs text-hg-black500 px-0 md:w-1/2 md:text-sm">
+                    <li className="flex gap-2">
+                      <SvgStethoscope className="h-5 w-5" />
+                      Consulta online con dermatólogo estético.
+                    </li>
+                    <li className="flex gap-2">
+                      <SvgVideo className="h-6 w-6" />
+                      Te enviaremos un whatsapp con los detalles para conectarte
+                      a tu consulta.
+                    </li>
+                  </ul>
                 </Flex>
-                <AppointmentResume isProbadorVirtual={false} isDerma />
-              </Container>
-            </div>
-            <Container className="mt-8">
-              <Text className="font-gtUltraThin font-semibold mb-4 text-derma-tertiary text-xl md:text-2xl">
-                Reserva tu cita
-              </Text>
-              <RegistrationForm
-                showPostalCode={true}
-                redirect={false}
-                hasContinueButton={false}
-                formData={client}
-                setClientData={setClient}
-              />
-              <CheckoutPayment
-                hasError={false}
-                className="mt-8"
-                formData={client}
-                isDerma
-              />
-            </Container>
-          </Flex>
-        </Container>
+              </Flex>
+
+              <Agenda isDashboard={true} isDerma={true} />
+            </Flex>
+          </Container>
+        </>
       )}
     </div>
   );

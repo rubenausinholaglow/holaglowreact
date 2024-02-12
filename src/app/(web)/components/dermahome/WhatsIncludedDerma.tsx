@@ -56,7 +56,7 @@ export default function WhatsIncludedDerma() {
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">
                 {[
-                  '<span class="font-semibold text-derma-tertiary">Consulta online</span> con tu dermatólogo',
+                  '<span class="font-semibold text-derma-tertiary">Consulta online</span> con tu dermatólogo estético',
                   'Receta de la <span class="font-semibold text-derma-tertiary">crema facial personalizada</span>',
                   'Recomendación de <span class="font-semibold text-derma-tertiary">rutina facial complementaria</span>',
                 ].map(item => (
@@ -79,13 +79,13 @@ export default function WhatsIncludedDerma() {
                   </li>
                 ))}
               </ul>
-              <Flex layout="col-center" className="w-full md:gap-4">
+              <Flex layout="col-center" className="w-full gap-4 md:gap-0">
                 <Image
                   src="/images/derma/home/cream.png?1"
                   alt="Holaglow"
                   width={200}
                   height={444}
-                  className="w-[130px] shrink-0"
+                  className="w-[130px] shrink-0 -translate-x-[10%]"
                 />
 
                 <Button

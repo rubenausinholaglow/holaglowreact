@@ -92,7 +92,7 @@ export default function Login() {
   async function isDermaValidPIN() {
     setIsLoadingPIN(true);
     //setErrorMessage('');
-    await AuthenticationService.isDermaValidPIN(formData.pin)
+    await AuthenticationService.isDermaValidPIN(Number.parseInt(formData.pin))
       .then(async response => {
         if (response) {
           setIsLoadingPIN(false);
@@ -221,7 +221,7 @@ export default function Login() {
               isDermaValidPhone();
             }}
           >
-            {isLoading ? <SvgSpinner /> : 'Continuar'}
+            {isLoadingPIN ? <SvgSpinner /> : 'Continuar'}
           </Button>
         </Container>
 

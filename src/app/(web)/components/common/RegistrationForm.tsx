@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
-import useRegistration from '@utils/userUtils';
+import { useRegistration, validFormData } from '@utils/userUtils';
 import {
   phoneValidationRegex,
   postalCodeValidationRegex,
@@ -33,6 +33,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   hasContinueButton = true,
   isEmbed = false,
   page = '',
+  initialValues,
   setClientData,
   showPostalCode = false,
 }: {
@@ -41,6 +42,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   hasContinueButton?: boolean;
   isEmbed?: boolean;
   page?: string;
+  initialValues?: Client;
   setClientData?: Dispatch<SetStateAction<Client>>;
   showPostalCode?: boolean;
 }) => {
@@ -85,6 +87,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     postalCode: '',
     origin: '',
   });
+
+  useEffect(() => {
+    if (initialValues) {
+      setFormData(initialValues);
+    }
+  }, []);
 
   const registerUser = useRegistration(
     formData,
@@ -131,16 +139,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
-    const areAllFieldsFilled = requiredFields.every(
-      field => formData[field] !== ''
-    );
 
-    if (
-      areAllFieldsFilled &&
-      isEmailValid &&
-      formData.termsAndConditionsAccepted &&
-      errors.length == 0
-    ) {
+    if (validFormData(formData, errors)) {
       setErrors([]);
       await handleRegistration();
     } else {
@@ -396,12 +396,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <Button
           disabled={isDisabled}
           onClick={() => {
-            handleContinue();
-            if (isEmbed) {
-              window.parent.postMessage(
-                routes.checkout.clinics,
-                'https://www.holaglow.com'
-              );
+            if (!isLoading && !isDisabled) {
+              handleContinue();
+              if (isEmbed) {
+                window.parent.postMessage(
+                  routes.checkout.clinics,
+                  'https://www.holaglow.com'
+                );
+              }
             }
           }}
           type="primary"

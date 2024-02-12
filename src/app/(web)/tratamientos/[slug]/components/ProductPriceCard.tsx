@@ -368,7 +368,11 @@ function ProductPriceItemsCard({
             id="tmevent_click_book_button_prices"
           >
             Reservar cita
-            <SvgArrow height={16} width={16} className="ml-2" />
+            <SvgArrow
+              height={16}
+              width={16}
+              className="ml-2 pointer-events-none"
+            />
           </Button>
         )}
       {productHighlighted && (

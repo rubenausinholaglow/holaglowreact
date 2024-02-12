@@ -32,7 +32,7 @@ export default function BlogPage() {
   return (
     <MainLayout>
       {!blogPosts ? (
-        <FullScreenLoading />
+        <FullScreenLoading isDerma={false} />
       ) : (
         <div className="rounded-t-3xl shadow-centered-black-lg ">
           <Container className="py-8">

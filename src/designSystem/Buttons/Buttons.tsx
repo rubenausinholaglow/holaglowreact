@@ -10,6 +10,7 @@ type ButtonTypes =
   | 'tertiary'
   | 'transparent'
   | 'derma'
+  | 'dermaDark'
   | 'disabled';
 type ButtonSizes = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -99,7 +100,6 @@ export const Button = ({
     return (
       <AnimateOnViewport origin={origin}>
         <button
-          id={id}
           className={twMerge(
             `transition-all relative group overflow-visible ${
               ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -110,6 +110,7 @@ export const Button = ({
         >
           <ButtonBase type={type} disabled={disabled} />
           <ButtonBody
+            id={id}
             type={type}
             size={size}
             customStyles={customStyles}
@@ -125,7 +126,6 @@ export const Button = ({
 
   return (
     <button
-      id={id}
       className={twMerge(
         `transition-all relative group overflow-visible ${
           ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
@@ -136,6 +136,7 @@ export const Button = ({
     >
       <ButtonBase type={type} disabled={disabled} />
       <ButtonBody
+        id={id}
         type={type}
         size={size}
         customStyles={customStyles}
@@ -153,18 +154,18 @@ const ButtonBody = ({
   size,
   customStyles,
   color,
-  bgColor,
   disabled = false,
   children,
+  id,
   ...rest
 }: {
   type: ButtonTypes;
   size: ButtonSizes;
   customStyles?: string;
   color?: string;
-  bgColor?: string;
   disabled?: boolean;
   children: ReactNode;
+  id?: string;
 }) => {
   const DISABLED_STYLES =
     'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default';
@@ -176,14 +177,18 @@ const ButtonBody = ({
       'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
     secondary:
       'bg-white text-hg-secondary border border-hg-black group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
-    tertiary: `${bgColor ? bgColor : 'bg-white'} ${
+    tertiary: `bg-white ${
       color ? color : 'text-hg-black border border-hg-black'
     }`,
     derma:
-      'bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary',
+      'bg-derma-primary text-white group-hover:bg-derma-primary500 group-hover:text-derma-primary',
+    dermaDark: `bg-derma-tertiary text-white ${
+      !disabled ? 'group-hover:bg-derma-tertiaryDark' : ''
+    }`,
     transparent:
       'bg-white text-hg-black border border-transparent group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100',
-    disabled: 'bg-hg-black100 text-hg-black300 cursor-default',
+    disabled:
+      'bg-hg-black100 text-hg-black300 group-hover:bg-hg-black100 group-hover:text-hg-black300 cursor-default',
     sm: 'text-xs font-medium h-[32px] px-4',
     md: 'text-xs font-medium h-[40px] px-4',
     lg: 'text-md font-semibold h-[48px] px-6',
@@ -199,7 +204,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles} {...rest}>
+    <Flex layout="row-center" className={styles} id={id} {...rest}>
       {children}
     </Flex>
   );
@@ -228,7 +233,7 @@ const ButtonBase = ({
 
   return (
     <div
-      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full ${styles} `}
+      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full pointer-events-none ${styles}`}
     ></div>
   );
 };

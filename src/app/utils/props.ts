@@ -13,6 +13,7 @@ export interface TextInputFieldProps {
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  hasNoValidation?: boolean;
   disableBgIcons?: boolean;
   customValidation?: () => boolean;
 }
@@ -29,6 +30,7 @@ export interface SearchBarProps {
 }
 
 export interface RegistrationFormProps {
+  initialValues?: Client;
   formData?: Client;
   handleFieldChange?: (
     event: React.ChangeEvent<HTMLInputElement>,

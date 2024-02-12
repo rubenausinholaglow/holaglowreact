@@ -3,6 +3,7 @@
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
@@ -56,7 +57,7 @@ export default function ZoneFilter({
         <li
           id={'tmevent_filters'}
           key={zone.name}
-          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer gap-2 ${
+          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-center items-center cursor-pointer gap-2 ${
             isDesktop ? 'w-[120px]' : ''
           } ${
             productFilters.zone.includes(zone.id)
@@ -73,15 +74,18 @@ export default function ZoneFilter({
             )
           }
         >
-          {productFilters.zone.includes(zone.id) ? (
-            <SvgCheckSquareActive className="ml-auto" />
-          ) : (
-            <SvgCheckSquare className="ml-auto" />
-          )}
-          <Image height={40} width={40} src={zone.icon} alt={zone.name} />
-          <Text size="xs" className="text-center">
-            {zone.name}
-          </Text>
+          <Flex layout="col-center" className="pointer-events-none">
+            {productFilters.zone.includes(zone.id) ? (
+              <SvgCheckSquareActive className="ml-auto" />
+            ) : (
+              <SvgCheckSquare className="ml-auto" />
+            )}
+
+            <Image height={40} width={40} src={zone.icon} alt={zone.name} />
+            <Text size="xs" className="text-center">
+              {zone.name}
+            </Text>
+          </Flex>
         </li>
       ))}
     </ul>

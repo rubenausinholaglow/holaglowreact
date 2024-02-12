@@ -66,13 +66,8 @@ export default function Profesionals() {
                 para asesorarte y aplicar nuestros tratamientos con la mayor
                 seguridad, eficacia y confianza
               </Text>
-              <a href="/quienes-somos">
-                <Button
-                  type="secondary"
-                  size="xl"
-                  className="mx-auto lg:mx-0"
-                  id={'tmevent_about_us_module'}
-                >
+              <a href="/quienes-somos" id="tmevent_about_us_module">
+                <Button type="secondary" size="xl" className="mx-auto lg:mx-0">
                   Conoce al equipo
                 </Button>
               </a>
