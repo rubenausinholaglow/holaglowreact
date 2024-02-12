@@ -92,7 +92,7 @@ export default function ConctactForm() {
     async function checkout() {
       const createdUser = await UserService.updateUser({
         address: client.address,
-        birthday: '',
+        birthday: '1990-01-01',
         city: client.city,
         country: '',
         dni: '',
