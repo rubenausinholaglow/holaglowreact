@@ -31,7 +31,11 @@ import {
   DERMA_TYPES_IDS,
 } from '../mockedData';
 
-export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
+export default function UpsellingRoutines({
+  data,
+}: {
+  data: UpsellingData | null;
+}) {
   const { showModalBackground } = useGlobalStore(state => state);
   const { deviceSize } = useSessionStore(state => state);
 
@@ -74,7 +78,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     setTypeOfPayment(TypeOfPayment.Full);
     setSelectedSlot(undefined);
     setSelectedDay(undefined);
-    setCurrentUser(data.user);
+    setCurrentUser(data?.user);
     const metrics: AnalyticsMetrics = {
       device: 0,
       locPhysicalMs: '',
@@ -96,8 +100,8 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
     setShowModal(showModalBackground);
   }, [showModalBackground]);
 
-  const filteredProducts = DERMA_PRODUCTS.filter(product =>
-    product.type.includes(data.routine)
+  const filteredProducts = DERMA_PRODUCTS.filter(
+    product => data != null && product.type.includes(data.routine)
   );
 
   async function addRevisionProduct() {
@@ -110,14 +114,14 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   }
 
   async function addRoutineProduct() {
-    const productDetails = await fetchProduct(DERMA_TYPES_IDS[data.routine]);
+    const productDetails = await fetchProduct(DERMA_TYPES_IDS[data!.routine]);
     productDetails.flowwwId = 0;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
   }
   async function addRoutineWithProduct() {
     const productDetails = await fetchProduct(
-      DERMA_BUNDLE_TYPES_IDS[data.routine]
+      DERMA_BUNDLE_TYPES_IDS[data!.routine]
     );
     productDetails.flowwwId = 6;
     setSelectedTreatments([...selectedTreatments, productDetails]);
@@ -125,6 +129,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
   }
 
   const selectProduct = async (id: number) => {
+    setCurrentUser(data?.user);
     switch (id) {
       case 1:
         await addRevisionProduct();
@@ -168,7 +173,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
               />
               {selectedRoutine !== 0 && (
                 <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-                  {DERMA_TYPES[data.routine]}
+                  {DERMA_TYPES[data!.routine]}
                 </Text>
               )}
               <TitleDerma className="text-derma-primary mb-4">
@@ -301,7 +306,7 @@ export default function UpsellingRoutines({ data }: { data: UpsellingData }) {
                           : 'bg-transparent text-transparent h-6'
                       }`}
                     >
-                      {index !== 0 && DERMA_TYPES[data.routine]}
+                      {index !== 0 && data && DERMA_TYPES[data.routine]}
                     </p>
                     <Text className="text-md mb-3 md:text-lg md:font-semibold">
                       {routine.name}

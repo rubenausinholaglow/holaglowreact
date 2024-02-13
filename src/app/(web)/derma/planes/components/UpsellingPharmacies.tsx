@@ -7,10 +7,14 @@ import { SvgSend } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { TitleDerma } from 'designSystem/Texts/Texts';
 
-export default function UpsellingPharmacies({ data }: { data: UpsellingData }) {
+export default function UpsellingPharmacies({
+  data,
+}: {
+  data: UpsellingData | null;
+}) {
   const [pharmacyPostalCode, setPharmacyPostalCode] = useState<
     string | undefined
-  >(data.user.postalCode);
+  >(data?.user?.postalCode);
   const [googleMapSrc, setGoogleMapSrc] = useState<string | undefined>(
     undefined
   );

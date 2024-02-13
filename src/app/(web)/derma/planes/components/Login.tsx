@@ -19,13 +19,12 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { useSessionStore } from 'app/stores/globalStore';
 
 export default function Login({
   setIsLogged,
-  setPhone,
 }: {
   setIsLogged: (value: boolean) => void;
-  setPhone: (value: string) => void;
 }) {
   const [formData, setFormData] = useState({
     phone: '',
@@ -33,7 +32,9 @@ export default function Login({
     pin: '',
   });
 
+  const { setDermaPhone } = useSessionStore(state => state);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [phone, setPhone] = useState('');
   const [isLoadingPhone, setIsLoadingPhone] = useState(false);
   const [isLoadingPIN, setIsLoadingPIN] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -104,6 +105,7 @@ export default function Login({
       .then(async response => {
         if (response) {
           setActiveSlide(activeSlide + 1);
+          setPhone(phone);
         } else {
           setErrorMessage(errorsConfig.ERROR_PHONE_NOT_VALID);
         }
@@ -123,7 +125,7 @@ export default function Login({
         if (response) {
           setIsLoadingPIN(false);
           setIsLogged(true);
-          setPhone(true);
+          setDermaPhone(phone);
         } else {
           setErrorMessage(errorsConfig.ERROR_PIN_NOT_VALID);
         }
