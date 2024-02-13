@@ -11,7 +11,7 @@ export default function AgendaCheckIn() {
   const router = useRouter();
   const routes = useRoutes();
 
-  const isCheckin = searchParams.get('isCheckin') === 'true';
+  const isCheckin = searchParams?.get('isCheckin') === 'true';
 
   return (
     <MainLayout

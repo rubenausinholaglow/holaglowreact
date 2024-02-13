@@ -79,7 +79,7 @@ export default function ConctactForm() {
         process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
     );
 
-    setHasError(!isEmpty(searchParams.get('error')));
+    setHasError(!isEmpty(searchParams?.get('error')));
 
     setActivePayment(PaymentBank.None);
   }, []);

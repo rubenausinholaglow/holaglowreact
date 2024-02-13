@@ -47,7 +47,7 @@ export default function ProductCard({
     '/landing/ppc/holaglow': '#leadForm',
   };
 
-  const isLanding = Object.keys(LANDINGS).includes(usePathname());
+  const isLanding = Object.keys(LANDINGS).includes(pathName || "");
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const [pendingDiscount, setPendingDiscount] = useState(false);
@@ -214,7 +214,7 @@ export default function ProductCard({
         }
         href={
           isLanding
-            ? LANDINGS[pathName]
+            ? LANDINGS[pathName || ""]
             : `${ROUTES.treatments}/${product?.extraInformation?.slug}`
         }
         className={`text-inherit ${className}`}

@@ -13,7 +13,7 @@ export default function ConfirmationCheckIn() {
   const router = useRouter();
   const ROUTES = useRoutes();
 
-  const isCheckin = searchParams.get('isCheckin') === 'true';
+  const isCheckin = searchParams?.get('isCheckin') === 'true';
 
   useEffect(() => {
     if (isCheckin) {
