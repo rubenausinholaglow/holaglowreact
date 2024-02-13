@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 export function DeviceSize() {
   const breakpoint = window.document.querySelector('#breakpoint');
 
@@ -23,6 +25,30 @@ export function DeviceSize() {
     isDesktop: false,
     isWideScreen: false,
   };
+}
+
+export function useDeviceSizeSSR() {
+  const [deviceSize, setDeviceSize] = useState<any>({});
+
+  useEffect(() => {
+    const breakpoint = window.document.querySelector('#breakpoint');
+
+    if (breakpoint) {
+      const content = getComputedStyle(breakpoint, ':after').content.replace(
+        /["']/g,
+        ''
+      );
+
+      setDeviceSize({
+        isMobile: content === 'sm',
+        isTablet: content === 'md',
+        isDesktop: content === 'lg',
+        isWideScreen: content === 'xl',
+      });
+    }
+  }, []);
+
+  return deviceSize;
 }
 
 export function Breakpoint() {

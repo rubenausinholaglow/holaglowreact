@@ -11,6 +11,7 @@ import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/compon
 import { useCrisalix } from '../(dashboard)/dashboard/(pages)/crisalix/useCrisalix';
 import { INITIAL_STATE } from './constants';
 
+
 export const handleGoBack = () => {
   window.history.back();
 };
@@ -152,4 +153,27 @@ export const getStatusClassName = (status: string, entity: string): string => {
     return `text-white rounded-full py-1 px-2 text-sm ${style}`;
   }
   return '';
+};
+
+
+export const formatDate = (date: Date, includeHours = true) => {
+
+  const finalDate = new Date(date);
+
+  if (finalDate.getFullYear() === 1) {
+    return "";
+  }
+
+  const options:  Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: includeHours ? "2-digit" : undefined,
+    minute: includeHours ? "2-digit" : undefined,
+    second: includeHours ? "2-digit" : undefined,
+    hour12: false, 
+  };
+  
+  const formattedDate = finalDate.toLocaleDateString("es-ES", options);
+  return `${formattedDate.replace(",", "")}`;
 };

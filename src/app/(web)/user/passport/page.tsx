@@ -8,14 +8,14 @@ import Treatments from './Treatments';
 
 const fetchPassportData = async (id: string) => {
   try {
+    const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}/BeautyPass?id=${id}`;
     const passportResponse = await fetch(
-      `https://holaglowcontactsapi.azurewebsites.net/BeautyPass?id=${id}`,
+      url,
 
       {
         cache: 'no-store',
       }
     );
-
     if (!passportResponse) {
       throw new Error('Network response was not OK');
     }
@@ -47,6 +47,7 @@ export default async function Passport({
       {appointment ? (
         <>
           <Header />
+
           <Treatments
             appointment={appointment}
             previousAppointments={previousAppointments}
