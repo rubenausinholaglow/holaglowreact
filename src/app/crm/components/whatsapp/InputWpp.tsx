@@ -70,6 +70,7 @@ export default function InputWpp({ userId }: InputWppProps) {
           value={input}
           onChange={e => setInput(e.currentTarget.value)}
           onKeyDown={handleKeyPress}
+          autoComplete="off"
         />
       </div>
 
