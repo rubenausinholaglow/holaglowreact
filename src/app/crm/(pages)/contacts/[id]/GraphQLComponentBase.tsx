@@ -27,7 +27,7 @@ export default function GraphQLComponentBase({
   return (
     <>
       {isLoading ? (
-        <SvgSpinner height={24} width={24} />
+        <SvgSpinner className="w-full justify-center" />
       ) : dataApi === null || error ? (
         <div className="pl-5">No se ha encontrado {tabName}.</div>
       ) : (
