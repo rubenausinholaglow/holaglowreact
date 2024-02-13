@@ -5,10 +5,10 @@ import Image from 'next/image';
 
 export default function StoriesDerma() {
   const dermaImages: any[] = [
-    '/images/derma/beforeAfter/beforeAfter1.webp',
-    '/images/derma/beforeAfter/beforeAfter2.webp',
-    '/images/derma/beforeAfter/beforeAfter3.webp',
-    '/images/derma/beforeAfter/beforeAfter4.webp',
+    '/images/derma/beforeAfter/beforeAfter1.jpg',
+    '/images/derma/beforeAfter/beforeAfter2.jpg',
+    '/images/derma/beforeAfter/beforeAfter3.jpg',
+    '/images/derma/beforeAfter/beforeAfter4.jpg',
   ];
 
   return (

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { DermaQuestions } from '@interface/dermaquestions';
 import { HOLAGLOW_COLORS } from '@utils/colors';
 import { SvgCheck, SvgCircle } from 'app/icons/Icons';
+import { SvgWarning } from 'app/icons/IconsDs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -15,12 +16,14 @@ export default function SecondStep({
   item,
   dermaQuestions,
   setDermaQuestions,
+  continueDisabled,
   setContinueDisabled,
 }: {
   question: number;
   item: any;
   dermaQuestions: DermaQuestions;
   setDermaQuestions: any;
+  continueDisabled: boolean;
   setContinueDisabled: any;
 }) {
   const [secondStepValues, setSecondStepValues] = useState<any>([[], []]);

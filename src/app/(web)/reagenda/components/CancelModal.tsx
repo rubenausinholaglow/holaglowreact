@@ -67,7 +67,7 @@ export default function CancelModal({
               <div>
                 <Text>
                   Servicio no reembolsable sin contraindicación médica (ver
-                  <a href="/aviso-legal">términos y condiciones</a>)
+                  <a href="/aviso-legal"> términos y condiciones</a>)
                 </Text>
               </div>
             </Flex>

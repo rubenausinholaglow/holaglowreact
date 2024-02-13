@@ -1,6 +1,7 @@
 'use client';
 
 import { Client } from '@interface/client';
+import { DermaQuestions } from '@interface/dermaquestions';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -9,11 +10,25 @@ export default function ThirdStep({
   activeSlideIndex,
   client,
   setClient,
+  dermaQuestions,
 }: {
   activeSlideIndex: number;
   client: Client;
   setClient: any;
+  dermaQuestions: DermaQuestions;
 }) {
+  const initialName = dermaQuestions.name;
+  const spaceIndex = initialName?.indexOf(' ');
+  let name, surName;
+
+  if (spaceIndex !== undefined && spaceIndex !== -1) {
+    name = initialName?.substring(0, spaceIndex) || '';
+    surName = initialName?.substring(spaceIndex + 1) || '';
+  } else {
+    name = initialName || '';
+    surName = '';
+  }
+
   return (
     <div>
       {activeSlideIndex === 4 && (
@@ -39,7 +54,7 @@ export default function ThirdStep({
                   showPostalCode={true}
                   redirect={false}
                   hasContinueButton={false}
-                  formData={client}
+                  initialValues={{ ...client, name: name, surname: surName }}
                   setClientData={setClient}
                 />
               </Flex>

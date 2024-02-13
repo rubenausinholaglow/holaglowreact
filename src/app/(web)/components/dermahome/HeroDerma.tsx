@@ -1,6 +1,5 @@
 'use client';
 
-import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
@@ -10,6 +9,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HeroDerma() {
   const { deviceSize } = useSessionStore(state => state);
@@ -40,14 +40,29 @@ export default function HeroDerma() {
           <Container className="pb-12 md:p-0 overflow-hidden">
             <Flex layout="col-left" className="md:ml-8">
               <Flex
-                layout="row-between"
-                className="mb-4 md:order-2 w-full md:justify-start gap-4"
+                layout="row-left"
+                className="mb-4 md:order-2 w-full md:justify-start gap-4 py-3"
               >
-                <Flex className="gap-2 items-center">
-                  <SvgStar className="-mt-1" />
-                  <span>4,7</span>
-                  <SvgGoogle />
-                </Flex>
+                <Link
+                  href="https://es.trustpilot.com/review/derma.holaglow.com"
+                  className="flex gap-2 items-center mr-auto"
+                >
+                  <Image
+                    src="/images/derma/home/trustPilotLogo.svg"
+                    alt="TrustPilot Derma by Holaglow"
+                    height={34}
+                    width={140}
+                    className="h-6 w-auto"
+                  />
+                  <span className="mt-2">4,4</span>
+                </Link>
+                {/* <Image
+                    src="/images/derma/home/trustPilotStarts.svg"
+                    alt="TrustPilot Derma by Holaglow"
+                    height={96}
+                    width={512}
+                    className="h-4 w-auto"
+                  /> */}
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
                 </Text>
@@ -67,14 +82,14 @@ export default function HeroDerma() {
                     isAnimated
                     className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
                   >
-                    Reserva tu consulta online con un dermatólogo estético y
-                    encuentra el mejor tratamiento para las necesidades
-                    específicas de tu piel.
+                    Reserva tu{' '}
+                    <b>consulta online con un dermatólogo estético</b> y
+                    encuentra el mejor tratamiento para tu piel sin salir de
+                    casa.
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
                     <Button
-                      isAnimated
                       type="tertiary"
                       size="xl"
                       className="lg:mb-12"
@@ -82,7 +97,7 @@ export default function HeroDerma() {
                       href="/multistep/start"
                       id={'tmevent_multistep_module'}
                     >
-                      Pide tu cita online
+                      Reserva tu videllamada
                     </Button>
                   </Flex>
                 </Flex>

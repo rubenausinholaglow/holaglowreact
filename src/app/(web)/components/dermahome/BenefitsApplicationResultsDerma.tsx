@@ -15,7 +15,7 @@ export default function BenefitsApplicationResultsDerma() {
           size="2xl"
           className="mb-6 md:mb-8 text-derma-primary"
         >
-          Crema facial recetada
+          Crema facial personalizada
         </TitleDerma>
         <Text className="text-hg-black500 mb-8">
           Una crema facial formulada exclusivamente para ti con ingredientes que
@@ -23,9 +23,12 @@ export default function BenefitsApplicationResultsDerma() {
           empíricamente.
         </Text>
 
-        <Flex layout="col-center" className="md:flex-row gap-4 md:gap-16 mb-16">
+        <Flex
+          layout="col-center"
+          className="md:flex-row gap-4 md:gap-16 mb-16 items-start"
+        >
           <Flex layout="col-left" className="gap-4 w-full mb-4 md:w-1/2">
-            <TitleDerma size="xl">Ventajas</TitleDerma>
+            <TitleDerma size="xl">Beneficios</TitleDerma>
             {[
               {
                 title: 'Prescripción médica',
@@ -117,7 +120,7 @@ export default function BenefitsApplicationResultsDerma() {
         </Flex>
 
         <TitleDerma size="xl" className="mb-6 md:mb-16">
-          Resultados
+          Resultados de una formulación antiaging
         </TitleDerma>
 
         <Flex layout="col-left" className="w-full md:flex-row">

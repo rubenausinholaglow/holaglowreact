@@ -253,7 +253,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 32,
+      version: 33,
     }
   )
 );

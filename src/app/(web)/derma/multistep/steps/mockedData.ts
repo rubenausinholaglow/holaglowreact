@@ -9,7 +9,7 @@ export const MULTISTEP_QUESTIONS: any = [
     questions: [
       {
         title:
-          'Busco un tratamiento efectivo para preocupaciones específicas de mi piel',
+          'Busco un tratamiento efectivo para preocupaciones específicas de mi piel (acné, manchas, rosácea, etc.)',
       },
       {
         title:
@@ -32,48 +32,30 @@ export const MULTISTEP_QUESTIONS: any = [
     section: 'Necesidades personales',
     title: 'Necesidades personales',
     description:
-      'Selecciona las inquietudes que te gustaría resolver en tu consulta',
+      'Selecciona todas las inquietudes que te gustaría resolver en la consulta.',
     showTextArea: true,
-    placeholder: 'Escribe aquí tu preocupación de piel facial',
+    placeholder: 'Escribe aquí otras inquietudes',
     questions: [
       {
         title: 'Acné',
       },
       {
-        title: 'Cicatrices',
+        title: 'Manchas',
       },
       {
-        title: 'Enrojecimiento',
+        title: 'Enrojecimiento/Rosácea',
       },
       {
-        title: 'Sensibilidad',
+        title: 'Piel Seca',
       },
       {
-        title: 'Pigmentación',
-      },
-      {
-        title: 'Sequedad',
-      },
-      {
-        title: 'Exceso de sebo/grasa',
-      },
-      {
-        title: 'Pérdida de firmeza',
-      },
-      {
-        title: 'Líneas finas',
+        title: 'Piel Grasa',
       },
       {
         title: 'Arrugas',
       },
       {
-        title: 'Rosácea',
-      },
-      {
-        title: 'Textura de la piel',
-      },
-      {
-        title: 'Manchas',
+        title: 'Cicatrices',
       },
     ],
   },
