@@ -113,7 +113,7 @@ export default function Form() {
     resetCart();
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
-      address: 'Consulta online',
+      address: 'Videollamada',
       city: '',
       flowwwId: '1',
       internalName: '',

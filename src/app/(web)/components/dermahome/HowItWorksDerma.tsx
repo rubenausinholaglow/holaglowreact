@@ -15,13 +15,13 @@ export default function HowItWorksDerma() {
       <ul className="flex flex-col w-full gap-8 md:gap-16 md:flex-row md:mb-16">
         {[
           {
-            text: 'Cuestionario y reserva',
+            text: 'Pide tu cita',
             description:
-              'Cuéntanos cómo es tu piel y agenda una cita con el dermatólogo estético según tu disponibilidad.',
+              'Cuéntanos en el formulario cómo es tu piel y pide cita online con el dermatólogo estético.',
             icon: '/images/derma/home/calendar.svg',
           },
           {
-            text: 'Consulta médica online',
+            text: 'Videollamada con el médico',
             description:
               'Reúnete con tu médico en una videollamada para analizar tus objetivos y evaluar el posible tratamiento.',
             icon: '/images/derma/home/online.svg',
@@ -29,7 +29,7 @@ export default function HowItWorksDerma() {
           {
             text: 'Tratamiento personalizado',
             description:
-              'Obtén tu plan de cuidado facial y la receta de una crema personalizada formulada exclusivamente para ti.',
+              'Obtén tu plan de cuidado facial y pide tu crema personalizada en la farmacia más cercana.',
             icon: '/images/derma/home/box.svg',
           },
         ].map((item, index) => (

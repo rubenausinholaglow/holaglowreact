@@ -75,9 +75,10 @@ export default function HeroDerma() {
                     isAnimated
                     className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
                   >
-                    Reserva tu consulta online con un dermatólogo estético y
-                    encuentra el mejor tratamiento para las necesidades
-                    específicas de tu piel.
+                    Reserva tu{' '}
+                    <b>consulta online con un dermatólogo estético</b> y
+                    encuentra el mejor tratamiento para tu piel sin salir de
+                    casa.
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
@@ -88,7 +89,7 @@ export default function HeroDerma() {
                       href="/multistep/start"
                       id={'tmevent_multistep_module'}
                     >
-                      Pide tu cita online
+                      Reserva tu videllamada
                     </Button>
                   </Flex>
                 </Flex>

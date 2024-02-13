@@ -56,7 +56,7 @@ export default function WhatsIncludedDerma() {
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">
                 {[
-                  '<span class="font-semibold text-derma-tertiary">Consulta online</span> con tu dermatólogo estético',
+                  '<span class="font-semibold text-derma-tertiary">Videollamada</span> con tu dermatólogo estético',
                   'Receta de la <span class="font-semibold text-derma-tertiary">crema facial personalizada</span>',
                   'Recomendación de <span class="font-semibold text-derma-tertiary">rutina facial complementaria</span>',
                 ].map(item => (
