@@ -4,7 +4,7 @@ import '../../../public/styles/Alma/widgets.min.css';
 import React from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
-
+import { headers } from 'next/headers';
 import App from './components/layout/App';
 
 export const metadata = {
@@ -12,19 +12,14 @@ export const metadata = {
   description:
     'La nueva cara de la medicina estética. Tratamientos sin cirugía para conseguir resultados reales',
 };
-
-const isDerma =
-  typeof window !== 'undefined' &&
-  window &&
-  window.location &&
-  window.location.href &&
-  window.location.href.includes('derma');
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = headers();
+  const url = headersList.get('derma') || '';
+  const isDerma = url.includes('true');
   return (
     <>
       <html lang="en" className="max-h-screen h-full bg-white text-hg-black">
