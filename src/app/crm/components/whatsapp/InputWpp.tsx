@@ -67,7 +67,7 @@ export default function InputWpp({ userId }: InputWppProps) {
         />
       </div>
 
-      <button type="submit" onClick={sendWhatsApp}>
+      <button onClick={sendWhatsApp}>
         <SvgSendMessage />
       </button>
     </div>
