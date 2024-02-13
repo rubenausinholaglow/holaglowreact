@@ -1,13 +1,8 @@
-"use client";
+'use client';
 import React, { useState } from 'react';
 import { useSessionStore } from 'app/stores/globalStore';
 
-import {
-  SvgEmojiFace,
-  SvgMicrophone,
-  SvgPlus,
-  SvgSendMessage,
-} from './WhatsAppIcons';
+import { SvgPlus, SvgSendMessage } from './WhatsAppIcons';
 
 interface InputWppProps {
   setWhatsappList: (whatsapp: any) => void;
@@ -24,7 +19,7 @@ export default function InputWpp({ setWhatsappList, userId }: InputWppProps) {
       userId: userId,
       text: input,
       taskId: '',
-      agentId: "",
+      agentId: '',
     });
 
     try {
@@ -52,14 +47,8 @@ export default function InputWpp({ setWhatsappList, userId }: InputWppProps) {
   }
 
   return (
-    <div
-      className="bg-grey-lighter px-4 py-4 flex items-center"
-      style={{ height: '92rem' }}
-    >
-      <div>
-        <SvgEmojiFace />
-        <SvgPlus />
-      </div>
+    <div className="bg-grey-lighter px-4 py-4 flex items-center">
+      <SvgPlus />
       <div className="flex-1 mx-4">
         <input
           placeholder="Escribe un mensaje"
@@ -69,7 +58,11 @@ export default function InputWpp({ setWhatsappList, userId }: InputWppProps) {
           onChange={e => setInput(e.currentTarget.value)}
         />
       </div>
-      <div>{input.length > 0 ? <button onClick={sendWhatsApp}><SvgSendMessage /></button>: <SvgMicrophone />}</div>
+      <div>
+        <button onClick={sendWhatsApp}>
+          <SvgSendMessage />
+        </button>
+      </div>
     </div>
   );
 }

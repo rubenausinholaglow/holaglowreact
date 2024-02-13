@@ -5,6 +5,7 @@ import '../components/datePicker.css';
 import React, { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
+import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
 import { ClientDetails } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
@@ -148,8 +149,8 @@ export default function ContactDetailPageBase({
 
   return (
     <>
-      <div className="flex">
-        <div className="w-2/3 rounded-xl bg-white ml-64 mt-2 mr-4 mb-10 h-screen">
+      <div className="flex flex-row">
+        <div className="basis-2/3 rounded-xl mx-auto bg-white ml-64 mt-2 mr-4 px-4 py-4 overflow-y-auto" style={{height: "90.9vh"}}>
           <CardContact
             contactInfo={contactDetail}
             isVisibleModal={isVisibleModal}
@@ -159,7 +160,7 @@ export default function ContactDetailPageBase({
 
           <Tabs tabs={tabs} defaultTab="Tareas" />
         </div>
-        <div className="w-1/3 rounded-xl bg-white  mt-2  h-screen">
+        <div className="basis-1/4 rounded-xl mx-auto bg-white mt-2 mr-4 px-4 py-4  h-96 overflow-y-auto" style={{height: "90.9vh"}}>
           <WhatsApp contactDetail={contactDetail} />
         </div>
       </div>

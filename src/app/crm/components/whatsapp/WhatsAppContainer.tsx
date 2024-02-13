@@ -7,5 +7,5 @@ interface WhatsAppContainerProps {
 export default function WhatsAppContainer({
   children,
 }: WhatsAppContainerProps) {
-  return <div className="border flex flex-col">{children}</div>;
+  return <div className="flex flex-col">{children}</div>;
 }

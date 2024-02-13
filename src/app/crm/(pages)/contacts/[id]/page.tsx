@@ -1,5 +1,6 @@
 import React from 'react';
 import useAsyncGQL from '@utils/useAsyncGQL';
+import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
 import { getContactTasks } from 'app/GraphQL/query/ContactDetailQuery';
 
