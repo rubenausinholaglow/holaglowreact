@@ -22,18 +22,18 @@ export default function GraphQLComponentBase({
   gqlName,
   statusTypeSwitch = undefined,
 }: GraphQLComponentBaseProps) {
-  const { data, error, isLoading } = useAsyncClientGQL(gqlName);
+  const { dataApi, error, isLoading } = useAsyncClientGQL(gqlName);
 
   return (
     <>
       {isLoading ? (
         <SvgSpinner height={24} width={24} />
-      ) : data === null || error ? (
+      ) : dataApi === null || error ? (
         <div className="pl-5">No se ha encontrado {tabName}.</div>
       ) : (
         <SimpleDataTable
           columns={columns}
-          rows={mapping(data?.user[idLabel])}
+          rows={mapping(dataApi?.user[idLabel])}
           statusTypeSwitch={statusTypeSwitch}
         />
       )}
