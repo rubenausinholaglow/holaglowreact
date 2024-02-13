@@ -193,7 +193,7 @@ export default function Confirmation({
                   >
                     <SvgVideo />
                   </Flex>
-                  Acceso a consulta online
+                  Acceso a videollamada
                 </Button>
               </a>
 
@@ -212,8 +212,7 @@ export default function Confirmation({
                   atcb_action(
                     {
                       name: 'Cita online - Derma by Holaglow',
-                      description:
-                        'Consulta online con un dermatólogo estético',
+                      description: 'Videollamada con tu dermatólogo estético',
                       startDate: dayjs(selectedDay).format('YYYY-MM-DD'),
                       startTime: selectedSlot?.startTime,
                       endTime: selectedSlot?.endTime,
