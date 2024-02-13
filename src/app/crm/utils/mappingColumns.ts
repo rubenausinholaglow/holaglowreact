@@ -8,6 +8,7 @@ import {
   Comment,
   CommentDataTableContact,
   Execution,
+  Lead,
   Task,
   TaskDataTableContact,
 } from '../types/Contact';
@@ -72,7 +73,9 @@ export const mappingCalls = (contactDetailCalls: any) => {
 export const mappingAppointments = (contactDetailAppointments: any) => {
   const model: AppointmentsDataTableContact[] = [];
   if (contactDetailAppointments) {
-    const concatenatedArray = []?.concat(...contactDetailAppointments);
+    const concatenatedArray = []?.concat(
+      ...contactDetailAppointments.map((detail: Lead) => detail.appointments)
+    );
     concatenatedArray?.forEach((appointment: Appointment) => {
       const newModel: AppointmentsDataTableContact = {
         status: appointment?.status,

@@ -168,6 +168,15 @@ export function getContactAppointment(id: string) {
   query User {
     user(id: "${id}") {
         leads {
+            origin
+            treatment
+            productId
+            treatmentPrice
+            status
+            closedReason
+            id
+            creationDate
+            active
             appointments {
                 date
                 startTime
@@ -183,27 +192,30 @@ export function getContactAppointment(id: string) {
                 id
                 creationDate
                 active
+                clinic {
+                    city
+                    province
+                    country
+                }
                 treatments {
                     id
                     creationDate
                     active
                     treatment {
-                        id
-                        creationDate
-                        active
                         product {
+                            id
                             title
                             description
                             longDescription
+                            active
                         }
                     }
-                }
-                clinic {
-                    city
                 }
             }
         }
     }
 }
+
+
   `;
 }
