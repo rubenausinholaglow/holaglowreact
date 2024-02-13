@@ -5,11 +5,10 @@ import { useSessionStore } from 'app/stores/globalStore';
 import { SvgPlus, SvgSendMessage } from './WhatsAppIcons';
 
 interface InputWppProps {
-  setWhatsappList: (whatsapp: any) => void;
   userId: string;
 }
 
-export default function InputWpp({ setWhatsappList, userId }: InputWppProps) {
+export default function InputWpp({ userId }: InputWppProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
 
@@ -58,11 +57,10 @@ export default function InputWpp({ setWhatsappList, userId }: InputWppProps) {
           onChange={e => setInput(e.currentTarget.value)}
         />
       </div>
-      <div>
-        <button onClick={sendWhatsApp}>
-          <SvgSendMessage />
-        </button>
-      </div>
+
+      <button onClick={sendWhatsApp}>
+        <SvgSendMessage />
+      </button>
     </div>
   );
 }

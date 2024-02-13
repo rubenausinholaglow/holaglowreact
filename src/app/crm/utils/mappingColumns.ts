@@ -74,8 +74,8 @@ export const mappingAppointments = (contactDetailAppointments: any) => {
       const newModel: AppointmentsDataTableContact = {
         status: appointment?.status,
         city: appointment?.clinic?.city,
-        dateAppointment: getDateDayMonthYear(appointment?.date, '-'),
         treatments: concatenateTreatment(appointment?.treatments),
+        dateAppointment: getDateDayMonthYear(appointment?.date, '-'),
         startTimeAppointment: appointment?.startTime,
       };
       model.push(newModel);

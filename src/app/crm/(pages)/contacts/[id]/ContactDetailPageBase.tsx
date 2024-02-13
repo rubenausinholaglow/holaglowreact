@@ -2,8 +2,9 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import '../components/datePicker.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import useAsyncClientGQL from '@utils/useAsyncClientGQL';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
 import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
@@ -32,6 +33,7 @@ import {
   getContactCalls,
   getContactComments,
   getContactTasks,
+  getContactWhatsapps,
 } from 'app/GraphQL/query/ContactDetailQuery';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
@@ -58,10 +60,25 @@ export default function ContactDetailPageBase({
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [identifier, setIdentifier] = useState<string>('');
   const [commentReminder, setCommentReminder] = useState<string>('');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { data: dataWhatsapp } = useAsyncClientGQL(
+    getContactWhatsapps(contactDetail?.id)
+  );
+
+  const handleContactReminder = (event: any) => {
+    event.preventDefault();
+    reminderAction(startDate, commentReminder, contactDetail?.id, identifier);
+  };
 
   const checkIfHasAgent = () => {
     const result = contactDetail['agent'] !== null;
     return result;
+  };  
+
+  const scrollToBottom = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   };
 
   const tabs = [
@@ -74,6 +91,7 @@ export default function ContactDetailPageBase({
           gqlName={getContactTasks(contactDetail?.id)}
           statusTypeSwitch={getTaskStatusText}
           tabName={'Tareas'}
+          idLabel={'taskInstances'}
         />
       ),
     },
@@ -101,6 +119,7 @@ export default function ContactDetailPageBase({
           mapping={mappingComments}
           gqlName={getContactComments(contactDetail?.id)}
           tabName={'Comentarios'}
+          idLabel={'comments'}
         />
       ),
     },
@@ -113,6 +132,7 @@ export default function ContactDetailPageBase({
           gqlName={getContactCalls(contactDetail?.id)}
           statusTypeSwitch={getCallStatusText}
           tabName={'Llamadas'}
+          idLabel={'calls'}
         />
       ),
     },
@@ -125,6 +145,7 @@ export default function ContactDetailPageBase({
           gqlName={getContactAppointment(contactDetail?.id)}
           statusTypeSwitch={getAppointmentStatusText}
           tabName={'Citas'}
+          idLabel={'leads'}
         />
       ),
     },
@@ -137,20 +158,23 @@ export default function ContactDetailPageBase({
           gqlName={getContactBudget(contactDetail?.id)}
           statusTypeSwitch={getBudgetStatusText}
           tabName={'Presupuestos'}
+          idLabel={'budgets'}
         />
       ),
     },
   ];
 
-  const handleContactReminder = (event: any) => {
-    event.preventDefault();
-    reminderAction(startDate, commentReminder, contactDetail?.id, identifier);
-  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [containerRef?.current]);
 
   return (
     <>
       <div className="flex flex-row">
-        <div className="basis-2/3 rounded-xl mx-auto bg-white ml-64 mt-2 mr-4 px-4 py-4 overflow-y-auto" style={{height: "90.9vh"}}>
+        <div
+          className="basis-2/3 rounded-xl mx-auto bg-white ml-64 mt-2 mr-4 px-4 py-4 overflow-y-auto"
+          style={{ height: '90.9vh' }}
+        >
           <CardContact
             contactInfo={contactDetail}
             isVisibleModal={isVisibleModal}
@@ -160,8 +184,13 @@ export default function ContactDetailPageBase({
 
           <Tabs tabs={tabs} defaultTab="Tareas" />
         </div>
-        <div className="basis-1/4 rounded-xl mx-auto bg-white mt-2 mr-4 px-4 py-4  h-96 overflow-y-auto" style={{height: "90.9vh"}}>
-          <WhatsApp contactDetail={contactDetail} />
+        <div
+          id='whatsappList'
+          className="basis-1/4 rounded-xl mx-auto bg-white mt-2 mr-4 px-4 py-4  h-96 overflow-y-scroll"
+          style={{ height: '90.9vh' }}
+          ref={containerRef}
+        >
+          <WhatsApp contactDetail={contactDetail} whatsappMessages={dataWhatsapp?.user?.whatsapps} />
         </div>
       </div>
       <ModalContact isOpen={isVisibleModal} closeModal={setIsVisibleModal}>

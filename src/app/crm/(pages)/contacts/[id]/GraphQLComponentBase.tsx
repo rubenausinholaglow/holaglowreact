@@ -9,6 +9,7 @@ interface GraphQLComponentBaseProps {
   columns: ColumnType[];
   mapping: (params: any) => any;
   tabName: string;
+  idLabel: string;
   gqlName: any;
   statusTypeSwitch?: any;
 }
@@ -17,6 +18,7 @@ export default function GraphQLComponentBase({
   columns,
   mapping,
   tabName,
+  idLabel,
   gqlName,
   statusTypeSwitch = undefined,
 }: GraphQLComponentBaseProps) {
@@ -31,7 +33,7 @@ export default function GraphQLComponentBase({
       ) : (
         <SimpleDataTable
           columns={columns}
-          rows={mapping(data?.user?.user)}
+          rows={mapping(data?.user[idLabel])}
           statusTypeSwitch={statusTypeSwitch}
         />
       )}
