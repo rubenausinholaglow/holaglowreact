@@ -29,17 +29,20 @@ import {
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import Image from 'next/image';
 
 export default function AppointmentResume({
   appointment,
   isProbadorVirtual,
   isConfirmation = false,
   isDerma = false,
+  isUpselling = false,
 }: {
   appointment?: Appointment;
   isProbadorVirtual: boolean;
   isConfirmation?: boolean;
   isDerma?: boolean;
+  isUpselling?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
@@ -97,6 +100,67 @@ export default function AppointmentResume({
   const accordionItemProps: AccordionItemProps = {
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
+
+  if (isUpselling) {
+    return (
+      <Flex layout="col-left" className="w-full">
+        <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl">
+          <Image
+            src="/images/derma/upselling/seguimiento.png"
+            height={100}
+            width={160}
+            alt="seguimiento"
+          />
+        </Flex>
+        <Flex layout="col-left" className="bg-white p-4 w-full gap-3">
+          <Text className="font-semibold">{selectedTreatmentsNames}</Text>
+          <div className="w-full flex items-center">
+            <SvgCalendar className="mr-2" />
+            <Text className="capitalize text-xs">
+              {localSelectedDay.format('dddd')}, {localSelectedDay.format('D')}{' '}
+              de {localSelectedDay.format('MMMM')} de{' '}
+              {localSelectedDay.format('YYYY')}
+            </Text>{' '}
+          </div>
+
+          {startTime && (
+            <div className="w-full flex items-center text-xs">
+              <SvgHour className="mr-2" />
+              {startTime}h Consulta online
+            </div>
+          )}
+
+          <div className="w-full border-t border-hg-black300 pt-4 mt-2">
+            <Flex
+              layout="col-left"
+              className="w-full gap-2 text-xs text-hg-black400 bg-hg-black50 p-2 rounded-xl"
+            >
+              <Flex className="justify-between w-full">
+                <Text>Importe sin IVA</Text>
+                <Text>{(selectedTreatments[0].price * 0.79).toFixed(2)} €</Text>
+              </Flex>
+              <Flex className="justify-between w-full ">
+                <Text>Impuestos</Text>
+                <Text>
+                  {(
+                    selectedTreatments[0].price -
+                    selectedTreatments[0].price * 0.79
+                  ).toFixed(2)}{' '}
+                  €
+                </Text>
+              </Flex>
+            </Flex>
+          </div>
+        </Flex>
+        <Flex className="bg-derma-primary/20 p-4 text-derma-primary rounded-b-2xl w-full justify-between font-semibold">
+          <Text>Importe total</Text>
+          <div>
+            <Text>{selectedTreatments[0].price.toFixed(2)} €</Text>
+          </div>
+        </Flex>
+      </Flex>
+    );
+  }
 
   return (
     <Flex

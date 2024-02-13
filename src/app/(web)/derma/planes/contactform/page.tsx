@@ -5,14 +5,12 @@ import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import UserService from '@services/UserService';
 import { usePayments } from '@utils/paymentUtils';
-import { useRegistration } from '@utils/userUtils';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -20,7 +18,7 @@ import {
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Title } from 'designSystem/Texts/Texts';
+import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
 
@@ -124,19 +122,36 @@ export default function ConctactForm() {
   const showExtraFields =
     cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1;
   return (
-    <DermaLayout hideButton={true} hideFooter={hideLayout}>
+    <DermaLayout
+      className="bg-derma-secondary100"
+      hideButton={true}
+      hideFooter={hideLayout}
+    >
       <Container className="px-0 md:mt-8 md:pb-8">
         <Flex
           layout="col-left"
-          className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
+          className="gap-4 md:gap-16 md:flex-row pt-4 md:pt-0"
         >
-          <div className="w-full md:w-1/2 md:order-2">
+          <div className="w-full md:w-1/2 p-4 md:order-2">
+            <TitleDerma size="xl" className="text-derma-primary mb-4">
+              ¡Ya casi lo tienes, {client.name}!{' '}
+            </TitleDerma>
+            <Text className="text-hg-black500 text-sm mb-2">
+              Como bien sabes, conseguir una piel saludable es un compromiso a
+              largo plazo. Gracias por confiar en nosotros para acompañarte en
+              este camino.
+            </Text>
+            <Text className="text-hg-black500 text-sm mb-8">
+              Los detalles de tu revisión online se proporcionarán por Whatsapp
+              y correo electrónico al pagar.
+            </Text>
             <AppointmentResume
               isProbadorVirtual={isProbadorVirtual}
-              isDerma={true}
+              isDerma
+              isUpselling
             />
           </div>
-          <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
+          <div className="w-full md:w-1/2 p-4">
             <Title size="xl" className="font-semibold mb-4">
               Reserva tu cita
             </Title>
