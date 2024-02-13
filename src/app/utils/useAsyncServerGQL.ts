@@ -4,7 +4,7 @@ import { createApolloClient } from 'lib/client';
 
 const client = createApolloClient(process.env.NEXT_PUBLIC_CONTACTS_API!, '');
 
-const useAsyncGQL = async (query: DocumentNode) => {
+const useAsyncServerGQL = async (query: DocumentNode) => {
   try {
     const { data } = await client.query({ query });
     if (data) {
@@ -18,4 +18,4 @@ const useAsyncGQL = async (query: DocumentNode) => {
   }
 };
 
-export default useAsyncGQL;
+export default useAsyncServerGQL;
