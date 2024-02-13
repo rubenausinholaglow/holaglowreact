@@ -25,7 +25,6 @@ export default function RootLayout({
         />
       </Head>
       <head>
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-KMG5BW3L"
@@ -34,7 +33,6 @@ export default function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           ></iframe>
         </noscript>
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script
           id="gtm-script"
           strategy="beforeInteractive"
