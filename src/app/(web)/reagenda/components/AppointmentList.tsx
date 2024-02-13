@@ -15,7 +15,6 @@ import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function AppointmentList({
@@ -33,7 +32,6 @@ export default function AppointmentList({
 
   const [isHydrated, setIsHydrated] = useState(false);
   const [appointments, setAppointments] = useState([] as Appointment[]);
-  const [isLoading, setIsLoading] = useState(true);
   const [currentToken, setCurrentToken] = useState('');
 
   const { clinics, setCurrentUser, stateProducts } = useGlobalPersistedStore(
@@ -61,17 +59,12 @@ export default function AppointmentList({
       if (token) {
         const res = await ScheduleService.next(token);
         setAppointments(res);
-        setIsLoading(false);
         setIsHydrated(true);
       }
     };
 
     getAppointments();
   }, []);
-
-  useEffect(() => {
-    setIsLoading(isEmpty(appointments));
-  }, [appointments]);
 
   const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
@@ -98,8 +91,8 @@ export default function AppointmentList({
     router.push('/checkout/agenda');
   };
 
-  if (!isHydrated || isLoading) {
-    return <FullScreenLoading isDerma />;
+  if (!isHydrated) {
+    return <FullScreenLoading isDerma={isDerma} />;
   }
 
   return (
@@ -205,7 +198,7 @@ export default function AppointmentList({
           }
         })}
 
-        {appointments.length == 0 && !isLoading && (
+        {appointments.length == 0 && (
           <div>
             ¡Ups! Parece que no tienes ninguna cita reservada. Para más dudas{' '}
             <a href="tel:682417208">llámanos</a>.

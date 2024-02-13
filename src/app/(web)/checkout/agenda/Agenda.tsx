@@ -460,13 +460,14 @@ export default function Agenda({
                       >
                         Agenda cita para{' '}
                         {Array.isArray(selectedTreatments) &&
-                          selectedTreatments.map(product => (
+                          selectedTreatments.map((product, index) => (
                             <span key={product.id} className="font-semibold">
-                              {product.title},{' '}
+                              {product.title}
+                              {index < selectedTreatments.length - 1 && ', '}
                             </span>
                           ))}
-                        {!isDerma && <>en tu clínica preferida</>}
-                        {isDerma && <>online</>}
+                        {!isDerma && <> en tu clínica preferida</>}
+                        {isDerma && <> online</>}
                       </Text>
 
                       {selectedClinic && !isDerma && (
