@@ -61,7 +61,7 @@ export default function ContactDetailPageBase({
   const [identifier, setIdentifier] = useState<string>('');
   const [commentReminder, setCommentReminder] = useState<string>('');
   const containerRef = useRef<HTMLDivElement>(null);
-  const { dataApi: dataWhatsapp } = useAsyncClientGQL(
+  const { dataApi: dataWhatsapp, isLoading: isLoadingWhatsapp } = useAsyncClientGQL(
     getContactWhatsapps(contactDetail?.id)
   );
 
@@ -192,6 +192,7 @@ export default function ContactDetailPageBase({
         >
           <WhatsApp
             contactDetail={contactDetail}
+            isLoadingWhatsapp={isLoadingWhatsapp}
             whatsappMessages={dataWhatsapp?.user?.whatsapps}
           />
         </div>
