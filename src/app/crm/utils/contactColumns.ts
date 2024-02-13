@@ -35,5 +35,5 @@ export const BudgetColumns : ColumnType[] = [
   { name: 'Productos', key: 'productsText' },
   { name: 'Precio', key: 'totalPrice' },
   { name: 'Estado', key: 'status' },
-  { name: 'Acciones', key: 'actions' },
+  
 ];

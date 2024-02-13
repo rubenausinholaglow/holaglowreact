@@ -73,7 +73,7 @@ export default function ContactDetailPageBase({
   const checkIfHasAgent = () => {
     const result = contactDetail['agent'] !== null;
     return result;
-  };  
+  };
 
   const scrollToBottom = () => {
     if (containerRef.current) {
@@ -166,7 +166,7 @@ export default function ContactDetailPageBase({
 
   useEffect(() => {
     scrollToBottom();
-  }, [containerRef?.current]);
+  }, [containerRef, dataWhatsapp]);
 
   return (
     <>
@@ -185,12 +185,15 @@ export default function ContactDetailPageBase({
           <Tabs tabs={tabs} defaultTab="Tareas" />
         </div>
         <div
-          id='whatsappList'
+          id="whatsappList"
           className="basis-1/4 rounded-xl mx-auto bg-white mt-2 mr-4 px-4 py-4  h-96 overflow-y-scroll"
           style={{ height: '90.9vh' }}
           ref={containerRef}
         >
-          <WhatsApp contactDetail={contactDetail} whatsappMessages={dataWhatsapp?.user?.whatsapps} />
+          <WhatsApp
+            contactDetail={contactDetail}
+            whatsappMessages={dataWhatsapp?.user?.whatsapps}
+          />
         </div>
       </div>
       <ModalContact isOpen={isVisibleModal} closeModal={setIsVisibleModal}>
