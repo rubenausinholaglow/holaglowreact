@@ -20,9 +20,8 @@ export async function middleware(req: NextRequest) {
     );
     url.pathname = `/${subdomain}${url.pathname}`;
   }
-  var res = NextResponse.rewrite(url);
-  if (subdomain) res.headers.set('derma', 'true');
-  return res;
+
+  return NextResponse.rewrite(url);
 }
 
 export const getValidSubdomain = (host?: string | null) => {
