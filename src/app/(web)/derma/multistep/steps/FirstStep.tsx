@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
-import { DermaQuestions } from '@interface/dermaquestions';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 import {
   SvgCheckSquare,
   SvgCheckSquareActive,

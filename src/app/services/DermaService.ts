@@ -4,7 +4,7 @@ import {
   ERROR_GET_DERMAROUTINES,
   ERROR_UPDATE_DERMAQUESTIONS,
 } from '@utils/textConstants';
-import { DermaQuestions } from 'app/types/dermaquestions';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 
 export const dermaService = {
   update: async (derma: DermaQuestions) => {
