@@ -1,10 +1,10 @@
 import Bugsnag from '@bugsnag/js';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { UpsellingData } from '@interface/upselling';
 import {
   ERROR_GET_DERMAROUTINES,
   ERROR_UPDATE_DERMAQUESTIONS,
 } from '@utils/textConstants';
-import { DermaQuestions } from '@interface/derma/dermaquestions';
 
 export const dermaService = {
   update: async (derma: DermaQuestions) => {
