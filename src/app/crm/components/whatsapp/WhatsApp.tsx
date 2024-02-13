@@ -24,14 +24,14 @@ export default function WhatsApp({
         whatsappMessages?.map(
           (whatsappMessage: WhatsappMessages, index: string) => {
             const showDate =
-              getDateDayMonthYear(whatsappMessage.time, "/") !== thisDate;
-            thisDate = getDateDayMonthYear(whatsappMessage.time, "/");
+              getDateDayMonthYear(whatsappMessage.time, '/') !== thisDate;
+            thisDate = getDateDayMonthYear(whatsappMessage.time, '/');
 
             return (
               <>
                 {showDate && (
                   <div className="text-center text-xs p-2">
-                    {getDateDayMonthYear(whatsappMessage.time, "/")}
+                    {getDateDayMonthYear(whatsappMessage.time, '/')}
                   </div>
                 )}
                 {whatsappMessage.received ? (
