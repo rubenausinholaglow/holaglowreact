@@ -61,7 +61,7 @@ export default function ContactDetailPageBase({
   const [identifier, setIdentifier] = useState<string>('');
   const [commentReminder, setCommentReminder] = useState<string>('');
   const containerRef = useRef<HTMLDivElement>(null);
-  const { data: dataWhatsapp } = useAsyncClientGQL(
+  const { dataApi: dataWhatsapp } = useAsyncClientGQL(
     getContactWhatsapps(contactDetail?.id)
   );
 
@@ -100,7 +100,7 @@ export default function ContactDetailPageBase({
       component: (
         <div className="py-10 max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-xl">
           <div className="px-4 mb-4">
-            Telefono: {contactDetail?.phonePrefix} {contactDetail?.phone}
+            Teléfono: {contactDetail?.phonePrefix} {contactDetail?.phone}
           </div>
           <div className="px-4 mb-4">Email: {contactDetail?.email}</div>
           {checkIfHasAgent() && (
