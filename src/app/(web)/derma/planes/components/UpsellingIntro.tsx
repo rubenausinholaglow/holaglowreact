@@ -6,7 +6,11 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
-export default function UpsellingIntro({ data }: { data: UpsellingData }) {
+export default function UpsellingIntro({
+  data,
+}: {
+  data: UpsellingData | null;
+}) {
   return (
     <Container>
       <Flex layout="col-left" className="w-full md:flex-row py-6 md:py-12">
@@ -27,7 +31,7 @@ export default function UpsellingIntro({ data }: { data: UpsellingData }) {
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Paciente</Text>
               <Text className="text-derma-primary font-medium">
-                {data.user.firstName}
+                {data?.user?.firstName}
               </Text>
             </Flex>
           </Button>
@@ -44,12 +48,12 @@ export default function UpsellingIntro({ data }: { data: UpsellingData }) {
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Fecha expedición receta</Text>
               <Text className="text-derma-primary font-medium">
-                {dayjs(data.creationDate).format('DD/MM/YYYY')}
+                {dayjs(data?.creationDate).format('DD/MM/YYYY')}
               </Text>
             </Flex>
           </Button>
 
-          {data.receiptUrl && (
+          {data?.receiptUrl && (
             <Button
               size="xl"
               type="derma"

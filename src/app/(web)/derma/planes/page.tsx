@@ -13,21 +13,22 @@ import Login from './components/Login';
 import UpsellingIntro from './components/UpsellingIntro';
 import UpsellingPharmacies from './components/UpsellingPharmacies';
 import UpsellingRoutines from './components/UpsellingRoutines';
+import { useSessionStore } from 'app/stores/globalStore';
 
 export default function Upselling() {
-  const [phone, setPhone] = useState('');
+  const { dermaPhone } = useSessionStore(state => state);
   const [isTopMessageVisible, setIsTopMessageVisible] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(dermaPhone != '');
   const [apiResponse, setApiResponse] = useState<UpsellingData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await dermaService.getRoutine('617628726'); // <--- usar phone
+      const response = await dermaService.getRoutine(dermaPhone);
       setApiResponse(response);
+      setIsLogged(true);
     };
-
-    fetchData();
-  }, []);
+    if (dermaPhone) fetchData();
+  }, [dermaPhone]);
 
   useEffect(() => {
     if (isLogged) {
@@ -60,8 +61,8 @@ export default function Upselling() {
         hideButton
         hideFooter={!isLogged}
       >
-        {!isLogged && <Login setIsLogged={setIsLogged} setPhone={setPhone} />}
-        {apiResponse && isLogged && (
+        {!isLogged && <Login setIsLogged={setIsLogged} />}
+        {isLogged && (
           <>
             <UpsellingIntro data={apiResponse} />
             <UpsellingRoutines data={apiResponse} />

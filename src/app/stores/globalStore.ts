@@ -40,6 +40,7 @@ interface SessionStore {
   userLoginResponse: LoginResponse | undefined;
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
+  dermaPhone: string;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -55,6 +56,7 @@ interface SessionActions {
   setUserLoginResponse: (userLoginResponse: LoginResponse | undefined) => void;
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
+  setDermaPhone: (phone: string) => void;
 }
 
 interface GlobalPersistStore {
@@ -133,6 +135,7 @@ export const useSessionStore = create(
       userLoginResponse: undefined,
       typeOfPayment: TypeOfPayment.Free,
       appointmentUrl: '',
+      dermaPhone: '',
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -171,6 +174,9 @@ export const useSessionStore = create(
       },
       setTypeOfPayment: value => {
         set({ typeOfPayment: value });
+      },
+      setDermaPhone: value => {
+        set({ dermaPhone: value });
       },
     }),
     {
