@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
     );
     url.pathname = `/${subdomain}${url.pathname}`;
   }
-  const res = NextResponse.rewrite(url);
+  var res = NextResponse.rewrite(url);
   if (subdomain) res.headers.set('derma', 'true');
   return res;
 }
