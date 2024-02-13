@@ -1,7 +1,7 @@
 enum TaskStatus {
-  Pending = 0,
-  Cancelled = 1,
-  Finished = 2,
+  Pending = "Pending",
+  Cancelled = "Cancelled",
+  Finished = "Finished",
 }
 
 interface GetTaskStatusProps {

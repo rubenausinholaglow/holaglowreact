@@ -29,7 +29,7 @@ export interface ClientDetails {
 export interface TaskDataTableContact {
   creationDate: string;
   name: string;
-  status: number; //Enum
+  status: string;
   endDateTask: string;
 }
 
@@ -57,7 +57,7 @@ export interface BudgetsDataTableContact {
   creationDate: string;
   productsText: string;
   totalPrice: number;
-  status: number;
+  status: string;
   actions: string;
 }
 
@@ -77,7 +77,7 @@ export interface Task {
   creationDate: string;
   id: string;
   reason: string;
-  status: number;
+  status: string;
   taskTemplate: TaskTemplate;
   executions: Execution[];
 }
@@ -121,7 +121,7 @@ export interface Budget {
   priceDiscount: number;
   products: Product[];
   referenceId: string;
-  statusBudget: number;
+  statusBudget: string;
   totalPrice: number;
   totalPriceWithIVA: number;
 }
@@ -161,13 +161,13 @@ interface TaskTemplate {
   order: number;
 }
 
-interface Execution {
+export interface Execution {
   active: true;
   creationDate: string;
   endTime: string;
   id: string;
   startTime: string;
-  status: number;
+  status: string;
 }
 
 interface Clinic {

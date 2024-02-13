@@ -1,9 +1,9 @@
 enum CallStatus {
-  NotAnswered = 0,
-  Answered = 1,
-  Busy = 2,
-  Pending = 3,
-  Completed = 4,
+  NotAnswered = 'NotAnswered',
+  Answered = 'Answered',
+  Busy = 'Busy',
+  Pending = 'Pending',
+  Completed = 'Completed',
 }
 
 interface GetCallStatusProps {

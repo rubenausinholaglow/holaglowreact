@@ -7,6 +7,7 @@ import {
   CallDataTableContact,
   Comment,
   CommentDataTableContact,
+  Execution,
   Task,
   TaskDataTableContact,
 } from '../types/Contact';
@@ -18,11 +19,13 @@ const concatenateProductName = (array: any[]) => {
 };
 
 const concatenateTreatment = (treatments: any[]) => {
-  const result = treatments?.map(treatment => treatment.treatment.product.title).join(', ');
+  const result = treatments
+    ?.map(treatment => treatment.treatment.product.title)
+    .join(', ');
   return result;
-}
+};
 
-const getLastTaskExecution = (executions: any) => {
+const getLastTaskExecution = (executions: Execution[]) => {
   return executions?.slice(-1)[0];
 };
 
@@ -68,7 +71,7 @@ export const mappingCalls = (contactDetailCalls: any) => {
 
 export const mappingAppointments = (contactDetailAppointments: any) => {
   const model: AppointmentsDataTableContact[] = [];
-  if(contactDetailAppointments){
+  if (contactDetailAppointments) {
     const concatenatedArray = []?.concat(...contactDetailAppointments);
     concatenatedArray?.forEach((appointment: Appointment) => {
       const newModel: AppointmentsDataTableContact = {
