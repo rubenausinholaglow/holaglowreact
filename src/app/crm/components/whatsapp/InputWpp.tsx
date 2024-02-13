@@ -12,6 +12,12 @@ export default function InputWpp({ userId }: InputWppProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      sendWhatsApp();
+    }
+  };
+
   async function sendWhatsApp() {
     const token = userLoginResponse?.token;
     const body = JSON.stringify({
@@ -37,6 +43,7 @@ export default function InputWpp({ userId }: InputWppProps) {
       if (!res) {
         throw new Error('Network response was not OK');
       }
+      setInput('');
     } catch (error) {
       console.error(
         'There has been a problem with your fetch operation:',
@@ -54,11 +61,13 @@ export default function InputWpp({ userId }: InputWppProps) {
           className="w-full border rounded px-2 py-2"
           name="whatsappInput"
           type="text"
+          value={input}
           onChange={e => setInput(e.currentTarget.value)}
+          onKeyDown={handleKeyPress}
         />
       </div>
 
-      <button onClick={sendWhatsApp}>
+      <button type="submit" onClick={sendWhatsApp}>
         <SvgSendMessage />
       </button>
     </div>

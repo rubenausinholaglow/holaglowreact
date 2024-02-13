@@ -25,18 +25,20 @@ export default function WhatsApp({
         whatsappMessages?.map(
           (whatsappMessage: WhatsappMessages, index: string) => (
             <>
-              <MessageLeft
-                key={`${firstName}_${index}`}
-                clientName={`${firstName} ${lastName}`}
-                clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
-                clientMessage={whatsappMessage.text}
-              />
-
-              <MessageRight
-                key={`${index}`}
-                clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
-                clientMessage={whatsappMessage.text}
-              />
+              {whatsappMessage.received ? (
+                <MessageLeft
+                  key={`${firstName}_${index}`}
+                  clientName={`${firstName} ${lastName}`}
+                  clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
+                  clientMessage={whatsappMessage.text}
+                />
+              ) : (
+                <MessageRight
+                  key={`${index}`}
+                  clientHourMessage={getDateOnlyTime(whatsappMessage.time)}
+                  clientMessage={whatsappMessage.text}
+                />
+              )}
             </>
           )
         )}

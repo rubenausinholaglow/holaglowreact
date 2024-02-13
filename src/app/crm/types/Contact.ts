@@ -133,6 +133,7 @@ export interface WhatsappMessages {
   id: string;
   creationDate: string;
   active: boolean;
+  received: boolean;
 }
 
 export interface Lead {
