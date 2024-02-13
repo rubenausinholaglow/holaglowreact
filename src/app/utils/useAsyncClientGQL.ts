@@ -8,9 +8,10 @@ const client = createApolloClient(process.env.NEXT_PUBLIC_CONTACTS_API!, '');
 const useAsyncClientGQL = (query: DocumentNode) => {
   const [dataApi, setDataApi] = useState<any>(null);
   const [error, setError] = useState<Error | unknown>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (query: DocumentNode) => {
+    setIsLoading(true);
     try {
       const { data } = await client.query({ query });
       if (data) {
