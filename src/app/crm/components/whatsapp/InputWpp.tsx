@@ -11,6 +11,7 @@ interface InputWppProps {
 export default function InputWpp({ userId }: InputWppProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
+  const [disableSendButton, setDisableSendButton] = useState(false);
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -19,6 +20,7 @@ export default function InputWpp({ userId }: InputWppProps) {
   };
 
   async function sendWhatsApp() {
+    setDisableSendButton(true);
     const token = userLoginResponse?.token;
     const body = JSON.stringify({
       userId: userId,
@@ -49,12 +51,16 @@ export default function InputWpp({ userId }: InputWppProps) {
         'There has been a problem with your fetch operation:',
         error
       );
+    } finally {
+      setDisableSendButton(false);
     }
   }
 
   return (
     <div className="bg-grey-lighter px-4 py-4 flex items-center">
-      <SvgPlus />
+      <button className="flex space-x-1 items-center px-0.5 py-2 hover:bg-gray-200 rounded-full">
+        <SvgPlus />
+      </button>
       <div className="flex-1 mx-4">
         <input
           placeholder="Escribe un mensaje"
@@ -67,7 +73,11 @@ export default function InputWpp({ userId }: InputWppProps) {
         />
       </div>
 
-      <button onClick={sendWhatsApp}>
+      <button
+        className="flex space-x-2 items-center px-2 py-2 hover:bg-gray-200 rounded-full"
+        onClick={sendWhatsApp}
+        disabled={disableSendButton}
+      >
         <SvgSendMessage />
       </button>
     </div>
