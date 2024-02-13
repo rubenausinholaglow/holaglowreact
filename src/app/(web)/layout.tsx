@@ -3,8 +3,9 @@ import '../../../public/styles/Alma/widgets.min.css';
 
 import React from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
 import { headers } from 'next/headers';
+import Script from 'next/script';
+
 import App from './components/layout/App';
 
 export const metadata = {
