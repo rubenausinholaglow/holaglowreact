@@ -38,39 +38,39 @@ export default function WaitComponent() {
   useEffect(() => {
     let tries = 0;
     async function checkPaymentStatus(id: string) {
-      //await FinanceService.checkPaymentStatus(id).then(async x => {
-      tries++;
-      //if (x) {
-      await ScheduleService.createAppointment(
-        selectedTreatments,
-        selectedSlot!,
-        selectedDay!,
-        selectedClinic!,
-        user!,
-        selectedPacksTreatments!,
-        analyticsMetrics,
-        id
-      ).then(y => {
-        if (y && y.length > 0) {
-          setAppointmentUrl(y[0].url);
+      await FinanceService.checkPaymentStatus(id).then(async x => {
+        tries++;
+        if (x) {
+          await ScheduleService.createAppointment(
+            selectedTreatments,
+            selectedSlot!,
+            selectedDay!,
+            selectedClinic!,
+            user!,
+            selectedPacksTreatments!,
+            analyticsMetrics,
+            id
+          ).then(y => {
+            if (y && y.length > 0) {
+              setAppointmentUrl(y[0].url);
+            }
+            router.push('/checkout/confirmation');
+          });
+        } else if (tries < 3) {
+          setTimeout(async () => {
+            await checkPaymentStatus(id);
+          }, 15000);
+        } else {
+          router.push('/checkout/contactform?error=true');
         }
-        router.push('/checkout/confirmation');
       });
-      /*} else if (tries < 3) {
-        setTimeout(async () => {
-          await checkPaymentStatus(id);
-        }, 15000);
-      } else {
-        router.push('/checkout/contactform?error=true');
-      }*/
-      //});
     }
 
     if (payment) {
       checkPaymentStatus(payment!.id);
     } else {
       setTimeout(() => {
-        router.push('https://holaglowreact-git-dev-1063-hola-glow.vercel.app');
+        router.push('https://holaglowreact-git-dev-1063-hola-glow.vercel.app/');
       }, 5000);
     }
 
