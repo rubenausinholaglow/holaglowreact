@@ -23,6 +23,7 @@ export default function ProductInfo({
   product: Product;
   isDashboard?: boolean;
 }) {
+  console.log('-emla ---------> ' + product.emlaType);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
   const {
     cart,
@@ -137,7 +138,7 @@ export default function ProductInfo({
                               className="font-semibold mb-1 md:mb-2"
                             >
                               {product.emlaType === EmlaType.Required
-                                ? product.applicationTimeMinutes * 2
+                                ? product.applicationTimeMinutes * 2 + ''
                                 : product.applicationTimeMinutes.toString()}{' '}
                               minutos
                             </Text>
@@ -160,7 +161,10 @@ export default function ProductInfo({
                 />
                 <div>
                   <Text size="lg" className="font-semibold mb-1 md:mb-2">
-                    {product.applicationTimeMinutes.toString()} minutos
+                    {product.emlaType === EmlaType.Required
+                      ? product.applicationTimeMinutes * 2 + ''
+                      : product.applicationTimeMinutes.toString()}{' '}
+                    minutos
                   </Text>
                   <Text>Tiempo de aplicación</Text>
                 </div>
