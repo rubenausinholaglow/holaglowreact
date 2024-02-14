@@ -169,7 +169,9 @@ export default function Confirmation({
             ) : (
               <AppointmentResume
                 appointment={appointment}
-                isProbadorVirtual
+                isProbadorVirtual={
+                  appointment?.flowwwId == '955' ? true : false
+                }
                 isConfirmation
               />
             )}

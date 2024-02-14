@@ -34,6 +34,13 @@ export interface Product {
   longDescription: string;
   numProductCardPhotos: number;
   videoUrl: string;
+  emlaType : EmlaType
+}
+
+export enum EmlaType {
+  Required,
+  Optional,
+  NotNeeded,
 }
 
 export interface BeforeAndAfterImages {
