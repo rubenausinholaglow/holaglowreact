@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export function getContactTasks(id: string) {
+export function getContactWithTasks(id: string) {
   return gql`
   query User {
     user(id: "${id}") {

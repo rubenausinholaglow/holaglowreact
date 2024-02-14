@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import useAsyncClientGQL from '@utils/useAsyncClientGQL';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
-import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
 import { ClientDetails } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
@@ -32,8 +31,8 @@ import {
   getContactBudget,
   getContactCalls,
   getContactComments,
-  getContactTasks,
   getContactWhatsapps,
+  getContactWithTasks,
 } from 'app/GraphQL/query/ContactDetailQuery';
 import es from 'date-fns/locale/es';
 import dayjs from 'dayjs';
@@ -88,7 +87,7 @@ export default function ContactDetailPageBase({
         <GraphQLComponentBase
           columns={TaskColumns}
           mapping={mappingTasks}
-          gqlName={getContactTasks(contactDetail?.id)}
+          gqlName={getContactWithTasks(contactDetail?.id)}
           statusTypeSwitch={getTaskStatusText}
           tabName={'Tareas'}
           idLabel={'taskInstances'}
@@ -166,7 +165,7 @@ export default function ContactDetailPageBase({
 
   useEffect(() => {
     if (dataWhatsapp?.user?.whatsapps) {
-      const sortedWhatsapps = [...dataWhatsapp?.user?.whatsapps || []];
+      const sortedWhatsapps = [...(dataWhatsapp?.user?.whatsapps || [])];
       sortedWhatsapps.sort((a, b) => {
         return new Date(a.time).getTime() - new Date(b.time).getTime();
       });
