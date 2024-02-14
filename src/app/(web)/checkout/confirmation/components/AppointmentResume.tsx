@@ -267,9 +267,7 @@ export default function AppointmentResume({
               } `}
             >
               <Text>
-                <span className="font-semibold">
-                  {isDerma ? 'Pago único' : 'Pagar ahora'}
-                </span>
+                <span className="font-semibold">Total</span>
                 {typeOfPayment == TypeOfPayment.Reservation && ' (Anticipo)'}
               </Text>
               <Text className="font-semibold">
