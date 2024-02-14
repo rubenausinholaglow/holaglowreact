@@ -102,10 +102,6 @@ export default function Form() {
 
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
-      productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA!;
-      productDetails.flowwwId = 5;
-      productDetails.title = 'Consulta personalizada de dermatología';
-      productDetails.price = 59;
       setSelectedTreatments([productDetails]);
       resetCart();
       addItemToCart(productDetails as CartItem);
@@ -139,7 +135,7 @@ export default function Form() {
     };
     setAnalyticsMetrics(metrics);
     setPayment(undefined);
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
+    initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
   }, []);
 
   useEffect(() => {

@@ -6,6 +6,7 @@ import { dermaService } from '@services/DermaService';
 import CheckHydration from '@utils/CheckHydration';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgCheckCircle } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
@@ -13,7 +14,6 @@ import Login from './components/Login';
 import UpsellingIntro from './components/UpsellingIntro';
 import UpsellingPharmacies from './components/UpsellingPharmacies';
 import UpsellingRoutines from './components/UpsellingRoutines';
-import { useSessionStore } from 'app/stores/globalStore';
 
 export default function Upselling() {
   const { dermaPhone } = useSessionStore(state => state);
