@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import useAsyncClient from '@utils/useAsyncClient';
 import { useSessionStore } from 'app/stores/globalStore';
 
 import { SvgPlus, SvgSendMessage } from './WhatsAppIcons';
@@ -12,6 +13,10 @@ export default function InputWpp({ userId }: InputWppProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
   const [disableSendButton, setDisableSendButton] = useState(false);
+  const { postData } = useAsyncClient(
+    `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsapp`,
+    'PUT'
+  );
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -19,41 +24,22 @@ export default function InputWpp({ userId }: InputWppProps) {
     }
   };
 
-  async function sendWhatsApp() {
+  const sendWhatsApp = () => {
     setDisableSendButton(true);
     const token = userLoginResponse?.token;
+    const headers = {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    };
     const body = JSON.stringify({
       userId: userId,
       text: input,
       taskId: '',
       agentId: '',
     });
-
-    try {
-      const res = await fetch(
-        process.env.NEXT_PUBLIC_CONTACTS_API + 'Tasks/SendWhatsapp',
-        {
-          cache: 'no-store',
-          headers: {
-            Authorization: 'Bearer ' + token,
-            'Content-Type': 'application/json',
-          },
-          method: 'PUT',
-          body: body,
-        }
-      );
-      if (!res) {
-        throw new Error('Network response was not OK');
-      }
-      setInput('');
-    } catch (error) {
-      console.error(
-        'There has been a problem with your fetch operation:',
-        error
-      );
-    } finally {
-      setDisableSendButton(false);
-    }
+    postData(body, headers);
+    setInput('');
+    setDisableSendButton(false);
   }
 
   return (
