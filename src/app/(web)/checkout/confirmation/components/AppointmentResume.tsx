@@ -161,7 +161,7 @@ export default function AppointmentResume({
       <div className="w-full">
         <Flex
           layout="col-left"
-          className="w-full gap-2 text-xs text-hg-black400 bg-hg-black50 p-2 rounded-lg mb-4"
+          className="w-full gap-2 text-xs text-hg-black400 bg-white/50 p-2 rounded-lg mb-4"
         >
           <Flex className="justify-between w-full">
             <Text>Importe sin IVA</Text>
