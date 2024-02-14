@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { AnalyticsMetrics } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
-import { CartItem, Product } from '@interface/product';
+import { CartItem } from '@interface/product';
 import { UpsellingData } from '@interface/upselling';
 import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
@@ -42,9 +42,7 @@ export default function UpsellingRoutines({
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState(0);
 
-  const { cart, addItemToCart, resetCart, applyCartDiscount } = useCartStore(
-    state => state
-  );
+  const { cart, addItemToCart, resetCart } = useCartStore(state => state);
   const {
     setSelectedClinic,
     setSelectedTreatments,
@@ -96,6 +94,7 @@ export default function UpsellingRoutines({
     setAnalyticsMetrics(metrics);
     setPayment(undefined);
   }, []);
+
   useEffect(() => {
     setShowModal(showModalBackground);
   }, [showModalBackground]);
@@ -155,100 +154,106 @@ export default function UpsellingRoutines({
         type="right"
         hideModalBackground
       >
-        <div className="bg-derma-secondary100 border-b border-hg-black relative min-h-screen">
-          <SvgCross
-            height={20}
-            width={20}
-            className="absolute top-4 right-4"
-            onClick={() => setShowModal(false)}
-          />
-          <div style={{ minHeight: `calc(100dvh - ${modalBottomBarHeight})` }}>
-            <Container className="pt-12 md:p-6">
-              <Image
-                src={DERMA_ROUTINES[selectedRoutine].modalImgSrc}
-                alt={DERMA_ROUTINES[selectedRoutine].name}
-                width={324}
-                height={396}
-                className="w-2/3 shrink-0 mx-auto mb-8"
-              />
-              {selectedRoutine !== 0 && (
-                <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
-                  {DERMA_TYPES[data!.routine]}
-                </Text>
-              )}
-              <TitleDerma className="text-derma-primary mb-4">
-                {DERMA_ROUTINES[selectedRoutine].name}
-              </TitleDerma>
-              <Flex
-                layout="col-left"
-                className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
-              >
-                {DERMA_ROUTINES[selectedRoutine].bullets.map((item, index) => {
-                  return (
-                    <Flex className="w-full gap-4 items-start" key={index}>
-                      <SvgCheckCircle className="text-derma-primary500 shrink-0 w-5 h-5" />
-                      <p
-                        className="text-hg-black500 text-sm md:text-md"
-                        dangerouslySetInnerHTML={{ __html: item }}
-                      />
-                    </Flex>
-                  );
-                })}
-              </Flex>
-              {selectedRoutine !== 0 && (
-                <Flex layout="col-left" className="w-full">
-                  {filteredProducts.map((item, index) => {
-                    return (
-                      <Flex
-                        layout="col-left"
-                        className={`w-full text-derma-tertiary mb-6 pb-8 ${
-                          filteredProducts.length !== index + 1
-                            ? 'border-b border-hg-black300'
-                            : ''
-                        }`}
-                        key={index}
-                      >
-                        <Text className="text-derma-tertiary mb-2 font-semibold text-lg">
-                          {item.title}
-                        </Text>
-                        <Text className="text-sm mb-4">{item.subTitle}</Text>
-                        <Text className="text-sm text-hg-black400">
-                          {item.text}
-                        </Text>
-                        {!isEmpty(item.info) && (
-                          <Text
-                            size="sm"
-                            className="mt-4 bg-white text-hg-black400 p-2"
-                          >
-                            {item.info}
-                          </Text>
-                        )}
-                      </Flex>
-                    );
-                  })}
+        {showModal && (
+          <div className="bg-derma-secondary100 border-b border-hg-black relative min-h-screen">
+            <SvgCross
+              height={20}
+              width={20}
+              className="absolute top-4 right-4"
+              onClick={() => setShowModal(false)}
+            />
+            <div
+              style={{ minHeight: `calc(100dvh - ${modalBottomBarHeight})` }}
+            >
+              <Container className="pt-12 md:p-6">
+                <Image
+                  src={DERMA_ROUTINES[selectedRoutine].modalImgSrc}
+                  alt={DERMA_ROUTINES[selectedRoutine].name}
+                  width={324}
+                  height={396}
+                  className="w-2/3 shrink-0 mx-auto mb-8"
+                />
+                {selectedRoutine !== 0 && (
+                  <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
+                    {DERMA_TYPES[data!.routine]}
+                  </Text>
+                )}
+                <TitleDerma className="text-derma-primary mb-4">
+                  {DERMA_ROUTINES[selectedRoutine].name}
+                </TitleDerma>
+                <Flex
+                  layout="col-left"
+                  className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
+                >
+                  {DERMA_ROUTINES[selectedRoutine].bullets.map(
+                    (item, index) => {
+                      return (
+                        <Flex className="w-full gap-4 items-start" key={index}>
+                          <SvgCheckCircle className="text-derma-primary500 shrink-0 w-5 h-5" />
+                          <p
+                            className="text-hg-black500 text-sm md:text-md"
+                            dangerouslySetInnerHTML={{ __html: item }}
+                          />
+                        </Flex>
+                      );
+                    }
+                  )}
                 </Flex>
-              )}
-            </Container>
-          </div>
-          <Flex
-            className={`bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full h-[${modalBottomBarHeight}]`}
-          >
-            <div>
-              <Text className="text-3xl font-bold">
-                {DERMA_ROUTINES[selectedRoutine].price}
-              </Text>
-              {DERMA_ROUTINES[selectedRoutine].price !==
-                DERMA_ROUTINES[selectedRoutine].discountedPrice && (
-                <Text className="text-sm text-hg-error font-medium line-through">
-                  PVP {DERMA_ROUTINES[selectedRoutine].discountedPrice}
-                </Text>
-              )}
+                {selectedRoutine !== 0 && (
+                  <Flex layout="col-left" className="w-full">
+                    {filteredProducts.map((item, index) => {
+                      return (
+                        <Flex
+                          layout="col-left"
+                          className={`w-full text-derma-tertiary mb-6 pb-8 ${
+                            filteredProducts.length !== index + 1
+                              ? 'border-b border-hg-black300'
+                              : ''
+                          }`}
+                          key={index}
+                        >
+                          <Text className="text-derma-tertiary mb-2 font-semibold text-lg">
+                            {item.title}
+                          </Text>
+                          <Text className="text-sm mb-4">{item.subTitle}</Text>
+                          <Text className="text-sm text-hg-black400">
+                            {item.text}
+                          </Text>
+                          {!isEmpty(item.info) && (
+                            <Text
+                              size="sm"
+                              className="mt-4 bg-white text-hg-black400 p-2"
+                            >
+                              {item.info}
+                            </Text>
+                          )}
+                        </Flex>
+                      );
+                    })}
+                  </Flex>
+                )}
+              </Container>
             </div>
-            <Button size="lg" type="derma">
-              Quiero el pack
-            </Button>
-          </Flex>
-        </div>
+            <Flex
+              className={`bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full h-[${modalBottomBarHeight}]`}
+            >
+              <div>
+                <Text className="text-3xl font-bold">
+                  {DERMA_ROUTINES[selectedRoutine].price}
+                </Text>
+                {DERMA_ROUTINES[selectedRoutine].price !==
+                  DERMA_ROUTINES[selectedRoutine].discountedPrice && (
+                  <Text className="text-sm text-hg-error font-medium line-through">
+                    PVP {DERMA_ROUTINES[selectedRoutine].discountedPrice}
+                  </Text>
+                )}
+              </div>
+              <Button size="lg" type="derma">
+                Quiero el pack
+              </Button>
+            </Flex>
+          </div>
+        )}
       </Modal>
 
       <div className="bg-derma-secondary300 pb-12">
@@ -293,8 +298,8 @@ export default function UpsellingRoutines({
                   <Image
                     src={routine.imgSrc}
                     alt="Seguimiento online con tu dermatólogo"
-                    width={324}
-                    height={396}
+                    width={700}
+                    height={700}
                     className="w-[55%]"
                   />
 
@@ -331,6 +336,7 @@ export default function UpsellingRoutines({
                     }`}
                     onClick={() => {
                       setSelectedRoutine(index);
+
                       setTimeout(() => {
                         setShowModal(true);
                       }, 100);
