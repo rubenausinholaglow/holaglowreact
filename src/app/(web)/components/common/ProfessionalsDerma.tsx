@@ -6,7 +6,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { Professional } from 'app/types/clinic';
+import { Professional, ProfessionalType } from 'app/types/clinic';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
@@ -26,16 +26,35 @@ export default function ProfessionalsDerma({
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 
   useEffect(() => {
-    const professionalsWithCity = clinics.flatMap(clinic =>
-      clinic.professionals.filter(professional => {
-        if (professional.professionalType === 1) {
-          return {
-            ...professional,
-            city: clinic.city,
-          };
-        }
-      })
-    );
+    const professionalsWithCity: Professional[] = [
+      {
+        authorDescription: '',
+        collegiateNumber: '282857497',
+        description: '',
+        flowwwId: '',
+        id: '',
+        name: 'Dra. Ana Salido',
+        professionalType: ProfessionalType.Medical,
+        title: 'Médico estético especialista en dermocosmética',
+        tittleAbbreviation: '',
+        urlPhoto:
+          'https://budgetimages.blob.core.windows.net/derma/medicos/PHOTO-2024-02-14-11-07-42.jpg',
+      },
+      {
+        authorDescription: '',
+        collegiateNumber: '282886988',
+        description: '',
+        flowwwId: '',
+        id: '',
+        name: 'Dra. Pérez Badillo',
+        professionalType: ProfessionalType.Medical,
+        title:
+          'Médico especialista en dermatología con Master en medicina estética',
+        tittleAbbreviation: '',
+        urlPhoto:
+          'https://budgetimages.blob.core.windows.net/derma/medicos/PHOTO-2024-02-13-12-50-04.jpg',
+      },
+    ];
 
     setProfessionals(professionalsWithCity);
   }, [clinics]);

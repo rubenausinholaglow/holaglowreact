@@ -26,7 +26,9 @@ export default function ProfessionalCard({
         </div>
 
         <Text className="font-semibold">{professional.name}</Text>
-        <Text size="xs">{professional.title}</Text>
+        <Text size="xs" className="text-center">
+          {professional.title}
+        </Text>
         <Text size="xs">Núm. Col. {professional.collegiateNumber}</Text>
         <Text size="xs" className="text-hg-black500">
           {professional.city}
