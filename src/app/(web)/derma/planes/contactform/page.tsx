@@ -110,7 +110,13 @@ export default function ConctactForm() {
         priceDiscount,
         manualPrice
       );
-      await initializePayment(activePayment, user!, false, price * 100, true);
+      await initializePayment(
+        activePayment,
+        user!,
+        false,
+        Number(price) * 100,
+        true
+      );
     }
     if (
       activePayment != PaymentBank.None &&
