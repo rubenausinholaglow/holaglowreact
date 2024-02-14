@@ -5,6 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { EmlaType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -508,7 +509,11 @@ export default function Agenda({
                                       size="xs"
                                       className="w-full text-left"
                                     >
-                                      {product.applicationTimeMinutes} minutos
+                                      {product.emlaType === EmlaType.Required
+                                        ? product.applicationTimeMinutes * 2 +
+                                          ''
+                                        : product.applicationTimeMinutes.toString()}{' '}
+                                      minutos
                                     </Text>
                                   </div>
                                 </Flex>
