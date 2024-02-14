@@ -180,34 +180,12 @@ export default function Confirmation({
               layout="col-left"
               className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
             >
-              <a href={appointmentUrl} target="_blank">
-                <Button
-                  size="xl"
-                  type="tertiary"
-                  className="w-full"
-                  customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
-                >
-                  <Flex
-                    layout="row-center"
-                    className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
-                  >
-                    <SvgVideo />
-                  </Flex>
-                  Acceso a videollamada
-                </Button>
-              </a>
-
-              <Text className="text-hg-black500 text-xs mb-2">
-                Te acabamos de enviar este enlace de acceso a la cita a tu
-                Whatsapp y email.
-              </Text>
-
               <Button
-                ref={addToCalendarRef}
-                size="md"
+                size="xl"
                 type="tertiary"
+                ref={addToCalendarRef}
                 className="w-full"
-                customStyles="border-none bg-derma-secondary100 text-derma-primary font-normal justify-start pl-2"
+                customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
                 onClick={() =>
                   atcb_action(
                     {
@@ -231,9 +209,19 @@ export default function Confirmation({
                   )
                 }
               >
-                <SvgCalendar className="h-4 w-4 mr-2" />
+                <Flex
+                  layout="row-center"
+                  className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
+                >
+                  <SvgCalendar />
+                </Flex>
                 Añadir a mi calendario
               </Button>
+
+              <Text className="text-hg-black500 text-xs mb-2">
+                Te acabamos de enviar este enlace de acceso a la cita a tu
+                Whatsapp y email.
+              </Text>
             </Flex>
           )}
 

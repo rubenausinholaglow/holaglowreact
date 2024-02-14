@@ -54,7 +54,7 @@ export default function HeroDerma() {
                     width={140}
                     className="h-6 w-auto"
                   />
-                  <span className="mt-2">4,4</span>
+                  <span className="mt-2">4,5</span>
                 </Link>
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
