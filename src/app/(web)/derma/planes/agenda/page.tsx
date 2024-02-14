@@ -37,7 +37,7 @@ export default function AgendaDerma() {
               </Flex>
             </Flex>
 
-            <Agenda isDashboard={true} isDerma={true} />
+            <Agenda isDashboard={true} isDerma={true} isCheckout={true} />
           </Flex>
         </Container>
       </DermaLayout>
