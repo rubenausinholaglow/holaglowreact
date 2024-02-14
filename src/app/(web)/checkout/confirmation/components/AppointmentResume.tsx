@@ -115,7 +115,7 @@ export default function AppointmentResume({
 
     return (
       <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl">
-        <Image src={imgSrc} height={100} width={160} alt="seguimiento" />
+        <Image src={imgSrc} height={100} width={165} alt="seguimiento" />
       </Flex>
     );
   };
