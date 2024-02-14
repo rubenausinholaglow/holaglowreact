@@ -13,13 +13,13 @@ import * as errorsConfig from '@utils/textConstants';
 import { phoneValidationRegex } from '@utils/validators';
 import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { useSessionStore } from 'app/stores/globalStore';
 
 export default function Login({
   setIsLogged,
