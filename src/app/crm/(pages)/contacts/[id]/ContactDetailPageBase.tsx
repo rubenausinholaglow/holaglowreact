@@ -61,9 +61,9 @@ export default function ContactDetailPageBase({
   const [identifier, setIdentifier] = useState<string>('');
   const [commentReminder, setCommentReminder] = useState<string>('');
   const containerRef = useRef<HTMLDivElement>(null);
-  const { dataApi: dataWhatsapp, isLoading: isLoadingWhatsapp } = useAsyncClientGQL(
-    getContactWhatsapps(contactDetail?.id)
-  );
+  const { dataApi: dataWhatsapp, isLoading: isLoadingWhatsapp } =
+    useAsyncClientGQL(getContactWhatsapps(contactDetail?.id));
+  const [whatsappList, setWhatappList] = useState<any[]>([]);
 
   const handleContactReminder = (event: any) => {
     event.preventDefault();
@@ -165,6 +165,16 @@ export default function ContactDetailPageBase({
   ];
 
   useEffect(() => {
+    if (dataWhatsapp?.user?.whatsapps) {
+      const sortedWhatsapps = [...dataWhatsapp?.user?.whatsapps || []];
+      sortedWhatsapps.sort((a, b) => {
+        return new Date(a.time).getTime() - new Date(b.time).getTime();
+      });
+      setWhatappList(sortedWhatsapps);
+    }
+  }, [dataWhatsapp?.user?.whatsapps]);
+
+  useEffect(() => {
     scrollToBottom();
   }, [containerRef, dataWhatsapp]);
 
@@ -193,7 +203,7 @@ export default function ContactDetailPageBase({
           <WhatsApp
             contactDetail={contactDetail}
             isLoadingWhatsapp={isLoadingWhatsapp}
-            whatsappMessages={dataWhatsapp?.user?.whatsapps}
+            whatsappMessages={whatsappList}
           />
         </div>
       </div>
