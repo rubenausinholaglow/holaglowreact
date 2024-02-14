@@ -29,10 +29,12 @@ export default function Agenda({
   isDashboard = false,
   isCheckin = false,
   isDerma = false,
+  isCheckout = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
   isDerma?: boolean;
+  isCheckout?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -279,7 +281,7 @@ export default function Agenda({
           });
         } else if (!isDerma) {
           router.push('/checkout/contactform');
-        } else {
+        } else if (isDerma && isCheckout) {
           router.push('/planes/contactform');
         }
       } catch {
