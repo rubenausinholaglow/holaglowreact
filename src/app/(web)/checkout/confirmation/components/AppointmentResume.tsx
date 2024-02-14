@@ -7,6 +7,7 @@ import {
 } from '@radix-ui/react-accordion';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { DERMA_APPOINTMENT_IMAGE } from 'app/(web)/derma/planes/mockedData';
 import {
   SvgAngleDown,
   SvgCalendar,
@@ -14,7 +15,6 @@ import {
   SvgLocation,
 } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
-import { SvgCrema } from 'app/icons/suggestionIcons';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
@@ -101,15 +101,21 @@ export default function AppointmentResume({
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
 
-  const TreatmentImage = () => {
+  const TreatmentImage = ({ id }: { id: string }) => {
+    let imgSrc = '';
+
+    DERMA_APPOINTMENT_IMAGE.map(item => {
+      if (item.ids.includes(id)) {
+        imgSrc = item.imgSrc;
+      }
+    });
+
+    imgSrc =
+      imgSrc === '' ? '/images/derma/upselling/rutinaFacial.png' : imgSrc;
+
     return (
       <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl">
-        <Image
-          src="/images/derma/upselling/seguimiento.png"
-          height={100}
-          width={160}
-          alt="seguimiento"
-        />
+        <Image src={imgSrc} height={100} width={160} alt="seguimiento" />
       </Flex>
     );
   };
@@ -285,22 +291,13 @@ export default function AppointmentResume({
 
   return (
     <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
-      {isUpselling && <TreatmentImage />}
+      {isUpselling && <TreatmentImage id={selectedTreatments[0].id} />}
       <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
         <TreatmentName />
         <TreatmentDate />
         {isUpselling && <TreatmentPriceBreakdown hideTotal />}
         {!appointment && <AppointmentDataResume />}
       </Flex>
-
-      {(isUpselling || isDerma) && (
-        <Flex className="bg-derma-primary/20 p-4 text-derma-primary rounded-b-2xl w-full justify-between font-semibold">
-          <Text>Importe total</Text>
-          <div>
-            <Text>{selectedTreatments[0].price.toFixed(2)} €</Text>
-          </div>
-        </Flex>
-      )}
     </Flex>
   );
 }

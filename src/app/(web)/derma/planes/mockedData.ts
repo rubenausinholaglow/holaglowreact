@@ -116,3 +116,21 @@ export const DERMA_PRODUCTS = [
     id: '8c4775db-8dbc-4c90-ba8f-4a9c023f030d',
   },
 ];
+
+export const DERMA_APPOINTMENT_IMAGE = [
+  {
+    // consulta online
+    ids: ['7f01ff68-eb9c-4b9b-83b8-efaec37e49e7'],
+    imgSrc: DERMA_ROUTINES[0].modalImgSrc,
+  },
+  {
+    // rutina facial
+    ids: DERMA_TYPES_IDS,
+    imgSrc: DERMA_ROUTINES[1].modalImgSrc,
+  },
+  {
+    // rutina facial + seguimiento
+    ids: DERMA_BUNDLE_TYPES_IDS,
+    imgSrc: DERMA_ROUTINES[2].modalImgSrc,
+  },
+];
