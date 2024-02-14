@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { atcb_action } from 'add-to-calendar-button';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCalendar } from 'app/icons/Icons';
@@ -37,7 +37,10 @@ export default function Confirmation({
     appointmentUrl,
     selectedSlot,
     selectedDay,
+    selectedTreatments,
   } = useSessionStore(state => state);
+
+  const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
 
   const addToCalendarRef = useRef(null);
   let tips = [
@@ -91,6 +94,11 @@ export default function Confirmation({
       resetCart();
       setPayment(undefined);
     }
+
+    setisProbadorVirtual(
+      selectedTreatments[0].id ===
+        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+    );
   }, []);
 
   return (
@@ -165,12 +173,12 @@ export default function Confirmation({
         <div className="row-span-2 w-full">
           <div className="mb-8">
             {isDerma ? (
-              <AppointmentResume isProbadorVirtual={false} isDerma />
+              <AppointmentResume isDerma />
             ) : (
               <AppointmentResume
                 appointment={appointment}
-                isProbadorVirtual
-                isConfirmation
+                isProbadorVirtual={isProbadorVirtual}
+                bgColor="bg-hg-secondary100"
               />
             )}
           </div>

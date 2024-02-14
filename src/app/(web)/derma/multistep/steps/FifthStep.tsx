@@ -41,7 +41,7 @@ export default function FifthStep({
                     </Text>
                   </Flex>
                 </Flex>
-                <AppointmentResume isProbadorVirtual={false} isDerma />
+                <AppointmentResume isDerma />
               </Container>
             </div>
             <Container className="mt-8">
