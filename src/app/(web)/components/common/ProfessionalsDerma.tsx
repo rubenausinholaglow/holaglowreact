@@ -38,7 +38,7 @@ export default function ProfessionalsDerma({
         title: 'Médico estético especialista en dermocosmética',
         tittleAbbreviation: '',
         urlPhoto:
-          'https://budgetimages.blob.core.windows.net/derma/medicos/PHOTO-2024-02-14-11-07-42.jpg',
+          'https://budgetimages.blob.core.windows.net/derma/medicos/1.jpg',
       },
       {
         authorDescription: '',
@@ -52,7 +52,7 @@ export default function ProfessionalsDerma({
           'Médico especialista en dermatología con Master en medicina estética',
         tittleAbbreviation: '',
         urlPhoto:
-          'https://budgetimages.blob.core.windows.net/derma/medicos/PHOTO-2024-02-13-12-50-04.jpg',
+          'https://budgetimages.blob.core.windows.net/derma/medicos/2.jpg',
       },
     ];
 
