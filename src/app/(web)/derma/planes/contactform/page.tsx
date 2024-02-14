@@ -104,12 +104,13 @@ export default function ConctactForm() {
         postalCode: client.postalCode!,
         province: '',
       });
-      const price = getTotalFromCart(
+      let price = getTotalFromCart(
         cart,
         percentageDiscount,
         priceDiscount,
         manualPrice
       );
+      price = price.replaceAll(' ', '').replaceAll('€', '');
       await initializePayment(
         activePayment,
         user!,

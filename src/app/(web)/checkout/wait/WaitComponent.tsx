@@ -65,7 +65,6 @@ export default function WaitComponent() {
         }
       });
     }
-
     if (payment) {
       checkPaymentStatus(payment!.id);
     } else {
