@@ -1,8 +1,8 @@
 enum BudgetStatus {
-  Open = 1,
-  Finish = 2,
-  Rejected = 3,
-  Paid = 4,
+  Open = "Open",
+  Finish = "Finish",
+  Rejected = "Rejected",
+  Paid = "Paid",
 }
 
 interface GetBudgetStatusProps {

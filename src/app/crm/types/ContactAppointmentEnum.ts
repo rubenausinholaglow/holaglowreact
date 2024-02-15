@@ -1,13 +1,13 @@
 enum AppointmentStatus {
-  Open = 0,
-  ManualCanceled = 1,
-  NoShow = 2,
-  Moved = 3,
-  Confirmed = 4,
-  Finished = 5,
-  InProgress = 6,
-  CheckIn = 7,
-  AutomaticCancel = 8,
+  Open = 'Open',
+  ManualCanceled = 'ManualCanceled',
+  NoShow = 'NoShow',
+  Moved = 'Moved',
+  Confirmed = 'Confirmed',
+  Finished = 'Finished',
+  InProgress = 'InProgress',
+  CheckIn = 'CheckIn',
+  AutomaticCancel = 'AutomaticCancel',
 }
 
 interface GetAppointmentStatusProps {

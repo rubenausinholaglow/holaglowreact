@@ -7,28 +7,37 @@ import {
   CallDataTableContact,
   Comment,
   CommentDataTableContact,
+  Execution,
+  Lead,
   Task,
   TaskDataTableContact,
 } from '../types/Contact';
 import { getDateDayMonthYear, getDateWithTime } from './dateFormat';
 
 const concatenateProductName = (array: any[]) => {
-  const result = array.map(element => element.product.title).join(', ');
+  const result = array?.map(element => element.product.title).join(', ');
   return result;
 };
 
-const getLastTaskExecution = (executions: any) => {
-  return executions.slice(-1)[0];
+const concatenateTreatment = (treatments: any[]) => {
+  const result = treatments
+    ?.map(treatment => treatment.treatment.product.title)
+    .join(', ');
+  return result;
+};
+
+const getLastTaskExecution = (executions: Execution[]) => {
+  return executions?.slice(-1)[0];
 };
 
 export const mappingTasks = (contactDetailTasks: any) => {
   const model: TaskDataTableContact[] = [];
-  contactDetailTasks.forEach((task: Task) => {
+  contactDetailTasks?.forEach((task: Task) => {
     const newModel: TaskDataTableContact = {
-      creationDate: getDateWithTime(task.creationDate, '-'),
-      name: task.taskTemplate.name,
-      status: getLastTaskExecution(task.executions).status,
-      endDateTask: getDateWithTime(task.completedTime, '-'),
+      creationDate: getDateWithTime(task?.creationDate, '-'),
+      name: task?.taskTemplate?.name,
+      status: getLastTaskExecution(task?.executions)?.status,
+      endDateTask: getDateWithTime(task?.completedTime, '-'),
     };
     model.push(newModel);
   });
@@ -37,11 +46,11 @@ export const mappingTasks = (contactDetailTasks: any) => {
 
 export const mappingComments = (contactDetailComments: any) => {
   const model: CommentDataTableContact[] = [];
-  contactDetailComments.forEach((comment: Comment) => {
+  contactDetailComments?.forEach((comment: Comment) => {
     const newModel: CommentDataTableContact = {
-      agent: comment.agent ? comment.agent.username : '',
-      creationDate: getDateWithTime(comment.creationDate, '-'),
-      text: comment.text,
+      agent: comment?.agent ? comment?.agent?.username : '',
+      creationDate: getDateWithTime(comment?.creationDate, '-'),
+      text: comment?.text,
     };
     model.push(newModel);
   });
@@ -50,11 +59,11 @@ export const mappingComments = (contactDetailComments: any) => {
 
 export const mappingCalls = (contactDetailCalls: any) => {
   const model: CallDataTableContact[] = [];
-  contactDetailCalls.forEach((call: Call) => {
+  contactDetailCalls?.forEach((call: Call) => {
     const newModel: CallDataTableContact = {
-      startTimeCalls: getDateWithTime(call.startTime, '-'),
-      endTimeCalls: getDateWithTime(call.endTime, '-'),
-      status: call.status,
+      startTimeCalls: getDateWithTime(call?.startTime, '-'),
+      endTimeCalls: getDateWithTime(call?.endTime, '-'),
+      status: call?.status,
     };
     model.push(newModel);
   });
@@ -63,28 +72,33 @@ export const mappingCalls = (contactDetailCalls: any) => {
 
 export const mappingAppointments = (contactDetailAppointments: any) => {
   const model: AppointmentsDataTableContact[] = [];
-  contactDetailAppointments.forEach((appointment: Appointment) => {
-    const newModel: AppointmentsDataTableContact = {
-      status: appointment.status,
-      city: appointment.clinic.city,
-      dateAppointment: getDateDayMonthYear(appointment.date, '-'),
-      treatments: concatenateProductName(appointment.appointmentProducts),
-      startTimeAppointment: appointment.startTime,
-    };
-    model.push(newModel);
-  });
+  if (contactDetailAppointments) {
+    const concatenatedArray = []?.concat(
+      ...contactDetailAppointments.map((detail: Lead) => detail.appointments)
+    );
+    concatenatedArray?.forEach((appointment: Appointment) => {
+      const newModel: AppointmentsDataTableContact = {
+        status: appointment?.status,
+        city: appointment?.clinic?.city,
+        treatments: concatenateTreatment(appointment?.treatments),
+        dateAppointment: getDateDayMonthYear(appointment?.date, '-'),
+        startTimeAppointment: appointment?.startTime,
+      };
+      model.push(newModel);
+    });
+  }
   return model;
 };
 
 export const mappingBudgets = (contactDetailBudgets: any) => {
   const model: BudgetsDataTableContact[] = [];
-  contactDetailBudgets.forEach((budget: Budget) => {
+  contactDetailBudgets?.forEach((budget: Budget) => {
     const newModel: BudgetsDataTableContact = {
-      creationDate: getDateDayMonthYear(budget.creationDate, '-'),
-      productsText: concatenateProductName(budget.products),
+      creationDate: getDateDayMonthYear(budget?.creationDate, '-'),
+      productsText: concatenateProductName(budget?.products),
       actions: '>',
-      status: budget.statusBudget,
-      totalPrice: budget.totalPrice,
+      status: budget?.statusBudget,
+      totalPrice: budget?.totalPrice,
     };
     model.push(newModel);
   });

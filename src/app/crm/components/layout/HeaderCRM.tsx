@@ -10,7 +10,7 @@ export default function Header() {
         className="z-30 w-full top-0 sticky transition-all ml-64 mt-8 mb-2"
       >
         <div className="flex items-center text-center">
-          <p>/ {pathName.toString().substring(5, pathName.length)}</p>
+          <p>/ {pathName?.toString().substring(5, pathName?.length)}</p>
         </div>
       </header>
     </>

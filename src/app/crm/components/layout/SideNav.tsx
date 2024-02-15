@@ -49,7 +49,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
           <button
             onClick={toggleSubMenu}
             className={`flex flex-row items-center p-2 rounded-lg hover-bg-zinc-100 w-full justify-between ${
-              pathName.includes(item.path) ? 'bg-zinc-100 text-white' : ''
+              pathName?.includes(item.path) ? 'bg-zinc-100 text-white' : ''
             }`}
           >
             <div className="flex flex-row space-x-4 items-center">

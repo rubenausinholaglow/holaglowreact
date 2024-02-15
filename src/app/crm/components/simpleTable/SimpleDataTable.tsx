@@ -15,12 +15,12 @@ export default function SimpleDataTable({
 }: DataTableContactProps) {
   return (
     <div className="container mx-auto">
-      <div className="overflow-y-auto max-h-80 overflow-x-auto">
+      <div className="overflow-y-auto max-h-max overflow-x-auto" style={{height: "55vh"}}>
         <table className="table min-w-full border shadow">
           <thead>
-            <tr>
+            <tr className={'bg-white shadow-md sticky'} style={{ top: '-1px' }}>
               {columns.map(column => (
-                <th className="border-b p-2 text-left" key={column.key}>
+                <th className="border-b p-2 text-left " key={column.key}>
                   {column.name}
                 </th>
               ))}

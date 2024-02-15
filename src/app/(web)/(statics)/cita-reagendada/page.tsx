@@ -19,10 +19,10 @@ export default function RescheduledAppointment() {
   const [endTime, setEndTime] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    setCity(searchParams.get('city') || undefined);
-    setDate(searchParams.get('date') || undefined);
-    setStartTime(searchParams.get('startTime') || undefined);
-    setEndTime(searchParams.get('endTime') || undefined);
+    setCity(searchParams?.get('city') || undefined);
+    setDate(searchParams?.get('date') || undefined);
+    setStartTime(searchParams?.get('startTime') || undefined);
+    setEndTime(searchParams?.get('endTime') || undefined);
   }, []);
 
   function getClinicAddress(city: string | undefined) {

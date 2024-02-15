@@ -22,12 +22,14 @@ export interface ClientDetails {
   calls: Call[];
   appointments: Appointment[];
   budgets: Budget[];
+  whatsapps: WhatsappMessages[];
+  leads: Lead[];
 }
 
 export interface TaskDataTableContact {
   creationDate: string;
   name: string;
-  status: number; //Enum
+  status: string;
   endDateTask: string;
 }
 
@@ -55,7 +57,7 @@ export interface BudgetsDataTableContact {
   creationDate: string;
   productsText: string;
   totalPrice: number;
-  status: number;
+  status: string;
   actions: string;
 }
 
@@ -75,7 +77,7 @@ export interface Task {
   creationDate: string;
   id: string;
   reason: string;
-  status: number;
+  status: string;
   taskTemplate: TaskTemplate;
   executions: Execution[];
 }
@@ -119,9 +121,23 @@ export interface Budget {
   priceDiscount: number;
   products: Product[];
   referenceId: string;
-  statusBudget: number;
+  statusBudget: string;
   totalPrice: number;
   totalPriceWithIVA: number;
+}
+
+export interface WhatsappMessages {
+  time: string;
+  agent: Agent;
+  text: string;
+  id: string;
+  creationDate: string;
+  active: boolean;
+  received: boolean;
+}
+
+export interface Lead {
+  appointments: Appointment[];
 }
 
 interface Agent {
@@ -145,13 +161,13 @@ interface TaskTemplate {
   order: number;
 }
 
-interface Execution {
+export interface Execution {
   active: true;
   creationDate: string;
   endTime: string;
   id: string;
   startTime: string;
-  status: number;
+  status: string;
 }
 
 interface Clinic {
