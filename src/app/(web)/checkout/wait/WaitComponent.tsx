@@ -41,21 +41,35 @@ export default function WaitComponent() {
       await FinanceService.checkPaymentStatus(id).then(async x => {
         tries++;
         if (x) {
-          await ScheduleService.createAppointment(
-            selectedTreatments,
-            selectedSlot!,
-            selectedDay!,
-            selectedClinic!,
-            user!,
-            selectedPacksTreatments!,
-            analyticsMetrics,
-            id
-          ).then(y => {
-            if (y && y.length > 0) {
-              setAppointmentUrl(y[0].url);
+          if (selectedSlot) {
+            await ScheduleService.createAppointment(
+              selectedTreatments,
+              selectedSlot!,
+              selectedDay!,
+              selectedClinic!,
+              user!,
+              selectedPacksTreatments!,
+              analyticsMetrics,
+              id
+            ).then(y => {
+              if (y && y.length > 0) {
+                setAppointmentUrl(y[0].url);
+              }
+              router.push('/checkout/confirmation');
+            });
+          } else {
+            const treatments = selectedTreatments!.map(x => x.title).join(', ');
+            const createTicketResponse = await FinanceService.createTicket({
+              flowwwToken: user!.clinicToken,
+              paymentId: id,
+              treatmentTitle: treatments,
+            });
+            if (createTicketResponse) {
+              router.push('/checkout/confirmation');
+            } else {
+              router.push('/checkout/contactform?error=true');
             }
-            router.push('/checkout/confirmation');
-          });
+          }
         } else if (tries < 3) {
           setTimeout(async () => {
             await checkPaymentStatus(id);

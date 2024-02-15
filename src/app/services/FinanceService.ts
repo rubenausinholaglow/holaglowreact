@@ -36,6 +36,31 @@ export default class FinanceService {
     }
   }
 
+  static async createTicket(
+    createTicket: CreateTicketRequest
+  ): Promise<boolean> {
+    try {
+      const url = `${FinanceService.getFinanceUrl()}Ticket`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createTicket),
+      });
+
+      if (res.ok) {
+        return true;
+      } else {
+        Bugsnag.notify('Error createTicket ' + res);
+        return false;
+      }
+    } catch (error: any) {
+      Bugsnag.notify('Error createTicket ' + error);
+      return false;
+    }
+  }
+
   static async checkPaymentStatus(id: string): Promise<boolean> {
     try {
       const url = `${FinanceService.getFinanceUrl()}External/Status?id=` + id;
