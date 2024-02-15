@@ -119,21 +119,6 @@ export default function Form() {
     setTypeOfPayment(TypeOfPayment.Full);
 
     setCurrentUser(undefined);
-    const metrics: AnalyticsMetrics = {
-      device: 0,
-      locPhysicalMs: '',
-      utmAdgroup: '',
-      utmCampaign: '',
-      utmContent: '',
-      utmMedium: '',
-      utmSource: '',
-      utmTerm: '',
-      treatmentText: '',
-      externalReference: '',
-      interestedTreatment: '',
-      treatmentPrice: 0,
-    };
-    setAnalyticsMetrics(metrics);
     setPayment(undefined);
     initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
   }, []);
