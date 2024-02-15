@@ -5,6 +5,9 @@ import {
   AccordionItemProps,
   AccordionSingleProps,
 } from '@radix-ui/react-accordion';
+import { getTotalFromCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { DERMA_APPOINTMENT_IMAGE } from 'app/(web)/derma/planes/mockedData';
 import {
   SvgAngleDown,
   SvgCalendar,
@@ -12,7 +15,6 @@ import {
   SvgLocation,
 } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
-import { SvgCrema } from 'app/icons/suggestionIcons';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
@@ -27,17 +29,20 @@ import {
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import Image from 'next/image';
 
 export default function AppointmentResume({
   appointment,
-  isProbadorVirtual,
-  isConfirmation = false,
+  isProbadorVirtual = false,
   isDerma = false,
+  isUpselling = false,
+  bgColor = 'bg-white',
 }: {
   appointment?: Appointment;
-  isProbadorVirtual: boolean;
-  isConfirmation?: boolean;
+  isProbadorVirtual?: boolean;
   isDerma?: boolean;
+  isUpselling?: boolean;
+  bgColor?: string;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
@@ -50,6 +55,9 @@ export default function AppointmentResume({
     typeOfPayment,
   } = useSessionStore(state => state);
 
+  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
+    state => state
+  );
   const [city, setCity] = useState<string>('');
   const [address, setAddress] = useState<string>('');
 
@@ -93,195 +101,201 @@ export default function AppointmentResume({
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
 
-  return (
-    <Flex
-      layout="col-left"
-      className={`w-full md:px-0 ${!isDerma ? 'px-4 md:pr-8' : ''}`}
-    >
-      {!isDerma && (
-        <Text
-          className={`mb-4 hidden md:block ${
-            isConfirmation ? 'text-sm' : 'text-lg font-semibold'
-          }`}
-        >
-          Detalle de tu tratamiento
-        </Text>
-      )}
+  const TreatmentImage = ({ id }: { id: string }) => {
+    let imgSrc = '';
 
-      <div
-        className={`w-full rounded-xl overflow-hidden ${
-          isConfirmation ? 'bg-hg-secondary100 p-4' : 'bg-white'
-        }`}
-      >
+    DERMA_APPOINTMENT_IMAGE.map(item => {
+      if (item.ids.includes(id)) {
+        imgSrc = item.imgSrc;
+      }
+    });
+
+    imgSrc =
+      imgSrc === '' ? '/images/derma/upselling/rutinaFacial.png' : imgSrc;
+
+    return (
+      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl">
+        <Image src={imgSrc} height={100} width={165} alt="seguimiento" />
+      </Flex>
+    );
+  };
+
+  const TreatmentName = () => {
+    return <Text className="font-semibold">{selectedTreatmentsNames}</Text>;
+  };
+
+  const TreatmentDate = () => {
+    return (
+      <Flex layout="col-left" className="w-full gap-2 text-sm">
+        <div className="w-full flex items-center">
+          <SvgCalendar className="mr-2" />
+          <Text className="capitalize">
+            {localSelectedDay.format('dddd')}, {localSelectedDay.format('D')} de{' '}
+            {localSelectedDay.format('MMMM')} de{' '}
+            {localSelectedDay.format('YYYY')}
+          </Text>{' '}
+        </div>
+        {startTime && (
+          <div className="w-full flex items-center">
+            <SvgHour className="mr-2" />
+            {startTime}h
+          </div>
+        )}
+        <div className="w-full flex items-start">
+          <SvgLocation className="mr-2 mt-1" />
+          <div className="flex flex-col ">
+            <Text className="font-semibold">{city}</Text>
+            <Text>{address}</Text>
+          </div>
+        </div>
+      </Flex>
+    );
+  };
+
+  const TreatmentPriceBreakdown = ({
+    hideTotal = false,
+  }: {
+    hideTotal?: boolean;
+  }) => {
+    return (
+      <div className="w-full">
         <Flex
           layout="col-left"
-          className={`w-full gap-4 text-sm px-4 pt-4 ${
-            !isDerma ? 'md:p-0' : ''
-          }`}
+          className="w-full gap-2 text-xs text-hg-black400 bg-white/50 p-2 rounded-lg mb-4"
         >
-          <div className="w-full flex items-center">
-            <SvgCalendar className="mr-2" />
-            <Text className="font-semibold capitalize">
-              {localSelectedDay.format('dddd')}, {localSelectedDay.format('D')}{' '}
-              de {localSelectedDay.format('MMMM')} de{' '}
-              {localSelectedDay.format('YYYY')}
-            </Text>{' '}
-          </div>
-          <div className="w-full flex items-center ">
-            <SvgHour className="mr-2" />
-            <Text className="font-semibold">{startTime}h</Text>
-          </div>
-          {!isDerma && (
-            <div className="w-full flex items-start pb-6 border-b border-hg-black300 mb-6">
-              <SvgLocation className="mr-2 mt-1" />
-              <div className="flex flex-col text-sm">
-                <Text className="font-semibold">{city}</Text>
-                <Text>{address}</Text>
-              </div>
-            </div>
-          )}
-
-          {isDerma && (
-            <div className="w-full flex items-start pb-6">
-              <SvgCrema className="mr-2 mt-1 h-4 w-4 shrink-0" />
-              <Text>
-                Videoconsulta y receta para crema facial personalizada
-              </Text>
-            </div>
-          )}
-        </Flex>
-
-        {!appointment && (
-          <Accordion {...accordionProps}>
-            <AccordionItem {...accordionItemProps}>
-              {!isDerma && (
-                <>
-                  <AccordionTrigger className="group md:hidden">
-                    <Flex className="transition-all bg-hg-secondary100 group-radix-state-open:bg-hg-secondary300 w-full justify-between px-4 py-3 border-x border-white">
-                      <Flex className="gap-2 text-sm">
-                        <SvgBag height={16} width={16} /> Ver resumen del pedido
-                      </Flex>
-                      <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
-                    </Flex>
-                  </AccordionTrigger>
-
-                  <AccordionContent>
-                    <Flex
-                      layout="col-left"
-                      className="w-full gap-4 text-sm pt-6 px-4 md:px-0 md:pt-0"
-                    >
-                      <div className="flex flex-col w-full mb-3">
-                        <Text className="font-semibold mb-2">
-                          {selectedTreatmentsNames}
-                        </Text>
-                        {selectedTreatments &&
-                        selectedTreatments[0] &&
-                        selectedTreatments[0].isPack ? (
-                          <ul className="p-1">
-                            {selectedPacksTreatments &&
-                              selectedPacksTreatments.map(item => {
-                                return <li key={item.title}>- {item.title}</li>;
-                              })}
-                          </ul>
-                        ) : selectedTreatments[0] &&
-                          !isEmpty(selectedTreatments[0].appliedProducts) ? (
-                          selectedTreatments[0].appliedProducts.map(item => {
-                            return (
-                              <Flex
-                                key={item.titlte}
-                                className="items-start mb-1"
-                              >
-                                <Text className="text-hg-black400 text-sm">
-                                  {item.titlte}
-                                </Text>
-                              </Flex>
-                            );
-                          })
-                        ) : (
-                          <Flex className="items-start mb-2">
-                            {selectedTreatments[0] && (
-                              <Text>{selectedTreatments[0].description}</Text>
-                            )}
-                          </Flex>
-                        )}
-                      </div>
-                    </Flex>
-                    {selectedTreatments[0] &&
-                      selectedTreatments[0].price > 0 && (
-                        <Flex
-                          layout="col-left"
-                          className="w-full gap-4 text-sm text-hg-black400 px-4 md:px-0"
-                        >
-                          <Flex className="justify-between w-full">
-                            <Text>Importe sin IVA</Text>
-                            <Text className="font-semibold">
-                              {(selectedTreatments[0].price * 0.79).toFixed(2)}€
-                            </Text>
-                          </Flex>
-                          <Flex className="justify-between w-full border-b border-hg-black300 pb-6 mb-6">
-                            <Text>Impuestos</Text>
-                            <Text className="font-semibold">
-                              {(
-                                selectedTreatments[0].price -
-                                selectedTreatments[0].price * 0.79
-                              ).toFixed(2)}
-                              €
-                            </Text>
-                          </Flex>
-                        </Flex>
-                      )}
-
-                    {!isProbadorVirtual && selectedTreatments[0] && (
-                      <Flex
-                        layout="col-left"
-                        className="w-full gap-4 text-sm px-4 pb-6 md:px-0"
-                      >
-                        <Flex className="justify-between w-full">
-                          <Text>Total</Text>
-                          <Text className="font-semibold">
-                            {selectedTreatments[0].price.toFixed(2)}€
-                          </Text>
-                        </Flex>
-                        {typeOfPayment == TypeOfPayment.Reservation && (
-                          <Flex className="justify-between w-full">
-                            <Text>Pendiente de pago en clínica</Text>
-                            <Text className="font-semibold">
-                              {(selectedTreatments[0].price - 49).toFixed(2)}€
-                            </Text>
-                          </Flex>
-                        )}
-                      </Flex>
-                    )}
-                  </AccordionContent>
-                </>
-              )}
-
-              {!isProbadorVirtual && selectedTreatments[0] && (
-                <Flex
-                  className={`w-full justify-between px-4 py-3 border border-white rounded-b-xl md:border-none ${
-                    isDerma
-                      ? 'bg-derma-primary500/20 text-derma-primary'
-                      : 'bg-hg-secondary100 text-hg-secondary md:rounded-xl'
-                  } `}
-                >
-                  <Text>
-                    <span className="font-semibold">
-                      {isDerma ? 'Pago único' : 'Pagar ahora'}
-                    </span>
-                    {typeOfPayment == TypeOfPayment.Reservation &&
-                      ' (Anticipo)'}
-                  </Text>
+          <Flex className="justify-between w-full">
+            <Text>Importe sin IVA</Text>
+            <Text>{(selectedTreatments[0].price * 0.79).toFixed(2)} €</Text>
+          </Flex>
+          <Flex className="justify-between w-full ">
+            <Text>Impuestos</Text>
+            <Text>
+              {(
+                selectedTreatments[0].price -
+                selectedTreatments[0].price * 0.79
+              ).toFixed(2)}{' '}
+              €
+            </Text>
+          </Flex>
+          {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
+            <Flex layout="col-left" className="w-full gap-2">
+              <Flex className="justify-between w-full">
+                <Text>Total</Text>
+                <Text className="font-semibold">
+                  {selectedTreatments[0].price.toFixed(2)}€
+                </Text>
+              </Flex>
+              {typeOfPayment == TypeOfPayment.Reservation && (
+                <Flex className="justify-between w-full">
+                  <Text>Pendiente de pago en clínica</Text>
                   <Text className="font-semibold">
-                    {isDerma
-                      ? `${selectedTreatments[0].price.toFixed(2)}€`
-                      : '49€'}
+                    {(selectedTreatments[0].price - 49).toFixed(2)}€
                   </Text>
                 </Flex>
               )}
-            </AccordionItem>
-          </Accordion>
-        )}
+            </Flex>
+          )}
+        </Flex>
       </div>
+    );
+  };
+
+  const AppointmentDataResume = () => {
+    return (
+      <Accordion {...accordionProps} className="w-full mt-2">
+        <AccordionItem {...accordionItemProps}>
+          {!isDerma && (
+            <>
+              <AccordionTrigger className="group md:hidden">
+                <Flex className="transition-all bg-hg-secondary100 group-radix-state-open:bg-hg-secondary300 w-full justify-between px-4 py-3 rounded-lg">
+                  <Flex className="gap-2 text-sm">
+                    <SvgBag height={16} width={16} /> Ver resumen del pedido
+                  </Flex>
+                  <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
+                </Flex>
+              </AccordionTrigger>
+
+              <AccordionContent className="md:border-t md:pt-4">
+                <Flex
+                  layout="col-left"
+                  className="w-full gap-4 text-sm p-4 md:p-0"
+                >
+                  <Flex layout="col-left" className="w-full gap-2">
+                    <TreatmentName />
+                    {selectedTreatments &&
+                    selectedTreatments[0] &&
+                    selectedTreatments[0].isPack ? (
+                      <ul className="p-1">
+                        {selectedPacksTreatments &&
+                          selectedPacksTreatments.map(item => {
+                            return <li key={item.title}>- {item.title}</li>;
+                          })}
+                      </ul>
+                    ) : selectedTreatments[0] &&
+                      !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                      selectedTreatments[0].appliedProducts.map(item => {
+                        return (
+                          <Flex key={item.titlte} className="items-start mb-1">
+                            <Text className="text-hg-black400 text-sm">
+                              {item.titlte}
+                            </Text>
+                          </Flex>
+                        );
+                      })
+                    ) : (
+                      <Flex className="items-start mb-2">
+                        {selectedTreatments[0] && (
+                          <Text>{selectedTreatments[0].description}</Text>
+                        )}
+                      </Flex>
+                    )}
+                  </Flex>
+                  {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
+                    <TreatmentPriceBreakdown />
+                  )}
+                </Flex>
+              </AccordionContent>
+            </>
+          )}
+
+          {!isProbadorVirtual && selectedTreatments[0] && (
+            <Flex
+              className={`w-full justify-between px-4 py-3 rounded-lg md:border-none mt-0.5 ${
+                isDerma
+                  ? 'bg-derma-primary500/20 text-derma-primary'
+                  : 'bg-hg-secondary300 text-hg-secondary md:rounded-lg'
+              } `}
+            >
+              <Text>
+                <span className="font-semibold">Total</span>
+                {typeOfPayment == TypeOfPayment.Reservation && ' (Anticipo)'}
+              </Text>
+              <Text className="font-semibold">
+                {isDerma
+                  ? getTotalFromCart(
+                      cart,
+                      percentageDiscount,
+                      priceDiscount,
+                      manualPrice
+                    )
+                  : '49€'}
+              </Text>
+            </Flex>
+          )}
+        </AccordionItem>
+      </Accordion>
+    );
+  };
+
+  return (
+    <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
+      {isUpselling && <TreatmentImage id={selectedTreatments[0].id} />}
+      <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
+        <TreatmentName />
+        <TreatmentDate />
+        {isUpselling && <TreatmentPriceBreakdown hideTotal />}
+        {!appointment && <AppointmentDataResume />}
+      </Flex>
     </Flex>
   );
 }

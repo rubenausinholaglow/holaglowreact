@@ -54,15 +54,8 @@ export default function HeroDerma() {
                     width={140}
                     className="h-6 w-auto"
                   />
-                  <span className="mt-2">4,4</span>
+                  <span className="mt-2">4,5</span>
                 </Link>
-                {/* <Image
-                    src="/images/derma/home/trustPilotStarts.svg"
-                    alt="TrustPilot Derma by Holaglow"
-                    height={96}
-                    width={512}
-                    className="h-4 w-auto"
-                  /> */}
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
                 </Text>
@@ -90,12 +83,11 @@ export default function HeroDerma() {
 
                   <Flex layout="row-center" className="w-full md:justify-start">
                     <Button
-                      type="tertiary"
+                      type="derma"
                       size="xl"
                       className="lg:mb-12"
-                      customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
                       href="/multistep/start"
-                      id={'tmevent_multistep_module'}
+                      id="tmevent_derma_multistep_start"
                     >
                       Reserva tu videllamada
                     </Button>

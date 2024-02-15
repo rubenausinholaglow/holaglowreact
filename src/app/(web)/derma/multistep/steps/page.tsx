@@ -5,7 +5,7 @@ import './datePickerDermaStyle.css';
 import { useEffect, useState } from 'react';
 import { User } from '@interface/appointment';
 import { AnalyticsMetrics, Client } from '@interface/client';
-import { DermaQuestions } from '@interface/dermaquestions';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
 import { dermaService } from '@services/DermaService';
@@ -63,6 +63,8 @@ const CLIENT_INITIAL_VALUES = {
   treatmentPrice: 0,
   postalCode: '',
   origin: 'Derma',
+  city: '',
+  address: '',
 };
 
 export default function Form() {
@@ -100,17 +102,14 @@ export default function Form() {
 
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
-      productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA!;
-      productDetails.flowwwId = 5;
-      productDetails.title = 'Consulta personalizada de dermatología';
-      productDetails.price = 59;
       setSelectedTreatments([productDetails]);
       resetCart();
       addItemToCart(productDetails as CartItem);
     }
+    resetCart();
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
-      address: 'Videollamada',
+      address: 'Videollamada (recibirás el enlace el día de la cita)',
       city: '',
       flowwwId: '1',
       internalName: '',
@@ -136,7 +135,7 @@ export default function Form() {
     };
     setAnalyticsMetrics(metrics);
     setPayment(undefined);
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
+    initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
   }, []);
 
   useEffect(() => {

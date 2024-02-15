@@ -1,15 +1,18 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export const Container = ({
   isHeader = false,
   className,
   id,
+  style,
   children,
+  ...rest
 }: {
   isHeader?: boolean;
   className?: string;
   id?: string;
+  style?: CSSProperties;
   children: ReactNode;
 }) => {
   return (
@@ -19,6 +22,7 @@ export const Container = ({
           className ? className : ''
         } `
       )}
+      {...rest}
       {...(id && { id })}
     >
       {children}
