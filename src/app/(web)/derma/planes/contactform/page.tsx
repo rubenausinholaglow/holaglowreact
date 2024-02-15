@@ -93,7 +93,6 @@ export default function ConctactForm() {
       client.phone = client.phone.replaceAll(' ', '');
       if (client.phone.startsWith(client.phonePrefix))
         client.phone = client.phone.replace(client.phonePrefix, '');
-      debugger;
       await UserService.updateUser({
         address: client.address,
         birthday: '1990-01-01',
