@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Appointment } from '@interface/appointment';
 import {
   Accordion,
@@ -289,15 +289,19 @@ export default function AppointmentResume({
     );
   };
 
-  return (
-    <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
-      {isUpselling && <TreatmentImage id={selectedTreatments[0].id} />}
-      <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
-        <TreatmentName />
-        <TreatmentDate />
-        {isUpselling && <TreatmentPriceBreakdown hideTotal />}
-        {!appointment && <AppointmentDataResume />}
+  const appointmentComponent = useMemo(() => {
+    return (
+      <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
+        {isUpselling && <TreatmentImage id={selectedTreatments[0].id} />}
+        <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
+          <TreatmentName />
+          <TreatmentDate />
+          {isUpselling && <TreatmentPriceBreakdown hideTotal />}
+          {!appointment && <AppointmentDataResume />}
+        </Flex>
       </Flex>
-    </Flex>
-  );
+    );
+  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments]);
+
+  return appointmentComponent;
 }

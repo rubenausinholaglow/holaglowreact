@@ -42,7 +42,7 @@ export default function DermaBottomBar({
           href="/multistep/start"
           className="mr-4 pointer-events-auto w-full"
           customStyles="px-2"
-          id="tmevent_derma_multistep_start"
+          id="tmevent_derma_multistep_start_bottom"
         >
           Reserva tu videollamada
         </Button>
