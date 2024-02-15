@@ -225,11 +225,6 @@ export default function Confirmation({
                 </Flex>
                 Añadir a mi calendario
               </Button>
-
-              <Text className="text-hg-black500 text-xs mb-2">
-                Te acabamos de enviar este enlace de acceso a la cita a tu
-                Whatsapp y email.
-              </Text>
             </Flex>
           )}
 
