@@ -58,7 +58,6 @@ export default function WaitComponent() {
               router.push('/checkout/confirmation');
             });
           } else {
-            debugger;
             const treatments = selectedTreatments!.map(x => x.title).join(', ');
             const createTicketResponse = await FinanceService.createTicket({
               flowwwToken: user!.flowwwToken,
