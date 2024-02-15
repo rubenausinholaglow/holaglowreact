@@ -66,7 +66,7 @@ export default function UpsellingRoutines({
     resetCart();
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
-      address: 'Consulta online',
+      address: 'Videollamada (recibirás el enlace el día de la cita)',
       city: '',
       flowwwId: '1',
       internalName: '',
@@ -128,6 +128,8 @@ export default function UpsellingRoutines({
   }
 
   const selectProduct = async (id: number) => {
+    setShowModal(false);
+
     setCurrentUser(data?.user);
     switch (id) {
       case 1:
@@ -149,7 +151,7 @@ export default function UpsellingRoutines({
     <>
       <Modal
         isVisible={showModal}
-        width={deviceSize.isMobile ? 'w-full' : 'max-w-[550px]'}
+        width={deviceSize.isMobile ? 'w-full' : 'max-w-[500px]'}
         className="shadow-none"
         type="right"
         hideModalBackground
@@ -171,7 +173,7 @@ export default function UpsellingRoutines({
                   alt={DERMA_ROUTINES[selectedRoutine].name}
                   width={324}
                   height={396}
-                  className="w-2/3 shrink-0 mx-auto mb-8"
+                  className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
                 />
                 {selectedRoutine !== 0 && (
                   <Text className="mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block">
@@ -248,8 +250,12 @@ export default function UpsellingRoutines({
                   </Text>
                 )}
               </div>
-              <Button size="lg" type="derma">
-                Quiero el pack
+              <Button
+                size="xl"
+                type="derma"
+                onClick={() => selectProduct(selectedRoutine + 1)}
+              >
+                {DERMA_ROUTINES[selectedRoutine].cta}
               </Button>
             </Flex>
           </div>
