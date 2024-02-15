@@ -1,4 +1,5 @@
 import Bugsnag from '@bugsnag/js';
+import { CreateTicketRequest } from '@interface/createTicket';
 import { PaymentInitResponse } from '@interface/payment';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
