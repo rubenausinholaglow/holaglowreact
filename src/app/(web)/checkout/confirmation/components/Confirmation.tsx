@@ -96,8 +96,9 @@ export default function Confirmation({
     }
 
     setisProbadorVirtual(
-      selectedTreatments[0].id ===
-        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+      selectedTreatments.length > 0 &&
+        selectedTreatments[0].id ===
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
     );
   }, []);
 
