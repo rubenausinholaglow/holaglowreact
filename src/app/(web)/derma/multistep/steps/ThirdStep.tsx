@@ -1,11 +1,11 @@
 'use client';
 
+import { Dispatch, SetStateAction } from 'react';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { Dispatch, SetStateAction } from 'react';
 
 export default function ThirdStep({
   activeSlideIndex,
