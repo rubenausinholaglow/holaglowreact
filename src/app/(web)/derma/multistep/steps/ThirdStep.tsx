@@ -5,17 +5,20 @@ import { DermaQuestions } from '@interface/derma/dermaquestions';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { Dispatch, SetStateAction } from 'react';
 
 export default function ThirdStep({
   activeSlideIndex,
   client,
   setClient,
   dermaQuestions,
+  setContinueDisabled = undefined,
 }: {
   activeSlideIndex: number;
   client: Client;
   setClient: any;
   dermaQuestions: DermaQuestions;
+  setContinueDisabled?: Dispatch<SetStateAction<boolean>>;
 }) {
   const initialName = dermaQuestions.name;
   const spaceIndex = initialName?.indexOf(' ');
@@ -56,6 +59,7 @@ export default function ThirdStep({
                   hasContinueButton={false}
                   initialValues={{ ...client, name: name, surname: surName }}
                   setClientData={setClient}
+                  setContinueDisabled={setContinueDisabled}
                 />
               </Flex>
             </Flex>
