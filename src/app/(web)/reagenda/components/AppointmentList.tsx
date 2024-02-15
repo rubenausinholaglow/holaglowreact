@@ -159,13 +159,9 @@ export default function AppointmentList({
                   <Flex layout="row-between" className="w-full mt-6">
                     <Button
                       size={deviceSize.isMobile ? 'sm' : 'md'}
-                      type="tertiary"
                       id="button-addon2"
-                      customStyles={
-                        isDerma
-                          ? 'border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary'
-                          : 'bg-hg-primary'
-                      }
+                      type={isDerma ? 'derma' : 'tertiary'}
+                      customStyles={!isDerma ? 'bg-hg-primary' : ''}
                       onClick={() => {
                         rescheduleAppointment(appointment);
                       }}

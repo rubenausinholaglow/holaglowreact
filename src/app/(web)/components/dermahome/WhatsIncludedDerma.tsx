@@ -30,9 +30,9 @@ export default function WhatsIncludedDerma() {
             >
               <Button
                 size="xl"
-                type="tertiary"
+                type="derma"
                 href="/multistep/start"
-                customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
+                id="tmevent_derma_multistep_start_middle"
               >
                 Comienza ahora
               </Button>
@@ -94,10 +94,11 @@ export default function WhatsIncludedDerma() {
                 />
 
                 <Button
-                  type="tertiary"
+                  type="derma"
                   size="lg"
                   href="/multistep/start"
-                  customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary md:hidden"
+                  customStyles="md:hidden"
+                  id="tmevent_derma_multistep_start_middle"
                 >
                   Comienza ahora
                 </Button>

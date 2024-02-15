@@ -29,10 +29,12 @@ export default function Agenda({
   isDashboard = false,
   isCheckin = false,
   isDerma = false,
+  isCheckout = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
   isDerma?: boolean;
+  isCheckout?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -91,7 +93,7 @@ export default function Agenda({
         selectedTreatments[0].type
       ];
   }
-  if (isDerma) maxDays = 365;
+  if (isDerma) maxDays = 90;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -279,12 +281,13 @@ export default function Agenda({
           });
         } else if (!isDerma) {
           router.push('/checkout/contactform');
+        } else if (isDerma && isCheckout) {
+          router.push('/planes/contactform');
         }
       } catch {
         setShowErrorMessage(true);
       }
     }
-
     if (selectedSlot && enableScheduler && !loadingDays && !loadingMonth) {
       schedule();
     }

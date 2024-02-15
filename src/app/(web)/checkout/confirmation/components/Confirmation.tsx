@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { atcb_action } from 'add-to-calendar-button';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCalendar } from 'app/icons/Icons';
@@ -37,7 +37,10 @@ export default function Confirmation({
     appointmentUrl,
     selectedSlot,
     selectedDay,
+    selectedTreatments,
   } = useSessionStore(state => state);
+
+  const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
 
   const addToCalendarRef = useRef(null);
   let tips = [
@@ -91,6 +94,11 @@ export default function Confirmation({
       resetCart();
       setPayment(undefined);
     }
+
+    setisProbadorVirtual(
+      selectedTreatments[0].id ===
+        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+    );
   }, []);
 
   return (
@@ -165,12 +173,12 @@ export default function Confirmation({
         <div className="row-span-2 w-full">
           <div className="mb-8">
             {isDerma ? (
-              <AppointmentResume isProbadorVirtual={false} isDerma />
+              <AppointmentResume isDerma />
             ) : (
               <AppointmentResume
                 appointment={appointment}
-                isProbadorVirtual
-                isConfirmation
+                isProbadorVirtual={isProbadorVirtual}
+                bgColor="bg-hg-secondary100"
               />
             )}
           </div>
@@ -180,34 +188,12 @@ export default function Confirmation({
               layout="col-left"
               className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
             >
-              <a href={appointmentUrl} target="_blank">
-                <Button
-                  size="xl"
-                  type="tertiary"
-                  className="w-full"
-                  customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
-                >
-                  <Flex
-                    layout="row-center"
-                    className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
-                  >
-                    <SvgVideo />
-                  </Flex>
-                  Acceso a videollamada
-                </Button>
-              </a>
-
-              <Text className="text-hg-black500 text-xs mb-2">
-                Te acabamos de enviar este enlace de acceso a la cita a tu
-                Whatsapp y email.
-              </Text>
-
               <Button
-                ref={addToCalendarRef}
-                size="md"
+                size="xl"
                 type="tertiary"
+                ref={addToCalendarRef}
                 className="w-full"
-                customStyles="border-none bg-derma-secondary100 text-derma-primary font-normal justify-start pl-2"
+                customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
                 onClick={() =>
                   atcb_action(
                     {
@@ -231,7 +217,12 @@ export default function Confirmation({
                   )
                 }
               >
-                <SvgCalendar className="h-4 w-4 mr-2" />
+                <Flex
+                  layout="row-center"
+                  className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
+                >
+                  <SvgCalendar />
+                </Flex>
                 Añadir a mi calendario
               </Button>
             </Flex>

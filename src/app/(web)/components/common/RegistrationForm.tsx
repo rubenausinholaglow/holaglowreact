@@ -36,6 +36,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   initialValues,
   setClientData,
   showPostalCode = false,
+  showCity = false,
+  showAddress = false,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -45,6 +47,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   initialValues?: Client;
   setClientData?: Dispatch<SetStateAction<Client>>;
   showPostalCode?: boolean;
+  showCity?: boolean;
+  showAddress?: boolean;
 }) => {
   const routes = useRoutes();
 
@@ -86,6 +90,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     treatmentPrice: 0,
     postalCode: '',
     origin: '',
+    city: '',
+    address: '',
   });
 
   useEffect(() => {
@@ -318,6 +324,28 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               {errorsConfig.ERROR_POSTALCODE_NOT_VALID}
             </p>
           )}
+        </>
+      )}
+      {showCity && (
+        <>
+          <TextInputField
+            placeholder="Ciudad"
+            value={formData.city!}
+            onChange={event => {
+              handleFieldChange(event, 'city');
+            }}
+          />
+        </>
+      )}
+      {showAddress && (
+        <>
+          <TextInputField
+            placeholder="Dirección de entrega"
+            value={formData.address!}
+            onChange={event => {
+              handleFieldChange(event, 'address');
+            }}
+          />
         </>
       )}
       <Flex layout="col-left" className="my-2 mb-4">

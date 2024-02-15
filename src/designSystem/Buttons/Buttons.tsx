@@ -180,8 +180,11 @@ const ButtonBody = ({
     tertiary: `bg-white ${
       color ? color : 'text-hg-black border border-hg-black'
     }`,
-    derma:
-      'bg-derma-primary text-white group-hover:bg-derma-primary500 group-hover:text-derma-primary',
+    derma: `bg-derma-primary text-white ${
+      !disabled
+        ? 'group-hover:bg-derma-primary500 group-hover:text-derma-primary'
+        : ''
+    }`,
     dermaDark: `bg-derma-tertiary text-white ${
       !disabled ? 'group-hover:bg-derma-tertiaryDark' : ''
     }`,
@@ -200,7 +203,7 @@ const ButtonBody = ({
   const styles = twMerge(
     `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
       isAnimated ? STYLES.animations : ''
-    }${disabled ? DISABLED_STYLES : ''}`
+    } ${disabled ? DISABLED_STYLES : ''}`
   );
 
   return (
