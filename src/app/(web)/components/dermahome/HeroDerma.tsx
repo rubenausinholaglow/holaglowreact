@@ -1,5 +1,6 @@
 'use client';
 
+import CheckHydration from '@utils/CheckHydration';
 import { useSessionStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
@@ -20,7 +21,7 @@ export default function HeroDerma() {
   const HEADER_HEIGHT_CLASS = `-${HEADER_HEIGHT}px`;
 
   return (
-    <>
+    <CheckHydration>
       <Flex
         layout="col-left"
         className="bg-gradient-30deg from-[#23D9B74D] to-[#FFC7C74D] pt-16 md:flex-row md:items-end overflow-hidden"
@@ -98,6 +99,6 @@ export default function HeroDerma() {
           </Container>
         </Flex>
       </Flex>
-    </>
+    </CheckHydration>
   );
 }

@@ -129,10 +129,12 @@ export default function AppointmentResume({
       <Flex layout="col-left" className="w-full gap-2 text-sm">
         <div className="w-full flex items-center">
           <SvgCalendar className="mr-2" />
-          <Text className="capitalize">
-            {localSelectedDay.format('dddd')}, {localSelectedDay.format('D')} de{' '}
-            {localSelectedDay.format('MMMM')} de{' '}
-            {localSelectedDay.format('YYYY')}
+          <Text>
+            <span className="capitalize">
+              {localSelectedDay.format('dddd')},{' '}
+            </span>
+            {localSelectedDay.format('D')} de {localSelectedDay.format('MMMM')}{' '}
+            de {localSelectedDay.format('YYYY')}
           </Text>{' '}
         </div>
         {startTime && (
