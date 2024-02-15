@@ -97,7 +97,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   useEffect(() => {
     if (initialValues) {
       setFormData(initialValues);
-      validatePhoneInput(initialValues.phone);
     }
   }, []);
 

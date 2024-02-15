@@ -40,7 +40,7 @@ export default function ConctactForm() {
   const [client, setClient] = useState<Client>({
     email: user?.email ?? '',
     phone: '+34' + user?.phone ?? '',
-    phonePrefix: '+34',
+    phonePrefix: '',
     name: user?.firstName ?? '',
     surname: user?.lastName ?? '',
     secondSurname: user?.secondLastName ?? '',
@@ -90,9 +90,6 @@ export default function ConctactForm() {
 
   useEffect(() => {
     async function checkout() {
-      client.phone = client.phone.replaceAll(' ', '');
-      if (client.phone.startsWith(client.phonePrefix))
-        client.phone = client.phone.replace(client.phonePrefix, '');
       await UserService.updateUser({
         address: client.address,
         birthday: '1990-01-01',
