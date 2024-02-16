@@ -45,6 +45,7 @@ export interface RegistrationFormProps {
   isEmbed?: boolean;
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
+  setContinueDisabled?: Dispatch<SetStateAction<boolean>>;
   showPostalCode?: boolean;
   showCity?: boolean;
   showAddress?: boolean;

@@ -36,6 +36,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   page = '',
   initialValues,
   setClientData,
+  setContinueDisabled = undefined,
   showPostalCode = false,
   showCity = false,
   showAddress = false,
@@ -47,6 +48,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   page?: string;
   initialValues?: Client;
   setClientData?: Dispatch<SetStateAction<Client>>;
+  setContinueDisabled?: Dispatch<SetStateAction<boolean>>;
   showPostalCode?: boolean;
   showCity?: boolean;
   showAddress?: boolean;
@@ -118,8 +120,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !showEmailError
     ) {
       setIsDisabled(false);
+      if (setContinueDisabled) setContinueDisabled(false);
     } else {
       setIsDisabled(true);
+      if (setContinueDisabled) setContinueDisabled(true);
     }
   }, [formData, showPhoneError, showEmailError]);
 

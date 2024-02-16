@@ -121,6 +121,7 @@ export default function Form() {
     setCurrentUser(undefined);
     setPayment(undefined);
     initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
+    setClient(CLIENT_INITIAL_VALUES);
   }, []);
 
   useEffect(() => {
@@ -130,25 +131,16 @@ export default function Form() {
     if (activePayment != PaymentBank.None && cart.length > 0) checkout();
   }, [activePayment]);
 
-  useEffect(() => {
-    if (client && validFormData(client, [])) setContinueDisabled(false);
-  }, [selectedSlot, client]);
-
   const goBack = (index: number) => {
     setActiveSlideIndex(index - 1);
     setContinueDisabled(false);
   };
 
   useEffect(() => {
-    if (activeSlideIndex === 4) {
-      setClient(CLIENT_INITIAL_VALUES);
-      setContinueDisabled(true);
-    }
-
-    if (activeSlideIndex === 5 && isEmpty(selectedSlot)) {
-      setContinueDisabled(true);
-    }
-  }, [activeSlideIndex, selectedSlot]);
+    if (activeSlideIndex === 5 && !isEmpty(selectedSlot)) {
+      setContinueDisabled(false);
+    } else setContinueDisabled(true);
+  }, [selectedSlot]);
 
   const goNext = (index: number) => {
     if (client && client.email && !createdUser) {
@@ -257,6 +249,7 @@ export default function Form() {
                 client={client}
                 setClient={setClient}
                 dermaQuestions={dermaQuestions}
+                setContinueDisabled={setContinueDisabled}
               />
             </div>
 
