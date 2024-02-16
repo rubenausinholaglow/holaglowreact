@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import useAsyncClient from '@utils/useAsyncClient';
 import { useSessionStore } from 'app/stores/globalStore';
 
+import DialogWpp from './DialogWpp';
 import { SvgPlus, SvgSendMessage } from './WhatsAppIcons';
 
 interface InputWppProps {
@@ -13,6 +14,7 @@ export default function InputWpp({ userId }: InputWppProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
   const [disableSendButton, setDisableSendButton] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const { postData } = useAsyncClient(
     `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsapp`,
     'PUT'
@@ -22,6 +24,10 @@ export default function InputWpp({ userId }: InputWppProps) {
     if (event.key === 'Enter') {
       sendWhatsApp();
     }
+  };
+
+  const handleDialog = () => {
+    setOpenDialog(!openDialog);
   };
 
   const sendWhatsApp = () => {
@@ -40,11 +46,14 @@ export default function InputWpp({ userId }: InputWppProps) {
     postData(body, headers);
     setInput('');
     setDisableSendButton(false);
-  }
+  };
 
   return (
     <div className="bg-grey-lighter px-4 py-4 flex items-center">
-      <button className="flex space-x-1 items-center px-0.5 py-2 hover:bg-gray-200 rounded-full">
+      <button
+        className="flex space-x-1 items-center px-0.5 py-2 hover:bg-gray-200 rounded-full"
+        onClick={handleDialog}
+      >
         <SvgPlus />
       </button>
       <div className="flex-1 mx-4">
@@ -67,6 +76,7 @@ export default function InputWpp({ userId }: InputWppProps) {
       >
         <SvgSendMessage />
       </button>
+      <DialogWpp isOpenDialog={openDialog} handleDialog={handleDialog} handleSelect={() => {}} />
     </div>
   );
 }
