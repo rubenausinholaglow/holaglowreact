@@ -5,6 +5,7 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
+import CheckHydration from '@utils/CheckHydration';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -130,11 +131,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       event.target.type === 'checkbox'
         ? event.target.checked
         : event.target.value;
+
+    console.log(value, field);
     setFormData(prevFormData => ({
       ...prevFormData,
       [field]: value,
     }));
   };
+
+  console.log(formData.phone, formData.phonePrefix);
 
   useEffect(() => {
     if (setClientData) setClientData(formData);

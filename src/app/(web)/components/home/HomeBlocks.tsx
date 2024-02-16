@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Container } from 'designSystem/Layouts/Layouts';
 
 import { useSessionStore } from '../../../stores/globalStore';
 import Clinics from '../common/Clinics';
+import RegistrationForm from '../common/RegistrationForm';
 import MainLayout from '../layout/MainLayout';
 import FloatingBottomBar from './FloatingBottomBar';
 import GoogleStars from './GoogleStars';
@@ -31,7 +33,11 @@ export default function HomeBlocks() {
 
   return (
     <MainLayout>
-      <Hero />
+      <Container>
+        <RegistrationForm />
+      </Container>
+
+      {/* <Hero />
       <GoogleStars />
       <ValuesCarousel />
       <HomePromo />
@@ -43,7 +49,7 @@ export default function HomeBlocks() {
       <Testimonials />
       <Clinics />
       <GoToTreatments />
-      {deviceSize.isMobile && <FloatingBottomBar threshold={1200} />}
+      {deviceSize.isMobile && <FloatingBottomBar threshold={1200} />} */}
     </MainLayout>
   );
 }
