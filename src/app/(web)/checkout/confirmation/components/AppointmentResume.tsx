@@ -301,7 +301,7 @@ export default function AppointmentResume({
         </Flex>
       </Flex>
     );
-  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments]);
+  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments, address]);
 
   return appointmentComponent;
 }
