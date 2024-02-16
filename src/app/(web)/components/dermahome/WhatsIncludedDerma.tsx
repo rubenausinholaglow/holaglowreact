@@ -49,7 +49,7 @@ export default function WhatsIncludedDerma() {
               <Flex className="gap-4 mb-6">
                 <Image
                   src="/images/derma/home/firstAppointment.svg"
-                  alt="Primera cita"
+                  alt="Primera consulta"
                   height={48}
                   width={48}
                 />
@@ -88,9 +88,9 @@ export default function WhatsIncludedDerma() {
                 <Image
                   src="/images/derma/home/cream.png?1"
                   alt="Holaglow"
-                  width={200}
-                  height={444}
-                  className="w-[130px] shrink-0 -translate-x-[10%]"
+                  width={500}
+                  height={500}
+                  className="w-[300px] shrink-0"
                 />
 
                 <Button
