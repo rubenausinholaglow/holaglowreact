@@ -33,7 +33,7 @@ export default function ProductPrices({
       const allProducts = product.upgrades.map(item => item.product);
       setProductITems(allProducts);
     }
-  }, [product]);
+  }, []);
 
   useEffect(() => {
     if (!isEmpty(productItems)) {

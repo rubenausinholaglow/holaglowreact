@@ -31,8 +31,10 @@ import ProductSuggestions from './ProductSuggestions';
 
 export default function ProductDetailPage({
   params,
+  productData,
 }: {
   params: { slug: string; isDashboard: boolean };
+  productData: Product | null;
 }) {
   const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
     state => state
@@ -42,7 +44,7 @@ export default function ProductDetailPage({
 
   const [isHydrated, setIsHydrated] = useState(false);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<Product | null>(productData);
   const [productId, setProductId] = useState('0');
   const { slug, isDashboard } = params;
 
@@ -53,6 +55,10 @@ export default function ProductDetailPage({
   });
 
   useEffect(() => {
+    setProduct(productData);
+  }, []);
+
+  useEffect(() => {
     if (!isEmpty(stateProducts)) {
       setProductsAreLoaded(true);
     }
@@ -61,7 +67,7 @@ export default function ProductDetailPage({
     }
   }, [stateProducts, dashboardProducts]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
       setProduct(productDetails);
@@ -91,11 +97,9 @@ export default function ProductDetailPage({
       initProduct(productId);
       setProduct(isEmpty(product) ? null : product);
     }
-  }, [productsAreLoaded, slug]);
+  }, [productsAreLoaded, slug]); */
 
   useEffect(() => {
-    setProduct(null);
-
     const fetchProduct = async () => {
       try {
         if (productHighlighted?.id) {
@@ -109,12 +113,16 @@ export default function ProductDetailPage({
       }
     };
 
-    fetchProduct();
+    if (productHighlighted) {
+      //fetchProduct();
+    }
   }, [productHighlighted]);
 
-  if (!productsAreLoaded || !isHydrated) {
+  if (!productsAreLoaded) {
     return <></>;
   }
+
+  console.log(product?.upgrades);
 
   if (product && product != undefined && !isEmpty(product)) {
     return (
