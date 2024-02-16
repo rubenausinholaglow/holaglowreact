@@ -33,7 +33,7 @@ export default function ProfessionalsDerma({
         description: '',
         flowwwId: '',
         id: '',
-        name: 'Dra. Ana Salido',
+        name: 'Dra. Salido Rentería',
         professionalType: ProfessionalType.Medical,
         title: 'Médico estético especialista en dermocosmética',
         tittleAbbreviation: '',
