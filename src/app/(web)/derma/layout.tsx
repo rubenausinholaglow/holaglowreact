@@ -1,4 +1,5 @@
 import 'app/globals.derma.css';
+
 import App from './../components/layout/App';
 
 export const metadata = {

@@ -37,7 +37,7 @@ export const PaymentModule = () => {
   const router = useRouter();
 
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
-  const [setOnLoad] = useState(false);
+  const [_, setOnLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
