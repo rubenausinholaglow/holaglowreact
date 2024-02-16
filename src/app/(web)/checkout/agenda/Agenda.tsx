@@ -66,6 +66,7 @@ export default function Agenda({
   const [currentMonth, setcurrentMonth] = useState(dayjs());
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
+  if (isDashboard) maxDays = 9999;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
