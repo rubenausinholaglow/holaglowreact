@@ -4,6 +4,7 @@ import useAsyncClient from '@utils/useAsyncClient';
 import { useSessionStore } from 'app/stores/globalStore';
 
 import DialogWpp from './DialogWpp';
+import ModalTemplate from './ModalTemplate';
 import { SvgPlus, SvgSendMessage } from './WhatsAppIcons';
 
 interface InputWppProps {
@@ -15,6 +16,7 @@ export default function InputWpp({ userId }: InputWppProps) {
   const [input, setInput] = useState('');
   const [disableSendButton, setDisableSendButton] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openModalTemplate, setOpenModalTemplate] = useState(false);
   const { postData } = useAsyncClient(
     `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsapp`,
     'PUT'
@@ -28,6 +30,17 @@ export default function InputWpp({ userId }: InputWppProps) {
 
   const handleDialog = () => {
     setOpenDialog(!openDialog);
+  };
+
+  const handleDialogOption = (option: string) => {
+    if (option === 'Template') {
+      handleModalTemplate();
+    }
+  };
+
+  const handleModalTemplate = () => {
+    setOpenDialog(false);
+    setOpenModalTemplate(!openModalTemplate);
   };
 
   const sendWhatsApp = () => {
@@ -76,7 +89,12 @@ export default function InputWpp({ userId }: InputWppProps) {
       >
         <SvgSendMessage />
       </button>
-      <DialogWpp isOpenDialog={openDialog} handleDialog={handleDialog} handleSelect={() => {}} />
+      <DialogWpp
+        isOpenDialog={openDialog}
+        handleDialog={handleDialog}
+        handleDialogOption={handleDialogOption}
+      />
+      <ModalTemplate isOpen={openModalTemplate} handleModalTemplate={handleModalTemplate} />
     </div>
   );
 }

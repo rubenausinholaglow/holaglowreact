@@ -3,13 +3,13 @@ import React from 'react';
 interface DialogWppProps {
   isOpenDialog: boolean;
   handleDialog: any;
-  handleSelect: (option: string) => void;
+  handleDialogOption: (option: string) => void;
 }
 
 export default function DialogWpp({
   isOpenDialog,
   handleDialog,
-  handleSelect,
+  handleDialogOption,
 }: DialogWppProps) {
   const handleCloseDialog = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -19,16 +19,13 @@ export default function DialogWpp({
 
   return (
     isOpenDialog && (
-      <div
-        className="absolute z-50 bottom-24"
-        onClick={handleCloseDialog}
-      >
+      <div className="absolute z-50 bottom-24" onClick={handleCloseDialog}>
         <div className="bg-white p-4 rounded-lg shadow-md">
           <ul>
             <li className="mb-4">
               <button
                 className="flex items-center space-x-2"
-                onClick={() => handleSelect('Imagen')}
+                onClick={() => handleDialogOption('Imagen')}
                 disabled
               >
                 <span>Imagen</span>
@@ -37,7 +34,7 @@ export default function DialogWpp({
             <li className="mb-4">
               <button
                 className="flex items-center space-x-2"
-                onClick={() => handleSelect('Video')}
+                onClick={() => handleDialogOption('Video')}
                 disabled
               >
                 <span>Video</span>
@@ -46,7 +43,7 @@ export default function DialogWpp({
             <li>
               <button
                 className="flex items-center space-x-2"
-                onClick={() => handleSelect('Template')}
+                onClick={() => handleDialogOption('Template')}
               >
                 <span>Template</span>
               </button>
