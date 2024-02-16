@@ -1,13 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Bugsnag from '@bugsnag/js';
 import { Product } from '@interface/product';
-import ProductService from '@services/ProductService';
 import CheckHydration from '@utils/CheckHydration';
 import { setSeoMetaData } from '@utils/common';
 import { fetchProduct } from '@utils/fetch';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import isEmpty from 'lodash/isEmpty';
@@ -37,10 +34,7 @@ export default function ProductPage({
   useEffect(() => {
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
-
       setProduct(productDetails);
-
-      console.log(productDetails.upgrades);
 
       setSeoMetaData(
         productDetails.extraInformation.seoTitle,
@@ -61,8 +55,6 @@ export default function ProductPage({
       setProduct(isEmpty(product) ? null : product);
     }
   }, [productsAreLoaded, slug]);
-
-  console.log(product?.upgrades);
 
   if (!productId) {
     redirect('/tratamientos');

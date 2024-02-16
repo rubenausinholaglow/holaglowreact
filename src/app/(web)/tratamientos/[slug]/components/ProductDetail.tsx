@@ -31,10 +31,10 @@ import ProductSuggestions from './ProductSuggestions';
 
 export default function ProductDetailPage({
   params,
-  productData,
+  productData = null,
 }: {
   params: { slug: string; isDashboard: boolean };
-  productData: Product | null;
+  productData?: Product | null;
 }) {
   const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
     state => state
