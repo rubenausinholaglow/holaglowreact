@@ -21,7 +21,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { isEmpty, max } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -63,7 +63,8 @@ export default function Agenda({
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [currentMonth, setcurrentMonth] = useState(dayjs());
   const format = 'YYYY-MM-DD';
-  let maxDays = 9999;
+  let maxDays = 60;
+  if (isDashboard) maxDays = 9999;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
