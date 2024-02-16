@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { atcb_action } from 'add-to-calendar-button';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCalendar } from 'app/icons/Icons';
-import { SvgArrow, SvgCheck, SvgVideo } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheck } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -34,7 +34,6 @@ export default function Confirmation({
   const {
     setAnalyticsMetrics,
     setPayment,
-    appointmentUrl,
     selectedSlot,
     selectedDay,
     selectedTreatments,

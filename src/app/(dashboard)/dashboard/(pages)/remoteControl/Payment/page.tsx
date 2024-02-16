@@ -26,7 +26,6 @@ export default function PaymentRemoteControl() {
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const [finalBudget, setFinalBudget] = useState<Budget | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState('');
   const [messageNotification, setMessageNotification] = useState<string | ''>(
     ''
   );

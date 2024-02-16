@@ -16,7 +16,6 @@ import Link from 'next/link';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
-import PromoTopBar from './PromoTopBar';
 
 let isTicking = false;
 let scrollPos = 0;

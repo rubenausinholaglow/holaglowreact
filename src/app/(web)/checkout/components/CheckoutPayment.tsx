@@ -5,7 +5,7 @@ import { validateEmail, validatePhone } from '@utils/validators';
 import { SvgWarning } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import { PaymentMethods } from './PaymentMethods';

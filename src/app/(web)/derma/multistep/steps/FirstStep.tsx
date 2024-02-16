@@ -1,12 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import TextInputField from '@dashboardComponents/TextInputField';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
-import {
-  SvgCheckSquare,
-  SvgCheckSquareActive,
-  SvgWarning,
-} from 'app/icons/IconsDs';
-import dayjs from 'dayjs';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';

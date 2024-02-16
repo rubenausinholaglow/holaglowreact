@@ -1,8 +1,4 @@
 import 'app/globals.derma.css';
-
-import Head from 'next/head';
-import Script from 'next/script';
-
 import App from './../components/layout/App';
 
 export const metadata = {

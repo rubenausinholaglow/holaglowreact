@@ -4,7 +4,7 @@ import './datePickerDermaStyle.css';
 
 import { useEffect, useState } from 'react';
 import { User } from '@interface/appointment';
-import { AnalyticsMetrics, Client } from '@interface/client';
+import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';

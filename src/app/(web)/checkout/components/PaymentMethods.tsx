@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { getTotalFromCart } from '@utils/utils';
@@ -9,10 +8,7 @@ import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import {
   AccordionContent,
   AccordionItem,
