@@ -24,6 +24,9 @@ export function getContactWithTasks(id: string) {
         id
         creationDate
         active
+        agent {
+          id
+        }
         taskInstances {
             status
             completedTime
