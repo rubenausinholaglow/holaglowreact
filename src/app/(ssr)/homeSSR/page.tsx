@@ -15,6 +15,10 @@ export const metadata: Metadata = {
       'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
     images: ['/images/home/OGimagen_Holaglow.jpg'],
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function HomeSSR() {

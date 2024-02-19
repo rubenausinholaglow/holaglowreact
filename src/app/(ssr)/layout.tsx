@@ -3,7 +3,6 @@ import 'app/globals.css';
 import { ReactNode } from 'react';
 import { Breakpoint } from 'app/(web)/components/layout/Breakpoint';
 import { poppins } from 'app/fonts';
-import Head from 'next/head';
 import Script from 'next/script';
 
 import { ModalBackground } from './homeSSR/components/Modal';
@@ -13,17 +12,12 @@ export const metadata = {
   title: 'Holaglow - Medicina estética',
   description:
     'La nueva cara de la medicina estética. Tratamientos sin cirugía para conseguir resultados reales',
+  viewport: 'width=device-width, initial-scale=1, user-scalable=no',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="max-h-screen h-full bg-white text-hg-black">
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, user-scalable=no"
-        />
-      </Head>
       <head>
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script
@@ -31,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           type="text/javascript"
           strategy="beforeInteractive"
           src="https://cdn-cookieyes.com/client_data/358786368d84a68230dff524/script.js"
-        ></Script>
+        />
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-K3NZR8P"
@@ -51,7 +45,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-K3NZR8P');`,
           }}
-        ></Script>
+        />
       </head>
       <body id="body" className={`relative min-h-full ${poppins.className}`}>
         <ModalBackground />

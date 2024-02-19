@@ -12,21 +12,21 @@ export default function HomeHero() {
         <Image
           src="/images/home/Header.png"
           alt="Holaglow"
-          width={1195}
-          height={1500}
+          width={800}
+          height={800}
           className="h-auto w-full scale-[135%] mt-[18%] md:w-[55%] md:scale-100 md:mt-0 md:py-16 ml-[15%] md:ml-0"
+          priority
         />
         <Flex
           layout="col-left"
           className="pb-10 z-10 w-full md:w-[45%] md:pl-8"
         >
-          <Text size="xl" className="mb-2" isAnimated origin="top">
+          <Text size="xl" className="mb-2" origin="top">
             Medicina estética
           </Text>
           <Title
             size="3xl"
             className="text-left font-bold leading-none mb-6 md:mb-12"
-            isAnimated
             origin="right"
           >
             Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
@@ -38,7 +38,6 @@ export default function HomeHero() {
             type="primary"
             size="xl"
             href={ROUTES.treatments}
-            isAnimated
           >
             Ver tratamientos
           </Button>
