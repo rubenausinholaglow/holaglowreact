@@ -55,25 +55,21 @@ export default function ModalTemplate({
     };
 
     const body = JSON.stringify({
-      request: {
-        userId: userId,
-        id: templateSelected?.params,
-        params: [templateSelected?.params],
-        taskId: '',
-        agentId: agentId,
-        preview: templateSelected?.label,
-      }
-    });    
-    
+      userId: userId,
+      id: templateSelected?.params,
+      params: [templateSelected?.params],
+      taskId: '',
+      agentId: agentId,
+      preview: templateSelected?.label,
+    });
+
     await postData(body, headers);
     handleModalTemplate();
   };
 
   return (
     isOpen && (
-      <div
-        className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex justify-center items-center"
-      >
+      <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex justify-center items-center">
         <div className="bg-white p-4 rounded-lg shadow-md">
           <div className="p-8">
             <h2 className="text-xl font-semibold mb-4">
