@@ -57,12 +57,12 @@ export default function ModalTemplate({
     const body = JSON.stringify({
       userId: userId,
       id: templateSelected?.params,
-      params: templateSelected?.params,
-      text: templateSelected?.label,
+      params: [templateSelected?.params],
       taskId: '',
       agentId: agentId,
       preview: templateSelected?.label,
-    });
+    });    
+    
     await postData(body, headers);
     handleModalTemplate();
   };
