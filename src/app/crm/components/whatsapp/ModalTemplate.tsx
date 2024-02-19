@@ -57,7 +57,7 @@ export default function ModalTemplate({
     const body = JSON.stringify({
       userId: userId,
       id: templateSelected?.params,
-      params: [templateSelected?.params],
+      params: templateSelected?.params ? [...templateSelected.params] : [],
       taskId: '',
       agentId: agentId,
       preview: templateSelected?.label,
