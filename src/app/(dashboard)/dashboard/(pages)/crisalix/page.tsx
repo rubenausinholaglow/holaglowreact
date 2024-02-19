@@ -19,14 +19,8 @@ const Page = () => {
   const [lastSimulatorId, setLastSimulatorId] = useState('');
 
   const userCrisalix = useCrisalix(state => state);
-  const {
-    storedClinicId,
-    user,
-    storedAppointmentId,
-    checkSimulator,
-    setCheckSimulator,
-    storedClinicFlowwwId,
-  } = useGlobalPersistedStore(state => state);
+  const { storedClinicId, user, setCheckSimulator, storedClinicFlowwwId } =
+    useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     setCheckSimulator(true);

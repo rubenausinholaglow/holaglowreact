@@ -1,8 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { getTotalFromCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -32,6 +33,9 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
 
   const paymentList = usePaymentList(state => state.paymentRequest);
   const { setActivePayment } = useGlobalPersistedStore(state => state);
+  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
+    state => state
+  );
 
   useEffect(() => {
     setActivePaymentMethod('');
@@ -98,7 +102,16 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
 
                   <Flex className="justify-between w-full bg-hg-black50 p-4 rounded-xl mb-8">
                     <Text>Total pago</Text>
-                    <Text>{isDerma ? '59,00€' : '49,00€'}</Text>
+                    <Text>
+                      {isDerma
+                        ? getTotalFromCart(
+                            cart,
+                            percentageDiscount,
+                            priceDiscount,
+                            manualPrice
+                          )
+                        : '49,00€'}
+                    </Text>
                   </Flex>
 
                   <Button

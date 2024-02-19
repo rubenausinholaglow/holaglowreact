@@ -30,9 +30,9 @@ export default function WhatsIncludedDerma() {
             >
               <Button
                 size="xl"
-                type="tertiary"
+                type="derma"
                 href="/multistep/start"
-                customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
+                id="tmevent_derma_multistep_start_middle"
               >
                 Comienza ahora
               </Button>
@@ -49,7 +49,7 @@ export default function WhatsIncludedDerma() {
               <Flex className="gap-4 mb-6">
                 <Image
                   src="/images/derma/home/firstAppointment.svg"
-                  alt="Primera cita"
+                  alt="Primera consulta"
                   height={48}
                   width={48}
                 />
@@ -61,7 +61,7 @@ export default function WhatsIncludedDerma() {
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">
                 {[
-                  '<span class="font-semibold text-derma-tertiary">Consulta online</span> con tu dermatólogo estético',
+                  '<span class="font-semibold text-derma-tertiary">Videollamada</span> con tu dermatólogo estético',
                   'Receta de la <span class="font-semibold text-derma-tertiary">crema facial personalizada</span>',
                   'Recomendación de <span class="font-semibold text-derma-tertiary">rutina facial complementaria</span>',
                 ].map(item => (
@@ -88,16 +88,17 @@ export default function WhatsIncludedDerma() {
                 <Image
                   src="/images/derma/home/cream.png?1"
                   alt="Holaglow"
-                  width={200}
-                  height={444}
-                  className="w-[130px] shrink-0 -translate-x-[10%]"
+                  width={500}
+                  height={500}
+                  className="w-[300px] shrink-0"
                 />
 
                 <Button
-                  type="tertiary"
+                  type="derma"
                   size="lg"
                   href="/multistep/start"
-                  customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary md:hidden"
+                  customStyles="md:hidden"
+                  id="tmevent_derma_multistep_start_middle"
                 >
                   Comienza ahora
                 </Button>

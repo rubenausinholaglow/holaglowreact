@@ -15,6 +15,32 @@ export const handleGoBack = () => {
   window.history.back();
 };
 
+export const getTotalFromCart = (
+  cart: CartItem[],
+  percentageDiscount: number,
+  priceDiscount: number,
+  manualPrice: number
+) => {
+  let productsPriceTotal = 0;
+  let productsPriceTotalWithDiscounts = 0;
+
+  if (cart) {
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
+    productsPriceTotalWithDiscounts = cart.reduce(
+      (acc, product) => acc + Number(product.priceWithDiscount),
+      0
+    );
+  }
+
+  const cartTotalWithDiscount = applyDiscountToCart(
+    percentageDiscount,
+    priceDiscount,
+    manualPrice,
+    productsPriceTotalWithDiscounts
+  );
+  return `${cartTotalWithDiscount} €`;
+};
+
 export const applyDiscountToCart = (
   percentageDiscount: number,
   priceDiscount: number,
@@ -38,7 +64,6 @@ export const applyDiscountToItem = (
   discountType: string,
   cartItem: CartItem
 ) => {
-
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 
@@ -152,4 +177,25 @@ export const getStatusClassName = (status: string, entity: string): string => {
     return `text-white rounded-full py-1 px-2 text-sm ${style}`;
   }
   return '';
+};
+
+export const formatDate = (date: Date, includeHours = true) => {
+  const finalDate = new Date(date);
+
+  if (finalDate.getFullYear() === 1) {
+    return '';
+  }
+
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: includeHours ? '2-digit' : undefined,
+    minute: includeHours ? '2-digit' : undefined,
+    second: includeHours ? '2-digit' : undefined,
+    hour12: false,
+  };
+
+  const formattedDate = finalDate.toLocaleDateString('es-ES', options);
+  return `${formattedDate.replace(',', '')}`;
 };

@@ -24,7 +24,6 @@ module.exports = {
       sm: ['14px', '20px'],
       xs: ['12px', '16px'],
     },
-
     extend: {
       colors: {
         hg: {
@@ -66,6 +65,7 @@ module.exports = {
         },
         derma: {
           primary: '#1FA6A6',
+          'primary/20': '#d0f3e7',
           primary500: '#23D9B7',
           primary300: '#99F2E2',
           primary100: '#e5f7ed',

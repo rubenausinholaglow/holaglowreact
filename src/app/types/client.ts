@@ -14,6 +14,8 @@ export interface Client {
   [key: string]: any;
   postalCode?: string;
   origin: string;
+  city: string;
+  address: string;
 }
 
 export interface AnalyticsMetrics {

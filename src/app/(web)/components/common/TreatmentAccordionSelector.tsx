@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';

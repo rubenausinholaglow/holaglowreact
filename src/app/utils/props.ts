@@ -15,6 +15,7 @@ export interface TextInputFieldProps {
   error?: string;
   hasNoValidation?: boolean;
   disableBgIcons?: boolean;
+  customValidation?: () => boolean;
 }
 
 export interface SearchBarProps {
@@ -44,7 +45,10 @@ export interface RegistrationFormProps {
   isEmbed?: boolean;
   page?: string;
   setClientData?: Dispatch<SetStateAction<Client>>;
+  setContinueDisabled?: Dispatch<SetStateAction<boolean>>;
   showPostalCode?: boolean;
+  showCity?: boolean;
+  showAddress?: boolean;
 }
 
 export interface CheckboxProps {

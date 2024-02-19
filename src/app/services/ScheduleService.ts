@@ -396,7 +396,7 @@ export default class ScheduleService {
     try {
       const url = `${ScheduleService.getScheduleUrl()}Appointment`;
 
-      const res = await fetch(url, {
+      await fetch(url, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

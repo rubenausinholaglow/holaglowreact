@@ -8,8 +8,7 @@ export const MULTISTEP_QUESTIONS: any = [
     showTextArea: false,
     questions: [
       {
-        title:
-          'Busco un tratamiento efectivo para preocupaciones específicas de mi piel (acné, manchas, rosácea, etc.)',
+        title: 'Busco un tratamiento para acné, manchas, rosácea, etc.',
       },
       {
         title:
@@ -19,8 +18,7 @@ export const MULTISTEP_QUESTIONS: any = [
         title: 'Me preocupa el envejecimiento saludable de mi piel',
       },
       {
-        title:
-          'Deseo cuidar mi piel mientras vivo cambios hormonales y/o la menopausia',
+        title: 'Los cambios hormonales y/o menopausia afectan a mi piel',
       },
       {
         title: 'Quiero preparar mi piel para un evento o una ocasión especial',

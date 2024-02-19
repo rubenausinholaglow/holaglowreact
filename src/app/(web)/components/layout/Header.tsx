@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import CheckHydration from '@utils/CheckHydration';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -15,7 +16,6 @@ import Link from 'next/link';
 
 import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
-import PromoTopBar from './PromoTopBar';
 
 let isTicking = false;
 let scrollPos = 0;
@@ -90,11 +90,13 @@ export default function Header() {
 
   return (
     <>
-      <MobileNavigation
-        isVisible={isMobileNavVisible}
-        headerHeight={HEADER_HEIGHT}
-        setIsMobileNavVisible={setIsMobileNavVisible}
-      />
+      <CheckHydration>
+        <MobileNavigation
+          isVisible={isMobileNavVisible}
+          headerHeight={HEADER_HEIGHT}
+          setIsMobileNavVisible={setIsMobileNavVisible}
+        />
+      </CheckHydration>
 
       <header
         id="header"
@@ -103,55 +105,50 @@ export default function Header() {
         } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
       >
         {/* <PromoTopBar /> */}
-        <AnimateOnViewport origin="top">
-          <Container isHeader>
-            <Flex
-              layout="row-between"
-              className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
-            >
-              <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
-                <SvgHolaglow
-                  fill={HOLAGLOW_COLORS['secondary']}
-                  className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
-                />
-              </Link>
+        <Container isHeader>
+          <Flex
+            layout="row-between"
+            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
+          >
+            <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
+              <SvgHolaglow
+                fill={HOLAGLOW_COLORS['secondary']}
+                className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
+              />
+            </Link>
 
-              <Navigation className="hidden lg:block 2xl:mr-20" />
+            <Navigation className="hidden lg:block 2xl:mr-20" />
 
-              <Flex
-                layout="row-center"
-                className="lg:absolute right-0 2xl:mr-20"
+            <Flex layout="row-center" className="lg:absolute right-0 2xl:mr-20">
+              <Button
+                id="tmevents_nav_menu_appointment"
+                size="sm"
+                type="tertiary"
+                href={ROUTES.checkout.clinics}
+                className="hidden md:block"
+                onClick={() => {
+                  setSelectedTreatments([]);
+                }}
               >
-                <Button
-                  id="tmevents_nav_menu_appointment"
-                  size="sm"
-                  type="tertiary"
-                  href={ROUTES.checkout.clinics}
-                  className="hidden md:block"
-                  onClick={() => {
-                    setSelectedTreatments([]);
-                  }}
-                >
-                  Reservar cita
-                  <SvgArrow
-                    height={16}
-                    width={16}
-                    className="ml-2 pointer-events-none"
-                  />
-                </Button>
-
-                <SvgMenu
-                  height={24}
-                  width={24}
-                  className="ml-2 lg:hidden"
-                  onClick={() => {
-                    setIsMobileNavVisible(true);
-                  }}
+                Reservar cita
+                <SvgArrow
+                  height={16}
+                  width={16}
+                  className="ml-2 pointer-events-none"
                 />
-              </Flex>
+              </Button>
+
+              <SvgMenu
+                height={24}
+                width={24}
+                className="ml-2 lg:hidden"
+                onClick={() => {
+                  setIsMobileNavVisible(true);
+                }}
+              />
             </Flex>
-          </Container>
-        </AnimateOnViewport>
+          </Flex>
+        </Container>
       </header>
     </>
   );

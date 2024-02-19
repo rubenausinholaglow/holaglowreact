@@ -34,7 +34,9 @@ export const Title = ({
     xl: 'text-xl lg:text-2xl',
   };
 
-  const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
+  const styles = twMerge(
+    `text-balance ${STYLES[size]} font-${weight} ${className}`
+  );
 
   if (isAnimated) {
     return (
@@ -80,7 +82,7 @@ export const TitleDerma = ({
     xl: 'text-drxl lg:text-2xl',
   };
 
-  const styles = `${className} ${STYLES[size]} ${
+  const styles = `text-balance ${className} ${STYLES[size]} ${
     size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltraBold'
   }`;
 
@@ -102,7 +104,7 @@ export const TitleDerma = ({
 };
 
 export const Text = ({
-  size = 'inherit',
+  size = 'default',
   as = 'p',
   className = '',
   wrapperClassName = '',
@@ -112,7 +114,7 @@ export const Text = ({
   origin = 'bottom',
   rest,
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inherit';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'drxl' | '2xl' | 'default';
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
   className?: string;
   wrapperClassName?: string;
@@ -124,9 +126,9 @@ export const Text = ({
 }) => {
   const HtmlComponent = as;
 
-  const styles = twMerge(
-    `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
-  );
+  const styles = `text-pretty text-left ${
+    size !== 'default' ? `text-${size}` : ''
+  } ${className}`;
 
   if (isAnimated) {
     return (

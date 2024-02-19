@@ -10,6 +10,12 @@ const nextConfig = {
         port: '',
         pathname: '/images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'budgetimages.blob.core.windows.net',
+        port: '',
+        pathname: '/derma/**',
+      },
     ],
   },
   webpack(config) {
