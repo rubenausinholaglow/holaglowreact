@@ -14,7 +14,9 @@ import {
 } from 'app/stores/globalStore';
 
 export const usePayments = () => {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { dermaProducts, stateProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const { setPayment, payment } = useSessionStore(state => state);
 
   const { cart } = useCartStore(state => state);
@@ -23,7 +25,8 @@ export const usePayments = () => {
     paymentBank: PaymentBank,
     createdUser: User,
     newTab = false,
-    price = 4900
+    price = 4900,
+    isDerma = false
   ) => {
     useNewTab = newTab ?? false;
 
@@ -48,7 +51,9 @@ export const usePayments = () => {
         };
         data.productPaymentRequest?.push(productPayment);
       } else {
-        const matchingProduct = stateProducts.find(x => x.id === product.id);
+        const matchingProduct = isDerma
+          ? dermaProducts.find(x => x.id === product.id)
+          : stateProducts.find(x => x.id === product.id);
 
         if (matchingProduct) {
           const productPayment: ProductPaymentRequest = {

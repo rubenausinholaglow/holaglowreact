@@ -34,7 +34,6 @@ const Page = () => {
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
   const [totalPriceInitial, setTotalPriceInitial] = useState<number>(0);
   const {
-    storedBoxId,
     storedClinicId,
     user,
     storedBudgetId,

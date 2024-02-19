@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
-import { User } from '@interface/appointment';
 import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import UserService from '@services/UserService';
@@ -62,7 +61,7 @@ export default function PaymentInput(props: Props) {
   );
   const [showPepperModal, setShowPepperModal] = useState(false);
   const [paymentStripe, setPaymentStripe] = useState(false);
-  const { user, stateProducts } = useGlobalPersistedStore(state => state);
+  const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
   const { remoteControl, storedBudgetId, setCurrentUser } =
     useGlobalPersistedStore(state => state);
@@ -223,10 +222,6 @@ export default function PaymentInput(props: Props) {
       return;
     }
     await addPayment(data.number);
-  };
-
-  const pay = async () => {
-    await addPayment(inputValue);
   };
 
   function validateFormData(formData: ClientUpdate): boolean {

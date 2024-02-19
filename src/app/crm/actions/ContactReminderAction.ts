@@ -13,7 +13,7 @@ export async function reminderAction(
     reason: comment,
   });
 
-  const res = await fetch(process.env.NEXT_PUBLIC_CONTACTS_API + 'Tasks', {
+  await fetch(process.env.NEXT_PUBLIC_CONTACTS_API + 'Tasks', {
     cache: 'no-store',
     headers: {
       Authorization: 'Bearer ' + token,

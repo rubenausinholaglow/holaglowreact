@@ -1,7 +1,8 @@
 'use client';
 
+import { Dispatch, SetStateAction } from 'react';
 import { Client } from '@interface/client';
-import { DermaQuestions } from '@interface/dermaquestions';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -11,11 +12,13 @@ export default function ThirdStep({
   client,
   setClient,
   dermaQuestions,
+  setContinueDisabled = undefined,
 }: {
   activeSlideIndex: number;
   client: Client;
   setClient: any;
   dermaQuestions: DermaQuestions;
+  setContinueDisabled?: Dispatch<SetStateAction<boolean>>;
 }) {
   const initialName = dermaQuestions.name;
   const spaceIndex = initialName?.indexOf(' ');
@@ -56,6 +59,7 @@ export default function ThirdStep({
                   hasContinueButton={false}
                   initialValues={{ ...client, name: name, surname: surName }}
                   setClientData={setClient}
+                  setContinueDisabled={setContinueDisabled}
                 />
               </Flex>
             </Flex>

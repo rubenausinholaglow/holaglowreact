@@ -1,6 +1,4 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 
 import ProductDetail from './components/ProductDetail';

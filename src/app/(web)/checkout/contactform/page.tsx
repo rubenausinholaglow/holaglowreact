@@ -15,7 +15,7 @@ import {
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Title } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
 
@@ -63,6 +63,8 @@ export default function ConctactForm() {
     interestedTreatment: '',
     treatmentPrice: 0,
     origin: '',
+    city: '',
+    address: '',
   });
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
@@ -108,7 +110,10 @@ export default function ConctactForm() {
           layout="col-left"
           className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
         >
-          <div className="w-full md:w-1/2 md:order-2">
+          <div className="w-full md:w-1/2 p-4 md:order-2">
+            <Text className="font-semibold text-lg hidden md:block pl-4">
+              Detalle de tu tratamiento
+            </Text>
             <AppointmentResume isProbadorVirtual={isProbadorVirtual} />
           </div>
           <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
