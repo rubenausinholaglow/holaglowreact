@@ -11,7 +11,7 @@ interface ModalTemplateProps {
 }
 
 interface Option {
-  params: number;
+  params: string;
   label: string;
   value: string;
   link: boolean;
@@ -33,13 +33,13 @@ export default function ModalTemplate({
     {
       value: 'TEMPLATE 1',
       label: 'HOLA! Encantado de bla bla bla {1} para bla bla bla {2}',
-      params: 2,
+      params: "2",
       link: true,
     },
     {
       value: 'TEMPLATE 2',
       label: 'HOLA! Encantado de bla bla bla {1}',
-      params: 1,
+      params: "1",
       link: false,
     },
   ];
