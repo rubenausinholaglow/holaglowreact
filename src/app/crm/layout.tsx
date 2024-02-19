@@ -3,6 +3,7 @@ import 'app/globals.css';
 import Head from 'next/head';
 
 export const metadata = {
+  metadataBase: new URL('https://holaglow.com'),
   title: 'Holaglow - CRM',
   image: '/images/home/OGimagen_Holaglow.jpg',
 };

@@ -4,6 +4,7 @@ import App from 'app/(web)/components/layout/App';
 import Head from 'next/head';
 
 export const metadata = {
+  metadataBase: new URL('https://holaglow.com'),
   title: 'Holaglow - Medicina estética',
   description:
     'La nueva cara de la medicina estética. Tratamientos sin cirugía para conseguir resultados reales',

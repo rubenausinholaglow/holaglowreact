@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://holaglow.com'),
   title: 'Sobre nosotros - Holaglow',
   description:
     'Queremos cambiar el significado de la medicina estética como una opción más de autocuidado y de la expresión personal.',
