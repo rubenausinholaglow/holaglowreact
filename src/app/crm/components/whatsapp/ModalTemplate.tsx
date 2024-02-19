@@ -1,15 +1,35 @@
-import React from 'react';
-import Select from 'react-select';
+import React, { useState } from 'react';
+import Select, { SingleValue } from 'react-select';
+import useAsyncClient from '@utils/useAsyncClient';
+import { useSessionStore } from 'app/stores/globalStore';
 
 interface ModalTemplateProps {
   isOpen: boolean;
+  userId: string;
+  agentId: string;
   handleModalTemplate: () => void;
+}
+
+interface Option {
+  params: number;
+  label: string;
+  value: string;
+  link: boolean;
 }
 export default function ModalTemplate({
   isOpen,
+  userId,
+  agentId,
   handleModalTemplate,
 }: ModalTemplateProps) {
-  const options = [
+  const { userLoginResponse } = useSessionStore(state => state);
+  const [templateSelected, setTemplateSelected] =
+    useState<SingleValue<Option>>(null);
+  const { postData } = useAsyncClient(
+    `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsappTemplate`,
+    'PUT'
+  );
+  const options: Option[] = [
     {
       value: 'TEMPLATE 1',
       label: 'HOLA! Encantado de bla bla bla {1} para bla bla bla {2}',
@@ -24,7 +44,28 @@ export default function ModalTemplate({
     },
   ];
 
-  const handleOnSelect = () => {};
+  const handleCancel = () => {
+    handleModalTemplate();
+  };
+
+  const handleConfirm = async () => {
+    const headers = {
+      Authorization: 'Bearer ' + userLoginResponse?.token,
+      'Content-Type': 'application/json',
+    };
+
+    const body = JSON.stringify({
+      userId: userId,
+      id: templateSelected?.params,
+      params: templateSelected?.params,
+      text: templateSelected?.label,
+      taskId: '',
+      agentId: agentId,
+      preview: templateSelected?.label,
+    });
+    await postData(body, headers);
+    handleModalTemplate();
+  };
 
   return (
     isOpen && (
@@ -44,17 +85,20 @@ export default function ModalTemplate({
               blurInputOnSelect={true}
               isSearchable={false}
               isClearable={true}
+              onChange={(event: SingleValue<Option>) =>
+                setTemplateSelected(event)
+              }
             />
 
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={handleModalTemplate}
+              onClick={handleCancel}
             >
               Cerrar
             </button>
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={handleModalTemplate}
+              onClick={handleConfirm}
             >
               OK
             </button>

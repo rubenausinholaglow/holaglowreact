@@ -9,9 +9,10 @@ import { SvgPlus, SvgSendMessage } from './WhatsAppIcons';
 
 interface InputWppProps {
   userId: string;
+  agentId: string;
 }
 
-export default function InputWpp({ userId }: InputWppProps) {
+export default function InputWpp({ userId, agentId }: InputWppProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
   const [disableSendButton, setDisableSendButton] = useState(false);
@@ -54,7 +55,7 @@ export default function InputWpp({ userId }: InputWppProps) {
       userId: userId,
       text: input,
       taskId: '',
-      agentId: '',
+      agentId: agentId,
     });
     postData(body, headers);
     setInput('');
@@ -94,7 +95,7 @@ export default function InputWpp({ userId }: InputWppProps) {
         handleDialog={handleDialog}
         handleDialogOption={handleDialogOption}
       />
-      <ModalTemplate isOpen={openModalTemplate} handleModalTemplate={handleModalTemplate} />
+      <ModalTemplate agentId={agentId} userId={userId} isOpen={openModalTemplate} handleModalTemplate={handleModalTemplate} />
     </div>
   );
 }

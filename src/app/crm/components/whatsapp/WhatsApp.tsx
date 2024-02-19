@@ -18,7 +18,7 @@ export default function WhatsApp({
   isLoadingWhatsapp,
   whatsappMessages,
 }: WhatsAppProps) {
-  const { firstName, lastName } = contactDetail;
+  const { firstName, lastName, agent } = contactDetail;
   let thisDate: string | null = null;
 
   return (
@@ -64,7 +64,7 @@ export default function WhatsApp({
                   );
                 }
               )}
-              <InputWpp userId={contactDetail.id} />
+              <InputWpp userId={contactDetail.id} agentId={agent?.id}/>
             </>
           )}
         </>
