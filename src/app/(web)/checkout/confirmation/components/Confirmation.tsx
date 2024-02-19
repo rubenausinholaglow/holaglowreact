@@ -36,12 +36,43 @@ export default function Confirmation({
     setPayment,
     selectedSlot,
     selectedDay,
+    selectedClinic,
     selectedTreatments,
   } = useSessionStore(state => state);
 
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
 
+  let selectedTreatmentsNames = '';
+  let selectedTreatmentsDescription = '';
+
+  if (selectedTreatments) {
+    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
+    selectedTreatmentsDescription = selectedTreatments
+      .map(x => x.description)
+      .join(' + ');
+  }
+
+  const ADD_TO_CALENDAR_CONFIG: object = {
+    name: isDerma
+      ? 'Cita online - Derma by Holaglow'
+      : `${selectedTreatmentsNames} - Holaglow`,
+    description: isDerma
+      ? 'Videollamada con tu dermatólogo estético'
+      : selectedTreatmentsDescription || '',
+    startDate: dayjs(selectedDay).format('YYYY-MM-DD'),
+    startTime: selectedSlot?.startTime,
+    endTime: selectedSlot?.endTime,
+    options: ['Apple', 'Google', 'iCal', 'Outlook.com', 'Yahoo'],
+    timeZone: 'Europe/Madrid',
+    location: isDerma
+      ? 'Videoconsulta online'
+      : selectedClinic
+      ? `${selectedClinic?.address}, ${selectedClinic?.city}`
+      : '',
+  };
+
   const addToCalendarRef = useRef(null);
+
   let tips = [
     {
       title: 'Confirmación de tu cita',
@@ -56,6 +87,7 @@ export default function Confirmation({
       text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
     },
   ];
+
   if (isDerma) {
     tips = [
       {
@@ -72,6 +104,7 @@ export default function Confirmation({
       },
     ];
   }
+
   useEffect(() => {
     if (!isDashboard) {
       setCurrentUser(undefined);
@@ -183,51 +216,44 @@ export default function Confirmation({
             )}
           </div>
 
-          {isDerma && (
-            <Flex
-              layout="col-left"
-              className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
+          <Flex
+            layout="col-left"
+            className={`${
+              isDerma
+                ? 'gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12'
+                : ''
+            }`}
+          >
+            <Button
+              size="xl"
+              type="tertiary"
+              ref={addToCalendarRef}
+              className="w-full"
+              customStyles={`font-normal justify-start pl-2 border-none ${
+                isDerma
+                  ? 'bg-derma-primary text-derma-primary100'
+                  : 'bg-hg-secondary text-white'
+              }`}
+              onClick={() =>
+                atcb_action(
+                  ADD_TO_CALENDAR_CONFIG,
+                  addToCalendarRef.current
+                    ? addToCalendarRef.current
+                    : undefined
+                )
+              }
             >
-              <Button
-                size="xl"
-                type="tertiary"
-                ref={addToCalendarRef}
-                className="w-full"
-                customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
-                onClick={() =>
-                  atcb_action(
-                    {
-                      name: 'Cita online - Derma by Holaglow',
-                      description: 'Videollamada con tu dermatólogo estético',
-                      startDate: dayjs(selectedDay).format('YYYY-MM-DD'),
-                      startTime: selectedSlot?.startTime,
-                      endTime: selectedSlot?.endTime,
-                      options: [
-                        'Apple',
-                        'Google',
-                        'iCal',
-                        'Outlook.com',
-                        'Yahoo',
-                      ],
-                      timeZone: 'Europe/Madrid',
-                    },
-                    addToCalendarRef.current
-                      ? addToCalendarRef.current
-                      : undefined
-                  )
-                }
+              <Flex
+                layout="row-center"
+                className={` rounded-full h-12 w-12 mr-2 ${
+                  isDerma ? 'bg-derma-primary500' : 'bg-transparent'
+                }`}
               >
-                <Flex
-                  layout="row-center"
-                  className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
-                >
-                  <SvgCalendar />
-                </Flex>
-                Añadir a mi calendario
-              </Button>
-            </Flex>
-          )}
-
+                <SvgCalendar />
+              </Flex>
+              Añadir a mi calendario
+            </Button>
+          </Flex>
           {!isDashboard && !isDerma && (
             <div className="pt-12">
               <a href="/tratamientos" className="hidden md:block">
