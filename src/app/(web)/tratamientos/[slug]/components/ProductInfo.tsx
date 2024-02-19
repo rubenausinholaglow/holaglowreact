@@ -19,9 +19,11 @@ import { isEmpty } from 'lodash';
 export default function ProductInfo({
   product,
   isDashboard = false,
+  setBottomBarThreshold,
 }: {
   product: Product;
   isDashboard?: boolean;
+  setBottomBarThreshold?: (value: number) => void;
 }) {
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
   const {
@@ -33,6 +35,14 @@ export default function ProductInfo({
   } = useCartStore(state => state);
 
   const [pendingDiscount, setPendingDiscount] = useState(false);
+
+  useEffect(() => {
+    if (setBottomBarThreshold && typeof window !== 'undefined') {
+      const videoElement = document.querySelector('video');
+
+      setBottomBarThreshold(videoElement ? videoElement.offsetTop : 1200);
+    }
+  }, []);
 
   useEffect(() => {
     if (pendingDiscount) {
