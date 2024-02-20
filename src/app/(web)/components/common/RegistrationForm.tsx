@@ -130,10 +130,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    const value =
+    let value: string | boolean | number | undefined =
       event.target.type === 'checkbox'
         ? event.target.checked
         : event.target.value;
+
+    if (field === 'phonePrefix' && typeof value === 'number') {
+      value = `+${value as number}`;
+    }
+
+    if (field === 'phone' && typeof value === 'number' && value === 0) {
+      value = undefined;
+    }
+
     setFormData(prevFormData => ({
       ...prevFormData,
       [field]: value,
