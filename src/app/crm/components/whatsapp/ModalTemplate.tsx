@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import Select, { SingleValue } from 'react-select';
 import useAsyncClient from '@utils/useAsyncClient';
+import { WhatsappMessages } from 'app/crm/types/Contact';
 import { useSessionStore } from 'app/stores/globalStore';
+import dayjs from 'dayjs';
 
 interface ModalTemplateProps {
   isOpen: boolean;
   userId: string;
   agentId: string;
   handleModalTemplate: () => void;
+  handleNewMessage: (value: string) => void;
 }
 
 interface Option {
@@ -21,6 +24,7 @@ export default function ModalTemplate({
   userId,
   agentId,
   handleModalTemplate,
+  handleNewMessage,
 }: ModalTemplateProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [templateSelected, setTemplateSelected] =
@@ -33,13 +37,13 @@ export default function ModalTemplate({
     {
       value: 'TEMPLATE 1',
       label: 'HOLA! Encantado de bla bla bla {1} para bla bla bla {2}',
-      params: "2",
+      params: '2',
       link: true,
     },
     {
       value: 'TEMPLATE 2',
       label: 'HOLA! Encantado de bla bla bla {1}',
-      params: "1",
+      params: '1',
       link: false,
     },
   ];
@@ -63,6 +67,8 @@ export default function ModalTemplate({
       preview: templateSelected?.label,
     });
 
+    handleNewMessage(templateSelected?.label || '');
+
     await postData(body, headers);
     handleModalTemplate();
   };
@@ -75,30 +81,33 @@ export default function ModalTemplate({
             <h2 className="text-xl font-semibold mb-4">
               Selecciona un template
             </h2>
-            <Select
-              options={options}
-              className={`w-full mb-2 bg-white`}
-              placeholder="Seleccionar template..."
-              blurInputOnSelect={true}
-              isSearchable={false}
-              isClearable={true}
-              onChange={(event: SingleValue<Option>) =>
-                setTemplateSelected(event)
-              }
-            />
-
-            <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={handleCancel}
-            >
-              Cerrar
-            </button>
-            <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={handleConfirm}
-            >
-              OK
-            </button>
+            <div className="w-80">
+              <Select
+                options={options}
+                className={`bg-white`}
+                placeholder="Seleccionar template..."
+                blurInputOnSelect={true}
+                isSearchable={false}
+                isClearable={true}
+                onChange={(event: SingleValue<Option>) =>
+                  setTemplateSelected(event)
+                }
+              />
+            </div>
+            <div className="flex justify-end place-content-end">
+              <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                onClick={handleCancel}
+              >
+                Cancelar
+              </button>
+              <button
+                className="mt-4 mr-0 px-4 py-2 bg-blue-500 mx-4 text-white rounded hover:bg-blue-600"
+                onClick={handleConfirm}
+              >
+                Confirmar
+              </button>
+            </div>
           </div>
         </div>
       </div>

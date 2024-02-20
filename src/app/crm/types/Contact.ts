@@ -128,12 +128,12 @@ export interface Budget {
 
 export interface WhatsappMessages {
   time: string;
-  agent: Agent;
+  agent?: Agent;
   text: string;
   id: string;
-  creationDate: string;
-  active: boolean;
-  received: boolean;
+  creationDate?: string;
+  active?: boolean;
+  received?: boolean;
 }
 
 export interface Lead {

@@ -1,7 +1,9 @@
 'use client';
 import React, { useState } from 'react';
 import useAsyncClient from '@utils/useAsyncClient';
+import { WhatsappMessages } from 'app/crm/types/Contact';
 import { useSessionStore } from 'app/stores/globalStore';
+import dayjs from 'dayjs';
 
 import DialogWpp from './DialogWpp';
 import ModalTemplate from './ModalTemplate';
@@ -10,9 +12,14 @@ import { SvgPlus, SvgSendMessage } from './WhatsAppIcons';
 interface InputWppProps {
   userId: string;
   agentId: string;
+  setWhatsappMessages: (value: any) => void;
 }
 
-export default function InputWpp({ userId, agentId }: InputWppProps) {
+export default function InputWpp({
+  userId,
+  agentId,
+  setWhatsappMessages,
+}: InputWppProps) {
   const { userLoginResponse } = useSessionStore(state => state);
   const [input, setInput] = useState('');
   const [disableSendButton, setDisableSendButton] = useState(false);
@@ -44,9 +51,24 @@ export default function InputWpp({ userId, agentId }: InputWppProps) {
     setOpenModalTemplate(!openModalTemplate);
   };
 
+  const handleNewMessage = (text: string) => {
+    const dateTime = dayjs();
+    const newWhatsappMessage: WhatsappMessages = {
+      id: '',
+      text: input,
+      creationDate: dateTime.toString(),
+      time: dateTime.format('HH:mm').toString(),
+    };
+    setWhatsappMessages((prevState: WhatsappMessages[]) => [
+      ...prevState,
+      newWhatsappMessage,
+    ]);
+  };
+
   const sendWhatsApp = () => {
     setDisableSendButton(true);
     const token = userLoginResponse?.token;
+
     const headers = {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
@@ -57,6 +79,7 @@ export default function InputWpp({ userId, agentId }: InputWppProps) {
       taskId: '',
       agentId: agentId,
     });
+    handleNewMessage(input);
     postData(body, headers);
     setInput('');
     setDisableSendButton(false);
@@ -95,7 +118,13 @@ export default function InputWpp({ userId, agentId }: InputWppProps) {
         handleDialog={handleDialog}
         handleDialogOption={handleDialogOption}
       />
-      <ModalTemplate agentId={agentId} userId={userId} isOpen={openModalTemplate} handleModalTemplate={handleModalTemplate} />
+      <ModalTemplate
+        agentId={agentId}
+        userId={userId}
+        isOpen={openModalTemplate}
+        handleModalTemplate={handleModalTemplate}
+        handleNewMessage={handleNewMessage}
+      />
     </div>
   );
 }
