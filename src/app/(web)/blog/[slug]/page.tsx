@@ -14,10 +14,12 @@ export async function generateMetadata(
   );
 
   const postData: Post = posts.filter((post: Post) => post.slug === slug)[0];
+
   if (postData) {
     return {
       title: postData.metaTitle,
       description: postData.metaDescription,
+      authors: [{ name: postData.author }],
       alternates: {
         canonical: postData.canonical,
       },
