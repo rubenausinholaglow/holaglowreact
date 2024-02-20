@@ -56,7 +56,7 @@ export default function WhatsIncludedDerma() {
                 <Text className="text-lg font-semibold">Primera consulta</Text>
               </Flex>
               <Text className="text-sm font-semibold mb-6">
-                <span className="text-2xl md:text-4xl font-bold">59 €</span>{' '}
+                <span className="text-2xl md:text-4xl font-bold">29 €</span>{' '}
                 /pago único
               </Text>
               <ul className="flex flex-col gap-4 w-full text-hg-black500 mb-4">

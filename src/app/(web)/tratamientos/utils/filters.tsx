@@ -38,8 +38,9 @@ export const applyFilters = ({
       filters.zone.length == 0 || filters.zone.includes(product.zone);
 
     const productClinics: Array<string> = product.clinicDetail.map(
-      (item: ProductClinics) => item.clinic.internalName
+      (item: ProductClinics) => item.clinic?.internalName
     );
+
     const isVisibleByClinic =
       filters.clinic.length == 0 ||
       filters.clinic.some(clinic => productClinics.includes(clinic));
