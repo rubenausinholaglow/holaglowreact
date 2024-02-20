@@ -126,7 +126,7 @@ export default function Form() {
 
   useEffect(() => {
     async function checkout() {
-      await initializePayment(activePayment, createdUser!, false, 5900);
+      await initializePayment(activePayment, createdUser!, false, 2900);
     }
     if (activePayment != PaymentBank.None && cart.length > 0) checkout();
   }, [activePayment]);
