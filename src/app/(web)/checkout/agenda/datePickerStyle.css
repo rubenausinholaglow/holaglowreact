@@ -176,6 +176,6 @@
   border-radius: 8px;
 }
 
-#datepickerWrapper .react-datepicker__day--today::before {
+#datepickerWrapper.datepickerDerma .react-datepicker__day--today::before {
   background-color: #1fa6a6 !important;
 }
