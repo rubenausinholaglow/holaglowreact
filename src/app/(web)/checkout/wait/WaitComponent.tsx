@@ -83,7 +83,7 @@ export default function WaitComponent() {
       checkPaymentStatus(payment!.id);
     } else {
       setTimeout(() => {
-        router.push('https://holaglowreact-git-dev-1063-hola-glow.vercel.app/');
+        router.push('https://holaglow.com/');
       }, 5000);
     }
 
