@@ -182,7 +182,6 @@ export default function Confirmation({
               />
             )}
           </div>
-
           {isDerma && (
             <Flex
               layout="col-left"
@@ -227,7 +226,6 @@ export default function Confirmation({
               </Button>
             </Flex>
           )}
-
           {!isDashboard && !isDerma && (
             <div className="pt-12">
               <a href="/tratamientos" className="hidden md:block">

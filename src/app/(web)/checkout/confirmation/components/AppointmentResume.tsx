@@ -273,14 +273,9 @@ export default function AppointmentResume({
                 {typeOfPayment == TypeOfPayment.Reservation && ' (Anticipo)'}
               </Text>
               <Text className="font-semibold">
-                {isDerma
-                  ? getTotalFromCart(
-                      cart,
-                      percentageDiscount,
-                      priceDiscount,
-                      manualPrice
-                    )
-                  : '49€'}
+                {typeOfPayment == TypeOfPayment.Reservation
+                  ? '49€'
+                  : `${selectedTreatments[0].price.toFixed(2)}€`}
               </Text>
             </Flex>
           )}
@@ -301,7 +296,14 @@ export default function AppointmentResume({
         </Flex>
       </Flex>
     );
-  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments, address]);
+  }, [
+    isProbadorVirtual,
+    isDerma,
+    isUpselling,
+    selectedTreatments,
+    address,
+    cart,
+  ]);
 
   return appointmentComponent;
 }
