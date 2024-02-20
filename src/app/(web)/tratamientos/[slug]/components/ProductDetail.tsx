@@ -40,7 +40,7 @@ export default function ProductDetailPage({
   const { deviceSize } = useSessionStore(state => state);
   const { productHighlighted } = useCartStore(state => state);
 
-  const [bottomBarThreshold, setBottomBarThreshold] = useState(99999);
+  const [bottomBarThreshold, setBottomBarThreshold] = useState(1200);
   const [isHydrated, setIsHydrated] = useState(false);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
