@@ -83,7 +83,7 @@ export default function WaitComponent() {
       checkPaymentStatus(payment!.id);
     } else {
       setTimeout(() => {
-        router.push('https://holaglow.com/');
+        router.push('https://www.holaglow.com/');
       }, 5000);
     }
 
