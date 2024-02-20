@@ -23,7 +23,6 @@ export default function ProductInfo({
   product: Product;
   isDashboard?: boolean;
 }) {
-  console.log('-emla ---------> ' + product.emlaType);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
   const {
     cart,
