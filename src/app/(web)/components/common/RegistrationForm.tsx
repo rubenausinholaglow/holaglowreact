@@ -5,7 +5,6 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import CheckHydration from '@utils/CheckHydration';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -131,19 +130,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    let value: string | boolean | number | undefined =
+    const value =
       event.target.type === 'checkbox'
         ? event.target.checked
         : event.target.value;
-
-    if (field === 'phonePrefix' && typeof value === 'number') {
-      value = `+${value as number}`;
-    }
-
-    if (field === 'phone' && typeof value === 'number' && value === 0) {
-      value = undefined;
-    }
-
     setFormData(prevFormData => ({
       ...prevFormData,
       [field]: value,
