@@ -10,7 +10,7 @@ interface ModalTemplateProps {
   userId: string;
   agentId: string;
   handleModalTemplate: () => void;
-  handleNewMessage: (value: string) => void;
+  handleNewMessage: (value: any) => void;
 }
 
 interface Option {
@@ -67,7 +67,8 @@ export default function ModalTemplate({
       preview: templateSelected?.label,
     });
 
-    handleNewMessage(templateSelected?.label || '');
+    const textTemplate = templateSelected?.label;
+    handleNewMessage(textTemplate);
 
     await postData(body, headers);
     handleModalTemplate();

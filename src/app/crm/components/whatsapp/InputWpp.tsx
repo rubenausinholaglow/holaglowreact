@@ -52,12 +52,12 @@ export default function InputWpp({
   };
 
   const handleNewMessage = (text: string) => {
-    const dateTime = dayjs();
+    const dateTime = dayjs(new Date());
     const newWhatsappMessage: WhatsappMessages = {
       id: '',
-      text: input,
+      text: text,
       creationDate: dateTime.toString(),
-      time: dateTime.format('HH:mm').toString(),
+      time: dateTime.toString(),
     };
     setWhatsappMessages((prevState: WhatsappMessages[]) => [
       ...prevState,
