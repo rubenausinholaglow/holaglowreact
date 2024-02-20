@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { setSeoMetaData } from '@utils/common';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';

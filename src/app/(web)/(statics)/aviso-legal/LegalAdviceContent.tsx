@@ -1,4 +1,3 @@
-import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 

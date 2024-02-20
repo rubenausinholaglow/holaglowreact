@@ -8,6 +8,7 @@ import Image from 'next/image';
 import StartButton from './StartButton';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://holaglow.com'),
   title: 'Cuidado facial personalizado - Holaglow Derma',
   description:
     'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para tu piel sin salir de casa.',

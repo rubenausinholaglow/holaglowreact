@@ -5,7 +5,6 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { EmlaType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -30,10 +29,12 @@ export default function Agenda({
   isDashboard = false,
   isCheckin = false,
   isDerma = false,
+  isCheckout = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
   isDerma?: boolean;
+  isCheckout?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -64,7 +65,8 @@ export default function Agenda({
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [currentMonth, setcurrentMonth] = useState(dayjs());
   const format = 'YYYY-MM-DD';
-  let maxDays = 9999;
+  let maxDays = 60;
+  if (isDashboard) maxDays = 9999;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
@@ -92,7 +94,7 @@ export default function Agenda({
         selectedTreatments[0].type
       ];
   }
-  if (isDerma) maxDays = 365;
+  if (isDerma) maxDays = 90;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
@@ -280,12 +282,13 @@ export default function Agenda({
           });
         } else if (!isDerma) {
           router.push('/checkout/contactform');
+        } else if (isDerma && isCheckout) {
+          router.push('/planes/contactform');
         }
       } catch {
         setShowErrorMessage(true);
       }
     }
-
     if (selectedSlot && enableScheduler && !loadingDays && !loadingMonth) {
       schedule();
     }
@@ -509,11 +512,7 @@ export default function Agenda({
                                       size="xs"
                                       className="w-full text-left"
                                     >
-                                      {product.emlaType === EmlaType.Required
-                                        ? product.applicationTimeMinutes * 2 +
-                                          ''
-                                        : product.applicationTimeMinutes.toString()}{' '}
-                                      minutos
+                                      {product.applicationTimeMinutes} minutos
                                     </Text>
                                   </div>
                                 </Flex>

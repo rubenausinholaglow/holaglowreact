@@ -79,6 +79,8 @@ export default function Page({
     interestedTreatment: '',
     treatmentPrice: 0,
     origin: '',
+    city: '',
+    address: '',
   });
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import BlogPage from './BlogPage';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://holaglow.com'),
   title: 'Glow Getter - El blog sobre medicina estética de Holaglow',
   description:
     'Resuelve tus dudas y descubre todo sobre la medicina estética contada por profesionales del sector de una manera clara y honesta.',

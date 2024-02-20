@@ -4,8 +4,8 @@ import './datePickerDermaStyle.css';
 
 import { useEffect, useState } from 'react';
 import { User } from '@interface/appointment';
-import { AnalyticsMetrics, Client } from '@interface/client';
-import { DermaQuestions } from '@interface/dermaquestions';
+import { Client } from '@interface/client';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
 import { dermaService } from '@services/DermaService';
@@ -63,6 +63,8 @@ const CLIENT_INITIAL_VALUES = {
   treatmentPrice: 0,
   postalCode: '',
   origin: 'Derma',
+  city: '',
+  address: '',
 };
 
 export default function Form() {
@@ -100,17 +102,14 @@ export default function Form() {
 
     async function initProduct(productId: string) {
       const productDetails = await fetchProduct(productId);
-      productDetails.id = process.env.NEXT_PUBLIC_CITA_DERMA!;
-      productDetails.flowwwId = 5;
-      productDetails.title = 'Consulta personalizada de dermatología';
-      productDetails.price = 59;
       setSelectedTreatments([productDetails]);
       resetCart();
       addItemToCart(productDetails as CartItem);
     }
+    resetCart();
     setSelectedClinic({
       id: 'c0cdafdc-f22e-4bba-b4d4-ba23357ca5e2',
-      address: 'Videollamada',
+      address: 'Videollamada (recibirás el enlace el día de la cita)',
       city: '',
       flowwwId: '1',
       internalName: '',
@@ -120,23 +119,9 @@ export default function Form() {
     setTypeOfPayment(TypeOfPayment.Full);
 
     setCurrentUser(undefined);
-    const metrics: AnalyticsMetrics = {
-      device: 0,
-      locPhysicalMs: '',
-      utmAdgroup: '',
-      utmCampaign: '',
-      utmContent: '',
-      utmMedium: '',
-      utmSource: '',
-      utmTerm: '',
-      treatmentText: '',
-      externalReference: '',
-      interestedTreatment: '',
-      treatmentPrice: 0,
-    };
-    setAnalyticsMetrics(metrics);
     setPayment(undefined);
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
+    initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
+    setClient(CLIENT_INITIAL_VALUES);
   }, []);
 
   useEffect(() => {
@@ -146,25 +131,16 @@ export default function Form() {
     if (activePayment != PaymentBank.None && cart.length > 0) checkout();
   }, [activePayment]);
 
-  useEffect(() => {
-    if (client && validFormData(client, [])) setContinueDisabled(false);
-  }, [selectedSlot, client]);
-
   const goBack = (index: number) => {
     setActiveSlideIndex(index - 1);
     setContinueDisabled(false);
   };
 
   useEffect(() => {
-    if (activeSlideIndex === 4) {
-      setClient(CLIENT_INITIAL_VALUES);
-      setContinueDisabled(true);
-    }
-
-    if (activeSlideIndex === 5 && isEmpty(selectedSlot)) {
-      setContinueDisabled(true);
-    }
-  }, [activeSlideIndex, selectedSlot]);
+    if (activeSlideIndex === 5 && !isEmpty(selectedSlot)) {
+      setContinueDisabled(false);
+    } else setContinueDisabled(true);
+  }, [selectedSlot]);
 
   const goNext = (index: number) => {
     if (client && client.email && !createdUser) {
@@ -273,6 +249,7 @@ export default function Form() {
                 client={client}
                 setClient={setClient}
                 dermaQuestions={dermaQuestions}
+                setContinueDisabled={setContinueDisabled}
               />
             </div>
 

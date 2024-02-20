@@ -9,7 +9,7 @@ import { ProductFilters } from 'app/types/filters';
 import { Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -40,6 +40,7 @@ interface SessionStore {
   userLoginResponse: LoginResponse | undefined;
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
+  dermaPhone: string;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -55,10 +56,12 @@ interface SessionActions {
   setUserLoginResponse: (userLoginResponse: LoginResponse | undefined) => void;
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
+  setDermaPhone: (phone: string) => void;
 }
 
 interface GlobalPersistStore {
   stateProducts: Product[];
+  dermaProducts: Product[];
   dashboardProducts: Product[];
   clinics: Clinic[];
   user?: User;
@@ -79,6 +82,7 @@ interface GlobalPersistStore {
 
 interface GlobalPersistActions {
   setStateProducts: (value: Product[]) => void;
+  setDermaProducts: (value: Product[]) => void;
   setDashboardProducts: (value: Product[]) => void;
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
@@ -131,6 +135,7 @@ export const useSessionStore = create(
       userLoginResponse: undefined,
       typeOfPayment: TypeOfPayment.Free,
       appointmentUrl: '',
+      dermaPhone: '',
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -170,6 +175,9 @@ export const useSessionStore = create(
       setTypeOfPayment: value => {
         set({ typeOfPayment: value });
       },
+      setDermaPhone: value => {
+        set({ dermaPhone: value });
+      },
     }),
     {
       name: 'session-storage',
@@ -185,11 +193,15 @@ export const useGlobalPersistedStore = create(
       promo: undefined,
       blogPosts: undefined,
       stateProducts: [],
+      dermaProducts: [],
       dashboardProducts: [],
       clinics: [],
       user: undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
+      },
+      setDermaProducts: (value: Product[]) => {
+        set({ dermaProducts: value });
       },
       setDashboardProducts: (value: Product[]) => {
         set({ dashboardProducts: value });
