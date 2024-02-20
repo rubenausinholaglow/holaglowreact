@@ -10,7 +10,7 @@ const FAQS = [
   {
     title: '¿Qué precio tiene una consulta online?',
     description:
-      'La consulta online con un dermatólogo estético cuesta 59€ e incluye el asesoramiento médico y la prescripción de una crema facial personalizada formulada exclusivamente para ti, siempre que sea necesario.',
+      'La consulta online con un dermatólogo estético cuesta 29€ e incluye el asesoramiento médico y la prescripción de una crema facial personalizada formulada exclusivamente para ti, siempre que sea necesario.',
   },
   {
     title: '¿Qué es el cuidado facial de grado médico o farmacéutico?',
