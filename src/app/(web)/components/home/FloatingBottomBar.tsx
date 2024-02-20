@@ -48,7 +48,11 @@ export default function FloatingBottomBar({
     recalculateVisibility();
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-  }, []);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [threshold, handleScroll]);
 
   useEffect(() => {
     if (product && !isEmpty(product.discounts)) {

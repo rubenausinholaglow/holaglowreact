@@ -40,6 +40,7 @@ export default function ProductDetailPage({
   const { deviceSize } = useSessionStore(state => state);
   const { productHighlighted } = useCartStore(state => state);
 
+  const [bottomBarThreshold, setBottomBarThreshold] = useState(1200);
   const [isHydrated, setIsHydrated] = useState(false);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
@@ -125,7 +126,11 @@ export default function ProductDetailPage({
           }`}
         >
           <ProductHeader product={product} isDashboard={isDashboard} />
-          <ProductInfo product={product} isDashboard={isDashboard} />
+          <ProductInfo
+            product={product}
+            isDashboard={isDashboard}
+            setBottomBarThreshold={setBottomBarThreshold}
+          />
           {isDashboard &&
             !product.isPack &&
             product.type != 3 &&
@@ -172,6 +177,7 @@ export default function ProductDetailPage({
             {deviceSize.isMobile && (
               <FloatingBottomBar
                 product={product}
+                threshold={bottomBarThreshold}
                 isVisible={!isProductPriceVisible}
               />
             )}
