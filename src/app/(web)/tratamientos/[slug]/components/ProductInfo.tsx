@@ -9,7 +9,7 @@ import {
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgCalendar } from 'app/icons/Icons';
 import { SvgTimeLeft, SvgTimer } from 'app/icons/IconsDs';
-import { CartItem, Product } from 'app/types/product';
+import { CartItem, EmlaType, Product } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -146,7 +146,9 @@ export default function ProductInfo({
                               size="lg"
                               className="font-semibold mb-1 md:mb-2"
                             >
-                              {product.applicationTimeMinutes.toString()}{' '}
+                              {product.emlaType === EmlaType.Required
+                                ? product.applicationTimeMinutes * 2 + ''
+                                : product.applicationTimeMinutes.toString()}{' '}
                               minutos
                             </Text>
                             <Text>Tiempo de aplicación</Text>
@@ -168,7 +170,10 @@ export default function ProductInfo({
                 />
                 <div>
                   <Text size="lg" className="font-semibold mb-1 md:mb-2">
-                    {product.applicationTimeMinutes.toString()} minutos
+                    {product.emlaType === EmlaType.Required
+                      ? product.applicationTimeMinutes * 2 + ''
+                      : product.applicationTimeMinutes.toString()}{' '}
+                    minutos
                   </Text>
                   <Text>Tiempo de aplicación</Text>
                 </div>
