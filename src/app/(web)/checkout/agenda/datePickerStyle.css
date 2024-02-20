@@ -1,6 +1,3 @@
-#datepickerWrapper {
-}
-
 #datepickerWrapper > div {
   width: 100%;
 }
@@ -78,6 +75,17 @@
 
 #datepickerWrapper .react-datepicker__day--today {
   font-weight: normal;
+  position: relative;
+}
+
+#datepickerWrapper .react-datepicker__day--today::before {
+  content: '';
+  background-color: #a96fe7 !important;
+  position: absolute;
+  height: 5px;
+  width: 5px;
+  top: 80%;
+  border-radius: 100%;
 }
 
 /* Day Selected */
@@ -124,4 +132,50 @@
   font-size: 30px;
   display: block;
   transform: rotate(-90deg);
+}
+
+/* Derma DATEPICKER */
+
+#datepickerWrapper.datepickerDerma {
+  font-family: var(--font-poppins);
+}
+
+#datepickerWrapper.datepickerDerma .react-datepicker {
+  background-color: theme('colors.derma.primary100');
+}
+#datepickerWrapper.datepickerDerma .react-datepicker__header {
+  background-color: theme('colors.derma.primary100');
+}
+
+#datepickerWrapper.datepickerDerma
+  .react-datepicker
+  .react-datepicker__day--keyboard-selected,
+#datepickerWrapper.datepickerDerma
+  .react-datepicker__month-text--keyboard-selected,
+#datepickerWrapper.datepickerDerma .react-datepicker__day--selected,
+#datepickerWrapper.datepickerDerma
+  .react-datepicker__quarter-text--keyboard-selected,
+#datepickerWrapper.datepickerDerma
+  .react-datepicker__year-text--keyboard-selected {
+  background-color: theme('colors.derma.primary') !important;
+}
+
+#datepickerWrapper.datepickerDerma.datepickerDerma
+  .react-datepicker__day:hover:not(.react-datepicker__day--disabled):not(
+    .react-datepicker__day--selected
+  ) {
+  background-color: theme('colors.derma.primary500') !important;
+}
+
+#datepickerWrapper.datepickerDerma .react-datepicker__month-select,
+#datepickerWrapper.datepickerDerma .react-datepicker__year-select {
+  background: rgba(255, 255, 255, 0.75);
+  min-width: 100px;
+  padding: 8px;
+  border: 1px solid theme('colors.derma.primary500');
+  border-radius: 8px;
+}
+
+#datepickerWrapper.datepickerDerma .react-datepicker__day--today::before {
+  background-color: #1fa6a6 !important;
 }

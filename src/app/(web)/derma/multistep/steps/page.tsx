@@ -1,7 +1,5 @@
 'use client';
 
-import './datePickerDermaStyle.css';
-
 import { useEffect, useState } from 'react';
 import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
@@ -13,7 +11,7 @@ import CheckHydration from '@utils/CheckHydration';
 import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
 import { usePayments } from '@utils/paymentUtils';
-import { useRegistration, validFormData } from '@utils/userUtils';
+import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow, SvgWarning } from 'app/icons/IconsDs';
