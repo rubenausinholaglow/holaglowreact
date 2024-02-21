@@ -206,6 +206,7 @@ export default function Form() {
             currentSlide={activeSlideIndex}
             dragEnabled={false}
             touchEnabled={false}
+            disableKeyboard
           >
             <div id="tm_derma_step1" className="min-h-[100px]">
               <FirstStep
