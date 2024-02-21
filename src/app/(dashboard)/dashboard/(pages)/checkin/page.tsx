@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
+import AppWrapper from 'app/(web)/components/layout/AppWrapper';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgScanQR } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -101,51 +102,56 @@ export default function Page() {
   }, [clinics]);
 
   return (
-    <MainLayout
-      isDashboard
-      hideBackButton
-      hideContactButtons
-      hideProfessionalSelector
-      hideBottomBar
-    >
-      <CheckHydration>
-        <Flex layout="col-center" className="w-full">
-          <Flex layout="col-center" className="gap-4 mb-12">
-            <Title className="font-bold text-5xl mb-8">
-              Te damos la <br />
-              <Underlined color={HOLAGLOW_COLORS['primary']}>
-                Bienvenid@
-              </Underlined>{' '}
-            </Title>
-            <Text className="mb-8 font-bold">
-              Escanea el QR que te hemos envíado para acceder a tu cita.
-            </Text>
-            {isScanning ? (
-              <ReadQr
-                onScanSuccess={onScanSuccess}
-                onErrorScan={reloadPageAfterDelay}
+    <AppWrapper>
+      <MainLayout
+        isDashboard
+        hideBackButton
+        hideContactButtons
+        hideProfessionalSelector
+        hideBottomBar
+      >
+        <CheckHydration>
+          <Flex layout="col-center" className="w-full">
+            <Flex layout="col-center" className="gap-4 mb-12">
+              <Title className="font-bold text-5xl mb-8">
+                Te damos la <br />
+                <Underlined color={HOLAGLOW_COLORS['primary']}>
+                  Bienvenid@
+                </Underlined>{' '}
+              </Title>
+              <Text className="mb-8 font-bold">
+                Escanea el QR que te hemos envíado para acceder a tu cita.
+              </Text>
+              {isScanning ? (
+                <ReadQr
+                  onScanSuccess={onScanSuccess}
+                  onErrorScan={reloadPageAfterDelay}
+                />
+              ) : (
+                <div
+                  onClick={startScan}
+                  className="justify-center items-center"
+                >
+                  <SvgScanQR height={192} width={192} fill="white" />
+                  <Text className="mb-8 text-center">{SCAN_QR}</Text>
+                </div>
+              )}
+            </Flex>
+
+            {!isScanning && (
+              <FormSection
+                formData={formData}
+                errors={errors}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+                checkIn={checkIn}
               />
-            ) : (
-              <div onClick={startScan} className="justify-center items-center">
-                <SvgScanQR height={192} width={192} fill="white" />
-                <Text className="mb-8 text-center">{SCAN_QR}</Text>
-              </div>
             )}
           </Flex>
-
-          {!isScanning && (
-            <FormSection
-              formData={formData}
-              errors={errors}
-              handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
-              isLoading={isLoading}
-              checkIn={checkIn}
-            />
-          )}
-        </Flex>
-      </CheckHydration>
-    </MainLayout>
+        </CheckHydration>
+      </MainLayout>
+    </AppWrapper>
   );
 }
 

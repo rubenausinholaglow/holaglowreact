@@ -1,5 +1,6 @@
 'use client';
 
+import AppWrapper from 'app/(web)/components/layout/AppWrapper';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -17,24 +18,26 @@ export default function CanceledAppointment() {
   const ROUTE = useRoutes();
 
   return (
-    <MainLayout>
-      <Container className="py-16 md:py-32">
-        <Title className="mb-8">¡Ops! Tu cita ha sido cancelada</Title>
-        <Text className="text-lg mb-12">
-          Hemos cancelado tu cita para el día {day} de {month} a las {hour}.
-          Puedes reservar una nueva cita{' '}
-          <a href={ROUTE.checkout.clinics}>aquí.</a>
-        </Text>
+    <AppWrapper>
+      <MainLayout>
+        <Container className="py-16 md:py-32">
+          <Title className="mb-8">¡Ops! Tu cita ha sido cancelada</Title>
+          <Text className="text-lg mb-12">
+            Hemos cancelado tu cita para el día {day} de {month} a las {hour}.
+            Puedes reservar una nueva cita{' '}
+            <a href={ROUTE.checkout.clinics}>aquí.</a>
+          </Text>
 
-        <Button
-          size="lg"
-          type="tertiary"
-          customStyles="border-hg-black bg-hg-primary"
-          href={ROUTE.treatments}
-        >
-          Ver tratamientos
-        </Button>
-      </Container>
-    </MainLayout>
+          <Button
+            size="lg"
+            type="tertiary"
+            customStyles="border-hg-black bg-hg-primary"
+            href={ROUTE.treatments}
+          >
+            Ver tratamientos
+          </Button>
+        </Container>
+      </MainLayout>
+    </AppWrapper>
   );
 }

@@ -6,20 +6,10 @@ import { Title, Underlined } from 'designSystem/Texts/Texts';
 
 import ProductList from './ProductList';
 
-/* async function getProducts() {
-  console.log()
-
-  const products = await fetchProducts();
+async function getProducts() {
+  const products = await fetchProducts({ isDerma: false });
 
   return products;
-} */
-
-async function getProducts() {
-  const products = await fetch(
-    'https://holaglowproductsapidev.azurewebsites.net/Product'
-  );
-
-  return products.json();
 }
 
 export default async function HomeProducts() {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
+import AppWrapper from 'app/(web)/components/layout/AppWrapper';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCheck, SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
@@ -169,22 +170,24 @@ export default function WaitComponent() {
   }
 
   return (
-    <MainLayout
-      isCheckout={!false}
-      hideHeader={false}
-      hideFooter={false}
-      hideBackButton
-    >
-      <Container>
-        <Flex
-          layout="col-center"
-          className="absolute flex inset-0 justify-center items-center gap-4"
-        >
-          {payment !== null && payment !== undefined
-            ? renderWeb(isDerma)
-            : renderDash(isDerma)}
-        </Flex>
-      </Container>
-    </MainLayout>
+    <AppWrapper>
+      <MainLayout
+        isCheckout={!false}
+        hideHeader={false}
+        hideFooter={false}
+        hideBackButton
+      >
+        <Container>
+          <Flex
+            layout="col-center"
+            className="absolute flex inset-0 justify-center items-center gap-4"
+          >
+            {payment !== null && payment !== undefined
+              ? renderWeb(isDerma)
+              : renderDash(isDerma)}
+          </Flex>
+        </Container>
+      </MainLayout>
+    </AppWrapper>
   );
 }

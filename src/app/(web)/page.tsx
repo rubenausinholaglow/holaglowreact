@@ -1,4 +1,4 @@
-import HomeSSR from 'app/(ssr)/homeSSR/page';
+import Home from 'app/(ssr)/homeSSR/components/HomeSSR';
 import type { Metadata } from 'next';
 
 import AppWrapper from './components/layout/AppWrapper';
@@ -18,10 +18,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default function HomePage() {
   return (
     <AppWrapper isSSR>
-      <HomeSSR />
+      <Home />
     </AppWrapper>
   );
 }
