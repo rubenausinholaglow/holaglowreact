@@ -153,22 +153,14 @@ export default function AppointmentResume({
         {isDerma && !isUpselling && (
           <>
             <div className="w-full flex items-start">
-              <SvgCheckCircle
-                height={20}
-                width={20}
-                className="text-derma-primary500 mr-2 shrink-0"
-              />
+              <SvgCheckCircle className="mr-2 shrink-0" />
               <div className="flex flex-col ">
                 <Text>Receta crema facial personalizada</Text>
               </div>
             </div>
             <div className="w-full flex items-start">
-              <SvgCheckCircle
-                height={20}
-                width={20}
-                className="text-derma-primary500 mr-2 shrink-0"
-              />
-              <div className="flex flex-col ">
+              <SvgCheckCircle className="mr-2 shrink-0" />
+              <div className="flex flex-col">
                 <Text>Recomendación rutina complementaria</Text>
               </div>
             </div>
