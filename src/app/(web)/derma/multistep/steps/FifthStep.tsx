@@ -35,20 +35,20 @@ export default function FifthStep({
                   </Flex>
                 </Flex>
                 <AppointmentResume isDerma />
-                <Flex className="text-center" layout="col-center">
-                  <div className="mb-4">
-                    <img
-                      width={200}
-                      src="/images/derma/trustpilot-logo.png"
-                    ></img>
-                  </div>
-                  <div className="w-full mb-4">
-                    TrustScore <b>4.7</b>
-                  </div>
-                </Flex>
               </Container>
             </div>
             <Container className="mt-8">
+              <Flex className="text-center" layout="col-center">
+                <div className="mb-4">
+                  <img
+                    width={200}
+                    src="/images/derma/trustpilot-logo.png"
+                  ></img>
+                </div>
+                <div className="w-full mb-4">
+                  TrustScore <b>4.7</b>
+                </div>
+              </Flex>
               <CheckoutPayment
                 hasError={false}
                 className="mt-8"
