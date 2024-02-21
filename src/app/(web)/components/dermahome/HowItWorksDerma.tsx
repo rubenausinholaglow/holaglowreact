@@ -27,9 +27,9 @@ export default function HowItWorksDerma() {
             icon: '/images/derma/home/online.svg',
           },
           {
-            text: 'Tratamiento personalizado',
+            text: 'Recibe tu rutina personalizada',
             description:
-              'Obtén tu plan de cuidado facial y pide tu crema personalizada en la farmacia más cercana.',
+              'Te enviamos las 3 cremas definidas por el médico y una receta para tu crema facial personalizada.',
             icon: '/images/derma/home/box.svg',
           },
         ].map((item, index) => (

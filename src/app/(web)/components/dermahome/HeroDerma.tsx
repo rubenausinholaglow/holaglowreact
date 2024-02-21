@@ -71,16 +71,15 @@ export default function HeroDerma() {
                     size="3xl"
                     className="text-derma-primary text-left mb-4"
                   >
-                    Cuidado facial personalizado
+                    Tú rutina facial diseñada por un médico
                   </TitleDerma>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
                   >
-                    Reserva tu{' '}
-                    <b>consulta online con un dermatólogo estético</b> y
-                    encuentra el mejor tratamiento para tu piel sin salir de
-                    casa.
+                    Un dermatólogo estético estudiará tu piel en una
+                    videollamada para diseñar una rutina facial con productos
+                    personalizados que te enviaremos a casa por 99€
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
@@ -91,7 +90,7 @@ export default function HeroDerma() {
                       href="/multistep/start"
                       id="tmevent_derma_multistep_start"
                     >
-                      Reserva tu videllamada
+                      Descubre tu rutina
                     </Button>
                   </Flex>
                 </Flex>
