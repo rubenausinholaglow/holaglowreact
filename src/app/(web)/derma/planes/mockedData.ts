@@ -120,6 +120,11 @@ export const DERMA_PRODUCTS = [
 export const DERMA_APPOINTMENT_IMAGE = [
   {
     // consulta online
+    ids: ['2ee9da6f-4fad-42fc-b717-0b67d49ef0cf'],
+    imgSrc: DERMA_ROUTINES[0].modalImgSrc,
+  },
+  {
+    // revision online
     ids: ['7f01ff68-eb9c-4b9b-83b8-efaec37e49e7'],
     imgSrc: DERMA_ROUTINES[0].modalImgSrc,
   },

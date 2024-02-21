@@ -45,7 +45,7 @@ export default function ThirdStep({
                 <Text className="text-sm text-derma-primary500 mb-2">
                   Paso {activeSlideIndex + 1}. Formulario
                 </Text>
-                <Text className="font-gtUltraThin font-semibold mb-4 text-derma-tertiary text-xl md:text-2xl">
+                <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
                   Solicita tu cita
                 </Text>
                 <Text className="text-hg-black500 text-sm mb-8 md:text-md">
@@ -60,6 +60,8 @@ export default function ThirdStep({
                   initialValues={{ ...client, name: name, surname: surName }}
                   setClientData={setClient}
                   setContinueDisabled={setContinueDisabled}
+                  showAddress={true}
+                  showCity={true}
                 />
               </Flex>
             </Flex>
