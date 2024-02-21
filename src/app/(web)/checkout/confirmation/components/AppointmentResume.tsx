@@ -292,11 +292,11 @@ export default function AppointmentResume({
   const appointmentComponent = useMemo(() => {
     return (
       <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
-        {isUpselling && <TreatmentImage id={selectedTreatments[0].id} />}
+        {isDerma && <TreatmentImage id={selectedTreatments[0].id} />}
         <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
           <TreatmentName />
           <TreatmentDate />
-          {isUpselling && <TreatmentPriceBreakdown hideTotal />}
+          {isDerma && <TreatmentPriceBreakdown hideTotal />}
           {!appointment && <AppointmentDataResume />}
         </Flex>
       </Flex>
