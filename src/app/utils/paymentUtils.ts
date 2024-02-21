@@ -29,7 +29,6 @@ export const usePayments = () => {
     isDerma = false
   ) => {
     useNewTab = newTab ?? false;
-
     const data: InitializePayment = {
       amount: Number(price),
       installments: 1,
@@ -40,8 +39,10 @@ export const usePayments = () => {
     };
     cart.forEach(product => {
       if (
-        product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_PREVIA_ID ||
-        product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_DERMA
+        product.id.toUpperCase() ===
+          process.env.NEXT_PUBLIC_CITA_PREVIA_ID?.toUpperCase() ||
+        product.id.toUpperCase() ===
+          process.env.NEXT_PUBLIC_CITA_DERMA?.toUpperCase()
       ) {
         const productPayment: ProductPaymentRequest = {
           name: product.title,

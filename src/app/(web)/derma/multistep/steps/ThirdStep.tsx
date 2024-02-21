@@ -60,6 +60,8 @@ export default function ThirdStep({
                   initialValues={{ ...client, name: name, surname: surName }}
                   setClientData={setClient}
                   setContinueDisabled={setContinueDisabled}
+                  showAddress={true}
+                  showCity={true}
                 />
               </Flex>
             </Flex>
