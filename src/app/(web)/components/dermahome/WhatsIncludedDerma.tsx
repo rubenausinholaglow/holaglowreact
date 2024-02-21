@@ -155,24 +155,14 @@ export default function WhatsIncludedDerma() {
               >
                 <Button
                   size="xl"
-                  type="tertiary"
-                  customStyles="bg-white text-hg-black border-none"
-                  onClick={() => setShowModal(true)}
-                >
-                  Saber más
-                </Button>
-
-                <Button
-                  size="xl"
                   type="derma"
                   href="/multistep/start"
                   id="tmevent_derma_multistep_start_middle"
                 >
                   Comienza ahora
-                  <SvgArrow className="ml-2" />
                 </Button>
 
-                {/* <SvgArrow className="h-12 w-12 text-derma-primary" /> */}
+                <SvgArrow className="h-12 w-12 text-derma-primary" />
               </Flex>
             </Flex>
 
@@ -188,7 +178,7 @@ export default function WhatsIncludedDerma() {
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
-                <Title size="xl" className="mb-2 font-bold">
+                <Title size="xl" className="mb-2 font-semibold">
                   {DERMA_ROUTINES[2].name}
                 </Title>
                 <div>
@@ -202,11 +192,11 @@ export default function WhatsIncludedDerma() {
                     </Text>
                   )}
                 </div>
-                <Flex className="w-full gap-4 md:gap-0 justify-between md:hidden mt-8">
+                <Flex className="w-full gap-4 md:gap-0 justify-between mt-8">
                   <Button
-                    size="sm"
+                    size={deviceSize.isMobile ? 'lg' : 'xl'}
                     type="tertiary"
-                    customStyles="border-none text-derma-tertiary bg-derma-secondary100"
+                    customStyles="border-none text-derma-tertiary bg-derma-secondary100 "
                     onClick={() => {
                       setShowModal(true);
                     }}
@@ -216,6 +206,7 @@ export default function WhatsIncludedDerma() {
                   <Button
                     type="derma"
                     size="lg"
+                    className="md:hidden"
                     href="/multistep/start"
                     id="tmevent_derma_multistep_start_middle"
                   >
