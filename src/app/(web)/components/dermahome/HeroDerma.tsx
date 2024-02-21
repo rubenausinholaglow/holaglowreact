@@ -40,7 +40,7 @@ export default function HeroDerma() {
           className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end "
         >
           <Container className="pb-12 md:p-0 overflow-hidden">
-            <Flex layout="col-left" className="md:ml-8">
+            <Flex layout="col-left" className="md:ml-8 md:mr-4">
               <Flex
                 layout="row-left"
                 className="mb-4 md:order-2 w-full md:justify-start gap-4 py-3"
