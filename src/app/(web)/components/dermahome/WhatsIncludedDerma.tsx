@@ -13,6 +13,22 @@ import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
+const RUTINE_DATA = {
+  imgSrc: '/images/derma/upselling/packDerma.png',
+  modalImgSrc: '/images/derma/upselling/packDermaModal.png',
+  name: 'Programa completo: Rutina facial + Revisión online',
+  price: '139€',
+  discountedPrice: '198€',
+  cta: 'Lo quiero todo',
+  bullets: [
+    'Potencia los resultados de tu crema personalizada',
+    'Cuatro productos seleccionados por dermatólogos',
+    'Envío gratis (de 3 a 5 días naturales)',
+    'Valora los resultados obtenidos y define próximos pasos con tu dermatólogo',
+  ],
+  id: 3,
+};
+
 export default function WhatsIncludedDerma() {
   const { showModalBackground } = useGlobalStore(state => state);
   const { deviceSize } = useSessionStore(state => state);
@@ -51,20 +67,20 @@ export default function WhatsIncludedDerma() {
             >
               <Container className="pt-12 md:p-6">
                 <Image
-                  src={DERMA_ROUTINES[2].modalImgSrc}
-                  alt={DERMA_ROUTINES[2].name}
+                  src={RUTINE_DATA.modalImgSrc}
+                  alt={RUTINE_DATA.name}
                   width={324}
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
                 />
                 <TitleDerma className="text-derma-primary mb-4">
-                  {DERMA_ROUTINES[2].name}
+                  {RUTINE_DATA.name}
                 </TitleDerma>
                 <Flex
                   layout="col-left"
                   className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
                 >
-                  {DERMA_ROUTINES[2].bullets.map((item, index) => {
+                  {RUTINE_DATA.bullets.map((item, index) => {
                     return (
                       <Flex className="w-full gap-4 items-start" key={index}>
                         <SvgCheckCircle className="text-derma-primary500 shrink-0 w-5 h-5" />
@@ -113,18 +129,15 @@ export default function WhatsIncludedDerma() {
               className={`bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full h-[${modalBottomBarHeight}]`}
             >
               <div>
-                <Text className="text-3xl font-bold">
-                  {DERMA_ROUTINES[2].price}
-                </Text>
-                {DERMA_ROUTINES[2].price !==
-                  DERMA_ROUTINES[2].discountedPrice && (
+                <Text className="text-3xl font-bold">{RUTINE_DATA.price}</Text>
+                {RUTINE_DATA.price !== RUTINE_DATA.discountedPrice && (
                   <Text className="text-sm text-hg-error font-medium line-through">
-                    PVP {DERMA_ROUTINES[2].discountedPrice}
+                    PVP {RUTINE_DATA.discountedPrice}
                   </Text>
                 )}
               </div>
               <Button size="xl" type="derma">
-                {DERMA_ROUTINES[2].cta}
+                {RUTINE_DATA.cta}
               </Button>
             </Flex>
           </div>
@@ -172,23 +185,22 @@ export default function WhatsIncludedDerma() {
                 className="bg-derma-secondary300 rounded-2xl p-4 md:p-6 shadow-centered-black w-full"
               >
                 <Image
-                  src={DERMA_ROUTINES[2].modalImgSrc}
-                  alt={DERMA_ROUTINES[2].name}
+                  src={RUTINE_DATA.modalImgSrc}
+                  alt={RUTINE_DATA.name}
                   width={324}
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
                 <Title size="xl" className="mb-2 font-semibold">
-                  {DERMA_ROUTINES[2].name}
+                  {RUTINE_DATA.name}
                 </Title>
                 <div>
                   <Text className="text-3xl font-bold">
-                    {DERMA_ROUTINES[2].price}
+                    {RUTINE_DATA.price}
                   </Text>
-                  {DERMA_ROUTINES[2].price !==
-                    DERMA_ROUTINES[2].discountedPrice && (
+                  {RUTINE_DATA.price !== RUTINE_DATA.discountedPrice && (
                     <Text className="text-sm text-hg-error font-medium line-through">
-                      PVP {DERMA_ROUTINES[2].discountedPrice}
+                      PVP {RUTINE_DATA.discountedPrice}
                     </Text>
                   )}
                 </div>
