@@ -1,6 +1,7 @@
+import HomeSSR from 'app/(ssr)/homeSSR/page';
 import type { Metadata } from 'next';
 
-import HomeBlocks from './components/home/HomeBlocks';
+import AppWrapper from './components/layout/AppWrapper';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://holaglow.com'),
@@ -18,5 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <HomeBlocks />;
+  return (
+    <AppWrapper isSSR>
+      <HomeSSR />
+    </AppWrapper>
+  );
 }

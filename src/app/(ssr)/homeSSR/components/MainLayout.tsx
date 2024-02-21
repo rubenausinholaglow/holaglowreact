@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Analytics } from '@vercel/analytics/react';
 import Header from 'app/(web)/components/layout/Header';
 
 import Footer from './FooterSSR';
@@ -18,7 +17,6 @@ export default function MainLayoutSSR({
       {!hideHeader && <Header />}
       {children}
       {!hideFooter && <Footer />}
-      <Analytics />
     </main>
   );
 }

@@ -6,8 +6,10 @@ export default class ProductService {
       window.location &&
       window.location.href &&
       window.location.href.includes('derma')
-    )
+    ) {
       url = process.env.NEXT_PUBLIC_DERMAPRODUCTS_API;
+    }
+
     return url!;
   }
 
