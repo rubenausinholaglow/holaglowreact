@@ -155,14 +155,24 @@ export default function WhatsIncludedDerma() {
               >
                 <Button
                   size="xl"
+                  type="tertiary"
+                  customStyles="bg-white text-hg-black border-none"
+                  onClick={() => setShowModal(true)}
+                >
+                  Saber más
+                </Button>
+
+                <Button
+                  size="xl"
                   type="derma"
                   href="/multistep/start"
                   id="tmevent_derma_multistep_start_middle"
                 >
                   Comienza ahora
+                  <SvgArrow className="ml-2" />
                 </Button>
 
-                <SvgArrow className="h-12 w-12 text-derma-primary" />
+                {/* <SvgArrow className="h-12 w-12 text-derma-primary" /> */}
               </Flex>
             </Flex>
 
@@ -178,10 +188,10 @@ export default function WhatsIncludedDerma() {
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
-                <Title size="xl" className="mb-2">
+                <Title size="xl" className="mb-2 font-bold">
                   {DERMA_ROUTINES[2].name}
                 </Title>
-                <div className="mb-8">
+                <div>
                   <Text className="text-3xl font-bold">
                     {DERMA_ROUTINES[2].price}
                   </Text>
@@ -192,7 +202,7 @@ export default function WhatsIncludedDerma() {
                     </Text>
                   )}
                 </div>
-                <Flex className="w-full gap-4 md:gap-0 justify-between">
+                <Flex className="w-full gap-4 md:gap-0 justify-between md:hidden mt-8">
                   <Button
                     size="sm"
                     type="tertiary"
@@ -207,7 +217,6 @@ export default function WhatsIncludedDerma() {
                     type="derma"
                     size="lg"
                     href="/multistep/start"
-                    customStyles="md:hidden"
                     id="tmevent_derma_multistep_start_middle"
                   >
                     Comienza ahora
