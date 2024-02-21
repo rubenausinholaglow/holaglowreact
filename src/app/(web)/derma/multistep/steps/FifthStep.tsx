@@ -26,22 +26,17 @@ export default function FifthStep({
                       Último paso. Pago
                     </Text>
                     <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
-                      ¡Ya casi lo tienes, {client.name}
-                      <br></br> Estás a punto de conseguir tu tratamiento
-                      personalizado
+                      Completa tu pedido
                     </Text>
                     <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                      Durante tu consulta, tu médico analizará las
-                      características de tu piel y te recomendará un plan de
-                      cuidado facial eficaz para conseguir tus objetivos.
-                      Además, en caso de que sea necesario, te facilitará la
-                      receta de una crema formulada exclusivamente para ti.{' '}
-                      <br></br>Los detalles de tu cita online se proporcionarán
-                      por Whatsapp al pagar.
+                      Confirma los datos de tu consulta y completa el pago para
+                      reservar tu videollamada
                     </Text>
                   </Flex>
                 </Flex>
                 <AppointmentResume isDerma />
+                <img src="/images/derma/trustpilot-logo.png"></img>
+                TrustScore <b>4.7</b>
               </Container>
             </div>
             <Container className="mt-8">

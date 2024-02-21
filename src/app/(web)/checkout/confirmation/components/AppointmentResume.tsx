@@ -14,7 +14,7 @@ import {
   SvgHour,
   SvgLocation,
 } from 'app/icons/Icons';
-import { SvgBag } from 'app/icons/IconsDs';
+import { SvgBag, SvgCheckCircle } from 'app/icons/IconsDs';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
@@ -150,6 +150,30 @@ export default function AppointmentResume({
             <Text>{address}</Text>
           </div>
         </div>
+        {isDerma && !isUpselling && (
+          <>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle
+                height={20}
+                width={20}
+                className="text-derma-primary500 mr-2 shrink-0"
+              />
+              <div className="flex flex-col ">
+                <Text>Receta crema facial personalizada</Text>
+              </div>
+            </div>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle
+                height={20}
+                width={20}
+                className="text-derma-primary500 mr-2 shrink-0"
+              />
+              <div className="flex flex-col ">
+                <Text>Recomendación rutina complementaria</Text>
+              </div>
+            </div>
+          </>
+        )}
       </Flex>
     );
   };
