@@ -170,7 +170,7 @@ export const PaymentMethods = ({
                     onClick={() => {
                       scrollDown();
                       if (method.key == 'creditCard') {
-                        setIsLoadingButton(true);
+                        setIsLoadingButton(!isLoadingButton);
                         setActivePayment(PaymentBank.Stripe);
                       }
                       if (method.key == 'alma') {
@@ -250,12 +250,12 @@ export const PaymentMethods = ({
                         </Flex>
                       </>
                     )}
-                    {isLoadingButton && (
+                    {isLoadingButton && method.key === 'creditCard' && (
                       <Flex className="w-full justify-center">
                         <SvgSpinner height={24} width={24} />
                       </Flex>
                     )}
-                    {clientSecret && (
+                    {clientSecret && method.key != 'alma' && (
                       <EmbeddedCheckoutProvider
                         stripe={stripePromise}
                         options={{ clientSecret }}
