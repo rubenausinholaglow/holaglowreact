@@ -8,7 +8,10 @@ import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import {
   AccordionContent,
   AccordionItem,
@@ -18,6 +21,11 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+import { loadStripe } from '@stripe/stripe-js';
+import {
+  EmbeddedCheckoutProvider,
+  EmbeddedCheckout,
+} from '@stripe/react-stripe-js';
 
 const PAYMENT_ICONS = {
   alma: ['alma.svg'],
@@ -26,11 +34,15 @@ const PAYMENT_ICONS = {
   creditCard: ['visa.svg', 'mastercard.svg'],
   direct: ['googlepay.svg', 'applepay.svg'],
 };
-
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [clientSecret, setClientSecret] = useState('');
 
+  const { payment } = useSessionStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
   const { setActivePayment } = useGlobalPersistedStore(state => state);
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
@@ -40,6 +52,10 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
+
+  useEffect(() => {
+    if (payment) setClientSecret(payment.embeddedReference);
+  }, [payment]);
 
   function scrollDown() {
     setTimeout(() => {
@@ -139,6 +155,14 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
                       </>
                     )}
                   </Button>
+                  {clientSecret && (
+                    <EmbeddedCheckoutProvider
+                      stripe={stripePromise}
+                      options={{ clientSecret }}
+                    >
+                      <EmbeddedCheckout />
+                    </EmbeddedCheckoutProvider>
+                  )}
                 </Flex>
               </AccordionContent>
             </AccordionItem>
