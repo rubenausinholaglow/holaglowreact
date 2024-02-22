@@ -4,13 +4,13 @@ import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { usePayments } from '@utils/paymentUtils';
-import { useRegistration } from '@utils/userUtils';
 import {
   EmbeddedCheckout,
   EmbeddedCheckoutProvider,
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { usePayments } from '@utils/paymentUtils';
+import { useRegistration } from '@utils/userUtils';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
@@ -66,6 +66,9 @@ export const PaymentMethods = ({
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
+  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
+    state => state
+  );
 
   useEffect(() => {
     setActivePaymentMethod('');
@@ -76,7 +79,8 @@ export const PaymentMethods = ({
       setErrorMessage(undefined);
     }, 6000);
   }, [errorMessage]);
-	useEffect(() => {
+
+  useEffect(() => {
     if (payment) {
       setIsLoadingButton(false);
       setClientSecret(payment.embeddedReference);
@@ -156,14 +160,14 @@ export const PaymentMethods = ({
                 className="bg-white py-6 px-8 rounded-xl w-full"
               >
                 <AccordionTrigger className="text-left">
-                <Flex
-                  className="gap-3  mb-4"
-                  onClick={() => {
-                    scrollDown();
-                    setIsLoadingButton(true);
-                    setActivePayment(PaymentBank.Stripe);
-                  }}
-                >
+                  <Flex
+                    className="gap-3  mb-4"
+                    onClick={() => {
+                      scrollDown();
+                      setIsLoadingButton(true);
+                      setActivePayment(PaymentBank.Stripe);
+                    }}
+                  >
                     <SvgRadioChecked
                       height={24}
                       width={24}
@@ -171,21 +175,21 @@ export const PaymentMethods = ({
                     />
                     <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
                     <Text>{method.label}</Text>
-                </Flex>
-                    <Flex className="ml-auto gap-2">
-                  {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
-                    PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS].map(
-                      (icon: string) => (
-                          <Image
-                            src={`/images/dashboard/payment/${icon}`}
-                            height={32}
-                            width={56}
-                            key={icon}
-                            alt={method.label}
-                            className="ml-auto"
-                          />
-                        ))}
-                    </Flex>
+                  </Flex>
+                  <Flex className="ml-auto gap-2">
+                    {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
+                      PAYMENT_ICONS[
+                        method.key as keyof typeof PAYMENT_ICONS
+                      ].map((icon: string) => (
+                        <Image
+                          src={`/images/dashboard/payment/${icon}`}
+                          height={32}
+                          width={56}
+                          key={icon}
+                          alt={method.label}
+                          className="ml-auto"
+                        />
+                      ))}
                   </Flex>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -193,79 +197,72 @@ export const PaymentMethods = ({
                     layout="col-left"
                     className="mt-4 pt-5 border-t border-hg-black w-full"
                   >
-                  {isLoadingButton && (
-                    <Flex className="w-full" layout="col-center">
-                    {method.key == 'alma' &&
-                    selectedTreatments[0].price > 49 ? (
+                    {isLoadingButton && (
                       <>
-                        {financialTimes.map(financialTime => (
-                          <div key={financialTime.key}>
-                            <Button
-                              id={isDerma ? 'tmevent_derma_step6' : ''}
-                              className="self-end"
-                              type="tertiary"
-                              customStyles={`gap-2 mb-4 ${
-                                isDerma
-                                  ? 'bg-derma-primary border-none text-white'
-                                  : 'bg-hg-primary'
-                              }`}
-                              onClick={() => {
-                                handlePaymentClick(
-                                  PaymentBank.Alma,
-                                  parseInt(financialTime.key)
-                                );
-                              }}
-                            >
-                              {isLoadingKey[financialTime.key] ? (
+                        <Flex className="w-full" layout="col-center">
+                          {method.key == 'alma' &&
+                          selectedTreatments[0].price > 49 ? (
+                            <>
+                              {financialTimes.map(financialTime => (
+                                <div key={financialTime.key}>
+                                  <Button
+                                    id={isDerma ? 'tmevent_derma_step6' : ''}
+                                    className="self-end"
+                                    type="tertiary"
+                                    customStyles={`gap-2 mb-4 ${
+                                      isDerma
+                                        ? 'bg-derma-primary border-none text-white'
+                                        : 'bg-hg-primary'
+                                    }`}
+                                    onClick={() => {
+                                      handlePaymentClick(
+                                        PaymentBank.Alma,
+                                        parseInt(financialTime.key)
+                                      );
+                                    }}
+                                  >
+                                    {isLoadingKey[financialTime.key] ? (
+                                      <Flex className="w-20 justify-center">
+                                        <SvgSpinner height={24} width={24} />
+                                      </Flex>
+                                    ) : (
+                                      <>
+                                        {financialTime.label}
+                                        <SvgArrow height={16} width={16} />
+                                      </>
+                                    )}
+                                  </Button>
+                                </div>
+                              ))}
+                              {errorMessage && (
+                                <p className="text-red-600"> {errorMessage} </p>
+                              )}
+                            </>
+                          ) : (
+                            <>
+                              {isLoadingButton ? (
                                 <Flex className="w-20 justify-center">
                                   <SvgSpinner height={24} width={24} />
                                 </Flex>
                               ) : (
                                 <>
-                                  {financialTime.label}
+                                  Continuar
                                   <SvgArrow height={16} width={16} />
                                 </>
                               )}
-                            </Button>
-                          </div>
-                        ))}
-                        {errorMessage && (
-                          <p className="text-red-600"> {errorMessage} </p>
-                        )}
+                            </>
+                          )}
+                        </Flex>
                       </>
-                    ) : (
-                      <Button
-                        id={isDerma ? 'tmevent_derma_step6' : ''}
-                        className="self-end"
-                        type="tertiary"
-                        customStyles={`gap-2 ${
-                          isDerma
-                            ? 'bg-derma-primary border-none text-white'
-                            : 'bg-hg-primary'
-                        }`}
-                        onClick={() => {
-                          setIsLoadingButton(true);
-                          setActivePayment(PaymentBank.Alma);
-                        }}
+                    )}
+                    {clientSecret && (
+                      <EmbeddedCheckoutProvider
+                        stripe={stripePromise}
+                        options={{ clientSecret }}
                       >
-                        {isLoadingButton ? (
-                          <Flex className="w-20 justify-center">
-                            <SvgSpinner height={24} width={24} />
-                          </Flex>
-                        ) : (
-                          <>
-                            Continuar
-                            <SvgArrow height={16} width={16} />
-                          </>
-                        )}
-                      </Button>
-                    <EmbeddedCheckoutProvider
-                      stripe={stripePromise}
-                      options={{ clientSecret }}
-                    >
-                      <EmbeddedCheckout className="w-full" />
-                    </EmbeddedCheckoutProvider>
-                  )}
+                        <EmbeddedCheckout className="w-full" />
+                      </EmbeddedCheckoutProvider>
+                    )}
                   </Flex>
                 </AccordionContent>
               </AccordionItem>

@@ -40,15 +40,13 @@ export const checkoutPaymentItems = [
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
+  {
     key: 'alma',
     label: 'Financiación Alma',
     paymentBank: PaymentBank.Alma,
     paymentMethod: PaymentMethod.Financing,
   },
-  {
-  },
 ];
-
 
 export const financialTimes = [
   {
@@ -62,4 +60,5 @@ export const financialTimes = [
   {
     key: '4',
     label: 'Paga en 4 plazos',
+  },
 ];
