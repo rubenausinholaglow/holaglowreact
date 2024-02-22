@@ -38,7 +38,7 @@ const PAYMENT_ICONS = {
 };
 
 export const PaymentMethods = ({
-  isDerma,
+  isDerma = false,
   client,
 }: {
   isDerma: boolean;
@@ -137,7 +137,7 @@ export const PaymentMethods = ({
           }}
         >
           {checkoutPaymentItems.map(method =>
-            method.key === 'alma' && isDerma ? null : (
+            method.key === 'alma' && !isDerma ? null : (
               <AccordionItem
                 key={method.key}
                 value={method.key}
