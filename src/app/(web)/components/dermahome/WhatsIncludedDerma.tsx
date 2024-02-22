@@ -212,7 +212,7 @@ export default function WhatsIncludedDerma() {
                     type="derma"
                     size={deviceSize.isMobile ? 'lg' : 'xl'}
                     href="/multistep/start"
-                    id="tmevent_derma_multistep_start_middle"
+                    id="tmevent_derma_multistep_start_middle_card"
                   >
                     Descubre tu rutina
                   </Button>

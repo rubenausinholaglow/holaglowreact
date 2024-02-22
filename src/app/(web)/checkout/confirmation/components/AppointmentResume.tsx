@@ -22,6 +22,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
 import {
   AccordionContent,
   AccordionItem,
@@ -31,6 +32,8 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+
+dayjs.locale(spanishConf);
 
 export default function AppointmentResume({
   appointment,
