@@ -1,17 +1,27 @@
 import { useEffect, useState } from 'react';
-import {
-  DERMA_PRODUCTS,
-  DERMA_ROUTINES,
-} from 'app/(web)/derma/planes/mockedData';
+import { DERMA_PRODUCTS } from 'app/(web)/derma/planes/mockedData';
 import { SvgArrow, SvgCheckCircle, SvgCross } from 'app/icons/IconsDs';
 import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
-import { data } from 'autoprefixer';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+
+const RUTINE_DATA = {
+  imgSrc: '/images/derma/upselling/packDerma.png',
+  modalImgSrc: '/images/derma/upselling/packDermaModal.png',
+  name: 'Programa completo: Rutina facial + Revisión online',
+  price: '99€',
+  discountedPrice: '129€',
+  cta: 'Lo quiero todo',
+  bullets: [
+    'Cremas seleccionadas para ti por tu médico',
+    'Receta de tu crema facial formulada',
+  ],
+  id: 3,
+};
 
 export default function WhatsIncludedDerma() {
   const { showModalBackground } = useGlobalStore(state => state);
@@ -20,10 +30,6 @@ export default function WhatsIncludedDerma() {
   const [showModal, setShowModal] = useState(false);
 
   const modalBottomBarHeight = '97px';
-
-  const filteredProducts = DERMA_PRODUCTS.filter(
-    product => data != null && product.type.includes(0)
-  );
 
   useEffect(() => {
     setShowModal(showModalBackground);
@@ -51,20 +57,20 @@ export default function WhatsIncludedDerma() {
             >
               <Container className="pt-12 md:p-6">
                 <Image
-                  src={DERMA_ROUTINES[2].modalImgSrc}
-                  alt={DERMA_ROUTINES[2].name}
+                  src={RUTINE_DATA.modalImgSrc}
+                  alt={RUTINE_DATA.name}
                   width={324}
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
                 />
                 <TitleDerma className="text-derma-primary mb-4">
-                  {DERMA_ROUTINES[2].name}
+                  Tu rutina facial personalizada
                 </TitleDerma>
                 <Flex
                   layout="col-left"
                   className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
                 >
-                  {DERMA_ROUTINES[2].bullets.map((item, index) => {
+                  {RUTINE_DATA.bullets.map((item, index) => {
                     return (
                       <Flex className="w-full gap-4 items-start" key={index}>
                         <SvgCheckCircle className="text-derma-primary500 shrink-0 w-5 h-5" />
@@ -77,21 +83,19 @@ export default function WhatsIncludedDerma() {
                   })}
                 </Flex>
                 <Flex layout="col-left" className="w-full">
-                  {filteredProducts.map((item, index) => {
+                  {DERMA_PRODUCTS.map((item, index) => {
                     return (
                       <Flex
                         layout="col-left"
-                        className={`w-full text-derma-tertiary mb-6 pb-8 ${
-                          filteredProducts.length !== index + 1
-                            ? 'border-b border-hg-black300'
-                            : ''
-                        }`}
+                        className="w-full text-derma-tertiary mb-6 pb-8 border-b border-hg-black300"
                         key={index}
                       >
                         <Text className="text-derma-tertiary mb-2 font-semibold text-lg">
                           {item.title}
                         </Text>
-                        <Text className="text-sm mb-4">{item.subTitle}</Text>
+                        {item.subTitle && (
+                          <Text className="text-sm mb-4">{item.subTitle}</Text>
+                        )}
                         <Text className="text-sm text-hg-black400">
                           {item.text}
                         </Text>
@@ -113,18 +117,20 @@ export default function WhatsIncludedDerma() {
               className={`bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full h-[${modalBottomBarHeight}]`}
             >
               <div>
-                <Text className="text-3xl font-bold">
-                  {DERMA_ROUTINES[2].price}
-                </Text>
-                {DERMA_ROUTINES[2].price !==
-                  DERMA_ROUTINES[2].discountedPrice && (
+                <Text className="text-3xl font-bold">{RUTINE_DATA.price}</Text>
+                {RUTINE_DATA.price !== RUTINE_DATA.discountedPrice && (
                   <Text className="text-sm text-hg-error font-medium line-through">
-                    PVP {DERMA_ROUTINES[2].discountedPrice}
+                    PVP {RUTINE_DATA.discountedPrice}
                   </Text>
                 )}
               </div>
-              <Button size="xl" type="derma">
-                {DERMA_ROUTINES[2].cta}
+              <Button
+                size="xl"
+                type="derma"
+                href="/multistep/start"
+                id="tmevent_derma_multistep_start_modal"
+              >
+                {RUTINE_DATA.cta}
               </Button>
             </Flex>
           </div>
@@ -155,24 +161,14 @@ export default function WhatsIncludedDerma() {
               >
                 <Button
                   size="xl"
-                  type="tertiary"
-                  customStyles="bg-white text-hg-black border-none"
-                  onClick={() => setShowModal(true)}
-                >
-                  Saber más
-                </Button>
-
-                <Button
-                  size="xl"
                   type="derma"
                   href="/multistep/start"
                   id="tmevent_derma_multistep_start_middle"
                 >
-                  Comienza ahora
-                  <SvgArrow className="ml-2" />
+                  Descubre tu rutina
                 </Button>
 
-                {/* <SvgArrow className="h-12 w-12 text-derma-primary" /> */}
+                <SvgArrow className="h-12 w-12 text-derma-primary" />
               </Flex>
             </Flex>
 
@@ -182,31 +178,30 @@ export default function WhatsIncludedDerma() {
                 className="bg-derma-secondary300 rounded-2xl p-4 md:p-6 shadow-centered-black w-full"
               >
                 <Image
-                  src={DERMA_ROUTINES[2].modalImgSrc}
-                  alt={DERMA_ROUTINES[2].name}
+                  src={RUTINE_DATA.modalImgSrc}
+                  alt={RUTINE_DATA.name}
                   width={324}
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
-                <Title size="xl" className="mb-2 font-bold">
-                  {DERMA_ROUTINES[2].name}
+                <Title size="xl" className="mb-2 font-semibold ">
+                  Cesta con productos personalizados y validados por el médico
                 </Title>
                 <div>
                   <Text className="text-3xl font-bold">
-                    {DERMA_ROUTINES[2].price}
+                    {RUTINE_DATA.price}
                   </Text>
-                  {DERMA_ROUTINES[2].price !==
-                    DERMA_ROUTINES[2].discountedPrice && (
+                  {RUTINE_DATA.price !== RUTINE_DATA.discountedPrice && (
                     <Text className="text-sm text-hg-error font-medium line-through">
-                      PVP {DERMA_ROUTINES[2].discountedPrice}
+                      PVP {RUTINE_DATA.discountedPrice}
                     </Text>
                   )}
                 </div>
-                <Flex className="w-full gap-4 md:gap-0 justify-between md:hidden mt-8">
+                <Flex className="w-full gap-4 md:gap-0 justify-between mt-8">
                   <Button
-                    size="sm"
+                    size={deviceSize.isMobile ? 'lg' : 'xl'}
                     type="tertiary"
-                    customStyles="border-none text-derma-tertiary bg-derma-secondary100"
+                    customStyles="border-none text-derma-tertiary bg-derma-secondary100 "
                     onClick={() => {
                       setShowModal(true);
                     }}
@@ -216,10 +211,11 @@ export default function WhatsIncludedDerma() {
                   <Button
                     type="derma"
                     size="lg"
+                    className="md:hidden"
                     href="/multistep/start"
                     id="tmevent_derma_multistep_start_middle"
                   >
-                    Comienza ahora
+                    Descubre tu rutina
                   </Button>
                 </Flex>
               </Flex>

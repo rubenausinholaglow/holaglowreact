@@ -152,16 +152,29 @@ export default function AppointmentResume({
         </div>
         {isDerma && !isUpselling && (
           <>
+            <Text className="font-semibold">Rutina facial</Text>
             <div className="w-full flex items-start">
               <SvgCheckCircle className="mr-2 shrink-0" />
               <div className="flex flex-col ">
-                <Text>Receta crema facial personalizada</Text>
+                <Text>Espuma limpiadora</Text>
               </div>
             </div>
             <div className="w-full flex items-start">
               <SvgCheckCircle className="mr-2 shrink-0" />
               <div className="flex flex-col">
-                <Text>Recomendación rutina complementaria</Text>
+                <Text>Protector solar 50+</Text>
+              </div>
+            </div>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle className="mr-2 shrink-0" />
+              <div className="flex flex-col">
+                <Text>Crema facial personalizada</Text>
+              </div>
+            </div>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle className="mr-2 shrink-0" />
+              <div className="flex flex-col">
+                <Text>Receta de crema formulada</Text>
               </div>
             </div>
           </>

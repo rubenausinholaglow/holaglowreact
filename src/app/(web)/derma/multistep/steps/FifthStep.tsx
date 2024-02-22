@@ -29,8 +29,8 @@ export default function FifthStep({
                       Completa tu pedido
                     </Text>
                     <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                      Confirma los datos de tu consulta y completa el pago para
-                      reservar tu videollamada
+                      Confirma los datos de tu pedido y completa el pago para
+                      recibir tu rutina personalizada en casa
                     </Text>
                   </Flex>
                 </Flex>

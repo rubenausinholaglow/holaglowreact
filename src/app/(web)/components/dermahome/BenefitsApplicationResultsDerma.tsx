@@ -119,6 +119,7 @@ export default function BenefitsApplicationResultsDerma() {
           </div>
         </Flex>
 
+        {/* 
         <TitleDerma size="xl" className="mb-6 md:mb-16">
           Resultados de una formulación antiaging
         </TitleDerma>
@@ -196,7 +197,7 @@ export default function BenefitsApplicationResultsDerma() {
             su tolerancia y experimentar los beneficios completos, en
             aproximadamente cuatro meses
           </Text>
-        </Flex>
+        </Flex> */}
       </Container>
     </div>
   );
