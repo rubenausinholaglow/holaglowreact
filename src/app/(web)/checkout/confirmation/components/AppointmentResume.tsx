@@ -8,7 +8,6 @@ import {
 } from '@radix-ui/react-accordion';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { DERMA_APPOINTMENT_IMAGE } from 'app/(web)/derma/planes/mockedData';
 import {
   SvgAngleDown,
   SvgCalendar,
@@ -23,6 +22,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
 import {
   AccordionContent,
   AccordionItem,
@@ -32,6 +32,8 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+
+dayjs.locale(spanishConf);
 
 export default function AppointmentResume({
   appointment,
@@ -323,14 +325,16 @@ export default function AppointmentResume({
                 {typeOfPayment == TypeOfPayment.Reservation && ' (Anticipo)'}
               </Text>
               <Text className="font-semibold">
-                {isDerma
+                {typeOfPayment == TypeOfPayment.Reservation
+                  ? '49€'
+                  : !isEmpty(cart)
                   ? getTotalFromCart(
                       cart,
                       percentageDiscount,
                       priceDiscount,
                       manualPrice
                     )
-                  : '49€'}
+                  : `${selectedTreatments[0].price.toFixed(2)}€`}
               </Text>
             </Flex>
           )}
