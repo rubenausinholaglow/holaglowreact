@@ -258,7 +258,12 @@ export default function Agenda({
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else if (user && selectedDay && !isDerma) {
+        } else if (
+          user &&
+          selectedDay &&
+          !isDerma &&
+          (isDashboard || isCheckin)
+        ) {
           setLoadingDays(true);
           setLoadingMonth(true);
           if (isDashboard || isCheckin)

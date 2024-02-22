@@ -21,7 +21,7 @@ export default function ProfessionalCard({
             height={300}
             width={250}
             src={professional.urlPhoto}
-            className="w-full"
+            className="w-full rounded-3xl overflow-hidden"
           />
         </div>
 
