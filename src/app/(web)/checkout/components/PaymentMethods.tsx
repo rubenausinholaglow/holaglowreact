@@ -52,8 +52,8 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
 
   useEffect(() => {
     if (payment) {
-      setClientSecret(payment.embeddedReference);
       setIsLoadingButton(false);
+      setClientSecret(payment.embeddedReference);
     }
   }, [payment]);
 
@@ -119,7 +119,11 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
                   layout="col-left"
                   className="mt-4 pt-5 border-t border-hg-black w-full"
                 >
-                  {isLoadingButton && <SvgSpinner height={24} width={24} />}
+                  {isLoadingButton && (
+                    <Flex className="w-full" layout="col-center">
+                      <SvgSpinner height={24} width={24} />
+                    </Flex>
+                  )}
                   {clientSecret && (
                     <EmbeddedCheckoutProvider
                       stripe={stripePromise}
