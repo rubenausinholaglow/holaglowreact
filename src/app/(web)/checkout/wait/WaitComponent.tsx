@@ -70,7 +70,7 @@ export default function WaitComponent() {
               router.push('/checkout/contactform?error=true');
             }
           }
-        } else if (tries < 3) {
+        } else if (tries < 40) {
           setTimeout(async () => {
             await checkPaymentStatus(id);
           }, 15000);
