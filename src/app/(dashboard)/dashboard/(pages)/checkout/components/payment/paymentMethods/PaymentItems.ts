@@ -36,7 +36,7 @@ export const paymentItems = [
 export const checkoutPaymentItems = [
   {
     key: 'creditCard',
-    label: 'Tarjeta',
+    label: 'Tarjeta de crédito/débito',
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
