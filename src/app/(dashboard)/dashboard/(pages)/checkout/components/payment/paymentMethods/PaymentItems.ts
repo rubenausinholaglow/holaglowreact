@@ -57,8 +57,4 @@ export const financialTimes = [
     key: '3',
     label: 'Paga en 3 plazos',
   },
-  {
-    key: '4',
-    label: 'Paga en 4 plazos',
-  },
 ];
