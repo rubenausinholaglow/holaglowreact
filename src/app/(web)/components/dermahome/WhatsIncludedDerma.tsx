@@ -199,7 +199,7 @@ export default function WhatsIncludedDerma() {
                 </div>
                 <Flex className="w-full gap-4 md:gap-0 justify-between mt-8">
                   <Button
-                    size={deviceSize.isMobile ? 'lg' : 'xl'}
+                    size={deviceSize.isMobile ? 'md' : 'xl'}
                     type="tertiary"
                     customStyles="border-none text-derma-tertiary bg-derma-secondary100 "
                     onClick={() => {

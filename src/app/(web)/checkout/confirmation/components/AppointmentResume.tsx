@@ -8,7 +8,6 @@ import {
 } from '@radix-ui/react-accordion';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { DERMA_APPOINTMENT_IMAGE } from 'app/(web)/derma/planes/mockedData';
 import {
   SvgAngleDown,
   SvgCalendar,
@@ -104,8 +103,6 @@ export default function AppointmentResume({
   };
 
   const TreatmentImage = ({ selectedSlot }: { selectedSlot: Slot }) => {
-    console.log(selectedSlot);
-
     const imgSrc = '/images/derma/upselling/rutinaFacial2.png';
     const imgSrc2 = selectedSlot.startTime.startsWith('17')
       ? '/images/derma/upselling/Perez.png'
@@ -323,14 +320,16 @@ export default function AppointmentResume({
                 {typeOfPayment == TypeOfPayment.Reservation && ' (Anticipo)'}
               </Text>
               <Text className="font-semibold">
-                {isDerma
+                {typeOfPayment == TypeOfPayment.Reservation
+                  ? '49€'
+                  : !isEmpty(cart)
                   ? getTotalFromCart(
                       cart,
                       percentageDiscount,
                       priceDiscount,
                       manualPrice
                     )
-                  : '49€'}
+                  : `${selectedTreatments[0].price.toFixed(2)}€`}
               </Text>
             </Flex>
           )}
