@@ -184,7 +184,7 @@ export default function WhatsIncludedDerma() {
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
-                <Title size="xl" className="mb-2 font-semibold ">
+                <Title size="xl" className="mb-2 font-gtUltraBold">
                   Cesta con productos personalizados y validados por el médico
                 </Title>
                 <div>
@@ -210,8 +210,7 @@ export default function WhatsIncludedDerma() {
                   </Button>
                   <Button
                     type="derma"
-                    size="lg"
-                    className="md:hidden"
+                    size={deviceSize.isMobile ? 'lg' : 'xl'}
                     href="/multistep/start"
                     id="tmevent_derma_multistep_start_middle"
                   >
