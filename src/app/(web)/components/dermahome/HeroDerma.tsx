@@ -28,13 +28,6 @@ export default function HeroDerma() {
         layout="col-left"
         className="md:flex-row md:items-end max-w-[1400px] mx-auto"
       >
-        <Image
-          src="/images/derma/home/homeDerma.png"
-          alt="Holaglow"
-          width={912}
-          height={894}
-          className="md:w-2/5"
-        />
         <Flex
           layout="col-center"
           className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end "
@@ -98,6 +91,13 @@ export default function HeroDerma() {
             </Flex>
           </Container>
         </Flex>
+        <Image
+          src="/images/derma/home/homeDerma.jpg"
+          alt="Holaglow"
+          width={912}
+          height={894}
+          className="md:w-2/5"
+        />
       </Flex>
     </div>
   );

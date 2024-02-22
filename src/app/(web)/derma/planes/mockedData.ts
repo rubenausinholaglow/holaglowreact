@@ -14,11 +14,11 @@ export const DERMA_BUNDLE_TYPES_IDS = [
 
 export const DERMA_ROUTINES = [
   {
-    imgSrc: '/images/derma/upselling/seguimiento.png',
-    modalImgSrc: '/images/derma/upselling/seguimiento.png',
-    name: 'Revisión online con tu dermatólogo estético',
-    price: '49€',
-    discountedPrice: '59€',
+    imgSrc: '/images/derma/upselling/packDermaJosep.png',
+    modalImgSrc: '/images/derma/upselling/packDermaJosep.png',
+    name: 'Consulta online con el médico',
+    price: '99€',
+    discountedPrice: '129€',
     cta: 'Reservar cita',
     bullets: [
       'Evalúa la tolerancia de tu piel a la crema personalizada',
