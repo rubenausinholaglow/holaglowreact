@@ -210,8 +210,7 @@ export const PaymentMethods = ({
                     {showAlmaButtons && (
                       <>
                         <Flex className="w-full" layout="col-center">
-                          {method.key == 'alma' &&
-                          selectedTreatments[0].price > 49 ? (
+                          {method.key == 'alma' ? (
                             <>
                               {financialTimes.map(financialTime => (
                                 <div key={financialTime.key}>
@@ -244,9 +243,6 @@ export const PaymentMethods = ({
                                   </Button>
                                 </div>
                               ))}
-                              {errorMessage && (
-                                <p className="text-red-600"> {errorMessage} </p>
-                              )}
                             </>
                           ) : (
                             <></>
@@ -266,6 +262,9 @@ export const PaymentMethods = ({
                       >
                         <EmbeddedCheckout className="w-full" />
                       </EmbeddedCheckoutProvider>
+                    )}
+                    {errorMessage && (
+                      <p className="text-red-600"> {errorMessage} </p>
                     )}
                   </Flex>
                 </AccordionContent>
