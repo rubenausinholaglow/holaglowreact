@@ -108,11 +108,11 @@ export default function AppointmentResume({
 
     const imgSrc = '/images/derma/upselling/rutinaFacial2.png';
     const imgSrc2 = selectedSlot.startTime.startsWith('17')
-      ? '/images/derma/upselling/Basart.png'
-      : '/images/derma/upselling/Perez.png';
+      ? '/images/derma/upselling/Perez.png'
+      : '/images/derma/upselling/Basart.png';
     const imgAlt2 = selectedSlot.startTime.startsWith('17')
-      ? 'Dr. Basart'
-      : 'Dra. Pérez';
+      ? 'Dr. Pérez'
+      : 'Dra. Basart';
 
     return (
       <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:w-2/5 shrink-0 md:rounded-t-none md:rounded-l-2xl">
@@ -140,8 +140,8 @@ export default function AppointmentResume({
 
   const TreatmentDate = ({ selectedSlot }: { selectedSlot: Slot }) => {
     const doctorInfo = selectedSlot.startTime.startsWith('17')
-      ? 'Dr. Basart · Núm. Colegiado 080856206'
-      : 'Dra. Pérez · Núm. Colegiada 282886988';
+      ? 'Dra. Pérez · Núm. Colegiada 282886988'
+      : 'Dr. Basart · Núm. Colegiado 080856206';
 
     return (
       <Flex layout="col-left" className="w-full gap-2 text-sm">

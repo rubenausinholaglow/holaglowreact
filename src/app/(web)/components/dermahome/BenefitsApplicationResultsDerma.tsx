@@ -1,14 +1,11 @@
-import { SvgArrowSmallLeft } from 'app/icons/Icons';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
-
 export default function BenefitsApplicationResultsDerma() {
   return (
-    <div className="pt-12 pb-16">
+    <div className="pt-12 pb-16 bg-derma-primary100">
       <Container>
         <TitleDerma
           isAnimated
