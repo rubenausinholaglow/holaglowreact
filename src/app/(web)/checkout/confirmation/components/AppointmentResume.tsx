@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Appointment } from '@interface/appointment';
+import { Slot } from '@interface/slot';
 import {
   Accordion,
   AccordionItemProps,
@@ -55,6 +56,8 @@ export default function AppointmentResume({
     typeOfPayment,
   } = useSessionStore(state => state);
 
+  console.log(selectedSlot);
+
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
     state => state
   );
@@ -101,21 +104,33 @@ export default function AppointmentResume({
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
 
-  const TreatmentImage = ({ id }: { id: string }) => {
-    let imgSrc = '';
+  const TreatmentImage = ({ selectedSlot }: { selectedSlot: Slot }) => {
+    console.log(selectedSlot);
 
-    DERMA_APPOINTMENT_IMAGE.map(item => {
-      if (item.ids.includes(id)) {
-        imgSrc = item.imgSrc;
-      }
-    });
-
-    imgSrc =
-      imgSrc === '' ? '/images/derma/upselling/rutinaFacial.png' : imgSrc;
+    const imgSrc = '/images/derma/upselling/rutinaFacial2.png';
+    const imgSrc2 = selectedSlot.startTime.startsWith('18')
+      ? '/images/derma/upselling/Basart.png'
+      : '/images/derma/upselling/PerezBadillo.png';
+    const imgAlt2 = selectedSlot.startTime.startsWith('18')
+      ? 'Dr. Josep Basart'
+      : 'Dra. Perez Badillo';
 
     return (
-      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl">
-        <Image src={imgSrc} height={100} width={165} alt="seguimiento" />
+      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:rounded-t-none md:rounded-l-2xl">
+        <Image
+          src={imgSrc}
+          height={100}
+          width={165}
+          alt="rutina facial derma by Holaglow"
+          className="md:relative md:left-16 md:top-[70px] md:z-10"
+        />
+        <Image
+          src={imgSrc2}
+          height={100}
+          width={165}
+          alt={imgAlt2}
+          className="md:relative md:right-12 md:bottom-20"
+        />
       </Flex>
     );
   };
@@ -144,40 +159,32 @@ export default function AppointmentResume({
           </div>
         )}
         <div className="w-full flex items-start">
-          <SvgLocation className="mr-2 mt-1" />
+          <SvgLocation className="mr-2 mt-1 shrink-0" />
           <div className="flex flex-col ">
             <Text className="font-semibold">{city}</Text>
             <Text>{address}</Text>
           </div>
         </div>
         {isDerma && !isUpselling && (
-          <>
-            <Text className="font-semibold">Rutina facial</Text>
-            <div className="w-full flex items-start">
-              <SvgCheckCircle className="mr-2 shrink-0" />
-              <div className="flex flex-col ">
-                <Text>Espuma limpiadora</Text>
+          <Flex
+            layout="col-left"
+            className="w-full gap-2 mt-2 pt-6 border-t border-hg-black300"
+          >
+            <Text className="font-semibold text-md">Rutina facial</Text>
+            {[
+              'Espuma limpiadora',
+              'Protector solar 50+',
+              'Crema facial personalizada',
+              'Receta de crema formulada',
+            ].map(item => (
+              <div className="w-full flex items-start" key={item}>
+                <SvgCheckCircle className="mr-2 shrink-0" />
+                <div className="flex flex-col ">
+                  <Text>{item}</Text>
+                </div>
               </div>
-            </div>
-            <div className="w-full flex items-start">
-              <SvgCheckCircle className="mr-2 shrink-0" />
-              <div className="flex flex-col">
-                <Text>Protector solar 50+</Text>
-              </div>
-            </div>
-            <div className="w-full flex items-start">
-              <SvgCheckCircle className="mr-2 shrink-0" />
-              <div className="flex flex-col">
-                <Text>Crema facial personalizada</Text>
-              </div>
-            </div>
-            <div className="w-full flex items-start">
-              <SvgCheckCircle className="mr-2 shrink-0" />
-              <div className="flex flex-col">
-                <Text>Receta de crema formulada</Text>
-              </div>
-            </div>
-          </>
+            ))}
+          </Flex>
         )}
       </Flex>
     );
@@ -209,7 +216,7 @@ export default function AppointmentResume({
             </Text>
           </Flex>
           {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
-            <Flex layout="col-left" className="w-full gap-2">
+            <Flex layout="col-left" className="w-full gap-2 ">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
@@ -320,8 +327,13 @@ export default function AppointmentResume({
 
   const appointmentComponent = useMemo(() => {
     return (
-      <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
-        {isDerma && <TreatmentImage id={selectedTreatments[0].id} />}
+      <Flex
+        layout="col-left"
+        className="w-full rounded-xl overflow-hidden md:flex-row md:items-stretch"
+      >
+        {isDerma && selectedSlot && (
+          <TreatmentImage selectedSlot={selectedSlot} />
+        )}
         <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
           <TreatmentName />
           <TreatmentDate />

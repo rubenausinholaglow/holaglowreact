@@ -30,7 +30,7 @@ export default function StartMultistep() {
                   alt="Holaglow"
                   width={816}
                   height={1014}
-                  className="w-2/3 md:w-auto md:max-h-[500px] shrink-0 md:ml-auto"
+                  className="md:w-auto shrink-0 md:ml-auto"
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">

@@ -5,6 +5,7 @@ import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import Image from 'next/image';
 
 export default function FifthStep({
   activeSlideIndex,
@@ -18,7 +19,7 @@ export default function FifthStep({
       {activeSlideIndex === 6 && (
         <Container className="px-0 md:px-4">
           <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
-            <div>
+            <div className="md:w-1/2">
               <Container className="md:px-0">
                 <Flex layout="col-left" className="w-full">
                   <Flex layout="col-left" className="w-full">
@@ -37,17 +38,19 @@ export default function FifthStep({
                 <AppointmentResume isDerma />
               </Container>
             </div>
-            <Container className="mt-8">
-              <Flex className="text-center" layout="col-center">
+            <Container className="mt-8 md:w-1/2">
+              <Flex className="text-center" layout="col-left">
                 <div className="mb-4">
-                  <img
+                  <Image
                     width={200}
+                    height={200}
+                    alt="TrustPilot"
                     src="/images/derma/trustpilot-logo.png"
-                  ></img>
+                  />
                 </div>
-                <div className="w-full mb-4">
+                <Text className="ml-4 mb-4">
                   TrustScore <b>4.7</b>
-                </div>
+                </Text>
               </Flex>
               <CheckoutPayment
                 hasError={false}
