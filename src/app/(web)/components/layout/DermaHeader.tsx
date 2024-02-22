@@ -89,7 +89,7 @@ export default function DermaHeader({
               {!hideButton && (
                 <Button
                   id="tmevent_derma_multistep_start_top"
-                  className="lg:absolute right-0 2xl:mr-20"
+                  className="lg:absolute right-0 2xl:mr-20 md:hidden"
                   type="tertiary"
                   href="/multistep/start"
                   customStyles="bg-transparent text-derma-primary border-derma-primary hover:border-derma-primary500 hover:text-derma-primary500"
