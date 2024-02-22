@@ -194,8 +194,7 @@ export const PaymentMethods = ({
                       </Text>
                     </Flex>
 
-                    {method.key == 'alma' &&
-                    selectedTreatments[0].price > 49 ? (
+                    {method.key == 'alma' ? (
                       <>
                         {financialTimes.map(financialTime => (
                           <div key={financialTime.key}>
