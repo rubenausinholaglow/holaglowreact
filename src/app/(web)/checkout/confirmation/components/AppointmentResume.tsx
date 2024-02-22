@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Appointment } from '@interface/appointment';
+import { Slot } from '@interface/slot';
 import {
   Accordion,
   AccordionItemProps,
@@ -7,20 +8,21 @@ import {
 } from '@radix-ui/react-accordion';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { DERMA_APPOINTMENT_IMAGE } from 'app/(web)/derma/planes/mockedData';
 import {
   SvgAngleDown,
   SvgCalendar,
   SvgHour,
   SvgLocation,
+  SvgStethoscope,
 } from 'app/icons/Icons';
-import { SvgBag } from 'app/icons/IconsDs';
+import { SvgBag, SvgCheckCircle } from 'app/icons/IconsDs';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
 import {
   AccordionContent,
   AccordionItem,
@@ -30,6 +32,8 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+
+dayjs.locale(spanishConf);
 
 export default function AppointmentResume({
   appointment,
@@ -101,21 +105,31 @@ export default function AppointmentResume({
     value: deviceSize.isMobile ? 'item-2' : 'item-1',
   };
 
-  const TreatmentImage = ({ id }: { id: string }) => {
-    let imgSrc = '';
-
-    DERMA_APPOINTMENT_IMAGE.map(item => {
-      if (item.ids.includes(id)) {
-        imgSrc = item.imgSrc;
-      }
-    });
-
-    imgSrc =
-      imgSrc === '' ? '/images/derma/upselling/rutinaFacial.png' : imgSrc;
+  const TreatmentImage = ({ selectedSlot }: { selectedSlot: Slot }) => {
+    const imgSrc = '/images/derma/upselling/rutinaFacial2.png';
+    const imgSrc2 = selectedSlot.startTime.startsWith('17')
+      ? '/images/derma/upselling/Perez.png'
+      : '/images/derma/upselling/Basart.png';
+    const imgAlt2 = selectedSlot.startTime.startsWith('17')
+      ? 'Dr. Pérez'
+      : 'Dra. Basart';
 
     return (
-      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl">
-        <Image src={imgSrc} height={100} width={165} alt="seguimiento" />
+      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:w-2/5 shrink-0 md:rounded-t-none md:rounded-l-2xl">
+        <Image
+          src={imgSrc}
+          height={100}
+          width={165}
+          alt="rutina facial derma by Holaglow"
+          className="md:relative md:left-16 md:top-[70px] md:z-10 md:w-4/5"
+        />
+        <Image
+          src={imgSrc2}
+          height={100}
+          width={165}
+          alt={imgAlt2}
+          className="md:relative md:right-12 md:bottom-16 md:w-4/5"
+        />
       </Flex>
     );
   };
@@ -124,11 +138,21 @@ export default function AppointmentResume({
     return <Text className="font-semibold">{selectedTreatmentsNames}</Text>;
   };
 
-  const TreatmentDate = () => {
+  const TreatmentDate = ({ selectedSlot }: { selectedSlot: Slot }) => {
+    const doctorInfo = selectedSlot.startTime.startsWith('17')
+      ? 'Dra. Pérez · Núm. Colegiada 282886988'
+      : 'Dr. Basart · Núm. Colegiado 080856206';
+
     return (
       <Flex layout="col-left" className="w-full gap-2 text-sm">
+        {isDerma && (
+          <div className="w-full flex items-center">
+            <SvgStethoscope className="mr-2 shrink-0" />
+            <Text>{doctorInfo}</Text>
+          </div>
+        )}
         <div className="w-full flex items-center">
-          <SvgCalendar className="mr-2" />
+          <SvgCalendar className="mr-2 shrink-0" />
           <Text>
             <span className="capitalize">
               {localSelectedDay.format('dddd')},{' '}
@@ -139,17 +163,43 @@ export default function AppointmentResume({
         </div>
         {startTime && (
           <div className="w-full flex items-center">
-            <SvgHour className="mr-2" />
+            <SvgHour className="mr-2 shrink-0" />
             {startTime}h
+            {isDerma && (
+              <span className="inline-block ml-1">consulta online</span>
+            )}
           </div>
         )}
-        <div className="w-full flex items-start">
-          <SvgLocation className="mr-2 mt-1" />
-          <div className="flex flex-col ">
-            <Text className="font-semibold">{city}</Text>
-            <Text>{address}</Text>
+        {!isDerma && (
+          <div className="w-full flex items-start">
+            <SvgLocation className="mr-2 mt-1 shrink-0" />
+            <div className="flex flex-col ">
+              <Text className="font-semibold">{city}</Text>
+              <Text>{address}</Text>
+            </div>
           </div>
-        </div>
+        )}
+        {isDerma && !isUpselling && (
+          <Flex
+            layout="col-left"
+            className="w-full gap-2 mt-2 pt-6 border-t border-hg-black300"
+          >
+            <Text className="font-semibold text-md">Rutina facial</Text>
+            {[
+              'Espuma limpiadora',
+              'Protector solar 50+',
+              'Crema facial personalizada',
+              'Receta de crema formulada',
+            ].map(item => (
+              <div className="w-full flex items-start" key={item}>
+                <SvgCheckCircle className="mr-2 shrink-0" />
+                <div className="flex flex-col ">
+                  <Text>{item}</Text>
+                </div>
+              </div>
+            ))}
+          </Flex>
+        )}
       </Flex>
     );
   };
@@ -180,7 +230,7 @@ export default function AppointmentResume({
             </Text>
           </Flex>
           {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
-            <Flex layout="col-left" className="w-full gap-2">
+            <Flex layout="col-left" className="w-full gap-2 ">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
@@ -273,14 +323,16 @@ export default function AppointmentResume({
                 {typeOfPayment == TypeOfPayment.Reservation && ' (Anticipo)'}
               </Text>
               <Text className="font-semibold">
-                {isDerma
+                {typeOfPayment == TypeOfPayment.Reservation
+                  ? '49€'
+                  : !isEmpty(cart)
                   ? getTotalFromCart(
                       cart,
                       percentageDiscount,
                       priceDiscount,
                       manualPrice
                     )
-                  : '49€'}
+                  : `${selectedTreatments[0].price.toFixed(2)}€`}
               </Text>
             </Flex>
           )}
@@ -291,12 +343,17 @@ export default function AppointmentResume({
 
   const appointmentComponent = useMemo(() => {
     return (
-      <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
-        {isUpselling && <TreatmentImage id={selectedTreatments[0].id} />}
+      <Flex
+        layout="col-left"
+        className="w-full rounded-xl overflow-hidden md:flex-row md:items-stretch"
+      >
+        {isDerma && selectedSlot && (
+          <TreatmentImage selectedSlot={selectedSlot} />
+        )}
         <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
           <TreatmentName />
-          <TreatmentDate />
-          {isUpselling && <TreatmentPriceBreakdown hideTotal />}
+          {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
+          {/* {isDerma && <TreatmentPriceBreakdown hideTotal />} */}
           {!appointment && <AppointmentDataResume />}
         </Flex>
       </Flex>

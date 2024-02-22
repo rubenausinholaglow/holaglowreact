@@ -115,8 +115,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !isEmpty(formData.surname) &&
       !isEmpty(formData.email) &&
       !isEmpty(formData.phone) &&
+      ((!isEmpty(formData.postalCode) && showPostalCode) || !showPostalCode) &&
+      ((!isEmpty(formData.city) && showCity) || !showCity) &&
+      ((!isEmpty(formData.address) && showAddress) || !showAddress) &&
       !showPhoneError &&
-      !showEmailError
+      !showEmailError &&
+      !showPostalCodeError
     ) {
       setIsDisabled(false);
       if (setContinueDisabled) setContinueDisabled(false);

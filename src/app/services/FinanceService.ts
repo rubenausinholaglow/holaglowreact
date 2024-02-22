@@ -29,11 +29,11 @@ export default class FinanceService {
         return data;
       } else {
         Bugsnag.notify('Error initializePayment ' + res);
-        return { id: '', url: '', referenceId: '' };
+        return { id: '', url: '', referenceId: '', embeddedReference: '' };
       }
     } catch (error: any) {
       Bugsnag.notify('Error initializePayment ' + error);
-      return { id: '', url: '', referenceId: '' };
+      return { id: '', url: '', referenceId: '', embeddedReference: '' };
     }
   }
 
