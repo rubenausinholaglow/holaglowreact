@@ -91,10 +91,7 @@ export const PaymentMethods = ({
       cart.length > 0 &&
       client!.email != ''
     ) {
-      const finalPrice = selectedTreatments[0].price
-        .toFixed(2)
-        .toString()
-        .replace('.', '');
+      const finalPrice = (selectedTreatments[0].price * 100).toFixed(0);
       const createdUser = await registerUser(client!, false, false, false);
       await initializePayment(
         activePayment,
