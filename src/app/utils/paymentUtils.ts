@@ -33,6 +33,7 @@ export const usePayments = () => {
   ) => {
     useNewTab = newTab ?? false;
     useRedirect = redirect ?? true;
+    if (PaymentBank.Alma == paymentBank) useRedirect = true;
     const data: InitializePayment = {
       amount: Number(price),
       installments: installments,
@@ -82,7 +83,11 @@ export const usePayments = () => {
   };
 
   useEffect(() => {
-    if (payment && payment.url && useRedirect) {
+    if (
+      payment &&
+      payment.url &&
+      (useRedirect || payment.referenceId.indexOf('payment_') == 0)
+    ) {
       if (useNewTab) {
         openWindow(payment.url);
       } else window.document.location.href = payment.url;
