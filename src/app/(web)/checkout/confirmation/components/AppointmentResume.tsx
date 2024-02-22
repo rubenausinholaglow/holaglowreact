@@ -14,6 +14,7 @@ import {
   SvgCalendar,
   SvgHour,
   SvgLocation,
+  SvgStethoscope,
 } from 'app/icons/Icons';
 import { SvgBag, SvgCheckCircle } from 'app/icons/IconsDs';
 import {
@@ -55,8 +56,6 @@ export default function AppointmentResume({
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
-
-  console.log(selectedSlot);
 
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
     state => state
@@ -108,28 +107,28 @@ export default function AppointmentResume({
     console.log(selectedSlot);
 
     const imgSrc = '/images/derma/upselling/rutinaFacial2.png';
-    const imgSrc2 = selectedSlot.startTime.startsWith('18')
+    const imgSrc2 = selectedSlot.startTime.startsWith('17')
       ? '/images/derma/upselling/Basart.png'
-      : '/images/derma/upselling/PerezBadillo.png';
-    const imgAlt2 = selectedSlot.startTime.startsWith('18')
-      ? 'Dr. Josep Basart'
-      : 'Dra. Perez Badillo';
+      : '/images/derma/upselling/Perez.png';
+    const imgAlt2 = selectedSlot.startTime.startsWith('17')
+      ? 'Dr. Basart'
+      : 'Dra. Pérez';
 
     return (
-      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:rounded-t-none md:rounded-l-2xl">
+      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:w-2/5 shrink-0 md:rounded-t-none md:rounded-l-2xl">
         <Image
           src={imgSrc}
           height={100}
           width={165}
           alt="rutina facial derma by Holaglow"
-          className="md:relative md:left-16 md:top-[70px] md:z-10"
+          className="md:relative md:left-16 md:top-[70px] md:z-10 md:w-4/5"
         />
         <Image
           src={imgSrc2}
           height={100}
           width={165}
           alt={imgAlt2}
-          className="md:relative md:right-12 md:bottom-20"
+          className="md:relative md:right-12 md:bottom-16 md:w-4/5"
         />
       </Flex>
     );
@@ -139,11 +138,21 @@ export default function AppointmentResume({
     return <Text className="font-semibold">{selectedTreatmentsNames}</Text>;
   };
 
-  const TreatmentDate = () => {
+  const TreatmentDate = ({ selectedSlot }: { selectedSlot: Slot }) => {
+    const doctorInfo = selectedSlot.startTime.startsWith('17')
+      ? 'Dr. Basart · Núm. Colegiado 080856206'
+      : 'Dra. Pérez · Núm. Colegiada 282886988';
+
     return (
       <Flex layout="col-left" className="w-full gap-2 text-sm">
+        {isDerma && (
+          <div className="w-full flex items-center">
+            <SvgStethoscope className="mr-2 shrink-0" />
+            <Text>{doctorInfo}</Text>
+          </div>
+        )}
         <div className="w-full flex items-center">
-          <SvgCalendar className="mr-2" />
+          <SvgCalendar className="mr-2 shrink-0" />
           <Text>
             <span className="capitalize">
               {localSelectedDay.format('dddd')},{' '}
@@ -154,17 +163,22 @@ export default function AppointmentResume({
         </div>
         {startTime && (
           <div className="w-full flex items-center">
-            <SvgHour className="mr-2" />
+            <SvgHour className="mr-2 shrink-0" />
             {startTime}h
+            {isDerma && (
+              <span className="inline-block ml-1">consulta online</span>
+            )}
           </div>
         )}
-        <div className="w-full flex items-start">
-          <SvgLocation className="mr-2 mt-1 shrink-0" />
-          <div className="flex flex-col ">
-            <Text className="font-semibold">{city}</Text>
-            <Text>{address}</Text>
+        {!isDerma && (
+          <div className="w-full flex items-start">
+            <SvgLocation className="mr-2 mt-1 shrink-0" />
+            <div className="flex flex-col ">
+              <Text className="font-semibold">{city}</Text>
+              <Text>{address}</Text>
+            </div>
           </div>
-        </div>
+        )}
         {isDerma && !isUpselling && (
           <Flex
             layout="col-left"
@@ -336,8 +350,8 @@ export default function AppointmentResume({
         )}
         <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
           <TreatmentName />
-          <TreatmentDate />
-          {isDerma && <TreatmentPriceBreakdown hideTotal />}
+          {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
+          {/* {isDerma && <TreatmentPriceBreakdown hideTotal />} */}
           {!appointment && <AppointmentDataResume />}
         </Flex>
       </Flex>
