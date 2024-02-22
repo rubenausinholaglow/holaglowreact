@@ -67,7 +67,7 @@ export default function HeroDerma() {
               >
                 <Flex layout="col-left" className="relative z-10">
                   <Text className="text-derma-primary text-left mb-4 text-3xl xl:text-4xl 2xl:text-5xl font-gtUltraBold">
-                    Tú rutina facial diseñada por un médico
+                    Tu rutina facial diseñada por un médico
                   </Text>
                   <Text
                     isAnimated
