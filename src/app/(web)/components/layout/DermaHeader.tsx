@@ -89,10 +89,10 @@ export default function DermaHeader({
               {!hideButton && (
                 <Button
                   id="tmevent_derma_multistep_start_top"
-                  className="lg:absolute right-0 2xl:mr-20 md:hidden"
+                  className="lg:absolute right-0 2xl:mr-20"
                   type="tertiary"
                   href="/multistep/start"
-                  customStyles="bg-transparent text-derma-primary border-derma-primary hover:border-derma-primary500 hover:text-derma-primary500"
+                  customStyles="bg-transparent text-derma-primary border-derma-primary md:text-derma-tertiary md:border-derma-tertiary hover:border-derma-primary500 hover:text-derma-primary500"
                 >
                   <Text className="font-semibold mr-2">Pide cita</Text>
                   <SvgArrow className="h-5 w-5" />
