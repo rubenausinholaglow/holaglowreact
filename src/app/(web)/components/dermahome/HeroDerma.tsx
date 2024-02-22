@@ -74,8 +74,11 @@ export default function HeroDerma() {
                     className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
                   >
                     Un dermatólogo estético estudiará tu piel en una
-                    videollamada para diseñar una rutina facial con productos
-                    personalizados que te enviaremos a casa por 99€
+                    videollamada para diseñar una rutina facial con{' '}
+                    <span className="font-semibold">
+                      productos personalizados
+                    </span>{' '}
+                    que te enviaremos a casa por 99€
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">

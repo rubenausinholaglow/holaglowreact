@@ -210,8 +210,7 @@ export default function WhatsIncludedDerma() {
                   </Button>
                   <Button
                     type="derma"
-                    size="lg"
-                    className="md:hidden"
+                    size={deviceSize.isMobile ? 'lg' : 'xl'}
                     href="/multistep/start"
                     id="tmevent_derma_multistep_start_middle"
                   >
