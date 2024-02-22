@@ -6,6 +6,11 @@ import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
+import {
+  EmbeddedCheckout,
+  EmbeddedCheckoutProvider,
+} from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
@@ -33,10 +38,12 @@ const PAYMENT_ICONS = {
   alma: ['alma.svg'],
   pepper: ['pepper.svg'],
   Efectivo: [],
-  creditCard: ['visa.svg', 'mastercard.svg'],
-  direct: ['googlepay.svg', 'applepay.svg'],
+  creditCard: ['visa.svg', 'mastercard.svg', 'googlepay.svg', 'applepay.svg'],
+  direct: [],
 };
-
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 export const PaymentMethods = ({
   isDerma = false,
   client,
@@ -46,14 +53,13 @@ export const PaymentMethods = ({
 }) => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [clientSecret, setClientSecret] = useState('');
   const [isLoadingKey, setIsLoadingKey] = useState<{ [key: string]: boolean }>(
     {}
   );
+  const { payment } = useSessionStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
   const { setActivePayment } = useGlobalPersistedStore(state => state);
-  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
-    state => state
-  );
   const { selectedTreatments } = useSessionStore(state => state);
   const initializePayment = usePayments();
   const registerUser = useRegistration(client!, false, false, false);
@@ -70,6 +76,12 @@ export const PaymentMethods = ({
       setErrorMessage(undefined);
     }, 6000);
   }, [errorMessage]);
+	useEffect(() => {
+    if (payment) {
+      setIsLoadingButton(false);
+      setClientSecret(payment.embeddedReference);
+    }
+  }, [payment]);
 
   function scrollDown() {
     setTimeout(() => {
@@ -144,7 +156,14 @@ export const PaymentMethods = ({
                 className="bg-white py-6 px-8 rounded-xl w-full"
               >
                 <AccordionTrigger className="text-left">
-                  <Flex className="gap-2" onClick={() => scrollDown()}>
+                <Flex
+                  className="gap-3  mb-4"
+                  onClick={() => {
+                    scrollDown();
+                    setIsLoadingButton(true);
+                    setActivePayment(PaymentBank.Stripe);
+                  }}
+                >
                     <SvgRadioChecked
                       height={24}
                       width={24}
@@ -152,13 +171,11 @@ export const PaymentMethods = ({
                     />
                     <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
                     <Text>{method.label}</Text>
+                </Flex>
                     <Flex className="ml-auto gap-2">
-                      {PAYMENT_ICONS[
-                        method.key as keyof typeof PAYMENT_ICONS
-                      ] &&
-                        PAYMENT_ICONS[
-                          method.key as keyof typeof PAYMENT_ICONS
-                        ].map((icon: string) => (
+                  {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
+                    PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS].map(
+                      (icon: string) => (
                           <Image
                             src={`/images/dashboard/payment/${icon}`}
                             height={32}
@@ -176,24 +193,8 @@ export const PaymentMethods = ({
                     layout="col-left"
                     className="mt-4 pt-5 border-t border-hg-black w-full"
                   >
-                    <Text className="mb-4">
-                      Serás redirigido/a a la pasarela para efectuar el pago.
-                    </Text>
-
-                    <Flex className="justify-between w-full bg-hg-black50 p-4 rounded-xl mb-8">
-                      <Text>Total pago</Text>
-                      <Text>
-                        {isDerma
-                          ? getTotalFromCart(
-                              cart,
-                              percentageDiscount,
-                              priceDiscount,
-                              manualPrice
-                            )
-                          : '49,00€'}
-                      </Text>
-                    </Flex>
-
+                  {isLoadingButton && (
+                    <Flex className="w-full" layout="col-center">
                     {method.key == 'alma' &&
                     selectedTreatments[0].price > 49 ? (
                       <>
@@ -258,7 +259,13 @@ export const PaymentMethods = ({
                           </>
                         )}
                       </Button>
-                    )}
+                    <EmbeddedCheckoutProvider
+                      stripe={stripePromise}
+                      options={{ clientSecret }}
+                    >
+                      <EmbeddedCheckout className="w-full" />
+                    </EmbeddedCheckoutProvider>
+                  )}
                   </Flex>
                 </AccordionContent>
               </AccordionItem>

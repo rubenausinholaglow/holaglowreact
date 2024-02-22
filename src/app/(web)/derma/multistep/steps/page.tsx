@@ -124,7 +124,14 @@ export default function Form() {
 
   useEffect(() => {
     async function checkout() {
-      await initializePayment(activePayment, createdUser!, false, 2900);
+      await initializePayment(
+        activePayment,
+        createdUser!,
+        false,
+        9900,
+        true,
+        false
+      );
     }
     if (activePayment != PaymentBank.None && cart.length > 0) checkout();
   }, [activePayment]);
@@ -206,6 +213,7 @@ export default function Form() {
             currentSlide={activeSlideIndex}
             dragEnabled={false}
             touchEnabled={false}
+            disableKeyboard
           >
             <div id="tm_derma_step1" className="min-h-[100px]">
               <FirstStep

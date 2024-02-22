@@ -14,7 +14,7 @@ import {
   SvgHour,
   SvgLocation,
 } from 'app/icons/Icons';
-import { SvgBag } from 'app/icons/IconsDs';
+import { SvgBag, SvgCheckCircle } from 'app/icons/IconsDs';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
@@ -150,6 +150,35 @@ export default function AppointmentResume({
             <Text>{address}</Text>
           </div>
         </div>
+        {isDerma && !isUpselling && (
+          <>
+            <Text className="font-semibold">Rutina facial</Text>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle className="mr-2 shrink-0" />
+              <div className="flex flex-col ">
+                <Text>Espuma limpiadora</Text>
+              </div>
+            </div>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle className="mr-2 shrink-0" />
+              <div className="flex flex-col">
+                <Text>Protector solar 50+</Text>
+              </div>
+            </div>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle className="mr-2 shrink-0" />
+              <div className="flex flex-col">
+                <Text>Crema facial personalizada</Text>
+              </div>
+            </div>
+            <div className="w-full flex items-start">
+              <SvgCheckCircle className="mr-2 shrink-0" />
+              <div className="flex flex-col">
+                <Text>Receta de crema formulada</Text>
+              </div>
+            </div>
+          </>
+        )}
       </Flex>
     );
   };
@@ -292,11 +321,11 @@ export default function AppointmentResume({
   const appointmentComponent = useMemo(() => {
     return (
       <Flex layout="col-left" className="w-full rounded-xl overflow-hidden">
-        {isUpselling && <TreatmentImage id={selectedTreatments[0].id} />}
+        {isDerma && <TreatmentImage id={selectedTreatments[0].id} />}
         <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
           <TreatmentName />
           <TreatmentDate />
-          {isUpselling && <TreatmentPriceBreakdown hideTotal />}
+          {isDerma && <TreatmentPriceBreakdown hideTotal />}
           {!appointment && <AppointmentDataResume />}
         </Flex>
       </Flex>

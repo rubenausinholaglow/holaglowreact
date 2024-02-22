@@ -21,7 +21,7 @@ export const usePayments = () => {
 
   const { cart } = useCartStore(state => state);
   let useNewTab = false;
-
+  let useRedirect = true;
   const initializePayment = async (
     paymentBank: PaymentBank,
     createdUser: User,
@@ -29,8 +29,10 @@ export const usePayments = () => {
     price = 4900,
     isDerma = false,
     installments = 1,
+    redirect = true
   ) => {
     useNewTab = newTab ?? false;
+    useRedirect = redirect ?? true;
     const data: InitializePayment = {
       amount: Number(price),
       installments: installments,
@@ -41,8 +43,10 @@ export const usePayments = () => {
     };
     cart.forEach(product => {
       if (
-        product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_PREVIA_ID ||
-        product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_DERMA
+        product.id.toUpperCase() ===
+          process.env.NEXT_PUBLIC_CITA_PREVIA_ID?.toUpperCase() ||
+        product.id.toUpperCase() ===
+          process.env.NEXT_PUBLIC_CITA_DERMA?.toUpperCase()
       ) {
         const productPayment: ProductPaymentRequest = {
           name: product.title,
@@ -78,7 +82,7 @@ export const usePayments = () => {
   };
 
   useEffect(() => {
-    if (payment && payment.url) {
+    if (payment && payment.url && useRedirect) {
       if (useNewTab) {
         openWindow(payment.url);
       } else window.document.location.href = payment.url;
