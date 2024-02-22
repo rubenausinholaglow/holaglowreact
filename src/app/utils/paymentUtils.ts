@@ -21,7 +21,7 @@ export const usePayments = () => {
 
   const { cart } = useCartStore(state => state);
   let useNewTab = false;
-  let useRedirect = true;
+  let useRedirect = false;
   const initializePayment = async (
     paymentBank: PaymentBank,
     createdUser: User,
