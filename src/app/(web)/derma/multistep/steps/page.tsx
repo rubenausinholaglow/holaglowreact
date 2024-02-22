@@ -134,7 +134,12 @@ export default function Form() {
         false
       );
     }
-    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
+    if (
+      activePayment != PaymentBank.None &&
+      activePayment == PaymentBank.Stripe &&
+      cart.length > 0
+    )
+      checkout();
   }, [activePayment]);
 
   const goBack = (index: number) => {

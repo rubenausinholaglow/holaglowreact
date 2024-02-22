@@ -32,6 +32,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 const PAYMENT_ICONS = {
@@ -53,6 +54,8 @@ export const PaymentMethods = ({
 }) => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [showAlmaButtons, setShowAlmaButtons] = useState(false);
+
   const [clientSecret, setClientSecret] = useState('');
   const [isLoadingKey, setIsLoadingKey] = useState<{ [key: string]: boolean }>(
     {}
@@ -83,7 +86,8 @@ export const PaymentMethods = ({
   useEffect(() => {
     if (payment) {
       setIsLoadingButton(false);
-      setClientSecret(payment.embeddedReference);
+      if (!isEmpty(payment.embeddedReference))
+        setClientSecret(payment.embeddedReference);
     }
   }, [payment]);
 
@@ -114,8 +118,9 @@ export const PaymentMethods = ({
         createdUser!,
         false,
         Number(finalPrice),
-        false,
-        installments
+        isDerma,
+        installments,
+        true
       )
         .then(x => {
           if (x == undefined) {
@@ -164,8 +169,13 @@ export const PaymentMethods = ({
                     className="gap-3  mb-4"
                     onClick={() => {
                       scrollDown();
-                      setIsLoadingButton(true);
-                      setActivePayment(PaymentBank.Stripe);
+                      if (method.key == 'creditCard') {
+                        setIsLoadingButton(true);
+                        setActivePayment(PaymentBank.Stripe);
+                      }
+                      if (method.key == 'alma') {
+                        setShowAlmaButtons(true);
+                      }
                     }}
                   >
                     <SvgRadioChecked
@@ -197,7 +207,7 @@ export const PaymentMethods = ({
                     layout="col-left"
                     className="mt-4 pt-5 border-t border-hg-black w-full"
                   >
-                    {isLoadingButton && (
+                    {showAlmaButtons && (
                       <>
                         <Flex className="w-full" layout="col-center">
                           {method.key == 'alma' &&
@@ -239,21 +249,15 @@ export const PaymentMethods = ({
                               )}
                             </>
                           ) : (
-                            <>
-                              {isLoadingButton ? (
-                                <Flex className="w-20 justify-center">
-                                  <SvgSpinner height={24} width={24} />
-                                </Flex>
-                              ) : (
-                                <>
-                                  Continuar
-                                  <SvgArrow height={16} width={16} />
-                                </>
-                              )}
-                            </>
+                            <></>
                           )}
                         </Flex>
                       </>
+                    )}
+                    {isLoadingButton && (
+                      <Flex className="w-full justify-center">
+                        <SvgSpinner height={24} width={24} />
+                      </Flex>
                     )}
                     {clientSecret && (
                       <EmbeddedCheckoutProvider
