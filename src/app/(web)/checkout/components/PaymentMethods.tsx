@@ -227,9 +227,6 @@ export const PaymentMethods = ({
                             </Button>
                           </div>
                         ))}
-                        {errorMessage && (
-                          <p className="text-red-600"> {errorMessage} </p>
-                        )}
                       </>
                     ) : (
                       <Button
@@ -257,6 +254,9 @@ export const PaymentMethods = ({
                           </>
                         )}
                       </Button>
+                    )}
+                    {errorMessage && (
+                      <p className="text-red-600"> {errorMessage} </p>
                     )}
                   </Flex>
                 </AccordionContent>

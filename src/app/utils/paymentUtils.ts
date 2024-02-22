@@ -71,7 +71,7 @@ export const usePayments = () => {
     try {
       const paymentResponse = await FinanceService.initializePayment(data);
       setPayment(paymentResponse);
-      return true;
+      if(paymentResponse.id != "") return true;
     } catch (error) {
       console.error('Error initializing payment:', error);
     }
