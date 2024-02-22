@@ -110,7 +110,7 @@ export default function ProfessionalsDerma({
         )}
         {!deviceSize.isMobile && (
           <Carousel
-            hasControls={false}
+            hasControls
             className="relative"
             isIntrinsicHeight
             visibleSlides={2}
