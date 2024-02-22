@@ -46,7 +46,7 @@ export const usePayments = () => {
       ) {
         const productPayment: ProductPaymentRequest = {
           name: product.title,
-          price: "9900",
+          price: product.price.toString(),
           quantity: '1',
           id: product.id.toUpperCase(),
         };
@@ -59,7 +59,7 @@ export const usePayments = () => {
         if (matchingProduct) {
           const productPayment: ProductPaymentRequest = {
             name: matchingProduct.title,
-            price: "9900",
+            price: product.price.toString(),
             quantity: '1',
             id: matchingProduct.id,
           };
