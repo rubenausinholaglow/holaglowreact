@@ -123,7 +123,7 @@ export default function CheckoutPayment({
         </Text>
       )}
 
-      <PaymentMethods isDerma={isDerma} />
+      <PaymentMethods isDerma={isDerma} client={formData} />
     </Flex>
   );
 }

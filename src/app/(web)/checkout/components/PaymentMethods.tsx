@@ -1,14 +1,24 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
+import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { usePayments } from '@utils/paymentUtils';
+import { useRegistration } from '@utils/userUtils';
 import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { checkoutPaymentItems } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
+import {
+  checkoutPaymentItems,
+  financialTimes,
+} from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import {
   AccordionContent,
   AccordionItem,
@@ -27,19 +37,39 @@ const PAYMENT_ICONS = {
   direct: ['googlepay.svg', 'applepay.svg'],
 };
 
-export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
+export const PaymentMethods = ({
+  isDerma,
+  client,
+}: {
+  isDerma: boolean;
+  client?: Client;
+}) => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
-
+  const [isLoadingKey, setIsLoadingKey] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const paymentList = usePaymentList(state => state.paymentRequest);
   const { setActivePayment } = useGlobalPersistedStore(state => state);
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
     state => state
   );
+  const { selectedTreatments } = useSessionStore(state => state);
+  const initializePayment = usePayments();
+  const registerUser = useRegistration(client!, false, false, false);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage(undefined);
+    }, 6000);
+  }, [errorMessage]);
 
   function scrollDown() {
     setTimeout(() => {
@@ -47,6 +77,56 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
     }, 250);
   }
 
+  const handlePaymentClick = async (
+    activePayment: PaymentBank,
+    installments: number
+  ) => {
+    if (isLoadingPayment()) return;
+    setIsLoadingKey({
+      ...isLoadingKey,
+      [installments]: true,
+    });
+    if (
+      activePayment != PaymentBank.None &&
+      cart.length > 0 &&
+      client!.email != ''
+    ) {
+      const finalPrice = selectedTreatments[0].price
+        .toFixed(2)
+        .toString()
+        .replace('.', '');
+      const createdUser = await registerUser(client!, false, false, false);
+      await initializePayment(
+        activePayment,
+        createdUser!,
+        false,
+        Number(finalPrice),
+        false,
+        installments
+      )
+        .then(x => {
+          if (x == undefined) {
+            setError(installments);
+          }
+        })
+        .catch(err => {
+          setError(installments);
+          Bugsnag.notify('Error Alma initializa ' + err);
+        });
+    }
+  };
+
+  function setError(key: number) {
+    setErrorMessage('Error inizializando pago, intentelo más tarde');
+    setIsLoadingKey({
+      ...isLoadingKey,
+      [key]: false,
+    });
+  }
+
+  function isLoadingPayment() {
+    return Object.values(isLoadingKey).some(value => value) ? true : false;
+  }
   return (
     <>
       {checkoutPaymentItems.length > 0 && (
@@ -114,31 +194,70 @@ export const PaymentMethods = ({ isDerma }: { isDerma: boolean }) => {
                     </Text>
                   </Flex>
 
-                  <Button
-                    id={isDerma ? 'tmevent_derma_step6' : ''}
-                    className="self-end"
-                    type="tertiary"
-                    customStyles={`gap-2 ${
-                      isDerma
-                        ? 'bg-derma-primary border-none text-white'
-                        : 'bg-hg-primary'
-                    }`}
-                    onClick={() => {
-                      setIsLoadingButton(true);
-                      setActivePayment(PaymentBank.Stripe);
-                    }}
-                  >
-                    {isLoadingButton ? (
-                      <Flex className="w-20 justify-center">
-                        <SvgSpinner height={24} width={24} />
-                      </Flex>
-                    ) : (
-                      <>
-                        Continuar
-                        <SvgArrow height={16} width={16} />
-                      </>
-                    )}
-                  </Button>
+                  {method.key == 'alma' && selectedTreatments[0].price > 49 ? (
+                    <>
+                      {financialTimes.map(financialTime => (
+                        <div key={financialTime.key}>
+                          <Button
+                            id={isDerma ? 'tmevent_derma_step6' : ''}
+                            className="self-end"
+                            type="tertiary"
+                            customStyles={`gap-2 mb-4 ${
+                              isDerma
+                                ? 'bg-derma-primary border-none text-white'
+                                : 'bg-hg-primary'
+                            }`}
+                            onClick={() => {
+                              handlePaymentClick(
+                                PaymentBank.Alma,
+                                parseInt(financialTime.key)
+                              );
+                            }}
+                          >
+                            {isLoadingKey[financialTime.key] ? (
+                              <Flex className="w-20 justify-center">
+                                <SvgSpinner height={24} width={24} />
+                              </Flex>
+                            ) : (
+                              <>
+                                {financialTime.label}
+                                <SvgArrow height={16} width={16} />
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      ))}
+                      {errorMessage && (
+                        <p className="text-red-600"> {errorMessage} </p>
+                      )}
+                    </>
+                  ) : (
+                    <Button
+                      id={isDerma ? 'tmevent_derma_step6' : ''}
+                      className="self-end"
+                      type="tertiary"
+                      customStyles={`gap-2 ${
+                        isDerma
+                          ? 'bg-derma-primary border-none text-white'
+                          : 'bg-hg-primary'
+                      }`}
+                      onClick={() => {
+                        setIsLoadingButton(true);
+                        setActivePayment(PaymentBank.Alma);
+                      }}
+                    >
+                      {isLoadingButton ? (
+                        <Flex className="w-20 justify-center">
+                          <SvgSpinner height={24} width={24} />
+                        </Flex>
+                      ) : (
+                        <>
+                          Continuar
+                          <SvgArrow height={16} width={16} />
+                        </>
+                      )}
+                    </Button>
+                  )}
                 </Flex>
               </AccordionContent>
             </AccordionItem>

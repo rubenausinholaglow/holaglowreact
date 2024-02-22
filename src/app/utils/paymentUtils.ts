@@ -21,18 +21,19 @@ export const usePayments = () => {
 
   const { cart } = useCartStore(state => state);
   let useNewTab = false;
+
   const initializePayment = async (
     paymentBank: PaymentBank,
     createdUser: User,
     newTab = false,
     price = 4900,
-    isDerma = false
+    isDerma = false,
+    installments = 1,
   ) => {
     useNewTab = newTab ?? false;
-
     const data: InitializePayment = {
       amount: Number(price),
-      installments: 1,
+      installments: installments,
       userId: createdUser?.id || '',
       paymentBank: paymentBank,
       productPaymentRequest: [],
@@ -45,7 +46,7 @@ export const usePayments = () => {
       ) {
         const productPayment: ProductPaymentRequest = {
           name: product.title,
-          price: product.price.toString(),
+          price: "9900",
           quantity: '1',
           id: product.id.toUpperCase(),
         };
@@ -58,7 +59,7 @@ export const usePayments = () => {
         if (matchingProduct) {
           const productPayment: ProductPaymentRequest = {
             name: matchingProduct.title,
-            price: product.price.toString(),
+            price: "9900",
             quantity: '1',
             id: matchingProduct.id,
           };
@@ -70,6 +71,7 @@ export const usePayments = () => {
     try {
       const paymentResponse = await FinanceService.initializePayment(data);
       setPayment(paymentResponse);
+      return true;
     } catch (error) {
       console.error('Error initializing payment:', error);
     }
