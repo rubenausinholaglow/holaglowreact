@@ -42,7 +42,7 @@ export const checkoutPaymentItems = [
   },
   {
     key: 'alma',
-    label: 'Financiación Alma',
+    label: 'Financiado 33€/mes durante 3 meses',
     paymentBank: PaymentBank.Alma,
     paymentMethod: PaymentMethod.Financing,
   },
