@@ -9,7 +9,7 @@ import { fetchBlogPosts } from 'app/utils/fetch';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Underlined } from 'designSystem/Texts/Texts';
 
-import AppWrapper from '../components/layout/AppSSR';
+import App from '../components/layout/App';
 import BlogCategorySelector from './components/BlogCategorySelector';
 import BlogItem from './components/BlogItem';
 

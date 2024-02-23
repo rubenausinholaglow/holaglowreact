@@ -11,7 +11,7 @@ import es from 'dayjs/locale/es';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
-import AppWrapper from '../components/layout/AppSSR';
+import App from '../components/layout/App';
 import AppointmentList from './components/AppointmentList';
 import CancelModal from './components/CancelModal';
 
