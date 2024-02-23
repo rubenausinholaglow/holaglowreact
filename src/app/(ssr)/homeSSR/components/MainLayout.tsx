@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import AppSSR from 'app/(web)/components/layout/AppSSR';
 import Header from 'app/(web)/components/layout/Header';
 
-//import Footer from './FooterSSR';
+import Footer from './FooterSSR';
 
 export default function MainLayoutSSR({
   hideHeader = false,
@@ -18,7 +18,7 @@ export default function MainLayoutSSR({
       <main>
         {!hideHeader && <Header />}
         {children}
-        {/* {!hideFooter && <Footer />} */}
+        {!hideFooter && <Footer />}
       </main>
     </AppSSR>
   );
