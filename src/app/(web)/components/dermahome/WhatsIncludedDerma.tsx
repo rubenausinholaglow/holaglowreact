@@ -190,7 +190,7 @@ export default function WhatsIncludedDerma() {
                 <div>
                   <Text className="text-3xl font-bold">
                     {RUTINE_DATA.price}{' '}
-                    <Text className="text-sm">(O 33€/mes en 3 meses)</Text>
+                    <Text className="text-sm">(o 33€/mes en 3 meses)</Text>
                   </Text>
                   {RUTINE_DATA.price !== RUTINE_DATA.discountedPrice && (
                     <Text className="text-sm text-hg-error font-medium line-through">
