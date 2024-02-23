@@ -1,4 +1,4 @@
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
 import LoginChecker from 'app/crm/components/login/LoginChecker';
@@ -7,7 +7,7 @@ import TableTasks from './components/tableTasks';
 
 export default function ContactsPage() {
   return (
-    <AppWrapper>
+    <App>
       <MainLayoutCRM>
         <LoginChecker>
           <ContainerCRM>
@@ -15,6 +15,6 @@ export default function ContactsPage() {
           </ContainerCRM>
         </LoginChecker>
       </MainLayoutCRM>
-    </AppWrapper>
+    </App>
   );
 }

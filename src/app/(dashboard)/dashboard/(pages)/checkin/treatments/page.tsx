@@ -1,7 +1,7 @@
 'use client';
 
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSadIcon } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -9,7 +9,7 @@ import { Title } from 'designSystem/Texts/Texts';
 
 export default function treatmentsSection() {
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isDashboard
         hideBackButton
@@ -34,6 +34,6 @@ export default function treatmentsSection() {
           </Flex>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

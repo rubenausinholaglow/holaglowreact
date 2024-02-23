@@ -8,7 +8,7 @@ import * as config from '@utils/textConstants';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import * as utils from '@utils/validators';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -335,7 +335,7 @@ export default function Page({
 
   if (remoteControl)
     return (
-      <AppWrapper>
+      <App>
         <MainLayout isDashboard hideBottomBar>
           <div className="px-4 w-full max-h-[85%] overflow-y-auto">
             <AppointmentsListComponent
@@ -364,12 +364,12 @@ export default function Page({
             {isLoadingUser && <SvgSpinner />}
           </div>
         </MainLayout>
-      </AppWrapper>
+      </App>
     );
 
   if (!remoteControl)
     return (
-      <AppWrapper>
+      <App>
         <MainLayout isDashboard hideBottomBar hasAnimatedBackground>
           <div className="fixed bottom-0 right-0 py-3 px-3">
             <Button
@@ -404,6 +404,6 @@ export default function Page({
           )}
           {isLoadingUser && <SvgSpinner />}
         </MainLayout>
-      </AppWrapper>
+      </App>
     );
 }

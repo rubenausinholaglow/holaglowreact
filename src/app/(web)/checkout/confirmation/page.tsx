@@ -1,14 +1,14 @@
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 
 import Confirmation from './components/Confirmation';
 
 export default function ConfirmationCheckout() {
   return (
-    <AppWrapper>
+    <App>
       <MainLayout hideFooter>
         <Confirmation />
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

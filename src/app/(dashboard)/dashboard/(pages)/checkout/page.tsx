@@ -7,7 +7,7 @@ import { ERROR_POST } from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import CheckoutTotal from 'app/(dashboard)/dashboard/components/checkout/CheckoutTotal';
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
@@ -116,7 +116,7 @@ const Page = () => {
   }
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isDashboard isCheckout>
         <Flex className="w-full">
           <div className="w-[55%] h-full p-4">
@@ -187,7 +187,7 @@ const Page = () => {
           </div>
         </Flex>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 };
 

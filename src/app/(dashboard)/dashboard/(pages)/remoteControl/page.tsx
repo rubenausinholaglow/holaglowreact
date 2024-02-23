@@ -1,6 +1,6 @@
 'use client';
 
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -18,7 +18,7 @@ export default function RemoteControl({
   const { user } = useGlobalPersistedStore(state => state);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isDashboard>
         <div className="mt-8">
           <Title className="text-xl mb-4">¡Hola {user?.firstName}!</Title>
@@ -46,6 +46,6 @@ export default function RemoteControl({
           <ValidateComment />
         </div>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

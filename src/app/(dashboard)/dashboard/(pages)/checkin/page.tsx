@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgScanQR } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -102,7 +102,7 @@ export default function Page() {
   }, [clinics]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isDashboard
         hideBackButton
@@ -151,7 +151,7 @@ export default function Page() {
           </Flex>
         </CheckHydration>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }
 

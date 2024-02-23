@@ -5,7 +5,7 @@ import '../styles/blog.css';
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Post } from 'app/types/blog';
@@ -71,7 +71,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   }, [clinics, post]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout>
         {!post ? (
           <FullScreenLoading />
@@ -147,6 +147,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           </div>
         )}
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

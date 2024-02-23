@@ -1,8 +1,6 @@
 import Home from 'app/(ssr)/homeSSR/components/HomeSSR';
 import type { Metadata } from 'next';
 
-import AppWrapper from './components/layout/AppWrapper';
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://holaglow.com'),
   title: 'Holaglow - La nueva cara de la medicina estética',
@@ -19,9 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return (
-    <AppWrapper isSSR>
-      <Home />
-    </AppWrapper>
-  );
+  return <Home />;
 }

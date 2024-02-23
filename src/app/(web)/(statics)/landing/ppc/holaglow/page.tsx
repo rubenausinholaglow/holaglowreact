@@ -8,7 +8,7 @@ import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import GoogleStars from 'app/(web)/components/home/GoogleStars';
 import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
 import Products from 'app/(web)/components/home/Products';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { SvgHolaglow } from 'app/icons/Icons';
@@ -69,7 +69,7 @@ export default function LandingCaptacion() {
   }, []);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout hideHeader>
         <meta name="robots" content="noindex,follow" />
         <header id="header" className="z-30 w-full bg-white">
@@ -279,6 +279,6 @@ export default function LandingCaptacion() {
         <Clinics />
         <GoToTreatments />
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

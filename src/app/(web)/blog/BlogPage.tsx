@@ -9,7 +9,7 @@ import { fetchBlogPosts } from 'app/utils/fetch';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Underlined } from 'designSystem/Texts/Texts';
 
-import AppWrapper from '../components/layout/AppWrapper';
+import AppWrapper from '../components/layout/AppSSR';
 import BlogCategorySelector from './components/BlogCategorySelector';
 import BlogItem from './components/BlogItem';
 
@@ -30,7 +30,7 @@ export default function BlogPage() {
   }, [blogPosts]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout>
         {!blogPosts ? (
           <FullScreenLoading isDerma={false} />
@@ -88,6 +88,6 @@ export default function BlogPage() {
           </div>
         )}
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

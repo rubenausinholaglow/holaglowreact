@@ -6,7 +6,7 @@ import { fetchProduct } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
@@ -106,7 +106,7 @@ export default function PVCitaMedica() {
   }
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isCheckout>
         {isLoading ? (
           <FullScreenLoading />
@@ -237,6 +237,6 @@ export default function PVCitaMedica() {
           </Container>
         )}
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

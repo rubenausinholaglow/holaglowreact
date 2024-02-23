@@ -5,7 +5,7 @@ import { fetchClinics, fetchProducts } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
@@ -71,7 +71,7 @@ export default function Page() {
   }, [stateProducts]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isDashboard>
         <Container className="mt-4">
           {!selectedClinic && (
@@ -106,6 +106,6 @@ export default function Page() {
           )}
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

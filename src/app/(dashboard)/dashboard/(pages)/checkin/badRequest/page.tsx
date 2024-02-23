@@ -1,7 +1,7 @@
 'use client';
 
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSadIcon } from 'app/icons/IconsDs';
 import useRoutes from 'app/utils/useRoutes';
@@ -15,7 +15,7 @@ export default function BadRequestSection() {
   const routes = useRoutes();
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isDashboard
         hideBackButton
@@ -47,6 +47,6 @@ export default function BadRequestSection() {
           </Button>
         </Flex>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

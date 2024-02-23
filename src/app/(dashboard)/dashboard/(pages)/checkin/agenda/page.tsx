@@ -1,6 +1,6 @@
 'use client';
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -15,7 +15,7 @@ export default function AgendaCheckIn() {
   const isCheckin = searchParams.get('isCheckin') === 'true';
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isDashboard
         hideBackButton
@@ -40,6 +40,6 @@ export default function AgendaCheckIn() {
           </Button>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import ProductService from '@services/ProductService';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import PsrpPage from 'app/(web)/tratamientos/psrp';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -71,7 +71,7 @@ export default function Page() {
   }
 
   return (
-    <AppWrapper>
+    <App>
       <Flex layout="col-center" className="w-full gap-1">
         {dashboardProducts.length > 0 ? (
           <>
@@ -89,6 +89,6 @@ export default function Page() {
           </MainLayout>
         )}
       </Flex>
-    </AppWrapper>
+    </App>
   );
 }

@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { INITIAL_STATE } from '@utils/constants';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
@@ -62,7 +62,7 @@ const Page = () => {
   }
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
         {user?.firstName && (
           <div className="mt-8">
@@ -93,7 +93,7 @@ const Page = () => {
           </div>
         )}
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 };
 export default Page;

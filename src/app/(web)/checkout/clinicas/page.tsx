@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCar, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
@@ -67,7 +67,7 @@ export default function ClinicsCheckout() {
   }, [selectedTreatments]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isCheckout>
         <Container className="mt-6 md:mt-16">
           <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
@@ -221,6 +221,6 @@ export default function ClinicsCheckout() {
           </Flex>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

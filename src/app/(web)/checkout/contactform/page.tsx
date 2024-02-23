@@ -7,7 +7,7 @@ import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
@@ -101,7 +101,7 @@ export default function ConctactForm() {
   }, [activePayment]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isCheckout={!hideLayout}
         hideHeader={hideLayout}
@@ -143,6 +143,6 @@ export default function ConctactForm() {
           <div className="bg-hg-cream500 w-1/2 h-full"></div>
         </div>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

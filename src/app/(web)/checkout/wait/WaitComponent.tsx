@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCheck, SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
@@ -170,7 +170,7 @@ export default function WaitComponent() {
   }
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isCheckout={!false}
         hideHeader={false}
@@ -188,6 +188,6 @@ export default function WaitComponent() {
           </Flex>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCheck } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -24,7 +24,7 @@ export default function WelcomeSection() {
   }, [router, routes.dashboard.checkIn.root]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isDashboard
         hideBackButton
@@ -51,6 +51,6 @@ export default function WelcomeSection() {
           </Text>
         </Flex>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

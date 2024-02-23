@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { fetchProducts } from '@utils/fetch';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -25,7 +25,7 @@ export default function Page() {
   }, [stateProducts]);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isCheckout>
         <Container className="mt-6 md:mt-16">
           <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
@@ -41,7 +41,7 @@ export default function Page() {
           </Flex>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 
   function initializeCategories() {

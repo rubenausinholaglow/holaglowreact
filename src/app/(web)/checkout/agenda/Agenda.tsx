@@ -8,7 +8,7 @@ import DatePicker from 'react-datepicker';
 import { EmlaType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
@@ -421,7 +421,7 @@ export default function Agenda({
   };
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isCheckout hideHeader={isDashboard}>
         {showErrorMessage ? (
           <>
@@ -680,6 +680,6 @@ export default function Agenda({
           </>
         )}
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

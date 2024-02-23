@@ -1,6 +1,6 @@
 'use client';
 
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -18,7 +18,7 @@ export default function CanceledAppointment() {
   const ROUTE = useRoutes();
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout>
         <Container className="py-16 md:py-32">
           <Title className="mb-8">¡Ops! Tu cita ha sido cancelada</Title>
@@ -38,6 +38,6 @@ export default function CanceledAppointment() {
           </Button>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

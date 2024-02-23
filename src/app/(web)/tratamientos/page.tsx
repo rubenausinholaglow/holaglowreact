@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import AppWrapper from '../components/layout/AppWrapper';
+import App from '../components/layout/App';
 import PsrpPage from './psrp';
 
 export const metadata: Metadata = {
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
 
 export default function ProductsPage() {
   return (
-    <AppWrapper>
+    <App>
       <PsrpPage slug="" isDashboard={false} />
-    </AppWrapper>
+    </App>
   );
 }

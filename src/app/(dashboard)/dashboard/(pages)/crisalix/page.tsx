@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import UserService from '@services/UserService';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
@@ -153,7 +153,7 @@ const Page = () => {
   };
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
         {user?.firstName && (
           <div className="absolute inset-0">
@@ -188,7 +188,7 @@ const Page = () => {
           </div>
         )}
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 };
 

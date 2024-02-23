@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Confirmation from 'app/(web)/checkout/confirmation/components/Confirmation';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgArrowSmallLeft } from 'app/icons/Icons';
 import useRoutes from 'app/utils/useRoutes';
@@ -27,7 +27,7 @@ export default function ConfirmationCheckIn() {
   }, []);
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout
         isDashboard
         hideBackButton
@@ -49,6 +49,6 @@ export default function ConfirmationCheckIn() {
           </Button>
         )}
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

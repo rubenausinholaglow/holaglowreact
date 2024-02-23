@@ -1,15 +1,15 @@
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 
 import LegalAdviceContent from './LegalAdviceContent';
 
 export default function LegalAdvice() {
   return (
-    <AppWrapper>
+    <App>
       <MainLayout>
         <meta name="robots" content="noindex,follow" />
         <LegalAdviceContent></LegalAdviceContent>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

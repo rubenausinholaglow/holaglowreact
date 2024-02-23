@@ -1,5 +1,5 @@
 import Clinics from 'app/(web)/components/common/Clinics';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function StaticClinics() {
   return (
-    <AppWrapper>
+    <App>
       <MainLayout>
         <div className="bg-hg-cream py-12 md:py-20" id="clinics">
           <Container className={'max-w-[1300px]'}>
@@ -55,6 +55,6 @@ export default function StaticClinics() {
         </div>
         <Clinics className="mb-12" />
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

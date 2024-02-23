@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -42,7 +42,7 @@ export default function RescheduledAppointment() {
   }
 
   return (
-    <AppWrapper>
+    <App>
       <MainLayout>
         <Container className="py-4 md:py-32">
           <Flex layout="col-left" className="md:flex-row">
@@ -102,6 +102,6 @@ export default function RescheduledAppointment() {
           </Flex>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }

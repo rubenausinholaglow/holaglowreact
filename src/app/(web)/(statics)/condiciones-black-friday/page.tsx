@@ -1,11 +1,11 @@
-import AppWrapper from 'app/(web)/components/layout/AppWrapper';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 
 export default function BlackFridayAdvice() {
   return (
-    <AppWrapper>
+    <App>
       <MainLayout>
         <meta name="robots" content="noindex,follow" />
         <Container className="py-8 md:py-12">
@@ -31,6 +31,6 @@ export default function BlackFridayAdvice() {
           </Flex>
         </Container>
       </MainLayout>
-    </AppWrapper>
+    </App>
   );
 }
