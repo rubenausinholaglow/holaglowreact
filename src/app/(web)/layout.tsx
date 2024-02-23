@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Script
             id="cookieyes"
             type="text/javascript"
-            strategy="beforeInteractive"
+            strategy="lazyOnload"
             src="https://cdn-cookieyes.com/client_data/358786368d84a68230dff524/script.js"
           />
           <noscript>
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
           <Script
             id="gtm-script"
-            strategy="beforeInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
