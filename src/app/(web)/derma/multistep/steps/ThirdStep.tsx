@@ -46,22 +46,22 @@ export default function ThirdStep({
                   Paso {activeSlideIndex + 1}. Formulario
                 </Text>
                 <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
-                  Solicita tu cita
+                  Pide tu rutina personalizada
                 </Text>
                 <Text className="text-hg-black500 text-sm mb-8 md:text-md">
-                  Rellena tus datos de contacto para reservar tu consulta
+                  Rellena tus datos de contacto y dirección de entrega
                 </Text>
               </Flex>
               <Flex layout="col-left" className="w-full md:w-1/2">
                 <RegistrationForm
-                  showPostalCode={true}
+                  showPostalCode
                   redirect={false}
                   hasContinueButton={false}
                   initialValues={{ ...client, name: name, surname: surName }}
                   setClientData={setClient}
                   setContinueDisabled={setContinueDisabled}
-                  showAddress={true}
-                  showCity={true}
+                  showAddress
+                  showCity
                 />
               </Flex>
             </Flex>

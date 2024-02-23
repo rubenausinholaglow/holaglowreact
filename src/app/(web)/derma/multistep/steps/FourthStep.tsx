@@ -26,7 +26,7 @@ export default function FourthStep({
                     Paso {activeSlideIndex + 1}. Agenda
                   </Text>
                   <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
-                    Selecciona el día y la hora
+                    Selecciona dia y hora de la videollamada
                   </Text>
                   <ul className="flex flex-col gap-4 mb-4 text-xs text-hg-black500 px-0 md:w-1/2 md:text-sm">
                     <li className="flex gap-2">
