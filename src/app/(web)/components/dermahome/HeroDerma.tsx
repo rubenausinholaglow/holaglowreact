@@ -78,7 +78,7 @@ export default function HeroDerma() {
                     <span className="font-semibold">
                       productos personalizados
                     </span>{' '}
-                    que te enviaremos a casa desde 33€/mes
+                    que te enviaremos a casa por 99€
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
