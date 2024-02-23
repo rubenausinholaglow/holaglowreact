@@ -1,5 +1,4 @@
 import 'app/globals.css';
-import '../../../public/styles/Alma/widgets.min.css';
 
 import { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
