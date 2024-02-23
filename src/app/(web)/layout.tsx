@@ -1,7 +1,6 @@
 import 'app/globals.css';
 
 import { ReactNode } from 'react';
-import { Analytics } from '@vercel/analytics/react';
 import { headers } from 'next/headers';
 import Script from 'next/script';
 
@@ -54,7 +53,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </head>
 
         {children}
-        <Analytics />
       </html>
     </>
   );
