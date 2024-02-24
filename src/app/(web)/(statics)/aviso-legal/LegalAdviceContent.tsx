@@ -171,13 +171,13 @@ export default function LegalAdviceContent() {
           caso de haber reservado cita física o telemática con un profesional de
           la salud, el cliente tras haber abonado el precio del servicio podrá
           desistir o cambiar la cita sin coste alguno si lo hace con
-          anterioridad a las 72h (3 días) de la cita. En el caso que lo hiciera
-          dentro de las 72h previas a la cita se considerará el servicio como
-          iniciado puesto que la ejecución interna (gestión de agenda médica,
-          reserva de slot médico) habría comenzado. En el caso de querer
-          modificar la cita con más de 72h de antelación el interesado podrá
-          efectuar dicho cambio telemáticamente Igualmente, por razones de
-          protección de la salud e higiene, tampoco se aplicará el derecho de
+          anterioridad a las 72h (3 días) previas a la fecha de la cita. En el
+          caso que lo hiciera dentro de las 72h previas a la cita se considerará
+          el servicio como iniciado puesto que la ejecución interna (gestión de
+          agenda médica, reserva de slot médico) habría comenzado. En el caso de
+          querer modificar la cita con más de 72h de antelación el interesado
+          podrá efectuar dicho cambio telemáticamente. Igualmente, por razones
+          de protección de la salud e higiene, tampoco se aplicará el derecho de
           desistimiento en la venta de productos de cosmética que hayan sido
           desprecintados tras la entrega.
         </p>
@@ -230,19 +230,19 @@ export default function LegalAdviceContent() {
         <p>
           En medicina estética (Holaglow Clinics) y tras el diagnóstico médico,
           los tratamientos pueden consistir en una sesión, una revisión no
-          obligatoria y un retoque si procede (en el caso de medicina estética;
-          El paciente tiene derecho a dicho retoque dentro de las primeras 4
-          semanas después de la realización del tratamiento. Dicho retoque se
-          realizará utilizando el mismo producto y lote de la primera sesión.
-          Una vez pasadas las 4 semanas o habiendo finalizado el producto
-          restante del lote utilizado, el paciente dejará de tener derecho a
-          retoques gratuitos y deberá comprar un vial o tratamiento nuevo,
-          debido a, entre otras cosas, la pérdida de propiedades del producto.
-          En el caso de las recomendaciones de tratamientos dermatológicos
-          (Holaglow Derma) y tras el diagnóstico médico, los tratamientos pueden
-          consistir en la recomendación del uso de un conjunto de productos
-          recetados o no siendo algunos de ellos susceptibles de ser
-          comercializados por Glow Lab S.L.
+          obligatoria y un retoque si procede. El paciente tiene derecho a dicho
+          retoque dentro de las primeras 4 semanas después de la realización del
+          tratamiento. Dicho retoque se realizará utilizando el mismo producto y
+          lote de la primera sesión. Una vez pasadas las 4 semanas o habiendo
+          finalizado el producto restante del lote utilizado, el paciente dejará
+          de tener derecho a retoques gratuitos y deberá comprar un vial o
+          tratamiento nuevo, debido a, entre otras cosas, la pérdida de
+          propiedades del producto. En el caso de las recomendaciones de
+          tratamientos dermatológicos (Holaglow Derma) y tras el diagnóstico
+          médico bien sea mediante fotografía o mediante videoconferencia, los
+          tratamientos pueden consistir en la recomendación del uso de un
+          conjunto de productos recetados o no siendo algunos de ellos
+          susceptibles de ser comercializados por Glow Lab S.L.
         </p>
 
         <p className="font-semibold pt-6 mt-6 border-t border-hg-black300 w-full">
