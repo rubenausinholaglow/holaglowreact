@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import AppSSR from 'app/(web)/components/layout/AppSSR';
+import { Analytics } from '@vercel/analytics/react';
 import Header from 'app/(web)/components/layout/Header';
 
 import Footer from './FooterSSR';
@@ -14,12 +14,11 @@ export default function MainLayoutSSR({
   children: ReactNode;
 }) {
   return (
-    <AppSSR>
-      <main>
-        {!hideHeader && <Header />}
-        {children}
-        {!hideFooter && <Footer />}
-      </main>
-    </AppSSR>
+    <main>
+      {!hideHeader && <Header />}
+      {children}
+      {!hideFooter && <Footer />}
+      <Analytics />
+    </main>
   );
 }

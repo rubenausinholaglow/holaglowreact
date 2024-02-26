@@ -12,8 +12,8 @@ export default function HomeHero() {
         <Image
           src="/images/home/Header.png"
           alt="Holaglow"
-          width={650}
-          height={650}
+          width={800}
+          height={800}
           className="h-auto w-full scale-[135%] mt-[18%] md:w-[55%] md:scale-100 md:mt-0 md:py-16 ml-[15%] md:ml-0"
           priority
         />

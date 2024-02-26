@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -42,66 +41,64 @@ export default function RescheduledAppointment() {
   }
 
   return (
-    <App>
-      <MainLayout>
-        <Container className="py-4 md:py-32">
-          <Flex layout="col-left" className="md:flex-row">
-            <div>
-              <Title size="xl" className="mb-8 font-bold">
-                ¡Genial! Hemos reprogramado tu cita
-              </Title>
-              <Text className="md:text-lg mb-4">
-                Estamos deseando verte el{' '}
-                <span className="font-semibold">
-                  {dayjs(date).format('dddd, D [de] MMMM')} a las {startTime}
-                </span>{' '}
-                en nuestra clínica en{' '}
-                <span className="font-semibold">
-                  {getClinicAddress(city)}, {city}
-                </span>
-                .
-              </Text>
+    <MainLayout>
+      <Container className="py-4 md:py-32">
+        <Flex layout="col-left" className="md:flex-row">
+          <div>
+            <Title size="xl" className="mb-8 font-bold">
+              ¡Genial! Hemos reprogramado tu cita
+            </Title>
+            <Text className="md:text-lg mb-4">
+              Estamos deseando verte el{' '}
+              <span className="font-semibold">
+                {dayjs(date).format('dddd, D [de] MMMM')} a las {startTime}
+              </span>{' '}
+              en nuestra clínica en{' '}
+              <span className="font-semibold">
+                {getClinicAddress(city)}, {city}
+              </span>
+              .
+            </Text>
 
-              <Text className="md:text-lg mb-8">
-                Cita actualizada correctamente
-              </Text>
+            <Text className="md:text-lg mb-8">
+              Cita actualizada correctamente
+            </Text>
 
-              <div className="mb-8">
-                <AddToCalendarButton
-                  styleLight={`--btn-background: ${HOLAGLOW_COLORS['primary']}; --btn-border: ${HOLAGLOW_COLORS['black']}; --btn-shadow: none; --btn-text: ${HOLAGLOW_COLORS['black']};`}
-                  name="Cita en Holaglow"
-                  description="Ven a vivir la experiencia Holaglow en primera persona &#127775; Te esperamos en la clínica para ayudarte a lucir tu mejor versión de forma natural!  ¡Nos vemos!"
-                  startDate={date || undefined}
-                  startTime={startTime || undefined}
-                  endDate={date || undefined}
-                  endTime={endTime || undefined}
-                  timeZone="Europe/Madrid"
-                  location={getClinicAddress(city)}
-                  options={['Apple', 'Google', 'iCal', 'Outlook.com', 'Yahoo']}
-                  trigger="click"
-                  label="Agregar cita al calendario"
-                  buttonStyle="round"
-                  hideBackground
-                ></AddToCalendarButton>
-              </div>
+            <div className="mb-8">
+              <AddToCalendarButton
+                styleLight={`--btn-background: ${HOLAGLOW_COLORS['primary']}; --btn-border: ${HOLAGLOW_COLORS['black']}; --btn-shadow: none; --btn-text: ${HOLAGLOW_COLORS['black']};`}
+                name="Cita en Holaglow"
+                description="Ven a vivir la experiencia Holaglow en primera persona &#127775; Te esperamos en la clínica para ayudarte a lucir tu mejor versión de forma natural!  ¡Nos vemos!"
+                startDate={date || undefined}
+                startTime={startTime || undefined}
+                endDate={date || undefined}
+                endTime={endTime || undefined}
+                timeZone="Europe/Madrid"
+                location={getClinicAddress(city)}
+                options={['Apple', 'Google', 'iCal', 'Outlook.com', 'Yahoo']}
+                trigger="click"
+                label="Agregar cita al calendario"
+                buttonStyle="round"
+                hideBackground
+              ></AddToCalendarButton>
             </div>
+          </div>
 
-            <div
-              className={`overflow-hidden max-w-full w-full md:w-2/5 md:mr-12 shrink-0 md:-order-1`}
-              style={{ height: `333px` }}
-            >
-              <div id="g-mapdisplay" className="h-full w-full max-w-full">
-                <iframe
-                  className="h-full w-full border-none"
-                  src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${getClinicAddress(
-                    city
-                  )},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
-                ></iframe>
-              </div>
+          <div
+            className={`overflow-hidden max-w-full w-full md:w-2/5 md:mr-12 shrink-0 md:-order-1`}
+            style={{ height: `333px` }}
+          >
+            <div id="g-mapdisplay" className="h-full w-full max-w-full">
+              <iframe
+                className="h-full w-full border-none"
+                src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${getClinicAddress(
+                  city
+                )},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
+              ></iframe>
             </div>
-          </Flex>
-        </Container>
-      </MainLayout>
-    </App>
+          </div>
+        </Flex>
+      </Container>
+    </MainLayout>
   );
 }

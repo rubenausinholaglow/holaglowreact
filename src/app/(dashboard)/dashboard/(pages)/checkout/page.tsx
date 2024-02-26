@@ -7,7 +7,6 @@ import { ERROR_POST } from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import CheckoutTotal from 'app/(dashboard)/dashboard/components/checkout/CheckoutTotal';
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
@@ -116,78 +115,74 @@ const Page = () => {
   }
 
   return (
-    <App>
-      <MainLayout isDashboard isCheckout>
-        <Flex className="w-full">
-          <div className="w-[55%] h-full p-4">
-            {storedBudgetId && !isBudgetModified && !isLoading && (
-              <PaymentModule />
-            )}
-            {!(storedBudgetId && !isBudgetModified && !isLoading) && (
-              <PepperWidget
-                totalPrice={Number(cartTotalPrice())}
-              ></PepperWidget>
-            )}
-          </div>
+    <MainLayout isDashboard isCheckout>
+      <Flex className="w-full">
+        <div className="w-[55%] h-full p-4">
+          {storedBudgetId && !isBudgetModified && !isLoading && (
+            <PaymentModule />
+          )}
+          {!(storedBudgetId && !isBudgetModified && !isLoading) && (
+            <PepperWidget totalPrice={Number(cartTotalPrice())}></PepperWidget>
+          )}
+        </div>
 
-          <div className="w-[45%] bg-white rounded-l-2xl h-full">
-            <Flex layout="col-left" className="p-4">
-              <Flex className="gap-2">
-                <SvgBag height={20} width={20} />
-                Resumen del pedido
-              </Flex>
+        <div className="w-[45%] bg-white rounded-l-2xl h-full">
+          <Flex layout="col-left" className="p-4">
+            <Flex className="gap-2">
+              <SvgBag height={20} width={20} />
+              Resumen del pedido
             </Flex>
-            <ul>
-              {cart?.map(cartItem => (
-                <li key={cartItem.uniqueId}>
-                  <ProductCard isCheckout product={cartItem} />
-                </li>
-              ))}
-            </ul>
+          </Flex>
+          <ul>
+            {cart?.map(cartItem => (
+              <li key={cartItem.uniqueId}>
+                <ProductCard isCheckout product={cartItem} />
+              </li>
+            ))}
+          </ul>
 
-            <CheckoutTotal />
+          <CheckoutTotal />
 
-            <Flex layout="col-left" className="gap-4 my-8 px-4">
-              {(!storedBudgetId || isBudgetModified || isLoading) && (
-                <Button
-                  className="w-full"
-                  customStyles="bg-hg-primary"
-                  size="xl"
-                  type="tertiary"
-                  onClick={async () => {
-                    setIsLoading(true);
-                    await handleFinalize();
-                    setIsLoading(false);
-                    setShowPaymentButtons(!showPaymentButtons);
-                    const message: any = {
-                      userId: user?.id,
-                      page: 'CheckOut',
-                    };
-                    messageService.goToPage(message);
-                  }}
-                >
-                  {isLoading ? (
-                    <SvgSpinner height={24} width={24} />
-                  ) : (
-                    'Finalizar Presupuesto'
-                  )}
-                </Button>
-              )}
-
+          <Flex layout="col-left" className="gap-4 my-8 px-4">
+            {(!storedBudgetId || isBudgetModified || isLoading) && (
               <Button
                 className="w-full"
-                size="md"
-                target="_blank"
-                href={`${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`}
+                customStyles="bg-hg-primary"
+                size="xl"
                 type="tertiary"
+                onClick={async () => {
+                  setIsLoading(true);
+                  await handleFinalize();
+                  setIsLoading(false);
+                  setShowPaymentButtons(!showPaymentButtons);
+                  const message: any = {
+                    userId: user?.id,
+                    page: 'CheckOut',
+                  };
+                  messageService.goToPage(message);
+                }}
               >
-                <span className="font-semibold">Agendar Cita</span>
+                {isLoading ? (
+                  <SvgSpinner height={24} width={24} />
+                ) : (
+                  'Finalizar Presupuesto'
+                )}
               </Button>
-            </Flex>
-          </div>
-        </Flex>
-      </MainLayout>
-    </App>
+            )}
+
+            <Button
+              className="w-full"
+              size="md"
+              target="_blank"
+              href={`${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`}
+              type="tertiary"
+            >
+              <span className="font-semibold">Agendar Cita</span>
+            </Button>
+          </Flex>
+        </div>
+      </Flex>
+    </MainLayout>
   );
 };
 

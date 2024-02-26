@@ -6,20 +6,16 @@ export default class ProductService {
       window.location &&
       window.location.href &&
       window.location.href.includes('derma')
-    ) {
+    )
       url = process.env.NEXT_PUBLIC_DERMAPRODUCTS_API;
-    }
-
-    return url || '';
+    return url!;
   }
 
-  static async getAllProducts({ isDerma = false }: { isDerma?: boolean }) {
-    const url = isDerma
-      ? process.env.NEXT_PUBLIC_DERMAPRODUCTS_API
-      : process.env.NEXT_PUBLIC_PRODUCTS_API || '';
-
+  static async getAllProducts() {
     try {
-      const res = await fetch(`${url}/Product`);
+      const url = `${ProductService.getProductsUrl()}Product`;
+
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         return data;
@@ -32,7 +28,7 @@ export default class ProductService {
   }
   static async getDashboardProducts() {
     try {
-      const url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}DashboardProducts`;
+      const url = `${ProductService.getProductsUrl()}DashboardProducts`;
 
       const res = await fetch(url);
       if (res.ok) {
@@ -48,7 +44,7 @@ export default class ProductService {
 
   static async getProduct(id: string) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}Product/${id}`;
+      const url = `${ProductService.getProductsUrl()}Product/${id}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();

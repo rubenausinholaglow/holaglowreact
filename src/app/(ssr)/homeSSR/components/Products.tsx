@@ -7,7 +7,7 @@ import { Title, Underlined } from 'designSystem/Texts/Texts';
 import ProductList from './ProductList';
 
 async function getProducts() {
-  const products = await fetchProducts({ isDerma: false });
+  const products = await fetchProducts();
 
   return products;
 }
