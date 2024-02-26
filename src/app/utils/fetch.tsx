@@ -8,12 +8,19 @@ import { Clinic } from 'app/types/clinic';
 import { Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 
-export async function fetchProducts() {
+export async function fetchProducts({
+  isDerma = false,
+}: {
+  isDerma?: boolean;
+}) {
   // Esthetic = 1, Medical = 2
   const allowedProductType = [1, 2];
 
   try {
-    const fetchedProducts = await ProductService.getAllProducts();
+    const fetchedProducts = await ProductService.getAllProducts({
+      isDerma: isDerma,
+    });
+
     if (fetchedProducts && fetchedProducts.length) {
       const filteredProducts = fetchedProducts.filter(
         (product: Product) =>
