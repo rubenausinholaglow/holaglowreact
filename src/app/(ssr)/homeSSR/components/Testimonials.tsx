@@ -1,3 +1,5 @@
+'use client';
+
 import CheckHydration from '@utils/CheckHydration';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
