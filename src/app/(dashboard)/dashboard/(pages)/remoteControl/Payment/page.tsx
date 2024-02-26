@@ -5,7 +5,6 @@ import { budgetService } from '@services/BudgetService';
 import ProductService from '@services/ProductService';
 import { INITIAL_STATE } from '@utils/constants';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import {
@@ -150,17 +149,11 @@ export default function PaymentRemoteControl() {
   }, []);
 
   return (
-    <App>
-      <MainLayout isDashboard isCheckout>
-        <Flex layout="col-center" className="w-full px-4">
-          {isLoading ? (
-            <SvgSpinner height={24} width={24} />
-          ) : (
-            <PaymentModule />
-          )}
-        </Flex>
-        {messageNotification ?? <Notification message={messageNotification} />}
-      </MainLayout>
-    </App>
+    <MainLayout isDashboard isCheckout>
+      <Flex layout="col-center" className="w-full px-4">
+        {isLoading ? <SvgSpinner height={24} width={24} /> : <PaymentModule />}
+      </Flex>
+      {messageNotification ?? <Notification message={messageNotification} />}
+    </MainLayout>
   );
 }

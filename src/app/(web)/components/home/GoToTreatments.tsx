@@ -1,5 +1,3 @@
-'use client';
-
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';

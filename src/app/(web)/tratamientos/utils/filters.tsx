@@ -74,10 +74,8 @@ export const applyFilters = ({
       isVisibleByPack,
       isVisibleByType,
     ].every(value => value === true);
-
     return { ...product, visibility: productVisibility };
   });
-
   return updatedProducts;
 };
 

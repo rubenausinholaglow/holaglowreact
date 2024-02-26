@@ -1,7 +1,5 @@
 'use client';
 
-import '/public/styles/Alma/widgets.min.css';
-
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import FinanceService from '@services/FinanceService';

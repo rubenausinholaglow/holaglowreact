@@ -5,7 +5,6 @@ import { fetchClinics, fetchProducts } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
@@ -48,7 +47,7 @@ export default function Page() {
 
   useEffect(() => {
     async function initProducts() {
-      const products = await fetchProducts({ isDerma: false });
+      const products = await fetchProducts();
       setStateProducts(products);
     }
 
@@ -71,41 +70,37 @@ export default function Page() {
   }, [stateProducts]);
 
   return (
-    <App>
-      <MainLayout isDashboard>
-        <Container className="mt-4">
-          {!selectedClinic && (
-            <>
-              <Title className="font-semibold mb-8">Selecciona clínica</Title>
+    <MainLayout isDashboard>
+      <Container className="mt-4">
+        {!selectedClinic && (
+          <>
+            <Title className="font-semibold mb-8">Selecciona clínica</Title>
 
-              <CheckoutClinicSelector isDashboard className="mb-8" />
-            </>
-          )}
+            <CheckoutClinicSelector isDashboard className="mb-8" />
+          </>
+        )}
 
-          {selectedClinic && (
-            <>
-              <Title className="font-semibold mb-8">
-                Selecciona tratamiento
-              </Title>
-              <Flex layout="col-left" className="gap-3 w-full">
-                {!isEmpty(productCategories) && (
-                  <TreatmentAccordionSelector isDashboard />
-                )}
-              </Flex>
+        {selectedClinic && (
+          <>
+            <Title className="font-semibold mb-8">Selecciona tratamiento</Title>
+            <Flex layout="col-left" className="gap-3 w-full">
+              {!isEmpty(productCategories) && (
+                <TreatmentAccordionSelector isDashboard />
+              )}
+            </Flex>
 
-              <Button
-                onClick={() => {
-                  router.push(
-                    `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
-                  );
-                }}
-              >
-                Continuar
-              </Button>
-            </>
-          )}
-        </Container>
-      </MainLayout>
-    </App>
+            <Button
+              onClick={() => {
+                router.push(
+                  `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
+                );
+              }}
+            >
+              Continuar
+            </Button>
+          </>
+        )}
+      </Container>
+    </MainLayout>
   );
 }

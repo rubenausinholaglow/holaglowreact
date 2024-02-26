@@ -14,6 +14,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 
+import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
 
 let isTicking = false;

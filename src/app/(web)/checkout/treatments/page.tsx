@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { fetchProducts } from '@utils/fetch';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -25,23 +24,19 @@ export default function Page() {
   }, [stateProducts]);
 
   return (
-    <App>
-      <MainLayout isCheckout>
-        <Container className="mt-6 md:mt-16">
-          <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
-            <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
-              <Title className="font-semibold">
-                ¿Qué tratamiento necesitas?
-              </Title>
+    <MainLayout isCheckout>
+      <Container className="mt-6 md:mt-16">
+        <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+          <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
+            <Title className="font-semibold">¿Qué tratamiento necesitas?</Title>
 
-              <Flex layout="col-left" className="gap-3 w-full">
-                {!isEmpty(productCategories) && <TreatmentAccordionSelector />}
-              </Flex>
+            <Flex layout="col-left" className="gap-3 w-full">
+              {!isEmpty(productCategories) && <TreatmentAccordionSelector />}
             </Flex>
           </Flex>
-        </Container>
-      </MainLayout>
-    </App>
+        </Flex>
+      </Container>
+    </MainLayout>
   );
 
   function initializeCategories() {
@@ -59,7 +54,7 @@ export default function Page() {
 
     setProductCategories(uniqueCategoryNames);
     async function initProducts() {
-      const products = await fetchProducts({ isDerma: false });
+      const products = await fetchProducts();
       setStateProducts(products);
     }
 

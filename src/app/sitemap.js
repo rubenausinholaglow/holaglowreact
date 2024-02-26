@@ -13,7 +13,7 @@ export default async function sitemap() {
     };
   });
 
-  const products = await ProductService.getAllProducts({ isDerma: false });
+  const products = await ProductService.getAllProducts();
   let filteredProducts = [];
   if (products && products.length > 0) {
     filteredProducts = products

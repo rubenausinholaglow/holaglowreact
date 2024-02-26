@@ -8,7 +8,6 @@ import * as config from '@utils/textConstants';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import * as utils from '@utils/validators';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -335,14 +334,50 @@ export default function Page({
 
   if (remoteControl)
     return (
-      <App>
-        <MainLayout isDashboard hideBottomBar>
-          <div className="px-4 w-full max-h-[85%] overflow-y-auto">
-            <AppointmentsListComponent
-              clinicId={storedClinicId}
-              boxId={storedBoxId}
+      <MainLayout isDashboard hideBottomBar>
+        <div className="px-4 w-full max-h-[85%] overflow-y-auto">
+          <AppointmentsListComponent
+            clinicId={storedClinicId}
+            boxId={storedBoxId}
+          />
+        </div>
+        <div className="mt-8">
+          {showRegistration ? (
+            <RegistrationForm
+              formData={formData}
+              handleFieldChange={handleFormFieldChange}
+              handleContinue={handleContinue}
+              errors={errors}
+              isLoading={isLoading}
             />
-          </div>
+          ) : (
+            <SearchUser
+              email={userEmail}
+              handleFieldChange={handleFieldEmailChange}
+              handleCheckUser={handleCheckUser}
+              errors={errors}
+              isLoading={isLoading}
+            />
+          )}
+          {isLoadingUser && <SvgSpinner />}
+        </div>
+      </MainLayout>
+    );
+
+  if (!remoteControl)
+    return (
+      <MainLayout isDashboard hideBottomBar hasAnimatedBackground>
+        <div className="fixed bottom-0 right-0 py-3 px-3">
+          <Button
+            onClick={() => setShowForm(!showForm)}
+            type="tertiary"
+            size="sm"
+            className=""
+          >
+            Búsqueda Manual
+          </Button>
+        </div>
+        {showForm && (
           <div className="mt-8">
             {showRegistration ? (
               <RegistrationForm
@@ -361,49 +396,9 @@ export default function Page({
                 isLoading={isLoading}
               />
             )}
-            {isLoadingUser && <SvgSpinner />}
           </div>
-        </MainLayout>
-      </App>
-    );
-
-  if (!remoteControl)
-    return (
-      <App>
-        <MainLayout isDashboard hideBottomBar hasAnimatedBackground>
-          <div className="fixed bottom-0 right-0 py-3 px-3">
-            <Button
-              onClick={() => setShowForm(!showForm)}
-              type="tertiary"
-              size="sm"
-              className=""
-            >
-              Búsqueda Manual
-            </Button>
-          </div>
-          {showForm && (
-            <div className="mt-8">
-              {showRegistration ? (
-                <RegistrationForm
-                  formData={formData}
-                  handleFieldChange={handleFormFieldChange}
-                  handleContinue={handleContinue}
-                  errors={errors}
-                  isLoading={isLoading}
-                />
-              ) : (
-                <SearchUser
-                  email={userEmail}
-                  handleFieldChange={handleFieldEmailChange}
-                  handleCheckUser={handleCheckUser}
-                  errors={errors}
-                  isLoading={isLoading}
-                />
-              )}
-            </div>
-          )}
-          {isLoadingUser && <SvgSpinner />}
-        </MainLayout>
-      </App>
+        )}
+        {isLoadingUser && <SvgSpinner />}
+      </MainLayout>
     );
 }

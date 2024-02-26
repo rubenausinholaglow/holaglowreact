@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import ProductService from '@services/ProductService';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import PsrpPage from 'app/(web)/tratamientos/psrp';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -71,24 +70,22 @@ export default function Page() {
   }
 
   return (
-    <App>
-      <Flex layout="col-center" className="w-full gap-1">
-        {dashboardProducts.length > 0 ? (
-          <>
-            {productHighlighted != null && <HightLightedProduct />}
-            <PsrpPage isDashboard />
-          </>
-        ) : (
-          <MainLayout isDashboard>
-            <p className="mb-4">Cargando productos...</p>
-            <SvgSpinner
-              height={30}
-              width={30}
-              fill={HOLAGLOW_COLORS['primary']}
-            />
-          </MainLayout>
-        )}
-      </Flex>
-    </App>
+    <Flex layout="col-center" className="w-full gap-1">
+      {dashboardProducts.length > 0 ? (
+        <>
+          {productHighlighted != null && <HightLightedProduct />}
+          <PsrpPage isDashboard />
+        </>
+      ) : (
+        <MainLayout isDashboard>
+          <p className="mb-4">Cargando productos...</p>
+          <SvgSpinner
+            height={30}
+            width={30}
+            fill={HOLAGLOW_COLORS['primary']}
+          />
+        </MainLayout>
+      )}
+    </Flex>
   );
 }

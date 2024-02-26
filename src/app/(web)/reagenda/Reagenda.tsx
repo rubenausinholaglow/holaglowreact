@@ -11,7 +11,6 @@ import es from 'dayjs/locale/es';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
-import App from '../components/layout/App';
 import AppointmentList from './components/AppointmentList';
 import CancelModal from './components/CancelModal';
 
@@ -100,21 +99,19 @@ export default function Reagenda({ isDerma = false }: { isDerma?: boolean }) {
   }
 
   return (
-    <App>
-      <MainLayout isCheckout>
-        <meta name="robots" content="noindex,nofollow" />
-        <CancelModal
-          appointmentToCancel={appointmentToCancel}
-          cancelAppointment={cancelAppointment}
-          showCancelModal={showCancelModal}
-        />
+    <MainLayout isCheckout>
+      <meta name="robots" content="noindex,nofollow" />
+      <CancelModal
+        appointmentToCancel={appointmentToCancel}
+        cancelAppointment={cancelAppointment}
+        showCancelModal={showCancelModal}
+      />
 
-        <AppointmentList
-          cancelling={cancelling}
-          setAppointmentToCancel={setAppointmentToCancel}
-          setShowCancelModal={setShowCancelModal}
-        />
-      </MainLayout>
-    </App>
+      <AppointmentList
+        cancelling={cancelling}
+        setAppointmentToCancel={setAppointmentToCancel}
+        setShowCancelModal={setShowCancelModal}
+      />
+    </MainLayout>
   );
 }

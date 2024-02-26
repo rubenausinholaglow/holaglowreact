@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import Confirmation from 'app/(web)/checkout/confirmation/components/Confirmation';
-import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgArrowSmallLeft } from 'app/icons/Icons';
 import useRoutes from 'app/utils/useRoutes';
@@ -27,28 +26,26 @@ export default function ConfirmationCheckIn() {
   }, []);
 
   return (
-    <App>
-      <MainLayout
-        isDashboard
-        hideBackButton
-        hideContactButtons
-        hideProfessionalSelector
-        hideBottomBar
-      >
-        <Confirmation isDashboard={true} />
+    <MainLayout
+      isDashboard
+      hideBackButton
+      hideContactButtons
+      hideProfessionalSelector
+      hideBottomBar
+    >
+      <Confirmation isDashboard={true} />
 
-        {!isCheckin && (
-          <Button
-            type="tertiary"
-            customStyles="bg-hg-primary"
-            className="mb-8"
-            href={ROUTES.dashboard.menu}
-          >
-            <SvgArrowSmallLeft />
-            Volver
-          </Button>
-        )}
-      </MainLayout>
-    </App>
+      {!isCheckin && (
+        <Button
+          type="tertiary"
+          customStyles="bg-hg-primary"
+          className="mb-8"
+          href={ROUTES.dashboard.menu}
+        >
+          <SvgArrowSmallLeft />
+          Volver
+        </Button>
+      )}
+    </MainLayout>
   );
 }
