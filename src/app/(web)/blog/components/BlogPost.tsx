@@ -5,6 +5,7 @@ import '../styles/blog.css';
 import { useEffect, useState } from 'react';
 import { Professional } from '@interface/clinic';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Post } from 'app/types/blog';
@@ -70,80 +71,82 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   }, [clinics, post]);
 
   return (
-    <MainLayout>
-      {!post ? (
-        <FullScreenLoading />
-      ) : (
-        <div className="rounded-t-3xl shadow-centered-black-lg ">
-          <Container className="mb-8 py-6 md:py-12">
-            <BlogBreadcrumb title={post.title} />
+    <App>
+      <MainLayout>
+        {!post ? (
+          <FullScreenLoading />
+        ) : (
+          <div className="rounded-t-3xl shadow-centered-black-lg ">
+            <Container className="mb-8 py-6 md:py-12">
+              <BlogBreadcrumb title={post.title} />
 
-            <div className="aspect-[3/2] relative rounded-3xl overflow-hidden mb-8">
-              <Image
-                src={`${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}post/${post.id}.jpg`}
-                alt={post.title}
-                fill
-                className="object-cover"
-              />
-            </div>
+              <div className="aspect-[3/2] relative rounded-3xl overflow-hidden mb-8">
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}post/${post.id}.jpg`}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-            <Flex className="gap-20 items-start">
-              <div>
-                {!isEmpty(post.categories) && (
-                  <BlogCategories
-                    className="mb-8"
-                    categories={post.categories}
+              <Flex className="gap-20 items-start">
+                <div>
+                  {!isEmpty(post.categories) && (
+                    <BlogCategories
+                      className="mb-8"
+                      categories={post.categories}
+                    />
+                  )}
+
+                  <Text as="h1" className="font-bold mb-4 text-2xl md:text-5xl">
+                    {post.title}
+                  </Text>
+                  <Text size="xs" className="mb-8">
+                    Por {author?.tittleAbbreviation}. {post.author}.{' '}
+                    <span className="text-hg-black500">
+                      {dayjs(post.creationDate).format('D MMMM, YYYY')}
+                    </span>
+                  </Text>
+
+                  <div dangerouslySetInnerHTML={{ __html: post.html }} />
+                </div>
+
+                <div className="hidden sticky top-0 md:block shrink-0 w-[360px]">
+                  <BlogShareBar
+                    className="my-12"
+                    url={`https://www.holaglow.com${route}`}
+                    title={post.title}
                   />
-                )}
 
-                <Text as="h1" className="font-bold mb-4 text-2xl md:text-5xl">
-                  {post.title}
-                </Text>
-                <Text size="xs" className="mb-8">
-                  Por {author?.tittleAbbreviation}. {post.author}.{' '}
-                  <span className="text-hg-black500">
-                    {dayjs(post.creationDate).format('D MMMM, YYYY')}
-                  </span>
-                </Text>
+                  <BlogRelatedPosts
+                    className="pb-12"
+                    categories={post.categories}
+                    posts={blogPosts}
+                  />
+                </div>
+              </Flex>
+            </Container>
 
-                <div dangerouslySetInnerHTML={{ __html: post.html }} />
-              </div>
+            {author && <BlogAuthor className="mb-12" professional={author} />}
 
-              <div className="hidden sticky top-0 md:block shrink-0 w-[360px]">
-                <BlogShareBar
-                  className="my-12"
-                  url={`https://www.holaglow.com${route}`}
-                  title={post.title}
-                />
+            <Container className="border-t border-hg-black md:hidden">
+              <BlogShareBar
+                className="my-12"
+                url={`https://www.holaglow.com${route}`}
+                title={post.title}
+              />
 
-                <BlogRelatedPosts
-                  className="pb-12"
-                  categories={post.categories}
-                  posts={blogPosts}
-                />
-              </div>
-            </Flex>
-          </Container>
+              <BlogRelatedPosts
+                className="pb-12"
+                categories={post.categories}
+                posts={blogPosts}
+              />
+            </Container>
 
-          {author && <BlogAuthor className="mb-12" professional={author} />}
-
-          <Container className="border-t border-hg-black md:hidden">
-            <BlogShareBar
-              className="my-12"
-              url={`https://www.holaglow.com${route}`}
-              title={post.title}
-            />
-
-            <BlogRelatedPosts
-              className="pb-12"
-              categories={post.categories}
-              posts={blogPosts}
-            />
-          </Container>
-
-          <BlogAppointment />
-        </div>
-      )}
-    </MainLayout>
+            <BlogAppointment />
+          </div>
+        )}
+      </MainLayout>
+    </App>
   );
 }

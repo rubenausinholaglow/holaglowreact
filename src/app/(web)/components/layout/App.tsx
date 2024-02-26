@@ -98,7 +98,7 @@ export default function Html({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function initProducts() {
       if (storedBoxId && storedClinicId) return true;
-      const products = await fetchProducts();
+      const products = await fetchProducts({ isDerma: false });
       if (!isDerma) setStateProducts(products);
       else setDermaProducts(products);
       setFilteredProducts(products);
