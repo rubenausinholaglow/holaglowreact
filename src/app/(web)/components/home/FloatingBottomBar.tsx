@@ -62,7 +62,7 @@ export default function FloatingBottomBar({
 
   return (
     <div
-      className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none ${
+      className={`md:hidden transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none ${
         showBottomBar && isVisible ? 'translate-y-[0%]' : 'translate-y-[105%]'
       }`}
     >

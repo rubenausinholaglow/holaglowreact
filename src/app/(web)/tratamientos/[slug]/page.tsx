@@ -1,4 +1,5 @@
 'use client';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 
 import ProductDetail from './components/ProductDetail';
@@ -9,8 +10,10 @@ export default function ProductPage({
   params: { slug: string; isDashboard: boolean };
 }) {
   return (
-    <MainLayout>
-      <ProductDetail params={params}></ProductDetail>
-    </MainLayout>
+    <App>
+      <MainLayout>
+        <ProductDetail params={params}></ProductDetail>
+      </MainLayout>
+    </App>
   );
 }

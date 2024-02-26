@@ -1,7 +1,9 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import ScheduleService from '@services/ScheduleService';
 import Confirmation from 'app/(web)/checkout/confirmation/components/Confirmation';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 
 export default function Page({
@@ -23,8 +25,10 @@ export default function Page({
   }, []);
   if (!appointment) return <></>;
   return (
-    <MainLayout>
-      <Confirmation appointment={appointment} />
-    </MainLayout>
+    <App>
+      <MainLayout>
+        <Confirmation appointment={appointment} />
+      </MainLayout>
+    </App>
   );
 }

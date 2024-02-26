@@ -37,7 +37,6 @@ export default function ValuesDescription() {
               alt="prejuicios"
               fill
               className="object-contain rounded-xl"
-              loading="eager"
             />
           </div>
         </AnimateOnViewport>
