@@ -99,9 +99,7 @@ export default function UpsellingRoutines({
     setShowModal(showModalBackground);
   }, [showModalBackground]);
 
-  const filteredProducts = DERMA_PRODUCTS.filter(
-    product => data != null && product.type.includes(data.routine)
-  );
+  const filteredProducts = DERMA_PRODUCTS.filter(product => data != null);
 
   async function addRevisionProduct() {
     const productDetails = await fetchProduct(

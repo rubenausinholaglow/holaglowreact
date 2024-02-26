@@ -89,7 +89,15 @@ export default function ConctactForm() {
   useEffect(() => {
     async function checkout() {
       const createdUser = await registerUser(client, false, false, false);
-      await initializePayment(activePayment, createdUser!);
+      await initializePayment(
+        activePayment,
+        createdUser!,
+        false,
+        undefined,
+        undefined,
+        undefined,
+        false
+      );
     }
     if (
       activePayment != PaymentBank.None &&

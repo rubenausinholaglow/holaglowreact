@@ -115,8 +115,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !isEmpty(formData.surname) &&
       !isEmpty(formData.email) &&
       !isEmpty(formData.phone) &&
+      formData.termsAndConditionsAccepted &&
+      ((!isEmpty(formData.postalCode) && showPostalCode) || !showPostalCode) &&
+      ((!isEmpty(formData.city) && showCity) || !showCity) &&
+      ((!isEmpty(formData.address) && showAddress) || !showAddress) &&
       !showPhoneError &&
-      !showEmailError
+      !showEmailError &&
+      !showPostalCodeError
     ) {
       setIsDisabled(false);
       if (setContinueDisabled) setContinueDisabled(false);
@@ -365,11 +370,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <Flex
           layout="row-left"
           className={
-            !hasContinueButton &&
-            !isDisabled &&
-            !formData.termsAndConditionsAccepted
-              ? 'animate-shake'
-              : ''
+            !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
           }
         >
           <label

@@ -29,6 +29,19 @@ export default function ProfessionalsDerma({
     const professionalsWithCity: Professional[] = [
       {
         authorDescription: '',
+        collegiateNumber: '080856206',
+        description: '',
+        flowwwId: '',
+        id: '',
+        name: 'Dr. Basart Dotras',
+        professionalType: ProfessionalType.Medical,
+        title: 'Médico estético especialista en dermocosmética',
+        tittleAbbreviation: '',
+        urlPhoto:
+          'https://budgetimages.blob.core.windows.net/derma/medicos/Josep.jpg',
+      },
+      {
+        authorDescription: '',
         collegiateNumber: '282857497',
         description: '',
         flowwwId: '',
@@ -38,7 +51,7 @@ export default function ProfessionalsDerma({
         title: 'Médico estético especialista en dermocosmética',
         tittleAbbreviation: '',
         urlPhoto:
-          'https://budgetimages.blob.core.windows.net/derma/medicos/1.jpg',
+          'https://budgetimages.blob.core.windows.net/derma/medicos/Ana.jpg',
       },
       {
         authorDescription: '',
@@ -52,7 +65,7 @@ export default function ProfessionalsDerma({
           'Médico especialista en dermatología con Master en medicina estética',
         tittleAbbreviation: '',
         urlPhoto:
-          'https://budgetimages.blob.core.windows.net/derma/medicos/2.jpg',
+          'https://budgetimages.blob.core.windows.net/derma/medicos/Shirley.jpg',
       },
     ];
 
@@ -97,7 +110,7 @@ export default function ProfessionalsDerma({
         )}
         {!deviceSize.isMobile && (
           <Carousel
-            hasControls={false}
+            hasControls
             className="relative"
             isIntrinsicHeight
             visibleSlides={2}

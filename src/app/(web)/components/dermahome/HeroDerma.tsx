@@ -21,26 +21,25 @@ export default function HeroDerma() {
 
   return (
     <div
-      className="bg-gradient-30deg from-[#23D9B74D] to-[#FFC7C74D] pt-16 overflow-hidden"
+      className="bg-derma-secondary100 pt-[72px] md:pt-0 overflow-hidden relative"
       style={{ marginTop: HEADER_HEIGHT_CLASS }}
     >
-      <Flex
-        layout="col-left"
-        className="md:flex-row md:items-end max-w-[1400px] mx-auto"
-      >
-        <Image
-          src="/images/derma/home/homeDerma.png"
-          alt="Holaglow"
-          width={912}
-          height={894}
-          className="md:w-2/5"
-        />
+      <Flex layout="col-left" className="md:flex-row md:items-end mx-auto">
+        <div className="w-full md:order-2 aspect-square relative md:w-1/2 xl:w-2/5">
+          <Image
+            src="/images/derma/home/homeDerma.jpg"
+            alt="Holaglow"
+            className="object-cover"
+            priority
+            fill
+          />
+        </div>
         <Flex
           layout="col-center"
-          className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end "
+          className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end md:w-1/2 xl:w-3/5"
         >
-          <Container className="pb-12 md:p-0 overflow-hidden">
-            <Flex layout="col-left" className="md:ml-8">
+          <Container className="pb-12 md:p-0 overflow-hidden md:pr-8 lg:pr-12">
+            <Flex layout="col-left" className="md:ml-8 md:mr-4 2xl:pl-16">
               <Flex
                 layout="row-left"
                 className="mb-4 md:order-2 w-full md:justify-start gap-4 py-3"
@@ -56,7 +55,7 @@ export default function HeroDerma() {
                     width={140}
                     className="h-6 w-auto"
                   />
-                  <span className="mt-2">4,5</span>
+                  <span className="mt-2">4,7</span>
                 </Link>
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
@@ -67,31 +66,30 @@ export default function HeroDerma() {
                 className="gap-4 items-center relative md:justify-center md:flex-row"
               >
                 <Flex layout="col-left" className="relative z-10">
-                  <TitleDerma
-                    size="3xl"
-                    className="text-derma-primary text-left mb-4"
-                  >
-                    Cuidado facial personalizado
-                  </TitleDerma>
+                  <Text className="text-derma-primary text-left mb-4 text-3xl xl:text-4xl 2xl:text-5xl font-gtUltraBold">
+                    Tu rutina facial diseñada por un médico
+                  </Text>
                   <Text
                     isAnimated
-                    className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
+                    className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
                   >
-                    Reserva tu{' '}
-                    <b>consulta online con un dermatólogo estético</b> y
-                    encuentra el mejor tratamiento para tu piel sin salir de
-                    casa.
+                    Un dermatólogo estético estudiará tu piel en una
+                    videollamada para diseñar una rutina facial con{' '}
+                    <span className="font-semibold">
+                      productos personalizados
+                    </span>{' '}
+                    que te enviaremos a casa por 99€
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
                     <Button
                       type="derma"
                       size="xl"
-                      className="lg:mb-12"
+                      className="md:mb-8 lg:mb-12"
                       href="/multistep/start"
                       id="tmevent_derma_multistep_start"
                     >
-                      Reserva tu videllamada
+                      Descubre tu rutina
                     </Button>
                   </Flex>
                 </Flex>
