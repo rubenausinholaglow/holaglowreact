@@ -9,6 +9,8 @@ import Image from 'next/image';
 export default function ProductResults({ product }: { product: Product }) {
   return (
     <Container className="p-0 pt-8 md:px-4 md:flex gap-16 justify-between mb-12 md:mb-16">
+      olakease
+      {/* 
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
         <div className="md:flex-row">
           <Title isAnimated size="2xl" className="font-bold mb-6 mt-8">
@@ -65,7 +67,7 @@ export default function ProductResults({ product }: { product: Product }) {
             </div>
           ))}
         </Carousel>
-      </div>
+      </div> */}
     </Container>
   );
 }

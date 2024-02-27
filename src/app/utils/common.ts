@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { Product } from 'app/types/product';
 import { isEmpty } from 'lodash';
