@@ -105,6 +105,7 @@ export default function Agenda({
   const toggleClicked = () => {
     setClicked(!clicked);
   };
+  const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -121,6 +122,7 @@ export default function Agenda({
         ).then(data => {
           setTotalTimeAppointment(data?.totalTime);
           callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
+          setLoadingMonthFirstTime(false);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -500,40 +502,48 @@ export default function Agenda({
                       {!isDerma && (
                         <Flex>
                           <SvgHour height={16} width={16} className="mr-2" />
-                          {selectedTreatments &&
-                            totalTimeAppointment == 0 &&
-                            Array.isArray(selectedTreatments) &&
-                            selectedTreatments.map(product => (
-                              <Flex key={product.id}>
-                                <Flex
-                                  layout="row-between"
-                                  className="items-start w-full"
-                                >
-                                  <div>
-                                    <Text
-                                      size="xs"
-                                      className="w-full text-left"
+                          {loadingMonthFirstTime ? (
+                            <SvgSpinner height={24} width={24} />
+                          ) : (
+                            <>
+                              {selectedTreatments &&
+                                totalTimeAppointment == 0 &&
+                                Array.isArray(selectedTreatments) &&
+                                selectedTreatments.map(product => (
+                                  <Flex key={product.id}>
+                                    <Flex
+                                      layout="row-between"
+                                      className="items-start w-full"
                                     >
-                                      <Text
-                                        size="xs"
-                                        className="w-full text-left"
-                                      >
-                                        {product.emlaType === EmlaType.Required
-                                          ? product.applicationTimeMinutes +
-                                            30 +
-                                            ' minutos '
-                                          : product.applicationTimeMinutes.toString() +
-                                            ' minutos '}
-                                      </Text>
-                                    </Text>
-                                  </div>
-                                </Flex>
-                              </Flex>
-                            ))}
-                          {totalTimeAppointment > 0 && (
-                            <Text size="xs" className="w-full text-left">
-                              {totalTimeAppointment + ' minutos '}
-                            </Text>
+                                      <div>
+                                        <Text
+                                          size="xs"
+                                          className="w-full text-left"
+                                        >
+                                          <Text
+                                            size="xs"
+                                            className="w-full text-left"
+                                          >
+                                            {product.emlaType ===
+                                            EmlaType.Required
+                                              ? product.applicationTimeMinutes +
+                                                30 +
+                                                ' minutos '
+                                              : product.applicationTimeMinutes.toString() +
+                                                ' minutos '}
+                                            <span>&nbsp;</span>
+                                          </Text>
+                                        </Text>
+                                      </div>
+                                    </Flex>
+                                  </Flex>
+                                ))}
+                              {totalTimeAppointment > 0 && (
+                                <Text size="xs" className="w-full text-left">
+                                  {totalTimeAppointment + ' minutos '}
+                                </Text>
+                              )}
+                            </>
                           )}
                         </Flex>
                       )}
