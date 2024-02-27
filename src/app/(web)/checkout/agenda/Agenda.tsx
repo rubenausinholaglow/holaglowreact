@@ -532,7 +532,7 @@ export default function Agenda({
                             ))}
                           {totalTimeAppointment > 0 && (
                             <Text size="xs" className="w-full text-left">
-                              {totalTimeAppointment} minutos
+                              {totalTimeAppointment + ' minutos '}
                             </Text>
                           )}
                         </Flex>
