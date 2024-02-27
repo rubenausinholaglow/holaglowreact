@@ -7,6 +7,7 @@ import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
 import { dermaService } from '@services/DermaService';
+import UserService from '@services/UserService';
 import CheckHydration from '@utils/CheckHydration';
 import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
@@ -31,7 +32,6 @@ import FourthStep from './FourthStep';
 import { MULTISTEP_QUESTIONS } from './mockedData';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
-import UserService from '@services/UserService';
 
 const CLIENT_INITIAL_VALUES = {
   email: '',
