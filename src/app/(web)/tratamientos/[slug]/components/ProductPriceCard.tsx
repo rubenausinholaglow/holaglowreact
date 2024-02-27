@@ -218,7 +218,7 @@ function ProductPriceItemsCard({
         product.packUnities.length ||
       !product.isPack
     ) {
-      router.push(ROUTES.checkout.clinics);
+      router.push(ROUTES.checkout.type);
     }
   };
 

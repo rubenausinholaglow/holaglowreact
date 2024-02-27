@@ -208,7 +208,7 @@ export default function ProductInfo({
             <Button
               onClick={() => {
                 setSelectedTreatments([product]);
-                router.push(ROUTES.checkout.clinics);
+                router.push(ROUTES.checkout.type);
               }}
               size="xl"
               type="tertiary"

@@ -180,6 +180,7 @@ export default function Agenda({
     const availability = availableDates ?? [];
     const today = dayjs();
     const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
+
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
