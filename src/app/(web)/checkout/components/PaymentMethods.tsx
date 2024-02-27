@@ -190,7 +190,9 @@ export const PaymentMethods = ({
                       className="shrink-0 hidden group-data-[state=open]:block"
                     />
                     <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-                    <Text>{method.label}</Text>
+                    <Text>
+                      {method.label.replace('{0}', isDerma ? '99' : '49')}
+                    </Text>
                   </Flex>
                   <Flex className="ml-auto gap-2">
                     {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&

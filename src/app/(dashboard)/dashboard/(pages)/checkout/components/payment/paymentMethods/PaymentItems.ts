@@ -36,7 +36,7 @@ export const paymentItems = [
 export const checkoutPaymentItems = [
   {
     key: 'creditCard',
-    label: 'Pago único 99€ con Tarjeta de crédito/debito',
+    label: 'Pago único {0}€ con Tarjeta de crédito/debito',
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
