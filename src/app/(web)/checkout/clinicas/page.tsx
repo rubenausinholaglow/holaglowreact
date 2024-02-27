@@ -71,6 +71,7 @@ export default function ClinicsCheckout() {
       <MainLayout isCheckout>
         <Container className="mt-6 md:mt-16">
           <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
+            {/*
             {!isEmpty(selectedTreatments) && (
               <Flex
                 layout="col-left"
@@ -163,9 +164,9 @@ export default function ClinicsCheckout() {
                           </div>
                         </Flex>
                       )
-                  )}
               </Flex>
             )}
+                  )} */}
 
             <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
               <Title className="font-semibold">Selecciona tu clínica</Title>

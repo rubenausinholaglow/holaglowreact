@@ -156,7 +156,7 @@ export default function PVCitaMedica() {
                   </Flex>
                 </Flex>
               </Flex>
-              {!isEmpty(selectedTreatments) && (
+              {/* {!isEmpty(selectedTreatments) && (
                 <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
                   <Title className="font-semibold hidden md:block">
                     Detalle de tu pedido
@@ -232,7 +232,7 @@ export default function PVCitaMedica() {
                         )
                     )}
                 </Flex>
-              )}
+              )} */}
             </Flex>
           </Container>
         )}
