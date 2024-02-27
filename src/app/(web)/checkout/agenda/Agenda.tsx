@@ -11,7 +11,13 @@ import { getTreatmentId } from '@utils/userUtils';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
+import {
+  SvgCheck,
+  SvgEllipsis,
+  SvgPhone,
+  SvgSadIcon,
+  SvgWarning,
+} from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -106,6 +112,7 @@ export default function Agenda({
   const toggleClicked = () => {
     setClicked(!clicked);
   };
+  const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -122,6 +129,7 @@ export default function Agenda({
         ).then(data => {
           setTotalTimeAppointment(data?.totalTime);
           callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
+          setLoadingMonthFirstTime(false);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -501,40 +509,56 @@ export default function Agenda({
                       {!isDerma && (
                         <Flex>
                           <SvgHour height={16} width={16} className="mr-2" />
-                          {selectedTreatments &&
-                            totalTimeAppointment == 0 &&
-                            Array.isArray(selectedTreatments) &&
-                            selectedTreatments.map(product => (
-                              <Flex key={product.id}>
-                                <Flex
-                                  layout="row-between"
-                                  className="items-start w-full"
-                                >
-                                  <div>
-                                    <Text
-                                      size="xs"
-                                      className="w-full text-left"
+                          {loadingMonthFirstTime ? (
+                            <SvgEllipsis
+                              className={`${
+                                isDerma
+                                  ? 'text-derma-primary'
+                                  : 'text-hg-secondary'
+                              } mt-2`}
+                              height={16}
+                              width={16}
+                            />
+                          ) : (
+                            <>
+                              {selectedTreatments &&
+                                totalTimeAppointment == 0 &&
+                                Array.isArray(selectedTreatments) &&
+                                selectedTreatments.map(product => (
+                                  <Flex key={product.id}>
+                                    <Flex
+                                      layout="row-between"
+                                      className="items-start w-full"
                                     >
-                                      <Text
-                                        size="xs"
-                                        className="w-full text-left"
-                                      >
-                                        {product.emlaType === EmlaType.Required
-                                          ? product.applicationTimeMinutes +
-                                            30 +
-                                            ' minutos '
-                                          : product.applicationTimeMinutes.toString() +
-                                            ' minutos '}
-                                      </Text>
-                                    </Text>
-                                  </div>
-                                </Flex>
-                              </Flex>
-                            ))}
-                          {totalTimeAppointment > 0 && (
-                            <Text size="xs" className="w-full text-left">
-                              {totalTimeAppointment + ' minutos '}
-                            </Text>
+                                      <div>
+                                        <Text
+                                          size="xs"
+                                          className="w-full text-left"
+                                        >
+                                          <Text
+                                            size="xs"
+                                            className="w-full text-left"
+                                          >
+                                            {product.emlaType ===
+                                            EmlaType.Required
+                                              ? product.applicationTimeMinutes +
+                                                30 +
+                                                ' minutos '
+                                              : product.applicationTimeMinutes.toString() +
+                                                ' minutos '}
+                                            <span>&nbsp;</span>
+                                          </Text>
+                                        </Text>
+                                      </div>
+                                    </Flex>
+                                  </Flex>
+                                ))}
+                              {totalTimeAppointment > 0 && (
+                                <Text size="xs" className="w-full text-left">
+                                  {totalTimeAppointment + ' minutos '}
+                                </Text>
+                              )}
+                            </>
                           )}
                         </Flex>
                       )}
