@@ -20,6 +20,8 @@ export default function ProductPrices({
   product: Product;
   isDashboard?: boolean;
 }) {
+  console.log(product.upgrades);
+
   const { deviceSize } = useSessionStore(state => state);
   const [productItems, setProductITems] = useState<Product[]>([]);
   const [isSessionProduct, setIsSessionProduct] = useState<boolean>(false);
