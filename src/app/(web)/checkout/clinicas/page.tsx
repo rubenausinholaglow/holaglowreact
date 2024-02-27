@@ -40,20 +40,6 @@ export default function ClinicsCheckout() {
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
     router.push(ROUTES.checkout.schedule);
-
-    /* let redirect = ROUTES.checkout.schedule;
-
-    if (
-      selectedTreatments &&
-      !isEmpty(selectedTreatments) &&
-      selectedTreatments[0].id ===
-        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
-    ) {
-      console.log('tenc prod seleccionat -> anar al schedule');
-      redirect = ROUTES.checkout.schedule;
-    }
-
-    router.push(redirect); */
   };
 
   useEffect(() => {
