@@ -136,6 +136,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       userId: user?.id || '',
       paymentBank: PaymentBank.Alma,
       originPayment: OriginPayment.dashboard,
+      deferred_Days: undefined,
     };
 
     try {
