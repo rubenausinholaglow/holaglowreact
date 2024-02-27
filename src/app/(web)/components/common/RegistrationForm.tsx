@@ -98,6 +98,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
   useEffect(() => {
     if (initialValues) {
+      initialValues.surname = initialValues.lastName;
       setFormData(initialValues);
     }
   }, []);

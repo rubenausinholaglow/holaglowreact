@@ -31,6 +31,7 @@ import FourthStep from './FourthStep';
 import { MULTISTEP_QUESTIONS } from './mockedData';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
+import UserService from '@services/UserService';
 
 const CLIENT_INITIAL_VALUES = {
   email: '',
@@ -89,6 +90,7 @@ export default function Form() {
   const { cart, addItemToCart, resetCart } = useCartStore(state => state);
   const STEPS = 7;
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
+  const [userId, setUserId] = useState('');
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
@@ -120,7 +122,36 @@ export default function Form() {
     setPayment(undefined);
     initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
     setClient(CLIENT_INITIAL_VALUES);
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    setUserId(params.get('userId') ?? '');
   }, []);
+
+  useEffect(() => {
+    async function get(userId: string) {
+      const dermaQuestions = await UserService.getDermaQuestions(userId);
+      if (dermaQuestions) {
+        setDermaQuestions({
+          birthDate: dermaQuestions.birthDate,
+          extraInfo: dermaQuestions.extraInfo,
+          id: dermaQuestions.id,
+          name: dermaQuestions.name,
+          phone: dermaQuestions.user?.phone ?? '',
+          phonePrefix: dermaQuestions.user?.phonePrefix ?? '',
+          scenario: dermaQuestions.scenario,
+          skinConcerns: dermaQuestions.skinConcerns,
+          userId: dermaQuestions.user?.id,
+        });
+        if (dermaQuestions.user) {
+          setActiveSlideIndex(5);
+          dermaQuestions.user.phone =
+            dermaQuestions.user.phonePrefix + dermaQuestions.user.phone;
+          setClient(dermaQuestions.user);
+        }
+      }
+    }
+    if (userId) get(userId);
+  }, [userId]);
 
   useEffect(() => {
     async function checkout() {

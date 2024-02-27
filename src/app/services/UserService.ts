@@ -1,3 +1,4 @@
+import { DermaQuestionsResponse } from '@interface/derma/dermaquestions';
 import { User } from 'app/types/appointment';
 import { Client, ClientUpdate } from 'app/types/client';
 
@@ -104,6 +105,23 @@ export default class UserService {
     }
   }
 
+  static async getDermaQuestions(
+    id: string
+  ): Promise<DermaQuestionsResponse | undefined> {
+    try {
+      const url = `${UserService.getContactsUrl()}Derma?userId=${id}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return undefined;
+      }
+    } catch (err) {
+      return undefined;
+    }
+  }
+
   static async getUserById(id: string) {
     try {
       const url = `${UserService.getContactsUrl()}Contact/${id}`;
@@ -119,16 +137,16 @@ export default class UserService {
     }
   }
 
-  static async getAllUsers(token : string) : Promise<User[] | undefined> {
+  static async getAllUsers(token: string): Promise<User[] | undefined> {
     try {
       const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/All`;
       const res = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.ok) {
         const data = await res.json();
         return data;
