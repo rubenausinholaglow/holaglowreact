@@ -101,6 +101,7 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
+  const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -119,7 +120,8 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic?.flowwwId || ''
         ).then(data => {
-          callbackMonthAvailability(data, dateToCheck);
+          setTotalTimeAppointment(data?.totalTime);
+          callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -135,7 +137,6 @@ export default function Agenda({
 
   function callbackGetSlots(data: Slot[]) {
     setClickedHour(null);
-
     const hours = Array<Slot>();
     const morning = Array<Slot>();
     const afternoon = Array<Slot>();
@@ -143,14 +144,8 @@ export default function Agenda({
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
       if (
-        ((minutes == '00' || (minutes == '30' && !isDerma)) &&
-          !(hour == '10' && minutes == '00')) ||
-        (selectedTreatmentsIds != '902' &&
-          (minutes == '00' ||
-            minutes == '12' ||
-            minutes == '24' ||
-            minutes == '36' ||
-            minutes == '48'))
+        !(hour == '10' && minutes == '00') ||
+        selectedTreatmentsIds != '902'
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
@@ -507,6 +502,7 @@ export default function Agenda({
                         <Flex>
                           <SvgHour height={16} width={16} className="mr-2" />
                           {selectedTreatments &&
+                            totalTimeAppointment == 0 &&
                             Array.isArray(selectedTreatments) &&
                             selectedTreatments.map(product => (
                               <Flex key={product.id}>
@@ -519,16 +515,27 @@ export default function Agenda({
                                       size="xs"
                                       className="w-full text-left"
                                     >
-                                      {product.emlaType === EmlaType.Required
-                                        ? product.applicationTimeMinutes * 2 +
-                                          ''
-                                        : product.applicationTimeMinutes.toString()}{' '}
-                                      minutos
+                                      <Text
+                                        size="xs"
+                                        className="w-full text-left"
+                                      >
+                                        {product.emlaType === EmlaType.Required
+                                          ? product.applicationTimeMinutes +
+                                            30 +
+                                            ' minutos '
+                                          : product.applicationTimeMinutes.toString() +
+                                            ' minutos '}
+                                      </Text>
                                     </Text>
                                   </div>
                                 </Flex>
                               </Flex>
                             ))}
+                          {totalTimeAppointment > 0 && (
+                            <Text size="xs" className="w-full text-left">
+                              {totalTimeAppointment + ' minutos '}
+                            </Text>
+                          )}
                         </Flex>
                       )}
                     </div>
