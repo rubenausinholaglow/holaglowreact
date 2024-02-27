@@ -10,7 +10,13 @@ import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
+import {
+  SvgCheck,
+  SvgEllipsis,
+  SvgPhone,
+  SvgSadIcon,
+  SvgWarning,
+} from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -503,7 +509,15 @@ export default function Agenda({
                         <Flex>
                           <SvgHour height={16} width={16} className="mr-2" />
                           {loadingMonthFirstTime ? (
-                            <SvgSpinner height={24} width={24} />
+                            <SvgEllipsis
+                              className={`${
+                                isDerma
+                                  ? 'text-derma-primary'
+                                  : 'text-hg-secondary'
+                              } mt-2`}
+                              height={16}
+                              width={16}
+                            />
                           ) : (
                             <>
                               {selectedTreatments &&
