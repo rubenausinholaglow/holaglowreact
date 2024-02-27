@@ -36,19 +36,19 @@ export const paymentItems = [
 export const checkoutPaymentItems = [
   {
     key: 'creditCard',
-    label: 'Tarjeta de crédito/débito',
+    label: 'Pago único 99€ con Tarjeta de crédito/debito',
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
   {
     key: 'alma',
-    label: 'Financiado 33€/mes durante 3 meses sin intereses',
+    label: 'Paga en 3 meses, 33€/mes, sin intereses',
     paymentBank: PaymentBank.Alma,
     paymentMethod: PaymentMethod.Financing,
   },
   {
     key: 'almadeferred',
-    label: 'Pago aplazado',
+    label: 'Pago aplazado 15 días, tras consulta y diagnóstico',
     paymentBank: PaymentBank.Alma,
     paymentMethod: PaymentMethod.Financing,
   },
