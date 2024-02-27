@@ -46,6 +46,12 @@ export const checkoutPaymentItems = [
     paymentBank: PaymentBank.Alma,
     paymentMethod: PaymentMethod.Financing,
   },
+  {
+    key: 'almadeferred',
+    label: 'Pago aplazado',
+    paymentBank: PaymentBank.Alma,
+    paymentMethod: PaymentMethod.Financing,
+  },
 ];
 
 export const financialTimes = [
