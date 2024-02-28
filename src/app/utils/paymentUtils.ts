@@ -29,7 +29,8 @@ export const usePayments = () => {
     price = 4900,
     isDerma = false,
     installments = 1,
-    redirect = true
+    redirect = true,
+    deferredDays: number | undefined = undefined
   ) => {
     useNewTab = newTab ?? false;
     useRedirect = redirect ?? true;
@@ -41,6 +42,7 @@ export const usePayments = () => {
       paymentBank: paymentBank,
       productPaymentRequest: [],
       originPayment: OriginPayment.web,
+      deferred_Days: deferredDays,
     };
     cart.forEach(product => {
       if (
