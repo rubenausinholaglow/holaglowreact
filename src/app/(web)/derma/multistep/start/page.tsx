@@ -28,18 +28,31 @@ export default function StartMultistep() {
                 <Image
                   src="/images/derma/home/dermaStart.png"
                   alt="Holaglow"
-                  width={816}
-                  height={1014}
+                  width={204}
+                  height={253}
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
                 <Text className="font-gtUltraThin text-derma-primary mb-6 md:mb-6 text-xl md:text-5xl md:font-gtUltraBold">
-                  Tu camino hacia una piel más saludable comienza aquí
+                  Tu rutina facial personalizada por 99€
+                </Text>
+                <Text className="font-gtUltraBold md:w-full md:text-lg mb-2">
+                  Videollamada de diagnóstico con el médico
+                </Text>
+                <Text className="font-gtUltraBold md:w-full md:text-lg mb-8">
+                  Te enviamos a casa tu rutina personalizada:
+                </Text>
+                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
+                  - Espuma limpiadora
+                </Text>
+                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
+                  - Crema hidratante de día para tu afección
+                </Text>
+                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
+                  - Protector solar
                 </Text>
                 <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
-                  El primer paso es identificar tus necesidades. Responde estas
-                  preguntas para orientar tu consulta médica y obtener un
-                  tratamiento personalizado.
+                  - Receta de la crema personalizada de noche
                 </Text>
 
                 <StartButton />
