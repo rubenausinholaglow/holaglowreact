@@ -55,7 +55,7 @@ export default function ProductExplanation({ product }: { product: Product }) {
             variar según tus necesidades y la valoración del médico.
           </Text>
           {imgSrc && (
-            <div className="relative aspect-[4/3] mb-8">
+            <div className="relative aspect-square mb-8">
               <Image
                 src={imgSrc}
                 onError={() => setImgSrc('')}
