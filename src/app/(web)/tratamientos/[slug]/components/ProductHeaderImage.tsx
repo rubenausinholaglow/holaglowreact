@@ -2,7 +2,7 @@
 
 import { getProductCardColor, useImageProps } from '@utils/common';
 import { Product } from 'app/types/product';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Image from 'next/image';
 

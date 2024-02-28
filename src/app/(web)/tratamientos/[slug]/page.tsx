@@ -1,10 +1,30 @@
 import { Product } from '@interface/product';
 import { fetchProduct, fetchProducts } from '@utils/fetch';
 import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
+import dynamic from 'next/dynamic';
 
+import ProductCrosselling from './components/ProductCrosselling';
+import ProductExplanation from './components/ProductExplanation';
+import ProductFaqs from './components/ProductFaqs';
+import ProductFreeAppointment from './components/ProductFreeAppointment';
 import ProductHeaderSSR from './components/ProductHeaderSSR';
 import ProductInfoSSR from './components/ProductInfoSSR';
+import ProductPaymentOptions from './components/ProductPaymentOptions';
+import ProductPricesSSR from './components/ProductPricesSSR';
 import ProductResults from './components/ProductResults';
+import ProductSuggestions from './components/ProductSuggestions';
+
+const Testimonials = dynamic(
+  () => import('app/(ssr)/homeSSR/components/Testimonials'),
+  { ssr: false }
+);
+
+const FloatingBottomBar = dynamic(
+  () => import('app/(web)/components/home/FloatingBottomBar'),
+  {
+    ssr: false,
+  }
+);
 
 async function getProducts() {
   const products = await fetchProducts({ isDerma: false });
@@ -12,10 +32,14 @@ async function getProducts() {
   return products;
 }
 
-async function getProduct(productID: string) {
-  const products = await fetchProduct(productID);
+async function getProduct(
+  productID: string,
+  isDashboard: boolean,
+  isDerma: boolean
+) {
+  const product = await fetchProduct(productID, isDashboard, isDerma);
 
-  return products;
+  return product;
 }
 
 export default async function ProductPage({
@@ -29,7 +53,7 @@ export default async function ProductPage({
     (product: Product) => product?.extraInformation?.slug === params.slug
   )[0].id;
 
-  const product = await getProduct(productId);
+  const product = await getProduct(productId, false, false);
 
   return (
     <MainLayoutSSR>
@@ -37,9 +61,29 @@ export default async function ProductPage({
         <ProductHeaderSSR product={product} />
         <ProductInfoSSR product={product} />
       </div>
-      {/* {product.beforeAndAfterImages?.length > 0 && (
-        <ProductResults product={product} />
-      )} */}
+      <ProductResults product={product} />
+      <ProductPricesSSR product={product} />
+      <ProductPaymentOptions totalPrice={product.price} />
+      <ProductExplanation product={product} />
+      <ProductFreeAppointment />
+      <div className="bg-hg-black50">
+        <Testimonials />
+      </div>
+      <ProductSuggestions product={product} />
+      {/* 
+      <ProductFaqs product={product} />
+
+      {product.relatedProducts?.length > 0 && (
+        <div className="bg-hg-cream500 pt-12 pb-24 md:py-16 md:pb-24">
+          <ProductCrosselling product={product} />
+        </div>
+      )}
+      <Clinics />
+      <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
+        <Professionals />
+      </div>
+    */}
+      <FloatingBottomBar />
     </MainLayoutSSR>
   );
 }

@@ -21,7 +21,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 
