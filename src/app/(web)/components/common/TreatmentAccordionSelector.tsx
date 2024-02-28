@@ -124,7 +124,7 @@ export default function TreatmentAccordionSelector({
                         }
 
                         if (!isDashboard) {
-                          router.push(ROUTES.checkout.schedule);
+                          router.push(ROUTES.checkout.clinics);
                         }
                       }}
                     >

@@ -20,6 +20,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   const GOOGLE_ID = isDerma ? 'GTM-KMG5BW3L' : 'GTM-K3NZR8P';
 
+  console.log(GOOGLE_ID);
+
   return (
     <>
       <html lang="en" className="max-h-screen h-full bg-white text-hg-black">
