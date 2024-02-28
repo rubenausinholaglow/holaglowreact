@@ -1,5 +1,5 @@
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { ROUTES } from 'app/utils/routes';
+import ROUTES from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';

@@ -73,26 +73,12 @@ export default function FloatingBottomBar({
               size="xl"
               type="tertiary"
               className="mr-4 pointer-events-auto w-full"
-              href={product ? '#prices' : ROUTES.checkout.clinics}
+              href={ROUTES.checkout.type}
               onClick={() => (!product ? setSelectedTreatments([]) : null)}
               customStyles="bg-hg-primary px-2"
               id={'tmevent_click_floating_button'}
             >
-              {product ? (
-                <div className="w-full">
-                  <span className="inline-block mr-1">Reserva desde</span>
-                  {discountedPrice && (
-                    <span className="inline-block line-through font-normal mr-1">
-                      {product.price} €
-                    </span>
-                  )}
-                  <span className="font-semibold text-lg">
-                    {discountedPrice ? discountedPrice : product.price} €
-                  </span>
-                </div>
-              ) : (
-                'Reservar cita'
-              )}
+              Me interesa
             </Button>
           </div>
           <Button

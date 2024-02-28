@@ -218,7 +218,7 @@ function ProductPriceItemsCard({
         product.packUnities.length ||
       !product.isPack
     ) {
-      router.push(ROUTES.checkout.clinics);
+      router.push(ROUTES.checkout.type);
     }
   };
 
@@ -351,7 +351,7 @@ function ProductPriceItemsCard({
           id={'tmevent_click_book_button_customize'}
           onClick={() => setShowDropdown(true)}
         >
-          Personalizar
+          Me interesa
         </Button>
       )}
 
@@ -367,7 +367,7 @@ function ProductPriceItemsCard({
             className="mt-8"
             id="tmevent_click_book_button_prices"
           >
-            Reservar cita
+            Me interesa
             <SvgArrow
               height={16}
               width={16}

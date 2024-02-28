@@ -1,4 +1,4 @@
-export const ROUTES = {
+const ROUTES = {
   home: '/',
   treatments: '/tratamientos',
   checkout: {
@@ -33,3 +33,5 @@ export const ROUTES = {
     menu: '/crm/menu',
   },
 };
+
+export default ROUTES;

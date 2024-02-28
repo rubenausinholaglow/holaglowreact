@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchProduct } from '@utils/fetch';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -69,6 +70,24 @@ export default function ProductPrices({
       setGroupedSessionProducts(groupedArrays);
     }
   }, [isSessionProduct]);
+
+  useEffect(() => {
+    async function initProduct(productId: string, isDashboard: boolean) {
+      const productDetails = await fetchProduct(productId, true);
+
+      if (productDetails.upgrades) {
+        productDetails.upgrades = productDetails.upgrades.sort(
+          (x, y) => x.order - y.order
+        );
+        const allProducts = productDetails.upgrades.map(item => item.product);
+        setProductITems(allProducts);
+      }
+    }
+
+    if (isDashboard) {
+      initProduct(product.id, true);
+    }
+  }, []);
 
   if (isEmpty(productItems)) {
     return <></>;
