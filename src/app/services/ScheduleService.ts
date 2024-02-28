@@ -8,7 +8,7 @@ import {
 } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
-import { DayAvailability, MonthAvailabilityResponse } from 'app/types/dayAvailability';
+import { DayAvailability } from 'app/types/dayAvailability';
 import { Product } from 'app/types/product';
 import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
@@ -249,7 +249,7 @@ export default class ScheduleService {
     date: string,
     treatment: string,
     clinicId: string
-  ): Promise<MonthAvailabilityResponse> {
+  ): Promise<Array<DayAvailability>> {
     try {
       const url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailability?date=` +
@@ -263,11 +263,11 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return {} as MonthAvailabilityResponse;
+        return [];
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
-      return {} as MonthAvailabilityResponse;
+      return [];
     }
   }
   static async getMonthAvailabilityv2(

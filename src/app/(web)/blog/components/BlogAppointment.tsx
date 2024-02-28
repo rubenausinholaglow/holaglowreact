@@ -20,7 +20,7 @@ export default function BlogAppointment() {
 
   useEffect(() => {
     async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId);
+      const productDetails = await fetchProduct(productId, false);
       setProduct(productDetails);
     }
 

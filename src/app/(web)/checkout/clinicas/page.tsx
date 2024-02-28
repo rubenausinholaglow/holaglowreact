@@ -39,16 +39,7 @@ export default function ClinicsCheckout() {
 
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
-    let redirect = ROUTES.checkout.type;
-    if (
-      selectedTreatments &&
-      !isEmpty(selectedTreatments) &&
-      selectedTreatments[0].id ===
-        process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
-    ) {
-      redirect = ROUTES.checkout.schedule;
-    }
-    router.push(redirect);
+    router.push(ROUTES.checkout.schedule);
   };
 
   useEffect(() => {
@@ -71,102 +62,6 @@ export default function ClinicsCheckout() {
       <MainLayout isCheckout>
         <Container className="mt-6 md:mt-16">
           <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
-            {!isEmpty(selectedTreatments) && (
-              <Flex
-                layout="col-left"
-                className="gap-4 w-full md:w-1/2 md:order-2"
-              >
-                <Title className="font-semibold hidden md:block">
-                  Detalle de tu pedido
-                </Title>
-
-                {Array.isArray(selectedTreatments) &&
-                  selectedTreatments.map(
-                    (product, index) =>
-                      product && (
-                        <Flex
-                          layout="col-left"
-                          className="w-full bg-hg-secondary100 p-3 gap-3 rounded-xl mb-12"
-                          key={product.id}
-                        >
-                          <Flex
-                            layout="row-between"
-                            className="items-start w-full"
-                          >
-                            <div>
-                              <Text className="font-semibold text-left mb-2">
-                                {product.title}
-                              </Text>
-
-                              {product.isPack ? (
-                                <ul className="p-1">
-                                  {selectedPacksTreatments &&
-                                    selectedPacksTreatments.map(item => {
-                                      return (
-                                        <li key={item.title}>- {item.title}</li>
-                                      );
-                                    })}
-                                </ul>
-                              ) : !isEmpty(product.appliedProducts) ? (
-                                product.appliedProducts.map(item => {
-                                  const iconName =
-                                    item.icon.split('/')[0] || 'SvgCross';
-                                  const iconFamily:
-                                    | 'default'
-                                    | 'category'
-                                    | 'suggestion'
-                                    | 'service' =
-                                    (item.icon.split('/')[1] as 'default') ||
-                                    'default';
-
-                                  return (
-                                    <Flex
-                                      key={item.titlte}
-                                      className="items-start mb-2"
-                                    >
-                                      <DynamicIcon
-                                        height={16}
-                                        width={16}
-                                        className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                                        name={iconName}
-                                        family={iconFamily}
-                                      />
-
-                                      <Text>{item.titlte}</Text>
-                                    </Flex>
-                                  );
-                                })
-                              ) : (
-                                <Flex className="items-start mb-2">
-                                  <Text>{product.description}</Text>
-                                </Flex>
-                              )}
-                            </div>
-                            <SvgRadioChecked
-                              className="mt-[2px] shrink-0"
-                              height={24}
-                              width={24}
-                            />
-                          </Flex>
-                          <div>
-                            {discountedPrice && discountedPrice.length > 0 && (
-                              <Text className="line-through text-hg-black500">
-                                {product.price} €
-                              </Text>
-                            )}
-                            <Text className=" text-hg-secondary font-semibold text-2xl">
-                              {discountedPrice && discountedPrice.length > 0
-                                ? discountedPrice[index]
-                                : product.price}{' '}
-                              €
-                            </Text>
-                          </div>
-                        </Flex>
-                      )
-                  )}
-              </Flex>
-            )}
-
             <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
               <Title className="font-semibold">Selecciona tu clínica</Title>
 

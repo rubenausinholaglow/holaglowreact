@@ -11,13 +11,7 @@ import { getTreatmentId } from '@utils/userUtils';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import {
-  SvgCheck,
-  SvgEllipsis,
-  SvgPhone,
-  SvgSadIcon,
-  SvgWarning,
-} from 'app/icons/IconsDs';
+import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -107,12 +101,10 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
-  const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
   };
-  const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -127,9 +119,7 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic?.flowwwId || ''
         ).then(data => {
-          setTotalTimeAppointment(data?.totalTime);
-          callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
-          setLoadingMonthFirstTime(false);
+          callbackMonthAvailability(data, dateToCheck);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -145,6 +135,7 @@ export default function Agenda({
 
   function callbackGetSlots(data: Slot[]) {
     setClickedHour(null);
+
     const hours = Array<Slot>();
     const morning = Array<Slot>();
     const afternoon = Array<Slot>();
@@ -152,8 +143,14 @@ export default function Agenda({
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
       if (
-        !(hour == '10' && minutes == '00') ||
-        selectedTreatmentsIds != '902'
+        ((minutes == '00' || (minutes == '30' && !isDerma)) &&
+          !(hour == '10' && minutes == '00')) ||
+        (selectedTreatmentsIds != '902' &&
+          (minutes == '00' ||
+            minutes == '12' ||
+            minutes == '24' ||
+            minutes == '36' ||
+            minutes == '48'))
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
@@ -180,6 +177,7 @@ export default function Agenda({
     const availability = availableDates ?? [];
     const today = dayjs();
     const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
+
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
@@ -509,57 +507,29 @@ export default function Agenda({
                       {!isDerma && (
                         <Flex>
                           <SvgHour height={16} width={16} className="mr-2" />
-                          {loadingMonthFirstTime ? (
-                            <SvgEllipsis
-                              className={`${
-                                isDerma
-                                  ? 'text-derma-primary'
-                                  : 'text-hg-secondary'
-                              } mt-2`}
-                              height={16}
-                              width={16}
-                            />
-                          ) : (
-                            <>
-                              {selectedTreatments &&
-                                totalTimeAppointment == 0 &&
-                                Array.isArray(selectedTreatments) &&
-                                selectedTreatments.map(product => (
-                                  <Flex key={product.id}>
-                                    <Flex
-                                      layout="row-between"
-                                      className="items-start w-full"
+                          {selectedTreatments &&
+                            Array.isArray(selectedTreatments) &&
+                            selectedTreatments.map(product => (
+                              <Flex key={product.id}>
+                                <Flex
+                                  layout="row-between"
+                                  className="items-start w-full"
+                                >
+                                  <div>
+                                    <Text
+                                      size="xs"
+                                      className="w-full text-left"
                                     >
-                                      <div>
-                                        <Text
-                                          size="xs"
-                                          className="w-full text-left"
-                                        >
-                                          <Text
-                                            size="xs"
-                                            className="w-full text-left"
-                                          >
-                                            {product.emlaType ===
-                                            EmlaType.Required
-                                              ? product.applicationTimeMinutes +
-                                                30 +
-                                                ' minutos '
-                                              : product.applicationTimeMinutes.toString() +
-                                                ' minutos '}
-                                            <span>&nbsp;</span>
-                                          </Text>
-                                        </Text>
-                                      </div>
-                                    </Flex>
-                                  </Flex>
-                                ))}
-                              {totalTimeAppointment > 0 && (
-                                <Text size="xs" className="w-full text-left">
-                                  {totalTimeAppointment + ' minutos '}
-                                </Text>
-                              )}
-                            </>
-                          )}
+                                      {product.emlaType === EmlaType.Required
+                                        ? product.applicationTimeMinutes * 2 +
+                                          ''
+                                        : product.applicationTimeMinutes.toString()}{' '}
+                                      minutos
+                                    </Text>
+                                  </div>
+                                </Flex>
+                              </Flex>
+                            ))}
                         </Flex>
                       )}
                     </div>
