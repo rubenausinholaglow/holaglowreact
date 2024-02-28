@@ -157,7 +157,7 @@ export default function Agenda({
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
-          if (parseInt(hour) < 16) {
+          if (parseInt(hour) < 15) {
             morning.push(x);
           } else afternoon.push(x);
         }
