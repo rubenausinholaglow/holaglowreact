@@ -7,6 +7,7 @@ export interface InitializePayment {
   amount: number;
   productPaymentRequest?: ProductPaymentRequest[];
   originPayment: OriginPayment;
+  deferred_Days: number | undefined;
 }
 
 export interface CreatePayment {

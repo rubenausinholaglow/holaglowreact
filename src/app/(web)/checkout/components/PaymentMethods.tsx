@@ -37,6 +37,7 @@ import Image from 'next/image';
 
 const PAYMENT_ICONS = {
   alma: ['alma.svg'],
+  almadeferred: ['alma.svg'],
   pepper: ['pepper.svg'],
   Efectivo: [],
   creditCard: ['visa.svg', 'mastercard.svg', 'googlepay.svg', 'applepay.svg'],
@@ -54,6 +55,7 @@ export const PaymentMethods = ({
 }) => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [isLoadingAlmaDeferred, setIsLoadingAlmaDeferred] = useState(false);
   const [showAlmaButtons, setShowAlmaButtons] = useState(false);
 
   const [clientSecret, setClientSecret] = useState('');
@@ -99,13 +101,15 @@ export const PaymentMethods = ({
 
   const handlePaymentClick = async (
     activePayment: PaymentBank,
-    installments: number
+    installments: number,
+    deferredDays: number | undefined
   ) => {
     if (isLoadingPayment()) return;
     setIsLoadingKey({
       ...isLoadingKey,
       [installments]: true,
     });
+    if (deferredDays) setIsLoadingAlmaDeferred(true);
     if (
       activePayment != PaymentBank.None &&
       cart.length > 0 &&
@@ -120,7 +124,8 @@ export const PaymentMethods = ({
         Number(finalPrice),
         isDerma,
         installments,
-        true
+        true,
+        deferredDays
       )
         .then(x => {
           if (x == undefined) {
@@ -158,7 +163,8 @@ export const PaymentMethods = ({
           }}
         >
           {checkoutPaymentItems.map(method =>
-            method.key === 'alma' && !isDerma ? null : (
+            (method.key === 'alma' || method.key === 'almadeferred') &&
+            !isDerma ? null : (
               <AccordionItem
                 key={method.key}
                 value={method.key}
@@ -184,7 +190,9 @@ export const PaymentMethods = ({
                       className="shrink-0 hidden group-data-[state=open]:block"
                     />
                     <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-                    <Text>{method.label}</Text>
+                    <Text>
+                      {method.label.replace('{0}', isDerma ? '99' : '49')}
+                    </Text>
                   </Flex>
                   <Flex className="ml-auto gap-2">
                     {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
@@ -226,7 +234,8 @@ export const PaymentMethods = ({
                                     onClick={() => {
                                       handlePaymentClick(
                                         PaymentBank.Alma,
-                                        parseInt(financialTime.key)
+                                        parseInt(financialTime.key),
+                                        undefined
                                       );
                                     }}
                                   >
@@ -249,6 +258,38 @@ export const PaymentMethods = ({
                           )}
                         </Flex>
                       </>
+                    )}
+                    {method.key == 'almadeferred' ? (
+                      <Flex className="w-full" layout="col-center">
+                        <div>
+                          <Button
+                            id={isDerma ? 'tmevent_derma_step6' : ''}
+                            className="self-end"
+                            type="tertiary"
+                            customStyles={`gap-2 mb-4 ${
+                              isDerma
+                                ? 'bg-derma-primary border-none text-white'
+                                : 'bg-hg-primary'
+                            }`}
+                            onClick={() => {
+                              handlePaymentClick(PaymentBank.Alma, 1, 15);
+                            }}
+                          >
+                            {isLoadingAlmaDeferred ? (
+                              <Flex className="w-20 justify-center">
+                                <SvgSpinner height={24} width={24} />
+                              </Flex>
+                            ) : (
+                              <>
+                                Continuar
+                                <SvgArrow height={16} width={16} />
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      </Flex>
+                    ) : (
+                      <></>
                     )}
                     {isLoadingButton && method.key === 'creditCard' && (
                       <Flex className="w-full justify-center">

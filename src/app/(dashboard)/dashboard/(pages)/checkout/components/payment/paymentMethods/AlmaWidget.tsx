@@ -116,7 +116,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     if (!isNaN(parsedValue)) {
       resultValue = Math.round(parsedValue * 100).toString();
     }
-
+    let deferredDays = undefined;
     let installmentsValue = installments;
     if (installmentsValue === -1) {
       const almaPaymentPlans = document.getElementsByClassName(
@@ -127,6 +127,10 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
         if (text) {
           installmentsValue = Number(text.replace(/x|d+/g, ''));
         }
+        if (text == 'D+15') {
+          deferredDays = 15;
+          installmentsValue = 1;
+        }
       }
     }
 
@@ -136,6 +140,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       userId: user?.id || '',
       paymentBank: PaymentBank.Alma,
       originPayment: OriginPayment.dashboard,
+      deferred_Days: deferredDays,
     };
 
     try {
