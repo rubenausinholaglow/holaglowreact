@@ -46,9 +46,9 @@ export default class ProductService {
     }
   }
 
-  static async getProduct(id: string) {
+  static async getProduct(id: string, isDashboard: boolean) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}Product/${id}`;
+      const url = `${ProductService.getProductsUrl()}Product/${id}?Dashboard=${isDashboard.toString()}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();

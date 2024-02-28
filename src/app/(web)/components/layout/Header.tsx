@@ -125,7 +125,7 @@ export default function Header() {
                 id="tmevents_nav_menu_appointment"
                 size="sm"
                 type="tertiary"
-                href={ROUTES.checkout.clinics}
+                href={ROUTES.checkout.type}
                 className="hidden md:block"
                 onClick={() => {
                   setSelectedTreatments([]);

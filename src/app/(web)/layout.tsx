@@ -18,7 +18,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const domain = headersList.get('host') || '';
   const isDerma = domain.includes('derma');
 
-  const GOOGLE_ID = isDerma ? 'GTM-KMG5BW3L' : 'GTM-KMG5BW3L';
+  const GOOGLE_ID = isDerma ? 'GTM-KMG5BW3L' : 'GTM-K3NZR8P';
+
+  console.log(GOOGLE_ID);
 
   return (
     <>

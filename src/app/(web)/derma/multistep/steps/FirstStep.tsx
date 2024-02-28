@@ -53,6 +53,10 @@ export default function FirstStep({
                 <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
                   Empecemos por ti
                 </Text>
+                <Text className="text-hg-black500 text-sm mb-8 md:text-md">
+                  Responde estas preguntas para ayudar al médico a entender
+                  mejor tus necesidades
+                </Text>
               </Flex>
 
               <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
