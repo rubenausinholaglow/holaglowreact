@@ -99,6 +99,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   useEffect(() => {
     if (initialValues) {
       initialValues.surname = initialValues.lastName;
+      initialValues.termsAndConditionsAccepted = true;
       setFormData(initialValues);
     }
   }, []);

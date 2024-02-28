@@ -142,6 +142,8 @@ export default function Form() {
           skinConcerns: dermaQuestions.skinConcerns,
           userId: dermaQuestions.user?.id,
         });
+        setContinueDisabled(false);
+        setIs18YearsOld(true);
         if (dermaQuestions.user) {
           setActiveSlideIndex(5);
           dermaQuestions.user.phone =
