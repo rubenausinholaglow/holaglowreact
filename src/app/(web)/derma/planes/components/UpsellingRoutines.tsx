@@ -103,7 +103,8 @@ export default function UpsellingRoutines({
 
   async function addRevisionProduct() {
     const productDetails = await fetchProduct(
-      process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!
+      process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!,
+      false
     );
     productDetails.flowwwId = 6;
     setSelectedTreatments([...selectedTreatments, productDetails]);
@@ -111,14 +112,18 @@ export default function UpsellingRoutines({
   }
 
   async function addRoutineProduct() {
-    const productDetails = await fetchProduct(DERMA_TYPES_IDS[data!.routine]);
+    const productDetails = await fetchProduct(
+      DERMA_TYPES_IDS[data!.routine],
+      false
+    );
     productDetails.flowwwId = 0;
     setSelectedTreatments([...selectedTreatments, productDetails]);
     if (cart.length == 0) addItemToCart(productDetails as CartItem);
   }
   async function addRoutineWithProduct() {
     const productDetails = await fetchProduct(
-      DERMA_BUNDLE_TYPES_IDS[data!.routine]
+      DERMA_BUNDLE_TYPES_IDS[data!.routine],
+      false
     );
     productDetails.flowwwId = 6;
     setSelectedTreatments([...selectedTreatments, productDetails]);
