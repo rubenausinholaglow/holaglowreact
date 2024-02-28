@@ -52,7 +52,7 @@ export default function PVCitaMedica() {
 
   useEffect(() => {
     async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId);
+      const productDetails = await fetchProduct(productId, false);
 
       if (productId === process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID) {
         setPVProduct(productDetails);
@@ -78,7 +78,7 @@ export default function PVCitaMedica() {
   }, []);
 
   async function initProductAdvance(productId: string) {
-    const productDetails = await fetchProduct(productId);
+    const productDetails = await fetchProduct(productId, false);
     addItemToCart(productDetails as CartItem);
   }
 
