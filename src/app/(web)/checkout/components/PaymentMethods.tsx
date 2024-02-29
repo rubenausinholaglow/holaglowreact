@@ -296,7 +296,7 @@ export const PaymentMethods = ({
                         <SvgSpinner height={24} width={24} />
                       </Flex>
                     )}
-                    {clientSecret && method.key != 'alma' && (
+                    {clientSecret && method.key == 'creditCard' && (
                       <EmbeddedCheckoutProvider
                         stripe={stripePromise}
                         options={{ clientSecret }}
