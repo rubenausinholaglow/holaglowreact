@@ -133,8 +133,12 @@ export default function ProductHeader({
                 onError={() => setNextImgSrc()}
                 className={`relative ${alignmentStyles} ${
                   !isDashboard && deviceSize.isMobile
-                    ? 'rounded-t-3xl'
-                    : 'rounded-3xl'
+                    ? product.productCardImagePosition !== 'middle'
+                      ? 'rounded-t-3xl'
+                      : ''
+                    : product.productCardImagePosition !== 'middle'
+                    ? 'rounded-3xl'
+                    : ''
                 } w-[66%]`}
               />
             )}
