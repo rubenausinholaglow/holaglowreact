@@ -11,7 +11,13 @@ import { getTreatmentId } from '@utils/userUtils';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
+import {
+  SvgCheck,
+  SvgEllipsis,
+  SvgPhone,
+  SvgSadIcon,
+  SvgWarning,
+} from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -66,6 +72,8 @@ export default function Agenda({
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [currentMonth, setcurrentMonth] = useState(dayjs());
+  const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
+  const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
   if (isDashboard) maxDays = 9999;
@@ -119,7 +127,9 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic?.flowwwId || ''
         ).then(data => {
-          callbackMonthAvailability(data, dateToCheck);
+          setTotalTimeAppointment(data?.totalTime);
+          callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
+          setLoadingMonthFirstTime(false);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -127,6 +137,7 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic!.flowwwId
         ).then(data => {
+          setLoadingMonthFirstTime(false);
           callbackMonthAvailability(data, dateToCheck);
         });
       }
@@ -143,14 +154,8 @@ export default function Agenda({
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
       if (
-        ((minutes == '00' || (minutes == '30' && !isDerma)) &&
-          !(hour == '10' && minutes == '00')) ||
-        (selectedTreatmentsIds != '902' &&
-          (minutes == '00' ||
-            minutes == '12' ||
-            minutes == '24' ||
-            minutes == '36' ||
-            minutes == '48'))
+        !(hour == '10' && minutes == '00') ||
+        selectedTreatmentsIds != '902'
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
@@ -507,29 +512,52 @@ export default function Agenda({
                       {!isDerma && (
                         <Flex>
                           <SvgHour height={16} width={16} className="mr-2" />
-                          {selectedTreatments &&
-                            Array.isArray(selectedTreatments) &&
-                            selectedTreatments.map(product => (
-                              <Flex key={product.id}>
-                                <Flex
-                                  layout="row-between"
-                                  className="items-start w-full"
-                                >
-                                  <div>
-                                    <Text
-                                      size="xs"
-                                      className="w-full text-left"
+                          {loadingMonthFirstTime ? (
+                            <SvgEllipsis
+                              className={`${
+                                isDerma
+                                  ? 'text-derma-primary'
+                                  : 'text-hg-secondary'
+                              } mt-2`}
+                              height={16}
+                              width={16}
+                            />
+                          ) : (
+                            <>
+                              {selectedTreatments &&
+                                totalTimeAppointment == 0 &&
+                                Array.isArray(selectedTreatments) &&
+                                selectedTreatments.map(product => (
+                                  <Flex key={product.id}>
+                                    <Flex
+                                      layout="row-between"
+                                      className="items-start w-full"
                                     >
-                                      {product.emlaType === EmlaType.Required
-                                        ? product.applicationTimeMinutes * 2 +
-                                          ''
-                                        : product.applicationTimeMinutes.toString()}{' '}
-                                      minutos
-                                    </Text>
-                                  </div>
-                                </Flex>
-                              </Flex>
-                            ))}
+                                      <div>
+                                        <Text
+                                          size="xs"
+                                          className="w-full text-left"
+                                        >
+                                          {product.emlaType ===
+                                          EmlaType.Required
+                                            ? product.applicationTimeMinutes +
+                                              30 +
+                                              ' minutos '
+                                            : product.applicationTimeMinutes.toString() +
+                                              ' minutos '}
+                                          <span>&nbsp;</span>
+                                        </Text>
+                                      </div>
+                                    </Flex>
+                                  </Flex>
+                                ))}
+                            </>
+                          )}
+                          {totalTimeAppointment > 0 && (
+                            <Text size="xs" className="w-full text-left">
+                              {totalTimeAppointment + ' minutos '}
+                            </Text>
+                          )}
                         </Flex>
                       )}
                     </div>
