@@ -13,7 +13,7 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
     <>
       <Container className="p-0 md:px-4 gap-4 md:gap-16 justify-between md:mb-16 flex flex-col md:flex-row">
         <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
-          <Title size="2xl" className="text-left font-bold mb-4">
+          <Title size="2xl" className="text-left font-bold mb-4 md:mt-8">
             {product.title}
           </Title>
 
