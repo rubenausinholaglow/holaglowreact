@@ -46,9 +46,9 @@ export async function fetchProducts({
   return [] as Product[];
 }
 
-export async function fetchProduct(id: string) {
+export async function fetchProduct(id: string, isDashboard: boolean) {
   try {
-    const product: Product = await ProductService.getProduct(id);
+    const product: Product = await ProductService.getProduct(id, isDashboard);
 
     return product;
   } catch (error: any) {

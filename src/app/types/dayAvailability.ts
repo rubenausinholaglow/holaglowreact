@@ -3,6 +3,7 @@ export interface DayAvailability {
   availability: boolean;
 }
 
+
 export interface MonthAvailabilityResponse {
   dayAvailabilities : Array<DayAvailability>
   totalTime : number;

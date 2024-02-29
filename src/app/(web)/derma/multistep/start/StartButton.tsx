@@ -10,7 +10,7 @@ export default function StartButton() {
       href="/multistep/steps"
       id="tmevent_derma_start"
     >
-      Empezar
+      Pedir rutina
       <SvgArrow className="ml-4" height={24} width={24} />
     </Button>
   );

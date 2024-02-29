@@ -72,6 +72,8 @@ export default function Agenda({
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [currentMonth, setcurrentMonth] = useState(dayjs());
+  const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
+  const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
   if (isDashboard) maxDays = 9999;
@@ -107,12 +109,10 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
-  const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
   };
-  const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -137,6 +137,7 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic!.flowwwId
         ).then(data => {
+          setLoadingMonthFirstTime(false);
           callbackMonthAvailability(data, dateToCheck);
         });
       }
@@ -145,6 +146,7 @@ export default function Agenda({
 
   function callbackGetSlots(data: Slot[]) {
     setClickedHour(null);
+
     const hours = Array<Slot>();
     const morning = Array<Slot>();
     const afternoon = Array<Slot>();
@@ -180,6 +182,7 @@ export default function Agenda({
     const availability = availableDates ?? [];
     const today = dayjs();
     const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
+
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
@@ -535,30 +538,25 @@ export default function Agenda({
                                           size="xs"
                                           className="w-full text-left"
                                         >
-                                          <Text
-                                            size="xs"
-                                            className="w-full text-left"
-                                          >
-                                            {product.emlaType ===
-                                            EmlaType.Required
-                                              ? product.applicationTimeMinutes +
-                                                30 +
-                                                ' minutos '
-                                              : product.applicationTimeMinutes.toString() +
-                                                ' minutos '}
-                                            <span>&nbsp;</span>
-                                          </Text>
+                                          {product.emlaType ===
+                                          EmlaType.Required
+                                            ? product.applicationTimeMinutes +
+                                              30 +
+                                              ' minutos '
+                                            : product.applicationTimeMinutes.toString() +
+                                              ' minutos '}
+                                          <span>&nbsp;</span>
                                         </Text>
                                       </div>
                                     </Flex>
                                   </Flex>
                                 ))}
-                              {totalTimeAppointment > 0 && (
-                                <Text size="xs" className="w-full text-left">
-                                  {totalTimeAppointment + ' minutos '}
-                                </Text>
-                              )}
                             </>
+                          )}
+                          {totalTimeAppointment > 0 && (
+                            <Text size="xs" className="w-full text-left">
+                              {totalTimeAppointment + ' minutos '}
+                            </Text>
                           )}
                         </Flex>
                       )}

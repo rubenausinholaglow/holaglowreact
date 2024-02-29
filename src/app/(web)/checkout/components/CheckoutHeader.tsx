@@ -51,7 +51,20 @@ export default function CheckoutHeader({
           <SvgHolaglow className="text-hg-secondary md:h-[29px] md:w-[120px]" />
 
           {!hideBackButton && (
-            <Button size="sm" type="tertiary" onClick={() => router.back()}>
+            <Button
+              size="sm"
+              type="tertiary"
+              onClick={() => {
+                setTimeout(() => {
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'instant',
+                  });
+                }, 300);
+                router.back();
+              }}
+            >
               <SvgArrowSmallLeft className="mr-2" />
 
               <span className="hidden md:block">Volver atrás</span>
