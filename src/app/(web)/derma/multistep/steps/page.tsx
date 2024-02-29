@@ -99,7 +99,7 @@ export default function Form() {
     useCartStore.setState(INITIAL_STATE);
 
     async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId, false);
+      const productDetails = await fetchProduct(productId, false, true);
       setSelectedTreatments([productDetails]);
       resetCart();
       addItemToCart(productDetails as CartItem);

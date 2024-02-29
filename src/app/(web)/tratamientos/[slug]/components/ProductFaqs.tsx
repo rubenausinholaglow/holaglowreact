@@ -1,10 +1,15 @@
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import dynamic from 'next/dynamic';
 
 import { FAQ, faqItems } from './faqs';
+
+const SimpleAccordion = dynamic(
+  () => import('designSystem/Accordion/SimpleAccordion'),
+  { ssr: false }
+);
 
 export default function ProductFaqs({ product }: { product: Product }) {
   const getFaqsForAppliedProduct = (appliedProduct: string) => {

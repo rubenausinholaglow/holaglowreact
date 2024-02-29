@@ -1,11 +1,12 @@
 import { Product } from '@interface/product';
 import { fetchProduct, fetchProducts } from '@utils/fetch';
+import Clinics from 'app/(ssr)/homeSSR/components/Clinics';
 import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
+import Professionals from 'app/(ssr)/homeSSR/components/Professionals';
 import dynamic from 'next/dynamic';
 
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
-import ProductFaqs from './components/ProductFaqs';
 import ProductFreeAppointment from './components/ProductFreeAppointment';
 import ProductHeaderSSR from './components/ProductHeaderSSR';
 import ProductInfoSSR from './components/ProductInfoSSR';
@@ -25,6 +26,10 @@ const FloatingBottomBar = dynamic(
     ssr: false,
   }
 );
+
+const ProductFaqs = dynamic(() => import('./components/ProductFaqs'), {
+  ssr: false,
+});
 
 async function getProducts() {
   const products = await fetchProducts({ isDerma: false });
@@ -70,7 +75,6 @@ export default async function ProductPage({
         <Testimonials />
       </div>
       <ProductSuggestions product={product} />
-      {/* 
       <ProductFaqs product={product} />
 
       {product.relatedProducts?.length > 0 && (
@@ -82,7 +86,6 @@ export default async function ProductPage({
       <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
         <Professionals />
       </div>
-    */}
       <FloatingBottomBar />
     </MainLayoutSSR>
   );
