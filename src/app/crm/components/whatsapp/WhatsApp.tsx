@@ -31,7 +31,7 @@ export default function WhatsApp({
         <>
           {whatsappMessages && (
             <>
-              {whatsappMessages?.map(({ text, time, received }, index) => {
+              {whatsappMessages?.map(({ text, time, received, urlFile }, index) => {
                 const showDate = getDateDayMonthYear(time, '/') !== thisDate;
                 thisDate = getDateDayMonthYear(time, '/');
 
@@ -54,6 +54,7 @@ export default function WhatsApp({
                         key={`${index}`}
                         clientHourMessage={getDateOnlyTime(time)}
                         clientMessage={text}
+                        urlFile={urlFile}
                       />
                     )}
                   </>

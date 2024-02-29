@@ -159,7 +159,8 @@ export function getContactWhatsapps(id: string) {
         received
         id
         creationDate
-        active
+        active,
+        urlFile
     }
   }
 }
