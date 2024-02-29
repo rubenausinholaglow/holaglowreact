@@ -64,7 +64,7 @@ export default function ProductDetailPage({
 
   useEffect(() => {
     async function initProduct(productId: string, isDashboard: boolean) {
-      const productDetails = await fetchProduct(productId, false);
+      const productDetails = await fetchProduct(productId, false, false);
       setProduct(productDetails);
       setSeoMetaData(
         productDetails.extraInformation.seoTitle,
@@ -102,6 +102,7 @@ export default function ProductDetailPage({
         if (productHighlighted?.id) {
           const data = await ProductService.getProduct(
             productHighlighted.id,
+            false,
             false
           );
           setProductId(productHighlighted.id);

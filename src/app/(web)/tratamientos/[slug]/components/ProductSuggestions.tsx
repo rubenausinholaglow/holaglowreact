@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { useSessionStore } from 'app/stores/globalStore';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function ProductSuggestions({ product }: { product: Product }) {
-  const deviceSize = useSessionStore(state => state.deviceSize);
+  const deviceSize = useDeviceSizeSSR();
+
   const visibleSuggestions = () => {
     if (deviceSize.isMobile) {
       return 1;
@@ -32,6 +33,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
       ? 'pre'
       : 'post'
   );
+
   if (isEmpty(product.preTreatmentInfo?.tips) && isEmpty(postTreatmentTips)) {
     return <></>;
   }

@@ -17,7 +17,7 @@ export default function ProductSessionPriceCard({
   index,
 }: {
   product: Product;
-  isDashboard: boolean;
+  isDashboard?: boolean;
   index: number;
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);

@@ -8,7 +8,7 @@ import {
 } from 'app/stores/globalStore';
 import { Professional } from 'app/types/clinic';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
