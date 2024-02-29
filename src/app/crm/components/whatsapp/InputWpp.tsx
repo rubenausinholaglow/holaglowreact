@@ -67,7 +67,7 @@ export default function InputWpp({
     }
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event : any) => {
     const file = event.target.files[0];
     handleSendFile(file);
   }
