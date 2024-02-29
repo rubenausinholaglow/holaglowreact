@@ -25,6 +25,7 @@ export default function InputWpp({
   const [disableSendButton, setDisableSendButton] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openModalTemplate, setOpenModalTemplate] = useState(false);
+
   const { postData } = useAsyncClient(
     `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsapp`,
     'PUT'
@@ -39,6 +40,37 @@ export default function InputWpp({
   const handleDialog = () => {
     setOpenDialog(!openDialog);
   };
+
+  const handleSendFile = async (fileBlob : File) => {
+    const formData = new FormData();
+    formData.append('file', fileBlob);
+    formData.append('taskId', "");
+    formData.append('userId', userId);
+    formData.append('agentId', agentId);
+    formData.append("fileName", fileBlob?.name)
+    
+
+    try {
+      const response = await fetch(
+        `https://localhost:7103/Tasks/SendWhatsappFile`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+      const responseResult = await response.json();
+      if(responseResult.ok){
+        setInput(responseResult?.file);
+      }
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    handleSendFile(file);
+  }
 
   const handleDialogOption = (option: string) => {
     if (option === 'Template') {
@@ -117,6 +149,7 @@ export default function InputWpp({
         isOpenDialog={openDialog}
         handleDialog={handleDialog}
         handleDialogOption={handleDialogOption}
+        handleFileChange={handleFileChange}
       />
       <ModalTemplate
         agentId={agentId}

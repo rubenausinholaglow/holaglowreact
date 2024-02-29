@@ -134,6 +134,7 @@ export interface WhatsappMessages {
   creationDate?: string;
   active?: boolean;
   received?: boolean;
+  urlFile?: string;
 }
 
 export interface Lead {
