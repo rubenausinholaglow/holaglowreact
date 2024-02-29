@@ -51,7 +51,7 @@ export default function LandingCaptacion() {
     setSelectedSlot(undefined);
     setSelectedClinic(undefined);
     async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId, false);
+      const productDetails = await fetchProduct(productId, false, false);
       setSelectedTreatments([productDetails]);
     }
 

@@ -7,7 +7,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Professional, ProfessionalType } from 'app/types/clinic';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';

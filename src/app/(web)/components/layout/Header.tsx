@@ -14,6 +14,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 
+import { useDeviceSizeSSR } from './Breakpoint';
 import MobileNavigation from './MobileNavigation';
 
 let isTicking = false;
@@ -46,12 +47,13 @@ function Navigation({ className }: { className: string }) {
 
 export default function Header() {
   const ROUTES = useRoutes();
+  const deviceSize = useDeviceSizeSSR();
 
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? HEADER_HEIGHT_MOBILE

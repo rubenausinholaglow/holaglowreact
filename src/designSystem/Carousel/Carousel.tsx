@@ -14,7 +14,7 @@ import {
   Slider,
 } from 'pure-react-carousel';
 
-export const Carousel = ({
+export default function Carousel({
   children,
   hasDots = false,
   hasControls = false,
@@ -54,7 +54,7 @@ export const Carousel = ({
   isDashboard?: boolean;
   isDerma?: boolean;
   [key: string]: any;
-}) => {
+}) {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const childrens = Children.toArray(children);
@@ -165,4 +165,4 @@ export const Carousel = ({
       )}
     </CarouselProvider>
   );
-};
+}
