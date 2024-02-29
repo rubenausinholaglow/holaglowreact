@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Product } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
+import {
+  Operation,
+  Quantifier,
+} from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -60,6 +65,13 @@ export default function TreatmentAccordionSelector({
 
     setProductCategories(uniqueCategoryNames);
   }, [stateProducts]);
+
+  function getQuantityOfProduct(product: Product): number {
+    const treatmentsWithSameProductId = selectedTreatments.filter(
+      treatment => treatment.id === product.id
+    );
+    return treatmentsWithSameProductId.length;
+  }
 
   return (
     <Accordion type="single" collapsible className="w-full">
@@ -133,17 +145,19 @@ export default function TreatmentAccordionSelector({
                         <Text className="text-xs">{product.description}</Text>
                       </div>
 
-                      {selectedTreatments.some(
-                        selectedProduct => selectedProduct.id === product.id
-                      ) ? (
-                        <SvgRadioChecked
-                          height={24}
-                          width={24}
-                          className="shrink-0 ml-auto"
-                        />
-                      ) : (
-                        <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
-                      )}
+                      <>
+                        {selectedTreatments.some(
+                          selectedProduct => selectedProduct.id === product.id
+                        ) ? (
+                          <SvgRadioChecked
+                            height={24}
+                            width={24}
+                            className="shrink-0 ml-auto"
+                          />
+                        ) : (
+                          <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
+                        )}
+                      </>
                     </li>
                   ))}
                 </ul>
