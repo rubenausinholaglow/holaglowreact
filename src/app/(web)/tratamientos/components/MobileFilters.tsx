@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
 import ClinicFilter from 'app/(web)/components/filters/ClinicFilter';

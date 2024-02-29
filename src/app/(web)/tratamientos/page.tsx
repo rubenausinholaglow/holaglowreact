@@ -1,7 +1,8 @@
+import { fetchProducts } from '@utils/fetch';
+import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
 import type { Metadata } from 'next';
 
-import App from '../components/layout/App';
-import PsrpPage from './psrp';
+import Tratamientos from './Tratamientos';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://holaglow.com'),
@@ -18,10 +19,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProductsPage() {
+async function getProducts() {
+  const products = await fetchProducts({ isDerma: false });
+
+  return products;
+}
+
+export default async function ProductsPage() {
+  const products = await getProducts();
+
   return (
-    <App>
-      <PsrpPage slug="" isDashboard={false} />
-    </App>
+    <MainLayoutSSR>
+      <Tratamientos products={products} />
+    </MainLayoutSSR>
   );
 }
