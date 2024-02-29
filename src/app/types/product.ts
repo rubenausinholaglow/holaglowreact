@@ -35,6 +35,8 @@ export interface Product {
   numProductCardPhotos: number;
   videoUrl: string;
   emlaType : EmlaType
+  visibleWeb: boolean;
+  visibleDashboard : boolean;
 }
 
 export enum EmlaType {

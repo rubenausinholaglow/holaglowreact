@@ -26,7 +26,7 @@ export async function fetchProducts({
         (product: Product) =>
           allowedProductType.includes(product.type) &&
           product.price > 0 &&
-          product.cardBackgroundColor.length > 0
+          product.visibleWeb == true
       );
 
       const products = filteredProducts.map((product: Product) => ({
