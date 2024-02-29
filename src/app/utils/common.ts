@@ -55,6 +55,7 @@ export const useImageProps = (product: Product, photoNumber = 1) => {
 
   return { imgSrc, alignmentStyles, setNextImgSrc, defaultImage };
 };
+
 export function getImageProductsCarousel(product: Product, photoNumber = 0) {
   return getImageProperties(product, photoNumber, true);
 }

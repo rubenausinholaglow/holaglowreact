@@ -7,9 +7,9 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import Image from 'next/image';
 
 export default function ProductHeaderImage({ product }: { product: Product }) {
-  const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
-
+  const { alignmentStyles, setNextImgSrc } = useImageProps(product);
   const imageUrls: any[] = [];
+  const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`;
 
   const renderCarouselItems = () => {
     return imageUrls.map((url, index) => (
@@ -52,6 +52,7 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
           width={600}
           height={400}
           src={imgSrc}
+          priority
           onError={() => setNextImgSrc()}
           className={`relative ${alignmentStyles} rounded-t-3xl md:rounded-3xl w-[66%]`}
         />

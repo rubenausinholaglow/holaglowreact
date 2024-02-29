@@ -1,13 +1,22 @@
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgCalendar } from 'app/icons/Icons';
-import { SvgArrow, SvgEuro, SvgTimeLeft, SvgTimer } from 'app/icons/IconsDs';
+import { SvgEuro, SvgTimeLeft, SvgTimer } from 'app/icons/IconsDs';
 import { EmlaType, Product } from 'app/types/product';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import dynamic from 'next/dynamic';
+
+const ProductVideo = dynamic(() => import('./ProductVideo'), { ssr: false });
+const ProductSelectorButton = dynamic(() => import('./ProductSelectorButton'), {
+  ssr: false,
+});
 
 export default function ProductInfoSSR({ product }: { product: Product }) {
+  const productVideoSrc = product.videoUrl
+    ? product.videoUrl
+    : '/videos/pdp.mp4';
+
   return (
     <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-auto w-full">
       <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl w-full">
@@ -117,34 +126,10 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
             </li>
           </ul>
 
-          <Button
-            /* onClick={() => {
-              //setSelectedTreatments([product]);
-              ROUTES.push(ROUTES.checkout.type);
-            }} */
-            size="xl"
-            type="tertiary"
-            customStyles="bg-hg-primary"
-            className="mb-12 md:mb-0 md:mt-auto"
-            id="tmevent_click_book_anchor_button"
-          >
-            Me interesa
-            <SvgArrow
-              height={24}
-              width={24}
-              className="ml-4 pointer-events-none"
-            />
-          </Button>
+          <ProductSelectorButton product={product} />
         </Container>
         <div className="md:w-2/5 shrink-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            src={product.videoUrl ? product.videoUrl : '/videos/pdp.mp4'}
-            className="w-full h-full block bg-black object-center md:rounded-xl"
-          />
+          <ProductVideo src={productVideoSrc} />
         </div>
       </div>
     </Container>
