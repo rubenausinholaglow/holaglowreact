@@ -21,7 +21,6 @@ export default function MessageRight({
   const isImage = () => {
     if (validateUrlFile()) return isAllowedExtensionImage(urlFile);
   };
-
   const isVideo = () => {
     if (validateUrlFile()) return isAllowedExtensionVideo(urlFile);
   };

@@ -26,6 +26,7 @@
     "add-to-calendar-button-react": "^2.5.8",
     "autoprefixer": "10.4.14",
     "dayjs": "^1.11.9",
+    "emoji-picker-react": "^4.8.0",
     "eslint": "8.40.0",
     "eslint-config-next": "^13.4.8",
     "express": "^4.18.2",

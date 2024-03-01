@@ -10,6 +10,8 @@ import {
 } from 'app/crm/utils/fileUtils';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import EmojiPicker from 'emoji-picker-react';
+import Image from 'next/image';
 
 import DialogWpp from './DialogWpp';
 import ModalTemplate from './ModalTemplate';
@@ -31,6 +33,7 @@ export default function InputWpp({
   const [disableSendButton, setDisableSendButton] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openModalTemplate, setOpenModalTemplate] = useState(false);
+  const [openEmojiDialog, setOpenEmojiDialog] = useState(false);
 
   const { postData } = useAsyncClient(
     `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsapp`,
@@ -145,6 +148,11 @@ export default function InputWpp({
     setDisableSendButton(false);
   };
 
+  const onEmojiClick = (event: any) => {
+    setInput(prevInput => prevInput + event.emoji);
+    setOpenEmojiDialog(false);
+  };
+
   return (
     <div className="bg-grey-lighter px-4 py-4 flex items-center">
       <button
@@ -152,6 +160,21 @@ export default function InputWpp({
         onClick={handleDialog}
       >
         <SvgPlus />
+      </button>
+      <button className="flex space-x-1 items-center px-0.5 py-2 hover:bg-gray-200 rounded-full">
+        <Image
+          alt="emojiIcon"
+          className="emoji-icon"
+          width={25}
+          height={25}
+          src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
+          onClick={() => setOpenEmojiDialog(val => !val)}
+        />
+        {openEmojiDialog && (
+          <div className="absolute bottom-0">
+            <EmojiPicker onEmojiClick={onEmojiClick} lazyLoadEmojis/>
+          </div>
+        )}
       </button>
       <div className="flex-1 mx-4">
         <input
