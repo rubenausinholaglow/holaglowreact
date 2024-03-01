@@ -125,22 +125,10 @@ export default function Agenda({
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
-          selectedClinic?.flowwwId || '',
-          isDerma
+          selectedClinic?.flowwwId || ''
         ).then(data => {
-          if (data) {
-            if (isDerma) {
-              callbackMonthAvailability(data as DayAvailability[], dateToCheck);
-            } else {
-              if ('totalTime' in data) {
-                setTotalTimeAppointment(data.totalTime);
-              }
-              if ('dayAvailabilities' in data && data.dayAvailabilities) {
-                callbackMonthAvailability(data.dayAvailabilities, dateToCheck);
-              }
-            }
-          }
-
+          setTotalTimeAppointment(data?.totalTime);
+          callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
           setLoadingMonthFirstTime(false);
         });
       } else {

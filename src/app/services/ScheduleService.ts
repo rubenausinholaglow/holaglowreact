@@ -248,9 +248,8 @@ export default class ScheduleService {
   static async getMonthAvailability(
     date: string,
     treatment: string,
-    clinicId: string,
-    isDerma : boolean,
-  ): Promise<MonthAvailabilityResponse | Array<DayAvailability>> {
+    clinicId: string
+  ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailability?date=` +
@@ -262,16 +261,15 @@ export default class ScheduleService {
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        return isDerma ? data : (data as MonthAvailabilityResponse);
+        return data;
       } else {
-        return isDerma ? [] : ({} as MonthAvailabilityResponse);
+        return {} as MonthAvailabilityResponse;
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
-      return isDerma ? [] : ({} as MonthAvailabilityResponse);
+      return {} as MonthAvailabilityResponse;
     }
   }
-
   static async getMonthAvailabilityv2(
     date: string,
     treatment: string,
