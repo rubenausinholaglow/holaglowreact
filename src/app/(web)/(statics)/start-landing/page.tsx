@@ -31,7 +31,7 @@ export default async function LandingPV() {
             className="rounded-t-2xl hidden md:block md:self-start md:rounded-2xl"
           />
           <Flex layout="col-left" className="grow">
-            <TitleDerma className="text-hg-secondary mb-2">
+            <TitleDerma className="text-hg-secondary mb-2 tracking-tight">
               Asesórate gratis con nuestro equipo médico
             </TitleDerma>
             <Text className="mb-4 text-hg-black500">

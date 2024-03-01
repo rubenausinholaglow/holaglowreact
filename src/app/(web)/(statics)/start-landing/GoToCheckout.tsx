@@ -43,6 +43,7 @@ export default function GoToCheckout() {
 
   return (
     <Button
+      id="tmevent_landingPV_start"
       size={deviceSize.isMobile ? 'lg' : 'xl'}
       type="tertiary"
       customStyles="bg-hg-secondary border-none text-white gap-2 hover:bg-hg-secondary700"
