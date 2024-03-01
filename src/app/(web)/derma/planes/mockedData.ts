@@ -14,47 +14,18 @@ export const DERMA_BUNDLE_TYPES_IDS = [
 
 export const DERMA_ROUTINES = [
   {
-    imgSrc: '/images/derma/upselling/packDermaJosep.png',
-    modalImgSrc: '/images/derma/upselling/packDermaJosep.png',
-    name: 'Consulta online con el médico',
-    price: '99€',
-    discountedPrice: '129€',
-    cta: 'Reservar cita',
-    bullets: [
-      'Evalúa la tolerancia de tu piel a la crema personalizada',
-      'Valora los resultados obtenidos y define próximos pasos',
-      'Prevén efectos indeseados, como sequedad o irritación',
-    ],
-    id: 1,
-  },
-  {
     imgSrc: '/images/derma/upselling/rutinaFacial.png',
     modalImgSrc: '/images/derma/upselling/rutinaFacial.png',
-    name: 'Rutina facial',
+    name: 'Descubre más sobre tu rutina personalizada',
     price: '129€',
     discountedPrice: '129€',
     cta: 'Comprar tu rutina',
     bullets: [
       'Potencia los resultados de tu crema personalizada',
-      'Cuatro productos seleccionados por dermatólogos estéticos',
+      'Tres productos seleccionados por dermatólogos estéticos',
       'Envío gratis (de 3 a 5 días naturales)',
     ],
     id: 2,
-  },
-  {
-    imgSrc: '/images/derma/upselling/packDerma.png',
-    modalImgSrc: '/images/derma/upselling/packDermaModal.png',
-    name: 'Programa completo: Rutina facial + Revisión online',
-    price: '139€',
-    discountedPrice: '198€',
-    cta: 'Lo quiero todo',
-    bullets: [
-      'Potencia los resultados de tu crema personalizada',
-      'Cuatro productos seleccionados por dermatólogos',
-      'Envío gratis (de 3 a 5 días naturales)',
-      'Valora los resultados obtenidos y define próximos pasos con tu dermatólogo',
-    ],
-    id: 3,
   },
 ];
 
@@ -93,21 +64,21 @@ export const DERMA_APPOINTMENT_IMAGE = [
   {
     // consulta online
     ids: ['2ee9da6f-4fad-42fc-b717-0b67d49ef0cf'],
-    imgSrc: DERMA_ROUTINES[0].modalImgSrc,
+    imgSrc: '/images/derma/upselling/packDermaJosep.png',
   },
   {
     // revision online
     ids: ['7f01ff68-eb9c-4b9b-83b8-efaec37e49e7'],
-    imgSrc: DERMA_ROUTINES[0].modalImgSrc,
+    imgSrc: '/images/derma/upselling/packDermaJosep.png',
   },
   {
     // rutina facial
     ids: DERMA_TYPES_IDS,
-    imgSrc: DERMA_ROUTINES[1].modalImgSrc,
+    imgSrc: '/images/derma/upselling/rutinaFacial.png',
   },
   {
     // rutina facial + seguimiento
     ids: DERMA_BUNDLE_TYPES_IDS,
-    imgSrc: DERMA_ROUTINES[2].modalImgSrc,
+    imgSrc: '/images/derma/upselling/packDermaModal.png',
   },
 ];
