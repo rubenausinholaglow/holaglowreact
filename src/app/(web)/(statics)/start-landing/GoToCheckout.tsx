@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
@@ -12,6 +13,7 @@ import isEmpty from 'lodash/isEmpty';
 import { useRouter } from 'next/navigation';
 
 export default function GoToCheckout() {
+  const deviceSize = useDeviceSizeSSR();
   const router = useRouter();
   const { setSelectedTreatments } = useSessionStore(state => state);
 
@@ -29,9 +31,9 @@ export default function GoToCheckout() {
   if (isEmpty(product)) {
     return (
       <Button
-        size="lg"
+        size={deviceSize.isMobile ? 'lg' : 'xl'}
         type="tertiary"
-        customStyles="bg-hg-secondary border-none text-white gap-2 px-16"
+        customStyles="bg-hg-secondary border-none text-white gap-2 px-16 hover:bg-hg-secondary700"
         className="mb-8"
       >
         <SvgSpinner className="text-white" />
@@ -41,9 +43,9 @@ export default function GoToCheckout() {
 
   return (
     <Button
-      size="lg"
+      size={deviceSize.isMobile ? 'lg' : 'xl'}
       type="tertiary"
-      customStyles="bg-hg-secondary border-none text-white gap-2"
+      customStyles="bg-hg-secondary border-none text-white gap-2 hover:bg-hg-secondary700"
       className="mb-8"
       onClick={() => {
         setSelectedTreatments([product]);
