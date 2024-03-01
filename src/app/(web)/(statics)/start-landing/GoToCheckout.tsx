@@ -21,7 +21,7 @@ export default function GoToCheckout() {
 
   useEffect(() => {
     async function initPVProduct(productId: string, isDashboard: boolean) {
-      const productDetails = await fetchProduct(productId, false);
+      const productDetails = await fetchProduct(productId, false, false);
       setProduct(productDetails);
     }
 
