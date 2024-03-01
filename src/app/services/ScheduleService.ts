@@ -274,7 +274,7 @@ export default class ScheduleService {
     date: string,
     treatment: string,
     clinicId: string
-  ): Promise<Array<DayAvailability>> {
+  ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailabilityv2?date=` +
@@ -288,11 +288,11 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return [];
+        return {} as MonthAvailabilityResponse;
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
-      return [];
+      return {} as MonthAvailabilityResponse;
     }
   }
 

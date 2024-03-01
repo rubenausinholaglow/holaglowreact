@@ -138,7 +138,7 @@ export default function Agenda({
           selectedClinic!.flowwwId
         ).then(data => {
           setLoadingMonthFirstTime(false);
-          callbackMonthAvailability(data, dateToCheck);
+          callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
         });
       }
     } else setLoadingMonth(false);
