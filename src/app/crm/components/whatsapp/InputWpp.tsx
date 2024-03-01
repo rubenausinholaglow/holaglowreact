@@ -60,7 +60,7 @@ export default function InputWpp({
 
     try {
       const response = await fetch(
-        `https://localhost:7103/Tasks/SendWhatsappFile`,
+        `${process.env.NEXT_PUBLIC_CONTACTS_API}/Tasks/SendWhatsappFile`,
         {
           method: 'POST',
           body: formData,
