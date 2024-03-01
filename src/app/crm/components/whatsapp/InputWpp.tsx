@@ -1,7 +1,13 @@
 'use client';
 import React, { useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import useAsyncClient from '@utils/useAsyncClient';
 import { WhatsappMessages } from 'app/crm/types/Contact';
+import {
+  getFileType,
+  isAllowedExtensionImage,
+  isAllowedExtensionVideo,
+} from 'app/crm/utils/fileUtils';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 
@@ -41,14 +47,13 @@ export default function InputWpp({
     setOpenDialog(!openDialog);
   };
 
-  const handleSendFile = async (fileBlob : File) => {
+  const handleSendFile = async (fileBlob: File) => {
     const formData = new FormData();
     formData.append('file', fileBlob);
-    formData.append('taskId', "");
+    formData.append('taskId', '');
     formData.append('userId', userId);
     formData.append('agentId', agentId);
-    formData.append("fileName", fileBlob?.name)
-    
+    formData.append('fileName', fileBlob?.name);
 
     try {
       const response = await fetch(
@@ -58,19 +63,42 @@ export default function InputWpp({
           body: formData,
         }
       );
-      const responseResult = await response.json();
-      if(responseResult.ok){
-        setInput(responseResult?.file);
-      }
+      const resultResponse = await response.json();
+      const dateTime = dayjs(new Date());
+      const newWhatsappMessage: WhatsappMessages = {
+        id: '',
+        text: '',
+        creationDate: dateTime.toString(),
+        time: dateTime.toString(),
+        urlFile: resultResponse.urlFile,
+      };
+
+      setWhatsappMessages((prevState: WhatsappMessages[]) => [
+        ...prevState,
+        newWhatsappMessage,
+      ]);
     } catch (error) {
-      console.error('Error al subir la imagen:', error);
+      Bugsnag.notify(`Error al subir la imagen`);
     }
   };
 
-  const handleFileChange = (event : any) => {
+  const validateFile = (file: File) => {
+    const typeFile = getFileType(file.type);
+
+    if (typeFile === 'image') {
+      return isAllowedExtensionImage(file.name);
+    }
+    if (typeFile === 'video') {
+      return isAllowedExtensionVideo(file.name);
+    }
+  };
+
+  const handleFileChange = (event: any) => {
     const file = event.target.files[0];
-    handleSendFile(file);
-  }
+    if (validateFile(file)) {
+      handleSendFile(file);
+    }
+  };
 
   const handleDialogOption = (option: string) => {
     if (option === 'Template') {
