@@ -2,9 +2,15 @@
 
 import { useRef, useState } from 'react';
 import { Product } from '@interface/product';
-//import ModalSSR from 'app/(ssr)/homeSSR/components/ModalSSR';
-import * as Dialog from '@radix-ui/react-dialog';
+import {
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+  DialogWrapper,
+} from 'app/(ssr)/homeSSR/components/Dialog';
 import { SvgCross } from 'app/icons/IconsDs';
+//import ModalSSR from 'app/(ssr)/homeSSR/components/ModalSSR';
+import { Text } from 'designSystem/Texts/Texts';
 
 import { useDeviceSizeSSR } from '../components/layout/Breakpoint';
 import MobileFilters from './components/MobileFilters';
@@ -122,7 +128,19 @@ export default function Tratamientos({ products }: { products: Product[] }) {
 
       <button onClick={() => setOpenModal(!openModal)}>Open modal</button>
 
-      <Dialog.Root open={openModal}>
+      {/* <DialogModal ></DialogModal> */}
+
+      <DialogWrapper>
+        <DialogTrigger>obrir modal!</DialogTrigger>
+        <DialogContent>
+          <Text>OLAKEASE</Text>
+          <DialogClose>
+            <SvgCross />
+          </DialogClose>
+        </DialogContent>
+      </DialogWrapper>
+
+      {/*  <Dialog.Root open={openModal}>
         <Dialog.Portal>
           <Dialog.Overlay
             className="bg-hg-black500 data-[state=open]:animate-overlayShow fixed inset-0"
@@ -178,7 +196,7 @@ export default function Tratamientos({ products }: { products: Product[] }) {
             </Dialog.Close>
           </Dialog.Content>
         </Dialog.Portal>
-      </Dialog.Root>
+      </Dialog.Root> */}
       {/* 
       <MobileFilters
         isVisible={isMobileFiltersVisible}
