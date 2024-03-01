@@ -16,7 +16,7 @@ export const DERMA_ROUTINES = [
   {
     imgSrc: '/images/derma/upselling/rutinaFacial.png',
     modalImgSrc: '/images/derma/upselling/rutinaFacial.png',
-    name: 'Rutina facial',
+    name: 'Tu rutina facial',
     price: '129€',
     discountedPrice: '129€',
     cta: 'Comprar tu rutina',
