@@ -1,4 +1,3 @@
-import { fetchProduct } from '@utils/fetch';
 import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
 import { SvgCircle } from 'app/icons/Icons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -20,9 +19,17 @@ export default async function LandingPV() {
           width={500}
           priority
           alt="Descubre nuestro probador virtual"
-          className="rounded-t-2xl"
+          className="rounded-t-2xl md:hidden"
         />
-        <Container className="py-4 grow flex flex-col">
+        <Container className="py-4 grow flex flex-col md:flex-row gap-12 md:grow-0 md:pt-12">
+          <Image
+            src="/images/statics/landings/PV/PV.jpg"
+            height={500}
+            width={500}
+            priority
+            alt="Descubre nuestro probador virtual"
+            className="rounded-t-2xl hidden md:block md:self-start md:rounded-2xl"
+          />
           <Flex layout="col-left" className="grow">
             <TitleDerma className="text-hg-secondary mb-2">
               Asesórate gratis con nuestro equipo médico
