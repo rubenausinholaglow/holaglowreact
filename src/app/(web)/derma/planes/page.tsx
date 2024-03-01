@@ -65,6 +65,7 @@ export default function Upselling() {
         {isLogged && (
           <>
             <UpsellingIntro data={apiResponse} />
+            <UpsellingRoutines data={apiResponse} />
             <UpsellingPharmacies data={apiResponse} />
           </>
         )}

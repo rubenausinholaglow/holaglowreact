@@ -204,7 +204,7 @@ export default function UpsellingRoutines({
                     }
                   )}
                 </Flex>
-                {selectedRoutine !== 0 && (
+                {selectedRoutine >= 0 && (
                   <Flex layout="col-left" className="w-full">
                     {filteredProducts.map((item, index) => {
                       return (
@@ -303,13 +303,13 @@ export default function UpsellingRoutines({
                     : 'bg-derma-secondary400'
                 }`}
               >
-                <Flex className="gap-6 mt-2 mb-6 md:flex-col h-full w-full items-start md:items-center">
+                <Container className="pt-12 md:p-6 md:w-1/2">
                   <Image
-                    src={routine.imgSrc}
-                    alt="Seguimiento online con tu dermatólogo"
-                    width={700}
-                    height={700}
-                    className="w-[55%]"
+                    src={DERMA_ROUTINES[selectedRoutine].modalImgSrc}
+                    alt={DERMA_ROUTINES[selectedRoutine].name}
+                    width={524}
+                    height={696}
+                    className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
                   />
 
                   <Flex layout="col-left" className="w-full">
@@ -325,42 +325,24 @@ export default function UpsellingRoutines({
                     <Text className="text-md mb-3 md:text-lg md:font-semibold">
                       {routine.name}
                     </Text>
-                    <Text className="text-3xl font-bold">{routine.price}</Text>
-                    {routine.price !== routine.discountedPrice && (
-                      <Text className="text-sm text-hg-error font-medium line-through">
-                        PVP {routine.discountedPrice}
-                      </Text>
-                    )}
                   </Flex>
-                </Flex>
 
-                <Flex layout="row-center" className="justify-between w-full">
-                  <Button
-                    size="sm"
-                    type="tertiary"
-                    customStyles={`border-none text-derma-tertiary ${
-                      index !== 2
-                        ? 'bg-derma-secondary100'
-                        : 'bg-white/10 text-white'
-                    }`}
-                    onClick={() => {
-                      setSelectedRoutine(index);
+                  <Flex layout="row-right" className="justify-between w-full">
+                    <Button
+                      type="derma"
+                      size={deviceSize.isMobile ? 'lg' : 'xl'}
+                      onClick={() => {
+                        setSelectedRoutine(index);
 
-                      setTimeout(() => {
-                        setShowModal(true);
-                      }, 100);
-                    }}
-                  >
-                    Saber más
-                  </Button>
-                  <Button
-                    type="derma"
-                    size={deviceSize.isMobile ? 'lg' : 'xl'}
-                    onClick={() => selectProduct(routine.id)}
-                  >
-                    {routine.cta}
-                  </Button>
-                </Flex>
+                        setTimeout(() => {
+                          setShowModal(true);
+                        }, 100);
+                      }}
+                    >
+                      Saber más
+                    </Button>
+                  </Flex>
+                </Container>
               </Flex>
             ))}
           </Flex>
