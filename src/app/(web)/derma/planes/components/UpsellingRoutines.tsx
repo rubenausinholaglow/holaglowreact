@@ -239,28 +239,6 @@ export default function UpsellingRoutines({
                 )}
               </Container>
             </div>
-            <Flex
-              className={`bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full h-[${modalBottomBarHeight}]`}
-            >
-              <div>
-                <Text className="text-3xl font-bold">
-                  {DERMA_ROUTINES[selectedRoutine].price}
-                </Text>
-                {DERMA_ROUTINES[selectedRoutine].price !==
-                  DERMA_ROUTINES[selectedRoutine].discountedPrice && (
-                  <Text className="text-sm text-hg-error font-medium line-through">
-                    PVP {DERMA_ROUTINES[selectedRoutine].discountedPrice}
-                  </Text>
-                )}
-              </div>
-              <Button
-                size="xl"
-                type="derma"
-                onClick={() => selectProduct(selectedRoutine + 1)}
-              >
-                {DERMA_ROUTINES[selectedRoutine].cta}
-              </Button>
-            </Flex>
           </div>
         )}
       </Modal>
