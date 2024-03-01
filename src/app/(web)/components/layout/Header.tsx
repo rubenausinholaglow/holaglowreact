@@ -45,7 +45,11 @@ function Navigation({ className }: { className: string }) {
   );
 }
 
-export default function Header() {
+export default function Header({
+  hideAppointmentButton = false,
+}: {
+  hideAppointmentButton?: boolean;
+}) {
   const ROUTES = useRoutes();
   const deviceSize = useDeviceSizeSSR();
 
@@ -121,23 +125,25 @@ export default function Header() {
             <Navigation className="hidden lg:block 2xl:mr-20" />
 
             <Flex layout="row-center" className="lg:absolute right-0 2xl:mr-20">
-              <Button
-                id="tmevents_nav_menu_appointment"
-                size="sm"
-                type="tertiary"
-                href={ROUTES.checkout.type}
-                className="hidden md:block"
-                onClick={() => {
-                  setSelectedTreatments([]);
-                }}
-              >
-                Reservar cita
-                <SvgArrow
-                  height={16}
-                  width={16}
-                  className="ml-2 pointer-events-none"
-                />
-              </Button>
+              {!hideAppointmentButton && (
+                <Button
+                  id="tmevents_nav_menu_appointment"
+                  size="sm"
+                  type="tertiary"
+                  href={ROUTES.checkout.type}
+                  className="hidden md:block"
+                  onClick={() => {
+                    setSelectedTreatments([]);
+                  }}
+                >
+                  Reservar cita
+                  <SvgArrow
+                    height={16}
+                    width={16}
+                    className="ml-2 pointer-events-none"
+                  />
+                </Button>
+              )}
 
               <SvgMenu
                 height={24}
