@@ -22,7 +22,7 @@ export const DERMA_ROUTINES = [
     cta: 'Comprar tu rutina',
     bullets: [
       'Potencia los resultados de tu crema personalizada',
-      'Cuatro productos seleccionados por dermatólogos estéticos',
+      'Tres productos seleccionados por dermatólogos estéticos',
       'Envío gratis (de 3 a 5 días naturales)',
     ],
     id: 2,
