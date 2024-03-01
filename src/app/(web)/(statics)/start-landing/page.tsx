@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import GoToCheckout from './GoToCheckout';
 
-export default async function LandingPV() {
+export default function LandingPV() {
   return (
     <MainLayoutSSR hideFooter hideAppointmentButton>
       <Flex
@@ -19,7 +19,7 @@ export default async function LandingPV() {
           width={500}
           priority
           alt="Descubre nuestro probador virtual"
-          className="rounded-t-2xl md:hidden"
+          className="rounded-t-2xl md:hidden w-full"
         />
         <Container className="py-4 grow flex flex-col md:flex-row gap-12 md:grow-0 md:pt-12">
           <Image
@@ -28,9 +28,9 @@ export default async function LandingPV() {
             width={500}
             priority
             alt="Descubre nuestro probador virtual"
-            className="rounded-t-2xl hidden md:block md:self-start md:rounded-2xl"
+            className="rounded-t-2xl hidden md:block md:self-start md:rounded-2xl md:w-1/2"
           />
-          <Flex layout="col-left" className="grow">
+          <Flex layout="col-left" className="grow md:w-1/2">
             <TitleDerma className="text-hg-secondary mb-2 tracking-tight">
               Asesórate gratis con nuestro equipo médico
             </TitleDerma>
