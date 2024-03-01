@@ -24,9 +24,7 @@ export async function fetchProducts({
     if (fetchedProducts && fetchedProducts.length) {
       const filteredProducts = fetchedProducts.filter(
         (product: Product) =>
-          allowedProductType.includes(product.type) &&
-          product.price > 0 &&
-          product.visibleWeb == true
+          allowedProductType.includes(product.type) && product.price > 0
       );
 
       const products = filteredProducts.map((product: Product) => ({

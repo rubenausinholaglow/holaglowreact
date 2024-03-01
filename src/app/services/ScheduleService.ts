@@ -261,10 +261,10 @@ export default class ScheduleService {
         clinicId;
       const res = await fetch(url);
       if (res.ok) {
-          const data = await res.json();
-          return isDerma ? data : (data as MonthAvailabilityResponse);
+        const data = await res.json();
+        return isDerma ? data : (data as MonthAvailabilityResponse);
       } else {
-          return isDerma ? [] : ({} as MonthAvailabilityResponse);
+        return isDerma ? [] : ({} as MonthAvailabilityResponse);
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
