@@ -1,6 +1,7 @@
 'use client';
 
 import { getProductCardColor, useImageProps } from '@utils/common';
+import { DeviceSize } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
