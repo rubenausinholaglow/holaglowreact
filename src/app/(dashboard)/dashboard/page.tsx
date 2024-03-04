@@ -11,7 +11,10 @@ import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessag
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Status } from 'app/types/appointment';
 import { Client } from 'app/types/client';
 import { CrisalixUser } from 'app/types/crisalix';
@@ -41,6 +44,7 @@ export default function Page({
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser, setAppointmentId, setBudgetId } =
     useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const {
     remoteControl,
     storedBoxId,
@@ -128,6 +132,7 @@ export default function Page({
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');
+    setSelectedTreatments([]);
     setCurrentUser(undefined);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
