@@ -22,7 +22,7 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
             width={140}
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
-            className={`relative ${url.alignmentStyles} rounded-t-3xl md:rounded-3xl w-[66%]`}
+            className={`relative ${url.alignmentStyles} rounded-t-3xl w-[66%]`}
           />
         </div>
       </Flex>
