@@ -96,9 +96,11 @@ export default function Page() {
 
               <Button
                 onClick={() => {
-                  router.push(
-                    `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
-                  );
+                  if (selectedTreatments.length > 0) {
+                    router.push(
+                      `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
+                    );
+                  }
                 }}
                 disabled={selectedTreatments.length == 0}
               >
