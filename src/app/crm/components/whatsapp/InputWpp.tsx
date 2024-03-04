@@ -66,20 +66,25 @@ export default function InputWpp({
           body: formData,
         }
       );
-      const resultResponse = await response.json();
-      const dateTime = dayjs(new Date());
-      const newWhatsappMessage: WhatsappMessages = {
-        id: '',
-        text: '',
-        creationDate: dateTime.toString(),
-        time: dateTime.toString(),
-        urlFile: resultResponse.urlFile,
-      };
+      if (response.ok) {
+        const resultResponse = await response.json();
+        const dateTime = dayjs(new Date());
+        const newWhatsappMessage: WhatsappMessages = {
+          id: '',
+          text: '',
+          creationDate: dateTime.toString(),
+          time: dateTime.toString(),
+          urlFile: resultResponse?.data?.urlFile,
+        };
 
-      setWhatsappMessages((prevState: WhatsappMessages[]) => [
-        ...prevState,
-        newWhatsappMessage,
-      ]);
+        setWhatsappMessages((prevState: WhatsappMessages[]) => [
+          ...prevState,
+          newWhatsappMessage,
+        ]);
+      } else {
+        const resultResponse = await response.json();
+        Bugsnag.notify(`Error al subir la imagen`, resultResponse);
+      }
     } catch (error) {
       Bugsnag.notify(`Error al subir la imagen`);
     }
@@ -172,7 +177,7 @@ export default function InputWpp({
         />
         {openEmojiDialog && (
           <div className="absolute bottom-0">
-            <EmojiPicker onEmojiClick={onEmojiClick} lazyLoadEmojis/>
+            <EmojiPicker onEmojiClick={onEmojiClick} lazyLoadEmojis />
           </div>
         )}
       </button>
