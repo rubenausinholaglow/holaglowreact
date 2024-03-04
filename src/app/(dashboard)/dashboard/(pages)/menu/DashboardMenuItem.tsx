@@ -24,17 +24,17 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   const { setSelectedTreatments } = useSessionStore(state => state);
 
   function goToPage(name: string) {
-    if (!remoteControl) return true;
     let message: GoToPageData;
     switch (name) {
       case 'Simulador 3D':
+        if (!remoteControl) return true;
         message = {
           userId: user?.id || '',
           page: 'Crisalix',
         };
         if (!ignoreMessages) messageService.goToPage(message);
         break;
-      case 'Presupeustos':
+      case 'Presupuestos':
         setSelectedTreatments([]);
         break;
       default:
