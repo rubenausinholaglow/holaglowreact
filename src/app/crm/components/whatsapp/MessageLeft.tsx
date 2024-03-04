@@ -31,7 +31,7 @@ export default function MessageLeft({
       <div className="rounded py-2 px-3" style={{ backgroundColor: '#F2F2F2' }}>
         <p className="text-sm text-teal">{clientName}</p>
         {isImage() && (
-          <Image alt="imageAgent" src={urlFile} width={100} height={100} />
+          <Image alt="imageClient" src={urlFile} width={100} height={100} />
         )}
         {isVideo() && (
           <video width={300} height={300} controls>
