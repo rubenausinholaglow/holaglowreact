@@ -1,7 +1,6 @@
 'use client';
 
 import { getProductCardColor, useImageProps } from '@utils/common';
-import { DeviceSize } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -22,7 +21,9 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
             width={140}
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
-            className={`relative ${url.alignmentStyles} rounded-t-3xl w-[66%]`}
+            className={`relative ${url.alignmentStyles} ${
+              alignmentStyles == 'ml-auto' && 'rounded-r-3xl'
+            } ${alignmentStyles == 'mr-auto' && 'rounded-l-3xl'} w-[66%]`}
           />
         </div>
       </Flex>
@@ -55,7 +56,9 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
           src={imgSrc}
           priority
           onError={() => setNextImgSrc()}
-          className={`relative ${alignmentStyles} rounded-t-3xl w-[66%]`}
+          className={`relative ${alignmentStyles} ${
+            alignmentStyles == 'ml-auto' && 'rounded-r-3xl'
+          } ${alignmentStyles == 'mr-auto' && 'rounded-l-3xl'} w-[66%]`}
         />
       )}
     </div>
