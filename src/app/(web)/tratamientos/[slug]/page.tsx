@@ -52,7 +52,13 @@ export default async function ProductPage({
 }: {
   params: { slug: string; isDashboard: boolean };
 }) {
-  const product = await getProduct(params.slug, false, false);
+  const products = await getProducts();
+
+  const productId = products.filter(
+    (product: Product) => product?.extraInformation?.slug === params.slug
+  )[0].id;
+
+  const product = await getProduct(productId, false, false);
 
   return (
     <MainLayoutSSR>
