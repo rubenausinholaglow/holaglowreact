@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Product } from '@interface/product';
 import { useSessionStore } from 'app/stores/globalStore';
 
@@ -7,7 +6,7 @@ const useSelectTreatments = () => {
         state => state
     );
 
-    const validTypes = [2, 3, 7];
+    const validTypes = [1, 2, 7];
 
     const addProduct = (product: Product) => {
         if (validTypes.includes(product.type)) {

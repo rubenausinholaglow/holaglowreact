@@ -26,12 +26,10 @@ const Page = () => {
   const userCrisalix = useCrisalix(state => state);
   const { remoteControl, setCheckSimulator, user, setBudgetId } =
     useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments } = useSessionStore(state => state);
   useEffect(() => {
     setBudgetId('');
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
-    setSelectedTreatments([]);
     setCheckSimulator(false);
   }, []);
 

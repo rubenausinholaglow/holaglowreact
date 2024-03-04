@@ -1,7 +1,10 @@
 'use client';
 
 import { messageService } from '@services/MessageService';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { GoToPageData } from 'app/types/FrontEndMessages';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,6 +21,8 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   const { user, ignoreMessages, remoteControl } = useGlobalPersistedStore(
     state => state
   );
+  const { setSelectedTreatments } = useSessionStore(state => state);
+
   function goToPage(name: string) {
     if (!remoteControl) return true;
     let message: GoToPageData;
@@ -28,6 +33,9 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
           page: 'Crisalix',
         };
         if (!ignoreMessages) messageService.goToPage(message);
+        break;
+      case 'Presupeustos':
+        setSelectedTreatments([]);
         break;
       default:
         '';
