@@ -11,7 +11,10 @@ import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Budget, StatusBudget } from 'app/types/budget';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -40,7 +43,9 @@ const Page = () => {
     storedBudgetId,
     setBudgetId,
     storedClinicProfessionalId,
+    dashboardProducts,
   } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -59,7 +64,7 @@ const Page = () => {
 
   const handleFinalize = async () => {
     setTotalPriceInitial(totalPriceToShow);
-
+    setTreatments();
     const budget: Budget = {
       userId: user?.id || '',
       discountCode:
@@ -113,6 +118,16 @@ const Page = () => {
       productsPriceTotalWithDiscounts
     );
     return cartTotalWithDiscount;
+  }
+
+  function setTreatments() {
+    setSelectedTreatments([]);
+    const validTypes = [1, 2];
+    const ids = cart.map(cartItem => cartItem.id);
+    const selectedProducts = dashboardProducts.filter(
+      product => ids.includes(product.id) && validTypes.includes(product.type)
+    );
+    setSelectedTreatments(selectedProducts);
   }
 
   return (
