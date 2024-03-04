@@ -22,7 +22,7 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
             width={140}
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
-            className={`relative ${url.alignmentStyles} rounded-t-3xl w-[66%]`}
+            className={`relative ${url.alignmentStyles} rounded-t-3xl md:rounded-3xl w-[66%]`}
           />
         </div>
       </Flex>
@@ -32,7 +32,7 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
   return (
     <div className="relative aspect-[3/2] w-full">
       <div
-        className={`absolute inset-0 top-[10%] ${alignmentStyles} rounded-t-3xl`}
+        className={`absolute inset-0 top-[10%] ${alignmentStyles} rounded-t-3xl md:rounded-3xl`}
         style={{
           background: getProductCardColor(product?.cardBackgroundColor),
         }}
