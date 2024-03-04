@@ -25,7 +25,8 @@ export default function Page() {
     setClinics,
     setStateProducts,
   } = useGlobalPersistedStore(state => state);
-  const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
+  const { selectedClinic, setSelectedClinic, selectedTreatments } =
+    useSessionStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   const router = useRouter();
@@ -99,6 +100,7 @@ export default function Page() {
                     `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
                   );
                 }}
+                disabled={selectedTreatments.length == 0}
               >
                 Continuar
               </Button>
