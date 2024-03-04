@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import { isClient } from '@utils/utils';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { twMerge } from 'tailwind-merge';
@@ -133,6 +134,16 @@ export const SwipeModal = ({
       } else {
         (modalRef.current as HTMLDivElement).style.transform =
           'translateY(105%)';
+      }
+    }
+
+    if (isClient()) {
+      const bodyElement = document.getElementsByTagName('body')[0];
+
+      if (isOpen) {
+        bodyElement.classList.add('overflow-hidden');
+      } else {
+        bodyElement.classList.remove('overflow-hidden');
       }
     }
   }, [isOpen]);

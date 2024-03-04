@@ -1,8 +1,8 @@
 'use client';
 
+import { ProductFilters } from '@interface/filters';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
-import { useGlobalStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
@@ -10,12 +10,14 @@ import Image from 'next/image';
 export default function ZoneFilter({
   className,
   isDesktop,
+  productFilters,
+  setProductFilters,
 }: {
   className?: string;
   isDesktop?: boolean;
+  productFilters: ProductFilters;
+  setProductFilters: (filters: ProductFilters) => void;
 }) {
-  const { productFilters, setProductFilters } = useGlobalStore(state => state);
-
   const ZONES = [
     {
       name: 'Tercio inferior',

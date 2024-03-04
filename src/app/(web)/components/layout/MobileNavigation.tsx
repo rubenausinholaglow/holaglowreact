@@ -11,7 +11,6 @@ import useRoutes from 'app/utils/useRoutes';
 import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
@@ -44,13 +43,13 @@ export default function MobileNavigation({
 
   return (
     <>
-      <div className="bg-white border-b border-hg-black pt-12 pb-8 relative">
+      <div className="bg-white border-b border-hg-black py-8 relative">
         <Flex
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
         >
           <a href={ROUTES.treatments} id={'tmevent_nav_menu_click'}>
-            <p className="font-semcibold">Ver Tratamientos</p>
+            <p className="font-semibold">Ver Tratamientos</p>
           </a>
 
           <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>

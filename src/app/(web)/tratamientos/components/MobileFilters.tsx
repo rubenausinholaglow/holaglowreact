@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import CategorySelector from 'app/(web)/components/filters/CategorySelector';
+import { ProductFilters } from '@interface/filters';
+import { Product } from '@interface/product';
+import CategorySelectorSSR from 'app/(ssr)/homeSSR/components/CategorySelectorSSR';
 import ClinicFilter from 'app/(web)/components/filters/ClinicFilter';
-import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
+import PackTypeFilterSSR from 'app/(web)/components/filters/PackTypeFilterSSR';
 import ZoneFilter from 'app/(web)/components/filters/ZoneFilter';
 import { SvgCross } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
@@ -17,16 +19,19 @@ import { filterCount } from '../utils/filters';
 export default function MobileFilters({
   isVisible,
   setModalVisibility,
+  products,
+  filteredProducts,
+  productFilters,
+  setProductFilters,
 }: {
   isVisible: boolean;
   setModalVisibility: (value: boolean) => void;
+  products: Product[];
+  filteredProducts: Product[];
+  productFilters: ProductFilters;
+  setProductFilters: (filters: ProductFilters) => void;
 }) {
-  const {
-    setIsModalOpen,
-    productFilters,
-    setProductFilters,
-    filteredProducts,
-  } = useGlobalStore(state => state);
+  const { setIsModalOpen } = useGlobalStore(state => state);
 
   useEffect(() => {
     setIsModalOpen(isVisible);
@@ -72,7 +77,7 @@ export default function MobileFilters({
               <SvgCross
                 height={20}
                 width={20}
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setModalVisibility(false)}
               />
             </Flex>
           </Flex>
@@ -85,19 +90,37 @@ export default function MobileFilters({
                 <Text size="sm" className="mb-4 font-semibold">
                   Tratamientos
                 </Text>
-                <CategorySelector isStacked className="mb-4" />
-                <PackTypeFilter customStyles="bg-hg-black50" />
+                <CategorySelectorSSR
+                  isStacked
+                  className="mb-4"
+                  products={products}
+                  productFilters={productFilters}
+                  setProductFilters={setProductFilters}
+                />
+                <PackTypeFilterSSR
+                  customStyles="bg-hg-black50"
+                  productFilters={productFilters}
+                  setProductFilters={setProductFilters}
+                />
               </Container>
             </div>
             <Container className="py-4 pb-12">
               <Text size="sm" className="mb-4 font-semibold">
                 Zona de la cara
               </Text>
-              <ZoneFilter className="mb-8" />
+              <ZoneFilter
+                className="mb-8"
+                productFilters={productFilters}
+                setProductFilters={setProductFilters}
+              />
               <Text size="sm" className="mb-4 font-semibold">
                 Clínicas
               </Text>
-              <ClinicFilter className="mb-6" />
+              <ClinicFilter
+                className="mb-6"
+                productFilters={productFilters}
+                setProductFilters={setProductFilters}
+              />
 
               <Button
                 id="tmevent_filters"

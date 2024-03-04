@@ -202,12 +202,19 @@ module.exports = {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
-        contentShow: {
+        contentShowLeft: {
           from: {
-            opacity: '0',
-            transform: 'translate(-50%, -48%) scale(0.96)',
+            opacity: '1',
+            transform: 'translate(105%, 0%)',
           },
-          to: { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
+          to: { opacity: '1', transform: 'translate(0%,  0%)' },
+        },
+        contentShowBottom: {
+          from: {
+            opacity: '1',
+            transform: 'translate(0%, 105%)',
+          },
+          to: { opacity: '1', transform: 'translate(0%,  0%)' },
         },
       },
       animation: {
@@ -216,8 +223,9 @@ module.exports = {
         horizontalScroll: 'horizontalScroll 50s linear infinite',
         animateBG: 'animateBG 180s ease infinite',
         shake: 'shake 3s ease infinite',
-        overlayShow: 'overlayShow 300ms cubic-bezier(0.16, 1, 0.3, 1)',
-        contentShow: 'contentShow 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+        overlayShow: 'overlayShow 300ms ease',
+        contentShowLeft: 'contentShowLeft 300ms ease',
+        contentShowBottom: 'contentShowBottom 300ms ease',
       },
     },
   },

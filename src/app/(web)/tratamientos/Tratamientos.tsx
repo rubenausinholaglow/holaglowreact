@@ -1,89 +1,40 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ProductFilters } from '@interface/filters';
 import { Product } from '@interface/product';
-import {
-  DialogClose,
-  DialogContent,
-  DialogTrigger,
-  DialogWrapper,
-} from 'app/(ssr)/homeSSR/components/Dialog';
-import { SvgCross } from 'app/icons/IconsDs';
-//import ModalSSR from 'app/(ssr)/homeSSR/components/ModalSSR';
-import { Text } from 'designSystem/Texts/Texts';
+import CheckHydration from '@utils/CheckHydration';
+import { HOLAGLOW_COLORS } from '@utils/colors';
+import CategorySelectorSSR from 'app/(ssr)/homeSSR/components/CategorySelectorSSR';
+import { SvgSpinner } from 'app/icons/Icons';
+import { SvgFilters } from 'app/icons/IconsDs';
+import { useGlobalStore } from 'app/stores/globalStore';
+import { Button } from 'designSystem/Buttons/Buttons';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import isEmpty from 'lodash/isEmpty';
+import Image from 'next/image';
 
+import { AnimateOnViewport } from '../components/common/AnimateOnViewport';
+import PackTypeFilterSSR from '../components/filters/PackTypeFilterSSR';
 import { useDeviceSizeSSR } from '../components/layout/Breakpoint';
+import ProductCard from '../components/product/ProductCard';
+import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
+import { applyFilters, filterCount, INITIAL_FILTERS } from './utils/filters';
 
 export default function Tratamientos({ products }: { products: Product[] }) {
   const deviceSize = useDeviceSizeSSR();
 
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [openModal, setOpenModal] = useState(false);
+  const { isModalOpen } = useGlobalStore(state => state);
 
-  /* 
-  const {
-    filteredProducts,
-    setFilteredProducts,
-    productFilters,
-    setProductFilters,
-    isModalOpen,
-  } = useGlobalStore(state => state);
-
-  const [isHydrated, setIsHydrated] = useState(false);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
-  const [showDashboardFilters, setShowDashboardFilters] = useState(true); 
-  
-  const metadataPacks = {
-    title: 'Packs de tratamientos de medicina estética - Holaglow',
-    description:
-      'Elige uno de los packs para tratar de manera global tus objetivos estéticos y conseguir el resultado que deseas',
-  };
-
-  useEffect(() => {
-    if (slug !== '') {
-      if (slug !== 'packs') {
-        let filterToApply = '';
-        switch (slug) {
-          case 'piel':
-            filterToApply = 'Calidad de la Piel';
-            break;
-          case 'pelo':
-            filterToApply = 'Caida del pelo';
-            break;
-          default:
-            filterToApply =
-              slug[0].toUpperCase() + slug.substr(1).toLowerCase();
-            break;
-        }
-        const categoryExists = filterItems.some(x => {
-          const exists = x.buttons.some(y => {
-            if (y.value == filterToApply) return true;
-          });
-          return exists;
-        });
-        if (
-          filterToApply &&
-          productFilters.category.indexOf(filterToApply) == -1 &&
-          categoryExists
-        ) {
-          if (filterToApply == 'Calidad de la Piel')
-            filterToApply = 'Calidad Piel';
-          productFilters.category.push(filterToApply);
-        }
-      } else {
-        setSeoMetaData(metadataPacks.title, metadataPacks.description);
-        productFilters.isPack = true;
-      }
-      setProductFilters(productFilters);
-    }
-  }, [slug, stateProducts]);
-  
-  useEffect(() => {
-    processFilters();
-    setIsHydrated(true);
-  }, [productFilters]);
+  const [productFilters, setProductFilters] =
+    useState<ProductFilters>(INITIAL_FILTERS);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(
+    applyFilters({ products: products, filters: productFilters })
+  );
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -91,51 +42,30 @@ export default function Tratamientos({ products }: { products: Product[] }) {
     }
   }, [isModalOpen]);
 
-  if (!isHydrated) {
-    return <></>;
-  }
-  */
-
-  /* function processFilters() {
-    if (isDashboard) {
-      if (isEmpty(filteredProducts)) {
-        setFilteredProducts(dashboardProducts);
-        setFilteredProducts(
-          applyFilters({ products: dashboardProducts, filters: productFilters })
-        );
-      } else {
-        setFilteredProducts(
-          applyFilters({ products: filteredProducts, filters: productFilters })
-        );
-      }
-    } else {
-      if (isEmpty(filteredProducts)) {
-        setFilteredProducts(stateProducts);
-        setFilteredProducts(
-          applyFilters({ products: stateProducts, filters: productFilters })
-        );
-      } else {
-        setFilteredProducts(
-          applyFilters({ products: filteredProducts, filters: productFilters })
-        );
-      }
-    }
-  } */
+  useEffect(() => {
+    setFilteredProducts(
+      applyFilters({ products: filteredProducts, filters: productFilters })
+    );
+  }, [productFilters]);
 
   return (
     <>
       <link rel="canonical" href="https://holaglow.com/tratamientos/" />
 
-      {/* 
-      <MobileFilters
-        isVisible={isMobileFiltersVisible}
-        setModalVisibility={setIsMobileFiltersVisible}
-      />
+      <CheckHydration>
+        <MobileFilters
+          isVisible={isMobileFiltersVisible}
+          setModalVisibility={setIsMobileFiltersVisible}
+          products={products}
+          productFilters={productFilters}
+          setProductFilters={setProductFilters}
+          filteredProducts={filteredProducts}
+        />
+      </CheckHydration>
 
       <div className="bg-hg-cream rounded-t-3xl overflow-hidden">
         <Container className="relative pt-8 pb-4">
           <Title
-            isAnimated
             size="2xl"
             className="font-bold mb-6 lg:mb-12 lg:w-3/5 md:text-4xl lg:text-5xl"
           >
@@ -154,15 +84,23 @@ export default function Tratamientos({ products }: { products: Product[] }) {
         </Container>
         <Container className="px-0 md:px-4 pb-4 relative">
           <div className="lg:flex lg:flex-row lg:justify-between">
-            <AnimateOnViewport
-              origin={deviceSize.isMobile ? 'right' : 'bottom'}
-            >
-              <CategorySelector className="mb-4 lg:mb-0" />
+            <AnimateOnViewport origin="bottom">
+              <CategorySelectorSSR
+                className="mb-4 lg:mb-0"
+                products={products}
+                productFilters={productFilters}
+                setProductFilters={setProductFilters}
+              />
             </AnimateOnViewport>
-            <PackTypeFilter className="ml-4 md:ml-0" />
+            <PackTypeFilterSSR
+              className="ml-4 md:ml-0"
+              productFilters={productFilters}
+              setProductFilters={setProductFilters}
+            />
           </div>
         </Container>
       </div>
+
       {isEmpty(filteredProducts) && (
         <Flex layout="row-left" className="justify-center">
           <SvgSpinner
@@ -172,6 +110,7 @@ export default function Tratamientos({ products }: { products: Product[] }) {
           />
         </Flex>
       )}
+
       {!isEmpty(filteredProducts) && (
         <div className="bg-hg-cream500 pb-32 relative">
           <Flex
@@ -230,6 +169,7 @@ export default function Tratamientos({ products }: { products: Product[] }) {
               </AnimateOnViewport>
             </Container>
           </Flex>
+          {/* 
 
           <AccordionPrimitive.Root
             type="single"
@@ -249,12 +189,11 @@ export default function Tratamientos({ products }: { products: Product[] }) {
               </AccordionPrimitive.Content>
             </AccordionPrimitive.Item>
           </AccordionPrimitive.Root>
+        */}
 
           <Container>
             <ul
-              className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 ${
-                showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
-              }   pb-6`}
+              className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 pb-6`}
             >
               {filteredProducts.map(product => {
                 if (product.visibility) {
@@ -274,7 +213,7 @@ export default function Tratamientos({ products }: { products: Product[] }) {
         </div>
       )}
 
-      <LookingFor /> */}
+      <LookingFor />
     </>
   );
 }

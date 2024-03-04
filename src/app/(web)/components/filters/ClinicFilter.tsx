@@ -1,19 +1,23 @@
 'use client';
 
 import { useEffect } from 'react';
+import { ProductFilters } from '@interface/filters';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useGlobalStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { fetchClinics } from 'app/utils/fetch';
 import { isEmpty } from 'lodash';
 
-export default function ClinicFilter({ className }: { className?: string }) {
+export default function ClinicFilter({
+  className,
+  productFilters,
+  setProductFilters,
+}: {
+  className?: string;
+  productFilters: ProductFilters;
+  setProductFilters: (filters: ProductFilters) => void;
+}) {
   const { clinics, setClinics } = useGlobalPersistedStore(state => state);
-
-  const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
   useEffect(() => {
     async function initClinics() {

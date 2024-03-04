@@ -139,9 +139,9 @@ export default function Header() {
                 <DialogTrigger>
                   <SvgMenu height={24} width={24} className="ml-2 lg:hidden" />
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent animation="left">
                   <DialogClose>
-                    <SvgCross />
+                    <SvgCross className="z-10 absolute top-4 right-4 h-5 w-5" />
                   </DialogClose>
                   <CheckHydration>
                     <MobileNavigation
