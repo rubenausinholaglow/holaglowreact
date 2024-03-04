@@ -4,6 +4,7 @@ import Clinics from 'app/(ssr)/homeSSR/components/Clinics';
 import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
 import Professionals from 'app/(ssr)/homeSSR/components/Professionals';
 import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
 
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
@@ -56,7 +57,11 @@ export default async function ProductPage({
 
   const productId = products.filter(
     (product: Product) => product?.extraInformation?.slug === params.slug
-  )[0].id;
+  )[0]?.id;
+
+  if (productId === undefined) {
+    return notFound();
+  }
 
   const product = await getProduct(productId, false, false);
 
