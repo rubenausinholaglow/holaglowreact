@@ -3,7 +3,7 @@
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
 export default function FooterSecondBlock({ clinics }: { clinics: Clinic[] }) {

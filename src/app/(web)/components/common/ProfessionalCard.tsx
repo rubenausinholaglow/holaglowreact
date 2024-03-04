@@ -1,5 +1,3 @@
-'use client';
-
 import { Professional } from 'app/types/clinic';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { Product } from 'app/types/product';
 import { isEmpty } from 'lodash';
@@ -53,6 +55,7 @@ export const useImageProps = (product: Product, photoNumber = 1) => {
 
   return { imgSrc, alignmentStyles, setNextImgSrc, defaultImage };
 };
+
 export function getImageProductsCarousel(product: Product, photoNumber = 0) {
   return getImageProperties(product, photoNumber, true);
 }

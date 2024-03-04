@@ -104,7 +104,8 @@ export default function UpsellingRoutines({
   async function addRevisionProduct() {
     const productDetails = await fetchProduct(
       process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!,
-      false
+      false,
+      true
     );
     productDetails.flowwwId = 6;
     setSelectedTreatments([...selectedTreatments, productDetails]);
@@ -114,7 +115,8 @@ export default function UpsellingRoutines({
   async function addRoutineProduct() {
     const productDetails = await fetchProduct(
       DERMA_TYPES_IDS[data!.routine],
-      false
+      false,
+      true
     );
     productDetails.flowwwId = 0;
     setSelectedTreatments([...selectedTreatments, productDetails]);
@@ -123,7 +125,8 @@ export default function UpsellingRoutines({
   async function addRoutineWithProduct() {
     const productDetails = await fetchProduct(
       DERMA_BUNDLE_TYPES_IDS[data!.routine],
-      false
+      false,
+      true
     );
     productDetails.flowwwId = 6;
     setSelectedTreatments([...selectedTreatments, productDetails]);

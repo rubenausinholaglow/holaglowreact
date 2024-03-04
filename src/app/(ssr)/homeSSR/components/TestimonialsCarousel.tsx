@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Testimonial } from '@interface/testimonial';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';

@@ -1,24 +1,34 @@
+'use client';
+
 import { ImgComparisonSlider } from '@img-comparison-slider/react';
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Carousel } from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
+const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
+  ssr: false,
+});
+
 export default function ProductResults({ product }: { product: Product }) {
+  if (product.beforeAndAfterImages?.length === 0) {
+    return <></>;
+  }
+
   return (
     <Container className="p-0 pt-8 md:px-4 md:flex gap-16 justify-between mb-12 md:mb-16">
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
         <div className="md:flex-row">
-          <Title isAnimated size="2xl" className="font-bold mb-6 mt-8">
+          <Title size="2xl" className="font-bold mb-6 mt-8">
             Consigue el{' '}
             <Underlined color={HOLAGLOW_COLORS['primary']}>
               resultado
             </Underlined>{' '}
             que deseas
           </Title>
-          <Text isAnimated className="text-hg-black500 mb-4 md:text-lg">
+          <Text className="text-hg-black500 mb-4 md:text-lg">
             Podrás presumir del cambio el mismo día y observarás el resultado
             óptimo a las dos semanas.
           </Text>

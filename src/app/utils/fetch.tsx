@@ -44,9 +44,17 @@ export async function fetchProducts({
   return [] as Product[];
 }
 
-export async function fetchProduct(id: string, isDashboard: boolean) {
+export async function fetchProduct(
+  id: string,
+  isDashboard: boolean,
+  isDerma: boolean
+) {
   try {
-    const product: Product = await ProductService.getProduct(id, isDashboard);
+    const product: Product = await ProductService.getProduct(
+      id,
+      isDashboard,
+      isDerma
+    );
 
     return product;
   } catch (error: any) {

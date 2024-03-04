@@ -8,7 +8,7 @@ import {
 } from 'app/stores/globalStore';
 import { fetchClinics } from 'app/utils/fetch';
 import useRoutes from 'app/utils/useRoutes';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
