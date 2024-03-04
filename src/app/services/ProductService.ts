@@ -20,7 +20,7 @@ export default class ProductService {
       : process.env.NEXT_PUBLIC_PRODUCTS_API || '';
 
     try {
-      const res = await fetch(`${url}/Product`);
+      const res = await fetch(`${url}Product`);
       if (res.ok) {
         const data = await res.json();
         return data;
