@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import useSelectTreatments from '@dashboardComponents/useSelectTreatments';
 import Tracker from '@utils/tracker';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgPlusSmall } from 'app/icons/Icons';
 import { SvgArrow, SvgGlow } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { CartItem, Product } from 'app/types/product';
 import {
   getDiscountedPrice,
@@ -42,6 +44,11 @@ export default function ProductCard({
   const [discountedPrice, setDiscountedPrice] = useState<0 | number>(0);
   const { setHighlightProduct, cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
+
+  const { setSelectedTreatments, selectedTreatments } = useSessionStore(
+    state => state
+  );
+  const { addProduct, removeProduct } = useSelectTreatments();
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
@@ -183,6 +190,7 @@ export default function ProductCard({
               onClick={e => {
                 e.stopPropagation();
                 addToCart(product as CartItem);
+                addProduct(product);
                 setPendingDiscount(true);
               }}
             >

@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import useSelectTreatments from '@dashboardComponents/useSelectTreatments';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import ProductDiscountForm from 'app/(dashboard)/dashboard/(pages)/checkout/components/ProductDiscountForm';
 import { SvgClose } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { CartItem } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -25,6 +27,8 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
+
+  const { removeProduct } = useSelectTreatments();
 
   const productCartItem = cart.filter(
     item =>
@@ -68,7 +72,10 @@ export default function ProductCard({ product, isCheckout }: Props) {
         ) : (
           <Button
             size="sm"
-            onClick={() => removeFromCart(product)}
+            onClick={e => {
+              removeFromCart(product);
+              removeProduct(product);
+            }}
             type="tertiary"
             className="shrink-0"
           >

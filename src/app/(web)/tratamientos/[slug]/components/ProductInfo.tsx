@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import useSelectTreatments from '@dashboardComponents/useSelectTreatments';
 import ROUTES from '@utils/routes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
@@ -41,6 +42,7 @@ export default function ProductInfo({
   } = useCartStore(state => state);
 
   const { setSelectedTreatments } = useSessionStore(state => state);
+  const { addProduct, removeProduct } = useSelectTreatments();
 
   useEffect(() => {
     if (setBottomBarThreshold && typeof window !== 'undefined') {
@@ -239,8 +241,10 @@ export default function ProductInfo({
                 ): void {
                   if (operation == 'increase') {
                     addItemToCart(product as CartItem);
+                    addProduct(product);
                     setPendingDiscount(true);
                   } else {
+                    removeProduct(product);
                     removeSingleProduct(product as CartItem);
                   }
                 }}

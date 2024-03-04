@@ -44,7 +44,6 @@ const Page = () => {
     storedBudgetId,
     setBudgetId,
     storedClinicProfessionalId,
-    dashboardProducts,
   } = useGlobalPersistedStore(state => state);
   const { setSelectedTreatments } = useSessionStore(state => state);
 
@@ -232,8 +231,7 @@ const Page = () => {
               <Button
                 className="w-full"
                 size="md"
-                target="_blank"
-                href={`${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`}
+                href={`${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`}
                 type="tertiary"
               >
                 <span className="font-semibold">Agendar Cita</span>

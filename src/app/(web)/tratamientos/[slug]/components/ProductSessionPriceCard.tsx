@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import useSelectTreatments from '@dashboardComponents/useSelectTreatments';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgPlusSmall } from 'app/icons/Icons';
 import * as icon from 'app/icons/IconsDs';
@@ -26,6 +27,7 @@ export default function ProductSessionPriceCard({
   const addToCart = useCartStore(state => state.addItemToCart);
   const [pendingDiscount, setPendingDiscount] = useState(false);
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const { addProduct } = useSelectTreatments();
 
   useEffect(() => {
     if (pendingDiscount) {
@@ -96,6 +98,7 @@ export default function ProductSessionPriceCard({
             onClick={e => {
               e.stopPropagation();
               addToCart(product as CartItem);
+              addProduct(product);
               setPendingDiscount(true);
             }}
           >

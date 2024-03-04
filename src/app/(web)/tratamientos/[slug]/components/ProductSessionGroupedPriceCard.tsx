@@ -16,7 +16,9 @@ export default function ProductSessionGroupedPriceCard({
 }: {
   product: Product;
 }) {
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, selectedTreatments } = useSessionStore(
+    state => state
+  );
   const ROUTES = useRoutes();
   const { productHighlighted, cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
@@ -70,6 +72,7 @@ export default function ProductSessionGroupedPriceCard({
             onClick={e => {
               e.stopPropagation();
               addToCart(product as CartItem);
+              setSelectedTreatments([...selectedTreatments, product]);
               setPendingDiscount(true);
             }}
           >
