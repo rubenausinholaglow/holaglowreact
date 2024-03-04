@@ -64,7 +64,6 @@ const Page = () => {
 
   const handleFinalize = async () => {
     setTotalPriceInitial(totalPriceToShow);
-    setTreatments();
     const budget: Budget = {
       userId: user?.id || '',
       discountCode:
@@ -118,55 +117,6 @@ const Page = () => {
       productsPriceTotalWithDiscounts
     );
     return cartTotalWithDiscount;
-  }
-
-  function setTreatments() {
-    setSelectedTreatments([]);
-    const validTypes = [1, 2, 5, 7];
-    const productsInCart: Product[] = cart
-      .filter(cartItem => validTypes.includes(cartItem.type))
-      .map(cartItem => {
-        const productInCart: Product = {
-          id: cartItem.id,
-          title: cartItem.title,
-          description: cartItem.description,
-          detail: cartItem.detail,
-          price: cartItem.price,
-          isPack: cartItem.isPack,
-          zone: cartItem.zone,
-          order: cartItem.order,
-          upgrades: cartItem.upgrades,
-          category: cartItem.category,
-          appliedProducts: cartItem.appliedProducts,
-          clinicDetail: cartItem.clinicDetail,
-          cardBackgroundColor: cartItem.cardBackgroundColor,
-          extraInformation: cartItem.extraInformation,
-          preTreatmentInfo: cartItem.preTreatmentInfo,
-          postTreatmentInfo: cartItem.postTreatmentInfo,
-          packUnities: cartItem.packUnities,
-          discounts: cartItem.discounts,
-          tags: cartItem.tags,
-          packMoreInformation: cartItem.packMoreInformation,
-          relatedProducts: cartItem.relatedProducts,
-          flowwwId: cartItem.flowwwId,
-          durationMin: cartItem.durationMin,
-          durationMax: cartItem.durationMax,
-          beforeAndAfterImages: cartItem.beforeAndAfterImages,
-          applicationTimeMinutes: cartItem.applicationTimeMinutes,
-          type: cartItem.type,
-          visibility: cartItem.visibility,
-          sessions: cartItem.sessions,
-          productCardImagePosition: cartItem.productCardImagePosition,
-          longDescription: cartItem.longDescription,
-          numProductCardPhotos: cartItem.numProductCardPhotos,
-          videoUrl: cartItem.videoUrl,
-          emlaType: cartItem.emlaType,
-        };
-
-        return productInCart;
-      });
-
-    setSelectedTreatments(productsInCart);
   }
 
   return (
