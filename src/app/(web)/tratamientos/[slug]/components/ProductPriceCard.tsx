@@ -6,6 +6,7 @@ import {
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import Dropdown from 'app/(web)/components/forms/Dropdown';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import {
   SvgAdd,
   SvgArrow,
@@ -410,7 +411,7 @@ export default function ProductPriceCard({
   isDashboard?: boolean;
   className?: string;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
+  const deviceSize = useDeviceSizeSSR();
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 

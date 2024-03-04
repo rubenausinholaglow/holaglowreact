@@ -8,7 +8,7 @@ import {
 } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
-import { DayAvailability } from 'app/types/dayAvailability';
+import { DayAvailability, MonthAvailabilityResponse } from 'app/types/dayAvailability';
 import { Product } from 'app/types/product';
 import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
@@ -249,7 +249,7 @@ export default class ScheduleService {
     date: string,
     treatment: string,
     clinicId: string
-  ): Promise<Array<DayAvailability>> {
+  ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailability?date=` +
@@ -263,18 +263,18 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return [];
+        return {} as MonthAvailabilityResponse;
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
-      return [];
+      return {} as MonthAvailabilityResponse;
     }
   }
   static async getMonthAvailabilityv2(
     date: string,
     treatment: string,
     clinicId: string
-  ): Promise<Array<DayAvailability>> {
+  ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailabilityv2?date=` +
@@ -288,11 +288,11 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return [];
+        return {} as MonthAvailabilityResponse;
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
-      return [];
+      return {} as MonthAvailabilityResponse;
     }
   }
 

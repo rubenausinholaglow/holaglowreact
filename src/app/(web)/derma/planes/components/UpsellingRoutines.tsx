@@ -104,7 +104,8 @@ export default function UpsellingRoutines({
   async function addRevisionProduct() {
     const productDetails = await fetchProduct(
       process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!,
-      false
+      false,
+      true
     );
     productDetails.flowwwId = 6;
     setSelectedTreatments([...selectedTreatments, productDetails]);
@@ -114,7 +115,8 @@ export default function UpsellingRoutines({
   async function addRoutineProduct() {
     const productDetails = await fetchProduct(
       DERMA_TYPES_IDS[data!.routine],
-      false
+      false,
+      true
     );
     productDetails.flowwwId = 0;
     setSelectedTreatments([...selectedTreatments, productDetails]);
@@ -123,7 +125,8 @@ export default function UpsellingRoutines({
   async function addRoutineWithProduct() {
     const productDetails = await fetchProduct(
       DERMA_BUNDLE_TYPES_IDS[data!.routine],
-      false
+      false,
+      true
     );
     productDetails.flowwwId = 6;
     setSelectedTreatments([...selectedTreatments, productDetails]);
@@ -204,7 +207,7 @@ export default function UpsellingRoutines({
                     }
                   )}
                 </Flex>
-                {selectedRoutine !== 0 && (
+                {selectedRoutine >= 0 && (
                   <Flex layout="col-left" className="w-full">
                     {filteredProducts.map((item, index) => {
                       return (
@@ -239,28 +242,6 @@ export default function UpsellingRoutines({
                 )}
               </Container>
             </div>
-            <Flex
-              className={`bg-derma-tertiary justify-between sticky bottom-0 py-4 px-6 text-white w-full h-[${modalBottomBarHeight}]`}
-            >
-              <div>
-                <Text className="text-3xl font-bold">
-                  {DERMA_ROUTINES[selectedRoutine].price}
-                </Text>
-                {DERMA_ROUTINES[selectedRoutine].price !==
-                  DERMA_ROUTINES[selectedRoutine].discountedPrice && (
-                  <Text className="text-sm text-hg-error font-medium line-through">
-                    PVP {DERMA_ROUTINES[selectedRoutine].discountedPrice}
-                  </Text>
-                )}
-              </div>
-              <Button
-                size="xl"
-                type="derma"
-                onClick={() => selectProduct(selectedRoutine + 1)}
-              >
-                {DERMA_ROUTINES[selectedRoutine].cta}
-              </Button>
-            </Flex>
           </div>
         )}
       </Modal>
@@ -282,16 +263,16 @@ export default function UpsellingRoutines({
 
         <Container className="bg-derma-primary500 rounded-3xl py-6 -mt-5 md:mt-0 md:mb-8">
           <TitleDerma size="2xl" className="text-white mb-4">
-            Completa tu plan de cuidado facial
+            Tu rutina facial ya está en camino
           </TitleDerma>
           <Text className="mb-8">
-            Según tu consulta, estas opciones pueden ayudarte a mejorar la salud
-            de tu piel
+            Sigue las recomendaciones que te llegarán junto a la rutina para
+            sacarle el máximo partido
           </Text>
 
           <Flex
             layout="col-left"
-            className={`w-full gap-6 md:grid md:grid-cols-${DERMA_ROUTINES.length}`}
+            className={` md:w-1/2 gap-6 md:grid mx-auto md:grid-cols-${DERMA_ROUTINES.length}`}
           >
             {DERMA_ROUTINES.map((routine, index) => (
               <Flex
@@ -303,64 +284,46 @@ export default function UpsellingRoutines({
                     : 'bg-derma-secondary400'
                 }`}
               >
-                <Flex className="gap-6 mt-2 mb-6 md:flex-col h-full w-full items-start md:items-center">
+                <Container className="pt-12 md:p-6">
                   <Image
-                    src={routine.imgSrc}
-                    alt="Seguimiento online con tu dermatólogo"
-                    width={700}
-                    height={700}
-                    className="w-[55%]"
+                    src={DERMA_ROUTINES[selectedRoutine].modalImgSrc}
+                    alt={DERMA_ROUTINES[selectedRoutine].name}
+                    width={524}
+                    height={696}
+                    className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
                   />
 
                   <Flex layout="col-left" className="w-full">
                     <p
                       className={`mb-2 bg-hg-secondary300 text-hg-secondary py-1 px-2 rounded-full text-xs inline-block ${
-                        index !== 0
+                        index >= 0
                           ? 'bg-hg-secondary300 text-hg-secondary'
                           : 'bg-transparent text-transparent h-6'
                       }`}
                     >
-                      {index !== 0 && data && DERMA_TYPES[data.routine]}
+                      {index >= 0 && data && DERMA_TYPES[data.routine]}
                     </p>
                     <Text className="text-md mb-3 md:text-lg md:font-semibold">
                       {routine.name}
                     </Text>
-                    <Text className="text-3xl font-bold">{routine.price}</Text>
-                    {routine.price !== routine.discountedPrice && (
-                      <Text className="text-sm text-hg-error font-medium line-through">
-                        PVP {routine.discountedPrice}
-                      </Text>
-                    )}
                   </Flex>
-                </Flex>
 
-                <Flex layout="row-center" className="justify-between w-full">
-                  <Button
-                    size="sm"
-                    type="tertiary"
-                    customStyles={`border-none text-derma-tertiary ${
-                      index !== 2
-                        ? 'bg-derma-secondary100'
-                        : 'bg-white/10 text-white'
-                    }`}
-                    onClick={() => {
-                      setSelectedRoutine(index);
+                  <Flex layout="row-right" className="justify-between w-full">
+                    <Button
+                      type="derma"
+                      size={deviceSize.isMobile ? 'lg' : 'xl'}
+                      onClick={() => {
+                        setSelectedRoutine(index);
 
-                      setTimeout(() => {
-                        setShowModal(true);
-                      }, 100);
-                    }}
-                  >
-                    Saber más
-                  </Button>
-                  <Button
-                    type="derma"
-                    size={deviceSize.isMobile ? 'lg' : 'xl'}
-                    onClick={() => selectProduct(routine.id)}
-                  >
-                    {routine.cta}
-                  </Button>
-                </Flex>
+                        setTimeout(() => {
+                          setShowModal(true);
+                        }, 100);
+                      }}
+                    >
+                      Saber más
+                    </Button>
+                  </Flex>
+                </Container>
               </Flex>
             ))}
           </Flex>

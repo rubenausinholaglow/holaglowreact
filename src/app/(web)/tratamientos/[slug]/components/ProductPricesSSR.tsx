@@ -1,96 +1,67 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { fetchProduct } from '@utils/fetch';
-import { useSessionStore } from 'app/stores/globalStore';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import dynamic from 'next/dynamic';
 
-import ProductPriceCard from './ProductPriceCard';
-import ProductSessionGroupedPriceCard from './ProductSessionGroupedPriceCard';
-import ProductSessionPriceCard from './ProductSessionPriceCard';
+const ProductPriceCard = dynamic(() => import('./ProductPriceCard'), {
+  ssr: false,
+});
+const ProductSessionGroupedPriceCard = dynamic(
+  () => import('./ProductSessionGroupedPriceCard'),
+  { ssr: false }
+);
+const ProductSessionPriceCard = dynamic(
+  () => import('./ProductSessionPriceCard'),
+  { ssr: false }
+);
 
-export default function ProductPrices({
-  product,
-  isDashboard = false,
-}: {
-  product: Product;
-  isDashboard?: boolean;
-}) {
-  const { deviceSize } = useSessionStore(state => state);
-  const [productItems, setProductITems] = useState<Product[]>([]);
-  const [isSessionProduct, setIsSessionProduct] = useState<boolean>(false);
-  const [groupedSessionProducts, setGroupedSessionProducts] = useState<
-    Product[][] | null
-  >([]);
+export default function ProductPricesSSR({ product }: { product: Product }) {
+  const deviceSize = useDeviceSizeSSR();
 
-  useEffect(() => {
-    if (product.upgrades) {
-      product.upgrades = product.upgrades.sort((x, y) => x.order - y.order);
-      const allProducts = product.upgrades.map(item => item.product);
-      setProductITems(allProducts);
-    }
-  }, [product]);
+  function groupProductsByTitle(arr: Product[]) {
+    const groupedArray: { [key: string]: Product[] } = {};
 
-  useEffect(() => {
-    if (!isEmpty(productItems)) {
-      setIsSessionProduct(
-        productItems.length > 1 &&
-          productItems
-            .map((item: Product) => item.title)
-            .every((item: string) => item.includes(product.title))
-      );
-    }
-  }, [productItems]);
+    productItems.forEach((product: Product) => {
+      const title = product.title.replace(/ x[36]$/, '');
 
-  useEffect(() => {
-    function groupProductsByTitle(arr: Product[]) {
-      const groupedArray: { [key: string]: Product[] } = {};
+      if (!groupedArray[title]) {
+        groupedArray[title] = [];
+      }
 
-      productItems.forEach((product: Product) => {
-        const title = product.title.replace(/ x[36]$/, '');
+      groupedArray[title].push(product);
+    });
 
-        if (!groupedArray[title]) {
-          groupedArray[title] = [];
-        }
+    return Object.values(groupedArray);
+  }
 
-        groupedArray[title].push(product);
-      });
+  let productItems: Product[] = [];
+  let isSessionProduct = false;
+  let groupedSessionProducts: Product[][] | null = [];
 
-      return Object.values(groupedArray);
-    }
+  if (product.upgrades) {
+    product.upgrades = product.upgrades.sort((x, y) => x.order - y.order);
+    const allProducts = product.upgrades.map(item => item.product);
+    productItems = allProducts;
+  }
 
+  if (productItems.length > 1) {
+    isSessionProduct = productItems
+      .map((item: Product) => item.title)
+      .every((item: string) => item.includes(product.title));
+  }
+
+  if (isSessionProduct) {
     const groupedArrays: Product[][] = groupProductsByTitle(productItems);
 
     if (groupedArrays.length !== productItems.length) {
-      setGroupedSessionProducts(groupedArrays);
+      groupedSessionProducts = groupedArrays;
     }
-  }, [isSessionProduct]);
-
-  useEffect(() => {
-    async function initProduct(productId: string, isDashboard: boolean) {
-      const productDetails = await fetchProduct(productId, true, false);
-
-      if (productDetails.upgrades) {
-        productDetails.upgrades = productDetails.upgrades.sort(
-          (x, y) => x.order - y.order
-        );
-        const allProducts = productDetails.upgrades.map(item => item.product);
-        setProductITems(allProducts);
-      }
-    }
-
-    if (isDashboard) {
-      initProduct(product.id, true);
-    }
-  }, []);
-
-  if (isEmpty(productItems)) {
-    return <></>;
   }
 
   return (
@@ -99,14 +70,12 @@ export default function ProductPrices({
       id="prices"
     >
       <Container className="py-12">
-        {!isDashboard && (
-          <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
-            <Underlined color={HOLAGLOW_COLORS['primary']}>
-              Personaliza
-            </Underlined>{' '}
-            tu experiencia
-          </Title>
-        )}
+        <Title size="2xl" className="font-bold mb-6 md:mb-12">
+          <Underlined color={HOLAGLOW_COLORS['primary']}>
+            Personaliza
+          </Underlined>{' '}
+          tu experiencia
+        </Title>
 
         {!isSessionProduct && (
           <Flex layout="col-left" className="md:flex-row gap-8">
@@ -116,7 +85,6 @@ export default function ProductPrices({
             >
               {productItems.map((item: Product, index: number) => (
                 <ProductPriceCard
-                  isDashboard={isDashboard}
                   fullWidthPack={productItems.length === 1 && item.isPack}
                   key={item.title}
                   product={item}
@@ -153,7 +121,6 @@ export default function ProductPrices({
                   if (item.price > 0) {
                     return (
                       <ProductSessionPriceCard
-                        isDashboard={isDashboard}
                         key={item.title}
                         product={item}
                         index={index}

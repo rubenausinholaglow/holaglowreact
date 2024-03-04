@@ -1,4 +1,4 @@
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, TitleDerma } from 'designSystem/Texts/Texts';
 import Image from 'next/image';

@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import CheckHydration from '@utils/CheckHydration';
 import { Professional } from 'app/types/clinic';
 import { Product } from 'app/types/product';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { isEmpty } from 'lodash';
 
 import ProfessionalCard from '../common/ProfessionalCard';

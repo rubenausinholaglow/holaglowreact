@@ -7,7 +7,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import useRoutes from 'app/utils/useRoutes';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
