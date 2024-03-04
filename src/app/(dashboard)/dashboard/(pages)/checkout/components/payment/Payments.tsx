@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import { Product } from '@interface/product';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
@@ -10,7 +11,10 @@ import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { StatusBudget, TicketBudget } from 'app/types/budget';
 import { MessageType } from 'app/types/messageSocket';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
@@ -61,7 +65,11 @@ export const PaymentModule = () => {
     storedBudgetId,
     storedAppointmentId,
     setBudgetId,
+    stateProducts,
   } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments, selectedTreatments } = useSessionStore(
+    state => state
+  );
 
   const { addPaymentToList, removePayment } = usePaymentList();
 
@@ -257,15 +265,18 @@ export const PaymentModule = () => {
   };
 
   const createTicket = async () => {
-    if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
+    /*if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
       alert('Hay cantidad pendiente de pagar');
       return;
-    }
+    }*/
     setIsLoading(true);
     try {
-      const result = await sendTicket();
+      setTreatments();
+      router.push('/dashboard/menu');
+      /*const result = await sendTicket();
       if (result) {
         setBudgetId('');
+        
         usePaymentList.setState(INITIAL_STATE_PAYMENT);
         useCartStore.setState(INITIAL_STATE);
         if (remoteControl) {
@@ -283,7 +294,7 @@ export const PaymentModule = () => {
         setMessageNotification('Ticket Creado Correctamente');
       } else {
         //TODO - ALERT MESSAGE
-      }
+      }*/
     } catch (error: any) {
       setIsLoading(false);
       Bugsnag.notify(error);
@@ -298,6 +309,14 @@ export const PaymentModule = () => {
     creditCard: ['visa.svg', 'mastercard.svg'],
     stripe: ['visa.svg', 'mastercard.svg'],
   };
+
+  function setTreatments() {
+    const ids = cart.map(cartItem => cartItem.id);
+    const selectedProducts = stateProducts.filter(product =>
+      ids.includes(product.id)
+    );
+    setSelectedTreatments(selectedProducts);
+  }
 
   return (
     <>
