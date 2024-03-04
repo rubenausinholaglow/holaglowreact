@@ -11,6 +11,12 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
   const imageUrls: any[] = [];
   const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`;
 
+  const alignmentImage =
+    product.productCardImagePosition === 'right'
+      ? 'rounded-r-3xl'
+      : product.productCardImagePosition === 'left'
+      ? 'rounded-l-3xl'
+      : '';
   const renderCarouselItems = () => {
     return imageUrls.map((url, index) => (
       <Flex key={index} layout="col-center" className="items-stretch">
@@ -21,11 +27,7 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
             width={140}
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
-            className={`relative ${url.alignmentStyles} ${
-              product.productCardImagePosition == 'right' && 'rounded-r-3xl'
-            } ${
-              product.productCardImagePosition == 'left' && 'rounded-l-3xl'
-            } w-[66%]`}
+            className={`relative ${url.alignmentStyles} ${alignmentImage} w-[66%]`}
           />
         </div>
       </Flex>
@@ -58,11 +60,7 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
           src={imgSrc}
           priority
           onError={() => setNextImgSrc()}
-          className={`relative ${alignmentStyles} ${
-            product.productCardImagePosition == 'right' && 'rounded-r-3xl'
-          } ${
-            product.productCardImagePosition == 'left' && 'rounded-l-3xl'
-          } w-[66%]`}
+          className={`relative ${alignmentStyles} ${alignmentImage} w-[66%]`}
         />
       )}
     </div>
