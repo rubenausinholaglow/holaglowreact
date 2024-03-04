@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import Select, { SingleValue } from 'react-select';
-import useAsyncClient from '@utils/useAsyncClient';
-import { WhatsappMessages } from 'app/crm/types/Contact';
+import asyncClient from '@utils/asyncClient';
 import { useSessionStore } from 'app/stores/globalStore';
-import dayjs from 'dayjs';
 
 interface ModalTemplateProps {
   isOpen: boolean;
@@ -29,10 +27,7 @@ export default function ModalTemplate({
   const { userLoginResponse } = useSessionStore(state => state);
   const [templateSelected, setTemplateSelected] =
     useState<SingleValue<Option>>(null);
-  const { postData } = useAsyncClient(
-    `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsappTemplate`,
-    'PUT'
-  );
+
   const options: Option[] = [
     {
       value: 'TEMPLATE 1',
@@ -70,7 +65,12 @@ export default function ModalTemplate({
     const textTemplate = templateSelected?.label;
     handleNewMessage(textTemplate);
 
-    await postData(body, headers);
+    await asyncClient(
+      `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsappTemplate`,
+      'PUT',
+      body,
+      headers
+    );
     handleModalTemplate();
   };
 

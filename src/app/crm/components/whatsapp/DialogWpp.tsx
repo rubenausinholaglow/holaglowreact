@@ -5,6 +5,7 @@ interface DialogWppProps {
   handleDialog: any;
   handleDialogOption: (option: string) => void;
   handleFileChange: (event: any) => void;
+  refInputFile: React.MutableRefObject<HTMLInputElement | null>;
 }
 
 export default function DialogWpp({
@@ -12,6 +13,7 @@ export default function DialogWpp({
   handleDialog,
   handleDialogOption,
   handleFileChange,
+  refInputFile,
 }: DialogWppProps) {
   const handleCloseDialog = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -26,24 +28,29 @@ export default function DialogWpp({
           <ul>
             <li className="mb-4">
               <input
-                id="fileInput"
+                id="fileImageInput"
                 type="file"
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
+                ref={refInputFile}
+                accept="image/png, image/gif, image/jpeg, image/jpg"
               />
-
-              <label htmlFor="fileInput">
-                <span>Imagen</span>
+              <label htmlFor="fileImageInput">
+                <span className="cursor-pointer">Imagen</span>
               </label>
             </li>
             <li className="mb-4">
-              <button
-                className="flex items-center space-x-2"
-                onClick={() => handleDialogOption('Video')}
-                disabled
-              >
-                <span>Video</span>
-              </button>
+              <input
+                id="fileVideoInput"
+                type="file"
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+                ref={refInputFile}
+                accept="video/*"
+              />
+              <label htmlFor="fileVideoInput">
+                <span className="cursor-pointer">Video</span>
+              </label>
             </li>
             <li>
               <button

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import useAsyncClient from '@utils/useAsyncClient';
+import asyncClient from '@utils/asyncClient';
 import { WhatsappMessages } from 'app/crm/types/Contact';
 import {
   getFileType,
@@ -34,11 +34,7 @@ export default function InputWpp({
   const [openDialog, setOpenDialog] = useState(false);
   const [openModalTemplate, setOpenModalTemplate] = useState(false);
   const [openEmojiDialog, setOpenEmojiDialog] = useState(false);
-
-  const { postData } = useAsyncClient(
-    `${process.env.NEXT_PUBLIC_CONTACTS_API}Tasks/SendWhatsapp`,
-    'PUT'
-  );
+  const refInputFile = React.useRef<HTMLInputElement | null>(null);
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -50,6 +46,14 @@ export default function InputWpp({
     setOpenDialog(!openDialog);
   };
 
+  const clearInputFile = () => {
+    if (refInputFile.current) {
+      refInputFile.current.value = '';
+    }
+  };
+
+  console.log(refInputFile);
+
   const handleSendFile = async (fileBlob: File) => {
     const formData = new FormData();
     formData.append('file', fileBlob);
@@ -60,7 +64,7 @@ export default function InputWpp({
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}/Tasks/SendWhatsappFile`,
+        `https://localhost:7103/Tasks/SendWhatsappFile`,
         {
           method: 'POST',
           body: formData,
@@ -74,16 +78,18 @@ export default function InputWpp({
           text: '',
           creationDate: dateTime.toString(),
           time: dateTime.toString(),
-          urlFile: resultResponse?.data?.urlFile,
+          urlFile: resultResponse?.data,
         };
 
         setWhatsappMessages((prevState: WhatsappMessages[]) => [
           ...prevState,
           newWhatsappMessage,
         ]);
+        clearInputFile();
       } else {
+        clearInputFile();
         const resultResponse = await response.json();
-        Bugsnag.notify(`Error al subir la imagen`, resultResponse);
+        Bugsnag.notify(`Error al subir la imagen`, resultResponse.error);
       }
     } catch (error) {
       Bugsnag.notify(`Error al subir la imagen`);
@@ -133,7 +139,7 @@ export default function InputWpp({
     ]);
   };
 
-  const sendWhatsApp = () => {
+  const sendWhatsApp = async () => {
     setDisableSendButton(true);
     const token = userLoginResponse?.token;
 
@@ -148,7 +154,12 @@ export default function InputWpp({
       agentId: agentId,
     });
     handleNewMessage(input);
-    postData(body, headers);
+    await asyncClient(
+      `${process.env.NEXT_PUBLIC_CONTACTS_API}/Tasks/SendWhatsappFile`,
+      'POST',
+      body,
+      headers
+    );
     setInput('');
     setDisableSendButton(false);
   };
@@ -206,6 +217,7 @@ export default function InputWpp({
         handleDialog={handleDialog}
         handleDialogOption={handleDialogOption}
         handleFileChange={handleFileChange}
+        refInputFile={refInputFile}
       />
       <ModalTemplate
         agentId={agentId}
