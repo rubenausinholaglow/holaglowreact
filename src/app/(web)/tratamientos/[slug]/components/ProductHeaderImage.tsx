@@ -22,8 +22,10 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
             className={`relative ${url.alignmentStyles} ${
-              alignmentStyles == 'ml-auto' && 'rounded-r-3xl'
-            } ${alignmentStyles == 'mr-auto' && 'rounded-l-3xl'} w-[66%]`}
+              product.productCardImagePosition == 'right' && 'rounded-r-3xl'
+            } ${
+              product.productCardImagePosition == 'left' && 'rounded-l-3xl'
+            } w-[66%]`}
           />
         </div>
       </Flex>
@@ -57,8 +59,10 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
           priority
           onError={() => setNextImgSrc()}
           className={`relative ${alignmentStyles} ${
-            alignmentStyles == 'ml-auto' && 'rounded-r-3xl'
-          } ${alignmentStyles == 'mr-auto' && 'rounded-l-3xl'} w-[66%]`}
+            product.productCardImagePosition == 'right' && 'rounded-r-3xl'
+          } ${
+            product.productCardImagePosition == 'left' && 'rounded-l-3xl'
+          } w-[66%]`}
         />
       )}
     </div>
