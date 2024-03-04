@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { SvgArrow, SvgCross } from 'app/icons/IconsDs';
+import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -43,20 +43,8 @@ export default function MobileNavigation({
   }, [clinics]);
 
   return (
-    <Modal
-      isVisible={isVisible}
-      width="w-full"
-      className="shadow-none bg-hg-primary300"
-      type="right"
-      hideModalBackground
-    >
+    <>
       <div className="bg-white border-b border-hg-black pt-12 pb-8 relative">
-        <SvgCross
-          height={20}
-          width={20}
-          className="absolute top-4 right-4"
-          onClick={() => setIsMobileNavVisible(false)}
-        />
         <Flex
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
@@ -196,6 +184,6 @@ export default function MobileNavigation({
           <a href="tel:(+34) 682 417 208">(+34) 682 417 208</a>
         </p>
       </Flex>
-    </Modal>
+    </>
   );
 }

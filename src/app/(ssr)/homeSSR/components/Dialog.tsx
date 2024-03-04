@@ -1,4 +1,6 @@
-import React, { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 
 export function DialogTrigger({ children }: { children: ReactNode }) {
@@ -6,10 +8,39 @@ export function DialogTrigger({ children }: { children: ReactNode }) {
 }
 
 export function DialogContent({ children }: { children: ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const dialogContent = document.querySelector('.Dialog.Content')!;
+
+    // Define a MutationObserver to track changes to the data-state attribute
+    const observer = new MutationObserver(mutationsList => {
+      for (const mutation of mutationsList) {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'data-state'
+        ) {
+          const newState = dialogContent.getAttribute('data-state') === 'open';
+          setIsOpen(newState);
+        }
+      }
+    });
+
+    // Start observing changes to the data-state attribute
+    observer.observe(dialogContent, { attributes: true });
+
+    // Cleanup function to disconnect the observer
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  console.log(isOpen);
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="bg-hg-black/50 z-40 data-[state=open]:animate-overlayShow fixed inset-0" />
-      <Dialog.Content className="z-40 data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
+      <Dialog.Content className="transition-all z-40 translate-x-[105%] data-[state=open]:translate-x-[50%] fixed inset-0 h-screen w-screen bg-white focus:outline-none">
         {children}
       </Dialog.Content>
     </Dialog.Portal>

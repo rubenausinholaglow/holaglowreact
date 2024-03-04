@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import CheckHydration from '@utils/CheckHydration';
-import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
+import {
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+  DialogWrapper,
+} from 'app/(ssr)/homeSSR/components/Dialog';
+import { SvgArrow, SvgCross, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
@@ -89,14 +95,6 @@ export default function Header() {
 
   return (
     <>
-      <CheckHydration>
-        <MobileNavigation
-          isVisible={isMobileNavVisible}
-          headerHeight={HEADER_HEIGHT}
-          setIsMobileNavVisible={setIsMobileNavVisible}
-        />
-      </CheckHydration>
-
       <header
         id="header"
         className={`z-30 w-full top-0 sticky transition-all ${
@@ -137,14 +135,23 @@ export default function Header() {
                 />
               </Button>
 
-              <SvgMenu
-                height={24}
-                width={24}
-                className="ml-2 lg:hidden"
-                onClick={() => {
-                  setIsMobileNavVisible(true);
-                }}
-              />
+              <DialogWrapper>
+                <DialogTrigger>
+                  <SvgMenu height={24} width={24} className="ml-2 lg:hidden" />
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogClose>
+                    <SvgCross />
+                  </DialogClose>
+                  <CheckHydration>
+                    <MobileNavigation
+                      isVisible={isMobileNavVisible}
+                      headerHeight={HEADER_HEIGHT}
+                      setIsMobileNavVisible={setIsMobileNavVisible}
+                    />
+                  </CheckHydration>
+                </DialogContent>
+              </DialogWrapper>
             </Flex>
           </Flex>
         </Container>
