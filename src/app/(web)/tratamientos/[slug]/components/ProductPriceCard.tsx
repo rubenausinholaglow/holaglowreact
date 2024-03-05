@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import useSelectTreatments from '@dashboardComponents/useSelectTreatments';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
   Operation,
@@ -182,7 +181,6 @@ function ProductPriceItemsCard({
     getQuantityOfProduct,
     removeSingleProduct,
   } = useCartStore(state => state);
-  const { addProduct, removeProduct } = useSelectTreatments();
 
   const isDisabled =
     product.isPack &&
@@ -388,9 +386,7 @@ function ProductPriceItemsCard({
             ): void {
               if (operation == 'increase') {
                 addItemToCart(product as CartItem);
-                addProduct(product);
               } else {
-                removeProduct(product);
                 removeSingleProduct(product as CartItem);
               }
             }}

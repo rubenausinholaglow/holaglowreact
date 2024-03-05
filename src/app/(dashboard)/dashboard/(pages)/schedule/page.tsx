@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Product } from '@interface/product';
 import { fetchClinics, fetchProducts } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
@@ -14,8 +15,10 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { forEach, isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+
+import { useCartStore } from '../budgets/stores/userCartStore';
 
 export default function Page() {
   const {
@@ -25,8 +28,13 @@ export default function Page() {
     setClinics,
     setStateProducts,
   } = useGlobalPersistedStore(state => state);
-  const { selectedClinic, setSelectedClinic, selectedTreatments } =
-    useSessionStore(state => state);
+  const {
+    selectedClinic,
+    setSelectedClinic,
+    selectedTreatments,
+    setSelectedTreatments,
+  } = useSessionStore(state => state);
+  const cart = useCartStore(state => state.cart);
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   const router = useRouter();
@@ -69,7 +77,25 @@ export default function Page() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
+    setTreatments();
   }, [stateProducts]);
+
+  function setTreatments() {
+    setSelectedTreatments([]);
+
+    const productTitles: string[] = cart.map(cartItem => cartItem.title);
+    const foundProducts: Product[] = [];
+
+    productTitles.forEach(title => {
+      stateProducts.forEach(product => {
+        if (title.includes(product.title)) {
+          foundProducts.push(product);
+        }
+      });
+    });
+
+    setSelectedTreatments(foundProducts);
+  }
 
   return (
     <App>

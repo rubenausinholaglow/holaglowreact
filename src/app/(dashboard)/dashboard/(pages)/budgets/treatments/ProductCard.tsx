@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useSelectTreatments from '@dashboardComponents/useSelectTreatments';
 import { SvgAngleDown, SvgClose } from 'app/icons/Icons';
 import { SvgGlow } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
@@ -26,7 +25,6 @@ interface Props {
 export default function ProductCard({ product, isCheckout }: Props) {
   const { cart, removeFromCart, addItemToCart, setHighlightProduct } =
     useCartStore(state => state);
-  const { removeProduct } = useSelectTreatments();
   const { setIsModalOpen } = useGlobalStore(state => state);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
@@ -77,7 +75,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
         className="absolute top-2 right-2 cursor-pointer"
         onClick={e => {
           removeFromCart(product);
-          removeProduct(product);
         }}
       />
       {!showDiscountForm && (
