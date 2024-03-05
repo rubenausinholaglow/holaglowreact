@@ -189,13 +189,12 @@ export default function TreatmentAccordionSelector({
                       onClick={() => {
                         const isSelected = selectedTreatments.some(
                           selectedProduct =>
-                            selectedProduct.title.includes(product.title)
+                            selectedProduct.title === product.title
                         );
 
                         if (isSelected) {
                           const updatedSelection = selectedTreatments.filter(
-                            selectedProduct =>
-                              !selectedProduct.title.includes(product.title)
+                            selectedProduct => selectedProduct.id !== product.id
                           );
                           setSelectedTreatments(updatedSelection);
                         } else {
