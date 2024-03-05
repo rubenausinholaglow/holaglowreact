@@ -152,7 +152,7 @@ export default function ProductCard({
         >
           <Flex
             layout={isDashboard ? 'row-left' : 'col-left'}
-            className="gap-2 mb-2"
+            className="gap-2"
           >
             {discountedPrice > 0 && (
               <Text
@@ -190,11 +190,7 @@ export default function ProductCard({
               <SvgPlusSmall height={20} width={20} />
             </Button>
           ) : (
-            <Button
-              type="tertiary"
-              className="mt-auto ml-4"
-              customStyles="bg-hg-primary hover:bg-hg-secondary100"
-            >
+            <Button type="primary" className="mt-auto ml-4">
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />
             </Button>

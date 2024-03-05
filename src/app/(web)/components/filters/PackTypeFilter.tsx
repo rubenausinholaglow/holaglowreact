@@ -24,10 +24,10 @@ export default function PackTypeFilter({
       isAnimated
       origin="right"
       className={className}
-      type="tertiary"
+      type="secondary"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
       customStyles={twMerge(`
-        border-none group-hover:bg-hg-secondary100 pointer-events-none ${
+        border-none group-hover:bg-hg-secondary100 text-hg-black pointer-events-none ${
           customStyles ? customStyles : ''
         } 
         ${

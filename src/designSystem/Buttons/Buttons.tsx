@@ -8,7 +8,7 @@ type ButtonTypes =
   | 'primary'
   | 'secondary'
   | 'tertiary'
-  | 'transparent'
+  | 'white'
   | 'derma'
   | 'dermaDark'
   | 'disabled';
@@ -61,6 +61,7 @@ export const Button = ({
             type={type}
             size={size}
             customStyles={customStyles}
+            disabled={disabled}
             {...rest}
           >
             {children}
@@ -86,6 +87,7 @@ export const Button = ({
           type={type}
           size={size}
           customStyles={customStyles}
+          disabled={disabled}
           {...rest}
         >
           {children}
@@ -149,7 +151,6 @@ const ButtonBody = ({
   type,
   size,
   customStyles,
-  color,
   disabled = false,
   children,
   id,
@@ -158,24 +159,20 @@ const ButtonBody = ({
   type: ButtonTypes;
   size: ButtonSizes;
   customStyles?: string;
-  color?: string;
   disabled?: boolean;
   children: ReactNode;
   id?: string;
 }) => {
   const DISABLED_STYLES =
-    'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default pointer-events-none';
+    'cursor-default pointer-events-none border-none bg-hg-black100 text-hg-black300 group-hover:bg-hg-black100 group-hover:text-hg-black300 group-active:bg-hg-black100 group-active:text-hg-black300';
 
   const STYLES: any = {
     common: 'transition-all relative text-center rounded-full',
-    animations: '-translate-y-1 group-active:-translate-y-0',
-    primary:
-      'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
+    primary: 'bg-hg-secondary text-white group-hover:bg-hg-secondary700',
     secondary:
-      'bg-white text-hg-secondary border border-hg-black group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
-    tertiary: `bg-white ${
-      color ? color : 'text-hg-black border border-hg-black'
-    }`,
+      'bg-hg-secondary100 text-hg-secondary border border-hg-secondary group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
+    tertiary:
+      'bg-hg-primary text-hg-black border border-hg-black group-active:bg-hg-secondary100 group-hover:bg-hg-secondary100',
     derma: `bg-derma-primary text-white ${
       !disabled
         ? 'group-hover:bg-derma-primary500 group-hover:text-derma-primary'
@@ -184,8 +181,8 @@ const ButtonBody = ({
     dermaDark: `bg-derma-tertiary text-white ${
       !disabled ? 'group-hover:bg-derma-tertiaryDark' : ''
     }`,
-    transparent:
-      'bg-white text-hg-black border border-transparent group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100',
+    white:
+      'bg-white text-hg-black border border-hg-black group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100',
     disabled:
       'bg-hg-black100 text-hg-black300 group-hover:bg-hg-black100 group-hover:text-hg-black300 cursor-default',
     sm: 'text-xs font-medium h-[32px] px-4',
@@ -194,12 +191,10 @@ const ButtonBody = ({
     xl: 'text-md font-semibold h-[64px] px-6',
   };
 
-  const isAnimated = (type === 'primary' || type === 'secondary') && !disabled;
-
   const styles = twMerge(
     `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
-      isAnimated ? STYLES.animations : ''
-    } ${disabled ? DISABLED_STYLES : ''}`
+      disabled ? DISABLED_STYLES : ''
+    }`
   );
 
   return (
