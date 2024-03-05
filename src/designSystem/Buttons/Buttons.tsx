@@ -57,7 +57,6 @@ export const Button = ({
           onClick={onClick}
           type={rest?.isSubmit ? 'submit' : 'button'}
         >
-          <ButtonBase type={type} />
           <ButtonBody
             type={type}
             size={size}
@@ -83,7 +82,6 @@ export const Button = ({
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
-        <ButtonBase type={type} />
         <ButtonBody
           type={type}
           size={size}
@@ -108,7 +106,6 @@ export const Button = ({
           onClick={onClick}
           type={rest?.isSubmit ? 'submit' : 'button'}
         >
-          <ButtonBase type={type} disabled={disabled} />
           <ButtonBody
             id={id}
             type={type}
@@ -134,7 +131,6 @@ export const Button = ({
       onClick={onClick}
       type={rest?.isSubmit ? 'submit' : 'button'}
     >
-      <ButtonBase type={type} disabled={disabled} />
       <ButtonBody
         id={id}
         type={type}
@@ -168,10 +164,10 @@ const ButtonBody = ({
   id?: string;
 }) => {
   const DISABLED_STYLES =
-    'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default';
+    'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default pointer-events-none';
 
   const STYLES: any = {
-    common: 'transition-all relative bottom-[1px] text-center rounded-full',
+    common: 'transition-all relative text-center rounded-full',
     animations: '-translate-y-1 group-active:-translate-y-0',
     primary:
       'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
@@ -210,33 +206,5 @@ const ButtonBody = ({
     <Flex layout="row-center" className={styles} id={id} {...rest}>
       {children}
     </Flex>
-  );
-};
-
-const ButtonBase = ({
-  type,
-  disabled = false,
-}: {
-  type: ButtonTypes;
-  disabled?: boolean;
-}) => {
-  const BUTTON_TYPES = ['primary', 'secondary'];
-
-  const STYLES: any = {
-    primary:
-      'bg-hg-primary border border-hg-black group-hover:bg-hg-secondary500',
-    secondary: 'bg-hg-secondary border border-hg-black',
-  };
-
-  const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;
-
-  if (disabled) {
-    return <></>;
-  }
-
-  return (
-    <div
-      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full pointer-events-none ${styles}`}
-    ></div>
   );
 };

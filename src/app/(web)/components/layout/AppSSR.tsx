@@ -5,8 +5,6 @@ import { gtUltra, poppins } from 'app/fonts';
 import { Breakpoint } from './Breakpoint';
 
 export default function AppSSR({ children }: { children: ReactNode }) {
-  console.log(poppins);
-
   return (
     <body
       id="body"

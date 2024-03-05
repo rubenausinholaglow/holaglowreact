@@ -16,11 +16,7 @@ export default function ValuesDescription() {
         className="gap-4 items-center relative md:justify-center md:flex-row"
       >
         <Flex layout="col-left" className="relative z-10 md:w-1/2">
-          <Title
-            isAnimated
-            size="2xl"
-            className="font-bold mb-12 md:mb-6 lg:pr-[20%]"
-          >
+          <Title isAnimated size="2xl" className="font-bold mb-12 md:mb-6">
             La belleza es lo que te dé la gana
           </Title>
           <Text

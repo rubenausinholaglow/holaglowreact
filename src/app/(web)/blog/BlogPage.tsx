@@ -7,7 +7,7 @@ import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { fetchBlogPosts } from 'app/utils/fetch';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 
 import App from '../components/layout/App';
 import BlogCategorySelector from './components/BlogCategorySelector';
@@ -37,12 +37,15 @@ export default function BlogPage() {
         ) : (
           <div className="rounded-t-3xl shadow-centered-black-lg ">
             <Container className="py-8">
-              <Text className="font-gtUltraBold text-4xl text-hg-secondary mb-2 md:text-6xl tracking-tighter md:text-center">
+              <Title
+                size="3xl"
+                className="mb-2 tracking-tighter md:text-center"
+              >
                 Glow{' '}
                 <Underlined color={HOLAGLOW_COLORS['primary']}>
                   Getter
                 </Underlined>
-              </Text>
+              </Title>
               <Text className="font-gtUltraBold text-xl mb-10 md:text-2xl md:text-center tracking-tighter font-semibold">
                 La medicina estética contada sin filtros
               </Text>
