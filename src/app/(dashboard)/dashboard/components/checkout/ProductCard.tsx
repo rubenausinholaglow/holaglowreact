@@ -63,16 +63,12 @@ export default function ProductCard({ product, isCheckout }: Props) {
             width={20}
             height={20}
             className="cursor-pointer shrink-0"
-            onClick={e => {
-              removeFromCart(product);
-            }}
+            onClick={() => removeFromCart(product)}
           />
         ) : (
           <Button
             size="sm"
-            onClick={e => {
-              removeFromCart(product);
-            }}
+            onClick={() => removeFromCart(product)}
             type="tertiary"
             className="shrink-0"
           >

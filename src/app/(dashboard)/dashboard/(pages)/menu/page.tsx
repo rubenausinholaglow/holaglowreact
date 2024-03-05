@@ -29,7 +29,6 @@ const Page = () => {
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
   }, []);
-
   useEffect(() => {
     if (!remoteControl) {
       const existsMessageCrisalixUser: any = messageSocket.messageSocket.filter(

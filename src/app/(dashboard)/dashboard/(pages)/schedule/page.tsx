@@ -15,7 +15,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
-import { forEach, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
