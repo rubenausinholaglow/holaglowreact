@@ -59,10 +59,6 @@ export default function Page() {
   }, [clinics]);
 
   useEffect(() => {
-    /* async function initTreatments() {
-      await setTreatments();
-    }*/
-
     async function initProducts() {
       const products = await fetchProducts({ isDerma: false });
       setStateProducts(products);
