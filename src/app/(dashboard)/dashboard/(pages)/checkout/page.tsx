@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Product } from '@interface/product';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
 import { ERROR_POST } from '@utils/textConstants';
@@ -12,10 +11,7 @@ import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Budget, StatusBudget } from 'app/types/budget';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';

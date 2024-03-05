@@ -26,7 +26,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const { cart, removeFromCart, addItemToCart, setHighlightProduct } =
     useCartStore(state => state);
   const { setIsModalOpen } = useGlobalStore(state => state);
-
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
@@ -73,9 +72,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         height={20}
         fill={HOLAGLOW_COLORS['black']}
         className="absolute top-2 right-2 cursor-pointer"
-        onClick={e => {
-          removeFromCart(product);
-        }}
+        onClick={() => removeFromCart(product)}
       />
       {!showDiscountForm && (
         <div

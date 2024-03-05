@@ -5,10 +5,7 @@ import { INITIAL_STATE } from '@utils/constants';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
 import { MessageType } from 'app/types/messageSocket';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
