@@ -21,8 +21,9 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   const { user, ignoreMessages, remoteControl } = useGlobalPersistedStore(
     state => state
   );
-  if (!remoteControl) return true;
+
   function goToPage(name: string) {
+    if (!remoteControl) return true;
     let message: GoToPageData;
     switch (name) {
       case 'Simulador 3D':

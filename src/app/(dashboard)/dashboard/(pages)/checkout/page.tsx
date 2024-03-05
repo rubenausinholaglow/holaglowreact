@@ -59,6 +59,7 @@ const Page = () => {
 
   const handleFinalize = async () => {
     setTotalPriceInitial(totalPriceToShow);
+
     const budget: Budget = {
       userId: user?.id || '',
       discountCode:

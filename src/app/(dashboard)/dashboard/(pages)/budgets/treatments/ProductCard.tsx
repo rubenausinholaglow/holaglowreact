@@ -27,7 +27,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
     useCartStore(state => state);
   const { setIsModalOpen } = useGlobalStore(state => state);
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
-
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
   const [imgSrc, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/${product.flowwwId}.jpg`
