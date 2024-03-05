@@ -163,11 +163,9 @@ function ProductPriceItemsCard({
   isOpen?: boolean;
 }) {
   const { stateProducts } = useGlobalPersistedStore(state => state);
-  const {
-    setSelectedTreatments,
-    selectedTreatments,
-    setSelectedPackTreatments,
-  } = useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedPackTreatments } = useSessionStore(
+    state => state
+  );
 
   const router = useRouter();
   const ROUTES = useRoutes();
