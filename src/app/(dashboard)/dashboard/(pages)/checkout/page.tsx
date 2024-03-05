@@ -180,7 +180,7 @@ const Page = () => {
               <Button
                 className="w-full"
                 size="md"
-                href={`${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`}
+                href={`${ROUTES.dashboard.schedule}`}
                 type="tertiary"
               >
                 <span className="font-semibold">Agendar Cita</span>
