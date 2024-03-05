@@ -30,7 +30,9 @@ export default function TreatmentAccordionSelector({
   const router = useRouter();
   const ROUTES = useRoutes();
 
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const { setSelectedTreatments, selectedTreatments } = useSessionStore(
     state => state
   );
@@ -42,17 +44,22 @@ export default function TreatmentAccordionSelector({
   const cart = useCartStore(state => state.cart);
 
   function getProductsByCategory(category: string) {
-    const filteredProducts = stateProducts.filter(
+    const filteredProducts = dashboardProducts.filter(
       product =>
         product.category.some(categoryItem => categoryItem.name === category) &&
         !product.isPack
     );
+    if (filteredProducts.length == 0) {
+      return selectedProducts;
+    }
 
-    return filteredProducts;
+    return filteredProducts.sort((a: any, b: any) =>
+      a.title > b.title ? 1 : -1
+    );
   }
 
   useEffect(() => {
-    const allCategoryNames: string[] = stateProducts.reduce(
+    const allCategoryNames: string[] = dashboardProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
           category => category.name
@@ -65,11 +72,70 @@ export default function TreatmentAccordionSelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, [stateProducts]);
+  }, [stateProducts, dashboardProducts]);
 
   useEffect(() => {
     if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
+
+  const renderAcordionContent = (category: string) => {
+    return (
+      <AccordionContent>
+        <div className="border-t border-hg-secondary300">
+          <ul className="flex flex-col w-full">
+            {getProductsByCategory(category).map(product => (
+              <li
+                className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
+                key={product.title}
+                onClick={() => {
+                  const isSelected = selectedTreatments.some(
+                    selectedProduct => selectedProduct.title === product.title
+                  );
+
+                  if (isSelected) {
+                    const updatedSelection = selectedTreatments.filter(
+                      selectedProduct => selectedProduct.id !== product.id
+                    );
+                    setSelectedTreatments(updatedSelection);
+                  } else {
+                    if (isDashboard) {
+                      setSelectedTreatments([...selectedTreatments, product]);
+                    } else {
+                      setSelectedTreatments([product]);
+                    }
+                  }
+
+                  if (!isDashboard) {
+                    router.push(ROUTES.checkout.clinics);
+                  }
+                }}
+              >
+                <div className="mr-4">
+                  <Text className="font-semibold">{product.title}</Text>
+                  <Text className="text-xs">{product.description}</Text>
+                </div>
+
+                {selectedTreatments.some(
+                  selectedProduct => selectedProduct.id === product.id
+                ) ||
+                selectedTreatments.some(selectedProduct =>
+                  selectedProduct.title.includes(product.title)
+                ) ? (
+                  <SvgRadioChecked
+                    height={24}
+                    width={24}
+                    className="shrink-0 ml-auto"
+                  />
+                ) : (
+                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </AccordionContent>
+    );
+  };
 
   if (isDashboard && selectedProducts.length > 0 && cart.length > 0)
     return (
@@ -85,65 +151,7 @@ export default function TreatmentAccordionSelector({
               <Text className="font-semibold">Tratamientos Seleccionados</Text>
             </Flex>
           </AccordionTrigger>
-          <AccordionContent>
-            <div className="border-t border-hg-secondary300">
-              <ul className="flex flex-col w-full">
-                {selectedProducts.map(product => (
-                  <li
-                    className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
-                    key={product.title}
-                    onClick={() => {
-                      const isSelected = selectedTreatments.some(
-                        selectedProduct =>
-                          selectedProduct.title.includes(product.title)
-                      );
-
-                      if (isSelected) {
-                        const updatedSelection = selectedTreatments.filter(
-                          selectedProduct =>
-                            !selectedProduct.title.includes(product.title)
-                        );
-                        setSelectedTreatments(updatedSelection);
-                      } else {
-                        if (isDashboard) {
-                          setSelectedTreatments([
-                            ...selectedTreatments,
-                            product,
-                          ]);
-                        } else {
-                          setSelectedTreatments([product]);
-                        }
-                      }
-
-                      if (!isDashboard) {
-                        router.push(ROUTES.checkout.clinics);
-                      }
-                    }}
-                  >
-                    <div className="mr-4">
-                      <Text className="font-semibold">{product?.title}</Text>
-                      <Text className="text-xs">{product?.description}</Text>
-                    </div>
-
-                    {selectedTreatments.some(
-                      selectedProduct => selectedProduct.id === product.id
-                    ) ||
-                    selectedTreatments.some(selectedProduct =>
-                      selectedProduct.title.includes(product.title)
-                    ) ? (
-                      <SvgRadioChecked
-                        height={24}
-                        width={24}
-                        className="shrink-0 ml-auto"
-                      />
-                    ) : (
-                      <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </AccordionContent>
+          {renderAcordionContent('')}
         </AccordionItem>
       </Accordion>
     );
@@ -181,65 +189,7 @@ export default function TreatmentAccordionSelector({
                   />
                 </Flex>
               </AccordionTrigger>
-              <AccordionContent>
-                <div className="border-t border-hg-secondary300">
-                  <ul className="flex flex-col w-full">
-                    {getProductsByCategory(category).map(product => (
-                      <li
-                        className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
-                        key={product.title}
-                        onClick={() => {
-                          const isSelected = selectedTreatments.some(
-                            selectedProduct =>
-                              selectedProduct.title === product.title
-                          );
-
-                          if (isSelected) {
-                            const updatedSelection = selectedTreatments.filter(
-                              selectedProduct =>
-                                selectedProduct.id !== product.id
-                            );
-                            setSelectedTreatments(updatedSelection);
-                          } else {
-                            if (isDashboard) {
-                              setSelectedTreatments([
-                                ...selectedTreatments,
-                                product,
-                              ]);
-                            } else {
-                              setSelectedTreatments([product]);
-                            }
-                          }
-
-                          if (!isDashboard) {
-                            router.push(ROUTES.checkout.clinics);
-                          }
-                        }}
-                      >
-                        <div className="mr-4">
-                          <Text className="font-semibold">{product.title}</Text>
-                          <Text className="text-xs">{product.description}</Text>
-                        </div>
-
-                        {selectedTreatments.some(
-                          selectedProduct => selectedProduct.id === product.id
-                        ) ||
-                        selectedTreatments.some(selectedProduct =>
-                          selectedProduct.title.includes(product.title)
-                        ) ? (
-                          <SvgRadioChecked
-                            height={24}
-                            width={24}
-                            className="shrink-0 ml-auto"
-                          />
-                        ) : (
-                          <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </AccordionContent>
+              {renderAcordionContent(category)}
             </AccordionItem>
           );
         })}

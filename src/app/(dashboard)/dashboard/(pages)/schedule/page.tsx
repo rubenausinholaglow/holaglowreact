@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 import { fetchClinics, fetchProducts } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
@@ -29,6 +30,7 @@ export default function Page() {
     storedClinicId,
     setClinics,
     setStateProducts,
+    setDashboardProducts,
   } = useGlobalPersistedStore(state => state);
   const {
     selectedClinic,
@@ -42,6 +44,26 @@ export default function Page() {
 
   const router = useRouter();
   const ROUTES = useRoutes();
+
+  useEffect(() => {
+    setStateProducts([]);
+    setDashboardProducts([]);
+    const fetchProducts = async () => {
+      try {
+        const data = await ProductService.getDashboardProducts(true);
+        const products = data.map((product: Product) => ({
+          ...product,
+          visibility: true,
+        }));
+        products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
+        setDashboardProducts(products);
+      } catch (error: any) {
+        console.log('error');
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     async function initClinics() {
@@ -153,7 +175,7 @@ export default function Page() {
           {selectedClinic && (
             <>
               <Title className="font-semibold mb-8">
-                Selecciona tratamiento
+                {cart.length == 0 ? 'Selecciona tratamiento' : 'Tratamientos'}
               </Title>
               <Flex layout="col-left" className="gap-3 w-full">
                 {!isEmpty(productCategories) && !isLoading ? (
