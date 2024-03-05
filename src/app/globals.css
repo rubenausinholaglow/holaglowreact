@@ -79,6 +79,10 @@ input[type='date']::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
+.textwrap-pretty {
+  text-wrap: pretty;
+}
+
 @layer components {
   .font-gtUltraBold {
     @apply tracking-tight;
