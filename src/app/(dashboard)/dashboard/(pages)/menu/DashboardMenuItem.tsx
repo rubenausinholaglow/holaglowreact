@@ -18,7 +18,6 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   const { user, ignoreMessages, remoteControl } = useGlobalPersistedStore(
     state => state
   );
-
   function goToPage(name: string) {
     if (!remoteControl) return true;
     let message: GoToPageData;
