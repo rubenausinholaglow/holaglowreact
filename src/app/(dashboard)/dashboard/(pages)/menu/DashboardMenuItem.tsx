@@ -1,10 +1,7 @@
 'use client';
 
 import { messageService } from '@services/MessageService';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { GoToPageData } from 'app/types/FrontEndMessages';
 import Image from 'next/image';
 import Link from 'next/link';
