@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Product, ProductType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -37,6 +38,7 @@ export default function TreatmentAccordionSelector({
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const cart = useCartStore(state => state.cart);
 
   function getProductsByCategory(category: string) {
     const filteredProducts = stateProducts.filter(
@@ -62,22 +64,25 @@ export default function TreatmentAccordionSelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-    setSelectedProducts(selectedTreatments);
   }, [stateProducts]);
 
-  if (isDashboard && selectedTreatments.length > 0)
+  useEffect(() => {
+    setSelectedProducts(selectedTreatments);
+  }, [selectedTreatments]);
+
+  if (isDashboard && selectedProducts.length > 0 && cart.length > 0)
     return (
       <Accordion
         type="single"
         collapsible
         className="w-full"
-        defaultValue="item-1"
+        defaultValue="item"
       >
         <AccordionItem
           className={`transition-all w-full rounded-lg overflow-hidden mb-4 
                   bg-hg-secondary100
             ${isDashboard ? 'min-w-[80%]' : ''}`}
-          value="item-1"
+          value="item"
         >
           <AccordionTrigger>
             <Flex className="p-4">
@@ -120,8 +125,8 @@ export default function TreatmentAccordionSelector({
                     }}
                   >
                     <div className="mr-4">
-                      <Text className="font-semibold">{product.title}</Text>
-                      <Text className="text-xs">{product.description}</Text>
+                      <Text className="font-semibold">{product?.title}</Text>
+                      <Text className="text-xs">{product?.description}</Text>
                     </div>
 
                     {selectedTreatments.some(

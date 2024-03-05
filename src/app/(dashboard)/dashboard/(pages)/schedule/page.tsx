@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 import { fetchClinics, fetchProducts } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -37,6 +38,7 @@ export default function Page() {
   } = useSessionStore(state => state);
   const cart = useCartStore(state => state.cart);
   const [productCategories, setProductCategories] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -60,6 +62,7 @@ export default function Page() {
     async function initProducts() {
       const products = await fetchProducts({ isDerma: false });
       setStateProducts(products);
+      setIsLoading(false);
     }
 
     if (isEmpty(stateProducts)) {
@@ -78,13 +81,16 @@ export default function Page() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-    setTreatments();
+    async function initTreatments() {
+      await setTreatments();
+    }
+    initTreatments();
   }, [stateProducts]);
 
-  function setTreatments() {
+  async function setTreatments() {
     setSelectedTreatments([]);
     const validTypes = [1, 2, 7];
-    const productTitles: string[] = cart.map(cartItem => cartItem.title);
+    /*const productTitles: string[] = cart.map(cartItem => cartItem.title);
     const foundProducts: Product[] = [];
 
     productTitles.forEach(title => {
@@ -96,9 +102,34 @@ export default function Page() {
           foundProducts.push(product);
         }
       });
-    });
+    });*/
+    const productIds = cart.map(cartItem => cartItem.id);
 
-    setSelectedTreatments(foundProducts);
+    const foundProducts = await Promise.all(
+      productIds.map(async id => {
+        const product = dashboardProducts.find(
+          product => product.id === id && validTypes.includes(product.type)
+        );
+        if (product) {
+          return product;
+        } else {
+          const fetchedProduct = await ProductService.getProduct(
+            id,
+            false,
+            false
+          );
+          if (fetchedProduct && validTypes.includes(fetchedProduct.type)) {
+            return fetchedProduct;
+          }
+        }
+      })
+    );
+    const validProducts = foundProducts.filter(
+      product => product !== undefined
+    );
+
+    setSelectedTreatments(validProducts);
+    setIsLoading(false);
   }
 
   return (
@@ -119,8 +150,10 @@ export default function Page() {
                 Selecciona tratamiento
               </Title>
               <Flex layout="col-left" className="gap-3 w-full">
-                {!isEmpty(productCategories) && (
+                {!isEmpty(productCategories) && !isLoading ? (
                   <TreatmentAccordionSelector isDashboard />
+                ) : (
+                  <SvgSpinner className="w-full mb-4" />
                 )}
               </Flex>
 
