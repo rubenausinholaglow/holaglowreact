@@ -5,7 +5,10 @@ import { INITIAL_STATE } from '@utils/constants';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { CrisalixUser } from 'app/types/crisalix';
 import { MessageType } from 'app/types/messageSocket';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
@@ -23,8 +26,11 @@ const Page = () => {
   const userCrisalix = useCrisalix(state => state);
   const { remoteControl, setCheckSimulator, user, setBudgetId } =
     useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
+
   useEffect(() => {
     setBudgetId('');
+    setSelectedTreatments([]);
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);

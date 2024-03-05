@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import ProductService from '@services/ProductService';
+import Bugsnag from '@bugsnag/js';
+import { Product } from '@interface/product';
 import { fetchClinics, fetchProducts } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
@@ -24,7 +25,6 @@ import { useCartStore } from '../budgets/stores/userCartStore';
 export default function Page() {
   const {
     stateProducts,
-    dashboardProducts,
     clinics,
     storedClinicId,
     setClinics,
@@ -59,6 +59,10 @@ export default function Page() {
   }, [clinics]);
 
   useEffect(() => {
+    /* async function initTreatments() {
+      await setTreatments();
+    }*/
+
     async function initProducts() {
       const products = await fetchProducts({ isDerma: false });
       setStateProducts(products);
@@ -80,55 +84,62 @@ export default function Page() {
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-    async function initTreatments() {
-      await setTreatments();
-    }
-    initTreatments();
+    setTreatments();
   }, [stateProducts]);
 
   async function setTreatments() {
-    setSelectedTreatments([]);
-    const validTypes = [1, 2, 7];
-    /*const productTitles: string[] = cart.map(cartItem => cartItem.title);
-    const foundProducts: Product[] = [];
+    try {
+      setSelectedTreatments([]);
+      const validTypes = [1, 2, 5, 7];
+      const productsInCart: Product[] = cart
+        .filter(cartItem => validTypes.includes(cartItem.type))
+        .map(cartItem => {
+          const productInCart: Product = {
+            id: cartItem.id,
+            title: cartItem.title,
+            description: cartItem.description,
+            detail: cartItem.detail,
+            price: cartItem.price,
+            isPack: cartItem.isPack,
+            zone: cartItem.zone,
+            order: cartItem.order,
+            upgrades: cartItem.upgrades,
+            category: cartItem.category,
+            appliedProducts: cartItem.appliedProducts,
+            clinicDetail: cartItem.clinicDetail,
+            cardBackgroundColor: cartItem.cardBackgroundColor,
+            extraInformation: cartItem.extraInformation,
+            preTreatmentInfo: cartItem.preTreatmentInfo,
+            postTreatmentInfo: cartItem.postTreatmentInfo,
+            packUnities: cartItem.packUnities,
+            discounts: cartItem.discounts,
+            tags: cartItem.tags,
+            packMoreInformation: cartItem.packMoreInformation,
+            relatedProducts: cartItem.relatedProducts,
+            flowwwId: cartItem.flowwwId,
+            durationMin: cartItem.durationMin,
+            durationMax: cartItem.durationMax,
+            beforeAndAfterImages: cartItem.beforeAndAfterImages,
+            applicationTimeMinutes: cartItem.applicationTimeMinutes,
+            type: cartItem.type,
+            visibility: cartItem.visibility,
+            sessions: cartItem.sessions,
+            productCardImagePosition: cartItem.productCardImagePosition,
+            longDescription: cartItem.longDescription,
+            numProductCardPhotos: cartItem.numProductCardPhotos,
+            videoUrl: cartItem.videoUrl,
+            emlaType: cartItem.emlaType,
+          };
 
-    productTitles.forEach(title => {
-      dashboardProducts.forEach(product => {
-        if (
-          title.includes(product.title) &&
-          validTypes.includes(product.type)
-        ) {
-          foundProducts.push(product);
-        }
-      });
-    });*/
-    const productIds = cart.map(cartItem => cartItem.id);
+          return productInCart;
+        });
 
-    const foundProducts = await Promise.all(
-      productIds.map(async id => {
-        const product = dashboardProducts.find(
-          product => product.id === id && validTypes.includes(product.type)
-        );
-        if (product) {
-          return product;
-        } else {
-          const fetchedProduct = await ProductService.getProduct(
-            id,
-            false,
-            false
-          );
-          if (fetchedProduct && validTypes.includes(fetchedProduct.type)) {
-            return fetchedProduct;
-          }
-        }
-      })
-    );
-    const validProducts = foundProducts.filter(
-      product => product !== undefined
-    );
-
-    setSelectedTreatments(validProducts);
-    setIsLoading(false);
+      setSelectedTreatments(productsInCart);
+    } catch (error: any) {
+      Bugsnag.notify(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
