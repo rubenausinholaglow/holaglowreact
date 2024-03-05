@@ -21,21 +21,16 @@ const DashboardMenuItem: React.FC<DashboardMenuItemProps> = ({
   const { user, ignoreMessages, remoteControl } = useGlobalPersistedStore(
     state => state
   );
-  const { setSelectedTreatments } = useSessionStore(state => state);
-
+  if (!remoteControl) return true;
   function goToPage(name: string) {
     let message: GoToPageData;
     switch (name) {
       case 'Simulador 3D':
-        if (!remoteControl) return true;
         message = {
           userId: user?.id || '',
           page: 'Crisalix',
         };
         if (!ignoreMessages) messageService.goToPage(message);
-        break;
-      case 'Presupuestos':
-        setSelectedTreatments([]);
         break;
       default:
         '';

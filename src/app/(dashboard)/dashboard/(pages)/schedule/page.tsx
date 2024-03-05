@@ -62,7 +62,6 @@ export default function Page() {
     async function initProducts() {
       const products = await fetchProducts({ isDerma: false });
       setStateProducts(products);
-      setIsLoading(false);
     }
 
     if (isEmpty(stateProducts)) {
