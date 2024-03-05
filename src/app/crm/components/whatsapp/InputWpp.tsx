@@ -52,8 +52,6 @@ export default function InputWpp({
     }
   };
 
-  console.log(refInputFile);
-
   const handleSendFile = async (fileBlob: File) => {
     const formData = new FormData();
     formData.append('file', fileBlob);
@@ -63,13 +61,10 @@ export default function InputWpp({
     formData.append('fileName', fileBlob?.name);
 
     try {
-      const response = await fetch(
-        `https://localhost:7103/Tasks/SendWhatsappFile`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
+      const response = await fetch(process.env.NEXT_PUBLIC_CONTACTS_API!, {
+        method: 'POST',
+        body: formData,
+      });
       if (response.ok) {
         const resultResponse = await response.json();
         const dateTime = dayjs(new Date());
