@@ -103,14 +103,16 @@ export default function TreatmentAccordionSelector({
                       className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                       key={product.title}
                       onClick={() => {
+                        debugger;
                         const isSelected = selectedTreatments.some(
                           selectedProduct =>
-                            selectedProduct.title === product.title
+                            selectedProduct.title.includes(product.title)
                         );
 
                         if (isSelected) {
                           const updatedSelection = selectedTreatments.filter(
-                            selectedProduct => selectedProduct.id !== product.id
+                            selectedProduct =>
+                              !selectedProduct.title.includes(product.title)
                           );
                           setSelectedTreatments(updatedSelection);
                         } else {
