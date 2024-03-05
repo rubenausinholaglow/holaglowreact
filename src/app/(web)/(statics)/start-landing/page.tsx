@@ -1,7 +1,7 @@
 import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
 import { SvgCircle } from 'app/icons/Icons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import GoToCheckout from './GoToCheckout';
@@ -31,9 +31,9 @@ export default function LandingPV() {
             className="rounded-t-2xl hidden md:block md:self-start md:rounded-2xl md:w-1/2"
           />
           <Flex layout="col-left" className="grow md:w-1/2">
-            <TitleDerma className="text-hg-secondary mb-2 tracking-tight">
+            <Title className="text-hg-secondary mb-2 tracking-tight">
               Asesórate gratis con nuestro equipo médico
-            </TitleDerma>
+            </Title>
             <Text className="mb-4 text-hg-black500">
               Pide tu primera cita médica y te informamos sobre los mejores
               tratamientos para ti

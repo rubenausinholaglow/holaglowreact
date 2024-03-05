@@ -46,7 +46,7 @@ export default function BlogPage() {
                   Getter
                 </Underlined>
               </Title>
-              <Text className="font-gtUltraBold text-xl mb-10 md:text-2xl md:text-center tracking-tighter font-semibold">
+              <Text className="font-gtUltra text-xl mb-10 md:text-2xl md:text-center tracking-tighter font-semibold">
                 La medicina estética contada sin filtros
               </Text>
 

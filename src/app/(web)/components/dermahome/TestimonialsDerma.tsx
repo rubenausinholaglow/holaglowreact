@@ -52,7 +52,7 @@ export default function TestimonialsDerma() {
         <Title
           isAnimated
           size="2xl"
-          className="font-gtUltraBold text-derma-primary font-bold mb-8 md:mb-12"
+          className="font-gtUltra text-derma-primary font-bold mb-8 md:mb-12"
         >
           Opiniones sobre Derma
         </Title>

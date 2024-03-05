@@ -49,7 +49,7 @@ export default function FaqsDerma() {
         <Title
           isAnimated
           size="2xl"
-          className="font-gtUltraBold text-derma-primary font-bold"
+          className="font-gtUltra text-derma-primary font-bold"
         >
           Preguntas frecuentes
         </Title>

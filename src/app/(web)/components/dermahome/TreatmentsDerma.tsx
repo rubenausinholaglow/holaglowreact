@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 interface DermaTreatment {
@@ -50,9 +50,9 @@ export default function TreatmentsDerma() {
   return (
     <div className="bg-derma-secondary300/70 pb-12 overflow-hidden">
       <Container className="pt-12 pb-4 overflow-hidden">
-        <TitleDerma size="xl" className="mb-4">
+        <Title size="xl" className="mb-4 text-derma-primary">
           Soluciones para cada tipo de piel
-        </TitleDerma>
+        </Title>
       </Container>
 
       <div className="whitespace-nowrap overflow-hidden inline-block animate-horizontalScroll">

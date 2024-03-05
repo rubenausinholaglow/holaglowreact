@@ -4,7 +4,7 @@ import { Client } from '@interface/client';
 import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function FifthStep({
@@ -26,9 +26,9 @@ export default function FifthStep({
                     <Text className="text-sm text-derma-primary500 mb-2">
                       Último paso. Pago
                     </Text>
-                    <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
+                    <Title className="text-derma-primary mb-4">
                       Completa tu pedido
-                    </Text>
+                    </Title>
                     <Text className="text-hg-black500 text-sm mb-8 md:text-md">
                       Confirma los datos de tu pedido y completa el pago para
                       recibir tu rutina personalizada en casa

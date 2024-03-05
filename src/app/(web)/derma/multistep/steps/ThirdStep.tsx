@@ -5,7 +5,7 @@ import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 export default function ThirdStep({
   activeSlideIndex,
@@ -45,9 +45,9 @@ export default function ThirdStep({
                 <Text className="text-sm text-derma-primary500 mb-2">
                   Paso {activeSlideIndex + 1}. Formulario
                 </Text>
-                <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
+                <Title className="text-derma-primary mb-4">
                   Pide tu rutina personalizada
-                </Text>
+                </Title>
                 <Text className="text-hg-black500 text-sm mb-8 md:text-md">
                   Rellena tus datos de contacto y dirección de entrega
                 </Text>

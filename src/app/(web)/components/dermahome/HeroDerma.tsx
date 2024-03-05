@@ -7,7 +7,7 @@ import {
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -66,9 +66,12 @@ export default function HeroDerma() {
                 className="gap-4 items-center relative md:justify-center md:flex-row"
               >
                 <Flex layout="col-left" className="relative z-10">
-                  <Text className="text-derma-primary text-left mb-4 text-3xl xl:text-4xl 2xl:text-5xl font-gtUltraBold">
+                  <Title
+                    size="2xl"
+                    className="text-derma-primary text-left mb-4"
+                  >
                     Tu rutina facial diseñada por un médico
-                  </Text>
+                  </Title>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"

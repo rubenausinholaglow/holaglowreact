@@ -58,7 +58,7 @@ export const Title = ({
   );
 };
 
-export const TitleDerma = ({
+/* export const Title = ({
   size = 'xl',
   as = 'h3',
   className = '',
@@ -86,7 +86,7 @@ export const TitleDerma = ({
   };
 
   const styles = `text-balance ${className} ${STYLES[size]} ${
-    size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltraBold'
+    size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltra'
   }`;
 
   if (isAnimated) {
@@ -104,7 +104,7 @@ export const TitleDerma = ({
       {children}
     </HtmlComponent>
   );
-};
+}; */
 
 export const Text = ({
   size = 'default',
