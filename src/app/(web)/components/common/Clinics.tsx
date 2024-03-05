@@ -18,7 +18,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
-import { AnimateOnViewport } from './AnimateOnViewport';
+import AnimateOnViewport from './AnimateOnViewport';
 
 export default function Clinics({ className = '' }: { className?: string }) {
   const { clinics } = useGlobalPersistedStore(state => state);

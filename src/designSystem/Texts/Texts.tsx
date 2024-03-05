@@ -1,9 +1,12 @@
-'use client';
-
 import { ReactNode } from 'react';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
+
+const AnimateOnViewport = dynamic(
+  () => import('app/(web)/components/common/AnimateOnViewport'),
+  { ssr: false }
+);
 
 export const Title = ({
   size = 'xl',
@@ -35,7 +38,7 @@ export const Title = ({
   };
 
   const styles = twMerge(
-    `text-balance ${STYLES[size]} font-${weight} ${className}`
+    `font-gtUltra tracking-tight text-balance ${STYLES[size]} font-${weight} ${className}`
   );
 
   if (isAnimated) {

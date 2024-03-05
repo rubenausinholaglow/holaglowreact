@@ -4,7 +4,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
+import AnimateOnViewport from '../common/AnimateOnViewport';
 
 export default function Profesionals() {
   return (

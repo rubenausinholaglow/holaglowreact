@@ -24,3 +24,19 @@ export const poppins = localFont({
     },
   ],
 });
+
+export const gtUltra = localFont({
+  src: [
+    {
+      path: '../../public/fonts/gtultramedian-light.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/gtultramedian-bold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-gtUltra',
+});

@@ -3,7 +3,7 @@
 import { ReactNode, RefObject, useEffect, useState } from 'react';
 import { useElementOnScreen } from 'app/utils/common';
 
-export const AnimateOnViewport = ({
+export default function AnimateOnViewport({
   className = '',
   origin = 'bottom',
   children,
@@ -11,7 +11,7 @@ export const AnimateOnViewport = ({
   className?: string;
   origin?: 'top' | 'right' | 'bottom' | 'left';
   children: ReactNode;
-}) => {
+}) {
   const [animated, setAnimated] = useState(false);
   const [ref, isInViewport] = useElementOnScreen({
     root: null,
@@ -56,4 +56,4 @@ export const AnimateOnViewport = ({
       {children}
     </div>
   );
-};
+}

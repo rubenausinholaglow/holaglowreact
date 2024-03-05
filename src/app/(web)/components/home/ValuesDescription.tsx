@@ -1,10 +1,12 @@
-'use client';
-
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
+const AnimateOnViewport = dynamic(
+  () => import('app/(web)/components/common/AnimateOnViewport'),
+  { ssr: false }
+);
 
 export default function ValuesDescription() {
   return (

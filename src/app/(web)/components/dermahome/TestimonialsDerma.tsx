@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { useSessionStore } from 'app/stores/globalStore';

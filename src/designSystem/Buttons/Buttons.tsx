@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
