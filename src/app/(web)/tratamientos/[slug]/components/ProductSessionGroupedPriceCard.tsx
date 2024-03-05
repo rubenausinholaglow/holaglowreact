@@ -17,9 +17,7 @@ export default function ProductSessionGroupedPriceCard({
 }: {
   product: Product;
 }) {
-  const { setSelectedTreatments, selectedTreatments } = useSessionStore(
-    state => state
-  );
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const ROUTES = useRoutes();
   const { productHighlighted, cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);

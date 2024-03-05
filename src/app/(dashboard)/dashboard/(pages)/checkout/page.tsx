@@ -45,7 +45,6 @@ const Page = () => {
     setBudgetId,
     storedClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments } = useSessionStore(state => state);
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -181,7 +180,7 @@ const Page = () => {
               <Button
                 className="w-full"
                 size="md"
-                href={`${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`}
+                href={`${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`}
                 type="tertiary"
               >
                 <span className="font-semibold">Agendar Cita</span>

@@ -6,7 +6,6 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import ProductDiscountForm from 'app/(dashboard)/dashboard/(pages)/checkout/components/ProductDiscountForm';
 import { SvgClose } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import { CartItem } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -67,7 +66,10 @@ export default function ProductCard({ product, isCheckout }: Props) {
             width={20}
             height={20}
             className="cursor-pointer shrink-0"
-            onClick={() => removeFromCart(product)}
+            onClick={e => {
+              removeFromCart(product);
+              removeProduct(product);
+            }}
           />
         ) : (
           <Button

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Product, ProductType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
@@ -135,6 +136,9 @@ export default function TreatmentAccordionSelector({
 
                       {selectedTreatments.some(
                         selectedProduct => selectedProduct.id === product.id
+                      ) ||
+                      selectedTreatments.some(selectedProduct =>
+                        selectedProduct.title.includes(product.title)
                       ) ? (
                         <SvgRadioChecked
                           height={24}

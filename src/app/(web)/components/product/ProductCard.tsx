@@ -45,10 +45,7 @@ export default function ProductCard({
   const { setHighlightProduct, cart } = useCartStore(state => state);
   const addToCart = useCartStore(state => state.addItemToCart);
 
-  const { setSelectedTreatments, selectedTreatments } = useSessionStore(
-    state => state
-  );
-  const { addProduct, removeProduct } = useSelectTreatments();
+  const { addProduct } = useSelectTreatments();
 
   const LANDINGS: { [key: string]: string } = {
     '/landing/ppc/holaglow': '#leadForm',
