@@ -23,6 +23,7 @@ import { useCartStore } from '../budgets/stores/userCartStore';
 export default function Page() {
   const {
     stateProducts,
+    dashboardProducts,
     clinics,
     storedClinicId,
     setClinics,
@@ -82,13 +83,16 @@ export default function Page() {
 
   function setTreatments() {
     setSelectedTreatments([]);
-
+    const validTypes = [1, 2, 7];
     const productTitles: string[] = cart.map(cartItem => cartItem.title);
     const foundProducts: Product[] = [];
 
     productTitles.forEach(title => {
-      stateProducts.forEach(product => {
-        if (title.includes(product.title)) {
+      dashboardProducts.forEach(product => {
+        if (
+          title.includes(product.title) &&
+          validTypes.includes(product.type)
+        ) {
           foundProducts.push(product);
         }
       });
