@@ -10,15 +10,17 @@ import MessageRight from './MessageRight';
 interface WhatsAppProps {
   contactDetail: ClientDetails;
   isLoadingWhatsapp: boolean;
-  whatsappMessages: any;
+  whatsappMessages: WhatsappMessages[];
+  setWhatsappMessages: (whatsappMessagesList: WhatsappMessages[]) => void;
 }
 
 export default function WhatsApp({
   contactDetail,
   isLoadingWhatsapp,
   whatsappMessages,
+  setWhatsappMessages
 }: WhatsAppProps) {
-  const { firstName, lastName } = contactDetail;
+  const { firstName, lastName, agent } = contactDetail;
   let thisDate: string | null = null;
 
   return (
@@ -29,42 +31,36 @@ export default function WhatsApp({
         <>
           {whatsappMessages && (
             <>
-              {whatsappMessages?.map(
-                (whatsappMessage: WhatsappMessages, index: string) => {
-                  const showDate =
-                    getDateDayMonthYear(whatsappMessage.time, '/') !== thisDate;
-                  thisDate = getDateDayMonthYear(whatsappMessage.time, '/');
+              {whatsappMessages?.map(({ text, time, received, urlFile }, index) => {
+                const showDate = getDateDayMonthYear(time, '/') !== thisDate;
+                thisDate = getDateDayMonthYear(time, '/');
 
-                  return (
-                    <>
-                      {showDate && (
-                        <div className="text-center text-xs p-2">
-                          {getDateDayMonthYear(whatsappMessage.time, '/')}
-                        </div>
-                      )}
-                      {whatsappMessage.received ? (
-                        <MessageLeft
-                          key={`${firstName}_${index}`}
-                          clientName={`${firstName} ${lastName}`}
-                          clientHourMessage={getDateOnlyTime(
-                            whatsappMessage.time
-                          )}
-                          clientMessage={whatsappMessage.text}
-                        />
-                      ) : (
-                        <MessageRight
-                          key={`${index}`}
-                          clientHourMessage={getDateOnlyTime(
-                            whatsappMessage.time
-                          )}
-                          clientMessage={whatsappMessage.text}
-                        />
-                      )}
-                    </>
-                  );
-                }
-              )}
-              <InputWpp userId={contactDetail.id} />
+                return (
+                  <>
+                    {showDate && (
+                      <div className="text-center text-xs p-2">
+                        {getDateDayMonthYear(time, '/')}
+                      </div>
+                    )}
+                    {received ? (
+                      <MessageLeft
+                        key={`${firstName}_${index}`}
+                        clientName={`${firstName} ${lastName}`}
+                        clientHourMessage={getDateOnlyTime(time)}
+                        clientMessage={text}
+                      />
+                    ) : (
+                      <MessageRight
+                        key={`${index}`}
+                        clientHourMessage={getDateOnlyTime(time)}
+                        clientMessage={text}
+                        urlFile={urlFile}
+                      />
+                    )}
+                  </>
+                );
+              })}
+              <InputWpp userId={contactDetail.id} agentId={agent?.id} setWhatsappMessages={setWhatsappMessages} />
             </>
           )}
         </>

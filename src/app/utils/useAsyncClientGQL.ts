@@ -3,7 +3,7 @@ import { DocumentNode } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
 import { createApolloClient } from 'lib/client';
 
-const client = createApolloClient(process.env.NEXT_PUBLIC_CONTACTS_API!, '');
+const client = createApolloClient("https://localhost:7103/", '');
 
 const useAsyncClientGQL = (query: DocumentNode) => {
   const [dataApi, setDataApi] = useState<any>(null);

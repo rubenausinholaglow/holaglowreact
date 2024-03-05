@@ -20,29 +20,11 @@ const useAsyncClient = (url: string, method?: string) => {
     }
   };
 
-  const postData = async (body: string, headers: HeadersInit) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(url, {
-        method: method,
-        body,
-        headers: headers,
-      });
-      const jsonResult = await response.json();
-      setDataApi(jsonResult);
-    } catch (error) {
-      setError(error);
-      Bugsnag.notify(`${url} ${error}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (method !== 'POST') fetchData(url);
   }, [url]);
 
-  return { dataApi, error, isLoading, postData };
+  return { dataApi, error, isLoading };
 };
 
 export default useAsyncClient;

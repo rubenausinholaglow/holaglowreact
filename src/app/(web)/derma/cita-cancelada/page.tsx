@@ -10,9 +10,9 @@ import { useSearchParams } from 'next/navigation';
 export default function CanceledAppointment() {
   const searchParams = useSearchParams();
 
-  const day = searchParams.get('day');
-  const hour = searchParams.get('hour');
-  const month = searchParams.get('month');
+  const day = searchParams?.get('day');
+  const hour = searchParams?.get('hour');
+  const month = searchParams?.get('month');
 
   const ROUTE = useRoutes();
 

@@ -7,7 +7,7 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import useAsyncClientGQL from '@utils/useAsyncClientGQL';
 import { reminderAction } from 'app/crm/actions/ContactReminderAction';
 import WhatsApp from 'app/crm/components/whatsapp/WhatsApp';
-import { ClientDetails } from 'app/crm/types/Contact';
+import { ClientDetails, WhatsappMessages } from 'app/crm/types/Contact';
 import getAppointmentStatusText from 'app/crm/types/ContactAppointmentEnum';
 import getBudgetStatusText from 'app/crm/types/ContactBudgetEnum';
 import getCallStatusText from 'app/crm/types/ContactCallEnum';
@@ -62,7 +62,7 @@ export default function ContactDetailPageBase({
   const containerRef = useRef<HTMLDivElement>(null);
   const { dataApi: dataWhatsapp, isLoading: isLoadingWhatsapp } =
     useAsyncClientGQL(getContactWhatsapps(contactDetail?.id));
-  const [whatsappList, setWhatappList] = useState<any[]>([]);
+  const [whatsappList, setWhatsappList] = useState<WhatsappMessages[]>([]);
 
   const handleContactReminder = (event: any) => {
     event.preventDefault();
@@ -169,7 +169,7 @@ export default function ContactDetailPageBase({
       sortedWhatsapps.sort((a, b) => {
         return new Date(a.time).getTime() - new Date(b.time).getTime();
       });
-      setWhatappList(sortedWhatsapps);
+      setWhatsappList(sortedWhatsapps);
     }
   }, [dataWhatsapp?.user?.whatsapps]);
 
@@ -203,6 +203,7 @@ export default function ContactDetailPageBase({
             contactDetail={contactDetail}
             isLoadingWhatsapp={isLoadingWhatsapp}
             whatsappMessages={whatsappList}
+            setWhatsappMessages={setWhatsappList}
           />
         </div>
       </div>

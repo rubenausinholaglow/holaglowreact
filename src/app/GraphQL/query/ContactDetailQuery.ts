@@ -24,6 +24,9 @@ export function getContactWithTasks(id: string) {
         id
         creationDate
         active
+        agent {
+          id
+        }
         taskInstances {
             status
             completedTime
@@ -156,7 +159,8 @@ export function getContactWhatsapps(id: string) {
         received
         id
         creationDate
-        active
+        active,
+        urlFile
     }
   }
 }
