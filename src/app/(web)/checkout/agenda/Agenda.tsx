@@ -109,7 +109,7 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
-  const { cart } = useCartStore(state => state);
+  const { cart, updateIsScheduled } = useCartStore(state => state);
 
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
@@ -302,7 +302,7 @@ export default function Agenda({
                     cartItem => cartItem.id === treatment.id
                   );
                   if (foundItem) {
-                    foundItem.isScheduled = true;
+                    updateIsScheduled(true, foundItem.uniqueId);
                   }
                 });
               }

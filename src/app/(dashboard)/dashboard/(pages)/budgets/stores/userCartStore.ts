@@ -159,6 +159,19 @@ export const useCartStore = create(
           }));
         }
       },
+      updateIsScheduled: (isScheduled : boolean, uniqueIdCartItem : string) => {
+        set(state => {
+          const updatedCart = state.cart.map(item => {
+          if (item.uniqueId === uniqueIdCartItem) {
+            return { ...item, isScheduled };
+          }
+            return item;
+          });
+
+          return { ...state, cart: updatedCart }; 
+        });
+
+      },
       resetCart: () => {
         set(() => ({
           cart: INITIAL_STATE.cart,
