@@ -199,3 +199,6 @@ export const formatDate = (date: Date, includeHours = true) => {
   const formattedDate = finalDate.toLocaleDateString('es-ES', options);
   return `${formattedDate.replace(',', '')}`;
 };
+
+
+export const validTypesFilterCart = [1,2,5,7]

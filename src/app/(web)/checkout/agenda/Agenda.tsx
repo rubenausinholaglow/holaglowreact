@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import { EmlaType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
+import { validTypesFilterCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
@@ -288,9 +289,8 @@ export default function Agenda({
             ''
           ).then(x => {
             if (isDashboard && !isDerma) {
-              const validTypes = [1, 2, 5, 7];
               const filteredCart = cart.filter(cartItem =>
-                validTypes.includes(cartItem.type)
+                validTypesFilterCart.includes(cartItem.type)
               );
 
               if (filteredCart.length > selectedTreatments.length) {

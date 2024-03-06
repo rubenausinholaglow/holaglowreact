@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
-import { fetchClinics, fetchProducts } from '@utils/fetch';
+import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
+import { validTypesFilterCart } from '@utils/utils';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import App from 'app/(web)/components/layout/App';
@@ -86,14 +87,13 @@ export default function Page() {
   async function setTreatments() {
     try {
       setSelectedTreatments([]);
-      const validTypes = [1, 2, 5, 7];
       const productTitle: string[] = cart.map(cartItem => cartItem.title);
       const foundProducts: Product[] = [];
       productTitle.forEach(title => {
         dashboardProducts.forEach(product => {
           if (
             title.toUpperCase() === product.title.toUpperCase() &&
-            validTypes.includes(product.type)
+            validTypesFilterCart.includes(product.type)
           ) {
             foundProducts.push(product);
           }
