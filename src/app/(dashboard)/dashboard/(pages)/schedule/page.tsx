@@ -25,7 +25,6 @@ import { useCartStore } from '../budgets/stores/userCartStore';
 
 export default function Page() {
   const {
-    stateProducts,
     clinics,
     storedClinicId,
     setClinics,
@@ -40,7 +39,6 @@ export default function Page() {
     setSelectedTreatments,
   } = useSessionStore(state => state);
   const cart = useCartStore(state => state.cart);
-  const [productCategories, setProductCategories] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
@@ -80,30 +78,6 @@ export default function Page() {
 
     setSelectedClinic(clinic[0]);
   }, [clinics]);
-
-  useEffect(() => {
-    async function initProducts() {
-      const products = await fetchProducts({ isDerma: false });
-      setStateProducts(products);
-    }
-
-    if (isEmpty(stateProducts)) {
-      initProducts();
-    }
-    const allCategoryNames: string[] = stateProducts.reduce(
-      (categoryNames: string[], product) => {
-        const productCategories = product.category.map(
-          category => category.name
-        );
-        return [...categoryNames, ...productCategories];
-      },
-      []
-    );
-
-    const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
-
-    setProductCategories(uniqueCategoryNames);
-  }, [stateProducts]);
 
   useEffect(() => {
     setTreatments();
@@ -152,7 +126,7 @@ export default function Page() {
                 {cart.length == 0 ? 'Selecciona tratamiento' : 'Tratamientos'}
               </Title>
               <Flex layout="col-left" className="gap-3 w-full">
-                {!isEmpty(productCategories) && !isLoading ? (
+                {!isEmpty(dashboardProducts) && !isLoading ? (
                   <TreatmentAccordionSelector isDashboard />
                 ) : (
                   <SvgSpinner className="w-full mb-4" />
