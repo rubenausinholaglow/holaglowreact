@@ -8,8 +8,8 @@ import DatePicker from 'react-datepicker';
 import { EmlaType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
-import App from 'app/(web)/components/layout/App';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { validTypesFilterCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
   SvgCheck,
@@ -109,6 +109,8 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
+  const { cart, updateIsScheduled } = useCartStore(state => state);
+
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -275,6 +277,7 @@ export default function Agenda({
           setLoadingMonth(true);
           if (isDashboard || isCheckin)
             analyticsMetrics.externalReference = '14';
+
           await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
@@ -286,6 +289,23 @@ export default function Agenda({
             ''
           ).then(x => {
             if (isDashboard && !isDerma) {
+              const filteredCart = cart.filter(
+                cartItem =>
+                  validTypesFilterCart.includes(cartItem.type) &&
+                  (cartItem.isScheduled === false ||
+                    cartItem.isScheduled === undefined)
+              );
+
+              if (filteredCart.length >= selectedTreatments.length) {
+                selectedTreatments.forEach(treatment => {
+                  const foundItem = filteredCart.find(
+                    cartItem => cartItem.id === treatment.id
+                  );
+                  if (foundItem) {
+                    updateIsScheduled(true, foundItem.uniqueId);
+                  }
+                });
+              }
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );

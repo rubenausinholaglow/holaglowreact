@@ -14,7 +14,6 @@ export async function fetchProducts({
   isDerma?: boolean;
 }) {
   // Esthetic = 1, Medical = 2
-  const allowedProductType = [1, 2];
 
   try {
     const fetchedProducts = await ProductService.getAllProducts({
@@ -22,12 +21,7 @@ export async function fetchProducts({
     });
 
     if (fetchedProducts && fetchedProducts.length) {
-      const filteredProducts = fetchedProducts.filter(
-        (product: Product) =>
-          allowedProductType.includes(product.type) && product.price > 0
-      );
-
-      const products = filteredProducts.map((product: Product) => ({
+      const products = fetchedProducts.map((product: Product) => ({
         ...product,
         visibility: true,
       }));
