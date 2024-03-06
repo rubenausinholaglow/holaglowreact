@@ -44,17 +44,13 @@ export default function HeroDerma() {
                 layout="row-left"
                 className="mb-4 md:order-2 w-full md:justify-start gap-4 py-3"
               >
-                <Link
-                  href="https://es.trustpilot.com/review/derma.holaglow.com"
-                  className="flex gap-2 items-center mr-auto"
-                >
-                  <Image
-                    src="/images/derma/home/GoogleReviews.png"
-                    alt="Holaglow reviews"
-                    height={200}
-                    width={deviceSize.isMobile ? 150 : 175}
-                  />
-                </Link>
+                <Image
+                  src="/images/derma/home/GoogleReviews.png"
+                  alt="Holaglow reviews"
+                  height={200}
+                  width={deviceSize.isMobile ? 150 : 175}
+                  className="mr-auto"
+                />
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
                 </Text>
