@@ -3,7 +3,7 @@ import useAsyncServerGQL from '@utils/useAsyncServerGQL';
 import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
 import LoginChecker from 'app/crm/components/login/LoginChecker';
-import { getPendingTasks } from 'app/GraphQL/query/ContactDetailQuery';
+import { getPendingTasks } from 'app/GraphQL/query/TaskQuery';
 
 import DashboardPage from './DashboardPage';
 

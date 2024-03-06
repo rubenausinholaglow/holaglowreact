@@ -2,6 +2,8 @@
 import React from 'react';
 import Card from 'app/crm/components/card/Card';
 
+import TableDashboard from './TableDashboard/TableDashboard';
+
 interface DashboardPageProps {
   pendingTasks: any;
 }
@@ -41,6 +43,7 @@ export default function DashboardPage({ pendingTasks }: DashboardPageProps) {
       backgroundColor: '#00c0e5',
     },
   ];
+  //  console.log(pendingTasks); TempConsoleLog
   return (
     <div>
       DashboardPage
@@ -56,6 +59,7 @@ export default function DashboardPage({ pendingTasks }: DashboardPageProps) {
           </div>
         ))}
       </div>
+      <TableDashboard pendingTasks={pendingTasks} />
     </div>
   );
 }
