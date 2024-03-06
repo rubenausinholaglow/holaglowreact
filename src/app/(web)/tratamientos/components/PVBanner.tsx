@@ -1,6 +1,6 @@
 import ROUTES from '@utils/routes';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgUserScan } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -13,7 +13,7 @@ export default function PVBanner({
   className?: string;
   isFloating?: boolean;
 }) {
-  const deviceSize = useDeviceSizeSSR();
+  const { deviceSize } = useSessionStore(state => state);
 
   return (
     <Flex
