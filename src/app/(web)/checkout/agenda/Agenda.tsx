@@ -296,7 +296,7 @@ export default function Agenda({
                     cartItem.isScheduled === undefined)
               );
 
-              if (filteredCart.length > selectedTreatments.length) {
+              if (filteredCart.length >= selectedTreatments.length) {
                 selectedTreatments.forEach(treatment => {
                   const foundItem = filteredCart.find(
                     cartItem => cartItem.id === treatment.id

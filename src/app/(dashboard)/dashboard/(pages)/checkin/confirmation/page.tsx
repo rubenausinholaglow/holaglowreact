@@ -32,7 +32,6 @@ export default function ConfirmationCheckIn() {
 
       return () => clearTimeout(timerId);
     }
-    debugger;
     const x = cart.some(
       x => x.isScheduled === false && validTypesFilterCart.includes(x.type)
     );
