@@ -40,16 +40,9 @@ export default function AuthenticationPage() {
       password: password,
     };
 
-    const userLoginResponse: LoginResponse = {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImRmZTA1OGY3LTM1MjItNDJjOS1iYzE0LWExYTM4Yjk5MzI1OSIsInN1YiI6InJ1YmVuLmF1c2luQGhvbGFnbG93LmNvbSIsImVtYWlsIjoicnViZW4uYXVzaW5AaG9sYWdsb3cuY29tIiwianRpIjoiM2RhOWQ1ZGUtYjcyMi00MjQwLTk4ZTUtYjQ5MThhNjRlNmM5IiwibmJmIjoxNzA5NzE0MTgwLCJleHAiOjE3MDk3NTAxODAsImlhdCI6MTcwOTcxNDE4MCwiaXNzIjoiSG9sYWdsb3ciLCJhdWQiOiJDUk0ifQ.qYd8NF3crXEe6zGqp86kFKPuQ_UsBu-LpAQpzYHqzfc",
-      refreshToken: "jGqK5Lo6XaZW+jnjU+KsAL8C+HhZR+piT/PAFK0FBdQcEvluBYAgDiekTZ+uw36F6D2/uxVCK5yzkEXytdAowA==",
-      refreshTokenExpiryTime: "2024-03-06T18:36:20.7269283Z",
-    };
-    setUserLoginResponse(userLoginResponse);
-    setIsLoading(false);
-    router.push(ROUTES.crm.menu);
+    
 
-    /*await AuthenticationService.userLogin(userLogin).then(async data => {
+    await AuthenticationService.userLogin(userLogin).then(async data => {
       if (data.token !== '') {
         const userLoginResponse: LoginResponse = {
           token: data.token,
@@ -66,7 +59,7 @@ export default function AuthenticationPage() {
         setEmail('');
         setPassword('');
       }
-    });*/
+    });
   };
 
   function handleErrorMessage(error: string): void {
