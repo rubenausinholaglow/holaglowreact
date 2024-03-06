@@ -58,7 +58,7 @@ export default function Page() {
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setDashboardProducts(products);
       } catch (error: any) {
-        console.log('error');
+        Bugsnag.notify(error);
       }
     };
 
