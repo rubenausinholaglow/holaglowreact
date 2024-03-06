@@ -223,13 +223,6 @@ export default function PsrpPage({
                 tratamientos
               </Underlined>
             </Title>
-            <Image
-              src={'/images/products/productsBg.png'}
-              height={858}
-              width={1395}
-              alt="nuestros tratamientos"
-              className="hidden lg:block absolute right-[5%] top-[10%] h-full w-auto scale-[160%]"
-            />
           </Container>
           <Container className="px-0 md:px-4 pb-4 relative">
             <div className="lg:flex lg:flex-row lg:justify-between">
