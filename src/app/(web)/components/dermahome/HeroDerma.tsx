@@ -49,13 +49,11 @@ export default function HeroDerma() {
                   className="flex gap-2 items-center mr-auto"
                 >
                   <Image
-                    src="/images/derma/home/trustPilotLogo.svg"
-                    alt="TrustPilot Derma by Holaglow"
-                    height={34}
-                    width={140}
-                    className="h-6 w-auto"
+                    src="/images/derma/home/GoogleReviews.png"
+                    alt="Holaglow reviews"
+                    height={200}
+                    width={deviceSize.isMobile ? 150 : 175}
                   />
-                  <span className="mt-2">4,7</span>
                 </Link>
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
