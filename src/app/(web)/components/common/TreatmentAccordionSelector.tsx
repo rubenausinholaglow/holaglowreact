@@ -44,22 +44,32 @@ export default function TreatmentAccordionSelector({
   const cart = useCartStore(state => state.cart);
 
   function getProductsByCategory(category: string) {
-    const filteredProducts = dashboardProducts.filter(
-      product =>
-        product.category.some(categoryItem => categoryItem.name === category) &&
-        !product.isPack
-    );
-    if (filteredProducts.length == 0) {
-      return selectedProducts;
+    let filteredProducts: Product[];
+    if (isDashboard) {
+      filteredProducts = dashboardProducts.filter(
+        product =>
+          product.category.some(
+            categoryItem => categoryItem.name === category
+          ) && !product.isPack
+      );
+      if (filteredProducts.length == 0) {
+        return selectedProducts;
+      }
+    } else {
+      filteredProducts = stateProducts.filter(
+        product =>
+          product.category.some(
+            categoryItem => categoryItem.name === category
+          ) && !product.isPack
+      );
     }
-
     return filteredProducts.sort((a: any, b: any) =>
       a.title > b.title ? 1 : -1
     );
   }
 
   useEffect(() => {
-    const allCategoryNames: string[] = dashboardProducts.reduce(
+    const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
         const productCategories = product.category.map(
           category => category.name
@@ -72,7 +82,25 @@ export default function TreatmentAccordionSelector({
     const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
-  }, [stateProducts, dashboardProducts]);
+  }, [stateProducts]);
+
+  useEffect(() => {
+    if (isDashboard) {
+      const allCategoryNames: string[] = dashboardProducts.reduce(
+        (categoryNames: string[], product) => {
+          const productCategories = product.category.map(
+            category => category.name
+          );
+          return [...categoryNames, ...productCategories];
+        },
+        []
+      );
+
+      const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
+
+      setProductCategories(uniqueCategoryNames);
+    }
+  }, [dashboardProducts]);
 
   useEffect(() => {
     if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
@@ -155,7 +183,7 @@ export default function TreatmentAccordionSelector({
         </AccordionItem>
       </Accordion>
     );
-  if (cart.length == 0)
+  if (cart.length == 0 || !isDashboard)
     return (
       <Accordion type="single" collapsible className="w-full">
         {productCategories.map(category => {
