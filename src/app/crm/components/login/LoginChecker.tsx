@@ -29,7 +29,7 @@ const LoginChecker: React.FC<LoginCheckerProps> = ({
       }
     } else {
       if (isLoginPage) {
-        router.push(ROUTES.crm.menu);
+        router.push(ROUTES.crm.dashboard);
         return;
       }
     }

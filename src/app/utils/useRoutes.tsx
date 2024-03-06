@@ -39,6 +39,7 @@ const useRoutes = () => {
     },
     crm: {
       authentication: '/crm',
+      dashboard: '/crm/dashboard',
       menu: '/crm/menu',
     },
   };
