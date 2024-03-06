@@ -4,7 +4,6 @@ import Bugsnag from '@bugsnag/js';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
-import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
@@ -13,7 +12,6 @@ import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { StatusBudget, TicketBudget } from 'app/types/budget';
 import { MessageType } from 'app/types/messageSocket';
-import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
 import { Ticket } from 'app/types/ticket';
 import { applyDiscountToCart } from 'app/utils/utils';
 import {
@@ -42,6 +40,7 @@ export const PaymentModule = () => {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
+  const [isTicketCreated, setTicketCreated] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
@@ -60,7 +59,6 @@ export const PaymentModule = () => {
     storedClinicProfessionalId,
     storedBudgetId,
     storedAppointmentId,
-    setBudgetId,
   } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
@@ -265,6 +263,7 @@ export const PaymentModule = () => {
     try {
       const result = await sendTicket();
       if (result) {
+        setTicketCreated(true);
         if (remoteControl) {
           const message: any = {
             clinicId: storedClinicId,
@@ -402,6 +401,7 @@ export const PaymentModule = () => {
         className="w-full mb-8"
         customStyles="bg-hg-primary"
         onClick={createTicket}
+        disabled={isTicketCreated}
       >
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>
