@@ -109,7 +109,7 @@ export default function Agenda({
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
-  const { cart, removeFromCart } = useCartStore(state => state);
+  const { cart } = useCartStore(state => state);
 
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
@@ -289,8 +289,11 @@ export default function Agenda({
             ''
           ).then(x => {
             if (isDashboard && !isDerma) {
-              const filteredCart = cart.filter(cartItem =>
-                validTypesFilterCart.includes(cartItem.type)
+              const filteredCart = cart.filter(
+                cartItem =>
+                  validTypesFilterCart.includes(cartItem.type) &&
+                  (cartItem.isScheduled === false ||
+                    cartItem.isScheduled === undefined)
               );
 
               if (filteredCart.length > selectedTreatments.length) {
@@ -299,7 +302,7 @@ export default function Agenda({
                     cartItem => cartItem.id === treatment.id
                   );
                   if (foundItem) {
-                    removeFromCart(foundItem);
+                    foundItem.isScheduled = true;
                     router.push(`${ROUTES.dashboard.schedule}`);
                   }
                 });

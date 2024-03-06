@@ -87,9 +87,18 @@ export default function Page() {
   async function setTreatments() {
     try {
       setSelectedTreatments([]);
-      const productTitle: string[] = cart.map(cartItem => cartItem.title);
+      const productTitles: string[] = cart
+        .filter(
+          cartItem =>
+            (cartItem.isScheduled === false ||
+              cartItem.isScheduled === undefined) &&
+            validTypesFilterCart.includes(cartItem.type)
+        )
+        .map(cartItem => cartItem.title);
+
       const foundProducts: Product[] = [];
-      productTitle.forEach(title => {
+
+      productTitles.forEach(title => {
         dashboardProducts.forEach(product => {
           if (
             title.toUpperCase() === product.title.toUpperCase() &&
