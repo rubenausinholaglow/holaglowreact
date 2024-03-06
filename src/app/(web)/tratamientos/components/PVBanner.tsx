@@ -47,7 +47,14 @@ export default function PVBanner({
           Te asesoramos gratis con nuestro escáner facial 3D
         </Text>
 
-        <Button type="secondary" size="sm" href={ROUTES.landings.pv}>
+        <Button
+          id={
+            isFloating ? 'tmevent_floating_minicard_pv' : 'tmevent_minicard_pv'
+          }
+          type="secondary"
+          size={deviceSize.isMobile ? 'sm' : 'md'}
+          href={ROUTES.landings.pv}
+        >
           <SvgUserScan className="h-4 w-4 mr-2" />
           Pide cita gratis
         </Button>

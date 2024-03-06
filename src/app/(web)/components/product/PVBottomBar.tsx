@@ -63,6 +63,7 @@ export default function PVBottomBar({
       }`}
     >
       <SvgCross
+        id="tmevent_close_floating_minicard_pv"
         className="h-4 w-4 text-hg-secondary absolute top-3 right-3 cursor-pointer"
         onClick={() => setIsClosed(true)}
       />

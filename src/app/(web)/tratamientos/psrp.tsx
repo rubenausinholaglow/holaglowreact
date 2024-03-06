@@ -337,7 +337,7 @@ export default function PsrpPage({
                   showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
                 }   pb-6`}
               >
-                <li className="pt-10">
+                <li className="md:pt-10">
                   <PVBanner />
                 </li>
                 {filteredProducts.map(product => {
