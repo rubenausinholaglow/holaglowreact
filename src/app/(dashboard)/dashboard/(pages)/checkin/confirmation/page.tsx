@@ -1,20 +1,28 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { validTypesFilterCart } from '@utils/utils';
 import Confirmation from 'app/(web)/checkout/confirmation/components/Confirmation';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgArrowSmallLeft } from 'app/icons/Icons';
+import { SvgArrow } from 'app/icons/IconsDs';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter, useSearchParams } from 'next/navigation';
+
+import { useCartStore } from '../../budgets/stores/userCartStore';
 
 export default function ConfirmationCheckIn() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const ROUTES = useRoutes();
+  const { cart } = useCartStore(state => state);
 
   const isCheckin = searchParams.get('isCheckin') === 'true';
+  const [isPendingProductsScheduler, setIsPendingProductsScheduler] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (isCheckin) {
@@ -24,6 +32,12 @@ export default function ConfirmationCheckIn() {
 
       return () => clearTimeout(timerId);
     }
+
+    setIsPendingProductsScheduler(
+      cart.some(
+        x => x.isScheduled === false && validTypesFilterCart.includes(x.type)
+      )
+    );
   }, []);
 
   return (
@@ -36,18 +50,30 @@ export default function ConfirmationCheckIn() {
         hideBottomBar
       >
         <Confirmation isDashboard={true} />
-
-        {!isCheckin && (
-          <Button
-            type="tertiary"
-            customStyles="bg-hg-primary"
-            className="mb-8"
-            href={ROUTES.dashboard.menu}
-          >
-            <SvgArrowSmallLeft />
-            Volver
-          </Button>
-        )}
+        <Flex className="gap-3">
+          {!isCheckin && (
+            <Button
+              type="tertiary"
+              customStyles="bg-hg-primary"
+              className="mb-8"
+              href={ROUTES.dashboard.menu}
+            >
+              <SvgArrowSmallLeft />
+              Volver
+            </Button>
+          )}
+          {isPendingProductsScheduler && (
+            <Button
+              type="tertiary"
+              customStyles="bg-hg-primary"
+              className="mb-8"
+              href={ROUTES.dashboard.schedule}
+            >
+              Crear otra cita
+              <SvgArrow height={18} width={18} className="ml-2" />
+            </Button>
+          )}
+        </Flex>
       </MainLayout>
     </App>
   );

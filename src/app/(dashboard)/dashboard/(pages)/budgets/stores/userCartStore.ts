@@ -19,6 +19,7 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
     priceDiscount: 0,
     priceWithDiscount: Number(product.price),
     uniqueId: createUniqueId(),
+    isScheduled: false
   });
   return updatedCart;
 }

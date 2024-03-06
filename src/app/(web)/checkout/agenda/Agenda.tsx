@@ -303,14 +303,12 @@ export default function Agenda({
                   );
                   if (foundItem) {
                     foundItem.isScheduled = true;
-                    router.push(`${ROUTES.dashboard.schedule}`);
                   }
                 });
-              } else {
-                router.push(
-                  `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
-                );
               }
+              router.push(
+                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
+              );
             } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
