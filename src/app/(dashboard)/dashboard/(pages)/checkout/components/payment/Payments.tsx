@@ -265,9 +265,6 @@ export const PaymentModule = () => {
     try {
       const result = await sendTicket();
       if (result) {
-        setBudgetId('');
-        usePaymentList.setState(INITIAL_STATE_PAYMENT);
-        useCartStore.setState(INITIAL_STATE);
         if (remoteControl) {
           const message: any = {
             clinicId: storedClinicId,
