@@ -145,9 +145,6 @@ export default function TreatmentAccordionSelector({
 
                 {selectedTreatments.some(
                   selectedProduct => selectedProduct.id === product.id
-                ) ||
-                selectedTreatments.some(selectedProduct =>
-                  selectedProduct.title.includes(product.title)
                 ) ? (
                   <SvgRadioChecked
                     height={24}
