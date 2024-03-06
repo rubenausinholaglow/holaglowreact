@@ -162,7 +162,7 @@ export default function TreatmentAccordionSelector({
     );
   };
 
-  if (isDashboard && selectedProducts.length > 0 && cart.length > 0)
+  if (isDashboard && cart.length > 0)
     return (
       <Accordion type="single" collapsible className="w-full" defaultValue="1">
         <AccordionItem
