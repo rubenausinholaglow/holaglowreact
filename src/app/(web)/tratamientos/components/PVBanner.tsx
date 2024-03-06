@@ -33,7 +33,7 @@ export default function PVBanner({
         alt="Descubre tu tratamiento ideal con nuestro probador virtual gratis"
         height={200}
         width={200}
-        className={`${isFloating ? 'w-[115px]' : 'w-2/5'} md:h-auto md:w-full`}
+        className={`${isFloating ? 'w-[115px]' : 'h-full'} md:h-auto md:w-full`}
       />
       <Flex layout="col-left" className="p-2 md:p-4 pl-4 md:items-center">
         <Text
