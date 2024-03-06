@@ -40,7 +40,6 @@ export const PaymentModule = () => {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-  const [isTicketCreated, setTicketCreated] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
@@ -263,7 +262,6 @@ export const PaymentModule = () => {
     try {
       const result = await sendTicket();
       if (result) {
-        setTicketCreated(true);
         if (remoteControl) {
           const message: any = {
             clinicId: storedClinicId,
@@ -401,7 +399,6 @@ export const PaymentModule = () => {
         className="w-full mb-8"
         customStyles="bg-hg-primary"
         onClick={createTicket}
-        disabled={isTicketCreated}
       >
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>
