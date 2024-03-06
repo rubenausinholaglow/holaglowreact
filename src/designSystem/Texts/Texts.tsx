@@ -38,7 +38,7 @@ export const Title = ({
   };
 
   const styles = twMerge(
-    `font-gtUltra -tracking-[3px] text-hg-secondary text-balance ${STYLES[size]} font-${weight} ${className}`
+    `font-gtUltra -tracking-[0.038em] text-hg-secondary text-balance ${STYLES[size]} font-${weight} ${className}`
   );
 
   if (isAnimated) {
