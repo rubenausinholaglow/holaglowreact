@@ -32,6 +32,9 @@ const ROUTES = {
     authentication: '/crm',
     menu: '/crm/menu',
   },
+  landings: {
+    pv: '/start-landing',
+  },
 };
 
 export default ROUTES;
