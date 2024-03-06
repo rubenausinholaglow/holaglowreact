@@ -276,8 +276,6 @@ export const PaymentModule = () => {
           };
           messageService.goToPage(message);
           router.push('/dashboard/remoteControl');
-        } else {
-          router.push('/dashboard/menu');
         }
 
         setMessageNotification('Ticket Creado Correctamente');

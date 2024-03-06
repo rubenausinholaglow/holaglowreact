@@ -173,7 +173,6 @@ const Page = () => {
                   )}
                 </Button>
               )}
-
               <Button
                 className="w-full"
                 size="md"
@@ -181,6 +180,14 @@ const Page = () => {
                 type="tertiary"
               >
                 <span className="font-semibold">Agendar Cita</span>
+              </Button>
+              <Button
+                className="w-full"
+                size="md"
+                href={`${ROUTES.dashboard.menu}`}
+                type="tertiary"
+              >
+                <span className="font-semibold">Menú</span>
               </Button>
             </Flex>
           </div>
