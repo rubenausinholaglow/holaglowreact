@@ -1,13 +1,16 @@
 'use client';
 
 import { Component, ReactNode } from 'react';
+import { registerLocale } from 'react-datepicker';
 import Bugsnag from '@bugsnag/js';
 import { Analytics } from '@vercel/analytics/react';
 import { gtUltra } from 'app/fonts';
+import es from 'date-fns/locale/es';
 
 import DermaFooter from './DermaFooter';
 import DermaHeader from './DermaHeader';
 
+registerLocale('es', es);
 class ErrorBoundary extends Component<any, any> {
   constructor(props: any | Readonly<any>) {
     super(props);
