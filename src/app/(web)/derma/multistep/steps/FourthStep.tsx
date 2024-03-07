@@ -4,7 +4,7 @@ import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import { SvgStethoscope } from 'app/icons/Icons';
 import { SvgVideo } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 export default function FourthStep({
   activeSlideIndex,
@@ -25,9 +25,9 @@ export default function FourthStep({
                   <Text className="text-sm text-derma-primary500 mb-2">
                     Paso {activeSlideIndex + 1}. Agenda
                   </Text>
-                  <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
+                  <Title className="text-derma-primary mb-4">
                     Selecciona dia y hora de la videollamada
-                  </Text>
+                  </Title>
                   <ul className="flex flex-col gap-4 mb-4 text-xs text-hg-black500 px-0 md:w-1/2 md:text-sm">
                     <li className="flex gap-2">
                       <SvgStethoscope className="h-5 w-5" />

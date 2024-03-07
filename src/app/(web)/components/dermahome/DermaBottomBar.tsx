@@ -14,7 +14,7 @@ export default function DermaBottomBar({
   const [showBottomBar, setShowBottomBar] = useState(false);
 
   const recalculateVisibility = () => {
-    setShowBottomBar(window.scrollY > (threshold ?? 350));
+    setShowBottomBar(window.scrollY > (threshold ?? 800));
     scrollPos.current = window.scrollY;
   };
 

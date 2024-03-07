@@ -21,7 +21,7 @@ export default function StoriesDerma() {
           <Title
             isAnimated
             size="2xl"
-            className="font-gtUltraBold text-derma-primary font-bold mb-4"
+            className="font-gtUltra text-derma-primary font-bold mb-4"
           >
             Historias inspiradoras
           </Title>

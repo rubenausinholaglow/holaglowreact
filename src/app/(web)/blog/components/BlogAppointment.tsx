@@ -55,7 +55,7 @@ export default function BlogAppointment() {
         >
           <Text
             isAnimated
-            className="text-hg-primary font-gtUltraBold mb-6 text-3xl md:text-4xl md:pr-8"
+            className="text-hg-primary font-gtUltra mb-6 text-3xl md:text-4xl md:pr-8"
           >
             Reserva tu cita
           </Text>

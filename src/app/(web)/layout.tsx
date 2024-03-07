@@ -1,5 +1,3 @@
-import 'app/globals.css';
-
 import { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { headers } from 'next/headers';

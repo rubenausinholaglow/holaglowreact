@@ -1,17 +1,17 @@
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function HowItWorksDerma() {
   return (
     <Container className="py-12 md:pb-0">
-      <TitleDerma
+      <Title
         isAnimated
         size="2xl"
         className="text-derma-primary text-left mb-8 md:mb-16"
       >
         Cómo funciona
-      </TitleDerma>
+      </Title>
       <ul className="flex flex-col w-full gap-8 md:gap-16 md:flex-row md:mb-16">
         {[
           {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ProductFilters } from '@interface/filters';
 import { Product } from '@interface/product';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import {
   applyFilters,

@@ -1,7 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
 import ProfessionalsDerma from '../common/ProfessionalsDerma';
 import StoriesDerma from '../common/StoriesDerma';
 import BenefitsApplicationResultsDerma from './BenefitsApplicationResultsDerma';
@@ -12,20 +8,6 @@ import TreatmentsDerma from './TreatmentsDerma';
 import WhatsIncludedDerma from './WhatsIncludedDerma';
 
 export default function HomeBlocksDerma() {
-  const [floatingBarThreshold, setFloatingBarThreshold] = useState(0);
-
-  useEffect(() => {
-    const professionals = document.getElementById('professionals');
-
-    if (professionals && floatingBarThreshold === 0) {
-      const rect = professionals.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const elementTop = rect.top + scrollTop + 125;
-
-      setFloatingBarThreshold(elementTop);
-    }
-  }, []);
-
   return (
     <>
       <TreatmentsDerma />

@@ -31,10 +31,10 @@ export default class ProductService {
       return err;
     }
   }
-  static async getDashboardProducts() {
+  static async getDashboardProducts(getUpgrades = false) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}DashboardProducts`;
-
+      let url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}DashboardProducts`;
+      url = getUpgrades ? url + "?getUpgrades=true" : url
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();

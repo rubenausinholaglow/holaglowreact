@@ -1,19 +1,19 @@
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function BenefitsApplicationResultsDerma() {
   return (
     <div className="pt-12 pb-16 bg-derma-primary100">
       <Container>
-        <TitleDerma
+        <Title
           isAnimated
           size="2xl"
           className="mb-6 md:mb-8 text-derma-primary"
         >
           Crema facial personalizada
-        </TitleDerma>
+        </Title>
         <Text className="text-hg-black500 mb-8">
           Una crema facial formulada exclusivamente para ti con ingredientes que
           han sido testados médicamente y cuya eficacia se ha demostrado
@@ -25,7 +25,9 @@ export default function BenefitsApplicationResultsDerma() {
           className="md:flex-row gap-4 md:gap-16 mb-16 items-start"
         >
           <Flex layout="col-left" className="gap-4 w-full mb-4 md:w-1/2">
-            <TitleDerma size="xl">Beneficios</TitleDerma>
+            <Title size="xl" className="text-derma-primary">
+              Beneficios
+            </Title>
             {[
               {
                 title: 'Prescripción médica',
@@ -73,7 +75,9 @@ export default function BenefitsApplicationResultsDerma() {
             layout="col-left"
             className="gap-4 w-full mb-4 md:w-1/2 md:order-2"
           >
-            <TitleDerma size="xl">Aplicación</TitleDerma>
+            <Title size="xl" className="text-derma-primary">
+              Aplicación
+            </Title>
             {[
               {
                 title:
@@ -117,9 +121,9 @@ export default function BenefitsApplicationResultsDerma() {
         </Flex>
 
         {/* 
-        <TitleDerma size="xl" className="mb-6 md:mb-16">
+        <Title size="xl" className="mb-6 md:mb-16">
           Resultados de una formulación antiaging
-        </TitleDerma>
+        </Title>
 
         <Flex layout="col-left" className="w-full md:flex-row">
           <div className="relative pb-8 mb-4 md:w-[80%]">

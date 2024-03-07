@@ -6,7 +6,10 @@ import { Title, Underlined } from 'designSystem/Texts/Texts';
 
 export default function LookingFor() {
   return (
-    <div className="bg-[url('/images/products/lookingForBg.png')] md:bg-[url('/images/products/lookingForBg-desktop.png')] bg-bottom bg-cover pt-16 pb-[650px] md:py-32">
+    <div
+      className="bg-[url('/images/products/lookingForBg.png')] md:bg-[url('/images/products/lookingForBg-desktop.png')] bg-bottom bg-cover pt-16 pb-[650px] md:py-32"
+      id="lookingFor"
+    >
       <Container>
         <Flex layout="col-center" className="md:items-start md:w-2/5">
           <Title
@@ -23,7 +26,7 @@ export default function LookingFor() {
 
           <Button
             isAnimated
-            type="secondary"
+            type="primary"
             size="xl"
             className="mb-8"
             href="tel:682417208"
@@ -36,9 +39,8 @@ export default function LookingFor() {
           <Button
             id={'tmevent_help_module_click'}
             isAnimated
-            type="tertiary"
+            type="white"
             className="mt-auto"
-            customStyles="bg-hg-primary hover:bg-hg-secondary100"
             size="xl"
             href="https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20y%20vuestros%20tratamientos"
           >

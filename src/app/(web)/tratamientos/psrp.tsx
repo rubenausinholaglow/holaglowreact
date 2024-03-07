@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
 import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -23,9 +23,12 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
+import FloatingBottomBar from '../components/home/FloatingBottomBar';
+import PVBottomBar from '../components/product/PVBottomBar';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
+import PVBanner from './components/PVBanner';
 import { applyFilters, filterCount } from './utils/filters';
 
 export default function PsrpPage({
@@ -125,14 +128,14 @@ export default function PsrpPage({
             <Flex className="justify-start px-4 py-1 w-full">
               <Flex className="mr-auto gap-2">
                 <Button
-                  type="tertiary"
+                  type="white"
                   size="sm"
                   onClick={() => {
                     setShowDashboardFilters(!showDashboardFilters);
                   }}
                 >
                   <SvgFilters className="mr-2" />
-                  <Flex layout="col-center">Filtrar</Flex>
+                  Filtrar
                 </Button>
                 <Text
                   size="xs"
@@ -204,7 +207,7 @@ export default function PsrpPage({
     );
   else
     return (
-      <MainLayout hideHeader={slug != ''}>
+      <MainLayout>
         <link rel="canonical" href="https://holaglow.com/tratamientos/" />
         <MobileFilters
           isVisible={isMobileFiltersVisible}
@@ -216,20 +219,13 @@ export default function PsrpPage({
             <Title
               isAnimated
               size="2xl"
-              className="font-bold mb-6 lg:mb-12 lg:w-3/5 md:text-4xl lg:text-5xl"
+              className="font-bold mb-6 lg:mb-12 lg:w-2/5 md:text-4xl lg:text-5xl"
             >
               Nuestros{' '}
               <Underlined color={HOLAGLOW_COLORS['secondary700']}>
                 tratamientos
               </Underlined>
             </Title>
-            <Image
-              src={'/images/products/productsBg.png'}
-              height={858}
-              width={1395}
-              alt="nuestros tratamientos"
-              className="hidden lg:block absolute right-[5%] top-[10%] h-full w-auto scale-[160%]"
-            />
           </Container>
           <Container className="px-0 md:px-4 pb-4 relative">
             <div className="lg:flex lg:flex-row lg:justify-between">
@@ -261,10 +257,9 @@ export default function PsrpPage({
                 <AnimateOnViewport>
                   <Flex layout="row-left" className="w-full justify-between">
                     <Button
-                      type="tertiary"
+                      type="white"
                       size="sm"
                       className="mr-2"
-                      customStyles="group-hover:bg-hg-secondary100"
                       onClick={() => {
                         deviceSize.isMobile
                           ? setIsMobileFiltersVisible(true)
@@ -272,7 +267,7 @@ export default function PsrpPage({
                       }}
                     >
                       <SvgFilters className="mr-2" />
-                      <Flex layout="col-center">Filtrar</Flex>
+                      Filtrar
                     </Button>
 
                     <div className="mr-auto">
@@ -335,6 +330,9 @@ export default function PsrpPage({
                   showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
                 }   pb-6`}
               >
+                <li className="md:pt-10">
+                  <PVBanner />
+                </li>
                 {filteredProducts.map(product => {
                   if (product.visibility) {
                     return (
@@ -354,6 +352,7 @@ export default function PsrpPage({
         )}
 
         <LookingFor />
+        <PVBottomBar />
       </MainLayout>
     );
 

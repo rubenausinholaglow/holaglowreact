@@ -4,20 +4,6 @@
 
 @config "./../../tailwind.config.js";
 
-@font-face {
-  font-family: 'gtUltraThin';
-  src: url('/fonts/gtultramedian-light.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'gtUltraBold';
-  src: url('/fonts/gtultramedian-bold.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -77,12 +63,6 @@ input[type='date']::-webkit-calendar-picker-indicator {
   height: 24px;
   width: 24px;
   cursor: pointer;
-}
-
-@layer components {
-  .font-gtUltraBold {
-    @apply tracking-tight;
-  }
 }
 
 #categorySelector::-webkit-scrollbar {
