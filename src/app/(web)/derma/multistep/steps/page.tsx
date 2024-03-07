@@ -197,11 +197,6 @@ export default function Form() {
       client.name = dermaQuestions.name!;
       setClient(client);
     }
-    if (client.phone) {
-      client.phone = client.phone.replace(client.phonePrefix, '');
-      setClient(client);
-      dermaQuestions.phone = client.phone;
-    }
     if (client.phonePrefix) dermaQuestions.phonePrefix = client.phonePrefix;
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
