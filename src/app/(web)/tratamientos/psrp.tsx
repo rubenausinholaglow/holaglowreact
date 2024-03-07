@@ -128,7 +128,7 @@ export default function PsrpPage({
             <Flex className="justify-start px-4 py-1 w-full">
               <Flex className="mr-auto gap-2">
                 <Button
-                  type="tertiary"
+                  type="white"
                   size="sm"
                   onClick={() => {
                     setShowDashboardFilters(!showDashboardFilters);
