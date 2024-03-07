@@ -52,7 +52,7 @@ export const Button = ({
           id={id}
           target={rest?.target}
           className={twMerge(
-            `relative group overflow-visible ${className} inline-block`
+            `relative overflow-visible ${className} inline-block`
           )}
           onClick={onClick}
           type={rest?.isSubmit ? 'submit' : 'button'}
@@ -78,7 +78,7 @@ export const Button = ({
         id={id}
         target={rest?.target}
         className={twMerge(
-          `relative group overflow-visible ${className} inline-block`
+          `relative overflow-visible ${className} inline-block`
         )}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
@@ -101,7 +101,7 @@ export const Button = ({
       <AnimateOnViewport origin={origin}>
         <button
           className={twMerge(
-            `transition-all relative group overflow-visible ${
+            `transition-all relative overflow-visible ${
               ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
             } ${className}`
           )}
@@ -164,27 +164,25 @@ const ButtonBody = ({
   id?: string;
 }) => {
   const DISABLED_STYLES =
-    'cursor-default pointer-events-none border-none bg-hg-black100 text-hg-black300 group-hover:bg-hg-black100 group-hover:text-hg-black300 group-active:bg-hg-black100 group-active:text-hg-black300';
+    'cursor-default pointer-events-none border-none bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 active:bg-hg-black100 active:text-hg-black300';
 
   const STYLES: any = {
     common: 'transition-all relative text-center rounded-full',
-    primary: 'bg-hg-secondary text-white group-hover:bg-hg-secondary700',
+    primary: 'bg-hg-secondary text-white hover:bg-hg-secondary700',
     secondary:
-      'bg-hg-secondary100 text-hg-secondary border border-hg-secondary group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
+      'bg-hg-secondary100 text-hg-secondary border border-hg-secondary active:bg-hg-secondary300 hover:bg-hg-secondary300',
     tertiary:
-      'bg-hg-primary text-hg-black border border-hg-black group-active:bg-hg-secondary100 group-hover:bg-hg-secondary100',
+      'bg-hg-primary text-hg-black border border-hg-black active:bg-hg-secondary100 hover:bg-hg-secondary100',
     derma: `bg-derma-primary text-white ${
-      !disabled
-        ? 'group-hover:bg-derma-primary500 group-hover:text-derma-primary'
-        : ''
+      !disabled ? 'hover:bg-derma-primary500 hover:text-derma-primary' : ''
     }`,
     dermaDark: `bg-derma-tertiary text-white ${
-      !disabled ? 'group-hover:bg-derma-tertiaryDark' : ''
+      !disabled ? 'hover:bg-derma-tertiaryDark' : ''
     }`,
     white:
-      'bg-white text-hg-black border border-hg-black group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100',
+      'bg-white text-hg-black border border-hg-black hover:bg-hg-secondary100 active:bg-hg-secondary100',
     disabled:
-      'bg-hg-black100 text-hg-black300 group-hover:bg-hg-black100 group-hover:text-hg-black300 cursor-default',
+      'bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default',
     sm: 'text-xs font-medium h-[32px] px-4',
     md: 'text-xs font-medium h-[40px] px-4',
     lg: 'text-md font-semibold h-[48px] px-6',

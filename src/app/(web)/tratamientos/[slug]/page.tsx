@@ -112,7 +112,7 @@ export default async function ProductPage({
       <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
         <Professionals />
       </div>
-      <FloatingBottomBar />
+      <FloatingBottomBar threshold={1200} />
     </MainLayoutSSR>
   );
 }

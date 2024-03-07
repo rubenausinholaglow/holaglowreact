@@ -24,7 +24,6 @@ export default function FloatingBottomBar({
   const { setSelectedTreatments } = useSessionStore(state => state);
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);
-  const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   let url =
     'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20y%20vuestros%20tratamientos';
@@ -53,12 +52,6 @@ export default function FloatingBottomBar({
       window.removeEventListener('scroll', handleScroll);
     };
   }, [threshold, handleScroll]);
-
-  useEffect(() => {
-    if (product && !isEmpty(product.discounts)) {
-      setDiscountedPrice(getDiscountedPrice(product));
-    }
-  }, [product]);
 
   return (
     <div
