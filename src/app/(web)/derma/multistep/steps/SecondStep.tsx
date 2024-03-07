@@ -30,7 +30,7 @@ export default function SecondStep({
         return item.concern.startsWith('Otros:');
       })
     : [];
-  let normalConcerns: number[] = [];
+  const normalConcerns: number[] = [];
   dermaQuestions?.skinConcerns.forEach(item => {
     normalConcerns.push(
       (MULTISTEP_QUESTIONS[1].questions as [any]).findIndex(
