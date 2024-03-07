@@ -34,9 +34,8 @@ export default function DashboardFooter({
     <Flex className="gap-4 justify-start">
       <Flex className="mr-auto gap-2">
         <Button
-          type="tertiary"
+          type="white"
           onClick={() => handleBackButton()}
-          customStyles="bg-hg-black text-hg-primary"
           size="sm"
           className="py-4 pl-4"
         >
