@@ -1,9 +1,12 @@
-'use client';
-
 import { ReactNode } from 'react';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
+
+const AnimateOnViewport = dynamic(
+  () => import('app/(web)/components/common/AnimateOnViewport'),
+  { ssr: false }
+);
 
 export const Title = ({
   size = 'xl',
@@ -35,7 +38,7 @@ export const Title = ({
   };
 
   const styles = twMerge(
-    `text-balance ${STYLES[size]} font-${weight} ${className}`
+    `font-gtUltra -tracking-[0.038em] text-hg-secondary text-balance ${STYLES[size]} font-${weight} ${className}`
   );
 
   if (isAnimated) {
@@ -55,7 +58,7 @@ export const Title = ({
   );
 };
 
-export const TitleDerma = ({
+/* export const Title = ({
   size = 'xl',
   as = 'h3',
   className = '',
@@ -83,7 +86,7 @@ export const TitleDerma = ({
   };
 
   const styles = `text-balance ${className} ${STYLES[size]} ${
-    size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltraBold'
+    size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltra'
   }`;
 
   if (isAnimated) {
@@ -101,7 +104,7 @@ export const TitleDerma = ({
       {children}
     </HtmlComponent>
   );
-};
+}; */
 
 export const Text = ({
   size = 'default',
@@ -126,7 +129,7 @@ export const Text = ({
 }) => {
   const HtmlComponent = as;
 
-  const styles = `text-pretty text-left ${
+  const styles = `text-left ${
     size !== 'default' ? `text-${size}` : ''
   } ${className}`;
 

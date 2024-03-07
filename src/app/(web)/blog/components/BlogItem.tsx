@@ -10,7 +10,6 @@ import BlogCategories from './BlogCategories';
 export default function BlogItem({
   className = '',
   post,
-  index,
   isHighlightedPost = false,
   activeCategories,
 }: {

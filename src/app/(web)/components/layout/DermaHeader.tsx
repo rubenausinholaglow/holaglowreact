@@ -15,7 +15,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Link from 'next/link';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
+import AnimateOnViewport from '../common/AnimateOnViewport';
 
 let isTicking = false;
 let scrollPos = 0;

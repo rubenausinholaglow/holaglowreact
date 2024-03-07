@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { SvgGlow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
@@ -90,7 +90,7 @@ export default function ProductHeader({
                 return (
                   <Button
                     key={category.name}
-                    type="tertiary"
+                    type="white"
                     customStyles="border-none pl-1 mb-8"
                   >
                     <CategoryIcon category={category.name} className="mr-2" />

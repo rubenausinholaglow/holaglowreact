@@ -129,7 +129,7 @@ export default function Header({
                 <Button
                   id="tmevents_nav_menu_appointment"
                   size="sm"
-                  type="tertiary"
+                  type="white"
                   href={ROUTES.checkout.type}
                   className="hidden md:block"
                   onClick={() => {

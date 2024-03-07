@@ -121,7 +121,7 @@ export function Footer() {
 
           <Button
             id={'tmevent_footer'}
-            type="tertiary"
+            type="white"
             href={ROUTES.checkout.clinics}
             onClick={() => {
               setSelectedTreatments([]);

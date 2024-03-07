@@ -5,7 +5,7 @@ import TextInputField from '@dashboardComponents/TextInputField';
 import { UpsellingData } from '@interface/upselling';
 import { SvgSend } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { TitleDerma } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 
 export default function UpsellingPharmacies({
   data,
@@ -58,9 +58,9 @@ export default function UpsellingPharmacies({
       <Container>
         <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
           <div className="w-full md:w-2/5">
-            <TitleDerma size="2xl" className="text-derma-primary mb-8">
+            <Title size="2xl" className="text-derma-primary mb-8">
               Buscador de farmacia
-            </TitleDerma>
+            </Title>
 
             <div className="w-full relative mb-4">
               <div className="absolute z-10 top-5 right-4 inline-block border border-derma-primary rounded-[6px] p-1">

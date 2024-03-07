@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { DERMA_PRODUCTS } from 'app/(web)/derma/planes/mockedData';
 import { SvgArrow, SvgCheckCircle, SvgCross } from 'app/icons/IconsDs';
@@ -5,7 +7,7 @@ import { useGlobalStore, useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
-import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
@@ -63,9 +65,9 @@ export default function WhatsIncludedDerma() {
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
                 />
-                <TitleDerma className="text-derma-primary mb-4">
+                <Title className="text-derma-primary mb-4">
                   Tu rutina facial personalizada
-                </TitleDerma>
+                </Title>
                 <Flex
                   layout="col-left"
                   className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
@@ -144,13 +146,9 @@ export default function WhatsIncludedDerma() {
             className="items-center relative md:justify-center md:flex-row md:gap-12 md:items-start"
           >
             <Flex layout="col-left" className="relative z-10 md:w-[55%]">
-              <TitleDerma
-                isAnimated
-                size="2xl"
-                className="text-white mb-4 md:mb-6"
-              >
+              <Title isAnimated size="2xl" className="text-white mb-4 md:mb-6">
                 Qué incluye el precio
-              </TitleDerma>
+              </Title>
               <Text className="text-hg-black500 md:w-full md:text-lg mb-6 md:text-white">
                 Tu piel merece un cuidado experto y personalizado
               </Text>
@@ -184,7 +182,7 @@ export default function WhatsIncludedDerma() {
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
-                <Title size="xl" className="mb-2 font-gtUltraBold">
+                <Title size="xl" className="mb-2 font-gtUltra">
                   Cesta con productos personalizados y validados por el médico
                 </Title>
                 <div>

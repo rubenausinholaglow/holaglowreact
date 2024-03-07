@@ -22,8 +22,7 @@ export default function ProductSelectorButton({
         router.push(ROUTES.checkout.type);
       }}
       size="xl"
-      type="tertiary"
-      customStyles="bg-hg-primary"
+      type="primary"
       className="mb-12 md:mb-0 md:mt-auto"
       id="tmevent_click_book_anchor_button"
     >

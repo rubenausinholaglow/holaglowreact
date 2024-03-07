@@ -53,7 +53,7 @@ export default function CheckoutHeader({
           {!hideBackButton && (
             <Button
               size="sm"
-              type="tertiary"
+              type="white"
               onClick={() => {
                 setTimeout(() => {
                   window.scrollTo({

@@ -9,7 +9,7 @@ import {
 import { Professional, ProfessionalType } from 'app/types/clinic';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import ProfessionalCard from './ProfessionalCard';
@@ -87,13 +87,13 @@ export default function ProfessionalsDerma({
           isDashboard ? '' : 'md:w-[55%]'
         } md:px-0 md:flex md:flex-col md:justify-center md:items-start md:order-2`}
       >
-        <TitleDerma
+        <Title
           isAnimated
           size="2xl"
           className="mb-6 md:mb-8 text-derma-primary"
         >
           Nuestra red de dermatólogos estéticos
-        </TitleDerma>
+        </Title>
         <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
           Dermatólogos experimentados escucharán todas tus inquietudes estéticas
           para acompañarte en el cuidado óptimo de tu piel y ayudarte a lograr

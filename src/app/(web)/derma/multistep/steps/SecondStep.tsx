@@ -5,7 +5,7 @@ import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { HOLAGLOW_COLORS } from '@utils/colors';
 import { SvgCheck, SvgCircle } from 'app/icons/Icons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
@@ -15,14 +15,12 @@ export default function SecondStep({
   item,
   dermaQuestions,
   setDermaQuestions,
-  continueDisabled,
   setContinueDisabled,
 }: {
   question: number;
   item: any;
   dermaQuestions: DermaQuestions;
   setDermaQuestions: any;
-  continueDisabled: boolean;
   setContinueDisabled: any;
 }) {
   const otherConcerns = dermaQuestions?.skinConcerns
@@ -132,9 +130,7 @@ export default function SecondStep({
           <Text className="text-sm text-derma-primary500">
             Paso {question + 2}. {item.section}
           </Text>
-          <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
-            {item.title}
-          </Text>
+          <Title className="text-derma-primary mb-4">{item.title}</Title>
           <Text className="text-hg-black500 text-sm mb-8 md:text-md">
             {item.description}
           </Text>

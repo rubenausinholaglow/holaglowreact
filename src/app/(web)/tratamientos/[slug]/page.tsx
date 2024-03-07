@@ -3,8 +3,11 @@ import { fetchProduct, fetchProducts } from '@utils/fetch';
 import Clinics from 'app/(ssr)/homeSSR/components/Clinics';
 import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
 import Professionals from 'app/(ssr)/homeSSR/components/Professionals';
+import App from 'app/(web)/components/layout/App';
 import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
 
+import PsrpPage from '../psrp';
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
 import ProductFreeAppointment from './components/ProductFreeAppointment';
@@ -47,16 +50,39 @@ async function getProduct(
   return product;
 }
 
+const TREATMENT_LANDINGS_SLUGS = [
+  'arrugas',
+  'lifting',
+  'relleno',
+  'lifting',
+  'piel',
+  'pelo',
+  'otros',
+  'packs',
+];
+
 export default async function ProductPage({
   params,
 }: {
   params: { slug: string; isDashboard: boolean };
 }) {
+  if (TREATMENT_LANDINGS_SLUGS.includes(params.slug)) {
+    return (
+      <App>
+        <PsrpPage slug={params.slug} />
+      </App>
+    );
+  }
+
   const products = await getProducts();
 
   const productId = products.filter(
     (product: Product) => product?.extraInformation?.slug === params.slug
-  )[0].id;
+  )[0]?.id;
+
+  if (productId === undefined) {
+    return notFound();
+  }
 
   const product = await getProduct(productId, false, false);
 

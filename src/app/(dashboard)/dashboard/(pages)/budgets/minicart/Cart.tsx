@@ -60,7 +60,7 @@ export function Cart() {
           ))}
         </ul>
         <Flex className="w-full p-4 justify-between">
-          <Button type="tertiary" size="sm" onClick={() => setShowCart(false)}>
+          <Button type="white" size="sm" onClick={() => setShowCart(false)}>
             Cerrar
           </Button>
           <Button

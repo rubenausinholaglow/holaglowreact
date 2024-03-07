@@ -69,7 +69,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
           <Button
             size="sm"
             onClick={() => removeFromCart(product)}
-            type="tertiary"
+            type="white"
             className="shrink-0"
           >
             Eliminar

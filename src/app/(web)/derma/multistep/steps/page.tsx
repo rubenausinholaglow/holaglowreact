@@ -261,10 +261,8 @@ export default function Form() {
                 dermaQuestions={dermaQuestions}
                 setDermaQuestions={setDermaQuestions}
                 setContinueDisabled={setContinueDisabled}
-                continueDisabled={continueDisabled}
                 is18YearsOld={is18YearsOld}
                 setIs18YearsOld={setIs18YearsOld}
-                setErrorMessage={setErrorMessage}
               />
             </div>
 
@@ -281,7 +279,6 @@ export default function Form() {
                       item={item}
                       dermaQuestions={dermaQuestions}
                       setDermaQuestions={setDermaQuestions}
-                      continueDisabled={continueDisabled}
                       setContinueDisabled={setContinueDisabled}
                     />
                   )}
