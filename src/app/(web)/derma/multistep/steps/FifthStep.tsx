@@ -45,12 +45,9 @@ export default function FifthStep({
                     width={200}
                     height={200}
                     alt="TrustPilot"
-                    src="/images/derma/trustpilot-logo.png"
+                    src="/images/derma/home/GoogleReviews.png"
                   />
                 </div>
-                <Text className="ml-4 mb-4">
-                  TrustScore <b>4.7</b>
-                </Text>
               </Flex>
               <CheckoutPayment
                 hasError={false}

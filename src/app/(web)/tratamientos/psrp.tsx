@@ -128,7 +128,7 @@ export default function PsrpPage({
             <Flex className="justify-start px-4 py-1 w-full">
               <Flex className="mr-auto gap-2">
                 <Button
-                  type="tertiary"
+                  type="white"
                   size="sm"
                   onClick={() => {
                     setShowDashboardFilters(!showDashboardFilters);
@@ -207,7 +207,7 @@ export default function PsrpPage({
     );
   else
     return (
-      <MainLayout hideHeader={slug != ''}>
+      <MainLayout>
         <link rel="canonical" href="https://holaglow.com/tratamientos/" />
         <MobileFilters
           isVisible={isMobileFiltersVisible}
@@ -226,13 +226,6 @@ export default function PsrpPage({
                 tratamientos
               </Underlined>
             </Title>
-            <Image
-              src={'/images/products/productsBg.png'}
-              height={858}
-              width={1395}
-              alt="nuestros tratamientos"
-              className="hidden lg:block absolute right-[5%] top-[10%] h-full w-auto scale-[160%]"
-            />
           </Container>
           <Container className="px-0 md:px-4 pb-4 relative">
             <div className="lg:flex lg:flex-row lg:justify-between">

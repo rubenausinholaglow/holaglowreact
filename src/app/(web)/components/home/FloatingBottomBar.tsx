@@ -71,28 +71,27 @@ export default function FloatingBottomBar({
           <div className="w-full mr-4 h-16">
             <Button
               size="xl"
-              type="tertiary"
+              type="primary"
               className="mr-4 pointer-events-auto w-full"
               href={ROUTES.checkout.type}
               onClick={() => (!product ? setSelectedTreatments([]) : null)}
-              customStyles="bg-hg-primary px-2"
               id={'tmevent_click_floating_button'}
             >
               Me interesa
             </Button>
           </div>
           <Button
-            type="primary"
+            type="secondary"
             size="xl"
             className="pointer-events-auto"
-            customStyles="h-[64px] p-0 w-[64px] shrink-0"
+            customStyles="shrink-0"
           >
             <a
               href={url}
               target="_blank"
               id="tmevent_click_floating_button_whatsapp"
             >
-              <SvgWhatsapp className="text-hg-primary" />
+              <SvgWhatsapp className="text-hg-secondary" />
             </a>
           </Button>
         </Flex>

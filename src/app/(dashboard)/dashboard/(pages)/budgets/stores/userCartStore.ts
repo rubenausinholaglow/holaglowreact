@@ -19,6 +19,7 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
     priceDiscount: 0,
     priceWithDiscount: Number(product.price),
     uniqueId: createUniqueId(),
+    isScheduled: false
   });
   return updatedCart;
 }
@@ -157,6 +158,19 @@ export const useCartStore = create(
             totalPrice: state.totalPrice - cartItem.priceWithDiscount,
           }));
         }
+      },
+      updateIsScheduled: (isScheduled : boolean, uniqueIdCartItem : string) => {
+        set(state => {
+          const updatedCart = state.cart.map(item => {
+          if (item.uniqueId === uniqueIdCartItem) {
+            return { ...item, isScheduled };
+          }
+            return item;
+          });
+
+          return { ...state, cart: updatedCart }; 
+        });
+
       },
       resetCart: () => {
         set(() => ({
