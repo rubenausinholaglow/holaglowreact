@@ -23,9 +23,12 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
+import FloatingBottomBar from '../components/home/FloatingBottomBar';
+import PVBottomBar from '../components/product/PVBottomBar';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
+import PVBanner from './components/PVBanner';
 import { applyFilters, filterCount } from './utils/filters';
 
 export default function PsrpPage({
@@ -327,6 +330,9 @@ export default function PsrpPage({
                   showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
                 }   pb-6`}
               >
+                <li className="md:pt-10">
+                  <PVBanner />
+                </li>
                 {filteredProducts.map(product => {
                   if (product.visibility) {
                     return (
@@ -346,6 +352,7 @@ export default function PsrpPage({
         )}
 
         <LookingFor />
+        <PVBottomBar />
       </MainLayout>
     );
 

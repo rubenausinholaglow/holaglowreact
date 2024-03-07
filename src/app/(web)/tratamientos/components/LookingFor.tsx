@@ -6,7 +6,10 @@ import { Title, Underlined } from 'designSystem/Texts/Texts';
 
 export default function LookingFor() {
   return (
-    <div className="bg-[url('/images/products/lookingForBg.png')] md:bg-[url('/images/products/lookingForBg-desktop.png')] bg-bottom bg-cover pt-16 pb-[650px] md:py-32">
+    <div
+      className="bg-[url('/images/products/lookingForBg.png')] md:bg-[url('/images/products/lookingForBg-desktop.png')] bg-bottom bg-cover pt-16 pb-[650px] md:py-32"
+      id="lookingFor"
+    >
       <Container>
         <Flex layout="col-center" className="md:items-start md:w-2/5">
           <Title

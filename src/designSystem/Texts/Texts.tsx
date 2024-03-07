@@ -129,7 +129,7 @@ export const Text = ({
 }) => {
   const HtmlComponent = as;
 
-  const styles = `text-pretty text-left ${
+  const styles = `text-left ${
     size !== 'default' ? `text-${size}` : ''
   } ${className}`;
 
