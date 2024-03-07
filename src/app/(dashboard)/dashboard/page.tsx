@@ -379,7 +379,7 @@ export default function Page({
           <div className="fixed bottom-0 right-0 py-3 px-3">
             <Button
               onClick={() => setShowForm(!showForm)}
-              type="tertiary"
+              type="white"
               size="sm"
               className=""
             >

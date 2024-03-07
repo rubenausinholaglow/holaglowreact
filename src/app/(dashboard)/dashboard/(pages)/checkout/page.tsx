@@ -177,7 +177,7 @@ const Page = () => {
                 className="w-full"
                 size="md"
                 href={`${ROUTES.dashboard.schedule}`}
-                type="tertiary"
+                type="white"
               >
                 <span className="font-semibold">Agendar Cita</span>
               </Button>
@@ -185,7 +185,7 @@ const Page = () => {
                 className="w-full"
                 size="md"
                 href={`${ROUTES.dashboard.menu}`}
-                type="tertiary"
+                type="white"
               >
                 <span className="font-semibold">Menú</span>
               </Button>
