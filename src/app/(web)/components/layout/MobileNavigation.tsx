@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { SvgArrow, SvgCross } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCross, SvgHolaglow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -51,6 +51,7 @@ export default function MobileNavigation({
       hideModalBackground
     >
       <div className="bg-white border-b border-hg-black pt-12 pb-8 relative">
+        <SvgHolaglow className="absolute top-4 left-4 text-hg-secondary" />
         <SvgCross
           height={20}
           width={20}
@@ -59,14 +60,25 @@ export default function MobileNavigation({
         />
         <Flex
           layout="col-left"
-          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
+          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 pt-4"
         >
           <a href={ROUTES.treatments} id={'tmevent_nav_menu_click'}>
-            <p className="font-semcibold">Ver Tratamientos</p>
+            <p className="font-gtUltra text-hg-secondary font-thin text-drxl">
+              Nuestros tratamientos
+            </p>
           </a>
 
-          <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
+          <SimpleAccordion
+            trigger="Más populares"
+            isOpen={!deviceSize.isMobile}
+          >
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+              <a
+                href="/tratamientos/aumento-labios"
+                id={'tmevent_nav_menu_click'}
+              >
+                <li>Arrugas de expresión</li>
+              </a>
               <a
                 href="/tratamientos/aumento-labios"
                 id={'tmevent_nav_menu_click'}
@@ -77,46 +89,25 @@ export default function MobileNavigation({
                 href="/tratamientos/relleno-ojeras"
                 id={'tmevent_nav_menu_click'}
               >
+                <li>Armonización facial</li>
+              </a>
+              <a
+                href="/tratamientos/relleno-ojeras"
+                id={'tmevent_nav_menu_click'}
+              >
                 <li>Relleno de ojeras</li>
               </a>
               <a
-                href="/tratamientos/proyeccion-pomulos"
+                href={`${ROUTES.treatments}/proyeccion-pomulos`}
                 id={'tmevent_nav_menu_click'}
               >
                 <li>Proyección de pómulos</li>
               </a>
-              <a href="/tratamientos/relleno" id={'tmevent_nav_menu_click'}>
-                <li>Ver más</li>
-              </a>
             </ul>
           </SimpleAccordion>
 
-          <SimpleAccordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a
-                href="/tratamientos/prevencion-arrugas"
-                id={'tmevent_nav_menu_click'}
-              >
-                <li>Prevención de arrugas</li>
-              </a>
-              <a
-                href="/tratamientos/arrugas-expresion-frente-entrecejo-patas-gallo"
-                id={'tmevent_nav_menu_click'}
-              >
-                <li>Arrugas frente</li>
-              </a>
-              <a href="/tratamientos/arrugas" id={'tmevent_nav_menu_click'}>
-                <li>Ver más</li>
-              </a>
-            </ul>
-          </SimpleAccordion>
-
-          <a href="/tratamientos/hydrafacial" id={'tmevent_nav_menu_click'}>
-            <p className="font-semibold">Hydrafacial ®</p>
-          </a>
-
-          <a href="/tratamientos/packs" id={'tmevent_nav_menu_click'}>
-            <p className="font-semibold">Packs Glow</p>
+          <a href={ROUTES.treatments} id={'tmevent_nav_menu_click'}>
+            <p className="font-semibold">Ver todos</p>
           </a>
 
           <Button

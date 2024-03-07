@@ -65,6 +65,10 @@ input[type='date']::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
+.font-gtUltra {
+  letter-spacing: -0.038em;
+}
+
 #categorySelector::-webkit-scrollbar {
   display: none;
 }
