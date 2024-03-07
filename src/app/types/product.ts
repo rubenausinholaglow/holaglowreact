@@ -139,6 +139,7 @@ export interface CartItem extends Product {
   percentageDiscount: number;
   uniqueId: string;
   priceWithDiscount: number;
+  isScheduled? : boolean;
 }
 
 export interface Category {

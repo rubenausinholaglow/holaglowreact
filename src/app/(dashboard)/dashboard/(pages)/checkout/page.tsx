@@ -173,15 +173,21 @@ const Page = () => {
                   )}
                 </Button>
               )}
-
               <Button
                 className="w-full"
                 size="md"
-                target="_blank"
-                href={`${ROUTES.dashboard.schedule}?token=${user?.flowwwToken}`}
+                href={`${ROUTES.dashboard.schedule}`}
                 type="tertiary"
               >
                 <span className="font-semibold">Agendar Cita</span>
+              </Button>
+              <Button
+                className="w-full"
+                size="md"
+                href={`${ROUTES.dashboard.menu}`}
+                type="tertiary"
+              >
+                <span className="font-semibold">Menú</span>
               </Button>
             </Flex>
           </div>
