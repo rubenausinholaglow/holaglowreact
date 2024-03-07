@@ -1,6 +1,7 @@
 'use client';
 
 import { getProductCardColor, useImageProps } from '@utils/common';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -8,13 +9,14 @@ import Image from 'next/image';
 
 export default function ProductHeaderImage({ product }: { product: Product }) {
   const { alignmentStyles, setNextImgSrc } = useImageProps(product);
+  const { deviceSize } = useSessionStore(state => state);
   const imageUrls: any[] = [];
   const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`;
 
   const alignmentImage =
-    product.productCardImagePosition === 'right'
+    product.productCardImagePosition === 'right' && !deviceSize.isMobile
       ? 'rounded-r-3xl'
-      : product.productCardImagePosition === 'left'
+      : product.productCardImagePosition === 'left' && !deviceSize.isMobile
       ? 'rounded-l-3xl'
       : '';
   const renderCarouselItems = () => {
