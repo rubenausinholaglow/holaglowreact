@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgAngle } from 'app/icons/IconsDs';
 import {

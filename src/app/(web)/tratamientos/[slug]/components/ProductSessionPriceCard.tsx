@@ -72,9 +72,8 @@ export default function ProductSessionPriceCard({
             </Flex>
             {!isDashboard && (
               <Button
-                type="tertiary"
+                type="primary"
                 className="hidden md:block shrink-0"
-                customStyles="bg-hg-primary md:mt-4"
                 onClick={() => {
                   setSelectedTreatments([product]);
                 }}

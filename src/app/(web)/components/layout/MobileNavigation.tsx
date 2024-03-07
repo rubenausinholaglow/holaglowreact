@@ -121,7 +121,7 @@ export default function MobileNavigation({
 
           <Button
             id={'tmevent_nav_menu_click'}
-            type="tertiary"
+            type="white"
             href={ROUTES.checkout.clinics}
             onClick={() => {
               setSelectedTreatments([]);

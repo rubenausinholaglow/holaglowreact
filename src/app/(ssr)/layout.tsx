@@ -1,5 +1,3 @@
-import 'app/globals.css';
-
 import { ReactNode } from 'react';
 import { Breakpoint } from 'app/(web)/components/layout/Breakpoint';
 import { poppins } from 'app/fonts';

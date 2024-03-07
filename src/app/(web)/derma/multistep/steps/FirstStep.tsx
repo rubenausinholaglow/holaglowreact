@@ -3,7 +3,7 @@ import TextInputField from '@dashboardComponents/TextInputField';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function FirstStep({
@@ -11,19 +11,15 @@ export default function FirstStep({
   dermaQuestions,
   setDermaQuestions,
   setContinueDisabled,
-  continueDisabled,
   is18YearsOld,
   setIs18YearsOld,
-  setErrorMessage,
 }: {
   activeSlideIndex: number;
   dermaQuestions: DermaQuestions;
   setDermaQuestions: any;
   setContinueDisabled: any;
-  continueDisabled: boolean;
   is18YearsOld: boolean;
   setIs18YearsOld: (value: boolean) => void;
-  setErrorMessage: (value: string) => void;
 }) {
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -50,9 +46,9 @@ export default function FirstStep({
                 <Text className="text-sm text-derma-primary500">
                   Paso {activeSlideIndex + 1}. Información básica del paciente
                 </Text>
-                <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
+                <Title className="text-derma-primary mb-4">
                   Empecemos por ti
-                </Text>
+                </Title>
                 <Text className="text-hg-black500 text-sm mb-8 md:text-md">
                   Responde estas preguntas para ayudar al médico a entender
                   mejor tus necesidades

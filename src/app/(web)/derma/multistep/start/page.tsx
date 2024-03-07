@@ -1,7 +1,7 @@
 import CheckHydration from '@utils/CheckHydration';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
@@ -33,13 +33,13 @@ export default function StartMultistep() {
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
-                <Text className="font-gtUltraThin text-derma-primary mb-6 md:mb-6 text-xl md:text-5xl md:font-gtUltraBold">
+                <Title size="2xl" className="text-derma-primary mb-6 md:mb-6">
                   Tu rutina facial personalizada por 99€
-                </Text>
-                <Text className="font-gtUltraBold md:w-full md:text-lg mb-2">
+                </Title>
+                <Text className="font-gtUltra md:w-full md:text-lg mb-2">
                   Videollamada de diagnóstico con el médico
                 </Text>
-                <Text className="font-gtUltraBold md:w-full md:text-lg mb-8">
+                <Text className="font-gtUltra md:w-full md:text-lg mb-8">
                   Te enviamos a casa tu rutina personalizada:
                 </Text>
                 <Text className="text-hg-black500 md:w-full md:text-lg mb-2">

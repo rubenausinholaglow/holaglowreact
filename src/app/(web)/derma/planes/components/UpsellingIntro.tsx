@@ -14,7 +14,7 @@ export default function UpsellingIntro({
   return (
     <Container>
       <Flex layout="col-left" className="w-full md:flex-row py-6 md:py-12">
-        <Text className="font-gtUltraThin mb-8 text-center text-derma-primary md:w-1/2 text-drxl md:text-5xl md:font-gtUltraBold md:text-left">
+        <Text className="font-gtUltraThin mb-8 text-center text-derma-primary md:w-1/2 text-drxl md:text-5xl md:font-gtUltra md:text-left">
           ¡Ya tenemos la receta de tu crema personalizada!
         </Text>
 

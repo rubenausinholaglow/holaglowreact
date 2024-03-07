@@ -18,7 +18,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -186,9 +186,9 @@ export default function UpsellingRoutines({
                     {DERMA_TYPES[data!.routine]}
                   </Text>
                 )}
-                <TitleDerma className="text-derma-primary mb-4">
+                <Title className="text-derma-primary mb-4">
                   {DERMA_ROUTINES[selectedRoutine].name}
-                </TitleDerma>
+                </Title>
                 <Flex
                   layout="col-left"
                   className="rounded-2xl bg-derma-secondary400 p-4 md:p-6 w-full gap-4 mb-8"
@@ -262,9 +262,9 @@ export default function UpsellingRoutines({
         </div>
 
         <Container className="bg-derma-primary500 rounded-3xl py-6 -mt-5 md:mt-0 md:mb-8">
-          <TitleDerma size="2xl" className="text-white mb-4">
+          <Title size="2xl" className="text-white mb-4">
             Tu rutina facial ya está en camino
-          </TitleDerma>
+          </Title>
           <Text className="mb-8">
             Sigue las recomendaciones que te llegarán junto a la rutina para
             sacarle el máximo partido

@@ -77,8 +77,7 @@ export default function DesktopFilters({
 
       <Button
         id={'tmevent_filters'}
-        type="tertiary"
-        customStyles="group-hover:bg-hg-secondary100"
+        type="white"
         onClick={() => setShowDesktopFilters(!showDesktopFilters)}
       >
         Cerrar

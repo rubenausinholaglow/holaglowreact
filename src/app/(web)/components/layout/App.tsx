@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
-import { poppins } from 'app/fonts';
+import { gtUltra, poppins } from 'app/fonts';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -143,7 +143,9 @@ export default function Html({ children }: { children: ReactNode }) {
 
   return (
     <body
-      className={`relative min-h-full ${poppins.className} ${
+      className={`relative min-h-full ${gtUltra.variable} ${
+        poppins.className
+      } ${
         isModalOpen || !isMainScrollEnabled
           ? 'overflow-hidden'
           : 'overflow-auto'

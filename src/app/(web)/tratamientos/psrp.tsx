@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
 import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -132,7 +132,7 @@ export default function PsrpPage({
                   }}
                 >
                   <SvgFilters className="mr-2" />
-                  <Flex layout="col-center">Filtrar</Flex>
+                  Filtrar
                 </Button>
                 <Text
                   size="xs"
@@ -216,7 +216,7 @@ export default function PsrpPage({
             <Title
               isAnimated
               size="2xl"
-              className="font-bold mb-6 lg:mb-12 lg:w-3/5 md:text-4xl lg:text-5xl"
+              className="font-bold mb-6 lg:mb-12 lg:w-2/5 md:text-4xl lg:text-5xl"
             >
               Nuestros{' '}
               <Underlined color={HOLAGLOW_COLORS['secondary700']}>
@@ -254,10 +254,9 @@ export default function PsrpPage({
                 <AnimateOnViewport>
                   <Flex layout="row-left" className="w-full justify-between">
                     <Button
-                      type="tertiary"
+                      type="white"
                       size="sm"
                       className="mr-2"
-                      customStyles="group-hover:bg-hg-secondary100"
                       onClick={() => {
                         deviceSize.isMobile
                           ? setIsMobileFiltersVisible(true)
@@ -265,7 +264,7 @@ export default function PsrpPage({
                       }}
                     >
                       <SvgFilters className="mr-2" />
-                      <Flex layout="col-center">Filtrar</Flex>
+                      Filtrar
                     </Button>
 
                     <div className="mr-auto">

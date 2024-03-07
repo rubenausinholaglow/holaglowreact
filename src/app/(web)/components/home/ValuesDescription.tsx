@@ -1,10 +1,12 @@
-'use client';
-
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
+const AnimateOnViewport = dynamic(
+  () => import('app/(web)/components/common/AnimateOnViewport'),
+  { ssr: false }
+);
 
 export default function ValuesDescription() {
   return (
@@ -14,11 +16,7 @@ export default function ValuesDescription() {
         className="gap-4 items-center relative md:justify-center md:flex-row"
       >
         <Flex layout="col-left" className="relative z-10 md:w-1/2">
-          <Title
-            isAnimated
-            size="2xl"
-            className="font-bold mb-12 md:mb-6 lg:pr-[20%]"
-          >
+          <Title isAnimated size="2xl" className="font-bold mb-12 md:mb-6">
             La belleza es lo que te dé la gana
           </Title>
           <Text

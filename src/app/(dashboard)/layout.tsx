@@ -1,4 +1,3 @@
-import 'app/globals.css';
 import '../../../public/styles/Alma/widgets.min.css';
 
 import Head from 'next/head';

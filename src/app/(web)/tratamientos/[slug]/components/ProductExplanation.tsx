@@ -1,4 +1,4 @@
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { SvgCheckCircle } from 'app/icons/IconsDs';
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';

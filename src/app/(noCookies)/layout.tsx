@@ -1,5 +1,3 @@
-import 'app/globals.css';
-
 import App from 'app/(web)/components/layout/App';
 import Head from 'next/head';
 

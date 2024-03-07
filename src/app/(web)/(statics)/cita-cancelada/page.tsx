@@ -2,6 +2,7 @@
 
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { SvgArrow } from 'app/icons/IconsDs';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
@@ -28,13 +29,9 @@ export default function CanceledAppointment() {
             <a href={ROUTE.checkout.clinics}>aquí.</a>
           </Text>
 
-          <Button
-            size="lg"
-            type="tertiary"
-            customStyles="border-hg-black bg-hg-primary"
-            href={ROUTE.treatments}
-          >
+          <Button size="lg" type="primary" href={ROUTE.treatments}>
             Ver tratamientos
+            <SvgArrow className="ml-2 h-5 w-5" />
           </Button>
         </Container>
       </MainLayout>

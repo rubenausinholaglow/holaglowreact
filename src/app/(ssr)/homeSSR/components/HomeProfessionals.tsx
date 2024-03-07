@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';

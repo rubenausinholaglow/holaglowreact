@@ -347,8 +347,7 @@ function ProductPriceItemsCard({
       {!productHighlighted && product.isPack && !showDropdown && (
         <Button
           className="mt-8"
-          type="tertiary"
-          customStyles="hover:bg-hg-secondary50"
+          type="primary"
           id={'tmevent_click_book_button_customize'}
           onClick={() => setShowDropdown(true)}
         >
@@ -359,12 +358,11 @@ function ProductPriceItemsCard({
       {(!product.isPack || (!productHighlighted && showDropdown)) &&
         !isDashboard && (
           <Button
-            type="tertiary"
+            type="primary"
             disabled={isDisabled}
             onClick={() => {
               setSelectedTreatment(product);
             }}
-            customStyles="bg-hg-primary hover:bg-hg-secondary100"
             className="mt-8"
             id="tmevent_click_book_button_prices"
           >

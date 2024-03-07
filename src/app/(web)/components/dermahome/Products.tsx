@@ -12,7 +12,7 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
+import AnimateOnViewport from '../common/AnimateOnViewport';
 import CategorySelector from '../filters/CategorySelector';
 
 export default function HomeProducts({

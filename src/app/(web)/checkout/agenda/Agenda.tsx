@@ -701,12 +701,12 @@ export default function Agenda({
                         className="gap-4 items-center w-full"
                       >
                         <a href="tel:+34 682 417 208">
-                          <Button size="xl" type="tertiary">
+                          <Button size="xl" type="white">
                             <SvgPhone className="mr-2" />
                             {selectedClinic && (
                               <div>
                                 <Text size="xs" className="whitespace-nowrap">
-                                  Llamanos al
+                                  Llámanos al
                                 </Text>
                                 <Text size="lg" className="whitespace-nowrap">
                                   {selectedClinic.phone}

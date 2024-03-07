@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { SvgGlow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';

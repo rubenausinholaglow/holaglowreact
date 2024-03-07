@@ -3,6 +3,7 @@
 import { Component, ReactNode } from 'react';
 import Bugsnag from '@bugsnag/js';
 import { Analytics } from '@vercel/analytics/react';
+import { gtUltra } from 'app/fonts';
 
 import DermaFooter from './DermaFooter';
 import DermaHeader from './DermaHeader';
@@ -47,7 +48,7 @@ export default function DermaLayout({
   return (
     <ErrorBoundary>
       <main
-        className={`${className} text-derma-tertiary min-h-screen overflow-hidden derma`}
+        className={`${className} ${gtUltra.variable} text-derma-tertiary min-h-screen overflow-hidden derma`}
       >
         <DermaHeader hideButton={hideButton} />
         {children}

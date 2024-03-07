@@ -18,7 +18,7 @@ import {
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
 
@@ -140,9 +140,9 @@ export default function ConctactForm() {
           className="gap-4 md:gap-16 md:flex-row pt-4 md:pt-0"
         >
           <div className="w-full md:w-1/2 p-4 md:order-2">
-            <TitleDerma size="xl" className="text-derma-primary mb-4">
+            <Title size="xl" className="text-derma-primary mb-4">
               ¡Ya casi lo tienes, {client.name}!{' '}
-            </TitleDerma>
+            </Title>
             <Text className="text-hg-black500 text-sm mb-2">
               Como bien sabes, conseguir una piel saludable es un compromiso a
               largo plazo. Gracias por confiar en nosotros para acompañarte en
