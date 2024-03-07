@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import { SvgCheckCircle } from 'app/icons/IconsDs';
 import { Product } from 'app/types/product';
@@ -7,10 +6,28 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-export default function ProductExplanation({ product }: { product: Product }) {
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productAnimation.gif`
-  );
+async function getProductImage(url: string) {
+  try {
+    const res = await fetch(url);
+    if (res.ok) {
+      const blob = await res.blob();
+
+      return blob;
+    }
+  } catch (err) {
+    return err;
+  }
+}
+
+export default async function ProductExplanation({
+  product,
+}: {
+  product: Product;
+}) {
+  const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productAnimation.gif`;
+  const productImageResponse = await getProductImage(imgSrc);
+  const isGifAvailable = productImageResponse !== undefined;
+
   return (
     <Container className="gap-16 justify-between py-12 px-0 md:px-4 md:flex md:pb-24">
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
@@ -54,12 +71,11 @@ export default function ProductExplanation({ product }: { product: Product }) {
             Te explicamos las zonas de aplicación del tratamiento, aunque pueden
             variar según tus necesidades y la valoración del médico.
           </Text>
-          {imgSrc && (
-            <div className="relative aspect-[4/3] mb-8">
+          {isGifAvailable && (
+            <div className="relative aspect-square mb-8">
               <Image
                 src={imgSrc}
-                onError={() => setImgSrc('')}
-                alt="fakeImg"
+                alt={`Antes y después del tratamiento: ${product.title}`}
                 fill
                 objectFit="cover"
                 className="rounded-2xl"

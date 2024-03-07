@@ -80,7 +80,7 @@ export default function AppointmentList({
     for (const treatment of treatments!) {
       let product = stateProducts.filter(y => y.id == treatment)[0];
       if (!product) {
-        product = await ProductService.getProduct(treatment);
+        product = await ProductService.getProduct(treatment, false, false);
       }
       products.push(product);
     }

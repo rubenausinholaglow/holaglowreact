@@ -22,7 +22,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 
@@ -101,7 +101,7 @@ export default function Form() {
     useCartStore.setState(INITIAL_STATE);
 
     async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId);
+      const productDetails = await fetchProduct(productId, false, true);
       setSelectedTreatments([productDetails]);
       resetCart();
       addItemToCart(productDetails as CartItem);

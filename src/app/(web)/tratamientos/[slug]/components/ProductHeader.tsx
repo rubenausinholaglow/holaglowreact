@@ -11,7 +11,7 @@ import {
   useImageProps,
 } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -133,8 +133,12 @@ export default function ProductHeader({
                 onError={() => setNextImgSrc()}
                 className={`relative ${alignmentStyles} ${
                   !isDashboard && deviceSize.isMobile
-                    ? 'rounded-t-3xl'
-                    : 'rounded-3xl'
+                    ? product.productCardImagePosition !== 'middle'
+                      ? 'rounded-t-3xl'
+                      : ''
+                    : product.productCardImagePosition !== 'middle'
+                    ? 'rounded-3xl'
+                    : ''
                 } w-[66%]`}
               />
             )}

@@ -19,7 +19,7 @@ export default function ProductPaymentOptions() {
 
   useEffect(() => {
     async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId);
+      const productDetails = await fetchProduct(productId, false, false);
       setProduct(productDetails);
     }
 

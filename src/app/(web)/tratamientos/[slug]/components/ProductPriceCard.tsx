@@ -6,6 +6,7 @@ import {
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import Dropdown from 'app/(web)/components/forms/Dropdown';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import {
   SvgAdd,
   SvgArrow,
@@ -218,7 +219,7 @@ function ProductPriceItemsCard({
         product.packUnities.length ||
       !product.isPack
     ) {
-      router.push(ROUTES.checkout.clinics);
+      router.push(ROUTES.checkout.type);
     }
   };
 
@@ -351,7 +352,7 @@ function ProductPriceItemsCard({
           id={'tmevent_click_book_button_customize'}
           onClick={() => setShowDropdown(true)}
         >
-          Personalizar
+          Me interesa
         </Button>
       )}
 
@@ -367,7 +368,7 @@ function ProductPriceItemsCard({
             className="mt-8"
             id="tmevent_click_book_button_prices"
           >
-            Reservar cita
+            Me interesa
             <SvgArrow
               height={16}
               width={16}
@@ -410,7 +411,7 @@ export default function ProductPriceCard({
   isDashboard?: boolean;
   className?: string;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
+  const deviceSize = useDeviceSizeSSR();
   const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 

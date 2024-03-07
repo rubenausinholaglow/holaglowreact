@@ -63,8 +63,8 @@ export default function ProductDetailPage({
   }, [stateProducts, dashboardProducts]);
 
   useEffect(() => {
-    async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId);
+    async function initProduct(productId: string, isDashboard: boolean) {
+      const productDetails = await fetchProduct(productId, false, false);
       setProduct(productDetails);
       setSeoMetaData(
         productDetails.extraInformation.seoTitle,
@@ -89,7 +89,7 @@ export default function ProductDetailPage({
     setProductId(productId);
 
     if (productId !== '' && productsAreLoaded) {
-      initProduct(productId);
+      initProduct(productId, false);
       setProduct(isEmpty(product) ? null : product);
     }
   }, [productsAreLoaded, slug]);
@@ -100,7 +100,11 @@ export default function ProductDetailPage({
     const fetchProduct = async () => {
       try {
         if (productHighlighted?.id) {
-          const data = await ProductService.getProduct(productHighlighted.id);
+          const data = await ProductService.getProduct(
+            productHighlighted.id,
+            false,
+            false
+          );
           setProductId(productHighlighted.id);
           setProduct(data);
           setIsHydrated(true);
@@ -140,7 +144,6 @@ export default function ProductDetailPage({
               </div>
             )}
         </div>
-
         {product.beforeAndAfterImages?.length > 0 && (
           <ProductResults product={product} />
         )}

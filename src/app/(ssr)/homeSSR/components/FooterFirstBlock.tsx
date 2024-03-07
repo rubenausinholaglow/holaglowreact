@@ -1,10 +1,10 @@
 'use client';
 
 import CheckHydration from '@utils/CheckHydration';
-import { ROUTES } from '@utils/routes';
+import ROUTES from '@utils/routes';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { useSessionStore } from 'app/stores/globalStore';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 

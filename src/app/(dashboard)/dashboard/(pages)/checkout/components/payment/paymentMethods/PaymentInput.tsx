@@ -337,6 +337,7 @@ export default function PaymentInput(props: Props) {
       paymentBank: paymentBank,
       productPaymentRequest: [],
       originPayment: OriginPayment.dashboard,
+      deferred_Days: undefined,
     };
 
     cart.forEach(product => {
