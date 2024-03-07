@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { SvgArrow, SvgCross, SvgHolaglow } from 'app/icons/IconsDs';
+import ROUTES from '@utils/routes';
+import { SvgPhone } from 'app/icons/Icons';
+import { SvgArrow, SvgCalling, SvgCross, SvgHolaglow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { fetchClinics } from 'app/utils/fetch';
-import useRoutes from 'app/utils/useRoutes';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -24,8 +25,6 @@ export default function MobileNavigation({
   headerHeight: number;
   setIsMobileNavVisible: (value: boolean) => void;
 }) {
-  const ROUTES = useRoutes();
-
   const paddingBottom = headerHeight + 16;
   const { clinics, setClinics } = useGlobalPersistedStore(state => state);
   const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
@@ -46,7 +45,7 @@ export default function MobileNavigation({
     <Modal
       isVisible={isVisible}
       width="w-full"
-      className="shadow-none bg-hg-primary300"
+      className="shadow-none bg-derma-secondary300"
       type="right"
       hideModalBackground
     >
@@ -60,49 +59,66 @@ export default function MobileNavigation({
         />
         <Flex
           layout="col-left"
-          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 pt-4"
+          className="gap-6 w-full md:w-1/4 text-lg font-semibold px-4 pt-4"
         >
-          <a href={ROUTES.treatments} id={'tmevent_nav_menu_click'}>
-            <p className="font-gtUltra text-hg-secondary font-thin text-drxl">
-              Nuestros tratamientos
-            </p>
-          </a>
+          <p className="font-gtUltra text-hg-secondary font-thin text-drxl">
+            Nuestros tratamientos
+          </p>
 
           <SimpleAccordion
             trigger="Más populares"
             isOpen={!deviceSize.isMobile}
           >
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a
-                href="/tratamientos/aumento-labios"
-                id={'tmevent_nav_menu_click'}
-              >
-                <li>Arrugas de expresión</li>
-              </a>
-              <a
-                href="/tratamientos/aumento-labios"
-                id={'tmevent_nav_menu_click'}
-              >
-                <li>Aumento de Labios</li>
-              </a>
-              <a
-                href="/tratamientos/relleno-ojeras"
-                id={'tmevent_nav_menu_click'}
-              >
-                <li>Armonización facial</li>
-              </a>
-              <a
-                href="/tratamientos/relleno-ojeras"
-                id={'tmevent_nav_menu_click'}
-              >
-                <li>Relleno de ojeras</li>
-              </a>
-              <a
-                href={`${ROUTES.treatments}/proyeccion-pomulos`}
-                id={'tmevent_nav_menu_click'}
-              >
-                <li>Proyección de pómulos</li>
-              </a>
+            <ul className="text-sm pt-4 font-normal flex flex-col">
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/arrugas-expresion-frente-entrecejo-patas-gallo`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Arrugas de expresión
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/aumento-labios`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Aumento de Labios
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/armonizacion-facial`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Armonización facial
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/relleno-ojeras`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Relleno de ojeras
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/proyeccion-pomulos`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Proyección de pómulos
+                </a>
+              </li>
             </ul>
           </SimpleAccordion>
 
@@ -111,60 +127,69 @@ export default function MobileNavigation({
           </a>
 
           <Button
+            size="lg"
             id={'tmevent_nav_menu_click'}
-            type="white"
+            type="secondary"
             href={ROUTES.checkout.clinics}
             onClick={() => {
               setSelectedTreatments([]);
             }}
           >
-            Reservar cita
+            Cita de asesoramiento gratis
             <SvgArrow height={16} width={16} className="ml-2" />
           </Button>
         </Flex>
       </div>
-      <div className="bg-white border-b border-hg-black py-8">
+      <div className="bg-white py-8">
         <Flex
           layout="col-left"
-          className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4"
+          className="gap-6 w-full md:w-1/4 text-lg font-semibold px-4"
         >
+          <a href={ROUTES.aboutUs} id={'tmevent_nav_menu_click'}>
+            <p className="font-semibold">Sobre nosotros</p>
+          </a>
+
           {!isEmpty(clinics) && (
             <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
-              <a href="/clinicas" id={'tmevent_nav_menu_click'}>
-                <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-                  {clinics &&
-                    clinics.map(clinic => (
-                      <li key={clinic.city}>{clinic.city}</li>
-                    ))}
-                </ul>
-              </a>
+              <ul className="text-sm pt-4 font-normal flex flex-col">
+                {clinics.map(clinic => (
+                  <li key={clinic.city}>
+                    <a
+                      className="py-2 block"
+                      href={ROUTES.clinics}
+                      id={'tmevent_nav_menu_click'}
+                    >
+                      {clinic.city}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </SimpleAccordion>
           )}
-
-          <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
-            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/quienes-somos" id={'tmevent_nav_menu_click'}>
-                <li>Quiénes somos</li>
-              </a>
-              <a href="/quienes-somos" id={'tmevent_nav_menu_click'}>
-                <li>Equipo médico</li>
-              </a>
-            </ul>
-          </SimpleAccordion>
-          <a href="/blog" id={'tmevent_nav_menu_click'}>
+          <a href={ROUTES.blog} id={'tmevent_nav_menu_click'}>
             <p className="font-semibold">Blog</p>
           </a>
+
           <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-              <a href="/politica-de-privacidad" id={'tmevent_nav_menu_click'}>
-                <li>Política de privacidad</li>
-              </a>
-              <a href="/aviso-legal" id={'tmevent_nav_menu_click'}>
-                <li>Términos y condiciones</li>
-              </a>
-              <a href="/condiciones-black-friday" id={'tmevent_nav_menu_click'}>
-                <li>Condiciones Black Friday</li>
-              </a>
+              <li>
+                <a
+                  className="py-2 block"
+                  href={ROUTES.statics.privacyPolicy}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Política de privacidad
+                </a>
+              </li>
+              <li>
+                <a
+                  className="py-2 block"
+                  href={ROUTES.statics.termsAndConditions}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Términos y condiciones
+                </a>
+              </li>
             </ul>
           </SimpleAccordion>
         </Flex>
@@ -174,18 +199,18 @@ export default function MobileNavigation({
         className="p-4 text-xs gap-4"
         style={{ paddingBottom: `${paddingBottom}px` }}
       >
-        <Title size="xl">Contacto</Title>
+        <p className="font-gtUltra text-hg-secondary font-thin text-drxl">
+          Contacto
+        </p>
         <p>
           Para dudas y pedidos, escríbenos a{' '}
           <a href="mailto:hola@holaglow.com">hola@holaglow.com</a>
         </p>
-        <p className="leading-6">
-          Por teléfono de Lunes a Viernes
-          <br />
-          De 10 a 14h y de 15 a 19h
-          <br />
-          <a href="tel:(+34) 682 417 208">(+34) 682 417 208</a>
-        </p>
+        <p>Llámanos de 10h a 19h de Lunes a Viernes</p>
+
+        <Button type="secondary" size="md" customStyles="font-semibold">
+          <SvgCalling className="h-4 w-4 mr-2" /> (+34) 682 417 208
+        </Button>
       </Flex>
     </Modal>
   );
