@@ -128,12 +128,9 @@ export default function MobileNavigation({
 
           <Button
             size="lg"
-            id={'tmevent_nav_menu_click'}
+            id="tmevent_nav_menu_click_pv_button"
             type="secondary"
-            href={ROUTES.checkout.clinics}
-            onClick={() => {
-              setSelectedTreatments([]);
-            }}
+            href={ROUTES.landings.pv}
           >
             Cita de asesoramiento gratis
             <SvgArrow height={16} width={16} className="ml-2" />
@@ -208,7 +205,13 @@ export default function MobileNavigation({
         </p>
         <p>Llámanos de 10h a 19h de Lunes a Viernes</p>
 
-        <Button type="secondary" size="md" customStyles="font-semibold">
+        <Button
+          href="tel: +34682417208"
+          type="secondary"
+          size="md"
+          customStyles="font-semibold"
+          id="tmevent_nav_menu_click_call_button"
+        >
           <SvgCalling className="h-4 w-4 mr-2" /> (+34) 682 417 208
         </Button>
       </Flex>

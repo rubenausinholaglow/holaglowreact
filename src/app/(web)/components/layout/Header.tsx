@@ -152,6 +152,7 @@ export default function Header({
                 onClick={() => {
                   setIsMobileNavVisible(true);
                 }}
+                id="tmevent_nav_menu_open"
               />
             </Flex>
           </Flex>
