@@ -1,5 +1,6 @@
 'use client';
 
+import ROUTES from '@utils/routes';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -31,19 +32,19 @@ export default function GoToTreatments() {
               ideal?
             </Title>
             <Text isAnimated size="lg" className="text-white mb-12">
-              Nosotros preguntamos y tú respondes. Fácil y rápido. Este es el
-              primer paso para descubrir juntos cuál es el tratamiento que mejor
-              se adapta a ti, a tus necesidades y a tus deseos.
+              Te asesoramos gratis con nuestro escáner facial 3D para que puedas
+              conocer todos nuestros tratamientos y ver el resultado antes de
+              hacértelos
             </Text>
             <Button
               isAnimated
               type="secondary"
               size="xl"
               className="mx-auto md:mx-0 mb-10"
-              href="https://holaglow.com/multi-step"
+              href={ROUTES.landings.pv}
               id={'tmevent_multistep_module'}
             >
-              Hacer test
+              Pedir cita gratis
               <SvgArrow className="ml-4" height={24} width={24} />
             </Button>
           </Flex>

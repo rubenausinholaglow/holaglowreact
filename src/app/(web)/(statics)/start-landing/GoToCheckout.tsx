@@ -45,8 +45,7 @@ export default function GoToCheckout() {
     <Button
       id="tmevent_landingPV_start"
       size={deviceSize.isMobile ? 'lg' : 'xl'}
-      type="tertiary"
-      customStyles="bg-hg-secondary border-none text-white gap-2 hover:bg-hg-secondary700"
+      type="primary"
       className="mb-8"
       onClick={() => {
         setSelectedTreatments([product]);
@@ -54,7 +53,7 @@ export default function GoToCheckout() {
       }}
     >
       Pedir cita gratis
-      <SvgArrow className="h-4 w-4" />
+      <SvgArrow className="h-4 w-4 ml-2" />
     </Button>
   );
 }

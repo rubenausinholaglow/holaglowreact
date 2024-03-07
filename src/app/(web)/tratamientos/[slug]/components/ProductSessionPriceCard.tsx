@@ -61,7 +61,7 @@ export default function ProductSessionPriceCard({
             layout="col-left"
             className="w-full md:bg-hg-black100 md:p-4 rounded-xl"
           >
-            <Flex className="text-sm md:mx-3 ">
+            <Flex className="text-sm md:mx-3 mb-2">
               <icon.SvgTimeLeft
                 className="text-hg-secondary mr-2"
                 height={16}

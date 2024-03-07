@@ -79,7 +79,6 @@ export default function Form() {
     setSelectedTreatments,
     selectedSlot,
     setTypeOfPayment,
-    setAnalyticsMetrics,
     setPayment,
   } = useSessionStore(state => state);
   const { activePayment, setActivePayment, setCurrentUser } =
@@ -288,8 +287,8 @@ export default function Form() {
                   <Button
                     size="xl"
                     onClick={() => goBack(activeSlideIndex)}
-                    type="tertiary"
-                    customStyles="bg-transparent border-none text-derma-tertiary"
+                    type="white"
+                    customStyles="bg-transparent border-none text-derma-tertiary group-hover:bg-white"
                   >
                     <Flex layout="row-left" className="gap-2">
                       <SvgArrow height={16} width={16} className="rotate-180" />
