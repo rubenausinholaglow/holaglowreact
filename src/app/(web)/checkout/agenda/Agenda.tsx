@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import { EmlaType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
@@ -25,6 +25,7 @@ import {
 import { DayAvailability } from 'app/types/dayAvailability';
 import { Slot } from 'app/types/slot';
 import useRoutes from 'app/utils/useRoutes';
+import es from 'date-fns/locale/es';
 import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -32,6 +33,8 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+registerLocale('es', es);
 
 export default function Agenda({
   isDashboard = false,

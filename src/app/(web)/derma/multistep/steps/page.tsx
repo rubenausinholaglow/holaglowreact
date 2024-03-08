@@ -8,6 +8,7 @@ import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
 import { dermaService } from '@services/DermaService';
+import UserService from '@services/UserService';
 import CheckHydration from '@utils/CheckHydration';
 import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
@@ -92,6 +93,7 @@ export default function Form() {
   const { cart, addItemToCart, resetCart } = useCartStore(state => state);
   const STEPS = 7;
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
+  const [userId, setUserId] = useState('');
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
@@ -123,7 +125,38 @@ export default function Form() {
     setPayment(undefined);
     initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
     setClient(CLIENT_INITIAL_VALUES);
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    setUserId(params.get('userId') ?? '');
   }, []);
+
+  useEffect(() => {
+    async function get(userId: string) {
+      const dermaQuestions = await UserService.getDermaQuestions(userId);
+      if (dermaQuestions) {
+        setDermaQuestions({
+          birthDate: dermaQuestions.birthDate,
+          extraInfo: dermaQuestions.extraInfo,
+          id: dermaQuestions.id,
+          name: dermaQuestions.name,
+          phone: dermaQuestions.user?.phone ?? '',
+          phonePrefix: dermaQuestions.user?.phonePrefix ?? '',
+          scenario: dermaQuestions.scenario,
+          skinConcerns: dermaQuestions.skinConcerns,
+          userId: dermaQuestions.user?.id,
+        });
+        setContinueDisabled(false);
+        setIs18YearsOld(true);
+        if (dermaQuestions.user) {
+          setActiveSlideIndex(5);
+          dermaQuestions.user.phone =
+            dermaQuestions.user.phonePrefix + dermaQuestions.user.phone;
+          setClient(dermaQuestions.user);
+        }
+      }
+    }
+    if (userId) get(userId);
+  }, [userId]);
 
   useEffect(() => {
     async function checkout() {
@@ -167,6 +200,7 @@ export default function Form() {
       client.name = dermaQuestions.name!;
       setClient(client);
     }
+    if (client.phonePrefix) dermaQuestions.phonePrefix = client.phonePrefix;
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       dermaQuestions.id = x!.toString();
