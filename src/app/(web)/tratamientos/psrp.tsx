@@ -23,8 +23,11 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
+import FilterText from '../components/filters/FilterText';
 import FloatingBottomBar from '../components/home/FloatingBottomBar';
+import ProductSearchBar from '../components/product/ProductSearchBar';
 import PVBottomBar from '../components/product/PVBottomBar';
+import Products from '../user/budget/Products';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
@@ -213,8 +216,7 @@ export default function PsrpPage({
           isVisible={isMobileFiltersVisible}
           setModalVisibility={setIsMobileFiltersVisible}
         />
-
-        <div className="bg-hg-cream rounded-t-3xl overflow-hidden">
+        <div className="bg-hg-cream rounded-t-3xl">
           <Container className="relative pt-8 pb-4">
             <Title
               isAnimated
@@ -226,6 +228,9 @@ export default function PsrpPage({
                 tratamientos
               </Underlined>
             </Title>
+          </Container>
+          <Container>
+            <ProductSearchBar products={stateProducts} />
           </Container>
           <Container className="px-0 md:px-4 pb-4 relative">
             <div className="lg:flex lg:flex-row lg:justify-between">
@@ -350,7 +355,6 @@ export default function PsrpPage({
             </Container>
           </div>
         )}
-
         <LookingFor />
         <PVBottomBar />
       </MainLayout>
