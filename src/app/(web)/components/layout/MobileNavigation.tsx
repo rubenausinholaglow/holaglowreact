@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import ROUTES from '@utils/routes';
-import { SvgPhone } from 'app/icons/Icons';
 import { SvgArrow, SvgCalling, SvgCross, SvgHolaglow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -56,6 +55,7 @@ export default function MobileNavigation({
           width={20}
           className="absolute top-4 right-4"
           onClick={() => setIsMobileNavVisible(false)}
+          id="tmevent_nav_menu_close"
         />
         <Flex
           layout="col-left"
