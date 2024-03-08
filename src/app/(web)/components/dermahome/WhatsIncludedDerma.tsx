@@ -182,7 +182,7 @@ export default function WhatsIncludedDerma() {
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
-                <Title size="xl" className="mb-2 font-gtUltra">
+                <Title size="xl" className="mb-2 text-derma-primary">
                   Cesta con productos personalizados y validados por el médico
                 </Title>
                 <div>

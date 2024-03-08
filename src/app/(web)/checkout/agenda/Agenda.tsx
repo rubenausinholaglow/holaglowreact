@@ -35,6 +35,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 registerLocale('es', es);
+
+registerLocale('es', es);
 export default function Agenda({
   isDashboard = false,
   isCheckin = false,
