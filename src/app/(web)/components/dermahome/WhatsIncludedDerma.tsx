@@ -21,6 +21,7 @@ const RUTINE_DATA = {
   bullets: [
     'Cremas seleccionadas para ti por tu médico',
     'Receta de tu crema facial formulada',
+    'A pedir en farmacia por 25-40€',
   ],
   id: 3,
 };

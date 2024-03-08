@@ -54,6 +54,9 @@ export default function StartMultistep() {
                 <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
                   - Receta de la crema personalizada de noche
                 </Text>
+                <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
+                  - A pedir en farmacia por 25-40€
+                </Text>
 
                 <StartButton />
               </Flex>
