@@ -13,6 +13,7 @@ import { fetchProduct } from '@utils/fetch';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import DermaBottomBar from 'app/(web)/components/dermahome/DermaBottomBar';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow, SvgWarning } from 'app/icons/IconsDs';
 import {
@@ -320,6 +321,9 @@ export default function Form() {
           </Container>
         </main>
       </div>
+      {activeSlideIndex == 6 && (
+        <DermaBottomBar showButton={false} threshold={100} />
+      )}
     </CheckHydration>
   );
 }

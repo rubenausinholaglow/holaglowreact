@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { registerLocale } from 'react-datepicker';
 import Bugsnag from '@bugsnag/js';
 import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/(web)/checkout/components/CheckoutHeader';
@@ -15,7 +14,6 @@ import { Footer } from './Footer';
 import Header from './Header';
 
 dayjs.locale(spanishConf);
-registerLocale('es', es);
 
 Bugsnag.start({
   apiKey: 'ddc16c7fe2c290310470f8ce76dfa563',
