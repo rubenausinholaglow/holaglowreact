@@ -200,10 +200,13 @@ export const formatDate = (date: Date, includeHours = true) => {
   return `${formattedDate.replace(',', '')}`;
 };
 
-
 export const validTypesFilterCart: ProductType[] = [
   ProductType.Esthetic,
   ProductType.Medical,
   ProductType.Dashboard,
   ProductType.GlowBox,
 ];
+
+export function isClient() {
+  return typeof window !== 'undefined';
+}

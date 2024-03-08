@@ -32,6 +32,10 @@ const ROUTES = {
     authentication: '/crm',
     menu: '/crm/menu',
   },
+  statics: {
+    termsAndConditions: '/aviso-legal',
+    privacyPolicy: '/politica-de-privacidad',
+  },
   landings: {
     pv: '/start-landing',
   },
