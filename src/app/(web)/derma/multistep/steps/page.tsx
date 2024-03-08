@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { registerLocale } from 'react-datepicker';
 import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
@@ -20,6 +21,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import es from 'date-fns/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -31,6 +33,8 @@ import FourthStep from './FourthStep';
 import { MULTISTEP_QUESTIONS } from './mockedData';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
+
+registerLocale('es', es);
 
 const CLIENT_INITIAL_VALUES = {
   email: '',
