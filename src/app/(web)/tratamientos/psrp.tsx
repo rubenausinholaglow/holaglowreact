@@ -218,22 +218,19 @@ export default function PsrpPage({
         />
         <div className="bg-hg-cream rounded-t-3xl">
           <Container className="relative pt-8 pb-4">
-            <Title
-              isAnimated
-              size="2xl"
-              className="font-bold mb-6 lg:mb-12 lg:w-2/5 md:text-4xl lg:text-5xl"
-            >
-              Nuestros{' '}
-              <Underlined color={HOLAGLOW_COLORS['secondary700']}>
-                tratamientos
-              </Underlined>
+            <Title isAnimated size="3xl" className="mt-4">
+              Nuestros tratamientos
             </Title>
           </Container>
-          <Container>
-            <ProductSearchBar products={stateProducts} />
+          <Container className="md:hidden">
+            <ProductSearchBar products={stateProducts} className="mb-4" />
           </Container>
-          <Container className="px-0 md:px-4 pb-4 relative">
-            <div className="lg:flex lg:flex-row lg:justify-between">
+          <Container className="px-0 md:px-4 pb-4 md:pb-8 relative">
+            <div className="lg:flex lg:flex-row lg:justify-between items-center">
+              <ProductSearchBar
+                products={stateProducts}
+                className="hidden md:block mr-8 mb-4 lg:mb-0"
+              />
               <AnimateOnViewport
                 origin={deviceSize.isMobile ? 'right' : 'bottom'}
               >
