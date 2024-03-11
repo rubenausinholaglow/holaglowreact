@@ -149,10 +149,10 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                 <Text size="lg">desde {product.price} €</Text>
               </div>
             </li>
-            <div className="pepperWidget"></div>
           </ul>
 
           <ProductSelectorButton product={product} />
+          <div className="pepperWidget flex relative md:justify-center flex-col w-full mt-5"></div>
         </Container>
         <div className="md:w-2/5 shrink-0">
           <ProductVideo src={productVideoSrc} />
