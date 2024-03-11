@@ -110,18 +110,16 @@ export default function ProductSearchBar({
     setSearchQuery('');
   };
 
-  console.log(noResultsProducts);
-
   return (
     <div className={`relative w-full ${className}`}>
       <Flex
         layout="row-left"
-        className={`transition-all py-3 px-4 bg-white z-20 relative ${
+        className={`transition-all py-3 px-4 bg-white z-20 relative border ${
           showResults ? 'bg-hg-black100 rounded-t-2xl' : 'rounded-2xl'
         } ${
           isMobileNavigation && !showResults
-            ? 'outline outline-1 outline-hg-black300'
-            : ''
+            ? 'border-hg-black300'
+            : 'border-transparent'
         }`}
       >
         <SvgSearch className="text-hg-secondary mr-3 shrink-0" />
