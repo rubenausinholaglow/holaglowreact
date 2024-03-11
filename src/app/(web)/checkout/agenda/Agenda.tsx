@@ -111,6 +111,10 @@ export default function Agenda({
   const [loadingDays, setLoadingDays] = useState(false);
   const { cart, updateIsScheduled } = useCartStore(state => state);
 
+  const uniqueProductIds = Array.from(
+    new Set(selectedTreatments.map(product => product.id))
+  );
+
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -495,13 +499,18 @@ export default function Agenda({
                         className="w-full text-left to-hg-black500 mb-4"
                       >
                         Agenda cita para{' '}
-                        {Array.isArray(selectedTreatments) &&
-                          selectedTreatments.map((product, index) => (
-                            <span key={product.id} className="font-semibold">
+                        {uniqueProductIds.map((productId, index) => {
+                          const product = selectedTreatments.find(
+                            product => product.id === productId
+                          );
+                          if (!product) return null;
+                          return (
+                            <span key={productId} className="font-semibold">
                               {product.title}
-                              {index < selectedTreatments.length - 1 && ', '}
+                              {index < uniqueProductIds.length - 1 && ', '}
                             </span>
-                          ))}
+                          );
+                        })}
                         {!isDerma && <> en tu clínica preferida</>}
                         {isDerma && <> online</>}
                       </Text>

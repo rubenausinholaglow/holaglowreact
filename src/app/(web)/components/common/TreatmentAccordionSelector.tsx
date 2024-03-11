@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
+import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
@@ -53,7 +53,10 @@ export default function TreatmentAccordionSelector({
           ) && !product.isPack
       );
       if (filteredProducts.length == 0) {
-        return selectedProducts;
+        const uniqueProductIds = Array.from(
+          new Set(selectedProducts.map(product => product.id))
+        );
+        return getUniqueProducts(uniqueProductIds);
       }
     } else {
       filteredProducts = stateProducts.filter(
@@ -66,6 +69,23 @@ export default function TreatmentAccordionSelector({
     return filteredProducts.sort((a: any, b: any) =>
       a.title > b.title ? 1 : -1
     );
+  }
+
+  function getUniqueProducts(uniqueProductIds: string[]): Product[] {
+    const finalSelectedProducts: Product[] = [];
+
+    uniqueProductIds.forEach(productId => {
+      const duplicateProducts = selectedProducts.filter(
+        product => product.id === productId
+      );
+      if (duplicateProducts.length > 1) {
+        duplicateProducts[0].description = `x${duplicateProducts.length} viales de ácido híaluronico`;
+        finalSelectedProducts.push(duplicateProducts[0]);
+      } else {
+        finalSelectedProducts.push(duplicateProducts[0]);
+      }
+    });
+    return finalSelectedProducts;
   }
 
   useEffect(() => {
