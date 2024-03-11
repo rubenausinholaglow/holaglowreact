@@ -29,7 +29,7 @@ export default function SecondStep({
       })
     : [];
   const normalConcerns: number[] = [];
-  dermaQuestions?.skinConcerns.forEach(item => {
+  dermaQuestions?.skinConcerns?.forEach(item => {
     normalConcerns.push(
       (MULTISTEP_QUESTIONS[1].questions as [any]).findIndex(
         x => x.title == item.concern
