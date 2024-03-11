@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
-import { fetchProduct } from '@utils/fetch';
+import { fetchProducts } from '@utils/fetch';
 import ROUTES from '@utils/routes';
 import {
   applyFilters,
@@ -53,29 +53,38 @@ export default function ProductSearchBar({
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [initialProducts, setInitialProducts] = useState(products);
   const [searchBarProducts, setSearchBarProducts] = useState(products);
   const [noResultsProducts, setNoResultsProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    async function fetchProducts() {
-      const fetchedProducts = await Promise.all(
-        NO_RESULTS_SLUGS.map(async slug => {
-          // Fetch product details for each slug
-          const productDetails = await fetchProduct(slug, false, false);
-          return productDetails;
-        })
+    async function initProducts() {
+      const products = await fetchProducts({ isDerma: false });
+
+      setInitialProducts(products);
+      setNoResultsProducts(
+        products.filter((product: Product) =>
+          NO_RESULTS_SLUGS.includes(product.extraInformation.slug)
+        )
       );
-      setNoResultsProducts(fetchedProducts);
     }
 
-    fetchProducts();
+    if (initialProducts.length === 0) {
+      initProducts();
+    } else {
+      setNoResultsProducts(
+        products.filter(product =>
+          NO_RESULTS_SLUGS.includes(product.extraInformation.slug)
+        )
+      );
+    }
   }, []);
 
   useEffect(() => {
     if (searchQuery.length > 2) {
       setSearchBarProducts(
         applyFilters({
-          products: products,
+          products: initialProducts,
           filters: { ...INITIAL_FILTERS, text: searchQuery },
         })
       );
@@ -85,7 +94,7 @@ export default function ProductSearchBar({
       setShowResults(false);
 
       setTimeout(() => {
-        setSearchBarProducts(products);
+        setSearchBarProducts(initialProducts);
       }, 200);
     }
   }, [searchQuery]);
