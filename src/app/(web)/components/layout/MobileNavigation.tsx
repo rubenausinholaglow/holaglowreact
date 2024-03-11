@@ -101,7 +101,7 @@ export default function MobileNavigation({
                     href={`${ROUTES.treatments}/aumento-labios`}
                     id={'tmevent_nav_menu_click'}
                   >
-                    Aumento de Labios
+                    Aumento de labios
                   </a>
                 </li>
 
