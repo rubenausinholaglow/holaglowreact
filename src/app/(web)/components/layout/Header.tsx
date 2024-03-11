@@ -63,6 +63,8 @@ export default function Header({
     ? HEADER_HEIGHT_MOBILE
     : HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
+  const HEADER_TOP_CLASS = `-top-[${HEADER_HEIGHT}px]`;
+  const HEADER_MARGIN_CLASS = `-mb-[${HEADER_HEIGHT}px]`;
 
   const recalculateVisibility = () => {
     setIsHeaderVisible(
@@ -104,8 +106,8 @@ export default function Header({
 
       <header
         id="header"
-        className={`z-30 w-full top-0 sticky transition-all ${
-          !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
+        className={`z-30 w-full top-0 left-0 right-0 sticky transition-all ${HEADER_MARGIN_CLASS} ${
+          !isHeaderVisible ? HEADER_TOP_CLASS : ''
         } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
       >
         {/* <PromoTopBar /> */}
