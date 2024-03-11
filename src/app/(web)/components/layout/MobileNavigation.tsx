@@ -3,10 +3,7 @@
 import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import { SvgArrow, SvgCalling, SvgCross, SvgHolaglow } from 'app/icons/IconsDs';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { fetchClinics } from 'app/utils/fetch';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -27,7 +24,6 @@ export default function MobileNavigation({
   const { clinics, setClinics, stateProducts } = useGlobalPersistedStore(
     state => state
   );
-  //const { deviceSize } = useSessionStore(state => state);
 
   const [isSearchBarOpened, setIsSearchBarOpened] = useState(false);
 
@@ -59,6 +55,7 @@ export default function MobileNavigation({
             width={20}
             className=""
             onClick={() => setIsMobileNavVisible(false)}
+            id="tmevent_nav_menu_close"
           />
         </Flex>
         <Container className="my-4">

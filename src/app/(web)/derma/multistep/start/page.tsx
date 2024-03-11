@@ -52,7 +52,8 @@ export default function StartMultistep() {
                   - Protector solar
                 </Text>
                 <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
-                  - Receta de la crema personalizada de noche
+                  - Receta de la crema personalizada de noche (a pedir en
+                  farmacia por 25-40€)
                 </Text>
 
                 <StartButton />

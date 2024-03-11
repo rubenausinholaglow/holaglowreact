@@ -1,18 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { registerLocale } from 'react-datepicker';
 import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { PaymentBank } from '@interface/payment';
 import { CartItem } from '@interface/product';
 import { dermaService } from '@services/DermaService';
+import UserService from '@services/UserService';
 import CheckHydration from '@utils/CheckHydration';
 import { INITIAL_STATE } from '@utils/constants';
 import { fetchProduct } from '@utils/fetch';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import DermaBottomBar from 'app/(web)/components/dermahome/DermaBottomBar';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow, SvgWarning } from 'app/icons/IconsDs';
 import {
@@ -20,6 +23,7 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import es from 'date-fns/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -31,6 +35,8 @@ import FourthStep from './FourthStep';
 import { MULTISTEP_QUESTIONS } from './mockedData';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
+
+registerLocale('es', es);
 
 const CLIENT_INITIAL_VALUES = {
   email: '',
@@ -79,7 +85,6 @@ export default function Form() {
     setSelectedTreatments,
     selectedSlot,
     setTypeOfPayment,
-    setAnalyticsMetrics,
     setPayment,
   } = useSessionStore(state => state);
   const { activePayment, setActivePayment, setCurrentUser } =
@@ -89,6 +94,7 @@ export default function Form() {
   const { cart, addItemToCart, resetCart } = useCartStore(state => state);
   const STEPS = 7;
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
+  const [userId, setUserId] = useState('');
   const progressBarWith: number = (activeSlideIndex + 1) * (100 / STEPS);
 
   const initializePayment = usePayments();
@@ -120,7 +126,38 @@ export default function Form() {
     setPayment(undefined);
     initProduct(process.env.NEXT_PUBLIC_CITA_DERMA!);
     setClient(CLIENT_INITIAL_VALUES);
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    setUserId(params.get('userId') ?? '');
   }, []);
+
+  useEffect(() => {
+    async function get(userId: string) {
+      const dermaQuestions = await UserService.getDermaQuestions(userId);
+      if (dermaQuestions) {
+        setDermaQuestions({
+          birthDate: dermaQuestions.birthDate,
+          extraInfo: dermaQuestions.extraInfo,
+          id: dermaQuestions.id,
+          name: dermaQuestions.name,
+          phone: dermaQuestions.user?.phone ?? '',
+          phonePrefix: dermaQuestions.user?.phonePrefix ?? '',
+          scenario: dermaQuestions.scenario,
+          skinConcerns: dermaQuestions.skinConcerns,
+          userId: dermaQuestions.user?.id,
+        });
+        setContinueDisabled(false);
+        setIs18YearsOld(true);
+        if (dermaQuestions.user) {
+          setActiveSlideIndex(5);
+          dermaQuestions.user.phone =
+            dermaQuestions.user.phonePrefix + dermaQuestions.user.phone;
+          setClient(dermaQuestions.user);
+        }
+      }
+    }
+    if (userId) get(userId);
+  }, [userId]);
 
   useEffect(() => {
     async function checkout() {
@@ -164,6 +201,9 @@ export default function Form() {
       client.name = dermaQuestions.name!;
       setClient(client);
     }
+    if (client.phonePrefix) dermaQuestions.phonePrefix = client.phonePrefix;
+    if (client.phone)
+      dermaQuestions.phone = client.phone.replace(client.phonePrefix, '');
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       dermaQuestions.id = x!.toString();
@@ -288,8 +328,8 @@ export default function Form() {
                   <Button
                     size="xl"
                     onClick={() => goBack(activeSlideIndex)}
-                    type="tertiary"
-                    customStyles="bg-transparent border-none text-derma-tertiary"
+                    type="white"
+                    customStyles="bg-transparent border-none text-derma-tertiary group-hover:bg-white"
                   >
                     <Flex layout="row-left" className="gap-2">
                       <SvgArrow height={16} width={16} className="rotate-180" />
@@ -320,6 +360,9 @@ export default function Form() {
           </Container>
         </main>
       </div>
+      {activeSlideIndex == 6 && (
+        <DermaBottomBar showButton={false} threshold={100} />
+      )}
     </CheckHydration>
   );
 }
