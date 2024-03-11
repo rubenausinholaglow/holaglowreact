@@ -1,7 +1,3 @@
-'use client';
-import './pepperStyle.css';
-
-import { useEffect, useState } from 'react';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgCalendar } from 'app/icons/Icons';
 import { SvgEuro, SvgTimeLeft, SvgTimer } from 'app/icons/IconsDs';
@@ -12,6 +8,7 @@ import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 
 const ProductVideo = dynamic(() => import('./ProductVideo'), { ssr: false });
+const PepperWidget = dynamic(() => import('./PepperWidget'));
 const ProductSelectorButton = dynamic(() => import('./ProductSelectorButton'), {
   ssr: false,
 });
@@ -21,29 +18,6 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
     ? product.videoUrl
     : '/videos/pdp.mp4';
 
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-  useEffect(() => {
-    if (!scriptLoaded) {
-      setScriptLoaded(true);
-      const toExecute = new Function(script);
-      toExecute();
-    }
-  }, []);
-
-  const script = `
-        var url = '../scripts/Pepper/pepper.js';
-        var environment = 'TST';
-        var language = 'ES';
-        var currency = 'EUR';
-        var apiKey = 'qh4hwfJqyGYcK2o0lDCpNfVhiXiCKZq2';
-        var publicKey = '0a64c825821bf9bc38c182671fa85786';
-        const scriptTag = document.createElement("script");
-        scriptTag.src = url;
-        document.head.appendChild(scriptTag);
-        scriptTag.addEventListener('load', function() {
-          PEPPER.config.initDraw( environment, language, currency, apiKey, publicKey, ${product.price}, 'STD', '.pepperWidget', 'in');
-        });
-      `;
   return (
     <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-auto w-full">
       <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl w-full">
@@ -154,7 +128,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
           </ul>
 
           <ProductSelectorButton product={product} />
-          <div className="pepperWidget flex relative md:justify-center flex-col w-full mt-5"></div>
+          <PepperWidget price={product.price} />
         </Container>
         <div className="md:w-2/5 shrink-0">
           <ProductVideo src={productVideoSrc} />
