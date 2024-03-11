@@ -55,6 +55,7 @@ export default function MobileNavigation({
             width={20}
             className=""
             onClick={() => setIsMobileNavVisible(false)}
+            id="tmevent_nav_menu_close"
           />
         </Flex>
         <Container className="my-4">
