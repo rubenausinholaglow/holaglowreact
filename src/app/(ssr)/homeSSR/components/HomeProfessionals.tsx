@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 export default function HomeProfessionals() {
   return (
-    <div className="bg-hg-skyblue/20 overflow-hidden">
+    <div className="bg-hg-secondary100 overflow-hidden">
       <Container className="py-12">
         <Flex
           layout="col-left"
@@ -49,10 +49,7 @@ export default function HomeProfessionals() {
                 </div>
               </Flex>
               <Title size="2xl" className="font-bold mb-6">
-                El mejor equipo para ponerse en tu{' '}
-                <Underlined color={HOLAGLOW_COLORS['secondary500']}>
-                  piel
-                </Underlined>
+                El mejor equipo para ponerse en tu piel
               </Title>
               <Text className="text-hg-black500 mb-8 lg:text-lg">
                 Estarás en manos de profesionales con experiencia contrastada

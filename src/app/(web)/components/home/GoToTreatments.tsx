@@ -1,35 +1,39 @@
-'use client';
-
 import ROUTES from '@utils/routes';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function GoToTreatments() {
   return (
-    <div className="bg-gradient-15deg from-hg-pink to-hg-secondary700">
+    <div className="bg-hg-secondary relative">
       <Container className="py-12">
-        <Flex layout="col-left" className="gap-4 items-center md:flex-row">
-          <Flex layout="col-left" className="md:w-1/2">
+        <div className="absolute top-0 bottom-0 left-0 right-1/2">
+          <div className="relative h-full">
+            <Image
+              src="/images/home/descubre.png"
+              alt="descubre"
+              objectFit="cover"
+              objectPosition="bottom"
+              fill
+            />
+          </div>
+        </div>
+        <div className="flex w-1/2 ml-auto">
+          <Flex layout="col-left" className="pl-12">
             <SvgHolaglowHand
               height={90}
               width={90}
-              className="text-hg-secondary mb-6"
+              className="text-hg-secondary500 mb-6"
             />
             <Title
               isAnimated
               size="2xl"
-              className="font-bold mb-12 md:mb-6 text-white"
+              className="font-bold mb-12 md:mb-6 text-hg-primary"
             >
-              ¿Te ayudamos a encontrar tu{' '}
-              <Underlined color={HOLAGLOW_COLORS['tertiary']}>
-                tratamiento
-              </Underlined>{' '}
-              ideal?
+              ¿Te ayudamos a encontrar tu tratamiento ideal?
             </Title>
             <Text isAnimated size="lg" className="text-white mb-12">
               Te asesoramos gratis con nuestro escáner facial 3D para que puedas
@@ -48,15 +52,7 @@ export default function GoToTreatments() {
               <SvgArrow className="ml-4" height={24} width={24} />
             </Button>
           </Flex>
-          <div className="w-full md:w-1/2 relative aspect-square">
-            <Image
-              src="/images/home/treatments2.png"
-              alt="descubre los tratamientos"
-              fill
-              className="object-fit"
-            />
-          </div>
-        </Flex>
+        </div>
       </Container>
     </div>
   );

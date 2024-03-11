@@ -61,8 +61,6 @@ export function Breakpoint() {
 }
 
 export function isMobile() {
-  const isMobile = true;
-
   const breakpoint = window.document.querySelector('#breakpoint');
 
   if (breakpoint) {
@@ -73,6 +71,4 @@ export function isMobile() {
 
     return content === 'sm';
   }
-
-  return isMobile;
 }

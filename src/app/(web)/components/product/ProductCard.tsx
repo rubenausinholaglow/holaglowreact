@@ -100,7 +100,7 @@ export default function ProductCard({
             className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
           />
 
-          {!isEmpty(product.category) && (
+          {/* {!isEmpty(product.category) && (
             <Flex
               layout="row-center"
               className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
@@ -117,7 +117,7 @@ export default function ProductCard({
                 );
               })}
             </Flex>
-          )}
+          )} */}
 
           {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
             <Flex
@@ -150,10 +150,7 @@ export default function ProductCard({
           layout={isDashboard ? 'col-left' : 'row-left'}
           className="mt-auto justify-between w-full"
         >
-          <Flex
-            layout={isDashboard ? 'row-left' : 'col-left'}
-            className="gap-2"
-          >
+          <Flex layout={isDashboard ? 'row-left' : 'col-left'}>
             {discountedPrice > 0 && (
               <Text
                 className={`text-xs line-through text-hg-black500 ${
@@ -164,7 +161,7 @@ export default function ProductCard({
               </Text>
             )}
             {!discountedPrice && !product.isPack && (
-              <Text className="text-xs text-hg-secondary">desde</Text>
+              <Text className="text-xs text-hg-black500">Desde</Text>
             )}
             <Text
               className={`text-hg-secondary font-semibold ${

@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <MainLayoutSSR>
       <HomeHero />
-      <GoogleStars />
+      {/* <GoogleStars /> */}
       <ValuesCarousel />
       <ValuesDescription />
       <Products />

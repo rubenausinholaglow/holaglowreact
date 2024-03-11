@@ -81,9 +81,9 @@ export default function Carousel({
     <ButtonBack
       className={`transition-opacity ${
         !isDerma
-          ? 'bg-hg-secondary text-hg-primary'
+          ? 'bg-hg-secondary100 border border-hg-secondary text-hg-secondary'
           : 'bg-derma-primary text-derma-primary100'
-      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
+      }  rounded-full p-3 disabled:opacity-10 disabled:cursor-default`}
       onClick={() => {
         handleBackButton();
       }}
@@ -96,9 +96,9 @@ export default function Carousel({
     <ButtonNext
       className={`transition-opacity ${
         !isDerma
-          ? 'bg-hg-secondary text-hg-primary'
+          ? 'bg-hg-secondary100 border border-hg-secondary text-hg-secondary'
           : 'bg-derma-primary text-derma-primary100'
-      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
+      }  rounded-full p-3 disabled:opacity-10 disabled:cursor-default`}
       onClick={() => {
         handleNextButton();
       }}

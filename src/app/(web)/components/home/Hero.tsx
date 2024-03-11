@@ -9,20 +9,18 @@ import { isMobile } from '../layout/Breakpoint';
 
 export default function HomeHero() {
   return (
-    <div className="relative border-4 border-hg-secondary">
+    <div className="relative pt-56">
       <Image
         src="/images/home/bg-desktop.png"
         fill
         alt="holaglow"
-        className="object-cover bg-bottom"
+        objectFit="cover"
+        objectPosition="bottom"
       />
-      <Container className="relative border-b border-hg-black overflow-hidden">
+      <Container className="relative overflow-hidden max-w-2xl">
         <Flex layout="col-center" className="md:flex-row">
-          <Flex
-            layout="col-left"
-            className="pb-10 z-10 w-full md:w-[45%] md:pl-8"
-          >
-            <Text size="xl" className="mb-2" origin="top">
+          <Flex layout="col-left" className="pb-48 z-10 w-full md:w-1/2">
+            <Text size="lg" className="mb-6 font-semibold" origin="top">
               Medicina estética
             </Text>
             <Title
@@ -41,7 +39,7 @@ export default function HomeHero() {
               size="xl"
               href={ROUTES.treatments}
             >
-              Ver tratamientos
+              <Text className="text-lg">Ver tratamientos</Text>
             </Button>
           </Flex>
         </Flex>

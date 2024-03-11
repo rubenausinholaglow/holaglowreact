@@ -18,7 +18,7 @@ export default function ValuesCarousel() {
       <div className="whitespace-nowrap overflow-hidden inline-block animate-horizontalScroll">
         <ul className="inline-block">
           {repeatedValues.map(value => (
-            <li className="inline-block pt-2 pb-1 px-6" key={value}>
+            <li className="inline-block pt-3 pb-2 px-6" key={value}>
               <Text disableAnimation size="lg" className="font-medium">
                 {value}
               </Text>
@@ -27,7 +27,7 @@ export default function ValuesCarousel() {
         </ul>
         <ul className="inline-block">
           {repeatedValues.map(value => (
-            <li className="inline-block pt-2 pb-1 px-6" key={value}>
+            <li className="inline-block pt-3 pb-2 px-6" key={value}>
               <Text disableAnimation size="lg" className="font-medium">
                 {value}
               </Text>

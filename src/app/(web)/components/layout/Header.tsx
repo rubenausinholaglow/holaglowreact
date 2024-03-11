@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import CheckHydration from '@utils/CheckHydration';
+import ROUTES from '@utils/routes';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
@@ -14,15 +14,13 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 
-import { useDeviceSizeSSR } from './Breakpoint';
+import { isMobile } from './Breakpoint';
 import MobileNavigation from './MobileNavigation';
 
 let isTicking = false;
 let scrollPos = 0;
 
 function Navigation({ className }: { className: string }) {
-  const ROUTES = useRoutes();
-
   const NAV_ITEMS = [
     { name: 'Tratamientos', link: ROUTES.treatments },
     { name: 'Clínicas', link: ROUTES.clinics },
@@ -51,7 +49,6 @@ export default function Header({
   hideAppointmentButton?: boolean;
 }) {
   const ROUTES = useRoutes();
-  const deviceSize = useDeviceSizeSSR();
 
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
@@ -59,12 +56,9 @@ export default function Header({
 
   const { setSelectedTreatments } = useSessionStore(state => state);
 
-  const HEADER_HEIGHT = deviceSize.isMobile
+  const HEADER_HEIGHT = isMobile()
     ? HEADER_HEIGHT_MOBILE
     : HEADER_HEIGHT_DESKTOP;
-  const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
-  const HEADER_TOP_CLASS = `-top-[${HEADER_HEIGHT}px]`;
-  const HEADER_MARGIN_CLASS = `-mb-[${HEADER_HEIGHT}px]`;
 
   const recalculateVisibility = () => {
     setIsHeaderVisible(
@@ -106,21 +100,21 @@ export default function Header({
 
       <header
         id="header"
-        className={`z-30 w-full top-0 left-0 right-0 sticky transition-all ${HEADER_MARGIN_CLASS} ${
-          !isHeaderVisible ? HEADER_TOP_CLASS : ''
-        } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
+        className="z-30 w-full top-0 left-0 right-0 sticky transition-all"
+        style={{
+          marginBottom: `-${HEADER_HEIGHT}px`,
+          top: !isHeaderVisible ? `-${HEADER_HEIGHT}px` : '',
+          background: isScrollOnTop ? 'transparent' : 'white',
+        }}
       >
         {/* <PromoTopBar /> */}
         <Container isHeader>
           <Flex
             layout="row-between"
-            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
+            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center `}
           >
             <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
-              <SvgHolaglow
-                fill={HOLAGLOW_COLORS['secondary']}
-                className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
-              />
+              <SvgHolaglow className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px] text-hg-secondary" />
             </Link>
 
             <Navigation className="hidden lg:block 2xl:mr-20" />
@@ -129,8 +123,9 @@ export default function Header({
               {!hideAppointmentButton && (
                 <Button
                   id="tmevents_nav_menu_appointment"
-                  size="sm"
+                  size={isMobile() ? 'sm' : 'md'}
                   type="white"
+                  customStyles="bg-transparent"
                   href={ROUTES.checkout.type}
                   className="hidden md:block"
                   onClick={() => {
