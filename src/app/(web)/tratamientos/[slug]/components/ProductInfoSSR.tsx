@@ -113,7 +113,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                 <Text size="lg">
                   {product.emlaType === EmlaType.Required
                     ? product.applicationTimeMinutes * 2 + ''
-                    : product.applicationTimeMinutes.toString()}{' '}
+                    : product.applicationTimeMinutes?.toString()}{' '}
                   minutos
                 </Text>
               </div>
