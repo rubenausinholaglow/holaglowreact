@@ -85,10 +85,10 @@ export default function ProductCard({
       <Flex layout="col-left" className="">
         <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
           <div
-            className="absolute inset-0 top-[10%] rounded-t-2xl "
-            style={{
+            className="absolute inset-0 top-[10%] rounded-t-2xl bg-gradient from-hg-pink to-hg-pink/5"
+            /* style={{
               background: getProductCardColor(product.cardBackgroundColor),
-            }}
+            }} */
           />
 
           <Image

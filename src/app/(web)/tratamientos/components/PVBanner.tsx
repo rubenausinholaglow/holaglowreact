@@ -41,7 +41,7 @@ export default function PVBanner({
             isFloating ? 'text-sm' : 'md:text-lg'
           }`}
         >
-          No se qué tratamiento quiero
+          No sé qué tratamiento quiero
         </Text>
         <Text size="xs" className="text-hg-black500 mb-3 md:text-center">
           Te asesoramos gratis con nuestro escáner facial 3D

@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import { isClient } from '@utils/utils';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { twMerge } from 'tailwind-merge';
@@ -11,13 +12,20 @@ export const ModalBackground = () => {
     showModalBackground,
     setShowModalBackground,
     setIsModalOpen,
-    //isMainScrollEnabled,
   } = useGlobalStore(state => state);
 
   useEffect(() => {
     setShowModalBackground(isModalOpen);
 
-    //TODO - toggle overflow-hidden class to disable scroll if a modal is visible
+    if (isClient()) {
+      const bodyElement = document.getElementsByTagName('body')[0];
+
+      if (isModalOpen) {
+        bodyElement.classList.add('overflow-hidden');
+      } else {
+        bodyElement.classList.remove('overflow-hidden');
+      }
+    }
   }, [isModalOpen]);
 
   return (

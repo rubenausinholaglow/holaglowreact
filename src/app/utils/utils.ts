@@ -4,7 +4,7 @@ import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/types/crisalix';
 import { INITIAL_STATE_MESSAGESOCKETLIST } from 'app/types/messageSocket';
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
-import { CartItem, Product, ProductType } from 'app/types/product';
+import { CartItem, ProductType } from 'app/types/product';
 
 import { useCartStore } from '../(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
@@ -208,8 +208,11 @@ export const validTypesFilterCart: ProductType[] = [
   ProductType.GlowBox,
 ];
 
+export function isClient() {
+  return typeof window !== 'undefined';
+}
 
- export function getUniqueProducts(uniqueProductIds: string[], selectedProducts : Product[]): Product[] {
+export function getUniqueProducts(uniqueProductIds: string[], selectedProducts : Product[]): Product[] {
     const finalSelectedProducts: Product[] = [];
 
     uniqueProductIds.forEach(productId => {
