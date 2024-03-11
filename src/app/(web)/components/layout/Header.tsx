@@ -98,7 +98,6 @@ export default function Header({
       <CheckHydration>
         <MobileNavigation
           isVisible={isMobileNavVisible}
-          headerHeight={HEADER_HEIGHT}
           setIsMobileNavVisible={setIsMobileNavVisible}
         />
       </CheckHydration>
