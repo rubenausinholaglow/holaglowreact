@@ -98,7 +98,6 @@ export default function Header({
       <CheckHydration>
         <MobileNavigation
           isVisible={isMobileNavVisible}
-          headerHeight={HEADER_HEIGHT}
           setIsMobileNavVisible={setIsMobileNavVisible}
         />
       </CheckHydration>
@@ -152,6 +151,7 @@ export default function Header({
                 onClick={() => {
                   setIsMobileNavVisible(true);
                 }}
+                id="tmevent_nav_menu_open"
               />
             </Flex>
           </Flex>

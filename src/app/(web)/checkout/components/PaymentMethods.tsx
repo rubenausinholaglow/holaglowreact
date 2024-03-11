@@ -225,11 +225,9 @@ export const PaymentMethods = ({
                                   <Button
                                     id={isDerma ? 'tmevent_derma_step6' : ''}
                                     className="self-end"
-                                    type="tertiary"
+                                    type={isDerma ? 'derma' : 'tertiary'}
                                     customStyles={`gap-2 mb-4 ${
-                                      isDerma
-                                        ? 'bg-derma-primary border-none text-white'
-                                        : 'bg-hg-primary'
+                                      isDerma ? '' : 'bg-hg-primary'
                                     }`}
                                     onClick={() => {
                                       handlePaymentClick(
@@ -265,11 +263,9 @@ export const PaymentMethods = ({
                           <Button
                             id={isDerma ? 'tmevent_derma_step6' : ''}
                             className="self-end"
-                            type="tertiary"
+                            type={isDerma ? 'derma' : 'tertiary'}
                             customStyles={`gap-2 mb-4 ${
-                              isDerma
-                                ? 'bg-derma-primary border-none text-white'
-                                : 'bg-hg-primary'
+                              isDerma ? '' : 'bg-hg-primary'
                             }`}
                             onClick={() => {
                               handlePaymentClick(PaymentBank.Alma, 1, 15);

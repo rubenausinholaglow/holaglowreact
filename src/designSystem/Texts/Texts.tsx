@@ -38,7 +38,7 @@ export const Title = ({
   };
 
   const styles = twMerge(
-    `font-gtUltra -tracking-[0.038em] text-hg-secondary text-balance ${STYLES[size]} font-${weight} ${className}`
+    `font-gtUltra text-hg-secondary text-balance ${STYLES[size]} font-${weight} ${className}`
   );
 
   if (isAnimated) {
@@ -57,54 +57,6 @@ export const Title = ({
     </HtmlComponent>
   );
 };
-
-/* export const Title = ({
-  size = 'xl',
-  as = 'h3',
-  className = '',
-  wrapperClassName = '',
-  isAnimated = false,
-  origin = 'bottom',
-  onClick = undefined,
-  children,
-}: {
-  size?: '3xl' | '2xl' | 'xl';
-  as?: 'h3' | 'h2' | 'h1';
-  className?: string;
-  wrapperClassName?: string;
-  isAnimated?: boolean;
-  origin?: 'top' | 'right' | 'bottom' | 'left';
-  children: ReactNode;
-  onClick?: (...args: any[]) => void;
-}) => {
-  const HtmlComponent = as;
-
-  const STYLES = {
-    '3xl': 'text-dr4xl lg:text-6xl',
-    '2xl': 'text-3xl lg:text-5xl',
-    xl: 'text-drxl lg:text-2xl',
-  };
-
-  const styles = `text-balance ${className} ${STYLES[size]} ${
-    size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltra'
-  }`;
-
-  if (isAnimated) {
-    return (
-      <AnimateOnViewport className={wrapperClassName} origin={origin}>
-        <HtmlComponent className={styles} onClick={onClick}>
-          {children}
-        </HtmlComponent>
-      </AnimateOnViewport>
-    );
-  }
-
-  return (
-    <HtmlComponent className={styles} onClick={onClick}>
-      {children}
-    </HtmlComponent>
-  );
-}; */
 
 export const Text = ({
   size = 'default',

@@ -59,3 +59,20 @@ export function Breakpoint() {
     />
   );
 }
+
+export function isMobile() {
+  const isMobile = true;
+
+  const breakpoint = window.document.querySelector('#breakpoint');
+
+  if (breakpoint) {
+    const content = getComputedStyle(breakpoint, ':after').content.replace(
+      /["']/g,
+      ''
+    );
+
+    return content === 'sm';
+  }
+
+  return isMobile;
+}

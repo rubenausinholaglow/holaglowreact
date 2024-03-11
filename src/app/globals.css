@@ -32,6 +32,10 @@ a {
   appearance: none !important;
 }
 
+p > a {
+  color: theme('colors.hg.secondary');
+}
+
 a:hover {
   color: theme('colors.hg.secondary');
 }
@@ -63,6 +67,10 @@ input[type='date']::-webkit-calendar-picker-indicator {
   height: 24px;
   width: 24px;
   cursor: pointer;
+}
+
+.font-gtUltra {
+  letter-spacing: -0.038em;
 }
 
 #categorySelector::-webkit-scrollbar {

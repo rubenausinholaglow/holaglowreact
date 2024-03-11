@@ -23,9 +23,33 @@ export default function SecondStep({
   setDermaQuestions: any;
   setContinueDisabled: any;
 }) {
-  const [secondStepValues, setSecondStepValues] = useState<any>([[], []]);
-  const [textAreaOne, setTextAreaOne] = useState<string>('');
-  const [textAreaTwo, setTextAreaTwo] = useState<string>('');
+  const otherConcerns = dermaQuestions?.skinConcerns
+    ? dermaQuestions.skinConcerns.filter(item => {
+        return item.concern.startsWith('Otros:');
+      })
+    : [];
+  const normalConcerns: number[] = [];
+  dermaQuestions?.skinConcerns?.forEach(item => {
+    normalConcerns.push(
+      (MULTISTEP_QUESTIONS[1].questions as [any]).findIndex(
+        x => x.title == item.concern
+      )
+    );
+  });
+  const [secondStepValues, setSecondStepValues] = useState<any>([
+    [
+      (MULTISTEP_QUESTIONS[0].questions as [any]).findIndex(
+        x => x.title == dermaQuestions?.scenario
+      ),
+    ],
+    normalConcerns,
+  ]);
+  const [textAreaOne, setTextAreaOne] = useState<string>(
+    otherConcerns[0]?.concern ?? ''
+  );
+  const [textAreaTwo, setTextAreaTwo] = useState<string>(
+    dermaQuestions?.extraInfo ?? ''
+  );
 
   const setSelectedQuestionValue = (question: number, value: number) => {
     const newValues = [...secondStepValues];
@@ -94,10 +118,6 @@ export default function SecondStep({
 
     if (value) setContinueDisabled(false);
   };
-
-  useEffect(() => {
-    setContinueDisabled([0, 1].includes(question));
-  }, [question]);
 
   return (
     <>
