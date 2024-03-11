@@ -49,12 +49,14 @@ export default function Page({
     remoteControl,
     storedBoxId,
     storedClinicId,
+    isCallCenter,
     setBoxId,
     setClinicId,
     setRemoteControl,
     setIgnoreMessages,
     setClinicFlowwwId,
     setClinicProfessionalId,
+    setIsCallCenter,
   } = useGlobalPersistedStore(state => state);
   const userCrisalix = useCrisalix(state => state);
 
@@ -140,6 +142,7 @@ export default function Page({
     setRemoteControl(params.get('remoteControl') == 'true');
     setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
+    setIsCallCenter(params.get('isCallCenter') == 'true');
   }, []);
 
   async function redirectPageByAppointmentId(
@@ -230,6 +233,10 @@ export default function Page({
     flowwwToken: string
   ) {
     try {
+      if (isCallCenter) {
+        router.push('/dashboard/menu');
+        return;
+      }
       await ScheduleService.getClinicScheduleByToken(flowwwToken).then(
         async data => {
           if (data != null) {
