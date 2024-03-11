@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
 import {
   applyFilters,
@@ -10,6 +11,14 @@ import {
 import { SvgArrow, SvgCross, SvgSearch } from 'app/icons/IconsDs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+
+const NO_RESULTS_SLUGS = [
+  'arrugas-expresion-frente-entrecejo-patas-gallo',
+  'aumento-labios',
+  'relleno-ojeras',
+  'armonizacion-facial',
+  'proyeccion-pomulos',
+];
 
 export default function ProductSearchBar({
   className = '',
@@ -25,6 +34,22 @@ export default function ProductSearchBar({
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [searchBarProducts, setSearchBarProducts] = useState(products);
+  const [noResultsProducts, setNoResultsProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      const fetchedProducts = await Promise.all(
+        NO_RESULTS_SLUGS.map(async slug => {
+          // Fetch product details for each slug
+          const productDetails = await fetchProduct(slug, false, false);
+          return productDetails;
+        })
+      );
+      setNoResultsProducts(fetchedProducts);
+    }
+
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     if (searchQuery.length > 2) {
@@ -67,6 +92,8 @@ export default function ProductSearchBar({
   const handleClearInputValue = () => {
     setSearchQuery('');
   };
+
+  console.log(noResultsProducts);
 
   return (
     <div className={`relative w-full ${className}`}>
