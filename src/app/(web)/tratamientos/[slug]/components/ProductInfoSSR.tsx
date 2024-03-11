@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useState } from 'react';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgCalendar } from 'app/icons/Icons';
 import { SvgEuro, SvgTimeLeft, SvgTimer } from 'app/icons/IconsDs';
@@ -7,7 +8,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
 
 const ProductVideo = dynamic(() => import('./ProductVideo'), { ssr: false });
 const ProductSelectorButton = dynamic(() => import('./ProductSelectorButton'), {
@@ -39,7 +39,6 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
         scriptTag.src = url;
         document.head.appendChild(scriptTag);
         scriptTag.addEventListener('load', function() {
-          debugger;
           PEPPER.config.initDraw( environment, language, currency, apiKey, publicKey, ${product.price}, 'STD', '.pepperWidget', 'in');
         });
       `;
