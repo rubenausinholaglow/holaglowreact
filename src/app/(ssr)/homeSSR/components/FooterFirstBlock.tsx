@@ -25,7 +25,7 @@ export default function FooterFirstBlock() {
         <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
           <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
             <a href="/tratamientos/aumento-labios" id={'tmevent_footer'}>
-              <li>Aumento de Labios</li>
+              <li>Aumento de labios</li>
             </a>
             <a href="/tratamientos/relleno-ojeras" id={'tmevent_footer'}>
               <li>Relleno de ojeras</li>

@@ -9,6 +9,8 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { twMerge } from 'tailwind-merge';
 
+import { isMobile } from '../layout/Breakpoint';
+
 export default function PackTypeFilter({
   className,
   customStyles,
@@ -59,8 +61,10 @@ export default function PackTypeFilter({
         >
           Sólo Packs <span className="text-hg-secondary">Black</span> Friday
         </span>
-      ) : (
+      ) : isMobile() ? (
         'Sólo Packs Glow'
+      ) : (
+        'Packs'
       )}
     </Button>
   );
