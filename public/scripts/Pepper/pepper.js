@@ -14,7 +14,6 @@
  *
  * --
  */
-
 //Apoyo para trabajo sessionStorage
 function setSessionStoragePepper(key, value) {
 	if(typeof(Storage) !== "undefined") {
@@ -41,15 +40,21 @@ PEPPER.config = {
 	currency: null,
 	sessionName: 'pepper_config',
 	domain: null,
+	domainConfig: null,
 	apiKey: null,
 	publicKey: null,
 	amount: null,
 	where: null,
 	position: null,
 	widgetType: null,
+	ignoreInit: false,
 
 	init: async function (environment, language, currency, apiKey, publicKey) {
+		if (this.ignoreInit) {
+			return;
+		}
 		this.environment = environment;
+		this.domainConfig = (environment == "PRD") ? 'https://merchant-config.pepperfinance.es' : 'https://play-merchant-config.pepperfinance.es';
 		this.domain = (environment == "PRD") ? 'https://api.peppermoney.es' : 'https://play-api.peppermoneytest.es';
 		this.language = language;
 		this.publicKey = publicKey;
@@ -68,6 +73,7 @@ PEPPER.config = {
 		this.where = where;
 		this.position = position;
 		await this.init(environment, language, currency, apiKey, publicKey);
+		this.ignoreInit = true;
 	},
 	getConfig: async function() {
 		try{
@@ -113,9 +119,7 @@ PEPPER.config = {
         }
 			xmlHttp.onerror = () => reject('Petition error');
 			xmlHttp.ontimeout  = () => reject('Timeour error');
-			xmlHttp.open('GET', that.domain + '/api-ecommerce/v2/config?language=' + that.language + '&currency=' + that.currency, true);
-        xmlHttp.setRequestHeader("x-merchant-key", that.publicKey);
-        xmlHttp.setRequestHeader("x-api-key", that.apiKey);
+			xmlHttp.open('GET', that.domainConfig + '/api/v1/merchants/' + that.publicKey + '/config?language=' + that.language + '&currency=' + that.currency + '&origin=' + encodeURIComponent(location.origin) , true);
         xmlHttp.setRequestHeader("Content-type", "application/json");
         xmlHttp.send();
 			
