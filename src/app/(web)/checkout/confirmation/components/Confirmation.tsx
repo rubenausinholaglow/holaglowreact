@@ -226,14 +226,10 @@ export default function Confirmation({
           >
             <Button
               size="xl"
-              type="tertiary"
+              type={isDerma ? 'derma' : 'primary'}
               ref={addToCalendarRef}
               className="w-full"
-              customStyles={`font-normal justify-start pl-2 border-none ${
-                isDerma
-                  ? 'bg-derma-primary text-derma-primary100'
-                  : 'bg-hg-secondary text-white'
-              }`}
+              customStyles="justify-start"
               onClick={() =>
                 atcb_action(
                   ADD_TO_CALENDAR_CONFIG,
@@ -258,10 +254,9 @@ export default function Confirmation({
             <div className="pt-12">
               <a href="/tratamientos" className="hidden md:block">
                 <Button
-                  type="tertiary"
+                  type="white"
                   size="md"
                   className="hidden md:flex"
-                  customStyles="group-hover:bg-hg-secondary100"
                   href={ROUTES.treatments}
                 >
                   <Flex layout="row-center">
@@ -313,10 +308,9 @@ export default function Confirmation({
               {!isDashboard && (
                 <a href="/tratamientos">
                   <Button
-                    type="tertiary"
+                    type="white"
                     size="md"
                     className="hidden md:inline"
-                    customStyles="group-hover:bg-hg-secondary100"
                     href={ROUTES.treatments}
                   >
                     <Flex layout="row-center">
