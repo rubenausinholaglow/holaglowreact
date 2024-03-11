@@ -20,7 +20,7 @@ const RUTINE_DATA = {
   cta: 'Lo quiero todo',
   bullets: [
     'Cremas seleccionadas para ti por tu médico',
-    'Receta de tu crema facial formulada',
+    'Receta de tu crema facial formulada (a pedir en farmacia por 25-40€)',
   ],
   id: 3,
 };
@@ -182,7 +182,7 @@ export default function WhatsIncludedDerma() {
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8 mt-4"
                 />
-                <Title size="xl" className="mb-2 font-gtUltra">
+                <Title size="xl" className="mb-2 text-derma-primary">
                   Cesta con productos personalizados y validados por el médico
                 </Title>
                 <div>

@@ -51,15 +51,93 @@ export default function MobileNavigation({
       type="right"
       hideModalBackground
     >
-      <Flex layout="col-left" className="w-full h-full relative">
-        <Flex layout="row-between" className="w-full p-4">
-          <SvgHolaglow className="text-hg-secondary" />
-          <SvgCross
-            height={20}
-            width={20}
-            className=""
-            onClick={() => setIsMobileNavVisible(false)}
-          />
+      <div className="bg-white border-b border-hg-black pt-12 pb-8 relative">
+        <SvgHolaglow className="absolute top-4 left-4 text-hg-secondary" />
+        <SvgCross
+          height={20}
+          width={20}
+          className="absolute top-4 right-4"
+          onClick={() => setIsMobileNavVisible(false)}
+          id="tmevent_nav_menu_close"
+        />
+        <Flex
+          layout="col-left"
+          className="gap-6 w-full md:w-1/4 text-lg font-semibold px-4 pt-4"
+        >
+          <p className="font-gtUltra text-hg-secondary font-thin text-drxl">
+            Nuestros tratamientos
+          </p>
+
+          <SimpleAccordion
+            trigger="Más populares"
+            isOpen={!deviceSize.isMobile}
+          >
+            <ul className="text-sm pt-4 font-normal flex flex-col">
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/arrugas-expresion-frente-entrecejo-patas-gallo`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Arrugas de expresión
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/aumento-labios`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Aumento de Labios
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/armonizacion-facial`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Armonización facial
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/relleno-ojeras`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Relleno de ojeras
+                </a>
+              </li>
+
+              <li>
+                <a
+                  className="py-2 block"
+                  href={`${ROUTES.treatments}/proyeccion-pomulos`}
+                  id={'tmevent_nav_menu_click'}
+                >
+                  Proyección de pómulos
+                </a>
+              </li>
+            </ul>
+          </SimpleAccordion>
+
+          <a href={ROUTES.treatments} id={'tmevent_nav_menu_click'}>
+            <p className="font-semibold">Ver todos</p>
+          </a>
+
+          <Button
+            size="lg"
+            id="tmevent_nav_menu_click_pv_button"
+            type="secondary"
+            href={ROUTES.landings.pv}
+          >
+            Cita de asesoramiento gratis
+            <SvgArrow height={16} width={16} className="ml-2" />
+          </Button>
         </Flex>
         <Container className="my-4">
           <ProductSearchBar

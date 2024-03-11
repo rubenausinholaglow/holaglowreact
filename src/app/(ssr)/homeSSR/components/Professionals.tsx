@@ -23,10 +23,14 @@ export default async function Professionals({
   const clinics = await getClinics();
 
   const professionals = clinics.flatMap(clinic =>
-    clinic.professionals.map((professional: Professional) => ({
-      ...professional,
-      city: clinic.city,
-    }))
+    clinic.professionals.filter(professional => {
+      if (professional.professionalType === 1) {
+        return {
+          ...professional,
+          city: clinic.city,
+        };
+      }
+    })
   );
 
   return (
