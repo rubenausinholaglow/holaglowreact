@@ -20,6 +20,26 @@ const NO_RESULTS_SLUGS = [
   'proyeccion-pomulos',
 ];
 
+function ProductSearchItem(product: Product, index: number) {
+  return (
+    <li
+      key={product.id}
+      className={`py-2 ${index === 0 ? '' : 'border-t border-hg-black400'}`}
+    >
+      <a
+        href={`${ROUTES.treatments}/${product.extraInformation.slug}`}
+        className="flex w-full"
+      >
+        <div className="mr-auto pr-4">
+          <Text className="text-sm font-semibold">{product.title}</Text>
+          <Text className="text-hg-secondary">{product.price} €</Text>
+        </div>
+        <SvgArrow className="shrink-0 h-4 w-4" />
+      </a>
+    </li>
+  );
+}
+
 export default function ProductSearchBar({
   className = '',
   isMobileNavigation = false,
@@ -71,10 +91,7 @@ export default function ProductSearchBar({
   }, [searchQuery]);
 
   useEffect(() => {
-    setShowResults(
-      searchQuery.length > 2 &&
-        searchBarProducts.filter(product => product.visibility).length > 0
-    );
+    setShowResults(searchQuery.length > 2);
 
     if (setIsSearchBarOpened) {
       setIsSearchBarOpened(
@@ -129,38 +146,31 @@ export default function ProductSearchBar({
           showResults ? 'shadow-centered-black' : 'max-h-0 -translate-y-[10px]'
         }`}
       >
-        <Text className="text-hg-black500 text-xs mb-2 pt-3 px-4">
-          Tratamientos
-        </Text>
-        <ul className="flex flex-col px-4 w-full">
-          {searchBarProducts.map((product, index) => {
-            if (product.visibility) {
-              return (
-                <li
-                  key={product.id}
-                  className={`py-2 ${
-                    index === 0 ? '' : 'border-t border-hg-black400'
-                  }`}
-                >
-                  <a
-                    href={`${ROUTES.treatments}/${product.extraInformation.slug}`}
-                    className="flex w-full"
-                  >
-                    <div className="mr-auto pr-4">
-                      <Text className="text-sm font-semibold">
-                        {product.title}
-                      </Text>
-                      <Text className="text-hg-secondary">
-                        {product.price} €
-                      </Text>
-                    </div>
-                    <SvgArrow className="shrink-0 h-4 w-4" />
-                  </a>
-                </li>
-              );
-            }
-          })}
-        </ul>
+        {searchBarProducts.filter(item => item.visibility).length > 0 ? (
+          <>
+            <Text className="text-hg-black500 text-xs mb-2 pt-3 px-4">
+              Tratamientos
+            </Text>
+            <ul className="flex flex-col px-4 w-full">
+              {searchBarProducts.map((product, index) => {
+                if (product.visibility) {
+                  return ProductSearchItem(product, index);
+                }
+              })}
+            </ul>
+          </>
+        ) : (
+          <>
+            <Text className="text-hg-black500 mb-2 pt-3 px-4">
+              Sin resultados. Te sugerimos...
+            </Text>
+            <ul className="flex flex-col px-4 w-full">
+              {noResultsProducts.map((product, index) =>
+                ProductSearchItem(product, index)
+              )}
+            </ul>
+          </>
+        )}
       </Flex>
     </div>
   );
