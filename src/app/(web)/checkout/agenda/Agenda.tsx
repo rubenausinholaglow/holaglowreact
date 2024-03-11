@@ -299,15 +299,17 @@ export default function Agenda({
                   (cartItem.isScheduled === false ||
                     cartItem.isScheduled === undefined)
               );
-
               if (filteredCart.length >= selectedTreatments.length) {
                 selectedTreatments.forEach(treatment => {
-                  const foundItem = filteredCart.find(
-                    cartItem => cartItem.id === treatment.id
+                  const selectedProducts = filteredCart.filter(
+                    cartItem =>
+                      cartItem.id === treatment.id &&
+                      (cartItem.isScheduled === false ||
+                        cartItem.isScheduled === undefined)
                   );
-                  if (foundItem) {
-                    updateIsScheduled(true, foundItem.uniqueId);
-                  }
+                  selectedProducts.forEach(item => {
+                    updateIsScheduled(true, item.uniqueId);
+                  });
                 });
               }
               router.push(
