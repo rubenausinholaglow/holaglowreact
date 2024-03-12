@@ -8,6 +8,7 @@ import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 
 const ProductVideo = dynamic(() => import('./ProductVideo'), { ssr: false });
+const PepperWidget = dynamic(() => import('./PepperWidget'));
 const ProductSelectorButton = dynamic(() => import('./ProductSelectorButton'), {
   ssr: false,
 });
@@ -88,7 +89,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                 <Text size="lg">
                   {product.emlaType === EmlaType.Required
                     ? product.applicationTimeMinutes * 2 + ''
-                    : product.applicationTimeMinutes.toString()}{' '}
+                    : product.applicationTimeMinutes?.toString()}{' '}
                   minutos
                 </Text>
               </div>
@@ -127,6 +128,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
           </ul>
 
           <ProductSelectorButton product={product} />
+          <PepperWidget price={product.price} />
         </Container>
         <div className="md:w-2/5 shrink-0">
           <ProductVideo src={productVideoSrc} />
