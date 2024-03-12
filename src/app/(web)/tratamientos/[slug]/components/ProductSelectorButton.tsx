@@ -23,7 +23,7 @@ export default function ProductSelectorButton({
       }}
       size="xl"
       type="primary"
-      className="mb-12 md:mb-0 md:mt-auto"
+      className="mb-6 md:mb-0 md:mt-auto"
       id="tmevent_click_book_anchor_button"
     >
       Me interesa

@@ -15,11 +15,11 @@ export default function PepperWidget({ price }: { price: number }) {
 
   const script = `
         var url = '../scripts/Pepper/pepper.js';
-        var environment = 'TST';
+        var environment = '${process.env.NEXT_PUBLIC_PEPPER_ENVIRONMENT}';
         var language = 'ES';
         var currency = 'EUR';
-        var apiKey = 'qh4hwfJqyGYcK2o0lDCpNfVhiXiCKZq2';
-        var publicKey = '0a64c825821bf9bc38c182671fa85786';
+        var apiKey = '${process.env.NEXT_PUBLIC_PEPPER_ENVIRONMENT}';
+        var publicKey = '${process.env.NEXT_PUBLIC_PEPPER_ENVIRONMENT}';
         const scriptTag = document.createElement("script");
         scriptTag.src = url;
         document.head.appendChild(scriptTag);
@@ -29,6 +29,6 @@ export default function PepperWidget({ price }: { price: number }) {
       `;
 
   return (
-    <div className="pepperWidget flex relative md:justify-center flex-col w-full mt-5"></div>
+    <div className="pepperWidget flex relative md:justify-center flex-col w-full md:mt-5 mb-10 md:mb-0"></div>
   );
 }
