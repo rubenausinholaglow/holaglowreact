@@ -6,7 +6,11 @@ import {
   AccordionItemProps,
   AccordionSingleProps,
 } from '@radix-ui/react-accordion';
-import { getTotalFromCart, getUniqueProducts } from '@utils/utils';
+import {
+  getTotalFromCart,
+  getUniqueIds,
+  getUniqueProducts,
+} from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   SvgAngleDown,
@@ -79,9 +83,7 @@ export default function AppointmentResume({
 
   let selectedTreatmentTitles: string[] = [];
   if (selectedTreatments) {
-    const uniqueProductIds = Array.from(
-      new Set(selectedTreatments.map(x => x.id))
-    );
+    const uniqueProductIds = getUniqueIds(selectedTreatments);
     selectedTreatmentTitles = uniqueProductIds.map(productId => {
       const product = selectedTreatments.find(x => x.id === productId);
       return product ? product.title : '';

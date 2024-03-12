@@ -229,3 +229,9 @@ export function getUniqueProducts(uniqueProductIds: string[], selectedProducts :
   });
   return finalSelectedProducts;
 }
+
+export function getUniqueIds(products : Product[]) : string[] {
+  return Array.from(
+      new Set(products.map(x => x.id))
+    );
+}

@@ -8,7 +8,7 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import { EmlaType, UnityType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
-import { validTypesFilterCart } from '@utils/utils';
+import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
@@ -115,9 +115,7 @@ export default function Agenda({
   const [loadingDays, setLoadingDays] = useState(false);
   const { cart, updateIsScheduled } = useCartStore(state => state);
 
-  const uniqueProductIds = Array.from(
-    new Set(selectedTreatments.map(product => product.id))
-  );
+  const uniqueProductIds = getUniqueIds(selectedTreatments);
 
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
