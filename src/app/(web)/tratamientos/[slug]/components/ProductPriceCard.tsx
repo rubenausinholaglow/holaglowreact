@@ -448,6 +448,7 @@ export default function ProductPriceCard({
               </Flex>
               <Flex layout="row-right">
                 {product.isPack &&
+                  !parentProduct.isPack &&
                   (!isEmpty(product.tags) &&
                   product.tags[0].tag === 'B.Friday' ? (
                     <Flex
