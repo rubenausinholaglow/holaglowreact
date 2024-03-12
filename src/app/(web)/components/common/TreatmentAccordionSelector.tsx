@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
+import { getUniqueProducts } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
@@ -41,6 +42,10 @@ export default function TreatmentAccordionSelector({
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedIndexsProducts, setSelectedIndexProducts] = useState<number[]>(
+    []
+  );
+
   const cart = useCartStore(state => state.cart);
 
   function getProductsByCategory(category: string) {
@@ -53,10 +58,10 @@ export default function TreatmentAccordionSelector({
           ) && !product.isPack
       );
       if (filteredProducts.length == 0) {
-        const uniqueProductIds = Array.from(
+        const productIds = Array.from(
           new Set(selectedProducts.map(product => product.id))
         );
-        return getUniqueProducts(uniqueProductIds);
+        return getUniqueProducts(productIds, selectedProducts);
       }
     } else {
       filteredProducts = stateProducts.filter(
@@ -70,24 +75,6 @@ export default function TreatmentAccordionSelector({
       a.title > b.title ? 1 : -1
     );
   }
-
-  function getUniqueProducts(uniqueProductIds: string[]): Product[] {
-    const finalSelectedProducts: Product[] = [];
-
-    uniqueProductIds.forEach(productId => {
-      const duplicateProducts = selectedProducts.filter(
-        product => product.id === productId
-      );
-      if (duplicateProducts.length > 1) {
-        duplicateProducts[0].description = `x${duplicateProducts.length} viales de ácido híaluronico`;
-        finalSelectedProducts.push(duplicateProducts[0]);
-      } else {
-        finalSelectedProducts.push(duplicateProducts[0]);
-      }
-    });
-    return finalSelectedProducts;
-  }
-
   useEffect(() => {
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
@@ -126,28 +113,53 @@ export default function TreatmentAccordionSelector({
     if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
 
+  useEffect(() => {
+    if (!isEmpty(selectedProducts)) {
+      const selectedIndexs: number[] = [];
+
+      selectedProducts.map((product, index) => {
+        selectedIndexs.push(index);
+      });
+      setSelectedIndexProducts(selectedIndexs);
+    }
+  }, [selectedProducts]);
+
   const renderAcordionContent = (category: string) => {
     return (
       <AccordionContent>
         <div className="border-t border-hg-secondary300">
           <ul className="flex flex-col w-full">
-            {getProductsByCategory(category).map(product => (
+            {getProductsByCategory(category).map((product, index) => (
               <li
                 className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                 key={product.title}
                 onClick={() => {
-                  const isSelected = selectedTreatments.some(
-                    selectedProduct => selectedProduct.title === product.title
-                  );
+                  const isSelected = selectedIndexsProducts.includes(index);
 
                   if (isSelected) {
-                    const updatedSelection = selectedTreatments.filter(
-                      selectedProduct => selectedProduct.id !== product.id
+                    setSelectedIndexProducts(x =>
+                      x.filter(item => item != index)
                     );
-                    setSelectedTreatments(updatedSelection);
+                    if (product.unityType == UnityType.AcidoHialuronico) {
+                      const updatedSelection = selectedTreatments.filter(
+                        selectedProduct => selectedProduct.id !== product.id
+                      );
+                      setSelectedTreatments(updatedSelection);
+                    } else {
+                      const indexToRemove = selectedTreatments.findIndex(
+                        x => x.title == product.title
+                      );
+                      const updatedTreatments = [...selectedTreatments];
+                      updatedTreatments.splice(indexToRemove, 1);
+                      setSelectedTreatments(updatedTreatments);
+                    }
                   } else {
                     if (isDashboard) {
                       setSelectedTreatments([...selectedTreatments, product]);
+                      setSelectedIndexProducts([
+                        ...selectedIndexsProducts,
+                        index,
+                      ]);
                     } else {
                       setSelectedTreatments([product]);
                     }
@@ -163,9 +175,7 @@ export default function TreatmentAccordionSelector({
                   <Text className="text-xs">{product.description}</Text>
                 </div>
 
-                {selectedTreatments.some(
-                  selectedProduct => selectedProduct.id === product.id
-                ) ? (
+                {selectedIndexsProducts.includes(index) ? (
                   <SvgRadioChecked
                     height={24}
                     width={24}
