@@ -134,24 +134,37 @@ export default function TreatmentAccordionSelector({
                 className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                 key={product.title}
                 onClick={() => {
-                  const isSelected = selectedIndexsProducts.includes(index);
+                  const isSelected =
+                    cart.length > 0
+                      ? selectedIndexsProducts.includes(index)
+                      : selectedTreatments.some(
+                          selectedProduct =>
+                            selectedProduct.title === product.title
+                        );
 
                   if (isSelected) {
-                    setSelectedIndexProducts(x =>
-                      x.filter(item => item != index)
-                    );
-                    if (product.unityType == UnityType.AcidoHialuronico) {
+                    if (cart.length > 0) {
+                      setSelectedIndexProducts(x =>
+                        x.filter(item => item != index)
+                      );
+                      if (product.unityType == UnityType.AcidoHialuronico) {
+                        const updatedSelection = selectedTreatments.filter(
+                          selectedProduct => selectedProduct.id !== product.id
+                        );
+                        setSelectedTreatments(updatedSelection);
+                      } else {
+                        const indexToRemove = selectedTreatments.findIndex(
+                          x => x.title == product.title
+                        );
+                        const updatedTreatments = [...selectedTreatments];
+                        updatedTreatments.splice(indexToRemove, 1);
+                        setSelectedTreatments(updatedTreatments);
+                      }
+                    } else {
                       const updatedSelection = selectedTreatments.filter(
                         selectedProduct => selectedProduct.id !== product.id
                       );
                       setSelectedTreatments(updatedSelection);
-                    } else {
-                      const indexToRemove = selectedTreatments.findIndex(
-                        x => x.title == product.title
-                      );
-                      const updatedTreatments = [...selectedTreatments];
-                      updatedTreatments.splice(indexToRemove, 1);
-                      setSelectedTreatments(updatedTreatments);
                     }
                   } else {
                     if (isDashboard) {
@@ -175,7 +188,11 @@ export default function TreatmentAccordionSelector({
                   <Text className="text-xs">{product.description}</Text>
                 </div>
 
-                {selectedIndexsProducts.includes(index) ? (
+                {cart.length > 0 ? (
+                  selectedIndexsProducts.includes(index)
+                ) : selectedTreatments.some(
+                    selectedProduct => selectedProduct.id === product.id
+                  ) ? (
                   <SvgRadioChecked
                     height={24}
                     width={24}
