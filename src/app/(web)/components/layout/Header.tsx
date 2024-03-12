@@ -95,7 +95,6 @@ export default function Header({
         id="header"
         className="z-30 w-full top-0 left-0 right-0 sticky transition-all"
         style={{
-          height: `${headerHeight()}px`,
           top: !isHeaderVisible ? `-${headerHeight()}px` : '',
           background: isScrollOnTop ? 'transparent' : 'white',
         }}
@@ -104,13 +103,10 @@ export default function Header({
         <Container isHeader>
           <Flex
             layout="row-between"
-            className="w-full relative py-4 lg:py-5 justify-between lg:justify-center"
-            style={{
-              height: `${headerHeight()}px`,
-            }}
+            className="w-full relative py-4 lg:py-6 justify-between lg:justify-center"
           >
             <Link href={ROUTES.home} className="lg:absolute left-0">
-              <SvgHolaglow className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px] text-hg-secondary" />
+              <SvgHolaglow className="h-[24px] md:h-[32px] w-[98px] md:w-[130px] text-hg-secondary" />
             </Link>
 
             <Navigation className="hidden lg:block" />
