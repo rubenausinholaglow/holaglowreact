@@ -134,7 +134,7 @@ export default function TreatmentAccordionSelector({
   }
 
   function getProductToAdd(product: Product): Product[] {
-    if (product.unityType === UnityType.AcidoHialuronico && cart.length > 0) {
+    if (product.unityType === UnityType.AcidoHialuronico) {
       return selectedProducts.filter(x => x.id === product.id) as Product[];
     } else {
       return [product];
