@@ -1,9 +1,9 @@
 import { Product } from '@interface/product';
 import { fetchProduct, fetchProducts } from '@utils/fetch';
-import Clinics from 'app/(ssr)/homeSSR/components/Clinics';
-import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
-import Professionals from 'app/(ssr)/homeSSR/components/Professionals';
+import Clinics from 'app/(web)/components/common/Clinics';
+import Professionals from 'app/(web)/components/common/ProfessionalsSSR';
 import App from 'app/(web)/components/layout/App';
+import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 
@@ -19,7 +19,7 @@ import ProductResults from './components/ProductResults';
 import ProductSuggestions from './components/ProductSuggestions';
 
 const Testimonials = dynamic(
-  () => import('app/(ssr)/homeSSR/components/Testimonials'),
+  () => import('app/(web)/components/home/Testimonials'),
   { ssr: false }
 );
 

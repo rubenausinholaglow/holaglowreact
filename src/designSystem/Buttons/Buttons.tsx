@@ -78,7 +78,7 @@ export const Button = ({
         id={id}
         target={rest?.target}
         className={twMerge(
-          `relative overflow-visible ${className} inline-block`
+          `relative overflow-visible inline-block ${className}`
         )}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}

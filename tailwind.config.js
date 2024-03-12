@@ -90,6 +90,7 @@ module.exports = {
         lg: '1024px',
         xl: '1152px',
         '2xl': '1280px',
+        '3xl': '1600px',
       },
       boxShadow: {
         'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.05)',

@@ -9,20 +9,9 @@ import Image from 'next/image';
 export default function GoToTreatments() {
   return (
     <div className="bg-hg-secondary relative">
-      <Container className="py-12">
-        <div className="absolute top-0 bottom-0 left-0 right-1/2">
-          <div className="relative h-full">
-            <Image
-              src="/images/home/descubre.png"
-              alt="descubre"
-              objectFit="cover"
-              objectPosition="bottom"
-              fill
-            />
-          </div>
-        </div>
-        <div className="flex w-1/2 ml-auto">
-          <Flex layout="col-left" className="pl-12">
+      <Container className="pt-12 pb-8 md:py-16 flex flex-col md:flex-row">
+        <div className="flex md:w-1/2 md:pl-12 ml-auto">
+          <Flex layout="col-left">
             <SvgHolaglowHand
               height={90}
               width={90}
@@ -44,7 +33,7 @@ export default function GoToTreatments() {
               isAnimated
               type="secondary"
               size="xl"
-              className="mx-auto md:mx-0 mb-10"
+              className="mx-auto md:mx-0"
               href={ROUTES.landings.pv}
               id={'tmevent_multistep_module'}
             >
@@ -53,7 +42,25 @@ export default function GoToTreatments() {
             </Button>
           </Flex>
         </div>
+        <div className="md:absolute top-0 bottom-0 left-0 right-1/2 rounded-br-[100px] overflow-hidden">
+          <div className="relative h-full">
+            <Image
+              src="/images/home/descubre.jpg"
+              alt="descubre"
+              objectFit="cover"
+              objectPosition="bottom-right"
+              fill
+            />
+          </div>
+        </div>
       </Container>
+      <Image
+        src="/images/home/descubre.jpg"
+        alt="descubre"
+        height={1552}
+        width={1440}
+        className="md:hidden w-full rounded-tr-[75px]"
+      />
     </div>
   );
 }

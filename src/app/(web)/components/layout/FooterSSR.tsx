@@ -30,7 +30,7 @@ export default async function Footer() {
       <Flex layout="col-left" className="gap-12 md:flex-row">
         <Flex
           layout="col-left"
-          className="md:w-1/2 order-3 md:-order-[1] px-4 md:px-0"
+          className="md:w-1/3 order-3 md:-order-[1] px-4 md:px-0"
         >
           <SvgHolaglow
             className="text-hg-secondary mb-8"

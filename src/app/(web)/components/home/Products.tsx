@@ -15,7 +15,7 @@ import { isEmpty } from 'lodash';
 import AnimateOnViewport from '../common/AnimateOnViewport';
 import CategorySelector from '../filters/CategorySelector';
 
-export default function HomeProducts({
+export default function Products({
   hideCategorySelector,
 }: {
   hideCategorySelector?: boolean;

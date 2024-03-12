@@ -1,4 +1,4 @@
-import Clinics from 'app/(web)/components/common/Clinics';
+import Clinics from 'app/(web)/components/common/Clinics_old';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';

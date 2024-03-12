@@ -1,3 +1,4 @@
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { State } from 'app/types/cart';
 
 export const INITIAL_STATE: State = {
@@ -16,3 +17,7 @@ export const HEADER_HEIGHT_DESKTOP = 72;
 
 export const DERMA_HEADER_HEIGHT_MOBILE = 68;
 export const DERMA_HEADER_HEIGHT_DESKTOP = 80;
+
+export function headerHeight() {
+  return isMobile() ? HEADER_HEIGHT_MOBILE : HEADER_HEIGHT_DESKTOP;
+}

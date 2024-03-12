@@ -1,7 +1,6 @@
 import { fetchProducts } from '@utils/fetch';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Title, Underlined } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 
 import ProductList from './ProductList';
 
@@ -11,17 +10,14 @@ async function getProducts() {
   return products;
 }
 
-export default async function HomeProducts() {
+export default async function ProductsSSR() {
   const products = await getProducts();
 
   return (
-    <div className="bg-hg-cream500 overflow-hidden py-12">
+    <div className="bg-hg-cream500 overflow-hidden pt-12 pb-4">
       <Container>
         <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
-          Tratamientos para conseguir resultados{' '}
-          <Underlined color={HOLAGLOW_COLORS['primary']}>
-            irresistibles
-          </Underlined>
+          Tratamientos para conseguir resultados irresistibles
         </Title>
       </Container>
 

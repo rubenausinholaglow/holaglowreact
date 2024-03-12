@@ -5,10 +5,7 @@ import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
-import {
-  HEADER_HEIGHT_DESKTOP,
-  HEADER_HEIGHT_MOBILE,
-} from 'app/utils/constants';
+import { headerHeight } from 'app/utils/constants';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -56,13 +53,9 @@ export default function Header({
 
   const { setSelectedTreatments } = useSessionStore(state => state);
 
-  const HEADER_HEIGHT = isMobile()
-    ? HEADER_HEIGHT_MOBILE
-    : HEADER_HEIGHT_DESKTOP;
-
   const recalculateVisibility = () => {
     setIsHeaderVisible(
-      window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
+      window.scrollY < headerHeight() || scrollPos > window.scrollY
     );
     scrollPos = window.scrollY;
     setIsScrollOnTop(scrollPos === 0);
@@ -102,8 +95,8 @@ export default function Header({
         id="header"
         className="z-30 w-full top-0 left-0 right-0 sticky transition-all"
         style={{
-          marginBottom: `-${HEADER_HEIGHT}px`,
-          top: !isHeaderVisible ? `-${HEADER_HEIGHT}px` : '',
+          height: `${headerHeight()}px`,
+          top: !isHeaderVisible ? `-${headerHeight()}px` : '',
           background: isScrollOnTop ? 'transparent' : 'white',
         }}
       >
@@ -111,15 +104,18 @@ export default function Header({
         <Container isHeader>
           <Flex
             layout="row-between"
-            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center `}
+            className="w-full relative py-4 lg:py-5 justify-between lg:justify-center"
+            style={{
+              height: `${headerHeight()}px`,
+            }}
           >
-            <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
+            <Link href={ROUTES.home} className="lg:absolute left-0">
               <SvgHolaglow className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px] text-hg-secondary" />
             </Link>
 
-            <Navigation className="hidden lg:block 2xl:mr-20" />
+            <Navigation className="hidden lg:block" />
 
-            <Flex layout="row-center" className="lg:absolute right-0 2xl:mr-20">
+            <Flex layout="row-center" className="lg:absolute right-0">
               {!hideAppointmentButton && (
                 <Button
                   id="tmevents_nav_menu_appointment"

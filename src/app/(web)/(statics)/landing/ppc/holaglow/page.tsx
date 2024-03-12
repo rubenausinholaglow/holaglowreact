@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
-import Clinics from 'app/(web)/components/common/Clinics';
+import Clinics from 'app/(web)/components/common/Clinics_old';
 import Professionals from 'app/(web)/components/common/Professionals';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import GoogleStars from 'app/(web)/components/home/GoogleStars';
@@ -157,8 +157,8 @@ export default function LandingCaptacion() {
         </Container>
 
         <Container className="relative px-0">
-          <div className="md:absolute right-0 -top-[45px]">
-            <GoogleStars hideOnDesktop={false} />
+          <div className="md:absolute right-4 bottom-4">
+            <GoogleStars />
           </div>
         </Container>
 

@@ -1,26 +1,25 @@
+import { headerHeight } from '@utils/constants';
+import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import ROUTES from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
-import { isMobile } from '../layout/Breakpoint';
+const HeroImage = dynamic(() => import('./HeroImage'), { ssr: false });
 
 export default function HomeHero() {
   return (
-    <div className="relative pt-56">
-      <Image
-        src="/images/home/bg-desktop.png"
-        fill
-        alt="holaglow"
-        objectFit="cover"
-        objectPosition="bottom"
-      />
-      <Container className="relative overflow-hidden max-w-2xl">
-        <Flex layout="col-center" className="md:flex-row">
-          <Flex layout="col-left" className="pb-48 z-10 w-full md:w-1/2">
-            <Text size="lg" className="mb-6 font-semibold" origin="top">
+    <div className="relative pt-24 md:pt-36 -mt-[56px] md:-mt-[72px]">
+      <HeroImage />
+      <Container isHeader className="relative overflow-hidden">
+        <Flex layout="col-left" className="md:flex-row w-full">
+          <Flex
+            layout="col-left"
+            className="z-10 w-full md:w-1/2 md:pb-80 mb-8 md:mb-0"
+          >
+            <Text className="mb-6 font-semibold md:text-lg" origin="top">
               Medicina estética
             </Text>
             <Title
@@ -33,6 +32,25 @@ export default function HomeHero() {
               <br />
               tus normas
             </Title>
+            <Button
+              id={'tmevent_header_button'}
+              type="primary"
+              size="xl"
+              href={ROUTES.treatments}
+              className="hidden md:block"
+            >
+              <Text className="text-lg">Ver tratamientos</Text>
+            </Button>
+          </Flex>
+          <Flex
+            layout="row-left"
+            className="mb-80 gap-2 bg-white/20 rounded-full px-4 md:ml-auto md:mb-0"
+          >
+            <SvgStar className="-mt-1" />
+            <span>4,7</span>
+            <SvgGoogle className="h-10" />
+          </Flex>
+          <Flex className="justify-center w-full pb-12 md:hidden">
             <Button
               id={'tmevent_header_button'}
               type="primary"
