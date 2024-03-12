@@ -115,7 +115,7 @@ export default function Agenda({
   const [loadingDays, setLoadingDays] = useState(false);
   const { cart, updateIsScheduled } = useCartStore(state => state);
 
-  const uniqueProductIds = getUniqueIds(selectedTreatments);
+  const productIds = getUniqueIds(selectedTreatments);
 
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
@@ -508,15 +508,14 @@ export default function Agenda({
                         className="w-full text-left to-hg-black500 mb-4"
                       >
                         Agenda cita para{' '}
-                        {uniqueProductIds.map((productId, index) => {
+                        {productIds.map((productId, index) => {
                           const product = selectedTreatments.find(
                             product => product.id === productId
                           );
-                          if (!product) return null;
                           return (
                             <span key={productId} className="font-semibold">
-                              {product.title}
-                              {index < uniqueProductIds.length - 1 && ', '}
+                              {product!.title}
+                              {index < productIds.length - 1 && ', '}
                             </span>
                           );
                         })}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Appointment } from '@interface/appointment';
+import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
 import {
   Accordion,
@@ -91,6 +92,11 @@ export default function AppointmentResume({
   }
   const selectedTreatmentsNames = selectedTreatmentTitles.join(' + ');
 
+  function getProductsMapped(): Product[] {
+    const uniqueProductIds = getUniqueIds(selectedTreatments);
+    return getUniqueProducts(uniqueProductIds, selectedTreatments);
+  }
+
   useEffect(() => {
     const appointmentClinic = appointment
       ? clinics.filter(clinic => clinic.flowwwId === appointment?.clinicId)[0]
@@ -145,14 +151,7 @@ export default function AppointmentResume({
   };
 
   const TreatmentsDashboard = () => {
-    const uniqueProductIds = Array.from(
-      new Set(selectedTreatments.map(product => product.id))
-    );
-    const productsMapped = getUniqueProducts(
-      uniqueProductIds,
-      selectedTreatments
-    );
-    return productsMapped.map(item => (
+    return getProductsMapped().map(item => (
       <div key={item.id}>
         <Text className="font-semibold">{item.title}</Text>
         <Text>{item.description}</Text>

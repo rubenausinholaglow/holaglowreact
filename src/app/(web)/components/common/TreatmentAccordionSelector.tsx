@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
-import { getUniqueProducts } from '@utils/utils';
+import { getUniqueIds, getUniqueProducts } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
@@ -58,9 +58,7 @@ export default function TreatmentAccordionSelector({
           ) && !product.isPack
       );
       if (filteredProducts.length == 0) {
-        const productIds = Array.from(
-          new Set(selectedProducts.map(product => product.id))
-        );
+        const productIds = getUniqueIds(selectedProducts);
         return getUniqueProducts(productIds, selectedProducts);
       }
     } else {
@@ -116,13 +114,53 @@ export default function TreatmentAccordionSelector({
   useEffect(() => {
     if (!isEmpty(selectedProducts)) {
       const selectedIndexs: number[] = [];
-
       selectedProducts.map((product, index) => {
         selectedIndexs.push(index);
       });
       setSelectedIndexProducts(selectedIndexs);
     }
   }, [selectedProducts]);
+
+  function addTreatment(product: Product, index: number) {
+    isDashboard && cart.length > 0
+      ? addTreatmentDashboard(product, index)
+      : setSelectedTreatments([...selectedTreatments, product]);
+  }
+
+  function addTreatmentDashboard(product: Product, index: number) {
+    const productToAdd: Product[] = getProductToAdd(product);
+    setSelectedTreatments([...selectedTreatments, ...productToAdd]);
+    setSelectedIndexProducts([...selectedIndexsProducts, index]);
+  }
+
+  function getProductToAdd(product: Product): Product[] {
+    if (product.unityType === UnityType.AcidoHialuronico && cart.length > 0) {
+      return selectedProducts.filter(x => x.id === product.id) as Product[];
+    } else {
+      return [product];
+    }
+  }
+
+  function removeTreatment(product: Product, index: number) {
+    setSelectedIndexProducts(x => x.filter(item => item !== index));
+    const updatedSelection = getUpdatedSelection(product);
+    setSelectedTreatments(updatedSelection);
+  }
+
+  function getUpdatedSelection(product: Product): Product[] {
+    if (product.unityType === UnityType.AcidoHialuronico) {
+      return selectedTreatments.filter(
+        selectedProduct => selectedProduct.id !== product.id
+      );
+    } else {
+      const indexToRemove = selectedTreatments.findIndex(
+        x => x.title === product.title
+      );
+      const updatedTreatments = [...selectedTreatments];
+      updatedTreatments.splice(indexToRemove, 1);
+      return updatedTreatments;
+    }
+  }
 
   const renderAcordionContent = (category: string) => {
     return (
@@ -138,53 +176,13 @@ export default function TreatmentAccordionSelector({
                     cart.length > 0
                       ? selectedIndexsProducts.includes(index)
                       : selectedTreatments.some(
-                          selectedProduct =>
-                            selectedProduct.title === product.title
+                          selectedProduct => selectedProduct.id === product.id
                         );
 
                   if (isSelected) {
-                    if (cart.length > 0) {
-                      setSelectedIndexProducts(x =>
-                        x.filter(item => item != index)
-                      );
-                      if (product.unityType == UnityType.AcidoHialuronico) {
-                        const updatedSelection = selectedTreatments.filter(
-                          selectedProduct => selectedProduct.id !== product.id
-                        );
-                        setSelectedTreatments(updatedSelection);
-                      } else {
-                        const indexToRemove = selectedTreatments.findIndex(
-                          x => x.title == product.title
-                        );
-                        const updatedTreatments = [...selectedTreatments];
-                        updatedTreatments.splice(indexToRemove, 1);
-                        setSelectedTreatments(updatedTreatments);
-                      }
-                    } else {
-                      const updatedSelection = selectedTreatments.filter(
-                        selectedProduct => selectedProduct.id !== product.id
-                      );
-                      setSelectedTreatments(updatedSelection);
-                    }
+                    removeTreatment(product, index);
                   } else {
-                    if (isDashboard) {
-                      const xProduct: Product[] =
-                        product.unityType == UnityType.AcidoHialuronico
-                          ? (selectedProducts.filter(
-                              x => x.id === product.id
-                            ) as Product[])
-                          : [product];
-                      setSelectedTreatments([
-                        ...selectedTreatments,
-                        ...xProduct,
-                      ]);
-                      setSelectedIndexProducts([
-                        ...selectedIndexsProducts,
-                        index,
-                      ]);
-                    } else {
-                      setSelectedTreatments([product]);
-                    }
+                    addTreatment(product, index);
                   }
 
                   if (!isDashboard) {
@@ -197,18 +195,22 @@ export default function TreatmentAccordionSelector({
                   <Text className="text-xs">{product.description}</Text>
                 </div>
 
-                {cart.length > 0 &&
-                (selectedIndexsProducts.includes(index) ||
-                  selectedTreatments.some(
-                    selectedProduct => selectedProduct.id === product.id
-                  )) ? (
-                  <SvgRadioChecked
-                    height={24}
-                    width={24}
-                    className="shrink-0 ml-auto"
-                  />
-                ) : (
-                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
+                {isDashboard && (
+                  <>
+                    {cart.length > 0 ? (
+                      selectedIndexsProducts.includes(index)
+                    ) : selectedTreatments.some(
+                        selectedProduct => selectedProduct.id === product.id
+                      ) ? (
+                      <SvgRadioChecked
+                        height={24}
+                        width={24}
+                        className="shrink-0 ml-auto"
+                      />
+                    ) : (
+                      <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
+                    )}
+                  </>
                 )}
               </li>
             ))}
