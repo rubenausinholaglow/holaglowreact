@@ -195,29 +195,43 @@ export default function TreatmentAccordionSelector({
                   <Text className="text-xs">{product.description}</Text>
                 </div>
 
-                {isDashboard && (
-                  <>
-                    {cart.length > 0 ? (
-                      selectedIndexsProducts.includes(index)
-                    ) : selectedTreatments.some(
-                        selectedProduct => selectedProduct.id === product.id
-                      ) ? (
-                      <SvgRadioChecked
-                        height={24}
-                        width={24}
-                        className="shrink-0 ml-auto"
-                      />
-                    ) : (
-                      <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
-                    )}
-                  </>
-                )}
+                {isDashboard && renderDashboardCheck(product, index)}
               </li>
             ))}
           </ul>
         </div>
       </AccordionContent>
     );
+  };
+
+  const renderDashboardCheck = (product: Product, index: number) => {
+    const commonElement = (
+      <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
+    );
+
+    const checkedElement = (
+      <SvgRadioChecked height={24} width={24} className="shrink-0 ml-auto" />
+    );
+
+    if (cart.length > 0) {
+      return (
+        <>
+          {selectedIndexsProducts.includes(index)
+            ? checkedElement
+            : commonElement}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {selectedTreatments.some(
+            selectedProduct => selectedProduct.id === product.id
+          )
+            ? checkedElement
+            : commonElement}
+        </>
+      );
+    }
   };
 
   if (isDashboard && cart.length > 0)
