@@ -5,7 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType } from '@interface/product';
+import { EmlaType, UnityType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
 import { validTypesFilterCart } from '@utils/utils';
@@ -304,17 +304,22 @@ export default function Agenda({
                     cartItem.isScheduled === undefined)
               );
               if (filteredCart.length >= selectedTreatments.length) {
-                selectedTreatments.forEach(treatment => {
-                  const selectedProducts = filteredCart.filter(
-                    cartItem =>
-                      cartItem.id === treatment.id &&
-                      (cartItem.isScheduled === false ||
-                        cartItem.isScheduled === undefined)
-                  );
-                  selectedProducts.forEach(item => {
-                    updateIsScheduled(true, item.uniqueId);
+                if (selectedTreatments.length == 1) {
+                  const selectedProduct = filteredCart.find(x => x.title);
+                  updateIsScheduled(true, selectedProduct!.uniqueId);
+                } else {
+                  selectedTreatments.forEach(treatment => {
+                    const selectedProducts = filteredCart.filter(
+                      cartItem =>
+                        cartItem.id === treatment.id &&
+                        (cartItem.isScheduled === false ||
+                          cartItem.isScheduled === undefined)
+                    );
+                    selectedProducts.forEach(item => {
+                      updateIsScheduled(true, item.uniqueId);
+                    });
                   });
-                });
+                }
               }
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
