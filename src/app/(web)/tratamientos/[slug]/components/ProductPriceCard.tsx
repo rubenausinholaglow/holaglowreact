@@ -352,6 +352,11 @@ function ProductPriceItemsCard({
           onClick={() => setShowDropdown(true)}
         >
           Me interesa
+          <SvgArrow
+            height={16}
+            width={16}
+            className="ml-2 pointer-events-none"
+          />
         </Button>
       )}
 
