@@ -168,7 +168,16 @@ export default function TreatmentAccordionSelector({
                     }
                   } else {
                     if (isDashboard) {
-                      setSelectedTreatments([...selectedTreatments, product]);
+                      const xProduct: Product[] =
+                        product.unityType == UnityType.AcidoHialuronico
+                          ? (selectedProducts.filter(
+                              x => x.id === product.id
+                            ) as Product[])
+                          : [product];
+                      setSelectedTreatments([
+                        ...selectedTreatments,
+                        ...xProduct,
+                      ]);
                       setSelectedIndexProducts([
                         ...selectedIndexsProducts,
                         index,
@@ -188,11 +197,11 @@ export default function TreatmentAccordionSelector({
                   <Text className="text-xs">{product.description}</Text>
                 </div>
 
-                {cart.length > 0 ? (
-                  selectedIndexsProducts.includes(index)
-                ) : selectedTreatments.some(
+                {cart.length > 0 &&
+                (selectedIndexsProducts.includes(index) ||
+                  selectedTreatments.some(
                     selectedProduct => selectedProduct.id === product.id
-                  ) ? (
+                  )) ? (
                   <SvgRadioChecked
                     height={24}
                     width={24}
