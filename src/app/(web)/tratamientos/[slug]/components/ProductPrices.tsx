@@ -72,8 +72,6 @@ export default function ProductPrices({
     }
   }, [isSessionProduct]);
 
-  console.log(product.id);
-
   useEffect(() => {
     async function initProduct(productId: string, isDashboard: boolean) {
       const productDetails = await fetchProduct(productId, isDashboard, false);
