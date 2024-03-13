@@ -36,7 +36,6 @@ import { useRouter } from 'next/navigation';
 
 registerLocale('es', es);
 
-registerLocale('es', es);
 export default function Agenda({
   isDashboard = false,
   isCheckin = false,
@@ -107,6 +106,8 @@ export default function Agenda({
       maxDaysByClinicAndType[selectedClinic.flowwwId][
         selectedTreatments[0].type
       ];
+
+    if (selectedTreatments[0].flowwwId == 903) maxDays = 60;
   }
   if (isDerma) maxDays = 90;
   const [clicked, setClicked] = useState(false);
@@ -121,7 +122,6 @@ export default function Agenda({
   };
 
   function loadMonth() {
-    if (selectedTreatmentsIds == '903') maxDays = 60;
     setLoadingMonth(true);
     if (
       selectedTreatmentsIds &&
