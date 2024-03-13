@@ -8,7 +8,6 @@ export default function PepperWidget({ price }: { price: number }) {
   useEffect(() => {
     if (!scriptLoaded) {
       setScriptLoaded(true);
-      debugger;
       const toExecute = new Function(script);
       toExecute();
     }
