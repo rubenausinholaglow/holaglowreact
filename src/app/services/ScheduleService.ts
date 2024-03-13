@@ -58,13 +58,13 @@ export default class ScheduleService {
     paymentId: string
   ) => {
     const appointments: Appointment[] = [];
-    let treatments = selectedTreatments!.map(x => x.title).join(',');
+    let treatments = selectedTreatments!.map(x => x.title).join(', ');
     if (
       selectedPacksTreatments &&
       selectedPacksTreatments.length &&
       treatments.indexOf('Probador') < 0
     ) {
-      treatments = selectedPacksTreatments!.map(x => x.title).join(',');
+      treatments = selectedPacksTreatments!.map(x => x.title).join(', ');
     }
     const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
     const format = 'YYYY-MM-DD';
