@@ -131,7 +131,8 @@ export default function Agenda({
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
-          selectedClinic?.flowwwId || ''
+          selectedClinic?.flowwwId || '',
+          isDashboard
         ).then(data => {
           setTotalTimeAppointment(data?.totalTime);
           callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
@@ -141,7 +142,8 @@ export default function Agenda({
         ScheduleService.getMonthAvailabilityv2(
           dateToCheck.format(format),
           selectedTreatmentsIds,
-          selectedClinic!.flowwwId
+          selectedClinic!.flowwwId,
+          isDashboard
         ).then(data => {
           setLoadingMonthFirstTime(false);
           callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
@@ -383,7 +385,8 @@ export default function Agenda({
       ScheduleService.getSlots(
         day.format(format),
         selectedTreatmentsIds,
-        selectedClinic!.flowwwId
+        selectedClinic!.flowwwId,
+        isDashboard
       )
         .then(data => {
           callbackGetSlots(data);
@@ -395,7 +398,8 @@ export default function Agenda({
       ScheduleService.getSlotsv2(
         day.format(format),
         selectedTreatmentsIds,
-        selectedClinic!.flowwwId
+        selectedClinic!.flowwwId,
+        isDashboard
       )
         .then(data => {
           callbackGetSlots(data);

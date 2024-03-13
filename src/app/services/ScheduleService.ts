@@ -8,7 +8,10 @@ import {
 } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
-import { DayAvailability, MonthAvailabilityResponse } from 'app/types/dayAvailability';
+import {
+  DayAvailability,
+  MonthAvailabilityResponse,
+} from 'app/types/dayAvailability';
 import { Product } from 'app/types/product';
 import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
@@ -248,7 +251,8 @@ export default class ScheduleService {
   static async getMonthAvailability(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    isDashboard: boolean
   ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
@@ -257,7 +261,9 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId;
+        clinicId +
+        '&isDashboard=' +
+        isDashboard;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -273,7 +279,8 @@ export default class ScheduleService {
   static async getMonthAvailabilityv2(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    isDashboard: boolean
   ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
@@ -282,7 +289,9 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId;
+        clinicId +
+        '&isDashboard=' +
+        isDashboard;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -299,7 +308,8 @@ export default class ScheduleService {
   static async getSlots(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    isDashboard: boolean
   ): Promise<Array<Slot>> {
     try {
       const url =
@@ -308,7 +318,9 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId;
+        clinicId +
+        '&isDashboard=' +
+        isDashboard;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -325,7 +337,8 @@ export default class ScheduleService {
   static async getSlotsv2(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    isDashboard: boolean
   ): Promise<Array<Slot>> {
     try {
       const url =
@@ -334,7 +347,9 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId;
+        clinicId +
+        '&isDashboard=' +
+        isDashboard;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
