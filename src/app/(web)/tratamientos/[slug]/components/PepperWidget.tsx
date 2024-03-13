@@ -8,6 +8,7 @@ export default function PepperWidget({ price }: { price: number }) {
   useEffect(() => {
     if (!scriptLoaded) {
       setScriptLoaded(true);
+      debugger;
       const toExecute = new Function(script);
       toExecute();
     }
@@ -18,8 +19,8 @@ export default function PepperWidget({ price }: { price: number }) {
         var environment = '${process.env.NEXT_PUBLIC_PEPPER_ENVIRONMENT}';
         var language = 'ES';
         var currency = 'EUR';
-        var apiKey = '${process.env.NEXT_PUBLIC_PEPPER_ENVIRONMENT}';
-        var publicKey = '${process.env.NEXT_PUBLIC_PEPPER_ENVIRONMENT}';
+        var apiKey = '${process.env.NEXT_PUBLIC_PEPPER_APIKEY}';
+        var publicKey = '${process.env.NEXT_PUBLIC_PEPPER_PUBLICKEY}';
         const scriptTag = document.createElement("script");
         scriptTag.src = url;
         document.head.appendChild(scriptTag);
