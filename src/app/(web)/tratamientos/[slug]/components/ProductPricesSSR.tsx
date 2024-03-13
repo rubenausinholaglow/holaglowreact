@@ -86,7 +86,11 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                 className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
               >
                 {productItems.map((item: Product, index: number) => (
-                  <ProductPriceCard key={item.title} product={item} />
+                  <ProductPriceCard
+                    key={item.title}
+                    product={item}
+                    parentProduct={product}
+                  />
                 ))}
               </Accordion>
             </Flex>

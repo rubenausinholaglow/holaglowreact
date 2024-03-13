@@ -120,6 +120,7 @@ export default function ProductPrices({
                   isDashboard={isDashboard}
                   key={item.title}
                   product={item}
+                  parentProduct={product}
                   className={
                     productItems.length === 1 &&
                     !deviceSize.isMobile &&
