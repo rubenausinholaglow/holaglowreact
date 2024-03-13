@@ -92,13 +92,6 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                     product={item}
                     index={index}
                     parentProduct={product}
-                    className={
-                      productItems.length === 1 &&
-                      !deviceSize.isMobile &&
-                      !item.isPack
-                        ? 'w-1/3'
-                        : ''
-                    }
                   />
                 ))}
               </Accordion>

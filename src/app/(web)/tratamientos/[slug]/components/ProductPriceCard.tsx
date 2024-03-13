@@ -1,26 +1,20 @@
 import { useEffect, useState } from 'react';
+import { fetchProduct } from '@utils/fetch';
+import ROUTES from '@utils/routes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
   Operation,
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import Dropdown from 'app/(web)/components/forms/Dropdown';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
-import {
-  SvgAdd,
-  SvgArrow,
-  SvgGlow,
-  SvgInjection,
-  SvgMinus,
-} from 'app/icons/IconsDs';
+import { SvgArrow, SvgGlow, SvgInjection } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { CartItem, Product } from 'app/types/product';
 import { getDiscountedPrice } from 'app/utils/common';
-import useRoutes from 'app/utils/useRoutes';
 import {
   Accordion,
   AccordionContent,
@@ -30,9 +24,8 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useRouter } from 'next/navigation';
-import { twMerge } from 'tailwind-merge';
 
 const UPGRADE_TYPES: Record<
   string,
@@ -150,29 +143,16 @@ export interface option {
 }
 
 function ProductPriceItemsCard({
-  product,
-  parentProduct,
   isDashboard = false,
-  setAccordionOverflow,
-  isOpen,
+  product,
 }: {
-  product: Product;
-  parentProduct: Product;
-  setAccordionOverflow: (value: string) => void;
   isDashboard: boolean;
-  isOpen?: boolean;
+  product: Product;
 }) {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments, setSelectedPackTreatments } = useSessionStore(
-    state => state
-  );
-
   const router = useRouter();
-  const ROUTES = useRoutes();
-  const [showDropdown, setShowDropdown] = useState(isOpen);
-  const [selectedPackOptions, setSelectedPackOptions] = useState(
-    [] as option[]
-  );
+
+  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const {
     productHighlighted,
     addItemToCart,
@@ -180,154 +160,62 @@ function ProductPriceItemsCard({
     removeSingleProduct,
   } = useCartStore(state => state);
 
-  const isDisabled =
-    product.isPack &&
-    selectedPackOptions.filter(x => x.value != '').length !=
-      product.packUnities.length;
-
-  const updateSelectedPackOptions = (newValue: string, index: number) => {
-    const newOptions = [...selectedPackOptions];
-    const itemToUpdate = newOptions.find((item: any) => item.index === index);
-
-    if (itemToUpdate) {
-      itemToUpdate.value = newValue;
-    } else {
-      newOptions.push({
-        index: index,
-        value: newValue,
-      });
-    }
-    setSelectedPackOptions(newOptions);
-  };
+  const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
 
   const setSelectedTreatment = (product: Product) => {
     let productToAdd = stateProducts.filter(x => product?.id === x.id)[0];
     if (!productToAdd) productToAdd = product;
     setSelectedTreatments([productToAdd]);
-    const packTreatments: Product[] = [];
 
-    if (selectedPackOptions.length > 0) {
-      selectedPackOptions.forEach(x => {
-        packTreatments.push(stateProducts.filter(y => y?.title === x.value)[0]);
-      });
-    }
-
-    setSelectedPackTreatments(packTreatments);
-
-    if (
-      selectedPackOptions.filter(x => x.value != '').length ==
-        product.packUnities.length ||
-      !product.isPack
-    ) {
-      router.push(ROUTES.checkout.type);
-    }
+    router.push(ROUTES.checkout.type);
   };
 
-  const defaultValues: { label: string; value: string }[] = [];
-
-  product.packUnities.forEach((item: any, index: any) => {
-    if (index == 0) {
-      const el = UPGRADE_TYPES[item?.type.toString()]?.options.find(
-        x => parentProduct.title == x.label
+  useEffect(() => {
+    async function initMedicalVisitProduct() {
+      const medicalVisitProduct = await fetchProduct(
+        process.env.NEXT_PUBLIC_MEDICAL_VISIT || '',
+        isDashboard,
+        false
       );
-      if (el) defaultValues.push(el);
+
+      setMedicalVisitProduct(medicalVisitProduct);
     }
-  });
 
-  useEffect(() => {
-    const initialSelectedPackOptions = defaultValues.map((item, index) => {
-      return { index: index, value: item?.value || '' };
-    });
-
-    setSelectedPackOptions(initialSelectedPackOptions);
+    initMedicalVisitProduct();
   }, []);
-
-  useEffect(() => {
-    if (showDropdown) {
-      setAccordionOverflow('overflow-visible');
-    }
-
-    if (!showDropdown) {
-      setAccordionOverflow('overflow-hidden');
-    }
-  }, [showDropdown]);
 
   return (
     <Flex layout="col-left" className="w-full">
-      {!showDropdown &&
-        (!isEmpty(product.appliedProducts) ? (
-          product.appliedProducts.map(item => {
-            const iconName = item.icon.split('/')[0] || 'SvgCross';
-            const iconFamily:
-              | 'default'
-              | 'category'
-              | 'suggestion'
-              | 'service' = (item.icon.split('/')[1] as 'default') || 'default';
+      {!isEmpty(product.appliedProducts) ? (
+        product.appliedProducts.map(item => {
+          const iconName = item.icon.split('/')[0] || 'SvgCross';
+          const iconFamily: 'default' | 'category' | 'suggestion' | 'service' =
+            (item.icon.split('/')[1] as 'default') || 'default';
 
-            return (
-              <Flex key={item.titlte} className="items-start mb-2">
-                <DynamicIcon
-                  height={16}
-                  width={16}
-                  className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                  name={iconName}
-                  family={iconFamily}
-                />
-
-                <Text>{item.titlte}</Text>
-              </Flex>
-            );
-          })
-        ) : (
-          <Flex className="items-start mb-2">
-            <SvgInjection
-              height={16}
-              width={16}
-              className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-            />
-            <Text>{product.description}</Text>
-          </Flex>
-        ))}
-      {!productHighlighted && showDropdown && (
-        <form className="w-full">
-          {product.packUnities.map((item: any, index: number) => {
-            return (
-              <div
-                className="w-full"
-                key={UPGRADE_TYPES[item.type.toString()].title}
-              >
-                <Flex layout="row-left" className="items-start">
-                  <DynamicIcon
-                    height={16}
-                    width={16}
-                    className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                    name={UPGRADE_TYPES[item.type.toString()].icon}
-                    family={
-                      (UPGRADE_TYPES[item.type.toString()].family as
-                        | 'default'
-                        | 'suggestion'
-                        | 'service'
-                        | 'category'
-                        | undefined) || 'default'
-                    }
-                  />
-                  <Text className="text-sm md:text-md">
-                    {UPGRADE_TYPES[item.type.toString()].title}
-                  </Text>
-                </Flex>
-                <Dropdown
-                  className="mt-2 w-full mb-4"
-                  options={UPGRADE_TYPES[item.type.toString()].options}
-                  defaultValue={defaultValues[index]}
-                  onChange={(value: any) => {
-                    updateSelectedPackOptions(value.value, index);
-                  }}
-                />
-              </div>
-            );
-          })}
-        </form>
+          return (
+            <Flex key={item.titlte} className="items-start mb-2">
+              <DynamicIcon
+                height={16}
+                width={16}
+                className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                name={iconName}
+                family={iconFamily}
+              />
+              <Text>{item.titlte}</Text>
+            </Flex>
+          );
+        })
+      ) : (
+        <Flex className="items-start mb-2">
+          <SvgInjection
+            height={16}
+            width={16}
+            className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+          />
+          <Text>{product.description}</Text>
+        </Flex>
       )}
+
       {product?.packMoreInformation && (
         <Accordion>
           <AccordionItem value="accordion">
@@ -344,36 +232,29 @@ function ProductPriceItemsCard({
           </AccordionItem>
         </Accordion>
       )}
-      {!productHighlighted && product.isPack && !showDropdown && (
+      {!isDashboard && (
         <Button
-          className="mt-8"
           type="primary"
-          id={'tmevent_click_book_button_customize'}
-          onClick={() => setShowDropdown(true)}
+          className="mt-4"
+          onClick={() => {
+            if (!isDashboard && !product.isPack) {
+              setSelectedTreatment(product);
+            }
+            if (medicalVisitProduct && product.isPack) {
+              setSelectedTreatment(medicalVisitProduct);
+            }
+          }}
+          id="tmevent_click_book_button_prices"
         >
           Me interesa
+          <SvgArrow
+            height={16}
+            width={16}
+            className="ml-2 pointer-events-none"
+          />
         </Button>
       )}
 
-      {(!product.isPack || (!productHighlighted && showDropdown)) &&
-        !isDashboard && (
-          <Button
-            type="primary"
-            disabled={isDisabled}
-            onClick={() => {
-              setSelectedTreatment(product);
-            }}
-            className="mt-8"
-            id="tmevent_click_book_button_prices"
-          >
-            Me interesa
-            <SvgArrow
-              height={16}
-              width={16}
-              className="ml-2 pointer-events-none"
-            />
-          </Button>
-        )}
       {productHighlighted && (
         <div className="pt-1 mt-2">
           <Quantifier
@@ -396,21 +277,16 @@ function ProductPriceItemsCard({
 
 export default function ProductPriceCard({
   product,
-  index,
-  parentProduct,
   fullWidthPack = false,
   isDashboard = false,
   className,
 }: {
   product: Product;
-  index: number;
-  parentProduct: Product;
   fullWidthPack?: boolean;
   isDashboard?: boolean;
   className?: string;
 }) {
   const deviceSize = useDeviceSizeSSR();
-  const [accordionOverflow, setAccordionOverflow] = useState('overflow-hidden');
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   useEffect(() => {
@@ -421,130 +297,91 @@ export default function ProductPriceCard({
 
   return (
     <Flex
-      className={`bg-white p-3 rounded-2xl w-full shadow-centered-secondary ${className}`}
+      className={`bg-white flex-col p-3 rounded-2xl shadow-centered-secondary w-full md:w-1/2 ${className}`}
     >
-      <AccordionItem
-        value={deviceSize.isMobile ? `accordion-${index}` : 'value'}
-      >
-        <AccordionTrigger
-          className={`${!deviceSize.isMobile ? 'pointer-events-none' : ''}`}
-        >
-          <Flex layout="col-left" className="p-3">
-            <Flex layout="row-between" className="w-full mb-2">
-              <Flex>
-                <span className="text-xl text-hg-secondary font-semibold md:text-2xl mr-2">
-                  {discountedPrice ? discountedPrice : product.price} €
-                </span>
-                {discountedPrice && (
-                  <span className="inline-block line-through font-normal text-hg-black500">
-                    {product.price} €
-                  </span>
-                )}
-              </Flex>
-              <Flex layout="row-right">
-                {product.isPack &&
-                  (!isEmpty(product.tags) &&
-                  product.tags[0].tag === 'B.Friday' ? (
-                    <Flex
-                      layout="row-center"
-                      className="bg-hg-black rounded-full p-1 px-2"
-                    >
-                      <SvgGlow
-                        height={12}
-                        width={12}
-                        className="text-hg-primary mr-1"
-                      />
-                      <Text className="text-hg-secondary" size="xs">
-                        B.<span className="text-hg-primary">Friday</span>
-                      </Text>
-                    </Flex>
-                  ) : (
-                    <Text
-                      size="xs"
-                      className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
-                    >
-                      Oferta especial
-                    </Text>
-                  ))}
-
-                {deviceSize.isMobile && (
-                  <Flex>
-                    <SvgAdd
-                      height={24}
-                      width={24}
-                      className="ml-2 group-radix-state-open:hidden"
-                    />
-                    <SvgMinus
-                      height={24}
-                      width={24}
-                      className="ml-2 hidden group-radix-state-open:block"
-                    />
-                  </Flex>
-                )}
-              </Flex>
-            </Flex>
-            <Text className="font-semibold md:text-lg">{product.title}</Text>
-            {product.isPack && deviceSize.isMobile && (
-              <Text className="font-semibold md:text-lg">
-                ¡Tu eliges la zona!
-              </Text>
+      <Flex layout="col-left" className="w-full p-3">
+        <Flex layout="row-between" className="w-full mb-2">
+          <Flex>
+            <span className="text-xl text-hg-secondary font-semibold md:text-2xl mr-2">
+              {discountedPrice ? discountedPrice : product.price} €
+            </span>
+            {discountedPrice && (
+              <span className="inline-block line-through font-normal text-hg-black500">
+                {product.price} €
+              </span>
             )}
           </Flex>
-        </AccordionTrigger>
-
-        <AccordionContent
-          className={twMerge(
-            `data-[state=closed]:overflow-hidden ${accordionOverflow}`
-          )}
-        >
-          <Flex
-            layout="col-left"
-            className={`md:flex-row items-start mt-3 ${
-              fullWidthPack && !deviceSize.isMobile ? 'md:p-4' : ''
-            }`}
-          >
-            {fullWidthPack && !deviceSize.isMobile && (
-              <div className="md:w-1/2 shrink-0">
-                <Text className="font-semibold md:text-lg mb-2">
-                  ¡Tu eliges la zona!
+          <Flex layout="row-right">
+            {product.isPack &&
+              (!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' ? (
+                <Flex
+                  layout="row-center"
+                  className="bg-hg-black rounded-full p-1 px-2"
+                >
+                  <SvgGlow
+                    height={12}
+                    width={12}
+                    className="text-hg-primary mr-1"
+                  />
+                  <Text className="text-hg-secondary" size="xs">
+                    B.<span className="text-hg-primary">Friday</span>
+                  </Text>
+                </Flex>
+              ) : (
+                <Text
+                  size="xs"
+                  className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                >
+                  Oferta especial
                 </Text>
-                {!isEmpty(product.appliedProducts) ? (
-                  <>
-                    {product.appliedProducts.map(item => (
-                      <Text key={item.titlte}>{item.titlte}</Text>
-                    ))}
-                    {product?.packMoreInformation && (
-                      <p>{product?.packMoreInformation}</p>
-                    )}
-                  </>
-                ) : (
-                  <Flex className="items-start mb-2">
-                    <SvgInjection
-                      height={16}
-                      width={16}
-                      className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                    />
-                    <Text>{product.description}</Text>
-                  </Flex>
-                )}
-              </div>
-            )}
-            <div
-              className={`bg-hg-black50 p-3 w-full rounded-xl ${
-                fullWidthPack && !deviceSize.isMobile ? 'md:w-1/2' : ''
-              }`}
-            >
-              <ProductPriceItemsCard
-                isDashboard={isDashboard}
-                product={product}
-                parentProduct={parentProduct}
-                setAccordionOverflow={setAccordionOverflow}
-                isOpen={fullWidthPack && !deviceSize.isMobile}
-              />
-            </div>
+              ))}
           </Flex>
-        </AccordionContent>
-      </AccordionItem>
+        </Flex>
+        <Text className="font-semibold md:text-lg">{product.title}</Text>
+        {product.isPack && deviceSize.isMobile && (
+          <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
+        )}
+      </Flex>
+      <Flex
+        layout="col-left"
+        className={`w-full md:flex-row items-start mt-3 ${
+          fullWidthPack && !deviceSize.isMobile ? 'md:p-4' : ''
+        }`}
+      >
+        {fullWidthPack && !deviceSize.isMobile && (
+          <div className="md:w-1/2 shrink-0">
+            <Text className="font-semibold md:text-lg mb-2">
+              ¡Tu eliges la zona!
+            </Text>
+            {!isEmpty(product.appliedProducts) ? (
+              <>
+                {product.appliedProducts.map(item => (
+                  <Text key={item.titlte}>{item.titlte}</Text>
+                ))}
+                {product?.packMoreInformation && (
+                  <p>{product?.packMoreInformation}</p>
+                )}
+              </>
+            ) : (
+              <Flex className="items-start mb-2">
+                <SvgInjection
+                  height={16}
+                  width={16}
+                  className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                />
+                <Text>{product.description}</Text>
+              </Flex>
+            )}
+          </div>
+        )}
+        <div
+          className={`bg-hg-black50 p-3 w-full rounded-xl ${
+            fullWidthPack && !deviceSize.isMobile ? 'md:w-1/2' : ''
+          }`}
+        >
+          <ProductPriceItemsCard isDashboard={isDashboard} product={product} />
+        </div>
+      </Flex>
     </Flex>
   );
 }
