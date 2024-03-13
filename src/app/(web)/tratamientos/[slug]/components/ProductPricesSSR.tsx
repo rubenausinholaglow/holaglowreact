@@ -75,10 +75,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
     >
       <Container className="py-12">
         <Title size="2xl" className="font-bold mb-6 md:mb-12">
-          <Underlined color={HOLAGLOW_COLORS['primary']}>
-            Personaliza
-          </Underlined>{' '}
-          tu experiencia
+          Pide cita o más información
         </Title>
 
         <CheckHydration>
