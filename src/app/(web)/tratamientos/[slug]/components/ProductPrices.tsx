@@ -120,8 +120,6 @@ export default function ProductPrices({
                   fullWidthPack={productItems.length === 1 && item.isPack}
                   key={item.title}
                   product={item}
-                  index={index}
-                  parentProduct={product}
                   className={
                     productItems.length === 1 &&
                     !deviceSize.isMobile &&

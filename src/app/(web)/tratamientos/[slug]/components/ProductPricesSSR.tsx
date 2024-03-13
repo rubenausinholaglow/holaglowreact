@@ -90,8 +90,6 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                     fullWidthPack={productItems.length === 1 && item.isPack}
                     key={item.title}
                     product={item}
-                    index={index}
-                    parentProduct={product}
                   />
                 ))}
               </Accordion>
