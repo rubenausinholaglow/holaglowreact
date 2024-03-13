@@ -7,8 +7,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import ProductHeaderImage from './ProductHeaderImage';
 
 export default function ProductHeaderSSR({ product }: { product: Product }) {
-  console.log(product);
-
   const validTypes = [3, 6, 7, 8];
 
   return (
