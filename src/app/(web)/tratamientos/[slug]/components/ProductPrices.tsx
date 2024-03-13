@@ -42,7 +42,8 @@ export default function ProductPrices({
         productItems.length > 1 &&
           productItems
             .map((item: Product) => item.title)
-            .every((item: string) => item.includes(product.title))
+            .every((item: string) => item.includes(product.title)) &&
+          product.title.indexOf('Pack Wellaging') < 0
       );
     }
   }, [productItems]);
@@ -71,9 +72,11 @@ export default function ProductPrices({
     }
   }, [isSessionProduct]);
 
+  console.log(product.id);
+
   useEffect(() => {
     async function initProduct(productId: string, isDashboard: boolean) {
-      const productDetails = await fetchProduct(productId, true, false);
+      const productDetails = await fetchProduct(productId, isDashboard, false);
 
       if (productDetails.upgrades) {
         productDetails.upgrades = productDetails.upgrades.sort(

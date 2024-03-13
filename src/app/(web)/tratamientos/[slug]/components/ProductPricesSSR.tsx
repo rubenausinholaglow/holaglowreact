@@ -3,10 +3,9 @@
 import CheckHydration from '@utils/CheckHydration';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 
@@ -24,6 +23,7 @@ const ProductSessionPriceCard = dynamic(
 
 export default function ProductPricesSSR({ product }: { product: Product }) {
   const deviceSize = useDeviceSizeSSR();
+
   function groupProductsByTitle(arr: Product[]) {
     const groupedArray: { [key: string]: Product[] } = {};
 
