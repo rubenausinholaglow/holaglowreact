@@ -24,7 +24,6 @@ const ProductSessionPriceCard = dynamic(
 
 export default function ProductPricesSSR({ product }: { product: Product }) {
   const deviceSize = useDeviceSizeSSR();
-
   function groupProductsByTitle(arr: Product[]) {
     const groupedArray: { [key: string]: Product[] } = {};
 
@@ -54,7 +53,11 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
   if (productItems.length > 1) {
     isSessionProduct = productItems
       .map((item: Product) => item.title)
-      .every((item: string) => item.includes(product.title));
+      .every(
+        (item: string) =>
+          item.includes(product.title) &&
+          product.title.indexOf('Pack Wellaging') < 0
+      );
   }
 
   if (isSessionProduct) {
@@ -86,11 +89,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                 className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
               >
                 {productItems.map((item: Product, index: number) => (
-                  <ProductPriceCard
-                    fullWidthPack={productItems.length === 1 && item.isPack}
-                    key={item.title}
-                    product={item}
-                  />
+                  <ProductPriceCard key={item.title} product={item} />
                 ))}
               </Accordion>
             </Flex>

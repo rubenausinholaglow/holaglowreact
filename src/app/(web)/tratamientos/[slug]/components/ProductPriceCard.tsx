@@ -277,12 +277,10 @@ function ProductPriceItemsCard({
 
 export default function ProductPriceCard({
   product,
-  fullWidthPack = false,
   isDashboard = false,
   className,
 }: {
   product: Product;
-  fullWidthPack?: boolean;
   isDashboard?: boolean;
   className?: string;
 }) {
@@ -342,43 +340,8 @@ export default function ProductPriceCard({
           <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
         )}
       </Flex>
-      <Flex
-        layout="col-left"
-        className={`w-full md:flex-row items-start mt-3 ${
-          fullWidthPack && !deviceSize.isMobile ? 'md:p-4' : ''
-        }`}
-      >
-        {fullWidthPack && !deviceSize.isMobile && (
-          <div className="md:w-1/2 shrink-0">
-            <Text className="font-semibold md:text-lg mb-2">
-              ¡Tu eliges la zona!
-            </Text>
-            {!isEmpty(product.appliedProducts) ? (
-              <>
-                {product.appliedProducts.map(item => (
-                  <Text key={item.titlte}>{item.titlte}</Text>
-                ))}
-                {product?.packMoreInformation && (
-                  <p>{product?.packMoreInformation}</p>
-                )}
-              </>
-            ) : (
-              <Flex className="items-start mb-2">
-                <SvgInjection
-                  height={16}
-                  width={16}
-                  className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                />
-                <Text>{product.description}</Text>
-              </Flex>
-            )}
-          </div>
-        )}
-        <div
-          className={`bg-hg-black50 p-3 w-full rounded-xl ${
-            fullWidthPack && !deviceSize.isMobile ? 'md:w-1/2' : ''
-          }`}
-        >
+      <Flex layout="col-left" className="w-full items-start mt-3">
+        <div className="bg-hg-black50 p-3 w-full rounded-xl">
           <ProductPriceItemsCard isDashboard={isDashboard} product={product} />
         </div>
       </Flex>

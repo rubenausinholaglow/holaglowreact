@@ -67,7 +67,11 @@ export default function FloatingBottomBar({
               type="primary"
               className="mr-4 pointer-events-auto w-full"
               href={ROUTES.checkout.type}
-              onClick={() => (!product ? setSelectedTreatments([]) : null)}
+              onClick={() => {
+                !product
+                  ? setSelectedTreatments([])
+                  : setSelectedTreatments([product]);
+              }}
               id={'tmevent_click_floating_button'}
             >
               Me interesa

@@ -32,7 +32,7 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
           )}
 
           <Flex className="gap-2">
-            {product.category.map(category => {
+            {product.category?.map(category => {
               return (
                 <Button
                   key={category.name}
