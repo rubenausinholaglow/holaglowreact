@@ -121,6 +121,7 @@ export default function Agenda({
   };
 
   function loadMonth() {
+    if (selectedTreatmentsIds == '903') maxDays = 60;
     setLoadingMonth(true);
     if (
       selectedTreatmentsIds &&
