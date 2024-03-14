@@ -83,7 +83,7 @@ export default function FullWidthCarousel({
                 <ProductCard
                   key={product.id}
                   product={product}
-                  className="h-full flex flex-col mr-10"
+                  className="h-full flex flex-col"
                 />
               );
             }
