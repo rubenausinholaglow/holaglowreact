@@ -3,10 +3,9 @@
 import CheckHydration from '@utils/CheckHydration';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 
@@ -54,7 +53,11 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
   if (productItems.length > 1) {
     isSessionProduct = productItems
       .map((item: Product) => item.title)
-      .every((item: string) => item.includes(product.title));
+      .every(
+        (item: string) =>
+          item.includes(product.title) &&
+          product.title.indexOf('Pack Wellaging') < 0
+      );
   }
 
   if (isSessionProduct) {
@@ -72,10 +75,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
     >
       <Container className="py-12">
         <Title size="2xl" className="font-bold mb-6 md:mb-12">
-          <Underlined color={HOLAGLOW_COLORS['primary']}>
-            Personaliza
-          </Underlined>{' '}
-          tu experiencia
+          Pide cita o más información
         </Title>
 
         <CheckHydration>
@@ -87,18 +87,9 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
               >
                 {productItems.map((item: Product, index: number) => (
                   <ProductPriceCard
-                    fullWidthPack={productItems.length === 1 && item.isPack}
                     key={item.title}
                     product={item}
-                    index={index}
                     parentProduct={product}
-                    className={
-                      productItems.length === 1 &&
-                      !deviceSize.isMobile &&
-                      !item.isPack
-                        ? 'w-1/3'
-                        : ''
-                    }
                   />
                 ))}
               </Accordion>

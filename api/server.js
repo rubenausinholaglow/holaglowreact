@@ -51,6 +51,13 @@ server.use(
   })
 );
 server.use(
+  '/landing/armonizacion-facial',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
   '/landing/test',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',

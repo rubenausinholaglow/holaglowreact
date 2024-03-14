@@ -7,8 +7,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import ProductHeaderImage from './ProductHeaderImage';
 
 export default function ProductHeaderSSR({ product }: { product: Product }) {
-  console.log(product);
-
   const validTypes = [3, 6, 7, 8];
 
   return (
@@ -20,13 +18,12 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
           </Title>
 
           {validTypes.includes(product.type) ? (
-            <Text className="text-hg-black500 mb-4">
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: product?.extraInformation?.resultDescription,
-                }}
-              />
-            </Text>
+            <p
+              className="text-hg-black500 mb-4"
+              dangerouslySetInnerHTML={{
+                __html: product?.extraInformation?.resultDescription,
+              }}
+            />
           ) : (
             <Text className="text-hg-black500 mb-4">
               {product.extraInformation?.resultDescription}
@@ -34,7 +31,7 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
           )}
 
           <Flex className="gap-2">
-            {product.category.map(category => {
+            {product.category?.map(category => {
               return (
                 <Button
                   key={category.name}
@@ -54,14 +51,12 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
       </Container>
       {product.type === 3 && (
         <Container>
-          <Text isAnimated className="text-hg-black500 mb-4 mt-8">
-            <p
-              className="mb-16"
-              dangerouslySetInnerHTML={{
-                __html: product?.detail,
-              }}
-            />
-          </Text>
+          <p
+            className="mb-16 text-hg-black500 mb-4 mt-8"
+            dangerouslySetInnerHTML={{
+              __html: product?.detail,
+            }}
+          />
         </Container>
       )}
     </>
