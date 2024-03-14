@@ -7,9 +7,8 @@ import {
   useGlobalStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
-
-import { isMobile } from '../layout/Breakpoint';
 
 export default function PackTypeFilter({
   className,
@@ -61,10 +60,8 @@ export default function PackTypeFilter({
         >
           Sólo Packs <span className="text-hg-secondary">Black</span> Friday
         </span>
-      ) : isMobile() ? (
-        'Sólo Packs Glow'
       ) : (
-        'Packs'
+        <Text className="text-xs whitespace-nowrap">Packs Glow</Text>
       )}
     </Button>
   );

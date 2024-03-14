@@ -13,6 +13,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
 import CategoryIcon from '../common/CategoryIcon';
+import PackTypeFilter from './PackTypeFilter';
 
 export default function CategorySelector({
   className,
@@ -90,7 +91,7 @@ export default function CategorySelector({
                 ? 'bg-hg-black100'
                 : 'bg-white hover:bg-hg-secondary100'
             }
-            ${i == 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
+            ${i === 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
             ${isDashboard ? 'py-2 px-4' : ''}
             ${isStacked ? 'mb-2' : ''}
             `)}
@@ -115,6 +116,9 @@ export default function CategorySelector({
           </li>
         );
       })}
+      <li className="mr-4">
+        <PackTypeFilter className="" />
+      </li>
     </ul>
   );
 }

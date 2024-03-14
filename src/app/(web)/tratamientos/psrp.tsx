@@ -213,7 +213,7 @@ export default function PsrpPage({
           setModalVisibility={setIsMobileFiltersVisible}
         />
         <div className="bg-hg-cream rounded-t-3xl">
-          <Container className="relative pt-8 pb-4">
+          <Container className="relative pt-6 pb-4">
             <Title isAnimated size="3xl" className="mt-4">
               Nuestros tratamientos
             </Title>
@@ -225,14 +225,14 @@ export default function PsrpPage({
             <div className="lg:flex lg:flex-row lg:justify-between items-center">
               <ProductSearchBar
                 products={stateProducts}
-                className="hidden md:block mr-8 mb-4 lg:mb-0"
+                className="hidden md:block mr-8"
               />
               <AnimateOnViewport
                 origin={deviceSize.isMobile ? 'right' : 'bottom'}
               >
-                <CategorySelector className="mb-4 lg:mb-0" />
+                <CategorySelector />
               </AnimateOnViewport>
-              <PackTypeFilter className="ml-4 md:ml-0" />
+              {/* <PackTypeFilter className="ml-4 md:ml-0" /> */}
             </div>
           </Container>
         </div>
