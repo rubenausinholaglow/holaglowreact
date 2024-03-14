@@ -135,14 +135,11 @@ export default function ProductDetailPage({
             isDashboard={isDashboard}
             setBottomBarThreshold={setBottomBarThreshold}
           />
-          {isDashboard &&
-            !product.isPack &&
-            product.type != 3 &&
-            product.upgrades?.length > 1 && (
-              <div ref={productPriceRef as RefObject<HTMLDivElement>}>
-                <ProductPrices product={product} isDashboard />
-              </div>
-            )}
+          {isDashboard && product.type != 3 && product.upgrades?.length > 1 && (
+            <div ref={productPriceRef as RefObject<HTMLDivElement>}>
+              <ProductPrices product={product} isDashboard />
+            </div>
+          )}
         </div>
         {product.beforeAndAfterImages?.length > 0 && (
           <ProductResults product={product} />

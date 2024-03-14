@@ -1,14 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { fetchProduct } from '@utils/fetch';
 import { SvgWhatsapp } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
-import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { isEmpty } from 'lodash';
 
 export default function FloatingBottomBar({
   product,
@@ -24,6 +23,7 @@ export default function FloatingBottomBar({
   const { setSelectedTreatments } = useSessionStore(state => state);
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);
+  const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
 
   let url =
     'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20y%20vuestros%20tratamientos';
@@ -41,6 +41,20 @@ export default function FloatingBottomBar({
   const handleScroll = () => {
     requestAnimationFrame(() => recalculateVisibility());
   };
+
+  useEffect(() => {
+    async function initMedicalVisitProduct() {
+      const medicalVisitProduct = await fetchProduct(
+        process.env.NEXT_PUBLIC_MEDICAL_VISIT || '',
+        false,
+        false
+      );
+
+      setMedicalVisitProduct(medicalVisitProduct);
+    }
+
+    initMedicalVisitProduct();
+  }, []);
 
   useEffect(() => {
     scrollPos.current = 0;
@@ -67,7 +81,13 @@ export default function FloatingBottomBar({
               type="primary"
               className="mr-4 pointer-events-auto w-full"
               href={ROUTES.checkout.type}
-              onClick={() => (!product ? setSelectedTreatments([]) : null)}
+              onClick={() => {
+                product && medicalVisitProduct && product.isPack
+                  ? setSelectedTreatments([medicalVisitProduct])
+                  : !product
+                  ? setSelectedTreatments([])
+                  : setSelectedTreatments([product]);
+              }}
               id={'tmevent_click_floating_button'}
             >
               Me interesa
