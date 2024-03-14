@@ -18,7 +18,6 @@ export default function ValuesDescription() {
             personalizados de medicina estética.
           </Text>
         </Flex>
-
         <div className="w-full md:w-1/2">
           <div className="relative w-full aspect-[34/29]">
             <Image

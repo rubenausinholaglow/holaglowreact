@@ -181,10 +181,10 @@ const ButtonBody = ({
       'bg-white text-hg-black border border-hg-black hover:bg-hg-secondary100 active:bg-hg-secondary100',
     disabled:
       'bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default',
-    sm: 'text-sm font-medium h-[32px] px-4',
-    md: 'text-sm font-medium h-[40px] px-4',
-    lg: 'text-md font-semibold h-[48px] px-6',
-    xl: 'text-lg font-semibold h-[64px] px-6',
+    sm: 'text-sm font-medium py-1.5 px-4 min-h-[32px]',
+    md: 'text-sm font-medium py-[10px] px-4 min-h-[40px]',
+    lg: 'text-md font-semibold py-3 px-6 min-h-[48px]',
+    xl: 'text-lg font-semibold py-4 px-6 min-h-[64px]',
   };
 
   const styles = twMerge(
