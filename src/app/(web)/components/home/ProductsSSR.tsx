@@ -17,7 +17,7 @@ export default async function ProductsSSR() {
     <div className="bg-hg-cream500 overflow-hidden pt-12 pb-4">
       <Container>
         <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-12">
-          Tratamientos para conseguir resultados irresistibles
+          Tratamientos para conseguir resultados naturales
         </Title>
       </Container>
 

@@ -4,10 +4,10 @@ import { RefObject, useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import ProductService from '@services/ProductService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import Clinics from 'app/(web)/components/common/Clinics_old';
+import Clinics from 'app/(web)/components/common/Clinics';
 import Professionals from 'app/(web)/components/common/Professionals';
 import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
-import Testimonials from 'app/(web)/components/home/Testimonials_old';
+import Testimonials from 'app/(web)/components/home/Testimonials';
 import {
   useGlobalPersistedStore,
   useSessionStore,

@@ -4,12 +4,13 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useEffect, useState } from 'react';
-import { SvgArrow } from 'app/icons/IconsDs';
+import { SvgArrow, SvgHolaGlowStar2 } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import {
   ButtonBack,
   ButtonNext,
   CarouselProvider,
+  Dot,
   Slide,
   Slider,
 } from 'pure-react-carousel';
@@ -144,24 +145,43 @@ export default function Carousel({
         )}
       </div>
 
-      {hasControls && !isDashboard && (
-        <>
-          <Flex layout="row-center" className="mt-8 relative">
-            {hasDots && (
-              <ul className="p-2 spacing flex gap-2 text-xs absolute">
-                <li>{currentSlideIndex + 1}</li>
-                <li>/</li>
-                <li>{childrens.length}</li>
+      {(hasControls || hasDots) && !isDashboard && (
+        <div className="mt-8">
+          {hasDots && (
+            <Flex layout="row-center" className="relative">
+              <ul className="p-2 spacing flex gap-2 text-xs absolute items-center">
+                {childrens.map((dot, index) => {
+                  const isActive = currentSlideIndex === index;
+
+                  return (
+                    <li key={index}>
+                      <SvgHolaGlowStar2
+                        onClick={() =>
+                          index > currentSlideIndex
+                            ? handleNextButton()
+                            : handleBackButton()
+                        }
+                        className={
+                          isActive
+                            ? 'h-6 w-6 text-hg-secondary '
+                            : 'h-4 w-4 text-hg-secondary300'
+                        }
+                      />
+                    </li>
+                  );
+                })}
               </ul>
-            )}
-          </Flex>
-          <Container className={`${isFullWidth ? '' : 'px-0'}`}>
-            <Flex layout="row-right" className="gap-6">
-              {buttonBack()}
-              {buttonNext()}
             </Flex>
-          </Container>
-        </>
+          )}
+          {hasControls && (
+            <Container className={`${isFullWidth ? '' : 'px-0'}`}>
+              <Flex layout="row-right" className="gap-6">
+                {buttonBack()}
+                {buttonNext()}
+              </Flex>
+            </Container>
+          )}
+        </div>
       )}
     </CarouselProvider>
   );

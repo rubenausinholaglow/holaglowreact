@@ -27,7 +27,7 @@ export default function ProductList({ products }: { products: Product[] }) {
 
   return (
     <>
-      <Container className="px-0 mb-8 md:px-4">
+      <Container className="px-0 mb-2 md:px-4">
         <AnimateOnViewport origin="right">
           <CategorySelectorSSR
             products={products}

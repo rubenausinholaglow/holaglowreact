@@ -3,9 +3,7 @@
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import { isMobile } from 'app/(web)/components/layout/Breakpoint';
-import { SvgArrow } from 'app/icons/IconsDs';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
 export default function FooterFirstBlock() {
@@ -16,7 +14,8 @@ export default function FooterFirstBlock() {
         className="gap-6 w-full md:w-1/3 text-xl font-semibold px-4 md:px-0 pb-6 border-b border-hg-black md:border-none"
       >
         <SimpleAccordion
-          trigger="Tratamientos más populares"
+          trigger={isMobile() ? 'Tratamientos' : 'Tratamientos más populares'}
+          triggerStyles="text-left"
           isOpen={!isMobile()}
         >
           <ul className="text-sm pt-4 font-normal flex flex-col">

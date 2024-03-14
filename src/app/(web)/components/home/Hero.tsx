@@ -10,7 +10,7 @@ export default function HomeHero() {
   return (
     <div
       className="
-        relative pt-24 md:pt-36 -mt-[56px] md:-mt-[72px] 
+        relative pt-20 md:pt-32 -mt-[56px] md:-mt-[72px] 
         bg-[url('/images/home/bg.png')] md:bg-[url('/images/home/bg-desktop.png')] bg-cover bg-bottom
       "
     >
@@ -36,20 +36,14 @@ export default function HomeHero() {
         <Flex layout="col-left" className="md:flex-row w-full">
           <Flex
             layout="col-left"
-            className="z-10 w-full md:w-1/2 md:pb-80 mb-8 md:mb-0"
+            className="z-10 w-full md:w-1/2 md:pb-64 xl:pb-96 mb-8 md:mb-0"
           >
-            <Text className="mb-6 font-semibold md:text-lg" origin="top">
-              Medicina estética
-            </Text>
             <Title
-              size="3xl"
-              className="text-left font-bold leading-none mb-6 md:mb-12"
+              size="2xl"
+              className="text-left font-bold leading-none md:mb-12"
               origin="right"
             >
-              Tu{' '}
-              <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
-              <br />
-              tus normas
+              Medicina estética para cuidar tu piel
             </Title>
             <Button
               id={'tmevent_header_button'}
@@ -63,7 +57,7 @@ export default function HomeHero() {
           </Flex>
           <Flex
             layout="row-left"
-            className="mb-80 gap-2 bg-white/20 rounded-full px-4 md:ml-auto md:mb-0"
+            className="mb-72 gap-2 bg-white/20 rounded-full px-4 md:ml-auto md:mb-0"
           >
             <SvgStar className="-mt-1" />
             <span>4,7</span>

@@ -19,7 +19,7 @@ export default async function Clinics({
 
   return (
     <div className={className}>
-      <div className="relative bg-white">
+      <div className="relative bg-derma-secondary100">
         <Container className="py-12 md:py-16">
           <Title isAnimated size="2xl" className="font-bold mb-8 md:w-1/2">
             Nuestras clínicas

@@ -76,7 +76,8 @@ export default function Testimonials() {
         </Flex>
       </Container>
       <FullWidthCarousel
-        hasControls={true}
+        hasDots={isMobile()}
+        hasControls={!isMobile()}
         className="pb-8"
         visibleSlides={isMobile() ? 1.2 : 3.5}
       >

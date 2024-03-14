@@ -93,7 +93,7 @@ export default function Header({
 
       <header
         id="header"
-        className="z-30 w-full top-0 left-0 right-0 sticky transition-all"
+        className="z-30 w-full top-0 left-0 right-0 sticky transition-all h-[56px] md:h-[72px]"
         style={{
           top: !isHeaderVisible ? `-${headerHeight()}px` : '',
           background: isScrollOnTop ? 'transparent' : 'white',
@@ -103,7 +103,7 @@ export default function Header({
         <Container isHeader>
           <Flex
             layout="row-between"
-            className="w-full relative py-4 lg:py-6 justify-between lg:justify-center"
+            className="w-full relative h-[56px] md:h-[72px] items-center justify-between lg:justify-center"
           >
             <Link href={ROUTES.home} className="lg:absolute left-0">
               <SvgHolaglow className="h-[24px] md:h-[32px] w-[98px] md:w-[130px] text-hg-secondary" />
@@ -113,24 +113,25 @@ export default function Header({
 
             <Flex layout="row-center" className="lg:absolute right-0">
               {!hideAppointmentButton && (
-                <Button
-                  id="tmevents_nav_menu_appointment"
-                  size={isMobile() ? 'sm' : 'md'}
-                  type="white"
-                  customStyles="bg-transparent"
-                  href={ROUTES.checkout.type}
-                  className="hidden md:block"
-                  onClick={() => {
-                    setSelectedTreatments([]);
-                  }}
-                >
-                  Reservar cita
-                  <SvgArrow
-                    height={16}
-                    width={16}
-                    className="ml-2 pointer-events-none"
-                  />
-                </Button>
+                <CheckHydration>
+                  <Button
+                    id="tmevents_nav_menu_appointment"
+                    size={isMobile() ? 'sm' : 'md'}
+                    type="white"
+                    customStyles="bg-transparent"
+                    href={ROUTES.checkout.type}
+                    onClick={() => {
+                      setSelectedTreatments([]);
+                    }}
+                  >
+                    Reservar cita
+                    <SvgArrow
+                      height={16}
+                      width={16}
+                      className="ml-2 pointer-events-none hidden md:block"
+                    />
+                  </Button>
+                </CheckHydration>
               )}
 
               <SvgMenu
