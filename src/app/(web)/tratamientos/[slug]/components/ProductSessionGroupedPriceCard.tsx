@@ -79,9 +79,8 @@ export default function ProductSessionGroupedPriceCard({
         )}
         {!productHighlighted && (
           <Button
-            type="tertiary"
+            type="primary"
             className="shrink-0"
-            customStyles="bg-hg-primary"
             onClick={() => {
               setSelectedTreatments([product]);
             }}

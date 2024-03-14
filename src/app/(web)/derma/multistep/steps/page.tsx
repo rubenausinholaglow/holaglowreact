@@ -203,7 +203,9 @@ export default function Form() {
     }
     if (client.phonePrefix) dermaQuestions.phonePrefix = client.phonePrefix;
     if (client.phone)
-      dermaQuestions.phone = client.phone.replace(client.phonePrefix, '');
+      dermaQuestions.phone = client.phone
+        .replaceAll(' ', '')
+        .replace(client.phonePrefix, '');
     setDermaQuestions(dermaQuestions);
     dermaService.update(dermaQuestions).then(x => {
       dermaQuestions.id = x!.toString();
