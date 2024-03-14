@@ -27,121 +27,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import isEmpty from 'lodash/isEmpty';
 import { useRouter } from 'next/navigation';
 
-const UPGRADE_TYPES: Record<
-  string,
-  {
-    title: string;
-    icon: string;
-    family: string;
-    options: { label: string; value: string }[];
-  }
-> = {
-  '1': {
-    title: '1 vial de ácido hialurónico',
-    icon: 'SvgInjection',
-    family: 'default',
-    options: [
-      {
-        label: 'Aumento de labios',
-        value: 'Aumento de labios',
-      },
-      {
-        label: 'Código de barras',
-        value: 'Código de barras',
-      },
-      {
-        label: 'Proyección de mandíbula',
-        value: 'Proyección de mandíbula',
-      },
-      {
-        label: 'Proyección de mentón',
-        value: 'Proyección de mentón',
-      },
-      {
-        label: 'Proyección de Pómulos',
-        value: 'Proyección de Pómulos',
-      },
-      {
-        label: 'Relleno lineas marioneta',
-        value: 'Relleno lineas marioneta',
-      },
-      {
-        label: 'Sonrisa Gingival',
-        value: 'Sonrisa Gingival',
-      },
-      {
-        label: 'Surco Nasogeniano',
-        value: 'Surco Nasogeniano',
-      },
-      {
-        label: 'Volumen y perfilado de cejas',
-        value: 'Volumen y perfilado de cejas',
-      },
-    ],
-  },
-  '2': {
-    title: '0,5 viales de inyectable antiarrugas',
-    icon: 'SvgInjection',
-    family: 'default',
-    options: [
-      {
-        label: 'Prevención arrugas',
-        value: 'Prevención arrugas',
-      },
-      {
-        label: 'Arrugas entrecejo y patas de gallo',
-        value: 'Arrugas entrecejo y patas de gallo',
-      },
-    ],
-  },
-  '3': {
-    title: '1 vial de inyectable antiarrugas',
-    icon: 'SvgInjection',
-    family: 'default',
-    options: [
-      {
-        label: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
-        value: 'Arrugas expresión: Frente, entrecejo y patas de gallo',
-      },
-    ],
-  },
-  '4': {
-    title: 'Piel',
-    icon: 'SvgInjection',
-    family: 'default',
-    options: [
-      {
-        label: 'Hydrafacial express (1 sesión)',
-        value: 'Hydrafacial',
-      },
-      {
-        label: 'Mesoterapia (1 sesión)',
-        value: 'Revitalización facial: Mesoterapia',
-      },
-    ],
-  },
-  '5': {
-    title: 'Piel Profunda',
-    icon: 'SvgInjection',
-    family: 'default',
-    options: [
-      {
-        label: 'Hydrafacial deluxe (1 sesión)',
-        value: 'Hydrafacial',
-      },
-      {
-        label: 'Dermapen (1 sesión)',
-        value: 'Microneedling',
-      },
-    ],
-  },
-};
-
-export interface option {
-  index: number;
-  value: string;
-}
-
 function ProductPriceItemsCard({
   isDashboard = false,
   product,
@@ -277,10 +162,12 @@ function ProductPriceItemsCard({
 
 export default function ProductPriceCard({
   product,
+  parentProduct,
   isDashboard = false,
   className,
 }: {
   product: Product;
+  parentProduct: Product;
   isDashboard?: boolean;
   className?: string;
 }) {
@@ -311,6 +198,7 @@ export default function ProductPriceCard({
           </Flex>
           <Flex layout="row-right">
             {product.isPack &&
+              !parentProduct.isPack &&
               (!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' ? (
                 <Flex
                   layout="row-center"

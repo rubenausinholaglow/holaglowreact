@@ -3,10 +3,9 @@
 import CheckHydration from '@utils/CheckHydration';
 import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 
@@ -24,6 +23,7 @@ const ProductSessionPriceCard = dynamic(
 
 export default function ProductPricesSSR({ product }: { product: Product }) {
   const deviceSize = useDeviceSizeSSR();
+
   function groupProductsByTitle(arr: Product[]) {
     const groupedArray: { [key: string]: Product[] } = {};
 
@@ -75,10 +75,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
     >
       <Container className="py-12">
         <Title size="2xl" className="font-bold mb-6 md:mb-12">
-          <Underlined color={HOLAGLOW_COLORS['primary']}>
-            Personaliza
-          </Underlined>{' '}
-          tu experiencia
+          Pide cita o más información
         </Title>
 
         <CheckHydration>
@@ -89,7 +86,11 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                 className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
               >
                 {productItems.map((item: Product, index: number) => (
-                  <ProductPriceCard key={item.title} product={item} />
+                  <ProductPriceCard
+                    key={item.title}
+                    product={item}
+                    parentProduct={product}
+                  />
                 ))}
               </Accordion>
             </Flex>
