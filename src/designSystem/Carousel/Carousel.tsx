@@ -190,8 +190,16 @@ export default function Carousel({
                     }
                     className={
                       isActive
-                        ? 'h-6 w-6 text-hg-secondary '
-                        : 'h-4 w-4 text-hg-secondary300'
+                        ? `h-6 w-6 ${
+                            isDerma
+                              ? 'text-derma-primary500'
+                              : 'text-hg-secondary'
+                          }`
+                        : `h-4 w-4 ${
+                            isDerma
+                              ? 'text-derma-primary300'
+                              : 'text-hg-secondary300'
+                          }`
                     }
                   />
                 </li>

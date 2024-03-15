@@ -6,6 +6,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import { isMobile } from '../layout/Breakpoint';
+
 const CLINICS = [
   {
     name: 'Barcelona',
@@ -46,7 +48,7 @@ const TAGS = [
 
 function ClinicSlide({ clinic }: { clinic: any }) {
   return (
-    <div className="rounded-t-3xl p-4 h-full flex flex-col">
+    <div className="rounded-t-3xl md:rounded-none p-4 md:p-[1px] h-full flex flex-col md:flex-row md:gap-16">
       <Carousel
         dragEnabled={false}
         touchEnabled={false}
@@ -56,6 +58,7 @@ function ClinicSlide({ clinic }: { clinic: any }) {
         visibleSlides={1}
         infinite={false}
         isDerma
+        className="md:order-2 md:rounded-3xl overflow-hidden"
       >
         {clinic.images.map((image: string) => (
           <div
@@ -71,22 +74,22 @@ function ClinicSlide({ clinic }: { clinic: any }) {
           </div>
         ))}
       </Carousel>
-      <div className="bg-white p-4 rounded-b-2xl overflow-hidden shadow-centered-black-sm flex-grow">
+      <div className="bg-white md:bg-transparent p-4 md:p-0 rounded-b-2xl overflow-hidden shadow-centered-black-sm flex-grow md:shadow-none">
         <Title className="font-light text-derma-tertiary text-drxl mb-4">
           Clínica {clinic.name}
         </Title>
-        <Flex className="gap-2 w-full items-start mb-6">
+        <Flex className="gap-2 w-full items-start mb-6 md:mb-16">
           <SvgLocation className="shrink-0 -mt-[2px] h-5 w-5" />
           <Text size="sm">{clinic.address}</Text>
         </Flex>
-        <Text className="font-semibold text-derma-tertiary mb-4">
+        <Text className="font-semibold text-derma-tertiary mb-4 md:text-lg md:mb-8">
           Servicios destacados
         </Text>
-        <ul className="flex gap-2 flex-wrap">
+        <ul className="flex gap-2 flex-wrap md:gap-4">
           {TAGS.map(tag => (
             <li
               key={tag}
-              className="bg-derma-primary300/20 text-derma-primary py-2 px-4 rounded-xl text-xs shrink-0"
+              className="bg-[#ebfcf9] text-derma-primary py-2 px-4 rounded-xl text-xs md:text-sm shrink-0"
             >
               {tag}
             </li>
@@ -103,7 +106,7 @@ export default function ClinicsDerma({
   className?: string;
 }) {
   return (
-    <>
+    <div className="md:bg-white md:py-16">
       <Container>
         <Title
           isAnimated
@@ -120,8 +123,13 @@ export default function ClinicsDerma({
       </Container>
       <Container className="px-0 md:px-4">
         <Carousel
-          controlStyles="px-4 md:px-0 mt-4"
-          hasDots
+          controlStyles={
+            isMobile()
+              ? 'px-4 md:px-0 mt-4'
+              : 'absolute left-[-100%] bottom-5 ml-24'
+          }
+          hasDots={isMobile()}
+          hasControls={!isMobile()}
           isIntrinsicHeight
           visibleSlides={1}
           currentSlide={0}
@@ -133,6 +141,6 @@ export default function ClinicsDerma({
           ))}
         </Carousel>
       </Container>
-    </>
+    </div>
   );
 }
