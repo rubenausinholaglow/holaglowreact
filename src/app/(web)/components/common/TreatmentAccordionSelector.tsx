@@ -123,7 +123,7 @@ export default function TreatmentAccordionSelector({
 
   function addTreatment(product: Product, index: number) {
     if (isDashboard) {
-      cart.length >= 0
+      cart.length > 0
         ? addTreatmentDashboard(product, index)
         : setSelectedTreatments([...selectedTreatments, product]);
     } else {
