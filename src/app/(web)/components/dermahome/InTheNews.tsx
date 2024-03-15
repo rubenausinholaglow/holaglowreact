@@ -97,7 +97,7 @@ export default function InTheNews() {
         hasControls
         className="relative"
         isIntrinsicHeight
-        hasDots
+        hasCounter
         visibleSlides={visibleNews()}
         infinite={false}
         sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}

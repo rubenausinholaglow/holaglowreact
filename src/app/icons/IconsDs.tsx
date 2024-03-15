@@ -194,6 +194,19 @@ export const SvgHolaGlowStar = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const SvgHolaGlowStar2 = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={22}
+    height={24}
+    fill="currentColor"
+    viewBox="0 0 22 24"
+    {...props}
+  >
+    <path d="M11.0109 24L10.5765 21.8947C9.18657 15.0526 8.12241 13.8947 1.75913 12.4211L0 12L1.75913 11.5789C8.12241 10.1053 9.18657 8.94737 10.5765 2.10526L11.0109 0L11.4452 2.10526C12.8134 8.94737 13.8776 10.1053 20.2409 11.5789L22 11.9789L20.2409 12.3789C13.8776 13.8947 12.8134 15.0316 11.4235 21.8947L11.0109 24Z" />
+  </svg>
+);
+
 export const SvgShare = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
