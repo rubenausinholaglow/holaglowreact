@@ -39,7 +39,6 @@ export default function StoriesDerma() {
             hasControls={dermaImages?.length > 1}
             dragEnabled={false}
             touchEnabled={false}
-            hasDots
             className="rounded-xl"
             isDerma
           >

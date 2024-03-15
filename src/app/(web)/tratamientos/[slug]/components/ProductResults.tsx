@@ -39,7 +39,7 @@ export default function ProductResults({ product }: { product: Product }) {
           hasControls={product.beforeAndAfterImages?.length > 1}
           dragEnabled={false}
           touchEnabled={false}
-          hasDots
+          hasCounter
           className="px-4 md:px-0 rounded-xl aspect-square"
         >
           {product.beforeAndAfterImages?.map(item => (

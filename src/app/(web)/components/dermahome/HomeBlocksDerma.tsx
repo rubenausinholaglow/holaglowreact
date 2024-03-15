@@ -1,3 +1,4 @@
+import ClinicsDerma from '../common/ClinicsDerma';
 import ProfessionalsDerma from '../common/ProfessionalsDerma';
 import StoriesDerma from '../common/StoriesDerma';
 import BenefitsApplicationResultsDerma from './BenefitsApplicationResultsDerma';
@@ -19,6 +20,7 @@ export default function HomeBlocksDerma() {
 
       <div className="bg-derma-secondary100 pt-12">
         <ProfessionalsDerma />
+        <ClinicsDerma />
         <StoriesDerma />
         <TestimonialsDerma />
       </div>
