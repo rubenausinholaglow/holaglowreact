@@ -45,7 +45,9 @@ export default function Page({
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser, setAppointmentId, setBudgetId } =
     useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedClinic } = useSessionStore(
+    state => state
+  );
   const {
     remoteControl,
     storedBoxId,
@@ -132,6 +134,7 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
+    setSelectedClinic(undefined);
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');

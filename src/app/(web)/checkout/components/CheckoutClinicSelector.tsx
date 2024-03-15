@@ -1,6 +1,6 @@
 'use client';
 
-import { Clinic } from '@interface/clinic';
+import { Clinic, ProfessionalType } from '@interface/clinic';
 import useRoutes from '@utils/useRoutes';
 import { SvgRadioChecked } from 'app/icons/IconsDs';
 import {
@@ -21,12 +21,25 @@ export default function CheckoutClinicSelector({
   const router = useRouter();
   const ROUTES = useRoutes();
 
-  const { clinics } = useGlobalPersistedStore(state => state);
+  const { clinics, setClinicFlowwwId, setClinicId, setClinicProfessionalId } =
+    useGlobalPersistedStore(state => state);
 
   const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
 
   const selectClinic = (clinic: Clinic) => {
     setSelectedClinic(clinic);
+
+    if (isDashboard) {
+      setClinicId(clinic.id);
+      setClinicFlowwwId(clinic.flowwwId);
+      setClinicProfessionalId(
+        clinics
+          .find(x => x.id == clinic.id)
+          ?.professionals.find(
+            x => x.professionalType === ProfessionalType.BeautyAdvisor
+          )?.id
+      );
+    }
 
     if (!isDashboard) {
       router.push(ROUTES.checkout.type);
