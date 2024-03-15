@@ -41,6 +41,7 @@ export default function Page({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser, setAppointmentId, setBudgetId } =
     useGlobalPersistedStore(state => state);
@@ -143,7 +144,15 @@ export default function Page({
     setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
     setIsCallCenter(params.get('isCallCenter') == 'true');
+    setPhoneNumber(params.get('phoneNumber') || '');
   }, []);
+
+  useEffect(() => {
+    if (!isEmpty(phoneNumber)) {
+      setIsLoadingUser(true);
+      handleCheckUser(phoneNumber);
+    }
+  }, [phoneNumber]);
 
   async function redirectPageByAppointmentId(
     name: string,
@@ -178,9 +187,9 @@ export default function Page({
     }
   }
 
-  const handleCheckUser = async () => {
+  const handleCheckUser = async (phoneNumber = '') => {
     setIsLoading(true);
-    await UserService.checkUser(userEmail)
+    await UserService.checkUser(phoneNumber != '' ? phoneNumber : userEmail)
       .then(async data => {
         if (data && !isEmpty(data)) {
           setCurrentUser(data);
