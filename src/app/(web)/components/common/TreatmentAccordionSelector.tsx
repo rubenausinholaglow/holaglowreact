@@ -122,9 +122,13 @@ export default function TreatmentAccordionSelector({
   }, [selectedProducts]);
 
   function addTreatment(product: Product, index: number) {
-    isDashboard && cart.length > 0
-      ? addTreatmentDashboard(product, index)
-      : setSelectedTreatments([...selectedTreatments, product]);
+    if (isDashboard) {
+      cart.length >= 0
+        ? addTreatmentDashboard(product, index)
+        : setSelectedTreatments([...selectedTreatments, product]);
+    } else {
+      setSelectedTreatments([product]);
+    }
   }
 
   function addTreatmentDashboard(product: Product, index: number) {
@@ -173,7 +177,7 @@ export default function TreatmentAccordionSelector({
                 key={product.title}
                 onClick={() => {
                   const isSelected =
-                    cart.length > 0
+                    isDashboard && cart.length > 0
                       ? selectedIndexsProducts.includes(index)
                       : selectedTreatments.some(
                           selectedProduct => selectedProduct.id === product.id
@@ -194,8 +198,7 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
-
-                {isDashboard && renderDashboardCheck(product, index)}
+                {renderCheck(product, index)}
               </li>
             ))}
           </ul>
@@ -204,7 +207,7 @@ export default function TreatmentAccordionSelector({
     );
   };
 
-  const renderDashboardCheck = (product: Product, index: number) => {
+  const renderCheck = (product: Product, index: number) => {
     const commonElement = (
       <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
     );
@@ -213,7 +216,7 @@ export default function TreatmentAccordionSelector({
       <SvgRadioChecked height={24} width={24} className="shrink-0 ml-auto" />
     );
 
-    if (cart.length > 0) {
+    if (isDashboard && cart.length > 0) {
       return (
         <>
           {selectedIndexsProducts.includes(index)
