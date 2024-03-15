@@ -71,7 +71,17 @@ const Page = () => {
   return (
     <App>
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-        {user?.firstName && (
+        <div>
+          {!selectedClinic && isCallCenter && (
+            <>
+              <Title className="font-semibold mb-8">Selecciona clínica</Title>
+
+              <CheckoutClinicSelector isDashboard className="mb-8" />
+            </>
+          )}
+        </div>
+        {((user?.firstName && !isCallCenter) ||
+          (isCallCenter && selectedClinic)) && (
           <div className="mt-8">
             <Title className="text-xl mb-4">Tu glow, tus normas</Title>
             <Title className="font-bold text-5xl mb-8">
@@ -87,7 +97,6 @@ const Page = () => {
                   {(item.visible == true ||
                     (isCallCenter && item.visible == false)) && (
                     <>
-                      {' '}
                       <DashboardMenuItem
                         key={item.title}
                         iconSrc={item.iconSrc}
@@ -97,7 +106,7 @@ const Page = () => {
                           item.link.includes('flowwwToken')
                             ? item.link.replace(
                                 'flowwwToken',
-                                user?.flowwwToken
+                                user!.flowwwToken
                               )
                             : item.link
                         }
@@ -110,16 +119,6 @@ const Page = () => {
             </div>
           </div>
         )}
-
-        <div>
-          {!selectedClinic && isCallCenter && (
-            <>
-              <Title className="font-semibold mb-8">Selecciona clínica</Title>
-
-              <CheckoutClinicSelector isDashboard className="mb-8" />
-            </>
-          )}
-        </div>
       </MainLayout>
     </App>
   );
