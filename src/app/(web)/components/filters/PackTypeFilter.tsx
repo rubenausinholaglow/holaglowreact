@@ -8,6 +8,7 @@ import {
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
+import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
 export default function PackTypeFilter({
@@ -22,13 +23,13 @@ export default function PackTypeFilter({
 
   return (
     <Button
-      isAnimated
-      origin="right"
       className={className}
       type="white"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
       customStyles={twMerge(`
-        border-none pointer-events-none ${customStyles ? customStyles : ''} 
+        p-1 pr-4 border-none pointer-events-none ${
+          customStyles ? customStyles : ''
+        } 
         ${
           promo && promo?.title === 'Black Friday'
             ? `bg-hg-black group-hover:bg- hg-black`
@@ -38,19 +39,13 @@ export default function PackTypeFilter({
       `)}
       id="tmevent_treatments_type"
     >
-      {productFilters.isPack ? (
-        <SvgCheckSquareActive
-          className={`mr-2 ${
-            promo && promo?.title === 'Black Friday' ? 'text-hg-black' : ''
-          }`}
-        />
-      ) : (
-        <SvgCheckSquare
-          className={`mr-2 ${
-            promo && promo?.title === 'Black Friday' ? 'text-hg-primary' : ''
-          }`}
-        />
-      )}
+      <Image
+        src="/images/filters/categories/pack.svg"
+        width={33}
+        height={33}
+        alt="Packs Holaglow"
+        className="shrink-0 mr-2"
+      />
 
       {promo && promo?.title === 'Black Friday' ? (
         <span

@@ -222,17 +222,16 @@ export default function PsrpPage({
             <ProductSearchBar products={stateProducts} className="mb-4" />
           </Container>
           <Container className="px-0 md:px-4 pb-4 md:pb-8 relative">
-            <div className="lg:flex lg:flex-row lg:justify-between items-center">
+            <div className="xl:flex xl:flex-row xl:justify-between items-center">
               <ProductSearchBar
                 products={stateProducts}
-                className="hidden md:block mr-8"
+                className="hidden md:block mr-8 xl:max-w-[220px]"
               />
               <AnimateOnViewport
                 origin={deviceSize.isMobile ? 'right' : 'bottom'}
               >
                 <CategorySelector />
               </AnimateOnViewport>
-              {/* <PackTypeFilter className="ml-4 md:ml-0" /> */}
             </div>
           </Container>
         </div>
