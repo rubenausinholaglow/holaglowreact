@@ -76,7 +76,6 @@ export default function ProductResults({ product }: { product: Product }) {
                   <span className="hidden" itemProp="contentUrl">
                     {item.urlBefore}
                   </span>
-                  ç
                   <span
                     className="hidden"
                     itemProp="creator"
