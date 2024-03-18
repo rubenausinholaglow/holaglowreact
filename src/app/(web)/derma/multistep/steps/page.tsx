@@ -75,6 +75,7 @@ export default function Form() {
   const [errorMessage, setErrorMessage] = useState('');
   const [is18YearsOld, setIs18YearsOld] = useState(false);
   const [continueDisabled, setContinueDisabled] = useState<boolean>(true);
+  const [alreadyCreatedUser, setAlreadyCreatedUser] = useState<boolean>(false);
   const [createdUser, setCreatedUser] = useState<User | undefined>(undefined);
   const [dermaQuestions, setDermaQuestions] = useState<DermaQuestions>({
     name: '',
@@ -191,7 +192,8 @@ export default function Form() {
   }, [selectedSlot]);
 
   const goNext = (index: number) => {
-    if (client && client.email && !createdUser) {
+    if (client && client.email && !createdUser && !alreadyCreatedUser) {
+      setAlreadyCreatedUser(true);
       client.origin = 'Derma';
       registerUser(client, false, false, false).then(x => {
         setCreatedUser(x);
