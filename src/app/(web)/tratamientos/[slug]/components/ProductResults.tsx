@@ -6,7 +6,9 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import Image from 'next/image';
+import Script from 'next/script';
 
 const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
   ssr: false,
@@ -16,9 +18,31 @@ export default function ProductResults({ product }: { product: Product }) {
   if (product.beforeAndAfterImages?.length === 0) {
     return <></>;
   }
+  const metaData: {
+    contentUrl: string | undefined;
+    creator: string;
+    creditText: string;
+    copyrightNotice: string;
+    license: string;
+  }[] = [];
+  product.beforeAndAfterImages.forEach(x => {
+    metaData.push({
+      contentUrl: x.urlBefore,
+      creator: 'Holaglow',
+      creditText: 'Holaglow',
+      copyrightNotice: 'Glow Lab SL',
+      license: 'https://www.holaglow.com/aviso-legal',
+    });
+  });
 
   return (
     <Container className="p-0 pt-8 md:px-4 md:flex gap-16 justify-between mb-12 md:mb-16">
+      <section>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(metaData) }}
+        />
+      </section>
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
         <div className="md:flex-row">
           <Title size="2xl" className="font-bold mb-6 mt-8">
@@ -44,34 +68,14 @@ export default function ProductResults({ product }: { product: Product }) {
         >
           {product.beforeAndAfterImages?.map(item => (
             <div key={item.id} className="overflow-hidden relative">
-              <ImgComparisonSlider className="outline-none w-full">
-                <figure slot="first" className="before">
-                  <div className="relative aspect-square">
-                    <Image
-                      src={item.urlBefore || ''}
-                      alt={product.title}
-                      fill
-                      className="object-cover rounded-3xl"
-                    />
-                  </div>
-                  <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute left-4 bottom-4 text-sm">
-                    Antes
-                  </span>
-                </figure>
-                <figure slot="second" className="after">
-                  <div className="relative aspect-square">
-                    <Image
-                      src={item.urlAfter || ''}
-                      alt={product.title}
-                      fill
-                      className="object-cover rounded-3xl"
-                    />
-                  </div>
-                  <span className="bg-hg-primary/50 py-1 px-2 rounded-xl absolute right-4 bottom-4 text-sm">
-                    Después
-                  </span>
-                </figure>
-              </ImgComparisonSlider>
+              <div className="relative aspect-square">
+                <Image
+                  src={item.urlBefore || ''}
+                  alt={'antes y despues' + product.title}
+                  fill
+                  className="object-cover rounded-3xl"
+                />
+              </div>
             </div>
           ))}
         </Carousel>
