@@ -264,14 +264,14 @@ export const useGlobalPersistedStore = create(
       setActivePayment: value => {
         set({ activePayment: value });
       },
-      isCallCenter : false,
+      isCallCenter: false,
       setIsCallCenter: value => {
-        set({ isCallCenter : value})
-      }
+        set({ isCallCenter: value });
+      },
     }),
     {
       name: 'global-storage',
-      version: 49,
+      version: 50,
     }
   )
 );
