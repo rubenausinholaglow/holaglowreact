@@ -26,6 +26,10 @@ const CATEGORY_ICONS: any = {
     name: 'Otros',
     color: HOLAGLOW_COLORS['black400'],
   },
+  Médico: {
+    name: 'Otros',
+    color: HOLAGLOW_COLORS['black400'],
+  },
 };
 
 export default function CategoryIcon({
