@@ -55,8 +55,8 @@ export default function ProductResults({ product }: { product: Product }) {
       <div className="md:w-1/2">
         <Carousel
           hasControls={product.beforeAndAfterImages?.length > 1}
-          dragEnabled={false}
-          touchEnabled={false}
+          dragEnabled={true}
+          touchEnabled={true}
           hasCounter
           className="px-4 md:px-0 rounded-xl aspect-square"
         >
