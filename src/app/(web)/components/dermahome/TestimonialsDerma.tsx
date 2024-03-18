@@ -69,6 +69,7 @@ export default function TestimonialsDerma() {
               <TestimonialCard
                 key={testimonial.name}
                 testimonial={testimonial}
+                isDerma={true}
                 className="h-full flex flex-col mr-4 border border-hg-black300 bg-transparent"
               />
             );

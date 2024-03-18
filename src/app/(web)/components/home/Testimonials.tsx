@@ -12,35 +12,43 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 const TESTIMONIALS: Testimonial[] = [
   {
     city: 'Barcelona',
-    name: 'Carmen Ausín',
-    imgUrl: '/images/derma/testimonials/carmenAusin.png',
+    name: 'Belen Hevia',
+    imgUrl: '/images/testimonials/belenHevia.png',
     value: 4.7,
     testimonial:
-      'Ya no sabía qué hacer con mi acné, hasta que descubrí la crema formulada!!! Ya llevo unos meses usándola y empiezo a ver cambios en mi piel, cosa que no había notado con ninguna otra crema… ya no me da vergüenza salir a la calle sin maquillaje! Gracias!!',
+      'Encantada de la experiencia, el doctor va explicando a cada momento lo que va haciendo y el personal súper amable . 100% recomendable 👌',
   },
   {
     city: 'Toledo',
-    name: 'Marta Gil',
-    imgUrl: '/images/derma/testimonials/martaGil.png',
+    name: 'Maria José Zamora',
+    imgUrl: '/images/testimonials/mariaJoseZamora.png',
     value: 4.7,
     testimonial:
-      'Además de haberme ayudado mucho con mi piel, siempre me han apoyado, los médicos son muy amables y profesionales. Da gusto recibir asesoramiento de esta calidad desde casa!',
+      'Perfecta experiencia en Holaglow! Equipo de súper profesionales, que te asesoran y acompañan durante el tratamiento',
   },
   {
     city: 'Alicante',
-    name: 'Rubén Zamora',
-    imgUrl: '/images/derma/testimonials/rubenZamora.png',
+    name: 'Maria Quilez',
+    imgUrl: '/images/testimonials/mariaQuilez.png',
     value: 4.7,
     testimonial:
-      'He luchado contra la rosácea durante muchos años y he probado muchísimos médicos y métodos, incluso láseres, pero solo con mi cremafacial personalizada estoy consiguiendo resultados realmente duraderos!! ',
+      'Estoy super contenta con el resultado. El equipo médico me ha asesorado muy bien y me he sentido muy cómoda en todo momento. El escáner es una pasada!!!!',
   },
   {
     city: 'Tarragona',
-    name: 'Amalia Rodriguez',
-    imgUrl: '/images/derma/testimonials/amaliaRodriguez.png',
+    name: 'Luna Santiago',
+    imgUrl: '/images/testimonials/lunaSantiago.png',
     value: 4.7,
     testimonial:
-      'Estaba cansada de los videos de tiktok recomendando soluciones milagrosas que luego no funcionan… Tener una consulta con un dermatólogo y una crema formulada para mi me ha ayudado a simplificar mi rutina facial y a escuchar lo que realmente necesita mi piel. Lo recomiendo mucho!!!',
+      'Me he hecho los labios y ha sido increíble!!! Sin duda el mejor lugar en el que poder confiarse. Un trato maravilloso hacia los clientes, os lo recomiendo!!',
+  },
+  {
+    city: 'Madrid',
+    name: 'Anna Asián',
+    imgUrl: '/images/testimonials/annaAsian.png',
+    value: 4.7,
+    testimonial:
+      'He visitado la clínica y son súper amables y profesionales, antes del tratamiento puedes ver el resultado de forma virtual en un simulador. Decidí hacerme un tratamiento antiarrugas en la frente, entrecejo y patas de gallo. Encantada con mi nueva imagen,mejorada y muy natural.',
   },
 ];
 
