@@ -61,9 +61,7 @@ export default function ProductResults({ product }: { product: Product }) {
           className="px-4 md:px-0 rounded-xl aspect-square"
         >
           {product.beforeAndAfterImages
-            ?.sort(function (a, b) {
-              return a.urlBefore! < b.urlBefore! ? -1 : 0;
-            })
+            ?.sort((a, b) => (a.urlBefore! < b.urlBefore! ? -1 : 0))
             .map(item => (
               <div key={item.id} className="overflow-hidden relative">
                 <div className="relative aspect-square">
