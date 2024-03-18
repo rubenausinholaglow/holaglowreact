@@ -15,7 +15,13 @@ import App from '../components/layout/App';
 import AppointmentList from './components/AppointmentList';
 import CancelModal from './components/CancelModal';
 
-export default function Reagenda({ isDerma = false }: { isDerma?: boolean }) {
+export default function Reagenda({
+  isDerma = false,
+  isDashboard = false,
+}: {
+  isDerma?: boolean;
+  isDashboard?: boolean;
+}) {
   dayjs.locale(es);
 
   const router = useRouter();
@@ -98,7 +104,23 @@ export default function Reagenda({ isDerma = false }: { isDerma?: boolean }) {
       </div>
     );
   }
-
+  if (isDashboard) {
+    return (
+      <>
+        <CancelModal
+          appointmentToCancel={appointmentToCancel}
+          cancelAppointment={cancelAppointment}
+          showCancelModal={showCancelModal}
+        />
+        <AppointmentList
+          isDashboard={true}
+          cancelling={cancelling}
+          setAppointmentToCancel={setAppointmentToCancel}
+          setShowCancelModal={setShowCancelModal}
+        />
+      </>
+    );
+  }
   return (
     <App>
       <MainLayout isCheckout>

@@ -22,11 +22,13 @@ export default function AppointmentList({
   setShowCancelModal,
   cancelling,
   isDerma = false,
+  isDashboard = false,
 }: {
   setAppointmentToCancel: (appointment: Appointment) => void;
   setShowCancelModal: (value: boolean) => void;
   cancelling: boolean;
   isDerma?: boolean;
+  isDashboard?: boolean;
 }) {
   const router = useRouter();
 
@@ -88,7 +90,9 @@ export default function AppointmentList({
     setSelectedTreatments(products);
     setPreviousAppointment(x);
     setSelectedClinic(selectedClinic);
-    router.push('/checkout/agenda');
+    isDashboard
+      ? router.push('/dashboard/checkin/agenda')
+      : router.push('/checkout/agenda');
   };
 
   if (!isHydrated) {
