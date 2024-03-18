@@ -1,10 +1,9 @@
 import { fetchClinics } from '@utils/fetch';
 import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 async function getClinics() {
   const clinics = await fetchClinics();
@@ -48,8 +47,7 @@ export default async function Professionals({
           size="2xl"
           className="text-left font-bold mb-6 md:mb-8"
         >
-          Nuestros{' '}
-          <Underlined color={HOLAGLOW_COLORS['secondary']}>doctores</Underlined>
+          Nuestros doctores
         </Title>
         <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
           En Holaglow defendemos una medicina estética que cuida y, para ello,
@@ -67,7 +65,7 @@ export default async function Professionals({
         />
 
         <Carousel
-          hasControls={professionals?.map && professionals?.map.length > 2}
+          hasControls={professionals && professionals?.length > 2}
           className="relative hidden md:block"
           isIntrinsicHeight
           visibleSlides={2}
