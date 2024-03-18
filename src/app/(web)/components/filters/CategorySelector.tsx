@@ -9,7 +9,6 @@ import {
   useGlobalStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
@@ -80,12 +79,17 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : 'pl-4'}
       `}
     >
+      <li className="shrink-0">
+        <PackTypeFilter isDashboard={isDashboard} />
+      </li>
       {productCategories.map((category, i) => {
         return (
           <li
             id={`tmevent_treatments_type_${category}`}
             key={category}
-            className="shrink-0"
+            className={`shrink-0 ${
+              i === productCategories.length - 1 ? 'mr-4' : ''
+            }`}
             onClick={() => {
               setProductFilters(
                 toggleFilter({
@@ -100,11 +104,13 @@ export default function CategorySelector({
               type="white"
               customStyles={twMerge(`
               p-1 pr-4 border-none pointer-events-none ${
+                isDashboard ? 'pl-4 bg-hg-black100' : ''
+              } ${
                 productFilters.category.includes(category)
                   ? 'bg-hg-primary500'
                   : isStacked
-                  ? 'bg-white mb-0'
-                  : 'bg-white hover:bg-hg-secondary100'
+                  ? 'mb-0'
+                  : ''
               }`)}
               id="tmevent_treatments_type"
             >
@@ -118,9 +124,6 @@ export default function CategorySelector({
           </li>
         );
       })}
-      <li className="shrink-0 mr-4">
-        <PackTypeFilter className="" />
-      </li>
     </ul>
   );
 }

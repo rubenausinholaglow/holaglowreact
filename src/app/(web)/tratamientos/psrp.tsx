@@ -246,7 +246,7 @@ export default function PsrpPage({
           <div className="bg-hg-cream500 pb-32 relative">
             <Flex
               layout="row-left"
-              className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
+              className="justify-between pt-6 pb-4 md:py-0 md:mt-8 md:absolute w-full"
             >
               <Container>
                 <AnimateOnViewport>
@@ -321,11 +321,11 @@ export default function PsrpPage({
 
             <Container>
               <ul
-                className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 ${
+                className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-2 md:gap-6 ${
                   showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
                 }   pb-6`}
               >
-                <li className="md:pt-10">
+                <li className="-mb-2 md:mb-0 md:pt-10">
                   <PVBanner />
                 </li>
                 {filteredProducts.map(product => {

@@ -19,6 +19,9 @@ const CATEGORY_ICONS: any = {
   Otros: {
     src: 'otros.svg',
   },
+  Médico: {
+    src: 'otros.svg',
+  },
 };
 
 export default function CategoryIcon({

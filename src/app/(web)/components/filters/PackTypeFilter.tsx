@@ -1,7 +1,6 @@
 'use client';
 
 import { toggleIsPack } from 'app/(web)/tratamientos/utils/filters';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -13,9 +12,11 @@ import { twMerge } from 'tailwind-merge';
 
 export default function PackTypeFilter({
   className,
+  isDashboard = false,
   customStyles,
 }: {
   className?: string;
+  isDashboard?: boolean;
   customStyles?: string;
 }) {
   const { promo } = useGlobalPersistedStore(state => state);
@@ -35,17 +36,20 @@ export default function PackTypeFilter({
             ? `bg-hg-black group-hover:bg- hg-black`
             : ''
         }
+        ${isDashboard ? 'pl-4 bg-hg-black100' : ''}
         ${productFilters.isPack ? 'bg-hg-primary500' : ''}
       `)}
       id="tmevent_treatments_type"
     >
-      <Image
-        src="/images/filters/categories/pack.svg"
-        width={33}
-        height={33}
-        alt="Packs Holaglow"
-        className="shrink-0 mr-2"
-      />
+      {!isDashboard && (
+        <Image
+          src="/images/filters/categories/pack.svg"
+          width={33}
+          height={33}
+          alt="Packs Holaglow"
+          className="shrink-0 mr-2"
+        />
+      )}
 
       {promo && promo?.title === 'Black Friday' ? (
         <span
@@ -56,7 +60,7 @@ export default function PackTypeFilter({
           Sólo Packs <span className="text-hg-secondary">Black</span> Friday
         </span>
       ) : (
-        <Text className="text-xs whitespace-nowrap">Packs Glow</Text>
+        <Text className="text-xs whitespace-nowrap">Packs</Text>
       )}
     </Button>
   );
