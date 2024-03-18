@@ -6,7 +6,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
-import MainLayoutSSR from './(ssr)/homeSSR/components/MainLayout';
+import MainLayoutSSR from './(web)/components/layout/MainLayoutSSR';
 
 export default function NotFound() {
   return (

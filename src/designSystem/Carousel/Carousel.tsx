@@ -10,6 +10,7 @@ import {
   ButtonBack,
   ButtonNext,
   CarouselProvider,
+  Dot,
   Slide,
   Slider,
 } from 'pure-react-carousel';

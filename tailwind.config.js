@@ -15,7 +15,7 @@ module.exports = {
       '2xl': ['32px', '40px'],
       xl: ['24px', '32px'],
       drxl: ['28px', '36px'],
-      lg: ['21px', '28px'],
+      lg: ['21px', '32px'],
       md: ['16px', '24px'],
       sm: ['14px', '20px'],
       xs: ['12px', '16px'],
@@ -90,6 +90,7 @@ module.exports = {
         lg: '1024px',
         xl: '1152px',
         '2xl': '1280px',
+        '3xl': '1600px',
       },
       boxShadow: {
         'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.05)',

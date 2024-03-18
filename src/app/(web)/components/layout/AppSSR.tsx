@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { ModalBackground } from 'app/(ssr)/homeSSR/components/Modal';
 import { gtUltra, poppins } from 'app/fonts';
+import { ModalBackgroundSSR } from 'designSystem/Modals/ModalSSR';
 
 import { Breakpoint } from './Breakpoint';
 
@@ -10,7 +10,7 @@ export default function AppSSR({ children }: { children: ReactNode }) {
       id="body"
       className={`relative min-h-full ${poppins.className} ${gtUltra.variable}`}
     >
-      <ModalBackground />
+      <ModalBackgroundSSR />
       <Breakpoint />
       {children}
     </body>

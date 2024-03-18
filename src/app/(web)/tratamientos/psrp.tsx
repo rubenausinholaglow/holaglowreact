@@ -19,15 +19,11 @@ import {
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
-import Image from 'next/image';
 
-import FilterText from '../components/filters/FilterText';
-import FloatingBottomBar from '../components/home/FloatingBottomBar';
 import ProductSearchBar from '../components/product/ProductSearchBar';
 import PVBottomBar from '../components/product/PVBottomBar';
-import Products from '../user/budget/Products';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';

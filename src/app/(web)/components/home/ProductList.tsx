@@ -4,14 +4,13 @@ import { useEffect, useState } from 'react';
 import { ProductFilters } from '@interface/filters';
 import { Product } from '@interface/product';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
+import CategorySelectorSSR from 'app/(web)/components/common/CategorySelectorSSR';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import {
   applyFilters,
   INITIAL_FILTERS,
 } from 'app/(web)/tratamientos/utils/filters';
 import { Container } from 'designSystem/Layouts/Layouts';
-
-import CategorySelectorSSR from './CategorySelectorSSR';
 
 export default function ProductList({ products }: { products: Product[] }) {
   const [productFilters, setProductFilters] =
@@ -28,7 +27,7 @@ export default function ProductList({ products }: { products: Product[] }) {
 
   return (
     <>
-      <Container className="px-0 mb-8 md:px-4">
+      <Container className="px-0 mb-2 md:px-4">
         <AnimateOnViewport origin="right">
           <CategorySelectorSSR
             products={products}

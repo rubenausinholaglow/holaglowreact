@@ -157,8 +157,8 @@ export default function LandingCaptacion() {
         </Container>
 
         <Container className="relative px-0">
-          <div className="md:absolute right-0 -top-[45px]">
-            <GoogleStars hideOnDesktop={false} />
+          <div className="md:absolute right-4 bottom-4">
+            <GoogleStars />
           </div>
         </Container>
 

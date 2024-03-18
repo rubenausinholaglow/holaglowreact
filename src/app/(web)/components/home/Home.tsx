@@ -1,12 +1,11 @@
-import GoogleStars from 'app/(web)/components/home/GoogleStars';
 import HomeHero from 'app/(web)/components/home/Hero';
 import ValuesCarousel from 'app/(web)/components/home/ValuesCarousel';
 import ValuesDescription from 'app/(web)/components/home/ValuesDescription';
 import dynamic from 'next/dynamic';
 
-import Clinics from './Clinics';
-import MainLayoutSSR from './MainLayout';
-import Products from './Products';
+import Clinics from '../common/Clinics';
+import MainLayoutSSR from '../layout/MainLayoutSSR';
+import Products from './ProductsSSR';
 
 const HomeProfessionals = dynamic(() => import('./HomeProfessionals'), {
   ssr: false,
@@ -29,7 +28,6 @@ export default function Home() {
   return (
     <MainLayoutSSR>
       <HomeHero />
-      <GoogleStars />
       <ValuesCarousel />
       <ValuesDescription />
       <Products />
@@ -37,7 +35,7 @@ export default function Home() {
       <Testimonials />
       <Clinics />
       <GoToTreatments />
-      <FloatingBottomBar />
+      <FloatingBottomBar className="bg-derma-secondary500" />
     </MainLayoutSSR>
   );
 }

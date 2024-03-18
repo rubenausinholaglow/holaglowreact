@@ -1,4 +1,4 @@
-import MainLayoutSSR from 'app/(ssr)/homeSSR/components/MainLayout';
+import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
 import { SvgCircle } from 'app/icons/Icons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';

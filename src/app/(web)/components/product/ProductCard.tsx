@@ -100,25 +100,6 @@ export default function ProductCard({
             className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
           />
 
-          {!isEmpty(product.category) && (
-            <Flex
-              layout="row-center"
-              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
-            >
-              {product.category.map(category => {
-                return (
-                  <Flex
-                    key={category.name}
-                    layout="row-left"
-                    className="flex rounded-full"
-                  >
-                    <CategoryIcon category={category.name} hasBackground />
-                  </Flex>
-                );
-              })}
-            </Flex>
-          )}
-
           {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
             <Flex
               layout="row-center"
@@ -148,12 +129,9 @@ export default function ProductCard({
         )}
         <Flex
           layout={isDashboard ? 'col-left' : 'row-left'}
-          className="mt-auto justify-between w-full"
+          className="mt-auto items-center justify-between w-full"
         >
-          <Flex
-            layout={isDashboard ? 'row-left' : 'col-left'}
-            className="gap-2"
-          >
+          <Flex layout={isDashboard ? 'row-left' : 'col-left'}>
             {discountedPrice > 0 && (
               <Text
                 className={`text-xs line-through text-hg-black500 ${
@@ -164,7 +142,7 @@ export default function ProductCard({
               </Text>
             )}
             {!discountedPrice && !product.isPack && (
-              <Text className="text-xs text-hg-secondary">desde</Text>
+              <Text className="text-xs text-hg-black500">Desde</Text>
             )}
             <Text
               className={`text-hg-secondary font-semibold ${
@@ -190,7 +168,7 @@ export default function ProductCard({
               <SvgPlusSmall height={20} width={20} />
             </Button>
           ) : (
-            <Button type="primary" className="mt-auto ml-4">
+            <Button type="primary" className="ml-4">
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />
             </Button>

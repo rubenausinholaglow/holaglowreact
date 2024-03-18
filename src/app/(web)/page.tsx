@@ -1,4 +1,4 @@
-import Home from 'app/(ssr)/homeSSR/components/HomeSSR';
+import Home from 'app/(web)/components/home/Home';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
