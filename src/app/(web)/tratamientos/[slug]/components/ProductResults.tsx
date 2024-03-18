@@ -70,8 +70,20 @@ export default function ProductResults({ product }: { product: Product }) {
                     fill
                     className="object-cover rounded-3xl"
                   />
-                  <span itemProp="license">
+                  <span className="hidden" itemProp="license">
                     https://www.holaglow.com/aviso-legal
+                  </span>
+                  <span className="hidden" itemProp="contentUrl">
+                    {item.urlBefore}
+                  </span>
+                  <span className="hidden" itemProp="creator">
+                    Holaglow
+                  </span>
+                  <span className="hidden" itemProp="creditText">
+                    Holaglow
+                  </span>
+                  <span className="hidden" itemProp="copyrightNotice">
+                    Glow Lab SL
                   </span>
                 </div>
               </div>
