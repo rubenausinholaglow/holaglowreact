@@ -256,7 +256,6 @@ export default function PaymentInput(props: Props) {
         );
         await FinanceService.initializePayment(initializePayment)
           .then(x => {
-            debugger;
             setShowPepperModal(false);
             if (x.url != '') {
               openWindow(x.url);
