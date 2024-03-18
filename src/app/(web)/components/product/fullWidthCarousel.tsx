@@ -15,6 +15,7 @@ export default function FullWidthCarousel({
   visibleSlides,
   className,
   items,
+  hasDots = false,
   hasControls = true,
   isPlaying = false,
   disableLeftMargin = false,
@@ -25,6 +26,7 @@ export default function FullWidthCarousel({
   visibleSlides?: number | null;
   className?: string;
   items?: Product[] | Professional[] | null;
+  hasDots?: boolean;
   hasControls?: boolean;
   isPlaying?: boolean;
   disableLeftMargin?: boolean;
@@ -66,6 +68,7 @@ export default function FullWidthCarousel({
       </style>
       <Carousel
         id={`productCarousel${randomId}`}
+        hasDots={hasDots}
         hasControls={hasControls && !isPlaying}
         className={`relative ${className}`}
         isIntrinsicHeight

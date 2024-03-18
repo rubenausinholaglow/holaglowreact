@@ -10,7 +10,7 @@ const FAQS = [
   {
     title: '¿Qué precio tiene una consulta online?',
     description:
-      'La consulta online con un dermatólogo estético cuesta 99€ e incluye el asesoramiento médico y la prescripción de una crema facial personalizada formulada exclusivamente para ti, siempre que sea necesario.',
+      'El precio de la rutina facial personalizada es de 99€ ( sale a 33€mes ya que dura 3 meses el tratamiento). Incluye la consulta con el médico para evaluar las necesidades de tu piel, los 3 productos que te enviamos a casa y la receta para una crema facial personalizada. La crema personalizada podrás encargarla en una farmacia y tiene un coste adicional de 25-40€.',
   },
   {
     title: '¿Qué es el cuidado facial de grado médico o farmacéutico?',
@@ -36,7 +36,7 @@ const FAQS = [
   {
     title: '¿Qué productos incluye la rutina facial complementaria?',
     description:
-      'Todas las rutinas faciales complementarias contienen una espuma limpiadora, un contorno de ojos y una crema de protección solar de alto espectro e hidratante indicada para todo tipo de pieles. Además, cada una de las rutinas incluye una crema para tratar el objetivo facial específico de cada paciente, desde las arrugas y el acné hasta las manchas o la rosácea.',
+      'Todas las rutinas faciales complementarias contienen una espuma limpiadora y una crema de protección solar de alto espectro e hidratante indicada para todo tipo de pieles. Además, cada una de las rutinas incluye una crema para tratar el objetivo facial específico de cada paciente, desde las arrugas y el acné hasta las manchas o la rosácea.',
   },
 ];
 

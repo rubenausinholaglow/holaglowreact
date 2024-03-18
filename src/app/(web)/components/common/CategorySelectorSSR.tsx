@@ -66,7 +66,7 @@ export default function CategorySelectorSSR({
           <li
             id={'tmevent_treatments_type'}
             key={category}
-            className={twMerge(`transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
+            className={twMerge(`shrink-0 transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
                 ? 'bg-hg-primary500'
                 : isStacked

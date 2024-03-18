@@ -1,144 +1,96 @@
 'use client';
 
-import { useSessionStore } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import Carousel from 'designSystem/Carousel/Carousel';
+import { Testimonial } from '@interface/testimonial';
+import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
+import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { SvgHolaglowHand } from 'app/icons/Icons';
+import { SvgByGoogle, SvgStar } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
-
-interface Testimonial {
-  name: string;
-  testimonial: string;
-  imgUrl: string;
-}
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    name: 'BELEN HEVIA',
+    city: 'Barcelona',
+    name: 'Carmen Ausín',
+    imgUrl: '/images/derma/testimonials/carmenAusin.png',
+    value: 4.7,
     testimonial:
-      'Encantada de la experiencia, el doctor va explicando a cada momento lo que va haciendo y el personal súper amable . 100% recomendable 👌',
-    imgUrl: '/images/testimonials/belenHevia.png',
+      'Ya no sabía qué hacer con mi acné, hasta que descubrí la crema formulada!!! Ya llevo unos meses usándola y empiezo a ver cambios en mi piel, cosa que no había notado con ninguna otra crema… ya no me da vergüenza salir a la calle sin maquillaje! Gracias!!',
   },
   {
-    name: 'MARIA JOSÉ ZAMORA',
+    city: 'Toledo',
+    name: 'Marta Gil',
+    imgUrl: '/images/derma/testimonials/martaGil.png',
+    value: 4.7,
     testimonial:
-      'Perfecta experiencia en Holaglow! Equipo de súper profesionales, que te asesoran y acompañan durante el tratamiento',
-    imgUrl: '/images/testimonials/mariaJoseZamora.png',
+      'Además de haberme ayudado mucho con mi piel, siempre me han apoyado, los médicos son muy amables y profesionales. Da gusto recibir asesoramiento de esta calidad desde casa!',
   },
   {
-    name: 'MARIA QUILEZ',
+    city: 'Alicante',
+    name: 'Rubén Zamora',
+    imgUrl: '/images/derma/testimonials/rubenZamora.png',
+    value: 4.7,
     testimonial:
-      'Estoy super contenta con el resultado. El equipo médico me ha asesorado muy bien y me he sentido muy cómoda en todo momento. El escáner es una pasada!!!!',
-    imgUrl: '/images/testimonials/mariaQuilez.png',
+      'He luchado contra la rosácea durante muchos años y he probado muchísimos médicos y métodos, incluso láseres, pero solo con mi cremafacial personalizada estoy consiguiendo resultados realmente duraderos!! ',
   },
   {
-    name: 'LUNA SANTIAGO',
+    city: 'Tarragona',
+    name: 'Amalia Rodriguez',
+    imgUrl: '/images/derma/testimonials/amaliaRodriguez.png',
+    value: 4.7,
     testimonial:
-      'Me he hecho los labios y ha sido increíble!!! Sin duda el mejor lugar en el que poder confiarse. Un trato maravilloso hacia los clientes, os lo recomiendo!!',
-    imgUrl: '/images/testimonials/lunaSantiago.png',
-  },
-  {
-    name: 'ANNA ASIÁN',
-    testimonial:
-      'He visitado la clínica y son súper amables y profesionales, antes del tratamiento puedes ver el resultado de forma virtual en un simulador. Decidí hacerme un tratamiento antiarrugas en la frente, entrecejo y patas de gallo. Encantada con mi nueva imagen,mejorada y muy natural.',
-    imgUrl: '/images/testimonials/annaAsian.png',
-  },
-  {
-    name: 'MONTSE MELERO',
-    testimonial:
-      'Ha sido mi primera vez y no puedo estar más contenta. El personal es encantador, me he sentido acompañada en todo momento y los resultados increíbles, ya se lo he recomendado a mis amigas, ¡Repetiré seguro!',
-    imgUrl: '/images/testimonials/montseMelero.png',
-  },
-  {
-    name: 'ALBERTO SANTAMARIA',
-    testimonial:
-      'Un gran equipo de profesionales!! Todos son súper amables y agradables, lo que te hace sentir muy agusto cuando te haces los tratamientos, te informan de todo lo que tengas dudas sin compromiso y te recomiendan siempre lo mejor que se te adapte a tu persona, sin duda lo recomiendo un 💯',
-    imgUrl: '/images/testimonials/albertoSantamaria.png',
+      'Estaba cansada de los videos de tiktok recomendando soluciones milagrosas que luego no funcionan… Tener una consulta con un dermatólogo y una crema formulada para mi me ha ayudado a simplificar mi rutina facial y a escuchar lo que realmente necesita mi piel. Lo recomiendo mucho!!!',
   },
 ];
 
-const Testimonial = ({
-  imgUrl,
-  name,
-  testimonial,
-}: {
-  imgUrl: string;
-  name: string;
-  testimonial: string;
-}) => {
-  return (
-    <Flex layout="col-center" className="items-stretch">
-      <div className="relative aspect-square mb-4">
-        <Image
-          src={imgUrl}
-          alt="testimonials"
-          fill
-          objectFit="cover"
-          className="rounded-xl mb-4"
-        />
-      </div>
-      <Text className="font-semibold text-center mb-4">{name}</Text>
-      <Text size="sm" className="text-hg-black500 text-center">
-        {testimonial}
-      </Text>
-    </Flex>
-  );
-};
-
 export default function Testimonials() {
-  const deviceSize = useSessionStore(state => state.deviceSize);
-
-  const visibleTestimonials = () => {
-    if (deviceSize.isMobile) {
-      return 1;
-    }
-
-    if (deviceSize.isTablet) {
-      return 2;
-    }
-
-    return 3;
-  };
-
-  function shuffleArray(array: Testimonial[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
-  const shuffledTestimonials = shuffleArray(TESTIMONIALS);
-
   return (
-    <Container className="py-12">
-      <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-8">
-        Si tú estás{' '}
-        <Underlined color={HOLAGLOW_COLORS['primary']}>feliz</Underlined>,
-        nosotros también
-      </Title>
-      <Text className="text-hg-black500 mb-6 md:mb-12">
-        Sabemos que nada transmite más confianza que una historia real. Te
-        presentamos a las personas que ya han confiado en Holaglow.
-      </Text>
-      <Carousel
-        hasControls
-        className="relative mb-12"
-        isIntrinsicHeight
-        visibleSlides={visibleTestimonials()}
-        infinite={false}
-        sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
+    <>
+      <Container className="py-12">
+        <Title isAnimated size="2xl" className="font-bold mb-6 md:mb-8">
+          Si tú estás feliz nosotros también
+        </Title>
+        <Text className="text-hg-black500 mb-6 md:mb-12 md:text-lg">
+          Sabemos que nada transmite más confianza que una historia real. Te
+          presentamos a las personas que ya han confiado en Holaglow.
+        </Text>
+
+        <Flex className="gap-4">
+          <SvgHolaglowHand className="h-[72px] w-[72px] p-4 bg-hg-secondary text-hg-primary rounded-full" />
+          <Flex layout="col-left" className="gap-1">
+            <Text className="font-semibold">Holaglow clinics</Text>
+            <Text className="text-xs text-hg-black400">
+              Basado en 83 comentarios
+            </Text>
+            <Flex className="gap-2 text-hg-secondary">
+              <Text className="font-semibold text-lg -mb-1">4.9</Text>
+              <SvgStar />
+              <SvgStar />
+              <SvgStar />
+              <SvgStar />
+              <SvgStar />
+              <SvgByGoogle className="ml-8 -mb-1" />
+            </Flex>
+          </Flex>
+        </Flex>
+      </Container>
+      <FullWidthCarousel
+        hasDots={isMobile()}
+        hasControls={!isMobile()}
+        className="pb-8"
+        visibleSlides={isMobile() ? 1.2 : 3.5}
       >
-        {shuffledTestimonials.map((item: Testimonial) => (
-          <Testimonial
-            key={item.name}
-            imgUrl={item.imgUrl}
-            name={item.name}
-            testimonial={item.testimonial}
-          />
-        ))}
-      </Carousel>
-    </Container>
+        {TESTIMONIALS.map((testimonial: Testimonial | any) => {
+          return (
+            <TestimonialCard
+              key={testimonial.name}
+              testimonial={testimonial}
+              className="h-full flex flex-col mr-8 bg-derma-secondary300"
+            />
+          );
+        })}
+      </FullWidthCarousel>
+    </>
   );
 }

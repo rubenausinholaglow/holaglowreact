@@ -162,9 +162,11 @@ export default function Agenda({
     data.forEach(x => {
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
+      const block10and45minutes =
+        (!isDashboard && minutes == '15') || (!isDashboard && minutes == '45');
       if (
-        !(hour == '10' && minutes == '00') ||
-        selectedTreatmentsIds != '902'
+        !block10and45minutes &&
+        (!(hour == '10' && minutes == '00') || selectedTreatmentsIds != '902')
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);

@@ -8,15 +8,19 @@ import { Product } from 'app/types/product';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
+import { twMerge } from 'tailwind-merge';
 
 export default function FloatingBottomBar({
   product,
   threshold,
   isVisible = true,
+  className = '',
 }: {
   product?: Product;
   threshold?: number;
   isVisible?: boolean;
+  className?: string;
 }) {
   const ROUTES = useRoutes();
 
@@ -73,9 +77,13 @@ export default function FloatingBottomBar({
         showBottomBar && isVisible ? 'translate-y-[0%]' : 'translate-y-[105%]'
       }`}
     >
-      <div className="p-4 mx-w-xl bg-white rounded-t-[40px]">
-        <Flex className="justify-between h-16">
-          <div className="w-full mr-4 h-16">
+      <div
+        className={twMerge(
+          `p-4 mx-w-xl bg-white rounded-t-[40px] ${className}`
+        )}
+      >
+        <Flex className="justify-between">
+          <div className="w-full mr-4">
             <Button
               size="xl"
               type="primary"
@@ -90,7 +98,7 @@ export default function FloatingBottomBar({
               }}
               id={'tmevent_click_floating_button'}
             >
-              Me interesa
+              {product ? 'Me interesa' : 'Reservar cita'}
             </Button>
           </div>
           <Button
