@@ -189,7 +189,7 @@ export default function PaymentInput(props: Props) {
 
   const activateAlma = async () => {
     if (validateFinancePrice()) {
-      setShowAlma(!showAlma);
+      setShowAlma(true);
       setMessageNotification('');
     }
   };
