@@ -1,10 +1,8 @@
 import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import ROUTES from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 export default function HomeHero() {
   return (
@@ -14,29 +12,11 @@ export default function HomeHero() {
         bg-[url('/images/home/bg.png')] md:bg-[url('/images/home/bg-desktop.png')] bg-cover bg-bottom
       "
     >
-      <Image
-        src="/images/home/bg.png"
-        fill
-        alt="holaglow"
-        objectFit="cover"
-        objectPosition="bottom"
-        priority
-        className="md:hidden"
-      />
-      <Image
-        src="/images/home/bg-desktop.png"
-        fill
-        alt="holaglow"
-        objectFit="cover"
-        objectPosition="bottom"
-        priority
-        className="hidden md:block"
-      />
       <Container isHeader className="relative overflow-hidden">
         <Flex layout="col-left" className="md:flex-row w-full">
           <Flex
             layout="col-left"
-            className="z-10 w-full md:w-1/2 md:pb-64 xl:pb-96 mb-8 md:mb-0"
+            className="z-10 w-full md:w-1/2 md:pb-64 2xl:pb-96 mb-8 md:mb-0"
           >
             <Title
               size="2xl"

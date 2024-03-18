@@ -18,9 +18,9 @@ export const Container = ({
   return (
     <div
       className={twMerge(
-        `w-full px-4 mx-auto ${isHeader ? 'max-w-3xl' : 'max-w-xl'} ${
-          className ? className : ''
-        } `
+        `w-full px-4 mx-auto ${
+          isHeader ? 'xl:max-w-3xl xl:px-24' : 'max-w-xl'
+        } ${className ? className : ''} `
       )}
       {...rest}
       {...(id && { id })}

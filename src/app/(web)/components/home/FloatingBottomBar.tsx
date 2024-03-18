@@ -98,7 +98,7 @@ export default function FloatingBottomBar({
               }}
               id={'tmevent_click_floating_button'}
             >
-              Me interesa
+              {product ? 'Me interesa' : 'Reservar cita'}
             </Button>
           </div>
           <Button

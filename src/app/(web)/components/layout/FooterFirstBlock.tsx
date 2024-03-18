@@ -14,7 +14,7 @@ export default function FooterFirstBlock() {
         className="gap-6 w-full md:w-1/3 text-xl font-semibold px-4 md:px-0 pb-6 border-b border-hg-black md:border-none"
       >
         <SimpleAccordion
-          trigger={isMobile() ? 'Tratamientos' : 'Tratamientos más populares'}
+          trigger="Más populares"
           triggerStyles="text-left"
           isOpen={!isMobile()}
         >
