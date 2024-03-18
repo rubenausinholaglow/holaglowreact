@@ -99,7 +99,7 @@ export default function ZoneFilter({
 
             <Image height={40} width={40} src={zone.icon} alt={zone.name} />
             <Text size="xs" className="text-center text-hg-secondary mt-2">
-              {zone.name} {isDashboard.toString()}
+              {zone.name}
             </Text>
           </Flex>
         </li>
