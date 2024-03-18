@@ -30,7 +30,7 @@ export default function DesktopFilters({
             <Text size="sm" className="font-semibold">
               Zona
             </Text>
-            <ZoneFilter />
+            <ZoneFilter isDashboard />
           </Flex>
           <Flex layout="col-left" className="w-full">
             <Text size="sm" className="font-semibold">
@@ -41,9 +41,9 @@ export default function DesktopFilters({
           <Flex layout="col-left" className="w-full">
             <CategorySelector isDashboard className="inner-flex" isStacked />
           </Flex>
-          <Flex layout="col-left" className="w-full">
+          {/* <Flex layout="col-left" className="w-full">
             <PackTypeFilter />
-          </Flex>
+          </Flex> */}
           <Flex layout="col-left" className="w-full">
             <TypeFilter />
           </Flex>
