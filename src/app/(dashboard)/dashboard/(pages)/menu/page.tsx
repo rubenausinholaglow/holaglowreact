@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { INITIAL_STATE } from '@utils/constants';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
@@ -24,9 +25,11 @@ import { menuItems } from './MenuItems';
 const Page = () => {
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
-  const { remoteControl, setCheckSimulator, user, setBudgetId } =
+  const { remoteControl, setCheckSimulator, user, setBudgetId, isCallCenter } =
     useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, selectedClinic } = useSessionStore(
+    state => state
+  );
 
   useEffect(() => {
     setBudgetId('');
@@ -68,7 +71,17 @@ const Page = () => {
   return (
     <App>
       <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-        {user?.firstName && (
+        <div>
+          {!selectedClinic && isCallCenter && (
+            <>
+              <Title className="font-semibold mb-8">Selecciona clínica</Title>
+
+              <CheckoutClinicSelector isDashboard className="mb-8" />
+            </>
+          )}
+        </div>
+        {((user?.firstName && !isCallCenter) ||
+          (isCallCenter && selectedClinic)) && (
           <div className="mt-8">
             <Title className="text-xl mb-4">Tu glow, tus normas</Title>
             <Title className="font-bold text-5xl mb-8">
@@ -80,18 +93,28 @@ const Page = () => {
             </Title>
             <div className="grid grid-cols-3 mb-12">
               {menuItems.map(item => (
-                <DashboardMenuItem
-                  key={item.title}
-                  iconSrc={item.iconSrc}
-                  altText={item.altText}
-                  title={item.title}
-                  link={
-                    item.link.includes('flowwwToken')
-                      ? item.link.replace('flowwwToken', user?.flowwwToken)
-                      : item.link
-                  }
-                  target={item.target}
-                />
+                <>
+                  {(item.visible == true ||
+                    (isCallCenter && item.visible == false)) && (
+                    <>
+                      <DashboardMenuItem
+                        key={item.title}
+                        iconSrc={item.iconSrc}
+                        altText={item.altText}
+                        title={item.title}
+                        link={
+                          item.link.includes('flowwwToken')
+                            ? item.link.replace(
+                                'flowwwToken',
+                                user!.flowwwToken
+                              )
+                            : item.link
+                        }
+                        target={item.target}
+                      />
+                    </>
+                  )}
+                </>
               ))}
             </div>
           </div>

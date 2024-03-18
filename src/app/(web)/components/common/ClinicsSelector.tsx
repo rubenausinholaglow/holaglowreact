@@ -55,20 +55,20 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
           clinics &&
           clinics.map((clinic, index) => (
             <AccordionItem
-              className="w-full"
               key={index}
               value={index.toString()}
+              className={`w-full rounded-2xl overflow-hidden
+                      ${
+                        selectedAccordion === index.toString()
+                          ? 'bg-hg-secondary100 border border-hg-secondary300'
+                          : 'bg-derma-secondary300 border border-transparent'
+                      }`}
             >
               <AccordionTrigger className="w-full">
                 <AnimateOnViewport>
                   <div
                     id={'tmevent_clinics_module'}
                     key="clinic.city"
-                    className={
-                      selectedAccordion === index.toString()
-                        ? 'bg-hg-primary300'
-                        : 'bg-hg-black100'
-                    }
                     onClick={() => {
                       if (index.toString() === selectedAccordion) {
                         setSelectedAccordion('3');
@@ -101,7 +101,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
                   </div>
                 </AnimateOnViewport>
               </AccordionTrigger>
-              <AccordionContent className="bg-hg-black100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+              <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
                 <div className={`overflow-hidden max-w-full w-full h-[300px]`}>
                   <div id="g-mapdisplay" className="h-full w-full max-w-full">
                     <iframe
@@ -123,10 +123,10 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
                 <Flex
                   id={'tmevent_clinics_module'}
                   layout="row-center"
-                  className={`transition-all w-full justify-between bg-hg-black100 p-4 cursor-pointer ${
+                  className={`transition-all w-full justify-between bg-hg-black100 py-6 px-4 cursor-pointer rounded-2xl ${
                     selectedClinic && selectedClinic.city === clinic.city
-                      ? 'bg-hg-primary300'
-                      : 'bg-hg-black100'
+                      ? 'bg-hg-secondary100 border border-hg-secondary300'
+                      : 'bg-derma-secondary300 border border-transparent'
                   } `}
                   key={clinic.city}
                   onClick={() => setSelectedClinic(clinics[index])}

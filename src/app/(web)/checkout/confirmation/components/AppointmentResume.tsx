@@ -1,12 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Appointment } from '@interface/appointment';
+import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
 import {
   Accordion,
   AccordionItemProps,
   AccordionSingleProps,
 } from '@radix-ui/react-accordion';
-import { getTotalFromCart } from '@utils/utils';
+import {
+  getTotalFromCart,
+  getUniqueIds,
+  getUniqueProducts,
+} from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   SvgAngleDown,
@@ -41,12 +46,14 @@ export default function AppointmentResume({
   isDerma = false,
   isUpselling = false,
   bgColor = 'bg-white',
+  isDashboard = false,
 }: {
   appointment?: Appointment;
   isProbadorVirtual?: boolean;
   isDerma?: boolean;
   isUpselling?: boolean;
   bgColor?: string;
+  isDashboard?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
@@ -75,10 +82,19 @@ export default function AppointmentResume({
       : ''
     : selectedSlot?.startTime;
 
-  let selectedTreatmentsNames = '';
-
+  let selectedTreatmentTitles: string[] = [];
   if (selectedTreatments) {
-    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
+    const uniqueProductIds = getUniqueIds(selectedTreatments);
+    selectedTreatmentTitles = uniqueProductIds.map(productId => {
+      const product = selectedTreatments.find(x => x.id === productId);
+      return product ? product.title : '';
+    });
+  }
+  const selectedTreatmentsNames = selectedTreatmentTitles.join(' + ');
+
+  function getProductsMapped(): Product[] {
+    const uniqueProductIds = getUniqueIds(selectedTreatments);
+    return getUniqueProducts(uniqueProductIds, selectedTreatments);
   }
 
   useEffect(() => {
@@ -132,6 +148,15 @@ export default function AppointmentResume({
         />
       </Flex>
     );
+  };
+
+  const TreatmentsDashboard = () => {
+    return getProductsMapped().map(item => (
+      <div key={item.id}>
+        <Text className="font-semibold">{item.title}</Text>
+        <Text>{item.description}</Text>
+      </div>
+    ));
   };
 
   const TreatmentName = () => {
@@ -272,36 +297,43 @@ export default function AppointmentResume({
                   layout="col-left"
                   className="w-full gap-4 text-sm p-4 md:p-0"
                 >
-                  <Flex layout="col-left" className="w-full gap-2">
-                    <TreatmentName />
-                    {selectedTreatments &&
-                    selectedTreatments[0] &&
-                    selectedTreatments[0].isPack ? (
-                      <ul className="p-1">
-                        {selectedPacksTreatments &&
-                          selectedPacksTreatments.map(item => {
-                            return <li key={item.title}>- {item.title}</li>;
-                          })}
-                      </ul>
-                    ) : selectedTreatments[0] &&
-                      !isEmpty(selectedTreatments[0].appliedProducts) ? (
-                      selectedTreatments[0].appliedProducts.map(item => {
-                        return (
-                          <Flex key={item.titlte} className="items-start mb-1">
-                            <Text className="text-hg-black400 text-sm">
-                              {item.titlte}
-                            </Text>
-                          </Flex>
-                        );
-                      })
-                    ) : (
-                      <Flex className="items-start mb-2">
-                        {selectedTreatments[0] && (
-                          <Text>{selectedTreatments[0].description}</Text>
-                        )}
-                      </Flex>
-                    )}
-                  </Flex>
+                  {isDashboard ? (
+                    <TreatmentsDashboard />
+                  ) : (
+                    <Flex layout="col-left" className="w-full gap-2">
+                      <TreatmentName />
+                      {selectedTreatments &&
+                      selectedTreatments[0] &&
+                      selectedTreatments[0].isPack ? (
+                        <ul className="p-1">
+                          {selectedPacksTreatments &&
+                            selectedPacksTreatments.map(item => {
+                              return <li key={item.title}>- {item.title}</li>;
+                            })}
+                        </ul>
+                      ) : selectedTreatments[0] &&
+                        !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                        selectedTreatments[0].appliedProducts.map(item => {
+                          return (
+                            <Flex
+                              key={item.titlte}
+                              className="items-start mb-1"
+                            >
+                              <Text className="text-hg-black400 text-sm">
+                                {item.titlte}
+                              </Text>
+                            </Flex>
+                          );
+                        })
+                      ) : (
+                        <Flex className="items-start mb-2">
+                          {selectedTreatments[0] && (
+                            <Text>{selectedTreatments[0].description}</Text>
+                          )}
+                        </Flex>
+                      )}
+                    </Flex>
+                  )}
                   {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
                     <TreatmentPriceBreakdown />
                   )}

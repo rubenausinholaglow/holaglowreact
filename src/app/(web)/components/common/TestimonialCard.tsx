@@ -29,14 +29,14 @@ export default function TestimonialCard({
           className="shrink-0"
         />
         <Flex layout="col-left">
-          <Text className="text-sm">{testimonial.city}</Text>
-          <Text className="text-bold mb-2">{testimonial.name}</Text>
+          <Text className="text-xs">{testimonial.city}</Text>
+          <Text className="font-semibold mb-2">{testimonial.name}</Text>
           <Flex className="gap-2">
-            <SvgStar height={10} width={10} />
-            <SvgStar height={10} width={10} />
-            <SvgStar height={10} width={10} />
-            <SvgStar height={10} width={10} />
-            <SvgStar height={10} width={10} />
+            <SvgStar className="h-5 w-5 text-hg-secondary" />
+            <SvgStar className="h-5 w-5 text-hg-secondary" />
+            <SvgStar className="h-5 w-5 text-hg-secondary" />
+            <SvgStar className="h-5 w-5 text-hg-secondary" />
+            <SvgStar className="h-5 w-5 text-hg-secondary" />
           </Flex>
         </Flex>
       </Flex>

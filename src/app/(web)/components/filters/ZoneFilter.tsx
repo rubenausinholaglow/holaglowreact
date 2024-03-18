@@ -7,14 +7,19 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import { isMobile, useDeviceSizeSSR } from '../layout/Breakpoint';
+
 export default function ZoneFilter({
   className,
   isDesktop,
+  isDashboard = false,
 }: {
   className?: string;
   isDesktop?: boolean;
+  isDashboard?: boolean;
 }) {
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
+  const deviceSize = useDeviceSizeSSR();
 
   const ZONES = [
     {
@@ -49,6 +54,14 @@ export default function ZoneFilter({
     },
   ];
 
+  function getBackgroundColor() {
+    if (isDashboard) {
+      return 'bg-hg-black100';
+    } else {
+      return deviceSize.isMobile ? 'bg-white' : 'bg-derma-secondary300';
+    }
+  }
+
   return (
     <ul
       className={`grid grid-cols-3 gap-5 w-full ${className ? className : ''}`}
@@ -59,11 +72,9 @@ export default function ZoneFilter({
           key={zone.name}
           className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-center items-center cursor-pointer gap-2 ${
             isDesktop ? 'w-[120px]' : ''
-          } ${
-            productFilters.zone.includes(zone.id)
-              ? 'bg-hg-primary500'
-              : 'bg-hg-black100'
-          }`}
+          }
+          ${getBackgroundColor()}
+          ${productFilters.zone.includes(zone.id) ? 'bg-hg-primary500' : ''}`}
           onClick={() =>
             setProductFilters(
               toggleFilter({
@@ -74,16 +85,21 @@ export default function ZoneFilter({
             )
           }
         >
-          <Flex layout="col-center" className="pointer-events-none">
-            {productFilters.zone.includes(zone.id) ? (
-              <SvgCheckSquareActive className="ml-auto" />
-            ) : (
-              <SvgCheckSquare className="ml-auto" />
-            )}
+          <Flex
+            layout="col-center"
+            className="relative aspect-square items-center justify-center pointer-events-none w-full pt-4"
+          >
+            <div className="absolute top-0 right-0">
+              {productFilters.zone.includes(zone.id) ? (
+                <SvgCheckSquareActive className="ml-auto" />
+              ) : (
+                <SvgCheckSquare className="ml-auto" />
+              )}
+            </div>
 
             <Image height={40} width={40} src={zone.icon} alt={zone.name} />
-            <Text size="xs" className="text-center">
-              {zone.name}
+            <Text size="xs" className="text-center text-hg-secondary mt-2">
+              {zone.name} {isDashboard.toString()}
             </Text>
           </Flex>
         </li>

@@ -6,7 +6,7 @@ import { useGlobalStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { twMerge } from 'tailwind-merge';
 
-export const ModalBackground = () => {
+export const ModalBackgroundSSR = () => {
   const {
     isModalOpen,
     showModalBackground,
@@ -43,7 +43,7 @@ export const ModalBackground = () => {
   );
 };
 
-export const Modal = ({
+export const ModalSSR = ({
   isVisible,
   setIsVisible,
   width,
@@ -129,7 +129,7 @@ export const Modal = ({
   );
 };
 
-export const SwipeModal = ({
+export const SwipeModalSSR = ({
   children,
   isOpen,
   className,

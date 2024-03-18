@@ -5,6 +5,7 @@ export const menuItems = [
     title: 'Simulador 3D',
     link: '/dashboard/crisalix',
     target: '',
+    visible: true,
   },
   {
     iconSrc: '/images/dashboard/menu-icons/presupuestos.svg',
@@ -12,6 +13,7 @@ export const menuItems = [
     title: 'Presupuestos',
     link: '/dashboard/budgets',
     target: '',
+    visible: true,
   },
   {
     iconSrc: '/images/dashboard/menu-icons/agenda.svg',
@@ -19,5 +21,14 @@ export const menuItems = [
     title: 'Agenda',
     link: '/dashboard/schedule?token=flowwwToken',
     target: '',
+    visible: true,
+  },
+  {
+    iconSrc: '/images/dashboard/menu-icons/agenda.svg',
+    altText: 'Reagenda',
+    title: 'Reagenda',
+    link: '/dashboard/reagenda?token=flowwwToken',
+    target: '',
+    visible: false,
   },
 ];

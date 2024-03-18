@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Product } from '@interface/product';
+import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
+import { getUniqueIds, getUniqueProducts } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
@@ -41,6 +42,10 @@ export default function TreatmentAccordionSelector({
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedIndexsProducts, setSelectedIndexProducts] = useState<number[]>(
+    []
+  );
+
   const cart = useCartStore(state => state.cart);
 
   function getProductsByCategory(category: string) {
@@ -53,7 +58,8 @@ export default function TreatmentAccordionSelector({
           ) && !product.isPack
       );
       if (filteredProducts.length == 0) {
-        return selectedProducts;
+        const productIds = getUniqueIds(selectedProducts);
+        return getUniqueProducts(productIds, selectedProducts);
       }
     } else {
       filteredProducts = stateProducts.filter(
@@ -67,7 +73,6 @@ export default function TreatmentAccordionSelector({
       a.title > b.title ? 1 : -1
     );
   }
-
   useEffect(() => {
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
@@ -106,31 +111,82 @@ export default function TreatmentAccordionSelector({
     if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
 
+  useEffect(() => {
+    if (!isEmpty(selectedProducts)) {
+      const selectedIndexs: number[] = [];
+      selectedProducts.map((product, index) => {
+        selectedIndexs.push(index);
+      });
+      setSelectedIndexProducts(selectedIndexs);
+    }
+  }, [selectedProducts]);
+
+  function addTreatment(product: Product, index: number) {
+    if (isDashboard) {
+      cart.length > 0
+        ? addTreatmentDashboard(product, index)
+        : setSelectedTreatments([...selectedTreatments, product]);
+    } else {
+      setSelectedTreatments([product]);
+    }
+  }
+
+  function addTreatmentDashboard(product: Product, index: number) {
+    const productToAdd: Product[] = getProductToAdd(product);
+    setSelectedTreatments([...selectedTreatments, ...productToAdd]);
+    setSelectedIndexProducts([...selectedIndexsProducts, index]);
+  }
+
+  function getProductToAdd(product: Product): Product[] {
+    if (product.unityType === UnityType.AcidoHialuronico) {
+      return selectedProducts.filter(x => x.id === product.id) as Product[];
+    } else {
+      return [product];
+    }
+  }
+
+  function removeTreatment(product: Product, index: number) {
+    setSelectedIndexProducts(x => x.filter(item => item !== index));
+    const updatedSelection = getUpdatedSelection(product);
+    setSelectedTreatments(updatedSelection);
+  }
+
+  function getUpdatedSelection(product: Product): Product[] {
+    if (product.unityType === UnityType.AcidoHialuronico) {
+      return selectedTreatments.filter(
+        selectedProduct => selectedProduct.id !== product.id
+      );
+    } else {
+      const indexToRemove = selectedTreatments.findIndex(
+        x => x.title === product.title
+      );
+      const updatedTreatments = [...selectedTreatments];
+      updatedTreatments.splice(indexToRemove, 1);
+      return updatedTreatments;
+    }
+  }
+
   const renderAcordionContent = (category: string) => {
     return (
       <AccordionContent>
         <div className="border-t border-hg-secondary300">
           <ul className="flex flex-col w-full">
-            {getProductsByCategory(category).map(product => (
+            {getProductsByCategory(category).map((product, index) => (
               <li
                 className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                 key={product.title}
                 onClick={() => {
-                  const isSelected = selectedTreatments.some(
-                    selectedProduct => selectedProduct.title === product.title
-                  );
+                  const isSelected =
+                    isDashboard && cart.length > 0
+                      ? selectedIndexsProducts.includes(index)
+                      : selectedTreatments.some(
+                          selectedProduct => selectedProduct.id === product.id
+                        );
 
                   if (isSelected) {
-                    const updatedSelection = selectedTreatments.filter(
-                      selectedProduct => selectedProduct.id !== product.id
-                    );
-                    setSelectedTreatments(updatedSelection);
+                    removeTreatment(product, index);
                   } else {
-                    if (isDashboard) {
-                      setSelectedTreatments([...selectedTreatments, product]);
-                    } else {
-                      setSelectedTreatments([product]);
-                    }
+                    addTreatment(product, index);
                   }
 
                   if (!isDashboard) {
@@ -142,24 +198,43 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
-
-                {selectedTreatments.some(
-                  selectedProduct => selectedProduct.id === product.id
-                ) ? (
-                  <SvgRadioChecked
-                    height={24}
-                    width={24}
-                    className="shrink-0 ml-auto"
-                  />
-                ) : (
-                  <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
-                )}
+                {renderCheck(product, index)}
               </li>
             ))}
           </ul>
         </div>
       </AccordionContent>
     );
+  };
+
+  const renderCheck = (product: Product, index: number) => {
+    const commonElement = (
+      <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
+    );
+
+    const checkedElement = (
+      <SvgRadioChecked height={24} width={24} className="shrink-0 ml-auto" />
+    );
+
+    if (isDashboard && cart.length > 0) {
+      return (
+        <>
+          {selectedIndexsProducts.includes(index)
+            ? checkedElement
+            : commonElement}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {selectedTreatments.some(
+            selectedProduct => selectedProduct.id === product.id
+          )
+            ? checkedElement
+            : commonElement}
+        </>
+      );
+    }
   };
 
   if (isDashboard && cart.length > 0)

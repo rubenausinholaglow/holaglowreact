@@ -6,7 +6,6 @@ import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
-import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import ProductCard from 'app/(web)/components/product/ProductCard';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -19,15 +18,10 @@ import {
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
-import Image from 'next/image';
 
-import FilterText from '../components/filters/FilterText';
-import FloatingBottomBar from '../components/home/FloatingBottomBar';
 import ProductSearchBar from '../components/product/ProductSearchBar';
-import PVBottomBar from '../components/product/PVBottomBar';
-import Products from '../user/budget/Products';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
@@ -217,7 +211,7 @@ export default function PsrpPage({
           setModalVisibility={setIsMobileFiltersVisible}
         />
         <div className="bg-hg-cream rounded-t-3xl">
-          <Container className="relative pt-8 pb-4">
+          <Container className="relative pt-6 pb-4">
             <Title isAnimated size="3xl" className="mt-4">
               Nuestros tratamientos
             </Title>
@@ -226,17 +220,16 @@ export default function PsrpPage({
             <ProductSearchBar products={stateProducts} className="mb-4" />
           </Container>
           <Container className="px-0 md:px-4 pb-4 md:pb-8 relative">
-            <div className="lg:flex lg:flex-row lg:justify-between items-center">
+            <div className="xl:flex xl:flex-row xl:justify-between items-center">
               <ProductSearchBar
                 products={stateProducts}
-                className="hidden md:block mr-8 mb-4 lg:mb-0"
+                className="hidden md:block mr-8 xl:max-w-[220px]"
               />
               <AnimateOnViewport
                 origin={deviceSize.isMobile ? 'right' : 'bottom'}
               >
-                <CategorySelector className="mb-4 lg:mb-0" />
+                <CategorySelector />
               </AnimateOnViewport>
-              <PackTypeFilter className="ml-4 md:ml-0" />
             </div>
           </Container>
         </div>
@@ -253,7 +246,7 @@ export default function PsrpPage({
           <div className="bg-hg-cream500 pb-32 relative">
             <Flex
               layout="row-left"
-              className="justify-between py-8 md:py-0 md:mt-8 md:absolute w-full"
+              className="justify-between pt-6 pb-4 md:py-0 md:mt-8 md:absolute w-full"
             >
               <Container>
                 <AnimateOnViewport>
@@ -328,11 +321,11 @@ export default function PsrpPage({
 
             <Container>
               <ul
-                className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-6 ${
+                className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-2 md:gap-6 ${
                   showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
                 }   pb-6`}
               >
-                <li className="md:pt-10">
+                <li className="-mb-2 md:mb-0 md:pt-10">
                   <PVBanner />
                 </li>
                 {filteredProducts.map(product => {
@@ -353,7 +346,6 @@ export default function PsrpPage({
           </div>
         )}
         <LookingFor />
-        <PVBottomBar />
       </MainLayout>
     );
 

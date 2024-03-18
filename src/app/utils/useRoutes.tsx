@@ -3,9 +3,8 @@
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 
 const useRoutes = () => {
-  const { storedBoxId, storedClinicId, user } = useGlobalPersistedStore(
-    state => state
-  );
+  const { storedBoxId, storedClinicId, user, isCallCenter } =
+    useGlobalPersistedStore(state => state);
 
   return {
     home: '/',
@@ -25,7 +24,9 @@ const useRoutes = () => {
       crisalix: '/dashboard/crisalix',
       schedule: `/dashboard/schedule?flowwwToken=${user?.flowwwToken}`,
       menu: '/dashboard/menu',
-      home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
+      home: isCallCenter
+        ? `/dashboard?isCallCenter=true&ignoreMessages=true`
+        : `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
       checkOut: '/dashboard/checkout',
       checkIn: {
         root: `/dashboard/checkin?clinicId=${storedClinicId}`,

@@ -5,10 +5,10 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType } from '@interface/product';
+import { EmlaType, UnityType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
-import { validTypesFilterCart } from '@utils/utils';
+import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
@@ -116,6 +116,8 @@ export default function Agenda({
   const [loadingDays, setLoadingDays] = useState(false);
   const { cart, updateIsScheduled } = useCartStore(state => state);
 
+  const productIds = getUniqueIds(selectedTreatments);
+
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
@@ -160,9 +162,11 @@ export default function Agenda({
     data.forEach(x => {
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
+      const block10and45minutes =
+        (!isDashboard && minutes == '15') || (!isDashboard && minutes == '45');
       if (
-        !(hour == '10' && minutes == '00') ||
-        selectedTreatmentsIds != '902'
+        !block10and45minutes &&
+        (!(hour == '10' && minutes == '00') || selectedTreatmentsIds != '902')
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
           hours.push(x);
@@ -300,16 +304,23 @@ export default function Agenda({
                   (cartItem.isScheduled === false ||
                     cartItem.isScheduled === undefined)
               );
-
               if (filteredCart.length >= selectedTreatments.length) {
-                selectedTreatments.forEach(treatment => {
-                  const foundItem = filteredCart.find(
-                    cartItem => cartItem.id === treatment.id
-                  );
-                  if (foundItem) {
-                    updateIsScheduled(true, foundItem.uniqueId);
-                  }
-                });
+                if (selectedTreatments.length == 1) {
+                  const selectedProduct = filteredCart.find(x => x.title);
+                  updateIsScheduled(true, selectedProduct!.uniqueId);
+                } else {
+                  selectedTreatments.forEach(treatment => {
+                    const selectedProducts = filteredCart.filter(
+                      cartItem =>
+                        cartItem.id === treatment.id &&
+                        (cartItem.isScheduled === false ||
+                          cartItem.isScheduled === undefined)
+                    );
+                    selectedProducts.forEach(item => {
+                      updateIsScheduled(true, item.uniqueId);
+                    });
+                  });
+                }
               }
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
@@ -500,13 +511,17 @@ export default function Agenda({
                         className="w-full text-left to-hg-black500 mb-4"
                       >
                         Agenda cita para{' '}
-                        {Array.isArray(selectedTreatments) &&
-                          selectedTreatments.map((product, index) => (
-                            <span key={product.id} className="font-semibold">
-                              {product.title}
-                              {index < selectedTreatments.length - 1 && ', '}
+                        {productIds.map((productId, index) => {
+                          const product = selectedTreatments.find(
+                            product => product.id === productId
+                          );
+                          return (
+                            <span key={productId} className="font-semibold">
+                              {product!.title}
+                              {index < productIds.length - 1 && ', '}
                             </span>
-                          ))}
+                          );
+                        })}
                         {!isDerma && <> en tu clínica preferida</>}
                         {isDerma && <> online</>}
                       </Text>

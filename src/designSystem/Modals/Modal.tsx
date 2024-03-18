@@ -172,10 +172,10 @@ export const SwipeModal = ({
 
   return (
     <div
-      className={`transition-all z-50 translate-y-[105%] rounded-t-2xl fixed w-full overflow-hidden bg-white bottom-0 left-0 right-0 swipe-modal 
+      className={twMerge(`transition-all z-50 translate-y-[105%] rounded-t-2xl fixed w-full overflow-hidden bg-white bottom-0 left-0 right-0 swipe-modal 
         ${isOpen ? 'translate-y-0' : ''}
         ${className ? className : ''}
-      `}
+      `)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}

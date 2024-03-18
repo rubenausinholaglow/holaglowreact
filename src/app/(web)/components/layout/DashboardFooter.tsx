@@ -14,7 +14,7 @@ export default function DashboardFooter({
   showCart?: boolean;
 }) {
   const router = useRouter();
-  const { remoteControl, storedBoxId, storedClinicId } =
+  const { remoteControl, storedBoxId, storedClinicId, isCallCenter } =
     useGlobalPersistedStore(state => state);
 
   function handleBackButton() {
@@ -25,7 +25,9 @@ export default function DashboardFooter({
         );
       } else
         router.push(
-          `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`
+          isCallCenter
+            ? `/dashboard?isCallCenter=true&ignoreMessages=true`
+            : `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`
         );
     } else router.back();
   }

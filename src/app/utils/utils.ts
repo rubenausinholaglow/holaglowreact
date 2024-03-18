@@ -4,7 +4,7 @@ import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/types/crisalix';
 import { INITIAL_STATE_MESSAGESOCKETLIST } from 'app/types/messageSocket';
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
-import { CartItem, ProductType } from 'app/types/product';
+import { CartItem, Product, ProductType, UnityType } from 'app/types/product';
 
 import { useCartStore } from '../(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
@@ -200,6 +200,7 @@ export const formatDate = (date: Date, includeHours = true) => {
   return `${formattedDate.replace(',', '')}`;
 };
 
+
 export const validTypesFilterCart: ProductType[] = [
   ProductType.Esthetic,
   ProductType.Medical,
@@ -209,4 +210,28 @@ export const validTypesFilterCart: ProductType[] = [
 
 export function isClient() {
   return typeof window !== 'undefined';
+}
+
+export function getUniqueProducts(uniqueProductIds: string[], selectedProducts : Product[]): Product[] {
+  const finalSelectedProducts: Product[] = [];
+  
+  uniqueProductIds.forEach(productId => {
+    const duplicatedAHProducts = selectedProducts.filter(
+      product => product.id === productId && product.unityType == UnityType.AcidoHialuronico
+    );
+    if (duplicatedAHProducts.length > 1) {
+      duplicatedAHProducts[0].description = `x${duplicatedAHProducts.length} viales de ácido híaluronico`;
+      finalSelectedProducts.push(duplicatedAHProducts[0]);
+    } else {
+      const productsWithSameId = selectedProducts.filter(product => product.id === productId);
+      finalSelectedProducts.push(...productsWithSameId);
+    }
+  });
+  return finalSelectedProducts;
+}
+
+export function getUniqueIds(products : Product[]) : string[] {
+  return Array.from(
+      new Set(products.map(x => x.id))
+    );
 }

@@ -34,7 +34,8 @@ export interface Product {
   longDescription: string;
   numProductCardPhotos: number;
   videoUrl: string;
-  emlaType : EmlaType
+  emlaType : EmlaType;
+  unityType : UnityType;
 }
 
 export enum EmlaType {
@@ -157,4 +158,19 @@ export enum ProductType {
   GiftCard,
   GlowBox,
   GlowGifts,
+}
+
+export enum UnityType {
+  None,
+  AcidoHialuronico,
+  BabyBotox,
+  Botox,
+  Piel,
+  PielProfunda,
+  Vitaminas,
+  Hilos,
+  Lifting,
+  Peeling,
+  Radiesse,
+  Belkyra
 }

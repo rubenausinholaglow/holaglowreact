@@ -34,14 +34,14 @@ export default function MobileFilters({
     <SwipeModal
       isOpen={isVisible}
       setModalVisibility={setModalVisibility}
-      className="h-5/6"
+      className="h-5/6 bg-derma-secondary300"
     >
       <Flex layout="col-left" className="h-full relative pt-20">
         <Flex
           layout="col-center"
           className="fixed top-4 left-0 right-0 justify-between mb-6 px-4"
         >
-          <div className="w-[72px] h-[6px] rounded-full bg-hg-black100 mx-auto mb-2"></div>
+          <div className="w-[72px] h-[6px] rounded-full bg-derma-secondary500 mx-auto mb-2"></div>
           <Flex className="justify-between w-full">
             <Text className="font-semibold">Filtrar</Text>
             <Flex>
@@ -84,7 +84,6 @@ export default function MobileFilters({
                   Tratamientos
                 </Text>
                 <CategorySelector isStacked className="mb-4" />
-                <PackTypeFilter customStyles="bg-hg-black50" />
               </Container>
             </div>
             <Container className="py-4 pb-12">

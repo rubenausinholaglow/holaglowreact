@@ -211,6 +211,7 @@ export default function Confirmation({
               <AppointmentResume
                 appointment={appointment}
                 isProbadorVirtual={isProbadorVirtual}
+                isDashboard={isDashboard}
                 bgColor="bg-hg-secondary100"
               />
             )}
