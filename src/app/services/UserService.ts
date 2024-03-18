@@ -1,3 +1,4 @@
+import Bugsnag from '@bugsnag/js';
 import { DermaQuestionsResponse } from '@interface/derma/dermaquestions';
 import { User } from 'app/types/appointment';
 import { Client, ClientUpdate } from 'app/types/client';
@@ -94,14 +95,15 @@ export default class UserService {
         },
         body: JSON.stringify(formData),
       });
+      
       if (res.ok) {
         const data = await res.json();
         return data;
       } else {
         return undefined;
       }
-    } catch (err) {
-      return undefined;
+    } catch (err : any) {
+      Bugsnag.notify(err);
     }
   }
 

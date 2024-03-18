@@ -247,13 +247,18 @@ export default function PaymentInput(props: Props) {
 
     await UserService.updateUser(formData)
       .then(async x => {
+        if (!x) {
+          setMessageNotification('Error actualizando usuario');
+          return;
+        }
         const initializePayment = constructInitializePayment(
           PaymentBank.Pepper
         );
         await FinanceService.initializePayment(initializePayment)
           .then(x => {
+            debugger;
             setShowPepperModal(false);
-            if (x) {
+            if (x.url != '') {
               openWindow(x.url);
               handleUrlPayment(x.id, '', x.referenceId);
             } else {
@@ -278,6 +283,7 @@ export default function PaymentInput(props: Props) {
           });
       })
       .catch(error => {
+        setShowPepperModal(false);
         setMessageNotification('Error actualizando el usuario');
         Bugsnag.notify('Error updateUser:', error);
       });
