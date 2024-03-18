@@ -78,7 +78,7 @@ export default function ProfessionalsDerma({
 
   return (
     <Container
-      className={`p-0 md:px-4 gap-16 ${
+      className={`p-0 md:px-4 gap-16 pb-12 ${
         isDashboard ? '' : 'md:flex'
       } justify-between md:mb-4 ${className}`}
     >
