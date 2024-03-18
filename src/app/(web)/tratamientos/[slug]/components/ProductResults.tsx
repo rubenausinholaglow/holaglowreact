@@ -76,8 +76,14 @@ export default function ProductResults({ product }: { product: Product }) {
                   <span className="hidden" itemProp="contentUrl">
                     {item.urlBefore}
                   </span>
-                  <span className="hidden" itemProp="creator">
-                    Holaglow
+                  ç
+                  <span
+                    className="hidden"
+                    itemProp="creator"
+                    itemType="https://schema.org/Company"
+                    itemScope
+                  >
+                    <meta itemProp="name" content="Holaglow" />
                   </span>
                   <span className="hidden" itemProp="creditText">
                     Holaglow
