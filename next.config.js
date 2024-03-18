@@ -17,6 +17,7 @@ const nextConfig = {
         pathname: '/derma/**',
       },
     ],
+    domains: ['www.holaglow.com'],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
