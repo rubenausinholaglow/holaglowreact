@@ -6,7 +6,6 @@ import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelector from 'app/(web)/components/filters/CategorySelector';
-import PackTypeFilter from 'app/(web)/components/filters/PackTypeFilter';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import ProductCard from 'app/(web)/components/product/ProductCard';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -23,7 +22,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import ProductSearchBar from '../components/product/ProductSearchBar';
-import PVBottomBar from '../components/product/PVBottomBar';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
 import MobileFilters from './components/MobileFilters';
@@ -348,7 +346,6 @@ export default function PsrpPage({
           </div>
         )}
         <LookingFor />
-        <PVBottomBar />
       </MainLayout>
     );
 

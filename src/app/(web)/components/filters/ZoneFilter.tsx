@@ -57,12 +57,12 @@ export default function ZoneFilter({
         <li
           id={'tmevent_filters'}
           key={zone.name}
-          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-center items-center cursor-pointer gap-2 ${
+          className={`transition-all px-2 aspect-square flex flex-col grow rounded-lg justify-center items-center cursor-pointer gap-2 ${
             isDesktop ? 'w-[120px]' : ''
           } ${
             productFilters.zone.includes(zone.id)
               ? 'bg-hg-primary500'
-              : 'bg-hg-black100'
+              : 'bg-white'
           }`}
           onClick={() =>
             setProductFilters(
@@ -74,15 +74,20 @@ export default function ZoneFilter({
             )
           }
         >
-          <Flex layout="col-center" className="pointer-events-none">
-            {productFilters.zone.includes(zone.id) ? (
-              <SvgCheckSquareActive className="ml-auto" />
-            ) : (
-              <SvgCheckSquare className="ml-auto" />
-            )}
+          <Flex
+            layout="col-center"
+            className="relative aspect-square items-center justify-center pointer-events-none w-full pt-4"
+          >
+            <div className="absolute top-0 right-0">
+              {productFilters.zone.includes(zone.id) ? (
+                <SvgCheckSquareActive className="ml-auto" />
+              ) : (
+                <SvgCheckSquare className="ml-auto" />
+              )}
+            </div>
 
             <Image height={40} width={40} src={zone.icon} alt={zone.name} />
-            <Text size="xs" className="text-center">
+            <Text size="xs" className="text-center text-hg-secondary mt-2">
               {zone.name}
             </Text>
           </Flex>

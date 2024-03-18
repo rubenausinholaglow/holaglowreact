@@ -74,10 +74,10 @@ export default function CategorySelector({
   return (
     <ul
       id="categorySelector"
-      className={`pl-4 md:pl-0 md:mt-4 xl:mt-0 flex overflow-x-scroll overflow-y-hidden md:overflow-auto gap-2 ${
+      className={`md:pl-0 md:mt-4 xl:mt-0 flex overflow-x-scroll overflow-y-hidden md:overflow-auto gap-2 ${
         className ? className : ''
       }
-      ${isStacked ? 'flex-wrap' : ''}
+      ${isStacked ? 'flex-wrap' : 'pl-4'}
       `}
     >
       {productCategories.map((category, i) => {
@@ -97,14 +97,13 @@ export default function CategorySelector({
             }}
           >
             <Button
-              className={className}
               type="white"
               customStyles={twMerge(`
               p-1 pr-4 border-none pointer-events-none ${
                 productFilters.category.includes(category)
                   ? 'bg-hg-primary500'
                   : isStacked
-                  ? 'bg-hg-black100'
+                  ? 'bg-white mb-0'
                   : 'bg-white hover:bg-hg-secondary100'
               }`)}
               id="tmevent_treatments_type"
