@@ -37,12 +37,6 @@ export default function ProductResults({ product }: { product: Product }) {
 
   return (
     <Container className="p-0 pt-8 md:px-4 md:flex gap-16 justify-between mb-12 md:mb-16">
-      <section>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(metaData) }}
-        />
-      </section>
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
         <div className="md:flex-row">
           <Title size="2xl" className="font-bold mb-6 mt-8">
@@ -69,12 +63,17 @@ export default function ProductResults({ product }: { product: Product }) {
           {product.beforeAndAfterImages?.map(item => (
             <div key={item.id} className="overflow-hidden relative">
               <div className="relative aspect-square">
-                <Image
-                  src={item.urlBefore || ''}
-                  alt={'antes y despues' + product.title}
-                  fill
-                  className="object-cover rounded-3xl"
-                />
+                <div itemScope itemType="https://schema.org/ImageObject">
+                  <Image
+                    src={item.urlBefore || ''}
+                    alt={'antes y despues' + product.title}
+                    fill
+                    className="object-cover rounded-3xl"
+                  />
+                  <span itemProp="license">
+                    https://www.holaglow.com/aviso-legal
+                  </span>
+                </div>
               </div>
             </div>
           ))}
