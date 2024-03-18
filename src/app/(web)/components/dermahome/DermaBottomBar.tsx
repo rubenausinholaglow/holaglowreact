@@ -34,7 +34,7 @@ export default function DermaBottomBar({
   }, []);
 
   const url =
-    'https://wa.me/+34654262903?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20derma';
+    'https://wa.me/+34930346565?text=Hola!%20Quiero%20saber%20m%C3%A1s%20sobre%20Holaglow%20derma';
   return (
     <div
       className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none md:hidden ${
