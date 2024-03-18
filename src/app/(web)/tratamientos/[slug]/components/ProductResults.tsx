@@ -80,7 +80,7 @@ export default function ProductResults({ product }: { product: Product }) {
                   <span
                     className="hidden"
                     itemProp="creator"
-                    itemType="https://schema.org/Company"
+                    itemType="https://schema.org/Organization"
                     itemScope
                   >
                     <meta itemProp="name" content="Holaglow" />
