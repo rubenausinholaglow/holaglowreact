@@ -42,6 +42,7 @@ export default function Page({
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [tries, setTries] = useState(1);
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser, setAppointmentId, setBudgetId } =
     useGlobalPersistedStore(state => state);
@@ -147,7 +148,8 @@ export default function Page({
     setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
     setIsCallCenter(params.get('isCallCenter') == 'true');
-    setPhoneNumber(params.get('phoneNumber') || '');
+    const phone = params.get('phoneNumber') || '';
+    setPhoneNumber(phone.length > 9 ? phone.slice(3, phone.length) : phone);
   }, []);
 
   useEffect(() => {
@@ -209,12 +211,14 @@ export default function Page({
         handleSearchError();
       });
     setIsLoading(false);
+    setIsLoadingUser(false);
   };
 
   const handleSearchError = async () => {
     handleRequestError([config.ERROR_AUTHENTICATION]);
     setUserEmail('');
-    setShowRegistration(true);
+    !isCallCenter || tries > 1 ? setShowRegistration(true) : null;
+    setTries(tries + 1);
   };
 
   const handleRegistration = async () => {
@@ -397,7 +401,10 @@ export default function Page({
         <MainLayout isDashboard hideBottomBar hasAnimatedBackground>
           <div className="fixed bottom-0 right-0 py-3 px-3">
             <Button
-              onClick={() => setShowForm(!showForm)}
+              onClick={e => {
+                setShowForm(!showForm);
+                setErrors([]);
+              }}
               type="white"
               size="sm"
               className=""
@@ -427,6 +434,11 @@ export default function Page({
             </div>
           )}
           {isLoadingUser && <SvgSpinner />}
+          {errors.includes(config.ERROR_AUTHENTICATION) && (
+            <p className="text-red-500 text-left text-sm ml-2 mt-2">
+              {config.ERROR_AUTHENTICATION}
+            </p>
+          )}
         </MainLayout>
       </App>
     );
