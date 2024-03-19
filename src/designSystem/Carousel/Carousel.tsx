@@ -10,7 +10,6 @@ import {
   ButtonBack,
   ButtonNext,
   CarouselProvider,
-  Dot,
   Slide,
   Slider,
 } from 'pure-react-carousel';
@@ -86,7 +85,7 @@ export default function Carousel({
     <ButtonBack
       className={`transition-opacity ${
         !isDerma
-          ? 'bg-hg-secondary text-hg-primary'
+          ? 'border border-hg-secondary text-hg-secondary'
           : `bg-derma-primary text-derma-primary100 ${
               isTopControl ? 'bg-white' : ''
             }`
@@ -111,7 +110,7 @@ export default function Carousel({
     <ButtonNext
       className={`transition-opacity ${
         !isDerma
-          ? 'bg-hg-secondary text-hg-primary'
+          ? 'border border-hg-secondary text-hg-secondary'
           : `bg-derma-primary text-derma-primary100 ${
               isTopControl ? 'bg-white' : ''
             }`
@@ -176,7 +175,7 @@ export default function Carousel({
       )}
 
       {hasDots && !isDashboard && (
-        <Flex layout="row-center" className="relative mt-4">
+        <Flex layout="row-center" className="relative mt-8">
           <ul className="p-2 spacing flex gap-2 text-xs absolute items-center">
             {childrens.map((dot, index) => {
               const isActive = currentSlideIndex === index;

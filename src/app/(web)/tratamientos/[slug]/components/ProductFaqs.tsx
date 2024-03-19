@@ -34,16 +34,17 @@ export default function ProductFaqs({ product }: { product: Product }) {
   return (
     <Container className="py-12">
       <Title isAnimated size="2xl" className="font-bold mb-8 md:mb-12">
-        Consulta las preguntas{' '}
-        <Underlined color={HOLAGLOW_COLORS['primary']}>frecuentes</Underlined>
+        Consulta las preguntas frecuentes
       </Title>
 
       <div className="md:grid md:grid-cols-2 md:gap-6">
-        {faqs.map(faq => {
+        {faqs.map((faq, index) => {
           return (
             <SimpleAccordion
               key={faq.title}
-              className="border-b border-hg-black pb-6 mb-6 md:mb-0"
+              className={`border-b border-hg-black md:mb-0 ${
+                faqs.length === index + 1 ? '' : 'pb-6 mb-6'
+              }`}
               trigger={faq.title}
               triggerStyles="text-left items-start font-semibold"
             >

@@ -29,6 +29,6 @@ export default function PepperWidget({ price }: { price: number }) {
       `;
 
   return (
-    <div className="pepperWidget flex relative md:justify-center flex-col w-full md:mt-5 mb-10 md:mb-0"></div>
+    <div className="pepperWidget flex relative md:justify-center flex-col w-full md:mt-5 mb-4 md:mb-0"></div>
   );
 }

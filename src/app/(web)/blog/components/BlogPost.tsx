@@ -113,7 +113,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
                 <div className="hidden sticky top-0 md:block shrink-0 w-[360px]">
                   <BlogShareBar
-                    className="my-12"
+                    className="my-12 bg-hg-primary100"
                     url={`https://www.holaglow.com${route}`}
                     title={post.title}
                   />
@@ -131,7 +131,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
             <Container className="border-t border-hg-black md:hidden">
               <BlogShareBar
-                className="my-12"
+                className="my-12 bg-hg-primary100"
                 url={`https://www.holaglow.com${route}`}
                 title={post.title}
               />

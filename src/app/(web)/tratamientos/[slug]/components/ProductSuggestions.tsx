@@ -39,26 +39,22 @@ export default function ProductSuggestions({ product }: { product: Product }) {
   }
 
   return (
-    <div className="bg-hg-secondary300 pt-12 pb-8 md:py-16">
+    <div className="bg-derma-secondary300 pt-12 pb-8 md:py-16">
       <Container>
-        <Title
-          isAnimated
-          size="2xl"
-          className="font-bold text-center mb-8 md:mb-12"
-        >
-          Sugerencias
+        <Title isAnimated size="2xl" className="text-center mb-8 md:mb-12">
+          Recomendaciones médicas
         </Title>
 
         {!isEmpty(product.preTreatmentInfo?.tips) &&
           !isEmpty(postTreatmentTips) && (
             <Flex layout="col-center" className="mb-10">
-              <ul className="inline-flex bg-hg-secondary500 p-1 rounded-full">
+              <ul className="inline-flex bg-derma-secondary500 p-1 rounded-full">
                 <li
                   id={'tmevent_click_treatment_info'}
-                  className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
+                  className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer text-hg-secondary ${
                     activeSlider === 'pre'
-                      ? 'bg-hg-primary text-hg-black'
-                      : 'text-hg-secondary'
+                      ? 'bg-hg-secondary text-hg-secondary100'
+                      : ''
                   }`}
                   onClick={() => setActiveSlider('pre')}
                 >
@@ -68,8 +64,8 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                   id={'tmevent_click_treatment_info'}
                   className={`transition-all text-xs font-medium py-3 px-4 rounded-full grow-0 cursor-pointer ${
                     activeSlider === 'post'
-                      ? 'bg-hg-primary text-hg-black'
-                      : 'text-hg-secondary'
+                      ? 'bg-hg-secondary text-hg-secondary100'
+                      : ''
                   }`}
                   onClick={() => setActiveSlider('post')}
                 >
@@ -78,10 +74,13 @@ export default function ProductSuggestions({ product }: { product: Product }) {
               </ul>
             </Flex>
           )}
+      </Container>
 
+      <Container className="px-0 md:px-4">
         <Carousel
           hasControls
-          className="relative mb-12"
+          controlStyles="px-4"
+          className="relative"
           isIntrinsicHeight
           visibleSlides={visibleSuggestions()}
           infinite={false}
@@ -96,7 +95,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                   <Flex
                     key={tip.priority}
                     layout="col-center"
-                    className="bg-white/30 p-8 rounded-2xl h-full mr-4 ml-4"
+                    className="bg-derma-secondary400 p-8 rounded-2xl h-full mr-4 ml-4"
                   >
                     <DynamicIcon
                       className="h-12 w-12 mb-6 text-hg-secondary"
@@ -117,7 +116,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
                   <Flex
                     key={tip.priority}
                     layout="col-center"
-                    className="bg-white/30 p-8 rounded-2xl h-full mr-4 ml-4"
+                    className="bg-derma-secondary400 p-8 rounded-2xl h-full mr-4 ml-4"
                   >
                     <DynamicIcon
                       className="h-12 w-12 mb-6 text-hg-secondary"

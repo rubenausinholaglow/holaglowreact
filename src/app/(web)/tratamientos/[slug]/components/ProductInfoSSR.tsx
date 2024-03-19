@@ -19,10 +19,10 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
     : '/videos/pdp.mp4';
 
   return (
-    <Container className="p-0 md:px-0 md:pb-0 md:py-0 mx-auto w-full">
-      <div className="md:flex gap-8 justify-between items-start md:bg-hg-cream md:p-6 md:rounded-2xl w-full">
-        <Container className="mt-8 md:mt-0 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
-          <Title size="xl" className="font-bold mb-8">
+    <Container className="px-0">
+      <div className="md:flex gap-8 justify-between items-start bg-derma-secondary400 md:p-6 md:rounded-2xl w-full">
+        <Container className="py-6 md:flex md:flex-col md:justify-center md:items-start">
+          <Title size="2xl" className="font-bold mb-8">
             Tu tratamiento
           </Title>
           <ul className="flex flex-col pb-4 w-full mb-4">
@@ -47,7 +47,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                           family={iconFamily}
                         />
 
-                        <Text size="lg">{item.titlte}</Text>
+                        <Text className="font-semibold">{item.titlte}</Text>
                       </Flex>
                     );
                   })
@@ -67,7 +67,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                           className="text-hg-secondary mr-3"
                         />
                         <div>
-                          <Text size="lg">
+                          <Text className="font-semibold">
                             {product.sessions.toString()}{' '}
                             {product.sessions === 1 ? 'sesión' : 'sesiones'}
                           </Text>
@@ -86,7 +86,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                 className="text-hg-secondary mr-3"
               />
               <div>
-                <Text size="lg">
+                <Text className="font-semibold">
                   {product.emlaType === EmlaType.Required
                     ? product.applicationTimeMinutes * 2 + ''
                     : product.applicationTimeMinutes?.toString()}{' '}
@@ -103,26 +103,26 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
               />
               <div className="flex flex-col">
                 {product.durationMin >= 30 ? (
-                  <Text size="lg">
+                  <Text className="font-semibold">
                     {(product.durationMin / 30).toString()}
                     {product.durationMax == product.durationMin && ' meses'}
                     {product.durationMax != product.durationMin &&
                       '-' + (product.durationMax / 30).toString() + ' meses'}
                   </Text>
                 ) : (
-                  <Text size="lg">Permanente</Text>
+                  <Text className="font-semibold">Permanente</Text>
                 )}
               </div>
             </li>
 
-            <li className="pb-4 flex">
+            <li className="flex">
               <SvgEuro
                 height={24}
                 width={24}
                 className="text-hg-secondary mr-3"
               />
               <div className="flex flex-col">
-                <Text size="lg">desde {product.price} €</Text>
+                <Text className="font-semibold">{product.price} €</Text>
               </div>
             </li>
           </ul>
@@ -130,9 +130,9 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
           <ProductSelectorButton product={product} />
           <PepperWidget price={product.price} />
         </Container>
-        <div className="md:w-2/5 shrink-0">
+        {/* <div className="md:w-2/5 shrink-0">
           <ProductVideo src={productVideoSrc} />
-        </div>
+        </div> */}
       </div>
     </Container>
   );
