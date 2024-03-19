@@ -17,7 +17,7 @@ export interface Product {
   extraInformation: ExtraInformation;
   preTreatmentInfo: PreTips;
   postTreatmentInfo: PostTips;
-  packUnities: [];
+  packUnities?: PackUnities[];
   discounts: Discount[];
   tags: Tag[];
   packMoreInformation: string;
@@ -75,6 +75,12 @@ export interface BenefitDetails {
 export interface AppliedProduct {
   titlte: string;
   icon: string;
+}
+
+export interface PackUnities {
+  id : string;
+  type : UnityType;
+  isScheduled? : boolean;
 }
 
 export interface ApplicationZoneDetail {

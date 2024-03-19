@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Product } from '@interface/product';
+import { PackUnities, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
@@ -38,6 +38,8 @@ export default function Page() {
     setSelectedClinic,
     selectedTreatments,
     setSelectedTreatments,
+    setTreatmentPacks,
+    treatmentPacks,
   } = useSessionStore(state => state);
   const cart = useCartStore(state => state.cart);
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +85,7 @@ export default function Page() {
 
   useEffect(() => {
     setTreatments();
-  }, [dashboardProducts]);
+  }, [dashboardProducts, treatmentPacks]);
 
   async function setTreatments() {
     try {
@@ -105,7 +107,19 @@ export default function Page() {
             title.toUpperCase() === product.title.toUpperCase() &&
             validTypesFilterCart.includes(product.type)
           ) {
-            product.isPack ? setPackInProductCart(true) : null;
+            if (product.isPack) {
+              setPackInProductCart(true);
+              product.packUnities?.forEach(x => {
+                if (!treatmentPacks.some(packType => packType.id == x.id)) {
+                  const packsToAdd: PackUnities = {
+                    id: x.id,
+                    type: x.type,
+                    isScheduled: false,
+                  };
+                  setTreatmentPacks([...treatmentPacks, packsToAdd]);
+                }
+              });
+            }
             foundProducts.push(product);
           }
         });

@@ -5,7 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType, UnityType } from '@interface/product';
+import { CartItem, EmlaType, Product, UnityType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
 import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
@@ -61,6 +61,8 @@ export default function Agenda({
     analyticsMetrics,
     selectedDay,
     setSelectedDay,
+    treatmentPacks,
+    setTreatmentPacks,
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
@@ -287,7 +289,7 @@ export default function Agenda({
           if (isDashboard || isCheckin)
             analyticsMetrics.externalReference = '14';
 
-          await ScheduleService.createAppointment(
+          /*await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
             selectedDay,
@@ -296,18 +298,28 @@ export default function Agenda({
             selectedPacksTreatments!,
             analyticsMetrics,
             ''
-          ).then(x => {
-            if (isDashboard && !isDerma) {
-              const filteredCart = cart.filter(
-                cartItem =>
-                  validTypesFilterCart.includes(cartItem.type) &&
-                  (cartItem.isScheduled === false ||
-                    cartItem.isScheduled === undefined)
-              );
-              if (filteredCart.length >= selectedTreatments.length) {
-                if (selectedTreatments.length == 1) {
+          ).then(x => {*/
+          if (isDashboard && !isDerma) {
+            const filteredCart = cart.filter(
+              cartItem =>
+                validTypesFilterCart.includes(cartItem.type) &&
+                (cartItem.isScheduled === false ||
+                  cartItem.isScheduled === undefined)
+            );
+            if (
+              filteredCart.length >= selectedTreatments.length ||
+              treatmentPacks.length > 0
+            ) {
+              if (selectedTreatments.length == 1) {
+                if (treatmentPacks.length > 0) {
+                  updateTreatmentPackScheduled(selectedTreatments);
+                } else {
                   const selectedProduct = filteredCart.find(x => x.title);
                   updateIsScheduled(true, selectedProduct!.uniqueId);
+                }
+              } else {
+                if (treatmentPacks.length > 0) {
+                  updateTreatmentPackScheduled(selectedTreatments);
                 } else {
                   selectedTreatments.forEach(treatment => {
                     const selectedProducts = filteredCart.filter(
@@ -322,13 +334,14 @@ export default function Agenda({
                   });
                 }
               }
-              router.push(
-                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
-              );
-            } else if (!isDashboard && !isDerma) {
-              router.push(ROUTES.checkout.thankYou);
             }
-          });
+            router.push(
+              `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
+            );
+          } else if (!isDashboard && !isDerma) {
+            router.push(ROUTES.checkout.thankYou);
+          }
+          //});
         } else if (!isDerma) {
           router.push('/checkout/contactform');
         } else if (isDerma && isCheckout) {
@@ -342,6 +355,28 @@ export default function Agenda({
       schedule();
     }
   }, [selectedSlot]);
+
+  function updateTreatmentPackScheduled(products: Product[]) {
+    const matchingTreatments = treatmentPacks.filter(treat => {
+      return products.some(prod => {
+        return (
+          prod.unityType === treat.type ||
+          (prod.unityType === UnityType.Botox &&
+            treat.type === UnityType.BabyBotox)
+        );
+      });
+    });
+
+    const remainingTreatments = treatmentPacks.filter(
+      treat => !matchingTreatments.includes(treat)
+    );
+
+    const updatedPacks = matchingTreatments.map(pack => {
+      return { ...pack, isScheduled: true };
+    });
+
+    setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
+  }
 
   useEffect(() => {
     const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);

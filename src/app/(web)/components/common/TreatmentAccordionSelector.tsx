@@ -40,9 +40,8 @@ export default function TreatmentAccordionSelector({
   const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
     state => state
   );
-  const { setSelectedTreatments, selectedTreatments } = useSessionStore(
-    state => state
-  );
+  const { setSelectedTreatments, selectedTreatments, treatmentPacks } =
+    useSessionStore(state => state);
 
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
@@ -53,6 +52,12 @@ export default function TreatmentAccordionSelector({
   );
 
   const cart = useCartStore(state => state.cart);
+  const validTypesPacks: UnityType[] = treatmentPacks.flatMap(x => {
+    if (x.type === UnityType.Botox || x.type === UnityType.BabyBotox) {
+      return [UnityType.Botox, UnityType.BabyBotox];
+    }
+    return x.type;
+  });
 
   function getProductsByCategory(category: string) {
     let filteredProducts: Product[];
@@ -217,7 +222,7 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
-                {packInProductCart || isDashboard
+                {packInProductCart || (isDashboard && cart.length == 0)
                   ? renderSelectorQuantity(product, index) || null
                   : renderCheck(product, index) || null}
               </li>
@@ -229,22 +234,27 @@ export default function TreatmentAccordionSelector({
   };
 
   const renderSelectorQuantity = (product: Product, index: number) => {
-    return (
-      <div className="ml-auto">
-        <Quantifier
-          handleUpdateQuantity={function handleUpdateQuantity(
-            operation: Operation
-          ): void {
-            if (operation == 'increase') {
-              addTreatment(product, index);
-            } else {
-              removeTreatment(product, index);
-            }
-          }}
-          quantity={getQuantityOfProduct(product)}
-        />
-      </div>
-    );
+    const disable =
+      selectedTreatments.length >=
+      treatmentPacks.filter(x => x.isScheduled == false).length;
+    if (validTypesPacks.includes(product.unityType))
+      return (
+        <div className="ml-auto">
+          <Quantifier
+            handleUpdateQuantity={function handleUpdateQuantity(
+              operation: Operation
+            ): void {
+              if (operation == 'increase') {
+                addTreatment(product, index);
+              } else {
+                removeTreatment(product, index);
+              }
+            }}
+            quantity={getQuantityOfProduct(product)}
+            disableAdd={disable}
+          />
+        </div>
+      );
   };
   const renderCheck = (product: Product, index: number) => {
     const commonElement = (
@@ -297,6 +307,12 @@ export default function TreatmentAccordionSelector({
   if (cart.length == 0 || !isDashboard || packInProductCart)
     return (
       <Accordion type="single" collapsible className="w-full">
+        {packInProductCart && (
+          <div className="mb-4">
+            {treatmentPacks.filter(x => x.isScheduled == true).length}/
+            {treatmentPacks.length} agendados
+          </div>
+        )}
         {productCategories.map(category => {
           return (
             <AccordionItem
