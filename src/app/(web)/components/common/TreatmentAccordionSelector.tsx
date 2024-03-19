@@ -28,9 +28,11 @@ import CategoryIcon from './CategoryIcon';
 export default function TreatmentAccordionSelector({
   isDashboard = false,
   isCheckin = false,
+  packInProductCart = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
+  packInProductCart?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -49,8 +51,6 @@ export default function TreatmentAccordionSelector({
   const [selectedIndexsProducts, setSelectedIndexProducts] = useState<number[]>(
     []
   );
-
-  const [isPackAndDashboard, setIsPackAndDashboard] = useState(false);
 
   const cart = useCartStore(state => state.cart);
 
@@ -112,18 +112,14 @@ export default function TreatmentAccordionSelector({
 
       setProductCategories(uniqueCategoryNames);
 
-      const isPack =
-        selectedTreatments.filter(treatment => treatment.isPack == true)
-          .length > 0;
-      setIsPackAndDashboard(isPack);
-      isPack ? setSelectedTreatments([]) : null;
+      packInProductCart ? setSelectedTreatments([]) : null;
     }
   }, [dashboardProducts]);
 
   useEffect(() => {
-    if (isEmpty(selectedProducts) && !isPackAndDashboard)
+    if (isEmpty(selectedProducts) && !packInProductCart)
       setSelectedProducts(selectedTreatments);
-  }, [selectedTreatments, isPackAndDashboard]);
+  }, [selectedTreatments]);
 
   useEffect(() => {
     if (!isEmpty(selectedProducts)) {
@@ -154,7 +150,7 @@ export default function TreatmentAccordionSelector({
   function getProductToAdd(product: Product): Product[] {
     if (
       product.unityType === UnityType.AcidoHialuronico &&
-      !isPackAndDashboard
+      !packInProductCart
     ) {
       return selectedProducts.filter(x => x.id === product.id) as Product[];
     } else {
@@ -198,7 +194,7 @@ export default function TreatmentAccordionSelector({
                 className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                 key={product.title}
                 onClick={() => {
-                  if (isPackAndDashboard) return;
+                  if (packInProductCart) return;
                   const isSelected =
                     isDashboard && cart.length > 0
                       ? selectedIndexsProducts.includes(index)
@@ -221,7 +217,7 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
-                {isPackAndDashboard
+                {packInProductCart
                   ? renderSelectorQuantity(product, index) || null
                   : renderCheck(product, index) || null}
               </li>
@@ -280,7 +276,7 @@ export default function TreatmentAccordionSelector({
     }
   };
 
-  if (isDashboard && cart.length > 0 && !isPackAndDashboard)
+  if (isDashboard && cart.length > 0 && !packInProductCart)
     return (
       <Accordion type="single" collapsible className="w-full" defaultValue="1">
         <AccordionItem
@@ -298,7 +294,7 @@ export default function TreatmentAccordionSelector({
         </AccordionItem>
       </Accordion>
     );
-  if (cart.length == 0 || !isDashboard || isPackAndDashboard)
+  if (cart.length == 0 || !isDashboard || packInProductCart)
     return (
       <Accordion type="single" collapsible className="w-full">
         {productCategories.map(category => {

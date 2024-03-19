@@ -41,6 +41,7 @@ export default function Page() {
   } = useSessionStore(state => state);
   const cart = useCartStore(state => state.cart);
   const [isLoading, setIsLoading] = useState(true);
+  const [packInProductCart, setPackInProductCart] = useState(false);
 
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -104,12 +105,13 @@ export default function Page() {
             title.toUpperCase() === product.title.toUpperCase() &&
             validTypesFilterCart.includes(product.type)
           ) {
+            product.isPack ? setPackInProductCart(true) : null;
             foundProducts.push(product);
           }
         });
       });
 
-      setSelectedTreatments(foundProducts);
+      !packInProductCart ? setSelectedTreatments(foundProducts) : null;
     } catch (error: any) {
       Bugsnag.notify(error);
     } finally {
@@ -121,39 +123,50 @@ export default function Page() {
     <App>
       <MainLayout isDashboard>
         <Container className="mt-4">
-          {!selectedClinic && (
+          {!isLoading && (
             <>
-              <Title className="font-semibold mb-8">Selecciona clínica</Title>
+              {!selectedClinic && (
+                <>
+                  <Title className="font-semibold mb-8">
+                    Selecciona clínica
+                  </Title>
 
-              <CheckoutClinicSelector isDashboard className="mb-8" />
-            </>
-          )}
+                  <CheckoutClinicSelector isDashboard className="mb-8" />
+                </>
+              )}
 
-          {selectedClinic && (
-            <>
-              <Title className="font-semibold mb-8">
-                {cart.length == 0 ? 'Selecciona tratamiento' : 'Tratamientos'}
-              </Title>
-              <Flex layout="col-left" className="gap-3 w-full">
-                {!isEmpty(dashboardProducts) && !isLoading ? (
-                  <TreatmentAccordionSelector isDashboard />
-                ) : (
-                  <SvgSpinner className="w-full mb-4" />
-                )}
-              </Flex>
+              {selectedClinic && (
+                <>
+                  <Title className="font-semibold mb-8">
+                    {cart.length == 0
+                      ? 'Selecciona tratamiento'
+                      : 'Tratamientos'}
+                  </Title>
+                  <Flex layout="col-left" className="gap-3 w-full">
+                    {!isEmpty(dashboardProducts) && !isLoading ? (
+                      <TreatmentAccordionSelector
+                        isDashboard
+                        packInProductCart
+                      />
+                    ) : (
+                      <SvgSpinner className="w-full mb-4" />
+                    )}
+                  </Flex>
 
-              <Button
-                onClick={() => {
-                  if (selectedTreatments.length > 0) {
-                    router.push(
-                      `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
-                    );
-                  }
-                }}
-                disabled={selectedTreatments.length == 0}
-              >
-                Continuar
-              </Button>
+                  <Button
+                    onClick={() => {
+                      if (selectedTreatments.length > 0) {
+                        router.push(
+                          `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
+                        );
+                      }
+                    }}
+                    disabled={selectedTreatments.length == 0}
+                  >
+                    Continuar
+                  </Button>
+                </>
+              )}
             </>
           )}
         </Container>
