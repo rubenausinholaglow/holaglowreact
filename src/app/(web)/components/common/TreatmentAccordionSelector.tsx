@@ -217,7 +217,7 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
-                {packInProductCart
+                {packInProductCart || isDashboard
                   ? renderSelectorQuantity(product, index) || null
                   : renderCheck(product, index) || null}
               </li>

@@ -146,7 +146,7 @@ export default function Page() {
                     {!isEmpty(dashboardProducts) && !isLoading ? (
                       <TreatmentAccordionSelector
                         isDashboard
-                        packInProductCart
+                        packInProductCart={packInProductCart}
                       />
                     ) : (
                       <SvgSpinner className="w-full mb-4" />
