@@ -198,7 +198,7 @@ export default function Agenda({
       const date = dayjs(x.date);
       if (
         availability.length < maxDays &&
-        (date.isAfter(today) || date.isSame(today, 'day')) &&
+        (date.isAfter(today) || (date.isSame(today, 'day') && !isDerma)) &&
         x.availability
       ) {
         availability.push(x);
