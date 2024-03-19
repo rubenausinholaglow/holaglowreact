@@ -349,6 +349,18 @@ const nextConfig = {
         permanent: true,
         statusCode: 301,
       },
+      {
+        source: '/tratamientos/pack-wellaging-plus',
+        destination: '/tratamientos/pack-wellaging',
+        permanent: true,
+        statusCode: 301,
+      },
+      {
+        source: '/tratamientos/pack-wellaging-esencial',
+        destination: '/tratamientos/pack-wellaging',
+        permanent: true,
+        statusCode: 301,
+      },
     ];
   },
 };
