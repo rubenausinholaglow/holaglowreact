@@ -3,7 +3,11 @@ import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
 import { getUniqueIds, getUniqueProducts } from '@utils/utils';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
+import {
+  Operation,
+  useCartStore,
+} from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -46,6 +50,8 @@ export default function TreatmentAccordionSelector({
     []
   );
 
+  const [isPackAndDashboard, setIsPackAndDashboard] = useState(false);
+
   const cart = useCartStore(state => state.cart);
 
   function getProductsByCategory(category: string) {
@@ -73,6 +79,7 @@ export default function TreatmentAccordionSelector({
       a.title > b.title ? 1 : -1
     );
   }
+
   useEffect(() => {
     const allCategoryNames: string[] = stateProducts.reduce(
       (categoryNames: string[], product) => {
@@ -104,12 +111,19 @@ export default function TreatmentAccordionSelector({
       const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
       setProductCategories(uniqueCategoryNames);
+
+      const isPack =
+        selectedTreatments.filter(treatment => treatment.isPack == true)
+          .length > 0;
+      setIsPackAndDashboard(isPack);
+      isPack ? setSelectedTreatments([]) : null;
     }
   }, [dashboardProducts]);
 
   useEffect(() => {
-    if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
-  }, [selectedTreatments]);
+    if (isEmpty(selectedProducts) && !isPackAndDashboard)
+      setSelectedProducts(selectedTreatments);
+  }, [selectedTreatments, isPackAndDashboard]);
 
   useEffect(() => {
     if (!isEmpty(selectedProducts)) {
@@ -138,7 +152,10 @@ export default function TreatmentAccordionSelector({
   }
 
   function getProductToAdd(product: Product): Product[] {
-    if (product.unityType === UnityType.AcidoHialuronico) {
+    if (
+      product.unityType === UnityType.AcidoHialuronico &&
+      !isPackAndDashboard
+    ) {
       return selectedProducts.filter(x => x.id === product.id) as Product[];
     } else {
       return [product];
@@ -166,6 +183,11 @@ export default function TreatmentAccordionSelector({
     }
   }
 
+  function getQuantityOfProduct(product: Product): number {
+    return selectedTreatments.filter(treatment => treatment.id === product.id)
+      .length;
+  }
+
   const renderAcordionContent = (category: string) => {
     return (
       <AccordionContent>
@@ -176,6 +198,7 @@ export default function TreatmentAccordionSelector({
                 className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                 key={product.title}
                 onClick={() => {
+                  if (isPackAndDashboard) return;
                   const isSelected =
                     isDashboard && cart.length > 0
                       ? selectedIndexsProducts.includes(index)
@@ -198,7 +221,9 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
-                {renderCheck(product, index)}
+                {isPackAndDashboard
+                  ? renderSelectorQuantity(product, index) || null
+                  : renderCheck(product, index) || null}
               </li>
             ))}
           </ul>
@@ -207,6 +232,24 @@ export default function TreatmentAccordionSelector({
     );
   };
 
+  const renderSelectorQuantity = (product: Product, index: number) => {
+    return (
+      <div className="ml-auto">
+        <Quantifier
+          handleUpdateQuantity={function handleUpdateQuantity(
+            operation: Operation
+          ): void {
+            if (operation == 'increase') {
+              addTreatment(product, index);
+            } else {
+              removeTreatment(product, index);
+            }
+          }}
+          quantity={getQuantityOfProduct(product)}
+        />
+      </div>
+    );
+  };
   const renderCheck = (product: Product, index: number) => {
     const commonElement = (
       <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
@@ -237,7 +280,7 @@ export default function TreatmentAccordionSelector({
     }
   };
 
-  if (isDashboard && cart.length > 0)
+  if (isDashboard && cart.length > 0 && !isPackAndDashboard)
     return (
       <Accordion type="single" collapsible className="w-full" defaultValue="1">
         <AccordionItem
@@ -255,7 +298,7 @@ export default function TreatmentAccordionSelector({
         </AccordionItem>
       </Accordion>
     );
-  if (cart.length == 0 || !isDashboard)
+  if (cart.length == 0 || !isDashboard || isPackAndDashboard)
     return (
       <Accordion type="single" collapsible className="w-full">
         {productCategories.map(category => {
