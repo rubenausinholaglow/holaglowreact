@@ -6,6 +6,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import ProductInfoSSR from './ProductInfoSSR';
+
 export default function ProductHeaderSSR({ product }: { product: Product }) {
   const validTypes = [3, 6, 7, 8];
 
@@ -102,6 +104,7 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
           />
         </Container>
       )}
+      <ProductInfoSSR product={product} />
     </div>
   );
 }

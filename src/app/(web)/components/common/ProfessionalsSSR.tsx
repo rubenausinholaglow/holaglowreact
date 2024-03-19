@@ -1,3 +1,4 @@
+import { Professional } from '@interface/clinic';
 import { fetchClinics } from '@utils/fetch';
 import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
 import Carousel from 'designSystem/Carousel/Carousel';
@@ -19,16 +20,23 @@ export default async function ProfessionalsSSR({
 }) {
   const clinics = await getClinics();
 
-  const professionals = clinics.flatMap(clinic =>
-    clinic.professionals.filter(professional => {
-      if (professional.professionalType === 1) {
-        return {
-          ...professional,
-          city: clinic.city,
-        };
-      }
-    })
-  );
+  const professionals = clinics
+    .flatMap(clinic =>
+      clinic.professionals.map(professional => {
+        if (professional.professionalType === 1) {
+          return {
+            ...professional,
+            city: clinic.city,
+          };
+        }
+        return null;
+      })
+    )
+    .filter(professional => professional !== null) as Professional[];
+
+  if (professionals.length === 0) {
+    return <></>;
+  }
 
   return (
     <Container
@@ -60,7 +68,7 @@ export default async function ProfessionalsSSR({
           visibleSlides={1}
           infinite={false}
         >
-          {professionals?.map(professional => (
+          {professionals.map(professional => (
             <ProfessionalCard
               key={professional.name}
               professional={professional}

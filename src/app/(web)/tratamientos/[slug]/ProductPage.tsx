@@ -1,5 +1,5 @@
 import { Product } from '@interface/product';
-import Clinics from 'app/(web)/components/common/Clinics';
+import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
 import ProfessionalsSSR from 'app/(web)/components/common/ProfessionalsSSR';
 import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
 import dynamic from 'next/dynamic';
@@ -8,7 +8,6 @@ import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
 import ProductFreeAppointment from './components/ProductFreeAppointment';
 import ProductHeaderSSR from './components/ProductHeaderSSR';
-import ProductInfoSSR from './components/ProductInfoSSR';
 import ProductPaymentOptions from './components/ProductPaymentOptions';
 import ProductPricesSSR from './components/ProductPricesSSR';
 import ProductSuggestions from './components/ProductSuggestions';
@@ -33,9 +32,8 @@ const ProductFaqs = dynamic(() => import('./components/ProductFaqs'), {
 export default function ProductPage({ product }: { product: Product }) {
   return (
     <MainLayoutSSR>
-      <div className="bg-derma-secondary300 rounded-t-3xl pt-8">
+      <div className="bg-derma-secondary300 rounded-t-3xl pt-8 relative">
         <ProductHeaderSSR product={product} />
-        <ProductInfoSSR product={product} />
       </div>
       <ProductVideos product={product} />
       <div className="bg-hg-secondary100 py-12">
@@ -56,7 +54,7 @@ export default function ProductPage({ product }: { product: Product }) {
         </div>
       )}
       <ProductExplanation product={product} />
-      <Clinics />
+      <ClinicsSSR />
       <FloatingBottomBar threshold={1200} product={product} />
     </MainLayoutSSR>
   );

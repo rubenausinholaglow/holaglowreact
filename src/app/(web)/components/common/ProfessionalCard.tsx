@@ -1,6 +1,7 @@
+import ROUTES from '@utils/routes';
 import { Professional } from 'app/types/clinic';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function ProfessionalCard({
@@ -14,15 +15,15 @@ export default function ProfessionalCard({
     <div className={`p-4 flex flex-col h-full ${className}`}>
       <Flex
         layout="col-center"
-        className="text-center shadow-centered-secondary rounded-3xl "
+        className="text-center shadow-centered-secondary rounded-3xl"
       >
-        <div className="w-full mb-4">
+        <div className="w-full bg-gradient from-white from-0% via-hg-secondary300/30 via-80% to-white rounded-t-3xl overflow-hidden pt-2">
           <Image
             alt={professional.name}
-            height={300}
+            height={250}
             width={250}
             src={professional.urlPhoto}
-            className="w-full rounded-t-3xl overflow-hidden"
+            className="w-full rounded-t-3xl overflow-hidden scale-110 translate-y-[10%]"
           />
         </div>
 
@@ -42,8 +43,8 @@ export default function ProfessionalCard({
             <b>1090</b> pacientes satisfechos
           </Text>
           <Text>
-            {professional.city}La encontrarás en nuestra clínica de{' '}
-            <a href="#">Barcelona</a>
+            La encontrarás en nuestra clínica de{' '}
+            <a href={ROUTES.clinics}>{professional.city}</a>
           </Text>
         </Flex>
       </Flex>
