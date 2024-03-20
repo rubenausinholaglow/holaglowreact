@@ -356,9 +356,15 @@ export default function TreatmentAccordionSelector({
     }
   };
 
-  if (isDashboard && cart.length > 0 && !packInProductCart)
+  if (isDashboard && cart.length > 0)
     return (
       <Accordion type="single" collapsible className="w-full" defaultValue="1">
+        {packInProductCart && (
+          <div className="mb-4">
+            {treatmentPacks.filter(x => x.isScheduled == true).length}/
+            {treatmentPacks.length} agendados
+          </div>
+        )}
         <AccordionItem
           className={`transition-all w-full rounded-lg overflow-hidden mb-4 
                   bg-hg-secondary100
@@ -367,52 +373,18 @@ export default function TreatmentAccordionSelector({
         >
           <AccordionTrigger>
             <Flex className="p-4">
-              <Text className="font-semibold">Tratamientos Seleccionados</Text>
+              <Text className="font-semibold">
+                {packInProductCart
+                  ? 'Seleccionar Tratamientos'
+                  : 'Tratamientos Seleccionados'}
+              </Text>
             </Flex>
           </AccordionTrigger>
           {renderAcordionContent('')}
         </AccordionItem>
       </Accordion>
     );
-  if (packInProductCart)
-    return (
-      <>
-        {isLoadingdashboard ? (
-          <SvgSpinner className="justify-center w-full mb-4" />
-        ) : (
-          <>
-            {packInProductCart && (
-              <div className="mb-4">
-                {treatmentPacks.filter(x => x.isScheduled == true).length}/
-                {treatmentPacks.length} agendados
-              </div>
-            )}
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full"
-              defaultValue="1"
-            >
-              <AccordionItem
-                className={`transition-all w-full rounded-lg overflow-hidden mb-4 
-                  bg-hg-secondary100
-            ${isDashboard ? 'min-w-[80%]' : ''}`}
-                value="1"
-              >
-                <AccordionTrigger>
-                  <Flex className="p-4">
-                    <Text className="font-semibold">
-                      Seleccionar Tratamientos
-                    </Text>
-                  </Flex>
-                </AccordionTrigger>
-                {renderAcordionContent('')}
-              </AccordionItem>
-            </Accordion>
-          </>
-        )}
-      </>
-    );
+
   if (cart.length == 0 || !isDashboard)
     return (
       <Accordion type="single" collapsible className="w-full">
