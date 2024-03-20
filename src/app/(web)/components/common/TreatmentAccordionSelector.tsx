@@ -138,6 +138,7 @@ export default function TreatmentAccordionSelector({
   }, [selectedTreatments]);
 
   useEffect(() => {
+    console.log('product categories');
     if (!isEmpty(productCategories)) setIsLoadingDashboard(false);
   }, [productCategories]);
 
