@@ -184,14 +184,10 @@ export default function Carousel({
               return (
                 <li key={index}>
                   <SvgHolaGlowStar2
-                    onClick={() =>
-                      index > currentSlideIndex
-                        ? handleNextButton()
-                        : handleBackButton()
-                    }
+                    onClick={() => setCurrentSlideIndex(index)}
                     className={
                       isActive
-                        ? `h-6 w-6 ${
+                        ? `h-6 w-6 pointer-events-none ${
                             isDerma
                               ? 'text-derma-primary500'
                               : 'text-hg-secondary'

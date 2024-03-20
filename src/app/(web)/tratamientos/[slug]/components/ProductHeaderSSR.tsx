@@ -50,9 +50,11 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
             })}
           </Flex>
         </Container>
-        <div className="mb-6 md:mb-0 md:row-start-2 md:col-start-1 md:col-end-3">
-          <ProductImagesCarousel product={product} />
-        </div>
+        {product.beforeAndAfterImages.length > 0 && (
+          <div className="mb-6 md:mb-0 md:row-start-2 md:col-start-1 md:col-end-3">
+            <ProductImagesCarousel product={product} />
+          </div>
+        )}
         <ProductInfoSSR product={product} />
       </Container>
 

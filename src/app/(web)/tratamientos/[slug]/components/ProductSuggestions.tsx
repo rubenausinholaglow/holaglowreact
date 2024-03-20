@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import {
+  isMobile,
+  useDeviceSizeSSR,
+} from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -78,7 +81,8 @@ export default function ProductSuggestions({ product }: { product: Product }) {
 
       <Container className="px-0 md:px-4">
         <Carousel
-          hasControls
+          hasDots={isMobile()}
+          hasControls={!isMobile()}
           controlStyles="px-4"
           className="relative"
           isIntrinsicHeight

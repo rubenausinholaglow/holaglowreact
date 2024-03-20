@@ -184,18 +184,12 @@ export default function ProductPriceCard({
 
   return (
     <Flex
-      className={`${
-        product.isPack ? 'bg-hg-secondary500' : 'bg-white'
-      } flex-col p-6 rounded-2xl shadow-centered-secondary w-full md:w-1/2 ${className}`}
+      className={`bg-white flex-col p-6 rounded-2xl shadow-centered-secondary w-full md:w-1/2 ${className}`}
     >
       <Flex layout="col-left" className="w-full">
         <Flex layout="row-between" className="w-full mb-2">
           <Flex>
-            <span
-              className={`text-2xl ${
-                product.isPack ? 'text-white' : 'text-hg-secondary'
-              } font-semibold md:text-2xl mr-2`}
-            >
+            <span className="text-2xl font-semibold md:text-2xl mr-2">
               {discountedPrice ? discountedPrice : product.price} €
             </span>
             {discountedPrice && (
@@ -224,7 +218,7 @@ export default function ProductPriceCard({
               ) : (
                 <Text
                   size="xs"
-                  className="py-1 px-2 bg-hg-primary text-hg-secondary rounded-md font-semibold"
+                  className="py-1 px-2 bg-hg-secondary text-white rounded-md font-semibold"
                 >
                   Oferta especial
                 </Text>

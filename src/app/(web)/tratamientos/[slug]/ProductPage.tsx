@@ -9,8 +9,12 @@ import ProductFreeAppointment from './components/ProductFreeAppointment';
 import ProductHeaderSSR from './components/ProductHeaderSSR';
 import ProductPaymentOptions from './components/ProductPaymentOptions';
 import ProductPricesSSR from './components/ProductPricesSSR';
-import ProductSuggestions from './components/ProductSuggestions';
 import ProductVideos from './components/ProductVideos';
+
+const ProductSuggestions = dynamic(
+  () => import('./components/ProductSuggestions'),
+  { ssr: false }
+);
 
 const ProfessionalsSSR = dynamic(
   () => import('app/(web)/components/common/ProfessionalsSSR'),

@@ -37,9 +37,9 @@ export default function BlogShareBar({
 
   return (
     <Flex className={` p-4 rounded-2xl justify-between ${className}`}>
-      <Text className="mr-6">Comparte</Text>
+      <Text className="mr-8 md:mr-16">Comparte</Text>
 
-      <Flex className="gap-6">
+      <Flex className="gap-8">
         <TwitterShareButton url={url} title={title}>
           <SvgX height={24} width={24} />
         </TwitterShareButton>

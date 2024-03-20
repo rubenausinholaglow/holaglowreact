@@ -28,6 +28,10 @@ export default function ProductVideos({ product }: { product: Product }) {
     }
   }, []);
 
+  if (videos.length < 1) {
+    return <></>;
+  }
+
   return (
     <Container className="py-12 md:pt-16 md:pb-20">
       <Flex
@@ -40,11 +44,6 @@ export default function ProductVideos({ product }: { product: Product }) {
           <Title size="2xl" className="font-bold mb-6">
             Loren Ipsum
           </Title>
-          <Text className="text-hg-black500 md:text-lg md: mb-8">
-            Lorem ipsum dolor sit amet. Ab voluptatem obcaecati et dolorem
-            minima aut eligendi praesentium hic autem quisquam in ducimus
-            corporis et reiciendis voluptas est architecto autem.
-          </Text>
         </div>
         <div
           className={
