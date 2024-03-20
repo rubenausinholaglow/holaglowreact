@@ -129,7 +129,6 @@ export default function TreatmentAccordionSelector({
       setProductCategories(uniqueCategoryNames);
 
       packInProductCart ? setSelectedTreatments([]) : null;
-      setIsLoadingDashboard(false);
     }
   }, [dashboardProducts]);
 
@@ -137,6 +136,10 @@ export default function TreatmentAccordionSelector({
     if (isEmpty(selectedProducts) && !packInProductCart)
       setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
+
+  useEffect(() => {
+    if (!isEmpty(productCategories)) setIsLoadingDashboard(false);
+  }, [productCategories]);
 
   useEffect(() => {
     if (!isEmpty(selectedProducts)) {
@@ -318,39 +321,26 @@ export default function TreatmentAccordionSelector({
 
   if (isDashboard && cart.length > 0 && !packInProductCart)
     return (
-      <>
-        {isLoadingdashboard ? (
-          <SvgSpinner className="justify-center w-full mb-4" />
-        ) : (
-          <Accordion
-            type="single"
-            collapsible
-            className="w-full"
-            defaultValue="1"
-          >
-            <AccordionItem
-              className={`transition-all w-full rounded-lg overflow-hidden mb-4 
+      <Accordion type="single" collapsible className="w-full" defaultValue="1">
+        <AccordionItem
+          className={`transition-all w-full rounded-lg overflow-hidden mb-4 
                   bg-hg-secondary100
             ${isDashboard ? 'min-w-[80%]' : ''}`}
-              value="1"
-            >
-              <AccordionTrigger>
-                <Flex className="p-4">
-                  <Text className="font-semibold">
-                    Tratamientos Seleccionados
-                  </Text>
-                </Flex>
-              </AccordionTrigger>
-              {renderAcordionContent('')}
-            </AccordionItem>
-          </Accordion>
-        )}
-      </>
+          value="1"
+        >
+          <AccordionTrigger>
+            <Flex className="p-4">
+              <Text className="font-semibold">Tratamientos Seleccionados</Text>
+            </Flex>
+          </AccordionTrigger>
+          {renderAcordionContent('')}
+        </AccordionItem>
+      </Accordion>
     );
   if (cart.length == 0 || !isDashboard || packInProductCart)
     return (
       <>
-        {productCategories.length == 0 ? (
+        {isLoadingdashboard ? (
           <SvgSpinner className="justify-center w-full mb-4" />
         ) : (
           <Accordion type="single" collapsible className="w-full">
