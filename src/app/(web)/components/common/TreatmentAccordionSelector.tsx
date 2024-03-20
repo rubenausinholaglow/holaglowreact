@@ -66,8 +66,8 @@ export default function TreatmentAccordionSelector({
   const productPacks = ['5465', '971'];
   const invalidProducts =
     cart.filter(x => productPacks.includes(x.flowwwId.toString())).length > 0
-      ? ['855', '854']
-      : [];
+      ? []
+      : ['855', '854'];
 
   function getProductsByCategory(category: string) {
     let filteredProducts: Product[];
@@ -89,7 +89,8 @@ export default function TreatmentAccordionSelector({
         if (
           validTypesPacks.includes(product.unityType) &&
           !product.isPack &&
-          !uniqueProductIds.has(product.title)
+          !uniqueProductIds.has(product.title) &&
+          !invalidProducts.includes(product.flowwwId.toString())
         ) {
           uniqueProductIds.add(product.title);
           return product;
