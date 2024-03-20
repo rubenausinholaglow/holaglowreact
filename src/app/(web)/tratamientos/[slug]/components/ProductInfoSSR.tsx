@@ -20,9 +20,9 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
 
   return (
     <Container className="px-0">
-      <div className="md:flex gap-8 justify-between items-start bg-derma-secondary400 md:p-6 md:rounded-2xl w-full">
-        <Container className="py-6 md:flex md:flex-col md:justify-center md:items-start">
-          <Title size="2xl" className="font-bold mb-8">
+      <div className="md:flex gap-8 justify-between items-start bg-derma-secondary400 md:rounded-2xl w-full">
+        <Container className="py-6 md:px-6 md:flex md:flex-col md:justify-center md:items-start">
+          <Title size="2xl" className="font-bold mb-8 md:hidden">
             Tu tratamiento
           </Title>
           <ul className="flex flex-col pb-4 w-full mb-4">
@@ -47,7 +47,9 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                           family={iconFamily}
                         />
 
-                        <Text className="font-semibold">{item.titlte}</Text>
+                        <Text className="font-semibold md:text-lg">
+                          {item.titlte}
+                        </Text>
                       </Flex>
                     );
                   })
@@ -67,7 +69,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                           className="text-hg-secondary mr-3"
                         />
                         <div>
-                          <Text className="font-semibold">
+                          <Text className="font-semibold md:text-lg">
                             {product.sessions.toString()}{' '}
                             {product.sessions === 1 ? 'sesión' : 'sesiones'}
                           </Text>
@@ -86,7 +88,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                 className="text-hg-secondary mr-3"
               />
               <div>
-                <Text className="font-semibold">
+                <Text className="font-semibold md:text-lg">
                   {product.emlaType === EmlaType.Required
                     ? product.applicationTimeMinutes * 2 + ''
                     : product.applicationTimeMinutes?.toString()}{' '}
@@ -103,14 +105,14 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
               />
               <div className="flex flex-col">
                 {product.durationMin >= 30 ? (
-                  <Text className="font-semibold">
+                  <Text className="font-semibold md:text-lg">
                     {(product.durationMin / 30).toString()}
                     {product.durationMax == product.durationMin && ' meses'}
                     {product.durationMax != product.durationMin &&
                       '-' + (product.durationMax / 30).toString() + ' meses'}
                   </Text>
                 ) : (
-                  <Text className="font-semibold">Permanente</Text>
+                  <Text className="font-semibold md:text-lg">Permanente</Text>
                 )}
               </div>
             </li>
@@ -122,7 +124,9 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
                 className="text-hg-secondary mr-3"
               />
               <div className="flex flex-col">
-                <Text className="font-semibold">{product.price} €</Text>
+                <Text className="font-semibold md:text-lg">
+                  {product.price} €
+                </Text>
               </div>
             </li>
           </ul>

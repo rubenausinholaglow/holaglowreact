@@ -1,9 +1,13 @@
+'use client';
+
 import { Professional } from '@interface/clinic';
 import { fetchClinics } from '@utils/fetch';
 import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+
+import { isMobile } from '../layout/Breakpoint';
 
 async function getClinics() {
   const clinics = await fetchClinics();
@@ -13,10 +17,8 @@ async function getClinics() {
 
 export default async function ProfessionalsSSR({
   className = '',
-  isDashboard = false,
 }: {
   className?: string;
-  isDashboard?: boolean;
 }) {
   const clinics = await getClinics();
 
@@ -40,15 +42,9 @@ export default async function ProfessionalsSSR({
 
   return (
     <Container
-      className={`p-0 md:px-4 gap-16   ${
-        isDashboard ? '' : 'md:flex'
-      } justify-between md:mb-16 ${className}`}
+      className={`p-0 md:px-4 gap-16 justify-between md:mb-8 ${className}`}
     >
-      <Container
-        className={`${
-          isDashboard ? '' : 'md:w-1/2'
-        } md:px-0 md:flex md:flex-col md:justify-center md:items-start`}
-      >
+      <Container className="md:px-0 md:flex md:flex-col md:justify-center md:items-start">
         <Title size="2xl" className="mb-4">
           Nuestras doctoras
         </Title>
@@ -59,23 +55,21 @@ export default async function ProfessionalsSSR({
           literal y metafóricamente.
         </Text>
       </Container>
-      <div className={`${isDashboard ? '' : 'md:w-1/2'}`}>
-        <Carousel
-          hasDots
-          hasControls={professionals?.map && professionals?.map.length > 2}
-          className="relative"
-          isIntrinsicHeight
-          visibleSlides={1}
-          infinite={false}
-        >
-          {professionals.map(professional => (
-            <ProfessionalCard
-              key={professional.name}
-              professional={professional}
-            />
-          ))}
-        </Carousel>
-      </div>
+      <Carousel
+        hasDots
+        hasControls={professionals?.map && professionals?.map.length > 2}
+        className="relative"
+        isIntrinsicHeight
+        visibleSlides={isMobile() ? 1 : 2}
+        infinite={false}
+      >
+        {professionals.map(professional => (
+          <ProfessionalCard
+            key={professional.name}
+            professional={professional}
+          />
+        ))}
+      </Carousel>
     </Container>
   );
 }

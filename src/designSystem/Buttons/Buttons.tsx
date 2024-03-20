@@ -184,7 +184,9 @@ const ButtonBody = ({
     sm: 'text-xs font-medium h-[32px] px-4',
     md: 'text-xs font-medium h-[40px] px-4',
     lg: 'text-md font-semibold h-[48px] px-6',
-    xl: 'text-lg font-semibold h-[64px] px-6',
+    xl: `${
+      type === 'primary' ? 'h-[64px] text-lg' : 'h-[60px] text-md'
+    } font-semibold px-6`,
   };
 
   const styles = twMerge(

@@ -214,6 +214,8 @@ export default function Carousel({
           className={`${isFullWidth ? '' : 'px-0'} ${
             hasTopControls
               ? 'absolute top-[50%] -translate-y-[50%] px-4'
+              : hasCounter
+              ? '-mt-4 '
               : 'mt-8'
           } ${rest.controlStyles ? rest.controlStyles : ''}`}
         >

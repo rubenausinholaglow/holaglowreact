@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgUserScan } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
@@ -15,7 +16,7 @@ import { useRouter } from 'next/navigation';
 export default function ProductPaymentOptions() {
   const router = useRouter();
   const ROUTES = useRoutes();
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function ProductPaymentOptions() {
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
   }, []);
 
-  const imgUrl = deviceSize.isMobile
+  const imgUrl = isMobile()
     ? '/images/product/probadorVirtual.png'
     : '/images/product/probadorVirtual-desk.png';
 
@@ -56,7 +57,7 @@ export default function ProductPaymentOptions() {
 
           <Button
             id={'tmevent_click_pv_button'}
-            size={deviceSize.isMobile ? 'lg' : 'xl'}
+            size={isMobile() ? 'lg' : 'xl'}
             type="secondary"
             onClick={() => {
               setSelectedTreatments([product]);
@@ -71,9 +72,7 @@ export default function ProductPaymentOptions() {
           className="relative aspect-[3/2] md:aspect-auto md:absolute top-0 bottom-0 left-0 right-[50%]"
           style={{
             backgroundImage: `url(${imgUrl})`,
-            backgroundPosition: deviceSize.isMobile
-              ? 'bottom center'
-              : 'right center',
+            backgroundPosition: isMobile() ? 'bottom center' : 'right center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
           }}

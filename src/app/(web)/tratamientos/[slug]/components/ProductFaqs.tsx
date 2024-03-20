@@ -1,7 +1,9 @@
+'use client';
+
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Container } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
 
 import { FAQ, faqItems } from './faqs';
@@ -37,24 +39,70 @@ export default function ProductFaqs({ product }: { product: Product }) {
         Consulta las preguntas frecuentes
       </Title>
 
-      <div className="md:grid md:grid-cols-2 md:gap-6">
-        {faqs.map((faq, index) => {
-          return (
-            <SimpleAccordion
-              key={faq.title}
-              className={`border-b border-hg-black md:mb-0 ${
-                faqs.length === index + 1 ? '' : 'pb-6 mb-6'
-              }`}
-              trigger={faq.title}
-              triggerStyles="text-left items-start font-semibold"
-            >
-              <Text size="sm" className="text-hg-black500 py-4">
-                {faq.description}
-              </Text>
-            </SimpleAccordion>
-          );
-        })}
-      </div>
+      <Flex
+        layout="col-left"
+        className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
+      >
+        {isMobile() &&
+          faqs.map((faq, index) => {
+            return (
+              <SimpleAccordion
+                key={faq.title}
+                className="pb-4 md:mb-0 border-b border-hg-black"
+                trigger={faq.title}
+                triggerStyles="text-left items-start font-semibold"
+              >
+                <Text size="sm" className="text-hg-black500 pt-4">
+                  {faq.description}
+                </Text>
+              </SimpleAccordion>
+            );
+          })}
+
+        {!isMobile() && (
+          <Flex layout="col-left" className="w-full gap-6">
+            {faqs.map((faq, index) => {
+              if (index % 2 === 0) {
+                return (
+                  <SimpleAccordion
+                    key={faq.title}
+                    className="pb-4 md:mb-0 border-b border-hg-black"
+                    trigger={faq.title}
+                    triggerStyles="text-left items-start font-semibold pb-2"
+                  >
+                    <Text size="sm" className="text-hg-black500 pt-4">
+                      {faq.description}
+                    </Text>
+                  </SimpleAccordion>
+                );
+              }
+              return null;
+            })}
+          </Flex>
+        )}
+
+        {!isMobile() && (
+          <Flex layout="col-left" className="w-full gap-6">
+            {faqs.map((faq, index) => {
+              if (index % 2 !== 0) {
+                return (
+                  <SimpleAccordion
+                    key={faq.title}
+                    className="pb-4 md:mb-0 border-b border-hg-black"
+                    trigger={faq.title}
+                    triggerStyles="text-left items-start font-semibold pb-2"
+                  >
+                    <Text size="sm" className="text-hg-black500 pt-4">
+                      {faq.description}
+                    </Text>
+                  </SimpleAccordion>
+                );
+              }
+              return null;
+            })}
+          </Flex>
+        )}
+      </Flex>
     </Container>
   );
 }

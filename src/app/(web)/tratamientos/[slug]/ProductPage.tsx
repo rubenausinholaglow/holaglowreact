@@ -1,6 +1,5 @@
 import { Product } from '@interface/product';
 import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
-import ProfessionalsSSR from 'app/(web)/components/common/ProfessionalsSSR';
 import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
 import dynamic from 'next/dynamic';
 
@@ -12,6 +11,11 @@ import ProductPaymentOptions from './components/ProductPaymentOptions';
 import ProductPricesSSR from './components/ProductPricesSSR';
 import ProductSuggestions from './components/ProductSuggestions';
 import ProductVideos from './components/ProductVideos';
+
+const ProfessionalsSSR = dynamic(
+  () => import('app/(web)/components/common/ProfessionalsSSR'),
+  { ssr: false }
+);
 
 const Testimonials = dynamic(
   () => import('app/(web)/components/home/Testimonials'),
