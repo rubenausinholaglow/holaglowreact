@@ -57,9 +57,11 @@ export default function TreatmentAccordionSelector({
 
   const cart = useCartStore(state => state.cart);
 
-  const validTypesPacks: UnityType[] = treatmentPacks.flatMap(x => {
-    return x.type;
-  });
+  const [validTypesPacks, setValidTypes] = useState<UnityType[]>(
+    treatmentPacks.flatMap(x => {
+      return x.type;
+    })
+  );
 
   function getProductsByCategory(category: string) {
     let filteredProducts: Product[];
@@ -130,7 +132,7 @@ export default function TreatmentAccordionSelector({
 
       packInProductCart ? setSelectedTreatments([]) : null;
     }
-  }, [dashboardProducts]);
+  }, [dashboardProducts, treatmentPacks, validTypesPacks]);
 
   useEffect(() => {
     if (isEmpty(selectedProducts) && !packInProductCart)
