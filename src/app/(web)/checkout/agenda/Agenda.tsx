@@ -359,11 +359,7 @@ export default function Agenda({
   function updateTreatmentPackScheduled(products: Product[]) {
     const matchingTreatments = treatmentPacks.filter(treat => {
       return products.some(prod => {
-        return (
-          prod.unityType === treat.type ||
-          (prod.unityType === UnityType.Botox &&
-            treat.type === UnityType.BabyBotox)
-        );
+        return prod.unityType === treat.type;
       });
     });
 

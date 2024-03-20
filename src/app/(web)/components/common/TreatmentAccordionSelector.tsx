@@ -52,10 +52,8 @@ export default function TreatmentAccordionSelector({
   );
 
   const cart = useCartStore(state => state.cart);
+
   const validTypesPacks: UnityType[] = treatmentPacks.flatMap(x => {
-    if (x.type === UnityType.Botox || x.type === UnityType.BabyBotox) {
-      return [UnityType.Botox, UnityType.BabyBotox];
-    }
     return x.type;
   });
 
@@ -105,9 +103,16 @@ export default function TreatmentAccordionSelector({
     if (isDashboard) {
       const allCategoryNames: string[] = dashboardProducts.reduce(
         (categoryNames: string[], product) => {
-          const productCategories = product.category.map(
-            category => category.name
-          );
+          let productCategories: string[] = [];
+          if (packInProductCart) {
+            if (validTypesPacks.includes(product.unityType)) {
+              productCategories = product.category.map(
+                category => category.name
+              );
+            }
+          } else {
+            productCategories = product.category.map(category => category.name);
+          }
           return [...categoryNames, ...productCategories];
         },
         []
@@ -164,9 +169,20 @@ export default function TreatmentAccordionSelector({
   }
 
   function removeTreatment(product: Product, index: number) {
-    setSelectedIndexProducts(x => x.filter(item => item !== index));
-    const updatedSelection = getUpdatedSelection(product);
-    setSelectedTreatments(updatedSelection);
+    if (packInProductCart) {
+      const firstProductIndex = selectedTreatments.findIndex(
+        item => item.id === product.id
+      );
+      if (firstProductIndex !== -1) {
+        const updatedTreatments = [...selectedTreatments];
+        updatedTreatments.splice(firstProductIndex, 1);
+        setSelectedTreatments(updatedTreatments);
+      }
+    } else {
+      setSelectedIndexProducts(x => x.filter(item => item !== index));
+      const updatedSelection = getUpdatedSelection(product);
+      setSelectedTreatments(updatedSelection);
+    }
   }
 
   function getUpdatedSelection(product: Product): Product[] {
