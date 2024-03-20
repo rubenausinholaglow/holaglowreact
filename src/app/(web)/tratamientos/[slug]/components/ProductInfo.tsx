@@ -249,18 +249,6 @@ export default function ProductInfo({
             </Flex>
           )}
         </Container>
-        {!isDashboard && (
-          <div className="md:w-2/5 shrink-0">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              src={product.videoUrl ? product.videoUrl : '/videos/pdp.mp4'}
-              className="w-full h-full block bg-black object-center md:rounded-xl"
-            />
-          </div>
-        )}
       </div>
     </Container>
   );
