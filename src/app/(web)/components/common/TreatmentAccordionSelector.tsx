@@ -139,7 +139,14 @@ export default function TreatmentAccordionSelector({
 
   useEffect(() => {
     console.log('product categories');
-    if (!isEmpty(productCategories)) setIsLoadingDashboard(false);
+    if (!isEmpty(productCategories)) {
+      console.log('have product categories');
+      setIsLoadingDashboard(false);
+    }
+    if (productCategories.length > 0) {
+      console.log('have product categories length');
+      setIsLoadingDashboard(false);
+    }
   }, [productCategories]);
 
   useEffect(() => {
