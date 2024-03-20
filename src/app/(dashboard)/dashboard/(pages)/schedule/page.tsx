@@ -109,28 +109,31 @@ export default function Page() {
           ) {
             if (product.isPack) {
               setPackInProductCart(true);
-              product.packUnities?.forEach(x => {
-                if (!treatmentPacks.some(packType => packType.id == x.id)) {
-                  const packsToAdd: PackUnities = {
-                    id: x.id,
-                    type: x.type,
-                    isScheduled: false,
-                  };
-                  setTreatmentPacks([...treatmentPacks, packsToAdd]);
-                }
-              });
+              addProductUnitiesPack(product);
             }
             foundProducts.push(product);
           }
         });
       });
-
       !packInProductCart ? setSelectedTreatments(foundProducts) : null;
     } catch (error: any) {
       Bugsnag.notify(error);
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function addProductUnitiesPack(product: Product) {
+    product.packUnities?.forEach(x => {
+      if (!treatmentPacks.some(packType => packType.id == x.id)) {
+        const packsToAdd: PackUnities = {
+          id: x.id,
+          type: x.type,
+          isScheduled: false,
+        };
+        setTreatmentPacks([...treatmentPacks, packsToAdd]);
+      }
+    });
   }
 
   return (

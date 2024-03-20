@@ -19,7 +19,6 @@ import { Budget, StatusBudget } from 'app/types/budget';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { useRouter } from 'next/navigation';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';
@@ -27,7 +26,6 @@ import { PaymentModule } from './components/payment/Payments';
 
 const Page = () => {
   const ROUTES = useRoutes();
-  const router = useRouter();
   const cart = useCartStore(state => state.cart);
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
