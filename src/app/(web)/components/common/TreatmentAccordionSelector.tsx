@@ -350,7 +350,7 @@ export default function TreatmentAccordionSelector({
   if (cart.length == 0 || !isDashboard || packInProductCart)
     return (
       <>
-        {isLoadingdashboard || productCategories.length == 0 ? (
+        {productCategories.length == 0 ? (
           <SvgSpinner className="justify-center w-full mb-4" />
         ) : (
           <Accordion type="single" collapsible className="w-full">
