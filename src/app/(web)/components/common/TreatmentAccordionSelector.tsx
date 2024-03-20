@@ -106,7 +106,7 @@ export default function TreatmentAccordionSelector({
   }, [stateProducts]);
 
   useEffect(() => {
-    if (isDashboard) {
+    if (isDashboard && !isEmpty(dashboardProducts)) {
       const allCategoryNames: string[] = dashboardProducts.reduce(
         (categoryNames: string[], product) => {
           let productCategories: string[] = [];
