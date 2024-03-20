@@ -536,16 +536,12 @@ export default function Agenda({
                           <Text size="xs" className="w-full text-left">
                             {selectedClinic.address}, {selectedClinic.city}
                           </Text>
-                          <Link
-                            href={
-                              isDashboard
-                                ? ROUTES.dashboard.schedule
-                                : ROUTES.checkout.clinics
-                            }
-                            className="text-xs ml-auto text-hg-secondary font-semibold"
+                          <Text
+                            onClick={() => router.back()}
+                            className="text-xs ml-auto text-hg-secondary font-semibold cursor-pointer"
                           >
                             Cambiar
-                          </Link>
+                          </Text>
                         </Flex>
                       )}
 
