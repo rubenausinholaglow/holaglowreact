@@ -244,30 +244,48 @@ export default function PaymentInput(props: Props) {
       ...prevFormData,
       ['id']: user?.id,
     }));
-    await UserService.updateUser(formData).then(async x => {
-      const initializePayment = constructInitializePayment(PaymentBank.Pepper);
-      await FinanceService.initializePayment(initializePayment).then(x => {
-        setShowPepperModal(false);
-        if (x) {
-          openWindow(x.url);
-          handleUrlPayment(x.id, '', x.referenceId);
-        } else {
-          setMessageNotification('Error pagando con Pepper');
-        }
-      });
 
-      await UserService.checkUser(user?.email)
-        .then(async data => {
-          if (data && !isEmpty(data)) {
-            setCurrentUser(data);
-          } else {
-            //TODO - MESSAGE ERROR UI
-          }
-        })
-        .catch(error => {
-          Bugsnag.notify('Error handleCheckUser:', error);
-        });
-    });
+    await UserService.updateUser(formData)
+      .then(async x => {
+        if (!x) {
+          setMessageNotification('Error actualizando usuario');
+          return;
+        }
+        const initializePayment = constructInitializePayment(
+          PaymentBank.Pepper
+        );
+        await FinanceService.initializePayment(initializePayment)
+          .then(x => {
+            setShowPepperModal(false);
+            if (x.url != '') {
+              openWindow(x.url);
+              handleUrlPayment(x.id, '', x.referenceId);
+            } else {
+              setMessageNotification('Error pagando con Pepper');
+            }
+          })
+          .catch(error => {
+            setMessageNotification('Error inicializando el pago');
+            Bugsnag.notify('Error initializePayment:', error);
+          });
+
+        await UserService.checkUser(user?.email)
+          .then(async data => {
+            if (data && !isEmpty(data)) {
+              setCurrentUser(data);
+            } else {
+              //TODO - MESSAGE ERROR UI
+            }
+          })
+          .catch(error => {
+            Bugsnag.notify('Error handleCheckUser:', error);
+          });
+      })
+      .catch(error => {
+        setShowPepperModal(false);
+        setMessageNotification('Error actualizando el usuario');
+        Bugsnag.notify('Error updateUser:', error);
+      });
     setIsLoading(false);
   };
 
