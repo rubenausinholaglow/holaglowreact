@@ -123,7 +123,7 @@ export default function TreatmentAccordionSelector({
         },
         []
       );
-
+      console.log('categorynames ' + allCategoryNames);
       const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
       setProductCategories(uniqueCategoryNames);
