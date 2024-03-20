@@ -152,6 +152,15 @@ export default function TreatmentAccordionSelector({
   }, [productCategories]);
 
   useEffect(() => {
+    if (!isEmpty(treatmentPacks))
+      setValidTypes(
+        treatmentPacks.flatMap(x => {
+          return x.type;
+        })
+      );
+  }, [treatmentPacks]);
+
+  useEffect(() => {
     if (!isEmpty(selectedProducts)) {
       const selectedIndexs: number[] = [];
       selectedProducts.map((product, index) => {
