@@ -8,6 +8,7 @@ import {
   Operation,
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { SvgSpinner } from 'app/icons/Icons';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -50,6 +51,9 @@ export default function TreatmentAccordionSelector({
   const [selectedIndexsProducts, setSelectedIndexProducts] = useState<number[]>(
     []
   );
+  const [isLoadingdashboard, setIsLoadingDashboard] = useState<boolean>(
+    isDashboard ? true : false
+  );
 
   const cart = useCartStore(state => state.cart);
 
@@ -84,19 +88,21 @@ export default function TreatmentAccordionSelector({
   }
 
   useEffect(() => {
-    const allCategoryNames: string[] = stateProducts.reduce(
-      (categoryNames: string[], product) => {
-        const productCategories = product.category.map(
-          category => category.name
-        );
-        return [...categoryNames, ...productCategories];
-      },
-      []
-    );
+    if (!isDashboard) {
+      const allCategoryNames: string[] = stateProducts.reduce(
+        (categoryNames: string[], product) => {
+          const productCategories = product.category.map(
+            category => category.name
+          );
+          return [...categoryNames, ...productCategories];
+        },
+        []
+      );
 
-    const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
+      const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
-    setProductCategories(uniqueCategoryNames);
+      setProductCategories(uniqueCategoryNames);
+    }
   }, [stateProducts]);
 
   useEffect(() => {
@@ -123,6 +129,7 @@ export default function TreatmentAccordionSelector({
       setProductCategories(uniqueCategoryNames);
 
       packInProductCart ? setSelectedTreatments([]) : null;
+      setIsLoadingDashboard(false);
     }
   }, [dashboardProducts]);
 
@@ -169,7 +176,7 @@ export default function TreatmentAccordionSelector({
   }
 
   function removeTreatment(product: Product, index: number) {
-    if (packInProductCart) {
+    if (isDashboard) {
       const firstProductIndex = selectedTreatments.findIndex(
         item => item.id === product.id
       );
@@ -215,7 +222,7 @@ export default function TreatmentAccordionSelector({
                 className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                 key={product.title}
                 onClick={() => {
-                  if (packInProductCart) return;
+                  if (isDashboard) return;
                   const isSelected =
                     isDashboard && cart.length > 0
                       ? selectedIndexsProducts.includes(index)
@@ -238,6 +245,7 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
+
                 {packInProductCart || (isDashboard && cart.length == 0)
                   ? renderSelectorQuantity(product, index) || null
                   : renderCheck(product, index) || null}
@@ -251,9 +259,15 @@ export default function TreatmentAccordionSelector({
 
   const renderSelectorQuantity = (product: Product, index: number) => {
     const disable =
+      cart.length > 0 &&
       selectedTreatments.length >=
-      treatmentPacks.filter(x => x.isScheduled == false).length;
-    if (validTypesPacks.includes(product.unityType))
+        treatmentPacks.filter(x => x.isScheduled == false).length
+        ? true
+        : false;
+    if (
+      validTypesPacks.includes(product.unityType) ||
+      (isDashboard && cart.length == 0)
+    )
       return (
         <div className="ml-auto">
           <Quantifier
@@ -304,66 +318,85 @@ export default function TreatmentAccordionSelector({
 
   if (isDashboard && cart.length > 0 && !packInProductCart)
     return (
-      <Accordion type="single" collapsible className="w-full" defaultValue="1">
-        <AccordionItem
-          className={`transition-all w-full rounded-lg overflow-hidden mb-4 
+      <>
+        {isLoadingdashboard ? (
+          <SvgSpinner className="justify-center w-full mb-4" />
+        ) : (
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full"
+            defaultValue="1"
+          >
+            <AccordionItem
+              className={`transition-all w-full rounded-lg overflow-hidden mb-4 
                   bg-hg-secondary100
             ${isDashboard ? 'min-w-[80%]' : ''}`}
-          value="1"
-        >
-          <AccordionTrigger>
-            <Flex className="p-4">
-              <Text className="font-semibold">Tratamientos Seleccionados</Text>
-            </Flex>
-          </AccordionTrigger>
-          {renderAcordionContent('')}
-        </AccordionItem>
-      </Accordion>
+              value="1"
+            >
+              <AccordionTrigger>
+                <Flex className="p-4">
+                  <Text className="font-semibold">
+                    Tratamientos Seleccionados
+                  </Text>
+                </Flex>
+              </AccordionTrigger>
+              {renderAcordionContent('')}
+            </AccordionItem>
+          </Accordion>
+        )}
+      </>
     );
   if (cart.length == 0 || !isDashboard || packInProductCart)
     return (
-      <Accordion type="single" collapsible className="w-full">
-        {packInProductCart && (
-          <div className="mb-4">
-            {treatmentPacks.filter(x => x.isScheduled == true).length}/
-            {treatmentPacks.length} agendados
-          </div>
-        )}
-        {productCategories.map(category => {
-          return (
-            <AccordionItem
-              value={category}
-              key={category}
-              className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
-                selectedCategory === category
-                  ? 'bg-hg-secondary100'
-                  : 'bg-hg-black50'
-              }
-            ${isDashboard ? 'min-w-[80%]' : ''}`}
-            >
-              <AccordionTrigger>
-                <Flex
-                  className="p-4"
-                  onClick={() =>
-                    setSelectedCategory(
-                      selectedCategory !== category ? category : null
-                    )
+      <>
+        {isLoadingdashboard ? (
+          <SvgSpinner className="justify-center w-full mb-4" />
+        ) : (
+          <Accordion type="single" collapsible className="w-full">
+            {packInProductCart && (
+              <div className="mb-4">
+                {treatmentPacks.filter(x => x.isScheduled == true).length}/
+                {treatmentPacks.length} agendados
+              </div>
+            )}
+            {productCategories.map(category => {
+              return (
+                <AccordionItem
+                  value={category}
+                  key={category}
+                  className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
+                    selectedCategory === category
+                      ? 'bg-hg-secondary100'
+                      : 'bg-hg-black50'
                   }
+            ${isDashboard ? 'min-w-[80%]' : ''}`}
                 >
-                  <CategoryIcon category={category} className="mr-4" />
-                  <Text className="font-semibold">{category}</Text>
+                  <AccordionTrigger>
+                    <Flex
+                      className="p-4"
+                      onClick={() =>
+                        setSelectedCategory(
+                          selectedCategory !== category ? category : null
+                        )
+                      }
+                    >
+                      <CategoryIcon category={category} className="mr-4" />
+                      <Text className="font-semibold">{category}</Text>
 
-                  <SvgAngle
-                    className={`transition-all text-hg-black500 ml-auto ${
-                      selectedCategory === category ? 'rotate-90' : ''
-                    }`}
-                  />
-                </Flex>
-              </AccordionTrigger>
-              {renderAcordionContent(category)}
-            </AccordionItem>
-          );
-        })}
-      </Accordion>
+                      <SvgAngle
+                        className={`transition-all text-hg-black500 ml-auto ${
+                          selectedCategory === category ? 'rotate-90' : ''
+                        }`}
+                      />
+                    </Flex>
+                  </AccordionTrigger>
+                  {renderAcordionContent(category)}
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
+        )}
+      </>
     );
 }
