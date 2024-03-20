@@ -51,15 +51,17 @@ export default function ProductPage({ product }: { product: Product }) {
       </div>
       <ProductSuggestions product={product} />
       <ProductFaqs product={product} />
-
+      <div className="bg-derma-secondary300 py-12">
+        <ProductCrosselling product={product} />
+      </div>
+      {/*
       {product.relatedProducts?.length > 0 && (
-        <div className="bg-derma-secondary300 py-12">
-          <ProductCrosselling product={product} />
-        </div>
       )}
+
       <ProductExplanation product={product} />
       <ClinicsSSR />
       <FloatingBottomBar threshold={1200} product={product} />
+       */}
     </MainLayoutSSR>
   );
 }

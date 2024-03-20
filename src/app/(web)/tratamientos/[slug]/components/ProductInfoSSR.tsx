@@ -7,17 +7,12 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 
-const ProductVideo = dynamic(() => import('./ProductVideo'), { ssr: false });
 const PepperWidget = dynamic(() => import('./PepperWidget'));
 const ProductSelectorButton = dynamic(() => import('./ProductSelectorButton'), {
   ssr: false,
 });
 
 export default function ProductInfoSSR({ product }: { product: Product }) {
-  const productVideoSrc = product.videoUrl
-    ? product.videoUrl
-    : '/videos/pdp.mp4';
-
   return (
     <Container className="px-0">
       <div className="md:flex gap-8 justify-between items-start bg-derma-secondary400 md:rounded-2xl w-full">
@@ -134,9 +129,6 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
           <ProductSelectorButton product={product} />
           <PepperWidget price={product.price} />
         </Container>
-        {/* <div className="md:w-2/5 shrink-0">
-          <ProductVideo src={productVideoSrc} />
-        </div> */}
       </div>
     </Container>
   );

@@ -13,6 +13,7 @@ import {
   Slide,
   Slider,
 } from 'pure-react-carousel';
+import { twMerge } from 'tailwind-merge';
 
 export default function Carousel({
   children,
@@ -129,7 +130,7 @@ export default function Carousel({
 
   return (
     <CarouselProvider
-      className={`relative w-full  ${className}`}
+      className={twMerge(`relative w-full ${className}`)}
       isIntrinsicHeight={isIntrinsicHeight}
       totalSlides={childrens.length}
       currentSlide={isFullWidth || hasDots ? currentSlideIndex : currentSlide}

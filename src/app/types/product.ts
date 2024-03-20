@@ -33,9 +33,9 @@ export interface Product {
   productCardImagePosition: string;
   longDescription: string;
   numProductCardPhotos: number;
-  videoUrl: string;
-  emlaType : EmlaType;
-  unityType : UnityType;
+  videos: Video[];
+  emlaType: EmlaType;
+  unityType: UnityType;
 }
 
 export enum EmlaType {
@@ -49,7 +49,12 @@ export interface BeforeAndAfterImages {
   urlAfter?: string;
   urlBefore?: string;
 }
-
+export interface Video {
+  url: string;
+  id?: string;
+  creationDate?: Date;
+  active: true;
+}
 export interface ExtraInformation {
   seoTitle: string;
   seoMetaDescription: string;
@@ -140,7 +145,7 @@ export interface CartItem extends Product {
   percentageDiscount: number;
   uniqueId: string;
   priceWithDiscount: number;
-  isScheduled? : boolean;
+  isScheduled?: boolean;
 }
 
 export interface Category {
@@ -172,5 +177,5 @@ export enum UnityType {
   Lifting,
   Peeling,
   Radiesse,
-  Belkyra
+  Belkyra,
 }

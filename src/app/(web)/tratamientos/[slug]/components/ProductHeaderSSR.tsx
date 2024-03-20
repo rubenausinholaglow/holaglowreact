@@ -16,7 +16,7 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
 
   return (
     <div className="md:pt-4 md:pb-12">
-      <Container className="p-0 md:px-4 md:gap-12 justify-between grid md:grid-cols-2">
+      <Container className="p-0 md:px-4 md:gap-16 justify-between grid md:grid-cols-2">
         <Container className="pb-6 md:pb-0 md:px-0 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-2">
           <Title size="2xl" className="text-left font-bold mb-4">
             {product.title}
@@ -24,13 +24,13 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
 
           {validTypes.includes(product.type) ? (
             <p
-              className="text-hg-black500 mb-4"
+              className="text-hg-black500 md:text-lg md: mb-8"
               dangerouslySetInnerHTML={{
                 __html: product?.extraInformation?.resultDescription,
               }}
             />
           ) : (
-            <Text className="text-hg-black500 mb-4 md:text-lg md: mb-8">
+            <Text className="text-hg-black500 md:text-lg md: mb-8">
               {product.extraInformation?.resultDescription}
             </Text>
           )}
