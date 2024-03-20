@@ -63,8 +63,16 @@ export default function TreatmentAccordionSelector({
     })
   );
 
+  const productPacks = ['5465', '971'];
+  const invalidProducts =
+    cart.filter(x => productPacks.includes(x.flowwwId.toString())).length > 0
+      ? ['855', '854']
+      : [];
+
   function getProductsByCategory(category: string) {
     let filteredProducts: Product[];
+    const uniqueProductIds = new Set<string>();
+
     if (isDashboard && !packInProductCart) {
       filteredProducts = dashboardProducts.filter(
         product =>
@@ -78,7 +86,12 @@ export default function TreatmentAccordionSelector({
       }
     } else if (packInProductCart) {
       filteredProducts = dashboardProducts.filter(product => {
-        if (validTypesPacks.includes(product.unityType)) {
+        if (
+          validTypesPacks.includes(product.unityType) &&
+          !product.isPack &&
+          !uniqueProductIds.has(product.title)
+        ) {
+          uniqueProductIds.add(product.title);
           return product;
         }
       });
@@ -131,7 +144,6 @@ export default function TreatmentAccordionSelector({
         },
         []
       );
-      console.log('categorynames ' + allCategoryNames);
       const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
       setProductCategories(uniqueCategoryNames);
@@ -273,7 +285,6 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{product.title}</Text>
                   <Text className="text-xs">{product.description}</Text>
                 </div>
-
                 {packInProductCart || (isDashboard && cart.length == 0)
                   ? renderSelectorQuantity(product, index) || null
                   : renderCheck(product, index) || null}
@@ -368,29 +379,36 @@ export default function TreatmentAccordionSelector({
         {isLoadingdashboard ? (
           <SvgSpinner className="justify-center w-full mb-4" />
         ) : (
-          <Accordion type="single" collapsible className="w-full">
+          <>
             {packInProductCart && (
               <div className="mb-4">
                 {treatmentPacks.filter(x => x.isScheduled == true).length}/
                 {treatmentPacks.length} agendados
               </div>
             )}
-            <AccordionItem
-              className={`transition-all w-full rounded-lg overflow-hidden mb-4 
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              defaultValue="1"
+            >
+              <AccordionItem
+                className={`transition-all w-full rounded-lg overflow-hidden mb-4 
                   bg-hg-secondary100
             ${isDashboard ? 'min-w-[80%]' : ''}`}
-              value="1"
-            >
-              <AccordionTrigger>
-                <Flex className="p-4">
-                  <Text className="font-semibold">
-                    Seleccionar Tratamientos
-                  </Text>
-                </Flex>
-              </AccordionTrigger>
-              {renderAcordionContent('')}
-            </AccordionItem>
-          </Accordion>
+                value="1"
+              >
+                <AccordionTrigger>
+                  <Flex className="p-4">
+                    <Text className="font-semibold">
+                      Seleccionar Tratamientos
+                    </Text>
+                  </Flex>
+                </AccordionTrigger>
+                {renderAcordionContent('')}
+              </AccordionItem>
+            </Accordion>
+          </>
         )}
       </>
     );
