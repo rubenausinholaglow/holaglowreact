@@ -167,7 +167,14 @@ export default function TreatmentAccordionSelector({
   }, [dashboardProducts, treatmentPacks, validTypesPacks]);
 
   useEffect(() => {
-    if (isEmpty(selectedProducts) && treatmentPacks.length == 0)
+    const hasIndividualProductInCart = cart.some(item => !item.isPack);
+
+    if (
+      isEmpty(selectedProducts) &&
+      hasIndividualProductInCart &&
+      treatmentPacks.filter(x => x.isScheduled == true).length == 0 &&
+      cart.filter(x => x.isScheduled == true).length == 0
+    )
       setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
 

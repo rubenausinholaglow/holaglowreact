@@ -365,6 +365,9 @@ export default function Agenda({
   function updateTreatmentPackScheduled(products: Product[]) {
     const matchingTreatments: PackUnities[] = [];
     products.forEach(prod => {
+      const productInCart = cart.filter(x => x.id == prod.id).length > 0;
+      if (productInCart) return;
+
       const matchingTreatment = treatmentPacks.find(
         treat =>
           treat.type === prod.unityType && !matchingTreatments.includes(treat)
