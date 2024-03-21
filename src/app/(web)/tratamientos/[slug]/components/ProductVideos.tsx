@@ -42,8 +42,12 @@ export default function ProductVideos({ product }: { product: Product }) {
       >
         <div className={videos.length === 1 && !isMobile() ? 'w-1/2' : ''}>
           <Title size="2xl" className="font-bold mb-6">
-            Loren Ipsum
+            Holaglow lovers
           </Title>
+          <Text className="hidden md:block text-hg-black500 text-lg mb-8">
+            Podrás presumir del cambio el mismo día y observarás el resultado
+            óptimo a las dos semanas.
+          </Text>
         </div>
         <div
           className={

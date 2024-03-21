@@ -72,7 +72,7 @@ export default function ProductImagesCarousel({
           <Title size="2xl" className="text-left font-bold mb-4">
             Consigue el resultado que deseas
           </Title>
-          <Text className="text-hg-black500 md:text-lg md: mb-8">
+          <Text className="text-hg-black500 md:text-lg mb-8">
             Podrás presumir del cambio el mismo día y observarás el resultado
             óptimo a las dos semanas.
           </Text>
