@@ -1,11 +1,10 @@
-import { getSelectorsByUserAgent } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { Professional } from '@interface/clinic';
 import { fetchClinics } from '@utils/fetch';
 import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { headers } from 'next/headers';
 
 async function getClinics() {
   const clinics = await fetchClinics();
@@ -19,9 +18,6 @@ export default async function ProfessionalsSSR({
   className?: string;
 }) {
   const clinics = await getClinics();
-  const { isMobile } = getSelectorsByUserAgent(
-    headers().get('user-agent') ?? ''
-  );
   const professionals = clinics
     .flatMap(clinic =>
       clinic.professionals.map(professional => {

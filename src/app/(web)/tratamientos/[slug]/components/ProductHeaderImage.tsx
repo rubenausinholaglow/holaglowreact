@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { getProductCardColor, useImageProps } from '@utils/common';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import isEmpty from 'lodash/isEmpty';
 import Image from 'next/image';
 
 export default function ProductHeaderImage({ product }: { product: Product }) {
-  const deviceSize = useDeviceSizeSSR();
   const { alignmentStyles, setNextImgSrc } = useImageProps(product);
   const imageUrls: any[] = [];
   const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`;
@@ -18,16 +16,14 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
   const [alignmentImage, setAlignmentImage] = useState('');
 
   useEffect(() => {
-    if (!isEmpty(deviceSize)) {
-      setAlignmentImage(
-        product.productCardImagePosition === 'right' && !deviceSize.isMobile
-          ? 'rounded-r-3xl'
-          : product.productCardImagePosition === 'left' && !deviceSize.isMobile
-          ? 'rounded-l-3xl'
-          : ''
-      );
-    }
-  }, [deviceSize]);
+    setAlignmentImage(
+      product.productCardImagePosition === 'right' && !isMobile()
+        ? 'rounded-r-3xl'
+        : product.productCardImagePosition === 'left' && !isMobile()
+        ? 'rounded-l-3xl'
+        : ''
+    );
+  }, []);
 
   const renderCarouselItems = () => {
     return imageUrls.map((url, index) => (

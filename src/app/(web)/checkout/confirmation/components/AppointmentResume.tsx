@@ -13,6 +13,7 @@ import {
   getUniqueProducts,
 } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import {
   SvgAngleDown,
   SvgCalendar,
@@ -57,7 +58,6 @@ export default function AppointmentResume({
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
-    deviceSize,
     selectedTreatments,
     selectedSlot,
     selectedDay,
@@ -114,11 +114,11 @@ export default function AppointmentResume({
   const accordionProps: AccordionSingleProps = {
     type: 'single',
     collapsible: true,
-    ...(deviceSize.isMobile ? {} : { defaultValue: 'item-1' }),
+    ...(isMobile() ? {} : { defaultValue: 'item-1' }),
   };
 
   const accordionItemProps: AccordionItemProps = {
-    value: deviceSize.isMobile ? 'item-2' : 'item-1',
+    value: isMobile() ? 'item-2' : 'item-1',
   };
 
   const TreatmentImage = ({ selectedSlot }: { selectedSlot: Slot }) => {

@@ -2,8 +2,8 @@
 
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgGlow } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import {
   getImageProductsCarousel,
@@ -24,7 +24,6 @@ export default function ProductHeader({
   product: Product;
   isDashboard?: boolean;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const imageUrls: any[] = [];
   for (let i = 1; i <= product.numProductCardPhotos; i++) {
@@ -44,9 +43,7 @@ export default function ProductHeader({
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
             className={`relative ${url.alignmentStyles} ${
-              !isDashboard && deviceSize.isMobile
-                ? 'rounded-t-3xl'
-                : 'rounded-3xl'
+              !isDashboard && isMobile() ? 'rounded-t-3xl' : 'rounded-3xl'
             } w-[66%]`}
           />
         </div>
@@ -58,7 +55,7 @@ export default function ProductHeader({
     <>
       <Container
         className={`p-0 md:px-4 gap-4 md:gap-16 justify-between md:mb-16 flex ${
-          !isDashboard && deviceSize.isMobile ? ' flex-col' : 'flex-row'
+          !isDashboard && isMobile() ? ' flex-col' : 'flex-row'
         }`}
       >
         <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
@@ -105,9 +102,7 @@ export default function ProductHeader({
           <div className="relative aspect-[3/2] w-full">
             <div
               className={`absolute inset-0 top-[10%] ${alignmentStyles} ${
-                !isDashboard && deviceSize.isMobile
-                  ? 'rounded-t-3xl'
-                  : 'rounded-3xl'
+                !isDashboard && isMobile() ? 'rounded-t-3xl' : 'rounded-3xl'
               }`}
               style={{
                 background: getProductCardColor(product.cardBackgroundColor),
@@ -132,7 +127,7 @@ export default function ProductHeader({
                 src={imgSrc}
                 onError={() => setNextImgSrc()}
                 className={`relative ${alignmentStyles} ${
-                  !isDashboard && deviceSize.isMobile
+                  !isDashboard && isMobile()
                     ? product.productCardImagePosition !== 'middle'
                       ? 'rounded-t-3xl'
                       : ''

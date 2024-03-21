@@ -1,10 +1,11 @@
 'use client';
 
-import { useSessionStore } from 'app/stores/globalStore';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+
+import { isMobile } from '../layout/Breakpoint';
 
 const FAQS = [
   {
@@ -41,8 +42,6 @@ const FAQS = [
 ];
 
 export default function FaqsDerma() {
-  const { deviceSize } = useSessionStore(store => store);
-
   return (
     <Container>
       <Flex layout="row-between" className="w-full gap-2 mb-12">
@@ -66,7 +65,7 @@ export default function FaqsDerma() {
         layout="col-left"
         className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
       >
-        {deviceSize.isMobile &&
+        {isMobile() &&
           FAQS.map((faq, index) => {
             return (
               <SimpleAccordion
@@ -82,7 +81,7 @@ export default function FaqsDerma() {
             );
           })}
 
-        {!deviceSize.isMobile && (
+        {!isMobile() && (
           <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 === 0) {
@@ -104,7 +103,7 @@ export default function FaqsDerma() {
           </Flex>
         )}
 
-        {!deviceSize.isMobile && (
+        {!isMobile() && (
           <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 !== 0) {

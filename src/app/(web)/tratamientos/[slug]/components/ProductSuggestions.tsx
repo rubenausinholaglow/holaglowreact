@@ -2,10 +2,7 @@
 
 import { useState } from 'react';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import {
-  isMobile,
-  useDeviceSizeSSR,
-} from 'app/(web)/components/layout/Breakpoint';
+import { isMobile, isTablet } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -13,19 +10,7 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 export default function ProductSuggestions({ product }: { product: Product }) {
-  const deviceSize = useDeviceSizeSSR();
-
-  const visibleSuggestions = () => {
-    if (deviceSize.isMobile) {
-      return 1;
-    }
-
-    if (deviceSize.isTablet) {
-      return 2;
-    }
-
-    return 3;
-  };
+  const visibleSuggestions = isMobile() ? 1 : isTablet() ? 2 : 3;
 
   const postTreatmentTips = product.postTreatmentInfo?.first24hTips?.concat(
     product.postTreatmentInfo.after24hTips
@@ -86,7 +71,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
           controlStyles="px-4"
           className="relative"
           isIntrinsicHeight
-          visibleSlides={visibleSuggestions()}
+          visibleSlides={visibleSuggestions}
           infinite={false}
           sliderStyles="md:gap-10"
         >

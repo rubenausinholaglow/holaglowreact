@@ -8,10 +8,8 @@ import Clinics from 'app/(web)/components/common/Clinics';
 import Professionals from 'app/(web)/components/common/Professionals';
 import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
 import Testimonials from 'app/(web)/components/home/Testimonials';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import { setSeoMetaData, useElementOnScreen } from 'app/utils/common';
 import { fetchProduct } from 'app/utils/fetch';
@@ -37,7 +35,6 @@ export default function ProductDetailPage({
   const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
     state => state
   );
-  const { deviceSize } = useSessionStore(state => state);
   const { productHighlighted } = useCartStore(state => state);
 
   const [bottomBarThreshold, setBottomBarThreshold] = useState(1200);
@@ -174,7 +171,7 @@ export default function ProductDetailPage({
             <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
               <Professionals isDashboard={isDashboard} />
             </div>
-            {deviceSize.isMobile && (
+            {isMobile() && (
               <FloatingBottomBar
                 product={product}
                 threshold={bottomBarThreshold}

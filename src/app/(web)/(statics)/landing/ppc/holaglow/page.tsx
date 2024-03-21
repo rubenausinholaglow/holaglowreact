@@ -1,10 +1,8 @@
-'use client';
-
-import { useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
+import ROUTES from '@utils/routes';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import Clinics from 'app/(web)/components/common/Clinics';
 import Professionals from 'app/(web)/components/common/Professionals';
-import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import GoogleStars from 'app/(web)/components/home/GoogleStars';
 import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
 import Products from 'app/(web)/components/home/Products';
@@ -13,14 +11,11 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { SvgHolaglow } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
-import { fetchProduct } from 'app/utils/fetch';
-import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
@@ -29,44 +24,11 @@ import Link from 'next/link';
 
 import ConsistOf from './components/ConsistOF';
 import LandingTestimonials from './components/LandingTestimonials';
+import LeadLandingRegistrationForm from './components/LeadLandingRegistrationForm';
 
 export default function LandingCaptacion() {
-  const ROUTES = useRoutes();
-
-  const {
-    deviceSize,
-    setSelectedTreatments,
-    setSelectedSlot,
-    setSelectedClinic,
-    analyticsMetrics,
-    setAnalyticsMetrics,
-  } = useSessionStore(state => state);
-
-  const HEADER_HEIGHT = deviceSize.isMobile
-    ? HEADER_HEIGHT_MOBILE
-    : HEADER_HEIGHT_DESKTOP;
+  const HEADER_HEIGHT = isMobile ? HEADER_HEIGHT_MOBILE : HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
-
-  useEffect(() => {
-    setSelectedSlot(undefined);
-    setSelectedClinic(undefined);
-    async function initProduct(productId: string) {
-      const productDetails = await fetchProduct(productId, false, false);
-      setSelectedTreatments([productDetails]);
-    }
-
-    initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
-    analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
-    analyticsMetrics.externalReference = 'Landing';
-    analyticsMetrics.utmAdgroup = '';
-    analyticsMetrics.utmCampaign = '';
-    analyticsMetrics.utmContent = '';
-    analyticsMetrics.utmMedium = '';
-    analyticsMetrics.utmSource = '';
-    analyticsMetrics.utmTerm = '';
-    analyticsMetrics.locPhysicalMs = '';
-    setAnalyticsMetrics(analyticsMetrics);
-  }, []);
 
   return (
     <App>
@@ -90,7 +52,7 @@ export default function LandingCaptacion() {
                 className="lg:absolute right-0  2xl:mr-20"
               >
                 <Button
-                  size={deviceSize.isMobile ? 'sm' : 'md'}
+                  size={isMobile ? 'sm' : 'md'}
                   type="tertiary"
                   href={ROUTES.checkout.clinics}
                 >
@@ -135,7 +97,7 @@ export default function LandingCaptacion() {
             <div className="row-start-1">
               <Image
                 src={`/images/statics/landings/captacion/hero${
-                  deviceSize.isMobile ? '' : 'Desktop'
+                  isMobile ? '' : 'Desktop'
                 }.png`}
                 alt="Asesórate gratis con nuestro equipo médico"
                 height={1044}
@@ -182,7 +144,7 @@ export default function LandingCaptacion() {
               <div className="md:order-2">
                 <Title
                   isAnimated
-                  origin={deviceSize.isMobile ? 'bottom' : 'right'}
+                  origin={isMobile ? 'bottom' : 'right'}
                   size="2xl"
                   className="font-bold mb-4"
                 >
@@ -194,18 +156,18 @@ export default function LandingCaptacion() {
                 </Title>
                 <Text
                   isAnimated
-                  origin={deviceSize.isMobile ? 'bottom' : 'right'}
+                  origin={isMobile ? 'bottom' : 'right'}
                   className="text-hg-black500 mb-8 md:text-lg"
                 >
                   En el siguiente paso podrás seleccionar clínica
                 </Text>
               </div>
               <AnimateOnViewport
-                origin={deviceSize.isMobile ? 'bottom' : 'left'}
+                origin={isMobile ? 'bottom' : 'left'}
                 className="w-full"
               >
                 <div className="md:bg-hg-black50 md:p-8 rounded-2xl shrink-0 md:shadow-centered-secondary">
-                  <RegistrationForm page="902" />
+                  <LeadLandingRegistrationForm />
                 </div>
               </AnimateOnViewport>
             </Flex>
@@ -236,7 +198,7 @@ export default function LandingCaptacion() {
           <AnimateOnViewport>
             <FullWidthCarousel
               className="pb-8 -mt-8"
-              visibleSlides={deviceSize.isMobile ? 1.5 : null}
+              visibleSlides={isMobile ? 1.5 : null}
               isPlaying
             >
               {Array.from({ length: 15 }, (_, index) => (

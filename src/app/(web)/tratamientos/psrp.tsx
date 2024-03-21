@@ -13,7 +13,6 @@ import { SvgFilters } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
-  useSessionStore,
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -21,6 +20,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import { isMobile } from '../components/layout/Breakpoint';
 import ProductSearchBar from '../components/product/ProductSearchBar';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';
@@ -38,7 +38,6 @@ export default function PsrpPage({
   const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
     state => state
   );
-  const { deviceSize } = useSessionStore(state => state);
   const {
     filteredProducts,
     setFilteredProducts,
@@ -225,9 +224,7 @@ export default function PsrpPage({
                 products={stateProducts}
                 className="hidden md:block mr-8 xl:max-w-[220px]"
               />
-              <AnimateOnViewport
-                origin={deviceSize.isMobile ? 'right' : 'bottom'}
-              >
+              <AnimateOnViewport origin={isMobile() ? 'right' : 'bottom'}>
                 <CategorySelector />
               </AnimateOnViewport>
             </div>
@@ -256,7 +253,7 @@ export default function PsrpPage({
                       size="sm"
                       className="mr-2"
                       onClick={() => {
-                        deviceSize.isMobile
+                        isMobile()
                           ? setIsMobileFiltersVisible(true)
                           : setShowDesktopFilters(!showDesktopFilters);
                       }}

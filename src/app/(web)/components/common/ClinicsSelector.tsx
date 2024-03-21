@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgAngle } from 'app/icons/IconsDs';
 import {
   Accordion,
@@ -19,16 +19,13 @@ import { isEmpty } from 'lodash';
 import FullScreenLoading from './FullScreenLayout';
 
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
-  const deviceSize = useDeviceSizeSSR();
-
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
   const [googleMapAddress, setGoogleMapAddress] = useState('');
 
   useEffect(() => {
-    if (!deviceSize.isMobile && clinics.length > 0)
-      setSelectedClinic(clinics[0]);
+    if (!isMobile() && clinics.length > 0) setSelectedClinic(clinics[0]);
   }, [clinics]);
 
   useEffect(() => {
@@ -53,7 +50,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
         className={`w-full flex flex-col gap-4`}
         value={selectedAccordion}
       >
-        {deviceSize.isMobile &&
+        {isMobile() &&
           clinics &&
           clinics.map((clinic, index) => (
             <AccordionItem
@@ -118,7 +115,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
           ))}
       </Accordion>
 
-      {!deviceSize.isMobile && (
+      {!isMobile() && (
         <>
           <div className="flex w-1/2">
             <Flex layout="col-left" className="gap-4 mr-24 w-full">

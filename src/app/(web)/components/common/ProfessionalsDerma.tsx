@@ -2,16 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Professional, ProfessionalType } from 'app/types/clinic';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import { isMobile } from '../layout/Breakpoint';
 import ProfessionalCard from './ProfessionalCard';
 
 export default function ProfessionalsDerma({
@@ -22,7 +20,6 @@ export default function ProfessionalsDerma({
   isDashboard?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize } = useSessionStore(state => state);
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 
   useEffect(() => {
@@ -101,14 +98,14 @@ export default function ProfessionalsDerma({
         </Text>
       </Container>
       <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>
-        {deviceSize.isMobile && (
+        {isMobile() && (
           <ProductCarousel
             hasControls={false}
             type="professionals"
             items={professionals}
           />
         )}
-        {!deviceSize.isMobile && (
+        {!isMobile() && (
           <Carousel
             hasControls
             className="relative"

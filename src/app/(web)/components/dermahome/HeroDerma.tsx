@@ -1,6 +1,5 @@
 'use client';
 
-import { useSessionStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -9,12 +8,11 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import Link from 'next/link';
+
+import { isMobile } from '../layout/Breakpoint';
 
 export default function HeroDerma() {
-  const { deviceSize } = useSessionStore(state => state);
-
-  const HEADER_HEIGHT = deviceSize.isMobile
+  const HEADER_HEIGHT = isMobile()
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `-${HEADER_HEIGHT}px`;
@@ -48,7 +46,7 @@ export default function HeroDerma() {
                   src="/images/derma/home/GoogleReviews.png"
                   alt="Holaglow reviews"
                   height={200}
-                  width={deviceSize.isMobile ? 150 : 175}
+                  width={isMobile() ? 150 : 175}
                   className="mr-auto"
                 />
                 <Text className="text-hg-black400 text-xs">

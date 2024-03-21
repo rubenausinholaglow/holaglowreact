@@ -9,7 +9,7 @@ import {
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgArrow, SvgGlow, SvgInjection } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -181,7 +181,6 @@ export default function ProductPriceCard({
   isDashboard?: boolean;
   className?: string;
 }) {
-  const deviceSize = useDeviceSizeSSR();
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   useEffect(() => {
@@ -234,7 +233,7 @@ export default function ProductPriceCard({
           </Flex>
         </Flex>
         <Text className="font-semibold md:text-lg">{product.title}</Text>
-        {product.isPack && deviceSize.isMobile && (
+        {product.isPack && isMobile() && (
           <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
         )}
       </Flex>

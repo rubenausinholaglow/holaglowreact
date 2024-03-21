@@ -6,6 +6,7 @@ import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgCalendar, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
@@ -40,12 +41,8 @@ export default function AppointmentList({
     state => state
   );
 
-  const {
-    deviceSize,
-    setSelectedTreatments,
-    setPreviousAppointment,
-    setSelectedClinic,
-  } = useSessionStore(state => state);
+  const { setSelectedTreatments, setPreviousAppointment, setSelectedClinic } =
+    useSessionStore(state => state);
 
   let showPast = false;
   let token = '';
@@ -162,7 +159,7 @@ export default function AppointmentList({
                 {!hideButtons && (
                   <Flex layout="row-between" className="w-full mt-6">
                     <Button
-                      size={deviceSize.isMobile ? 'sm' : 'md'}
+                      size={isMobile() ? 'sm' : 'md'}
                       id="button-addon2"
                       type={isDerma ? 'derma' : 'tertiary'}
                       customStyles={!isDerma ? 'bg-hg-primary' : ''}
@@ -180,7 +177,7 @@ export default function AppointmentList({
                       !appointment.isCancelled && (
                         <>
                           <Button
-                            size={deviceSize.isMobile ? 'sm' : 'md'}
+                            size={isMobile() ? 'sm' : 'md'}
                             type="tertiary"
                             id="button-addon2"
                             onClick={() => {

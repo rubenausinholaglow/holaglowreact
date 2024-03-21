@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import CheckHydration from '@utils/CheckHydration';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -16,6 +15,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import Link from 'next/link';
 
 import AnimateOnViewport from '../common/AnimateOnViewport';
+import { isMobile } from './Breakpoint';
 
 let isTicking = false;
 let scrollPos = 0;
@@ -30,9 +30,7 @@ export default function DermaHeader({
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
-  const { deviceSize } = useSessionStore(state => state);
-
-  const HEADER_HEIGHT = deviceSize.isMobile
+  const HEADER_HEIGHT = isMobile()
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
 
