@@ -1,3 +1,4 @@
+import { getSelectorsByUserAgent } from 'react-device-detect';
 import { Professional } from '@interface/clinic';
 import { fetchClinics } from '@utils/fetch';
 import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
@@ -5,7 +6,6 @@ import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { headers } from 'next/headers';
-import { getSelectorsByUserAgent } from 'react-device-detect';
 
 async function getClinics() {
   const clinics = await fetchClinics();
