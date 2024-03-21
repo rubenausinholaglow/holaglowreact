@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Professional, ProfessionalType } from 'app/types/clinic';
@@ -9,7 +10,6 @@ import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
-import { isMobile } from '../layout/Breakpoint';
 import ProfessionalCard from './ProfessionalCard';
 
 export default function ProfessionalsDerma({

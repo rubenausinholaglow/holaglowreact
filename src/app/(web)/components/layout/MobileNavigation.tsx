@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
 import { SvgArrow, SvgCalling, SvgCross, SvgHolaglow } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -12,7 +13,6 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { isEmpty } from 'lodash';
 
 import ProductSearchBar from '../product/ProductSearchBar';
-import { isMobile } from './Breakpoint';
 
 export default function MobileNavigation({
   isVisible,

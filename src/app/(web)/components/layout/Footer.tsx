@@ -1,5 +1,6 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import { SvgHolaglow } from 'app/icons/IconsDs';
 import { SvgInstagram } from 'app/icons/socialIcons';
 import {
@@ -12,8 +13,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { usePathname } from 'next/navigation';
-
-import { isMobile } from './Breakpoint';
 
 export function Footer() {
   const ROUTES = useRoutes();

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -15,7 +16,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import Link from 'next/link';
 
 import AnimateOnViewport from '../common/AnimateOnViewport';
-import { isMobile } from './Breakpoint';
 
 let isTicking = false;
 let scrollPos = 0;

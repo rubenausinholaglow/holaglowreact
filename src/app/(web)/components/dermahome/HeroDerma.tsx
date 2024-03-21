@@ -1,5 +1,6 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -8,8 +9,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-
-import { isMobile } from '../layout/Breakpoint';
 
 export default function HeroDerma() {
   const HEADER_HEIGHT = isMobile

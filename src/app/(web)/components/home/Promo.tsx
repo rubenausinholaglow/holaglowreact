@@ -1,5 +1,6 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -7,8 +8,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-
-import { isMobile } from '../layout/Breakpoint';
 
 function BlackFriday() {
   const router = useRouter();

@@ -1,13 +1,12 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { Testimonial } from 'app/types/testimonial';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
-
-import { isMobile } from '../layout/Breakpoint';
 
 const TESTIMONIALS: Testimonial[] = [
   {

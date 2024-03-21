@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { DERMA_PRODUCTS } from 'app/(web)/derma/planes/mockedData';
 import { SvgArrow, SvgCheckCircle, SvgCross } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
@@ -10,8 +11,6 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-
-import { isMobile } from '../layout/Breakpoint';
 
 const RUTINE_DATA = {
   imgSrc: '/images/derma/upselling/packDerma.png',

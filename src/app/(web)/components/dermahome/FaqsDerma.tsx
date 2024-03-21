@@ -1,11 +1,10 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-
-import { isMobile } from '../layout/Breakpoint';
 
 const FAQS = [
   {

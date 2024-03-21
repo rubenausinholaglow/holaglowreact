@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
@@ -20,7 +21,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
-import { isMobile } from '../components/layout/Breakpoint';
 import ProductSearchBar from '../components/product/ProductSearchBar';
 import DesktopFilters from './components/DesktopFilters';
 import LookingFor from './components/LookingFor';

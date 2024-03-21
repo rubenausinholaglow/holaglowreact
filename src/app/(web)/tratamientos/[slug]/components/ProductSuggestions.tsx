@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { isMobile, isTablet } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
@@ -65,58 +66,60 @@ export default function ProductSuggestions({ product }: { product: Product }) {
       </Container>
 
       <Container className="px-0">
-        <Carousel
-          hasDots={isMobile}
-          hasControls={!isMobile}
-          controlStyles="px-4"
-          className="relative"
-          isIntrinsicHeight
-          visibleSlides={visibleSuggestions}
-          infinite={false}
-          sliderStyles="md:gap-10"
-        >
-          {product.preTreatmentInfo?.tips &&
-            activeSlider === 'pre' &&
-            product.preTreatmentInfo?.tips
-              .sort((a, b) => a.priority - b.priority)
-              .map(tip => {
-                return (
-                  <Flex
-                    key={tip.priority}
-                    layout="col-center"
-                    className="bg-derma-secondary400 p-8 rounded-2xl h-full mr-4 ml-4"
-                  >
-                    <DynamicIcon
-                      className="h-12 w-12 mb-6 text-hg-secondary"
-                      name={`Svg${tip.icon}`}
-                      family="suggestion"
-                    />
-                    <Text className="text-center">{tip.details}</Text>
-                  </Flex>
-                );
-              })}
+        <CheckHydration>
+          <Carousel
+            hasDots={isMobile}
+            hasControls={!isMobile}
+            controlStyles="px-4"
+            className="relative"
+            isIntrinsicHeight
+            visibleSlides={visibleSuggestions}
+            infinite={false}
+            sliderStyles="md:gap-10"
+          >
+            {product.preTreatmentInfo?.tips &&
+              activeSlider === 'pre' &&
+              product.preTreatmentInfo?.tips
+                .sort((a, b) => a.priority - b.priority)
+                .map(tip => {
+                  return (
+                    <Flex
+                      key={tip.priority}
+                      layout="col-center"
+                      className="bg-derma-secondary400 p-8 rounded-2xl h-full mr-4 ml-4"
+                    >
+                      <DynamicIcon
+                        className="h-12 w-12 mb-6 text-hg-secondary"
+                        name={`Svg${tip.icon}`}
+                        family="suggestion"
+                      />
+                      <Text className="text-center">{tip.details}</Text>
+                    </Flex>
+                  );
+                })}
 
-          {postTreatmentTips &&
-            activeSlider === 'post' &&
-            postTreatmentTips
-              .sort((a, b) => a.priority - b.priority)
-              .map(tip => {
-                return (
-                  <Flex
-                    key={tip.priority}
-                    layout="col-center"
-                    className="bg-derma-secondary400 p-8 rounded-2xl h-full mr-4 ml-4"
-                  >
-                    <DynamicIcon
-                      className="h-12 w-12 mb-6 text-hg-secondary"
-                      name={`Svg${tip.icon}`}
-                      family="suggestion"
-                    />
-                    <Text className="text-center">{tip.details}</Text>
-                  </Flex>
-                );
-              })}
-        </Carousel>
+            {postTreatmentTips &&
+              activeSlider === 'post' &&
+              postTreatmentTips
+                .sort((a, b) => a.priority - b.priority)
+                .map(tip => {
+                  return (
+                    <Flex
+                      key={tip.priority}
+                      layout="col-center"
+                      className="bg-derma-secondary400 p-8 rounded-2xl h-full mr-4 ml-4"
+                    >
+                      <DynamicIcon
+                        className="h-12 w-12 mb-6 text-hg-secondary"
+                        name={`Svg${tip.icon}`}
+                        family="suggestion"
+                      />
+                      <Text className="text-center">{tip.details}</Text>
+                    </Flex>
+                  );
+                })}
+          </Carousel>
+        </CheckHydration>
       </Container>
     </div>
   );

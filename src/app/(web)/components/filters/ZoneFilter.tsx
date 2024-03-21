@@ -1,13 +1,12 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-
-import { isMobile } from '../layout/Breakpoint';
 
 export default function ZoneFilter({
   className,
