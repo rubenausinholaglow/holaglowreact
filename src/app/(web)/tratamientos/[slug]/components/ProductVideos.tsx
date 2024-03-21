@@ -15,11 +15,11 @@ const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
 });
 
 export default function ProductVideos({ product }: { product: Product }) {
-  const [videos, setVideos] = useState(product.videos);
+  const [videos, setVideos] = useState(product?.videos ? product.videos : []);
   const deviceSize = useDeviceSizeSSR();
 
   useEffect(() => {
-    if (product.videos.length < 1) {
+    if (videos.length === 0) {
       setVideos([
         {
           url: '/videos/pdp.mp4',
