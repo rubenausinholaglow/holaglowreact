@@ -6,9 +6,11 @@ import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function ProfessionalCard({
+  isDerma = false,
   professional,
   className = '',
 }: {
+  isDerma?: boolean;
   professional: Professional;
   className?: string;
 }) {
@@ -32,7 +34,7 @@ export default function ProfessionalCard({
             fill
             objectFit="cover"
             src={professional.urlPhoto}
-            className="hidden md:block pt-6"
+            className={`hidden md:block ${!isDerma && 'pt-6'}`}
           />
         </div>
 
@@ -40,8 +42,16 @@ export default function ProfessionalCard({
           layout="col-left"
           className="flex-grow md:h-full bg-white w-full rounded-bl-3xl rounded-br-3xl md:rounded-bl-none md:rounded-r-3xl overflow-hidden py-6 px-4 md:px-6 text-sm gap-2"
         >
-          <SvgHolaglowHand className="text-hg-secondary500 hidden md:block h-14 w-14" />
-          <Text className="font-gtUltra font-light text-hg-secondary text-drxl md:text-2xl">
+          <SvgHolaglowHand
+            className={`hidden md:block h-14 w-14 ${
+              isDerma ? 'text-derma-primary500' : 'text-hg-secondary500'
+            }`}
+          />
+          <Text
+            className={`font-gtUltra font-light ${
+              isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+            } text-drxl md:text-2xl`}
+          >
             {professional.tittleAbbreviation}. {professional.name}
           </Text>
           <Text>{professional.title}</Text>

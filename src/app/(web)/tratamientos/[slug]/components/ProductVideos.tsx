@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Product } from '@interface/product';
 import CheckHydration from '@utils/CheckHydration';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
-import { Product } from 'app/types/product';
+import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
@@ -16,6 +16,7 @@ const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
 
 export default function ProductVideos({ product }: { product: Product }) {
   const [videos, setVideos] = useState(product.videos);
+  const deviceSize = useDeviceSizeSSR();
 
   useEffect(() => {
     if (product.videos.length < 1) {
@@ -37,29 +38,35 @@ export default function ProductVideos({ product }: { product: Product }) {
       <Flex
         layout="col-left"
         className={`w-full ${
-          videos.length === 1 && !isMobile() ? 'flex-row gap-16' : ''
+          videos.length === 1 && !deviceSize.isMobile ? 'flex-row gap-16' : ''
         }`}
       >
-        <div className={videos.length === 1 && !isMobile() ? 'w-1/2' : ''}>
+        <div
+          className={videos.length === 1 && !deviceSize.isMobile ? 'w-1/2' : ''}
+        >
           <Title size="2xl" className="font-bold mb-6">
             Holaglow lovers
           </Title>
           <Text className="hidden md:block text-hg-black500 text-lg mb-8">
-            Podrás presumir del cambio el mismo día y observarás el resultado
-            óptimo a las dos semanas.
+            Descubre la experiencia en primera persona de pacientes que ya han
+            confiado en Holaglow.
           </Text>
         </div>
         <div
           className={
-            videos.length === 1 && !isMobile() ? 'w-1/2 aspect-square' : ''
+            videos.length === 1 && !deviceSize.isMobile
+              ? 'w-1/2 aspect-square'
+              : ''
           }
         >
           <CheckHydration>
             <Carousel
               hasDots={videos.length > 1}
-              dragEnabled={true}
-              touchEnabled={true}
-              visibleSlides={videos.length > 1 ? (isMobile() ? 1 : 3) : 1}
+              dragEnabled={videos.length > 1}
+              touchEnabled={videos.length > 1}
+              visibleSlides={
+                videos.length > 1 ? (deviceSize.isMobile ? 1 : 3) : 1
+              }
               isIntrinsicHeight
               infinite={false}
               sliderStyles="md:gap-8"
