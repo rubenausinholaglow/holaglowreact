@@ -51,10 +51,6 @@ export default function TreatmentAccordionSelector({
   const [selectedIndexsProducts, setSelectedIndexProducts] = useState<number[]>(
     []
   );
-  const [isLoadingdashboard, setIsLoadingDashboard] = useState<boolean>(
-    isDashboard ? true : false
-  );
-
   const cart = useCartStore(state => state.cart);
 
   const [validTypesPacks, setValidTypes] = useState<UnityType[]>(
@@ -157,14 +153,9 @@ export default function TreatmentAccordionSelector({
   }, [dashboardProducts, treatmentPacks, validTypesPacks]);
 
   useEffect(() => {
-    if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
+    if (isEmpty(selectedProducts) && !packInProductCart)
+      setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
-
-  useEffect(() => {
-    if (!isEmpty(productCategories)) {
-      setIsLoadingDashboard(false);
-    }
-  }, [productCategories]);
 
   useEffect(() => {
     if (!isEmpty(treatmentPacks))
@@ -302,8 +293,10 @@ export default function TreatmentAccordionSelector({
   const renderSelectorQuantity = (product: Product, index: number) => {
     const disable =
       cart.length > 0 &&
-      selectedTreatments.length >=
-        treatmentPacks.filter(x => x.isScheduled == false).length
+      selectedTreatments.filter(x => x.unityType == product.unityType).length >=
+        treatmentPacks.filter(
+          x => x.isScheduled == false && x.type == product.unityType
+        ).length
         ? true
         : false;
     if (
@@ -323,7 +316,7 @@ export default function TreatmentAccordionSelector({
               }
             }}
             quantity={getQuantityOfProduct(product)}
-            disableAdd={disable}
+            disableAddQuantity={disable}
           />
         </div>
       );

@@ -5,7 +5,13 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { CartItem, EmlaType, Product, UnityType } from '@interface/product';
+import {
+  CartItem,
+  EmlaType,
+  PackUnities,
+  Product,
+  UnityType,
+} from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
 import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
@@ -299,7 +305,7 @@ export default function Agenda({
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard && !isDerma) {
+            if (isDashboard) {
               const filteredCart = cart.filter(
                 cartItem =>
                   validTypesFilterCart.includes(cartItem.type) &&
@@ -357,19 +363,24 @@ export default function Agenda({
   }, [selectedSlot]);
 
   function updateTreatmentPackScheduled(products: Product[]) {
-    const matchingTreatments = treatmentPacks.filter(treat => {
-      return products.some(prod => {
-        return prod.unityType === treat.type;
-      });
+    const matchingTreatments: PackUnities[] = [];
+    products.forEach(prod => {
+      const matchingTreatment = treatmentPacks.find(
+        treat =>
+          treat.type === prod.unityType && !matchingTreatments.includes(treat)
+      );
+      if (matchingTreatment) {
+        matchingTreatments.push(matchingTreatment);
+      }
     });
-
     const remainingTreatments = treatmentPacks.filter(
-      treat => !matchingTreatments.includes(treat)
+      treat => !matchingTreatments.some(mt => mt.id === treat.id)
     );
 
-    const updatedPacks = matchingTreatments.map(pack => {
-      return { ...pack, isScheduled: true };
-    });
+    const updatedPacks = matchingTreatments.map(pack => ({
+      ...pack,
+      isScheduled: true,
+    }));
 
     setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
   }
