@@ -65,7 +65,7 @@ export default function FaqsDerma() {
         layout="col-left"
         className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
       >
-        {isMobile() &&
+        {isMobile &&
           FAQS.map((faq, index) => {
             return (
               <SimpleAccordion
@@ -81,7 +81,7 @@ export default function FaqsDerma() {
             );
           })}
 
-        {!isMobile() && (
+        {!isMobile && (
           <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 === 0) {
@@ -103,7 +103,7 @@ export default function FaqsDerma() {
           </Flex>
         )}
 
-        {!isMobile() && (
+        {!isMobile && (
           <Flex layout="col-left" className="w-full gap-10">
             {FAQS.map((faq, index) => {
               if (index % 2 !== 0) {

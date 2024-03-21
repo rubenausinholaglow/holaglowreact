@@ -224,7 +224,7 @@ export default function PsrpPage({
                 products={stateProducts}
                 className="hidden md:block mr-8 xl:max-w-[220px]"
               />
-              <AnimateOnViewport origin={isMobile() ? 'right' : 'bottom'}>
+              <AnimateOnViewport origin={isMobile ? 'right' : 'bottom'}>
                 <CategorySelector />
               </AnimateOnViewport>
             </div>
@@ -253,7 +253,7 @@ export default function PsrpPage({
                       size="sm"
                       className="mr-2"
                       onClick={() => {
-                        isMobile()
+                        isMobile
                           ? setIsMobileFiltersVisible(true)
                           : setShowDesktopFilters(!showDesktopFilters);
                       }}

@@ -1,17 +1,10 @@
-'use client';
-
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
+import isMobileSSR from '@utils/isMobileSSR';
 import { Product } from 'app/types/product';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import dynamic from 'next/dynamic';
 
 import { FAQ, faqItems } from './faqs';
-
-const SimpleAccordion = dynamic(
-  () => import('designSystem/Accordion/SimpleAccordion'),
-  { ssr: false }
-);
 
 export default function ProductFaqs({ product }: { product: Product }) {
   const getFaqsForAppliedProduct = (appliedProduct: string) => {
@@ -43,7 +36,7 @@ export default function ProductFaqs({ product }: { product: Product }) {
         layout="col-left"
         className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
       >
-        {isMobile() &&
+        {isMobileSSR() &&
           faqs.map((faq, index) => {
             return (
               <SimpleAccordion
@@ -59,7 +52,7 @@ export default function ProductFaqs({ product }: { product: Product }) {
             );
           })}
 
-        {!isMobile() && (
+        {!isMobileSSR() && (
           <Flex layout="col-left" className="w-full gap-6">
             {faqs.map((faq, index) => {
               if (index % 2 === 0) {
@@ -81,7 +74,7 @@ export default function ProductFaqs({ product }: { product: Product }) {
           </Flex>
         )}
 
-        {!isMobile() && (
+        {!isMobileSSR() && (
           <Flex layout="col-left" className="w-full gap-6">
             {faqs.map((faq, index) => {
               if (index % 2 !== 0) {

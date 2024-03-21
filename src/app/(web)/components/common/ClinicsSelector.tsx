@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgAngle } from 'app/icons/IconsDs';
 import {
   Accordion,
@@ -25,7 +25,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
   const [googleMapAddress, setGoogleMapAddress] = useState('');
 
   useEffect(() => {
-    if (!isMobile() && clinics.length > 0) setSelectedClinic(clinics[0]);
+    if (!isMobile && clinics.length > 0) setSelectedClinic(clinics[0]);
   }, [clinics]);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
         className={`w-full flex flex-col gap-4`}
         value={selectedAccordion}
       >
-        {isMobile() &&
+        {isMobile &&
           clinics &&
           clinics.map((clinic, index) => (
             <AccordionItem
@@ -115,7 +115,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
           ))}
       </Accordion>
 
-      {!isMobile() && (
+      {!isMobile && (
         <>
           <div className="flex w-1/2">
             <Flex layout="col-left" className="gap-4 mr-24 w-full">

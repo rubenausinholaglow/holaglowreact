@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { fetchProduct } from '@utils/fetch';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
@@ -111,7 +111,7 @@ export default function ProductPrices({
         {!isSessionProduct && (
           <Flex layout="col-left" className="md:flex-row gap-8">
             <Accordion
-              defaultValue={isMobile() ? 'accordion-0' : 'value'}
+              defaultValue={isMobile ? 'accordion-0' : 'value'}
               className="flex flex-col gap-4 mb-8 md:flex-row md:gap items-start"
             >
               {productItems.map((item: Product, index: number) => (
@@ -121,7 +121,7 @@ export default function ProductPrices({
                   product={item}
                   parentProduct={product}
                   className={
-                    productItems.length === 1 && !isMobile() && !item.isPack
+                    productItems.length === 1 && !isMobile && !item.isPack
                       ? 'w-1/3'
                       : ''
                   }

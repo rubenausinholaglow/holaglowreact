@@ -12,7 +12,7 @@ import Image from 'next/image';
 import { isMobile } from '../layout/Breakpoint';
 
 export default function HeroDerma() {
-  const HEADER_HEIGHT = isMobile()
+  const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `-${HEADER_HEIGHT}px`;
@@ -46,7 +46,7 @@ export default function HeroDerma() {
                   src="/images/derma/home/GoogleReviews.png"
                   alt="Holaglow reviews"
                   height={200}
-                  width={isMobile() ? 150 : 175}
+                  width={isMobile ? 150 : 175}
                   className="mr-auto"
                 />
                 <Text className="text-hg-black400 text-xs">

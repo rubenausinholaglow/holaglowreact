@@ -1,9 +1,6 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
 import CheckHydration from '@utils/CheckHydration';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import isMobileSSR from '@utils/isMobileSSR';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
@@ -15,19 +12,14 @@ const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
 });
 
 export default function ProductVideos({ product }: { product: Product }) {
-  const [videos, setVideos] = useState(product?.videos ? product.videos : []);
-  const deviceSize = useDeviceSizeSSR();
+  const defaultVideos = [
+    {
+      url: '/videos/pdp.mp4',
+      active: true,
+    },
+  ];
 
-  useEffect(() => {
-    if (videos.length === 0) {
-      setVideos([
-        {
-          url: '/videos/pdp.mp4',
-          active: true,
-        },
-      ]);
-    }
-  }, []);
+  const videos = product?.videos ? product.videos : defaultVideos;
 
   if (videos.length < 1) {
     return <></>;
@@ -38,12 +30,10 @@ export default function ProductVideos({ product }: { product: Product }) {
       <Flex
         layout="col-left"
         className={`w-full ${
-          videos.length === 1 && !deviceSize.isMobile ? 'flex-row gap-16' : ''
+          videos.length === 1 && !isMobileSSR() ? 'flex-row gap-16' : ''
         }`}
       >
-        <div
-          className={videos.length === 1 && !deviceSize.isMobile ? 'w-1/2' : ''}
-        >
+        <div className={videos.length === 1 && !isMobileSSR() ? 'w-1/2' : ''}>
           <Title size="2xl" className="font-bold mb-6">
             Holaglow lovers
           </Title>
@@ -54,9 +44,7 @@ export default function ProductVideos({ product }: { product: Product }) {
         </div>
         <div
           className={
-            videos.length === 1 && !deviceSize.isMobile
-              ? 'w-1/2 aspect-square'
-              : ''
+            videos.length === 1 && !isMobileSSR() ? 'w-1/2 aspect-square' : ''
           }
         >
           <CheckHydration>
@@ -64,9 +52,7 @@ export default function ProductVideos({ product }: { product: Product }) {
               hasDots={videos.length > 1}
               dragEnabled={videos.length > 1}
               touchEnabled={videos.length > 1}
-              visibleSlides={
-                videos.length > 1 ? (deviceSize.isMobile ? 1 : 3) : 1
-              }
+              visibleSlides={videos.length > 1 ? (isMobileSSR() ? 1 : 3) : 1}
               isIntrinsicHeight
               infinite={false}
               sliderStyles="md:gap-8"

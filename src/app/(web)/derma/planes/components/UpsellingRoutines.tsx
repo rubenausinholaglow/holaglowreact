@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { AnalyticsMetrics } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { UpsellingData } from '@interface/upselling';
 import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgCheckCircle, SvgCross, SvgWarning } from 'app/icons/IconsDs';
 import {
   TypeOfPayment,
@@ -94,7 +94,7 @@ export default function UpsellingRoutines({
     <>
       <Modal
         isVisible={showModal}
-        width={isMobile() ? 'w-full' : 'max-w-[500px]'}
+        width={isMobile ? 'w-full' : 'max-w-[500px]'}
         className="shadow-none"
         type="right"
         hideModalBackground
@@ -248,7 +248,7 @@ export default function UpsellingRoutines({
                   <Flex layout="row-right" className="justify-between w-full">
                     <Button
                       type="derma"
-                      size={isMobile() ? 'lg' : 'xl'}
+                      size={isMobile ? 'lg' : 'xl'}
                       onClick={() => {
                         setSelectedRoutine(index);
 

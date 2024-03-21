@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
@@ -9,7 +10,6 @@ import {
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgArrow, SvgGlow, SvgInjection } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -233,7 +233,7 @@ export default function ProductPriceCard({
           </Flex>
         </Flex>
         <Text className="font-semibold md:text-lg">{product.title}</Text>
-        {product.isPack && isMobile() && (
+        {product.isPack && isMobile && (
           <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
         )}
       </Flex>

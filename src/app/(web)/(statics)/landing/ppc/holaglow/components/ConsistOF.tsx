@@ -1,4 +1,4 @@
-import { isMobile } from 'react-device-detect';
+import isMobileSSR from '@utils/isMobileSSR';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import Carousel from 'designSystem/Carousel/Carousel';
@@ -43,7 +43,7 @@ export default function ConsistOf() {
         <Underlined color={HOLAGLOW_COLORS['primary']}>consiste</Underlined>?
       </Title>
 
-      {isMobile && (
+      {isMobileSSR() && (
         <Carousel
           hasControls
           className="relative mt-8"
@@ -72,7 +72,7 @@ export default function ConsistOf() {
         </Carousel>
       )}
 
-      {!isMobile && (
+      {!isMobileSSR() && (
         <div className="grid grid-cols-2 gap-16 my-12">
           {SLIDES.map((item: SliderItem, index: number) => (
             <Flex key={index} layout="col-center" className="items-stretch">

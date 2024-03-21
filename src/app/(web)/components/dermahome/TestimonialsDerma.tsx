@@ -60,7 +60,7 @@ export default function TestimonialsDerma() {
         <FullWidthCarousel
           hasControls={true}
           className="pb-8"
-          visibleSlides={isMobile() ? 1.2 : 3.5}
+          visibleSlides={isMobile ? 1.2 : 3.5}
           isDerma={true}
         >
           {TESTIMONIALS.map((testimonial: Testimonial | any) => {

@@ -1,5 +1,3 @@
-'use client';
-
 import CheckHydration from '@utils/CheckHydration';
 import BlogShareBar from 'app/(web)/blog/components/BlogShareBar';
 import { Product } from 'app/types/product';
@@ -7,7 +5,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
-import { usePathname } from 'next/navigation';
+import { headers } from 'next/headers';
 
 const ProductPriceCard = dynamic(() => import('./ProductPriceCard'), {
   ssr: false,
@@ -22,7 +20,7 @@ const ProductSessionPriceCard = dynamic(
 );
 
 export default function ProductPricesSSR({ product }: { product: Product }) {
-  const route = usePathname();
+  const headersList = headers();
 
   function groupProductsByTitle(arr: Product[]) {
     const groupedArray: { [key: string]: Product[] } = {};
@@ -164,8 +162,8 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
         )}
         <Flex layout="row-center" className="pt-4">
           <BlogShareBar
-            title="title"
-            url={`https://www.holaglow.com${route}`}
+            title={product.title}
+            url={`http://www.holaglow.com/${headersList.get('next-url') || ''}`}
           />
         </Flex>
       </Container>

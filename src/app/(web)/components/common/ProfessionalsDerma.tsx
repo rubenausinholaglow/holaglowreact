@@ -98,14 +98,14 @@ export default function ProfessionalsDerma({
         </Text>
       </Container>
       <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>
-        {isMobile() && (
+        {isMobile && (
           <ProductCarousel
             hasControls={false}
             type="professionals"
             items={professionals}
           />
         )}
-        {!isMobile() && (
+        {!isMobile && (
           <Carousel
             hasControls
             className="relative"

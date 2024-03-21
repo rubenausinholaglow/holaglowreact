@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { getProductCardColor, useImageProps } from '@utils/common';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { Product } from 'app/types/product';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -17,9 +17,9 @@ export default function ProductHeaderImage({ product }: { product: Product }) {
 
   useEffect(() => {
     setAlignmentImage(
-      product.productCardImagePosition === 'right' && !isMobile()
+      product.productCardImagePosition === 'right' && !isMobile
         ? 'rounded-r-3xl'
-        : product.productCardImagePosition === 'left' && !isMobile()
+        : product.productCardImagePosition === 'left' && !isMobile
         ? 'rounded-l-3xl'
         : ''
     );

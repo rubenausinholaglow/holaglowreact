@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
@@ -13,7 +14,6 @@ import {
   getUniqueProducts,
 } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import {
   SvgAngleDown,
   SvgCalendar,
@@ -114,11 +114,11 @@ export default function AppointmentResume({
   const accordionProps: AccordionSingleProps = {
     type: 'single',
     collapsible: true,
-    ...(isMobile() ? {} : { defaultValue: 'item-1' }),
+    ...(isMobile ? {} : { defaultValue: 'item-1' }),
   };
 
   const accordionItemProps: AccordionItemProps = {
-    value: isMobile() ? 'item-2' : 'item-1',
+    value: isMobile ? 'item-2' : 'item-1',
   };
 
   const TreatmentImage = ({ selectedSlot }: { selectedSlot: Slot }) => {

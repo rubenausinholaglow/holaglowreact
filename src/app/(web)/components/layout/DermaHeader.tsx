@@ -30,7 +30,7 @@ export default function DermaHeader({
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
-  const HEADER_HEIGHT = isMobile()
+  const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
 

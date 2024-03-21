@@ -1,6 +1,6 @@
-import { isMobile } from 'react-device-detect';
 import { Professional } from '@interface/clinic';
 import { fetchClinics } from '@utils/fetch';
+import isMobileSSR from '@utils/isMobileSSR';
 import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
@@ -56,7 +56,7 @@ export default async function ProfessionalsSSR({
         hasControls={professionals?.map && professionals?.map.length > 2}
         className="relative"
         isIntrinsicHeight
-        visibleSlides={isMobile ? 1 : 2}
+        visibleSlides={isMobileSSR() ? 1 : 2}
         infinite={false}
       >
         {professionals.map(professional => (

@@ -1,8 +1,8 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgGlow } from 'app/icons/IconsDs';
 import { Product } from 'app/types/product';
 import {
@@ -43,7 +43,7 @@ export default function ProductHeader({
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
             className={`relative ${url.alignmentStyles} ${
-              !isDashboard && isMobile() ? 'rounded-t-3xl' : 'rounded-3xl'
+              !isDashboard && isMobile ? 'rounded-t-3xl' : 'rounded-3xl'
             } w-[66%]`}
           />
         </div>
@@ -55,7 +55,7 @@ export default function ProductHeader({
     <>
       <Container
         className={`p-0 md:px-4 gap-4 md:gap-16 justify-between md:mb-16 flex ${
-          !isDashboard && isMobile() ? ' flex-col' : 'flex-row'
+          !isDashboard && isMobile ? ' flex-col' : 'flex-row'
         }`}
       >
         <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
@@ -102,7 +102,7 @@ export default function ProductHeader({
           <div className="relative aspect-[3/2] w-full">
             <div
               className={`absolute inset-0 top-[10%] ${alignmentStyles} ${
-                !isDashboard && isMobile() ? 'rounded-t-3xl' : 'rounded-3xl'
+                !isDashboard && isMobile ? 'rounded-t-3xl' : 'rounded-3xl'
               }`}
               style={{
                 background: getProductCardColor(product.cardBackgroundColor),
@@ -127,7 +127,7 @@ export default function ProductHeader({
                 src={imgSrc}
                 onError={() => setNextImgSrc()}
                 className={`relative ${alignmentStyles} ${
-                  !isDashboard && isMobile()
+                  !isDashboard && isMobile
                     ? product.productCardImagePosition !== 'middle'
                       ? 'rounded-t-3xl'
                       : ''

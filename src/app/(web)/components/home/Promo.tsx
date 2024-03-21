@@ -17,12 +17,12 @@ function BlackFriday() {
     <Container className="px-0 pt-8 md:pt-12">
       <div
         className={`relative cursor-pointer ${
-          isMobile() ? 'aspect-[39/78]' : 'aspect-[2432/1096]'
+          isMobile ? 'aspect-[39/78]' : 'aspect-[2432/1096]'
         }`}
         onClick={() => router.push(`${ROUTES.treatments}/packs`)}
       >
         <Image
-          src={`/images/home/bf-bg${isMobile() ? '' : '-desk'}.png`}
+          src={`/images/home/bf-bg${isMobile ? '' : '-desk'}.png`}
           className="object-fill"
           fill
           alt="black friday holaglow"

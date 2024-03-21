@@ -1,13 +1,12 @@
-'use client';
-
 import { Testimonial } from '@interface/testimonial';
-import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
-import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import isMobileSSR from '@utils/isMobileSSR';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgByGoogle, SvgStar } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+
+import TestimonialCard from '../common/TestimonialCard';
+import FullWidthCarousel from '../product/fullWidthCarousel';
 
 const TESTIMONIALS: Testimonial[] = [
   {
@@ -51,8 +50,7 @@ const TESTIMONIALS: Testimonial[] = [
       'He visitado la clínica y son súper amables y profesionales, antes del tratamiento puedes ver el resultado de forma virtual en un simulador. Decidí hacerme un tratamiento antiarrugas en la frente, entrecejo y patas de gallo. Encantada con mi nueva imagen,mejorada y muy natural.',
   },
 ];
-
-export default function Testimonials() {
+export default async function Testimonials() {
   return (
     <>
       <Container className="py-12">
@@ -84,10 +82,10 @@ export default function Testimonials() {
         </Flex>
       </Container>
       <FullWidthCarousel
-        hasDots={isMobile()}
-        hasControls={!isMobile()}
+        hasDots={isMobileSSR()}
+        hasControls={!isMobileSSR()}
         className="pb-8"
-        visibleSlides={isMobile() ? 1.2 : 3.5}
+        visibleSlides={isMobileSSR() ? 1.2 : 3.5}
       >
         {TESTIMONIALS.map((testimonial: Testimonial | any) => {
           return (

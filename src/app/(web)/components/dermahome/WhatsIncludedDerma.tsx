@@ -41,7 +41,7 @@ export default function WhatsIncludedDerma() {
     <>
       <Modal
         isVisible={showModal}
-        width={isMobile() ? 'w-full' : 'max-w-[500px]'}
+        width={isMobile ? 'w-full' : 'max-w-[500px]'}
         className="shadow-none"
         type="right"
         hideModalBackground
@@ -198,7 +198,7 @@ export default function WhatsIncludedDerma() {
                 </div>
                 <Flex className="w-full gap-4 md:gap-0 justify-between mt-8">
                   <Button
-                    size={isMobile() ? 'md' : 'xl'}
+                    size={isMobile ? 'md' : 'xl'}
                     type="tertiary"
                     customStyles="border-none text-derma-tertiary bg-derma-secondary100 "
                     onClick={() => {
@@ -209,7 +209,7 @@ export default function WhatsIncludedDerma() {
                   </Button>
                   <Button
                     type="derma"
-                    size={isMobile() ? 'lg' : 'xl'}
+                    size={isMobile ? 'lg' : 'xl'}
                     href="/multistep/start"
                     id="tmevent_derma_multistep_start_middle_card"
                   >

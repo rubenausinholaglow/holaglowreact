@@ -1,4 +1,4 @@
-import { isMobile } from 'react-device-detect';
+import isMobileSSR from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import Clinics from 'app/(web)/components/common/Clinics';
@@ -27,7 +27,9 @@ import LandingTestimonials from './components/LandingTestimonials';
 import LeadLandingRegistrationForm from './components/LeadLandingRegistrationForm';
 
 export default function LandingCaptacion() {
-  const HEADER_HEIGHT = isMobile ? HEADER_HEIGHT_MOBILE : HEADER_HEIGHT_DESKTOP;
+  const HEADER_HEIGHT = isMobileSSR()
+    ? HEADER_HEIGHT_MOBILE
+    : HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
   return (
@@ -52,7 +54,7 @@ export default function LandingCaptacion() {
                 className="lg:absolute right-0  2xl:mr-20"
               >
                 <Button
-                  size={isMobile ? 'sm' : 'md'}
+                  size={isMobileSSR() ? 'sm' : 'md'}
                   type="tertiary"
                   href={ROUTES.checkout.clinics}
                 >
@@ -97,7 +99,7 @@ export default function LandingCaptacion() {
             <div className="row-start-1">
               <Image
                 src={`/images/statics/landings/captacion/hero${
-                  isMobile ? '' : 'Desktop'
+                  isMobileSSR() ? '' : 'Desktop'
                 }.png`}
                 alt="Asesórate gratis con nuestro equipo médico"
                 height={1044}
@@ -144,7 +146,7 @@ export default function LandingCaptacion() {
               <div className="md:order-2">
                 <Title
                   isAnimated
-                  origin={isMobile ? 'bottom' : 'right'}
+                  origin={isMobileSSR() ? 'bottom' : 'right'}
                   size="2xl"
                   className="font-bold mb-4"
                 >
@@ -156,14 +158,14 @@ export default function LandingCaptacion() {
                 </Title>
                 <Text
                   isAnimated
-                  origin={isMobile ? 'bottom' : 'right'}
+                  origin={isMobileSSR() ? 'bottom' : 'right'}
                   className="text-hg-black500 mb-8 md:text-lg"
                 >
                   En el siguiente paso podrás seleccionar clínica
                 </Text>
               </div>
               <AnimateOnViewport
-                origin={isMobile ? 'bottom' : 'left'}
+                origin={isMobileSSR() ? 'bottom' : 'left'}
                 className="w-full"
               >
                 <div className="md:bg-hg-black50 md:p-8 rounded-2xl shrink-0 md:shadow-centered-secondary">
@@ -198,7 +200,7 @@ export default function LandingCaptacion() {
           <AnimateOnViewport>
             <FullWidthCarousel
               className="pb-8 -mt-8"
-              visibleSlides={isMobile ? 1.5 : null}
+              visibleSlides={isMobileSSR() ? 1.5 : null}
               isPlaying
             >
               {Array.from({ length: 15 }, (_, index) => (

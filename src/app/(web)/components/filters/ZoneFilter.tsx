@@ -57,7 +57,7 @@ export default function ZoneFilter({
     if (isDashboard) {
       return 'bg-hg-black100';
     } else {
-      return isMobile() ? 'bg-white' : 'bg-derma-secondary300';
+      return isMobile ? 'bg-white' : 'bg-derma-secondary300';
     }
   }
 

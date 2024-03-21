@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Product } from '@interface/product';
 import ROUTES from '@utils/routes';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { useSessionStore } from 'app/stores/globalStore';
 import { fetchProduct } from 'app/utils/fetch';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -27,7 +27,7 @@ export default function BlogAppointment() {
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
   }, []);
 
-  const imgUrl = isMobile()
+  const imgUrl = isMobile
     ? '/images/blog/BlogAppointment.png'
     : '/images/blog/BlogAppointment-desk.png';
 
@@ -42,7 +42,7 @@ export default function BlogAppointment() {
           className="relative aspect-[5/6] md:aspect-auto md:absolute top-0 bottom-0 right-0 md:left-[50%]"
           style={{
             backgroundImage: `url(${imgUrl})`,
-            backgroundPosition: isMobile() ? 'bottom center' : 'center',
+            backgroundPosition: isMobile ? 'bottom center' : 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
           }}
@@ -68,7 +68,7 @@ export default function BlogAppointment() {
             className="mb-8 md:mb-0"
             id={'tmevent_click_pv_button'}
             isAnimated
-            size={isMobile() ? 'lg' : 'xl'}
+            size={isMobile ? 'lg' : 'xl'}
             type="secondary"
             onClick={() => {
               setSelectedTreatments([product]);
