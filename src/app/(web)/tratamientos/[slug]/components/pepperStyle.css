@@ -1,3 +1,28 @@
+.pepperWidget {
+  > div {
+    width: 100%;
+    max-width: none !important;
+    justify-content: start;
+  }
+
+  .pepper-pill-left {
+    align-items: start;
+  }
+
+  .pepper-text-right {
+    flex-grow: 1;
+  }
+
+  .pepper-container-line.pepper-container-line-simulator {
+    margin-left: 16px;
+    margin-right: 8px;
+    display: flex;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    padding: 2px;
+  }
+}
+
 .pepper-btn-green {
   background-color: #ccace5 !important;
 }

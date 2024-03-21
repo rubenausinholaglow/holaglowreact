@@ -87,7 +87,7 @@ export default function FloatingBottomBar({
         <Flex className="justify-between">
           <div className="w-full mr-4">
             <Button
-              size="xl"
+              size="lg"
               type="primary"
               className="mr-4 pointer-events-auto w-full"
               href={ROUTES.checkout.type}
@@ -108,7 +108,7 @@ export default function FloatingBottomBar({
           </div>
           <Button
             type="secondary"
-            size="xl"
+            size="lg"
             className="pointer-events-auto"
             customStyles="shrink-0"
           >

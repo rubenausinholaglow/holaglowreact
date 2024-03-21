@@ -26,8 +26,8 @@ import ProductHeader from './ProductHeader';
 import ProductInfo from './ProductInfo';
 import ProductPaymentOptions from './ProductPaymentOptions';
 import ProductPrices from './ProductPrices';
-import ProductResults from './ProductResults';
 import ProductSuggestions from './ProductSuggestions';
+import ProductResults from './ProductVideos';
 
 export default function ProductDetailPage({
   params,

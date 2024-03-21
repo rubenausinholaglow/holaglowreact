@@ -7,7 +7,7 @@ export default function ProductPaymentOptions({
   totalPrice: number;
 }) {
   return (
-    <Container className="px-0 md:mt-16 md:px-4">
+    <Container className="px-0 md:mt-16 md:mb-16 md:px-4">
       <div className="bg-[url('/images/product/paymentOptions.png')] md:bg-[url('/images/product/paymentOptions-desktop.png')] bg-cover bg-center md:rounded-3xl">
         <Flex className="md:gap-16">
           <div className="w-1/2"></div>

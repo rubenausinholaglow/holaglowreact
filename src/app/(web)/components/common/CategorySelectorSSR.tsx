@@ -64,7 +64,7 @@ export default function CategorySelectorSSR({
       {productCategories.map((category, i) => {
         return (
           <li
-            id={'tmevent_treatments_type'}
+            id={`tmevent_treatments_type_${category}`}
             key={category}
             className={twMerge(`shrink-0 transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
               productFilters.category.includes(category)
@@ -87,7 +87,7 @@ export default function CategorySelectorSSR({
               );
             }}
           >
-            <Flex layout="row-left">
+            <Flex layout="row-left" className="pointer-events-none">
               {!isDashboard && (
                 <CategoryIcon category={category} className="mr-2" />
               )}

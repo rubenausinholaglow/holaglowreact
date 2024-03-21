@@ -1,4 +1,4 @@
-import Professionals from 'app/(web)/components/common/Professionals';
+import ProfessionalsSSR from 'app/(web)/components/common/ProfessionalsSSR';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -53,7 +53,7 @@ export default function StaticClinics() {
             </div>
           </Container>
         </div>
-        <Professionals className="py-12 md:py-16" />
+        <ProfessionalsSSR className="py-12 md:py-16" />
         <Container>
           <Flex className="pb-12 md:pb-16">
             <ul className="flex flex-col gap-12">

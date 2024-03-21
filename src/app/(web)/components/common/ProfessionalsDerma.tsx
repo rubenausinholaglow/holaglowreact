@@ -113,13 +113,14 @@ export default function ProfessionalsDerma({
             hasControls
             className="relative"
             isIntrinsicHeight
-            visibleSlides={2}
+            visibleSlides={1}
             infinite={false}
             sliderStyles="gap-8"
             isDerma
           >
             {professionals?.map(professional => (
               <ProfessionalCard
+                isDerma
                 key={professional.name}
                 professional={professional}
                 className="h-full flex flex-col"
