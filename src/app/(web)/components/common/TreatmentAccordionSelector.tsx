@@ -167,10 +167,7 @@ export default function TreatmentAccordionSelector({
   }, [dashboardProducts, treatmentPacks, validTypesPacks]);
 
   useEffect(() => {
-    if (
-      isEmpty(selectedProducts) &&
-      treatmentPacks.filter(x => x.isScheduled == true).length == 0
-    )
+    if (isEmpty(selectedProducts) && treatmentPacks.length == 0)
       setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
 
