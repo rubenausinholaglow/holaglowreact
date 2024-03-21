@@ -62,6 +62,7 @@ export default function AppointmentResume({
     selectedSlot,
     selectedDay,
     selectedClinic,
+    selectedPack,
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
@@ -160,6 +161,8 @@ export default function AppointmentResume({
   };
 
   const TreatmentName = () => {
+    if (selectedPack)
+      return <Text className="font-semibold">{selectedPack.title}</Text>;
     return <Text className="font-semibold">{selectedTreatmentsNames}</Text>;
   };
 

@@ -24,7 +24,9 @@ export default function FloatingBottomBar({
 }) {
   const ROUTES = useRoutes();
 
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedPack } = useSessionStore(
+    state => state
+  );
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
@@ -95,6 +97,9 @@ export default function FloatingBottomBar({
                   : !product
                   ? setSelectedTreatments([])
                   : setSelectedTreatments([product]);
+
+                if (product && product.isPack) setSelectedPack(product);
+                else setSelectedPack(undefined);
               }}
               id={'tmevent_click_floating_button'}
             >

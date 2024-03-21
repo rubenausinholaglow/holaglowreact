@@ -31,6 +31,7 @@ interface SessionStore {
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
+  selectedPack?: Product;
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
@@ -47,6 +48,7 @@ interface SessionActions {
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
+  setSelectedPack: (value: Product | undefined) => void;
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
@@ -127,6 +129,7 @@ export const useSessionStore = create(
         isWideScreen: false,
       },
       selectedTreatments: [],
+      selectedPack: undefined,
       selectedPacksTreatments: [],
       selectedClinic: undefined,
       selectedDay: undefined,
@@ -152,6 +155,9 @@ export const useSessionStore = create(
       },
       setSelectedTreatments: value => {
         set({ selectedTreatments: value });
+      },
+      setSelectedPack: value => {
+        set({ selectedPack: value });
       },
       setSelectedPackTreatments: value => {
         set({ selectedPacksTreatments: value });

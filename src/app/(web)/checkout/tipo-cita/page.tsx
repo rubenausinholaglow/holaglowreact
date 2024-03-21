@@ -27,6 +27,7 @@ export default function PVCitaMedica() {
     selectedTreatments,
     setSelectedTreatments,
     setTypeOfPayment,
+    setSelectedPack,
   } = useSessionStore(state => state);
 
   const [isHydrated, setIsHydrated] = useState(false);
@@ -85,6 +86,8 @@ export default function PVCitaMedica() {
   function handleClick(product: Product) {
     setIsLoading(true);
     setSelectedTreatments([product]);
+    if (product.isPack) setSelectedPack(product);
+    else setSelectedPack(undefined);
     setTypeOfPayment(TypeOfPayment.Free);
     router.push(ROUTES.checkout.clinics);
   }
