@@ -69,11 +69,15 @@ export default function TreatmentAccordionSelector({
       ? []
       : ['855', '854'];
 
-  function getProductsByCategory(category: string) {
+  function getProductsByCategory(
+    category: string,
+    haveSelctedProducts = false
+  ) {
+    debugger;
     let filteredProducts: Product[];
-    const uniqueProductIds = new Set<string>();
+    const uniqueProductTitle = new Set<string>();
 
-    if (isDashboard && !packInProductCart) {
+    if ((isDashboard && !packInProductCart) || haveSelctedProducts) {
       filteredProducts = dashboardProducts.filter(
         product =>
           product.category.some(
@@ -89,10 +93,10 @@ export default function TreatmentAccordionSelector({
         if (
           validTypesPacks.includes(product.unityType) &&
           !product.isPack &&
-          !uniqueProductIds.has(product.title) &&
+          !uniqueProductTitle.has(product.title) &&
           !invalidProducts.includes(product.flowwwId.toString())
         ) {
-          uniqueProductIds.add(product.title);
+          uniqueProductTitle.add(product.title);
           return product;
         }
       });
@@ -154,18 +158,11 @@ export default function TreatmentAccordionSelector({
   }, [dashboardProducts, treatmentPacks, validTypesPacks]);
 
   useEffect(() => {
-    if (isEmpty(selectedProducts) && !packInProductCart)
-      setSelectedProducts(selectedTreatments);
+    if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
 
   useEffect(() => {
-    console.log('product categories');
     if (!isEmpty(productCategories)) {
-      console.log('have product categories');
-      setIsLoadingDashboard(false);
-    }
-    if (productCategories.length > 0) {
-      console.log('have product categories length');
       setIsLoadingDashboard(false);
     }
   }, [productCategories]);
@@ -253,44 +250,49 @@ export default function TreatmentAccordionSelector({
       .length;
   }
 
-  const renderAcordionContent = (category: string) => {
+  const renderAcordionContent = (
+    category: string,
+    haveSelectedProducts = false
+  ) => {
     return (
       <AccordionContent>
         <div className="border-t border-hg-secondary300">
           <ul className="flex flex-col w-full">
-            {getProductsByCategory(category).map((product, index) => (
-              <li
-                className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
-                key={product.title}
-                onClick={() => {
-                  if (isDashboard) return;
-                  const isSelected =
-                    isDashboard && cart.length > 0
-                      ? selectedIndexsProducts.includes(index)
-                      : selectedTreatments.some(
-                          selectedProduct => selectedProduct.id === product.id
-                        );
+            {getProductsByCategory(category, haveSelectedProducts).map(
+              (product, index) => (
+                <li
+                  className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
+                  key={product.title}
+                  onClick={() => {
+                    if (isDashboard) return;
+                    const isSelected =
+                      isDashboard && cart.length > 0
+                        ? selectedIndexsProducts.includes(index)
+                        : selectedTreatments.some(
+                            selectedProduct => selectedProduct.id === product.id
+                          );
 
-                  if (isSelected) {
-                    removeTreatment(product, index);
-                  } else {
-                    addTreatment(product, index);
-                  }
+                    if (isSelected) {
+                      removeTreatment(product, index);
+                    } else {
+                      addTreatment(product, index);
+                    }
 
-                  if (!isDashboard) {
-                    router.push(ROUTES.checkout.clinics);
-                  }
-                }}
-              >
-                <div className="mr-4">
-                  <Text className="font-semibold">{product.title}</Text>
-                  <Text className="text-xs">{product.description}</Text>
-                </div>
-                {packInProductCart || (isDashboard && cart.length == 0)
-                  ? renderSelectorQuantity(product, index) || null
-                  : renderCheck(product, index) || null}
-              </li>
-            ))}
+                    if (!isDashboard) {
+                      router.push(ROUTES.checkout.clinics);
+                    }
+                  }}
+                >
+                  <div className="mr-4">
+                    <Text className="font-semibold">{product.title}</Text>
+                    <Text className="text-xs">{product.description}</Text>
+                  </div>
+                  {packInProductCart || (isDashboard && cart.length == 0)
+                    ? renderSelectorQuantity(product, index) || null
+                    : renderCheck(product, index) || null}
+                </li>
+              )
+            )}
           </ul>
         </div>
       </AccordionContent>
@@ -356,34 +358,35 @@ export default function TreatmentAccordionSelector({
     }
   };
 
-  if (isDashboard && cart.length > 0)
-    return (
-      <Accordion type="single" collapsible className="w-full" defaultValue="1">
-        {packInProductCart && (
-          <div className="mb-4">
-            {treatmentPacks.filter(x => x.isScheduled == true).length}/
-            {treatmentPacks.length} agendados
-          </div>
-        )}
-        <AccordionItem
-          className={`transition-all w-full rounded-lg overflow-hidden mb-4 
+  const renderAccordion = (haveSelectedProducts: boolean) => {
+    <Accordion type="single" collapsible className="w-full" defaultValue="1">
+      {!haveSelectedProducts && (
+        <div className="mb-4">
+          {treatmentPacks.filter(x => x.isScheduled == true).length}/
+          {treatmentPacks.length} agendados
+        </div>
+      )}
+      <AccordionItem
+        className={`transition-all w-full rounded-lg overflow-hidden mb-4 
                   bg-hg-secondary100
             ${isDashboard ? 'min-w-[80%]' : ''}`}
-          value="1"
-        >
-          <AccordionTrigger>
-            <Flex className="p-4">
-              <Text className="font-semibold">
-                {packInProductCart
-                  ? 'Seleccionar Tratamientos'
-                  : 'Tratamientos Seleccionados'}
-              </Text>
-            </Flex>
-          </AccordionTrigger>
-          {renderAcordionContent('')}
-        </AccordionItem>
-      </Accordion>
-    );
+        value="1"
+      >
+        <AccordionTrigger>
+          <Flex className="p-4">
+            <Text className="font-semibold">
+              {packInProductCart
+                ? 'Seleccionar Tratamientos'
+                : 'Tratamientos Seleccionados'}
+            </Text>
+          </Flex>
+        </AccordionTrigger>
+        {renderAcordionContent('', haveSelectedProducts)}
+      </AccordionItem>
+    </Accordion>;
+  };
+
+  if (isDashboard && cart.length > 0) return <>{renderAccordion(false)}</>;
 
   if (cart.length == 0 || !isDashboard)
     return (

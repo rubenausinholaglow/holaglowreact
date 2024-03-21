@@ -110,12 +110,11 @@ export default function Page() {
             if (product.isPack) {
               setPackInProductCart(true);
               addProductUnitiesPack(product);
-            }
-            foundProducts.push(product);
+            } else foundProducts.push(product);
           }
         });
       });
-      !packInProductCart ? setSelectedTreatments(foundProducts) : null;
+      setSelectedTreatments(foundProducts);
     } catch (error: any) {
       Bugsnag.notify(error);
     } finally {
