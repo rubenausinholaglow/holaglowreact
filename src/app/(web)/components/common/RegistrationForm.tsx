@@ -99,7 +99,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   useEffect(() => {
     if (initialValues) {
       initialValues.surname = initialValues.lastName;
-      initialValues.termsAndConditionsAccepted = true;
+      initialValues.termsAndConditionsAccepted =
+        initialValues.name.length > 0 && initialValues.secondSurname.length > 0;
       setFormData(initialValues);
     }
   }, []);

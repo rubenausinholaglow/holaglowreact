@@ -5,15 +5,16 @@ import './customCss.css';
 
 import { Children, ReactNode, useEffect, useState } from 'react';
 import { SvgAngle, SvgArrow, SvgHolaGlowStar2 } from 'app/icons/IconsDs';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import {
   ButtonBack,
   ButtonNext,
   CarouselProvider,
-  Dot,
   Slide,
   Slider,
 } from 'pure-react-carousel';
+import { twMerge } from 'tailwind-merge';
 
 export default function Carousel({
   children,
@@ -84,53 +85,57 @@ export default function Carousel({
 
   const buttonBack = ({ isTopControl = false }: { isTopControl?: boolean }) => (
     <ButtonBack
-      className={`transition-opacity ${
-        !isDerma
-          ? 'bg-hg-secondary text-hg-primary'
-          : `bg-derma-primary text-derma-primary100 ${
-              isTopControl ? 'bg-white' : ''
-            }`
-      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
       onClick={() => {
         handleBackButton();
       }}
+      className="disabled:opacity-10 disabled:cursor-default"
     >
-      {isTopControl ? (
-        <SvgAngle
-          height={16}
-          width={16}
-          className="rotate-180 text-derma-tertiary"
-        />
-      ) : (
-        <SvgArrow height={16} width={16} className="rotate-180" />
-      )}
+      <Button
+        type={isDerma ? 'derma' : 'secondary'}
+        customStyles={`px-0 aspect-square ${isTopControl ? 'bg-white' : ''}`}
+      >
+        {isTopControl ? (
+          <SvgAngle
+            height={16}
+            width={16}
+            className={`rotate-180 ${
+              isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+            }`}
+          />
+        ) : (
+          <SvgArrow height={16} width={16} className="rotate-180" />
+        )}
+      </Button>
     </ButtonBack>
   );
 
   const buttonNext = ({ isTopControl = false }: { isTopControl?: boolean }) => (
     <ButtonNext
-      className={`transition-opacity ${
-        !isDerma
-          ? 'bg-hg-secondary text-hg-primary'
-          : `bg-derma-primary text-derma-primary100 ${
-              isTopControl ? 'bg-white' : ''
-            }`
-      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
       onClick={() => {
         handleNextButton();
       }}
+      className="disabled:opacity-10 disabled:cursor-default"
     >
-      {isTopControl ? (
-        <SvgAngle height={16} width={16} className="text-derma-tertiary" />
-      ) : (
-        <SvgArrow height={16} width={16} />
-      )}
+      <Button
+        type={isDerma ? 'derma' : 'secondary'}
+        customStyles={`px-0 aspect-square ${isTopControl ? 'bg-white' : ''}`}
+      >
+        {isTopControl ? (
+          <SvgAngle
+            height={16}
+            width={16}
+            className={isDerma ? 'text-derma-primary' : 'text-hg-secondary'}
+          />
+        ) : (
+          <SvgArrow height={16} width={16} />
+        )}
+      </Button>
     </ButtonNext>
   );
 
   return (
     <CarouselProvider
-      className={`relative w-full  ${className}`}
+      className={twMerge(`relative w-full ${className}`)}
       isIntrinsicHeight={isIntrinsicHeight}
       totalSlides={childrens.length}
       currentSlide={isFullWidth || hasDots ? currentSlideIndex : currentSlide}
@@ -176,7 +181,7 @@ export default function Carousel({
       )}
 
       {hasDots && !isDashboard && (
-        <Flex layout="row-center" className="relative mt-4">
+        <Flex layout="row-center" className="relative mt-8">
           <ul className="p-2 spacing flex gap-2 text-xs absolute items-center">
             {childrens.map((dot, index) => {
               const isActive = currentSlideIndex === index;
@@ -184,14 +189,10 @@ export default function Carousel({
               return (
                 <li key={index}>
                   <SvgHolaGlowStar2
-                    onClick={() =>
-                      index > currentSlideIndex
-                        ? handleNextButton()
-                        : handleBackButton()
-                    }
+                    onClick={() => setCurrentSlideIndex(index)}
                     className={
                       isActive
-                        ? `h-6 w-6 ${
+                        ? `h-6 w-6 pointer-events-none ${
                             isDerma
                               ? 'text-derma-primary500'
                               : 'text-hg-secondary'
@@ -215,6 +216,8 @@ export default function Carousel({
           className={`${isFullWidth ? '' : 'px-0'} ${
             hasTopControls
               ? 'absolute top-[50%] -translate-y-[50%] px-4'
+              : hasCounter
+              ? '-mt-4 '
               : 'mt-8'
           } ${rest.controlStyles ? rest.controlStyles : ''}`}
         >

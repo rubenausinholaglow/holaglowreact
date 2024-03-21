@@ -1,4 +1,5 @@
 'use client';
+
 import Agenda from 'app/(web)/checkout/agenda/Agenda';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';

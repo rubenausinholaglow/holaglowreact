@@ -16,6 +16,8 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import FullScreenLoading from './FullScreenLayout';
+
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
   const deviceSize = useDeviceSizeSSR();
 
@@ -101,8 +103,9 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
                   </div>
                 </AnimateOnViewport>
               </AccordionTrigger>
-              <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-                <div className={`overflow-hidden max-w-full w-full h-[300px]`}>
+              <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp relative">
+                <FullScreenLoading />
+                <div className="overflow-hidden max-w-full w-full h-[300px] relative z-10">
                   <div id="g-mapdisplay" className="h-full w-full max-w-full">
                     <iframe
                       className="h-full w-full border-none"
@@ -146,10 +149,11 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
           </div>
           <div
             id="mapLayer"
-            className="absolute bg-slate-400 top-0 bottom-0 right-0 left-1/2"
+            className="absolute top-0 bottom-0 right-0 left-1/2"
           >
+            <FullScreenLoading />
             <div
-              className={`overflow-hidden max-w-full w-full`}
+              className="overflow-hidden max-w-full w-full relative z-10"
               style={{ height: `${mapHeight}px` }}
             >
               <div id="g-mapdisplay" className="h-full w-full max-w-full">

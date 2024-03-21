@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
+import { SvgUserScan } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import { fetchProduct } from 'app/utils/fetch';
@@ -14,7 +16,7 @@ import { useRouter } from 'next/navigation';
 export default function ProductPaymentOptions() {
   const router = useRouter();
   const ROUTES = useRoutes();
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -26,36 +28,28 @@ export default function ProductPaymentOptions() {
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
   }, []);
 
-  const imgUrl = deviceSize.isMobile
-    ? '/images/product/probadorVirtual.jpg'
-    : '/images/product/probadorVirtual-desk.jpg';
+  const imgUrl = isMobile()
+    ? '/images/product/probadorVirtual.png'
+    : '/images/product/probadorVirtual-desk.png';
 
   if (isEmpty(product)) {
     return <></>;
   }
 
   return (
-    <div className="bg-hg-pink relative">
+    <div className="bg-derma-secondary300 relative">
       <Container className="px-0 md:px-4">
-        <div
-          className="relative aspect-[3/2] md:aspect-auto md:absolute top-0 bottom-0 left-0 right-[50%]"
-          style={{
-            backgroundImage: `url(${imgUrl})`,
-            backgroundPosition: deviceSize.isMobile
-              ? 'bottom center'
-              : 'right center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-          }}
-        ></div>
         <Flex
           layout="col-center"
           className="px-4 py-8 md:px-0 md:w-1/2 md:ml-[50%] md:py-24 md:pl-16"
         >
-          <Title isAnimated className="text-hg-secondary mb-2 md:mb-6">
-            ¿Te gustaría ver cómo quedará tu tratamiento antes de hacértelo?
+          <Title
+            size="2xl"
+            className="text-hg-secondary mb-2 md:mb-6 text-center"
+          >
+            ¿No sabes qué tratamiento hacerte?
           </Title>
-          <Text isAnimated className="mb-8 md:mb-12 md:text-lg md:text-center">
+          <Text className="mb-8 md:mb-12 md:text-lg text-center text-hg-black500">
             Si sientes curiosidad por algún tratamiento de medicina estética,
             podrás descubrir cómo será el resultado sobre una simulación 3D de
             tu rostro.
@@ -63,17 +57,26 @@ export default function ProductPaymentOptions() {
 
           <Button
             id={'tmevent_click_pv_button'}
-            isAnimated
-            size={deviceSize.isMobile ? 'lg' : 'xl'}
+            size={isMobile() ? 'lg' : 'xl'}
             type="secondary"
             onClick={() => {
               setSelectedTreatments([product]);
               router.push(ROUTES.checkout.clinics);
             }}
           >
-            Pide cita 3d gratis
+            <SvgUserScan className="mr-2 h-5 w-5" />
+            Pide cita 3D gratis
           </Button>
         </Flex>
+        <div
+          className="relative aspect-[3/2] md:aspect-auto md:absolute top-0 bottom-0 left-0 right-[50%]"
+          style={{
+            backgroundImage: `url(${imgUrl})`,
+            backgroundPosition: isMobile() ? 'bottom center' : 'right center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}
+        ></div>
       </Container>
     </div>
   );

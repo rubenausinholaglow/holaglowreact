@@ -43,13 +43,12 @@ export default function ProductSelectorButton({
         );
         router.push(ROUTES.checkout.type);
       }}
-      size="xl"
+      size="lg"
       type="primary"
       className="mb-6 md:mb-0 md:mt-auto"
       id="tmevent_click_book_anchor_button"
     >
       Me interesa
-      <SvgArrow height={24} width={24} className="ml-4 pointer-events-none" />
     </Button>
   );
 }

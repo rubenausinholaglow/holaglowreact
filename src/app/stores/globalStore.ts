@@ -31,6 +31,7 @@ interface SessionStore {
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
+  previousSelectedTreatments: Product[];
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
@@ -48,6 +49,7 @@ interface SessionActions {
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
+  setPreviousSelectedTreatments: (value: Product[]) => void;
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
@@ -129,6 +131,7 @@ export const useSessionStore = create(
         isWideScreen: false,
       },
       selectedTreatments: [],
+      previousSelectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
       selectedDay: undefined,
@@ -155,6 +158,9 @@ export const useSessionStore = create(
       },
       setSelectedTreatments: value => {
         set({ selectedTreatments: value });
+      },
+      setPreviousSelectedTreatments: value => {
+        set({ previousSelectedTreatments: value });
       },
       setSelectedPackTreatments: value => {
         set({ selectedPacksTreatments: value });
@@ -189,7 +195,7 @@ export const useSessionStore = create(
     }),
     {
       name: 'session-storage',
-      version: 19,
+      version: 20,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -277,7 +283,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 51,
+      version: 52,
     }
   )
 );

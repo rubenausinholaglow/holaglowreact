@@ -48,14 +48,10 @@ export default function Professionals({
   return (
     <Container
       className={`p-0 md:px-4 gap-16   ${
-        isDashboard ? '' : 'md:flex'
+        isDashboard ? '' : 'lg:flex'
       } justify-between md:mb-16 ${className}`}
     >
-      <Container
-        className={`${
-          isDashboard ? '' : 'md:w-1/2'
-        } md:px-0 md:flex md:flex-col md:justify-center md:items-start`}
-      >
+      <Container className="md:px-0 md:flex md:flex-col md:justify-center md:items-start">
         <Title
           isAnimated
           size="2xl"
@@ -71,29 +67,12 @@ export default function Professionals({
           literal y metafóricamente.
         </Text>
       </Container>
-      <div className={`${isDashboard ? '' : 'md:w-1/2'}`}>
-        {deviceSize.isMobile && (
-          <ProductCarousel type="professionals" items={professionals} />
-        )}
-        {!deviceSize.isMobile && (
-          <Carousel
-            hasControls={professionals?.map && professionals?.map.length > 2}
-            className="relative"
-            isIntrinsicHeight
-            visibleSlides={2}
-            infinite={false}
-            sliderStyles="gap-8"
-          >
-            {professionals?.map(professional => (
-              <ProfessionalCard
-                key={professional.name}
-                professional={professional}
-                className="h-full flex flex-col"
-              />
-            ))}
-          </Carousel>
-        )}
-      </div>
+      <ProductCarousel
+        visibleSlides={1}
+        className="w-full"
+        type="professionals"
+        items={professionals}
+      />
     </Container>
   );
 }
