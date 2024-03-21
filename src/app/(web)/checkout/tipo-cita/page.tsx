@@ -76,8 +76,7 @@ export default function PVCitaMedica() {
     ) {
       setSelectedTreatments([]);
       setIsHydrated(true);
-    } else if (!isEmpty(selectedTreatments))
-      setPreviousSelectedTreatments(selectedTreatments);
+    }
   }, []);
 
   async function initProductAdvance(productId: string) {
@@ -87,6 +86,8 @@ export default function PVCitaMedica() {
 
   function handleClick(product: Product) {
     if (product) {
+      if (!isEmpty(selectedTreatments))
+        setPreviousSelectedTreatments(selectedTreatments);
       setIsLoading(true);
       setSelectedTreatments([product]);
       setTypeOfPayment(TypeOfPayment.Free);
