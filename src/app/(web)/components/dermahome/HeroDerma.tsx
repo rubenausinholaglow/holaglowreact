@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useSessionStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
@@ -13,6 +14,16 @@ import Link from 'next/link';
 
 export default function HeroDerma() {
   const { deviceSize } = useSessionStore(state => state);
+  const routinesArray = ['acné', 'melasma', 'rosácea', 'antiaging'];
+  const [routineIndex, setRoutineIndex] = useState(0);
+
+  const startTimer = () => {
+    setTimeout(() => {
+      setRoutineIndex(routineIndex < 3 ? routineIndex + 1 : 0);
+    }, 1000);
+  };
+
+  startTimer();
 
   const HEADER_HEIGHT = deviceSize.isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
@@ -64,18 +75,19 @@ export default function HeroDerma() {
                     size="2xl"
                     className="text-derma-primary text-left mb-4"
                   >
-                    Tu rutina facial diseñada por un médico
+                    Tu rutina facial de 3 meses para{' '}
+                    {routinesArray[routineIndex]}
                   </Title>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
                   >
-                    Un dermatólogo estético estudiará tu piel en una
-                    videollamada para diseñar una rutina facial con{' '}
+                    Te enviamos a casa{' '}
                     <span className="font-semibold">
-                      productos personalizados
+                      tu rutina facial personalizada
                     </span>{' '}
-                    que te enviaremos a casa por 99€
+                    por 99€ y te devolvemos el dinero si no ves una mejora al
+                    finalizar el tratamiento
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
