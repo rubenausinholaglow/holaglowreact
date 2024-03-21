@@ -10,7 +10,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function HeroDerma() {
   const { deviceSize } = useSessionStore(state => state);
@@ -20,7 +19,7 @@ export default function HeroDerma() {
   const startTimer = () => {
     setTimeout(() => {
       setRoutineIndex(routineIndex < 3 ? routineIndex + 1 : 0);
-    }, 1000);
+    }, 2000);
   };
 
   startTimer();
@@ -71,13 +70,20 @@ export default function HeroDerma() {
                 className="gap-4 items-center relative md:justify-center md:flex-row"
               >
                 <Flex layout="col-left" className="relative z-10">
-                  <Title
-                    size="2xl"
-                    className="text-derma-primary text-left mb-4"
-                  >
-                    Tu rutina facial de 3 meses para{' '}
-                    {routinesArray[routineIndex]}
-                  </Title>
+                  <div className="overflow-hidden inline-block">
+                    <Title
+                      size="2xl"
+                      className="text-derma-primary text-left mb-4"
+                    >
+                      Tu rutina facial de 3 meses para{' '}
+                    </Title>
+                    <Title
+                      size="2xl"
+                      className="text-derma-tertiary text-left mb-4"
+                    >
+                      {routinesArray[routineIndex]}
+                    </Title>
+                  </div>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
