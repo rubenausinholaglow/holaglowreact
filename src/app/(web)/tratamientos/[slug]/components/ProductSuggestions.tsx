@@ -79,7 +79,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
           )}
       </Container>
 
-      <Container className="px-0 md:px-4">
+      <Container className="px-0">
         <Carousel
           hasDots={isMobile()}
           hasControls={!isMobile()}
@@ -88,7 +88,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
           isIntrinsicHeight
           visibleSlides={visibleSuggestions()}
           infinite={false}
-          sliderStyles={`${deviceSize.isMobile ? '' : 'gap-16'}`}
+          sliderStyles="md:gap-10"
         >
           {product.preTreatmentInfo?.tips &&
             activeSlider === 'pre' &&

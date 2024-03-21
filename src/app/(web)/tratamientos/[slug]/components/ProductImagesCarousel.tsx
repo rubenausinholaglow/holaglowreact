@@ -17,8 +17,8 @@ export default function ProductImagesCarousel({
       <Carousel
         controlStyles="px-4"
         hasControls={product.beforeAndAfterImages?.length > 1}
-        dragEnabled={true}
-        touchEnabled={true}
+        dragEnabled={product.beforeAndAfterImages?.length > 1}
+        touchEnabled={product.beforeAndAfterImages?.length > 1}
         visibleSlides={
           product.beforeAndAfterImages?.length > 1 ? (isMobile() ? 1 : 3) : 1
         }

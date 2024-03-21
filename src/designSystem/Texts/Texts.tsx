@@ -36,7 +36,9 @@ export const Title = ({
     xl: 'text-xl lg:text-2xl',
   };
 
-  const styles = `font-gtUltra font-bold text-hg-secondary text-balance ${STYLES[size]} ${className}`;
+  const styles = twMerge(
+    `font-gtUltra font-bold text-hg-secondary text-balance ${STYLES[size]} ${className}`
+  );
 
   if (isAnimated) {
     return (

@@ -99,8 +99,8 @@ export default async function ProductExplanation({
                       : 'mb-6 pb-6 border-b border-hg-black'
                   }`}
                 >
-                  <div className="flex border border-hg-secondary rounded-full h-10 w-10 items-center justify-center text-hg-secondary mr-4 shrink-0">
-                    {index + 1}
+                  <div className="flex border border-hg-secondary rounded-full h-10 w-10 text-lg md:h-12 md:w-12 md:text-xl items-center justify-center text-hg-secondary mr-4 shrink-0">
+                    <span className="pt-1">{index + 1}</span>
                   </div>
                   <div>
                     <Text isAnimated className="font-semibold mb-4">

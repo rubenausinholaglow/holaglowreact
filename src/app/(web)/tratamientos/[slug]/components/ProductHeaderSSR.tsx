@@ -4,6 +4,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import ProductInfoSSR from './ProductInfoSSR';
 

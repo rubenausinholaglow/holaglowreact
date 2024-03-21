@@ -5,6 +5,7 @@ import './customCss.css';
 
 import { Children, ReactNode, useEffect, useState } from 'react';
 import { SvgAngle, SvgArrow, SvgHolaGlowStar2 } from 'app/icons/IconsDs';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import {
   ButtonBack,
@@ -84,47 +85,51 @@ export default function Carousel({
 
   const buttonBack = ({ isTopControl = false }: { isTopControl?: boolean }) => (
     <ButtonBack
-      className={`transition-opacity ${
-        !isDerma
-          ? 'border border-hg-secondary text-hg-secondary'
-          : `bg-derma-primary text-derma-primary100 ${
-              isTopControl ? 'bg-white' : ''
-            }`
-      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
       onClick={() => {
         handleBackButton();
       }}
+      className="disabled:opacity-10 disabled:cursor-default"
     >
-      {isTopControl ? (
-        <SvgAngle
-          height={16}
-          width={16}
-          className="rotate-180 text-derma-tertiary"
-        />
-      ) : (
-        <SvgArrow height={16} width={16} className="rotate-180" />
-      )}
+      <Button
+        type={isDerma ? 'derma' : 'secondary'}
+        customStyles={`px-0 aspect-square ${isTopControl ? 'bg-white' : ''}`}
+      >
+        {isTopControl ? (
+          <SvgAngle
+            height={16}
+            width={16}
+            className={`rotate-180 ${
+              isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+            }`}
+          />
+        ) : (
+          <SvgArrow height={16} width={16} className="rotate-180" />
+        )}
+      </Button>
     </ButtonBack>
   );
 
   const buttonNext = ({ isTopControl = false }: { isTopControl?: boolean }) => (
     <ButtonNext
-      className={`transition-opacity ${
-        !isDerma
-          ? 'border border-hg-secondary text-hg-secondary'
-          : `bg-derma-primary text-derma-primary100 ${
-              isTopControl ? 'bg-white' : ''
-            }`
-      }  rounded-full p-2 disabled:opacity-10 disabled:cursor-default`}
       onClick={() => {
         handleNextButton();
       }}
+      className="disabled:opacity-10 disabled:cursor-default"
     >
-      {isTopControl ? (
-        <SvgAngle height={16} width={16} className="text-derma-tertiary" />
-      ) : (
-        <SvgArrow height={16} width={16} />
-      )}
+      <Button
+        type={isDerma ? 'derma' : 'secondary'}
+        customStyles={`px-0 aspect-square ${isTopControl ? 'bg-white' : ''}`}
+      >
+        {isTopControl ? (
+          <SvgAngle
+            height={16}
+            width={16}
+            className={isDerma ? 'text-derma-primary' : 'text-hg-secondary'}
+          />
+        ) : (
+          <SvgArrow height={16} width={16} />
+        )}
+      </Button>
     </ButtonNext>
   );
 

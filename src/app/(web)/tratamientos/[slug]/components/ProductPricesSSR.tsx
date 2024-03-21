@@ -80,7 +80,10 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
 
         <CheckHydration>
           {!isSessionProduct && (
-            <Flex layout="col-left" className="md:flex-row gap-8">
+            <Flex
+              layout="col-left"
+              className="md:flex-row gap-8 md:items-stretch"
+            >
               {productItems.map((item: Product, index: number) => (
                 <ProductPriceCard
                   key={item.title}
