@@ -1,4 +1,4 @@
-import Clinics from 'app/(web)/components/common/Clinics';
+import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -53,7 +53,7 @@ export default function StaticClinics() {
             </div>
           </Container>
         </div>
-        <Clinics className="mb-12" />
+        <ClinicsSSR className="mb-12" />
       </MainLayout>
     </App>
   );

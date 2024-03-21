@@ -3,7 +3,7 @@ import ValuesCarousel from 'app/(web)/components/home/ValuesCarousel';
 import ValuesDescription from 'app/(web)/components/home/ValuesDescription';
 import dynamic from 'next/dynamic';
 
-import Clinics from '../common/Clinics';
+import Clinics from '../common/ClinicsSSR';
 import MainLayoutSSR from '../layout/MainLayoutSSR';
 import Products from './ProductsSSR';
 

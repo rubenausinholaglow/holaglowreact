@@ -113,7 +113,7 @@ export default function ProductPrices({
           <Flex layout="col-left" className="md:flex-row gap-8">
             <Accordion
               defaultValue={deviceSize.isMobile ? 'accordion-0' : 'value'}
-              className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
+              className="flex flex-col gap-4 mb-8 md:flex-row md:gap items-start"
             >
               {productItems.map((item: Product, index: number) => (
                 <ProductPriceCard

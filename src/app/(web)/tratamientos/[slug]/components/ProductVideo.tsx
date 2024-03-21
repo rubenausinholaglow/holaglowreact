@@ -1,7 +1,7 @@
 export default function ProductVideo({ src }: { src: string }) {
   return (
     <video
-      autoPlay
+      controls
       muted
       loop
       playsInline
