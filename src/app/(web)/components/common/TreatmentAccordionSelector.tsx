@@ -73,44 +73,43 @@ export default function TreatmentAccordionSelector({
     category: string,
     findSelectedProducts = false
   ) {
-    let filteredProducts: Product[];
-    const uniqueProductTitle = new Set<string>();
+    const filterCondition = (product: Product) => {
+      return (
+        product.category.some(categoryItem => categoryItem.name === category) &&
+        !product.isPack
+      );
+    };
 
     if ((isDashboard && !packInProductCart) || findSelectedProducts) {
-      filteredProducts = dashboardProducts.filter(
-        product =>
-          product.category.some(
-            categoryItem => categoryItem.name === category
-          ) && !product.isPack
-      );
-      if (filteredProducts.length == 0) {
+      const filteredProducts: Product[] =
+        dashboardProducts.filter(filterCondition);
+      if (filteredProducts.length === 0) {
         const productIds = getUniqueIds(selectedProducts);
         return getUniqueProducts(productIds, selectedProducts);
       }
-    } else if (packInProductCart) {
-      filteredProducts = dashboardProducts.filter(product => {
-        if (
-          validTypesPacks.includes(product.unityType) &&
-          !product.isPack &&
-          !uniqueProductTitle.has(product.title) &&
-          !invalidProducts.includes(product.flowwwId.toString()) &&
-          selectedProducts.filter(x => x.title == product.title).length == 0
-        ) {
-          uniqueProductTitle.add(product.title);
-          return product;
-        }
-      });
-    } else {
-      filteredProducts = stateProducts.filter(
-        product =>
-          product.category.some(
-            categoryItem => categoryItem.name === category
-          ) && !product.isPack
-      );
+      return filteredProducts.sort((a, b) => (a.title > b.title ? 1 : -1));
     }
-    return filteredProducts.sort((a: any, b: any) =>
-      a.title > b.title ? 1 : -1
-    );
+    if (packInProductCart) {
+      const uniqueProductTitles = new Set<string>();
+      return dashboardProducts
+        .filter(product => {
+          if (
+            validTypesPacks.includes(product.unityType) &&
+            !product.isPack &&
+            !uniqueProductTitles.has(product.title) &&
+            !invalidProducts.includes(product.flowwwId.toString()) &&
+            selectedProducts.every(x => x.title !== product.title)
+          ) {
+            uniqueProductTitles.add(product.title);
+            return true;
+          }
+          return false;
+        })
+        .sort((a, b) => (a.title > b.title ? 1 : -1));
+    }
+    return stateProducts
+      .filter(filterCondition)
+      .sort((a, b) => (a.title > b.title ? 1 : -1));
   }
 
   useEffect(() => {
@@ -359,7 +358,7 @@ export default function TreatmentAccordionSelector({
     }
   };
 
-  const renderAccordion = (findSelectedProducts: boolean) => {
+  const renderAccordionDashboard = (findSelectedProducts: boolean) => {
     return (
       <Accordion type="single" collapsible className="w-full" defaultValue="1">
         {!findSelectedProducts && (
@@ -393,8 +392,10 @@ export default function TreatmentAccordionSelector({
     const haveSelectedProducts = getProductsByCategory('', true);
     return (
       <>
-        {haveSelectedProducts.length > 0 ? renderAccordion(true) : null}
-        {renderAccordion(false)}
+        {haveSelectedProducts.length > 0
+          ? renderAccordionDashboard(true)
+          : null}
+        {packInProductCart ? renderAccordionDashboard(false) : null}
       </>
     );
   }
