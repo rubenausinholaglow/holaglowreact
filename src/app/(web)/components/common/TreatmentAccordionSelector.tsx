@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import useRoutes from '@utils/useRoutes';
-import { getUniqueIds, getUniqueProducts } from '@utils/utils';
+import {
+  getUniqueIds,
+  getUniqueProducts,
+  validTypesFilterCart,
+} from '@utils/utils';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
   Operation,
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { SvgSpinner } from 'app/icons/Icons';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -89,13 +92,11 @@ export default function TreatmentAccordionSelector({
       const uniqueProductTitles = new Set<string>();
       return dashboardProducts
         .filter(product => {
-          if (
-            validTypesPacks.includes(product.unityType) &&
-            !product.isPack &&
-            !uniqueProductTitles.has(product.title) &&
-            !invalidProducts.includes(product.flowwwId.toString()) &&
-            selectedProducts.every(x => x.title !== product.title)
-          ) {
+          const isValidProductDashboard = checkIsValidProductDashboard(
+            product,
+            uniqueProductTitles
+          );
+          if (isValidProductDashboard) {
             uniqueProductTitles.add(product.title);
             return true;
           }
@@ -108,6 +109,19 @@ export default function TreatmentAccordionSelector({
       .sort((a, b) => (a.title > b.title ? 1 : -1));
   }
 
+  function checkIsValidProductDashboard(
+    product: Product,
+    uniqueProductTitles: Set<string>
+  ) {
+    return (
+      validTypesPacks.includes(product.unityType) &&
+      validTypesFilterCart.includes(product.type) &&
+      !product.isPack &&
+      !uniqueProductTitles.has(product.title) &&
+      !invalidProducts.includes(product.flowwwId.toString()) &&
+      selectedProducts.every(x => x.title !== product.title)
+    );
+  }
   useEffect(() => {
     if (!isDashboard) {
       const allCategoryNames: string[] = stateProducts.reduce(
@@ -292,7 +306,8 @@ export default function TreatmentAccordionSelector({
   const renderSelectorQuantity = (product: Product, index: number) => {
     const disable =
       cart.length > 0 &&
-      selectedTreatments.filter(x => x.unityType == product.unityType).length >=
+      selectedTreatments.filter(x => x.unityType == product.unityType).length -
+        selectedProducts.filter(x => x.unityType == product.unityType).length >=
         treatmentPacks.filter(
           x => x.isScheduled == false && x.type == product.unityType
         ).length
