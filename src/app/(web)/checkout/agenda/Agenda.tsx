@@ -324,21 +324,21 @@ export default function Agenda({
                     updateIsScheduled(true, selectedProduct!.uniqueId);
                   }
                 } else {
-                  if (treatmentPacks.length > 0) {
-                    updateTreatmentPackScheduled(selectedTreatments);
-                  } else {
-                    selectedTreatments.forEach(treatment => {
-                      const selectedProducts = filteredCart.filter(
-                        cartItem =>
-                          cartItem.id === treatment.id &&
-                          (cartItem.isScheduled === false ||
-                            cartItem.isScheduled === undefined)
-                      );
-                      selectedProducts.forEach(item => {
-                        updateIsScheduled(true, item.uniqueId);
-                      });
+                  treatmentPacks.length > 0
+                    ? updateTreatmentPackScheduled(selectedTreatments)
+                    : null;
+
+                  selectedTreatments.forEach(treatment => {
+                    const selectedProducts = filteredCart.filter(
+                      cartItem =>
+                        cartItem.id === treatment.id &&
+                        (cartItem.isScheduled === false ||
+                          cartItem.isScheduled === undefined)
+                    );
+                    selectedProducts.forEach(item => {
+                      updateIsScheduled(true, item.uniqueId);
                     });
-                  }
+                  });
                 }
               }
               router.push(
