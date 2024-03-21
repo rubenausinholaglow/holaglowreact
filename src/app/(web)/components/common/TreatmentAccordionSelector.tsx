@@ -153,8 +153,7 @@ export default function TreatmentAccordionSelector({
   }, [dashboardProducts, treatmentPacks, validTypesPacks]);
 
   useEffect(() => {
-    if (isEmpty(selectedProducts) && !packInProductCart)
-      setSelectedProducts(selectedTreatments);
+    if (isEmpty(selectedProducts)) setSelectedProducts(selectedTreatments);
   }, [selectedTreatments]);
 
   useEffect(() => {
