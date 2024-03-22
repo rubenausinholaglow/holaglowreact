@@ -246,9 +246,12 @@ export default function TreatmentAccordionSelector({
         ? addTreatmentDashboard(product, index)
         : setSelectedTreatments([...selectedTreatments, product]);
     } else {
-      product.isPack
-        ? setSelectedTreatments([medicalVisitProduct!])
-        : setSelectedTreatments([product]);
+      if (product.isPack) {
+        setSelectedTreatments([medicalVisitProduct!]);
+        setSelectedProducts([product]);
+      } else {
+        setSelectedTreatments([product]);
+      }
     }
   }
 
@@ -410,6 +413,9 @@ export default function TreatmentAccordionSelector({
         <>
           {selectedTreatments.some(
             selectedProduct => selectedProduct.id === product.id
+          ) ||
+          selectedProducts.some(
+            selproduct => selproduct.title === product.title
           )
             ? checkedElement
             : commonElement}
