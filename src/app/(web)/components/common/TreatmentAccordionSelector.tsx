@@ -3,6 +3,7 @@ import Bugsnag from '@bugsnag/js';
 import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
+import { fetchProduct } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import {
   getUniqueIds,
@@ -56,6 +57,7 @@ export default function TreatmentAccordionSelector({
   const [selectedIndexsProducts, setSelectedIndexProducts] = useState<number[]>(
     []
   );
+  const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
   const cart = useCartStore(state => state.cart);
 
   const [validTypesPacks, setValidTypes] = useState<UnityType[]>(
@@ -224,13 +226,29 @@ export default function TreatmentAccordionSelector({
     }
   }, [selectedProducts]);
 
+  useEffect(() => {
+    async function initMedicalVisitProduct() {
+      const medicalVisitProduct = await fetchProduct(
+        process.env.NEXT_PUBLIC_MEDICAL_VISIT || '',
+        false,
+        false
+      );
+
+      setMedicalVisitProduct(medicalVisitProduct);
+    }
+
+    initMedicalVisitProduct();
+  }, []);
+
   function addTreatment(product: Product, index: number) {
     if (isDashboard) {
       cart.length > 0
         ? addTreatmentDashboard(product, index)
         : setSelectedTreatments([...selectedTreatments, product]);
     } else {
-      setSelectedTreatments([product]);
+      product.isPack
+        ? setSelectedTreatments([medicalVisitProduct!])
+        : setSelectedTreatments([product]);
     }
   }
 
