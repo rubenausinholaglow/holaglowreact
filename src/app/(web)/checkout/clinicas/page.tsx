@@ -1,35 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
+import { useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgCar, SvgRadioChecked } from 'app/icons/IconsDs';
+import { SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Clinic } from 'app/types/clinic';
-import { getDiscountedPrice } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+
+import FreeParking from '../components/FreeParking';
 
 export default function ClinicsCheckout() {
   const router = useRouter();
   const ROUTES = useRoutes();
 
   const { clinics } = useGlobalPersistedStore(state => state);
-  const {
-    selectedClinic,
-    setSelectedClinic,
-    selectedPacksTreatments,
-    selectedTreatments,
-  } = useSessionStore(state => state);
-
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
+  const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
 
   useEffect(() => {
     if (selectedClinic) {
@@ -42,36 +36,23 @@ export default function ClinicsCheckout() {
     router.push(ROUTES.checkout.schedule);
   };
 
-  useEffect(() => {
-    const discountedPrices: any = [];
-    if (selectedTreatments && !isEmpty(selectedTreatments)) {
-      selectedTreatments.map(product => {
-        const discountedPrice = getDiscountedPrice(product);
-
-        if (discountedPrice && discountedPrice !== product.price) {
-          discountedPrices.push(discountedPrice);
-        }
-      });
-    }
-
-    setDiscountedPrice(discountedPrices);
-  }, [selectedTreatments]);
-
   return (
     <App>
       <MainLayout isCheckout>
         <Container className="mt-6 md:mt-16">
           <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
             <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
-              <Title className="font-semibold">Selecciona tu clínica</Title>
+              <Title size="xldr" className="font-light">
+                Selecciona tu clínica
+              </Title>
 
               {clinics.map((clinic, index) => (
                 <Flex
-                  layout="row-center"
-                  className={`transition-all w-full justify-between p-3 cursor-pointer rounded-xl ${
+                  layout="row-left"
+                  className={`border border-hg-black300 p-4 rounded-2xl gap-4 w-full hover:bg-hg-secondary100 cursor-pointer ${
                     selectedClinic && selectedClinic.city === clinic.city
-                      ? 'bg-hg-secondary100'
-                      : 'bg-hg-black50'
+                      ? 'border-hg-secondary'
+                      : ''
                   } `}
                   key={clinic.city}
                   onClick={() => selectClinic(clinics[index])}
@@ -88,34 +69,27 @@ export default function ClinicsCheckout() {
                     <SvgRadioChecked
                       height={24}
                       width={24}
-                      className="shrink-0 ml-4"
+                      className="shrink-0 ml-auto"
                     />
                   ) : (
-                    <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-4"></div>
+                    <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
                   )}
                 </Flex>
               ))}
-              <Flex
-                layout="row-left"
-                className="bg-hg-primary100 p-6 gap-3 rounded-t-2xl md:rounded-2xl w-full items-start relative bottom-0 left-0 right-0 md:relative"
-              >
-                <div className="bg-hg-primary p-3 rounded-full">
-                  <SvgCar height={16} width={16} />
-                </div>
-                <div>
-                  <Text size="sm" className="font-semibold mb-2">
-                    Parking Gratis
-                  </Text>
-                  <Text className="text-left" size="xs">
-                    Te pagamos el parking para que tú disfrutes al máximo de la
-                    experiencia
-                  </Text>
-                </div>
-              </Flex>
+              {!isMobile && (
+                <CheckHydration>
+                  <FreeParking />
+                </CheckHydration>
+              )}
             </Flex>
           </Flex>
         </Container>
       </MainLayout>
+      {isMobile && (
+        <CheckHydration>
+          <FreeParking className="absolute bottom-0 left-0 right-0" />
+        </CheckHydration>
+      )}
     </App>
   );
 }

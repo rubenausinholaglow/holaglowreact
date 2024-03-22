@@ -50,7 +50,7 @@ export default function ProfessionalCard({
           <Text
             className={`font-gtUltra font-light ${
               isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-            } text-drxl md:text-2xl`}
+            } text-xldr md:text-2xl`}
           >
             {professional.tittleAbbreviation}. {professional.name}
           </Text>

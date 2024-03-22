@@ -266,7 +266,7 @@ export default function TreatmentAccordionSelector({
               className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
                 selectedCategory === category
                   ? 'bg-hg-secondary100'
-                  : 'bg-hg-black50'
+                  : 'bg-derma-secondary300'
               }
             ${isDashboard ? 'min-w-[80%]' : ''}`}
             >
@@ -283,7 +283,7 @@ export default function TreatmentAccordionSelector({
                   <Text className="font-semibold">{category}</Text>
 
                   <SvgAngle
-                    className={`transition-all text-hg-black500 ml-auto ${
+                    className={`transition-all text-hg-secondary ml-auto ${
                       selectedCategory === category ? 'rotate-90' : ''
                     }`}
                   />

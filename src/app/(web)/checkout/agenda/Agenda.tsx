@@ -5,19 +5,14 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType, UnityType } from '@interface/product';
+import { EmlaType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
+import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
 import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import {
-  SvgCheck,
-  SvgEllipsis,
-  SvgPhone,
-  SvgSadIcon,
-  SvgWarning,
-} from 'app/icons/IconsDs';
+import { SvgEllipsis, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -33,6 +28,9 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+import NeedHelp from './NeedHelp';
+import SlotList from './SlotList';
 
 registerLocale('es', es);
 
@@ -110,7 +108,6 @@ export default function Agenda({
     if (selectedTreatments[0].flowwwId == 903) maxDays = 60;
   }
   if (isDerma) maxDays = 90;
-  const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
@@ -119,9 +116,6 @@ export default function Agenda({
   const productIds = getUniqueIds(selectedTreatments);
 
   const maxDay = dayjs().add(maxDays, 'day');
-  const toggleClicked = () => {
-    setClicked(!clicked);
-  };
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -367,18 +361,6 @@ export default function Agenda({
     setcurrentMonth(date);
     setDateToCheck(date);
   };
-  const selectHour = async (x: Slot) => {
-    toggleClicked();
-    setSelectedSlot(x);
-
-    if (isDerma) {
-      window.scrollTo({
-        left: 0,
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   const selectDate = (x: Date) => {
     if (!selectedTreatmentsIds || !selectedClinic) return;
@@ -426,47 +408,6 @@ export default function Agenda({
     );
   };
 
-  const SlotList = ({ slots = [] }: { slots: Slot[] }) => {
-    return (
-      <Flex className="flex-wrap  mb-3 md:mb-0">
-        {slots.map((slot: Slot) => {
-          return (
-            <Flex
-              key={slot.startTime}
-              layout="row-between"
-              className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                isDerma
-                  ? 'border-none bg-derma-secondary400'
-                  : 'border border-hg-black bg-white'
-              } ${
-                clickedHour === slot.startTime
-                  ? `${
-                      isDerma ? 'bg-derma-primary' : 'bg-hg-secondary'
-                    } text-white`
-                  : ''
-              }`}
-            >
-              <div
-                className="w-full cursor-pointer flex justify-center"
-                onClick={async () => {
-                  if (!loadingDays) {
-                    setClickedHour(slot.startTime);
-                    await selectHour(slot);
-                  }
-                }}
-              >
-                {clickedHour === slot.startTime && (
-                  <SvgCheck className="text-white mr-1 h-5 w-5" />
-                )}
-                {slot.startTime}
-              </div>
-            </Flex>
-          );
-        })}
-      </Flex>
-    );
-  };
-
   return (
     <>
       {showErrorMessage ? (
@@ -489,7 +430,7 @@ export default function Agenda({
         <>
           {!isDerma && (
             <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
-              <Title size="xl" className="font-semibold">
+              <Title size="xldr" className="font-light">
                 Selecciona día y hora
               </Title>
             </Container>
@@ -640,7 +581,7 @@ export default function Agenda({
                 </Container>
               </div>
 
-              <div className="w-full md:w-1/2 flex flex-col justify-between">
+              <div className="w-full md:w-1/2 flex flex-col justify-between md:pr-4">
                 <Container>
                   <Flex
                     layout="col-left"
@@ -665,7 +606,13 @@ export default function Agenda({
                             <Text size="sm" className="font-semibold mb-4">
                               Horario de mañana
                             </Text>
-                            <SlotList slots={morningHours} />
+                            <SlotList
+                              slots={morningHours}
+                              isDerma={isDerma}
+                              loadingDays={loadingDays}
+                              clickedHour={clickedHour}
+                              setClickedHour={setClickedHour}
+                            />
                           </>
                         )}
 
@@ -674,7 +621,13 @@ export default function Agenda({
                             <Text size="sm" className="font-semibold mb-4">
                               Horario de tarde
                             </Text>
-                            <SlotList slots={afternoonHours} />
+                            <SlotList
+                              slots={afternoonHours}
+                              isDerma={isDerma}
+                              loadingDays={loadingDays}
+                              clickedHour={clickedHour}
+                              setClickedHour={setClickedHour}
+                            />
                           </>
                         )}
                       </>
@@ -709,37 +662,9 @@ export default function Agenda({
                       </Flex>
                     )}
                   {!loadingMonth && !loadingDays && !isDashboard && (
-                    <Flex
-                      layout="col-left"
-                      className="bg-hg-primary100 p-3 gap-3 md:relative w-full rounded-2xl md:rounded-none"
-                    >
-                      <Text className="font-semibold">
-                        ¿La cita que necesitas no está disponible?
-                      </Text>
-                      <Flex
-                        layout="row-left"
-                        className="gap-4 items-center w-full"
-                      >
-                        <a href="tel:+34 682 417 208">
-                          <Button size="xl" type="white">
-                            <SvgPhone className="mr-2" />
-                            {selectedClinic && (
-                              <div>
-                                <Text size="xs" className="whitespace-nowrap">
-                                  Llámanos al
-                                </Text>
-                                <Text size="lg" className="whitespace-nowrap">
-                                  {selectedClinic.phone}
-                                </Text>
-                              </div>
-                            )}
-                          </Button>
-                        </a>
-                        <Text size="xs">
-                          Te ayudaremos a agendar tu tratamiento
-                        </Text>
-                      </Flex>
-                    </Flex>
+                    <CheckHydration>
+                      <NeedHelp />
+                    </CheckHydration>
                   )}
                 </div>
               </div>

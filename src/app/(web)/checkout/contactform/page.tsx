@@ -121,13 +121,13 @@ export default function ConctactForm() {
             className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
           >
             <div className="w-full md:w-1/2 p-4 md:order-2">
-              <Text className="font-semibold text-lg hidden md:block pl-4">
+              <Text className="font-semibold text-lg hidden md:block">
                 Detalle de tu tratamiento
               </Text>
               <AppointmentResume isProbadorVirtual={isProbadorVirtual} />
             </div>
             <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
-              <Title size="xl" className="font-semibold mb-4">
+              <Title size="xldr" className="font-light mb-4 md:mb-6">
                 Reserva tu cita
               </Title>
               <RegistrationForm

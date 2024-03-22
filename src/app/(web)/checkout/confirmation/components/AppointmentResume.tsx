@@ -38,6 +38,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { twMerge } from 'tailwind-merge';
 
 dayjs.locale(spanishConf);
 
@@ -48,6 +49,7 @@ export default function AppointmentResume({
   isUpselling = false,
   bgColor = 'bg-white',
   isDashboard = false,
+  isConfirmation = false,
 }: {
   appointment?: Appointment;
   isProbadorVirtual?: boolean;
@@ -55,6 +57,7 @@ export default function AppointmentResume({
   isUpselling?: boolean;
   bgColor?: string;
   isDashboard?: boolean;
+  isConfirmation?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
@@ -159,8 +162,16 @@ export default function AppointmentResume({
     ));
   };
 
-  const TreatmentName = () => {
-    return <Text className="font-semibold">{selectedTreatmentsNames}</Text>;
+  const TreatmentName = ({ className = '' }: { className?: string }) => {
+    return (
+      <Text
+        className={twMerge(
+          `font-semibold px-4 pt-4 text-xs md:text-sm ${className}`
+        )}
+      >
+        {selectedTreatmentsNames}
+      </Text>
+    );
   };
 
   const TreatmentDate = ({ selectedSlot }: { selectedSlot: Slot }) => {
@@ -169,7 +180,7 @@ export default function AppointmentResume({
       : 'Dr. Basart · Núm. Colegiado 080856206';
 
     return (
-      <Flex layout="col-left" className="w-full gap-2 text-sm">
+      <Flex layout="col-left" className="p-4 w-full gap-2 text-xs md:text-sm">
         {isDerma && (
           <div className="w-full flex items-center">
             <SvgStethoscope className="mr-2 shrink-0" />
@@ -238,7 +249,7 @@ export default function AppointmentResume({
       <div className="w-full">
         <Flex
           layout="col-left"
-          className="w-full gap-2 text-xs text-hg-black400 bg-white/50 p-2 rounded-lg mb-4"
+          className="w-full gap-1 text-xs py-4 rounded-lg"
         >
           <Flex className="justify-between w-full">
             <Text>Importe sin IVA</Text>
@@ -255,7 +266,7 @@ export default function AppointmentResume({
             </Text>
           </Flex>
           {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
-            <Flex layout="col-left" className="w-full gap-2 ">
+            <Flex layout="col-left" className="w-full gap-1 ">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
@@ -279,12 +290,15 @@ export default function AppointmentResume({
 
   const AppointmentDataResume = () => {
     return (
-      <Accordion {...accordionProps} className="w-full mt-2">
+      <Accordion
+        {...accordionProps}
+        className="w-full mt-auto pb-[2px] pl-[2px] pr-[2px]"
+      >
         <AccordionItem {...accordionItemProps}>
           {!isDerma && (
             <>
-              <AccordionTrigger className="group md:hidden">
-                <Flex className="transition-all bg-hg-secondary100 group-radix-state-open:bg-hg-secondary300 w-full justify-between px-4 py-3 rounded-lg">
+              {/* <AccordionTrigger className="group md:hidden">
+                <Flex className="w-full justify-between p-4">
                   <Flex className="gap-2 text-sm">
                     <SvgBag height={16} width={16} /> Ver resumen del pedido
                   </Flex>
@@ -292,53 +306,50 @@ export default function AppointmentResume({
                 </Flex>
               </AccordionTrigger>
 
-              <AccordionContent className="md:border-t md:pt-4">
-                <Flex
-                  layout="col-left"
-                  className="w-full gap-4 text-sm p-4 md:p-0"
-                >
-                  {isDashboard ? (
-                    <TreatmentsDashboard />
-                  ) : (
-                    <Flex layout="col-left" className="w-full gap-2">
-                      <TreatmentName />
-                      {selectedTreatments &&
-                      selectedTreatments[0] &&
-                      selectedTreatments[0].isPack ? (
-                        <ul className="p-1">
-                          {selectedPacksTreatments &&
-                            selectedPacksTreatments.map(item => {
-                              return <li key={item.title}>- {item.title}</li>;
-                            })}
-                        </ul>
-                      ) : selectedTreatments[0] &&
-                        !isEmpty(selectedTreatments[0].appliedProducts) ? (
-                        selectedTreatments[0].appliedProducts.map(item => {
-                          return (
-                            <Flex
-                              key={item.titlte}
-                              className="items-start mb-1"
-                            >
-                              <Text className="text-hg-black400 text-sm">
-                                {item.titlte}
-                              </Text>
-                            </Flex>
-                          );
-                        })
-                      ) : (
-                        <Flex className="items-start mb-2">
-                          {selectedTreatments[0] && (
-                            <Text>{selectedTreatments[0].description}</Text>
-                          )}
-                        </Flex>
-                      )}
-                    </Flex>
-                  )}
-                  {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
-                    <TreatmentPriceBreakdown />
-                  )}
-                </Flex>
-              </AccordionContent>
+              <AccordionContent className="md:border-t md:pt-4"> */}
+              <Flex layout="col-left" className="w-full text-sm px-4">
+                {isDashboard ? (
+                  <TreatmentsDashboard />
+                ) : (
+                  <Flex
+                    layout="col-left"
+                    className="w-full border-t border-b border-hg-black300 py-3"
+                  >
+                    <TreatmentName className="p-0" />
+                    {selectedTreatments &&
+                    selectedTreatments[0] &&
+                    selectedTreatments[0].isPack ? (
+                      <ul className="p-1">
+                        {selectedPacksTreatments &&
+                          selectedPacksTreatments.map(item => {
+                            return <li key={item.title}>- {item.title}</li>;
+                          })}
+                      </ul>
+                    ) : selectedTreatments[0] &&
+                      !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                      selectedTreatments[0].appliedProducts.map(item => {
+                        return (
+                          <Flex key={item.titlte} className="items-start mb-1">
+                            <Text className="text-hg-black400 text-xs md:text-sm">
+                              {item.titlte}
+                            </Text>
+                          </Flex>
+                        );
+                      })
+                    ) : (
+                      <Flex className="items-start mb-2">
+                        {selectedTreatments[0] && (
+                          <Text>{selectedTreatments[0].description}</Text>
+                        )}
+                      </Flex>
+                    )}
+                  </Flex>
+                )}
+                {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
+                  <TreatmentPriceBreakdown />
+                )}
+              </Flex>
+              {/* </AccordionContent> */}
             </>
           )}
 
@@ -347,7 +358,9 @@ export default function AppointmentResume({
               className={`w-full justify-between px-4 py-3 rounded-lg md:border-none mt-0.5 ${
                 isDerma
                   ? 'bg-derma-primary500/20 text-derma-primary'
-                  : 'bg-hg-secondary300 text-hg-secondary md:rounded-lg'
+                  : isConfirmation
+                  ? 'text-hg-secondary'
+                  : 'bg-hg-secondary100 text-hg-secondary md:rounded-lg'
               } `}
             >
               <Text>
@@ -382,10 +395,9 @@ export default function AppointmentResume({
         {isDerma && selectedSlot && (
           <TreatmentImage selectedSlot={selectedSlot} />
         )}
-        <Flex layout="col-left" className={`p-4 w-full gap-3 ${bgColor}`}>
-          <TreatmentName />
+        <Flex layout="col-left" className={`w-full ${bgColor}`}>
+          {/* <TreatmentName /> */}
           {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
-          {/* {isDerma && <TreatmentPriceBreakdown hideTotal />} */}
           {!appointment && <AppointmentDataResume />}
         </Flex>
       </Flex>

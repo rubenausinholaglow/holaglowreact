@@ -114,7 +114,7 @@ export default function PVCitaMedica() {
           <Container className="mt-6 md:mt-16">
             <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
               <Flex layout="col-left" className="gap-6 w-full md:w-1/2">
-                <Title className="font-semibold md:block">
+                <Title size="xldr" className="font-light">
                   ¿Qué tipo de cita quieres reservar?
                 </Title>
 

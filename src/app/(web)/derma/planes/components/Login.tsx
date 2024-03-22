@@ -169,7 +169,7 @@ export default function Login({
       disableKeyboard
     >
       <Container className="md:max-w-sm">
-        <Text className="font-gtUltraThin text-drxl text-derma-primary text-center mb-4">
+        <Text className="font-gtUltraThin text-xldr text-derma-primary text-center mb-4">
           Verificación de identidad
         </Text>
         <Text className="text-hg-black500 text-center text-sm mb-12">
@@ -268,7 +268,7 @@ export default function Login({
       </Container>
 
       <Container className="md:max-w-sm">
-        <Text className="font-gtUltraThin text-drxl text-derma-primary text-center mt-12 md:mt-16 mb-4">
+        <Text className="font-gtUltraThin text-xldr text-derma-primary text-center mt-12 md:mt-16 mb-4">
           Te hemos enviado un PIN
         </Text>
         <Text className="text-hg-black500 text-center text-sm mb-12">
