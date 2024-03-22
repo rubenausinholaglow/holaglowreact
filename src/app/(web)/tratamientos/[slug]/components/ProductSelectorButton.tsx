@@ -15,7 +15,9 @@ export default function ProductSelectorButton({
   product: Product;
 }) {
   const router = useRouter();
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedPack } = useSessionStore(
+    state => state
+  );
 
   const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
 
@@ -41,6 +43,8 @@ export default function ProductSelectorButton({
             ? [medicalVisitProduct]
             : [product]
         );
+        if (product.isPack) setSelectedPack(product);
+        else setSelectedPack(undefined);
         router.push(ROUTES.checkout.type);
       }}
       size="lg"
