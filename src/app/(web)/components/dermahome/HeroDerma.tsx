@@ -70,20 +70,18 @@ export default function HeroDerma() {
                 className="gap-4 items-center relative md:justify-center md:flex-row"
               >
                 <Flex layout="col-left" className="relative z-10">
-                  <div className="overflow-hidden inline-block">
-                    <Title
-                      size="2xl"
-                      className="text-derma-primary text-left mb-4"
-                    >
-                      Tu rutina facial de 3 meses para{' '}
-                    </Title>
-                    <Title
-                      size="2xl"
-                      className="text-derma-tertiary text-left mb-4"
-                    >
-                      {routinesArray[routineIndex]}
-                    </Title>
-                  </div>
+                  <Title
+                    size="2xl"
+                    className="text-derma-primary text-left mb-4"
+                  >
+                    Tu rutina facial de 3 meses para{' '}
+                  </Title>
+                  <Title
+                    size="2xl"
+                    className="text-derma-tertiary text-left mb-4"
+                  >
+                    {routinesArray[routineIndex]}
+                  </Title>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
