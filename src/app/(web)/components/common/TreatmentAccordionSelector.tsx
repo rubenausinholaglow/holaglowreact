@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
 import { Product, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
+import ProductService from '@services/ProductService';
 import useRoutes from '@utils/useRoutes';
 import {
   getUniqueIds,
@@ -41,13 +43,13 @@ export default function TreatmentAccordionSelector({
   const router = useRouter();
   const ROUTES = useRoutes();
 
-  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
-    state => state
-  );
+  const { dashboardProducts } = useGlobalPersistedStore(state => state);
   const { setSelectedTreatments, selectedTreatments, treatmentPacks } =
     useSessionStore(state => state);
 
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+
+  const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
 
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -73,8 +75,12 @@ export default function TreatmentAccordionSelector({
     findSelectedProducts = false
   ) {
     const filterCondition = (product: Product) => {
+      if (category.toLocaleUpperCase() == 'PACKS')
+        return product.category.some(
+          categoryItem => categoryItem.name === category && product.isPack
+        );
       return product.category.some(
-        categoryItem => categoryItem.name === category
+        categoryItem => categoryItem.name === category && !product.isPack
       );
     };
 
@@ -103,7 +109,7 @@ export default function TreatmentAccordionSelector({
         })
         .sort((a, b) => (a.title > b.title ? 1 : -1));
     }
-    return stateProducts
+    return productsAgenda
       .filter(filterCondition)
       .sort((a, b) => (a.title > b.title ? 1 : -1));
   }
@@ -122,26 +128,44 @@ export default function TreatmentAccordionSelector({
     );
   }
   useEffect(() => {
-    if (!isDashboard) {
-      const allCategoryNames: string[] = stateProducts.reduce(
-        (categoryNames: string[], product) => {
-          const productCategories = product.category.map(
-            category => category.name
-          );
-          return [...categoryNames, ...productCategories];
-        },
-        []
-      );
+    async function getAgendaProducts() {
+      const params = {
+        isDerma: false,
+        getAgendaProducts: true,
+      };
+      await ProductService.getAllProducts(params)
+        .then(products => {
+          if (products.length > 0) {
+            setProductsAgenda(products);
+            const allCategoryNames: string[] = products.reduce(
+              (categoryNames: string[], product) => {
+                const productCategories = product.category.map(
+                  category => category.name
+                );
+                return [...categoryNames, ...productCategories];
+              },
+              []
+            );
 
-      const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
-      const packsIndex = uniqueCategoryNames.indexOf('Packs');
-      if (packsIndex !== -1) {
-        uniqueCategoryNames.splice(packsIndex, 1);
-        uniqueCategoryNames.unshift('Packs');
-      }
-      setProductCategories(uniqueCategoryNames);
+            const uniqueCategoryNames: string[] = [
+              ...new Set(allCategoryNames),
+            ];
+            const packsIndex = uniqueCategoryNames.indexOf('Packs');
+            if (packsIndex !== -1) {
+              uniqueCategoryNames.splice(packsIndex, 1);
+              uniqueCategoryNames.unshift('Packs');
+            }
+            setProductCategories(uniqueCategoryNames);
+          }
+        })
+        .catch((err: any) => {
+          Bugsnag.notify(err);
+        });
     }
-  }, [stateProducts]);
+    if (!isDashboard) {
+      getAgendaProducts();
+    }
+  }, []);
 
   useEffect(() => {
     if (isDashboard && !isEmpty(dashboardProducts)) {
@@ -418,7 +442,7 @@ export default function TreatmentAccordionSelector({
     );
   }
 
-  if (cart.length == 0 || !isDashboard)
+  if (cart.length == 0 || (!isDashboard && productsAgenda.length > 0))
     return (
       <Accordion type="single" collapsible className="w-full">
         {productCategories.map(category => {
