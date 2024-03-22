@@ -45,8 +45,12 @@ export default function TreatmentAccordionSelector({
   const ROUTES = useRoutes();
 
   const { dashboardProducts } = useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments, selectedTreatments, treatmentPacks } =
-    useSessionStore(state => state);
+  const {
+    setSelectedTreatments,
+    selectedTreatments,
+    treatmentPacks,
+    setSelectedPack,
+  } = useSessionStore(state => state);
 
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
@@ -249,6 +253,7 @@ export default function TreatmentAccordionSelector({
       if (product.isPack) {
         setSelectedTreatments([medicalVisitProduct!]);
         setSelectedProducts([product]);
+        setSelectedPack(product);
       } else {
         setSelectedTreatments([product]);
       }
