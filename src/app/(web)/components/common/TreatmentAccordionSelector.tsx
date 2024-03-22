@@ -73,9 +73,8 @@ export default function TreatmentAccordionSelector({
     findSelectedProducts = false
   ) {
     const filterCondition = (product: Product) => {
-      return (
-        product.category.some(categoryItem => categoryItem.name === category) &&
-        !product.isPack
+      return product.category.some(
+        categoryItem => categoryItem.name === category
       );
     };
 
@@ -135,7 +134,11 @@ export default function TreatmentAccordionSelector({
       );
 
       const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
-
+      const packsIndex = uniqueCategoryNames.indexOf('Packs');
+      if (packsIndex !== -1) {
+        uniqueCategoryNames.splice(packsIndex, 1);
+        uniqueCategoryNames.unshift('Packs');
+      }
       setProductCategories(uniqueCategoryNames);
     }
   }, [stateProducts]);
