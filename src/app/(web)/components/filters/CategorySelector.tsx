@@ -101,6 +101,7 @@ export default function CategorySelector({
             }}
           >
             <Button
+              className="pointer-events-none"
               type="white"
               customStyles={twMerge(`
               p-1 pr-4 border-none pointer-events-none ${
@@ -112,7 +113,6 @@ export default function CategorySelector({
                   ? 'mb-0'
                   : ''
               }`)}
-              id="tmevent_treatments_type"
             >
               {!isDashboard && (
                 <CategoryIcon category={category} className="mr-2" />

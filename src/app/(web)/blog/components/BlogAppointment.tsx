@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Product } from '@interface/product';
-import useRoutes from '@utils/useRoutes';
+import ROUTES from '@utils/routes';
 import { useSessionStore } from 'app/stores/globalStore';
 import { fetchProduct } from 'app/utils/fetch';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -12,10 +13,9 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function BlogAppointment() {
-  const ROUTES = useRoutes();
   const router = useRouter();
 
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function BlogAppointment() {
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
   }, []);
 
-  const imgUrl = deviceSize.isMobile
+  const imgUrl = isMobile
     ? '/images/blog/BlogAppointment.png'
     : '/images/blog/BlogAppointment-desk.png';
 
@@ -42,9 +42,7 @@ export default function BlogAppointment() {
           className="relative aspect-[5/6] md:aspect-auto md:absolute top-0 bottom-0 right-0 md:left-[50%]"
           style={{
             backgroundImage: `url(${imgUrl})`,
-            backgroundPosition: deviceSize.isMobile
-              ? 'bottom center'
-              : 'center',
+            backgroundPosition: isMobile ? 'bottom center' : 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
           }}
@@ -70,7 +68,7 @@ export default function BlogAppointment() {
             className="mb-8 md:mb-0"
             id={'tmevent_click_pv_button'}
             isAnimated
-            size={deviceSize.isMobile ? 'lg' : 'xl'}
+            size={isMobile ? 'lg' : 'xl'}
             type="secondary"
             onClick={() => {
               setSelectedTreatments([product]);

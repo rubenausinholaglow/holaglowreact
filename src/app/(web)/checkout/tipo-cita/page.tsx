@@ -27,6 +27,8 @@ export default function PVCitaMedica() {
     selectedTreatments,
     setSelectedTreatments,
     setTypeOfPayment,
+    previousSelectedTreatments,
+    setPreviousSelectedTreatments,
   } = useSessionStore(state => state);
 
   const [isHydrated, setIsHydrated] = useState(false);
@@ -83,10 +85,14 @@ export default function PVCitaMedica() {
   }
 
   function handleClick(product: Product) {
-    setIsLoading(true);
-    setSelectedTreatments([product]);
-    setTypeOfPayment(TypeOfPayment.Free);
-    router.push(ROUTES.checkout.clinics);
+    if (product) {
+      if (!isEmpty(selectedTreatments))
+        setPreviousSelectedTreatments(selectedTreatments);
+      setIsLoading(true);
+      setSelectedTreatments([product]);
+      setTypeOfPayment(TypeOfPayment.Free);
+      router.push(ROUTES.checkout.clinics);
+    }
   }
 
   async function AdvanceProduct() {
@@ -96,9 +102,14 @@ export default function PVCitaMedica() {
     await initProductAdvance(process.env.NEXT_PUBLIC_CITA_PREVIA_ID!);
 
     setTypeOfPayment(TypeOfPayment.Reservation);
-    isEmpty(selectedTreatments)
-      ? router.push(ROUTES.checkout.treatments)
-      : router.push(ROUTES.checkout.clinics);
+    if (!isEmpty(previousSelectedTreatments)) {
+      setSelectedTreatments(previousSelectedTreatments);
+      router.push(ROUTES.checkout.treatments);
+    } else {
+      isEmpty(selectedTreatments)
+        ? router.push(ROUTES.checkout.treatments)
+        : router.push(ROUTES.checkout.clinics);
+    }
   }
 
   if (!isHydrated) {

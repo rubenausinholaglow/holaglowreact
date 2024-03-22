@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
@@ -57,7 +58,6 @@ export default function AppointmentResume({
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
-    deviceSize,
     selectedTreatments,
     selectedSlot,
     selectedDay,
@@ -114,11 +114,11 @@ export default function AppointmentResume({
   const accordionProps: AccordionSingleProps = {
     type: 'single',
     collapsible: true,
-    ...(deviceSize.isMobile ? {} : { defaultValue: 'item-1' }),
+    ...(isMobile ? {} : { defaultValue: 'item-1' }),
   };
 
   const accordionItemProps: AccordionItemProps = {
-    value: deviceSize.isMobile ? 'item-2' : 'item-1',
+    value: isMobile ? 'item-2' : 'item-1',
   };
 
   const TreatmentImage = ({ selectedSlot }: { selectedSlot: Slot }) => {
@@ -334,15 +334,15 @@ export default function AppointmentResume({
                       )}
                     </Flex>
                   )}
-                  {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
-                    <TreatmentPriceBreakdown />
-                  )}
+                  {selectedTreatments[0] &&
+                    selectedTreatments[0].price > 0 &&
+                    !isDashboard && <TreatmentPriceBreakdown />}
                 </Flex>
               </AccordionContent>
             </>
           )}
 
-          {!isProbadorVirtual && selectedTreatments[0] && (
+          {!isProbadorVirtual && selectedTreatments[0] && !isDashboard && (
             <Flex
               className={`w-full justify-between px-4 py-3 rounded-lg md:border-none mt-0.5 ${
                 isDerma

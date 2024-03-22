@@ -1,13 +1,11 @@
-'use client';
-
 import CheckHydration from '@utils/CheckHydration';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
+import BlogShareBar from 'app/(web)/blog/components/BlogShareBar';
 import { Product } from 'app/types/product';
-import { Accordion } from 'designSystem/Accordion/Accordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
+import { headers } from 'next/headers';
 
 const ProductPriceCard = dynamic(() => import('./ProductPriceCard'), {
   ssr: false,
@@ -22,7 +20,7 @@ const ProductSessionPriceCard = dynamic(
 );
 
 export default function ProductPricesSSR({ product }: { product: Product }) {
-  const deviceSize = useDeviceSizeSSR();
+  const headersList = headers();
 
   function groupProductsByTitle(arr: Product[]) {
     const groupedArray: { [key: string]: Product[] } = {};
@@ -70,7 +68,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
 
   return (
     <div
-      className="bg-gradient from-hg-secondary500 to-hg-primary300"
+      className="bg-gradient from-derma-secondary500 to-derma-secondary100"
       id="prices"
     >
       <Container className="py-12">
@@ -80,19 +78,17 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
 
         <CheckHydration>
           {!isSessionProduct && (
-            <Flex layout="col-left" className="md:flex-row gap-8">
-              <Accordion
-                defaultValue={deviceSize.isMobile ? 'accordion-0' : 'value'}
-                className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
-              >
-                {productItems.map((item: Product, index: number) => (
-                  <ProductPriceCard
-                    key={item.title}
-                    product={item}
-                    parentProduct={product}
-                  />
-                ))}
-              </Accordion>
+            <Flex
+              layout="col-left"
+              className="md:flex-row gap-8 md:items-stretch"
+            >
+              {productItems.map((item: Product, index: number) => (
+                <ProductPriceCard
+                  key={item.title}
+                  product={item}
+                  parentProduct={product}
+                />
+              ))}
             </Flex>
           )}
         </CheckHydration>
@@ -164,6 +160,12 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
             ))}
           </Flex>
         )}
+        <Flex layout="row-center" className="pt-4">
+          <BlogShareBar
+            title={product.title}
+            url={`http://www.holaglow.com/${headersList.get('next-url') || ''}`}
+          />
+        </Flex>
       </Container>
     </div>
   );

@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgAngle } from 'app/icons/IconsDs';
 import {
   Accordion,
@@ -16,17 +16,16 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
-export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
-  const deviceSize = useDeviceSizeSSR();
+import FullScreenLoading from './FullScreenLayout';
 
+export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
   const [googleMapAddress, setGoogleMapAddress] = useState('');
 
   useEffect(() => {
-    if (!deviceSize.isMobile && clinics.length > 0)
-      setSelectedClinic(clinics[0]);
+    if (!isMobile && clinics.length > 0) setSelectedClinic(clinics[0]);
   }, [clinics]);
 
   useEffect(() => {
@@ -51,7 +50,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
         className={`w-full flex flex-col gap-4`}
         value={selectedAccordion}
       >
-        {deviceSize.isMobile &&
+        {isMobile &&
           clinics &&
           clinics.map((clinic, index) => (
             <AccordionItem
@@ -101,8 +100,9 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
                   </div>
                 </AnimateOnViewport>
               </AccordionTrigger>
-              <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-                <div className={`overflow-hidden max-w-full w-full h-[300px]`}>
+              <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp relative">
+                <FullScreenLoading />
+                <div className="overflow-hidden max-w-full w-full h-[300px] relative z-10">
                   <div id="g-mapdisplay" className="h-full w-full max-w-full">
                     <iframe
                       className="h-full w-full border-none"
@@ -115,7 +115,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
           ))}
       </Accordion>
 
-      {!deviceSize.isMobile && (
+      {!isMobile && (
         <>
           <div className="flex w-1/2">
             <Flex layout="col-left" className="gap-4 mr-24 w-full">
@@ -146,10 +146,11 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
           </div>
           <div
             id="mapLayer"
-            className="absolute bg-slate-400 top-0 bottom-0 right-0 left-1/2"
+            className="absolute top-0 bottom-0 right-0 left-1/2"
           >
+            <FullScreenLoading />
             <div
-              className={`overflow-hidden max-w-full w-full`}
+              className="overflow-hidden max-w-full w-full relative z-10"
               style={{ height: `${mapHeight}px` }}
             >
               <div id="g-mapdisplay" className="h-full w-full max-w-full">

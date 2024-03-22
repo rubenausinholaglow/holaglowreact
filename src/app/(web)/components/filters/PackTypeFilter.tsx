@@ -24,13 +24,12 @@ export default function PackTypeFilter({
 
   return (
     <Button
+      id="tmevent_treatments_type_packs"
       className={className}
       type="white"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
       customStyles={twMerge(`
-        p-1 pr-4 border-none pointer-events-none ${
-          customStyles ? customStyles : ''
-        } 
+        p-1 pr-4 border-none ${customStyles ? customStyles : ''} 
         ${
           promo && promo?.title === 'Black Friday'
             ? `bg-hg-black group-hover:bg- hg-black`
@@ -39,29 +38,30 @@ export default function PackTypeFilter({
         ${isDashboard ? 'pl-4 bg-hg-black100' : ''}
         ${productFilters.isPack ? 'bg-hg-primary500' : ''}
       `)}
-      id="tmevent_treatments_type"
     >
-      {!isDashboard && (
-        <Image
-          src="/images/filters/categories/pack.svg"
-          width={33}
-          height={33}
-          alt="Packs Holaglow"
-          className="shrink-0 mr-2"
-        />
-      )}
+      <div className="flex items-center pointer-events-none">
+        {!isDashboard && (
+          <Image
+            src="/images/filters/categories/pack.svg"
+            width={33}
+            height={33}
+            alt="Packs Holaglow"
+            className="shrink-0 mr-2"
+          />
+        )}
 
-      {promo && promo?.title === 'Black Friday' ? (
-        <span
-          className={
-            productFilters.isPack ? 'text-hg-black' : 'text-hg-primary'
-          }
-        >
-          Sólo Packs <span className="text-hg-secondary">Black</span> Friday
-        </span>
-      ) : (
-        <Text className="text-xs whitespace-nowrap">Packs</Text>
-      )}
+        {promo && promo?.title === 'Black Friday' ? (
+          <span
+            className={
+              productFilters.isPack ? 'text-hg-black' : 'text-hg-primary'
+            }
+          >
+            Sólo Packs <span className="text-hg-secondary">Black</span> Friday
+          </span>
+        ) : (
+          <Text className="text-xs whitespace-nowrap">Packs</Text>
+        )}
+      </div>
     </Button>
   );
 }

@@ -1,17 +1,26 @@
+import isMobileSSR from '@utils/isMobileSSR';
 import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
 import ROUTES from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import Image from 'next/image';
 
 export default function HomeHero() {
+  const heroImgSrc = isMobileSSR()
+    ? '/images/home/bg.png'
+    : '/images/home/bg-desktop.png';
+
   return (
-    <div
-      className="
-        relative pt-20 md:pt-32 -mt-[56px] md:-mt-[72px] 
-        bg-[url('/images/home/bg.png')] md:bg-[url('/images/home/bg-desktop.png')] bg-cover bg-bottom
-      "
-    >
+    <div className="relative pt-20 md:pt-32 -mt-[56px] md:-mt-[72px]">
+      <Image
+        src={heroImgSrc}
+        fill
+        priority
+        objectFit="cover"
+        objectPosition="bottom"
+        alt="Medicina estética para cuidar tu piel"
+      />
       <Container isHeader className="relative overflow-hidden">
         <Flex layout="col-left" className="md:flex-row w-full">
           <Flex
