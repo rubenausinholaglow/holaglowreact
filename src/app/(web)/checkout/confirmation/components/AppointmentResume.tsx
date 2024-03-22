@@ -234,8 +234,10 @@ export default function AppointmentResume({
 
   const TreatmentPriceBreakdown = ({
     hideTotal = false,
+    product,
   }: {
     hideTotal?: boolean;
+    product: Product;
   }) => {
     return (
       <div className="w-full">
@@ -245,31 +247,25 @@ export default function AppointmentResume({
         >
           <Flex className="justify-between w-full">
             <Text>Importe sin IVA</Text>
-            <Text>{(selectedTreatments[0].price * 0.79).toFixed(2)} €</Text>
+            <Text>{(product.price * 0.79).toFixed(2)} €</Text>
           </Flex>
           <Flex className="justify-between w-full ">
             <Text>Impuestos</Text>
-            <Text>
-              {(
-                selectedTreatments[0].price -
-                selectedTreatments[0].price * 0.79
-              ).toFixed(2)}{' '}
-              €
-            </Text>
+            <Text>{(product.price - product.price * 0.79).toFixed(2)} €</Text>
           </Flex>
-          {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
+          {!isProbadorVirtual && product && !hideTotal && (
             <Flex layout="col-left" className="w-full gap-2 ">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
-                  {selectedTreatments[0].price.toFixed(2)}€
+                  {product.price.toFixed(2)}€
                 </Text>
               </Flex>
               {typeOfPayment == TypeOfPayment.Reservation && (
                 <Flex className="justify-between w-full">
                   <Text>Pendiente de pago en clínica</Text>
                   <Text className="font-semibold">
-                    {(selectedTreatments[0].price - 49).toFixed(2)}€
+                    {(product.price - 49).toFixed(2)}€
                   </Text>
                 </Flex>
               )}
@@ -338,7 +334,10 @@ export default function AppointmentResume({
                     </Flex>
                   )}
                   {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
-                    <TreatmentPriceBreakdown />
+                    <TreatmentPriceBreakdown product={selectedTreatments[0]} />
+                  )}
+                  {selectedPack && selectedPack.price > 0 && (
+                    <TreatmentPriceBreakdown product={selectedPack} />
                   )}
                 </Flex>
               </AccordionContent>

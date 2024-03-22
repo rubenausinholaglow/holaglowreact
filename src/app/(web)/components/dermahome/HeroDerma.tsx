@@ -9,7 +9,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function HeroDerma() {
   const { deviceSize } = useSessionStore(state => state);
