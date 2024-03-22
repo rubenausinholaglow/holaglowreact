@@ -12,7 +12,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function HeroDerma() {
-  const HEADER_HEIGHT = isMobile
   const routinesArray = ['acné', 'melasma', 'rosácea', 'antiaging'];
   const [routineIndex, setRoutineIndex] = useState(0);
 
@@ -23,6 +22,7 @@ export default function HeroDerma() {
   };
 
   startTimer();
+  const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `-${HEADER_HEIGHT}px`;
