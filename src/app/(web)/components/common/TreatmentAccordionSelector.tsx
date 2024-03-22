@@ -154,7 +154,7 @@ export default function TreatmentAccordionSelector({
                 category => category.name
               );
             }
-          } else {
+          } else if (!product.isPack) {
             productCategories = product.category.map(category => category.name);
           }
           return [...categoryNames, ...productCategories];
