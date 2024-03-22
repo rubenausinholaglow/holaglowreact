@@ -23,7 +23,7 @@ const CATEGORY_ICONS: any = {
     src: 'otros.svg',
   },
   Packs: {
-    src: 'Pack.svg',
+    src: 'pack.svg',
   },
 };
 
