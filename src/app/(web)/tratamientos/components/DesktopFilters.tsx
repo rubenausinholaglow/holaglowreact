@@ -41,9 +41,6 @@ export default function DesktopFilters({
           <Flex layout="col-left" className="w-full">
             <CategorySelector isDashboard className="inner-flex" isStacked />
           </Flex>
-          {/* <Flex layout="col-left" className="w-full">
-            <PackTypeFilter />
-          </Flex> */}
           <Flex layout="col-left" className="w-full">
             <TypeFilter />
           </Flex>

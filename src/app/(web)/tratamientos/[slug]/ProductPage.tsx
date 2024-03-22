@@ -1,41 +1,19 @@
 import { Product } from '@interface/product';
 import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
+import ProfessionalsSSR from 'app/(web)/components/common/ProfessionalsSSR';
+import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
+import Testimonials from 'app/(web)/components/home/Testimonials';
 import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
-import dynamic from 'next/dynamic';
 
 import ProductCrosselling from './components/ProductCrosselling';
 import ProductExplanation from './components/ProductExplanation';
+import ProductFaqs from './components/ProductFaqs';
 import ProductFreeAppointment from './components/ProductFreeAppointment';
 import ProductHeaderSSR from './components/ProductHeaderSSR';
 import ProductPaymentOptions from './components/ProductPaymentOptions';
 import ProductPricesSSR from './components/ProductPricesSSR';
+import ProductSuggestions from './components/ProductSuggestions';
 import ProductVideos from './components/ProductVideos';
-
-const ProductSuggestions = dynamic(
-  () => import('./components/ProductSuggestions'),
-  { ssr: false }
-);
-
-const ProfessionalsSSR = dynamic(
-  () => import('app/(web)/components/common/ProfessionalsSSR'),
-  { ssr: false }
-);
-
-const Testimonials = dynamic(
-  () => import('app/(web)/components/home/Testimonials'),
-  { ssr: false }
-);
-
-const FloatingBottomBar = dynamic(
-  () => import('app/(web)/components/home/FloatingBottomBar'),
-  {
-    ssr: false,
-  }
-);
-
-const ProductFaqs = dynamic(() => import('./components/ProductFaqs'), {
-  ssr: false,
-});
 
 export default function ProductPage({ product }: { product: Product }) {
   return (

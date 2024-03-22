@@ -1,9 +1,9 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import { useSessionStore } from 'app/stores/globalStore';
 import { Testimonial } from 'app/types/testimonial';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
@@ -44,8 +44,6 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export default function TestimonialsDerma() {
-  const { deviceSize } = useSessionStore(store => store);
-
   return (
     <>
       <Container>
@@ -61,7 +59,7 @@ export default function TestimonialsDerma() {
         <FullWidthCarousel
           hasControls={true}
           className="pb-8"
-          visibleSlides={deviceSize.isMobile ? 1.2 : 3.5}
+          visibleSlides={isMobile ? 1.2 : 3.5}
           isDerma={true}
         >
           {TESTIMONIALS.map((testimonial: Testimonial | any) => {

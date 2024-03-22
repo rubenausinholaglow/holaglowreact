@@ -1,12 +1,11 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import { SvgLocation } from 'app/icons/Icons';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-
-import { isMobile } from '../layout/Breakpoint';
 
 const CLINICS = [
   {
@@ -124,12 +123,12 @@ export default function ClinicsDerma({
       <Container className="px-0 md:px-4">
         <Carousel
           controlStyles={
-            isMobile()
+            isMobile
               ? 'px-4 md:px-0 mt-4'
               : 'absolute left-[-100%] bottom-5 ml-24'
           }
-          hasDots={isMobile()}
-          hasControls={!isMobile()}
+          hasDots={isMobile}
+          hasControls={!isMobile}
           isIntrinsicHeight
           visibleSlides={1}
           currentSlide={0}

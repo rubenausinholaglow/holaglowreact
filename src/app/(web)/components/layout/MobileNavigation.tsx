@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
 import { SvgArrow, SvgCalling, SvgCross, SvgHolaglow } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -12,7 +13,6 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { isEmpty } from 'lodash';
 
 import ProductSearchBar from '../product/ProductSearchBar';
-import { isMobile } from './Breakpoint';
 
 export default function MobileNavigation({
   isVisible,
@@ -80,7 +80,7 @@ export default function MobileNavigation({
               Nuestros tratamientos
             </p>
 
-            <SimpleAccordion trigger="Más populares" isOpen={!isMobile()}>
+            <SimpleAccordion trigger="Más populares" isOpen={!isMobile}>
               <ul className="text-sm pt-4 font-normal flex flex-col">
                 <li>
                   <a
@@ -157,7 +157,7 @@ export default function MobileNavigation({
             </a>
 
             {!isEmpty(clinics) && (
-              <SimpleAccordion trigger="Clínicas" isOpen={!isMobile()}>
+              <SimpleAccordion trigger="Clínicas" isOpen={!isMobile}>
                 <ul className="text-sm pt-4 font-normal flex flex-col">
                   {clinics.map(clinic => (
                     <li key={clinic.city}>
@@ -177,7 +177,7 @@ export default function MobileNavigation({
               <p className="font-semibold">Blog</p>
             </a>
 
-            <SimpleAccordion trigger="Privacidad" isOpen={!isMobile()}>
+            <SimpleAccordion trigger="Privacidad" isOpen={!isMobile}>
               <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
                 <li>
                   <a
