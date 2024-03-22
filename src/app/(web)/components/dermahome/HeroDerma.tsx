@@ -72,15 +72,12 @@ export default function HeroDerma() {
                 <Flex layout="col-left" className="relative z-10">
                   <Title
                     size="2xl"
-                    className="text-derma-primary text-left mb-4"
+                    className="text-derma-primary text-left mb-4 text-wrap"
                   >
                     Tu rutina facial de 3 meses para{' '}
-                  </Title>
-                  <Title
-                    size="2xl"
-                    className="text-derma-tertiary text-left mb-4"
-                  >
-                    {routinesArray[routineIndex]}
+                    <span className="text-derma-tertiary text-left mb-4">
+                      {routinesArray[routineIndex]}
+                    </span>
                   </Title>
                   <Text
                     isAnimated
