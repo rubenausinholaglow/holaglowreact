@@ -256,6 +256,7 @@ export default function TreatmentAccordionSelector({
         setSelectedPack(product);
       } else {
         setSelectedTreatments([product]);
+        setSelectedPack(undefined);
       }
     }
   }
