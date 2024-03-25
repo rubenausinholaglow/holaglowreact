@@ -39,7 +39,9 @@ function ProductPriceItemsCard({
   const router = useRouter();
 
   const { stateProducts } = useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedPack } = useSessionStore(
+    state => state
+  );
   const {
     productHighlighted,
     addItemToCart,
@@ -137,6 +139,8 @@ function ProductPriceItemsCard({
               if (medicalVisitProduct && product.isPack) {
                 setSelectedTreatment(medicalVisitProduct);
               }
+            if (product.isPack) setSelectedPack(product);
+            else setSelectedPack(undefined);
             }}
             id="tmevent_click_book_button_prices"
           >
