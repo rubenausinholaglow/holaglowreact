@@ -1,5 +1,6 @@
 import CheckHydration from '@utils/CheckHydration';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
+import { SvgCheckCircle } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
@@ -19,43 +20,48 @@ export default function StartMultistep() {
       <meta name="robots" content="noindex,follow" />
       <div className="bg-derma-secondary100 min-h-screen">
         <DermaLayout hideButton hideFooter>
+          <Container className="px-0 md:px-4">
+            <Image
+              src="/images/derma/home/dermaStart.jpg"
+              alt="Holaglow"
+              width={780}
+              height={752}
+              className="rounded-t-2xl w-full"
+            />
+          </Container>
           <Container id="tm_derma_step0">
             <Flex
               layout="col-left"
-              className="gap-8 md:gap-16 items-center relative md:justify-center md:flex-row md:mt-12"
+              className="items-center relative md:justify-center md:flex-row md:mt-12"
             >
-              <Flex layout="row-center" className="w-4/5 md:w-1/2">
-                <Image
-                  src="/images/derma/home/dermaStart.png"
-                  alt="Holaglow"
-                  width={204}
-                  height={253}
-                />
-              </Flex>
-              <Flex layout="col-left" className="relative z-10 md:w-1/2">
-                <Title size="2xl" className="text-derma-primary mb-6 md:mb-6">
+              <Flex layout="col-left" className="relative z-10 md:w-1/2 py-4">
+                <Title
+                  size="xldr"
+                  className="text-derma-primary font-light mb-4"
+                >
                   Tu rutina facial personalizada por 99€
                 </Title>
-                <Text className="font-gtUltra md:w-full md:text-lg mb-2">
-                  Videollamada de diagnóstico con el médico
-                </Text>
-                <Text className="font-gtUltra md:w-full md:text-lg mb-8">
-                  Te enviamos a casa tu rutina personalizada:
-                </Text>
-                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
-                  - Espuma limpiadora
-                </Text>
-                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
-                  - Crema hidratante de día para tu afección
-                </Text>
-                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
-                  - Protector solar
-                </Text>
-                <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
-                  - Receta de la crema personalizada de noche (a pedir en
-                  farmacia por 25-40€)
-                </Text>
+                <Flex
+                  layout="col-left"
+                  className="gap-2 w-full text-hg-black500 mb-8"
+                >
+                  <Text className="md:text-lg mb-2">
+                    Videollamada de diagnóstico con el médico. Te enviamos a
+                    casa tu rutina personalizada:
+                  </Text>
 
+                  {[
+                    'Espuma limpiadora',
+                    'Crema hidratante de día para tu afección',
+                    'Protector solar',
+                    'Receta de la crema personalizada de noche <span className="text-xs">(a pedir en farmacia por 25-40€)</span>',
+                  ].map(item => (
+                    <Flex key={item}>
+                      <SvgCheckCircle className="shrink-0 mr-2" />
+                      <p dangerouslySetInnerHTML={{ __html: item }} />
+                    </Flex>
+                  ))}
+                </Flex>
                 <StartButton />
               </Flex>
             </Flex>
