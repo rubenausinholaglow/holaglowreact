@@ -52,7 +52,9 @@ export default function CategorySelector({
           categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
       );
     } else {
-      filteredCategoryNames = allCategoryNames;
+      filteredCategoryNames = allCategoryNames.filter(
+        categoryName => categoryName !== 'Packs'
+      );
     }
 
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
