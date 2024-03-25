@@ -43,7 +43,7 @@ interface SessionStore {
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
   dermaPhone: string;
-  treatmentPacks : PackUnities[];
+  treatmentPacks: PackUnities[];
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -201,7 +201,7 @@ export const useSessionStore = create(
     }),
     {
       name: 'session-storage',
-      version: 20,
+      version: 21,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -289,7 +289,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 52,
+      version: 53,
     }
   )
 );
