@@ -355,15 +355,15 @@ export default function AppointmentResume({
                       )}
                     </Flex>
                   )}
-                  {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
-                    <TreatmentPriceBreakdown />
-                  )}
+                  {selectedTreatments[0] &&
+                    selectedTreatments[0].price > 0 &&
+                    !isDashboard && <TreatmentPriceBreakdown />}
                 </Flex>
               </AccordionContent>
             </>
           )}
 
-          {!isProbadorVirtual && selectedTreatments[0] && (
+          {!isProbadorVirtual && selectedTreatments[0] && !isDashboard && (
             <Flex
               className={`w-full justify-between px-4 py-3 rounded-lg md:border-none mt-0.5 ${
                 isDerma

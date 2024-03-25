@@ -215,55 +215,59 @@ export default function Confirmation({
               />
             )}
           </div>
-          <Flex
-            layout="row-left"
-            className={`gap-4 w-full mb-12 ${
-              isDerma
-                ? 'border border-derma-primary100 rounded-3xl bg-white p-6 mb-12'
-                : ''
-            }`}
-          >
-            <Button
-              size="lg"
-              type={isDerma ? 'derma' : 'primary'}
-              ref={addToCalendarRef}
-              className="w-full"
-              customStyles="justify-start pl-2"
-              onClick={() =>
-                atcb_action(
-                  ADD_TO_CALENDAR_CONFIG,
-                  addToCalendarRef.current
-                    ? addToCalendarRef.current
-                    : undefined
-                )
-              }
+          {!isDashboard && (
+            <Flex
+              layout="col-left"
+              className={`${
+                isDerma
+                  ? 'gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12'
+                  : ''
+              }`}
             >
-              <Flex
-                layout="row-center"
-                className={` rounded-full h-8 w-8 mr-2 p-1 ${
-                  isDerma
-                    ? 'bg-derma-primary500'
-                    : 'bg-hg-secondary300 text-hg-secondary'
-                }`}
-              >
-                <SvgCalendar />
-              </Flex>
-              <Text className="font-light text-md">Añadir a mi calendario</Text>
-            </Button>
-            {!isDashboard && !isDerma && (
               <Button
-                type="secondary"
-                size="lg"
-                className="hidden md:flex shrink-0"
-                href={ROUTES.treatments}
+                size="xl"
+                type={isDerma ? 'derma' : 'primary'}
+                ref={addToCalendarRef}
+                className="w-full"
+                customStyles="justify-start"
+                onClick={() =>
+                  atcb_action(
+                    ADD_TO_CALENDAR_CONFIG,
+                    addToCalendarRef.current
+                      ? addToCalendarRef.current
+                      : undefined
+                  )
+                }
               >
-                <Flex layout="row-center">
-                  Ver tratamientos
-                  <SvgArrow height={18} width={18} className="ml-2" />
+                <Flex
+                  layout="row-center"
+                  className={` rounded-full h-12 w-12 mr-2 ${
+                    isDerma ? 'bg-derma-primary500' : 'bg-transparent'
+                  }`}
+                >
+                  <SvgCalendar />
                 </Flex>
+                Añadir a mi calendario
               </Button>
-            )}
-          </Flex>
+            </Flex>
+          )}
+          {!isDashboard && !isDerma && (
+            <div className="pt-12">
+              <a href="/tratamientos" className="hidden md:block">
+                <Button
+                  type="white"
+                  size="md"
+                  className="hidden md:flex"
+                  href={ROUTES.treatments}
+                >
+                  <Flex layout="row-center">
+                    <span className="font-semibold">Ver tratamientos</span>
+                    <SvgArrow height={18} width={18} className="ml-2" />
+                  </Flex>
+                </Button>
+              </a>
+            </div>
+          )}
         </div>
 
         {!appointment && (

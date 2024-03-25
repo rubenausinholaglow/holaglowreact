@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
@@ -11,6 +12,16 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function HeroDerma() {
+  const routinesArray = ['acné', 'melasma', 'rosácea', 'antiaging'];
+  const [routineIndex, setRoutineIndex] = useState(0);
+
+  const startTimer = () => {
+    setTimeout(() => {
+      setRoutineIndex(routineIndex < 3 ? routineIndex + 1 : 0);
+    }, 2000);
+  };
+
+  startTimer();
   const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
@@ -59,20 +70,23 @@ export default function HeroDerma() {
                 <Flex layout="col-left" className="relative z-10">
                   <Title
                     size="2xl"
-                    className="text-derma-primary text-left mb-4"
+                    className="text-derma-primary text-left mb-4 text-wrap"
                   >
-                    Tu rutina facial diseñada por un médico
+                    Tu rutina facial de 3 meses para{' '}
+                    <span className="text-derma-tertiary text-left mb-4">
+                      {routinesArray[routineIndex]}
+                    </span>
                   </Title>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
                   >
-                    Un dermatólogo estético estudiará tu piel en una
-                    videollamada para diseñar una rutina facial con{' '}
+                    Te enviamos a casa{' '}
                     <span className="font-semibold">
-                      productos personalizados
+                      tu rutina facial personalizada
                     </span>{' '}
-                    que te enviaremos a casa por 99€
+                    por 99€ y te devolvemos el dinero si no ves una mejora al
+                    finalizar el tratamiento
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">

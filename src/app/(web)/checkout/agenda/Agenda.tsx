@@ -192,7 +192,7 @@ export default function Agenda({
       const date = dayjs(x.date);
       if (
         availability.length < maxDays &&
-        (date.isAfter(today) || date.isSame(today, 'day')) &&
+        (date.isAfter(today) || (date.isSame(today, 'day') && !isDerma)) &&
         x.availability
       ) {
         availability.push(x);
@@ -477,16 +477,12 @@ export default function Agenda({
                           <Text size="xs" className="w-full text-left">
                             {selectedClinic.address}, {selectedClinic.city}
                           </Text>
-                          <Link
-                            href={
-                              isDashboard
-                                ? ROUTES.dashboard.schedule
-                                : ROUTES.checkout.clinics
-                            }
-                            className="text-xs ml-auto text-hg-secondary font-semibold"
+                          <Text
+                            onClick={() => router.back()}
+                            className="text-xs ml-auto text-hg-secondary font-semibold cursor-pointer"
                           >
                             Cambiar
-                          </Link>
+                          </Text>
                         </Flex>
                       )}
 

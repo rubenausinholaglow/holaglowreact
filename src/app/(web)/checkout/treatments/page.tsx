@@ -35,7 +35,9 @@ export default function Page() {
               </Title>
 
               <Flex layout="col-left" className="gap-3 w-full">
-                {!isEmpty(productCategories) && <TreatmentAccordionSelector />}
+                {!isEmpty(productCategories) && (
+                  <TreatmentAccordionSelector isDashboard={false} />
+                )}
               </Flex>
             </Flex>
           </Flex>
