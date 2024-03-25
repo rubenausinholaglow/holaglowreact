@@ -1,5 +1,4 @@
 import Bugsnag from '@bugsnag/js';
-
 import { DermaQuestionsResponse } from '@interface/derma/dermaquestions';
 import { User } from 'app/types/appointment';
 import { Client, ClientUpdate } from 'app/types/client';
