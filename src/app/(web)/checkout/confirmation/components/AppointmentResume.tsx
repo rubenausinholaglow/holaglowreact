@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
@@ -57,11 +58,11 @@ export default function AppointmentResume({
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
   const {
-    deviceSize,
     selectedTreatments,
     selectedSlot,
     selectedDay,
     selectedClinic,
+    selectedPack,
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
@@ -114,11 +115,11 @@ export default function AppointmentResume({
   const accordionProps: AccordionSingleProps = {
     type: 'single',
     collapsible: true,
-    ...(deviceSize.isMobile ? {} : { defaultValue: 'item-1' }),
+    ...(isMobile ? {} : { defaultValue: 'item-1' }),
   };
 
   const accordionItemProps: AccordionItemProps = {
-    value: deviceSize.isMobile ? 'item-2' : 'item-1',
+    value: isMobile ? 'item-2' : 'item-1',
   };
 
   const TreatmentImage = ({ selectedSlot }: { selectedSlot: Slot }) => {
@@ -160,6 +161,8 @@ export default function AppointmentResume({
   };
 
   const TreatmentName = () => {
+    if (selectedPack)
+      return <Text className="font-semibold">{selectedPack.title}</Text>;
     return <Text className="font-semibold">{selectedTreatmentsNames}</Text>;
   };
 
@@ -231,8 +234,10 @@ export default function AppointmentResume({
 
   const TreatmentPriceBreakdown = ({
     hideTotal = false,
+    product,
   }: {
     hideTotal?: boolean;
+    product: Product;
   }) => {
     return (
       <div className="w-full">
@@ -242,31 +247,25 @@ export default function AppointmentResume({
         >
           <Flex className="justify-between w-full">
             <Text>Importe sin IVA</Text>
-            <Text>{(selectedTreatments[0].price * 0.79).toFixed(2)} €</Text>
+            <Text>{(product.price * 0.79).toFixed(2)} €</Text>
           </Flex>
           <Flex className="justify-between w-full ">
             <Text>Impuestos</Text>
-            <Text>
-              {(
-                selectedTreatments[0].price -
-                selectedTreatments[0].price * 0.79
-              ).toFixed(2)}{' '}
-              €
-            </Text>
+            <Text>{(product.price - product.price * 0.79).toFixed(2)} €</Text>
           </Flex>
-          {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
+          {!isProbadorVirtual && product && !hideTotal && (
             <Flex layout="col-left" className="w-full gap-2 ">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
-                  {selectedTreatments[0].price.toFixed(2)}€
+                  {product.price.toFixed(2)}€
                 </Text>
               </Flex>
               {typeOfPayment == TypeOfPayment.Reservation && (
                 <Flex className="justify-between w-full">
                   <Text>Pendiente de pago en clínica</Text>
                   <Text className="font-semibold">
-                    {(selectedTreatments[0].price - 49).toFixed(2)}€
+                    {(product.price - 49).toFixed(2)}€
                   </Text>
                 </Flex>
               )}
@@ -334,15 +333,22 @@ export default function AppointmentResume({
                       )}
                     </Flex>
                   )}
-                  {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
-                    <TreatmentPriceBreakdown />
+                {selectedTreatments[0] &&
+                    selectedTreatments[0].price > 0 &&
+                    !isDashboard && (
+                      <TreatmentPriceBreakdown
+                        product={selectedTreatments[0]}
+                      />
+                    )}
+                  {selectedPack && selectedPack.price > 0 && (
+                    <TreatmentPriceBreakdown product={selectedPack} />
                   )}
                 </Flex>
               </AccordionContent>
             </>
           )}
 
-          {!isProbadorVirtual && selectedTreatments[0] && (
+          {!isProbadorVirtual && selectedTreatments[0] && !isDashboard && (
             <Flex
               className={`w-full justify-between px-4 py-3 rounded-lg md:border-none mt-0.5 ${
                 isDerma

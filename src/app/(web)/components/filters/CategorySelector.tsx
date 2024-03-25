@@ -52,7 +52,9 @@ export default function CategorySelector({
           categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
       );
     } else {
-      filteredCategoryNames = allCategoryNames;
+      filteredCategoryNames = allCategoryNames.filter(
+        categoryName => categoryName !== 'Packs'
+      );
     }
 
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
@@ -101,6 +103,7 @@ export default function CategorySelector({
             }}
           >
             <Button
+              className="pointer-events-none"
               type="white"
               customStyles={twMerge(`
               p-1 pr-4 border-none pointer-events-none ${
@@ -112,7 +115,6 @@ export default function CategorySelector({
                   ? 'mb-0'
                   : ''
               }`)}
-              id="tmevent_treatments_type"
             >
               {!isDashboard && (
                 <CategoryIcon category={category} className="mr-2" />

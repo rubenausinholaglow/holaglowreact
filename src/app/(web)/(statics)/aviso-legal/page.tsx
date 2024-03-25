@@ -8,7 +8,7 @@ export default function LegalAdvice() {
     <App>
       <MainLayout>
         <meta name="robots" content="noindex,follow" />
-        <LegalAdviceContent></LegalAdviceContent>
+        <LegalAdviceContent />
       </MainLayout>
     </App>
   );

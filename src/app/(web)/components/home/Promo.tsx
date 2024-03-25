@@ -1,10 +1,8 @@
 'use client';
 
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
-import useRoutes from 'app/utils/useRoutes';
+import { isMobile } from 'react-device-detect';
+import ROUTES from '@utils/routes';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -12,20 +10,18 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 function BlackFriday() {
-  const { deviceSize } = useSessionStore(state => state);
   const router = useRouter();
-  const ROUTES = useRoutes();
 
   return (
     <Container className="px-0 pt-8 md:pt-12">
       <div
         className={`relative cursor-pointer ${
-          deviceSize.isMobile ? 'aspect-[39/78]' : 'aspect-[2432/1096]'
+          isMobile ? 'aspect-[39/78]' : 'aspect-[2432/1096]'
         }`}
         onClick={() => router.push(`${ROUTES.treatments}/packs`)}
       >
         <Image
-          src={`/images/home/bf-bg${deviceSize.isMobile ? '' : '-desk'}.png`}
+          src={`/images/home/bf-bg${isMobile ? '' : '-desk'}.png`}
           className="object-fill"
           fill
           alt="black friday holaglow"

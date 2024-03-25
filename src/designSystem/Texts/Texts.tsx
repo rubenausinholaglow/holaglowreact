@@ -10,7 +10,6 @@ const AnimateOnViewport = dynamic(
 
 export const Title = ({
   size = 'xl',
-  weight = 'semibold',
   as = 'h3',
   className = '',
   wrapperClassName = '',
@@ -38,7 +37,7 @@ export const Title = ({
   };
 
   const styles = twMerge(
-    `font-gtUltra text-hg-secondary text-balance ${STYLES[size]} font-${weight} ${className}`
+    `font-gtUltra font-bold text-hg-secondary text-balance ${STYLES[size]} ${className}`
   );
 
   if (isAnimated) {

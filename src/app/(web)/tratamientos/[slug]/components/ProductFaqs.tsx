@@ -1,15 +1,10 @@
+import isMobileSSR from '@utils/isMobileSSR';
 import { Product } from 'app/types/product';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import { Container } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import dynamic from 'next/dynamic';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 import { FAQ, faqItems } from './faqs';
-
-const SimpleAccordion = dynamic(
-  () => import('designSystem/Accordion/SimpleAccordion'),
-  { ssr: false }
-);
 
 export default function ProductFaqs({ product }: { product: Product }) {
   const getFaqsForAppliedProduct = (appliedProduct: string) => {
@@ -34,26 +29,73 @@ export default function ProductFaqs({ product }: { product: Product }) {
   return (
     <Container className="py-12">
       <Title isAnimated size="2xl" className="font-bold mb-8 md:mb-12">
-        Consulta las preguntas{' '}
-        <Underlined color={HOLAGLOW_COLORS['primary']}>frecuentes</Underlined>
+        Consulta las preguntas frecuentes
       </Title>
 
-      <div className="md:grid md:grid-cols-2 md:gap-6">
-        {faqs.map(faq => {
-          return (
-            <SimpleAccordion
-              key={faq.title}
-              className="border-b border-hg-black pb-6 mb-6 md:mb-0"
-              trigger={faq.title}
-              triggerStyles="text-left items-start font-semibold"
-            >
-              <Text size="sm" className="text-hg-black500 py-4">
-                {faq.description}
-              </Text>
-            </SimpleAccordion>
-          );
-        })}
-      </div>
+      <Flex
+        layout="col-left"
+        className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
+      >
+        {isMobileSSR() &&
+          faqs.map((faq, index) => {
+            return (
+              <SimpleAccordion
+                key={faq.title}
+                className="pb-4 md:mb-0 border-b border-hg-black"
+                trigger={faq.title}
+                triggerStyles="text-left items-start font-semibold"
+              >
+                <Text size="sm" className="text-hg-black500 pt-4">
+                  {faq.description}
+                </Text>
+              </SimpleAccordion>
+            );
+          })}
+
+        {!isMobileSSR() && (
+          <Flex layout="col-left" className="w-full gap-6">
+            {faqs.map((faq, index) => {
+              if (index % 2 === 0) {
+                return (
+                  <SimpleAccordion
+                    key={faq.title}
+                    className="pb-4 md:mb-0 border-b border-hg-black"
+                    trigger={faq.title}
+                    triggerStyles="text-left items-start font-semibold pb-2"
+                  >
+                    <Text size="sm" className="text-hg-black500 pt-4">
+                      {faq.description}
+                    </Text>
+                  </SimpleAccordion>
+                );
+              }
+              return null;
+            })}
+          </Flex>
+        )}
+
+        {!isMobileSSR() && (
+          <Flex layout="col-left" className="w-full gap-6">
+            {faqs.map((faq, index) => {
+              if (index % 2 !== 0) {
+                return (
+                  <SimpleAccordion
+                    key={faq.title}
+                    className="pb-4 md:mb-0 border-b border-hg-black"
+                    trigger={faq.title}
+                    triggerStyles="text-left items-start font-semibold pb-2"
+                  >
+                    <Text size="sm" className="text-hg-black500 pt-4">
+                      {faq.description}
+                    </Text>
+                  </SimpleAccordion>
+                );
+              }
+              return null;
+            })}
+          </Flex>
+        )}
+      </Flex>
     </Container>
   );
 }

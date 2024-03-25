@@ -24,7 +24,9 @@ export default function FloatingBottomBar({
 }) {
   const ROUTES = useRoutes();
 
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedPack } = useSessionStore(
+    state => state
+  );
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
@@ -85,7 +87,7 @@ export default function FloatingBottomBar({
         <Flex className="justify-between">
           <div className="w-full mr-4">
             <Button
-              size="xl"
+              size="lg"
               type="primary"
               className="mr-4 pointer-events-auto w-full"
               href={ROUTES.checkout.type}
@@ -95,6 +97,9 @@ export default function FloatingBottomBar({
                   : !product
                   ? setSelectedTreatments([])
                   : setSelectedTreatments([product]);
+
+                if (product && product.isPack) setSelectedPack(product);
+                else setSelectedPack(undefined);
               }}
               id={'tmevent_click_floating_button'}
             >
@@ -103,7 +108,7 @@ export default function FloatingBottomBar({
           </div>
           <Button
             type="secondary"
-            size="xl"
+            size="lg"
             className="pointer-events-auto"
             customStyles="shrink-0"
           >

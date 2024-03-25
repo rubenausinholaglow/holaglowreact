@@ -5,7 +5,13 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType, UnityType } from '@interface/product';
+import {
+  CartItem,
+  EmlaType,
+  PackUnities,
+  Product,
+  UnityType,
+} from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import { getTreatmentId } from '@utils/userUtils';
 import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
@@ -56,11 +62,14 @@ export default function Agenda({
     selectedSlot,
     previousAppointment,
     selectedTreatments,
+    selectedPack,
     selectedPacksTreatments,
     selectedClinic,
     analyticsMetrics,
     selectedDay,
     setSelectedDay,
+    treatmentPacks,
+    setTreatmentPacks,
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
@@ -198,7 +207,7 @@ export default function Agenda({
       const date = dayjs(x.date);
       if (
         availability.length < maxDays &&
-        (date.isAfter(today) || date.isSame(today, 'day')) &&
+        (date.isAfter(today) || (date.isSame(today, 'day') && !isDerma)) &&
         x.availability
       ) {
         availability.push(x);
@@ -297,18 +306,29 @@ export default function Agenda({
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard && !isDerma) {
+            if (isDashboard) {
               const filteredCart = cart.filter(
                 cartItem =>
                   validTypesFilterCart.includes(cartItem.type) &&
                   (cartItem.isScheduled === false ||
                     cartItem.isScheduled === undefined)
               );
-              if (filteredCart.length >= selectedTreatments.length) {
+              if (
+                filteredCart.length >= selectedTreatments.length ||
+                treatmentPacks.length > 0
+              ) {
                 if (selectedTreatments.length == 1) {
-                  const selectedProduct = filteredCart.find(x => x.title);
-                  updateIsScheduled(true, selectedProduct!.uniqueId);
+                  if (treatmentPacks.length > 0) {
+                    updateTreatmentPackScheduled(selectedTreatments);
+                  } else {
+                    const selectedProduct = filteredCart.find(x => x.title);
+                    updateIsScheduled(true, selectedProduct!.uniqueId);
+                  }
                 } else {
+                  treatmentPacks.length > 0
+                    ? updateTreatmentPackScheduled(selectedTreatments)
+                    : null;
+
                   selectedTreatments.forEach(treatment => {
                     const selectedProducts = filteredCart.filter(
                       cartItem =>
@@ -342,6 +362,32 @@ export default function Agenda({
       schedule();
     }
   }, [selectedSlot]);
+
+  function updateTreatmentPackScheduled(products: Product[]) {
+    const matchingTreatments: PackUnities[] = [];
+    products.forEach(prod => {
+      const productInCart = cart.filter(x => x.id == prod.id).length > 0;
+      if (productInCart) return;
+
+      const matchingTreatment = treatmentPacks.find(
+        treat =>
+          treat.type === prod.unityType && !matchingTreatments.includes(treat)
+      );
+      if (matchingTreatment) {
+        matchingTreatments.push(matchingTreatment);
+      }
+    });
+    const remainingTreatments = treatmentPacks.filter(
+      treat => !matchingTreatments.some(mt => mt.id === treat.id)
+    );
+
+    const updatedPacks = matchingTreatments.map(pack => ({
+      ...pack,
+      isScheduled: true,
+    }));
+
+    setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
+  }
 
   useEffect(() => {
     const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
@@ -511,17 +557,23 @@ export default function Agenda({
                         className="w-full text-left to-hg-black500 mb-4"
                       >
                         Agenda cita para{' '}
-                        {productIds.map((productId, index) => {
-                          const product = selectedTreatments.find(
-                            product => product.id === productId
-                          );
-                          return (
-                            <span key={productId} className="font-semibold">
-                              {product!.title}
-                              {index < productIds.length - 1 && ', '}
-                            </span>
-                          );
-                        })}
+                        {selectedPack && (
+                          <span className="font-semibold">
+                            {selectedPack.title}
+                          </span>
+                        )}
+                        {!selectedPack &&
+                          productIds.map((productId, index) => {
+                            const product = selectedTreatments.find(
+                              product => product.id === productId
+                            );
+                            return (
+                              <span key={productId} className="font-semibold">
+                                {product!.title}
+                                {index < productIds.length - 1 && ', '}
+                              </span>
+                            );
+                          })}
                         {!isDerma && <> en tu clínica preferida</>}
                         {isDerma && <> online</>}
                       </Text>
@@ -536,16 +588,12 @@ export default function Agenda({
                           <Text size="xs" className="w-full text-left">
                             {selectedClinic.address}, {selectedClinic.city}
                           </Text>
-                          <Link
-                            href={
-                              isDashboard
-                                ? ROUTES.dashboard.schedule
-                                : ROUTES.checkout.clinics
-                            }
-                            className="text-xs ml-auto text-hg-secondary font-semibold"
+                          <Text
+                            onClick={() => router.back()}
+                            className="text-xs ml-auto text-hg-secondary font-semibold cursor-pointer"
                           >
                             Cambiar
-                          </Link>
+                          </Text>
                         </Flex>
                       )}
 

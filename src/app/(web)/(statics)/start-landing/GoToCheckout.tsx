@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Product } from '@interface/product';
 import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
@@ -13,7 +13,6 @@ import isEmpty from 'lodash/isEmpty';
 import { useRouter } from 'next/navigation';
 
 export default function GoToCheckout() {
-  const deviceSize = useDeviceSizeSSR();
   const router = useRouter();
   const { setSelectedTreatments } = useSessionStore(state => state);
 
@@ -31,7 +30,7 @@ export default function GoToCheckout() {
   if (isEmpty(product)) {
     return (
       <Button
-        size={deviceSize.isMobile ? 'lg' : 'xl'}
+        size={isMobile ? 'lg' : 'xl'}
         type="tertiary"
         customStyles="bg-hg-secondary border-none text-white gap-2 px-16 hover:bg-hg-secondary700"
         className="mb-8"
@@ -44,7 +43,7 @@ export default function GoToCheckout() {
   return (
     <Button
       id="tmevent_landingPV_start"
-      size={deviceSize.isMobile ? 'lg' : 'xl'}
+      size={isMobile ? 'lg' : 'xl'}
       type="primary"
       className="mb-8"
       onClick={() => {

@@ -32,17 +32,17 @@ export default async function ProductExplanation({
     <Container className="gap-16 justify-between py-12 px-0 md:px-4 md:flex md:pb-24">
       <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-start md:items-start">
         <Title isAnimated size="2xl" className="font-bold mb-6">
-          <Underlined color={HOLAGLOW_COLORS['secondary700']}>
-            Procedimiento
-          </Underlined>{' '}
-          {product.type == 2 && 'médico'}
+          Procedimiento {product.type == 2 && 'médico'}
           {product.type == 1 && 'estético'}
         </Title>
         <Text isAnimated className="text-hg-black500 mb-6">
           {product.extraInformation?.procedimentDescription}
         </Text>
 
-        <Text isAnimated size="xl" className="mb-4 font-semibold">
+        <Text
+          isAnimated
+          className="mb-4 text-hg-secondary font-gtUltra text-drxl"
+        >
           {product.extraInformation?.benefitsInformation?.title}
         </Text>
         <Text isAnimated className="text-hg-black500 mb-6">
@@ -64,7 +64,10 @@ export default async function ProductExplanation({
       </Container>
       <div className="md:w-1/2">
         <Container className="md:px-0">
-          <Text isAnimated size="xl" className="mb-4 font-semibold">
+          <Text
+            isAnimated
+            className="mb-4 text-hg-secondary font-gtUltra text-drxl"
+          >
             Cuáles son las zonas de aplicación
           </Text>
           <Text isAnimated className="text-hg-black500 mb-8">
@@ -88,10 +91,16 @@ export default async function ProductExplanation({
               .map((applicationZoneDetail, index) => (
                 <li
                   key={applicationZoneDetail.id}
-                  className="mb-6 pb-6 border-b border-hg-black flex"
+                  className={` flex ${
+                    product.extraInformation?.applicationZoneInfo
+                      ?.applicationZoneDetail.length ===
+                    index + 1
+                      ? ''
+                      : 'mb-6 pb-6 border-b border-hg-black'
+                  }`}
                 >
-                  <div className="flex border border-hg-secondary rounded-full h-10 w-10 items-center justify-center text-hg-secondary mr-4 shrink-0">
-                    {index + 1}
+                  <div className="flex border border-hg-secondary rounded-full h-10 w-10 text-lg md:h-12 md:w-12 md:text-xl items-center justify-center text-hg-secondary mr-4 shrink-0">
+                    <span className="pt-1">{index + 1}</span>
                   </div>
                   <div>
                     <Text isAnimated className="font-semibold mb-4">

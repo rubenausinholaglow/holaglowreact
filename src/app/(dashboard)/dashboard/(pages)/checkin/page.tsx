@@ -29,8 +29,12 @@ const CHECKIN_LOADING_TEXT = 'Checking In...';
 
 export default function Page() {
   const [isScanning, setIsScanning] = useState(false);
-  const { setSelectedClinic, setSelectedSlot, setSelectedTreatments } =
-    useSessionStore(state => state);
+  const {
+    setSelectedClinic,
+    setSelectedSlot,
+    setSelectedTreatments,
+    setSelectedPack,
+  } = useSessionStore(state => state);
   const { clinics, user, setUserCheckIn, setCurrentUser, setClinicId } =
     useGlobalPersistedStore(state => state);
 
@@ -89,6 +93,7 @@ export default function Page() {
     setSelectedSlot(undefined);
     setClinicId('');
     setSelectedTreatments([]);
+    setSelectedPack(undefined);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     const clinicId = params.get('clinicId') || '';

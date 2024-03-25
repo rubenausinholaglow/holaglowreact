@@ -1,11 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Professional, ProfessionalType } from 'app/types/clinic';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
@@ -22,7 +20,6 @@ export default function ProfessionalsDerma({
   isDashboard?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize } = useSessionStore(state => state);
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 
   useEffect(() => {
@@ -101,25 +98,26 @@ export default function ProfessionalsDerma({
         </Text>
       </Container>
       <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>
-        {deviceSize.isMobile && (
+        {isMobile && (
           <ProductCarousel
             hasControls={false}
             type="professionals"
             items={professionals}
           />
         )}
-        {!deviceSize.isMobile && (
+        {!isMobile && (
           <Carousel
             hasControls
             className="relative"
             isIntrinsicHeight
-            visibleSlides={2}
+            visibleSlides={1}
             infinite={false}
             sliderStyles="gap-8"
             isDerma
           >
             {professionals?.map(professional => (
               <ProfessionalCard
+                isDerma
                 key={professional.name}
                 professional={professional}
                 className="h-full flex flex-col"

@@ -8,11 +8,13 @@ export type Operation = 'decrease' | 'increase';
 interface Props {
   handleUpdateQuantity: (operation: Operation) => void;
   quantity: number;
+  disableAddQuantity?: boolean;
 }
 
 export const Quantifier: FunctionComponent<Props> = ({
   handleUpdateQuantity,
   quantity,
+  disableAddQuantity = false,
 }) => {
   const [value, setValue] = useState<number>(1);
 
@@ -30,6 +32,7 @@ export const Quantifier: FunctionComponent<Props> = ({
   };
 
   const increase = (): void => {
+    if (disableAddQuantity) return;
     handleUpdateQuantity('increase');
     setValue(prevState => prevState + 1);
   };
@@ -62,6 +65,7 @@ export const Quantifier: FunctionComponent<Props> = ({
         onClick={increase}
         className="p-0"
         customStyles="p-0 h-8 w-8 border-none"
+        disabled={disableAddQuantity}
       >
         <Text size="md">+</Text>
       </Button>

@@ -1,28 +1,14 @@
+import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
+import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
 import HomeHero from 'app/(web)/components/home/Hero';
 import ValuesCarousel from 'app/(web)/components/home/ValuesCarousel';
 import ValuesDescription from 'app/(web)/components/home/ValuesDescription';
-import dynamic from 'next/dynamic';
 
-import Clinics from '../common/Clinics';
+import Clinics from '../common/ClinicsSSR';
 import MainLayoutSSR from '../layout/MainLayoutSSR';
+import HomeProfessionals from './HomeProfessionals';
 import Products from './ProductsSSR';
-
-const HomeProfessionals = dynamic(() => import('./HomeProfessionals'), {
-  ssr: false,
-});
-const Testimonials = dynamic(() => import('./Testimonials'), { ssr: false });
-const GoToTreatments = dynamic(
-  () => import('app/(web)/components/home/GoToTreatments'),
-  {
-    ssr: false,
-  }
-);
-const FloatingBottomBar = dynamic(
-  () => import('app/(web)/components/home/FloatingBottomBar'),
-  {
-    ssr: false,
-  }
-);
+import Testimonials from './Testimonials';
 
 export default function Home() {
   return (

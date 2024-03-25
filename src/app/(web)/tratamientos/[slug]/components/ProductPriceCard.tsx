@@ -1,4 +1,7 @@
+'use client';
+
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
@@ -7,7 +10,6 @@ import {
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgArrow, SvgGlow, SvgInjection } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -37,7 +39,9 @@ function ProductPriceItemsCard({
   const router = useRouter();
 
   const { stateProducts } = useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedPack } = useSessionStore(
+    state => state
+  );
   const {
     productHighlighted,
     addItemToCart,
@@ -70,93 +74,103 @@ function ProductPriceItemsCard({
   }, []);
 
   return (
-    <Flex layout="col-left" className="w-full">
-      {!isEmpty(product.appliedProducts) ? (
-        product.appliedProducts.map(item => {
-          const iconName = item.icon.split('/')[0] || 'SvgCross';
-          const iconFamily: 'default' | 'category' | 'suggestion' | 'service' =
-            (item.icon.split('/')[1] as 'default') || 'default';
+    <>
+      <Flex layout="col-left" className="w-full">
+        {!isEmpty(product.appliedProducts) ? (
+          product.appliedProducts.map(item => {
+            const iconName = item.icon.split('/')[0] || 'SvgCross';
+            const iconFamily:
+              | 'default'
+              | 'category'
+              | 'suggestion'
+              | 'service' = (item.icon.split('/')[1] as 'default') || 'default';
 
-          return (
-            <Flex key={item.titlte} className="items-start mb-2">
-              <DynamicIcon
-                height={16}
-                width={16}
-                className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-                name={iconName}
-                family={iconFamily}
-              />
-              <Text>{item.titlte}</Text>
-            </Flex>
-          );
-        })
-      ) : (
-        <Flex className="items-start mb-2">
-          <SvgInjection
-            height={16}
-            width={16}
-            className="mr-2 mt-0.5 text-hg-secondary shrink-0"
-          />
-          <Text>{product.description}</Text>
-        </Flex>
-      )}
+            return (
+              <Flex key={item.titlte} className="items-start mb-2 text-sm">
+                <DynamicIcon
+                  height={16}
+                  width={16}
+                  className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+                  name={iconName}
+                  family={iconFamily}
+                />
+                <Text>{item.titlte}</Text>
+              </Flex>
+            );
+          })
+        ) : (
+          <Flex className="items-start mb-2">
+            <SvgInjection
+              height={16}
+              width={16}
+              className="mr-2 mt-0.5 text-hg-secondary shrink-0"
+            />
+            <Text>{product.description}</Text>
+          </Flex>
+        )}
 
-      {product?.packMoreInformation && (
-        <Accordion>
-          <AccordionItem value="accordion">
-            <AccordionContent>
-              <p className="pl-5 pt-3 pb-0 text-sm md:text-md">
-                {product?.packMoreInformation}
-              </p>
-            </AccordionContent>
-            <AccordionTrigger>
-              <span className="text-hg-secondary underline block text-left pt-3 pl-5 text-sm md:text-md">
-                + info
-              </span>
-            </AccordionTrigger>
-          </AccordionItem>
-        </Accordion>
-      )}
-      {!isDashboard && (
-        <Button
-          type="primary"
-          className="mt-4"
-          onClick={() => {
-            if (!isDashboard && !product.isPack) {
-              setSelectedTreatment(product);
-            }
-            if (medicalVisitProduct && product.isPack) {
-              setSelectedTreatment(medicalVisitProduct);
-            }
-          }}
-          id="tmevent_click_book_button_prices"
-        >
-          Me interesa
-          <SvgArrow
-            height={16}
-            width={16}
-            className="ml-2 pointer-events-none"
-          />
-        </Button>
-      )}
+        {product?.packMoreInformation && (
+          <Accordion>
+            <AccordionItem value="accordion">
+              <AccordionContent>
+                <p className="pt-3 pb-0 text-sm md:text-md">
+                  {product?.packMoreInformation}
+                </p>
+              </AccordionContent>
+              <AccordionTrigger>
+                <span className="text-hg-secondary block text-left text-sm md:text-md font-semibold">
+                  + info
+                </span>
+              </AccordionTrigger>
+            </AccordionItem>
+          </Accordion>
+        )}
+      </Flex>
 
-      {productHighlighted && (
-        <div className="pt-1 mt-2">
-          <Quantifier
-            handleUpdateQuantity={function handleUpdateQuantity(
-              operation: Operation
-            ): void {
-              if (operation == 'increase') {
-                addItemToCart(product as CartItem);
-              } else {
-                removeSingleProduct(product as CartItem);
+      <div className="mt-auto">
+        {!isDashboard && (
+          <Button
+            type="primary"
+            className="mt-4"
+            onClick={() => {
+              if (!isDashboard && !product.isPack) {
+                setSelectedTreatment(product);
               }
+              if (medicalVisitProduct && product.isPack) {
+                setSelectedTreatment(medicalVisitProduct);
+              }
+            if (product.isPack) setSelectedPack(product);
+            else setSelectedPack(undefined);
             }}
-            quantity={getQuantityOfProduct(product)}
-          />
-        </div>
-      )}
-    </Flex>
+            id="tmevent_click_book_button_prices"
+          >
+            Me interesa
+            <SvgArrow
+              height={16}
+              width={16}
+              className="ml-2 pointer-events-none"
+            />
+          </Button>
+        )}
+
+        {productHighlighted && (
+          <div className="pt-1 mt-2">
+            <Quantifier
+              handleUpdateQuantity={function handleUpdateQuantity(
+                operation: Operation
+              ): void {
+                if (operation == 'increase') {
+                  addItemToCart(product as CartItem);
+                } else {
+                  removeSingleProduct(product as CartItem);
+                }
+              }}
+              quantity={getQuantityOfProduct(product)}
+            />
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -171,7 +185,6 @@ export default function ProductPriceCard({
   isDashboard?: boolean;
   className?: string;
 }) {
-  const deviceSize = useDeviceSizeSSR();
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   useEffect(() => {
@@ -182,16 +195,16 @@ export default function ProductPriceCard({
 
   return (
     <Flex
-      className={`bg-white flex-col p-3 rounded-2xl shadow-centered-secondary w-full md:w-1/2 ${className}`}
+      className={`bg-white flex-col p-6 rounded-2xl shadow-centered-secondary w-full md:w-1/2 ${className}`}
     >
-      <Flex layout="col-left" className="w-full p-3">
-        <Flex layout="row-between" className="w-full mb-2">
-          <Flex>
-            <span className="text-xl text-hg-secondary font-semibold md:text-2xl mr-2">
+      <Flex layout="col-left" className="w-full">
+        <Flex layout="row-between" className="w-full mb-2 items-start">
+          <Flex className="text-hg-secondary">
+            <span className="text-2xl font-semibold md:text-2xl mr-2">
               {discountedPrice ? discountedPrice : product.price} €
             </span>
             {discountedPrice && (
-              <span className="inline-block line-through font-normal text-hg-black500">
+              <span className="text-2xl inline-block line-through font-normal text-hg-black500">
                 {product.price} €
               </span>
             )}
@@ -216,7 +229,7 @@ export default function ProductPriceCard({
               ) : (
                 <Text
                   size="xs"
-                  className="py-1 px-2 bg-hg-turquoise/20 text-hg-turquoise rounded-md"
+                  className="py-1 px-2 bg-hg-primary text-hg-secondary rounded-md font-semibold"
                 >
                   Oferta especial
                 </Text>
@@ -224,14 +237,12 @@ export default function ProductPriceCard({
           </Flex>
         </Flex>
         <Text className="font-semibold md:text-lg">{product.title}</Text>
-        {product.isPack && deviceSize.isMobile && (
+        {product.isPack && isMobile && (
           <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
         )}
       </Flex>
-      <Flex layout="col-left" className="w-full items-start mt-3">
-        <div className="bg-hg-black50 p-3 w-full rounded-xl">
-          <ProductPriceItemsCard isDashboard={isDashboard} product={product} />
-        </div>
+      <Flex layout="col-left" className="w-full items-start pt-2">
+        <ProductPriceItemsCard isDashboard={isDashboard} product={product} />
       </Flex>
     </Flex>
   );
