@@ -9,7 +9,7 @@ const SupportLaboralTime = () => {
       <Text size="md" className="leading-6 mb-10 text-center">
         Contacte por teléfono de Lunes a Viernes
         <br />
-        De 10 a 14h y de 15 a 19h
+        De 10 a 14:30h y de 15:30 a 19h
         <br />
         <a href="tel:+34 682 417 208">(+34) 682 417 208</a>
         <br />
