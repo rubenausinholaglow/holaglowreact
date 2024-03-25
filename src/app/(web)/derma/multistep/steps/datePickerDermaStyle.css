@@ -1,0 +1,41 @@
+/* datepicker Derma */
+
+#datepickerWrapper.datepickerDerma {
+  font-family: var(--font-poppins);
+}
+
+#datepickerWrapper.datepickerDerma .react-datepicker {
+  background-color: theme('colors.derma.primary100');
+}
+#datepickerWrapper.datepickerDerma .react-datepicker__header {
+  background-color: theme('colors.derma.primary100');
+}
+
+#datepickerWrapper.datepickerDerma
+  .react-datepicker
+  .react-datepicker__day--keyboard-selected,
+#datepickerWrapper.datepickerDerma
+  .react-datepicker__month-text--keyboard-selected,
+#datepickerWrapper.datepickerDerma .react-datepicker__day--selected,
+#datepickerWrapper.datepickerDerma
+  .react-datepicker__quarter-text--keyboard-selected,
+#datepickerWrapper.datepickerDerma
+  .react-datepicker__year-text--keyboard-selected {
+  background-color: theme('colors.derma.primary') !important;
+}
+
+#datepickerWrapper.datepickerDerma.datepickerDerma
+  .react-datepicker__day:hover:not(.react-datepicker__day--disabled):not(
+    .react-datepicker__day--selected
+  ) {
+  background-color: theme('colors.derma.primary500') !important;
+}
+
+#datepickerWrapper.datepickerDerma .react-datepicker__month-select,
+#datepickerWrapper.datepickerDerma .react-datepicker__year-select {
+  background: rgba(255, 255, 255, 0.75);
+  min-width: 100px;
+  padding: 8px;
+  border: 1px solid theme('colors.derma.primary500');
+  border-radius: 8px;
+}

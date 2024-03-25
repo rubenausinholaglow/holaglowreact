@@ -34,9 +34,7 @@ export default function ClinicFilter({ className }: { className?: string }) {
           id={'tmevent_filters'}
           key={clinic.city}
           className={`transition-all flex p-2 mb-2 items-center rounded-xl cursor-pointer ${
-            productFilters.clinic.includes(clinic.internalName)
-              ? 'bg-hg-primary500'
-              : ''
+            productFilters.clinic.includes(clinic.internalName) ? '' : ''
           }`}
           onClick={() =>
             setProductFilters(
@@ -48,11 +46,13 @@ export default function ClinicFilter({ className }: { className?: string }) {
             )
           }
         >
-          {productFilters.clinic.includes(clinic.internalName) ? (
-            <SvgCheckSquareActive className="mr-2" />
-          ) : (
-            <SvgCheckSquare className="mr-2" />
-          )}
+          <div className="pointer-events-none">
+            {productFilters.clinic.includes(clinic.internalName) ? (
+              <SvgCheckSquareActive className="mr-2" />
+            ) : (
+              <SvgCheckSquare className="mr-2" />
+            )}
+          </div>
           {clinic.city}
         </li>
       ))}

@@ -1,56 +1,6 @@
 import { ReactNode } from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { SvgAdd } from 'app/icons/IconsDs';
 import { twMerge } from 'tailwind-merge';
-
-export function SimpleAccordion({
-  trigger,
-  triggerStyles,
-  iconSize = 24,
-  iconStyles,
-  className,
-  children,
-  isOpen = false,
-}: {
-  trigger: string;
-  triggerStyles?: string;
-  iconSize?: number;
-  iconStyles?: string;
-  className?: string;
-  children: ReactNode;
-  isOpen?: boolean;
-}) {
-  return (
-    <AccordionPrimitive.Root
-      type="single"
-      className={twMerge(`w-full ${className}`)}
-      collapsible
-      defaultValue={isOpen ? 'item' : ''}
-    >
-      <AccordionPrimitive.Item value="item" className="w-full">
-        {!isOpen ? (
-          <AccordionPrimitive.Trigger
-            className={twMerge(
-              `group flex items-center justify-between w-full ${triggerStyles}`
-            )}
-          >
-            {trigger}
-            <SvgAdd
-              height={iconSize}
-              width={iconSize}
-              className={`transition-transform origin-center group-radix-state-open:rotate-45 group-radix-state-open:duration-200 shrink-0 ${iconStyles}`}
-            />
-          </AccordionPrimitive.Trigger>
-        ) : (
-          <>{trigger}</>
-        )}
-        <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-          {children}
-        </AccordionPrimitive.Content>
-      </AccordionPrimitive.Item>
-    </AccordionPrimitive.Root>
-  );
-}
 
 export function Accordion({
   type = 'single',

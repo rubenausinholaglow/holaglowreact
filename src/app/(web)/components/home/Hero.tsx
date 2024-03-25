@@ -1,51 +1,69 @@
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import useRoutes from 'app/utils/useRoutes';
+import isMobileSSR from '@utils/isMobileSSR';
+import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
+import ROUTES from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function HomeHero() {
-  const ROUTES = useRoutes();
+  const heroImgSrc = isMobileSSR()
+    ? '/images/home/bg.png'
+    : '/images/home/bg-desktop.png';
 
   return (
-    <Container className="relative border-b border-hg-black overflow-hidden">
-      <Flex layout="col-center" className="md:flex-row">
-        <Image
-          src="/images/home/Header.png"
-          alt="Holaglow"
-          width={1195}
-          height={1500}
-          className="h-auto w-full scale-[135%] mt-[18%] md:w-[55%] md:scale-100 md:mt-0 md:py-16 ml-[15%] md:ml-0"
-        />
-        <Flex
-          layout="col-left"
-          className="pb-10 z-10 w-full md:w-[45%] md:pl-8"
-        >
-          <Text size="xl" className="mb-2" isAnimated origin="top">
-            Medicina estética
-          </Text>
-          <Title
-            size="3xl"
-            className="text-left font-bold leading-none mb-6 md:mb-12"
-            isAnimated
-            origin="right"
+    <div className="relative pt-20 md:pt-32 -mt-[56px] md:-mt-[72px]">
+      <Image
+        src={heroImgSrc}
+        fill
+        priority
+        objectFit="cover"
+        objectPosition="bottom"
+        alt="Medicina estética para cuidar tu piel"
+      />
+      <Container isHeader className="relative overflow-hidden">
+        <Flex layout="col-left" className="md:flex-row w-full">
+          <Flex
+            layout="col-left"
+            className="z-10 w-full md:w-1/2 md:pb-64 2xl:pb-96 mb-8 md:mb-0"
           >
-            Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
-            <br />
-            tus normas
-          </Title>
-          <Button
-            id={'tmevent_header_button'}
-            type="primary"
-            size="xl"
-            href={ROUTES.treatments}
-            isAnimated
+            <Title
+              size="2xl"
+              className="text-left font-bold leading-none md:mb-12"
+              origin="right"
+            >
+              Medicina estética para cuidar tu piel
+            </Title>
+            <Button
+              id={'tmevent_header_button'}
+              type="primary"
+              size="xl"
+              href={ROUTES.treatments}
+              className="hidden md:block"
+            >
+              <Text className="text-lg">Ver tratamientos</Text>
+            </Button>
+          </Flex>
+          <Flex
+            layout="row-left"
+            className="mb-72 gap-2 bg-white/20 rounded-full px-4 md:ml-auto md:mb-0"
           >
-            Ver tratamientos
-          </Button>
+            <SvgStar className="-mt-1" />
+            <span>4,7</span>
+            <SvgGoogle className="h-10" />
+          </Flex>
+          <Flex className="justify-center w-full pb-12 md:hidden">
+            <Button
+              id={'tmevent_header_button'}
+              type="primary"
+              size="xl"
+              href={ROUTES.treatments}
+            >
+              <Text className="text-lg">Ver tratamientos</Text>
+            </Button>
+          </Flex>
         </Flex>
-      </Flex>
-    </Container>
+      </Container>
+    </div>
   );
 }

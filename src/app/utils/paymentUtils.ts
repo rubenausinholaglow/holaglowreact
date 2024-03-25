@@ -14,40 +14,54 @@ import {
 } from 'app/stores/globalStore';
 
 export const usePayments = () => {
-  const { stateProducts } = useGlobalPersistedStore(state => state);
+  const { dermaProducts, stateProducts } = useGlobalPersistedStore(
+    state => state
+  );
   const { setPayment, payment } = useSessionStore(state => state);
 
   const { cart } = useCartStore(state => state);
   let useNewTab = false;
+  let useRedirect = false;
   const initializePayment = async (
     paymentBank: PaymentBank,
     createdUser: User,
-    newTab = false
+    newTab = false,
+    price = 4900,
+    isDerma = false,
+    installments = 1,
+    redirect = true,
+    deferredDays: number | undefined = undefined
   ) => {
     useNewTab = newTab ?? false;
-
-    const resultValue = 4900;
-
+    useRedirect = redirect ?? true;
+    if (PaymentBank.Alma == paymentBank) useRedirect = true;
     const data: InitializePayment = {
-      amount: Number(resultValue),
-      installments: 1,
+      amount: Number(price),
+      installments: installments,
       userId: createdUser?.id || '',
       paymentBank: paymentBank,
       productPaymentRequest: [],
-      originPayment : OriginPayment.web
+      originPayment: OriginPayment.web,
+      deferred_Days: deferredDays,
     };
-
     cart.forEach(product => {
-      if (product.id.toUpperCase() === process.env.NEXT_PUBLIC_CITA_PREVIA_ID) {
+      if (
+        product.id.toUpperCase() ===
+          process.env.NEXT_PUBLIC_CITA_PREVIA_ID?.toUpperCase() ||
+        product.id.toUpperCase() ===
+          process.env.NEXT_PUBLIC_CITA_DERMA?.toUpperCase()
+      ) {
         const productPayment: ProductPaymentRequest = {
           name: product.title,
           price: product.price.toString(),
           quantity: '1',
-          id: process.env.NEXT_PUBLIC_CITA_PREVIA_ID,
+          id: product.id.toUpperCase(),
         };
         data.productPaymentRequest?.push(productPayment);
       } else {
-        const matchingProduct = stateProducts.find(x => x.id === product.id);
+        const matchingProduct = isDerma
+          ? dermaProducts.find(x => x.id === product.id)
+          : stateProducts.find(x => x.id === product.id);
 
         if (matchingProduct) {
           const productPayment: ProductPaymentRequest = {
@@ -64,13 +78,18 @@ export const usePayments = () => {
     try {
       const paymentResponse = await FinanceService.initializePayment(data);
       setPayment(paymentResponse);
+      if (paymentResponse.id != '') return true;
     } catch (error) {
       console.error('Error initializing payment:', error);
     }
   };
 
   useEffect(() => {
-    if (payment && payment.url) {
+    if (
+      payment &&
+      payment.url &&
+      (useRedirect || payment.referenceId.indexOf('payment_') == 0)
+    ) {
       if (useNewTab) {
         openWindow(payment.url);
       } else window.document.location.href = payment.url;

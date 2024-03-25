@@ -8,9 +8,13 @@ import * as config from '@utils/textConstants';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import * as utils from '@utils/validators';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Status } from 'app/types/appointment';
 import { Client } from 'app/types/client';
 import { CrisalixUser } from 'app/types/crisalix';
@@ -37,19 +41,25 @@ export default function Page({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [tries, setTries] = useState(1);
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser, setAppointmentId, setBudgetId } =
     useGlobalPersistedStore(state => state);
+  const { setSelectedTreatments, setSelectedClinic, setSelectedPack } =
+    useSessionStore(state => state);
   const {
     remoteControl,
     storedBoxId,
     storedClinicId,
+    isCallCenter,
     setBoxId,
     setClinicId,
     setRemoteControl,
     setIgnoreMessages,
     setClinicFlowwwId,
     setClinicProfessionalId,
+    setIsCallCenter,
   } = useGlobalPersistedStore(state => state);
   const userCrisalix = useCrisalix(state => state);
 
@@ -78,6 +88,9 @@ export default function Page({
     },
     interestedTreatment: '',
     treatmentPrice: 0,
+    origin: '',
+    city: '',
+    address: '',
   });
 
   useEffect(() => {
@@ -121,9 +134,12 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
+    setSelectedClinic(undefined);
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');
+    setSelectedTreatments([]);
+    setSelectedPack(undefined);
     setCurrentUser(undefined);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
@@ -131,7 +147,17 @@ export default function Page({
     setRemoteControl(params.get('remoteControl') == 'true');
     setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
+    setIsCallCenter(params.get('isCallCenter') == 'true');
+    const phone = params.get('phoneNumber') || '';
+    setPhoneNumber(phone.length > 9 ? phone.slice(3, phone.length) : phone);
   }, []);
+
+  useEffect(() => {
+    if (!isEmpty(phoneNumber)) {
+      setIsLoadingUser(true);
+      handleCheckUser(phoneNumber);
+    }
+  }, [phoneNumber]);
 
   async function redirectPageByAppointmentId(
     name: string,
@@ -166,9 +192,9 @@ export default function Page({
     }
   }
 
-  const handleCheckUser = async () => {
+  const handleCheckUser = async (phoneNumber = '') => {
     setIsLoading(true);
-    await UserService.checkUser(userEmail)
+    await UserService.checkUser(phoneNumber != '' ? phoneNumber : userEmail)
       .then(async data => {
         if (data && !isEmpty(data)) {
           setCurrentUser(data);
@@ -185,12 +211,14 @@ export default function Page({
         handleSearchError();
       });
     setIsLoading(false);
+    setIsLoadingUser(false);
   };
 
   const handleSearchError = async () => {
     handleRequestError([config.ERROR_AUTHENTICATION]);
     setUserEmail('');
-    setShowRegistration(true);
+    !isCallCenter || tries > 1 ? setShowRegistration(true) : null;
+    setTries(tries + 1);
   };
 
   const handleRegistration = async () => {
@@ -221,6 +249,10 @@ export default function Page({
     flowwwToken: string
   ) {
     try {
+      if (isCallCenter) {
+        router.push('/dashboard/menu');
+        return;
+      }
       await ScheduleService.getClinicScheduleByToken(flowwwToken).then(
         async data => {
           if (data != null) {
@@ -331,50 +363,14 @@ export default function Page({
 
   if (remoteControl)
     return (
-      <MainLayout isDashboard hideBottomBar>
-        <div className="px-4 w-full max-h-[85%] overflow-y-auto">
-          <AppointmentsListComponent
-            clinicId={storedClinicId}
-            boxId={storedBoxId}
-          />
-        </div>
-        <div className="mt-8">
-          {showRegistration ? (
-            <RegistrationForm
-              formData={formData}
-              handleFieldChange={handleFormFieldChange}
-              handleContinue={handleContinue}
-              errors={errors}
-              isLoading={isLoading}
+      <App>
+        <MainLayout isDashboard hideBottomBar>
+          <div className="px-4 w-full max-h-[85%] overflow-y-auto">
+            <AppointmentsListComponent
+              clinicId={storedClinicId}
+              boxId={storedBoxId}
             />
-          ) : (
-            <SearchUser
-              email={userEmail}
-              handleFieldChange={handleFieldEmailChange}
-              handleCheckUser={handleCheckUser}
-              errors={errors}
-              isLoading={isLoading}
-            />
-          )}
-          {isLoadingUser && <SvgSpinner />}
-        </div>
-      </MainLayout>
-    );
-
-  if (!remoteControl)
-    return (
-      <MainLayout isDashboard hideBottomBar hasAnimatedBackground>
-        <div className="fixed bottom-0 right-0 py-3 px-3">
-          <Button
-            onClick={() => setShowForm(!showForm)}
-            type="tertiary"
-            size="sm"
-            className=""
-          >
-            Búsqueda Manual
-          </Button>
-        </div>
-        {showForm && (
+          </div>
           <div className="mt-8">
             {showRegistration ? (
               <RegistrationForm
@@ -393,9 +389,57 @@ export default function Page({
                 isLoading={isLoading}
               />
             )}
+            {isLoadingUser && <SvgSpinner />}
           </div>
-        )}
-        {isLoadingUser && <SvgSpinner />}
-      </MainLayout>
+        </MainLayout>
+      </App>
+    );
+
+  if (!remoteControl)
+    return (
+      <App>
+        <MainLayout isDashboard hideBottomBar hasAnimatedBackground>
+          <div className="fixed bottom-0 right-0 py-3 px-3">
+            <Button
+              onClick={e => {
+                setShowForm(!showForm);
+                setErrors([]);
+              }}
+              type="white"
+              size="sm"
+              className=""
+            >
+              Búsqueda Manual
+            </Button>
+          </div>
+          {showForm && (
+            <div className="mt-8">
+              {showRegistration ? (
+                <RegistrationForm
+                  formData={formData}
+                  handleFieldChange={handleFormFieldChange}
+                  handleContinue={handleContinue}
+                  errors={errors}
+                  isLoading={isLoading}
+                />
+              ) : (
+                <SearchUser
+                  email={userEmail}
+                  handleFieldChange={handleFieldEmailChange}
+                  handleCheckUser={handleCheckUser}
+                  errors={errors}
+                  isLoading={isLoading}
+                />
+              )}
+            </div>
+          )}
+          {isLoadingUser && <SvgSpinner />}
+          {errors.includes(config.ERROR_AUTHENTICATION) && (
+            <p className="text-red-500 text-left text-sm ml-2 mt-2">
+              {config.ERROR_AUTHENTICATION}
+            </p>
+          )}
+        </MainLayout>
+      </App>
     );
 }

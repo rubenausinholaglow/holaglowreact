@@ -1,19 +1,22 @@
 'use client';
 
 import { toggleIsPack } from 'app/(web)/tratamientos/utils/filters';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Text } from 'designSystem/Texts/Texts';
+import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
 export default function PackTypeFilter({
   className,
+  isDashboard = false,
   customStyles,
 }: {
   className?: string;
+  isDashboard?: boolean;
   customStyles?: string;
 }) {
   const { promo } = useGlobalPersistedStore(state => state);
@@ -21,49 +24,44 @@ export default function PackTypeFilter({
 
   return (
     <Button
-      id={'tmevent_filters'}
-      isAnimated
-      origin="right"
+      id="tmevent_treatments_type_packs"
       className={className}
-      type="tertiary"
+      type="white"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
       customStyles={twMerge(`
-        border-none group-hover:bg-hg-secondary100 ${
-          customStyles ? customStyles : ''
-        } 
+        p-1 pr-4 border-none ${customStyles ? customStyles : ''} 
         ${
           promo && promo?.title === 'Black Friday'
             ? `bg-hg-black group-hover:bg- hg-black`
             : ''
         }
+        ${isDashboard ? 'pl-4 bg-hg-black100' : ''}
         ${productFilters.isPack ? 'bg-hg-primary500' : ''}
       `)}
     >
-      {productFilters.isPack ? (
-        <SvgCheckSquareActive
-          className={`mr-2 ${
-            promo && promo?.title === 'Black Friday' ? 'text-hg-black' : ''
-          }`}
-        />
-      ) : (
-        <SvgCheckSquare
-          className={`mr-2 ${
-            promo && promo?.title === 'Black Friday' ? 'text-hg-primary' : ''
-          }`}
-        />
-      )}
+      <div className="flex items-center pointer-events-none">
+        {!isDashboard && (
+          <Image
+            src="/images/filters/categories/pack.svg"
+            width={33}
+            height={33}
+            alt="Packs Holaglow"
+            className="shrink-0 mr-2"
+          />
+        )}
 
-      {promo && promo?.title === 'Black Friday' ? (
-        <span
-          className={
-            productFilters.isPack ? 'text-hg-black' : 'text-hg-primary'
-          }
-        >
-          Sólo Packs <span className="text-hg-secondary">Black</span> Friday
-        </span>
-      ) : (
-        'Sólo Packs Glow'
-      )}
+        {promo && promo?.title === 'Black Friday' ? (
+          <span
+            className={
+              productFilters.isPack ? 'text-hg-black' : 'text-hg-primary'
+            }
+          >
+            Sólo Packs <span className="text-hg-secondary">Black</span> Friday
+          </span>
+        ) : (
+          <Text className="text-xs whitespace-nowrap">Packs</Text>
+        )}
+      </div>
     </Button>
   );
 }

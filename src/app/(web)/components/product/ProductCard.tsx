@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Tracker from '@utils/tracker';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgPlusSmall } from 'app/icons/Icons';
 import { SvgArrow, SvgGlow } from 'app/icons/IconsDs';
@@ -33,6 +34,7 @@ export default function ProductCard({
   isDashboard?: boolean;
   [key: string]: any;
 }) {
+  const tracker = new Tracker();
   const ROUTES = useRoutes();
 
   const pathName = usePathname();
@@ -83,10 +85,10 @@ export default function ProductCard({
       <Flex layout="col-left" className="">
         <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
           <div
-            className="absolute inset-0 top-[10%] rounded-t-2xl "
-            style={{
+            className="absolute inset-0 top-[10%] rounded-t-2xl bg-gradient from-hg-pink to-hg-pink/5"
+            /* style={{
               background: getProductCardColor(product.cardBackgroundColor),
-            }}
+            }} */
           />
 
           <Image
@@ -97,25 +99,6 @@ export default function ProductCard({
             onError={() => setNextImgSrc()}
             className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
           />
-
-          {!isEmpty(product.category) && (
-            <Flex
-              layout="row-center"
-              className="bg-white rounded-full p-1 absolute left-0 bottom-0 m-2 gap-1"
-            >
-              {product.category.map(category => {
-                return (
-                  <Flex
-                    key={category.name}
-                    layout="row-left"
-                    className="flex rounded-full"
-                  >
-                    <CategoryIcon category={category.name} hasBackground />
-                  </Flex>
-                );
-              })}
-            </Flex>
-          )}
 
           {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
             <Flex
@@ -146,12 +129,9 @@ export default function ProductCard({
         )}
         <Flex
           layout={isDashboard ? 'col-left' : 'row-left'}
-          className="mt-auto justify-between w-full"
+          className="mt-auto items-center justify-between w-full"
         >
-          <Flex
-            layout={isDashboard ? 'row-left' : 'col-left'}
-            className="gap-2 mb-2"
-          >
+          <Flex layout={isDashboard ? 'row-left' : 'col-left'}>
             {discountedPrice > 0 && (
               <Text
                 className={`text-xs line-through text-hg-black500 ${
@@ -162,7 +142,7 @@ export default function ProductCard({
               </Text>
             )}
             {!discountedPrice && !product.isPack && (
-              <Text className="text-xs text-hg-secondary">desde</Text>
+              <Text className="text-xs text-hg-black500">Desde</Text>
             )}
             <Text
               className={`text-hg-secondary font-semibold ${
@@ -177,7 +157,7 @@ export default function ProductCard({
               size="sm"
               type="tertiary"
               className="mt-auto"
-              bgColor="bg-hg-primary"
+              customStyles="bg-hg-primary"
               onClick={e => {
                 e.stopPropagation();
                 addToCart(product as CartItem);
@@ -188,12 +168,7 @@ export default function ProductCard({
               <SvgPlusSmall height={20} width={20} />
             </Button>
           ) : (
-            <Button
-              type="tertiary"
-              className="mt-auto ml-4"
-              bgColor="bg-hg-primary"
-              customStyles="hover:bg-hg-secondary100"
-            >
+            <Button type="primary" className="ml-4">
               <p className="mr-2">Saber más</p>
               <SvgArrow height={20} width={20} />
             </Button>
@@ -207,6 +182,9 @@ export default function ProductCard({
     return (
       <Link
         id="tmevent_click_product_card"
+        onClick={() =>
+          tracker.track('Click', 'ProductCard', product?.extraInformation?.slug)
+        }
         href={
           isLanding
             ? LANDINGS[pathName]

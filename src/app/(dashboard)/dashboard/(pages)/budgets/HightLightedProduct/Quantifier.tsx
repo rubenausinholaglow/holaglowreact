@@ -39,12 +39,10 @@ export const Quantifier: FunctionComponent<Props> = ({
       className="bg-hg-secondary500 rounded-3xl gap-1 py-1 px-2"
     >
       <Button
-        type="tertiary"
+        type="white"
         onClick={reduce}
         className="p-0"
-        customStyles={`p-0 ${
-          value === 0 ? '' : 'bg-hg-secondary300'
-        } p-0 h-8 w-8 border-none`}
+        customStyles="p-0 p-0 h-8 w-8 border-none"
       >
         <Text size="md">-</Text>
       </Button>
@@ -60,10 +58,10 @@ export const Quantifier: FunctionComponent<Props> = ({
         {value}
       </Text>
       <Button
-        type="tertiary"
+        type="white"
         onClick={increase}
         className="p-0"
-        customStyles="p-0 h-8 w-8 border-none bg-hg-secondary300"
+        customStyles="p-0 h-8 w-8 border-none"
       >
         <Text size="md">+</Text>
       </Button>

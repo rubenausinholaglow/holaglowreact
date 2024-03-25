@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 
+import App from '../components/layout/App';
 import PsrpPage from './psrp';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://holaglow.com'),
   title: 'Tratamientos de medicina estética en Holaglow',
   description:
     'Encuentra el tratamiento de medicina estética que mejor se adapte a ti y potencia tu belleza desde el interior',
@@ -17,5 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsPage() {
-  return <PsrpPage slug="" isDashboard={false}></PsrpPage>;
+  return (
+    <App>
+      <PsrpPage slug="" isDashboard={false} />
+    </App>
+  );
 }

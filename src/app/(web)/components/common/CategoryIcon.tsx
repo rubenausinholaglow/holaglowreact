@@ -1,65 +1,47 @@
-import * as icon from 'app/icons/categoryIcons';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import Image from 'next/image';
 
 const CATEGORY_ICONS: any = {
   Relleno: {
-    name: 'Relleno',
-    color: HOLAGLOW_COLORS['turquoise'],
+    src: 'rellenos.svg',
   },
   'Calidad Piel': {
-    name: 'CalidadPiel',
-    color: HOLAGLOW_COLORS['tertiary'],
+    src: 'calidad-piel.svg',
   },
   Arrugas: {
-    name: 'Arrugas',
-    color: HOLAGLOW_COLORS['orange'],
+    src: 'arrugas.svg',
   },
   'Caida del pelo': {
-    name: 'CaidaPelo',
-    color: HOLAGLOW_COLORS['magenta'],
+    src: 'caida-pelo.svg',
   },
   Lifting: {
-    name: 'Lifting',
-    color: HOLAGLOW_COLORS['pink'],
+    src: 'lifting.svg',
   },
   Otros: {
-    name: 'Otros',
-    color: HOLAGLOW_COLORS['black400'],
+    src: 'otros.svg',
+  },
+  Médico: {
+    src: 'otros.svg',
   },
 };
 
 export default function CategoryIcon({
   category,
   className = '',
-  hasBackground = false,
 }: {
   category: string;
   className?: string;
-  hasBackground?: boolean;
 }) {
-  const iconComponentName = `Svg${CATEGORY_ICONS[category]?.name}`;
-
-  if (!CATEGORY_ICONS[category]?.name) {
+  if (!CATEGORY_ICONS[category]?.src) {
     return <></>;
   }
 
-  const IconComponent = (icon as any)[iconComponentName] || null;
-  const borderColorStyle = `${CATEGORY_ICONS[category].color}`;
-
-  const backgroundColorStyle = `${
-    !hasBackground ? '#ffffff' : `${CATEGORY_ICONS[category].color}33`
-  }`;
-
   return (
-    <IconComponent
-      height={32}
-      width={32}
-      fill={CATEGORY_ICONS[category].color}
-      className={`rounded-full bg-hg-white p-1 border ${className}`}
-      style={{
-        borderColor: borderColorStyle,
-        backgroundColor: backgroundColorStyle,
-      }}
+    <Image
+      src={`/images/filters/categories/${CATEGORY_ICONS[category].src}`}
+      width={33}
+      height={33}
+      alt={category}
+      className="shrink-0 mr-2"
     />
   );
 }

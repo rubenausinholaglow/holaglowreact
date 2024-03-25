@@ -1,5 +1,6 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import { SvgHolaglow } from 'app/icons/IconsDs';
 import { SvgInstagram } from 'app/icons/socialIcons';
 import {
@@ -7,7 +8,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import useRoutes from 'app/utils/useRoutes';
-import { SimpleAccordion } from 'designSystem/Accordion/Accordion';
+import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -17,7 +18,7 @@ export function Footer() {
   const ROUTES = useRoutes();
 
   const { clinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
+  const { setSelectedTreatments } = useSessionStore(state => state);
   const isHome = usePathname() === '/';
 
   return (
@@ -77,10 +78,10 @@ export function Footer() {
             <p className="font-semibold">Ver Tratamientos</p>
           </a>
 
-          <SimpleAccordion trigger="Rellenos" isOpen={!deviceSize.isMobile}>
+          <SimpleAccordion trigger="Rellenos" isOpen={!isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <a href="/tratamientos/aumento-labios" id={'tmevent_footer'}>
-                <li>Aumento de Labios</li>
+                <li>Aumento de labios</li>
               </a>
               <a href="/tratamientos/relleno-ojeras" id={'tmevent_footer'}>
                 <li>Relleno de ojeras</li>
@@ -94,7 +95,7 @@ export function Footer() {
             </ul>
           </SimpleAccordion>
 
-          <SimpleAccordion trigger="Arrugas" isOpen={!deviceSize.isMobile}>
+          <SimpleAccordion trigger="Arrugas" isOpen={!isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <a href="/tratamientos/prevencion-arrugas" id={'tmevent_footer'}>
                 <li>Prevención de arrugas</li>
@@ -121,7 +122,7 @@ export function Footer() {
 
           <Button
             id={'tmevent_footer'}
-            type="tertiary"
+            type="white"
             href={ROUTES.checkout.clinics}
             onClick={() => {
               setSelectedTreatments([]);
@@ -135,7 +136,7 @@ export function Footer() {
           layout="col-left"
           className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6"
         >
-          <SimpleAccordion trigger="Clínicas" isOpen={!deviceSize.isMobile}>
+          <SimpleAccordion trigger="Clínicas" isOpen={!isMobile}>
             <a href="/clinicas" id={'tmevent_footer'}>
               <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
                 {clinics &&
@@ -146,7 +147,7 @@ export function Footer() {
             </a>
           </SimpleAccordion>
 
-          <SimpleAccordion trigger="Nosotrxs" isOpen={!deviceSize.isMobile}>
+          <SimpleAccordion trigger="Nosotrxs" isOpen={!isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <a href="/quienes-somos" id={'tmevent_footer'}>
                 <li>Quiénes somos</li>
@@ -156,7 +157,7 @@ export function Footer() {
               </a>
             </ul>
           </SimpleAccordion>
-          <SimpleAccordion trigger="Privacidad" isOpen={!deviceSize.isMobile}>
+          <SimpleAccordion trigger="Privacidad" isOpen={!isMobile}>
             <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
               <a href="/politica-de-privacidad" id={'tmevent_footer'}>
                 <li>Política de privacidad</li>

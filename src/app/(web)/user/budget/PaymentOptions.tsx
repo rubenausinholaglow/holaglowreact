@@ -30,30 +30,18 @@ export function PaymentTable({
         }`}
       >
         <div className="flex flex-col gap-1 w-1/2">
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2 opacity-50">
+          <p className="rounded-md bg-white/60 py-1 px-2 text-[#717D96] text-left">
             Pago financiado
           </p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
-            En 3 meses
-          </p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
-            En 4 meses
-          </p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
-            En 6 meses
-          </p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
-            En 9 meses
-          </p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
-            En 12 meses
-          </p>
-          <p className="rounded-md bg-hg-primary/30 py-1 px-2 min-w-max">
-            En 18 meses
-          </p>
+          <p className="rounded-md bg-white py-1 px-2 min-w-max">En 3 meses</p>
+          <p className="rounded-md bg-white py-1 px-2 min-w-max">En 4 meses</p>
+          <p className="rounded-md bg-white py-1 px-2 min-w-max">En 6 meses</p>
+          <p className="rounded-md bg-white py-1 px-2 min-w-max">En 9 meses</p>
+          <p className="rounded-md bg-white py-1 px-2 min-w-max">En 12 meses</p>
+          <p className="rounded-md bg-white py-1 px-2 min-w-max">En 18 meses</p>
         </div>
-        <div className="flex flex-col gap-1 w-1/2">
-          <p className="rounded-md bg-white/50 py-1 px-2 text-[#717D96]">
+        <div className="flex flex-col gap-1 w-1/2 text-hg-secondary">
+          <p className="rounded-md bg-white/60 py-1 px-2 text-[#717D96] text-center">
             Importe mensual
           </p>
           <p className="rounded-md bg-white py-1 px-2 font-semibold">
@@ -71,7 +59,7 @@ export function PaymentTable({
           <p className="rounded-md bg-white py-1 px-2 font-semibold">
             {`${priceFormat((totalPrice * 1.075) / 12)}`} €
           </p>
-          <p className="rounded-md bg-white py-1 px-2 font-semibold border border-hg-black500">
+          <p className="rounded-md bg-hg-secondary100 py-1 px-2 font-semibold border border-hg-secondary shadow-centered-secondary">
             {`${priceFormat((totalPrice * 1.117) / 18)}`} €
           </p>
         </div>

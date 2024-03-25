@@ -1,17 +1,21 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function ZoneFilter({
   className,
   isDesktop,
+  isDashboard = false,
 }: {
   className?: string;
   isDesktop?: boolean;
+  isDashboard?: boolean;
 }) {
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
@@ -48,6 +52,14 @@ export default function ZoneFilter({
     },
   ];
 
+  function getBackgroundColor() {
+    if (isDashboard) {
+      return 'bg-hg-black100';
+    } else {
+      return isMobile ? 'bg-white' : 'bg-derma-secondary300';
+    }
+  }
+
   return (
     <ul
       className={`grid grid-cols-3 gap-5 w-full ${className ? className : ''}`}
@@ -56,13 +68,11 @@ export default function ZoneFilter({
         <li
           id={'tmevent_filters'}
           key={zone.name}
-          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-between items-center cursor-pointer gap-2 ${
+          className={`transition-all p-2 aspect-square flex flex-col grow rounded-lg justify-center items-center cursor-pointer gap-2 ${
             isDesktop ? 'w-[120px]' : ''
-          } ${
-            productFilters.zone.includes(zone.id)
-              ? 'bg-hg-primary500'
-              : 'bg-hg-black100'
-          }`}
+          }
+          ${getBackgroundColor()}
+          ${productFilters.zone.includes(zone.id) ? 'bg-hg-primary500' : ''}`}
           onClick={() =>
             setProductFilters(
               toggleFilter({
@@ -73,15 +83,23 @@ export default function ZoneFilter({
             )
           }
         >
-          {productFilters.zone.includes(zone.id) ? (
-            <SvgCheckSquareActive className="ml-auto" />
-          ) : (
-            <SvgCheckSquare className="ml-auto" />
-          )}
-          <Image height={40} width={40} src={zone.icon} alt={zone.name} />
-          <Text size="xs" className="text-center">
-            {zone.name}
-          </Text>
+          <Flex
+            layout="col-center"
+            className="relative aspect-square items-center justify-center pointer-events-none w-full pt-4"
+          >
+            <div className="absolute top-0 right-0">
+              {productFilters.zone.includes(zone.id) ? (
+                <SvgCheckSquareActive className="ml-auto" />
+              ) : (
+                <SvgCheckSquare className="ml-auto" />
+              )}
+            </div>
+
+            <Image height={40} width={40} src={zone.icon} alt={zone.name} />
+            <Text size="xs" className="text-center text-hg-secondary mt-2">
+              {zone.name}
+            </Text>
+          </Flex>
         </li>
       ))}
     </ul>

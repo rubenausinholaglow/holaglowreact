@@ -1,13 +1,15 @@
-'use client';
-
 import { ReactNode } from 'react';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
+
+const AnimateOnViewport = dynamic(
+  () => import('app/(web)/components/common/AnimateOnViewport'),
+  { ssr: false }
+);
 
 export const Title = ({
   size = 'xl',
-  weight = 'semibold',
   as = 'h3',
   className = '',
   wrapperClassName = '',
@@ -34,7 +36,9 @@ export const Title = ({
     xl: 'text-xl lg:text-2xl',
   };
 
-  const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
+  const styles = twMerge(
+    `font-gtUltra font-bold text-hg-secondary text-balance ${STYLES[size]} ${className}`
+  );
 
   if (isAnimated) {
     return (
@@ -54,7 +58,7 @@ export const Title = ({
 };
 
 export const Text = ({
-  size = 'inherit',
+  size = 'default',
   as = 'p',
   className = '',
   wrapperClassName = '',
@@ -64,7 +68,7 @@ export const Text = ({
   origin = 'bottom',
   rest,
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inherit';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'drxl' | '2xl' | 'default';
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
   className?: string;
   wrapperClassName?: string;
@@ -76,9 +80,9 @@ export const Text = ({
 }) => {
   const HtmlComponent = as;
 
-  const styles = twMerge(
-    `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
-  );
+  const styles = `text-left ${
+    size !== 'default' ? `text-${size}` : ''
+  } ${className}`;
 
   if (isAnimated) {
     return (

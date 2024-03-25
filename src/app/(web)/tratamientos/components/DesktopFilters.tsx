@@ -30,7 +30,7 @@ export default function DesktopFilters({
             <Text size="sm" className="font-semibold">
               Zona
             </Text>
-            <ZoneFilter />
+            <ZoneFilter isDashboard />
           </Flex>
           <Flex layout="col-left" className="w-full">
             <Text size="sm" className="font-semibold">
@@ -40,9 +40,6 @@ export default function DesktopFilters({
           </Flex>
           <Flex layout="col-left" className="w-full">
             <CategorySelector isDashboard className="inner-flex" isStacked />
-          </Flex>
-          <Flex layout="col-left" className="w-full">
-            <PackTypeFilter />
           </Flex>
           <Flex layout="col-left" className="w-full">
             <TypeFilter />
@@ -77,8 +74,7 @@ export default function DesktopFilters({
 
       <Button
         id={'tmevent_filters'}
-        type="tertiary"
-        customStyles="group-hover:bg-hg-secondary100"
+        type="white"
         onClick={() => setShowDesktopFilters(!showDesktopFilters)}
       >
         Cerrar

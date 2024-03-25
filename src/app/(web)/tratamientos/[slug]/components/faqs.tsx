@@ -25,6 +25,28 @@ export const faqItems: Record<string, FAQ[]> = {
         'Lo mejor de este tratamiento es que al ser mínimamente invasivo los efectos secundarios del ácido hialurónico son muy leves y de corta duración. Los más comunes son la aparición de hematomas, moretones o inflamaciones. Por lo que podrás continuar con tu rutina sin complicaciones.',
     },
   ],
+  '2 viales de ácido hialurónico': [
+    {
+      title: '¿Podré ver los resultados de manera instantánea?',
+      description:
+        'Los resultados son inmediatos y visibles desde el primer momento, aunque pueden estar condicionados por la posible inflamación. El resultado óptimo del tratamiento se verá a las tres semanas de la aplicación',
+    },
+    {
+      title: '¿Cuánto tiempo duran los resultados del ácido hialurónico?',
+      description:
+        'Cada uno de nosotros es único y también lo es nuestra piel. Generalmente, el ácido hialurónico se reabsorbe durante los seis o doce meses posteriores a su aplicación.',
+    },
+    {
+      title: '¿La aplicación de ácido hialurónico es dolorosa?',
+      description:
+        'La aplicación de ácido hialurónico no es dolorosa. De todos modos, el umbral del dolor es distinto para cada persona por lo que estaremos encantados de aplicar anestésico tópico, si lo deseas. ',
+    },
+    {
+      title: '¿Qué efectos secundarios puede tener el ácido hialurónico?',
+      description:
+        'Lo mejor de este tratamiento es que al ser mínimamente invasivo los efectos secundarios del ácido hialurónico son muy leves y de corta duración. Los más comunes son la aparición de hematomas, moretones o inflamaciones. Por lo que podrás continuar con tu rutina sin complicaciones.',
+    },
+  ],
   'Ácido desoxicólico (ADC)': [
     {
       title: '¿Podré ver los resultados de manera instantánea?',
@@ -66,7 +88,7 @@ export const faqItems: Record<string, FAQ[]> = {
         'La aplicación de la mesoterapia no es dolorosa. De todos modos, el umbral del dolor es distinto para cada persona por lo que estaremos encantados de aplicar anestésico tópico, si lo deseas. ',
     },
   ],
-  'Hidroxiapatita cálcica': [
+  '1 vial de hidroxiapatita cálcica': [
     {
       title: '¿Podré ver los resultados de manera instantánea?',
       description:

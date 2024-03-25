@@ -57,7 +57,7 @@ export default function HightLightedProduct() {
             }}
           />
         </Flex>
-        <ProductDetail params={params}></ProductDetail>
+        <ProductDetail params={params} />
       </Modal>
     </>
   );

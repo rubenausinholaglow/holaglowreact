@@ -1,11 +1,20 @@
 import Bugsnag from '@bugsnag/js';
+
+import { DermaQuestionsResponse } from '@interface/derma/dermaquestions';
 import { User } from 'app/types/appointment';
 import { Client, ClientUpdate } from 'app/types/client';
 
 export default class UserService {
+  static getContactsUrl(): string {
+    let url = process.env.NEXT_PUBLIC_CONTACTS_API;
+    if (window.location.href.includes('derma'))
+      url = process.env.NEXT_PUBLIC_DERMACONTACTS_API;
+    return url!;
+  }
+
   static async checkUser(email = ''): Promise<User | undefined> {
     try {
-      const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/V2/Search?search=${email}`;
+      const url = `${UserService.getContactsUrl()}Contact/V2/Search?search=${email}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -21,7 +30,7 @@ export default class UserService {
   static async getSimulationReady(id: string, clinicId: string) {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}Crisalix/SimulationReady?id=${id}&clinic=${clinicId}`,
+        `${UserService.getContactsUrl()}Crisalix/SimulationReady?id=${id}&clinic=${clinicId}`,
         {
           method: 'GET',
         }
@@ -39,7 +48,7 @@ export default class UserService {
   static async createCrisalixUser(userId: string, clinicId: string) {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}Crisalix/Patients?userId=${userId}&clinicId=${clinicId}`,
+        `${UserService.getContactsUrl()}Crisalix/Patients?userId=${userId}&clinicId=${clinicId}`,
         {
           method: 'POST',
           headers: {
@@ -60,16 +69,13 @@ export default class UserService {
 
   static async registerUser(formData: Client): Promise<User | undefined> {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${UserService.getContactsUrl()}Contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       if (res.ok) {
         const data = await res.json();
         return data;
@@ -83,16 +89,31 @@ export default class UserService {
 
   static async updateUser(formData: ClientUpdate) {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${UserService.getContactsUrl()}Contact`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return undefined;
+      }
+    } catch (err : any) {
+      Bugsnag.notify(err);
+    }
+  }
+
+  static async getDermaQuestions(
+    id: string
+  ): Promise<DermaQuestionsResponse | undefined> {
+    try {
+      const url = `${UserService.getContactsUrl()}Derma?userId=${id}`;
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         return data;
@@ -106,7 +127,7 @@ export default class UserService {
 
   static async getUserById(id: string) {
     try {
-      const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/${id}`;
+      const url = `${UserService.getContactsUrl()}Contact/${id}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -118,6 +139,7 @@ export default class UserService {
       return '';
     }
   }
+
 
   static async getAccessToken(token: string): Promise<string> {
       try {
@@ -135,5 +157,26 @@ export default class UserService {
           Bugsnag.notify('Error getAccessToken' + err);
           return "";
       }
+  }
+  
+  static async getAllUsers(token: string): Promise<User[] | undefined> {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/All`;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return undefined;
+      }
+    } catch (err) {
+      return undefined;
+    }
   }
 }

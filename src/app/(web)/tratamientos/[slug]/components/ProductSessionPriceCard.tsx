@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgPlusSmall } from 'app/icons/Icons';
@@ -17,7 +19,7 @@ export default function ProductSessionPriceCard({
   index,
 }: {
   product: Product;
-  isDashboard: boolean;
+  isDashboard?: boolean;
   index: number;
 }) {
   const { setSelectedTreatments } = useSessionStore(state => state);
@@ -61,7 +63,7 @@ export default function ProductSessionPriceCard({
             layout="col-left"
             className="w-full md:bg-hg-black100 md:p-4 rounded-xl"
           >
-            <Flex className="text-sm md:mx-3 ">
+            <Flex className="text-sm md:mx-3 mb-2">
               <icon.SvgTimeLeft
                 className="text-hg-secondary mr-2"
                 height={16}
@@ -72,9 +74,8 @@ export default function ProductSessionPriceCard({
             </Flex>
             {!isDashboard && (
               <Button
-                type="tertiary"
+                type="primary"
                 className="hidden md:block shrink-0"
-                customStyles="bg-hg-primary md:mt-4"
                 onClick={() => {
                   setSelectedTreatments([product]);
                 }}
@@ -92,7 +93,7 @@ export default function ProductSessionPriceCard({
             size="sm"
             type="tertiary"
             className="mt-auto"
-            bgColor="bg-hg-primary"
+            customStyles="bg-hg-primary"
             onClick={e => {
               e.stopPropagation();
               addToCart(product as CartItem);

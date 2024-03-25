@@ -4,11 +4,20 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { EmlaType, UnityType } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { getTreatmentId } from '@utils/userUtils';
+import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgCheck, SvgPhone, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
+import {
+  SvgCheck,
+  SvgEllipsis,
+  SvgPhone,
+  SvgSadIcon,
+  SvgWarning,
+} from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -16,7 +25,8 @@ import {
 import { DayAvailability } from 'app/types/dayAvailability';
 import { Slot } from 'app/types/slot';
 import useRoutes from 'app/utils/useRoutes';
-import dayjs from 'dayjs';
+import es from 'date-fns/locale/es';
+import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -24,12 +34,18 @@ import { isEmpty } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+registerLocale('es', es);
+
 export default function Agenda({
   isDashboard = false,
   isCheckin = false,
+  isDerma = false,
+  isCheckout = false,
 }: {
   isDashboard?: boolean;
   isCheckin?: boolean;
+  isDerma?: boolean;
+  isCheckout?: boolean;
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -40,6 +56,7 @@ export default function Agenda({
     selectedSlot,
     previousAppointment,
     selectedTreatments,
+    selectedPack,
     selectedPacksTreatments,
     selectedClinic,
     analyticsMetrics,
@@ -48,17 +65,22 @@ export default function Agenda({
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
-  const [dateToCheck, setDateToCheck] = useState(dayjs());
+  const [dateToCheck, setDateToCheck] = useState<Dayjs | undefined>(undefined);
   const [availableDates, setAvailableDates] = useState(Array<DayAvailability>);
   const [morningHours, setMorningHours] = useState(Array<Slot>);
   const [afternoonHours, setAfternoonHours] = useState(Array<Slot>);
   const [dateFormatted, setDateFormatted] = useState('');
-  const [localDateSelected, setLocalDateSelected] = useState(new Date());
+  const [localDateSelected, setLocalDateSelected] = useState<Date | undefined>(
+    undefined
+  );
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-
+  const [currentMonth, setcurrentMonth] = useState(dayjs());
+  const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
+  const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
+  if (isDashboard) maxDays = 9999;
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
@@ -85,25 +107,39 @@ export default function Agenda({
       maxDaysByClinicAndType[selectedClinic.flowwwId][
         selectedTreatments[0].type
       ];
+
+    if (selectedTreatments[0].flowwwId == 903) maxDays = 60;
   }
+  if (isDerma) maxDays = 90;
   const [clicked, setClicked] = useState(false);
   const [clickedHour, setClickedHour] = useState<string | null>(null);
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
+  const { cart, updateIsScheduled } = useCartStore(state => state);
+
+  const productIds = getUniqueIds(selectedTreatments);
+
   const maxDay = dayjs().add(maxDays, 'day');
   const toggleClicked = () => {
     setClicked(!clicked);
   };
 
   function loadMonth() {
-    if (selectedTreatmentsIds && availableDates.length < maxDays) {
+    setLoadingMonth(true);
+    if (
+      selectedTreatmentsIds &&
+      availableDates.length < maxDays &&
+      dateToCheck
+    ) {
       if (selectedTreatmentsIds != '902') {
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
           selectedClinic?.flowwwId || ''
         ).then(data => {
-          callbackMonthAvailability(data);
+          setTotalTimeAppointment(data?.totalTime);
+          callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
+          setLoadingMonthFirstTime(false);
         });
       } else {
         ScheduleService.getMonthAvailabilityv2(
@@ -111,27 +147,34 @@ export default function Agenda({
           selectedTreatmentsIds,
           selectedClinic!.flowwwId
         ).then(data => {
-          callbackMonthAvailability(data);
+          setLoadingMonthFirstTime(false);
+          callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
         });
       }
     } else setLoadingMonth(false);
   }
 
   function callbackGetSlots(data: Slot[]) {
+    setClickedHour(null);
+
     const hours = Array<Slot>();
     const morning = Array<Slot>();
     const afternoon = Array<Slot>();
     data.forEach(x => {
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
+      const block10and45minutes =
+        (!isDashboard && minutes == '15') || (!isDashboard && minutes == '45');
       if (
-        (minutes == '00' || minutes == '30') &&
-        !(hour == '10' && minutes == '00')
+        !block10and45minutes &&
+        (!(hour == '10' && minutes == '00') || selectedTreatmentsIds != '902')
       ) {
-        hours.push(x);
-        if (parseInt(hour) < 16) {
-          morning.push(x);
-        } else afternoon.push(x);
+        if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
+          hours.push(x);
+          if (parseInt(hour) < 15) {
+            morning.push(x);
+          } else afternoon.push(x);
+        }
       }
     });
     setMorningHours(morning);
@@ -143,39 +186,50 @@ export default function Agenda({
     });
   }
 
-  function callbackMonthAvailability(data: DayAvailability[]) {
+  function callbackMonthAvailability(
+    data: DayAvailability[],
+    dateToCheck: Dayjs
+  ) {
+    const endOfMonth = dateToCheck.endOf('month');
     const availability = availableDates ?? [];
     const today = dayjs();
+    const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
+
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
         availability.length < maxDays &&
-        (date.isAfter(today) || date.isSame(today, 'day')) &&
+        (date.isAfter(today) || (date.isSame(today, 'day') && !isDerma)) &&
         x.availability
       ) {
         availability.push(x);
       }
     });
     setAvailableDates(availability);
-    if (!selectedDay) {
-      setSelectedDay(dayjs(availability[0].date));
-    } else {
-      setSelectedDay(selectedDay);
-    }
-    setLoadingMonth(false);
+    setSelectedDay(selectedDay);
+    if (loadedCurrentMonth) {
+      setDateToCheck(dateToCheck.add(1, 'month'));
+    } else setLoadingMonth(false);
   }
 
-  useEffect(() => {
+  function initialize() {
     setLoadingMonth(true);
-    setSelectedDay(dayjs());
-    setSelectedSlot(undefined);
+    setSelectedDay(undefined);
     setEnableScheduler(true);
+    setDateToCheck(dayjs());
+  }
+  useEffect(() => {
+    initialize();
   }, []);
+
+  useEffect(() => {
+    initialize();
+  }, [selectedTreatments]);
 
   useEffect(() => {
     async function schedule() {
       try {
-        if (user?.flowwwToken && previousAppointment) {
+        if (user?.flowwwToken && previousAppointment && selectedDay) {
           setLoadingDays(true);
           setLoadingMonth(true);
           let ids = selectedTreatments!.map(x => x.flowwwId).join(', ');
@@ -215,19 +269,25 @@ export default function Agenda({
             },
             previous: previousAppointment,
           }).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else if (user) {
+        } else if (
+          user &&
+          selectedDay &&
+          !isDerma &&
+          (isDashboard || isCheckin)
+        ) {
           setLoadingDays(true);
           setLoadingMonth(true);
           if (isDashboard || isCheckin)
             analyticsMetrics.externalReference = '14';
+
           await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
@@ -238,45 +298,64 @@ export default function Agenda({
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard) {
+            if (isDashboard && !isDerma) {
+              const filteredCart = cart.filter(
+                cartItem =>
+                  validTypesFilterCart.includes(cartItem.type) &&
+                  (cartItem.isScheduled === false ||
+                    cartItem.isScheduled === undefined)
+              );
+              if (filteredCart.length >= selectedTreatments.length) {
+                if (selectedTreatments.length == 1) {
+                  const selectedProduct = filteredCart.find(x => x.title);
+                  updateIsScheduled(true, selectedProduct!.uniqueId);
+                } else {
+                  selectedTreatments.forEach(treatment => {
+                    const selectedProducts = filteredCart.filter(
+                      cartItem =>
+                        cartItem.id === treatment.id &&
+                        (cartItem.isScheduled === false ||
+                          cartItem.isScheduled === undefined)
+                    );
+                    selectedProducts.forEach(item => {
+                      updateIsScheduled(true, item.uniqueId);
+                    });
+                  });
+                }
+              }
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-            } else {
+            } else if (!isDashboard && !isDerma) {
               router.push(ROUTES.checkout.thankYou);
             }
           });
-        } else {
+        } else if (!isDerma) {
           router.push('/checkout/contactform');
+        } else if (isDerma && isCheckout) {
+          router.push('/planes/contactform');
         }
       } catch {
         setShowErrorMessage(true);
       }
     }
-
     if (selectedSlot && enableScheduler && !loadingDays && !loadingMonth) {
       schedule();
     }
   }, [selectedSlot]);
 
   useEffect(() => {
-    if (selectedPacksTreatments && selectedPacksTreatments.length > 0) {
-      setSelectedTreatmentsIds(
-        selectedPacksTreatments!
-          .slice(0, 2)
-          .map(x => x.flowwwId)
-          .join(',')
-      );
-    } else if (selectedTreatments && selectedTreatments.length > 0) {
-      setSelectedTreatmentsIds(
-        selectedTreatments!.map(x => x.flowwwId).join(',')
-      );
-    } else setSelectedTreatmentsIds('674');
-  }, [dateToCheck]);
+    const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
+    setSelectedTreatmentsIds(ids);
+  }, [dateToCheck, selectedTreatments]);
 
   useEffect(() => {
-    selectDate(dayjs(selectedDay).toDate());
-    setLocalDateSelected(dayjs(selectedDay).toDate());
+    if (selectedDay) {
+      selectDate(dayjs(selectedDay).toDate());
+      setLocalDateSelected(dayjs(selectedDay).toDate());
+    } else {
+      setLocalDateSelected(undefined);
+    }
   }, [selectedTreatmentsIds]);
 
   useEffect(() => {
@@ -286,16 +365,26 @@ export default function Agenda({
   const onMonthChange = (x: any) => {
     setLoadingMonth(true);
     const date = dayjs(x);
+    setcurrentMonth(date);
     setDateToCheck(date);
   };
   const selectHour = async (x: Slot) => {
     toggleClicked();
     setSelectedSlot(x);
+
+    if (isDerma) {
+      window.scrollTo({
+        left: 0,
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const selectDate = (x: Date) => {
-    if (!selectedTreatmentsIds) return;
+    if (!selectedTreatmentsIds || !selectedClinic) return;
     setSelectedDay(dayjs(x));
+    setSelectedSlot(undefined);
     setLocalDateSelected(x);
     setLoadingDays(true);
     setMorningHours([]);
@@ -338,8 +427,49 @@ export default function Agenda({
     );
   };
 
+  const SlotList = ({ slots = [] }: { slots: Slot[] }) => {
+    return (
+      <Flex className="flex-wrap  mb-3 md:mb-0">
+        {slots.map((slot: Slot) => {
+          return (
+            <Flex
+              key={slot.startTime}
+              layout="row-between"
+              className={`transition-all gap-2 text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
+                isDerma
+                  ? 'border-none bg-derma-secondary400'
+                  : 'border border-hg-black bg-white'
+              } ${
+                clickedHour === slot.startTime
+                  ? `${
+                      isDerma ? 'bg-derma-primary' : 'bg-hg-secondary'
+                    } text-white`
+                  : ''
+              }`}
+            >
+              <div
+                className="w-full cursor-pointer flex justify-center"
+                onClick={async () => {
+                  if (!loadingDays) {
+                    setClickedHour(slot.startTime);
+                    await selectHour(slot);
+                  }
+                }}
+              >
+                {clickedHour === slot.startTime && (
+                  <SvgCheck className="text-white mr-1 h-5 w-5" />
+                )}
+                {slot.startTime}
+              </div>
+            </Flex>
+          );
+        })}
+      </Flex>
+    );
+  };
+
   return (
-    <MainLayout isCheckout hideHeader={isDashboard}>
+    <>
       {showErrorMessage ? (
         <>
           <Flex className="gap-2 bg-white/50 rounded-xl p-4 text-hg-error">
@@ -358,11 +488,13 @@ export default function Agenda({
         </>
       ) : (
         <>
-          <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
-            <Title size="xl" className="font-semibold">
-              Selecciona día y hora
-            </Title>
-          </Container>
+          {!isDerma && (
+            <Container className="mt-6 mb-4 md:mb-6 md:mt-16">
+              <Title size="xl" className="font-semibold">
+                Selecciona día y hora
+              </Title>
+            </Container>
+          )}
           <Container className="px-0">
             <Flex
               layout="col-left"
@@ -375,24 +507,33 @@ export default function Agenda({
                     className="block gap-16 items-start md:flex"
                   >
                     <div className="w-full">
-                      {selectedTreatments &&
-                        Array.isArray(selectedTreatments) &&
-                        selectedTreatments.map(product => (
-                          <div key={product.id}>
-                            <Text
-                              size="sm"
-                              className="w-full text-left to-hg-black500 mb-4"
-                            >
-                              Agenda cita para{' '}
-                              <span className="font-semibold w-full">
-                                {product.title}
+                      <Text
+                        size="sm"
+                        className="w-full text-left to-hg-black500 mb-4"
+                      >
+                        Agenda cita para{' '}
+                        {selectedPack && (
+                          <span className="font-semibold">
+                            {selectedPack.title}
+                          </span>
+                        )}
+                        {!selectedPack &&
+                          productIds.map((productId, index) => {
+                            const product = selectedTreatments.find(
+                              product => product.id === productId
+                            );
+                            return (
+                              <span key={productId} className="font-semibold">
+                                {product!.title}
+                                {index < productIds.length - 1 && ', '}
                               </span>
-                              , en tu clínica preferida
-                            </Text>
-                          </div>
-                        ))}
+                            );
+                          })}
+                        {!isDerma && <> en tu clínica preferida</>}
+                        {isDerma && <> online</>}
+                      </Text>
 
-                      {selectedClinic && (
+                      {selectedClinic && !isDerma && (
                         <Flex className="mb-4">
                           <SvgLocation
                             height={16}
@@ -402,52 +543,84 @@ export default function Agenda({
                           <Text size="xs" className="w-full text-left">
                             {selectedClinic.address}, {selectedClinic.city}
                           </Text>
-                          <Link
-                            href={
-                              isDashboard
-                                ? ROUTES.dashboard.schedule
-                                : ROUTES.checkout.clinics
-                            }
-                            className="text-xs ml-auto text-hg-secondary font-semibold"
+                          <Text
+                            onClick={() => router.back()}
+                            className="text-xs ml-auto text-hg-secondary font-semibold cursor-pointer"
                           >
                             Cambiar
-                          </Link>
+                          </Text>
                         </Flex>
                       )}
-                      <Flex>
-                        <SvgHour height={16} width={16} className="mr-2" />
-                        {selectedTreatments &&
-                          Array.isArray(selectedTreatments) &&
-                          selectedTreatments.map(product => (
-                            <Flex key={product.id}>
-                              <Flex
-                                layout="row-between"
-                                className="items-start w-full"
-                              >
-                                <div>
-                                  <Text size="xs" className="w-full text-left">
-                                    {product.applicationTimeMinutes} minutos
-                                  </Text>
-                                </div>
-                              </Flex>
-                            </Flex>
-                          ))}
-                      </Flex>
+
+                      {!isDerma && (
+                        <Flex>
+                          <SvgHour height={16} width={16} className="mr-2" />
+                          {loadingMonthFirstTime ? (
+                            <SvgEllipsis
+                              className={`${
+                                isDerma
+                                  ? 'text-derma-primary'
+                                  : 'text-hg-secondary'
+                              } mt-2`}
+                              height={16}
+                              width={16}
+                            />
+                          ) : (
+                            <>
+                              {selectedTreatments &&
+                                totalTimeAppointment == 0 &&
+                                Array.isArray(selectedTreatments) &&
+                                selectedTreatments.map(product => (
+                                  <Flex key={product.id}>
+                                    <Flex
+                                      layout="row-between"
+                                      className="items-start w-full"
+                                    >
+                                      <div>
+                                        <Text
+                                          size="xs"
+                                          className="w-full text-left"
+                                        >
+                                          {product.emlaType ===
+                                          EmlaType.Required
+                                            ? product.applicationTimeMinutes +
+                                              30 +
+                                              ' minutos '
+                                            : product.applicationTimeMinutes.toString() +
+                                              ' minutos '}
+                                          <span>&nbsp;</span>
+                                        </Text>
+                                      </div>
+                                    </Flex>
+                                  </Flex>
+                                ))}
+                            </>
+                          )}
+                          {totalTimeAppointment > 0 && (
+                            <Text size="xs" className="w-full text-left">
+                              {totalTimeAppointment + ' minutos '}
+                            </Text>
+                          )}
+                        </Flex>
+                      )}
                     </div>
                   </Flex>
                 </Container>
                 <Container className="px-0 md:px-4 relative">
-                  {loadingDays && (
+                  {(loadingMonth || loadingDays) && (
                     <SvgSpinner
                       height={48}
                       width={48}
-                      className="absolute text-hg-secondary left-1/2 top-1/2 -ml-6 -mt-6"
+                      className={`absolute ${
+                        isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                      } left-1/2 top-1/2 -ml-6 -mt-6`}
                     />
                   )}
                   <Flex
                     className={`transition-opacity w-full mb-6 md:mb-0 ${
                       loadingDays ? 'opacity-25' : 'opacity-100'
-                    }`}
+                    }
+                    ${isDerma ? 'datepickerDerma' : ''}`}
                     id="datepickerWrapper"
                   >
                     <DatePicker
@@ -489,79 +662,23 @@ export default function Agenda({
                             {dateFormatted.toString()}
                           </span>
                         </Text>
+
                         {morningHours.length > 0 && (
-                          <Text size="sm" className="font-semibold mb-4">
-                            Horario de mañana
-                          </Text>
+                          <>
+                            <Text size="sm" className="font-semibold mb-4">
+                              Horario de mañana
+                            </Text>
+                            <SlotList slots={morningHours} />
+                          </>
                         )}
-                        {morningHours.length > 0 && (
-                          <Flex className="flex-wrap  mb-3 md:mb-0">
-                            {morningHours.map(x => {
-                              return (
-                                <Flex
-                                  key={x.startTime}
-                                  layout="row-between"
-                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                    clickedHour === x.startTime
-                                      ? 'bg-hg-secondary text-white'
-                                      : 'bg-white'
-                                  }`}
-                                >
-                                  <div
-                                    className="w-full cursor-pointer flex justify-center"
-                                    onClick={async () => {
-                                      if (!loadingDays) {
-                                        setClickedHour(x.startTime);
-                                        await selectHour(x);
-                                      }
-                                    }}
-                                  >
-                                    {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-hg-primary mr-1 h-4 w-4" />
-                                    )}
-                                    {x.startTime}
-                                  </div>
-                                </Flex>
-                              );
-                            })}
-                          </Flex>
-                        )}
+
                         {afternoonHours.length > 0 && (
-                          <Text size="sm" className="font-semibold mb-4">
-                            Horario de tarde
-                          </Text>
-                        )}
-                        {afternoonHours.length > 0 && (
-                          <Flex className="flex-wrap mb-6 md:mb-0">
-                            {afternoonHours.map(x => {
-                              return (
-                                <Flex
-                                  key={x.startTime}
-                                  layout="row-between"
-                                  className={`transition-all gap-2 border border-hg-black text-sm rounded-xl mr-3 w-20 h-8 mb-3 ${
-                                    clickedHour === x.startTime
-                                      ? 'bg-hg-secondary text-white'
-                                      : 'bg-white'
-                                  }`}
-                                >
-                                  <div
-                                    className="w-full cursor-pointer flex justify-center"
-                                    onClick={async () => {
-                                      if (!loadingDays) {
-                                        setClickedHour(x.startTime);
-                                        await selectHour(x);
-                                      }
-                                    }}
-                                  >
-                                    {clickedHour === x.startTime && (
-                                      <SvgCheck className="text-hg-primary mr-1" />
-                                    )}
-                                    {x.startTime}
-                                  </div>
-                                </Flex>
-                              );
-                            })}
-                          </Flex>
+                          <>
+                            <Text size="sm" className="font-semibold mb-4">
+                              Horario de tarde
+                            </Text>
+                            <SlotList slots={afternoonHours} />
+                          </>
                         )}
                       </>
                     )}
@@ -572,9 +689,14 @@ export default function Agenda({
                   {isEmpty(afternoonHours) &&
                     isEmpty(morningHours) &&
                     !loadingMonth &&
-                    !loadingDays && (
+                    !loadingDays &&
+                    selectedDay && (
                       <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
-                        <SvgSadIcon className="mb-5 text-hg-secondary" />
+                        <SvgSadIcon
+                          className={`mb-5 ${
+                            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                          }`}
+                        />
                         <Title size="xl" className="font-semibold">
                           ¡Lo sentimos!
                         </Title>
@@ -602,12 +724,12 @@ export default function Agenda({
                         className="gap-4 items-center w-full"
                       >
                         <a href="tel:+34 682 417 208">
-                          <Button size="xl" type="tertiary">
+                          <Button size="xl" type="white">
                             <SvgPhone className="mr-2" />
                             {selectedClinic && (
                               <div>
                                 <Text size="xs" className="whitespace-nowrap">
-                                  Llamanos al
+                                  Llámanos al
                                 </Text>
                                 <Text size="lg" className="whitespace-nowrap">
                                   {selectedClinic.phone}
@@ -628,6 +750,6 @@ export default function Agenda({
           </Container>
         </>
       )}
-    </MainLayout>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
 
 export const phoneValidationRegex = /^[679]{1}[0-9]{8}$/;
-
+export const postalCodeValidationRegex = /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/;
 export const validateEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const validDomains = [

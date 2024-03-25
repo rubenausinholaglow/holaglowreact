@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
@@ -8,7 +8,9 @@ type ButtonTypes =
   | 'primary'
   | 'secondary'
   | 'tertiary'
-  | 'transparent'
+  | 'white'
+  | 'derma'
+  | 'dermaDark'
   | 'disabled';
 type ButtonSizes = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -50,16 +52,16 @@ export const Button = ({
           id={id}
           target={rest?.target}
           className={twMerge(
-            `relative group overflow-visible ${className} inline-block`
+            `relative overflow-visible inline-block ${className}`
           )}
           onClick={onClick}
           type={rest?.isSubmit ? 'submit' : 'button'}
         >
-          <ButtonBase type={type} />
           <ButtonBody
             type={type}
             size={size}
             customStyles={customStyles}
+            disabled={disabled}
             {...rest}
           >
             {children}
@@ -76,16 +78,16 @@ export const Button = ({
         id={id}
         target={rest?.target}
         className={twMerge(
-          `relative group overflow-visible ${className} inline-block`
+          `relative overflow-visible inline-block ${className}`
         )}
         onClick={onClick}
         type={rest?.isSubmit ? 'submit' : 'button'}
       >
-        <ButtonBase type={type} />
         <ButtonBody
           type={type}
           size={size}
           customStyles={customStyles}
+          disabled={disabled}
           {...rest}
         >
           {children}
@@ -98,17 +100,16 @@ export const Button = ({
     return (
       <AnimateOnViewport origin={origin}>
         <button
-          id={id}
           className={twMerge(
-            `transition-all relative group overflow-visible ${
+            `transition-all relative overflow-visible ${
               ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
             } ${className}`
           )}
           onClick={onClick}
           type={rest?.isSubmit ? 'submit' : 'button'}
         >
-          <ButtonBase type={type} disabled={disabled} />
           <ButtonBody
+            id={id}
             type={type}
             size={size}
             customStyles={customStyles}
@@ -124,17 +125,14 @@ export const Button = ({
 
   return (
     <button
-      id={id}
       className={twMerge(
-        `transition-all relative group overflow-visible ${
-          ['primary', 'secondary'].includes(type) ? 'top-[3px]' : ''
-        } ${className}`
+        `transition-all relative group overflow-visible ${className}`
       )}
       onClick={onClick}
       type={rest?.isSubmit ? 'submit' : 'button'}
     >
-      <ButtonBase type={type} disabled={disabled} />
       <ButtonBody
+        id={id}
         type={type}
         size={size}
         customStyles={customStyles}
@@ -151,87 +149,55 @@ const ButtonBody = ({
   type,
   size,
   customStyles,
-  color,
-  bgColor,
   disabled = false,
   children,
+  id,
   ...rest
 }: {
   type: ButtonTypes;
   size: ButtonSizes;
   customStyles?: string;
-  color?: string;
-  bgColor?: string;
   disabled?: boolean;
   children: ReactNode;
+  id?: string;
 }) => {
-  const DISABLED_STYLES: any = {
-    primary:
-      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
-    secondary:
-      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
-    tertiary:
-      'border-none bg-hg-black100 group-active:bg-hg-black100 text-hg-black300 group-hover:text-hg-black300 group-active:text-hg-black300 cursor-default',
-  };
+  const DISABLED_STYLES =
+    'cursor-default pointer-events-none border-none bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 active:bg-hg-black100 active:text-hg-black300';
 
   const STYLES: any = {
-    common: 'transition-all relative bottom-[1px] text-center rounded-full',
-    animations: '-translate-y-1 group-active:-translate-y-0',
-    primary:
-      'bg-hg-black text-hg-primary group-active:text-hg-secondary500 group-hover:text-hg-secondary500',
+    common: 'transition-all relative text-center rounded-full',
+    primary: 'bg-hg-secondary text-white hover:bg-hg-secondary700',
     secondary:
-      'bg-white text-hg-secondary border border-hg-black group-active:bg-hg-secondary300 group-hover:bg-hg-secondary300',
-    tertiary: `${bgColor ? bgColor : 'bg-white'} ${
-      color ? color : 'text-hg-black border border-hg-black'
+      'bg-hg-secondary100 text-hg-secondary border border-hg-secondary active:bg-hg-secondary300 hover:bg-hg-secondary300',
+    tertiary:
+      'bg-hg-primary text-hg-black border border-hg-black active:bg-hg-secondary100 hover:bg-hg-secondary100',
+    derma: `bg-derma-primary text-white ${
+      !disabled ? 'hover:bg-derma-primary500 hover:text-derma-primary' : ''
     }`,
-    transparent:
-      'bg-white text-hg-black border border-transparent group-hover:bg-hg-secondary100 group-active:bg-hg-secondary100',
-    disabled: 'bg-hg-black100 text-hg-black300 cursor-default',
+    dermaDark: `bg-derma-tertiary text-white ${
+      !disabled ? 'hover:bg-derma-tertiaryDark' : ''
+    }`,
+    white:
+      'bg-white text-hg-black border border-hg-black hover:bg-hg-secondary100 active:bg-hg-secondary100',
+    disabled:
+      'bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default',
     sm: 'text-xs font-medium h-[32px] px-4',
     md: 'text-xs font-medium h-[40px] px-4',
     lg: 'text-md font-semibold h-[48px] px-6',
-    xl: 'text-md font-semibold h-[64px] px-6',
+    xl: `${
+      type === 'primary' ? 'h-[64px] text-lg' : 'h-[60px] text-md'
+    } font-semibold px-6`,
   };
-
-  const isAnimated = (type === 'primary' || type === 'secondary') && !disabled;
 
   const styles = twMerge(
     `${STYLES.common} ${STYLES[type]} ${STYLES[size]} ${customStyles} ${
-      isAnimated ? STYLES.animations : ''
-    }${disabled ? DISABLED_STYLES[type] : ''}`
+      disabled ? DISABLED_STYLES : ''
+    }`
   );
 
   return (
-    <Flex layout="row-center" className={styles} {...rest}>
+    <Flex layout="row-center" className={styles} id={id} {...rest}>
       {children}
     </Flex>
-  );
-};
-
-const ButtonBase = ({
-  type,
-  disabled = false,
-}: {
-  type: ButtonTypes;
-  disabled?: boolean;
-}) => {
-  const BUTTON_TYPES = ['primary', 'secondary'];
-
-  const STYLES: any = {
-    primary:
-      'bg-hg-primary border border-hg-black group-hover:bg-hg-secondary500',
-    secondary: 'bg-hg-secondary border border-hg-black',
-  };
-
-  const styles = `${BUTTON_TYPES.includes(type) ? STYLES[type] : ''}`;
-
-  if (disabled) {
-    return <></>;
-  }
-
-  return (
-    <div
-      className={`absolute bottom-0 left-0 right-0 top-0 rounded-full ${styles} `}
-    ></div>
   );
 };

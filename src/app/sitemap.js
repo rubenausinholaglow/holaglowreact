@@ -13,18 +13,19 @@ export default async function sitemap() {
     };
   });
 
-  const products = await ProductService.getAllProducts();
-
-  const filteredProducts = products
-    .filter(p => p.type === 1 || p.type === 2)
-    .map(p => ({
-      url: `https://www.holaglow.com/tratamientos/${p.extraInformation.slug}`,
-      changefreq: 'daily',
-      priority: 0.7,
-    }));
+  const products = await ProductService.getAllProducts({ isDerma: false });
+  let filteredProducts = [];
+  if (products && products.length > 0) {
+    filteredProducts = products
+      .filter(p => p.type === 1 || p.type === 2)
+      .map(p => ({
+        url: `https://www.holaglow.com/tratamientos/${p.extraInformation.slug}`,
+        changefreq: 'daily',
+        priority: 0.7,
+      }));
+  }
 
   const allSitemapData = [...sitemapData, ...filteredProducts, ...blog];
-
   return allSitemapData;
 }
 
