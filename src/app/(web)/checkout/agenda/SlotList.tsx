@@ -38,13 +38,13 @@ export default function SlotList({
   };
 
   return (
-    <Flex className="flex-wrap  mb-3 md:mb-0">
+    <Flex className="flex-wrap gap-3">
       {slots.map((slot: Slot) => {
         return (
           <Flex
             key={slot.startTime}
             layout="row-between"
-            className={`transition-all gap-2 text-sm rounded-lg mr-3 w-20 h-8 mb-3 ${
+            className={`transition-all text-sm rounded-lg w-20 h-8 ${
               isDerma
                 ? 'border-none bg-derma-secondary400'
                 : 'border border-hg-black bg-white'

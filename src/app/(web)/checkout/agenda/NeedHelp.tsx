@@ -1,4 +1,3 @@
-import { SvgPhone } from 'app/icons/Icons';
 import { SvgCalling } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';

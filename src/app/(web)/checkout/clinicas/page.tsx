@@ -49,7 +49,7 @@ export default function ClinicsCheckout() {
               {clinics.map((clinic, index) => (
                 <Flex
                   layout="row-left"
-                  className={`border border-hg-black300 p-4 rounded-2xl gap-4 w-full hover:bg-hg-secondary100 cursor-pointer ${
+                  className={`border border-hg-black300 py-4 px-4 rounded-2xl gap-4 w-full hover:bg-hg-secondary100 cursor-pointer ${
                     selectedClinic && selectedClinic.city === clinic.city
                       ? 'border-hg-secondary'
                       : ''
@@ -61,7 +61,7 @@ export default function ClinicsCheckout() {
                     <Text size="lg" className="font-semibold mb-2">
                       {clinic.city}
                     </Text>
-                    <address className="not-italic mb-2 text-xs">
+                    <address className="not-italic text-xs">
                       {clinic.address}
                     </address>
                   </Flex>
@@ -78,7 +78,7 @@ export default function ClinicsCheckout() {
               ))}
               {!isMobile && (
                 <CheckHydration>
-                  <FreeParking />
+                  <FreeParking className="mt-12" />
                 </CheckHydration>
               )}
             </Flex>

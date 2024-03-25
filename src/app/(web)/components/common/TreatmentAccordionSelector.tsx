@@ -258,41 +258,48 @@ export default function TreatmentAccordionSelector({
   if (cart.length == 0 || !isDashboard)
     return (
       <Accordion type="single" collapsible className="w-full">
-        {productCategories.map(category => {
-          return (
-            <AccordionItem
-              value={category}
-              key={category}
-              className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
-                selectedCategory === category
-                  ? 'bg-hg-secondary100'
-                  : 'bg-derma-secondary300'
-              }
-            ${isDashboard ? 'min-w-[80%]' : ''}`}
-            >
-              <AccordionTrigger>
-                <Flex
-                  className="p-4"
-                  onClick={() =>
-                    setSelectedCategory(
-                      selectedCategory !== category ? category : null
-                    )
-                  }
-                >
-                  <CategoryIcon category={category} className="mr-4" />
-                  <Text className="font-semibold">{category}</Text>
+        {productCategories
+          .sort((a, b) => {
+            if (a === 'Packs') return -1;
+            if (b === 'Packs') return 1;
+            return 0;
+          })
+          .map(category => {
+            return (
+              <AccordionItem
+                value={category}
+                key={category}
+                className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
+                  selectedCategory === category
+                    ? 'bg-hg-secondary100'
+                    : 'bg-derma-secondary300'
+                }
+                ${isDashboard ? 'min-w-[80%]' : ''}
+              `}
+              >
+                <AccordionTrigger>
+                  <Flex
+                    className="p-4"
+                    onClick={() =>
+                      setSelectedCategory(
+                        selectedCategory !== category ? category : null
+                      )
+                    }
+                  >
+                    <CategoryIcon category={category} className="mr-4" />
+                    <Text className="font-semibold">{category}</Text>
 
-                  <SvgAngle
-                    className={`transition-all text-hg-secondary ml-auto ${
-                      selectedCategory === category ? 'rotate-90' : ''
-                    }`}
-                  />
-                </Flex>
-              </AccordionTrigger>
-              {renderAcordionContent(category)}
-            </AccordionItem>
-          );
-        })}
+                    <SvgAngle
+                      className={`transition-all text-hg-secondary ml-auto ${
+                        selectedCategory === category ? 'rotate-90' : ''
+                      }`}
+                    />
+                  </Flex>
+                </AccordionTrigger>
+                {renderAcordionContent(category)}
+              </AccordionItem>
+            );
+          })}
       </Accordion>
     );
 }

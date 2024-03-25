@@ -577,19 +577,19 @@ export default function Agenda({
                 </Container>
               </div>
 
-              <div className="w-full md:w-1/2 flex flex-col justify-between md:pr-4">
-                <Container>
+              <div className="w-full md:w-1/2 flex flex-col md:pr-4">
+                <Container className="md:px-0">
                   <Flex
                     layout="col-left"
-                    className={`items-start w-full mb-6 md:mb-0 ${
+                    className={`items-start w-full mb-4 ${
                       loadingDays ? 'opacity-25' : 'opacity-100'
                     }`}
                   >
                     {(afternoonHours.length > 0 || morningHours.length > 0) && (
-                      <>
+                      <Flex layout="col-left" className="gap-8 w-full">
                         <Text
                           size="sm"
-                          className="w-full text-left to-hg-black500 mb-6"
+                          className="w-full text-left to-hg-black500"
                         >
                           Selecciona hora para el{' '}
                           <span className="font-semibold">
@@ -598,7 +598,7 @@ export default function Agenda({
                         </Text>
 
                         {morningHours.length > 0 && (
-                          <>
+                          <div>
                             <Text size="sm" className="font-semibold mb-4">
                               Horario de mañana
                             </Text>
@@ -609,11 +609,11 @@ export default function Agenda({
                               clickedHour={clickedHour}
                               setClickedHour={setClickedHour}
                             />
-                          </>
+                          </div>
                         )}
 
                         {afternoonHours.length > 0 && (
-                          <>
+                          <div className="mb-4">
                             <Text size="sm" className="font-semibold mb-4">
                               Horario de tarde
                             </Text>
@@ -624,14 +624,14 @@ export default function Agenda({
                               clickedHour={clickedHour}
                               setClickedHour={setClickedHour}
                             />
-                          </>
+                          </div>
                         )}
-                      </>
+                      </Flex>
                     )}
                   </Flex>
                 </Container>
 
-                <div className="mt-auto">
+                <div>
                   {isEmpty(afternoonHours) &&
                     isEmpty(morningHours) &&
                     !loadingMonth &&
@@ -657,12 +657,12 @@ export default function Agenda({
                         </Text>
                       </Flex>
                     )}
-                  {!loadingMonth && !loadingDays && !isDashboard && (
-                    <CheckHydration>
-                      <NeedHelp />
-                    </CheckHydration>
-                  )}
                 </div>
+                {!loadingMonth && !loadingDays && !isDashboard && (
+                  <CheckHydration>
+                    <NeedHelp />
+                  </CheckHydration>
+                )}
               </div>
             </Flex>
           </Container>
