@@ -11,7 +11,10 @@ import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Budget, StatusBudget } from 'app/types/budget';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -23,7 +26,6 @@ import { PaymentModule } from './components/payment/Payments';
 
 const Page = () => {
   const ROUTES = useRoutes();
-
   const cart = useCartStore(state => state.cart);
   const totalPrice = useCartStore(state => state.totalPrice);
   const priceDiscount = useCartStore(state => state.priceDiscount);
@@ -41,6 +43,7 @@ const Page = () => {
     setBudgetId,
     storedClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
+  const { setTreatmentPacks } = useSessionStore(state => state);
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -178,6 +181,9 @@ const Page = () => {
                 size="md"
                 href={`${ROUTES.dashboard.schedule}`}
                 type="white"
+                onClick={e => {
+                  setTreatmentPacks([]);
+                }}
               >
                 <span className="font-semibold">Agendar Cita</span>
               </Button>

@@ -6,7 +6,7 @@ import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
-import { Product } from 'app/types/product';
+import { PackUnities, Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
 import { Dayjs } from 'dayjs';
@@ -43,6 +43,7 @@ interface SessionStore {
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
   dermaPhone: string;
+  treatmentPacks : PackUnities[];
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -61,6 +62,7 @@ interface SessionActions {
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
   setDermaPhone: (phone: string) => void;
+  setTreatmentPacks: (treatment: PackUnities[]) => void;
 }
 
 interface GlobalPersistStore {
@@ -144,6 +146,7 @@ export const useSessionStore = create(
       typeOfPayment: TypeOfPayment.Free,
       appointmentUrl: '',
       dermaPhone: '',
+      treatmentPacks: [],
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -191,6 +194,9 @@ export const useSessionStore = create(
       },
       setDermaPhone: value => {
         set({ dermaPhone: value });
+      },
+      setTreatmentPacks: value => {
+        set({ treatmentPacks: value });
       },
     }),
     {
