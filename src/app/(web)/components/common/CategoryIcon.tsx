@@ -22,6 +22,9 @@ const CATEGORY_ICONS: any = {
   Médico: {
     src: 'otros.svg',
   },
+  Packs: {
+    src: 'pack.svg',
+  },
 };
 
 export default function CategoryIcon({

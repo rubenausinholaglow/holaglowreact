@@ -333,7 +333,7 @@ export default function AppointmentResume({
                       )}
                     </Flex>
                   )}
-                  {selectedTreatments[0] &&
+                {selectedTreatments[0] &&
                     selectedTreatments[0].price > 0 &&
                     !isDashboard && (
                       <TreatmentPriceBreakdown

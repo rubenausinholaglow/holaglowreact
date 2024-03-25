@@ -38,7 +38,7 @@ const Page = () => {
     usePaymentList.setState(INITIAL_STATE_PAYMENT);
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
-    setTreatmentPacks([]);
+	setTreatmentPacks([]);
   }, []);
   useEffect(() => {
     if (!remoteControl) {
