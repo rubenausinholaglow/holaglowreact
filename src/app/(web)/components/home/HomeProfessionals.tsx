@@ -1,5 +1,3 @@
-'use client';
-
 import ROUTES from '@utils/routes';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { Button } from 'designSystem/Buttons/Buttons';

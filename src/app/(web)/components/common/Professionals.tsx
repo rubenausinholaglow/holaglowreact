@@ -2,18 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Professional } from 'app/types/clinic';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
-
-import ProfessionalCard from './ProfessionalCard';
 
 export default function Professionals({
   className = '',
@@ -23,7 +17,6 @@ export default function Professionals({
   isDashboard?: boolean;
 }) {
   const { clinics } = useGlobalPersistedStore(state => state);
-  const { deviceSize } = useSessionStore(state => state);
   const [professionals, setProfessionals] = useState<Professional[] | null>([]);
 
   useEffect(() => {

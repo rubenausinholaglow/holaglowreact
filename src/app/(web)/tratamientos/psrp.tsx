@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { setSeoMetaData } from '@utils/common';
 import { filterItems } from '@utils/filterItems';
@@ -13,7 +14,6 @@ import { SvgFilters } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
-  useSessionStore,
 } from 'app/stores/globalStore';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -38,7 +38,6 @@ export default function PsrpPage({
   const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
     state => state
   );
-  const { deviceSize } = useSessionStore(state => state);
   const {
     filteredProducts,
     setFilteredProducts,
@@ -225,9 +224,7 @@ export default function PsrpPage({
                 products={stateProducts}
                 className="hidden md:block mr-8 xl:max-w-[220px]"
               />
-              <AnimateOnViewport
-                origin={deviceSize.isMobile ? 'right' : 'bottom'}
-              >
+              <AnimateOnViewport origin={isMobile ? 'right' : 'bottom'}>
                 <CategorySelector />
               </AnimateOnViewport>
             </div>
@@ -256,7 +253,7 @@ export default function PsrpPage({
                       size="sm"
                       className="mr-2"
                       onClick={() => {
-                        deviceSize.isMobile
+                        isMobile
                           ? setIsMobileFiltersVisible(true)
                           : setShowDesktopFilters(!showDesktopFilters);
                       }}

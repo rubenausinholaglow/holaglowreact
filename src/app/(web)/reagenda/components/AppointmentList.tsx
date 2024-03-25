@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
@@ -40,12 +41,8 @@ export default function AppointmentList({
     state => state
   );
 
-  const {
-    deviceSize,
-    setSelectedTreatments,
-    setPreviousAppointment,
-    setSelectedClinic,
-  } = useSessionStore(state => state);
+  const { setSelectedTreatments, setPreviousAppointment, setSelectedClinic } =
+    useSessionStore(state => state);
 
   let showPast = false;
   let token = '';
@@ -162,7 +159,7 @@ export default function AppointmentList({
                 {!hideButtons && (
                   <Flex layout="row-between" className="w-full mt-6">
                     <Button
-                      size={deviceSize.isMobile ? 'sm' : 'md'}
+                      size={isMobile ? 'sm' : 'md'}
                       id="button-addon2"
                       type={isDerma ? 'derma' : 'tertiary'}
                       customStyles={!isDerma ? 'bg-hg-primary' : ''}
@@ -180,7 +177,7 @@ export default function AppointmentList({
                       !appointment.isCancelled && (
                         <>
                           <Button
-                            size={deviceSize.isMobile ? 'sm' : 'md'}
+                            size={isMobile ? 'sm' : 'md'}
                             type="tertiary"
                             id="button-addon2"
                             onClick={() => {

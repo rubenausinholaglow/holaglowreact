@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { AnalyticsMetrics } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
-import { CartItem } from '@interface/product';
 import { UpsellingData } from '@interface/upselling';
 import { INITIAL_STATE } from '@utils/constants';
-import { fetchProduct } from '@utils/fetch';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCheckCircle, SvgCross, SvgWarning } from 'app/icons/IconsDs';
 import {
@@ -21,15 +20,8 @@ import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-import {
-  DERMA_BUNDLE_TYPES_IDS,
-  DERMA_PRODUCTS,
-  DERMA_ROUTINES,
-  DERMA_TYPES,
-  DERMA_TYPES_IDS,
-} from '../mockedData';
+import { DERMA_PRODUCTS, DERMA_ROUTINES, DERMA_TYPES } from '../mockedData';
 
 export default function UpsellingRoutines({
   data,
@@ -37,16 +29,14 @@ export default function UpsellingRoutines({
   data: UpsellingData | null;
 }) {
   const { showModalBackground } = useGlobalStore(state => state);
-  const { deviceSize } = useSessionStore(state => state);
 
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState(0);
 
-  const { cart, addItemToCart, resetCart } = useCartStore(state => state);
+  const { resetCart } = useCartStore(state => state);
   const {
     setSelectedClinic,
     setSelectedTreatments,
-    selectedTreatments,
     setTypeOfPayment,
     setAnalyticsMetrics,
     setSelectedDay,
@@ -57,7 +47,6 @@ export default function UpsellingRoutines({
     state => state
   );
   const modalBottomBarHeight = '97px';
-  const router = useRouter();
 
   useEffect(() => {
     setActivePayment(PaymentBank.None);
@@ -101,63 +90,11 @@ export default function UpsellingRoutines({
 
   const filteredProducts = DERMA_PRODUCTS.filter(product => data != null);
 
-  async function addRevisionProduct() {
-    const productDetails = await fetchProduct(
-      process.env.NEXT_PUBLIC_CITA_DERMA_REVISION!,
-      false,
-      true
-    );
-    productDetails.flowwwId = 6;
-    setSelectedTreatments([...selectedTreatments, productDetails]);
-    if (cart.length == 0) addItemToCart(productDetails as CartItem);
-  }
-
-  async function addRoutineProduct() {
-    const productDetails = await fetchProduct(
-      DERMA_TYPES_IDS[data!.routine],
-      false,
-      true
-    );
-    productDetails.flowwwId = 0;
-    setSelectedTreatments([...selectedTreatments, productDetails]);
-    if (cart.length == 0) addItemToCart(productDetails as CartItem);
-  }
-  async function addRoutineWithProduct() {
-    const productDetails = await fetchProduct(
-      DERMA_BUNDLE_TYPES_IDS[data!.routine],
-      false,
-      true
-    );
-    productDetails.flowwwId = 6;
-    setSelectedTreatments([...selectedTreatments, productDetails]);
-    if (cart.length == 0) addItemToCart(productDetails as CartItem);
-  }
-
-  const selectProduct = async (id: number) => {
-    setShowModal(false);
-
-    setCurrentUser(data?.user);
-    switch (id) {
-      case 1:
-        await addRevisionProduct();
-        router.push('/planes/agenda');
-        break;
-      case 2:
-        await addRoutineProduct();
-        router.push('/planes/contactform');
-        break;
-      case 3:
-        await addRoutineWithProduct();
-        router.push('/planes/agenda');
-        break;
-    }
-  };
-
   return (
     <>
       <Modal
         isVisible={showModal}
-        width={deviceSize.isMobile ? 'w-full' : 'max-w-[500px]'}
+        width={isMobile ? 'w-full' : 'max-w-[500px]'}
         className="shadow-none"
         type="right"
         hideModalBackground
@@ -311,7 +248,7 @@ export default function UpsellingRoutines({
                   <Flex layout="row-right" className="justify-between w-full">
                     <Button
                       type="derma"
-                      size={deviceSize.isMobile ? 'lg' : 'xl'}
+                      size={isMobile ? 'lg' : 'xl'}
                       onClick={() => {
                         setSelectedRoutine(index);
 
