@@ -180,7 +180,10 @@ export default function AppointmentResume({
       : 'Dr. Basart · Núm. Colegiado 080856206';
 
     return (
-      <Flex layout="col-left" className="p-4 w-full gap-2 text-xs md:text-sm">
+      <Flex
+        layout="col-left"
+        className="p-4 md:px-0 w-full gap-2 text-xs md:text-sm"
+      >
         {isDerma && (
           <div className="w-full flex items-center">
             <SvgStethoscope className="mr-2 shrink-0" />
@@ -249,7 +252,7 @@ export default function AppointmentResume({
       <div className="w-full">
         <Flex
           layout="col-left"
-          className="w-full gap-1 text-xs py-4 rounded-lg"
+          className="w-full gap-1 text-xs py-3 rounded-lg"
         >
           <Flex className="justify-between w-full">
             <Text>Importe sin IVA</Text>
@@ -266,7 +269,7 @@ export default function AppointmentResume({
             </Text>
           </Flex>
           {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
-            <Flex layout="col-left" className="w-full gap-1 ">
+            <Flex layout="col-left" className="w-full">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
@@ -274,12 +277,19 @@ export default function AppointmentResume({
                 </Text>
               </Flex>
               {typeOfPayment == TypeOfPayment.Reservation && (
-                <Flex className="justify-between w-full">
-                  <Text>Pendiente de pago en clínica</Text>
-                  <Text className="font-semibold">
-                    {(selectedTreatments[0].price - 49).toFixed(2)}€
-                  </Text>
-                </Flex>
+                <div className="border-t border-hg-black300 mt-4 pt-4">
+                  <Flex className="justify-between w-full">
+                    <Text>Pendiente de pago en clínica</Text>
+                    <Text className="font-semibold">
+                      {(selectedTreatments[0].price - 49).toFixed(2)}€
+                    </Text>
+                  </Flex>
+
+                  <p className="bg-derma-secondary100 text-hg-black500 py-3 px-4 mt-2 rounded-xl mb-2">
+                    El importe restante se puede abonar en clínica al contado o
+                    financiado hasta 18 meses con Pepper o Alma
+                  </p>
+                </div>
               )}
             </Flex>
           )}
@@ -297,7 +307,7 @@ export default function AppointmentResume({
         <AccordionItem {...accordionItemProps}>
           {!isDerma && (
             <>
-              {/* <AccordionTrigger className="group md:hidden">
+              <AccordionTrigger className="group md:hidden">
                 <Flex className="w-full justify-between p-4">
                   <Flex className="gap-2 text-sm">
                     <SvgBag height={16} width={16} /> Ver resumen del pedido
@@ -306,50 +316,50 @@ export default function AppointmentResume({
                 </Flex>
               </AccordionTrigger>
 
-              <AccordionContent className="md:border-t md:pt-4"> */}
-              <Flex layout="col-left" className="w-full text-sm px-4">
-                {isDashboard ? (
-                  <TreatmentsDashboard />
-                ) : (
-                  <Flex
-                    layout="col-left"
-                    className="w-full border-t border-b border-hg-black300 py-3"
-                  >
-                    <TreatmentName className="p-0" />
-                    {selectedTreatments &&
-                    selectedTreatments[0] &&
-                    selectedTreatments[0].isPack ? (
-                      <ul className="p-1">
-                        {selectedPacksTreatments &&
-                          selectedPacksTreatments.map(item => {
-                            return <li key={item.title}>- {item.title}</li>;
-                          })}
-                      </ul>
-                    ) : selectedTreatments[0] &&
-                      !isEmpty(selectedTreatments[0].appliedProducts) ? (
-                      selectedTreatments[0].appliedProducts.map(item => {
-                        return (
-                          <Flex key={item.titlte} className="items-start mb-1">
-                            <Text className="text-hg-black400 text-xs md:text-sm">
-                              {item.titlte}
-                            </Text>
-                          </Flex>
-                        );
-                      })
-                    ) : (
-                      <Flex className="items-start mb-2">
-                        {selectedTreatments[0] && (
-                          <Text>{selectedTreatments[0].description}</Text>
-                        )}
-                      </Flex>
-                    )}
-                  </Flex>
-                )}
-                {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
-                  <TreatmentPriceBreakdown />
-                )}
-              </Flex>
-              {/* </AccordionContent> */}
+              <AccordionContent className="md:border-t border-hg-black300 md:pt-2">
+                <Flex layout="col-left" className="w-full text-sm px-4 md:px-0">
+                  {isDashboard ? (
+                    <TreatmentsDashboard />
+                  ) : (
+                    <Flex layout="col-left" className="w-full py-3">
+                      <TreatmentName className="p-0" />
+                      {selectedTreatments &&
+                      selectedTreatments[0] &&
+                      selectedTreatments[0].isPack ? (
+                        <ul className="p-1">
+                          {selectedPacksTreatments &&
+                            selectedPacksTreatments.map(item => {
+                              return <li key={item.title}>- {item.title}</li>;
+                            })}
+                        </ul>
+                      ) : selectedTreatments[0] &&
+                        !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                        selectedTreatments[0].appliedProducts.map(item => {
+                          return (
+                            <Flex
+                              key={item.titlte}
+                              className="items-start mb-1"
+                            >
+                              <Text className="text-hg-black400 text-xs md:text-sm">
+                                {item.titlte}
+                              </Text>
+                            </Flex>
+                          );
+                        })
+                      ) : (
+                        <Flex className="items-start mb-2">
+                          {selectedTreatments[0] && (
+                            <Text>{selectedTreatments[0].description}</Text>
+                          )}
+                        </Flex>
+                      )}
+                    </Flex>
+                  )}
+                  {selectedTreatments[0] && selectedTreatments[0].price > 0 && (
+                    <TreatmentPriceBreakdown />
+                  )}
+                </Flex>
+              </AccordionContent>
             </>
           )}
 
