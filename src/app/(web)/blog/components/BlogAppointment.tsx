@@ -15,7 +15,8 @@ import { useRouter } from 'next/navigation';
 export default function BlogAppointment() {
   const router = useRouter();
 
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const { deviceSize, setSelectedTreatments, setSelectedPack } =
+    useSessionStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -72,6 +73,8 @@ export default function BlogAppointment() {
             type="secondary"
             onClick={() => {
               setSelectedTreatments([product]);
+              if (product.isPack) setSelectedPack(product);
+              else setSelectedPack(undefined);
               router.push(ROUTES.checkout.clinics);
             }}
           >

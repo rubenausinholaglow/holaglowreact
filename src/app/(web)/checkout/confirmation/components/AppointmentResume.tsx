@@ -65,6 +65,7 @@ export default function AppointmentResume({
     selectedSlot,
     selectedDay,
     selectedClinic,
+    selectedPack,
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
@@ -182,7 +183,9 @@ export default function AppointmentResume({
     return (
       <Flex
         layout="col-left"
-        className="p-4 md:px-0 w-full gap-2 text-xs md:text-sm"
+        className={`p-4 w-full gap-2 text-xs md:text-sm ${
+          !isConfirmation ? 'md:px-0' : ''
+        }`}
       >
         {isDerma && (
           <div className="w-full flex items-center">
@@ -245,8 +248,10 @@ export default function AppointmentResume({
 
   const TreatmentPriceBreakdown = ({
     hideTotal = false,
+    product,
   }: {
     hideTotal?: boolean;
+    product: Product;
   }) => {
     return (
       <div className="w-full">
@@ -256,24 +261,18 @@ export default function AppointmentResume({
         >
           <Flex className="justify-between w-full">
             <Text>Importe sin IVA</Text>
-            <Text>{(selectedTreatments[0].price * 0.79).toFixed(2)} €</Text>
+            <Text>{(product.price * 0.79).toFixed(2)} €</Text>
           </Flex>
           <Flex className="justify-between w-full ">
             <Text>Impuestos</Text>
-            <Text>
-              {(
-                selectedTreatments[0].price -
-                selectedTreatments[0].price * 0.79
-              ).toFixed(2)}{' '}
-              €
-            </Text>
+            <Text>{(product.price - product.price * 0.79).toFixed(2)} €</Text>
           </Flex>
-          {!isProbadorVirtual && selectedTreatments[0] && !hideTotal && (
+          {!isProbadorVirtual && product && !hideTotal && (
             <Flex layout="col-left" className="w-full">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
-                  {selectedTreatments[0].price.toFixed(2)}€
+                  {product.price.toFixed(2)}€
                 </Text>
               </Flex>
               {typeOfPayment == TypeOfPayment.Reservation && (
@@ -287,7 +286,7 @@ export default function AppointmentResume({
 
                   <p className="bg-derma-secondary100 text-hg-black500 py-3 px-4 mt-2 rounded-xl mb-2">
                     El importe restante se puede abonar en clínica al contado o
-                    financiado hasta 18 meses con Pepper o Alma
+                    financiado hasta 18 meses con Pepper, Alma o Frakmenta
                   </p>
                 </div>
               )}
@@ -316,8 +315,13 @@ export default function AppointmentResume({
                 </Flex>
               </AccordionTrigger>
 
-              <AccordionContent className="md:border-t border-hg-black300 md:pt-2">
-                <Flex layout="col-left" className="w-full text-sm px-4 md:px-0">
+              <AccordionContent className="md:border-t border-hg-black300 md:pt-2 ">
+                <Flex
+                  layout="col-left"
+                  className={`w-full text-sm px-4 ${
+                    !isConfirmation ? 'md:px-0' : ''
+                  }`}
+                >
                   {isDashboard ? (
                     <TreatmentsDashboard />
                   ) : (
@@ -357,7 +361,14 @@ export default function AppointmentResume({
                   )}
                   {selectedTreatments[0] &&
                     selectedTreatments[0].price > 0 &&
-                    !isDashboard && <TreatmentPriceBreakdown />}
+                    !isDashboard && (
+                      <TreatmentPriceBreakdown
+                        product={selectedTreatments[0]}
+                      />
+                    )}
+                  {selectedPack && selectedPack.price > 0 && (
+                    <TreatmentPriceBreakdown product={selectedPack} />
+                  )}
                 </Flex>
               </AccordionContent>
             </>
@@ -369,7 +380,7 @@ export default function AppointmentResume({
                 isDerma
                   ? 'bg-derma-primary500/20 text-derma-primary'
                   : isConfirmation
-                  ? 'text-hg-secondary'
+                  ? 'text-hg-secondary bg-hg-secondary300'
                   : 'bg-hg-secondary100 text-hg-secondary md:rounded-lg'
               } `}
             >

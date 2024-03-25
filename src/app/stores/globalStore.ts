@@ -6,7 +6,7 @@ import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
-import { Product } from 'app/types/product';
+import { PackUnities, Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
 import { Dayjs } from 'dayjs';
@@ -31,6 +31,7 @@ interface SessionStore {
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
+  selectedPack?: Product;
   previousSelectedTreatments: Product[];
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
@@ -42,12 +43,14 @@ interface SessionStore {
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
   dermaPhone: string;
+  treatmentPacks: PackUnities[];
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
+  setSelectedPack: (value: Product | undefined) => void;
   setPreviousSelectedTreatments: (value: Product[]) => void;
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
@@ -59,6 +62,7 @@ interface SessionActions {
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
   setDermaPhone: (phone: string) => void;
+  setTreatmentPacks: (treatment: PackUnities[]) => void;
 }
 
 interface GlobalPersistStore {
@@ -129,6 +133,7 @@ export const useSessionStore = create(
         isWideScreen: false,
       },
       selectedTreatments: [],
+      selectedPack: undefined,
       previousSelectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
@@ -141,6 +146,7 @@ export const useSessionStore = create(
       typeOfPayment: TypeOfPayment.Free,
       appointmentUrl: '',
       dermaPhone: '',
+      treatmentPacks: [],
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -155,6 +161,9 @@ export const useSessionStore = create(
       },
       setSelectedTreatments: value => {
         set({ selectedTreatments: value });
+      },
+      setSelectedPack: value => {
+        set({ selectedPack: value });
       },
       setPreviousSelectedTreatments: value => {
         set({ previousSelectedTreatments: value });
@@ -186,10 +195,13 @@ export const useSessionStore = create(
       setDermaPhone: value => {
         set({ dermaPhone: value });
       },
+      setTreatmentPacks: value => {
+        set({ treatmentPacks: value });
+      },
     }),
     {
       name: 'session-storage',
-      version: 20,
+      version: 21,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -277,7 +289,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 52,
+      version: 53,
     }
   )
 );

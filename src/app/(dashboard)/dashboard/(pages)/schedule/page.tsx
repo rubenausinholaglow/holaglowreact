@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Product } from '@interface/product';
+import { PackUnities, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
@@ -38,9 +38,12 @@ export default function Page() {
     setSelectedClinic,
     selectedTreatments,
     setSelectedTreatments,
+    setTreatmentPacks,
+    treatmentPacks,
   } = useSessionStore(state => state);
   const cart = useCartStore(state => state.cart);
   const [isLoading, setIsLoading] = useState(true);
+  const [packInProductCart, setPackInProductCart] = useState(false);
 
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -82,7 +85,7 @@ export default function Page() {
 
   useEffect(() => {
     setTreatments();
-  }, [dashboardProducts]);
+  }, [dashboardProducts, treatmentPacks]);
 
   async function setTreatments() {
     try {
@@ -104,11 +107,13 @@ export default function Page() {
             title.toUpperCase() === product.title.toUpperCase() &&
             validTypesFilterCart.includes(product.type)
           ) {
-            foundProducts.push(product);
+            if (product.isPack) {
+              setPackInProductCart(true);
+              addProductUnitiesPack(product);
+            } else foundProducts.push(product);
           }
         });
       });
-
       setSelectedTreatments(foundProducts);
     } catch (error: any) {
       Bugsnag.notify(error);
@@ -117,43 +122,67 @@ export default function Page() {
     }
   }
 
+  function addProductUnitiesPack(product: Product) {
+    product.packUnities?.forEach(x => {
+      if (!treatmentPacks.some(packType => packType.id == x.id)) {
+        const packsToAdd: PackUnities = {
+          id: x.id,
+          type: x.type,
+          isScheduled: false,
+        };
+        setTreatmentPacks([...treatmentPacks, packsToAdd]);
+      }
+    });
+  }
+
   return (
     <App>
       <MainLayout isDashboard>
         <Container className="mt-4">
-          {!selectedClinic && (
+          {!isLoading && (
             <>
-              <Title className="font-semibold mb-8">Selecciona clínica</Title>
+              {!selectedClinic && (
+                <>
+                  <Title className="font-semibold mb-8">
+                    Selecciona clínica
+                  </Title>
 
-              <CheckoutClinicSelector isDashboard className="mb-8" />
-            </>
-          )}
+                  <CheckoutClinicSelector isDashboard className="mb-8" />
+                </>
+              )}
 
-          {selectedClinic && (
-            <>
-              <Title className="font-semibold mb-8">
-                {cart.length == 0 ? 'Selecciona tratamiento' : 'Tratamientos'}
-              </Title>
-              <Flex layout="col-left" className="gap-3 w-full">
-                {!isEmpty(dashboardProducts) && !isLoading ? (
-                  <TreatmentAccordionSelector isDashboard />
-                ) : (
-                  <SvgSpinner className="w-full mb-4" />
-                )}
-              </Flex>
+              {selectedClinic && (
+                <>
+                  <Title className="font-semibold mb-8">
+                    {cart.length == 0
+                      ? 'Selecciona tratamiento'
+                      : 'Tratamientos'}
+                  </Title>
+                  <Flex layout="col-left" className="gap-3 w-full">
+                    {!isEmpty(dashboardProducts) && !isLoading ? (
+                      <TreatmentAccordionSelector
+                        isDashboard
+                        packInProductCart={packInProductCart}
+                      />
+                    ) : (
+                      <SvgSpinner className="w-full mb-4" />
+                    )}
+                  </Flex>
 
-              <Button
-                onClick={() => {
-                  if (selectedTreatments.length > 0) {
-                    router.push(
-                      `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
-                    );
-                  }
-                }}
-                disabled={selectedTreatments.length == 0}
-              >
-                Continuar
-              </Button>
+                  <Button
+                    onClick={() => {
+                      if (selectedTreatments.length > 0) {
+                        router.push(
+                          `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
+                        );
+                      }
+                    }}
+                    disabled={selectedTreatments.length == 0}
+                  >
+                    Continuar
+                  </Button>
+                </>
+              )}
             </>
           )}
         </Container>

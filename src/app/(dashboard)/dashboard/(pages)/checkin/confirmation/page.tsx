@@ -7,6 +7,7 @@ import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgArrowSmallLeft } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -19,6 +20,7 @@ export default function ConfirmationCheckIn() {
   const router = useRouter();
   const ROUTES = useRoutes();
   const { cart } = useCartStore(state => state);
+  const { treatmentPacks } = useSessionStore(state => state);
 
   const isCheckin = searchParams.get('isCheckin') === 'true';
   const [isPendingProductsScheduler, setIsPendingProductsScheduler] =
@@ -32,11 +34,16 @@ export default function ConfirmationCheckIn() {
 
       return () => clearTimeout(timerId);
     }
-    setIsPendingProductsScheduler(
-      cart.some(
-        x => x.isScheduled === false && validTypesFilterCart.includes(x.type)
-      )
-    );
+    treatmentPacks.length > 0
+      ? setIsPendingProductsScheduler(
+          treatmentPacks.some(x => x.isScheduled == false)
+        )
+      : setIsPendingProductsScheduler(
+          cart.some(
+            x =>
+              x.isScheduled === false && validTypesFilterCart.includes(x.type)
+          )
+        );
   }, []);
 
   return (

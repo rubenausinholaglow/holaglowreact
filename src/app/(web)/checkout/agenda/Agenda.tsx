@@ -5,7 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType } from '@interface/product';
+import { EmlaType, PackUnities, Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
@@ -26,7 +26,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import NeedHelp from './NeedHelp';
@@ -54,11 +53,14 @@ export default function Agenda({
     selectedSlot,
     previousAppointment,
     selectedTreatments,
+    selectedPack,
     selectedPacksTreatments,
     selectedClinic,
     analyticsMetrics,
     selectedDay,
     setSelectedDay,
+    treatmentPacks,
+    setTreatmentPacks,
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
@@ -291,18 +293,29 @@ export default function Agenda({
             analyticsMetrics,
             ''
           ).then(x => {
-            if (isDashboard && !isDerma) {
+            if (isDashboard) {
               const filteredCart = cart.filter(
                 cartItem =>
                   validTypesFilterCart.includes(cartItem.type) &&
                   (cartItem.isScheduled === false ||
                     cartItem.isScheduled === undefined)
               );
-              if (filteredCart.length >= selectedTreatments.length) {
+              if (
+                filteredCart.length >= selectedTreatments.length ||
+                treatmentPacks.length > 0
+              ) {
                 if (selectedTreatments.length == 1) {
-                  const selectedProduct = filteredCart.find(x => x.title);
-                  updateIsScheduled(true, selectedProduct!.uniqueId);
+                  if (treatmentPacks.length > 0) {
+                    updateTreatmentPackScheduled(selectedTreatments);
+                  } else {
+                    const selectedProduct = filteredCart.find(x => x.title);
+                    updateIsScheduled(true, selectedProduct!.uniqueId);
+                  }
                 } else {
+                  treatmentPacks.length > 0
+                    ? updateTreatmentPackScheduled(selectedTreatments)
+                    : null;
+
                   selectedTreatments.forEach(treatment => {
                     const selectedProducts = filteredCart.filter(
                       cartItem =>
@@ -336,6 +349,32 @@ export default function Agenda({
       schedule();
     }
   }, [selectedSlot]);
+
+  function updateTreatmentPackScheduled(products: Product[]) {
+    const matchingTreatments: PackUnities[] = [];
+    products.forEach(prod => {
+      const productInCart = cart.filter(x => x.id == prod.id).length > 0;
+      if (productInCart) return;
+
+      const matchingTreatment = treatmentPacks.find(
+        treat =>
+          treat.type === prod.unityType && !matchingTreatments.includes(treat)
+      );
+      if (matchingTreatment) {
+        matchingTreatments.push(matchingTreatment);
+      }
+    });
+    const remainingTreatments = treatmentPacks.filter(
+      treat => !matchingTreatments.some(mt => mt.id === treat.id)
+    );
+
+    const updatedPacks = matchingTreatments.map(pack => ({
+      ...pack,
+      isScheduled: true,
+    }));
+
+    setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
+  }
 
   useEffect(() => {
     const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
@@ -452,17 +491,23 @@ export default function Agenda({
                         className="w-full text-left to-hg-black500 mb-4"
                       >
                         Agenda cita para{' '}
-                        {productIds.map((productId, index) => {
-                          const product = selectedTreatments.find(
-                            product => product.id === productId
-                          );
-                          return (
-                            <span key={productId} className="font-semibold">
-                              {product!.title}
-                              {index < productIds.length - 1 && ', '}
-                            </span>
-                          );
-                        })}
+                        {selectedPack && (
+                          <span className="font-semibold">
+                            {selectedPack.title}
+                          </span>
+                        )}
+                        {!selectedPack &&
+                          productIds.map((productId, index) => {
+                            const product = selectedTreatments.find(
+                              product => product.id === productId
+                            );
+                            return (
+                              <span key={productId} className="font-semibold">
+                                {product!.title}
+                                {index < productIds.length - 1 && ', '}
+                              </span>
+                            );
+                          })}
                         {!isDerma && <> en tu clínica preferida</>}
                         {isDerma && <> online</>}
                       </Text>

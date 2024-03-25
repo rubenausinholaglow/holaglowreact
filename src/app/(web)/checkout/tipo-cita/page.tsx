@@ -27,6 +27,7 @@ export default function PVCitaMedica() {
     selectedTreatments,
     setSelectedTreatments,
     setTypeOfPayment,
+    setSelectedPack,
     previousSelectedTreatments,
     setPreviousSelectedTreatments,
   } = useSessionStore(state => state);
@@ -90,6 +91,8 @@ export default function PVCitaMedica() {
         setPreviousSelectedTreatments(selectedTreatments);
       setIsLoading(true);
       setSelectedTreatments([product]);
+    if (product.isPack) setSelectedPack(product);
+    else setSelectedPack(undefined);
       setTypeOfPayment(TypeOfPayment.Free);
       router.push(ROUTES.checkout.clinics);
     }
