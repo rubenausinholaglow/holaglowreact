@@ -26,6 +26,7 @@ export default function WaitComponent() {
     selectedDay,
     selectedClinic,
     selectedPacksTreatments,
+    selectedPack,
     analyticsMetrics,
     payment,
     setAppointmentUrl,
@@ -51,7 +52,8 @@ export default function WaitComponent() {
               user!,
               selectedPacksTreatments!,
               analyticsMetrics,
-              id
+              id,
+              selectedPack
             ).then(y => {
               if (y && y.length > 0) {
                 setAppointmentUrl(y[0].url);
