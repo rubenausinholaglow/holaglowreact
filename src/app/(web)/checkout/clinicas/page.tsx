@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCar, SvgRadioChecked } from 'app/icons/IconsDs';
@@ -65,26 +64,27 @@ export default function ClinicsCheckout() {
             <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
               <Title className="font-semibold">Selecciona tu clínica</Title>
 
-              {clinics.map((clinic, index) => (
+              {selectedTreatments[0].clinicDetail.map((item, index) => (
                 <Flex
                   layout="row-center"
                   className={`transition-all w-full justify-between p-3 cursor-pointer rounded-xl ${
-                    selectedClinic && selectedClinic.city === clinic.city
+                    selectedClinic && selectedClinic.city === item.clinic.city
                       ? 'bg-hg-secondary100'
                       : 'bg-hg-black50'
                   } `}
-                  key={clinic.city}
+                  key={item.clinic.city}
                   onClick={() => selectClinic(clinics[index])}
                 >
                   <Flex layout="col-left">
                     <Text size="lg" className="font-semibold mb-2">
-                      {clinic.city}
+                      {item.clinic.city}
                     </Text>
                     <address className="not-italic mb-2 text-xs">
-                      {clinic.address}
+                      {item.clinic.address}
                     </address>
                   </Flex>
-                  {selectedClinic && selectedClinic.city === clinic.city ? (
+                  {selectedClinic &&
+                  selectedClinic.city === item.clinic.city ? (
                     <SvgRadioChecked
                       height={24}
                       width={24}
