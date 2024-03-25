@@ -1,11 +1,11 @@
-import { isMobile } from 'react-device-detect';
+import isMobileSSR from '@utils/isMobileSSR';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
 import GoToPVButton from './GoToPVButton';
 
 export default function ProductPaymentOptions() {
-  const imgUrl = isMobile
+  const imgUrl = isMobileSSR()
     ? '/images/product/probadorVirtual.png'
     : '/images/product/probadorVirtual-desk.png';
 
@@ -34,7 +34,9 @@ export default function ProductPaymentOptions() {
           className="relative aspect-[3/2] md:aspect-auto md:absolute top-0 bottom-0 left-0 right-[50%]"
           style={{
             backgroundImage: `url(${imgUrl})`,
-            backgroundPosition: isMobile ? 'bottom center' : 'right center',
+            backgroundPosition: isMobileSSR()
+              ? 'bottom center'
+              : 'right center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
           }}
