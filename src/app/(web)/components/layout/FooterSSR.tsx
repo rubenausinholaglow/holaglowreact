@@ -1,4 +1,5 @@
 import { fetchClinics } from '@utils/fetch';
+import isMobileSSR from '@utils/isMobileSSR';
 import { SvgHolaglow } from 'app/icons/IconsDs';
 import { SvgInstagram } from 'app/icons/socialIcons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';

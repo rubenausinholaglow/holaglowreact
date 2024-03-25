@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
@@ -9,7 +10,6 @@ import {
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { useDeviceSizeSSR } from 'app/(web)/components/layout/Breakpoint';
 import { SvgArrow, SvgGlow, SvgInjection } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -185,7 +185,6 @@ export default function ProductPriceCard({
   isDashboard?: boolean;
   className?: string;
 }) {
-  const deviceSize = useDeviceSizeSSR();
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   useEffect(() => {
@@ -200,7 +199,7 @@ export default function ProductPriceCard({
     >
       <Flex layout="col-left" className="w-full">
         <Flex layout="row-between" className="w-full mb-2 items-start">
-          <Flex>
+          <Flex className="text-hg-secondary">
             <span className="text-2xl font-semibold md:text-2xl mr-2">
               {discountedPrice ? discountedPrice : product.price} €
             </span>
@@ -230,7 +229,7 @@ export default function ProductPriceCard({
               ) : (
                 <Text
                   size="xs"
-                  className="py-1 px-2 bg-hg-secondary text-white rounded-md font-semibold"
+                  className="py-1 px-2 bg-hg-primary text-hg-secondary rounded-md font-semibold"
                 >
                   Oferta especial
                 </Text>
@@ -238,7 +237,7 @@ export default function ProductPriceCard({
           </Flex>
         </Flex>
         <Text className="font-semibold md:text-lg">{product.title}</Text>
-        {product.isPack && deviceSize.isMobile && (
+        {product.isPack && isMobile && (
           <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
         )}
       </Flex>

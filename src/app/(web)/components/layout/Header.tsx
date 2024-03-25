@@ -1,17 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { headerHeight } from 'app/utils/constants';
-import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 
-import { isMobile } from './Breakpoint';
 import MobileNavigation from './MobileNavigation';
 
 let isTicking = false;
@@ -45,8 +44,6 @@ export default function Header({
 }: {
   hideAppointmentButton?: boolean;
 }) {
-  const ROUTES = useRoutes();
-
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
@@ -116,7 +113,7 @@ export default function Header({
                 <CheckHydration>
                   <Button
                     id="tmevents_nav_menu_appointment"
-                    size={isMobile() ? 'sm' : 'md'}
+                    size={isMobile ? 'sm' : 'md'}
                     type="white"
                     customStyles="bg-transparent"
                     href={ROUTES.checkout.type}
