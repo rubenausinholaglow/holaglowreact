@@ -365,7 +365,7 @@ export default function AppointmentResume({
 
           {!isProbadorVirtual && selectedTreatments[0] && !isDashboard && (
             <Flex
-              className={`w-full justify-between px-4 py-3 rounded-lg md:border-none mt-0.5 ${
+              className={`w-full justify-between px-4 py-3 rounded-b-lg md:border-none mt-0.5 ${
                 isDerma
                   ? 'bg-derma-primary500/20 text-derma-primary'
                   : isConfirmation
