@@ -8,11 +8,7 @@ import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
-import {
-  phoneValidationRegex,
-  postalCodeValidationRegex,
-  validateEmail,
-} from '@utils/validators';
+import { postalCodeValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
 import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';

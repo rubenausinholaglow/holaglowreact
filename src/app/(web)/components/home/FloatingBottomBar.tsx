@@ -8,7 +8,6 @@ import { Product } from 'app/types/product';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
 export default function FloatingBottomBar({

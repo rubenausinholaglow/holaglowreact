@@ -1,4 +1,3 @@
-import ROUTES from '@utils/routes';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { Professional } from 'app/types/clinic';
 import { Flex } from 'designSystem/Layouts/Layouts';

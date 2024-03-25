@@ -8,10 +8,9 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { CartItem, Product } from 'app/types/product';
-import { getDiscountedPrice } from 'app/utils/common';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -23,7 +22,6 @@ export default function PVCitaMedica() {
 
   const { addItemToCart } = useCartStore(state => state);
   const {
-    selectedPacksTreatments,
     selectedTreatments,
     setSelectedTreatments,
     setTypeOfPayment,
@@ -35,23 +33,6 @@ export default function PVCitaMedica() {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [PVProduct, setPVProduct] = useState<Product | null>(null);
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
-
-  useEffect(() => {
-    const discountedPrices: any = [];
-    if (selectedTreatments && !isEmpty(selectedTreatments)) {
-      selectedTreatments.map(product => {
-        const discountedPrice = getDiscountedPrice(product);
-
-        if (discountedPrice && discountedPrice !== product.price) {
-          discountedPrices.push(discountedPrice);
-        }
-      });
-    }
-
-    setDiscountedPrice(discountedPrices);
-    setIsHydrated(true);
-  }, [selectedTreatments]);
 
   useEffect(() => {
     async function initProduct(productId: string) {
@@ -91,8 +72,8 @@ export default function PVCitaMedica() {
         setPreviousSelectedTreatments(selectedTreatments);
       setIsLoading(true);
       setSelectedTreatments([product]);
-    if (product.isPack) setSelectedPack(product);
-    else setSelectedPack(undefined);
+      if (product.isPack) setSelectedPack(product);
+      else setSelectedPack(undefined);
       setTypeOfPayment(TypeOfPayment.Free);
       router.push(ROUTES.checkout.clinics);
     }
