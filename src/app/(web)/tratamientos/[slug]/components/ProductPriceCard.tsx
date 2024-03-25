@@ -199,7 +199,7 @@ export default function ProductPriceCard({
     >
       <Flex layout="col-left" className="w-full">
         <Flex layout="row-between" className="w-full mb-2 items-start">
-          <Flex>
+          <Flex className="text-hg-secondary">
             <span className="text-2xl font-semibold md:text-2xl mr-2">
               {discountedPrice ? discountedPrice : product.price} €
             </span>
@@ -229,7 +229,7 @@ export default function ProductPriceCard({
               ) : (
                 <Text
                   size="xs"
-                  className="py-1 px-2 bg-hg-secondary text-white rounded-md font-semibold"
+                  className="py-1 px-2 bg-hg-primary text-hg-secondary rounded-md font-semibold"
                 >
                   Oferta especial
                 </Text>
