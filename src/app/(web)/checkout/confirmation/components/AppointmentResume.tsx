@@ -406,7 +406,6 @@ export default function AppointmentResume({
           <TreatmentImage selectedSlot={selectedSlot} />
         )}
         <Flex layout="col-left" className={`w-full ${bgColor}`}>
-          {/* <TreatmentName /> */}
           {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
           {!appointment && <AppointmentDataResume />}
         </Flex>
