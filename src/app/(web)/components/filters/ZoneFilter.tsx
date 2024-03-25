@@ -1,13 +1,12 @@
 'use client';
 
+import { isMobile } from 'react-device-detect';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-
-import { isMobile, useDeviceSizeSSR } from '../layout/Breakpoint';
 
 export default function ZoneFilter({
   className,
@@ -19,7 +18,6 @@ export default function ZoneFilter({
   isDashboard?: boolean;
 }) {
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
-  const deviceSize = useDeviceSizeSSR();
 
   const ZONES = [
     {
@@ -58,7 +56,7 @@ export default function ZoneFilter({
     if (isDashboard) {
       return 'bg-hg-black100';
     } else {
-      return deviceSize.isMobile ? 'bg-white' : 'bg-derma-secondary300';
+      return isMobile ? 'bg-white' : 'bg-derma-secondary300';
     }
   }
 

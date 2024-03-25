@@ -62,6 +62,7 @@ export default function Agenda({
     selectedSlot,
     previousAppointment,
     selectedTreatments,
+    selectedPack,
     selectedPacksTreatments,
     selectedClinic,
     analyticsMetrics,
@@ -556,17 +557,23 @@ export default function Agenda({
                         className="w-full text-left to-hg-black500 mb-4"
                       >
                         Agenda cita para{' '}
-                        {productIds.map((productId, index) => {
-                          const product = selectedTreatments.find(
-                            product => product.id === productId
-                          );
-                          return (
-                            <span key={productId} className="font-semibold">
-                              {product!.title}
-                              {index < productIds.length - 1 && ', '}
-                            </span>
-                          );
-                        })}
+                        {selectedPack && (
+                          <span className="font-semibold">
+                            {selectedPack.title}
+                          </span>
+                        )}
+                        {!selectedPack &&
+                          productIds.map((productId, index) => {
+                            const product = selectedTreatments.find(
+                              product => product.id === productId
+                            );
+                            return (
+                              <span key={productId} className="font-semibold">
+                                {product!.title}
+                                {index < productIds.length - 1 && ', '}
+                              </span>
+                            );
+                          })}
                         {!isDerma && <> en tu clínica preferida</>}
                         {isDerma && <> online</>}
                       </Text>

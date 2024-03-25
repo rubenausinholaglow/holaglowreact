@@ -1,7 +1,5 @@
-'use client';
-
 import { Product } from '@interface/product';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
+import isMobileSSR from '@utils/isMobileSSR';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -20,11 +18,13 @@ export default function ProductImagesCarousel({
         dragEnabled={product.beforeAndAfterImages?.length > 1}
         touchEnabled={product.beforeAndAfterImages?.length > 1}
         visibleSlides={
-          product.beforeAndAfterImages?.length > 1 ? (isMobile() ? 1 : 3) : 1
+          product.beforeAndAfterImages?.length > 1 ? (isMobileSSR() ? 1 : 3) : 1
         }
-        hasCounter={isMobile() && product.beforeAndAfterImages?.length > 1}
+        hasCounter={isMobileSSR() && product.beforeAndAfterImages?.length > 1}
         className={`md:px-0 rounded-xl aspect-square md:aspect-auto ${
-          product.beforeAndAfterImages?.length < 2 && !isMobile() ? 'w-1/2' : ''
+          product.beforeAndAfterImages?.length < 2 && !isMobileSSR()
+            ? 'w-1/2'
+            : ''
         }
         `}
       >
@@ -67,7 +67,7 @@ export default function ProductImagesCarousel({
             </div>
           ))}
       </Carousel>
-      {product.beforeAndAfterImages?.length <= 1 && !isMobile() && (
+      {product.beforeAndAfterImages?.length <= 1 && !isMobileSSR() && (
         <div className="w-1/2">
           <Title size="2xl" className="text-left font-bold mb-4">
             Consigue el resultado que deseas

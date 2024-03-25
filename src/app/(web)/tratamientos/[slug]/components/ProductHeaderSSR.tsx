@@ -3,14 +3,9 @@ import { Product } from 'app/types/product';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import dynamic from 'next/dynamic';
-import Image from 'next/image';
 
+import ProductImagesCarousel from './ProductImagesCarousel';
 import ProductInfoSSR from './ProductInfoSSR';
-
-const ProductImagesCarousel = dynamic(() => import('./ProductImagesCarousel'), {
-  ssr: false,
-});
 
 export default function ProductHeaderSSR({ product }: { product: Product }) {
   const validTypes = [3, 6, 7, 8];

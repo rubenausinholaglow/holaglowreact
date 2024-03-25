@@ -1,6 +1,7 @@
 'use client';
 
-import { useSessionStore } from 'app/stores/globalStore';
+import { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -9,12 +10,19 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function HeroDerma() {
-  const { deviceSize } = useSessionStore(state => state);
+  const routinesArray = ['acné', 'melasma', 'rosácea', 'antiaging'];
+  const [routineIndex, setRoutineIndex] = useState(0);
 
-  const HEADER_HEIGHT = deviceSize.isMobile
+  const startTimer = () => {
+    setTimeout(() => {
+      setRoutineIndex(routineIndex < 3 ? routineIndex + 1 : 0);
+    }, 2000);
+  };
+
+  startTimer();
+  const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `-${HEADER_HEIGHT}px`;
@@ -48,7 +56,7 @@ export default function HeroDerma() {
                   src="/images/derma/home/GoogleReviews.png"
                   alt="Holaglow reviews"
                   height={200}
-                  width={deviceSize.isMobile ? 150 : 175}
+                  width={isMobile ? 150 : 175}
                   className="mr-auto"
                 />
                 <Text className="text-hg-black400 text-xs">
@@ -62,20 +70,23 @@ export default function HeroDerma() {
                 <Flex layout="col-left" className="relative z-10">
                   <Title
                     size="2xl"
-                    className="text-derma-primary text-left mb-4"
+                    className="text-derma-primary text-left mb-4 text-wrap"
                   >
-                    Tu rutina facial diseñada por un médico
+                    Tu rutina facial de 3 meses para{' '}
+                    <span className="text-derma-tertiary text-left mb-4">
+                      {routinesArray[routineIndex]}
+                    </span>
                   </Title>
                   <Text
                     isAnimated
                     className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
                   >
-                    Un dermatólogo estético estudiará tu piel en una
-                    videollamada para diseñar una rutina facial con{' '}
+                    Te enviamos a casa{' '}
                     <span className="font-semibold">
-                      productos personalizados
+                      tu rutina facial personalizada
                     </span>{' '}
-                    que te enviaremos a casa por 99€
+                    por 99€ y te devolvemos el dinero si no ves una mejora al
+                    finalizar el tratamiento
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">

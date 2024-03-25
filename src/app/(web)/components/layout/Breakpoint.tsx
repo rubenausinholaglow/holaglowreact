@@ -75,3 +75,18 @@ export function isMobile() {
     }
   }
 }
+
+export function isTablet() {
+  if (isClient()) {
+    const breakpoint = window.document.querySelector('#breakpoint');
+
+    if (breakpoint) {
+      const content = getComputedStyle(breakpoint, ':after').content.replace(
+        /["']/g,
+        ''
+      );
+
+      return content === 'md';
+    }
+  }
+}
