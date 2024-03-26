@@ -21,14 +21,8 @@ export default function ClinicsCheckout() {
   const ROUTES = useRoutes();
 
   const { clinics } = useGlobalPersistedStore(state => state);
-  const {
-    selectedClinic,
-    setSelectedClinic,
-    selectedPacksTreatments,
-    selectedTreatments,
-  } = useSessionStore(state => state);
-
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
+  const { selectedClinic, setSelectedClinic, selectedTreatments } =
+    useSessionStore(state => state);
 
   useEffect(() => {
     if (selectedClinic) {
@@ -41,20 +35,9 @@ export default function ClinicsCheckout() {
     router.push(ROUTES.checkout.schedule);
   };
 
-  useEffect(() => {
-    const discountedPrices: any = [];
-    if (selectedTreatments && !isEmpty(selectedTreatments)) {
-      selectedTreatments.map(product => {
-        const discountedPrice = getDiscountedPrice(product);
-
-        if (discountedPrice && discountedPrice !== product.price) {
-          discountedPrices.push(discountedPrice);
-        }
-      });
-    }
-
-    setDiscountedPrice(discountedPrices);
-  }, [selectedTreatments]);
+  const availableClinicsByPRoduct = selectedTreatments[0].clinicDetail.map(
+    item => item.clinic.city
+  );
 
   return (
     <App>
@@ -64,27 +47,33 @@ export default function ClinicsCheckout() {
             <Flex layout="col-left" className="gap-4 w-full md:w-1/2">
               <Title className="font-semibold">Selecciona tu clínica</Title>
 
-              {selectedTreatments[0].clinicDetail.map((item, index) => (
+              {clinics.map((item, index) => (
                 <Flex
                   layout="row-center"
                   className={`transition-all w-full justify-between p-3 cursor-pointer rounded-xl ${
-                    selectedClinic && selectedClinic.city === item.clinic.city
+                    availableClinicsByPRoduct.includes(item.city)
+                      ? ''
+                      : 'pointer-events-none opacity-20'
+                  } ${
+                    selectedClinic && selectedClinic.city === item.city
                       ? 'bg-hg-secondary100'
                       : 'bg-hg-black50'
                   } `}
-                  key={item.clinic.city}
+                  key={item.city}
                   onClick={() => selectClinic(clinics[index])}
                 >
                   <Flex layout="col-left">
                     <Text size="lg" className="font-semibold mb-2">
-                      {item.clinic.city}
+                      {item.city}{' '}
+                      {!availableClinicsByPRoduct.includes(item.city) && (
+                        <span className="text-sm">(No disponible)</span>
+                      )}
                     </Text>
                     <address className="not-italic mb-2 text-xs">
-                      {item.clinic.address}
+                      {item.address}
                     </address>
                   </Flex>
-                  {selectedClinic &&
-                  selectedClinic.city === item.clinic.city ? (
+                  {selectedClinic && selectedClinic.city === item.city ? (
                     <SvgRadioChecked
                       height={24}
                       width={24}
