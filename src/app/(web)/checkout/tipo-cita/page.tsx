@@ -91,8 +91,8 @@ export default function PVCitaMedica() {
         setPreviousSelectedTreatments(selectedTreatments);
       setIsLoading(true);
       setSelectedTreatments([product]);
-    if (product.isPack) setSelectedPack(product);
-    else setSelectedPack(undefined);
+      if (product.isPack) setSelectedPack(product);
+      else setSelectedPack(undefined);
       setTypeOfPayment(TypeOfPayment.Free);
       router.push(ROUTES.checkout.clinics);
     }
@@ -107,7 +107,7 @@ export default function PVCitaMedica() {
     setTypeOfPayment(TypeOfPayment.Reservation);
     if (!isEmpty(previousSelectedTreatments)) {
       setSelectedTreatments(previousSelectedTreatments);
-      router.push(ROUTES.checkout.treatments);
+      router.push(ROUTES.checkout.clinics);
     } else {
       isEmpty(selectedTreatments)
         ? router.push(ROUTES.checkout.treatments)

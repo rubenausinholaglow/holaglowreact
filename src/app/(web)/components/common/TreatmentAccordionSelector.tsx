@@ -337,7 +337,7 @@ export default function TreatmentAccordionSelector({
                             selectedProduct => selectedProduct.id === product.id
                           );
 
-                    if (isSelected) {
+                    if (isSelected && isDashboard) {
                       removeTreatment(product, index);
                     } else {
                       addTreatment(product, index);
