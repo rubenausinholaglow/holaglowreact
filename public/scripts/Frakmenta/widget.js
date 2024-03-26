@@ -1,7 +1,7 @@
 let me, apikey, url_ecommerce, url_api, langJson, langValue;
 
 async function simulator() {
-
+    console.log('simulator ON')
     frakmenta_init();
     let langJson = await getTextsByLang(getLang());
 
@@ -73,6 +73,7 @@ async function simulator() {
 }
 
 function frakmenta_init() {
+     console.log('INIT ON')
     me = document.querySelector('script[data-apikey][data-name="widgetFK"]');
 
     if (me != null) {

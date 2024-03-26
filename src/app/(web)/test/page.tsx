@@ -26,11 +26,12 @@ export default function Page() {
       if (!scriptLoaded) {
         const scriptTag = document.createElement("script");
         scriptTag.src = url;
-        scriptTag.setAttribute("data-apikey", "test");
+        scriptTag.setAttribute("data-apikey", "https://beta2.frakmenta.com");
         scriptTag.setAttribute("data-name", "widgetFK");
         document.head.appendChild(scriptTag);
         scriptTag.addEventListener('load', function() {
           var widgets = frakmenta_init();
+          simulator();
         });
       } else {
        
@@ -41,35 +42,11 @@ export default function Page() {
     <App>
       <MainLayout isCheckout>
         test
-        <script>simulator();</script>
-        <iframe
-          className="display:none"
-          id="frakmentaEcommerce"
-          name="frameEcommerce"
-          scrolling="no"
-        ></iframe>
-        <form
-          id="fk-form-installments"
-          name="pagoForm"
-          target="frameEcommerce"
-          method="POST"
-          action="https://frakmenta.com/op/ecommerce/load"
-        >
-          <input
-            id="infoTotal"
-            name="infoTotal"
-            className="border-black border-4"
-          />
-          <input id="token" name="token" className="border-black border-4" />
-          <button
-            id="Pagar"
-            name="Pagar"
-            type="submit"
-            className="button btn-pagar"
-          >
-            Paga con frakmenta
-          </button>
-        </form>
+        <div
+          className="fk-installments"
+          id="fk-widget-installments"
+          data-product_price="500"
+        ></div>
       </MainLayout>
     </App>
   );
