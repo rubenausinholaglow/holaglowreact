@@ -165,12 +165,8 @@ export default function AppointmentResume({
 
   const TreatmentName = ({ className = '' }: { className?: string }) => {
     return (
-      <Text
-        className={twMerge(
-          `font-semibold px-4 pt-4 text-xs md:text-sm ${className}`
-        )}
-      >
-        {selectedTreatmentsNames}
+      <Text className={`font-semibold text-xs md:text-sm ${className}`}>
+        {selectedPack ? selectedPack.title : selectedTreatmentsNames}
       </Text>
     );
   };
@@ -280,7 +276,7 @@ export default function AppointmentResume({
                   <Flex className="justify-between w-full">
                     <Text>Pendiente de pago en clínica</Text>
                     <Text className="font-semibold">
-                      {(selectedTreatments[0].price - 49).toFixed(2)}€
+                      {(product.price - 49).toFixed(2)}€
                     </Text>
                   </Flex>
 
@@ -351,11 +347,11 @@ export default function AppointmentResume({
                           );
                         })
                       ) : (
-                        <Flex className="items-start mb-2">
-                          {selectedTreatments[0] && (
+                        selectedTreatments[0].description && (
+                          <Flex className="items-start mb-2">
                             <Text>{selectedTreatments[0].description}</Text>
-                          )}
-                        </Flex>
+                          </Flex>
+                        )
                       )}
                     </Flex>
                   )}
