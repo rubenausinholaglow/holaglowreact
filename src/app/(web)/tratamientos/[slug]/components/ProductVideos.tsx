@@ -21,7 +21,7 @@ export default function ProductVideos({ product }: { product: Product }) {
 
   const videos = product?.videos ? product.videos : defaultVideos;
 
-  if (videos.length < 1) {
+  if (videos.length < 0) {
     return <></>;
   }
 
@@ -30,10 +30,10 @@ export default function ProductVideos({ product }: { product: Product }) {
       <Flex
         layout="col-left"
         className={`w-full ${
-          videos.length === 1 && !isMobileSSR() ? 'flex-row gap-16' : ''
+          videos.length <= 1 && !isMobileSSR() ? 'flex-row gap-16' : ''
         }`}
       >
-        <div className={videos.length === 1 && !isMobileSSR() ? 'w-1/2' : ''}>
+        <div className={videos.length <= 1 && !isMobileSSR() ? 'w-1/2' : ''}>
           <Title size="2xl" className="font-bold mb-6">
             Holaglow lovers
           </Title>
@@ -44,7 +44,7 @@ export default function ProductVideos({ product }: { product: Product }) {
         </div>
         <div
           className={
-            videos.length === 1 && !isMobileSSR() ? 'w-1/2 aspect-square' : ''
+            videos.length <= 1 && !isMobileSSR() ? 'w-1/2 aspect-square' : ''
           }
         >
           <CheckHydration>
@@ -68,11 +68,15 @@ export default function ProductVideos({ product }: { product: Product }) {
                     </div>
                   );
                 }
-
                 return null;
               })}
             </Carousel>
           </CheckHydration>
+          {videos.length == 0 && (
+            <div key={'/videos/pdp.mp4'} className="rounded-2xl ">
+              <ProductVideo src={'/videos/pdp.mp4'} />
+            </div>
+          )}
         </div>
       </Flex>
     </Container>
