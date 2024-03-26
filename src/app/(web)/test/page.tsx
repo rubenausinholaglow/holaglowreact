@@ -41,7 +41,12 @@ export default function Page() {
     <App>
       <MainLayout isCheckout>
         test
-        <script>{`simulator();`}</script>
+        <iframe
+          className="display:none"
+          id="frakmentaEcommerce"
+          name="frameEcommerce"
+          scrolling="no"
+        ></iframe>
       </MainLayout>
     </App>
   );
