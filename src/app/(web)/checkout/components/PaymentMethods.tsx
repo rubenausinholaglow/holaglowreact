@@ -4,14 +4,11 @@ import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import {
-  EmbeddedCheckout,
-  EmbeddedCheckoutProvider,
-} from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import { StripeForm } from './StripeForm';
+import { StripePaymentElementOptions, loadStripe } from '@stripe/stripe-js';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
-import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   checkoutPaymentItems,
@@ -34,6 +31,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { Appearance } from '@stripe/stripe-js';
 
 const PAYMENT_ICONS = {
   alma: ['alma.svg'],
@@ -42,6 +40,9 @@ const PAYMENT_ICONS = {
   Efectivo: [],
   creditCard: ['visa.svg', 'mastercard.svg', 'googlepay.svg', 'applepay.svg'],
   direct: [],
+};
+const paymentElementOptions: StripePaymentElementOptions = {
+  layout: 'tabs',
 };
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -59,6 +60,7 @@ export const PaymentMethods = ({
   const [showAlmaButtons, setShowAlmaButtons] = useState(false);
 
   const [clientSecret, setClientSecret] = useState('');
+  const [isLoadingStripe, setIsLoadingStripe] = useState<boolean>(false);
   const [isLoadingKey, setIsLoadingKey] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -146,6 +148,10 @@ export const PaymentMethods = ({
       [key]: false,
     });
   }
+  const appearance: Appearance = {
+    theme: 'stripe',
+    labels: 'floating',
+  };
 
   function isLoadingPayment() {
     return Object.values(isLoadingKey).some(value => value) ? true : false;
@@ -190,9 +196,11 @@ export const PaymentMethods = ({
                       className="shrink-0 hidden group-data-[state=open]:block"
                     />
                     <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-                    <Text>
-                      {method.label.replace('{0}', isDerma ? '99' : '49')}
-                    </Text>
+                    {method.label.length > 0 && (
+                      <Text>
+                        {method.label.replace('{0}', isDerma ? '99' : '49')}
+                      </Text>
+                    )}
                   </Flex>
                   <Flex className="ml-auto gap-2">
                     {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
@@ -287,18 +295,13 @@ export const PaymentMethods = ({
                     ) : (
                       <></>
                     )}
-                    {isLoadingButton && method.key === 'creditCard' && (
-                      <Flex className="w-full justify-center">
-                        <SvgSpinner height={24} width={24} />
-                      </Flex>
-                    )}
                     {clientSecret && method.key == 'creditCard' && (
-                      <EmbeddedCheckoutProvider
+                      <Elements
                         stripe={stripePromise}
-                        options={{ clientSecret }}
+                        options={{ clientSecret, appearance }}
                       >
-                        <EmbeddedCheckout className="w-full" />
-                      </EmbeddedCheckoutProvider>
+                        <StripeForm />
+                      </Elements>
                     )}
                     {errorMessage && (
                       <p className="text-red-600"> {errorMessage} </p>
