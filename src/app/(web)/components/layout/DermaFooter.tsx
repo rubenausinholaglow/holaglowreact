@@ -2,7 +2,6 @@
 
 import { SvgHolaglowDermaUnicolor } from 'app/icons/iconsDerma';
 import { SvgInstagram, SvgTikTok } from 'app/icons/socialIcons';
-import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -15,7 +14,6 @@ export default function DermaFooter({
   className?: string;
   hideFooter?: boolean;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
   const isHome = usePathname() === '/';
 
   if (hideFooter) {
@@ -45,13 +43,13 @@ export default function DermaFooter({
 
             <Flex layout="row-left" className="w-full gap-4 mb-8">
               <a
-                href="https://www.instagram.com/holaglow.clinics/"
+                href="https://www.instagram.com/holaglow.derma/"
                 id={'tmevent_footer'}
               >
                 <SvgInstagram height={24} width={24} className="text-white" />
               </a>
               <a
-                href="https://www.tiktok.com/@holaglow.clinics"
+                href="https://www.tiktok.com/@holaglow.derma"
                 id={'tmevent_footer'}
               >
                 <SvgTikTok height={24} width={24} className="text-white" />
@@ -72,7 +70,10 @@ export default function DermaFooter({
             </Text>
             <Text size="xs" className="mb-6">
               Para dudas y pedidos, escríbenos a{' '}
-              <a href="mailto:hola@holaglow.com" className="text-derma-primary">
+              <a
+                href="mailto:derma@holaglow.com"
+                className="text-derma-primary"
+              >
                 derma@holaglow.com
               </a>
             </Text>

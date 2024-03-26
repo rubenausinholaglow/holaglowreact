@@ -3,9 +3,10 @@ import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import DermaHome from '../components/dermahome/DermaHome';
 
 export const metadata: Metadata = {
-  title: 'Holaglow - La nueva cara de la medicina estética',
+  metadataBase: new URL('https://holaglow.com'),
+  title: 'Cuidado facial personalizado - Holaglow Derma',
   description:
-    'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
+    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para tu piel sin salir de casa.',
 };
 
 export default function DerHome() {

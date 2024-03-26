@@ -4,7 +4,6 @@ import Bugsnag from '@bugsnag/js';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
-import { INITIAL_STATE } from '@utils/constants';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
@@ -13,7 +12,6 @@ import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { StatusBudget, TicketBudget } from 'app/types/budget';
 import { MessageType } from 'app/types/messageSocket';
-import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
 import { Ticket } from 'app/types/ticket';
 import { applyDiscountToCart } from 'app/utils/utils';
 import {
@@ -37,7 +35,7 @@ export const PaymentModule = () => {
   const router = useRouter();
 
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
-  const [onLoad, setOnLoad] = useState(false);
+  const [_, setOnLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
@@ -60,7 +58,6 @@ export const PaymentModule = () => {
     storedClinicProfessionalId,
     storedBudgetId,
     storedAppointmentId,
-    setBudgetId,
   } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
@@ -265,9 +262,6 @@ export const PaymentModule = () => {
     try {
       const result = await sendTicket();
       if (result) {
-        setBudgetId('');
-        usePaymentList.setState(INITIAL_STATE_PAYMENT);
-        useCartStore.setState(INITIAL_STATE);
         if (remoteControl) {
           const message: any = {
             clinicId: storedClinicId,
@@ -276,8 +270,6 @@ export const PaymentModule = () => {
           };
           messageService.goToPage(message);
           router.push('/dashboard/remoteControl');
-        } else {
-          router.push('/dashboard/menu');
         }
 
         setMessageNotification('Ticket Creado Correctamente');

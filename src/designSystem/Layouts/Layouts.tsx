@@ -1,22 +1,29 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export const Container = ({
   isHeader = false,
   className,
+  id,
+  style,
   children,
+  ...rest
 }: {
   isHeader?: boolean;
   className?: string;
+  id?: string;
+  style?: CSSProperties;
   children: ReactNode;
 }) => {
   return (
     <div
       className={twMerge(
-        `w-full px-4 mx-auto ${isHeader ? 'max-w-full' : 'max-w-xl'} ${
-          className ? className : ''
-        } `
+        `w-full px-4 mx-auto ${
+          isHeader ? 'xl:max-w-3xl xl:px-24' : 'max-w-xl'
+        } ${className ? className : ''} `
       )}
+      {...rest}
+      {...(id && { id })}
     >
       {children}
     </div>

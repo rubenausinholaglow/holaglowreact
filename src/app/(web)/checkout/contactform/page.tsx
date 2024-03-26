@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
-import useRegistration from '@utils/userUtils';
+import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
@@ -15,7 +16,7 @@ import {
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Title } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
 
@@ -63,6 +64,8 @@ export default function ConctactForm() {
     interestedTreatment: '',
     treatmentPrice: 0,
     origin: '',
+    city: '',
+    address: '',
   });
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
@@ -87,49 +90,67 @@ export default function ConctactForm() {
   useEffect(() => {
     async function checkout() {
       const createdUser = await registerUser(client, false, false, false);
-      await initializePayment(activePayment, createdUser!);
+      await initializePayment(
+        activePayment,
+        createdUser!,
+        false,
+        undefined,
+        undefined,
+        undefined,
+        false
+      );
     }
-    if (activePayment != PaymentBank.None && cart.length > 0) checkout();
+    if (
+      activePayment != PaymentBank.None &&
+      cart.length > 0 &&
+      client.email != ''
+    )
+      checkout();
   }, [activePayment]);
 
   return (
-    <MainLayout
-      isCheckout={!hideLayout}
-      hideHeader={hideLayout}
-      hideFooter={hideLayout}
-    >
-      <Container className="px-0 md:mt-8 md:pb-8">
-        <Flex
-          layout="col-left"
-          className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
-        >
-          <div className="w-full md:w-1/2 md:order-2">
-            <AppointmentResume isProbadorVirtual={isProbadorVirtual} />
-          </div>
-          <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
-            <Title size="xl" className="font-semibold mb-4">
-              Reserva tu cita
-            </Title>
-            <RegistrationForm
-              redirect={hideLayout}
-              hasContinueButton={isProbadorVirtual}
-              formData={client}
-              setClientData={setClient}
-            />
-
-            {!isProbadorVirtual && (
-              <CheckoutPayment
-                hasError={hasError}
-                className="mt-8"
-                formData={client}
+    <App>
+      <MainLayout
+        isCheckout={!hideLayout}
+        hideHeader={hideLayout}
+        hideFooter={hideLayout}
+      >
+        <Container className="px-0 md:mt-8 md:pb-8">
+          <Flex
+            layout="col-left"
+            className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
+          >
+            <div className="w-full md:w-1/2 p-4 md:order-2">
+              <Text className="font-semibold text-lg hidden md:block pl-4">
+                Detalle de tu tratamiento
+              </Text>
+              <AppointmentResume isProbadorVirtual={isProbadorVirtual} />
+            </div>
+            <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
+              <Title size="xl" className="font-semibold mb-4">
+                Reserva tu cita
+              </Title>
+              <RegistrationForm
+                redirect={hideLayout}
+                hasContinueButton={isProbadorVirtual}
+                initialValues={client}
+                setClientData={setClient}
               />
-            )}
-          </div>
-        </Flex>
-      </Container>
-      <div className="hidden md:block absolute left-0 right-0 -z-50 top-0 bottom-0">
-        <div className="bg-hg-cream500 w-1/2 h-full"></div>
-      </div>
-    </MainLayout>
+
+              {!isProbadorVirtual && (
+                <CheckoutPayment
+                  hasError={hasError}
+                  className="mt-8"
+                  formData={client}
+                />
+              )}
+            </div>
+          </Flex>
+        </Container>
+        <div className="hidden md:block absolute left-0 right-0 -z-50 top-0 bottom-0">
+          <div className="bg-hg-cream500 w-1/2 h-full"></div>
+        </div>
+      </MainLayout>
+    </App>
   );
 }

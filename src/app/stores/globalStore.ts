@@ -1,3 +1,4 @@
+import { LoginResponse } from '@interface/Login';
 import { PaymentBank, PaymentInitResponse } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
@@ -5,10 +6,10 @@ import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
-import { Product } from 'app/types/product';
+import { PackUnities, Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -30,32 +31,43 @@ interface SessionStore {
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
+  selectedPack?: Product;
+  previousSelectedTreatments: Product[];
   selectedPacksTreatments?: Product[];
   selectedClinic?: Clinic;
   selectedSlot?: Slot;
-  selectedDay: Dayjs;
+  selectedDay: Dayjs | undefined;
   previousAppointment: Appointment | undefined;
   payment: PaymentInitResponse | undefined;
+  userLoginResponse: LoginResponse | undefined;
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
+  dermaPhone: string;
+  treatmentPacks: PackUnities[];
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
+  setSelectedPack: (value: Product | undefined) => void;
+  setPreviousSelectedTreatments: (value: Product[]) => void;
   setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
-  setSelectedDay: (day: Dayjs) => void;
+  setSelectedDay: (day?: Dayjs) => void;
   setPreviousAppointment: (appointment: Appointment) => void;
   setPayment: (payment: PaymentInitResponse | undefined) => void;
+  setUserLoginResponse: (userLoginResponse: LoginResponse | undefined) => void;
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
+  setDermaPhone: (phone: string) => void;
+  setTreatmentPacks: (treatment: PackUnities[]) => void;
 }
 
 interface GlobalPersistStore {
   stateProducts: Product[];
+  dermaProducts: Product[];
   dashboardProducts: Product[];
   clinics: Clinic[];
   user?: User;
@@ -72,10 +84,12 @@ interface GlobalPersistStore {
   storedClinicProfessionalId: string | '';
   storedBudgetId: string | '';
   activePayment: PaymentBank;
+  isCallCenter: boolean;
 }
 
 interface GlobalPersistActions {
   setStateProducts: (value: Product[]) => void;
+  setDermaProducts: (value: Product[]) => void;
   setDashboardProducts: (value: Product[]) => void;
   setClinics: (value: Clinic[]) => void;
   setCurrentUser: (value?: User) => void;
@@ -92,6 +106,7 @@ interface GlobalPersistActions {
   setClinicProfessionalId: (value?: string) => void;
   setBudgetId: (value?: string) => void;
   setActivePayment: (value?: PaymentBank) => void;
+  setIsCallCenter: (value?: boolean) => void;
 }
 
 export const useSessionStore = create(
@@ -118,15 +133,20 @@ export const useSessionStore = create(
         isWideScreen: false,
       },
       selectedTreatments: [],
+      selectedPack: undefined,
+      previousSelectedTreatments: [],
       selectedPacksTreatments: [],
       selectedClinic: undefined,
-      selectedDay: dayjs(),
+      selectedDay: undefined,
       selectedSlot: undefined,
       previousAppointment: undefined,
       isMobile: true,
       payment: undefined,
+      userLoginResponse: undefined,
       typeOfPayment: TypeOfPayment.Free,
       appointmentUrl: '',
+      dermaPhone: '',
+      treatmentPacks: [],
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -141,6 +161,12 @@ export const useSessionStore = create(
       },
       setSelectedTreatments: value => {
         set({ selectedTreatments: value });
+      },
+      setSelectedPack: value => {
+        set({ selectedPack: value });
+      },
+      setPreviousSelectedTreatments: value => {
+        set({ previousSelectedTreatments: value });
       },
       setSelectedPackTreatments: value => {
         set({ selectedPacksTreatments: value });
@@ -160,13 +186,22 @@ export const useSessionStore = create(
       setPayment: value => {
         set({ payment: value });
       },
+      setUserLoginResponse: value => {
+        set({ userLoginResponse: value });
+      },
       setTypeOfPayment: value => {
         set({ typeOfPayment: value });
+      },
+      setDermaPhone: value => {
+        set({ dermaPhone: value });
+      },
+      setTreatmentPacks: value => {
+        set({ treatmentPacks: value });
       },
     }),
     {
       name: 'session-storage',
-      version: 8,
+      version: 21,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -178,11 +213,15 @@ export const useGlobalPersistedStore = create(
       promo: undefined,
       blogPosts: undefined,
       stateProducts: [],
+      dermaProducts: [],
       dashboardProducts: [],
       clinics: [],
       user: undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
+      },
+      setDermaProducts: (value: Product[]) => {
+        set({ dermaProducts: value });
       },
       setDashboardProducts: (value: Product[]) => {
         set({ dashboardProducts: value });
@@ -243,10 +282,14 @@ export const useGlobalPersistedStore = create(
       setActivePayment: value => {
         set({ activePayment: value });
       },
+      isCallCenter: false,
+      setIsCallCenter: value => {
+        set({ isCallCenter: value });
+      },
     }),
     {
       name: 'global-storage',
-      version: 27,
+      version: 53,
     }
   )
 );

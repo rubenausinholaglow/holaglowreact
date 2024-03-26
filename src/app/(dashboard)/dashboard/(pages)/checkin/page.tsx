@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
+import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgScanQR } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -28,8 +29,12 @@ const CHECKIN_LOADING_TEXT = 'Checking In...';
 
 export default function Page() {
   const [isScanning, setIsScanning] = useState(false);
-  const { setSelectedClinic, setSelectedSlot, setSelectedTreatments } =
-    useSessionStore(state => state);
+  const {
+    setSelectedClinic,
+    setSelectedSlot,
+    setSelectedTreatments,
+    setSelectedPack,
+  } = useSessionStore(state => state);
   const { clinics, user, setUserCheckIn, setCurrentUser, setClinicId } =
     useGlobalPersistedStore(state => state);
 
@@ -88,6 +93,7 @@ export default function Page() {
     setSelectedSlot(undefined);
     setClinicId('');
     setSelectedTreatments([]);
+    setSelectedPack(undefined);
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     const clinicId = params.get('clinicId') || '';
@@ -101,51 +107,56 @@ export default function Page() {
   }, [clinics]);
 
   return (
-    <MainLayout
-      isDashboard
-      hideBackButton
-      hideContactButtons
-      hideProfessionalSelector
-      hideBottomBar
-    >
-      <CheckHydration>
-        <Flex layout="col-center" className="w-full">
-          <Flex layout="col-center" className="gap-4 mb-12">
-            <Title className="font-bold text-5xl mb-8">
-              Te damos la <br />
-              <Underlined color={HOLAGLOW_COLORS['primary']}>
-                Bienvenid@
-              </Underlined>{' '}
-            </Title>
-            <Text className="mb-8 font-bold">
-              Escanea el QR que te hemos envíado para acceder a tu cita.
-            </Text>
-            {isScanning ? (
-              <ReadQr
-                onScanSuccess={onScanSuccess}
-                onErrorScan={reloadPageAfterDelay}
+    <App>
+      <MainLayout
+        isDashboard
+        hideBackButton
+        hideContactButtons
+        hideProfessionalSelector
+        hideBottomBar
+      >
+        <CheckHydration>
+          <Flex layout="col-center" className="w-full">
+            <Flex layout="col-center" className="gap-4 mb-12">
+              <Title className="font-bold text-5xl mb-8">
+                Te damos la <br />
+                <Underlined color={HOLAGLOW_COLORS['primary']}>
+                  Bienvenid@
+                </Underlined>{' '}
+              </Title>
+              <Text className="mb-8 font-bold">
+                Escanea el QR que te hemos envíado para acceder a tu cita.
+              </Text>
+              {isScanning ? (
+                <ReadQr
+                  onScanSuccess={onScanSuccess}
+                  onErrorScan={reloadPageAfterDelay}
+                />
+              ) : (
+                <div
+                  onClick={startScan}
+                  className="justify-center items-center"
+                >
+                  <SvgScanQR height={192} width={192} fill="white" />
+                  <Text className="mb-8 text-center">{SCAN_QR}</Text>
+                </div>
+              )}
+            </Flex>
+
+            {!isScanning && (
+              <FormSection
+                formData={formData}
+                errors={errors}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+                checkIn={checkIn}
               />
-            ) : (
-              <div onClick={startScan} className="justify-center items-center">
-                <SvgScanQR height={192} width={192} fill="white" />
-                <Text className="mb-8 text-center">{SCAN_QR}</Text>
-              </div>
             )}
           </Flex>
-
-          {!isScanning && (
-            <FormSection
-              formData={formData}
-              errors={errors}
-              handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
-              isLoading={isLoading}
-              checkIn={checkIn}
-            />
-          )}
-        </Flex>
-      </CheckHydration>
-    </MainLayout>
+        </CheckHydration>
+      </MainLayout>
+    </App>
   );
 }
 

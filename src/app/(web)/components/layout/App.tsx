@@ -1,7 +1,7 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
-import { poppins } from 'app/fonts';
+import { ReactNode, useEffect, useState } from 'react';
+import { gtUltra, poppins } from 'app/fonts';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
@@ -55,6 +55,9 @@ export default function Html({ children }: { children: ReactNode }) {
     setAnalyticsMetrics(analyticsMetrics);
   }
 
+  const [productsLoaded, setProductsLoaded] = useState(false);
+  const [clinicsLoaded, setClinicsLoaded] = useState(false);
+
   const {
     isModalOpen,
     showModalBackground,
@@ -70,7 +73,9 @@ export default function Html({ children }: { children: ReactNode }) {
 
   const {
     stateProducts,
+    dermaProducts,
     setStateProducts,
+    setDermaProducts,
     clinics,
     setClinics,
     promo,
@@ -84,16 +89,28 @@ export default function Html({ children }: { children: ReactNode }) {
     getAnalyticsMetrics();
   }, []);
 
+  const isDerma =
+    typeof window !== 'undefined' &&
+    window.location &&
+    window.location.href &&
+    window.location.href.includes('derma');
+
   useEffect(() => {
     async function initProducts() {
       if (storedBoxId && storedClinicId) return true;
-      const products = await fetchProducts();
-      setStateProducts(products);
+      const products = await fetchProducts({ isDerma: false });
+      if (!isDerma) setStateProducts(products);
+      else setDermaProducts(products);
       setFilteredProducts(products);
     }
 
-    if (isEmpty(stateProducts)) {
+    if (
+      ((isEmpty(stateProducts) && !isDerma) ||
+        (isEmpty(dermaProducts) && isDerma)) &&
+      !productsLoaded
+    ) {
       initProducts();
+      setProductsLoaded(true);
     }
   }, [stateProducts]);
 
@@ -103,8 +120,9 @@ export default function Html({ children }: { children: ReactNode }) {
       setClinics(clinics);
     }
 
-    if (isEmpty(clinics)) {
+    if (isEmpty(clinics) && !clinicsLoaded) {
       initClinics();
+      setClinicsLoaded(true);
     }
   }, [clinics]);
 
@@ -125,7 +143,9 @@ export default function Html({ children }: { children: ReactNode }) {
 
   return (
     <body
-      className={`relative min-h-full ${poppins.className} ${
+      className={`relative min-h-full ${gtUltra.variable} ${
+        poppins.className
+      } ${
         isModalOpen || !isMainScrollEnabled
           ? 'overflow-hidden'
           : 'overflow-auto'

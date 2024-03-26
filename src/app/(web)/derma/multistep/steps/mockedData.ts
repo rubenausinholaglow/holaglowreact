@@ -8,8 +8,7 @@ export const MULTISTEP_QUESTIONS: any = [
     showTextArea: false,
     questions: [
       {
-        title:
-          'Busco un tratamiento efectivo para preocupaciones específicas de mi piel',
+        title: 'Busco un tratamiento para acné, manchas, rosácea, etc.',
       },
       {
         title:
@@ -19,8 +18,7 @@ export const MULTISTEP_QUESTIONS: any = [
         title: 'Me preocupa el envejecimiento saludable de mi piel',
       },
       {
-        title:
-          'Deseo cuidar mi piel mientras vivo cambios hormonales y/o la menopausia',
+        title: 'Los cambios hormonales y/o menopausia afectan a mi piel',
       },
       {
         title: 'Quiero preparar mi piel para un evento o una ocasión especial',
@@ -32,48 +30,30 @@ export const MULTISTEP_QUESTIONS: any = [
     section: 'Necesidades personales',
     title: 'Necesidades personales',
     description:
-      'Selecciona las inquietudes que te gustaría resolver en tu consulta',
+      'Selecciona todas las inquietudes que te gustaría resolver en la consulta.',
     showTextArea: true,
-    placeholder: 'Escribe aquí tu preocupación de piel facial',
+    placeholder: 'Escribe aquí otras inquietudes',
     questions: [
       {
         title: 'Acné',
       },
       {
-        title: 'Cicatrices',
+        title: 'Manchas',
       },
       {
-        title: 'Enrojecimiento',
+        title: 'Enrojecimiento/Rosácea',
       },
       {
-        title: 'Sensibilidad',
+        title: 'Piel Seca',
       },
       {
-        title: 'Pigmentación',
-      },
-      {
-        title: 'Sequedad',
-      },
-      {
-        title: 'Exceso de sebo/grasa',
-      },
-      {
-        title: 'Pérdida de firmeza',
-      },
-      {
-        title: 'Líneas finas',
+        title: 'Piel Grasa',
       },
       {
         title: 'Arrugas',
       },
       {
-        title: 'Rosácea',
-      },
-      {
-        title: 'Textura de la piel',
-      },
-      {
-        title: 'Manchas',
+        title: 'Cicatrices',
       },
     ],
   },

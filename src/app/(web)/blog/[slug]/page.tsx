@@ -9,15 +9,17 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const slug = params.slug;
-  const posts = await fetch(
-    `https://holaglowblogapi.azurewebsites.net/Blog`
-  ).then(res => res.json());
+  const posts = await fetch(`${process.env.NEXT_PUBLIC_BLOG_API}Blog`).then(
+    res => res.json()
+  );
 
   const postData: Post = posts.filter((post: Post) => post.slug === slug)[0];
+
   if (postData) {
     return {
       title: postData.metaTitle,
       description: postData.metaDescription,
+      authors: [{ name: postData.author }],
       alternates: {
         canonical: postData.canonical,
       },

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
+import App from 'app/(web)/components/layout/App';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCheck, SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
@@ -41,24 +42,36 @@ export default function WaitComponent() {
       await FinanceService.checkPaymentStatus(id).then(async x => {
         tries++;
         if (x) {
-          await ScheduleService.createAppointment(
-            selectedTreatments,
-            selectedSlot!,
-            selectedDay,
-            selectedClinic!,
-            user!,
-            selectedPacksTreatments!,
-            analyticsMetrics,
-            id
-          ).then(y => {
-            console.log(y);
-            console.log(y.length);
-            if (y && y.length > 0) {
-              setAppointmentUrl(y[0].url);
+          if (selectedSlot) {
+            await ScheduleService.createAppointment(
+              selectedTreatments,
+              selectedSlot!,
+              selectedDay!,
+              selectedClinic!,
+              user!,
+              selectedPacksTreatments!,
+              analyticsMetrics,
+              id
+            ).then(y => {
+              if (y && y.length > 0) {
+                setAppointmentUrl(y[0].url);
+              }
+              router.push('/checkout/confirmation');
+            });
+          } else {
+            const treatments = selectedTreatments!.map(x => x.title).join(', ');
+            const createTicketResponse = await FinanceService.createTicket({
+              flowwwToken: user!.flowwwToken,
+              paymentId: id,
+              treatmentTitle: treatments,
+            });
+            if (createTicketResponse) {
+              router.push('/checkout/confirmation');
+            } else {
+              router.push('/checkout/contactform?error=true');
             }
-            router.push('/checkout/confirmation');
-          });
-        } else if (tries < 3) {
+          }
+        } else if (tries < 40) {
           setTimeout(async () => {
             await checkPaymentStatus(id);
           }, 15000);
@@ -67,7 +80,6 @@ export default function WaitComponent() {
         }
       });
     }
-
     if (payment) {
       checkPaymentStatus(payment!.id);
     } else {
@@ -81,6 +93,7 @@ export default function WaitComponent() {
 
   const renderWeb = (isDerma: boolean) => (
     <>
+      <meta name="robots" content="noindex,follow" />
       <div className="rounded-full overflow-hidden">
         <SvgTimer
           className={`${
@@ -157,22 +170,24 @@ export default function WaitComponent() {
   }
 
   return (
-    <MainLayout
-      isCheckout={!false}
-      hideHeader={false}
-      hideFooter={false}
-      hideBackButton
-    >
-      <Container>
-        <Flex
-          layout="col-center"
-          className="absolute flex inset-0 justify-center items-center gap-4"
-        >
-          {payment !== null && payment !== undefined
-            ? renderWeb(isDerma)
-            : renderDash(isDerma)}
-        </Flex>
-      </Container>
-    </MainLayout>
+    <App>
+      <MainLayout
+        isCheckout={!false}
+        hideHeader={false}
+        hideFooter={false}
+        hideBackButton
+      >
+        <Container>
+          <Flex
+            layout="col-center"
+            className="absolute flex inset-0 justify-center items-center gap-4"
+          >
+            {payment !== null && payment !== undefined
+              ? renderWeb(isDerma)
+              : renderDash(isDerma)}
+          </Flex>
+        </Container>
+      </MainLayout>
+    </App>
   );
 }

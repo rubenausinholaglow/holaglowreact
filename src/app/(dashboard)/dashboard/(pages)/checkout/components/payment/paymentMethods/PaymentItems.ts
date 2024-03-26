@@ -36,14 +36,31 @@ export const paymentItems = [
 export const checkoutPaymentItems = [
   {
     key: 'creditCard',
-    label: 'Tarjeta',
+    label: 'Pago único {0}€ con Tarjeta de crédito/debito',
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
   {
-    key: 'direct',
-    label: 'Pago rápido',
-    paymentBank: PaymentBank.Stripe,
-    paymentMethod: PaymentMethod.CreditCard,
+    key: 'alma',
+    label: 'Paga en 3 meses, 33€/mes, sin intereses',
+    paymentBank: PaymentBank.Alma,
+    paymentMethod: PaymentMethod.Financing,
+  },
+  {
+    key: 'almadeferred',
+    label: 'Pago aplazado 15 días, tras consulta y diagnóstico',
+    paymentBank: PaymentBank.Alma,
+    paymentMethod: PaymentMethod.Financing,
+  },
+];
+
+export const financialTimes = [
+  {
+    key: '2',
+    label: 'Paga en 2 plazos',
+  },
+  {
+    key: '3',
+    label: 'Paga en 3 plazos',
   },
 ];

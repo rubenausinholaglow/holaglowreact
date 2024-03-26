@@ -1,9 +1,10 @@
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import { entityStatusConfig } from 'app/crm/components/table/EntityStatusConfig';
 import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/types/crisalix';
 import { INITIAL_STATE_MESSAGESOCKETLIST } from 'app/types/messageSocket';
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
 import { INITIAL_STATE_PAYMENT } from 'app/types/paymentList';
-import { CartItem } from 'app/types/product';
+import { CartItem, Product, ProductType, UnityType } from 'app/types/product';
 
 import { useCartStore } from '../(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { usePaymentList } from '../(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
@@ -12,6 +13,32 @@ import { INITIAL_STATE } from './constants';
 
 export const handleGoBack = () => {
   window.history.back();
+};
+
+export const getTotalFromCart = (
+  cart: CartItem[],
+  percentageDiscount: number,
+  priceDiscount: number,
+  manualPrice: number
+) => {
+  let productsPriceTotal = 0;
+  let productsPriceTotalWithDiscounts = 0;
+
+  if (cart) {
+    productsPriceTotal = cart.reduce((acc, product) => acc + product.price, 0);
+    productsPriceTotalWithDiscounts = cart.reduce(
+      (acc, product) => acc + Number(product.priceWithDiscount),
+      0
+    );
+  }
+
+  const cartTotalWithDiscount = applyDiscountToCart(
+    percentageDiscount,
+    priceDiscount,
+    manualPrice,
+    productsPriceTotalWithDiscounts
+  );
+  return `${cartTotalWithDiscount} €`;
 };
 
 export const applyDiscountToCart = (
@@ -37,7 +64,6 @@ export const applyDiscountToItem = (
   discountType: string,
   cartItem: CartItem
 ) => {
-
   const percentageDiscountValue =
     discountType === '%' ? value : cartItem.percentageDiscount;
 
@@ -132,4 +158,80 @@ export function clearLocalStorage(allLocalStorage: boolean) {
   useMessageSocket.setState(INITIAL_STATE_MESSAGESOCKETLIST);
   usePaymentList.setState(INITIAL_STATE_PAYMENT);
   useCartStore.setState(INITIAL_STATE);
+}
+
+export function getStatusText(statusText: string, entity: string): string {
+  const lowercaseStatus = statusText.toUpperCase();
+  const config = entityStatusConfig[entity];
+  if (config && lowercaseStatus in config.names) {
+    return config.names[lowercaseStatus];
+  }
+  return statusText;
+}
+
+export const getStatusClassName = (status: string, entity: string): string => {
+  const uppercaseStatus = status.toUpperCase();
+  const config = entityStatusConfig[entity];
+  if (config && uppercaseStatus in config.colors) {
+    const style = config.colors[uppercaseStatus];
+    return `text-white rounded-full py-1 px-2 text-sm ${style}`;
+  }
+  return '';
+};
+
+export const formatDate = (date: Date, includeHours = true) => {
+  const finalDate = new Date(date);
+
+  if (finalDate.getFullYear() === 1) {
+    return '';
+  }
+
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: includeHours ? '2-digit' : undefined,
+    minute: includeHours ? '2-digit' : undefined,
+    second: includeHours ? '2-digit' : undefined,
+    hour12: false,
+  };
+
+  const formattedDate = finalDate.toLocaleDateString('es-ES', options);
+  return `${formattedDate.replace(',', '')}`;
+};
+
+
+export const validTypesFilterCart: ProductType[] = [
+  ProductType.Esthetic,
+  ProductType.Medical,
+  ProductType.Dashboard,
+  ProductType.GlowBox,
+];
+
+export function isClient() {
+  return typeof window !== 'undefined';
+}
+
+export function getUniqueProducts(uniqueProductIds: string[], selectedProducts : Product[]): Product[] {
+  const finalSelectedProducts: Product[] = [];
+  
+  uniqueProductIds.forEach(productId => {
+    const duplicatedAHProducts = selectedProducts.filter(
+      product => product.id === productId && product.unityType == UnityType.AcidoHialuronico
+    );
+    if (duplicatedAHProducts.length > 1) {
+      duplicatedAHProducts[0].description = `x${duplicatedAHProducts.length} viales de ácido híaluronico`;
+      finalSelectedProducts.push(duplicatedAHProducts[0]);
+    } else {
+      const productsWithSameId = selectedProducts.filter(product => product.id === productId);
+      finalSelectedProducts.push(...productsWithSameId);
+    }
+  });
+  return finalSelectedProducts;
+}
+
+export function getUniqueIds(products : Product[]) : string[] {
+  return Array.from(
+      new Set(products.map(x => x.id))
+    );
 }

@@ -1,14 +1,14 @@
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function StoriesDerma() {
   const dermaImages: any[] = [
-    '/images/derma/beforeAfter/beforeAfter1.webp',
-    '/images/derma/beforeAfter/beforeAfter2.webp',
-    '/images/derma/beforeAfter/beforeAfter3.webp',
-    '/images/derma/beforeAfter/beforeAfter4.webp',
+    '/images/derma/beforeAfter/beforeAfter1.jpg',
+    '/images/derma/beforeAfter/beforeAfter2.jpg',
+    '/images/derma/beforeAfter/beforeAfter3.jpg',
+    '/images/derma/beforeAfter/beforeAfter4.jpg',
   ];
 
   return (
@@ -21,7 +21,7 @@ export default function StoriesDerma() {
           <Title
             isAnimated
             size="2xl"
-            className="font-gtUltraBold text-derma-primary font-bold mb-4"
+            className="font-gtUltra text-derma-primary font-bold mb-4"
           >
             Historias inspiradoras
           </Title>
@@ -39,7 +39,6 @@ export default function StoriesDerma() {
             hasControls={dermaImages?.length > 1}
             dragEnabled={false}
             touchEnabled={false}
-            hasDots
             className="rounded-xl"
             isDerma
           >

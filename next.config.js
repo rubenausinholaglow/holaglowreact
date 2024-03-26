@@ -10,7 +10,14 @@ const nextConfig = {
         port: '',
         pathname: '/images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'budgetimages.blob.core.windows.net',
+        port: '',
+        pathname: '/derma/**',
+      },
     ],
+    domains: ['www.holaglow.com'],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
@@ -339,6 +346,18 @@ const nextConfig = {
       {
         source: '/landing/sonrisa-gingival',
         destination: '/tratamientos/sonrisa-gingival',
+        permanent: true,
+        statusCode: 301,
+      },
+      {
+        source: '/tratamientos/pack-wellaging-plus',
+        destination: '/tratamientos/pack-wellaging',
+        permanent: true,
+        statusCode: 301,
+      },
+      {
+        source: '/tratamientos/pack-wellaging-esencial',
+        destination: '/tratamientos/pack-wellaging',
         permanent: true,
         statusCode: 301,
       },

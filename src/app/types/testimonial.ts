@@ -1,7 +1,7 @@
 export interface Testimonial {
-  city: string;
+  city?: string;
   name: string;
   imgUrl: string;
-  value: number;
+  value?: number;
   testimonial: string;
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgPlusSmall } from 'app/icons/Icons';
@@ -66,7 +68,7 @@ export default function ProductSessionGroupedPriceCard({
             size="sm"
             type="tertiary"
             className="mt-auto"
-            bgColor="bg-hg-primary"
+            customStyles="bg-hg-primary"
             onClick={e => {
               e.stopPropagation();
               addToCart(product as CartItem);
@@ -79,9 +81,8 @@ export default function ProductSessionGroupedPriceCard({
         )}
         {!productHighlighted && (
           <Button
-            type="tertiary"
+            type="primary"
             className="shrink-0"
-            customStyles="bg-hg-primary"
             onClick={() => {
               setSelectedTreatments([product]);
             }}

@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { atcb_action } from 'add-to-calendar-button';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgCalendar } from 'app/icons/Icons';
-import { SvgArrow, SvgCheck, SvgSend, SvgVideo } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheck } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -11,6 +12,7 @@ import {
 import { Appointment } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import useRoutes from 'app/utils/useRoutes';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -29,8 +31,79 @@ export default function Confirmation({
   const ROUTES = useRoutes();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
   const { resetCart } = useCartStore(state => state);
-  const { selectedClinic, setAnalyticsMetrics, setPayment, appointmentUrl } =
-    useSessionStore(state => state);
+  const {
+    setAnalyticsMetrics,
+    setPayment,
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    selectedTreatments,
+  } = useSessionStore(state => state);
+
+  const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
+
+  let selectedTreatmentsNames = '';
+  let selectedTreatmentsDescription = '';
+
+  if (selectedTreatments) {
+    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
+    selectedTreatmentsDescription = selectedTreatments
+      .map(x => x.description)
+      .join(' + ');
+  }
+
+  const ADD_TO_CALENDAR_CONFIG: object = {
+    name: isDerma
+      ? 'Cita online - Derma by Holaglow'
+      : `${selectedTreatmentsNames} - Holaglow`,
+    description: isDerma
+      ? 'Videollamada con tu dermatólogo estético'
+      : selectedTreatmentsDescription || '',
+    startDate: dayjs(selectedDay).format('YYYY-MM-DD'),
+    startTime: selectedSlot?.startTime,
+    endTime: selectedSlot?.endTime,
+    options: ['Apple', 'Google', 'iCal', 'Outlook.com', 'Yahoo'],
+    timeZone: 'Europe/Madrid',
+    location: isDerma
+      ? 'Videoconsulta online'
+      : selectedClinic
+      ? `${selectedClinic?.address}, ${selectedClinic?.city}`
+      : '',
+  };
+
+  const addToCalendarRef = useRef(null);
+
+  let tips = [
+    {
+      title: 'Confirmación de tu cita',
+      text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
+    },
+    {
+      title: 'Recomendaciones pretratamiento',
+      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
+    },
+    {
+      title: 'Distintos métodos de pago',
+      text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
+    },
+  ];
+
+  if (isDerma) {
+    tips = [
+      {
+        title: 'Detalles de videollamada',
+        text: 'Antes de tu consulta, te enviaremos un whatsapp y un correo electrónico para recordarte el enlace de acceso a la videollamada.',
+      },
+      {
+        title: 'Consejos para tu consulta',
+        text: 'Te damos tres tips para que aproveches al máximo tu cita online con el médico: Buena conexión, buena luz y cara lavada.',
+      },
+      {
+        title: 'Solución personalizada',
+        text: 'Después, recibirás el plan de cuidado facial que el dermatólogo haya diseñado para ti y la receta de la crema formulada, si corresponde.',
+      },
+    ];
+  }
 
   useEffect(() => {
     if (!isDashboard) {
@@ -53,6 +126,12 @@ export default function Confirmation({
       resetCart();
       setPayment(undefined);
     }
+
+    setisProbadorVirtual(
+      selectedTreatments.length > 0 &&
+        selectedTreatments[0].id ===
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase()
+    );
   }, []);
 
   return (
@@ -103,12 +182,23 @@ export default function Confirmation({
                   <br />
                   Tu cita ha sido realizada con éxito
                 </Text>
-                <Text className="text-center text-hg-black500 hidden md:block">
-                  Nos alegramos de que confíes en nosotros para acompañarte,
-                  aconsejarte y ayudarte a conseguir el efecto glow que deseas.
-                  Nuestro propósito es que te mires bonito para que te sientas
-                  aún mejor. ¡Qué ganas de verte!
-                </Text>
+                {!isDerma && (
+                  <Text className="text-center text-hg-black500 hidden md:block">
+                    Nos alegramos de que confíes en nosotros para acompañarte,
+                    aconsejarte y ayudarte a conseguir el efecto glow que
+                    deseas. Nuestro propósito es que te mires bonito para que te
+                    sientas aún mejor. ¡Qué ganas de verte!
+                  </Text>
+                )}
+                {isDerma && (
+                  <Text className="text-center text-hg-black500 hidden md:block">
+                    Nos alegramos de que confíes en nosotros para asesorarte y
+                    acompañarte en este camino hacia una piel más sana. Nuestro
+                    propósito es atender tus necesidades de manera personalizada
+                    para garantizarte unos resultados efectivos y duraderos.
+                    ¡Qué ganas de verte!
+                  </Text>
+                )}
               </>
             )}
           </Flex>
@@ -116,68 +206,59 @@ export default function Confirmation({
         <div className="row-span-2 w-full">
           <div className="mb-8">
             {isDerma ? (
-              <AppointmentResume isProbadorVirtual={false} isDerma />
+              <AppointmentResume isDerma />
             ) : (
               <AppointmentResume
                 appointment={appointment}
-                isProbadorVirtual
-                isConfirmation
+                isProbadorVirtual={isProbadorVirtual}
+                isDashboard={isDashboard}
+                bgColor="bg-hg-secondary100"
               />
             )}
           </div>
-
-          {isDerma && (
+          {!isDashboard && (
             <Flex
               layout="col-left"
-              className="gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12"
+              className={`${
+                isDerma
+                  ? 'gap-4 w-full border border-derma-primary100 rounded-3xl bg-white p-6 mb-12'
+                  : ''
+              }`}
             >
-              <a href={appointmentUrl}>
-                <Button
-                  size="xl"
-                  type="tertiary"
-                  className="w-full"
-                  customStyles="border-none bg-derma-primary text-derma-primary100 font-normal justify-start pl-2"
-                >
-                  <Flex
-                    layout="row-center"
-                    className="bg-derma-primary500 rounded-full h-12 w-12 mr-2"
-                  >
-                    <SvgVideo />
-                  </Flex>
-                  Acceso a consulta online
-                </Button>
-              </a>
-
-              <Text className="text-hg-black500 text-xs mb-2">
-                Te acabamos de enviar este enlace de acceso a la cita a tu
-                Whatsapp y email.
-              </Text>
-
               <Button
-                size="md"
-                type="tertiary"
+                size="xl"
+                type={isDerma ? 'derma' : 'primary'}
+                ref={addToCalendarRef}
                 className="w-full"
-                customStyles="border-none bg-derma-secondary100 text-derma-primary font-normal justify-start pl-2"
+                customStyles="justify-start"
+                onClick={() =>
+                  atcb_action(
+                    ADD_TO_CALENDAR_CONFIG,
+                    addToCalendarRef.current
+                      ? addToCalendarRef.current
+                      : undefined
+                  )
+                }
               >
                 <Flex
                   layout="row-center"
-                  className="bg-derma-primary500/20 rounded-full h-8 w-8 mr-2"
+                  className={` rounded-full h-12 w-12 mr-2 ${
+                    isDerma ? 'bg-derma-primary500' : 'bg-transparent'
+                  }`}
                 >
-                  <SvgCalendar className="h-4 w-4" />
+                  <SvgCalendar />
                 </Flex>
                 Añadir a mi calendario
               </Button>
             </Flex>
           )}
-
           {!isDashboard && !isDerma && (
             <div className="pt-12">
               <a href="/tratamientos" className="hidden md:block">
                 <Button
-                  type="tertiary"
+                  type="white"
                   size="md"
                   className="hidden md:flex"
-                  customStyles="group-hover:bg-hg-secondary100"
                   href={ROUTES.treatments}
                 >
                   <Flex layout="row-center">
@@ -201,20 +282,7 @@ export default function Confirmation({
               layout="col-left"
               className="bg-hg-cream500 p-4 rounded-xl gap-4"
             >
-              {[
-                {
-                  title: 'Confirmación de tu cita',
-                  text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
-                },
-                {
-                  title: 'Recomendaciones pretratamiento',
-                  text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
-                },
-                {
-                  title: 'Distintos métodos de pago',
-                  text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
-                },
-              ].map((item, index) => (
+              {tips.map((item, index) => (
                 <Flex
                   className="border-b border-hg-secondary300 pb-4 items-start"
                   key={item.title}
@@ -242,10 +310,9 @@ export default function Confirmation({
               {!isDashboard && (
                 <a href="/tratamientos">
                   <Button
-                    type="tertiary"
+                    type="white"
                     size="md"
                     className="hidden md:inline"
-                    customStyles="group-hover:bg-hg-secondary100"
                     href={ROUTES.treatments}
                   >
                     <Flex layout="row-center">

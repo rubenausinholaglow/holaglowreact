@@ -8,19 +8,20 @@ import { Clinic } from 'app/types/clinic';
 import { Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 
-export async function fetchProducts() {
+export async function fetchProducts({
+  isDerma = false,
+}: {
+  isDerma?: boolean;
+}) {
   // Esthetic = 1, Medical = 2
-  const allowedProductType = [1, 2];
 
   try {
-    const fetchedProducts = await ProductService.getAllProducts();
-    if (fetchedProducts && fetchedProducts.length) {
-      const filteredProducts = fetchedProducts.filter(
-        (product: Product) =>
-          allowedProductType.includes(product.type) && product.price > 0
-      );
+    const fetchedProducts = await ProductService.getAllProducts({
+      isDerma: isDerma,
+    });
 
-      const products = filteredProducts.map((product: Product) => ({
+    if (fetchedProducts && fetchedProducts.length) {
+      const products = fetchedProducts.map((product: Product) => ({
         ...product,
         visibility: true,
       }));
@@ -37,9 +38,17 @@ export async function fetchProducts() {
   return [] as Product[];
 }
 
-export async function fetchProduct(id: string) {
+export async function fetchProduct(
+  id: string,
+  isDashboard: boolean,
+  isDerma: boolean
+) {
   try {
-    const product: Product = await ProductService.getProduct(id);
+    const product: Product = await ProductService.getProduct(
+      id,
+      isDashboard,
+      isDerma
+    );
 
     return product;
   } catch (error: any) {

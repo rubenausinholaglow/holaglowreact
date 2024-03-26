@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
-import { User } from '@interface/appointment';
 import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import UserService from '@services/UserService';
@@ -62,10 +61,14 @@ export default function PaymentInput(props: Props) {
   );
   const [showPepperModal, setShowPepperModal] = useState(false);
   const [paymentStripe, setPaymentStripe] = useState(false);
-  const { user, stateProducts } = useGlobalPersistedStore(state => state);
+  const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
   const { remoteControl, storedBudgetId, setCurrentUser } =
     useGlobalPersistedStore(state => state);
+
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const [formData, setFormData] = useState<ClientUpdate>({
     dni: user?.dni ?? '',
@@ -176,19 +179,23 @@ export default function PaymentInput(props: Props) {
     props.onButtonClick(false);
   };
 
+  function validateFinancePrice() {
+    if (parseFloat(inputValue) <= 50) {
+      setMessageNotification('La cifra a financiar debe ser superior a 50€');
+      return false;
+    }
+    return true;
+  }
+
   const activateAlma = async () => {
-    if (parseFloat(inputValue) >= 50) {
-      setShowAlma(!showAlma);
+    if (validateFinancePrice()) {
+      setShowAlma(true);
       setMessageNotification('');
-    } else {
-      setMessageNotification(
-        'La cifra a financiar por alma debe ser igual o superior a 50€'
-      );
     }
   };
 
   const activatePepper = async () => {
-    setshowPepper(true);
+    if (validateFinancePrice()) setshowPepper(true);
   };
 
   const openPepper = () => {
@@ -210,47 +217,75 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
+    if (isLoading) return;
     if (showAlma || messageNotification || showPepper || paymentStripe) {
       return;
     }
     await addPayment(data.number);
   };
 
-  const pay = async () => {
-    await addPayment(inputValue);
-  };
+  function validateFormData(formData: ClientUpdate): boolean {
+    const keysToValidate = Object.keys(formData).filter(
+      key => key.toLocaleUpperCase() !== 'COUNTRY'
+    ) as Array<keyof ClientUpdate>;
+    return keysToValidate.every(key => !!formData[key]);
+  }
 
   const initializePepper = async () => {
+    if (isLoading) return;
+    if (!validateFormData(formData)) {
+      setErrorMessage('Faltan datos para la financiación');
+      setTimeout(() => setErrorMessage(undefined), 5000);
+      return;
+    }
     setIsLoading(true);
 
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       ['id']: user?.id,
     }));
-    await UserService.updateUser(formData).then(async x => {
-      const initializePayment = constructInitializePayment(PaymentBank.Pepper);
-      await FinanceService.initializePayment(initializePayment).then(x => {
-        setShowPepperModal(false);
-        if (x) {
-          openWindow(x.url);
-          handleUrlPayment(x.id, '', x.referenceId);
-        } else {
-          setMessageNotification('Error pagando con Pepper');
-        }
-      });
 
-      await UserService.checkUser(user?.email)
-        .then(async data => {
-          if (data && !isEmpty(data)) {
-            setCurrentUser(data);
-          } else {
-            //TODO - MESSAGE ERROR UI
-          }
-        })
-        .catch(error => {
-          Bugsnag.notify('Error handleCheckUser:', error);
-        });
-    });
+    await UserService.updateUser(formData)
+      .then(async x => {
+        if (!x) {
+          setMessageNotification('Error actualizando usuario');
+          return;
+        }
+        const initializePayment = constructInitializePayment(
+          PaymentBank.Pepper
+        );
+        await FinanceService.initializePayment(initializePayment)
+          .then(x => {
+            setShowPepperModal(false);
+            if (x.url != '') {
+              openWindow(x.url);
+              handleUrlPayment(x.id, '', x.referenceId);
+            } else {
+              setMessageNotification('Error pagando con Pepper');
+            }
+          })
+          .catch(error => {
+            setMessageNotification('Error inicializando el pago');
+            Bugsnag.notify('Error initializePayment:', error);
+          });
+
+        await UserService.checkUser(user?.email)
+          .then(async data => {
+            if (data && !isEmpty(data)) {
+              setCurrentUser(data);
+            } else {
+              //TODO - MESSAGE ERROR UI
+            }
+          })
+          .catch(error => {
+            Bugsnag.notify('Error handleCheckUser:', error);
+          });
+      })
+      .catch(error => {
+        setShowPepperModal(false);
+        setMessageNotification('Error actualizando el usuario');
+        Bugsnag.notify('Error updateUser:', error);
+      });
     setIsLoading(false);
   };
 
@@ -290,6 +325,7 @@ export default function PaymentInput(props: Props) {
   }, [isModalOpen]);
 
   const initializeStripePayment = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     setPaymentStripe(true);
     const initializePayment = constructInitializePayment(PaymentBank.Stripe);
@@ -319,6 +355,7 @@ export default function PaymentInput(props: Props) {
       paymentBank: paymentBank,
       productPaymentRequest: [],
       originPayment: OriginPayment.dashboard,
+      deferred_Days: undefined,
     };
 
     cart.forEach(product => {
@@ -481,6 +518,9 @@ export default function PaymentInput(props: Props) {
             >
               {isLoading ? <SvgSpinner height={24} width={24} /> : 'Pagar'}
             </Button>
+            {errorMessage && (
+              <span className="text-hg-error">{errorMessage}</span>
+            )}
           </Flex>
         </Modal>
         {showAlma && (
@@ -571,6 +611,7 @@ export default function PaymentInput(props: Props) {
                     <SvgArrow height={16} width={16} className="ml-2" />
                   </Button>
                 )}
+                <div className="bg-hg-"></div>
                 {props.paymentBank === PaymentBank.Stripe && (
                   <Button
                     type="tertiary"

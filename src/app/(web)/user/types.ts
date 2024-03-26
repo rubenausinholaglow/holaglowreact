@@ -69,6 +69,16 @@ export interface Appointment {
       title: string;
     };
   }>;
+  productsUsed : ProductsUsed[];
+}
+
+export interface ProductsUsed {
+
+  productUsed : string;
+  quantity : number;
+  lotReference : string;
+  expiryDate : Date;
+
 }
 export interface Tip {
   details: string;

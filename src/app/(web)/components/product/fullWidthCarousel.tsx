@@ -1,9 +1,10 @@
 'use client';
 
 import { ReactNode } from 'react';
+import CheckHydration from '@utils/CheckHydration';
 import { Professional } from 'app/types/clinic';
 import { Product } from 'app/types/product';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { isEmpty } from 'lodash';
 
 import ProfessionalCard from '../common/ProfessionalCard';
@@ -14,19 +15,23 @@ export default function FullWidthCarousel({
   visibleSlides,
   className,
   items,
+  hasDots = false,
   hasControls = true,
   isPlaying = false,
   disableLeftMargin = false,
   children,
+  isDerma = false,
 }: {
   type?: 'products' | 'professionals';
   visibleSlides?: number | null;
   className?: string;
   items?: Product[] | Professional[] | null;
+  hasDots?: boolean;
   hasControls?: boolean;
   isPlaying?: boolean;
   disableLeftMargin?: boolean;
   children?: ReactNode;
+  isDerma?: boolean;
 }) {
   const randomId = Math.random().toString().slice(2, 5);
 
@@ -51,7 +56,7 @@ export default function FullWidthCarousel({
   }
 
   return (
-    <>
+    <CheckHydration>
       <style>
         {`
           #productCarousel${randomId} [aria-label="slider"] {
@@ -63,12 +68,14 @@ export default function FullWidthCarousel({
       </style>
       <Carousel
         id={`productCarousel${randomId}`}
+        hasDots={hasDots}
         hasControls={hasControls && !isPlaying}
         className={`relative ${className}`}
         isIntrinsicHeight
         visibleSlides={slidesToShow}
         isPlaying={isPlaying}
         isFullWidth
+        isDerma={isDerma}
       >
         {type &&
           type === 'products' &&
@@ -102,6 +109,6 @@ export default function FullWidthCarousel({
 
         {children}
       </Carousel>
-    </>
+    </CheckHydration>
   );
 }

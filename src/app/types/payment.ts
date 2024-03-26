@@ -29,5 +29,5 @@ export interface PaymentInitResponse {
   id: string;
   url: string;
   referenceId: string;
+  embeddedReference: string;
 }
-

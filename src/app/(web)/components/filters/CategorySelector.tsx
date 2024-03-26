@@ -8,11 +8,12 @@ import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { Flex } from 'designSystem/Layouts/Layouts';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
 import CategoryIcon from '../common/CategoryIcon';
+import PackTypeFilter from './PackTypeFilter';
 
 export default function CategorySelector({
   className,
@@ -51,7 +52,9 @@ export default function CategorySelector({
           categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
       );
     } else {
-      filteredCategoryNames = allCategoryNames;
+      filteredCategoryNames = allCategoryNames.filter(
+        categoryName => categoryName !== 'Packs'
+      );
     }
 
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
@@ -72,28 +75,23 @@ export default function CategorySelector({
   return (
     <ul
       id="categorySelector"
-      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto ${
+      className={`md:pl-0 md:mt-4 xl:mt-0 flex overflow-x-scroll overflow-y-hidden md:overflow-auto gap-2 ${
         className ? className : ''
       }
-      ${isStacked ? 'flex-wrap' : ''}
+      ${isStacked ? 'flex-wrap' : 'pl-4'}
       `}
     >
+      <li className="shrink-0">
+        <PackTypeFilter isDashboard={isDashboard} />
+      </li>
       {productCategories.map((category, i) => {
         return (
           <li
-            id={'tmevent_treatments_type'}
+            id={`tmevent_treatments_type_${category}`}
             key={category}
-            className={twMerge(`transition-all cursor-pointer rounded-full p-1 pr-4 mr-3 ${
-              productFilters.category.includes(category)
-                ? 'bg-hg-primary500'
-                : isStacked
-                ? 'bg-hg-black100'
-                : 'bg-white hover:bg-hg-secondary100'
-            }
-            ${i == 0 && !isStacked ? 'ml-4 md:ml-0' : ''}
-            ${isDashboard ? 'py-2 px-4' : ''}
-            ${isStacked ? 'mb-2' : ''}
-            `)}
+            className={`shrink-0 ${
+              i === productCategories.length - 1 ? 'mr-4' : ''
+            }`}
             onClick={() => {
               setProductFilters(
                 toggleFilter({
@@ -104,14 +102,27 @@ export default function CategorySelector({
               );
             }}
           >
-            <Flex layout="row-left">
+            <Button
+              className="pointer-events-none"
+              type="white"
+              customStyles={twMerge(`
+              p-1 pr-4 border-none pointer-events-none ${
+                isDashboard ? 'pl-4 bg-hg-black100' : ''
+              } ${
+                productFilters.category.includes(category)
+                  ? 'bg-hg-primary500'
+                  : isStacked
+                  ? 'mb-0'
+                  : ''
+              }`)}
+            >
               {!isDashboard && (
                 <CategoryIcon category={category} className="mr-2" />
               )}
               <Text size="xs" className="whitespace-nowrap font-medium">
                 {category}
               </Text>
-            </Flex>
+            </Button>
           </li>
         );
       })}

@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -15,7 +15,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Link from 'next/link';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
+import AnimateOnViewport from '../common/AnimateOnViewport';
 
 let isTicking = false;
 let scrollPos = 0;
@@ -30,9 +30,7 @@ export default function DermaHeader({
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
-  const { deviceSize } = useSessionStore(state => state);
-
-  const HEADER_HEIGHT = deviceSize.isMobile
+  const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
 
@@ -88,10 +86,11 @@ export default function DermaHeader({
 
               {!hideButton && (
                 <Button
+                  id="tmevent_derma_multistep_start_top"
                   className="lg:absolute right-0 2xl:mr-20"
                   type="tertiary"
                   href="/multistep/start"
-                  customStyles="bg-transparent text-derma-primary border-derma-primary hover:border-derma-primary500 hover:text-derma-primary500"
+                  customStyles="bg-transparent text-derma-primary border-derma-primary md:text-derma-tertiary md:border-derma-tertiary hover:border-derma-primary500 hover:text-derma-primary500"
                 >
                   <Text className="font-semibold mr-2">Pide cita</Text>
                   <SvgArrow className="h-5 w-5" />

@@ -1,4 +1,5 @@
 import Bugsnag from '@bugsnag/js';
+import { CreateTicketRequest } from '@interface/createTicket';
 import { PaymentInitResponse } from '@interface/payment';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
@@ -28,11 +29,36 @@ export default class FinanceService {
         return data;
       } else {
         Bugsnag.notify('Error initializePayment ' + res);
-        return { id: '', url: '', referenceId: '' };
+        return { id: '', url: '', referenceId: '', embeddedReference: '' };
       }
     } catch (error: any) {
       Bugsnag.notify('Error initializePayment ' + error);
-      return { id: '', url: '', referenceId: '' };
+      return { id: '', url: '', referenceId: '', embeddedReference: '' };
+    }
+  }
+
+  static async createTicket(
+    createTicket: CreateTicketRequest
+  ): Promise<boolean> {
+    try {
+      const url = `${FinanceService.getFinanceUrl()}Ticket`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createTicket),
+      });
+
+      if (res.ok) {
+        return true;
+      } else {
+        Bugsnag.notify('Error createTicket ' + res);
+        return false;
+      }
+    } catch (error: any) {
+      Bugsnag.notify('Error createTicket ' + error);
+      return false;
     }
   }
 

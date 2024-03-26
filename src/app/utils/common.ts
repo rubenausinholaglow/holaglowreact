@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { Product } from 'app/types/product';
 import { isEmpty } from 'lodash';
@@ -43,7 +45,7 @@ export const useImageProps = (product: Product, photoNumber = 1) => {
     false
   );
 
-  const [imgSrcDefault, setImgSrc] = useState(
+  const [_, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`
   );
 
@@ -53,6 +55,7 @@ export const useImageProps = (product: Product, photoNumber = 1) => {
 
   return { imgSrc, alignmentStyles, setNextImgSrc, defaultImage };
 };
+
 export function getImageProductsCarousel(product: Product, photoNumber = 0) {
   return getImageProperties(product, photoNumber, true);
 }
@@ -109,16 +112,27 @@ export function getDiscountedPrice(product: Product) {
 
 export const setSeoMetaData = (title: string, description: string) => {
   document.title = title;
-  const imageUrl = "https://holaglowreact-git-dev-966-hola-glow.vercel.app/images/home/OGimagen_Holaglow.jpg"
-  
-  const metaDescriptionTag = document.querySelector('meta[name="description"]') as HTMLMetaElement;
-  const ogUrlTag = document.querySelector('meta[property="og:url"]') as HTMLMetaElement;
-  const ogTypeTag = document.querySelector('meta[property="og:type"]') as HTMLMetaElement;
-  const ogTitleTag = document.querySelector('meta[property="og:title"]') as HTMLMetaElement;
-  const ogDescriptionTag = document.querySelector('meta[property="og:description"]') as HTMLMetaElement;
-  const ogImageTag = document.querySelector('meta[property="og:image"]') as HTMLMetaElement;
+  const imageUrl =
+    'https://holaglowreact-git-dev-966-hola-glow.vercel.app/images/home/OGimagen_Holaglow.jpg';
 
-  
+  const metaDescriptionTag = document.querySelector(
+    'meta[name="description"]'
+  ) as HTMLMetaElement;
+  const ogUrlTag = document.querySelector(
+    'meta[property="og:url"]'
+  ) as HTMLMetaElement;
+  const ogTypeTag = document.querySelector(
+    'meta[property="og:type"]'
+  ) as HTMLMetaElement;
+  const ogTitleTag = document.querySelector(
+    'meta[property="og:title"]'
+  ) as HTMLMetaElement;
+  const ogDescriptionTag = document.querySelector(
+    'meta[property="og:description"]'
+  ) as HTMLMetaElement;
+  const ogImageTag = document.querySelector(
+    'meta[property="og:image"]'
+  ) as HTMLMetaElement;
 
   if (metaDescriptionTag) {
     metaDescriptionTag.setAttribute('content', description);
@@ -146,21 +160,25 @@ export const setSeoMetaData = (title: string, description: string) => {
     newOgDescriptionTag.content = description;
     document.head.appendChild(newOgDescriptionTag);
   }
-  
+
   if (ogImageTag) {
-      ogImageTag.setAttribute('content', imageUrl);
+    ogImageTag.setAttribute('content', imageUrl);
   } else {
-      const newOgImageTag = document.createElement('meta');
-      newOgImageTag.setAttribute('property', 'og:image');
-      newOgImageTag.content = imageUrl;
-      document.head.appendChild(newOgImageTag);
+    const newOgImageTag = document.createElement('meta');
+    newOgImageTag.setAttribute('property', 'og:image');
+    newOgImageTag.content = imageUrl;
+    document.head.appendChild(newOgImageTag);
   }
   if (ogUrlTag) {
-    ogUrlTag.setAttribute('content', "https://holaglowreact-git-dev-966-hola-glow.vercel.app/" || '');
+    ogUrlTag.setAttribute(
+      'content',
+      'https://holaglowreact-git-dev-966-hola-glow.vercel.app/' || ''
+    );
   } else {
     const newOgUrlTag = document.createElement('meta');
     newOgUrlTag.setAttribute('property', 'og:url');
-    newOgUrlTag.content = "https://holaglowreact-git-dev-966-hola-glow.vercel.app/" || '';
+    newOgUrlTag.content =
+      'https://holaglowreact-git-dev-966-hola-glow.vercel.app/' || '';
     document.head.appendChild(newOgUrlTag);
   }
 

@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSessionStore } from 'app/stores/globalStore';
+import { isMobile } from 'react-device-detect';
+import { fetchProduct } from '@utils/fetch';
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Accordion } from 'designSystem/Accordion/Accordion';
@@ -20,7 +21,6 @@ export default function ProductPrices({
   product: Product;
   isDashboard?: boolean;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
   const [productItems, setProductITems] = useState<Product[]>([]);
   const [isSessionProduct, setIsSessionProduct] = useState<boolean>(false);
   const [groupedSessionProducts, setGroupedSessionProducts] = useState<
@@ -41,7 +41,8 @@ export default function ProductPrices({
         productItems.length > 1 &&
           productItems
             .map((item: Product) => item.title)
-            .every((item: string) => item.includes(product.title))
+            .every((item: string) => item.includes(product.title)) &&
+          product.title.indexOf('Pack Wellaging') < 0
       );
     }
   }, [productItems]);
@@ -70,6 +71,24 @@ export default function ProductPrices({
     }
   }, [isSessionProduct]);
 
+  useEffect(() => {
+    async function initProduct(productId: string, isDashboard: boolean) {
+      const productDetails = await fetchProduct(productId, isDashboard, false);
+
+      if (productDetails.upgrades) {
+        productDetails.upgrades = productDetails.upgrades.sort(
+          (x, y) => x.order - y.order
+        );
+        const allProducts = productDetails.upgrades.map(item => item.product);
+        setProductITems(allProducts);
+      }
+    }
+
+    if (isDashboard) {
+      initProduct(product.id, true);
+    }
+  }, []);
+
   if (isEmpty(productItems)) {
     return <></>;
   }
@@ -92,21 +111,17 @@ export default function ProductPrices({
         {!isSessionProduct && (
           <Flex layout="col-left" className="md:flex-row gap-8">
             <Accordion
-              defaultValue={deviceSize.isMobile ? 'accordion-0' : 'value'}
-              className="flex flex-col gap-4 mb-8 md:flex-row md:gap-8 items-start"
+              defaultValue={isMobile ? 'accordion-0' : 'value'}
+              className="flex flex-col gap-4 mb-8 md:flex-row md:gap items-start"
             >
               {productItems.map((item: Product, index: number) => (
                 <ProductPriceCard
                   isDashboard={isDashboard}
-                  fullWidthPack={productItems.length === 1 && item.isPack}
                   key={item.title}
                   product={item}
-                  index={index}
                   parentProduct={product}
                   className={
-                    productItems.length === 1 &&
-                    !deviceSize.isMobile &&
-                    !item.isPack
+                    productItems.length === 1 && !isMobile && !item.isPack
                       ? 'w-1/3'
                       : ''
                   }

@@ -6,10 +6,6 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-      gtUltraThin: ['gtUltraThin', 'Georgia', 'serif'],
-      gtUltraBold: ['gtUltraBold', 'Georgia', 'serif'],
-    },
     fontSize: {
       '6xl': ['78px', '92px'],
       '5xl': ['64px', '72px'],
@@ -19,13 +15,15 @@ module.exports = {
       '2xl': ['32px', '40px'],
       xl: ['24px', '32px'],
       drxl: ['28px', '36px'],
-      lg: ['21px', '28px'],
+      lg: ['21px', '32px'],
       md: ['16px', '24px'],
       sm: ['14px', '20px'],
       xs: ['12px', '16px'],
     },
-
     extend: {
+      fontFamily: {
+        gtUltra: ['var(--font-gtUltra)'],
+      },
       colors: {
         hg: {
           primary: '#EBFF0D',
@@ -66,6 +64,7 @@ module.exports = {
         },
         derma: {
           primary: '#1FA6A6',
+          'primary/20': '#d0f3e7',
           primary500: '#23D9B7',
           primary300: '#99F2E2',
           primary100: '#e5f7ed',
@@ -74,6 +73,7 @@ module.exports = {
           secondary300: '#F7F3F0',
           secondary100: '#FBFAF3',
           tertiary: '#112959',
+          tertiaryDark: '#030140',
         },
       },
       backgroundImage: {
@@ -90,6 +90,7 @@ module.exports = {
         lg: '1024px',
         xl: '1152px',
         '2xl': '1280px',
+        '3xl': '1600px',
       },
       boxShadow: {
         'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.05)',

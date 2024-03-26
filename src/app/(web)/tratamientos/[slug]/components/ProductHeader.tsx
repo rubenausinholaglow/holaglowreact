@@ -1,9 +1,9 @@
 'use client';
 
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
+import { isMobile } from 'react-device-detect';
+import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { SvgGlow } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import {
   getImageProductsCarousel,
@@ -11,7 +11,7 @@ import {
   useImageProps,
 } from 'app/utils/common';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Carousel } from 'designSystem/Carousel/Carousel';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -24,7 +24,6 @@ export default function ProductHeader({
   product: Product;
   isDashboard?: boolean;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const imageUrls: any[] = [];
   for (let i = 1; i <= product.numProductCardPhotos; i++) {
@@ -44,9 +43,7 @@ export default function ProductHeader({
             alt={`Placeholder ${index + 1}`}
             onError={url.defaultImage}
             className={`relative ${url.alignmentStyles} ${
-              !isDashboard && deviceSize.isMobile
-                ? 'rounded-t-3xl'
-                : 'rounded-3xl'
+              !isDashboard && isMobile ? 'rounded-t-3xl' : 'rounded-3xl'
             } w-[66%]`}
           />
         </div>
@@ -58,7 +55,7 @@ export default function ProductHeader({
     <>
       <Container
         className={`p-0 md:px-4 gap-4 md:gap-16 justify-between md:mb-16 flex ${
-          !isDashboard && deviceSize.isMobile ? ' flex-col' : 'flex-row'
+          !isDashboard && isMobile ? ' flex-col' : 'flex-row'
         }`}
       >
         <Container className="md:w-1/2 md:px-0 md:flex md:flex-col md:justify-center md:items-start">
@@ -90,7 +87,7 @@ export default function ProductHeader({
                 return (
                   <Button
                     key={category.name}
-                    type="tertiary"
+                    type="white"
                     customStyles="border-none pl-1 mb-8"
                   >
                     <CategoryIcon category={category.name} className="mr-2" />
@@ -105,9 +102,7 @@ export default function ProductHeader({
           <div className="relative aspect-[3/2] w-full">
             <div
               className={`absolute inset-0 top-[10%] ${alignmentStyles} ${
-                !isDashboard && deviceSize.isMobile
-                  ? 'rounded-t-3xl'
-                  : 'rounded-3xl'
+                !isDashboard && isMobile ? 'rounded-t-3xl' : 'rounded-3xl'
               }`}
               style={{
                 background: getProductCardColor(product.cardBackgroundColor),
@@ -132,9 +127,13 @@ export default function ProductHeader({
                 src={imgSrc}
                 onError={() => setNextImgSrc()}
                 className={`relative ${alignmentStyles} ${
-                  !isDashboard && deviceSize.isMobile
-                    ? 'rounded-t-3xl'
-                    : 'rounded-3xl'
+                  !isDashboard && isMobile
+                    ? product.productCardImagePosition !== 'middle'
+                      ? 'rounded-t-3xl'
+                      : ''
+                    : product.productCardImagePosition !== 'middle'
+                    ? 'rounded-3xl'
+                    : ''
                 } w-[66%]`}
               />
             )}

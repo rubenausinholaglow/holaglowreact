@@ -1,28 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
+import ROUTES from '@utils/routes';
 import { SvgArrow, SvgHolaglow, SvgMenu } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
-import {
-  HEADER_HEIGHT_DESKTOP,
-  HEADER_HEIGHT_MOBILE,
-} from 'app/utils/constants';
-import useRoutes from 'app/utils/useRoutes';
+import { headerHeight } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
 
-import { AnimateOnViewport } from '../common/AnimateOnViewport';
 import MobileNavigation from './MobileNavigation';
-import PromoTopBar from './PromoTopBar';
 
 let isTicking = false;
 let scrollPos = 0;
 
 function Navigation({ className }: { className: string }) {
-  const ROUTES = useRoutes();
-
   const NAV_ITEMS = [
     { name: 'Tratamientos', link: ROUTES.treatments },
     { name: 'Clínicas', link: ROUTES.clinics },
@@ -45,23 +39,20 @@ function Navigation({ className }: { className: string }) {
   );
 }
 
-export default function Header() {
-  const ROUTES = useRoutes();
-
+export default function Header({
+  hideAppointmentButton = false,
+}: {
+  hideAppointmentButton?: boolean;
+}) {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
-  const { deviceSize, setSelectedTreatments } = useSessionStore(state => state);
-
-  const HEADER_HEIGHT = deviceSize.isMobile
-    ? HEADER_HEIGHT_MOBILE
-    : HEADER_HEIGHT_DESKTOP;
-  const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
+  const { setSelectedTreatments } = useSessionStore(state => state);
 
   const recalculateVisibility = () => {
     setIsHeaderVisible(
-      window.scrollY < HEADER_HEIGHT || scrollPos > window.scrollY
+      window.scrollY < headerHeight() || scrollPos > window.scrollY
     );
     scrollPos = window.scrollY;
     setIsScrollOnTop(scrollPos === 0);
@@ -90,63 +81,68 @@ export default function Header() {
 
   return (
     <>
-      <MobileNavigation
-        isVisible={isMobileNavVisible}
-        headerHeight={HEADER_HEIGHT}
-        setIsMobileNavVisible={setIsMobileNavVisible}
-      />
+      <CheckHydration>
+        <MobileNavigation
+          isVisible={isMobileNavVisible}
+          setIsMobileNavVisible={setIsMobileNavVisible}
+        />
+      </CheckHydration>
 
       <header
         id="header"
-        className={`z-30 w-full top-0 sticky transition-all ${
-          !isHeaderVisible ? '-translate-y-full' : '-translate-y-0'
-        } ${isScrollOnTop ? 'bg-transparent' : 'bg-white'}`}
+        className="z-30 w-full top-0 left-0 right-0 sticky transition-all h-[56px] md:h-[72px]"
+        style={{
+          top: !isHeaderVisible ? `-${headerHeight()}px` : '',
+          background: isScrollOnTop ? 'transparent' : 'white',
+        }}
       >
         {/* <PromoTopBar /> */}
-        <AnimateOnViewport origin="top">
-          <Container isHeader>
-            <Flex
-              layout="row-between"
-              className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
-            >
-              <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
-                <SvgHolaglow
-                  fill={HOLAGLOW_COLORS['secondary']}
-                  className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
-                />
-              </Link>
+        <Container isHeader>
+          <Flex
+            layout="row-between"
+            className="w-full relative h-[56px] md:h-[72px] items-center justify-between lg:justify-center"
+          >
+            <Link href={ROUTES.home} className="lg:absolute left-0">
+              <SvgHolaglow className="h-[24px] md:h-[32px] w-[98px] md:w-[130px] text-hg-secondary" />
+            </Link>
 
-              <Navigation className="hidden lg:block 2xl:mr-20" />
+            <Navigation className="hidden lg:block" />
 
-              <Flex
-                layout="row-center"
-                className="lg:absolute right-0 2xl:mr-20"
-              >
-                <Button
-                  size="sm"
-                  type="tertiary"
-                  href={ROUTES.checkout.clinics}
-                  className="hidden md:block"
-                  onClick={() => {
-                    setSelectedTreatments([]);
-                  }}
-                >
-                  Reservar cita
-                  <SvgArrow height={16} width={16} className="ml-2" />
-                </Button>
+            <Flex layout="row-center" className="lg:absolute right-0">
+              {!hideAppointmentButton && (
+                <CheckHydration>
+                  <Button
+                    id="tmevents_nav_menu_appointment"
+                    size={isMobile ? 'sm' : 'md'}
+                    type="white"
+                    customStyles="bg-transparent"
+                    href={ROUTES.checkout.type}
+                    onClick={() => {
+                      setSelectedTreatments([]);
+                    }}
+                  >
+                    Reservar cita
+                    <SvgArrow
+                      height={16}
+                      width={16}
+                      className="ml-2 pointer-events-none hidden md:block"
+                    />
+                  </Button>
+                </CheckHydration>
+              )}
 
-                <SvgMenu
-                  height={24}
-                  width={24}
-                  className="ml-2 lg:hidden"
-                  onClick={() => {
-                    setIsMobileNavVisible(true);
-                  }}
-                />
-              </Flex>
+              <SvgMenu
+                height={24}
+                width={24}
+                className="ml-2 lg:hidden"
+                onClick={() => {
+                  setIsMobileNavVisible(true);
+                }}
+                id="tmevent_nav_menu_open"
+              />
             </Flex>
-          </Container>
-        </AnimateOnViewport>
+          </Flex>
+        </Container>
       </header>
     </>
   );

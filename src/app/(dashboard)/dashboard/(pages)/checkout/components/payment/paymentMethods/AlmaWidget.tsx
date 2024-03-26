@@ -1,5 +1,7 @@
 'use client';
 
+import '/public/styles/Alma/widgets.min.css';
+
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import FinanceService from '@services/FinanceService';
@@ -105,6 +107,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     `;
 
   const handleClick = async (amountFinance: string) => {
+    if (isLoading) return;
     setIsLoading(true);
 
     const parsedValue = parseFloat(amountFinance);
@@ -113,7 +116,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
     if (!isNaN(parsedValue)) {
       resultValue = Math.round(parsedValue * 100).toString();
     }
-
+    let deferredDays = undefined;
     let installmentsValue = installments;
     if (installmentsValue === -1) {
       const almaPaymentPlans = document.getElementsByClassName(
@@ -124,6 +127,10 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
         if (text) {
           installmentsValue = Number(text.replace(/x|d+/g, ''));
         }
+        if (text == 'D+15') {
+          deferredDays = 15;
+          installmentsValue = 1;
+        }
       }
     }
 
@@ -133,6 +140,7 @@ export const AlmaWidget: React.FC<AlmaProps> = ({
       userId: user?.id || '',
       paymentBank: PaymentBank.Alma,
       originPayment: OriginPayment.dashboard,
+      deferred_Days: deferredDays,
     };
 
     try {

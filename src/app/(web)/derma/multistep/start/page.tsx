@@ -1,24 +1,25 @@
 import CheckHydration from '@utils/CheckHydration';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgArrow } from 'app/icons/IconsDs';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata: Metadata = {
-  title: 'Holaglow - La nueva cara de la medicina estética',
-  description:
-    'Di adiós a los prejuicios y haz realidad tu propia idea de belleza con tratamientos estéticos eficaces',
-};
+import StartButton from './StartButton';
 
+export const metadata: Metadata = {
+  metadataBase: new URL('https://holaglow.com'),
+  title: 'Cuidado facial personalizado - Holaglow Derma',
+  description:
+    'Reserva tu consulta online con un dermatólogo estético y encuentra el mejor tratamiento para tu piel sin salir de casa.',
+};
 export default function StartMultistep() {
   return (
     <CheckHydration>
+      <meta name="robots" content="noindex,follow" />
       <div className="bg-derma-secondary100 min-h-screen">
         <DermaLayout hideButton hideFooter>
-          <Container>
+          <Container id="tm_derma_step0">
             <Flex
               layout="col-left"
               className="gap-8 md:gap-16 items-center relative md:justify-center md:flex-row md:mt-12"
@@ -27,31 +28,35 @@ export default function StartMultistep() {
                 <Image
                   src="/images/derma/home/dermaStart.png"
                   alt="Holaglow"
-                  width={816}
-                  height={1014}
-                  className="w-2/3 md:w-full shrink-0"
+                  width={204}
+                  height={253}
                 />
               </Flex>
               <Flex layout="col-left" className="relative z-10 md:w-1/2">
-                <Text className="font-gtUltraThin text-derma-primary mb-6 md:mb-6 text-xl md:text-5xl md:font-gtUltraBold">
-                  Tu camino hacia una piel más saludable comienza aquí
+                <Title size="2xl" className="text-derma-primary mb-6 md:mb-6">
+                  Tu rutina facial personalizada por 99€
+                </Title>
+                <Text className="font-gtUltra md:w-full md:text-lg mb-2">
+                  Videollamada de diagnóstico con el médico
+                </Text>
+                <Text className="font-gtUltra md:w-full md:text-lg mb-8">
+                  Te enviamos a casa tu rutina personalizada:
+                </Text>
+                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
+                  - Espuma limpiadora
+                </Text>
+                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
+                  - Crema hidratante de día para tu afección
+                </Text>
+                <Text className="text-hg-black500 md:w-full md:text-lg mb-2">
+                  - Protector solar
                 </Text>
                 <Text className="text-hg-black500 md:w-full md:text-lg mb-8">
-                  El primer paso es identificar tus necesidades. Responde estas
-                  preguntas para orientar tu consulta médica y obtener un
-                  tratamiento personalizado.
+                  - Receta de la crema personalizada de noche (a pedir en
+                  farmacia por 25-40€)
                 </Text>
-                <Button
-                  type="tertiary"
-                  size="xl"
-                  className="mx-auto md:mx-0 mb-10"
-                  href="/multistep/steps"
-                  id={'tmevent_multistep_module'}
-                  customStyles="border-derma-primary bg-derma-secondary300 text-derma-primary"
-                >
-                  Empezar
-                  <SvgArrow className="ml-4" height={24} width={24} />
-                </Button>
+
+                <StartButton />
               </Flex>
             </Flex>
           </Container>

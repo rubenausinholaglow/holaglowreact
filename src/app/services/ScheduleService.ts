@@ -1,4 +1,5 @@
 import Bugsnag from '@bugsnag/js';
+import { getTreatmentId } from '@utils/userUtils';
 import {
   Appointment,
   RescheduleAppointmentRequest,
@@ -7,7 +8,7 @@ import {
 } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
-import { DayAvailability } from 'app/types/dayAvailability';
+import { DayAvailability, MonthAvailabilityResponse } from 'app/types/dayAvailability';
 import { Product } from 'app/types/product';
 import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
@@ -57,15 +58,15 @@ export default class ScheduleService {
     paymentId: string
   ) => {
     const appointments: Appointment[] = [];
-    let ids = selectedTreatments!.map(x => x.flowwwId).join(',');
     let treatments = selectedTreatments!.map(x => x.title).join(',');
-    if (selectedPacksTreatments && selectedPacksTreatments.length) {
-      ids = selectedPacksTreatments!
-        .slice(0, 2)
-        .map(x => x.flowwwId)
-        .join(',');
+    if (
+      selectedPacksTreatments &&
+      selectedPacksTreatments.length &&
+      treatments.indexOf('Probador') < 0
+    ) {
       treatments = selectedPacksTreatments!.map(x => x.title).join(',');
     }
+    const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
     const format = 'YYYY-MM-DD';
     const comment = 'Tratamiento visto en web: ' + treatments;
 
@@ -248,7 +249,7 @@ export default class ScheduleService {
     date: string,
     treatment: string,
     clinicId: string
-  ): Promise<Array<DayAvailability>> {
+  ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailability?date=` +
@@ -262,18 +263,18 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return [];
+        return {} as MonthAvailabilityResponse;
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
-      return [];
+      return {} as MonthAvailabilityResponse;
     }
   }
   static async getMonthAvailabilityv2(
     date: string,
     treatment: string,
     clinicId: string
-  ): Promise<Array<DayAvailability>> {
+  ): Promise<MonthAvailabilityResponse> {
     try {
       const url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailabilityv2?date=` +
@@ -287,11 +288,11 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return [];
+        return {} as MonthAvailabilityResponse;
       }
     } catch (err: any) {
       Bugsnag.notify('Error getting monthavailability', err);
-      return [];
+      return {} as MonthAvailabilityResponse;
     }
   }
 
@@ -395,7 +396,7 @@ export default class ScheduleService {
     try {
       const url = `${ScheduleService.getScheduleUrl()}Appointment`;
 
-      const res = await fetch(url, {
+      await fetch(url, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
-import useRegistration from '@utils/userUtils';
+import { useRegistration, validFormData } from '@utils/userUtils';
 import {
   phoneValidationRegex,
   postalCodeValidationRegex,
@@ -33,16 +33,24 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   hasContinueButton = true,
   isEmbed = false,
   page = '',
+  initialValues,
   setClientData,
+  setContinueDisabled = undefined,
   showPostalCode = false,
+  showCity = false,
+  showAddress = false,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
   hasContinueButton?: boolean;
   isEmbed?: boolean;
   page?: string;
+  initialValues?: Client;
   setClientData?: Dispatch<SetStateAction<Client>>;
+  setContinueDisabled?: Dispatch<SetStateAction<boolean>>;
   showPostalCode?: boolean;
+  showCity?: boolean;
+  showAddress?: boolean;
 }) => {
   const routes = useRoutes();
 
@@ -84,7 +92,18 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     treatmentPrice: 0,
     postalCode: '',
     origin: '',
+    city: '',
+    address: '',
   });
+
+  useEffect(() => {
+    if (initialValues) {
+      initialValues.surname = initialValues.lastName;
+      initialValues.termsAndConditionsAccepted =
+        initialValues.name.length > 0 && initialValues.secondSurname.length > 0;
+      setFormData(initialValues);
+    }
+  }, []);
 
   const registerUser = useRegistration(
     formData,
@@ -99,12 +118,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !isEmpty(formData.surname) &&
       !isEmpty(formData.email) &&
       !isEmpty(formData.phone) &&
+      formData.termsAndConditionsAccepted &&
+      ((!isEmpty(formData.postalCode) && showPostalCode) || !showPostalCode) &&
+      ((!isEmpty(formData.city) && showCity) || !showCity) &&
+      ((!isEmpty(formData.address) && showAddress) || !showAddress) &&
       !showPhoneError &&
-      !showEmailError
+      !showEmailError &&
+      !showPostalCodeError
     ) {
       setIsDisabled(false);
+      if (setContinueDisabled) setContinueDisabled(false);
     } else {
       setIsDisabled(true);
+      if (setContinueDisabled) setContinueDisabled(true);
     }
   }, [formData, showPhoneError, showEmailError]);
 
@@ -112,10 +138,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    const value =
+    let value: string | boolean | number | undefined =
       event.target.type === 'checkbox'
         ? event.target.checked
         : event.target.value;
+
+    if (field === 'phonePrefix' && typeof value === 'number') {
+      value = `+${value as number}`;
+    }
+
+    if (field === 'phone' && typeof value === 'number' && value === 0) {
+      value = undefined;
+    }
+
     setFormData(prevFormData => ({
       ...prevFormData,
       [field]: value,
@@ -131,16 +166,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
-    const areAllFieldsFilled = requiredFields.every(
-      field => formData[field] !== ''
-    );
 
-    if (
-      areAllFieldsFilled &&
-      isEmailValid &&
-      formData.termsAndConditionsAccepted &&
-      errors.length == 0
-    ) {
+    if (validFormData(formData, errors)) {
       setErrors([]);
       await handleRegistration();
     } else {
@@ -179,29 +206,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       handleFieldChange(event, 'phonePrefix');
     }
 
-    validatePhoneInput(`+${value}`);
-  }
-
-  function validatePhoneInput(phoneNumber: string) {
-    if (
-      phoneNumber.length > 3 &&
-      phoneNumber.startsWith('+34') &&
-      phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
-    ) {
-      setShowPhoneError(false);
-    }
-
-    if (
-      phoneNumber.length > 3 &&
-      phoneNumber.startsWith('+34') &&
-      !phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
-    ) {
-      setShowPhoneError(true);
-    }
-
-    if (isEmpty(phoneNumber) || phoneNumber === '+' || phoneNumber === '+34') {
-      setShowPhoneError(true);
-    }
+    setShowPhoneError(utils.validatePhoneInput(`+${value}`));
   }
 
   const handleRegistration = async () => {
@@ -320,15 +325,33 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           )}
         </>
       )}
+      {showCity && (
+        <>
+          <TextInputField
+            placeholder="Ciudad"
+            value={formData.city!}
+            onChange={event => {
+              handleFieldChange(event, 'city');
+            }}
+          />
+        </>
+      )}
+      {showAddress && (
+        <>
+          <TextInputField
+            placeholder="Dirección de entrega"
+            value={formData.address!}
+            onChange={event => {
+              handleFieldChange(event, 'address');
+            }}
+          />
+        </>
+      )}
       <Flex layout="col-left" className="my-2 mb-4">
         <Flex
           layout="row-left"
           className={
-            !hasContinueButton &&
-            !isDisabled &&
-            !formData.termsAndConditionsAccepted
-              ? 'animate-shake'
-              : ''
+            !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
           }
         >
           <label
@@ -396,12 +419,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <Button
           disabled={isDisabled}
           onClick={() => {
-            handleContinue();
-            if (isEmbed) {
-              window.parent.postMessage(
-                routes.checkout.clinics,
-                'https://www.holaglow.com'
-              );
+            if (!isLoading && !isDisabled) {
+              handleContinue();
+              if (isEmbed) {
+                window.parent.postMessage(
+                  routes.checkout.clinics,
+                  'https://www.holaglow.com'
+                );
+              }
             }
           }}
           type="primary"

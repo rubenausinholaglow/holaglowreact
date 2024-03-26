@@ -1,53 +1,64 @@
 'use client';
 
-import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
+import { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, TitleDerma } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function HeroDerma() {
-  const { deviceSize } = useSessionStore(state => state);
+  const routinesArray = ['acné', 'melasma', 'rosácea', 'antiaging'];
+  const [routineIndex, setRoutineIndex] = useState(0);
 
-  const HEADER_HEIGHT = deviceSize.isMobile
+  const startTimer = () => {
+    setTimeout(() => {
+      setRoutineIndex(routineIndex < 3 ? routineIndex + 1 : 0);
+    }, 2000);
+  };
+
+  startTimer();
+  const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `-${HEADER_HEIGHT}px`;
 
   return (
-    <>
-      <Flex
-        layout="col-left"
-        className="bg-gradient-30deg from-[#23D9B74D] to-[#FFC7C74D] pt-16 md:flex-row md:items-end overflow-hidden"
-        style={{ marginTop: HEADER_HEIGHT_CLASS }}
-      >
-        <Image
-          src="/images/derma/home/homeDerma.png"
-          alt="Holaglow"
-          width={912}
-          height={894}
-          className="md:w-2/5 xl:ml-[5%]"
-        />
+    <div
+      className="bg-derma-secondary100 pt-[72px] md:pt-0 overflow-hidden relative"
+      style={{ marginTop: HEADER_HEIGHT_CLASS }}
+    >
+      <Flex layout="col-left" className="md:flex-row md:items-end mx-auto">
+        <div className="w-full md:order-2 aspect-square relative md:w-1/2 xl:w-2/5">
+          <Image
+            src="/images/derma/home/homeDerma.jpg"
+            alt="Holaglow"
+            className="object-cover"
+            priority
+            fill
+          />
+        </div>
         <Flex
           layout="col-center"
-          className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end lg:mr-[5%]"
+          className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end md:w-1/2 xl:w-3/5"
         >
-          <Container className="pb-12 md:p-0 overflow-hidden">
-            <Flex layout="col-left" className="md:ml-8">
+          <Container className="pb-12 md:p-0 overflow-hidden md:pr-8 lg:pr-12">
+            <Flex layout="col-left" className="md:ml-8 md:mr-4 2xl:pl-16">
               <Flex
-                layout="row-between"
-                className="mb-4 md:order-2 w-full md:justify-start gap-4"
+                layout="row-left"
+                className="mb-4 md:order-2 w-full md:justify-start gap-4 py-3"
               >
-                <Flex className="gap-2 items-center">
-                  <SvgStar className="-mt-1" />
-                  <span>4,7</span>
-                  <SvgGoogle />
-                </Flex>
+                <Image
+                  src="/images/derma/home/GoogleReviews.png"
+                  alt="Holaglow reviews"
+                  height={200}
+                  width={isMobile ? 150 : 175}
+                  className="mr-auto"
+                />
                 <Text className="text-hg-black400 text-xs">
                   Impulsado por Holaglow
                 </Text>
@@ -57,32 +68,36 @@ export default function HeroDerma() {
                 className="gap-4 items-center relative md:justify-center md:flex-row"
               >
                 <Flex layout="col-left" className="relative z-10">
-                  <TitleDerma
-                    size="3xl"
-                    className="text-derma-primary text-left mb-4"
+                  <Title
+                    size="2xl"
+                    className="text-derma-primary text-left mb-4 text-wrap"
                   >
-                    Cuidado facial personalizado
-                  </TitleDerma>
+                    Tu rutina facial de 3 meses para{' '}
+                    <span className="text-derma-tertiary text-left mb-4">
+                      {routinesArray[routineIndex]}
+                    </span>
+                  </Title>
                   <Text
                     isAnimated
-                    className="text-hg-black500 md:w-full lg:text-lg mb-8 lg:mb-16  "
+                    className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
                   >
-                    Reserva tu consulta online con un dermatólogo estético y
-                    encuentra el mejor tratamiento para las necesidades
-                    específicas de tu piel.
+                    Te enviamos a casa{' '}
+                    <span className="font-semibold">
+                      tu rutina facial personalizada
+                    </span>{' '}
+                    por 99€ y te devolvemos el dinero si no ves una mejora al
+                    finalizar el tratamiento
                   </Text>
 
                   <Flex layout="row-center" className="w-full md:justify-start">
                     <Button
-                      isAnimated
-                      type="tertiary"
+                      type="derma"
                       size="xl"
-                      className="lg:mb-12"
-                      customStyles="border-none bg-derma-primary text-white hover:bg-derma-primary500 hover:text-derma-primary"
+                      className="md:mb-8 lg:mb-12"
                       href="/multistep/start"
-                      id={'tmevent_multistep_module'}
+                      id="tmevent_derma_multistep_start"
                     >
-                      Pide tu cita online
+                      Descubre tu rutina
                     </Button>
                   </Flex>
                 </Flex>
@@ -91,6 +106,6 @@ export default function HeroDerma() {
           </Container>
         </Flex>
       </Flex>
-    </>
+    </div>
   );
 }

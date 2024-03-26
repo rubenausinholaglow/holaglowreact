@@ -1,13 +1,15 @@
-'use client';
-
 import { ReactNode } from 'react';
-import { AnimateOnViewport } from 'app/(web)/components/common/AnimateOnViewport';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
+
+const AnimateOnViewport = dynamic(
+  () => import('app/(web)/components/common/AnimateOnViewport'),
+  { ssr: false }
+);
 
 export const Title = ({
   size = 'xl',
-  weight = 'semibold',
   as = 'h3',
   className = '',
   wrapperClassName = '',
@@ -34,55 +36,9 @@ export const Title = ({
     xl: 'text-xl lg:text-2xl',
   };
 
-  const styles = twMerge(`${STYLES[size]} font-${weight} ${className}`);
-
-  if (isAnimated) {
-    return (
-      <AnimateOnViewport className={wrapperClassName} origin={origin}>
-        <HtmlComponent className={styles} onClick={onClick}>
-          {children}
-        </HtmlComponent>
-      </AnimateOnViewport>
-    );
-  }
-
-  return (
-    <HtmlComponent className={styles} onClick={onClick}>
-      {children}
-    </HtmlComponent>
+  const styles = twMerge(
+    `font-gtUltra font-bold text-hg-secondary text-balance ${STYLES[size]} ${className}`
   );
-};
-
-export const TitleDerma = ({
-  size = 'xl',
-  as = 'h3',
-  className = '',
-  wrapperClassName = '',
-  isAnimated = false,
-  origin = 'bottom',
-  onClick = undefined,
-  children,
-}: {
-  size?: '3xl' | '2xl' | 'xl';
-  as?: 'h3' | 'h2' | 'h1';
-  className?: string;
-  wrapperClassName?: string;
-  isAnimated?: boolean;
-  origin?: 'top' | 'right' | 'bottom' | 'left';
-  children: ReactNode;
-  onClick?: (...args: any[]) => void;
-}) => {
-  const HtmlComponent = as;
-
-  const STYLES = {
-    '3xl': 'text-dr4xl lg:text-6xl',
-    '2xl': 'text-3xl lg:text-5xl',
-    xl: 'text-drxl lg:text-2xl',
-  };
-
-  const styles = `${className} ${STYLES[size]} ${
-    size === 'xl' ? 'font-gtUltraThin' : 'font-gtUltraBold'
-  }`;
 
   if (isAnimated) {
     return (
@@ -102,7 +58,7 @@ export const TitleDerma = ({
 };
 
 export const Text = ({
-  size = 'inherit',
+  size = 'default',
   as = 'p',
   className = '',
   wrapperClassName = '',
@@ -112,7 +68,7 @@ export const Text = ({
   origin = 'bottom',
   rest,
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inherit';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'drxl' | '2xl' | 'default';
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
   className?: string;
   wrapperClassName?: string;
@@ -124,9 +80,9 @@ export const Text = ({
 }) => {
   const HtmlComponent = as;
 
-  const styles = twMerge(
-    `text-left ${size ? `text-${size}` : 'text-md'} ${className}`
-  );
+  const styles = `text-left ${
+    size !== 'default' ? `text-${size}` : ''
+  } ${className}`;
 
   if (isAnimated) {
     return (

@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { DermaQuestions } from '@interface/dermaquestions';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { HOLAGLOW_COLORS } from '@utils/colors';
 import { SvgCheck, SvgCircle } from 'app/icons/Icons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import { MULTISTEP_QUESTIONS } from './mockedData';
@@ -23,9 +23,33 @@ export default function SecondStep({
   setDermaQuestions: any;
   setContinueDisabled: any;
 }) {
-  const [secondStepValues, setSecondStepValues] = useState<any>([[], []]);
-  const [textAreaOne, setTextAreaOne] = useState<string>('');
-  const [textAreaTwo, setTextAreaTwo] = useState<string>('');
+  const otherConcerns = dermaQuestions?.skinConcerns
+    ? dermaQuestions.skinConcerns.filter(item => {
+        return item.concern.startsWith('Otros:');
+      })
+    : [];
+  const normalConcerns: number[] = [];
+  dermaQuestions?.skinConcerns?.forEach(item => {
+    normalConcerns.push(
+      (MULTISTEP_QUESTIONS[1].questions as [any]).findIndex(
+        x => x.title == item.concern
+      )
+    );
+  });
+  const [secondStepValues, setSecondStepValues] = useState<any>([
+    [
+      (MULTISTEP_QUESTIONS[0].questions as [any]).findIndex(
+        x => x.title == dermaQuestions?.scenario
+      ),
+    ],
+    normalConcerns,
+  ]);
+  const [textAreaOne, setTextAreaOne] = useState<string>(
+    otherConcerns[0]?.concern ?? ''
+  );
+  const [textAreaTwo, setTextAreaTwo] = useState<string>(
+    dermaQuestions?.extraInfo ?? ''
+  );
 
   const setSelectedQuestionValue = (question: number, value: number) => {
     const newValues = [...secondStepValues];
@@ -97,14 +121,16 @@ export default function SecondStep({
 
   return (
     <>
-      <Flex layout="col-left" className="w-full md:flex-row md:gap-16">
+      <Flex
+        layout="col-left"
+        className="w-full md:flex-row md:gap-16"
+        id="tm_derma_step1"
+      >
         <Flex layout="col-left" className="w-full md:w-1/2">
           <Text className="text-sm text-derma-primary500">
             Paso {question + 2}. {item.section}
           </Text>
-          <Text className="font-gtUltraThin text-xl text-derma-primary md:text-2xl mb-4">
-            {item.title}
-          </Text>
+          <Title className="text-derma-primary mb-4">{item.title}</Title>
           <Text className="text-hg-black500 text-sm mb-8 md:text-md">
             {item.description}
           </Text>
