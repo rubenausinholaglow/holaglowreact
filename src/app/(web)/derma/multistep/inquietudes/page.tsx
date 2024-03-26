@@ -1,10 +1,17 @@
+'use client';
+
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgCheckSquare } from 'app/icons/IconsDs';
+import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function Inquietudes() {
+  const { inquietudes, setInquietudes } = useDermaStore(state => state);
+
+  console.log(inquietudes);
+
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
@@ -49,11 +56,20 @@ export default function Inquietudes() {
                 'No se lo que tengo',
               ].map(item => (
                 <li
-                  className="rounded-xl bg-derma-secondary400 p-3 flex justify-between"
+                  className={`transition-all rounded-xl p-3 flex justify-between ${
+                    inquietudes === item
+                      ? 'bg-derma-primary/20'
+                      : 'bg-derma-secondary400'
+                  }`}
                   key={item}
+                  onClick={() => setInquietudes(item)}
                 >
                   {item}
-                  <SvgCheckSquare className="h-6 w-6" />
+                  {inquietudes === item ? (
+                    <SvgCheckSquareActive className="h-6 w-6" />
+                  ) : (
+                    <SvgCheckSquare className="h-6 w-6" />
+                  )}
                 </li>
               ))}
             </ul>
