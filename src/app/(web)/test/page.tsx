@@ -47,6 +47,24 @@ export default function Page() {
           name="frameEcommerce"
           scrolling="no"
         ></iframe>
+        <form
+          id="fk-form-installments"
+          name="pagoForm"
+          target="frameEcommerce"
+          method="POST"
+          action="https://frakmenta.com/op/ecommerce/load"
+        >
+          <input id="infoTotal" name="infoTotal" value="IMPORTE" />
+          <input id="token" name="token" />
+          <button
+            id="Pagar"
+            name="Pagar"
+            type="submit"
+            className="button btn-pagar"
+          >
+            Paga con frakmenta
+          </button>
+        </form>
       </MainLayout>
     </App>
   );
