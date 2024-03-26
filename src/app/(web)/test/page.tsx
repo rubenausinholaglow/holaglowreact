@@ -54,8 +54,12 @@ export default function Page() {
           method="POST"
           action="https://frakmenta.com/op/ecommerce/load"
         >
-          <input id="infoTotal" name="infoTotal" value="IMPORTE" />
-          <input id="token" name="token" />
+          <input
+            id="infoTotal"
+            name="infoTotal"
+            className="border-black border-4"
+          />
+          <input id="token" name="token" className="border-black border-4" />
           <button
             id="Pagar"
             name="Pagar"
