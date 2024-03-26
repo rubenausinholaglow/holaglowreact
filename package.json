@@ -43,6 +43,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
+    "react-images-uploading": "^3.1.7",
     "react-phone-input-2": "^2.15.1",
     "react-select": "^5.7.5",
     "react-share": "^5.0.3",

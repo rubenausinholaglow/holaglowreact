@@ -14,12 +14,9 @@ const ROUTES = {
   blog: '/blog',
   dashboard: {
     crisalix: '/dashboard/crisalix',
-    //schedule: `/dashboard/schedule?flowwwToken=${user?.flowwwToken}`,
     menu: '/dashboard/menu',
-    //home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
     checkOut: '/dashboard/checkout',
     checkIn: {
-      //root: `/dashboard/checkin?clinicId=${storedClinicId}`,
       treatments: '/dashboard/checkin/treatments',
       agenda: '/dashboard/checkin/agenda',
       thankYou: '/dashboard/checkin/welcome',
@@ -38,6 +35,19 @@ const ROUTES = {
   },
   landings: {
     pv: '/start-landing',
+  },
+  derma: {
+    multistep: {
+      start: 'demra/multistep/start',
+      pains: '/derma/multistep/pains',
+      categories: '/derma/multistep/categories',
+      skinType: '/derma/multistep/skin-type',
+      sensitivity: '/derma/multistep/sensitivity',
+      gender: '/derma/multistep/gender',
+      pictures: '/derma/multistep/pictures',
+      extraInfo: '/derma/multistep/extra-info',
+      form: '/derma/multistep/form',
+    },
   },
 };
 

@@ -162,7 +162,7 @@ const ButtonBody = ({
   id?: string;
 }) => {
   const DISABLED_STYLES =
-    'cursor-default pointer-events-none border-none bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 active:bg-hg-black100 active:text-hg-black300';
+    'cursor-default pointer-events-none border-none bg-white text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 active:bg-hg-black100 active:text-hg-black300';
 
   const STYLES: any = {
     common: 'transition-all relative text-center rounded-full',
@@ -180,7 +180,7 @@ const ButtonBody = ({
     white:
       'bg-white text-hg-black border border-hg-black hover:bg-hg-secondary100 active:bg-hg-secondary100',
     disabled:
-      'bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default',
+      'bg-white text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default',
     sm: 'text-xs font-medium h-[32px] px-4',
     md: 'text-xs font-medium h-[40px] px-4',
     lg: 'text-md font-semibold h-[48px] px-6',

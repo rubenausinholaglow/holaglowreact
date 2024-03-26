@@ -1,16 +1,20 @@
 'use client';
 
+import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
+import {
+  SvgArrow,
+  SvgCheckSquare,
+  SvgCheckSquareActive,
+} from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function Inquietudes() {
-  const { inquietudes, setInquietudes } = useDermaStore(state => state);
-
-  console.log(inquietudes);
+  const { gender, setGender } = useDermaStore(state => state);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -47,32 +51,42 @@ export default function Inquietudes() {
               </Text>
             </div>
 
-            <ul className="flex flex-col gap-4 w-full">
-              {[
-                'Acné',
-                'Enrojecimiento / Rosácea',
-                'Melasma / Manchas',
-                'Dermatitis',
-                'No se lo que tengo',
-              ].map(item => (
-                <li
-                  className={`transition-all rounded-xl p-3 flex justify-between ${
-                    inquietudes === item
-                      ? 'bg-derma-primary/20'
-                      : 'bg-derma-secondary400'
-                  }`}
-                  key={item}
-                  onClick={() => setInquietudes(item)}
+            <div className="w-full">
+              <ul className="flex flex-col gap-4 w-full mb-8">
+                {['Masculino', 'Femenino', 'No binario'].map(item => (
+                  <li
+                    className={`transition-all rounded-xl p-3 flex justify-between ${
+                      gender === item
+                        ? 'bg-derma-primary/20'
+                        : 'bg-derma-secondary400'
+                    }`}
+                    key={item}
+                    onClick={() =>
+                      setGender(gender === item ? undefined : item)
+                    }
+                  >
+                    {item}
+                    {gender === item ? (
+                      <SvgCheckSquareActive className="h-6 w-6" />
+                    ) : (
+                      <SvgCheckSquare className="h-6 w-6" />
+                    )}
+                  </li>
+                ))}
+              </ul>
+              <Flex className="justify-between">
+                <Button type="white" customStyles="bg-transparent border-none">
+                  <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
+                  <Text className="text-derma-tertiary">Atrás</Text>
+                </Button>
+                <Button
+                  href={ROUTES.derma.multistep.pictures}
+                  type={gender !== undefined ? 'dermaDark' : 'disabled'}
                 >
-                  {item}
-                  {inquietudes === item ? (
-                    <SvgCheckSquareActive className="h-6 w-6" />
-                  ) : (
-                    <SvgCheckSquare className="h-6 w-6" />
-                  )}
-                </li>
-              ))}
-            </ul>
+                  Siguiente
+                </Button>
+              </Flex>
+            </div>
           </Flex>
         </Container>
       </DermaLayout>

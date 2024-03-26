@@ -1,40 +1,50 @@
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface DermaStore {
-  inquietudes: string | undefined;
-  sensaciones: string | undefined;
-  descripcionPiel: string | undefined;
-  sensibilidad: string | undefined;
-  genero: string | undefined;
+  pain: string | undefined;
+  categories: string[];
+  skinType: string | undefined;
+  gender: string | undefined;
+  pictures: [];
 }
 
 interface DermaActions {
-  setInquietudes: (value: string) => void;
-  setSensaciones: (value: string) => void;
-  setDescripcionPiel: (value: string) => void;
-  setSensibilidad: (value: string) => void;
-  setGenero: (value: string) => void;
+  setPain: (value: string | undefined) => void;
+  setCategories: (value: string[]) => void;
+  setSkinType: (value: string | undefined) => void;
+  setGender: (value: string | undefined) => void;
+  setPictures: (value: []) => void;
 }
 
-export const useDermaStore = create<DermaStore & DermaActions>(set => ({
-  inquietudes: undefined,
-  sensaciones: undefined,
-  descripcionPiel: undefined,
-  sensibilidad: undefined,
-  genero: undefined,
-  setInquietudes: (value: string) => {
-    set({ inquietudes: value });
-  },
-  setSensaciones: (value: string) => {
-    set({ sensaciones: value });
-  },
-  setDescripcionPiel: (value: string) => {
-    set({ descripcionPiel: value });
-  },
-  setSensibilidad: (value: string) => {
-    set({ sensibilidad: value });
-  },
-  setGenero: (value: string) => {
-    set({ genero: value });
-  },
-}));
+export const useDermaStore = create(
+  persist<DermaStore & DermaActions>(
+    set => ({
+      pain: undefined,
+      setPain: (value: string | undefined) => {
+        set({ pain: value });
+      },
+      categories: [],
+      setCategories: (value: string[]) => {
+        set({ categories: value });
+      },
+      skinType: undefined,
+      setSkinType: (value: string | undefined) => {
+        set({ skinType: value });
+      },
+      gender: undefined,
+      setGender: (value: string | undefined) => {
+        set({ gender: value });
+      },
+      pictures: [],
+      setPictures: (value: []) => {
+        set({ pictures: value });
+      },
+    }),
+    {
+      name: 'derma-storage',
+      version: 1,
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
