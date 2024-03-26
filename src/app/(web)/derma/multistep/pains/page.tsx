@@ -16,6 +16,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
+import DermaStepHeader from '../../components/DermaStepHeader';
+import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
 
 export default function Inquietudes() {
   const router = useRouter();
@@ -30,35 +32,15 @@ export default function Inquietudes() {
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16"
           >
-            <div>
-              <Image
-                alt="Dr. Basart"
-                src="/images/derma/multistep/Basart.png"
-                height={192}
-                width={192}
-                className="mx-auto w-24 mb-4"
-              />
-              <Text className="text-xs text-derma-primary500 mb-1">
-                Paso 1. Necesidades personales
-              </Text>
-              <Title className="text-derma-primary font-light mb-1">
-                Selecciona las inquietudes que te gustaría resolver en tu
-                consulta
-              </Title>
-              <Text className="text-sm text-hg-black500">
-                Elige tantas opciones como desees
-              </Text>
-            </div>
+            <DermaStepHeader
+              intro="Paso 1. Necesidades personales"
+              title="Selecciona las inquietudes que te gustaría resolver en tu
+                consulta"
+            />
 
             <div className="w-full">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {[
-                  'Acné',
-                  'Enrojecimiento / Rosácea',
-                  'Melasma / Manchas',
-                  'Dermatitis',
-                  'No se lo que tengo',
-                ].map(item => (
+                {PAINS_AND_SYMPTOMS.map(item => item.pain).map(item => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
                       pain === item
@@ -88,7 +70,7 @@ export default function Inquietudes() {
                     <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
                   <Button
-                    href={ROUTES.derma.multistep.categories}
+                    href={ROUTES.derma.multistep.symptoms}
                     type={pain !== undefined ? 'dermaDark' : 'disabled'}
                   >
                     Siguiente

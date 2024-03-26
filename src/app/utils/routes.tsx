@@ -40,9 +40,11 @@ const ROUTES = {
     multistep: {
       start: 'demra/multistep/start',
       pains: '/derma/multistep/pains',
-      categories: '/derma/multistep/categories',
+      symptoms: '/derma/multistep/symptoms',
       skinType: '/derma/multistep/skin-type',
-      sensitivity: '/derma/multistep/sensitivity',
+      skinSensitivity: '/derma/multistep/skin-sensitivity',
+      alergies: '/derma/multistep/alergies',
+      illnesses: '/derma/multistep/illnesses',
       gender: '/derma/multistep/gender',
       pictures: '/derma/multistep/pictures',
       extraInfo: '/derma/multistep/extra-info',

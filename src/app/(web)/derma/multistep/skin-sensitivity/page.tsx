@@ -10,11 +10,13 @@ import {
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
+import { Text } from 'designSystem/Texts/Texts';
+
+import DermaStepHeader from '../../components/DermaStepHeader';
+import { SKIN_SENSITIVITIES } from '../multistepConfig';
 
 export default function Inquietudes() {
-  const { inquietudes, setInquietudes } = useDermaStore(state => state);
+  const { skinSensitivity, setSkinSensitivity } = useDermaStore(state => state);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -31,48 +33,37 @@ export default function Inquietudes() {
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16"
           >
-            <div>
-              <Image
-                alt="Dr. Basart"
-                src="/images/derma/multistep/Basart.png"
-                height={192}
-                width={192}
-                className="mx-auto w-24 mb-4"
-              />
-              <Text className="text-xs text-derma-primary500 mb-1">
-                Paso 1. Necesidades personales
+            <DermaStepHeader
+              intro="Paso 4. "
+              title="¿Qué tan sensible es tu piel?"
+            >
+              <Text className="text-hg-black500 mt-2">
+                Con esto nos referimos a enrojecimiento/sarpullido, picazón
+                frecuente, sensación de tensión o ardor
               </Text>
-              <Title className="text-derma-primary font-light mb-1">
-                Selecciona las inquietudes que te gustaría resolver en tu
-                consulta
-              </Title>
-              <Text className="text-sm text-hg-black500">
-                Elige tantas opciones como desees
+              <Text className="text-xs mt-2">
+                1 = Poco sensible / 5 = Muy sensible
               </Text>
-            </div>
+            </DermaStepHeader>
 
             <div className="w-full">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {[
-                  'Acné',
-                  'Enrojecimiento / Rosácea',
-                  'Melasma / Manchas',
-                  'Dermatitis',
-                  'No se lo que tengo',
-                ].map(item => (
+                {SKIN_SENSITIVITIES.map(item => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
-                      inquietudes === item
+                      skinSensitivity === item
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={item}
                     onClick={() =>
-                      setInquietudes(inquietudes === item ? undefined : item)
+                      setSkinSensitivity(
+                        skinSensitivity === item ? undefined : item
+                      )
                     }
                   >
                     {item}
-                    {inquietudes === item ? (
+                    {skinSensitivity === item ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -86,8 +77,10 @@ export default function Inquietudes() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.categories}
-                  type={inquietudes !== undefined ? 'dermaDark' : 'disabled'}
+                  href={ROUTES.derma.multistep.pictures}
+                  type={
+                    skinSensitivity !== undefined ? 'dermaDark' : 'disabled'
+                  }
                 >
                   Siguiente
                 </Button>

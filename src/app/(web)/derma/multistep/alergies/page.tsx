@@ -16,72 +16,34 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
-
-const CATEGORIES_BY_PAIN = [
-  {
-    name: 'Acné',
-    categories: ['Acné 1', 'Acné 2', 'Acné 3', 'Acné 4', 'Acné 5'],
-  },
-  {
-    name: 'Enrojecimiento / Rosácea',
-    categories: [
-      'Enrojecimiento / Rosácea 1',
-      'Enrojecimiento / Rosácea 2',
-      'Enrojecimiento / Rosácea 3',
-      'Enrojecimiento / Rosácea 4',
-      'Enrojecimiento / Rosácea 5',
-    ],
-  },
-  {
-    name: 'Melasma / Manchas',
-    categories: [
-      'Melasma / Manchas 1',
-      'Melasma / Manchas 2',
-      'Melasma / Manchas 3',
-      'Melasma / Manchas 4',
-      'Melasma / Manchas 5',
-    ],
-  },
-  {
-    name: 'Dermatitis',
-    categories: [
-      'Dermatitis 1',
-      'Dermatitis 2',
-      'Dermatitis 3',
-      'Dermatitis 4',
-      'Dermatitis 5',
-    ],
-  },
-];
+import DermaStepHeader from '../../components/DermaStepHeader';
+import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
 
 export default function Inquietudes() {
   const router = useRouter();
-  const { pain, categories, setCategories } = useDermaStore(state => state);
+  const { pain, symptoms, setSymptoms } = useDermaStore(state => state);
 
   const [textAreaValue, setTextAreaValue] = useState('');
 
   useEffect(() => {
-    const hasExtraCategory = categories.filter(category =>
+    const hasExtraSymptom = symptoms.filter(category =>
       category.startsWith('Extra:')
     );
 
-    if (hasExtraCategory.length > 0) {
-      setTextAreaValue(hasExtraCategory[0].substring(6));
+    if (hasExtraSymptom.length > 0) {
+      setTextAreaValue(hasExtraSymptom[0].substring(6));
     }
-  }, [categories]);
+  }, [symptoms]);
 
   function handleTextArea(event: ChangeEvent<HTMLTextAreaElement>) {
-    const categoriesWithoutExtra = categories.filter(
+    const symptomsWithoutExtra = symptoms.filter(
       category => !category.startsWith('Extra:')
     );
 
-    setCategories(categoriesWithoutExtra);
+    setSymptoms(symptomsWithoutExtra);
 
     if (event.target.value.length > 0) {
-      setCategories([
-        ...categoriesWithoutExtra,
-        `Extra: ${event.target.value}`,
-      ]);
+      setSymptoms([...symptomsWithoutExtra, `Extra: ${event.target.value}`]);
     }
   }
 
@@ -94,50 +56,33 @@ export default function Inquietudes() {
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16"
           >
-            <div>
-              <Image
-                alt="Dr. Basart"
-                src="/images/derma/multistep/Basart.png"
-                height={192}
-                width={192}
-                className="mx-auto w-24 mb-4"
-              />
-              <Text className="text-xs text-derma-primary500 mb-1">
-                Paso 2. Necesidades personales
-              </Text>
-              <Title className="text-derma-primary font-light mb-1">
-                Selecciona las inquietudes que te gustaría resolver en tu
-                consulta
-              </Title>
-              <Text className="text-sm text-hg-black500">
-                Elige tantas opciones como desees
-              </Text>
-            </div>
+            <DermaStepHeader
+              intro="Paso 2. Síntomas"
+              title="¿Sientes una sensación de ... en la zona ...?"
+            />
 
             <div className="w-full">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {CATEGORIES_BY_PAIN.filter(
-                  item => item.name === pain
-                )[0].categories.map(category => (
+                {PAINS_AND_SYMPTOMS.filter(
+                  item => item.pain === pain
+                )[0].symptoms.map(category => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
-                      categories.includes(category)
+                      symptoms.includes(category)
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={category}
                     onClick={() => {
-                      if (categories.includes(category)) {
-                        setCategories(
-                          categories.filter(cat => cat !== category)
-                        );
+                      if (symptoms.includes(category)) {
+                        setSymptoms(symptoms.filter(cat => cat !== category));
                       } else {
-                        setCategories([...categories, category]);
+                        setSymptoms([...symptoms, category]);
                       }
                     }}
                   >
                     {category}
-                    {categories.includes(category) ? (
+                    {symptoms.includes(category) ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -174,7 +119,7 @@ export default function Inquietudes() {
                 </Button>
                 <Button
                   href={ROUTES.derma.multistep.skinType}
-                  type={categories.length > 0 ? 'dermaDark' : 'disabled'}
+                  type={symptoms.length > 0 ? 'dermaDark' : 'disabled'}
                 >
                   Siguiente
                 </Button>

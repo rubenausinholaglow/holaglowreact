@@ -10,8 +10,10 @@ import {
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
+import { Text } from 'designSystem/Texts/Texts';
+
+import DermaStepHeader from '../../components/DermaStepHeader';
+import { SKIN_TYPES } from '../multistepConfig';
 
 export default function Inquietudes() {
   const { skinType, setSkinType } = useDermaStore(state => state);
@@ -31,51 +33,38 @@ export default function Inquietudes() {
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16"
           >
-            <div>
-              <Image
-                alt="Dr. Basart"
-                src="/images/derma/multistep/Basart.png"
-                height={192}
-                width={192}
-                className="mx-auto w-24 mb-4"
-              />
-              <Text className="text-xs text-derma-primary500 mb-1">
-                Paso 1. Necesidades personales
-              </Text>
-              <Title className="text-derma-primary font-light mb-1">
-                Selecciona las inquietudes que te gustaría resolver en tu
-                consulta
-              </Title>
-              <Text className="text-sm text-hg-black500">
-                Elige tantas opciones como desees
-              </Text>
-            </div>
+            <DermaStepHeader
+              intro="Paso 3. Tipo de piel"
+              title="¿Cómo describirías la piel de tu rostro?"
+            />
 
             <div className="w-full">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {[
-                  'Piel seca',
-                  'Piel normal',
-                  'Piel grasa',
-                  'Piel mixta',
-                  'No se mi tipo de piel',
-                ].map(item => (
+                {SKIN_TYPES.map(item => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
-                      skinType === item
+                      skinType === item.title
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={item}
+                    key={item.title}
                     onClick={() =>
-                      setSkinType(skinType === item ? undefined : item)
+                      setSkinType(
+                        skinType === item.title ? undefined : item.title
+                      )
                     }
                   >
-                    {item}
-                    {skinType === item ? (
-                      <SvgCheckSquareActive className="h-6 w-6" />
+                    <div>
+                      {item.title}
+                      <Text className="text-xs text-hg-black500">
+                        {item.text}
+                      </Text>
+                    </div>
+
+                    {skinType === item.title ? (
+                      <SvgCheckSquareActive className="h-6 w-6 shrink-0" />
                     ) : (
-                      <SvgCheckSquare className="h-6 w-6" />
+                      <SvgCheckSquare className="h-6 w-6 shrink-0" />
                     )}
                   </li>
                 ))}
@@ -86,7 +75,7 @@ export default function Inquietudes() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.gender}
+                  href={ROUTES.derma.multistep.skinSensitivity}
                   type={skinType !== undefined ? 'dermaDark' : 'disabled'}
                 >
                   Siguiente

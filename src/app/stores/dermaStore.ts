@@ -3,16 +3,20 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface DermaStore {
   pain: string | undefined;
-  categories: string[];
+  symptoms: string[];
   skinType: string | undefined;
+  skinSensitivity: string | undefined;
+  alergies: string | undefined;
   gender: string | undefined;
   pictures: [];
 }
 
 interface DermaActions {
   setPain: (value: string | undefined) => void;
-  setCategories: (value: string[]) => void;
+  setSymptoms: (value: string[]) => void;
   setSkinType: (value: string | undefined) => void;
+  setSkinSensitivity: (value: string) => void;
+  setAlergies: (value: string | undefined) => void;
   setGender: (value: string | undefined) => void;
   setPictures: (value: []) => void;
 }
@@ -24,13 +28,21 @@ export const useDermaStore = create(
       setPain: (value: string | undefined) => {
         set({ pain: value });
       },
-      categories: [],
-      setCategories: (value: string[]) => {
-        set({ categories: value });
+      symptoms: [],
+      setSymptoms: (value: string[]) => {
+        set({ symptoms: value });
       },
       skinType: undefined,
       setSkinType: (value: string | undefined) => {
         set({ skinType: value });
+      },
+      skinSensitivity: undefined,
+      setSkinSensitivity: (value: string | undefined) => {
+        set({ skinSensitivity: value });
+      },
+      alergies: undefined,
+      setAlergies: (value: string | undefined) => {
+        set({ alergies: value });
       },
       gender: undefined,
       setGender: (value: string | undefined) => {
