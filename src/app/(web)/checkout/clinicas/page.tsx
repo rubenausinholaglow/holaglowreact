@@ -1,7 +1,8 @@
 'use client';
 
-
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgRadioChecked } from 'app/icons/IconsDs';
@@ -59,7 +60,7 @@ export default function ClinicsCheckout() {
                       ? ''
                       : 'pointer-events-none opacity-20'
                   } ${
-                    selectedClinic && selectedClinic.city === clinic.city
+                    selectedClinic && selectedClinic.city === item.city
                       ? 'border-hg-secondary'
                       : ''
                   } `}
