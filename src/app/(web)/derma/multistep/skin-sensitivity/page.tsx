@@ -12,6 +12,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
+import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
 
@@ -21,13 +22,8 @@ export default function Inquietudes() {
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
-        <Container className="px-0 md:px-4 md:pt-12">
-          <div className="md:w-1/2 md:pr-8">
-            <ul className="flex bg-derma-primary500/20 h-[4px] w-full rounded-full mb-6">
-              <li className="h-[4px] rounded-full bg-derma-primary transition-all w-[25%]"></li>
-            </ul>
-          </div>
-        </Container>
+        <DermaStepBar steps={7} step={4} />
+
         <Container>
           <Flex
             layout="col-left"
@@ -46,7 +42,7 @@ export default function Inquietudes() {
               </Text>
             </DermaStepHeader>
 
-            <div className="w-full">
+            <div className="md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {SKIN_SENSITIVITIES.map(item => (
                   <li
@@ -77,7 +73,7 @@ export default function Inquietudes() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.pictures}
+                  href={ROUTES.derma.multistep.alergies}
                   type={
                     skinSensitivity !== undefined ? 'dermaDark' : 'disabled'
                   }

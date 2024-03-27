@@ -38,20 +38,24 @@ export default function Inquietudes() {
                 consulta"
             />
 
-            <div className="w-full">
+            <div className="md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {PAINS_AND_SYMPTOMS.map(item => item.pain).map(item => (
+                {PAINS_AND_SYMPTOMS.map(painItem => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
-                      pain === item
+                      pain === painItem.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={item}
-                    onClick={() => setPain(pain === item ? undefined : item)}
+                    key={painItem.name}
+                    onClick={() =>
+                      setPain(
+                        pain === painItem.value ? undefined : painItem.value
+                      )
+                    }
                   >
-                    {item}
-                    {pain === item ? (
+                    {painItem.name}
+                    {pain === painItem.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />

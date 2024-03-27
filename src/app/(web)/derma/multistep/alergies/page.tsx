@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import {
@@ -11,8 +11,7 @@ import {
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
+import { Text } from 'designSystem/Texts/Texts';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
@@ -23,34 +22,20 @@ export default function Inquietudes() {
   const router = useRouter();
   const { alergies, setAlergies } = useDermaStore(state => state);
 
-  const [textAreaValue, setTextAreaValue] = useState('');
+  const [showAlergiesInfo, setShowEAlergiesExtraInfo] = useState(
+    alergies === 'Sí'
+  );
 
   useEffect(() => {
-    const hasExtraSymptom = symptoms.filter(category =>
-      category.startsWith('Extra:')
-    );
-
-    if (hasExtraSymptom.length > 0) {
-      setTextAreaValue(hasExtraSymptom[0].substring(6));
+    if (alergies === 'Sí') {
+      setShowAlergiesTextArea(true);
     }
-  }, [symptoms]);
-
-  function handleTextArea(event: ChangeEvent<HTMLTextAreaElement>) {
-    const symptomsWithoutExtra = symptoms.filter(
-      category => !category.startsWith('Extra:')
-    );
-
-    setSymptoms(symptomsWithoutExtra);
-
-    if (event.target.value.length > 0) {
-      setSymptoms([...symptomsWithoutExtra, `Extra: ${event.target.value}`]);
-    }
-  }
+  }, [alergies]);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={2} />
+        <DermaStepBar steps={7} step={5} />
         <Container>
           <Flex
             layout="col-left"
@@ -61,50 +46,28 @@ export default function Inquietudes() {
               title="¿Tienes alguna alergia?"
             />
 
-            <div className="w-full">
+            <div className="md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {ALERGIES.map(item => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
-                      symptoms.includes(category)
+                      alergies === item
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={category}
-                    onClick={() => {
-                      if (symptoms.includes(category)) {
-                        setSymptoms(symptoms.filter(cat => cat !== category));
-                      } else {
-                        setSymptoms([...symptoms, category]);
-                      }
-                    }}
+                    key={item}
+                    onClick={() =>
+                      setAlergies(alergies === item ? undefined : item)
+                    }
                   >
-                    {category}
-                    {symptoms.includes(category) ? (
+                    {item}
+                    {alergies === item ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
                     )}
                   </li>
                 ))}
-                <li
-                  className={`transition-all rounded-xl p-3 ${
-                    textAreaValue.length > 0
-                      ? 'bg-derma-primary/20'
-                      : 'bg-derma-secondary400'
-                  }`}
-                >
-                  <Text className="mb-2">Cuéntame tu vida</Text>
-                  <textarea
-                    className="w-full h-24 md:h-48 p-2 text-sm"
-                    placeholder="Escribe aquí tus movidas"
-                    onChange={event => {
-                      handleTextArea(event);
-                      setTextAreaValue(event.target.value);
-                    }}
-                    value={textAreaValue.replace(/^\s+/, '')}
-                  />
-                </li>
               </ul>
               <Flex className="justify-between pb-12">
                 <Button
@@ -117,7 +80,7 @@ export default function Inquietudes() {
                 </Button>
                 <Button
                   href={ROUTES.derma.multistep.skinType}
-                  type={symptoms.length > 0 ? 'dermaDark' : 'disabled'}
+                  type={alergies !== undefined ? 'dermaDark' : 'disabled'}
                 >
                   Siguiente
                 </Button>

@@ -12,7 +12,7 @@ export default function DermaStepHeader({
   children?: ReactNode;
 }) {
   return (
-    <div>
+    <div className="md:w-1/2">
       <Image
         alt="Dr. Basart"
         src="/images/derma/multistep/Basart.png"

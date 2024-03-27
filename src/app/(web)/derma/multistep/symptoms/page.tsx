@@ -61,28 +61,30 @@ export default function Inquietudes() {
               title="¿Sientes una sensación de ... en la zona ...?"
             />
 
-            <div className="w-full">
+            <div className="md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {PAINS_AND_SYMPTOMS.filter(
-                  item => item.pain === pain
-                )[0].symptoms.map(category => (
+                  painItem => painItem.value === pain
+                )[0].symptoms.map(symptom => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
-                      symptoms.includes(category)
+                      symptoms.includes(symptom.value)
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={category}
+                    key={symptom.name}
                     onClick={() => {
-                      if (symptoms.includes(category)) {
-                        setSymptoms(symptoms.filter(cat => cat !== category));
+                      if (symptoms.includes(symptom.value)) {
+                        setSymptoms(
+                          symptoms.filter(item => item !== symptom.value)
+                        );
                       } else {
-                        setSymptoms([...symptoms, category]);
+                        setSymptoms([...symptoms, symptom.value]);
                       }
                     }}
                   >
-                    {category}
-                    {symptoms.includes(category) ? (
+                    {symptom.name}
+                    {symptoms.includes(symptom.value) ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
