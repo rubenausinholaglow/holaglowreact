@@ -43,23 +43,8 @@ export default function Page() {
     setDashboardProducts([]);
     const fetchProducts = async () => {
       try {
-        const data = await ProductService.getDashboardProducts();
-        const products = data
-          .map((product: Product) => ({
-            ...product,
-            visibility: true,
-          }))
-          .filter((product: Product) => {
-            if (product.clinicDetail.length === 0) {
-              return true;
-            }
-            return product.clinicDetail.some(
-              (clinicDetail: ProductClinics) =>
-                clinicDetail.clinic.id === storedClinicId
-            );
-          });
-        products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
-
+        const products =
+          await ProductService.getDashboardProducts(storedClinicId);
         setDashboardProducts(products);
         setFilteredProducts(products);
         setIsHydrated(true);
