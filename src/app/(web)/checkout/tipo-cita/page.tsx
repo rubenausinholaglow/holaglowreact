@@ -8,10 +8,9 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { CartItem, Product } from 'app/types/product';
-import { getDiscountedPrice } from 'app/utils/common';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -23,7 +22,6 @@ export default function PVCitaMedica() {
 
   const { addItemToCart } = useCartStore(state => state);
   const {
-    selectedPacksTreatments,
     selectedTreatments,
     setSelectedTreatments,
     setTypeOfPayment,
@@ -35,23 +33,6 @@ export default function PVCitaMedica() {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [PVProduct, setPVProduct] = useState<Product | null>(null);
-  const [discountedPrice, setDiscountedPrice] = useState<null | []>(null);
-
-  useEffect(() => {
-    const discountedPrices: any = [];
-    if (selectedTreatments && !isEmpty(selectedTreatments)) {
-      selectedTreatments.map(product => {
-        const discountedPrice = getDiscountedPrice(product);
-
-        if (discountedPrice && discountedPrice !== product.price) {
-          discountedPrices.push(discountedPrice);
-        }
-      });
-    }
-
-    setDiscountedPrice(discountedPrices);
-    setIsHydrated(true);
-  }, [selectedTreatments]);
 
   useEffect(() => {
     async function initProduct(productId: string) {
@@ -91,8 +72,8 @@ export default function PVCitaMedica() {
         setPreviousSelectedTreatments(selectedTreatments);
       setIsLoading(true);
       setSelectedTreatments([product]);
-    if (product.isPack) setSelectedPack(product);
-    else setSelectedPack(undefined);
+      if (product.isPack) setSelectedPack(product);
+      else setSelectedPack(undefined);
       setTypeOfPayment(TypeOfPayment.Free);
       router.push(ROUTES.checkout.clinics);
     }
@@ -107,7 +88,7 @@ export default function PVCitaMedica() {
     setTypeOfPayment(TypeOfPayment.Reservation);
     if (!isEmpty(previousSelectedTreatments)) {
       setSelectedTreatments(previousSelectedTreatments);
-      router.push(ROUTES.checkout.treatments);
+      router.push(ROUTES.checkout.clinics);
     } else {
       isEmpty(selectedTreatments)
         ? router.push(ROUTES.checkout.treatments)
@@ -128,7 +109,7 @@ export default function PVCitaMedica() {
           <Container className="mt-6 md:mt-16">
             <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
               <Flex layout="col-left" className="gap-6 w-full md:w-1/2">
-                <Title className="font-semibold md:block">
+                <Title size="xldr" className="font-light">
                   ¿Qué tipo de cita quieres reservar?
                 </Title>
 

@@ -5,7 +5,7 @@ import { validateEmail, validatePhone } from '@utils/validators';
 import { SvgWarning } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import { PaymentMethods } from './PaymentMethods';
@@ -99,13 +99,12 @@ export default function CheckoutPayment({
       }`}
       id="checkoutPaymentForm"
     >
-      <Text
-        className={`font-semibold mb-4 text-xl md:text-2xl ${
-          isDerma ? 'font-gtUltraThin text-derma-tertiary' : ''
-        }`}
+      <Title
+        size="xldr"
+        className={`font-light mb-4 ${isDerma ? 'text-derma-tertiary' : ''}`}
       >
         Selecciona método de pago
-      </Text>
+      </Title>
 
       {hasError && (
         <Flex className="bg-hg-error100 text-hg-error text-xs gap-3 px-4 py-3 rounded-xl w-full mb-4">

@@ -6,11 +6,7 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import { SvgPlusSmall } from 'app/icons/Icons';
 import { SvgArrow, SvgGlow } from 'app/icons/IconsDs';
 import { CartItem, Product } from 'app/types/product';
-import {
-  getDiscountedPrice,
-  getProductCardColor,
-  useImageProps,
-} from 'app/utils/common';
+import { getDiscountedPrice, useImageProps } from 'app/utils/common';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -19,8 +15,6 @@ import { isEmpty } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-import CategoryIcon from '../common/CategoryIcon';
 
 export default function ProductCard({
   product,

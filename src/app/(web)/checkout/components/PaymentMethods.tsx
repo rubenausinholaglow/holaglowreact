@@ -11,7 +11,6 @@ import {
 import { loadStripe } from '@stripe/stripe-js';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
-import { getTotalFromCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   checkoutPaymentItems,
@@ -71,9 +70,7 @@ export const PaymentMethods = ({
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
-  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
-    state => state
-  );
+  const { cart } = useCartStore(state => state);
 
   useEffect(() => {
     setActivePaymentMethod('');

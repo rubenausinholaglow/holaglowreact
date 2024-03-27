@@ -8,9 +8,12 @@ export default function Issues() {
         <h3 className="font-semibold mb-4 text-xl">¿Tienes dudas?</h3>
         <p className="w-1/2 text-md text-center mb-8">
           Si tienes molestias excesivas, presentas una inflamación que va en
-          aumento después del tercer día o te aparece fiebre,{' '}
-          <span className="font-semibold">ponte en contacto con nosotros</span>{' '}
-          lo antes posible.
+          aumento después del tercer día o te aparece fiebre,
+          <span className="font-semibold">
+            {' '}
+            visita holaglow.com/urgencias
+          </span>{' '}
+          y te atenderemos lo antes posible.
         </p>
         <div className="flex">
           <div className="flex items-center">
