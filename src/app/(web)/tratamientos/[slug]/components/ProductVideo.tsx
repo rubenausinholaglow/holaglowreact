@@ -6,7 +6,7 @@ export default function ProductVideo({ src }: { src: string }) {
       loop
       playsInline
       src={src}
-      className="w-full h-full block bg-black object-center md:rounded-xl"
+      className="w-full h-full block bg-black object-center rounded-xl"
     />
   );
 }
