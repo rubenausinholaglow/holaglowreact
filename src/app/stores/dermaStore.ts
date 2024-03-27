@@ -21,7 +21,7 @@ interface DermaActions {
   setPain: (value: number | undefined) => void;
   setSymptoms: (value: string[]) => void;
   setSkinType: (value: number | undefined) => void;
-  setSkinSensitivity: (value: number) => void;
+  setSkinSensitivity: (value: number | undefined) => void;
   setAllergies: (value: number | undefined) => void;
   setAllergiesInfo: (value: string | undefined) => void;
   setIllnesses: (value: number | undefined) => void;

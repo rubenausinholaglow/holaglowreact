@@ -101,7 +101,9 @@ export default function Inquietudes() {
                   href={ROUTES.derma.multistep.illnesses}
                   type={
                     (allergies !== 0 && allergies) ||
-                    (allergies === 0 && allergiesInfo?.length > 0)
+                    (allergies === 0 &&
+                      allergiesInfo &&
+                      allergiesInfo.length > 0)
                       ? 'dermaDark'
                       : 'disabled'
                   }

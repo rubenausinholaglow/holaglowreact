@@ -49,7 +49,6 @@ const ROUTES = {
       lactancy: '/derma/multistep/lactancy',
       gender: '/derma/multistep/gender',
       pictures: '/derma/multistep/pictures',
-      extraInfo: '/derma/multistep/extra-info',
       form: '/derma/multistep/form',
     },
   },

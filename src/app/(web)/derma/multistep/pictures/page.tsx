@@ -1,17 +1,12 @@
 'use client';
 
 import ImageUploading from 'react-images-uploading';
-import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import {
-  SvgArrow,
-  SvgCheckSquare,
-  SvgCheckSquareActive,
-} from 'app/icons/IconsDs';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import DermaStepBar from '../../components/DermaStepBar';
@@ -20,10 +15,9 @@ import DermaStepHeader from '../../components/DermaStepHeader';
 export default function Inquietudes() {
   const { pictures, setPictures } = useDermaStore(state => state);
 
-  const onChange = (imageList, addUpdateIndex) => {
+  const onChange = (/* imageList, addUpdateIndex */) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
-    setPictures(imageList);
+    //setPictures(imageList);
   };
 
   return (
@@ -263,7 +257,7 @@ export default function Inquietudes() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.categories}
+                  href="#"
                   type={pictures !== undefined ? 'dermaDark' : 'disabled'}
                 >
                   Siguiente

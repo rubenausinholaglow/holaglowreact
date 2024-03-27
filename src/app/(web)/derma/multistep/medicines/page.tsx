@@ -103,7 +103,9 @@ export default function Inquietudes() {
                   href={ROUTES.derma.multistep.lactancy}
                   type={
                     (medicines !== 0 && medicines) ||
-                    (medicines === 0 && medicinesInfo?.length > 0)
+                    (medicines === 0 &&
+                      medicinesInfo &&
+                      medicinesInfo?.length > 0)
                       ? 'dermaDark'
                       : 'disabled'
                   }

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import {
@@ -11,7 +10,7 @@ import {
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
