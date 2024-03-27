@@ -48,7 +48,11 @@ export default function Header({
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
-  const { setSelectedTreatments } = useSessionStore(state => state);
+  const {
+    setSelectedTreatments,
+    setSelectedPack,
+    setPreviousSelectedTreatments,
+  } = useSessionStore(state => state);
 
   const recalculateVisibility = () => {
     setIsHeaderVisible(
@@ -119,6 +123,8 @@ export default function Header({
                     href={ROUTES.checkout.type}
                     onClick={() => {
                       setSelectedTreatments([]);
+                      setSelectedPack(undefined);
+                      setPreviousSelectedTreatments([]);
                     }}
                   >
                     Reservar cita

@@ -88,7 +88,7 @@ export default function PVCitaMedica() {
     setTypeOfPayment(TypeOfPayment.Reservation);
     if (!isEmpty(previousSelectedTreatments)) {
       setSelectedTreatments(previousSelectedTreatments);
-      router.push(ROUTES.checkout.treatments);
+      router.push(ROUTES.checkout.clinics);
     } else {
       isEmpty(selectedTreatments)
         ? router.push(ROUTES.checkout.treatments)
