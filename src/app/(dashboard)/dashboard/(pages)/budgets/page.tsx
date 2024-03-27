@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ProductClinics } from '@interface/clinic';
 import ProductService from '@services/ProductService';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -21,8 +22,12 @@ export default function Page() {
   const { setHighlightProduct, productHighlighted } = useCartStore(
     state => state
   );
-  const { setStateProducts, dashboardProducts, setDashboardProducts } =
-    useGlobalPersistedStore(state => state);
+  const {
+    setStateProducts,
+    dashboardProducts,
+    setDashboardProducts,
+    storedClinicId,
+  } = useGlobalPersistedStore(state => state);
   const {
     setFilteredProducts,
     setProductFilters,
@@ -39,11 +44,19 @@ export default function Page() {
     const fetchProducts = async () => {
       try {
         const data = await ProductService.getDashboardProducts();
-        const products = data.map((product: Product) => ({
-          ...product,
-          visibility: true,
-        }));
+        const products = data
+          .map((product: Product) => ({
+            ...product,
+            visibility: true,
+          }))
+          .filter((product: Product) =>
+            product.clinicDetail.some(
+              (clinicDetail: ProductClinics) =>
+                clinicDetail.clinic.id === storedClinicId
+            )
+          );
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
+
         setDashboardProducts(products);
         setFilteredProducts(products);
         setIsHydrated(true);

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import { ProductClinics } from '@interface/clinic';
 import { PackUnities, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { fetchClinics } from '@utils/fetch';
@@ -54,10 +55,17 @@ export default function Page() {
     const fetchProducts = async () => {
       try {
         const data = await ProductService.getDashboardProducts(true);
-        const products = data.map((product: Product) => ({
-          ...product,
-          visibility: true,
-        }));
+        const products = data
+          .map((product: Product) => ({
+            ...product,
+            visibility: true,
+          }))
+          .filter((product: Product) =>
+            product.clinicDetail.some(
+              (clinicDetail: ProductClinics) =>
+                clinicDetail.clinic.id === storedClinicId
+            )
+          );
         products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
         setDashboardProducts(products);
       } catch (error: any) {
