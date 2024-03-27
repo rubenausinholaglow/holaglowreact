@@ -1,12 +1,12 @@
 import { Product } from '@interface/product';
 import { fetchProduct, fetchProducts } from '@utils/fetch';
 import App from 'app/(web)/components/layout/App';
+import { Metadata, ResolvingMetadata } from 'next';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 
 import PsrpPage from '../psrp';
 import ProductPage from './ProductPage';
-import { Metadata, ResolvingMetadata } from 'next';
 
 async function getProducts() {
   const products = await fetchProducts({ isDerma: false });
