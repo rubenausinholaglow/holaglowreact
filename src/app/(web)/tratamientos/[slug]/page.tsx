@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 
 import PsrpPage from '../psrp';
 import ProductPage from './ProductPage';
+import { Metadata, ResolvingMetadata } from 'next';
 
 async function getProducts() {
   const products = await fetchProducts({ isDerma: false });
@@ -13,6 +14,26 @@ async function getProducts() {
   return products;
 }
 
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const slug = params.slug;
+  const product = await getProduct(slug, false, false);
+
+  if (product) {
+    return {
+      title: product.extraInformation.seoTitle,
+      description: product.extraInformation.seoMetaDescription,
+      robots: {
+        index: true,
+        follow: true,
+      },
+    };
+  } else {
+    return {};
+  }
+}
 async function getProduct(
   productID: string,
   isDashboard: boolean,
