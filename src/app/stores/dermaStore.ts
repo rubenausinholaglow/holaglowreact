@@ -2,23 +2,33 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface DermaStore {
-  pain: string | undefined;
+  pain: number | undefined;
   symptoms: string[];
-  skinType: string | undefined;
-  skinSensitivity: string | undefined;
-  alergies: string | undefined;
-  illnesses: string | undefined;
+  skinType: number | undefined;
+  skinSensitivity: number | undefined;
+  allergies: number | undefined;
+  allergiesInfo: string | undefined;
+  illnesses: number | undefined;
+  illnessesInfo: string | undefined;
+  medicines: number | undefined;
+  medicinesInfo: string | undefined;
+  lactancy: number | undefined;
   gender: string | undefined;
   pictures: [];
 }
 
 interface DermaActions {
-  setPain: (value: string | undefined) => void;
+  setPain: (value: number | undefined) => void;
   setSymptoms: (value: string[]) => void;
-  setSkinType: (value: string | undefined) => void;
-  setSkinSensitivity: (value: string) => void;
-  setAlergies: (value: string | undefined) => void;
-  setIllnesses: (value: string | undefined) => void;
+  setSkinType: (value: number | undefined) => void;
+  setSkinSensitivity: (value: number) => void;
+  setAllergies: (value: number | undefined) => void;
+  setAllergiesInfo: (value: string | undefined) => void;
+  setIllnesses: (value: number | undefined) => void;
+  setIllnessesInfo: (value: string | undefined) => void;
+  setMedicines: (value: number | undefined) => void;
+  setMedicinesInfo: (value: string | undefined) => void;
+  setLactancy: (value: number | undefined) => void;
   setGender: (value: string | undefined) => void;
   setPictures: (value: []) => void;
 }
@@ -27,7 +37,7 @@ export const useDermaStore = create(
   persist<DermaStore & DermaActions>(
     set => ({
       pain: undefined,
-      setPain: (value: string | undefined) => {
+      setPain: (value: number | undefined) => {
         set({ pain: value });
       },
       symptoms: [],
@@ -35,20 +45,40 @@ export const useDermaStore = create(
         set({ symptoms: value });
       },
       skinType: undefined,
-      setSkinType: (value: string | undefined) => {
+      setSkinType: (value: number | undefined) => {
         set({ skinType: value });
       },
       skinSensitivity: undefined,
-      setSkinSensitivity: (value: string | undefined) => {
+      setSkinSensitivity: (value: number | undefined) => {
         set({ skinSensitivity: value });
       },
-      alergies: undefined,
-      setAlergies: (value: string | undefined) => {
-        set({ alergies: value });
+      allergies: undefined,
+      setAllergies: (value: number | undefined) => {
+        set({ allergies: value });
+      },
+      allergiesInfo: undefined,
+      setAllergiesInfo: (value: string | undefined) => {
+        set({ allergiesInfo: value });
       },
       illnesses: undefined,
-      setIllnesses: (value: string | undefined) => {
+      setIllnesses: (value: number | undefined) => {
         set({ illnesses: value });
+      },
+      illnessesInfo: undefined,
+      setIllnessesInfo: (value: string | undefined) => {
+        set({ illnessesInfo: value });
+      },
+      medicines: undefined,
+      setMedicines: (value: number | undefined) => {
+        set({ medicines: value });
+      },
+      medicinesInfo: undefined,
+      setMedicinesInfo: (value: string | undefined) => {
+        set({ medicinesInfo: value });
+      },
+      lactancy: undefined,
+      setLactancy: (value: number | undefined) => {
+        set({ lactancy: value });
       },
       gender: undefined,
       setGender: (value: string | undefined) => {

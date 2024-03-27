@@ -33,19 +33,19 @@ export default function Inquietudes() {
               title="¿Cómo describirías la piel de tu rostro?"
             />
 
-            <div className="md:w-1/2">
+            <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {SKIN_TYPES.map(item => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex justify-between ${
-                      skinType === item.title
+                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                      skinType === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={item.title}
                     onClick={() =>
                       setSkinType(
-                        skinType === item.title ? undefined : item.title
+                        skinType === item.value ? undefined : item.value
                       )
                     }
                   >
@@ -56,7 +56,7 @@ export default function Inquietudes() {
                       </Text>
                     </div>
 
-                    {skinType === item.title ? (
+                    {skinType === item.value ? (
                       <SvgCheckSquareActive className="h-6 w-6 shrink-0" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6 shrink-0" />

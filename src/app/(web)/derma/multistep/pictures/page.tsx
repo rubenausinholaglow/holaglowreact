@@ -14,9 +14,11 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import DermaStepBar from '../../components/DermaStepBar';
+import DermaStepHeader from '../../components/DermaStepHeader';
+
 export default function Inquietudes() {
   const { pictures, setPictures } = useDermaStore(state => state);
-  const maxNumber = 69;
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
@@ -27,87 +29,231 @@ export default function Inquietudes() {
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
-        <Container className="px-0 md:px-4 md:pt-12">
-          <div className="md:w-1/2 md:pr-8">
-            <ul className="flex bg-derma-primary500/20 h-[4px] w-full rounded-full mb-6">
-              <li className="h-[4px] rounded-full bg-derma-primary transition-all w-[25%]"></li>
-            </ul>
-          </div>
-        </Container>
+        <DermaStepBar steps={7} step={7} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16"
           >
-            <div>
-              <Image
-                alt="Dr. Basart"
-                src="/images/derma/multistep/Basart.png"
-                height={192}
-                width={192}
-                className="mx-auto w-24 mb-4"
-              />
-              <Text className="text-xs text-derma-primary500 mb-1">
-                Paso 1. Necesidades personales
+            <DermaStepHeader
+              intro="Paso 9. Hazte unas fotos"
+              title="Sube las fotos de tu rostro"
+            >
+              <Text className="mt-2 text-hg-black500 text-sm">
+                Necesitamos 3 fotos de tu rostro en detalle frontal y perfil de
+                ambos lados para identificar tus necesidades y orientar tu
+                consulta médica. Los datos se procesan de forma segura
               </Text>
-              <Title className="text-derma-primary font-light mb-1">
-                Selecciona las inquietudes que te gustaría resolver en tu
-                consulta
-              </Title>
-              <Text className="text-sm text-hg-black500">
-                Elige tantas opciones como desees
-              </Text>
-            </div>
+            </DermaStepHeader>
 
             <div className="w-full">
               <ImageUploading
-                multiple
                 value={pictures}
                 onChange={onChange}
-                maxNumber={maxNumber}
+                maxNumber={1}
                 dataURLKey="data_url"
               >
                 {({
                   imageList,
                   onImageUpload,
-                  onImageRemoveAll,
-                  onImageUpdate,
                   onImageRemove,
                   isDragging,
                   dragProps,
                 }) => (
-                  // write your building UI
-                  <div className="upload__image-wrapper">
-                    <button
-                      style={isDragging ? { color: 'red' } : undefined}
-                      onClick={onImageUpload}
-                      {...dragProps}
+                  <button
+                    className="w-full mb-4"
+                    style={isDragging ? { color: 'red' } : undefined}
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    <Flex
+                      layout="row-left"
+                      className="border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full"
                     >
-                      Click or Drop here
-                    </button>
-                    &nbsp;
-                    <button onClick={onImageRemoveAll}>
-                      Remove all images
-                    </button>
-                    {imageList.map((image, index) => (
-                      <div key={index} className="image-item">
-                        <Image
-                          src={image['data_url']}
-                          alt=""
-                          width={100}
-                          height={100}
-                        />
-                        <div className="image-item__btn-wrapper">
-                          <button onClick={() => onImageUpdate(index)}>
-                            Update
-                          </button>
-                          <button onClick={() => onImageRemove(index)}>
-                            Remove
-                          </button>
-                        </div>
+                      <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4">
+                        {imageList.length > 0 ? (
+                          imageList.map((image, index) => (
+                            <Image
+                              key={index}
+                              src={image['data_url']}
+                              alt=""
+                              width={100}
+                              height={100}
+                            />
+                          ))
+                        ) : (
+                          <Image
+                            src="/images/derma/multistep/faceIcon.png"
+                            fill
+                            objectFit="cover"
+                            alt="rostro frontal"
+                          />
+                        )}
                       </div>
-                    ))}
-                  </div>
+                      <div>
+                        <Text>
+                          <span className="font-semibold text-sm">Foto 1.</span>{' '}
+                          Rostro frontal
+                        </Text>
+                        <Text className="text-hg-black500 text-xs">
+                          Haz una foto o selecciona de la galería
+                        </Text>
+                      </div>
+
+                      {imageList.map((image, index) => (
+                        <div key={index} className="image-item">
+                          <div className="image-item__btn-wrapper">
+                            <button onClick={() => onImageRemove(index)}>
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </Flex>
+                    {/* <button onClick={onImageRemoveAll}>
+                    Remove all images
+                  </button> */}
+                  </button>
+                )}
+              </ImageUploading>
+
+              <ImageUploading
+                value={pictures}
+                onChange={onChange}
+                maxNumber={1}
+                dataURLKey="data_url"
+              >
+                {({
+                  imageList,
+                  onImageUpload,
+                  onImageRemove,
+                  isDragging,
+                  dragProps,
+                }) => (
+                  <button
+                    className="w-full mb-4"
+                    style={isDragging ? { color: 'red' } : undefined}
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    <Flex
+                      layout="row-left"
+                      className="border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full"
+                    >
+                      <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4">
+                        {imageList.length > 0 ? (
+                          imageList.map((image, index) => (
+                            <Image
+                              key={index}
+                              src={image['data_url']}
+                              alt=""
+                              width={100}
+                              height={100}
+                            />
+                          ))
+                        ) : (
+                          <Image
+                            src="/images/derma/multistep/faceIcon.png"
+                            fill
+                            objectFit="cover"
+                            alt="rostro frontal"
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <Text>
+                          <span className="font-semibold text-sm">Foto 2.</span>{' '}
+                          Perfil derecho
+                        </Text>
+                        <Text className="text-hg-black500 text-xs">
+                          Haz una foto o selecciona de la galería
+                        </Text>
+                      </div>
+
+                      {imageList.map((image, index) => (
+                        <div key={index} className="image-item">
+                          <div className="image-item__btn-wrapper">
+                            <button onClick={() => onImageRemove(index)}>
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </Flex>
+                    {/* <button onClick={onImageRemoveAll}>
+                    Remove all images
+                  </button> */}
+                  </button>
+                )}
+              </ImageUploading>
+
+              <ImageUploading
+                value={pictures}
+                onChange={onChange}
+                maxNumber={1}
+                dataURLKey="data_url"
+              >
+                {({
+                  imageList,
+                  onImageUpload,
+                  onImageRemove,
+                  isDragging,
+                  dragProps,
+                }) => (
+                  <button
+                    className="w-full mb-4"
+                    style={isDragging ? { color: 'red' } : undefined}
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    <Flex
+                      layout="row-left"
+                      className="border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full"
+                    >
+                      <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4">
+                        {imageList.length > 0 ? (
+                          imageList.map((image, index) => (
+                            <Image
+                              key={index}
+                              src={image['data_url']}
+                              alt=""
+                              width={100}
+                              height={100}
+                            />
+                          ))
+                        ) : (
+                          <Image
+                            src="/images/derma/multistep/faceIcon.png"
+                            fill
+                            objectFit="cover"
+                            alt="rostro frontal"
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <Text>
+                          <span className="font-semibold text-sm">Foto 3.</span>{' '}
+                          Perfil izquierdo
+                        </Text>
+                        <Text className="text-hg-black500 text-xs">
+                          Haz una foto o selecciona de la galería
+                        </Text>
+                      </div>
+
+                      {imageList.map((image, index) => (
+                        <div key={index} className="image-item">
+                          <div className="image-item__btn-wrapper">
+                            <button onClick={() => onImageRemove(index)}>
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </Flex>
+                    {/* <button onClick={onImageRemoveAll}>
+                    Remove all images
+                  </button> */}
+                  </button>
                 )}
               </ImageUploading>
 

@@ -45,6 +45,8 @@ const ROUTES = {
       skinSensitivity: '/derma/multistep/skin-sensitivity',
       alergies: '/derma/multistep/alergies',
       illnesses: '/derma/multistep/illnesses',
+      medicines: '/derma/multistep/medicines',
+      lactancy: '/derma/multistep/lactancy',
       gender: '/derma/multistep/gender',
       pictures: '/derma/multistep/pictures',
       extraInfo: '/derma/multistep/extra-info',

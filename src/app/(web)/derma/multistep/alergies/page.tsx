@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import {
@@ -11,26 +11,19 @@ import {
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { ALERGIES } from '../multistepConfig';
+import { ALLERGIES } from '../multistepConfig';
 
 export default function Inquietudes() {
   const router = useRouter();
-  const { alergies, setAlergies } = useDermaStore(state => state);
+  const { allergies, allergiesInfo, setAllergies, setAllergiesInfo } =
+    useDermaStore(state => state);
 
-  const [showAlergiesInfo, setShowEAlergiesExtraInfo] = useState(
-    alergies === 'Sí'
-  );
-
-  useEffect(() => {
-    if (alergies === 'Sí') {
-      setShowAlergiesTextArea(true);
-    }
-  }, [alergies]);
+  const [textAreaValue, setTextAreaValue] = useState(allergiesInfo);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -46,22 +39,24 @@ export default function Inquietudes() {
               title="¿Tienes alguna alergia?"
             />
 
-            <div className="md:w-1/2">
+            <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {ALERGIES.map(item => (
+                {ALLERGIES.map(allergy => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex justify-between ${
-                      alergies === item
+                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                      allergies === allergy.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={item}
+                    key={allergy.title}
                     onClick={() =>
-                      setAlergies(alergies === item ? undefined : item)
+                      setAllergies(
+                        allergies === allergy.value ? undefined : allergy.value
+                      )
                     }
                   >
-                    {item}
-                    {alergies === item ? (
+                    {allergy.title}
+                    {allergies === allergy.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -69,6 +64,30 @@ export default function Inquietudes() {
                   </li>
                 ))}
               </ul>
+              {allergies === 0 && (
+                <>
+                  <Title className="font-light text-derma-primary mb-2">
+                    Explícanos tus alergias
+                  </Title>
+                  <Text className="mb-4 text-hg-black400 text-sm">
+                    Cuanta más información nos proporciones, mejor podremos
+                    asesorarte sobre tus objetivos y preocupaciones de la piel.
+                  </Text>
+                  <textarea
+                    className="w-full h-24 md:h-48 p-2 text-sm border border-derma-secondary500 rounded-xl mb-8"
+                    placeholder="Escribe aquí tus movidas"
+                    onChange={event => {
+                      setAllergiesInfo(event.target.value);
+                      setTextAreaValue(event.target.value);
+                    }}
+                    value={
+                      textAreaValue && textAreaValue.length > 0
+                        ? textAreaValue.replace(/^\s+/, '')
+                        : ''
+                    }
+                  />
+                </>
+              )}
               <Flex className="justify-between pb-12">
                 <Button
                   type="white"
@@ -79,8 +98,13 @@ export default function Inquietudes() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.skinType}
-                  type={alergies !== undefined ? 'dermaDark' : 'disabled'}
+                  href={ROUTES.derma.multistep.illnesses}
+                  type={
+                    (allergies !== 0 && allergies) ||
+                    (allergies === 0 && allergiesInfo?.length > 0)
+                      ? 'dermaDark'
+                      : 'disabled'
+                  }
                 >
                   Siguiente
                 </Button>

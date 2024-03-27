@@ -11,7 +11,7 @@ import {
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -38,11 +38,11 @@ export default function Inquietudes() {
                 consulta"
             />
 
-            <div className="md:w-1/2">
+            <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {PAINS_AND_SYMPTOMS.map(painItem => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex justify-between ${
+                    className={`transition-all rounded-xl p-3 flex justify-between items-center gap-4 ${
                       pain === painItem.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
@@ -54,7 +54,15 @@ export default function Inquietudes() {
                       )
                     }
                   >
-                    {painItem.name}
+                    <Flex className="gap-3">
+                      <Image
+                        src={painItem.img}
+                        height={64}
+                        width={64}
+                        alt={painItem.name}
+                      />
+                      {painItem.name}
+                    </Flex>
                     {pain === painItem.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
