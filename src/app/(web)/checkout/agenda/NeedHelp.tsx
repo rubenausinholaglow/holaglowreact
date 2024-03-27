@@ -16,7 +16,7 @@ export default function NeedHelp({ className = '' }: { className?: string }) {
         ¿La cita que necesitas no está disponible?
       </Text>
       <Flex layout="row-left" className="gap-4 items-center w-full">
-        <a href="tel:+34 682 417 208">
+        <a href="tel:+34 682 417 208" id="tmevent_agenda_call">
           <Button size="xl" type="secondary">
             <SvgCalling className="mr-2" />
             {selectedClinic && (
