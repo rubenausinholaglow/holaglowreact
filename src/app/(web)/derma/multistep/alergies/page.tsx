@@ -17,11 +17,11 @@ import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
+import { ALERGIES } from '../multistepConfig';
 
 export default function Inquietudes() {
   const router = useRouter();
-  const { pain, symptoms, setSymptoms } = useDermaStore(state => state);
+  const { alergies, setAlergies } = useDermaStore(state => state);
 
   const [textAreaValue, setTextAreaValue] = useState('');
 
@@ -57,15 +57,13 @@ export default function Inquietudes() {
             className="w-full md:flex-row gap-6 md:gap-16"
           >
             <DermaStepHeader
-              intro="Paso 2. Síntomas"
-              title="¿Sientes una sensación de ... en la zona ...?"
+              intro="Paso 5. Alergias"
+              title="¿Tienes alguna alergia?"
             />
 
             <div className="w-full">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {PAINS_AND_SYMPTOMS.filter(
-                  item => item.pain === pain
-                )[0].symptoms.map(category => (
+                {ALERGIES.map(item => (
                   <li
                     className={`transition-all rounded-xl p-3 flex justify-between ${
                       symptoms.includes(category)

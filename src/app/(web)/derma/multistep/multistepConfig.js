@@ -59,3 +59,5 @@ export const SKIN_TYPES = [
 ];
 
 export const SKIN_SENSITIVITIES = ['1', '2', '3', '4', '5'];
+
+export const ALERGIES = ['Sí', 'No', 'No lo se'];

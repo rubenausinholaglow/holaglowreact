@@ -7,6 +7,7 @@ interface DermaStore {
   skinType: string | undefined;
   skinSensitivity: string | undefined;
   alergies: string | undefined;
+  illnesses: string | undefined;
   gender: string | undefined;
   pictures: [];
 }
@@ -17,6 +18,7 @@ interface DermaActions {
   setSkinType: (value: string | undefined) => void;
   setSkinSensitivity: (value: string) => void;
   setAlergies: (value: string | undefined) => void;
+  setIllnesses: (value: string | undefined) => void;
   setGender: (value: string | undefined) => void;
   setPictures: (value: []) => void;
 }
@@ -43,6 +45,10 @@ export const useDermaStore = create(
       alergies: undefined,
       setAlergies: (value: string | undefined) => {
         set({ alergies: value });
+      },
+      illnesses: undefined,
+      setIllnesses: (value: string | undefined) => {
+        set({ illnesses: value });
       },
       gender: undefined,
       setGender: (value: string | undefined) => {
