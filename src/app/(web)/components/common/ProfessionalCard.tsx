@@ -1,4 +1,3 @@
-import ROUTES from '@utils/routes';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { Professional } from 'app/types/clinic';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -50,7 +49,7 @@ export default function ProfessionalCard({
           <Text
             className={`font-gtUltra font-light ${
               isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-            } text-drxl md:text-2xl`}
+            } text-xldr md:text-2xl`}
           >
             {professional.tittleAbbreviation}. {professional.name}
           </Text>

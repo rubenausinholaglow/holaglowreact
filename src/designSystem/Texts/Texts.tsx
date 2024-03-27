@@ -18,7 +18,7 @@ export const Title = ({
   onClick = undefined,
   children,
 }: {
-  size?: '3xl' | '2xl' | 'xl';
+  size?: '3xl' | '2xl' | 'xl' | 'xldr';
   weight?: string;
   as?: 'h3' | 'h2' | 'h1';
   className?: string;
@@ -34,6 +34,7 @@ export const Title = ({
     '3xl': 'text-4xl lg:text-6xl',
     '2xl': 'text-3xl lg:text-5xl',
     xl: 'text-xl lg:text-2xl',
+    xldr: 'text-[28px]',
   };
 
   const styles = twMerge(
@@ -68,7 +69,7 @@ export const Text = ({
   origin = 'bottom',
   rest,
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'drxl' | '2xl' | 'default';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xldr' | '2xl' | 'default';
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
   className?: string;
   wrapperClassName?: string;

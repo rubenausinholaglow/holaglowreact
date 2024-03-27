@@ -11,7 +11,6 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { CartItem, Product } from 'app/types/product';
-import { getDiscountedPrice } from 'app/utils/common';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -110,7 +109,7 @@ export default function PVCitaMedica() {
           <Container className="mt-6 md:mt-16">
             <Flex layout="col-left" className="gap-8 md:gap-16 md:flex-row">
               <Flex layout="col-left" className="gap-6 w-full md:w-1/2">
-                <Title className="font-semibold md:block">
+                <Title size="xldr" className="font-light">
                   ¿Qué tipo de cita quieres reservar?
                 </Title>
 

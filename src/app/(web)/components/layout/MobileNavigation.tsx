@@ -76,7 +76,7 @@ export default function MobileNavigation({
             layout="col-left"
             className="gap-6 w-full text-lg font-semibold px-4 pb-8 border-b border-hg-black700"
           >
-            <p className="font-gtUltra text-hg-secondary font-thin text-drxl">
+            <p className="font-gtUltra text-hg-secondary font-thin text-xldr">
               Nuestros tratamientos
             </p>
 
@@ -204,7 +204,7 @@ export default function MobileNavigation({
             layout="col-left"
             className="p-4 text-xs gap-4 bg-derma-secondary300 w-full flex-grow"
           >
-            <p className="font-gtUltra text-hg-secondary font-thin text-drxl">
+            <p className="font-gtUltra text-hg-secondary font-thin text-xldr">
               Contacto
             </p>
             <p>
