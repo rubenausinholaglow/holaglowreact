@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import { isMobile } from 'react-device-detect';
-import CheckHydration from '@utils/CheckHydration';
+
+import { useEffect, useState } from 'react';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgRadioChecked } from 'app/icons/IconsDs';
@@ -23,7 +22,9 @@ export default function ClinicsCheckout() {
   const ROUTES = useRoutes();
 
   const { clinics } = useGlobalPersistedStore(state => state);
-  const { selectedClinic, setSelectedClinic } = useSessionStore(state => state);
+
+  const { selectedClinic, setSelectedClinic, selectedTreatments } =
+    useSessionStore(state => state);
 
   useEffect(() => {
     if (selectedClinic) {
@@ -36,6 +37,10 @@ export default function ClinicsCheckout() {
     router.push(ROUTES.checkout.schedule);
   };
 
+  const availableClinicsByPRoduct = selectedTreatments[0].clinicDetail.map(
+    item => item.clinic.city
+  );
+
   return (
     <App>
       <MainLayout isCheckout>
@@ -46,26 +51,33 @@ export default function ClinicsCheckout() {
                 Selecciona tu clínica
               </Title>
 
-              {clinics.map((clinic, index) => (
+              {clinics.map((item, index) => (
                 <Flex
                   layout="row-left"
                   className={`border border-hg-black300 py-4 px-4 rounded-2xl gap-4 w-full hover:bg-hg-secondary100 cursor-pointer ${
+                    availableClinicsByPRoduct.includes(item.city)
+                      ? ''
+                      : 'pointer-events-none opacity-20'
+                  } ${
                     selectedClinic && selectedClinic.city === clinic.city
                       ? 'border-hg-secondary'
                       : ''
                   } `}
-                  key={clinic.city}
+                  key={item.city}
                   onClick={() => selectClinic(clinics[index])}
                 >
                   <Flex layout="col-left">
                     <Text size="lg" className="font-semibold mb-2">
-                      {clinic.city}
+                      {item.city}{' '}
+                      {!availableClinicsByPRoduct.includes(item.city) && (
+                        <span className="text-sm">(No disponible)</span>
+                      )}
                     </Text>
-                    <address className="not-italic text-xs">
-                      {clinic.address}
+                    <address className="not-italic mb-2 text-xs">
+                      {item.address}
                     </address>
                   </Flex>
-                  {selectedClinic && selectedClinic.city === clinic.city ? (
+                  {selectedClinic && selectedClinic.city === item.city ? (
                     <SvgRadioChecked
                       height={24}
                       width={24}

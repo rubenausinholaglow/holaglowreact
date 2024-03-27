@@ -291,7 +291,8 @@ export default function Agenda({
             user,
             selectedPacksTreatments!,
             analyticsMetrics,
-            ''
+            '',
+            selectedPack
           ).then(x => {
             if (isDashboard) {
               const filteredCart = cart.filter(
