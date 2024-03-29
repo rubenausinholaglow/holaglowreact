@@ -13,6 +13,7 @@ import Testimonials from './Testimonials';
 export default function Home() {
   return (
     <MainLayoutSSR>
+      <p>olakease</p>
       <HomeHero />
       <ValuesCarousel />
       <ValuesDescription />
