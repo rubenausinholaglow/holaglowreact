@@ -47,25 +47,29 @@ export default function DashboardFooter({
         >
           <SvgArrow height={16} width={16} className="rotate-180" />
         </Button>
-        <Button
-          type="white"
-          onClick={e => {
-            cart.resetCart();
-            router.push(ROUTES.dashboard.schedule);
-          }}
-          size="sm"
-          className="py-4 pl-4"
-        >
-          Crear cita
-        </Button>
-        <Button
-          type="white"
-          onClick={() => router.push(ROUTES.dashboard.budgets)}
-          size="sm"
-          className="py-4 pl-4"
-        >
-          Crear presupuesto
-        </Button>
+        {isCallCenter && (
+          <>
+            <Button
+              type="white"
+              onClick={e => {
+                cart.resetCart();
+                router.push(ROUTES.dashboard.schedule);
+              }}
+              size="sm"
+              className="py-4 pl-4"
+            >
+              Crear cita
+            </Button>
+            <Button
+              type="white"
+              onClick={() => router.push(ROUTES.dashboard.budgets)}
+              size="sm"
+              className="py-4 pl-4"
+            >
+              Crear presupuesto
+            </Button>
+          </>
+        )}
         {remoteControl && <ButtonMessage />}
       </Flex>
 
