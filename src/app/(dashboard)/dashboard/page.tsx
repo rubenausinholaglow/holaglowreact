@@ -42,7 +42,6 @@ export default function Page({
   const [showRegistration, setShowRegistration] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [tries, setTries] = useState(1);
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser, setAppointmentId, setBudgetId } =
     useGlobalPersistedStore(state => state);
@@ -217,8 +216,8 @@ export default function Page({
   const handleSearchError = async () => {
     handleRequestError([config.ERROR_AUTHENTICATION]);
     setUserEmail('');
-    !isCallCenter || tries > 1 ? setShowRegistration(true) : null;
-    setTries(tries + 1);
+    setShowForm(true);
+    setShowRegistration(true);
   };
 
   const handleRegistration = async () => {
