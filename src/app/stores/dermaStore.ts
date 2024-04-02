@@ -1,3 +1,4 @@
+import { ImageListType } from 'react-images-uploading';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -14,7 +15,8 @@ interface DermaStore {
   medicinesInfo: string | undefined;
   lactancy: number | undefined;
   gender: string | undefined;
-  pictures: [];
+  pictures: ImageListType;
+  extraInfo: string | undefined;
 }
 
 interface DermaActions {
@@ -30,7 +32,8 @@ interface DermaActions {
   setMedicinesInfo: (value: string | undefined) => void;
   setLactancy: (value: number | undefined) => void;
   setGender: (value: string | undefined) => void;
-  setPictures: (value: []) => void;
+  setPictures: (value: ImageListType) => void;
+  setExtraInfo: (value: string) => void;
 }
 
 export const useDermaStore = create(
@@ -85,8 +88,12 @@ export const useDermaStore = create(
         set({ gender: value });
       },
       pictures: [],
-      setPictures: (value: []) => {
+      setPictures: (value: ImageListType) => {
         set({ pictures: value });
+      },
+      extraInfo: undefined,
+      setExtraInfo: (value: string | undefined) => {
+        set({ extraInfo: value });
       },
     }),
     {

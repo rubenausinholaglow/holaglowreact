@@ -16,7 +16,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_TYPES } from '../multistepConfig';
 
-export default function Inquietudes() {
+export default function SkinType() {
   const { skinType, setSkinType } = useDermaStore(state => state);
 
   return (
@@ -26,7 +26,7 @@ export default function Inquietudes() {
         <Container>
           <Flex
             layout="col-left"
-            className="w-full md:flex-row gap-6 md:gap-16"
+            className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
               intro="Paso 3. Tipo de piel"

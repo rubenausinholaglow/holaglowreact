@@ -19,7 +19,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
 
-export default function Inquietudes() {
+export default function Pains() {
   const router = useRouter();
   const { pain, setPain } = useDermaStore(state => state);
 
@@ -30,7 +30,7 @@ export default function Inquietudes() {
         <Container>
           <Flex
             layout="col-left"
-            className="w-full md:flex-row gap-6 md:gap-16"
+            className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
               intro="Paso 1. Necesidades personales"
@@ -39,39 +39,39 @@ export default function Inquietudes() {
             />
 
             <div className="w-full md:w-1/2">
-              <ul className="flex flex-col gap-4 w-full mb-8">
-                {PAINS_AND_SYMPTOMS.map(painItem => (
-                  <li
-                    className={`transition-all rounded-xl p-3 flex justify-between items-center gap-4 ${
-                      pain === painItem.value
-                        ? 'bg-derma-primary/20'
-                        : 'bg-derma-secondary400'
-                    }`}
-                    key={painItem.name}
-                    onClick={() =>
-                      setPain(
-                        pain === painItem.value ? undefined : painItem.value
-                      )
-                    }
-                  >
-                    <Flex className="gap-3">
-                      <Image
-                        src={painItem.img}
-                        height={64}
-                        width={64}
-                        alt={painItem.name}
-                      />
-                      {painItem.name}
-                    </Flex>
-                    {pain === painItem.value ? (
-                      <SvgCheckSquareActive className="h-6 w-6" />
-                    ) : (
-                      <SvgCheckSquare className="h-6 w-6" />
-                    )}
-                  </li>
-                ))}
-              </ul>
               <CheckHydration>
+                <ul className="flex flex-col gap-4 w-full mb-8">
+                  {PAINS_AND_SYMPTOMS.map(painItem => (
+                    <li
+                      className={`transition-all rounded-xl p-3 flex justify-between items-center gap-4 ${
+                        pain === painItem.value
+                          ? 'bg-derma-primary/20'
+                          : 'bg-derma-secondary400'
+                      }`}
+                      key={painItem.name}
+                      onClick={() =>
+                        setPain(
+                          pain === painItem.value ? undefined : painItem.value
+                        )
+                      }
+                    >
+                      <Flex className="gap-3">
+                        <Image
+                          src={painItem.img}
+                          height={64}
+                          width={64}
+                          alt={painItem.name}
+                        />
+                        {painItem.name}
+                      </Flex>
+                      {pain === painItem.value ? (
+                        <SvgCheckSquareActive className="h-6 w-6" />
+                      ) : (
+                        <SvgCheckSquare className="h-6 w-6" />
+                      )}
+                    </li>
+                  ))}
+                </ul>
                 <Flex className="justify-between">
                   <Button
                     type="white"

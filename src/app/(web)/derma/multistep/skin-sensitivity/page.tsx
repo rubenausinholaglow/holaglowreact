@@ -16,7 +16,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
 
-export default function Inquietudes() {
+export default function SkinSensitivity() {
   const { skinSensitivity, setSkinSensitivity } = useDermaStore(state => state);
 
   return (
@@ -27,7 +27,7 @@ export default function Inquietudes() {
         <Container>
           <Flex
             layout="col-left"
-            className="w-full md:flex-row gap-6 md:gap-16"
+            className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
               intro="Paso 4. "

@@ -17,7 +17,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { LACTANCY } from '../multistepConfig';
 
-export default function Inquietudes() {
+export default function Lactancy() {
   const router = useRouter();
   const { lactancy, setLactancy } = useDermaStore(state => state);
 
@@ -28,7 +28,7 @@ export default function Inquietudes() {
         <Container>
           <Flex
             layout="col-left"
-            className="w-full md:flex-row gap-6 md:gap-16"
+            className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
               intro="Paso 8. Embarazo"

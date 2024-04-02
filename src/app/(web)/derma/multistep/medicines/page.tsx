@@ -18,7 +18,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { MEDICINES } from '../multistepConfig';
 
-export default function Inquietudes() {
+export default function Medicines() {
   const router = useRouter();
   const { medicines, medicinesInfo, setMedicines, setMedicinesInfo } =
     useDermaStore(state => state);
@@ -32,7 +32,7 @@ export default function Inquietudes() {
         <Container>
           <Flex
             layout="col-left"
-            className="w-full md:flex-row gap-6 md:gap-16"
+            className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
               intro="Paso 7. Fármacos"
@@ -90,7 +90,7 @@ export default function Inquietudes() {
                   />
                 </>
               )}
-              <Flex className="justify-between pb-12">
+              <Flex className="justify-between">
                 <Button
                   type="white"
                   customStyles="bg-transparent border-none"

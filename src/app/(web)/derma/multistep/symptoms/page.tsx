@@ -18,7 +18,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
 
-export default function Inquietudes() {
+export default function Symptoms() {
   const router = useRouter();
   const { pain, symptoms, setSymptoms } = useDermaStore(state => state);
 
@@ -53,7 +53,7 @@ export default function Inquietudes() {
         <Container>
           <Flex
             layout="col-left"
-            className="w-full md:flex-row gap-6 md:gap-16"
+            className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
               intro="Paso 2. Síntomas"
@@ -107,7 +107,7 @@ export default function Inquietudes() {
                   />
                 </li>
               </ul>
-              <Flex className="justify-between pb-12">
+              <Flex className="justify-between">
                 <Button
                   type="white"
                   customStyles="bg-transparent border-none"

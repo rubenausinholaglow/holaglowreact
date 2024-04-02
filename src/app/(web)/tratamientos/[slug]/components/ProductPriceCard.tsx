@@ -26,7 +26,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 function ProductPriceItemsCard({
@@ -139,8 +139,8 @@ function ProductPriceItemsCard({
               if (medicalVisitProduct && product.isPack) {
                 setSelectedTreatment(medicalVisitProduct);
               }
-            if (product.isPack) setSelectedPack(product);
-            else setSelectedPack(undefined);
+              if (product.isPack) setSelectedPack(product);
+              else setSelectedPack(undefined);
             }}
             id="tmevent_click_book_button_prices"
           >

@@ -9,7 +9,7 @@ import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 export default function GoToCheckout() {

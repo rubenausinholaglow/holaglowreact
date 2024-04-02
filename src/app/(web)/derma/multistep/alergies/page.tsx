@@ -18,7 +18,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ALLERGIES } from '../multistepConfig';
 
-export default function Inquietudes() {
+export default function Allergies() {
   const router = useRouter();
   const { allergies, allergiesInfo, setAllergies, setAllergiesInfo } =
     useDermaStore(state => state);
@@ -32,7 +32,7 @@ export default function Inquietudes() {
         <Container>
           <Flex
             layout="col-left"
-            className="w-full md:flex-row gap-6 md:gap-16"
+            className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
               intro="Paso 5. Alergias"
@@ -88,7 +88,7 @@ export default function Inquietudes() {
                   />
                 </>
               )}
-              <Flex className="justify-between pb-12">
+              <Flex className="justify-between">
                 <Button
                   type="white"
                   customStyles="bg-transparent border-none"
