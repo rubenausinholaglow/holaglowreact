@@ -20,10 +20,10 @@ import { MEDICINES } from '../multistepConfig';
 
 export default function Medicines() {
   const router = useRouter();
-  const { medicines, medicinesInfo, setMedicines, setMedicinesInfo } =
+  const { medication, medicationInfo, setMedication, setMedicationInfo } =
     useDermaStore(state => state);
 
-  const [textAreaValue, setTextAreaValue] = useState(medicinesInfo);
+  const [textAreaValue, setTextAreaValue] = useState(medicationInfo);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -44,21 +44,21 @@ export default function Medicines() {
                 {MEDICINES.map(medicine => (
                   <li
                     className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
-                      medicines === medicine.value
+                      medication === medicine.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={medicine.title}
                     onClick={() =>
-                      setMedicines(
-                        medicines === medicine.value
+                      setMedication(
+                        medication === medicine.value
                           ? undefined
                           : medicine.value
                       )
                     }
                   >
                     {medicine.title}
-                    {medicines === medicine.value ? (
+                    {medication === medicine.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -66,7 +66,7 @@ export default function Medicines() {
                   </li>
                 ))}
               </ul>
-              {medicines === 0 && (
+              {medication === 0 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
                     Explícanos más acerca del fármaco que estás tomando
@@ -79,7 +79,7 @@ export default function Medicines() {
                     className="w-full h-24 md:h-48 p-2 text-sm border border-derma-secondary500 rounded-xl mb-8"
                     placeholder="Escribe aquí tus movidas"
                     onChange={event => {
-                      setMedicinesInfo(event.target.value);
+                      setMedicationInfo(event.target.value);
                       setTextAreaValue(event.target.value);
                     }}
                     value={
@@ -100,12 +100,12 @@ export default function Medicines() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.lactancy}
+                  href={ROUTES.derma.multistep.lactating}
                   type={
-                    (medicines !== 0 && medicines) ||
-                    (medicines === 0 &&
-                      medicinesInfo &&
-                      medicinesInfo?.length > 0)
+                    (medication !== 0 && medication) ||
+                    (medication === 0 &&
+                      medicationInfo &&
+                      medicationInfo?.length > 0)
                       ? 'dermaDark'
                       : 'disabled'
                   }

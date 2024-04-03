@@ -71,9 +71,13 @@ export default function ImageUploader({
                   {!isEmpty(images[0]) ? (
                     <Text className="text-hg-black400 text-xs text-ellipsis whitespace-nowrap overflow-hidden">
                       <span>
-                        {`${(images[0]?.file?.size / 1024)
-                          .toFixed(2)
-                          .replace('.', "'")} kb`}
+                        {images[0]?.file
+                          ? `${
+                              (images[0].file.size / 1024)
+                                ?.toFixed(2)
+                                ?.replace('.', "'") ?? ''
+                            } kb`
+                          : ''}
                       </span>
                       <span className="font-bold">{' · '}</span>
                       <span>{images[0]?.file?.name}</span>

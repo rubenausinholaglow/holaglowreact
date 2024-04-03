@@ -6,15 +6,14 @@ interface DermaStore {
   pain: number | undefined;
   symptoms: string[];
   skinType: number | undefined;
-  skinSensitivity: number | undefined;
-  allergies: number | undefined;
-  allergiesInfo: string | undefined;
-  illnesses: number | undefined;
-  illnessesInfo: string | undefined;
-  medicines: number | undefined;
-  medicinesInfo: string | undefined;
-  lactancy: number | undefined;
-  gender: string | undefined;
+  skinSensibility: number | undefined;
+  allergy: number | undefined;
+  allergyInfo: string | undefined;
+  illness: number | undefined;
+  illnessInfo: string | undefined;
+  medication: number | undefined;
+  medicationInfo: string | undefined;
+  lactating: number | undefined;
   pictures: ImageListType;
   extraInfo: string | undefined;
 }
@@ -23,15 +22,14 @@ interface DermaActions {
   setPain: (value: number | undefined) => void;
   setSymptoms: (value: string[]) => void;
   setSkinType: (value: number | undefined) => void;
-  setSkinSensitivity: (value: number | undefined) => void;
-  setAllergies: (value: number | undefined) => void;
-  setAllergiesInfo: (value: string | undefined) => void;
-  setIllnesses: (value: number | undefined) => void;
-  setIllnessesInfo: (value: string | undefined) => void;
-  setMedicines: (value: number | undefined) => void;
-  setMedicinesInfo: (value: string | undefined) => void;
-  setLactancy: (value: number | undefined) => void;
-  setGender: (value: string | undefined) => void;
+  setSkinSensibility: (value: number | undefined) => void;
+  setAllergy: (value: number | undefined) => void;
+  setAllergyInfo: (value: string | undefined) => void;
+  setIllness: (value: number | undefined) => void;
+  setIllnessInfo: (value: string | undefined) => void;
+  setMedication: (value: number | undefined) => void;
+  setMedicationInfo: (value: string | undefined) => void;
+  setLactating: (value: number | undefined) => void;
   setPictures: (value: ImageListType) => void;
   setExtraInfo: (value: string) => void;
 }
@@ -51,41 +49,37 @@ export const useDermaStore = create(
       setSkinType: (value: number | undefined) => {
         set({ skinType: value });
       },
-      skinSensitivity: undefined,
-      setSkinSensitivity: (value: number | undefined) => {
-        set({ skinSensitivity: value });
+      skinSensibility: undefined,
+      setSkinSensibility: (value: number | undefined) => {
+        set({ skinSensibility: value });
       },
-      allergies: undefined,
-      setAllergies: (value: number | undefined) => {
-        set({ allergies: value });
+      allergy: undefined,
+      setAllergy: (value: number | undefined) => {
+        set({ allergy: value });
       },
-      allergiesInfo: undefined,
-      setAllergiesInfo: (value: string | undefined) => {
-        set({ allergiesInfo: value });
+      allergyInfo: undefined,
+      setAllergyInfo: (value: string | undefined) => {
+        set({ allergyInfo: value });
       },
-      illnesses: undefined,
-      setIllnesses: (value: number | undefined) => {
-        set({ illnesses: value });
+      illness: undefined,
+      setIllness: (value: number | undefined) => {
+        set({ illness: value });
       },
-      illnessesInfo: undefined,
-      setIllnessesInfo: (value: string | undefined) => {
-        set({ illnessesInfo: value });
+      illnessInfo: undefined,
+      setIllnessInfo: (value: string | undefined) => {
+        set({ illnessInfo: value });
       },
-      medicines: undefined,
-      setMedicines: (value: number | undefined) => {
-        set({ medicines: value });
+      medication: undefined,
+      setMedication: (value: number | undefined) => {
+        set({ medication: value });
       },
-      medicinesInfo: undefined,
-      setMedicinesInfo: (value: string | undefined) => {
-        set({ medicinesInfo: value });
+      medicationInfo: undefined,
+      setMedicationInfo: (value: string | undefined) => {
+        set({ medicationInfo: value });
       },
-      lactancy: undefined,
-      setLactancy: (value: number | undefined) => {
-        set({ lactancy: value });
-      },
-      gender: undefined,
-      setGender: (value: string | undefined) => {
-        set({ gender: value });
+      lactating: undefined,
+      setLactating: (value: number | undefined) => {
+        set({ lactating: value });
       },
       pictures: [],
       setPictures: (value: ImageListType) => {

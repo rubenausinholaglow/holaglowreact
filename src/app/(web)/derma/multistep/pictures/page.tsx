@@ -43,7 +43,7 @@ export default function Pictures() {
               </Text>
             </DermaStepHeader>
 
-            <div className="w-full">
+            <div className="w-full md:w-1/2">
               <Flex layout="col-left" className="w-full gap-4 mb-8">
                 <ImageUploader
                   title="Foto 1"

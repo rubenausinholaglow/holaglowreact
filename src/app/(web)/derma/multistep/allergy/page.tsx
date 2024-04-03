@@ -20,10 +20,11 @@ import { ALLERGIES } from '../multistepConfig';
 
 export default function Allergies() {
   const router = useRouter();
-  const { allergies, allergiesInfo, setAllergies, setAllergiesInfo } =
-    useDermaStore(state => state);
+  const { allergy, allergyInfo, setAllergy, setAllergyInfo } = useDermaStore(
+    state => state
+  );
 
-  const [textAreaValue, setTextAreaValue] = useState(allergiesInfo);
+  const [textAreaValue, setTextAreaValue] = useState(allergyInfo);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -41,22 +42,22 @@ export default function Allergies() {
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {ALLERGIES.map(allergy => (
+                {ALLERGIES.map(item => (
                   <li
                     className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
-                      allergies === allergy.value
+                      allergy === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={allergy.title}
+                    key={item.title}
                     onClick={() =>
-                      setAllergies(
-                        allergies === allergy.value ? undefined : allergy.value
+                      setAllergy(
+                        allergy === item.value ? undefined : item.value
                       )
                     }
                   >
-                    {allergy.title}
-                    {allergies === allergy.value ? (
+                    {item.title}
+                    {allergy === item.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -64,7 +65,7 @@ export default function Allergies() {
                   </li>
                 ))}
               </ul>
-              {allergies === 0 && (
+              {allergy === 0 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
                     Explícanos tus alergias
@@ -77,7 +78,7 @@ export default function Allergies() {
                     className="w-full h-24 md:h-48 p-2 text-sm border border-derma-secondary500 rounded-xl mb-8"
                     placeholder="Escribe aquí tus movidas"
                     onChange={event => {
-                      setAllergiesInfo(event.target.value);
+                      setAllergyInfo(event.target.value);
                       setTextAreaValue(event.target.value);
                     }}
                     value={
@@ -98,12 +99,10 @@ export default function Allergies() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.illnesses}
+                  href={ROUTES.derma.multistep.illness}
                   type={
-                    (allergies !== 0 && allergies) ||
-                    (allergies === 0 &&
-                      allergiesInfo &&
-                      allergiesInfo.length > 0)
+                    (allergy !== 0 && allergy) ||
+                    (allergy === 0 && allergyInfo && allergyInfo.length > 0)
                       ? 'dermaDark'
                       : 'disabled'
                   }

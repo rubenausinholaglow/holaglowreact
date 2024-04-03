@@ -16,13 +16,26 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
 
-export default function SkinSensitivity() {
-  const { skinSensitivity, setSkinSensitivity } = useDermaStore(state => state);
+export default function SkinSensitivity({
+  dermaStepHeaderIntro,
+  dermaStepBarSteps,
+  dermaStepBarStep,
+}: {
+  dermaStepHeaderIntro?: string;
+  dermaStepBarSteps?: number;
+  dermaStepBarStep?: number;
+}) {
+  const { pain, skinSensibility, setSkinSensibility } = useDermaStore(
+    state => state
+  );
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={4} />
+        <DermaStepBar
+          steps={dermaStepBarSteps ? dermaStepBarSteps : 7}
+          step={dermaStepBarStep ? dermaStepBarStep : 4}
+        />
 
         <Container>
           <Flex
@@ -30,7 +43,7 @@ export default function SkinSensitivity() {
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 4. "
+              intro="Paso 4. Sensibilidad"
               title="¿Qué tan sensible es tu piel?"
             >
               <Text className="text-hg-black500 mt-2">
@@ -47,19 +60,19 @@ export default function SkinSensitivity() {
                 {SKIN_SENSITIVITIES.map(skin => (
                   <li
                     className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
-                      skinSensitivity === skin.value
+                      skinSensibility === skin.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={skin.value}
                     onClick={() =>
-                      setSkinSensitivity(
-                        skinSensitivity === skin.value ? undefined : skin.value
+                      setSkinSensibility(
+                        skinSensibility === skin.value ? undefined : skin.value
                       )
                     }
                   >
                     {skin.title}
-                    {skinSensitivity === skin.value ? (
+                    {skinSensibility === skin.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -73,9 +86,13 @@ export default function SkinSensitivity() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.alergies}
+                  href={
+                    pain === 4
+                      ? ROUTES.derma.multistep.ns.lactating
+                      : ROUTES.derma.multistep.allergy
+                  }
                   type={
-                    skinSensitivity !== undefined ? 'dermaDark' : 'disabled'
+                    skinSensibility !== undefined ? 'dermaDark' : 'disabled'
                   }
                 >
                   Siguiente

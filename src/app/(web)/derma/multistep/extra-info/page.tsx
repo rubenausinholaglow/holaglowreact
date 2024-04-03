@@ -13,23 +13,38 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 
-export default function AlgoMas() {
+export default function ExtraInfo({
+  dermaStepHeaderIntro,
+  dermaStepBarSteps,
+  dermaStepBarStep,
+}: {
+  dermaStepHeaderIntro?: string;
+  dermaStepBarSteps?: number;
+  dermaStepBarStep?: number;
+}) {
   const router = useRouter();
-  const { extraInfo, setExtraInfo } = useDermaStore(state => state);
+  const { pain, extraInfo, setExtraInfo } = useDermaStore(state => state);
 
   const [textAreaValue, setTextAreaValue] = useState(extraInfo);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={8} step={7} />
+        <DermaStepBar
+          steps={dermaStepBarSteps ? dermaStepBarSteps : 8}
+          step={dermaStepBarStep ? dermaStepBarStep : 7}
+        />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 10. Información adicional"
+              intro={
+                dermaStepHeaderIntro
+                  ? dermaStepHeaderIntro
+                  : 'Paso 10. Información adicional'
+              }
               title="¿Te gustaría contarnos algo más?"
             >
               <Text className="mt-2 text-hg-black500 text-sm">
@@ -61,7 +76,14 @@ export default function AlgoMas() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button href={ROUTES.derma.multistep.form} type="dermaDark">
+                <Button
+                  href={
+                    pain === 4
+                      ? ROUTES.derma.multistep.ns.skinType
+                      : ROUTES.derma.multistep.form
+                  }
+                  type="dermaDark"
+                >
                   Siguiente
                 </Button>
               </Flex>

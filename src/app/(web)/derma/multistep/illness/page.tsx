@@ -20,10 +20,11 @@ import { ILLNESSES } from '../multistepConfig';
 
 export default function Illnesses() {
   const router = useRouter();
-  const { illnesses, illnessesInfo, setIllnesses, setIllnessesInfo } =
-    useDermaStore(state => state);
+  const { illness, illnessInfo, setIllness, setIllnessInfo } = useDermaStore(
+    state => state
+  );
 
-  const [textAreaValue, setTextAreaValue] = useState(illnessesInfo);
+  const [textAreaValue, setTextAreaValue] = useState(illnessInfo);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -41,22 +42,22 @@ export default function Illnesses() {
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {ILLNESSES.map(illness => (
+                {ILLNESSES.map(item => (
                   <li
                     className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
-                      illnesses === illness.value
+                      illness === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={illness.title}
+                    key={item.title}
                     onClick={() =>
-                      setIllnesses(
-                        illnesses === illness.value ? undefined : illness.value
+                      setIllness(
+                        illness === item.value ? undefined : item.value
                       )
                     }
                   >
-                    {illness.title}
-                    {illnesses === illness.value ? (
+                    {item.title}
+                    {illness === item.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -64,7 +65,7 @@ export default function Illnesses() {
                   </li>
                 ))}
               </ul>
-              {illnesses === 0 && (
+              {illness === 0 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
                     Explícanos más acerca de tu enfermedad
@@ -77,7 +78,7 @@ export default function Illnesses() {
                     className="w-full h-24 md:h-48 p-2 text-sm border border-derma-secondary500 rounded-xl mb-8"
                     placeholder="Escribe aquí tus movidas"
                     onChange={event => {
-                      setIllnessesInfo(event.target.value);
+                      setIllnessInfo(event.target.value);
                       setTextAreaValue(event.target.value);
                     }}
                     value={
@@ -98,12 +99,10 @@ export default function Illnesses() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.medicines}
+                  href={ROUTES.derma.multistep.medication}
                   type={
-                    (illnesses !== 0 && illnesses) ||
-                    (illnesses === 0 &&
-                      illnessesInfo &&
-                      illnessesInfo?.length > 0)
+                    (illness !== 0 && illness) ||
+                    (illness === 0 && illnessInfo && illnessInfo?.length > 0)
                       ? 'dermaDark'
                       : 'disabled'
                   }

@@ -82,7 +82,11 @@ export default function Pains() {
                     <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
                   <Button
-                    href={ROUTES.derma.multistep.symptoms}
+                    href={
+                      pain === 4
+                        ? ROUTES.derma.multistep.ns.extraInfo
+                        : ROUTES.derma.multistep.symptoms
+                    }
                     type={pain !== undefined ? 'dermaDark' : 'disabled'}
                   >
                     Siguiente

@@ -16,20 +16,35 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_TYPES } from '../multistepConfig';
 
-export default function SkinType() {
-  const { skinType, setSkinType } = useDermaStore(state => state);
+export default function SkinType({
+  dermaStepHeaderIntro,
+  dermaStepBarSteps,
+  dermaStepBarStep,
+}: {
+  dermaStepHeaderIntro?: string;
+  dermaStepBarSteps?: number;
+  dermaStepBarStep?: number;
+}) {
+  const { pain, skinType, setSkinType } = useDermaStore(state => state);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={3} />
+        <DermaStepBar
+          steps={dermaStepBarSteps ? dermaStepBarSteps : 7}
+          step={dermaStepBarStep ? dermaStepBarStep : 3}
+        />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 3. Tipo de piel"
+              intro={
+                dermaStepHeaderIntro
+                  ? dermaStepHeaderIntro
+                  : 'Paso 3. Tipo de piel'
+              }
               title="¿Cómo describirías la piel de tu rostro?"
             />
 
@@ -70,7 +85,11 @@ export default function SkinType() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
-                  href={ROUTES.derma.multistep.skinSensitivity}
+                  href={
+                    pain === 4
+                      ? ROUTES.derma.multistep.ns.skinSensibility
+                      : ROUTES.derma.multistep.skinSensibility
+                  }
                   type={skinType !== undefined ? 'dermaDark' : 'disabled'}
                 >
                   Siguiente
