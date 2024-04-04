@@ -112,7 +112,6 @@ export default function Form({
     dermaService.update(dermaQuestions as DermaQuestions);
 
     // faltaría subir las img's
-
     console.log(pictures);
   }
 
@@ -129,18 +128,13 @@ export default function Form({
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro={
-                dermaStepHeaderIntro
-                  ? dermaStepHeaderIntro
-                  : 'Último paso. Formulario'
-              }
+              intro="Último paso. Formulario"
               title="Solicita tu cita"
             >
               <Text className="mt-2 text-hg-black500 text-sm">
                 Rellena tus datos de contacto para reservar tu consulta
               </Text>
             </DermaStepHeader>
-
             <div className="w-full md:w-1/2">
               <RegistrationForm
                 setClientData={setClient}

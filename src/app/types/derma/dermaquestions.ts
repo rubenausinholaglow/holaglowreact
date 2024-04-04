@@ -18,6 +18,8 @@ export interface DermaQuestions {
   medication: number;
   medicationInfo: string;
   lactating: number;
+  skinConcerns: SkinConcern[];
+  scenario: string | undefined;
 }
 export interface SkinConcern {
   concern: string;
