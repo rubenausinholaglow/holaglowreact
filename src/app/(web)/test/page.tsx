@@ -28,6 +28,8 @@ export default function Page() {
         scriptTag.src = url;
         scriptTag.setAttribute("data-apikey", "https://beta2.frakmenta.com");
         scriptTag.setAttribute("data-name", "widgetFK");
+        scriptTag.setAttribute("data-api-url", "https://frakmenta.com");
+      
         document.head.appendChild(scriptTag);
         scriptTag.addEventListener('load', function() {
           var widgets = frakmenta_init();
