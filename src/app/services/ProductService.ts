@@ -1,3 +1,4 @@
+import { ProductClinics } from "@interface/clinic";
 import { Product } from "@interface/product";
 
 export default class ProductService {
@@ -34,14 +35,26 @@ export default class ProductService {
       return [];
     }
   }
-  static async getDashboardProducts(getUpgrades = false) {
+  static async getDashboardProducts(clinicId : string, getUpgrades = false) {
     try {
       let url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}DashboardProducts`;
       url = getUpgrades ? url + "?getUpgrades=true" : url
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        return data;
+        const products = data
+          .map((product: Product) => ({
+            ...product,
+            visibility: true,
+          }))
+          .filter((product: Product) =>
+            product.clinicDetail.some(
+              (clinicDetail: ProductClinics) =>
+                clinicDetail.clinic.id === clinicId
+            )
+          ).sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
+        
+        return products;
       } else {
         return '';
       }
