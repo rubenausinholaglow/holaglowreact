@@ -49,15 +49,7 @@ const CLIENT_INITIAL_VALUES = {
   address: '',
 };
 
-export default function Form({
-  dermaStepHeaderIntro,
-  dermaStepBarSteps,
-  dermaStepBarStep,
-}: {
-  dermaStepHeaderIntro?: string;
-  dermaStepBarSteps?: number;
-  dermaStepBarStep?: number;
-}) {
+export default function Form() {
   const router = useRouter();
 
   const {
@@ -118,10 +110,7 @@ export default function Form({
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar
-          steps={dermaStepBarSteps ? dermaStepBarSteps : 11}
-          step={dermaStepBarStep ? dermaStepBarStep : 11}
-        />
+        <DermaStepBar steps={1} step={1} />
         <Container>
           <Flex
             layout="col-left"
