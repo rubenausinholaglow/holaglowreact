@@ -200,7 +200,14 @@ export default function ProductInfo({
                 className="text-hg-secondary mr-3"
               />
               <div className="flex flex-col">
-                <Text size="lg">desde {product.price} €</Text>
+                <Text size="lg">
+                  desde {discountedPrice ? discountedPrice : product.price} €{' '}
+                  {discountedPrice && (
+                    <span className="inline-block line-through font-normal mr-1">
+                      {product.price} €
+                    </span>
+                  )}
+                </Text>
               </div>
             </li>
           </ul>
