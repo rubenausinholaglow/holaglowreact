@@ -400,7 +400,7 @@ export default function Page({
         <MainLayout
           isDashboard
           hideBottomBar
-          hasAnimatedBackground={isCallCenter}
+          hasAnimatedBackground={!isCallCenter}
         >
           <div className="fixed bottom-0 right-0 py-3 px-3">
             <Button
