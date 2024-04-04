@@ -17,6 +17,7 @@ export default function ImageUploader({
   pictureIndex: number;
 }) {
   const [images, setImages] = useState([]);
+  const [imageSize, setImageSize] = useState('');
   const { pictures, setPictures } = useDermaStore(state => state);
 
   const onChange = (imageList: ImageListType) => {
@@ -33,6 +34,13 @@ export default function ImageUploader({
   useEffect(() => {
     const updatedPictures = [...pictures];
     updatedPictures[pictureIndex] = images[0];
+
+    const picture = pictures[pictureIndex];
+
+    if (picture?.file) {
+      const fileSize = picture.file.size / 1024; // size in KB
+      setImageSize(`${fileSize.toFixed(2).replace('.', "'")} kb`);
+    }
 
     setPictures(updatedPictures);
   }, [images]);
@@ -100,13 +108,10 @@ export default function ImageUploader({
                     {!isEmpty(pictures[pictureIndex]) ? (
                       <Text className="text-hg-black400 text-xs text-ellipsis whitespace-nowrap overflow-hidden">
                         <span>
-                          {pictures[pictureIndex]?.file
-                            ? `${
-                                (pictures[pictureIndex].file.size / 1024)
-                                  ?.toFixed(2)
-                                  ?.replace('.', "'") ?? ''
-                              } kb`
-                            : ''}
+                          {((pictures[pictureIndex]?.file?.size ?? 0) / 1024)
+                            ?.toFixed(2)
+                            .replace('.', "'")}{' '}
+                          kb
                         </span>
                         <span className="font-bold">{' · '}</span>
                         <span>{pictures[pictureIndex]?.file?.name}</span>
