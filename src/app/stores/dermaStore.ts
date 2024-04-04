@@ -5,6 +5,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 interface DermaStore {
   id: string;
   pain: number;
+  otherPain: string;
   symptoms: string[];
   skinType: number;
   skinSensibility: number;
@@ -22,6 +23,7 @@ interface DermaStore {
 interface DermaActions {
   setId: (value: string) => void;
   setPain: (value: number) => void;
+  setOtherPain: (value: string) => void;
   setSymptoms: (value: string[]) => void;
   setSkinType: (value: number) => void;
   setSkinSensibility: (value: number) => void;
@@ -43,9 +45,13 @@ export const useDermaStore = create(
       setId: (value: string) => {
         set({ id: value });
       },
-      pain: 0,
+      pain: 6, // values from 0 to 5 are real values,
       setPain: (value: number) => {
         set({ pain: value });
+      },
+      otherPain: '',
+      setOtherPain: (value: string) => {
+        set({ otherPain: value });
       },
       symptoms: [],
       setSymptoms: (value: string[]) => {

@@ -27,7 +27,7 @@ export default function Symptoms() {
 
   useEffect(() => {
     const hasExtraSymptom = symptoms.filter(category =>
-      category.startsWith('Extra:')
+      category.startsWith('Otros:')
     );
 
     if (hasExtraSymptom.length > 0) {
@@ -37,13 +37,13 @@ export default function Symptoms() {
 
   function handleTextArea(event: ChangeEvent<HTMLTextAreaElement>) {
     const symptomsWithoutExtra = symptoms.filter(
-      category => !category.startsWith('Extra:')
+      category => !category.startsWith('Otros:')
     );
 
     setSymptoms(symptomsWithoutExtra);
 
     if (event.target.value.length > 0) {
-      setSymptoms([...symptomsWithoutExtra, `Extra: ${event.target.value}`]);
+      setSymptoms([...symptomsWithoutExtra, `Otros: ${event.target.value}`]);
     }
   }
 
@@ -58,8 +58,12 @@ export default function Symptoms() {
           >
             <DermaStepHeader
               intro="Paso 2. Síntomas"
-              title="¿Sientes una sensación de ... en la zona ...?"
-            />
+              title="¿Qué síntomas ves en tu piel?"
+            >
+              <Text className="text-hg-black500 mt-2">
+                Selecciona todos los que apliquen
+              </Text>
+            </DermaStepHeader>
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
@@ -89,24 +93,27 @@ export default function Symptoms() {
                     )}
                   </li>
                 ))}
-                <li
-                  className={`transition-all rounded-xl p-3 ${
-                    textAreaValue.length > 0
-                      ? 'bg-derma-primary/20'
-                      : 'bg-derma-secondary400'
-                  }`}
-                >
-                  <Text className="mb-2">Cuéntame tu vida</Text>
-                  <textarea
-                    className="w-full h-24 md:h-48 p-2 text-sm"
-                    placeholder="Escribe aquí tus movidas"
-                    onChange={event => {
-                      handleTextArea(event);
-                      setTextAreaValue(event.target.value);
-                    }}
-                    value={textAreaValue.replace(/^\s+/, '')}
-                  />
-                </li>
+
+                {pain === 5 && (
+                  <li
+                    className={`transition-all rounded-xl p-3 ${
+                      textAreaValue.length > 0
+                        ? 'bg-derma-primary/20'
+                        : 'bg-derma-secondary400'
+                    }`}
+                  >
+                    <Text className="mb-2">Otros</Text>
+                    <textarea
+                      className="w-full h-24 md:h-48 p-2 text-sm"
+                      placeholder="Escribe aquí tus movidas"
+                      onChange={event => {
+                        handleTextArea(event);
+                        setTextAreaValue(event.target.value);
+                      }}
+                      value={textAreaValue.replace(/^\s+/, '')}
+                    />
+                  </li>
+                )}
               </ul>
               <Flex className="justify-between">
                 <Button

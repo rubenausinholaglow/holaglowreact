@@ -26,7 +26,7 @@ export default function StartMultistep() {
               className="md:flex-row w-full md:gap-12 xl:gap-16"
             >
               <Image
-                src="/images/derma/home/dermaStart.jpg"
+                src="/images/derma/home/sonsolesStart.jpg"
                 alt="Holaglow"
                 width={780}
                 height={752}
@@ -37,34 +37,32 @@ export default function StartMultistep() {
                   layout="col-left"
                   className="items-center relative md:justify-center md:flex-row md:mt-12"
                 >
-                  <Flex layout="col-left" className="relative z-10 py-4">
+                  <Flex
+                    layout="col-left"
+                    className="relative z-10 py-4 text-hg-black500"
+                  >
                     <Title
                       size="xldr"
-                      className="text-derma-primary font-light mb-4"
+                      className="text-derma-primary font-light"
                     >
-                      Tu rutina facial personalizada por 99€
+                      Dra. Sonsoles Espí
                     </Title>
-                    <Flex
-                      layout="col-left"
-                      className="gap-2 w-full text-hg-black500 mb-8"
-                    >
-                      <Text className="md:text-lg mb-2">
-                        Videollamada de diagnóstico con el médico. Te enviamos a
-                        casa tu rutina personalizada:
-                      </Text>
+                    <Text className="text-sm">
+                      Directora médica en Holaglow
+                    </Text>
+                    <Text className="text-sm mb-4">
+                      Médico estético y especialista en dermocosmética
+                    </Text>
 
-                      {[
-                        'Espuma limpiadora',
-                        'Crema hidratante de día para tu afección',
-                        'Protector solar',
-                        'Receta de la crema personalizada de noche <span className="text-xs">(a pedir en farmacia por 25-40€)</span>',
-                      ].map(item => (
-                        <Flex key={item}>
-                          <SvgCheckCircle className="shrink-0 mr-2" />
-                          <p dangerouslySetInnerHTML={{ __html: item }} />
-                        </Flex>
-                      ))}
-                    </Flex>
+                    <Text className="md:text-lg mb-2">
+                      ¡Hola! Vamos a encontrar la mejor rutina para tu piel.
+                    </Text>
+
+                    <Text className="md:text-lg mb-8">
+                      Ahora te haremos algunas preguntas para que tu médico
+                      pueda diseñar una rutina específica para ti.
+                    </Text>
+
                     <StartButton />
                   </Flex>
                 </Flex>

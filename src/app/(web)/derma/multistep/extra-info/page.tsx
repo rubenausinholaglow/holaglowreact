@@ -78,11 +78,7 @@ export default function ExtraInfo({
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={
-                    pain === 5
-                      ? ROUTES.derma.multistep.ns.skinType
-                      : ROUTES.derma.multistep.form
-                  }
+                  nextUrl={ROUTES.derma.multistep.form}
                   isDisabled={false}
                 />
               </Flex>

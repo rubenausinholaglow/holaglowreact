@@ -34,10 +34,13 @@ export default function Pains() {
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 1. Necesidades personales"
-              title="Selecciona las inquietudes que te gustaría resolver en tu
-                consulta"
-            />
+              intro="Paso 1. Necesidades de tu piel"
+              title="¿Cómo te podemos ayudar?"
+            >
+              <Text className="text-hg-black500 mt-2">
+                Elige el aspecto principal de tu piel que quieres tratar
+              </Text>
+            </DermaStepHeader>
 
             <div className="w-full md:w-1/2">
               <CheckHydration>
@@ -82,11 +85,7 @@ export default function Pains() {
                   </Button>
                   <NextMultistepButton
                     isDisabled={pain === undefined}
-                    nextUrl={
-                      pain === 5
-                        ? ROUTES.derma.multistep.ns.extraInfo
-                        : ROUTES.derma.multistep.symptoms
-                    }
+                    nextUrl={ROUTES.derma.multistep.symptoms}
                   />
                 </Flex>
               </CheckHydration>

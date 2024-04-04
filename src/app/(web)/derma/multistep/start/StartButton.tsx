@@ -6,11 +6,10 @@ export default function StartButton() {
   return (
     <Button
       type="dermaDark"
-      className=""
       href={ROUTES.derma.multistep.pains}
       id="tmevent_derma_start"
     >
-      Pedir rutina
+      Empezar
       <SvgArrow className="ml-4" height={16} width={16} />
     </Button>
   );

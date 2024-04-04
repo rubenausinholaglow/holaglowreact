@@ -83,11 +83,7 @@ export default function Lactancy({
                     <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
                   <NextMultistepButton
-                    nextUrl={
-                      pain === 5
-                        ? ROUTES.derma.multistep.ns.form
-                        : ROUTES.derma.multistep.pictures
-                    }
+                    nextUrl={ROUTES.derma.multistep.pictures}
                     isDisabled={lactating !== 3}
                   />
                 </Flex>

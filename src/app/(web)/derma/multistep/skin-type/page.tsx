@@ -11,6 +11,7 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import Image from 'next/image';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
@@ -26,7 +27,7 @@ export default function SkinType({
   dermaStepBarSteps?: number;
   dermaStepBarStep?: number;
 }) {
-  const { pain, skinType, setSkinType } = useDermaStore(state => state);
+  const { skinType, setSkinType } = useDermaStore(state => state);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -53,7 +54,7 @@ export default function SkinType({
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {SKIN_TYPES.map(item => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                    className={`transition-all rounded-xl p-3 flex items-center justify-start gap-4 cursor-pointer ${
                       skinType === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
@@ -63,7 +64,14 @@ export default function SkinType({
                       setSkinType(skinType === item.value ? 0 : item.value)
                     }
                   >
-                    <div>
+                    <Image
+                      src={item.img}
+                      height={32}
+                      width={32}
+                      alt={item.title}
+                      className="shrink-0"
+                    />
+                    <div className="mr-auto">
                       {item.title}
                       <Text className="text-xs text-hg-black500">
                         {item.text}
@@ -84,11 +92,7 @@ export default function SkinType({
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={
-                    pain === 5
-                      ? ROUTES.derma.multistep.ns.skinSensibility
-                      : ROUTES.derma.multistep.skinSensibility
-                  }
+                  nextUrl={ROUTES.derma.multistep.skinSensibility}
                   isDisabled={skinType === 0}
                 />
               </Flex>

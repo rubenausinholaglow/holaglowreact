@@ -91,11 +91,7 @@ export default function SkinSensitivity({
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={
-                    pain === 5
-                      ? ROUTES.derma.multistep.ns.lactating
-                      : ROUTES.derma.multistep.allergy
-                  }
+                  nextUrl={ROUTES.derma.multistep.allergy}
                   isDisabled={skinSensibility === undefined}
                 />
               </Flex>

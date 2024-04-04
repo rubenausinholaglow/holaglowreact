@@ -8,6 +8,7 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
@@ -50,11 +51,13 @@ export default function Pictures() {
                   subtitle="Rostro frontal"
                   pictureIndex={0}
                 />
+
                 <ImageUploader
                   title="Foto 2"
                   subtitle="Perfil derecho"
                   pictureIndex={1}
                 />
+
                 <ImageUploader
                   title="Foto 3"
                   subtitle="Perfil izquierdo"
