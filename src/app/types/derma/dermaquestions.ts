@@ -5,14 +5,27 @@ export interface DermaQuestions {
   userId: string | undefined;
   name: string | undefined;
   birthDate: string | undefined;
-  scenario: string | undefined;
   phone: string | undefined;
   phonePrefix: string | undefined;
-  extraInfo: string | undefined;
-  skinConcerns: SkinConcern[];
+  extraInfo: string;
+  pain: painObject[] | [];
+  skinType: number;
+  skinSensibility: number;
+  allergy: number;
+  allergyInfo: string;
+  illness: number;
+  illnessInfo: string;
+  medication: number;
+  medicationInfo: string;
+  lactating: number;
 }
 export interface SkinConcern {
   concern: string;
+}
+
+export interface painObject {
+  skinPain: number;
+  option: string;
 }
 
 export interface DermaQuestionsResponse {
@@ -23,7 +36,4 @@ export interface DermaQuestionsResponse {
   scenario: string | undefined;
   extraInfo: string | undefined;
   skinConcerns: SkinConcern[];
-}
-export interface SkinConcern {
-  concern: string;
 }

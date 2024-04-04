@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ALLERGIES } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function Allergies() {
   const router = useRouter();
@@ -51,9 +52,7 @@ export default function Allergies() {
                     }`}
                     key={item.title}
                     onClick={() =>
-                      setAllergy(
-                        allergy === item.value ? undefined : item.value
-                      )
+                      setAllergy(allergy === item.value ? 0 : item.value)
                     }
                   >
                     {item.title}
@@ -65,7 +64,7 @@ export default function Allergies() {
                   </li>
                 ))}
               </ul>
-              {allergy === 0 && (
+              {allergy === 1 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
                     Explícanos tus alergias
@@ -98,17 +97,12 @@ export default function Allergies() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button
-                  href={ROUTES.derma.multistep.illness}
-                  type={
-                    (allergy !== 0 && allergy) ||
-                    (allergy === 0 && allergyInfo && allergyInfo.length > 0)
-                      ? 'dermaDark'
-                      : 'disabled'
+                <NextMultistepButton
+                  nextUrl={ROUTES.derma.multistep.illness}
+                  isDisabled={
+                    allergy === 0 || (allergy === 1 && allergyInfo.length === 0)
                   }
-                >
-                  Siguiente
-                </Button>
+                />
               </Flex>
             </div>
           </Flex>

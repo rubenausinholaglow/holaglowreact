@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function ExtraInfo({
   dermaStepHeaderIntro,
@@ -76,16 +77,14 @@ export default function ExtraInfo({
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button
-                  href={
-                    pain === 4
+                <NextMultistepButton
+                  nextUrl={
+                    pain === 5
                       ? ROUTES.derma.multistep.ns.skinType
                       : ROUTES.derma.multistep.form
                   }
-                  type="dermaDark"
-                >
-                  Siguiente
-                </Button>
+                  isDisabled={false}
+                />
               </Flex>
             </div>
           </Flex>

@@ -15,7 +15,7 @@ export default function DermaStepHeader({
     <div className="md:w-1/2">
       <Image
         alt="Dr. Basart"
-        src="/images/derma/multistep/Basart.png"
+        src="/images/derma/multistep/Sonsoles.png"
         height={192}
         width={192}
         className="mx-auto w-24 mb-4 md:ml-0"

@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Client } from '@interface/client';
-import ROUTES from '@utils/routes';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
+import { dermaService } from '@services/DermaService';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -60,6 +61,7 @@ export default function Form({
   const router = useRouter();
 
   const {
+    id,
     pain,
     symptoms,
     skinType,
@@ -79,39 +81,21 @@ export default function Form({
   const [client, setClient] = useState<Client>(CLIENT_INITIAL_VALUES);
 
   function handleFinishDermaFlow() {
-    const contactData = {
-      email: client.email,
-      phone: client.phone,
-      phonePrefix: client.phonePrefix,
-      name: client.name,
-      surname: client.surname,
-      secondSurname: client.secondSurname,
-      termsAndConditionsAccepted: client.termsAndConditionsAccepted,
-      receiveCommunications: client.receiveCommunications,
-      page: client.page,
-      externalReference: client.externalReference,
-      analyticsMetrics: client.analyticsMetrics,
-      interestedTreatment: client.interestedTreatment,
-      treatmentPrice: client.treatmentPrice,
-      postalCode: client.postalCode,
-      origin: client.origin,
-      city: client.city,
-      address: client.address,
-    };
+    const formattedPain =
+      symptoms.length > 0
+        ? symptoms.map(symptom => ({
+            skinPain: pain,
+            optionsSkinPain: symptom,
+          }))
+        : [];
 
-    const formattedPain = symptoms.map(symptom => ({
-      skinPain: pain,
-      optionsSkinPain: symptom,
-    }));
-
-    const questionsData = {
-      id: '',
-      userId: '',
+    const dermaQuestions = {
+      id,
+      userId: undefined,
       name: client.name,
-      birthDate: '',
-      phone: client.phone,
+      birthDate: undefined,
+      phone: client.phone.replaceAll(' ', '').replace(client.phonePrefix, ''),
       phonePrefix: client.phonePrefix,
-      extraInfo: extraInfo,
       pain: formattedPain,
       skinType,
       skinSensibility,
@@ -119,12 +103,17 @@ export default function Form({
       allergyInfo,
       illness,
       illnessInfo,
-      lactating,
       medication,
       medicationInfo,
+      lactating,
+      extraInfo,
     };
 
-    console.log(questionsData);
+    dermaService.update(dermaQuestions as DermaQuestions);
+
+    // faltaría subir las img's
+
+    console.log(pictures);
   }
 
   return (

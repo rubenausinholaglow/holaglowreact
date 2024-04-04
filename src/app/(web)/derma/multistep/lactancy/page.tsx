@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { LACTANCY } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function Lactancy({
   dermaStepHeaderIntro,
@@ -58,9 +59,7 @@ export default function Lactancy({
                     }`}
                     key={item.title}
                     onClick={() =>
-                      setLactating(
-                        lactating === item.value ? undefined : item.value
-                      )
+                      setLactating(lactating === item.value ? 0 : item.value)
                     }
                   >
                     {item.title}
@@ -73,26 +72,28 @@ export default function Lactancy({
                 ))}
               </ul>
 
-              <Flex className="justify-between pb-12">
-                <Button
-                  type="white"
-                  customStyles="bg-transparent border-none"
-                  onclick={() => router.back()}
-                >
-                  <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
-                  <Text className="text-derma-tertiary">Atrás</Text>
-                </Button>
-                <Button
-                  href={
-                    pain === 4
-                      ? ROUTES.derma.multistep.ns.form
-                      : ROUTES.derma.multistep.pictures
-                  }
-                  type={lactating !== undefined ? 'dermaDark' : 'disabled'}
-                >
-                  Siguiente
-                </Button>
-              </Flex>
+              {lactating === 0 || lactating === 3 ? (
+                <Flex className="justify-between pb-12">
+                  <Button
+                    type="white"
+                    customStyles="bg-transparent border-none"
+                    onclick={() => router.back()}
+                  >
+                    <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
+                    <Text className="text-derma-tertiary">Atrás</Text>
+                  </Button>
+                  <NextMultistepButton
+                    nextUrl={
+                      pain === 5
+                        ? ROUTES.derma.multistep.ns.form
+                        : ROUTES.derma.multistep.pictures
+                    }
+                    isDisabled={lactating !== 3}
+                  />
+                </Flex>
+              ) : (
+                <Text>no te podemos ayudar - PONERLO BONICO</Text>
+              )}
             </div>
           </Flex>
         </Container>

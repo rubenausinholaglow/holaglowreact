@@ -15,6 +15,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_TYPES } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function SkinType({
   dermaStepHeaderIntro,
@@ -59,9 +60,7 @@ export default function SkinType({
                     }`}
                     key={item.title}
                     onClick={() =>
-                      setSkinType(
-                        skinType === item.value ? undefined : item.value
-                      )
+                      setSkinType(skinType === item.value ? 0 : item.value)
                     }
                   >
                     <div>
@@ -84,16 +83,14 @@ export default function SkinType({
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button
-                  href={
-                    pain === 4
+                <NextMultistepButton
+                  nextUrl={
+                    pain === 5
                       ? ROUTES.derma.multistep.ns.skinSensibility
                       : ROUTES.derma.multistep.skinSensibility
                   }
-                  type={skinType !== undefined ? 'dermaDark' : 'disabled'}
-                >
-                  Siguiente
-                </Button>
+                  isDisabled={skinType === 0}
+                />
               </Flex>
             </div>
           </Flex>

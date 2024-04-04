@@ -3,33 +3,35 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface DermaStore {
-  pain: number | undefined;
+  id: string;
+  pain: number;
   symptoms: string[];
-  skinType: number | undefined;
-  skinSensibility: number | undefined;
-  allergy: number | undefined;
-  allergyInfo: string | undefined;
-  illness: number | undefined;
-  illnessInfo: string | undefined;
-  medication: number | undefined;
-  medicationInfo: string | undefined;
-  lactating: number | undefined;
+  skinType: number;
+  skinSensibility: number;
+  allergy: number;
+  allergyInfo: string;
+  illness: number;
+  illnessInfo: string;
+  medication: number;
+  medicationInfo: string;
+  lactating: number;
   pictures: ImageListType;
-  extraInfo: string | undefined;
+  extraInfo: string;
 }
 
 interface DermaActions {
-  setPain: (value: number | undefined) => void;
+  setId: (value: string) => void;
+  setPain: (value: number) => void;
   setSymptoms: (value: string[]) => void;
-  setSkinType: (value: number | undefined) => void;
-  setSkinSensibility: (value: number | undefined) => void;
-  setAllergy: (value: number | undefined) => void;
-  setAllergyInfo: (value: string | undefined) => void;
-  setIllness: (value: number | undefined) => void;
-  setIllnessInfo: (value: string | undefined) => void;
-  setMedication: (value: number | undefined) => void;
-  setMedicationInfo: (value: string | undefined) => void;
-  setLactating: (value: number | undefined) => void;
+  setSkinType: (value: number) => void;
+  setSkinSensibility: (value: number) => void;
+  setAllergy: (value: number) => void;
+  setAllergyInfo: (value: string) => void;
+  setIllness: (value: number) => void;
+  setIllnessInfo: (value: string) => void;
+  setMedication: (value: number) => void;
+  setMedicationInfo: (value: string) => void;
+  setLactating: (value: number) => void;
   setPictures: (value: ImageListType) => void;
   setExtraInfo: (value: string) => void;
 }
@@ -37,47 +39,51 @@ interface DermaActions {
 export const useDermaStore = create(
   persist<DermaStore & DermaActions>(
     set => ({
-      pain: undefined,
-      setPain: (value: number | undefined) => {
+      id: '',
+      setId: (value: string) => {
+        set({ id: value });
+      },
+      pain: 0,
+      setPain: (value: number) => {
         set({ pain: value });
       },
       symptoms: [],
       setSymptoms: (value: string[]) => {
         set({ symptoms: value });
       },
-      skinType: undefined,
-      setSkinType: (value: number | undefined) => {
+      skinType: 0,
+      setSkinType: (value: number) => {
         set({ skinType: value });
       },
-      skinSensibility: undefined,
-      setSkinSensibility: (value: number | undefined) => {
+      skinSensibility: 0,
+      setSkinSensibility: (value: number) => {
         set({ skinSensibility: value });
       },
-      allergy: undefined,
-      setAllergy: (value: number | undefined) => {
+      allergy: 0,
+      setAllergy: (value: number) => {
         set({ allergy: value });
       },
-      allergyInfo: undefined,
-      setAllergyInfo: (value: string | undefined) => {
+      allergyInfo: '',
+      setAllergyInfo: (value: string) => {
         set({ allergyInfo: value });
       },
-      illness: undefined,
-      setIllness: (value: number | undefined) => {
+      illness: 0,
+      setIllness: (value: number) => {
         set({ illness: value });
       },
-      illnessInfo: undefined,
-      setIllnessInfo: (value: string | undefined) => {
+      illnessInfo: '',
+      setIllnessInfo: (value: string) => {
         set({ illnessInfo: value });
       },
-      medication: undefined,
-      setMedication: (value: number | undefined) => {
+      medication: 0,
+      setMedication: (value: number) => {
         set({ medication: value });
       },
-      medicationInfo: undefined,
+      medicationInfo: '',
       setMedicationInfo: (value: string | undefined) => {
         set({ medicationInfo: value });
       },
-      lactating: undefined,
+      lactating: 0,
       setLactating: (value: number | undefined) => {
         set({ lactating: value });
       },
@@ -85,8 +91,8 @@ export const useDermaStore = create(
       setPictures: (value: ImageListType) => {
         set({ pictures: value });
       },
-      extraInfo: undefined,
-      setExtraInfo: (value: string | undefined) => {
+      extraInfo: '',
+      setExtraInfo: (value: string) => {
         set({ extraInfo: value });
       },
     }),

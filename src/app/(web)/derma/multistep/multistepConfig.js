@@ -1,13 +1,13 @@
 export const PAINS_AND_SYMPTOMS = [
   {
     name: 'Acné',
-    value: 0,
+    value: 1,
     img: '/images/derma/multistep/pains/acne.png',
     symptoms: ['Acné 1', 'Acné 2', 'Acné 3', 'Acné 4', 'Acné 5'],
   },
   {
     name: 'Enrojecimiento / Rosácea',
-    value: 1,
+    value: 2,
     img: '/images/derma/multistep/pains/rosacea.png',
     symptoms: [
       'Enrojecimiento / Rosácea 1',
@@ -19,7 +19,7 @@ export const PAINS_AND_SYMPTOMS = [
   },
   {
     name: 'Melasma / Manchas',
-    value: 2,
+    value: 3,
     img: '/images/derma/multistep/pains/melasma.png',
     symptoms: [
       'Melasma / Manchas 1',
@@ -31,7 +31,7 @@ export const PAINS_AND_SYMPTOMS = [
   },
   {
     name: 'Dermatitis',
-    value: 3,
+    value: 4,
     img: '/images/derma/multistep/pains/dermatitis.png',
     symptoms: [
       'Dermatitis 1',
@@ -43,7 +43,7 @@ export const PAINS_AND_SYMPTOMS = [
   },
   {
     name: 'No se lo que tengo',
-    value: 4,
+    value: 5,
     img: '/images/derma/multistep/pains/dontKnow.png',
     symptoms: [],
   },
@@ -52,31 +52,31 @@ export const PAINS_AND_SYMPTOMS = [
 export const SKIN_TYPES = [
   {
     title: 'Piel seca',
-    value: 0,
+    value: 1,
     img: '/images/derma/multistep/pains/dry.png',
     text: 'Tu piel está tensa, escamosa o te pica (especialmente con el frío)',
   },
   {
     title: 'Piel normal',
-    value: 1,
+    value: 2,
     img: '/images/derma/multistep/pains/normal.png',
     text: 'Tu piel no es particularmente seca, grasa ni sensible',
   },
   {
     title: 'Piel grasa',
-    value: 2,
+    value: 3,
     img: '/images/derma/multistep/pains/oily.png',
     text: 'Tu piel es naturalmente más grasa, lo que a menudo da lugar a una tez brillante',
   },
   {
     title: 'Piel mixta',
-    value: 3,
+    value: 4,
     img: '/images/derma/multistep/pains/mixed.png',
     text: 'Tu piel está en parte seca y en parte grasa (especialmente en la nariz, la barbilla y la frente)',
   },
   {
     title: 'No se mi tipo de piel',
-    value: 4,
+    value: 5,
     img: '/images/derma/multistep/pains/dontKnow.png',
     text: '',
   },
@@ -91,24 +91,24 @@ export const SKIN_SENSITIVITIES = [
 ];
 
 export const ALLERGIES = [
-  { title: 'Sí', value: 0 },
-  { title: 'No', value: 1 },
-  { title: 'No lo se', value: 2 },
+  { title: 'Sí', value: 1 },
+  { title: 'No', value: 2 },
+  { title: 'No lo se', value: 3 },
 ];
 
 export const ILLNESSES = [
-  { title: 'Sí', value: 0 },
-  { title: 'No', value: 1 },
-  { title: 'No lo se', value: 2 },
+  { title: 'Sí', value: 1 },
+  { title: 'No', value: 2 },
+  { title: 'No lo se', value: 3 },
 ];
 
 export const MEDICINES = [
-  { title: 'Sí', value: 0 },
-  { title: 'No', value: 1 },
+  { title: 'Sí', value: 1 },
+  { title: 'No', value: 2 },
 ];
 
 export const LACTANCY = [
-  { title: 'Sí, estoy lactando', value: 0 },
-  { title: 'Sí, estoy embarazada y lactando', value: 1 },
-  { title: 'No', value: 2 },
+  { title: 'Sí, estoy lactando', value: 1 },
+  { title: 'Sí, estoy embarazada y lactando', value: 2 },
+  { title: 'No', value: 3 },
 ];

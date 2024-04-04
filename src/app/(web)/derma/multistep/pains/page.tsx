@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function Pains() {
   const router = useRouter();
@@ -50,9 +51,7 @@ export default function Pains() {
                       }`}
                       key={painItem.name}
                       onClick={() =>
-                        setPain(
-                          pain === painItem.value ? undefined : painItem.value
-                        )
+                        setPain(pain === painItem.value ? 0 : painItem.value)
                       }
                     >
                       <Flex className="gap-3">
@@ -81,16 +80,14 @@ export default function Pains() {
                     <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                     <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
-                  <Button
-                    href={
-                      pain === 4
+                  <NextMultistepButton
+                    isDisabled={pain === undefined}
+                    nextUrl={
+                      pain === 5
                         ? ROUTES.derma.multistep.ns.extraInfo
                         : ROUTES.derma.multistep.symptoms
                     }
-                    type={pain !== undefined ? 'dermaDark' : 'disabled'}
-                  >
-                    Siguiente
-                  </Button>
+                  />
                 </Flex>
               </CheckHydration>
             </div>

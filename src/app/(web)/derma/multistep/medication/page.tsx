@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { MEDICINES } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function Medicines() {
   const router = useRouter();
@@ -51,9 +52,7 @@ export default function Medicines() {
                     key={medicine.title}
                     onClick={() =>
                       setMedication(
-                        medication === medicine.value
-                          ? undefined
-                          : medicine.value
+                        medication === medicine.value ? 0 : medicine.value
                       )
                     }
                   >
@@ -66,7 +65,7 @@ export default function Medicines() {
                   </li>
                 ))}
               </ul>
-              {medication === 0 && (
+              {medication === 1 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
                     Explícanos más acerca del fármaco que estás tomando
@@ -99,19 +98,13 @@ export default function Medicines() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button
-                  href={ROUTES.derma.multistep.lactating}
-                  type={
-                    (medication !== 0 && medication) ||
-                    (medication === 0 &&
-                      medicationInfo &&
-                      medicationInfo?.length > 0)
-                      ? 'dermaDark'
-                      : 'disabled'
+                <NextMultistepButton
+                  nextUrl={ROUTES.derma.multistep.lactating}
+                  isDisabled={
+                    medication === 0 ||
+                    (medication === 1 && medicationInfo.length === 0)
                   }
-                >
-                  Siguiente
-                </Button>
+                />
               </Flex>
             </div>
           </Flex>

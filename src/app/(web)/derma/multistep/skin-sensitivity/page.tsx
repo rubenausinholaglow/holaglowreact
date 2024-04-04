@@ -15,6 +15,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function SkinSensitivity({
   dermaStepHeaderIntro,
@@ -43,7 +44,11 @@ export default function SkinSensitivity({
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 4. Sensibilidad"
+              intro={
+                dermaStepHeaderIntro
+                  ? dermaStepHeaderIntro
+                  : 'Paso 4. Sensibilidad'
+              }
               title="¿Qué tan sensible es tu piel?"
             >
               <Text className="text-hg-black500 mt-2">
@@ -67,7 +72,7 @@ export default function SkinSensitivity({
                     key={skin.value}
                     onClick={() =>
                       setSkinSensibility(
-                        skinSensibility === skin.value ? undefined : skin.value
+                        skinSensibility === skin.value ? 0 : skin.value
                       )
                     }
                   >
@@ -85,18 +90,14 @@ export default function SkinSensitivity({
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button
-                  href={
-                    pain === 4
+                <NextMultistepButton
+                  nextUrl={
+                    pain === 5
                       ? ROUTES.derma.multistep.ns.lactating
                       : ROUTES.derma.multistep.allergy
                   }
-                  type={
-                    skinSensibility !== undefined ? 'dermaDark' : 'disabled'
-                  }
-                >
-                  Siguiente
-                </Button>
+                  isDisabled={skinSensibility === undefined}
+                />
               </Flex>
             </div>
           </Flex>

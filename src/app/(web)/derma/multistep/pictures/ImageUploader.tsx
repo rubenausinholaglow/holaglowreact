@@ -51,8 +51,8 @@ export default function ImageUploader({
                     <Image
                       src={images[0]['data_url']}
                       alt={subtitle}
-                      width={100}
-                      height={100}
+                      fill
+                      objectFit="cover"
                     />
                   ) : (
                     <Image

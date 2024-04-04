@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ILLNESSES } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function Illnesses() {
   const router = useRouter();
@@ -51,9 +52,7 @@ export default function Illnesses() {
                     }`}
                     key={item.title}
                     onClick={() =>
-                      setIllness(
-                        illness === item.value ? undefined : item.value
-                      )
+                      setIllness(illness === item.value ? 0 : item.value)
                     }
                   >
                     {item.title}
@@ -65,7 +64,7 @@ export default function Illnesses() {
                   </li>
                 ))}
               </ul>
-              {illness === 0 && (
+              {illness === 1 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
                     Explícanos más acerca de tu enfermedad
@@ -98,17 +97,12 @@ export default function Illnesses() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button
-                  href={ROUTES.derma.multistep.medication}
-                  type={
-                    (illness !== 0 && illness) ||
-                    (illness === 0 && illnessInfo && illnessInfo?.length > 0)
-                      ? 'dermaDark'
-                      : 'disabled'
+                <NextMultistepButton
+                  nextUrl={ROUTES.derma.multistep.medication}
+                  isDisabled={
+                    illness === 0 || (illness === 1 && illnessInfo.length === 0)
                   }
-                >
-                  Siguiente
-                </Button>
+                />
               </Flex>
             </div>
           </Flex>

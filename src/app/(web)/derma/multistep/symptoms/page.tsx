@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function Symptoms() {
   const router = useRouter();
@@ -116,12 +117,10 @@ export default function Symptoms() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <Button
-                  href={ROUTES.derma.multistep.skinType}
-                  type={symptoms.length > 0 ? 'dermaDark' : 'disabled'}
-                >
-                  Siguiente
-                </Button>
+                <NextMultistepButton
+                  nextUrl={ROUTES.derma.multistep.skinType}
+                  isDisabled={symptoms.length === 0}
+                />
               </Flex>
             </div>
           </Flex>

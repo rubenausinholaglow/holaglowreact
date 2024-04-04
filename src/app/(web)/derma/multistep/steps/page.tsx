@@ -350,7 +350,8 @@ export default function Form() {
                     disabled={continueDisabled}
                     onClick={() => {
                       if (!continueDisabled) {
-                        goNext(activeSlideIndex);
+                        //goNext(activeSlideIndex);
+                        console.log(dermaQuestions);
                       }
                       checkErrors();
                     }}
