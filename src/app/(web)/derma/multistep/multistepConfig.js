@@ -126,7 +126,6 @@ export const MEDICINES = [
 ];
 
 export const LACTANCY = [
-  { title: 'Sí, estoy lactando', value: 1 },
-  { title: 'Sí, estoy embarazada y lactando', value: 2 },
-  { title: 'No', value: 3 },
+  { title: 'Sí', value: 1 },
+  { title: 'No', value: 2 },
 ];

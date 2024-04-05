@@ -34,14 +34,14 @@ export default function Lactancy() {
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 8. Embarazo"
+              intro="Paso 8. Lactancia"
               title="¿Actualmente estás en periodo de lactancia y/o embarazo?"
             />
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {LACTANCY.map(item => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       lactating === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
@@ -61,7 +61,7 @@ export default function Lactancy() {
                 ))}
               </ul>
 
-              {lactating === 0 || lactating === 3 ? (
+              {lactating === 0 || lactating === 2 ? (
                 <Flex className="justify-between pb-12">
                   <Button
                     type="white"
@@ -73,7 +73,7 @@ export default function Lactancy() {
                   </Button>
                   <NextMultistepButton
                     nextUrl={ROUTES.derma.multistep.pictures}
-                    isDisabled={lactating !== 3}
+                    isDisabled={lactating !== 2}
                   />
                 </Flex>
               ) : (
@@ -82,16 +82,29 @@ export default function Lactancy() {
                     Gracias por tu interés
                   </Text>
 
-                  <Text>Lamentablemente, no podemos ayudarte ahora :(</Text>
-                  <Text>
+                  <Text className="mb-2">
+                    Lamentablemente, no podemos ayudarte ahora :(
+                  </Text>
+                  <Text className="mb-2">
                     Si estás embarazada o en periodo de lactancia, no podemos
                     recetarte algunos de los principios activos clave para la
                     eficacia de nuestras rutinas.
                   </Text>
-                  <Text>
+                  <Text className="mb-6">
                     ¡Estaremos encantados de atenderte más adelante si sigues
                     interesada!
                   </Text>
+
+                  <Button
+                    type="white"
+                    customStyles="bg-transparent border-none"
+                    href={ROUTES.derma.home}
+                  >
+                    <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
+                    <Text className="text-derma-tertiary">
+                      Volver al inicio
+                    </Text>
+                  </Button>
                 </div>
               )}
             </div>

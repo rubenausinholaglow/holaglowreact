@@ -49,7 +49,7 @@ export default function Pains() {
                 <ul className="flex flex-col gap-4 w-full mb-8">
                   {PAINS_AND_SYMPTOMS.map(painItem => (
                     <li
-                      className={`transition-all rounded-xl p-3 flex justify-between items-center gap-4 ${
+                      className={`transition-all rounded-xl px-3 py-4 flex justify-between items-center gap-4 cursor-pointer ${
                         pain === painItem.value
                           ? 'bg-derma-primary/20'
                           : 'bg-derma-secondary400'

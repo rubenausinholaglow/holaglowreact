@@ -40,14 +40,14 @@ export default function Allergies() {
           >
             <DermaStepHeader
               intro="Paso 5. Alergias"
-              title="¿Tienes alguna alergia?"
+              title="¿Tienes alguna alergia conocida?"
             />
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {ALLERGIES.map(item => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       allergy === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
@@ -69,25 +69,30 @@ export default function Allergies() {
               {allergy === 1 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
-                    Explícanos tus alergias
+                    Cuéntanos más sobre tus alergias
                   </Title>
                   <Text className="mb-4 text-hg-black400 text-sm">
-                    Cuanta más información nos proporciones, mejor podremos
-                    asesorarte sobre tus objetivos y preocupaciones de la piel.
+                    Necesitamos información lo más precisa posible para adaptar
+                    tu rutina si fuera necesario
                   </Text>
-                  <textarea
-                    className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl border border-derma-secondary500 mb-8"
-                    placeholder="Escribe aquí tus movidas"
-                    onChange={event => {
-                      setAllergyInfo(event.target.value);
-                      setTextAreaValue(event.target.value);
-                    }}
-                    value={
-                      textAreaValue && textAreaValue.length > 0
-                        ? textAreaValue.replace(/^\s+/, '')
-                        : ''
-                    }
-                  />
+                  <div className="relative">
+                    <Text className="absolute top-4 left-4 text-hg-black500 text-sm">
+                      Cuéntanos
+                    </Text>
+                    <textarea
+                      className="w-full h-56 md:h-64 p-4 text-sm rounded-2xl border border-derma-secondary500 mb-8 pt-10"
+                      placeholder="Qué tipo de alergia tienes, a algún medicamento, alimento..."
+                      onChange={event => {
+                        setAllergyInfo(event.target.value);
+                        setTextAreaValue(event.target.value);
+                      }}
+                      value={
+                        textAreaValue && textAreaValue.length > 0
+                          ? textAreaValue.replace(/^\s+/, '')
+                          : ''
+                      }
+                    />
+                  </div>
                 </>
               )}
               <Flex className="justify-between">

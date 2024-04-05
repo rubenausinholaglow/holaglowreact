@@ -47,7 +47,7 @@ export default function Illnesses() {
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {ILLNESSES.map(item => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       illness === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
@@ -69,25 +69,30 @@ export default function Illnesses() {
               {illness === 1 && (
                 <>
                   <Title className="font-light text-derma-primary mb-2">
-                    Explícanos más acerca de tu enfermedad
+                    Cuéntanos más sobre la enfermedad
                   </Title>
                   <Text className="mb-4 text-hg-black400 text-sm">
-                    Cuanta más información nos proporciones, mejor podremos
-                    asesorarte sobre tus objetivos y preocupaciones de la piel.
+                    Necesitamos información lo más precisa posible para adaptar
+                    tu rutina si fuera necesario
                   </Text>
-                  <textarea
-                    className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl border border-derma-secondary500 mb-8"
-                    placeholder="Escribe aquí tus movidas"
-                    onChange={event => {
-                      setIllnessInfo(event.target.value);
-                      setTextAreaValue(event.target.value);
-                    }}
-                    value={
-                      textAreaValue && textAreaValue.length > 0
-                        ? textAreaValue.replace(/^\s+/, '')
-                        : ''
-                    }
-                  />
+                  <div className="relative">
+                    <Text className="absolute top-4 left-4 text-hg-black500 text-sm">
+                      Cuéntanos
+                    </Text>
+                    <textarea
+                      className="w-full h-56 md:h-64 p-4 text-sm rounded-2xl border border-derma-secondary500 mb-8 pt-10"
+                      placeholder="Qué enfermedad tienes, desde hace cuánto..."
+                      onChange={event => {
+                        setIllnessInfo(event.target.value);
+                        setTextAreaValue(event.target.value);
+                      }}
+                      value={
+                        textAreaValue && textAreaValue.length > 0
+                          ? textAreaValue.replace(/^\s+/, '')
+                          : ''
+                      }
+                    />
+                  </div>
                 </>
               )}
               <Flex className="justify-between">

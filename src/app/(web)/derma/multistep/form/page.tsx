@@ -128,13 +128,10 @@ export default function Form() {
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Último paso. Formulario"
-              title="Solicita tu cita"
-            >
-              <Text className="mt-2 text-hg-black500 text-sm">
-                Rellena tus datos de contacto para reservar tu consulta
-              </Text>
-            </DermaStepHeader>
+              intro="Último paso. Datos de contacto"
+              title="Rellena el formulario para solicitar el análisis médico de tu piel"
+            />
+
             <div className="w-full md:w-1/2">
               <RegistrationForm
                 setClientData={setClient}

@@ -37,6 +37,7 @@ const ROUTES = {
     pv: '/start-landing',
   },
   derma: {
+    home: 'https://derma.holaglow.com',
     multistep: {
       start: 'demra/multistep/start',
       pains: '/derma/multistep/pains',

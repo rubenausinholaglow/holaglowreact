@@ -47,7 +47,7 @@ export default function SkinType() {
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {SKIN_TYPES.map(item => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex items-center justify-start gap-4 cursor-pointer ${
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-start gap-4 cursor-pointer ${
                       skinType === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'

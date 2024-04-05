@@ -73,7 +73,7 @@ export default function Symptoms() {
                   painItem => painItem.value === pain
                 )[0].symptoms.map(symptom => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       symptoms.includes(symptom)
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'

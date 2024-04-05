@@ -8,6 +8,7 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
@@ -21,9 +22,7 @@ export default function Pictures() {
   const { pictures } = useDermaStore(state => state);
 
   useEffect(() => {
-    setIsDisabled(
-      !pictures.every(picture => picture !== null && picture !== undefined)
-    );
+    setIsDisabled(pictures.some(picture => isEmpty(picture)));
   }, [pictures]);
 
   return (
@@ -38,13 +37,12 @@ export default function Pictures() {
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 9. Hazte unas fotos"
+              intro="Paso 9. Fotos"
               title="Sube las fotos de tu rostro"
             >
               <Text className="mt-2 text-hg-black500 text-sm">
-                Necesitamos 3 fotos de tu rostro en detalle frontal y perfil de
-                ambos lados para identificar tus necesidades y orientar tu
-                consulta médica. Los datos se procesan de forma segura
+                Necesitamos 3 fotos de tu rostro para que el médico pueda hacer
+                un diagnóstico correcto y diseñar tu rutina personalizada.
               </Text>
             </DermaStepHeader>
 
@@ -52,7 +50,7 @@ export default function Pictures() {
               <Flex layout="col-left" className="w-full gap-4 mb-8">
                 <ImageUploader
                   title="Foto 1"
-                  subtitle="Rostro frontal"
+                  subtitle="Frontal"
                   pictureIndex={0}
                 />
 

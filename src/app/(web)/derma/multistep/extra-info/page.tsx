@@ -16,7 +16,7 @@ import NextMultistepButton from '../NextMultistepButton';
 
 export default function ExtraInfo() {
   const router = useRouter();
-  const { pain, extraInfo, setExtraInfo } = useDermaStore(state => state);
+  const { extraInfo, setExtraInfo } = useDermaStore(state => state);
 
   const [textAreaValue, setTextAreaValue] = useState(extraInfo);
 
@@ -36,15 +36,18 @@ export default function ExtraInfo() {
               title="¿Te gustaría contarnos algo más?"
             >
               <Text className="mt-2 text-hg-black500 text-sm">
-                Cuanta más información nos proporciones, mejor podremos
-                asesorarte sobre tus objetivos y preocupaciones de la piel.
+                Cuanta más información nos proporciones, mejor podremos ayudarte
+                a conseguir tus objetivos.
               </Text>
             </DermaStepHeader>
 
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 relative">
+              <Text className="absolute top-4 left-4 text-hg-black500 text-sm">
+                Cuéntanos
+              </Text>
               <textarea
-                className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl border border-derma-secondary500 mb-8"
-                placeholder="Por ejemplo: cualquier medicación (ten en cuenta que nuestros médicos no pueden recetar online antibióticos orales ni medicamentos, como Roaccutane y Spironolactone), tratamientos recibidos anteriormente, alergias, características de su estilo de vida, etc."
+                className="w-full h-56 md:h-64 p-4 text-sm rounded-2xl border border-derma-secondary500 mb-8 pt-10"
+                placeholder="FALTA PLACEHOLDER EXTRA INFO"
                 onChange={event => {
                   setExtraInfo(event.target.value);
                   setTextAreaValue(event.target.value);

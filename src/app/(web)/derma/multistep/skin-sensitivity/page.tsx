@@ -43,7 +43,10 @@ export default function SkinSensitivity() {
                 Con esto nos referimos a enrojecimiento/sarpullido, picazón
                 frecuente, sensación de tensión o ardor
               </Text>
-              <Text className="text-xs mt-2">
+              <Text className="text-hg-black500 mt-3">
+                Adaptaremos tu rutina a la sensibilidad de tu piel
+              </Text>
+              <Text className="text-xs mt-1">
                 1 = Poco sensible / 5 = Muy sensible
               </Text>
             </DermaStepHeader>
@@ -52,7 +55,7 @@ export default function SkinSensitivity() {
               <ul className="flex flex-col gap-4 w-full mb-8">
                 {SKIN_SENSITIVITIES.map(skin => (
                   <li
-                    className={`transition-all rounded-xl p-3 flex items-center justify-between gap-4 cursor-pointer ${
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       skinSensibility === skin.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
@@ -64,7 +67,7 @@ export default function SkinSensitivity() {
                       )
                     }
                   >
-                    <span className="font-semibold">{skin.title}</span>
+                    <span className="font-semibold pl-1">{skin.title}</span>
                     {skinSensibility === skin.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
