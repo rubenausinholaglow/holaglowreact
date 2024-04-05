@@ -62,7 +62,7 @@ export default function DashboardFooter({
             </Button>
             <Button
               type="white"
-              onClick={() => router.push(ROUTES.dashboard.budgets)}
+              href={ROUTES.dashboard.budgets}
               size="sm"
               className="py-4 pl-4"
             >
