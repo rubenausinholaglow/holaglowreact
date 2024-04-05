@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { dermaService } from '@services/DermaService';
-import { useRegistration } from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -16,6 +15,7 @@ import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
+import { useRegistration } from '@utils/userUtils';
 
 const CLIENT_INITIAL_VALUES = {
   email: '',
@@ -103,10 +103,8 @@ export default function Form() {
       extraInfo,
     };
     dermaService.update(dermaQuestions as DermaQuestions);
-    debugger;
     client.origin = 'Derma';
     registerUser(client, false, false, false).then(user => {
-      debugger;
       pictures.forEach((x, y) => {
         dermaService.uploadImage(
           user!.flowwwToken,
