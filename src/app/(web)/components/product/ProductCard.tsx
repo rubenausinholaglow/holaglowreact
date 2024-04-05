@@ -94,7 +94,7 @@ export default function ProductCard({
             className={`relative ${
               product.productCardImagePosition != 'full'
                 ? alignmentStyles + ' ' + imgHeight
-                : ''
+                : 'rounded-t-2xl'
             } w-auto`}
           />
 
