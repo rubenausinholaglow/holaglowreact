@@ -121,7 +121,7 @@ export default function Form() {
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={1} step={1} />
+        <DermaStepBar steps={11} step={11} />
         <Container>
           <Flex
             layout="col-left"

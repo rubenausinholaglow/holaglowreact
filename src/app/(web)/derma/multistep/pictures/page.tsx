@@ -21,8 +21,18 @@ export default function Pictures() {
   const [isDisabled, setIsDisabled] = useState(true);
   const { pictures } = useDermaStore(state => state);
 
+  function checkIsDisabled() {
+    setIsDisabled(
+      isEmpty(pictures[0]) || isEmpty(pictures[1]) || isEmpty(pictures[2])
+    );
+  }
+
   useEffect(() => {
-    setIsDisabled(pictures.some(picture => isEmpty(picture)));
+    checkIsDisabled();
+  }, []);
+
+  useEffect(() => {
+    checkIsDisabled();
   }, [pictures]);
 
   return (
@@ -30,7 +40,7 @@ export default function Pictures() {
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={7} />
+        <DermaStepBar steps={11} step={9} />
         <Container>
           <Flex
             layout="col-left"

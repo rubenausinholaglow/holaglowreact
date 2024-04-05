@@ -114,7 +114,7 @@ export default function ImageUploader({
                     </Text>
 
                     {!isEmpty(pictures[pictureIndex]) ? (
-                      <Text className="text-hg-black400 text-xs text-ellipsis whitespace-nowrap overflow-hidden">
+                      <Text className="text-hg-black400 text-xs">
                         {imageSize === "0'00" ? (
                           ''
                         ) : (
@@ -123,7 +123,9 @@ export default function ImageUploader({
                             <span className="font-bold">{' · '}</span>
                           </>
                         )}
-                        <span>{pictures[pictureIndex]?.file?.name}</span>
+                        <span className="inline-block">
+                          {pictures[pictureIndex]?.file?.name}
+                        </span>
                       </Text>
                     ) : (
                       <Text className="text-hg-black500 text-xs">

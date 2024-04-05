@@ -28,7 +28,7 @@ export default function SkinType() {
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={3} />
+        <DermaStepBar steps={11} step={3} />
         <Container>
           <Flex
             layout="col-left"

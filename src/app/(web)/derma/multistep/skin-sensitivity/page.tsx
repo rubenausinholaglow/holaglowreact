@@ -28,7 +28,7 @@ export default function SkinSensitivity() {
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={4} />
+        <DermaStepBar steps={11} step={4} />
 
         <Container>
           <Flex
@@ -87,7 +87,7 @@ export default function SkinSensitivity() {
                 </Button>
                 <NextMultistepButton
                   nextUrl={ROUTES.derma.multistep.allergy}
-                  isDisabled={skinSensibility === undefined}
+                  isDisabled={skinSensibility === 0}
                 />
               </Flex>
             </div>

@@ -32,7 +32,7 @@ export default function Illnesses() {
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={6} />
+        <DermaStepBar steps={11} step={6} />
         <Container>
           <Flex
             layout="col-left"
@@ -80,7 +80,7 @@ export default function Illnesses() {
                       Cuéntanos
                     </Text>
                     <textarea
-                      className="w-full h-56 md:h-64 p-4 text-sm rounded-2xl border border-derma-secondary500 mb-8 pt-10"
+                      className="w-full h-56 md:h-64 p-4 text-sm rounded-2xl border border-derma-secondary500 mb-8 pt-10 resize-none"
                       placeholder="Qué enfermedad tienes, desde hace cuánto..."
                       onChange={event => {
                         setIllnessInfo(event.target.value);

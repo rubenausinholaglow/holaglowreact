@@ -52,7 +52,7 @@ export default function Symptoms() {
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={7} step={2} />
+        <DermaStepBar steps={11} step={2} />
         <Container>
           <Flex
             layout="col-left"
@@ -106,8 +106,8 @@ export default function Symptoms() {
                   >
                     <Text className="mb-2">Otros</Text>
                     <textarea
-                      className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl rounded-2xl"
-                      placeholder="Escribe aquí tus movidas"
+                      className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl resize-none"
+                      placeholder="FALTA PLACEHOLDER (?)"
                       onChange={event => {
                         handleTextArea(event);
                         setTextAreaValue(event.target.value);
