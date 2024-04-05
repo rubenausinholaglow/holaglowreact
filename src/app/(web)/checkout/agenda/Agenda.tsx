@@ -83,15 +83,15 @@ export default function Agenda({
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
-      '0': 10,
+      '0': 50,
     },
     '4': {
       //Barcelona
-      '0': 15,
+      '0': 55,
     },
     '5': {
       //Valencia
-      '0': 10,
+      '0': 50,
     },
   };
   if (
@@ -189,7 +189,7 @@ export default function Agenda({
     const availability = availableDates ?? [];
     const today = dayjs();
     const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
-
+    let datesAvailableInCurrentMonth = loadedCurrentMonth ? 0 : -1;
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
@@ -198,12 +198,24 @@ export default function Agenda({
         x.availability
       ) {
         availability.push(x);
+        if (date.month() == currentMonth.month())
+          datesAvailableInCurrentMonth++;
       }
     });
     setAvailableDates(availability);
     setSelectedDay(selectedDay);
     if (loadedCurrentMonth) {
       setDateToCheck(dateToCheck.add(1, 'month'));
+      if (
+        datesAvailableInCurrentMonth < 60 &&
+        datesAvailableInCurrentMonth > -1
+      ) {
+        var element = document.getElementsByClassName(
+          'react-datepicker__navigation--next'
+        )[0] as any;
+        if (element) element.click();
+        setcurrentMonth(today.add(1, 'month'));
+      }
     } else setLoadingMonth(false);
   }
 
