@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { dermaService } from '@services/DermaService';
+import { useRegistration } from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -71,6 +72,7 @@ export default function Form() {
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [client, setClient] = useState<Client>(CLIENT_INITIAL_VALUES);
+  const registerUser = useRegistration(client, false, false, false);
 
   function handleFinishDermaFlow() {
     const formattedPain =
@@ -100,11 +102,20 @@ export default function Form() {
       lactating,
       extraInfo,
     };
-
     dermaService.update(dermaQuestions as DermaQuestions);
-
-    // faltaría subir las img's
-    console.log(pictures);
+    debugger;
+    client.origin = 'Derma';
+    registerUser(client, false, false, false).then(user => {
+      debugger;
+      pictures.forEach((x, y) => {
+        dermaService.uploadImage(
+          user!.flowwwToken,
+          x.file!,
+          'ImagePosition' + y
+        );
+      });
+    });
+    //REDIRECT TO NEXT PAGE
   }
 
   return (

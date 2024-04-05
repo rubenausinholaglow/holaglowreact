@@ -53,4 +53,30 @@ export const dermaService = {
       throw new Error(ERROR_GET_DERMAROUTINES);
     }
   },
+  uploadImage: async (
+    userId: string,
+    file: Blob,
+    fileName: string
+  ): Promise<boolean> => {
+    const formdata = new FormData();
+    formdata.append('UserId', userId);
+    formdata.append('files', file);
+    formdata.append('FileName', fileName);
+    const requestOptions: RequestInit = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow',
+    };
+
+    fetch(`${process.env.NEXT_PUBLIC_DERMAPATIENTS_API}Image`, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        return true;
+      })
+      .catch(error => {
+        Bugsnag.notify(error + ERROR_GET_DERMAROUTINES);
+        throw new Error(ERROR_GET_DERMAROUTINES);
+      });
+    return true;
+  },
 };
