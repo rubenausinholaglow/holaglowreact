@@ -91,7 +91,11 @@ export default function ProductCard({
             height={300}
             src={imgSrc}
             onError={() => setNextImgSrc()}
-            className={`relative ${alignmentStyles} ${imgHeight} w-auto`}
+            className={`relative ${
+              product.productCardImagePosition != 'full'
+                ? alignmentStyles + ' ' + imgHeight
+                : ''
+            } w-auto`}
           />
 
           {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
