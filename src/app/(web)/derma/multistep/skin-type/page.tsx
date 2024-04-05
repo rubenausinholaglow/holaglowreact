@@ -12,6 +12,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
@@ -27,6 +28,7 @@ export default function SkinType({
   dermaStepBarSteps?: number;
   dermaStepBarStep?: number;
 }) {
+  const router = useRouter();
   const { skinType, setSkinType } = useDermaStore(state => state);
 
   return (
@@ -87,7 +89,11 @@ export default function SkinType({
                 ))}
               </ul>
               <Flex className="justify-between">
-                <Button type="white" customStyles="bg-transparent border-none">
+                <Button
+                  type="white"
+                  customStyles="bg-transparent border-none"
+                  onClick={() => router.back()}
+                >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>

@@ -8,13 +8,15 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import ImageUploader from './ImageUploader';
 
 export default function Pictures() {
+  const router = useRouter();
+
   const [isDisabled, setIsDisabled] = useState(true);
   const { pictures } = useDermaStore(state => state);
 
@@ -23,8 +25,6 @@ export default function Pictures() {
       !pictures.every(picture => picture !== null && picture !== undefined)
     );
   }, [pictures]);
-
-  console.log(pictures);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
@@ -68,7 +68,11 @@ export default function Pictures() {
               </Flex>
 
               <Flex className="justify-between">
-                <Button type="white" customStyles="bg-transparent border-none">
+                <Button
+                  type="white"
+                  customStyles="bg-transparent border-none"
+                  onClick={() => router.back()}
+                >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
