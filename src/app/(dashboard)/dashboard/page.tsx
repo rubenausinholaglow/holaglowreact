@@ -397,11 +397,7 @@ export default function Page({
   if (!remoteControl)
     return (
       <App>
-        <MainLayout
-          isDashboard
-          hideBottomBar
-          hasAnimatedBackground={!isCallCenter}
-        >
+        <MainLayout isDashboard hideBottomBar hasAnimatedBackground={!showForm}>
           <div className="fixed bottom-0 right-0 py-3 px-3">
             <Button
               onClick={e => {
