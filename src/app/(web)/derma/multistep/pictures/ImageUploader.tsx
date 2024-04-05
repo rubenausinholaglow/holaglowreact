@@ -41,7 +41,7 @@ export default function ImageUploader({
 
   useEffect(() => {
     const updatedPictures = [...pictures];
-    updatedPictures[pictureIndex] = images[0];
+    if (images[0]) updatedPictures[pictureIndex] = images[0];
 
     const picture = pictures[pictureIndex];
 
