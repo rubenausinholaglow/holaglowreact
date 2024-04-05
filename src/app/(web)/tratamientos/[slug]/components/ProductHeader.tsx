@@ -24,7 +24,6 @@ export default function ProductHeader({
   product: Product;
   isDashboard?: boolean;
 }) {
-  console.log(product.productCardImagePosition);
   const { imgSrc, alignmentStyles, setNextImgSrc } = useImageProps(product);
   const imageUrls: any[] = [];
   for (let i = 1; i <= product.numProductCardPhotos; i++) {
