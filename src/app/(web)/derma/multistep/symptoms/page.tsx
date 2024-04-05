@@ -117,7 +117,7 @@ export default function Symptoms() {
                   </li>
                 )}
               </ul>
-              {pain === 5 ? (
+              {pain === 5 && textAreaValue.length > 0 ? (
                 <div className="bg-white p-4 rounded-2xl text-hg-black500 text-sm">
                   <Text className="mb-1 font-semibold">
                     Lamentablemente, no podemos ayudarte ahora :(
