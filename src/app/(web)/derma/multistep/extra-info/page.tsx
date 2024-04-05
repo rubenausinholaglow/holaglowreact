@@ -14,15 +14,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import NextMultistepButton from '../NextMultistepButton';
 
-export default function ExtraInfo({
-  dermaStepHeaderIntro,
-  dermaStepBarSteps,
-  dermaStepBarStep,
-}: {
-  dermaStepHeaderIntro?: string;
-  dermaStepBarSteps?: number;
-  dermaStepBarStep?: number;
-}) {
+export default function ExtraInfo() {
   const router = useRouter();
   const { pain, extraInfo, setExtraInfo } = useDermaStore(state => state);
 
@@ -30,22 +22,17 @@ export default function ExtraInfo({
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
+
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar
-          steps={dermaStepBarSteps ? dermaStepBarSteps : 8}
-          step={dermaStepBarStep ? dermaStepBarStep : 7}
-        />
+        <DermaStepBar steps={8} step={7} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro={
-                dermaStepHeaderIntro
-                  ? dermaStepHeaderIntro
-                  : 'Paso 10. Información adicional'
-              }
+              intro="Paso 10. Información adicional"
               title="¿Te gustaría contarnos algo más?"
             >
               <Text className="mt-2 text-hg-black500 text-sm">

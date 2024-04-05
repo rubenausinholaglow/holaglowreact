@@ -51,7 +51,7 @@ export default function DermaLayout({
   return (
     <ErrorBoundary>
       <main
-        className={`${className} ${gtUltra.variable} text-derma-tertiary min-h-screen overflow-hidden derma`}
+        className={`${className} ${gtUltra.variable} text-derma-tertiary min-h-screen overflow-hidden derma relative`}
       >
         <DermaHeader hideButton={hideButton} />
         {children}

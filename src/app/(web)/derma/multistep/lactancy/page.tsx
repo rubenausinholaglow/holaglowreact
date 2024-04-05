@@ -18,34 +18,23 @@ import DermaStepHeader from '../../components/DermaStepHeader';
 import { LACTANCY } from '../multistepConfig';
 import NextMultistepButton from '../NextMultistepButton';
 
-export default function Lactancy({
-  dermaStepHeaderIntro,
-  dermaStepBarSteps,
-  dermaStepBarStep,
-}: {
-  dermaStepHeaderIntro?: string;
-  dermaStepBarSteps?: number;
-  dermaStepBarStep?: number;
-}) {
+export default function Lactancy() {
   const router = useRouter();
-  const { pain, lactating, setLactating } = useDermaStore(state => state);
+  const { lactating, setLactating } = useDermaStore(state => state);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
+
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar
-          steps={dermaStepBarSteps ? dermaStepBarSteps : 7}
-          step={dermaStepBarStep ? dermaStepBarStep : 6}
-        />
+        <DermaStepBar steps={7} step={6} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro={
-                dermaStepHeaderIntro ? dermaStepHeaderIntro : 'Paso 8. Embarazo'
-              }
+              intro="Paso 8. Embarazo"
               title="¿Actualmente estás en periodo de lactancia y/o embarazo?"
             />
             <div className="w-full md:w-1/2">
@@ -88,7 +77,22 @@ export default function Lactancy({
                   />
                 </Flex>
               ) : (
-                <Text>no te podemos ayudar - PONERLO BONICO</Text>
+                <div className="bg-white p-4 rounded-2xl text-hg-black500 text-sm">
+                  <Text className="mb-1 font-semibold">
+                    Gracias por tu interés
+                  </Text>
+
+                  <Text>Lamentablemente, no podemos ayudarte ahora :(</Text>
+                  <Text>
+                    Si estás embarazada o en periodo de lactancia, no podemos
+                    recetarte algunos de los principios activos clave para la
+                    eficacia de nuestras rutinas.
+                  </Text>
+                  <Text>
+                    ¡Estaremos encantados de atenderte más adelante si sigues
+                    interesada!
+                  </Text>
+                </div>
               )}
             </div>
           </Flex>

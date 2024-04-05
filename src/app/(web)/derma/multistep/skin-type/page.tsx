@@ -19,38 +19,29 @@ import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_TYPES } from '../multistepConfig';
 import NextMultistepButton from '../NextMultistepButton';
 
-export default function SkinType({
-  dermaStepHeaderIntro,
-  dermaStepBarSteps,
-  dermaStepBarStep,
-}: {
-  dermaStepHeaderIntro?: string;
-  dermaStepBarSteps?: number;
-  dermaStepBarStep?: number;
-}) {
+export default function SkinType() {
   const router = useRouter();
   const { skinType, setSkinType } = useDermaStore(state => state);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
+
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar
-          steps={dermaStepBarSteps ? dermaStepBarSteps : 7}
-          step={dermaStepBarStep ? dermaStepBarStep : 3}
-        />
+        <DermaStepBar steps={7} step={3} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro={
-                dermaStepHeaderIntro
-                  ? dermaStepHeaderIntro
-                  : 'Paso 3. Tipo de piel'
-              }
+              intro="Paso 3. Tipo de piel"
               title="¿Cómo describirías la piel de tu rostro?"
-            />
+            >
+              <Text className="text-hg-black500 mt-2">
+                Selecciona todos los que apliquen
+              </Text>
+            </DermaStepHeader>
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">

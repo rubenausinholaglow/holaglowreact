@@ -49,6 +49,8 @@ export default function Symptoms() {
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
+
       <DermaLayout hideButton hideFooter>
         <DermaStepBar steps={7} step={2} />
         <Container>
@@ -115,20 +117,41 @@ export default function Symptoms() {
                   </li>
                 )}
               </ul>
-              <Flex className="justify-between">
-                <Button
-                  type="white"
-                  customStyles="bg-transparent border-none"
-                  onClick={() => router.back()}
-                >
-                  <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
-                  <Text className="text-derma-tertiary">Atrás</Text>
-                </Button>
-                <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.skinType}
-                  isDisabled={symptoms.length === 0}
-                />
-              </Flex>
+              {pain === 5 ? (
+                <div className="bg-white p-4 rounded-2xl text-hg-black500 text-sm">
+                  <Text className="mb-1 font-semibold">
+                    Lamentablemente, no podemos ayudarte ahora :(
+                  </Text>
+                  <Text className="mb-6">
+                    Actualmente solo tratamos casos de Melasma, Acné, Rosácea o
+                    Calidad de la piel en general.
+                  </Text>
+
+                  <Button
+                    type="white"
+                    customStyles="bg-transparent border-none"
+                    onClick={() => router.back()}
+                  >
+                    <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
+                    <Text className="text-derma-tertiary">Atrás</Text>
+                  </Button>
+                </div>
+              ) : (
+                <Flex className="justify-between">
+                  <Button
+                    type="white"
+                    customStyles="bg-transparent border-none"
+                    onClick={() => router.back()}
+                  >
+                    <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
+                    <Text className="text-derma-tertiary">Atrás</Text>
+                  </Button>
+                  <NextMultistepButton
+                    nextUrl={ROUTES.derma.multistep.skinType}
+                    isDisabled={symptoms.length === 0}
+                  />
+                </Flex>
+              )}
             </div>
           </Flex>
         </Container>

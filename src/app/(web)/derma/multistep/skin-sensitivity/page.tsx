@@ -18,26 +18,17 @@ import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
 import NextMultistepButton from '../NextMultistepButton';
 
-export default function SkinSensitivity({
-  dermaStepHeaderIntro,
-  dermaStepBarSteps,
-  dermaStepBarStep,
-}: {
-  dermaStepHeaderIntro?: string;
-  dermaStepBarSteps?: number;
-  dermaStepBarStep?: number;
-}) {
+export default function SkinSensitivity() {
   const router = useRouter();
 
   const { skinSensibility, setSkinSensibility } = useDermaStore(state => state);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
+
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar
-          steps={dermaStepBarSteps ? dermaStepBarSteps : 7}
-          step={dermaStepBarStep ? dermaStepBarStep : 4}
-        />
+        <DermaStepBar steps={7} step={4} />
 
         <Container>
           <Flex
@@ -45,11 +36,7 @@ export default function SkinSensitivity({
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro={
-                dermaStepHeaderIntro
-                  ? dermaStepHeaderIntro
-                  : 'Paso 4. Sensibilidad'
-              }
+              intro="Paso 4. Sensibilidad"
               title="¿Qué tan sensible es tu piel?"
             >
               <Text className="text-hg-black500 mt-2">

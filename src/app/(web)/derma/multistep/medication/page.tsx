@@ -28,6 +28,8 @@ export default function Medicines() {
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
+
       <DermaLayout hideButton hideFooter>
         <DermaStepBar steps={7} step={6} />
         <Container>
