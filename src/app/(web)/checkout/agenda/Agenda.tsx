@@ -210,7 +210,7 @@ export default function Agenda({
         datesAvailableInCurrentMonth < 60 &&
         datesAvailableInCurrentMonth > -1
       ) {
-        let element = document.getElementsByClassName(
+        const element = document.getElementsByClassName(
           'react-datepicker__navigation--next'
         )[0] as any;
         if (element) element.click();
