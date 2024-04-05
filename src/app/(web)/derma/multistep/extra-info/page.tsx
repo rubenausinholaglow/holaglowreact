@@ -56,7 +56,7 @@ export default function ExtraInfo({
 
             <div className="w-full md:w-1/2">
               <textarea
-                className="w-full h-24 md:h-48 p-2 text-sm border border-derma-secondary500 rounded-xl mb-8"
+                className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl border border-derma-secondary500 mb-8"
                 placeholder="Por ejemplo: cualquier medicación (ten en cuenta que nuestros médicos no pueden recetar online antibióticos orales ni medicamentos, como Roaccutane y Spironolactone), tratamientos recibidos anteriormente, alergias, características de su estilo de vida, etc."
                 onChange={event => {
                   setExtraInfo(event.target.value);
@@ -72,7 +72,7 @@ export default function ExtraInfo({
                 <Button
                   type="white"
                   customStyles="bg-transparent border-none"
-                  onclick={() => router.back()}
+                  onClick={() => router.back()}
                 >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>

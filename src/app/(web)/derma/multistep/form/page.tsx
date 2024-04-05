@@ -135,7 +135,7 @@ export default function Form() {
                 <Button
                   type="white"
                   customStyles="bg-transparent border-none"
-                  onclick={() => router.back()}
+                  onClick={() => router.back()}
                 >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>

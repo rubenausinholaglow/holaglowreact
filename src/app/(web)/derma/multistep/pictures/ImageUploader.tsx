@@ -32,6 +32,14 @@ export default function ImageUploader({
   };
 
   useEffect(() => {
+    const pictureSize = ((pictures[pictureIndex]?.file?.size ?? 0) / 1024)
+      ?.toFixed(2)
+      .replace('.', "'");
+
+    setImageSize(pictureSize);
+  }, [pictures]);
+
+  useEffect(() => {
     const updatedPictures = [...pictures];
     updatedPictures[pictureIndex] = images[0];
 
@@ -107,13 +115,14 @@ export default function ImageUploader({
 
                     {!isEmpty(pictures[pictureIndex]) ? (
                       <Text className="text-hg-black400 text-xs text-ellipsis whitespace-nowrap overflow-hidden">
-                        <span>
-                          {((pictures[pictureIndex]?.file?.size ?? 0) / 1024)
-                            ?.toFixed(2)
-                            .replace('.', "'")}{' '}
-                          kb
-                        </span>
-                        <span className="font-bold">{' · '}</span>
+                        {imageSize === "0'00" ? (
+                          ''
+                        ) : (
+                          <>
+                            <span>{`${imageSize} kb`}</span>
+                            <span className="font-bold">{' · '}</span>
+                          </>
+                        )}
                         <span>{pictures[pictureIndex]?.file?.name}</span>
                       </Text>
                     ) : (

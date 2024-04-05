@@ -76,7 +76,7 @@ export default function SkinSensitivity({
                       )
                     }
                   >
-                    {skin.title}
+                    <span className="font-semibold">{skin.title}</span>
                     {skinSensibility === skin.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (

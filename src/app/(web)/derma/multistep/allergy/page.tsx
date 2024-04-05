@@ -74,7 +74,7 @@ export default function Allergies() {
                     asesorarte sobre tus objetivos y preocupaciones de la piel.
                   </Text>
                   <textarea
-                    className="w-full h-24 md:h-48 p-2 text-sm border border-derma-secondary500 rounded-xl mb-8"
+                    className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl border border-derma-secondary500 mb-8"
                     placeholder="Escribe aquí tus movidas"
                     onChange={event => {
                       setAllergyInfo(event.target.value);
@@ -92,7 +92,7 @@ export default function Allergies() {
                 <Button
                   type="white"
                   customStyles="bg-transparent border-none"
-                  onclick={() => router.back()}
+                  onClick={() => router.back()}
                 >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>

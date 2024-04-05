@@ -24,6 +24,8 @@ export default function Pictures() {
     );
   }, [pictures]);
 
+  console.log(pictures);
+
   return (
     <div className="bg-derma-secondary100 min-h-screen">
       <DermaLayout hideButton hideFooter>
