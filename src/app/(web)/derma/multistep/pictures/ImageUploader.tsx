@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import ImageUploading, { ImageListType } from 'react-images-uploading';
+import ImageUploading, {
+  ImageListType,
+  ImageType,
+} from 'react-images-uploading';
 import Bugsnag from '@bugsnag/js';
 import { SvgCross } from 'app/icons/IconsDs';
-import { useDermaStore } from 'app/stores/dermaStore';
+import {
+  useDermaImageOneStore,
+  useDermaImageThreeStore,
+  useDermaImageTwoStore,
+  useDermaStore,
+} from 'app/stores/dermaStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -17,42 +25,53 @@ export default function ImageUploader({
   subtitle: string;
   pictureIndex: number;
 }) {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<Array<ImageType>>([]);
   const [imageSize, setImageSize] = useState('');
-  const { pictures, setPictures } = useDermaStore(state => state);
+  const { picture, setPicture } = useDermaImageOneStore(state => state);
+  const { pictureTwo, setPictureTwo } = useDermaImageTwoStore(state => state);
+  const { pictureThree, setPictureThree } = useDermaImageThreeStore(
+    state => state
+  );
 
   const onChange = (imageList: ImageListType) => {
-    setImages(imageList as never[]);
+    debugger;
+    const imagesConcat: Array<ImageType> = [];
+    if (picture) imagesConcat.push(picture);
+    if (pictureTwo) imagesConcat.push(pictureTwo);
+    if (pictureThree) imagesConcat.push(pictureThree);
+    setImages(imagesConcat.concat(imageList));
   };
 
   const removePicture = (index: number) => {
-    const updatedPictures = [...pictures];
-    updatedPictures[pictureIndex] = [];
-
-    setPictures(updatedPictures);
+    debugger;
+    if (index == 0) setPicture(undefined);
+    if (index == 1) setPictureTwo(undefined);
+    if (index == 2) setPictureThree(undefined);
   };
 
   useEffect(() => {
-    const pictureSize = ((pictures[pictureIndex]?.file?.size ?? 0) / 1024)
+    const pictureSize = ((picture?.file?.size ?? 0) / 1024)
       ?.toFixed(2)
       .replace('.', "'");
 
     setImageSize(pictureSize);
-  }, [pictures]);
+  }, [picture]);
 
   useEffect(() => {
     try {
-      const updatedPictures = [...pictures];
-      if (images[0]) updatedPictures[pictureIndex] = images[0];
+      debugger;
+      let pic = undefined;
+      if (pictureIndex == 0) pic = images[0];
+      if (pictureIndex == 1) pic = images[1];
+      if (pictureIndex == 2) pic = images[2];
 
-      const picture = pictures[pictureIndex];
-
-      if (picture?.file) {
-        const fileSize = picture.file.size / 1024; // size in KB
+      if (pic?.file) {
+        const fileSize = pic.file.size / 1024; // size in KB
         setImageSize(`${fileSize.toFixed(2).replace('.', "'")} kb`);
       }
-
-      setPictures(updatedPictures);
+      if (pictureIndex == 0) setPicture(images[0]);
+      if (pictureIndex == 1) setPictureTwo(images[1]);
+      if (pictureIndex == 2) setPictureThree(images[2]);
     } catch (ex) {
       if (ex instanceof Error) {
         alert(ex.message);
@@ -63,11 +82,11 @@ export default function ImageUploader({
 
   const isDisabled = () => {
     if (pictureIndex === 1) {
-      return isEmpty(pictures[0]) && isEmpty(pictures[1]);
+      return isEmpty(picture) && isEmpty(pictureTwo);
     }
 
     if (pictureIndex === 2) {
-      return isEmpty(pictures[1]) && isEmpty(pictures[2]);
+      return isEmpty(pictureTwo) && isEmpty(pictureThree);
     }
 
     return false;
@@ -76,7 +95,7 @@ export default function ImageUploader({
   return (
     <>
       <ImageUploading
-        value={pictures[pictureIndex] as ImageListType}
+        value={images[pictureIndex] as ImageListType}
         maxNumber={1}
         onChange={onChange}
         dataURLKey="data_url"
@@ -91,7 +110,7 @@ export default function ImageUploader({
             <div className="w-full relative">
               <button
                 onClick={
-                  isEmpty(pictures[pictureIndex]) ? onImageUpload : undefined
+                  isEmpty(images[pictureIndex]) ? onImageUpload : undefined
                 }
                 className="w-full"
               >
@@ -100,9 +119,9 @@ export default function ImageUploader({
                   className="border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full"
                 >
                   <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4 shrink-0">
-                    {!isEmpty(pictures[pictureIndex]) ? (
+                    {!isEmpty(images[pictureIndex]) ? (
                       <Image
-                        src={pictures[pictureIndex]['data_url']}
+                        src={images[pictureIndex]['data_url']}
                         alt={subtitle}
                         fill
                         objectFit="cover"
@@ -121,7 +140,7 @@ export default function ImageUploader({
                       <span className="font-semibold">{title}.</span> {subtitle}
                     </Text>
 
-                    {!isEmpty(pictures[pictureIndex]) ? (
+                    {!isEmpty(images[pictureIndex]) ? (
                       <Text className="text-hg-black400 text-xs">
                         {imageSize === "0'00" ? (
                           ''
@@ -132,7 +151,7 @@ export default function ImageUploader({
                           </>
                         )}
                         <span className="inline-block">
-                          {pictures[pictureIndex]?.file?.name}
+                          {images[pictureIndex]?.file?.name}
                         </span>
                       </Text>
                     ) : (
@@ -141,7 +160,7 @@ export default function ImageUploader({
                       </Text>
                     )}
                   </div>
-                  {!isEmpty(pictures[pictureIndex]) && (
+                  {!isEmpty(images[pictureIndex]) && (
                     <SvgCross
                       className="h-4 w-4 ml-4 shrink-0 self-start"
                       onClick={() => removePicture(pictureIndex)}

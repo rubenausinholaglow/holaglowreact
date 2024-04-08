@@ -8,7 +8,12 @@ import { useRegistration } from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useDermaStore } from 'app/stores/dermaStore';
+import {
+  useDermaImageOneStore,
+  useDermaImageThreeStore,
+  useDermaImageTwoStore,
+  useDermaStore,
+} from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -66,13 +71,18 @@ export default function Form() {
     medication,
     medicationInfo,
     lactating,
-    pictures,
     extraInfo,
   } = useDermaStore(state => state);
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [client, setClient] = useState<Client>(CLIENT_INITIAL_VALUES);
   const registerUser = useRegistration(client, false, false, false);
+
+  const { picture, setPicture } = useDermaImageOneStore(state => state);
+  const { pictureTwo, setPictureTwo } = useDermaImageTwoStore(state => state);
+  const { pictureThree, setPictureThree } = useDermaImageThreeStore(
+    state => state
+  );
 
   function handleFinishDermaFlow() {
     const formattedPain =
@@ -105,13 +115,21 @@ export default function Form() {
     dermaService.update(dermaQuestions as DermaQuestions);
     client.origin = 'Derma';
     registerUser(client, false, false, false).then(user => {
-      pictures.forEach((x, y) => {
-        dermaService.uploadImage(
-          user!.flowwwToken,
-          x.file!,
-          'ImagePosition' + y
-        );
-      });
+      dermaService.uploadImage(
+        user!.flowwwToken,
+        picture!.file!,
+        'ImagePosition' + 0
+      );
+      dermaService.uploadImage(
+        user!.flowwwToken,
+        pictureTwo!.file!,
+        'ImagePosition' + 1
+      );
+      dermaService.uploadImage(
+        user!.flowwwToken,
+        pictureThree!.file!,
+        'ImagePosition' + 2
+      );
     });
     //REDIRECT TO NEXT PAGE
   }
