@@ -26,7 +26,7 @@ export default function CanceledAppointment() {
           <Text className="text-lg mb-12">
             Hemos cancelado tu cita para el día {day} de {month} a las {hour}.
             Puedes reservar una nueva cita{' '}
-            <a href={ROUTE.checkout.clinics}>aquí.</a>
+            <a href={ROUTE.checkout.type}>aquí.</a>
           </Text>
 
           <Button size="lg" type="primary" href={ROUTE.treatments}>
