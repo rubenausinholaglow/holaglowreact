@@ -1,5 +1,5 @@
-import { ProductClinics } from "@interface/clinic";
-import { Product } from "@interface/product";
+import { ProductClinics } from '@interface/clinic';
+import { Product } from '@interface/product';
 
 export default class ProductService {
   static getProductsUrl(): string {
@@ -17,13 +17,21 @@ export default class ProductService {
     return url || '';
   }
 
-  static async getAllProducts({ isDerma = false, getAgendaProducts = false }: { isDerma?: boolean, getAgendaProducts? : boolean }) : Promise<Product[]> {
+  static async getAllProducts({
+    isDerma = false,
+    getAgendaProducts = false,
+  }: {
+    isDerma?: boolean;
+    getAgendaProducts?: boolean;
+  }): Promise<Product[]> {
     const urlApi = isDerma
       ? process.env.NEXT_PUBLIC_DERMAPRODUCTS_API
       : process.env.NEXT_PUBLIC_PRODUCTS_API || '';
 
     try {
-      const url = getAgendaProducts ? `${urlApi}Product?getAgendaProducts=true` : `${urlApi}Product`;
+      const url = getAgendaProducts
+        ? `${urlApi}Product?getAgendaProducts=true`
+        : `${urlApi}Product`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -35,10 +43,10 @@ export default class ProductService {
       return [];
     }
   }
-  static async getDashboardProducts(clinicId : string, getUpgrades = false) {
+  static async getDashboardProducts(clinicId: string, getUpgrades = false) {
     try {
       let url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}DashboardProducts`;
-      url = getUpgrades ? url + "?getUpgrades=true" : url
+      url = getUpgrades ? url + '?getUpgrades=true' : url;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -47,13 +55,15 @@ export default class ProductService {
             ...product,
             visibility: true,
           }))
-          .filter((product: Product) =>
-            product.clinicDetail.some(
-              (clinicDetail: ProductClinics) =>
-                clinicDetail.clinic.id === clinicId
-            )
-          ).sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
-        
+          .filter(
+            (product: Product) =>
+              product.clinicDetail.some(
+                (clinicDetail: ProductClinics) =>
+                  clinicDetail.clinic.id === clinicId
+              ) || product.clinicDetail.length == 0
+          )
+          .sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
+
         return products;
       } else {
         return '';
