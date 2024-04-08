@@ -3,13 +3,15 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
-const SUBSCRIPTIONS = {
-  trimestral: {
+const SUBSCRIPTIONS = [
+  {
     title: 'Suscripción trimestral',
-    bgColor: 'bg-derma-primary/60',
+    imgSrc: '/images/derma/landingPrecios/rutinaHolaglow.png',
+    bgColor: 'bg-white',
     tag: {
       text: 'El más popular',
-      styles: 'bg-hg-primary derma-primary/60',
+      styles:
+        'bg-hg-primary rounded-full px-3 py-2 inline-block ml-auto text-xs text-derma-primary font-semibold',
     },
     price: {
       value: '75€',
@@ -34,8 +36,9 @@ const SUBSCRIPTIONS = {
       },
     ],
   },
-  unica: {
+  {
     title: 'Compra única',
+    imgSrc: '/images/derma/landingPrecios/rutinaHolaglow.png',
     bgColor: 'bg-white',
     tag: {},
     price: {
@@ -53,41 +56,52 @@ const SUBSCRIPTIONS = {
       },
     ],
   },
-};
+];
 
 export default function OptionsPrices() {
   return (
-    <Container className="bg-white/50 py-4 rounded-2xl -mt-4">
-      <ul className="flex flex-col md:flex-row gap-4 w-full">
-        <li className="p-4 rounded-2xl bg-derma-primary/60">
-          <DynamicIcon
-            family="default"
-            name="SvgCream"
-            height={24}
-            width={24}
-          />
-          <DynamicIcon
-            family="default"
-            name="SvgVerify"
-            height={24}
-            width={24}
-          />
-          <DynamicIcon
-            family="default"
-            name="SvgRefreshSquare"
-            height={24}
-            width={24}
-          />
-          <Text className="text-center">Tratamiento personalizado</Text>
-        </li>
-        <li className="p-4 rounded-2xl bg-derma-secondary500">
-          <Text className="text-center">Tratamiento personalizado</Text>
-        </li>
-      </ul>
+    <div className="bg-derma-secondary300 py-4 pb-16">
+      <Container className="bg-white/50 py-4 rounded-2xl -mt-4">
+        <ul className="flex flex-col md:flex-row gap-4 w-full">
+          {SUBSCRIPTIONS.map(subscription => (
+            <li
+              className={`flex flex-col p-4 justify-center rounded-xl ${subscription.bgColor}`}
+              key={subscription.title}
+            >
+              {subscription.tag?.text && (
+                <p className={subscription.tag.styles}>
+                  {subscription.tag.text}
+                </p>
+              )}
+              <Text className="text-lg md:text-xl font-semibold mb-2">
+                {subscription.title}
+              </Text>
+              <Text className="text-3xl font-bold">
+                {subscription.price.value}
+              </Text>
+              <Text className="text-sm">{subscription.price.subtitle}</Text>
 
-      <Flex className="justify-center">
-        <Button type="derma">Empezar análisi de piel</Button>
-      </Flex>
-    </Container>
+              <ul className="border-t border-hg-black500 flex-flex-col gap-3">
+                {subscription.bullets.map(bullet => (
+                  <li key={bullet.text}>
+                    <DynamicIcon
+                      family="default"
+                      name={bullet.icon}
+                      height={20}
+                      width={20}
+                    />
+                    {bullet.text}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+
+        <Flex className="justify-center">
+          <Button type="derma">Empezar análisi de piel</Button>
+        </Flex>
+      </Container>
+    </div>
   );
 }
