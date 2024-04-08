@@ -87,6 +87,7 @@ export default function Pictures() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
+                  className={isDisabled ? 'pointer-events-none' : ''}
                   href={ROUTES.derma.multistep.extraInfo}
                   type={!isDisabled ? 'dermaDark' : 'disabled'}
                 >

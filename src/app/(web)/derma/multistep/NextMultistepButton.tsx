@@ -64,7 +64,7 @@ export default function NextMultistepButton({
   return (
     <Button
       onClick={() => {
-        handleNextMultistep();
+        if (!isDisabled) handleNextMultistep();
       }}
       type={isDisabled ? 'disabled' : 'dermaDark'}
     >
