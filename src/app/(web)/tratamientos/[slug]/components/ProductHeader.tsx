@@ -156,7 +156,7 @@ export default function ProductHeader({
           </div>
         </div>
       </Container>
-      {product.type == 3 && (
+      {(product.type === 3 || product.flowwwId.toString() == '5519') && (
         <Container>
           <Text isAnimated className="text-hg-black500 mb-4 mt-8">
             <p
