@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import ImageUploading, { ImageListType } from 'react-images-uploading';
+import Bugsnag from '@bugsnag/js';
 import { SvgCross } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import Bugsnag from '@bugsnag/js';
 
 export default function ImageUploader({
   title,
