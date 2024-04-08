@@ -34,7 +34,6 @@ export default function ImageUploader({
   );
 
   const onChange = (imageList: ImageListType) => {
-    debugger;
     const imagesConcat: Array<ImageType> = [];
     if (picture) imagesConcat.push(picture);
     if (pictureTwo) imagesConcat.push(pictureTwo);
@@ -43,7 +42,6 @@ export default function ImageUploader({
   };
 
   const removePicture = (index: number) => {
-    debugger;
     if (index == 0) setPicture(undefined);
     if (index == 1) setPictureTwo(undefined);
     if (index == 2) setPictureThree(undefined);
@@ -59,7 +57,6 @@ export default function ImageUploader({
 
   useEffect(() => {
     try {
-      debugger;
       let pic = undefined;
       if (pictureIndex == 0) pic = images[0];
       if (pictureIndex == 1) pic = images[1];
