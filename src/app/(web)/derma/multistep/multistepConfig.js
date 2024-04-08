@@ -48,23 +48,6 @@ export const PAINS_AND_SYMPTOMS = [
       'Piel pálida y cansada',
     ],
   },
-  {
-    name: 'Otros',
-    value: 5,
-    img: '/images/derma/multistep/pains/dontKnow.png',
-    symptoms: [
-      'Imperfecciones',
-      'Puntos negros',
-      'Granos o espinillas',
-      'Enrojecimiento o inflamación',
-      'Poros obstruidos',
-      'Cicatrices o marcas de acné',
-      'Poros dilatados',
-      'Manchas de la edad',
-      'Piel pálida y cansada',
-      'Zonas decoloradas',
-    ],
-  },
 ];
 
 export const SKIN_TYPES = [

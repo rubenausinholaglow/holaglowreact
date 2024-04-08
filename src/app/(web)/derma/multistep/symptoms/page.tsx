@@ -95,63 +95,22 @@ export default function Symptoms() {
                     )}
                   </li>
                 ))}
-
-                {pain === 5 && (
-                  <li
-                    className={`transition-all rounded-xl p-3 ${
-                      textAreaValue.length > 0
-                        ? 'bg-derma-primary/20'
-                        : 'bg-derma-secondary400'
-                    }`}
-                  >
-                    <Text className="mb-2">Otros</Text>
-                    <textarea
-                      className="w-full h-24 md:h-48 p-2 text-sm rounded-2xl resize-none"
-                      placeholder="FALTA PLACEHOLDER (?)"
-                      onChange={event => {
-                        handleTextArea(event);
-                        setTextAreaValue(event.target.value);
-                      }}
-                      value={textAreaValue.replace(/^\s+/, '')}
-                    />
-                  </li>
-                )}
               </ul>
-              {pain === 5 && textAreaValue.length > 0 ? (
-                <div className="bg-white p-4 rounded-2xl text-hg-black500 text-sm">
-                  <Text className="mb-1 font-semibold">
-                    Lamentablemente, no podemos ayudarte ahora :(
-                  </Text>
-                  <Text className="mb-6">
-                    Actualmente solo tratamos casos de Melasma, Acné, Rosácea o
-                    Calidad de la piel en general.
-                  </Text>
 
-                  <Button
-                    type="white"
-                    customStyles="bg-transparent border-none"
-                    onClick={() => router.back()}
-                  >
-                    <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
-                    <Text className="text-derma-tertiary">Atrás</Text>
-                  </Button>
-                </div>
-              ) : (
-                <Flex className="justify-between">
-                  <Button
-                    type="white"
-                    customStyles="bg-transparent border-none"
-                    onClick={() => router.back()}
-                  >
-                    <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
-                    <Text className="text-derma-tertiary">Atrás</Text>
-                  </Button>
-                  <NextMultistepButton
-                    nextUrl={ROUTES.derma.multistep.skinType}
-                    isDisabled={symptoms.length === 0}
-                  />
-                </Flex>
-              )}
+              <Flex className="justify-between">
+                <Button
+                  type="white"
+                  customStyles="bg-transparent border-none"
+                  onClick={() => router.back()}
+                >
+                  <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
+                  <Text className="text-derma-tertiary">Atrás</Text>
+                </Button>
+                <NextMultistepButton
+                  nextUrl={ROUTES.derma.multistep.skinType}
+                  isDisabled={symptoms.length === 0}
+                />
+              </Flex>
             </div>
           </Flex>
         </Container>
