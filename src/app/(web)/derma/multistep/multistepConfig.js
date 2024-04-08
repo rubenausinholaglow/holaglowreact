@@ -2,7 +2,7 @@ export const PAINS_AND_SYMPTOMS = [
   {
     name: 'Melasma',
     value: 2,
-    img: '/images/derma/multistep/pains/melasma.png',
+    img: '/images/derma/multistep/pains/melasma.jpg',
     symptoms: [
       'Hiperpigmentación',
       'Zonas decoloradas',
@@ -13,7 +13,7 @@ export const PAINS_AND_SYMPTOMS = [
   {
     name: 'Acné',
     value: 0,
-    img: '/images/derma/multistep/pains/acne.png',
+    img: '/images/derma/multistep/pains/acne.jpg',
     symptoms: [
       'Imperfecciones',
       'Puntos negros',
@@ -27,7 +27,7 @@ export const PAINS_AND_SYMPTOMS = [
   {
     name: 'Rosácea',
     value: 1,
-    img: '/images/derma/multistep/pains/rosacea.png',
+    img: '/images/derma/multistep/pains/rosacea.jpg',
     symptoms: [
       'Enrojecimiento o inflamación',
       'Sensación de ardor',
@@ -38,7 +38,7 @@ export const PAINS_AND_SYMPTOMS = [
   {
     name: 'Calidad de la piel',
     value: 4,
-    img: '/images/derma/multistep/pains/dermatitis.png',
+    img: '/images/derma/multistep/pains/calidadPiel.jpg',
     symptoms: [
       'Líneas de expresión',
       'Pliegues',

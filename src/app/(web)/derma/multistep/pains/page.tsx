@@ -46,10 +46,10 @@ export default function Pains() {
 
             <div className="w-full md:w-1/2">
               <CheckHydration>
-                <ul className="flex flex-col gap-4 w-full mb-8">
+                <ul className="grid grid-cols-2 grid-rows-2 gap-4 w-full mb-8">
                   {PAINS_AND_SYMPTOMS.map(painItem => (
                     <li
-                      className={`transition-all rounded-xl px-3 py-4 flex justify-between items-center gap-4 cursor-pointer ${
+                      className={`flex flex-col justify-start transition-all rounded-xl p-3 items-center gap-4 cursor-pointer ${
                         pain === painItem.value
                           ? 'bg-derma-primary/20'
                           : 'bg-derma-secondary400'
@@ -59,20 +59,23 @@ export default function Pains() {
                         setPain(pain === painItem.value ? 6 : painItem.value)
                       }
                     >
-                      <Flex className="gap-3">
-                        <Image
-                          src={painItem.img}
-                          height={64}
-                          width={64}
-                          alt={painItem.name}
-                        />
-                        {painItem.name}
+                      <Image
+                        src={painItem.img}
+                        height={200}
+                        width={200}
+                        alt={painItem.name}
+                        className="rounded-xl"
+                      />
+                      <Flex className="gap-2">
+                        {/* 
+                        {pain === painItem.value ? (
+                          <SvgCheckSquareActive className="h-6 w-6" />
+                        ) : (
+                          <SvgCheckSquare className="h-6 w-6" />
+                        )} 
+                        */}
+                        <Text className="">{painItem.name}</Text>
                       </Flex>
-                      {pain === painItem.value ? (
-                        <SvgCheckSquareActive className="h-6 w-6" />
-                      ) : (
-                        <SvgCheckSquare className="h-6 w-6" />
-                      )}
                     </li>
                   ))}
                 </ul>
