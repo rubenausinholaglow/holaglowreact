@@ -1,27 +1,39 @@
-import { SvgCross } from 'app/icons/IconsDs';
+import {
+  SvgBox,
+  SvgCalendarSearch,
+  SvgStethoscope,
+  SvgUsers,
+} from 'app/icons/IconsDs';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
 export default function TreatmentsPrices() {
   return (
-    <div className="bg-derma-secondary300 py-4 pb-16">
+    <div className="bg-derma-secondary300 py-4 pb-16 md:pt-12">
       <Container>
-        <ul className="grid grid-cols-2 grid-rows-2 gap-4 text-derma-tertiaryDark">
-          <li className="p-4 rounded-2xl bg-derma-secondary500">
-            <SvgCross className="mx-auto mb-4" />
-            <Text className="text-center">Tratamiento personalizado</Text>
+        <ul className="grid grid-cols-2 grid-rows-2 md:grid-cols-4 md:grid-rows-1 gap-4 md:gap-6 text-derma-tertiaryDark">
+          <li className="p-4 md:py-6 rounded-2xl bg-derma-secondary500">
+            <SvgUsers className="h-12 w-12 text-derma-primary500 mx-auto mb-4" />
+            <Text className="text-center md:text-lg">
+              Tratamiento personalizado
+            </Text>
           </li>
-          <li className="p-4 rounded-2xl bg-derma-secondary500">
-            <SvgCross className="mx-auto mb-4" />
-            <Text className="text-center">Tratamiento personalizado</Text>
+          <li className="p-4 md:py-6 rounded-2xl bg-derma-secondary500">
+            <SvgStethoscope className="h-12 w-12 text-derma-primary500 mx-auto mb-4" />
+            <Text className="text-center md:text-lg">
+              Dermatólogos especializados
+            </Text>
           </li>
-          <li className="p-4 rounded-2xl bg-derma-secondary500">
-            <SvgCross className="mx-auto mb-4" />
-            <Text className="text-center">Tratamiento personalizado</Text>
+          <li className="p-4 md:py-6 rounded-2xl bg-derma-secondary500">
+            <SvgCalendarSearch className="h-12 w-12 text-derma-primary500 mx-auto mb-4" />
+            <Text className="text-center md:text-lg">Seguimiento contínuo</Text>
           </li>
-          <li className="p-4 rounded-2xl bg-derma-secondary500">
-            <SvgCross className="mx-auto mb-4" />
-            <Text className="text-center">Tratamiento personalizado</Text>
+          <li className="p-4 md:py-6 rounded-2xl bg-derma-secondary500">
+            <SvgBox className="h-12 w-12 text-derma-primary500 mx-auto mb-4" />
+            <Text className="text-center md:text-lg">
+              Entregas <br className="hidden md:block" />
+              flexibles
+            </Text>
           </li>
         </ul>
       </Container>

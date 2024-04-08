@@ -1,6 +1,7 @@
 'use client';
 
 import { isMobile } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -64,65 +65,67 @@ export default function FaqsDerma() {
         layout="col-left"
         className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
       >
-        {isMobile &&
-          FAQS.map((faq, index) => {
-            return (
-              <SimpleAccordion
-                key={faq.title}
-                className="pb-4 md:mb-0 border-b border-derma-tertiary"
-                trigger={faq.title}
-                triggerStyles="text-left items-start font-semibold"
-              >
-                <Text size="sm" className="text-hg-black500 pt-4">
-                  {faq.description}
-                </Text>
-              </SimpleAccordion>
-            );
-          })}
-
-        {!isMobile && (
-          <Flex layout="col-left" className="w-full gap-10">
-            {FAQS.map((faq, index) => {
-              if (index % 2 === 0) {
-                return (
-                  <SimpleAccordion
-                    key={faq.title}
-                    className="pb-4 md:mb-0 border-b border-derma-tertiary"
-                    trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
-                  >
-                    <Text size="sm" className="text-hg-black500 pt-4">
-                      {faq.description}
-                    </Text>
-                  </SimpleAccordion>
-                );
-              }
-              return null;
+        <CheckHydration>
+          {isMobile &&
+            FAQS.map(faq => {
+              return (
+                <SimpleAccordion
+                  key={faq.title}
+                  className="pb-4 md:mb-0 border-b border-derma-tertiary"
+                  trigger={faq.title}
+                  triggerStyles="text-left items-start font-semibold"
+                >
+                  <Text size="sm" className="text-hg-black500 pt-4">
+                    {faq.description}
+                  </Text>
+                </SimpleAccordion>
+              );
             })}
-          </Flex>
-        )}
 
-        {!isMobile && (
-          <Flex layout="col-left" className="w-full gap-10">
-            {FAQS.map((faq, index) => {
-              if (index % 2 !== 0) {
-                return (
-                  <SimpleAccordion
-                    key={faq.title}
-                    className="pb-4 md:mb-0 border-b border-derma-tertiary"
-                    trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
-                  >
-                    <Text size="sm" className="text-hg-black500 pt-4">
-                      {faq.description}
-                    </Text>
-                  </SimpleAccordion>
-                );
-              }
-              return null;
-            })}
-          </Flex>
-        )}
+          {!isMobile && (
+            <Flex layout="col-left" className="w-full gap-10">
+              {FAQS.map((faq, index) => {
+                if (index % 2 === 0) {
+                  return (
+                    <SimpleAccordion
+                      key={faq.title}
+                      className="pb-4 md:mb-0 border-b border-derma-tertiary"
+                      trigger={faq.title}
+                      triggerStyles="text-left items-start font-semibold text-lg pb-2"
+                    >
+                      <Text size="sm" className="text-hg-black500 pt-4">
+                        {faq.description}
+                      </Text>
+                    </SimpleAccordion>
+                  );
+                }
+                return null;
+              })}
+            </Flex>
+          )}
+
+          {!isMobile && (
+            <Flex layout="col-left" className="w-full gap-10">
+              {FAQS.map((faq, index) => {
+                if (index % 2 !== 0) {
+                  return (
+                    <SimpleAccordion
+                      key={faq.title}
+                      className="pb-4 md:mb-0 border-b border-derma-tertiary"
+                      trigger={faq.title}
+                      triggerStyles="text-left items-start font-semibold text-lg pb-2"
+                    >
+                      <Text size="sm" className="text-hg-black500 pt-4">
+                        {faq.description}
+                      </Text>
+                    </SimpleAccordion>
+                  );
+                }
+                return null;
+              })}
+            </Flex>
+          )}
+        </CheckHydration>
       </Flex>
     </Container>
   );
