@@ -6,6 +6,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import Bugsnag from '@bugsnag/js';
 
 export default function ImageUploader({
   title,
@@ -43,17 +44,21 @@ export default function ImageUploader({
 
   useEffect(() => {
     alert('useEffect []');
-    const updatedPictures = [...pictures];
-    if (images[0]) updatedPictures[pictureIndex] = images[0];
+    try {
+      const updatedPictures = [...pictures];
+      if (images[0]) updatedPictures[pictureIndex] = images[0];
 
-    const picture = pictures[pictureIndex];
+      const picture = pictures[pictureIndex];
 
-    if (picture?.file) {
-      const fileSize = picture.file.size / 1024; // size in KB
-      setImageSize(`${fileSize.toFixed(2).replace('.', "'")} kb`);
+      if (picture?.file) {
+        const fileSize = picture.file.size / 1024; // size in KB
+        setImageSize(`${fileSize.toFixed(2).replace('.', "'")} kb`);
+      }
+
+      setPictures(updatedPictures);
+    } catch (ex: any) {
+      Bugsnag.notify(ex);
     }
-
-    setPictures(updatedPictures);
   }, [images]);
 
   const isDisabled = () => {
