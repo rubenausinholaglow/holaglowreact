@@ -22,7 +22,6 @@ export default function ImageUploader({
   const { pictures, setPictures } = useDermaStore(state => state);
 
   const onChange = (imageList: ImageListType) => {
-    alert('onChange event');
     setImages(imageList as never[]);
   };
 
@@ -34,7 +33,6 @@ export default function ImageUploader({
   };
 
   useEffect(() => {
-    alert('useEffect [pictures]');
     const pictureSize = ((pictures[pictureIndex]?.file?.size ?? 0) / 1024)
       ?.toFixed(2)
       .replace('.', "'");
@@ -43,7 +41,6 @@ export default function ImageUploader({
   }, [pictures]);
 
   useEffect(() => {
-    alert('useEffect []');
     try {
       const updatedPictures = [...pictures];
       if (images[0]) updatedPictures[pictureIndex] = images[0];
@@ -56,8 +53,11 @@ export default function ImageUploader({
       }
 
       setPictures(updatedPictures);
-    } catch (ex: any) {
-      Bugsnag.notify(ex);
+    } catch (ex) {
+      if (ex instanceof Error) {
+        alert(ex.message);
+        Bugsnag.notify(ex);
+      }
     }
   }, [images]);
 
