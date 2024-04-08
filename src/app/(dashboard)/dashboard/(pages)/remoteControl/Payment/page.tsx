@@ -30,7 +30,7 @@ export default function PaymentRemoteControl() {
   const [messageNotification, setMessageNotification] = useState<string | ''>(
     ''
   );
-  const { user } = useGlobalPersistedStore(state => state);
+  const { user, storedClinicId } = useGlobalPersistedStore(state => state);
 
   const { setFilteredProducts, productFilters, setProductFilters } =
     useGlobalStore(state => state);
@@ -130,12 +130,9 @@ export default function PaymentRemoteControl() {
     setFilteredProducts([]);
     const fetchProducts = async () => {
       try {
-        const data = await ProductService.getDashboardProducts();
-        const products = data.map((product: Product) => ({
-          ...product,
-          visibility: true,
-        }));
-        products.sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
+        const products =
+          await ProductService.getDashboardProducts(storedClinicId);
+
         setStateProducts(products);
         setFilteredProducts(products);
         productFilters.isPack = true;

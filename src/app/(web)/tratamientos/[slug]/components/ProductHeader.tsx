@@ -134,7 +134,11 @@ export default function ProductHeader({
                     : product.productCardImagePosition !== 'middle'
                     ? 'rounded-3xl'
                     : ''
-                } w-[66%]`}
+                } ${
+                  product.productCardImagePosition !== 'full'
+                    ? 'w-[66%]'
+                    : 'h-[250px]'
+                } `}
               />
             )}
 
