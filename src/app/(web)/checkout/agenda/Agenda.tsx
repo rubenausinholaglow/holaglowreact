@@ -74,7 +74,7 @@ export default function Agenda({
   );
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [currentMonth, setcurrentMonth] = useState(dayjs());
+  const [currentMonth, setcurrentMonth] = useState(dayjs().add(12, 'day'));
   const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
   const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
   const format = 'YYYY-MM-DD';
@@ -83,15 +83,15 @@ export default function Agenda({
   const maxDaysByClinicAndType: any = {
     '1': {
       //Madrid
-      '0': 50,
+      '0': 10,
     },
     '4': {
       //Barcelona
-      '0': 55,
+      '0': 15,
     },
     '5': {
       //Valencia
-      '0': 50,
+      '0': 10,
     },
   };
   if (
@@ -117,7 +117,7 @@ export default function Agenda({
 
   const productIds = getUniqueIds(selectedTreatments);
 
-  const maxDay = dayjs().add(maxDays, 'day');
+  const maxDay = dayjs().add(12, 'day').add(maxDays, 'day');
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -187,7 +187,7 @@ export default function Agenda({
   ) {
     const endOfMonth = dateToCheck.endOf('month');
     const availability = availableDates ?? [];
-    const today = dayjs();
+    const today = dayjs().add(12, 'day');
     const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
     let datesAvailableInCurrentMonth = loadedCurrentMonth ? 0 : -1;
     data.forEach((x: any) => {
@@ -207,7 +207,7 @@ export default function Agenda({
     if (loadedCurrentMonth) {
       setDateToCheck(dateToCheck.add(1, 'month'));
       if (
-        datesAvailableInCurrentMonth < 60 &&
+        datesAvailableInCurrentMonth < 3 &&
         datesAvailableInCurrentMonth > -1
       ) {
         const element = document.getElementsByClassName(
@@ -223,7 +223,7 @@ export default function Agenda({
     setLoadingMonth(true);
     setSelectedDay(undefined);
     setEnableScheduler(true);
-    setDateToCheck(dayjs());
+    setDateToCheck(dayjs().add(12, 'day'));
   }
   useEffect(() => {
     initialize();
