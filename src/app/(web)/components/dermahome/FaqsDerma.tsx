@@ -41,9 +41,13 @@ const FAQS = [
   },
 ];
 
-export default function FaqsDerma() {
+export default function FaqsDerma({
+  className = '',
+}: {
+  className: ReactNode;
+}) {
   return (
-    <Container>
+    <Container className={className}>
       <Flex layout="row-between" className="w-full gap-2 mb-12">
         <Title
           isAnimated

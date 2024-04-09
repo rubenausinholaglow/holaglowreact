@@ -23,8 +23,8 @@ const TREATMENTS = [
 
 export default function TreatmentsDerma() {
   return (
-    <div className="bg-derma-secondary300/70 pb-12 overflow-hidden">
-      <Container className="pt-12 pb-4 overflow-hidden">
+    <div className="pb-12 overflow-hidden">
+      <Container className="pt-8 pb-4 overflow-hidden">
         <Title size="xl" className="mb-4 text-derma-tertiary font-thin">
           Soluciones para cada tipo de piel
         </Title>
@@ -40,7 +40,7 @@ export default function TreatmentsDerma() {
                 alt={treatment.name}
                 height={500}
                 width={500}
-                className="rounded-xl"
+                className="rounded-xl mb-2"
               />
               <Text className="text-center md:text-lg">{treatment.name}</Text>
             </li>

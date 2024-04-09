@@ -43,7 +43,7 @@ export default function ProfessionalCard({
         >
           <SvgHolaglowHand
             className={`hidden md:block h-14 w-14 ${
-              isDerma ? 'text-derma-primary500' : 'text-hg-secondary500'
+              isDerma ? 'text-derma-primary500/20' : 'text-hg-secondary500'
             }`}
           />
           <Text

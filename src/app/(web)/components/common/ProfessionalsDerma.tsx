@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Professional, ProfessionalType } from 'app/types/clinic';
@@ -98,33 +99,24 @@ export default function ProfessionalsDerma({
         </Text>
       </Container>
       <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>
-        {isMobile && (
-          <ProductCarousel
-            hasControls={false}
-            type="professionals"
-            items={professionals}
-          />
-        )}
-        {!isMobile && (
-          <Carousel
-            hasControls
-            className="relative"
-            isIntrinsicHeight
-            visibleSlides={1}
-            infinite={false}
-            sliderStyles="gap-8"
-            isDerma
-          >
-            {professionals?.map(professional => (
-              <ProfessionalCard
-                isDerma
-                key={professional.name}
-                professional={professional}
-                className="h-full flex flex-col"
-              />
-            ))}
-          </Carousel>
-        )}
+        <Carousel
+          hasControls
+          className="relative"
+          isIntrinsicHeight
+          visibleSlides={1}
+          infinite={false}
+          isDerma
+          controlStyles="px-4 mt-4"
+        >
+          {professionals?.map(professional => (
+            <ProfessionalCard
+              isDerma
+              key={professional.name}
+              professional={professional}
+              className="h-full flex flex-col"
+            />
+          ))}
+        </Carousel>
       </div>
     </Container>
   );
