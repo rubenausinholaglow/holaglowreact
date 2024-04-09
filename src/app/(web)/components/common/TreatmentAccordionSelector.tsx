@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Product, UnityType } from '@interface/product';
+import { Product, ProductType, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import { fetchProduct } from '@utils/fetch';
+import { productLimitations } from '@utils/productLimitations';
 import useRoutes from '@utils/useRoutes';
 import {
   getUniqueIds,
@@ -364,16 +365,96 @@ export default function TreatmentAccordionSelector({
     );
   };
 
+  const getCountByType = (
+    selectedTreatments: Product[],
+    productType: ProductType
+  ): number => {
+    return selectedTreatments.filter(
+      treatment => treatment.type === productType
+    ).length;
+  };
+
+  const getCountByUnityType = (
+    selectedTreatments: Product[],
+    unityType: UnityType
+  ): number => {
+    return selectedTreatments.filter(
+      treatment => treatment.unityType === unityType
+    ).length;
+  };
   const renderSelectorQuantity = (product: Product, index: number) => {
+    const countMedicalProduct = getCountByType(
+      selectedTreatments,
+      ProductType.Medical
+    );
+    const countEstheticProduct = getCountByType(
+      selectedTreatments,
+      ProductType.Esthetic
+    );
+
+    const countLiftingProduct =
+      (selectedTreatments.length > 0 &&
+        getCountByUnityType(selectedTreatments, UnityType.Lifting)) ||
+      getCountByUnityType(selectedTreatments, UnityType.Radiesse) ||
+      0;
+
+    const countHilosProduct =
+      (selectedTreatments.length > 0 &&
+        getCountByUnityType(selectedTreatments, UnityType.Hilos)) ||
+      0;
+
+    const countPapadaProduct =
+      (selectedTreatments.length > 0 &&
+        getCountByType(selectedTreatments, ProductType.Esthetic)) ||
+      0;
+
+    const countBotoxProduct =
+      (selectedTreatments.length > 0 &&
+        getCountByUnityType(selectedTreatments, UnityType.Botox)) ||
+      getCountByType(selectedTreatments, ProductType.Esthetic) ||
+      0;
+
+    const countOjerasProduct =
+      (selectedTreatments.length > 0 &&
+        selectedTreatments.filter(x => x.flowwwId.toString() == '854')
+          .length) ||
+      0;
+
+    const someLimitedProduct =
+      selectedTreatments.length > 0 &&
+      productLimitations.some(
+        limitation =>
+          selectedTreatments.some(
+            treatment => limitation.id === treatment.flowwwId.toString()
+          ) ||
+          (selectedTreatments.length > 0 &&
+            productLimitations.some(
+              limitation => limitation.id === product.flowwwId.toString()
+            ))
+      );
+
     const disable =
-      cart.length > 0 &&
-      selectedTreatments.filter(x => x.unityType == product.unityType).length -
-        selectedProducts.filter(x => x.unityType == product.unityType).length >=
-        treatmentPacks.filter(
-          x => x.isScheduled == false && x.type == product.unityType
-        ).length
-        ? true
-        : false;
+      (cart.length == 0 &&
+        (someLimitedProduct ||
+          (countOjerasProduct > 0 && product.unityType == UnityType.Botox) ||
+          (countOjerasProduct > 0 &&
+            product.unityType == UnityType.BabyBotox) ||
+          (countBotoxProduct > 0 && product.flowwwId.toString() == '854') ||
+          (countHilosProduct > 0 && product.unityType == UnityType.Lifting) ||
+          (countHilosProduct > 0 && product.unityType == UnityType.Radiesse) ||
+          (countLiftingProduct > 0 && product.unityType == UnityType.Hilos) ||
+          (countPapadaProduct > 0 && product.unityType == UnityType.Hilos) ||
+          (countHilosProduct > 0 && product.unityType == UnityType.Belkyra) ||
+          (countMedicalProduct > 0 && product.type == ProductType.Esthetic) ||
+          (countEstheticProduct > 0 && product.type == ProductType.Medical))) ||
+      (cart.length > 0 &&
+        selectedTreatments.filter(x => x.unityType == product.unityType)
+          .length -
+          selectedProducts.filter(x => x.unityType == product.unityType)
+            .length >=
+          treatmentPacks.filter(
+            x => x.isScheduled == false && x.type == product.unityType
+          ).length);
     if (
       validTypesPacks.includes(product.unityType) ||
       (isDashboard && cart.length == 0)
