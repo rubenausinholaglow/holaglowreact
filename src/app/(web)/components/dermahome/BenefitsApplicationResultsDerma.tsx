@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -7,7 +6,7 @@ import Image from 'next/image';
 export default function BenefitsApplicationResultsDerma({
   className = '',
 }: {
-  className: ReactNode;
+  className?: string;
 }) {
   return (
     <div className={`py-12 bg-derma-primary100 ${className}`}>
