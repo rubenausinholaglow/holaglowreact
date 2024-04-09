@@ -5,7 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType, PackUnities, Product } from '@interface/product';
+import { EmlaType, PackUnitiesScheduled, Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
@@ -352,7 +352,7 @@ export default function Agenda({
   }, [selectedSlot]);
 
   function updateTreatmentPackScheduled(products: Product[]) {
-    const matchingTreatments: PackUnities[] = [];
+    const matchingTreatments: PackUnitiesScheduled[] = [];
     products.forEach(prod => {
       const productInCart = cart.filter(x => x.id == prod.id).length > 0;
       if (productInCart) return;

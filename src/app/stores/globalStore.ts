@@ -6,7 +6,7 @@ import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
-import { PackUnities, Product } from 'app/types/product';
+import {  PackUnitiesScheduled, Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
 import { Dayjs } from 'dayjs';
@@ -43,7 +43,7 @@ interface SessionStore {
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
   dermaPhone: string;
-  treatmentPacks: PackUnities[];
+  treatmentPacks: PackUnitiesScheduled[];
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -62,7 +62,7 @@ interface SessionActions {
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
   setDermaPhone: (phone: string) => void;
-  setTreatmentPacks: (treatment: PackUnities[]) => void;
+  setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
 }
 
 interface GlobalPersistStore {
