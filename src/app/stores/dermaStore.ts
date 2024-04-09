@@ -1,4 +1,4 @@
-import { ImageListType, ImageType } from 'react-images-uploading';
+import { ImageListType } from 'react-images-uploading';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -16,26 +16,8 @@ interface DermaStore {
   medication: number;
   medicationInfo: string;
   lactating: number;
+  picturesUrls: Array<string>;
   extraInfo: string;
-}
-interface DermaPictureStore {
-  picture: ImageType | undefined;
-}
-interface DermaPictureTwoStore {
-  pictureTwo: ImageType | undefined;
-}
-interface DermaPictureThreeStore {
-  pictureThree: ImageType | undefined;
-}
-
-interface DermaPictureActions {
-  setPicture: (value: ImageType | undefined) => void;
-}
-interface DermaPictureTwoActions {
-  setPictureTwo: (value: ImageType | undefined) => void;
-}
-interface DermaPictureThreeActions {
-  setPictureThree: (value: ImageType | undefined) => void;
 }
 
 interface DermaActions {
@@ -52,54 +34,10 @@ interface DermaActions {
   setMedication: (value: number) => void;
   setMedicationInfo: (value: string) => void;
   setLactating: (value: number) => void;
+  setPicturesUrls: (value: Array<string>) => void;
   setExtraInfo: (value: string) => void;
 }
 
-export const useDermaImageOneStore = create(
-  persist<DermaPictureStore & DermaPictureActions>(
-    set => ({
-      picture: undefined,
-      setPicture: (value: ImageType | undefined) => {
-        set({ picture: value });
-      },
-    }),
-    {
-      name: 'derma-imageone',
-      version: 1,
-      storage: createJSONStorage(() => sessionStorage),
-    }
-  )
-);
-export const useDermaImageTwoStore = create(
-  persist<DermaPictureTwoStore & DermaPictureTwoActions>(
-    set => ({
-      pictureTwo: undefined,
-      setPictureTwo: (value: ImageType | undefined) => {
-        set({ pictureTwo: value });
-      },
-    }),
-    {
-      name: 'derma-imagetwo',
-      version: 1,
-      storage: createJSONStorage(() => sessionStorage),
-    }
-  )
-);
-export const useDermaImageThreeStore = create(
-  persist<DermaPictureThreeStore & DermaPictureThreeActions>(
-    set => ({
-      pictureThree: undefined,
-      setPictureThree: (value: ImageType | undefined) => {
-        set({ pictureThree: value });
-      },
-    }),
-    {
-      name: 'derma-imagethree',
-      version: 1,
-      storage: createJSONStorage(() => sessionStorage),
-    }
-  )
-);
 export const useDermaStore = create(
   persist<DermaStore & DermaActions>(
     set => ({
@@ -154,6 +92,10 @@ export const useDermaStore = create(
       lactating: 0,
       setLactating: (value: number | undefined) => {
         set({ lactating: value });
+      },
+      picturesUrls: [],
+      setPicturesUrls: (value: Array<string>) => {
+        set({ picturesUrls: value });
       },
       extraInfo: '',
       setExtraInfo: (value: string) => {

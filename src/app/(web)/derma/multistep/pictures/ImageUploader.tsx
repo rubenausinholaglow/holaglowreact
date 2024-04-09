@@ -1,16 +1,13 @@
+'use client';
 import { useEffect, useState } from 'react';
 import ImageUploading, {
   ImageListType,
   ImageType,
 } from 'react-images-uploading';
 import Bugsnag from '@bugsnag/js';
+import { dermaService } from '@services/DermaService';
 import { SvgCross } from 'app/icons/IconsDs';
-import {
-  useDermaImageOneStore,
-  useDermaImageThreeStore,
-  useDermaImageTwoStore,
-  useDermaStore,
-} from 'app/stores/dermaStore';
+import { useDermaStore } from 'app/stores/dermaStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -25,70 +22,84 @@ export default function ImageUploader({
   subtitle: string;
   pictureIndex: number;
 }) {
-  const [images, setImages] = useState<Array<ImageType>>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [images, setImages] = useState<ImageListType>([]);
   const [imageSize, setImageSize] = useState('');
-  const { picture, setPicture } = useDermaImageOneStore(state => state);
-  const { pictureTwo, setPictureTwo } = useDermaImageTwoStore(state => state);
-  const { pictureThree, setPictureThree } = useDermaImageThreeStore(
-    state => state
-  );
+  const { picturesUrls, setPicturesUrls, id } = useDermaStore(state => state);
 
   const onChange = (imageList: ImageListType) => {
-    const imagesConcat: Array<ImageType> = [];
-    if (picture) imagesConcat.push(picture);
-    if (pictureTwo) imagesConcat.push(pictureTwo);
-    if (pictureThree) imagesConcat.push(pictureThree);
-    setImages(imagesConcat.concat(imageList));
-  };
-
-  const removePicture = (index: number) => {
-    if (index == 0) setPicture(undefined);
-    if (index == 1) setPictureTwo(undefined);
-    if (index == 2) setPictureThree(undefined);
-  };
-
-  useEffect(() => {
-    const pictureSize = ((picture?.file?.size ?? 0) / 1024)
-      ?.toFixed(2)
-      .replace('.', "'");
-
-    setImageSize(pictureSize);
-  }, [picture]);
-
-  useEffect(() => {
+    images.push(imageList);
+    setImages(images);
     try {
-      let pic = undefined;
-      if (pictureIndex == 0) pic = images[0];
-      if (pictureIndex == 1) pic = images[1];
-      if (pictureIndex == 2) pic = images[2];
+      const picture = imageList[0];
 
-      if (pic?.file) {
-        const fileSize = pic.file.size / 1024; // size in KB
+      if (picture?.file) {
+        const fileSize = picture.file.size / 1024; // size in KB
         setImageSize(`${fileSize.toFixed(2).replace('.', "'")} kb`);
       }
-      if (pictureIndex == 0) setPicture(images[0]);
-      if (pictureIndex == 1) setPictureTwo(images[1]);
-      if (pictureIndex == 2) setPictureThree(images[2]);
+      if (imageList[0]) {
+        uploadImage(imageList);
+      }
     } catch (ex) {
       if (ex instanceof Error) {
         alert(ex.message);
         Bugsnag.notify(ex);
       }
     }
+
+    async function uploadImage(
+      updatedPictures: ImageType[] | { file: Blob }[]
+    ) {
+      const url = await dermaService.uploadImage(
+        undefined,
+        updatedPictures[0].file!,
+        'ImagePosition' + pictureIndex,
+        id
+      );
+      picturesUrls.push(url);
+      setPicturesUrls(picturesUrls);
+    }
+  };
+
+  const removePicture = (index: number) => {
+    const updatedPictures = [...images];
+    updatedPictures[pictureIndex] = [];
+
+    setImages(updatedPictures);
+    picturesUrls.splice(index, 1);
+    setPicturesUrls(picturesUrls);
+  };
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+  useEffect(() => {
+    const pictureSize = ((images[pictureIndex]?.file?.size ?? 0) / 1024)
+      ?.toFixed(2)
+      .replace('.', "'");
+
+    setImageSize(pictureSize);
   }, [images]);
 
   const isDisabled = () => {
     if (pictureIndex === 1) {
-      return isEmpty(picture) && isEmpty(pictureTwo);
+      console.log('picture1' + isEmpty(picturesUrls[0]));
+      return isEmpty(picturesUrls[0]);
     }
 
     if (pictureIndex === 2) {
-      return isEmpty(pictureTwo) && isEmpty(pictureThree);
+      console.log(
+        'picture2' + isEmpty(picturesUrls[0]) + ' - ' + isEmpty(picturesUrls[1])
+      );
+      return isEmpty(picturesUrls[0]) || isEmpty(picturesUrls[1]);
     }
 
     return false;
   };
 
+  if (!isHydrated) {
+    return <></>;
+  }
   return (
     <>
       <ImageUploading
@@ -107,7 +118,10 @@ export default function ImageUploader({
             <div className="w-full relative">
               <button
                 onClick={
-                  isEmpty(images[pictureIndex]) ? onImageUpload : undefined
+                  isEmpty(images[pictureIndex]) &&
+                  isEmpty(picturesUrls[pictureIndex])
+                    ? onImageUpload
+                    : undefined
                 }
                 className="w-full"
               >
@@ -116,19 +130,30 @@ export default function ImageUploader({
                   className="border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full"
                 >
                   <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4 shrink-0">
-                    {!isEmpty(images[pictureIndex]) ? (
+                    {isEmpty(images[pictureIndex]) &&
+                      isEmpty(picturesUrls[pictureIndex]) && (
+                        <Image
+                          src="/images/derma/multistep/faceIcon.png"
+                          fill
+                          objectFit="cover"
+                          alt={subtitle}
+                        />
+                      )}
+                    {!isEmpty(images[pictureIndex]) &&
+                      !isEmpty(images[pictureIndex]['data_url']) && (
+                        <Image
+                          src={images[pictureIndex]['data_url']}
+                          alt={subtitle}
+                          fill
+                          objectFit="cover"
+                        />
+                      )}
+                    {!isEmpty(picturesUrls[pictureIndex]) && (
                       <Image
-                        src={images[pictureIndex]['data_url']}
+                        src={picturesUrls[pictureIndex]}
                         alt={subtitle}
                         fill
                         objectFit="cover"
-                      />
-                    ) : (
-                      <Image
-                        src="/images/derma/multistep/faceIcon.png"
-                        fill
-                        objectFit="cover"
-                        alt={subtitle}
                       />
                     )}
                   </div>
@@ -137,7 +162,7 @@ export default function ImageUploader({
                       <span className="font-semibold">{title}.</span> {subtitle}
                     </Text>
 
-                    {!isEmpty(images[pictureIndex]) ? (
+                    {!isEmpty(images[pictureIndex]) && (
                       <Text className="text-hg-black400 text-xs">
                         {imageSize === "0'00" ? (
                           ''
@@ -151,13 +176,16 @@ export default function ImageUploader({
                           {images[pictureIndex]?.file?.name}
                         </span>
                       </Text>
-                    ) : (
-                      <Text className="text-hg-black500 text-xs">
-                        Haz una foto o selecciona de la galería
-                      </Text>
                     )}
+                    {isEmpty(images[pictureIndex]) &&
+                      isEmpty(picturesUrls[pictureIndex]) && (
+                        <Text className="text-hg-black500 text-xs">
+                          Haz una foto o selecciona de la galería
+                        </Text>
+                      )}
                   </div>
-                  {!isEmpty(images[pictureIndex]) && (
+                  {(!isEmpty(images[pictureIndex]) ||
+                    !isEmpty(picturesUrls[pictureIndex])) && (
                     <SvgCross
                       className="h-4 w-4 ml-4 shrink-0 self-start"
                       onClick={() => removePicture(pictureIndex)}

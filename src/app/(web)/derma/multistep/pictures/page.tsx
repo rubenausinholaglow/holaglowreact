@@ -4,12 +4,7 @@ import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
-import {
-  useDermaImageOneStore,
-  useDermaImageThreeStore,
-  useDermaImageTwoStore,
-  useDermaStore,
-} from 'app/stores/dermaStore';
+import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -24,15 +19,13 @@ export default function Pictures() {
   const router = useRouter();
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const { picturesUrls } = useDermaStore(state => state);
 
-  const { picture, setPicture } = useDermaImageOneStore(state => state);
-  const { pictureTwo, setPictureTwo } = useDermaImageTwoStore(state => state);
-  const { pictureThree, setPictureThree } = useDermaImageThreeStore(
-    state => state
-  );
   function checkIsDisabled() {
     setIsDisabled(
-      isEmpty(picture) || isEmpty(pictureTwo) || isEmpty(pictureThree)
+      isEmpty(picturesUrls[0]) ||
+        isEmpty(picturesUrls[1]) ||
+        isEmpty(picturesUrls[2])
     );
   }
 
@@ -42,7 +35,7 @@ export default function Pictures() {
 
   useEffect(() => {
     checkIsDisabled();
-  }, [picture, pictureTwo, pictureThree]);
+  }, [picturesUrls.length]);
 
   return (
     <div className="bg-derma-secondary100 min-h-screen">

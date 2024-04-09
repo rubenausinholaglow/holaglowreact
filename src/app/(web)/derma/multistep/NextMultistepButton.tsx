@@ -53,7 +53,7 @@ export default function NextMultistepButton({
     };
 
     dermaService.update(dermaQuestions as DermaQuestions).then(response => {
-      if (id === undefined) {
+      if (response) {
         setId(response.toString());
       }
     });

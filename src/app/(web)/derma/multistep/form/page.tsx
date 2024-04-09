@@ -8,12 +8,7 @@ import { useRegistration } from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
-import {
-  useDermaImageOneStore,
-  useDermaImageThreeStore,
-  useDermaImageTwoStore,
-  useDermaStore,
-} from 'app/stores/dermaStore';
+import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -78,12 +73,6 @@ export default function Form() {
   const [client, setClient] = useState<Client>(CLIENT_INITIAL_VALUES);
   const registerUser = useRegistration(client, false, false, false);
 
-  const { picture, setPicture } = useDermaImageOneStore(state => state);
-  const { pictureTwo, setPictureTwo } = useDermaImageTwoStore(state => state);
-  const { pictureThree, setPictureThree } = useDermaImageThreeStore(
-    state => state
-  );
-
   function handleFinishDermaFlow() {
     const formattedPain =
       symptoms.length > 0
@@ -93,43 +82,28 @@ export default function Form() {
           }))
         : [];
 
-    const dermaQuestions = {
-      id,
-      userId: undefined,
-      name: client.name,
-      birthDate: undefined,
-      phone: client.phone.replaceAll(' ', '').replace(client.phonePrefix, ''),
-      phonePrefix: client.phonePrefix,
-      pain: formattedPain,
-      skinType,
-      skinSensibility,
-      allergy,
-      allergyInfo,
-      illness,
-      illnessInfo,
-      medication,
-      medicationInfo,
-      lactating,
-      extraInfo,
-    };
-    dermaService.update(dermaQuestions as DermaQuestions);
     client.origin = 'Derma';
     registerUser(client, false, false, false).then(user => {
-      dermaService.uploadImage(
-        user!.flowwwToken,
-        picture!.file!,
-        'ImagePosition' + 0
-      );
-      dermaService.uploadImage(
-        user!.flowwwToken,
-        pictureTwo!.file!,
-        'ImagePosition' + 1
-      );
-      dermaService.uploadImage(
-        user!.flowwwToken,
-        pictureThree!.file!,
-        'ImagePosition' + 2
-      );
+      const dermaQuestions = {
+        id,
+        userId: undefined,
+        name: client.name,
+        birthDate: undefined,
+        phone: client.phone.replaceAll(' ', '').replace(client.phonePrefix, ''),
+        phonePrefix: client.phonePrefix,
+        pain: formattedPain,
+        skinType,
+        skinSensibility,
+        allergy,
+        allergyInfo,
+        illness,
+        illnessInfo,
+        medication,
+        medicationInfo,
+        lactating,
+        extraInfo,
+      };
+      dermaService.update(dermaQuestions as DermaQuestions);
     });
     //REDIRECT TO NEXT PAGE
   }

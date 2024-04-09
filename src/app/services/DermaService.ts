@@ -54,12 +54,14 @@ export const dermaService = {
     }
   },
   uploadImage: async (
-    userId: string,
+    userId: string | undefined,
     file: Blob,
-    fileName: string
-  ): Promise<boolean> => {
+    fileName: string,
+    referenceId: string
+  ): Promise<string> => {
     const formdata = new FormData();
-    formdata.append('UserId', userId);
+    if (userId) formdata.append('UserId', userId);
+    formdata.append('ReferenceId', referenceId);
     formdata.append('files', file);
     formdata.append('FileName', fileName);
     const requestOptions: RequestInit = {
@@ -68,15 +70,17 @@ export const dermaService = {
       redirect: 'follow',
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_DERMAPATIENTS_API}Image`, requestOptions)
+    return fetch(
+      `${process.env.NEXT_PUBLIC_DERMAPATIENTS_API}Image`,
+      requestOptions
+    )
       .then(response => response.text())
       .then(result => {
-        return true;
+        return result;
       })
       .catch(error => {
         Bugsnag.notify(error + ERROR_GET_DERMAROUTINES);
         throw new Error(ERROR_GET_DERMAROUTINES);
       });
-    return true;
   },
 };
