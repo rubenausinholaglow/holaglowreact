@@ -84,11 +84,12 @@ export default function Page() {
 
   useEffect(() => {
     setTreatments();
-  }, [dashboardProducts, treatmentPacks]);
+  }, []);
 
   async function setTreatments() {
     try {
       setSelectedTreatments([]);
+      console.log('setSelected');
       const productTitles: string[] = cart
         .filter(
           cartItem =>
@@ -123,14 +124,15 @@ export default function Page() {
 
   function addProductUnitiesPack(product: Product) {
     product.packUnities?.forEach(x => {
-      if (!treatmentPacks.some(packType => packType.id == x.id)) {
-        const packsToAdd: PackUnities = {
-          id: x.id,
-          type: x.type,
-          isScheduled: false,
-        };
-        setTreatmentPacks([...treatmentPacks, packsToAdd]);
-      }
+      console.log(x.id);
+      //if (!treatmentPacks.some(packType => packType.id == x.id)) {
+      const packsToAdd: PackUnities = {
+        id: x.id,
+        type: x.type,
+        isScheduled: false,
+      };
+      setTreatmentPacks([...treatmentPacks, packsToAdd]);
+      // }
     });
   }
 
