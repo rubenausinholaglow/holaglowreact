@@ -1,4 +1,4 @@
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import dynamic from 'next/dynamic';

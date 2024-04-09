@@ -1,4 +1,4 @@
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -78,12 +78,12 @@ const SUBSCRIPTIONS = [
 
 export default function OptionsPrices() {
   return (
-    <div className="bg-derma-secondary300 py-4 pb-16">
-      <Container className="bg-white/50 py-4 rounded-2xl -mt-4 md:p-6">
+    <div className="bg-derma-secondary300 py-4">
+      <Container className="bg-white/50 py-4 rounded-3xl -mt-4 md:p-6">
         <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
           {SUBSCRIPTIONS.map((subscription, index) => (
             <li
-              className={`relative flex flex-col p-4 pt-8 md:p-6 md:pt-16 justify-center rounded-xl md:w-1/2 ${subscription.bgColor}`}
+              className={`relative flex flex-col p-4 pt-8 md:p-6 md:pt-16 justify-center rounded-2xl md:w-1/2 ${subscription.bgColor}`}
               key={subscription.title}
             >
               {subscription.tag?.text && (
@@ -141,7 +141,7 @@ export default function OptionsPrices() {
 
         <Flex className="justify-center">
           <Button type="derma" size="xl" customStyles="px-16">
-            Empezar análisi de piel
+            Empezar análisis de piel
           </Button>
         </Flex>
       </Container>

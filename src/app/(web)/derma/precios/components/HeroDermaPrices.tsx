@@ -1,4 +1,4 @@
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -45,10 +45,12 @@ export default function HeroDermaPrices() {
         </Container>
       </div>
       {isMobileSSR() && (
-        <>
-          <Container>
-            <ReviewScore />
-          </Container>
+        <div className="bg-derma-secondary300">
+          <div className="bg-[rgba(255,255,255,.5)]">
+            <Container>
+              <ReviewScore />
+            </Container>
+          </div>
           <div className="bg-derma-secondary300 py-4">
             <Container>
               <Title size="2xl" className="text-derma-primary mb-4">
@@ -61,7 +63,7 @@ export default function HeroDermaPrices() {
               </Text>
             </Container>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
