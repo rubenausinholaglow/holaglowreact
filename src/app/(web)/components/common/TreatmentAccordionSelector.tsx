@@ -129,8 +129,7 @@ export default function TreatmentAccordionSelector({
       validTypesFilterCart.includes(product.type) &&
       !product.isPack &&
       !uniqueProductTitles.has(product.title) &&
-      !invalidProducts.includes(product.flowwwId.toString()) &&
-      selectedProducts.every(x => x.title !== product.title)
+      !invalidProducts.includes(product.flowwwId.toString())
     );
   }
   useEffect(() => {
