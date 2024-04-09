@@ -89,6 +89,7 @@ export default function Page() {
   async function setTreatments() {
     try {
       setSelectedTreatments([]);
+      const packsToAdd: PackUnitiesScheduled[] = [];
       console.log('setSelected');
       const productTitles: string[] = cart
         .filter(
@@ -109,11 +110,15 @@ export default function Page() {
           ) {
             if (product.isPack) {
               setPackInProductCart(true);
-              addProductUnitiesPack(product);
+              const packs = addProductUnitiesPack(product);
+              packsToAdd.push(...packs);
             } else foundProducts.push(product);
           }
         });
       });
+      if (packsToAdd.length > 0) {
+        setTreatmentPacks([...treatmentPacks, ...packsToAdd]);
+      }
       setSelectedTreatments(foundProducts);
     } catch (error: any) {
       Bugsnag.notify(error);
@@ -122,19 +127,18 @@ export default function Page() {
     }
   }
 
-  function addProductUnitiesPack(product: Product) {
+  function addProductUnitiesPack(product: Product): PackUnitiesScheduled[] {
+    const packsToAdd: PackUnitiesScheduled[] = [];
     product.packUnities?.forEach(x => {
-      console.log(x.id);
-      //if (!treatmentPacks.some(packType => packType.id == x.id)) {
-      const packsToAdd: PackUnitiesScheduled = {
+      const pack: PackUnitiesScheduled = {
         uniqueId: createUniqueId(),
         id: x.id,
         type: x.type,
         isScheduled: false,
       };
-      setTreatmentPacks([...treatmentPacks, packsToAdd]);
-      // }
+      packsToAdd.push(pack);
     });
+    return packsToAdd;
   }
 
   return (

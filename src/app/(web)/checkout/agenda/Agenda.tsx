@@ -366,7 +366,7 @@ export default function Agenda({
       }
     });
     const remainingTreatments = treatmentPacks.filter(
-      treat => !matchingTreatments.some(mt => mt.id === treat.id)
+      treat => !matchingTreatments.some(mt => mt.uniqueId === treat.uniqueId)
     );
 
     const updatedPacks = matchingTreatments.map(pack => ({
