@@ -1,8 +1,7 @@
-'use client';
-
-import { isMobile, isTablet } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
+import { isMobileSSR, isTabletSSR } from '@utils/isMobileSSR';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
+import { Button } from 'designSystem/Buttons/Buttons';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -78,7 +77,7 @@ const INGREDIENTS = [
 
 const COMPLEMENTS = [
   {
-    imgSrc: '/images/derma/landingPrecios/ingredients/complement.png',
+    imgSrc: '/images/derma/landingPrecios/ingredients/espumaLimpiadora.png',
     name: 'Espuma limpiadora',
     volume: '150ml',
     description:
@@ -87,7 +86,7 @@ const COMPLEMENTS = [
       'Ácido glicólico 2%, Avena 2%, Manzanilla 2%, Base foam de limpieza',
   },
   {
-    imgSrc: '/images/derma/landingPrecios/ingredients/complement.png',
+    imgSrc: '/images/derma/landingPrecios/ingredients/protectorSolar.png',
     name: 'Protector solar 50+',
     volume: '50ml',
     description:
@@ -96,7 +95,7 @@ const COMPLEMENTS = [
       'Ácido hialurónico, Colágeno natural, Filtros solares en base de emulsión sin grasa',
   },
   {
-    imgSrc: '/images/derma/landingPrecios/ingredients/complement.png',
+    imgSrc: '/images/derma/landingPrecios/ingredients/crema.png',
     name: 'Crema de día específica',
     volume: '50ml',
     description:
@@ -106,7 +105,7 @@ const COMPLEMENTS = [
 ];
 
 export default function IngredientsPrices() {
-  const visibleComplements = isMobile ? 1 : isTablet ? 2 : 3;
+  const visibleComplements = isMobileSSR() ? 1 : isTabletSSR() ? 2 : 3;
 
   return (
     <div className="bg-derma-secondary300 py-4 pb-16">
@@ -175,10 +174,12 @@ export default function IngredientsPrices() {
       <Container className="px-0 md:px-4">
         <CheckHydration>
           <Carousel
-            hasDots={isMobile}
-            hasControls={!isMobile}
+            hasDots={isMobileSSR()}
+            hasControls={
+              !isMobileSSR() && COMPLEMENTS.length > visibleComplements
+            }
             controlStyles="px-4"
-            className="relative"
+            className="relative pb-12"
             isIntrinsicHeight
             visibleSlides={visibleComplements}
             infinite={false}
@@ -219,6 +220,12 @@ export default function IngredientsPrices() {
             })}
           </Carousel>
         </CheckHydration>
+
+        <Flex className="justify-center">
+          <Button type="derma" size="xl" customStyles="px-16">
+            Empezar análisis de piel
+          </Button>
+        </Flex>
       </Container>
     </div>
   );

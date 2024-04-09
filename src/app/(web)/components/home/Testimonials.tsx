@@ -1,5 +1,5 @@
 import { Testimonial } from '@interface/testimonial';
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgByGoogle, SvgStar } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';

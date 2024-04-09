@@ -21,19 +21,16 @@ export default function TreatmentsPrices() {
           <li className="p-4 md:py-6 rounded-2xl bg-derma-secondary500">
             <SvgStethoscope className="h-12 w-12 text-derma-primary500 mx-auto mb-4" />
             <Text className="text-center md:text-lg">
-              Dermatólogos especializados
+              Médicos especialistas
             </Text>
           </li>
           <li className="p-4 md:py-6 rounded-2xl bg-derma-secondary500">
             <SvgCalendarSearch className="h-12 w-12 text-derma-primary500 mx-auto mb-4" />
-            <Text className="text-center md:text-lg">Seguimiento contínuo</Text>
+            <Text className="text-center md:text-lg">Seguimiento continuo</Text>
           </li>
           <li className="p-4 md:py-6 rounded-2xl bg-derma-secondary500">
             <SvgBox className="h-12 w-12 text-derma-primary500 mx-auto mb-4" />
-            <Text className="text-center md:text-lg">
-              Entregas <br className="hidden md:block" />
-              flexibles
-            </Text>
+            <Text className="text-center md:text-lg">Envío gratis</Text>
           </li>
         </ul>
       </Container>
