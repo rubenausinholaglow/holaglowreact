@@ -86,14 +86,15 @@ export default function DermaHeader({
 
               {!hideButton && (
                 <Button
+                  size={isMobile ? 'sm' : 'md'}
                   id="tmevent_derma_multistep_start_top"
                   className="lg:absolute right-0 2xl:mr-20"
                   type="tertiary"
                   href="/multistep/start"
-                  customStyles="bg-transparent text-derma-primary border-derma-primary md:text-derma-tertiary md:border-derma-tertiary hover:border-derma-primary500 hover:text-derma-primary500"
+                  customStyles="bg-transparent text-derma-tertiary border-derma-tertiary md:text-derma-tertiary md:border-derma-tertiary"
                 >
-                  <Text className="font-semibold mr-2">Pide cita</Text>
-                  <SvgArrow className="h-5 w-5" />
+                  <Text className="md:font-semibold">Pide cita</Text>
+                  <SvgArrow className="h-5 w-5 hidden ml-2 md:block" />
                 </Button>
               )}
             </Flex>
