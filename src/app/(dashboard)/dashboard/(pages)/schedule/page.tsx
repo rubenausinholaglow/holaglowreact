@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { ProductClinics } from '@interface/clinic';
-import { PackUnities, Product } from '@interface/product';
+import { PackUnitiesScheduled, Product } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
@@ -22,6 +21,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+import { v4 as createUniqueId } from 'uuid';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
 
@@ -126,7 +126,8 @@ export default function Page() {
     product.packUnities?.forEach(x => {
       console.log(x.id);
       //if (!treatmentPacks.some(packType => packType.id == x.id)) {
-      const packsToAdd: PackUnities = {
+      const packsToAdd: PackUnitiesScheduled = {
+        uniqueId: createUniqueId(),
         id: x.id,
         type: x.type,
         isScheduled: false,

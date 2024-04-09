@@ -85,6 +85,12 @@ export interface AppliedProduct {
 export interface PackUnities {
   id : string;
   type : UnityType;
+}
+
+export interface PackUnitiesScheduled {
+  uniqueId : string;
+  id : string;
+  type : UnityType;
   isScheduled? : boolean;
 }
 
