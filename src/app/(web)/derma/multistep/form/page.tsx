@@ -78,7 +78,7 @@ export default function Form() {
       symptoms.length > 0
         ? symptoms.map(symptom => ({
             skinPain: pain,
-            optionsSkinPain: symptom,
+            option: symptom,
           }))
         : [];
 
