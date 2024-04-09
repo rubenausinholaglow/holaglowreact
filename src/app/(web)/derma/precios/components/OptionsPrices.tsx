@@ -1,3 +1,4 @@
+import isMobileSSR from '@utils/isMobileSSR';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -80,7 +81,7 @@ export default function OptionsPrices() {
     <div className="bg-derma-secondary300 py-4 pb-16">
       <Container className="bg-white/50 py-4 rounded-2xl -mt-4 md:p-6">
         <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
-          {SUBSCRIPTIONS.map(subscription => (
+          {SUBSCRIPTIONS.map((subscription, index) => (
             <li
               className={`relative flex flex-col p-4 pt-8 md:p-6 md:pt-16 justify-center rounded-xl md:w-1/2 ${subscription.bgColor}`}
               key={subscription.title}
@@ -97,7 +98,9 @@ export default function OptionsPrices() {
                 alt={subscription.title}
                 height={200}
                 width={200}
-                className="mb-4 mx-auto"
+                className={`mb-4 mx-auto ${
+                  index === 0 && isMobileSSR() ? 'mt-8' : ''
+                }`}
               />
               <Text className="text-lg md:text-xl font-semibold mb-2">
                 {subscription.title}
@@ -108,7 +111,6 @@ export default function OptionsPrices() {
               <Text className="text-sm text-derma-primary500">
                 {subscription.price.subtitle}
               </Text>
-
               <ul className="border-t border-hg-black100 mt-4 py-4 flex flex-col gap-4 ">
                 {subscription.bullets.map(bullet => (
                   <li

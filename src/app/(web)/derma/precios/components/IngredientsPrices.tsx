@@ -129,14 +129,15 @@ export default function IngredientsPrices() {
             className="w-full pr-6 gap-2"
             key={ingredient.name}
           >
-            <div className="aspect-[3/2] w-full rounded-2xl bg-derma-secondary500 mb-2 py-4 relative border-8 border-derma-secondary500">
+            <Flex className="relative aspect-[3/2] w-full rounded-2xl bg-derma-secondary500 mb-2 py-4 overflow-hidden">
               <Image
-                fill
                 alt={ingredient.name}
                 src={ingredient.imgSrc}
-                objectFit="cover"
+                fill
+                objectFit="contain"
+                className="scale-110"
               />
-            </div>
+            </Flex>
 
             <Text className="text-lg font-semibold">{ingredient.name}</Text>
             <Text className="">

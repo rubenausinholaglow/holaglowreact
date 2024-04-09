@@ -1,6 +1,4 @@
 import isMobileSSR from '@utils/isMobileSSR';
-import { SvgHolaglowHand } from 'app/icons/Icons';
-import { SvgByGoogle, SvgStar } from 'app/icons/IconsDs';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
