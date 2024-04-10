@@ -64,7 +64,11 @@ export const applyFilters = ({
     });
     const isVisibleByText =
       filters.text.length === 0 ||
-      product.title.toLowerCase().includes(filters.text.toLowerCase());
+      product.title.toLowerCase().includes(filters.text.toLowerCase()) ||
+      product.description.toLowerCase().includes(filters.text.toLowerCase()) ||
+      product.longDescription
+        .toLowerCase()
+        .includes(filters.text.toLowerCase());
     const productVisibility = [
       isVisibleByCategory,
       isVisibleByZone,
