@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
+import ROUTES from '@utils/routes';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow } from 'app/icons/IconsDs';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
-import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -25,8 +25,6 @@ export default function DermaHeader({
 }: {
   hideButton: boolean;
 }) {
-  const ROUTES = useRoutes();
-
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
@@ -90,10 +88,10 @@ export default function DermaHeader({
                   id="tmevent_derma_multistep_start_top"
                   className="lg:absolute right-0 2xl:mr-20"
                   type="tertiary"
-                  href="/multistep/start"
+                  href={ROUTES.derma.multistep.start}
                   customStyles="bg-transparent text-derma-tertiary border-derma-tertiary md:text-derma-tertiary md:border-derma-tertiary"
                 >
-                  <Text className="md:font-semibold">Pide cita</Text>
+                  <Text className="md:font-semibold">Analizar mi piel</Text>
                   <SvgArrow className="h-5 w-5 hidden ml-2 md:block" />
                 </Button>
               )}
