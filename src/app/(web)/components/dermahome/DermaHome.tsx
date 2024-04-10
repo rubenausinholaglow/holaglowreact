@@ -21,7 +21,7 @@ export default function DermaHome() {
         <StoriesDerma />
         <ProfessionalsDerma className="py-12" />
         <ClinicsDerma />
-        <BenefitsApplicationResultsDerma className="mt-12" />
+        <BenefitsApplicationResultsDerma className="mt-12 md:mt-0" />
         <FaqsDerma className="py-12" />
       </div>
       <DermaBottomBar />

@@ -18,7 +18,7 @@ export default function BenefitsApplicationResultsDerma({
         >
           Una rutina minimalista
         </Title>
-        <Text className="text-hg-black500 mb-8">
+        <Text className="text-hg-black500 mb-8 md:text-lg">
           Lo que tu piel necesita. Nada más. Nada menos.
         </Text>
 
@@ -74,7 +74,7 @@ export default function BenefitsApplicationResultsDerma({
             </Title>
             {[
               {
-                title: 'Mantén tu piel limpia',
+                title: 'Mantienen tu piel limpia',
               },
               {
                 title: 'Evitan el envejecimiento prematuro de la piel',

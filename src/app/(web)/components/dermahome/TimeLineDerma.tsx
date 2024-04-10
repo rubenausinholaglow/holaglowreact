@@ -1,3 +1,4 @@
+import ROUTES from '@utils/routes';
 import { SvgCheck } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -74,7 +75,7 @@ export default function TimeLineDerma() {
         />
       </Flex>
 
-      <Button type="derma" size="xl">
+      <Button type="derma" size="xl" href={ROUTES.derma.multistep.start}>
         Empezar análisis
       </Button>
     </Container>
