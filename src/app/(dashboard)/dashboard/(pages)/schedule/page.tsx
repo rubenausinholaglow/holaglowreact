@@ -19,7 +19,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { isEmpty, set } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { v4 as createUniqueId } from 'uuid';
 
@@ -88,9 +88,8 @@ export default function Page() {
 
   async function setTreatments() {
     try {
-      setSelectedTreatments([]);
+      //setSelectedTreatments([]);
       const packsToAdd: PackUnitiesScheduled[] = [];
-      console.log('setSelected');
       const productTitles: string[] = cart
         .filter(
           cartItem =>
@@ -99,7 +98,6 @@ export default function Page() {
             validTypesFilterCart.includes(cartItem.type)
         )
         .map(cartItem => cartItem.title);
-
       const foundProducts: Product[] = [];
 
       productTitles.forEach(title => {
@@ -116,10 +114,11 @@ export default function Page() {
           }
         });
       });
+
+      setSelectedTreatments([...selectedTreatments, ...foundProducts]);
       if (packsToAdd.length > 0) {
         setTreatmentPacks([...treatmentPacks, ...packsToAdd]);
       }
-      setSelectedTreatments(foundProducts);
     } catch (error: any) {
       Bugsnag.notify(error);
     } finally {

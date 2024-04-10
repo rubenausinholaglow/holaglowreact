@@ -16,6 +16,7 @@ import {
   Operation,
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { SvgSpinner } from 'app/icons/Icons';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -206,9 +207,11 @@ export default function TreatmentAccordionSelector({
       isEmpty(selectedProducts) &&
       hasIndividualProductInCart &&
       treatmentPacks.filter(x => x.isScheduled == true).length == 0 &&
-      cart.filter(x => x.isScheduled == true).length == 0
-    )
+      cart.filter(x => x.isScheduled == true).length == 0 &&
+      selectedTreatments.length > 0
+    ) {
       setSelectedProducts(selectedTreatments);
+    }
   }, [selectedTreatments]);
 
   useEffect(() => {
@@ -311,8 +314,10 @@ export default function TreatmentAccordionSelector({
   }
 
   function getQuantityOfProduct(product: Product): number {
-    return selectedTreatments.filter(treatment => treatment.id === product.id)
-      .length;
+    return (
+      selectedTreatments.filter(treatment => treatment.id === product.id)
+        .length + selectedProducts.filter(x => x.id === product.id).length
+    );
   }
 
   const renderAcordionContent = (
@@ -542,6 +547,7 @@ export default function TreatmentAccordionSelector({
 
   if (isDashboard && cart.length > 0) {
     const haveSelectedProducts = getProductsByCategory('', true);
+
     return (
       <>
         {haveSelectedProducts.length > 0
