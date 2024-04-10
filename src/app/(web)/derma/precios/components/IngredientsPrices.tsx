@@ -1,5 +1,6 @@
 import CheckHydration from '@utils/CheckHydration';
 import { isMobileSSR, isTabletSSR } from '@utils/isMobileSSR';
+import ROUTES from '@utils/routes';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { Button } from 'designSystem/Buttons/Buttons';
 import Carousel from 'designSystem/Carousel/Carousel';
@@ -222,7 +223,12 @@ export default function IngredientsPrices() {
         </CheckHydration>
 
         <Flex className="justify-center">
-          <Button type="derma" size="xl" customStyles="px-16">
+          <Button
+            type="derma"
+            size="xl"
+            customStyles="px-16"
+            href={ROUTES.derma.multistep.start}
+          >
             Empezar análisis de piel
           </Button>
         </Flex>

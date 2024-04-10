@@ -1,4 +1,6 @@
+import { multiValueCSS } from 'react-select/dist/declarations/src/components/MultiValue';
 import { isMobileSSR } from '@utils/isMobileSSR';
+import ROUTES from '@utils/routes';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -80,7 +82,7 @@ export default function OptionsPrices() {
   return (
     <div className="bg-derma-secondary300 py-4">
       <Container className="px-0 md:px-4 ">
-        <div className="px-4 bg-white/50 py-4 rounded-3xl -mt-4 md:p-6">
+        <div className="px-4 bg-derma-primary300/20 py-4 rounded-3xl -mt-4 md:p-6">
           <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
             {SUBSCRIPTIONS.map((subscription, index) => (
               <li
@@ -141,7 +143,12 @@ export default function OptionsPrices() {
           </ul>
 
           <Flex className="justify-center">
-            <Button type="derma" size="xl" customStyles="px-16">
+            <Button
+              type="derma"
+              size="xl"
+              customStyles="px-16"
+              href={ROUTES.derma.multistep.start}
+            >
               Empezar análisis de piel
             </Button>
           </Flex>

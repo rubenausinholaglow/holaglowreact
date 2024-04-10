@@ -16,7 +16,7 @@ export default function GuaranteedResults() {
         />
         <div>
           <Text className="font-semibold mb-1">Garantía de resultados</Text>
-          <Text className="text-sm">
+          <Text className="text-sm md:text-md">
             Prueba tu rutina siguiendo las indicaciones del médico y si en 3
             meses no ves una mejora, te devolvemos el dinero. Consulta{' '}
             <a href={ROUTES.statics.termsAndConditions}>las condiciones</a>
