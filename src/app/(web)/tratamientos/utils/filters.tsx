@@ -64,11 +64,13 @@ export const applyFilters = ({
     });
     const isVisibleByText =
       filters.text.length === 0 ||
-      product.title.toLowerCase().includes(filters.text.toLowerCase()) ||
-      product.description.toLowerCase().includes(filters.text.toLowerCase()) ||
-      product.longDescription
-        .toLowerCase()
-        .includes(filters.text.toLowerCase());
+      normalizeText(product.title).includes(normalizeText(filters.text)) ||
+      normalizeText(product.description).includes(
+        normalizeText(filters.text)
+      ) ||
+      normalizeText(product.longDescription).includes(
+        normalizeText(filters.text)
+      );
     const productVisibility = [
       isVisibleByCategory,
       isVisibleByZone,
@@ -85,6 +87,12 @@ export const applyFilters = ({
   return updatedProducts;
 };
 
+export const normalizeText = (text: string) => {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+};
 export const filterCount = (filters: ProductFilters) => {
   let filterCount = 0;
 
