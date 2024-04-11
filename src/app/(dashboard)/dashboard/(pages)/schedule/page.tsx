@@ -103,7 +103,6 @@ export default function Page() {
             validTypesFilterCart.includes(cartItem.type)
         )
         .map(cartItem => cartItem.title);
-      const foundProducts: Product[] = [];
 
       productTitles.forEach(title => {
         dashboardProducts.forEach(product => {
@@ -115,8 +114,6 @@ export default function Page() {
               setPackInProductCart(true);
               const packs = addProductUnitiesPack(product);
               packsToAdd.push(...packs);
-            } else {
-              foundProducts.push(product);
             }
           }
         });

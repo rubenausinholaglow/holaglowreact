@@ -43,11 +43,7 @@ const Page = () => {
     setBudgetId,
     storedClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
-  const {
-    setTreatmentPacks,
-    setSelectedTreatments,
-    setSelectedPackTreatments,
-  } = useSessionStore(state => state);
+  const { setTreatmentPacks } = useSessionStore(state => state);
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -187,7 +183,6 @@ const Page = () => {
                 type="white"
                 onClick={e => {
                   setTreatmentPacks([]);
-                  setSelectedPackTreatments([]);
                 }}
               >
                 <span className="font-semibold">Agendar Cita</span>

@@ -52,7 +52,6 @@ interface SessionActions {
   setSelectedTreatments: (value: Product[]) => void;
   setSelectedPack: (value: Product | undefined) => void;
   setPreviousSelectedTreatments: (value: Product[]) => void;
-  setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day?: Dayjs) => void;
@@ -167,9 +166,6 @@ export const useSessionStore = create(
       },
       setPreviousSelectedTreatments: value => {
         set({ previousSelectedTreatments: value });
-      },
-      setSelectedPackTreatments: value => {
-        set({ selectedPacksTreatments: value });
       },
       setSelectedClinic: value => {
         set({ selectedClinic: value });
