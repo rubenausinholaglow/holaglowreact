@@ -1,23 +1,25 @@
-import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-export default function BenefitsApplicationResultsDerma() {
+export default function BenefitsApplicationResultsDerma({
+  className = '',
+}: {
+  className?: string;
+}) {
   return (
-    <div className="pt-12 pb-16 bg-derma-primary100">
+    <div className={`py-12 bg-derma-primary100 ${className}`}>
       <Container>
         <Title
           isAnimated
           size="2xl"
           className="mb-6 md:mb-8 text-derma-primary"
         >
-          Crema facial personalizada
+          Una rutina minimalista
         </Title>
-        <Text className="text-hg-black500 mb-8">
-          Una crema facial formulada exclusivamente para ti con ingredientes que
-          han sido testados médicamente y cuya eficacia se ha demostrado
-          empíricamente.
+        <Text className="text-hg-black500 mb-8 md:text-lg">
+          Lo que tu piel necesita. Nada más. Nada menos.
         </Text>
 
         <Flex
@@ -25,47 +27,39 @@ export default function BenefitsApplicationResultsDerma() {
           className="md:flex-row gap-4 md:gap-16 mb-16 items-start"
         >
           <Flex layout="col-left" className="gap-4 w-full mb-4 md:w-1/2">
-            <Title size="xl" className="text-derma-primary">
-              Beneficios
+            <Title size="xl" className="mb-4 text-derma-tertiary font-light">
+              Una crema facial personalizada
             </Title>
             {[
               {
-                title: 'Prescripción médica',
-                text: 'Los principios activos farmacológicos que contiene la formulación únicamente pueden ser recetados por un médico.',
+                title: 'Recetada por un médico',
               },
               {
-                title: 'Formulación magistral',
-                text: 'La combinación de fármacos creada exclusivamente para un paciente específico por su médico y preparada de manera personalizada en una farmacia.',
+                title: 'Compuesta por ingredientes médicos',
               },
               {
-                title: 'Ingredientes testados',
-                text: 'Al tratarse de principios activos farmacológicos, los ingredientes de la crema recetada se han sometido a ensayos clínicos más exhaustivos que los productos cosméticos.',
+                title: 'Específica para tus objetivos',
               },
               {
-                title: 'Eficacia demostrada',
-                text: 'Gracias a la comprobación empírica de la eficacia de los ingredientes y la personalización de la fórmula, los resultados son más notables y duraderos.',
+                title: 'Adaptada a tu tipo de piel',
               },
             ].map(item => (
-              <SimpleAccordion
+              <Flex
                 key={item.title}
-                className="p-4 md:mb-0 bg-white/50 rounded-2xl"
-                trigger={item.title}
-                triggerStyles="text-left items-start font-semibold"
-                iconStyles="text-derma-primary500"
+                className="bg-white/50 p-4 md:text-lg rounded-2xl gap-4 w-full"
               >
-                <Text size="sm" className="text-hg-black500 pt-4">
-                  {item.text}
-                </Text>
-              </SimpleAccordion>
+                <SvgArrow className="text-derma-primary500" />
+                <Text>{item.title}</Text>
+              </Flex>
             ))}
           </Flex>
-          <div className="md:w-1/2 flex justify-center">
+          <div className="w-full md:w-1/2 flex justify-center">
             <Image
-              src="/images/derma/home/benefits.png"
+              src="/images/derma/home/cremaFormulada.png"
               alt="Beneficios de las cremas formuladas"
               height={648}
               width={648}
-              className="w-2/3 md:w-[80%]"
+              className="w-1/2 md:w-[80%]"
             />
           </div>
         </Flex>
@@ -75,47 +69,36 @@ export default function BenefitsApplicationResultsDerma() {
             layout="col-left"
             className="gap-4 w-full mb-4 md:w-1/2 md:order-2"
           >
-            <Title size="xl" className="text-derma-primary">
-              Aplicación
+            <Title size="xl" className="mb-4 text-derma-tertiary font-light">
+              Tres cremas complementarias
             </Title>
             {[
               {
-                title:
-                  '<span class="font-semibold">¿Cuándo?</span> Por la noche.',
-                text: 'Comienza aplicando una o dos veces por semana, aumentando la periodicidad gradualmente según la recomendación de tu médico.',
+                title: 'Mantienen tu piel limpia',
               },
               {
-                title:
-                  '<span class="font-semibold">¿Cómo?</span> Sobre la piel limpia y seca (antes de la crema hidratante).',
-                text: 'A la mañana siguiente, lava bien tu rostro, aplica crema hidratante y protege tu piel con un SPF de amplio espectro.',
+                title: 'Evitan el envejecimiento prematuro de la piel',
               },
               {
-                title:
-                  '<span class="font-semibold">¿Cuánto?</span> La cantidad del tamaño de un guisante',
-                text: 'Este tipo de cremas son poderosas y eficaces, por eso, no necesitarás aplicar más cantidad para experimentar sus beneficios.',
+                title: 'Potencian el efecto de la crema personalizada',
               },
             ].map(item => (
-              <SimpleAccordion
+              <Flex
                 key={item.title}
-                className="p-4 md:mb-0 bg-white/50 rounded-2xl"
-                trigger={item.title}
-                triggerHasHtml
-                triggerStyles="text-left items-start"
-                iconStyles="text-derma-primary500"
+                className="bg-white/50 p-4 md:text-lg rounded-2xl gap-4 w-full"
               >
-                <Text size="sm" className="text-hg-black500 pt-4">
-                  {item.text}
-                </Text>
-              </SimpleAccordion>
+                <SvgArrow className="text-derma-primary500" />
+                <Text>{item.title}</Text>
+              </Flex>
             ))}
           </Flex>
-          <div className="md:w-1/2 flex justify-center">
+          <div className="w-full md:w-1/2 flex justify-center">
             <Image
-              src="/images/derma/home/application.png"
+              src="/images/derma/home/cremasComplementarias.png"
               alt="Beneficios de las cremas formuladas"
-              height={572}
-              width={432}
-              className="w-2/3 md:w-[80%]"
+              height={648}
+              width={648}
+              className="w-1/2 md:w-[80%]"
             />
           </div>
         </Flex>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
 import ProductCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Professional, ProfessionalType } from 'app/types/clinic';
@@ -26,16 +27,15 @@ export default function ProfessionalsDerma({
     const professionalsWithCity: Professional[] = [
       {
         authorDescription: '',
-        collegiateNumber: '080856206',
+        collegiateNumber: '505015795',
         description: '',
         flowwwId: '',
         id: '',
-        name: 'Dr. Basart Dotras',
+        name: 'Sonsoles Espi Montoya',
         professionalType: ProfessionalType.Medical,
         title: 'Médico estético especialista en dermocosmética',
-        tittleAbbreviation: '',
-        urlPhoto:
-          'https://budgetimages.blob.core.windows.net/derma/medicos/Josep.jpg',
+        tittleAbbreviation: 'Dra',
+        urlPhoto: '/images/derma/home/sonsoles.png',
       },
       {
         authorDescription: '',
@@ -43,10 +43,10 @@ export default function ProfessionalsDerma({
         description: '',
         flowwwId: '',
         id: '',
-        name: 'Dra. Salido Rentería',
+        name: 'Ana Salido Rentería',
         professionalType: ProfessionalType.Medical,
         title: 'Médico estético especialista en dermocosmética',
-        tittleAbbreviation: '',
+        tittleAbbreviation: 'Dra',
         urlPhoto:
           'https://budgetimages.blob.core.windows.net/derma/medicos/Ana.jpg',
       },
@@ -56,11 +56,11 @@ export default function ProfessionalsDerma({
         description: '',
         flowwwId: '',
         id: '',
-        name: 'Dra. Pérez Badillo',
+        name: 'Shirley Pérez Badillo',
         professionalType: ProfessionalType.Medical,
         title:
           'Médico especialista en dermatología con Master en medicina estética',
-        tittleAbbreviation: '',
+        tittleAbbreviation: 'Dra',
         urlPhoto:
           'https://budgetimages.blob.core.windows.net/derma/medicos/Shirley.jpg',
       },
@@ -81,7 +81,7 @@ export default function ProfessionalsDerma({
     >
       <Container
         className={`${
-          isDashboard ? '' : 'md:w-[55%]'
+          isDashboard ? '' : 'md:w-1/2'
         } md:px-0 md:flex md:flex-col md:justify-center md:items-start md:order-2`}
       >
         <Title
@@ -89,42 +89,33 @@ export default function ProfessionalsDerma({
           size="2xl"
           className="mb-6 md:mb-8 text-derma-primary"
         >
-          Nuestra red de dermatólogos estéticos
+          Nuestros dermatólogos estéticos
         </Title>
         <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
-          Dermatólogos experimentados escucharán todas tus inquietudes estéticas
-          para acompañarte en el cuidado óptimo de tu piel y ayudarte a lograr
-          tus objetivos con tratamientos eficaces clínicamente testados.
+          Nuestros médicos analizarán tu piel para acompañarte en el cuidado
+          óptimo de tu piel y ayudarte a lograr tus objetivos con tratamientos
+          eficaces y clínicamente testados.
         </Text>
       </Container>
-      <div className={`${isDashboard ? '' : 'md:w-[45%]'}`}>
-        {isMobile && (
-          <ProductCarousel
-            hasControls={false}
-            type="professionals"
-            items={professionals}
-          />
-        )}
-        {!isMobile && (
-          <Carousel
-            hasControls
-            className="relative"
-            isIntrinsicHeight
-            visibleSlides={1}
-            infinite={false}
-            sliderStyles="gap-8"
-            isDerma
-          >
-            {professionals?.map(professional => (
-              <ProfessionalCard
-                isDerma
-                key={professional.name}
-                professional={professional}
-                className="h-full flex flex-col"
-              />
-            ))}
-          </Carousel>
-        )}
+      <div className={`${isDashboard ? '' : 'md:w-1/2'}`}>
+        <Carousel
+          hasControls
+          className="relative"
+          isIntrinsicHeight
+          visibleSlides={1}
+          infinite={false}
+          isDerma
+          controlStyles="px-4 mt-4"
+        >
+          {professionals?.map(professional => (
+            <ProfessionalCard
+              isDerma
+              key={professional.name}
+              professional={professional}
+              className="h-full flex flex-col"
+            />
+          ))}
+        </Carousel>
       </div>
     </Container>
   );
