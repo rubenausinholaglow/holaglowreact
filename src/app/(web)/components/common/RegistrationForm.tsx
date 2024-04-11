@@ -35,6 +35,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showPostalCode = false,
   showCity = false,
   showAddress = false,
+  className = '',
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -47,6 +48,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showPostalCode?: boolean;
   showCity?: boolean;
   showAddress?: boolean;
+  className?: string;
 }) => {
   const routes = useRoutes();
 
@@ -215,7 +217,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 w-full">
+    <div
+      className={`grid grid-cols-1 gap-4 w-full ${className ? className : ''}`}
+    >
       <TextInputField
         placeholder="Nombre"
         value={formData.name}

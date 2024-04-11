@@ -49,6 +49,7 @@ export interface RegistrationFormProps {
   showPostalCode?: boolean;
   showCity?: boolean;
   showAddress?: boolean;
+  className?: string;
 }
 
 export interface CheckboxProps {

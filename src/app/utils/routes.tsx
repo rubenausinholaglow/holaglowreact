@@ -14,12 +14,9 @@ const ROUTES = {
   blog: '/blog',
   dashboard: {
     crisalix: '/dashboard/crisalix',
-    //schedule: `/dashboard/schedule?flowwwToken=${user?.flowwwToken}`,
     menu: '/dashboard/menu',
-    //home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
     checkOut: '/dashboard/checkout',
     checkIn: {
-      //root: `/dashboard/checkin?clinicId=${storedClinicId}`,
       treatments: '/dashboard/checkin/treatments',
       agenda: '/dashboard/checkin/agenda',
       thankYou: '/dashboard/checkin/welcome',
