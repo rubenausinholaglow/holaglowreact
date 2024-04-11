@@ -37,6 +37,8 @@ class ErrorBoundary extends Component<any, any> {
   }
 }
 
+console.log(gtUltra);
+
 export default function DermaLayout({
   children,
   hideButton = false,

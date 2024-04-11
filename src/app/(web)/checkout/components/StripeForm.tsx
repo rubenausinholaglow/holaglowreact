@@ -1,12 +1,11 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import { StripePaymentElementOptions, loadStripe } from '@stripe/stripe-js';
-import React from 'react';
+import { loadStripe, StripePaymentElementOptions } from '@stripe/stripe-js';
 import { Button } from 'designSystem/Buttons/Buttons';
 
 export const StripeForm = () => {
@@ -46,7 +45,7 @@ export const StripeForm = () => {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <Button id="submit" type="white" size="sm">
+      <Button id="submit" type="primary" size="lg" className="mt-4">
         Pago con tarjeta débito/crédito
       </Button>
       {/* Show any error or success messages */}
