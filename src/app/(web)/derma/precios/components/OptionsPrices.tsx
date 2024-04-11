@@ -141,7 +141,6 @@ export default function OptionsPrices() {
               </li>
             ))}
           </ul>
-
           <Flex className="justify-center">
             <Button
               type="derma"

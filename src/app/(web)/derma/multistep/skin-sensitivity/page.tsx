@@ -24,8 +24,8 @@ export default function SkinSensitivity() {
   const { skinSensibility, setSkinSensibility } = useDermaStore(state => state);
 
   return (
-    <div className="bg-derma-secondary100 min-h-screen">
-      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
+    <div className="bg-derma-secondary300 min-h-screen">
+      <div className="absolute top-0 bottom-0 right-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
         <DermaStepBar steps={11} step={4} />

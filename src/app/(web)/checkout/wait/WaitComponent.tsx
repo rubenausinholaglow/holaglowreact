@@ -153,7 +153,7 @@ export default function WaitComponent() {
   if (isDerma) {
     return (
       <CheckHydration>
-        <div className="bg-derma-secondary100 min-h-screen">
+        <div className="bg-derma-secondary300 min-h-screen">
           <DermaLayout hideButton hideFooter>
             <Container>
               <Flex

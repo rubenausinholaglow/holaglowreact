@@ -18,7 +18,7 @@ export default function StartMultistep() {
   return (
     <>
       <meta name="robots" content="noindex,follow" />
-      <div className="bg-derma-secondary100 min-h-screen">
+      <div className="bg-derma-secondary300 min-h-screen">
         <DermaLayout hideButton hideFooter>
           <Container className="px-0 md:px-4">
             <Flex
