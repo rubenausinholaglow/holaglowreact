@@ -56,7 +56,6 @@ export default function TreatmentAccordionSelector({
   const cart = useCartStore(state => state.cart);
   const router = useRouter();
   const ROUTES = useRoutes();
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -257,9 +256,6 @@ export default function TreatmentAccordionSelector({
         <>
           {selectedTreatments.some(
             selectedProduct => selectedProduct.id === product.id
-          ) ||
-          selectedProducts.some(
-            selproduct => selproduct.title === product.title
           )
             ? checkedElement
             : commonElement}

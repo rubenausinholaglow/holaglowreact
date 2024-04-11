@@ -2,12 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import {
-  PackUnitiesScheduled,
-  Product,
-  ProductType,
-  UnityType,
-} from '@interface/product';
+import { PackUnitiesScheduled, Product, UnityType } from '@interface/product';
 import ProductService from '@services/ProductService';
 import { getValidTypes } from '@utils/agendaUtils';
 import { fetchClinics } from '@utils/fetch';
