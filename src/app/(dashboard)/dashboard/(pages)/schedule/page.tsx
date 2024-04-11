@@ -9,6 +9,7 @@ import {
   UnityType,
 } from '@interface/product';
 import ProductService from '@services/ProductService';
+import { getValidTypes } from '@utils/agendaUtils';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import { validTypesFilterCart } from '@utils/utils';
@@ -53,6 +54,7 @@ export default function Page() {
   const router = useRouter();
   const ROUTES = useRoutes();
 
+  const validTypes = getValidTypes();
   useEffect(() => {
     setStateProducts([]);
     setDashboardProducts([]);
@@ -177,46 +179,53 @@ export default function Page() {
                       <>
                         <div>
                           {cart.length > 0 &&
-                            cart.map((product, index) => {
-                              if (!product.isPack)
-                                return (
-                                  <div key={index} className="flex gap-4">
-                                    <Text className="font-semibold">
-                                      {product.title}
-                                    </Text>
-                                    <Text>
-                                      {product.isScheduled
-                                        ? 'Agendado'
-                                        : 'Pendiente'}
-                                    </Text>
-                                  </div>
-                                );
-                              else
-                                return (
-                                  <div>
-                                    <Text className="font-semibold">
-                                      {product.title}
-                                    </Text>
-                                    {product.packUnities?.map((pack, index) => {
-                                      const x = treatmentPacks.find(
-                                        x => x.id == pack.id
-                                      );
-                                      return (
-                                        <div key={index} className="flex gap-4">
-                                          <Text className="font-semibold ml-4">
-                                            {UnityType[x!.type]}
-                                          </Text>
-                                          <Text>
-                                            {x?.isScheduled
-                                              ? 'Agendado'
-                                              : 'Pendiente'}
-                                          </Text>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                );
-                            })}
+                            cart
+                              .filter(x => validTypes.includes(x.type))
+                              .map((product, index) => {
+                                if (!product.isPack)
+                                  return (
+                                    <div key={index} className="flex gap-4">
+                                      <Text className="font-semibold">
+                                        {product.title}
+                                      </Text>
+                                      <Text>
+                                        {product.isScheduled
+                                          ? 'Agendado'
+                                          : 'Pendiente'}
+                                      </Text>
+                                    </div>
+                                  );
+                                else
+                                  return (
+                                    <div>
+                                      <Text className="font-semibold">
+                                        {product.title}
+                                      </Text>
+                                      {product.packUnities?.map(
+                                        (pack, index) => {
+                                          const x = treatmentPacks.find(
+                                            x => x.id == pack.id
+                                          );
+                                          return (
+                                            <div
+                                              key={index}
+                                              className="flex gap-4"
+                                            >
+                                              <Text className="font-semibold ml-4">
+                                                {UnityType[x!.type]}
+                                              </Text>
+                                              <Text>
+                                                {x?.isScheduled
+                                                  ? 'Agendado'
+                                                  : 'Pendiente'}
+                                              </Text>
+                                            </div>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+                                  );
+                              })}
                         </div>
                         <TreatmentAccordionSelector
                           isDashboard

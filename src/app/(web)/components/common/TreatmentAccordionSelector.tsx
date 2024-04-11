@@ -168,7 +168,12 @@ export default function TreatmentAccordionSelector({
           <ul className="flex flex-col w-full">
             {findSelectedProducts &&
               cart
-                .filter(item => !item.isPack && !item.isScheduled)
+                .filter(
+                  item =>
+                    !item.isPack &&
+                    !item.isScheduled &&
+                    validTypes.includes(item.type)
+                )
                 .map((product, index) => {
                   if (!uniqueTitles.has(product.title)) {
                     uniqueTitles.add(product.title);
