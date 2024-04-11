@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Product, ProductType, UnityType } from '@interface/product';
+import { Product } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import {
@@ -8,20 +8,12 @@ import {
   getValidUnityTypes,
   isDisableAddQuantity,
 } from '@utils/agendaUtils';
-import { fetchProduct } from '@utils/fetch';
-import { productLimitations } from '@utils/productLimitations';
 import useRoutes from '@utils/useRoutes';
-import {
-  getUniqueIds,
-  getUniqueProducts,
-  validTypesFilterCart,
-} from '@utils/utils';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
   Operation,
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { SvgSpinner } from 'app/icons/Icons';
 import { SvgAngle, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -41,11 +33,9 @@ import CategoryIcon from './CategoryIcon';
 
 export default function TreatmentAccordionSelector({
   isDashboard = false,
-  isCheckin = false,
   packInProductCart = false,
 }: {
   isDashboard?: boolean;
-  isCheckin?: boolean;
   packInProductCart?: boolean;
 }) {
   const { dashboardProducts } = useGlobalPersistedStore(state => state);
