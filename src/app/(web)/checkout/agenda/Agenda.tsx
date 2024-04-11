@@ -61,6 +61,8 @@ export default function Agenda({
     setSelectedDay,
     treatmentPacks,
     setTreatmentPacks,
+    setSelectedTreatmentsDashboard,
+    selectedTreatmentsDashboard,
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
@@ -283,7 +285,7 @@ export default function Agenda({
           if (isDashboard || isCheckin)
             analyticsMetrics.externalReference = '14';
 
-          await ScheduleService.createAppointment(
+          /*await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
             selectedDay,
@@ -293,50 +295,63 @@ export default function Agenda({
             analyticsMetrics,
             '',
             selectedPack
-          ).then(x => {
-            if (isDashboard) {
-              const filteredCart = cart.filter(
-                cartItem =>
-                  validTypesFilterCart.includes(cartItem.type) &&
-                  (cartItem.isScheduled === false ||
-                    cartItem.isScheduled === undefined)
-              );
+          ).then(x => {*/
+          if (isDashboard) {
+            const filteredCart = cart.filter(
+              cartItem =>
+                validTypesFilterCart.includes(cartItem.type) &&
+                (cartItem.isScheduled === false ||
+                  cartItem.isScheduled === undefined)
+            );
+            if (
+              filteredCart.length >= selectedTreatments.length ||
+              treatmentPacks.length > 0
+            ) {
               if (
-                filteredCart.length >= selectedTreatments.length ||
-                treatmentPacks.length > 0
+                selectedTreatments.length == 1 &&
+                !selectedTreatments[0].isPack
               ) {
-                if (selectedTreatments.length == 1) {
-                  if (treatmentPacks.length > 0) {
-                    updateTreatmentPackScheduled(selectedTreatments);
-                  } else {
-                    const selectedProduct = filteredCart.find(x => x.title);
-                    updateIsScheduled(true, selectedProduct!.uniqueId);
-                  }
+                const selectedProduct = filteredCart.find(
+                  x => x.title == selectedTreatments[0].title
+                );
+
+                if (selectedProduct != null) {
+                  setSelectedTreatmentsDashboard(
+                    selectedTreatmentsDashboard.filter(
+                      x => x.id !== selectedProduct.id
+                    )
+                  );
+                  updateIsScheduled(true, selectedProduct!.uniqueId);
                 } else {
                   treatmentPacks.length > 0
                     ? updateTreatmentPackScheduled(selectedTreatments)
                     : null;
-
-                  selectedTreatments.forEach(treatment => {
-                    const selectedProducts = filteredCart.filter(
-                      cartItem =>
-                        cartItem.id === treatment.id &&
-                        (cartItem.isScheduled === false ||
-                          cartItem.isScheduled === undefined)
-                    );
-                    selectedProducts.forEach(item => {
-                      updateIsScheduled(true, item.uniqueId);
-                    });
-                  });
                 }
+              } else {
+                treatmentPacks.length > 0
+                  ? updateTreatmentPackScheduled(selectedTreatments)
+                  : null;
+
+                selectedTreatments.forEach(treatment => {
+                  const selectedProducts = filteredCart.filter(
+                    cartItem =>
+                      cartItem.id === treatment.id &&
+                      (cartItem.isScheduled === false ||
+                        cartItem.isScheduled === undefined)
+                  );
+                  selectedProducts.forEach(item => {
+                    updateIsScheduled(true, item.uniqueId);
+                  });
+                });
               }
-              router.push(
-                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
-              );
-            } else if (!isDashboard && !isDerma) {
-              router.push(ROUTES.checkout.thankYou);
             }
-          });
+            router.push(
+              `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
+            );
+          } else if (!isDashboard && !isDerma) {
+            router.push(ROUTES.checkout.thankYou);
+          }
+          //});
         } else if (!isDerma) {
           router.push('/checkout/contactform');
         } else if (isDerma && isCheckout) {
@@ -373,7 +388,6 @@ export default function Agenda({
       ...pack,
       isScheduled: true,
     }));
-
     setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
   }
 

@@ -187,7 +187,6 @@ const Page = () => {
                 type="white"
                 onClick={e => {
                   setTreatmentPacks([]);
-                  setSelectedTreatments([]);
                   setSelectedPackTreatments([]);
                 }}
               >

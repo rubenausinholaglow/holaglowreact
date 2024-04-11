@@ -157,6 +157,7 @@ export default function ProductCard({
               className="mt-auto"
               customStyles="bg-hg-primary"
               onClick={e => {
+                console.log(product);
                 e.stopPropagation();
                 addToCart(product as CartItem);
                 setPendingDiscount(true);

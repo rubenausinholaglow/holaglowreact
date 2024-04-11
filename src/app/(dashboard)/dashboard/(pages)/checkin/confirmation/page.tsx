@@ -20,7 +20,9 @@ export default function ConfirmationCheckIn() {
   const router = useRouter();
   const ROUTES = useRoutes();
   const { cart } = useCartStore(state => state);
-  const { treatmentPacks } = useSessionStore(state => state);
+  const { treatmentPacks, setSelectedTreatments } = useSessionStore(
+    state => state
+  );
 
   const isCheckin = searchParams.get('isCheckin') === 'true';
   const [isPendingProductsScheduler, setIsPendingProductsScheduler] =
@@ -44,6 +46,7 @@ export default function ConfirmationCheckIn() {
               x.isScheduled === false && validTypesFilterCart.includes(x.type)
           )
         );
+    setSelectedTreatments([]);
   }, []);
 
   return (

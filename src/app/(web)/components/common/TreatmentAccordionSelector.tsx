@@ -3,6 +3,11 @@ import Bugsnag from '@bugsnag/js';
 import { Product, ProductType, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
+import {
+  getValidTypes,
+  getValidUnityTypes,
+  isDisableAddQuantity,
+} from '@utils/agendaUtils';
 import { fetchProduct } from '@utils/fetch';
 import { productLimitations } from '@utils/productLimitations';
 import useRoutes from '@utils/useRoutes';
@@ -43,103 +48,48 @@ export default function TreatmentAccordionSelector({
   isCheckin?: boolean;
   packInProductCart?: boolean;
 }) {
-  const router = useRouter();
-  const ROUTES = useRoutes();
-
   const { dashboardProducts } = useGlobalPersistedStore(state => state);
-  const {
-    setSelectedTreatments,
-    selectedTreatments,
-    treatmentPacks,
-    setSelectedPack,
-  } = useSessionStore(state => state);
-
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-
-  const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
-
+  const { selectedTreatments, setSelectedTreatments, treatmentPacks } =
+    useSessionStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedIndexsProducts, setSelectedIndexProducts] = useState<number[]>(
-    []
-  );
-  const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
   const cart = useCartStore(state => state.cart);
+  const router = useRouter();
+  const ROUTES = useRoutes();
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
 
-  const [validTypesPacks, setValidTypes] = useState<UnityType[]>(
-    treatmentPacks.flatMap(x => {
-      return x.type;
-    })
-  );
-
-  const productPacks = ['5465', '971'];
-  const invalidProducts =
-    cart.filter(x => productPacks.includes(x.flowwwId.toString())).length > 0
-      ? []
-      : ['855', '854'];
-
-  function getProductsByCategory(
-    category: string,
-    findSelectedProducts = false
-  ) {
-    const filterCondition = (product: Product) => {
-      if (category.toLocaleUpperCase() == 'PACKS')
-        return product.category.some(
-          categoryItem => categoryItem.name === category && product.isPack
-        );
-      return product.category.some(
-        categoryItem => categoryItem.name === category && !product.isPack
-      );
-    };
-
-    if ((isDashboard && !packInProductCart) || findSelectedProducts) {
-      const filteredProducts: Product[] =
-        dashboardProducts.filter(filterCondition);
-      if (filteredProducts.length === 0) {
-        const productIds = getUniqueIds(selectedProducts);
-        return getUniqueProducts(productIds, selectedProducts);
-      }
-      return filteredProducts.sort((a, b) => (a.title > b.title ? 1 : -1));
-    }
-    if (packInProductCart) {
-      const uniqueProductTitles = new Set<string>();
-      return dashboardProducts
-        .filter(product => {
-          const isValidProductDashboard = checkIsValidProductDashboard(
-            product,
-            uniqueProductTitles
-          );
-          if (isValidProductDashboard) {
-            uniqueProductTitles.add(product.title);
-            return true;
+  useEffect(() => {
+    if (isDashboard && !isEmpty(dashboardProducts)) {
+      const allCategoryNames: string[] = dashboardProducts.reduce(
+        (categoryNames: string[], product) => {
+          let productCategories: string[] = [];
+          if (packInProductCart) {
+            if (validUnityTypes.includes(product.unityType)) {
+              productCategories = product.category.map(
+                category => category.name
+              );
+            }
+          } else if (!product.isPack) {
+            productCategories = product.category.map(category => category.name);
           }
-          return false;
-        })
-        .sort((a, b) => (a.title > b.title ? 1 : -1));
-    }
-    return productsAgenda
-      .filter(filterCondition)
-      .sort((a, b) => (a.title > b.title ? 1 : -1));
-  }
+          return [...categoryNames, ...productCategories];
+        },
+        []
+      );
+      const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
-  function checkIsValidProductDashboard(
-    product: Product,
-    uniqueProductTitles: Set<string>
-  ) {
-    return (
-      validTypesPacks.includes(product.unityType) &&
-      validTypesFilterCart.includes(product.type) &&
-      !product.isPack &&
-      !uniqueProductTitles.has(product.title) &&
-      !invalidProducts.includes(product.flowwwId.toString())
-    );
-  }
+      setProductCategories(uniqueCategoryNames);
+    }
+  }, [dashboardProducts, treatmentPacks]);
+
   useEffect(() => {
     async function getAgendaProducts() {
       const params = {
         isDerma: false,
         getAgendaProducts: true,
       };
+
       await ProductService.getAllProducts(params)
         .then(products => {
           if (products.length > 0) {
@@ -174,149 +124,36 @@ export default function TreatmentAccordionSelector({
     }
   }, []);
 
-  useEffect(() => {
-    if (isDashboard && !isEmpty(dashboardProducts)) {
-      const allCategoryNames: string[] = dashboardProducts.reduce(
-        (categoryNames: string[], product) => {
-          let productCategories: string[] = [];
-          if (packInProductCart) {
-            if (validTypesPacks.includes(product.unityType)) {
-              productCategories = product.category.map(
-                category => category.name
-              );
-            }
-          } else if (!product.isPack) {
-            productCategories = product.category.map(category => category.name);
-          }
-          return [...categoryNames, ...productCategories];
-        },
-        []
+  function getProductsByCategory(category: string): Product[] {
+    const filterCondition = (product: Product) => {
+      if (category.toLocaleUpperCase() == 'PACKS')
+        return product.category.some(
+          categoryItem => categoryItem.name === category && product.isPack
+        );
+      return product.category.some(
+        categoryItem => categoryItem.name === category && !product.isPack
       );
-      const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
+    };
 
-      setProductCategories(uniqueCategoryNames);
+    if (isDashboard)
+      return dashboardProducts
+        .filter(x => x.category.some(y => y.name === category) && !x.isPack)
+        .sort((a, b) => (a.title > b.title ? 1 : -1));
 
-      packInProductCart ? setSelectedTreatments([]) : null;
-    }
-  }, [dashboardProducts, treatmentPacks, validTypesPacks]);
-
-  useEffect(() => {
-    const hasIndividualProductInCart = cart.some(item => !item.isPack);
-
-    if (
-      isEmpty(selectedProducts) &&
-      hasIndividualProductInCart &&
-      treatmentPacks.filter(x => x.isScheduled == true).length == 0 &&
-      cart.filter(x => x.isScheduled == true).length == 0 &&
-      selectedTreatments.length > 0
-    ) {
-      setSelectedProducts(selectedTreatments);
-    }
-  }, [selectedTreatments]);
-
-  useEffect(() => {
-    if (!isEmpty(treatmentPacks))
-      setValidTypes(
-        treatmentPacks.flatMap(x => {
-          return x.type;
-        })
-      );
-  }, [treatmentPacks]);
-
-  useEffect(() => {
-    if (!isEmpty(selectedProducts)) {
-      const selectedIndexs: number[] = [];
-      selectedProducts.map((product, index) => {
-        selectedIndexs.push(index);
-      });
-      setSelectedIndexProducts(selectedIndexs);
-    }
-  }, [selectedProducts]);
-
-  useEffect(() => {
-    async function initMedicalVisitProduct() {
-      const medicalVisitProduct = await fetchProduct(
-        process.env.NEXT_PUBLIC_MEDICAL_VISIT || '',
-        false,
-        false
-      );
-
-      setMedicalVisitProduct(medicalVisitProduct);
-    }
-
-    initMedicalVisitProduct();
-  }, []);
-
-  function addTreatment(product: Product, index: number) {
-    if (isDashboard) {
-      cart.length > 0
-        ? addTreatmentDashboard(product, index)
-        : setSelectedTreatments([...selectedTreatments, product]);
-    } else {
-      if (product.isPack) {
-        setSelectedTreatments([medicalVisitProduct!]);
-        setSelectedProducts([product]);
-        setSelectedPack(product);
-      } else {
-        setSelectedTreatments([product]);
-        setSelectedPack(undefined);
-      }
-    }
+    return productsAgenda
+      .filter(filterCondition)
+      .sort((a, b) => (a.title > b.title ? 1 : -1));
   }
 
-  function addTreatmentDashboard(product: Product, index: number) {
-    const productToAdd: Product[] = getProductToAdd(product);
-    setSelectedTreatments([...selectedTreatments, ...productToAdd]);
-    setSelectedIndexProducts([...selectedIndexsProducts, index]);
-  }
+  const validUnityTypes = getValidUnityTypes(treatmentPacks);
+  const validTypes = getValidTypes();
 
-  function getProductToAdd(product: Product): Product[] {
-    if (
-      product.unityType === UnityType.AcidoHialuronico &&
-      !packInProductCart
-    ) {
-      return selectedProducts.filter(x => x.id === product.id) as Product[];
-    } else {
-      return [product];
-    }
-  }
-
-  function removeTreatment(product: Product, index: number) {
-    if (isDashboard) {
-      const firstProductIndex = selectedTreatments.findIndex(
-        item => item.id === product.id
-      );
-      if (firstProductIndex !== -1) {
-        const updatedTreatments = [...selectedTreatments];
-        updatedTreatments.splice(firstProductIndex, 1);
-        setSelectedTreatments(updatedTreatments);
-      }
-    } else {
-      setSelectedIndexProducts(x => x.filter(item => item !== index));
-      const updatedSelection = getUpdatedSelection(product);
-      setSelectedTreatments(updatedSelection);
-    }
-  }
-
-  function getUpdatedSelection(product: Product): Product[] {
-    if (product.unityType === UnityType.AcidoHialuronico) {
-      return selectedTreatments.filter(
-        selectedProduct => selectedProduct.id !== product.id
-      );
-    } else {
-      const indexToRemove = selectedTreatments.findIndex(
-        x => x.title === product.title
-      );
-      const updatedTreatments = [...selectedTreatments];
-      updatedTreatments.splice(indexToRemove, 1);
-      return updatedTreatments;
-    }
-  }
-
-  function getQuantityOfProduct(product: Product): number {
-    return (
-      selectedTreatments.filter(treatment => treatment.id === product.id)
-        .length + selectedProducts.filter(x => x.id === product.id).length
+  function getProductsByTypePack(): Product[] {
+    return dashboardProducts.filter(
+      product =>
+        validUnityTypes.includes(product.unityType) &&
+        validTypes.includes(product.type) &&
+        !product.isPack
     );
   }
 
@@ -324,164 +161,77 @@ export default function TreatmentAccordionSelector({
     category: string,
     findSelectedProducts = false
   ) => {
+    const uniqueTitles = new Set<string>();
     return (
       <AccordionContent>
         <div className="border-t border-hg-secondary300">
           <ul className="flex flex-col w-full">
-            {getProductsByCategory(category, findSelectedProducts).map(
-              (product, index) => (
-                <li
-                  className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
-                  key={product.title}
-                  onClick={() => {
-                    if (isDashboard) return;
-                    const isSelected =
-                      isDashboard && cart.length > 0
-                        ? selectedIndexsProducts.includes(index)
-                        : selectedTreatments.some(
-                            selectedProduct => selectedProduct.id === product.id
-                          );
+            {findSelectedProducts &&
+              cart
+                .filter(item => !item.isPack && !item.isScheduled)
+                .map((product, index) => {
+                  if (!uniqueTitles.has(product.title)) {
+                    uniqueTitles.add(product.title);
+                    return (
+                      <li
+                        className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
+                        key={index}
+                      >
+                        <div className="mr-4">
+                          <Text className="font-semibold">{product.title}</Text>
+                          <Text className="text-xs">{product.description}</Text>
+                        </div>
+                        {renderSelectorQuantity(product, index)}
+                      </li>
+                    );
+                  }
+                })}
+            {cart.length > 0 &&
+              treatmentPacks.length > 0 &&
+              !findSelectedProducts && (
+                <>
+                  {getProductsByTypePack().map((product, index) => (
+                    <li
+                      className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
+                      key={product.title}
+                    >
+                      <div className="mr-4">
+                        <Text className="font-semibold">{product.title}</Text>
+                        <Text className="text-xs">{product.description}</Text>
+                      </div>
+                      {renderSelectorQuantity(product, index)}
+                    </li>
+                  ))}
+                </>
+              )}
+            {getProductsByCategory(category).map((product, index) => (
+              <li
+                className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
+                key={product.title}
+                onClick={() => {
+                  if (isDashboard) return;
 
-                    if (isSelected && isDashboard) {
-                      removeTreatment(product, index);
-                    } else {
-                      addTreatment(product, index);
-                    }
-
-                    if (!isDashboard) {
-                      router.push(ROUTES.checkout.clinics);
-                    }
-                  }}
-                >
-                  <div className="mr-4">
-                    <Text className="font-semibold">{product.title}</Text>
-                    <Text className="text-xs">{product.description}</Text>
-                  </div>
-                  {(packInProductCart && !findSelectedProducts) ||
-                  (isDashboard && cart.length == 0)
-                    ? renderSelectorQuantity(product, index) || null
-                    : renderCheck(product, index) || null}
-                </li>
-              )
-            )}
+                  setSelectedTreatments([product]);
+                  if (!isDashboard) {
+                    router.push(ROUTES.checkout.clinics);
+                  }
+                }}
+              >
+                <div className="mr-4">
+                  <Text className="font-semibold">{product.title}</Text>
+                  <Text className="text-xs">{product.description}</Text>
+                </div>
+                {isDashboard
+                  ? renderSelectorQuantity(product, index) || null
+                  : renderCheck(product, index) || null}
+              </li>
+            ))}
           </ul>
         </div>
       </AccordionContent>
     );
   };
 
-  const getCountByType = (
-    selectedTreatments: Product[],
-    productType: ProductType
-  ): number => {
-    return selectedTreatments.filter(
-      treatment => treatment.type === productType
-    ).length;
-  };
-
-  const getCountByUnityType = (
-    selectedTreatments: Product[],
-    unityType: UnityType
-  ): number => {
-    return selectedTreatments.filter(
-      treatment => treatment.unityType === unityType
-    ).length;
-  };
-  const renderSelectorQuantity = (product: Product, index: number) => {
-    const countMedicalProduct = getCountByType(
-      selectedTreatments,
-      ProductType.Medical
-    );
-    const countEstheticProduct = getCountByType(
-      selectedTreatments,
-      ProductType.Esthetic
-    );
-
-    const countLiftingProduct =
-      (selectedTreatments.length > 0 &&
-        getCountByUnityType(selectedTreatments, UnityType.Lifting)) ||
-      getCountByUnityType(selectedTreatments, UnityType.Radiesse) ||
-      0;
-
-    const countHilosProduct =
-      (selectedTreatments.length > 0 &&
-        getCountByUnityType(selectedTreatments, UnityType.Hilos)) ||
-      0;
-
-    const countPapadaProduct =
-      (selectedTreatments.length > 0 &&
-        getCountByType(selectedTreatments, ProductType.Esthetic)) ||
-      0;
-
-    const countBotoxProduct =
-      (selectedTreatments.length > 0 &&
-        getCountByUnityType(selectedTreatments, UnityType.Botox)) ||
-      getCountByType(selectedTreatments, ProductType.Esthetic) ||
-      0;
-
-    const countOjerasProduct =
-      (selectedTreatments.length > 0 &&
-        selectedTreatments.filter(x => x.flowwwId.toString() == '854')
-          .length) ||
-      0;
-
-    const someLimitedProduct =
-      selectedTreatments.length > 0 &&
-      productLimitations.some(
-        limitation =>
-          selectedTreatments.some(
-            treatment => limitation.id === treatment.flowwwId.toString()
-          ) ||
-          (selectedTreatments.length > 0 &&
-            productLimitations.some(
-              limitation => limitation.id === product.flowwwId.toString()
-            ))
-      );
-
-    const disable =
-      (cart.length == 0 &&
-        (someLimitedProduct ||
-          (countOjerasProduct > 0 && product.unityType == UnityType.Botox) ||
-          (countOjerasProduct > 0 &&
-            product.unityType == UnityType.BabyBotox) ||
-          (countBotoxProduct > 0 && product.flowwwId.toString() == '854') ||
-          (countHilosProduct > 0 && product.unityType == UnityType.Lifting) ||
-          (countHilosProduct > 0 && product.unityType == UnityType.Radiesse) ||
-          (countLiftingProduct > 0 && product.unityType == UnityType.Hilos) ||
-          (countPapadaProduct > 0 && product.unityType == UnityType.Hilos) ||
-          (countHilosProduct > 0 && product.unityType == UnityType.Belkyra) ||
-          (countMedicalProduct > 0 && product.type == ProductType.Esthetic) ||
-          (countEstheticProduct > 0 && product.type == ProductType.Medical))) ||
-      (cart.length > 0 &&
-        selectedTreatments.filter(x => x.unityType == product.unityType)
-          .length -
-          selectedProducts.filter(x => x.unityType == product.unityType)
-            .length >=
-          treatmentPacks.filter(
-            x => x.isScheduled == false && x.type == product.unityType
-          ).length);
-    if (
-      validTypesPacks.includes(product.unityType) ||
-      (isDashboard && cart.length == 0)
-    )
-      return (
-        <div className="ml-auto">
-          <Quantifier
-            handleUpdateQuantity={function handleUpdateQuantity(
-              operation: Operation
-            ): void {
-              if (operation == 'increase') {
-                addTreatment(product, index);
-              } else {
-                removeTreatment(product, index);
-              }
-            }}
-            quantity={getQuantityOfProduct(product)}
-            disableAddQuantity={disable}
-          />
-        </div>
-      );
-  };
   const renderCheck = (product: Product, index: number) => {
     const commonElement = (
       <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
@@ -494,7 +244,7 @@ export default function TreatmentAccordionSelector({
     if (isDashboard && cart.length > 0) {
       return (
         <>
-          {selectedIndexsProducts.includes(index)
+          {selectedTreatments.some(x => x.id === product.id)
             ? checkedElement
             : commonElement}
         </>
@@ -518,12 +268,7 @@ export default function TreatmentAccordionSelector({
   const renderAccordionDashboard = (findSelectedProducts: boolean) => {
     return (
       <Accordion type="single" collapsible className="w-full" defaultValue="1">
-        {!findSelectedProducts && (
-          <div className="mb-4">
-            {treatmentPacks.filter(x => x.isScheduled == true).length}/
-            {treatmentPacks.length} agendados
-          </div>
-        )}
+        {!findSelectedProducts && <div className="mb-4"></div>}
         <AccordionItem
           className={`transition-all w-full rounded-lg overflow-hidden mb-4 
                   bg-hg-secondary100
@@ -545,20 +290,60 @@ export default function TreatmentAccordionSelector({
     );
   };
 
-  if (isDashboard && cart.length > 0) {
-    const haveSelectedProducts = getProductsByCategory('', true);
+  const renderSelectorQuantity = (product: Product, index: number) => {
+    const disable = isDisableAddQuantity(
+      selectedTreatments,
+      product,
+      cart,
+      treatmentPacks
+    );
 
     return (
-      <>
-        {haveSelectedProducts.length > 0
-          ? renderAccordionDashboard(true)
-          : null}
-        {packInProductCart ? renderAccordionDashboard(false) : null}
-      </>
+      <div className="ml-auto">
+        <Quantifier
+          handleUpdateQuantity={function handleUpdateQuantity(
+            operation: Operation
+          ): void {
+            if (operation == 'increase') {
+              setSelectedTreatments([...selectedTreatments, product]);
+            } else {
+              const firstProductIndex = selectedTreatments.findIndex(
+                item => item.id === product.id
+              );
+              const updatedTreatments = [...selectedTreatments];
+              updatedTreatments.splice(firstProductIndex, 1);
+              setSelectedTreatments(updatedTreatments);
+            }
+          }}
+          quantity={getQuantityOfProduct(product)}
+          disableAddQuantity={disable}
+        />
+      </div>
+    );
+  };
+
+  function getQuantityOfProduct(product: Product): number {
+    return selectedTreatments.filter(treatment => treatment.id === product.id)
+      .length;
+  }
+
+  if (isDashboard && cart.length > 0) {
+    return (
+      <div className="w-full">
+        <div>{renderAccordionDashboard(true)}</div>
+        <div className="mt-4">
+          {treatmentPacks.length > 0 ? renderAccordionDashboard(false) : null}
+        </div>
+      </div>
     );
   }
 
-  if (cart.length == 0 || (!isDashboard && productsAgenda.length > 0))
+  if (
+    cart.length == 0 ||
+    (cart.length == 1 &&
+      cart[0].flowwwId.toString() ==
+        process.env.NEXT_PUBLIC_CITA_PREVIA_FLOWWWID)
+  ) {
     return (
       <Accordion type="single" collapsible className="w-full">
         {productCategories
@@ -605,4 +390,5 @@ export default function TreatmentAccordionSelector({
           })}
       </Accordion>
     );
+  }
 }

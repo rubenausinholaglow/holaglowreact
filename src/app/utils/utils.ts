@@ -235,3 +235,15 @@ export function getUniqueIds(products : Product[]) : string[] {
       new Set(products.map(x => x.id))
     );
 }
+
+export const typeToString = {
+  [ProductType.Others]: 'Otros',
+  [ProductType.Esthetic]: 'Estético',
+  [ProductType.Medical]: 'Medical',
+  [ProductType.Product]: 'Product',
+  [ProductType.Voucher]: 'Voucher',
+  [ProductType.Dashboard]: 'Dashboard',
+  [ProductType.GiftCard]: 'GiftCard',
+  [ProductType.GlowBox]: 'GlowBox',
+  [ProductType.GlowGifts]: 'GlowGifts',
+};
