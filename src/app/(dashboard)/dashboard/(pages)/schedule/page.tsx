@@ -182,7 +182,7 @@ export default function Page() {
                                       </Text>
                                       <Text>
                                         {product.isScheduled
-                                          ? 'Agendado'
+                                          ? 'Agendado ' + product.scheduledDate
                                           : 'Pendiente'}
                                       </Text>
                                     </div>
@@ -208,7 +208,8 @@ export default function Page() {
                                               </Text>
                                               <Text>
                                                 {x?.isScheduled
-                                                  ? 'Agendado'
+                                                  ? 'Agendado ' +
+                                                    x.scheduledDate
                                                   : 'Pendiente'}
                                               </Text>
                                             </div>

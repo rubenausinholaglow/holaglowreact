@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Product } from '@interface/product';
+import { Product, ProductType, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import {
@@ -47,6 +47,8 @@ export default function TreatmentAccordionSelector({
   const router = useRouter();
   const ROUTES = useRoutes();
   const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
+
+  const notValidProducts = [4107, 0];
 
   useEffect(() => {
     if (isDashboard && !isEmpty(dashboardProducts)) {
@@ -126,7 +128,13 @@ export default function TreatmentAccordionSelector({
 
     if (isDashboard)
       return dashboardProducts
-        .filter(x => x.category.some(y => y.name === category) && !x.isPack)
+        .filter(x => {
+          return (
+            x.category.some(y => y.name === category) &&
+            !x.isPack &&
+            x.flowwwId != 4107
+          );
+        })
         .sort((a, b) => (a.title > b.title ? 1 : -1));
 
     return productsAgenda
@@ -142,7 +150,8 @@ export default function TreatmentAccordionSelector({
       product =>
         validUnityTypes.includes(product.unityType) &&
         validTypes.includes(product.type) &&
-        !product.isPack
+        !product.isPack &&
+        product.flowwwId != 4107
     );
   }
 
@@ -220,6 +229,9 @@ export default function TreatmentAccordionSelector({
       <div className="mr-4">
         <Text className="font-semibold">{product.title}</Text>
         <Text className="text-xs">{product.description}</Text>
+        <Text className="text-xs">{product.flowwwId}</Text>
+        <Text className="text-xs">{UnityType[product.unityType]}</Text>
+        <Text className="text-xs">{ProductType[product.type]}</Text>
       </div>
     );
   };
@@ -295,12 +307,17 @@ export default function TreatmentAccordionSelector({
             if (operation == 'increase') {
               setSelectedTreatments([...selectedTreatments, product]);
             } else {
-              const firstProductIndex = selectedTreatments.findIndex(
-                item => item.id === product.id
+              const isSelected = selectedTreatments.some(
+                selectedProduct => selectedProduct.id === product.id
               );
-              const updatedTreatments = [...selectedTreatments];
-              updatedTreatments.splice(firstProductIndex, 1);
-              setSelectedTreatments(updatedTreatments);
+              if (isSelected) {
+                const firstProductIndex = selectedTreatments.findIndex(
+                  item => item.id === product.id
+                );
+                const updatedTreatments = [...selectedTreatments];
+                updatedTreatments.splice(firstProductIndex, 1);
+                setSelectedTreatments(updatedTreatments);
+              }
             }
           }}
           quantity={getQuantityOfProduct(product)}

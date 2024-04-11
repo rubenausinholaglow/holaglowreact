@@ -75,9 +75,9 @@ export function isDisableAddQuantity(selectedTreatments: Product[], product: Pro
         return true;
     }
 
-    if (isIncompatibleWithSelectedTreatmentsByUnityType(product, selectedTreatments)) {
+    /*if (isIncompatibleWithSelectedTreatmentsByUnityType(product, selectedTreatments)) {
         return true;
-    }
+    }*/
 
 
     if (cart.length > 0 && selectedTreatments.filter(x => x.unityType == product.unityType)
@@ -103,6 +103,10 @@ const incompatibleProductsMap: Record<number, number[]> = {
     936 :[2109, 2110],
     935 :[2109, 2110],
     934 :[2109, 2110],
+    854 : [851, 850, 856],
+    851 : [854],
+    850 : [854],
+    856 : [854],
 };
 
 function isIncompatibleWithSelectedTreatments(flowwwId: number, selectedTreatments: Product[]): boolean {
@@ -117,31 +121,6 @@ function isIncompatibleWithSelectedTreatments(flowwwId: number, selectedTreatmen
     }  
     return false;
 }
-
-
-const incompatibleProductsUnityTypeMap: Record<number, UnityType[]> = {
-    854: [UnityType.BabyBotox, UnityType.Botox],
-};
-
-function isIncompatibleWithSelectedTreatmentsByUnityType(product: Product, selectedTreatments: Product[]): boolean {
-
-    if(selectedTreatments.filter(x => incompatibleProductsUnityTypeMap[x.flowwwId]).length > 0)
-    {
-        if(product.unityType == UnityType.Botox || product.unityType == UnityType.BabyBotox)
-        {
-            return true
-        }
-    } else{
-        if(selectedTreatments.some(x => x.unityType == UnityType.Botox || x.unityType == UnityType.BabyBotox) && product.flowwwId == 854)
-        {
-            return true
-        }
-    }
-
-    return false;
-}
-
-
 
 export  function getValidTypes() {
     const types = [ProductType.Esthetic, ProductType.Medical];

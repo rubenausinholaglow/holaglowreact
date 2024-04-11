@@ -9,7 +9,7 @@ import { EmlaType, PackUnitiesScheduled, Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
-import { getUniqueIds, validTypesFilterCart } from '@utils/utils';
+import { formatDate, getUniqueIds, validTypesFilterCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import { SvgEllipsis, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
@@ -301,6 +301,12 @@ export default function Agenda({
                   (cartItem.isScheduled === false ||
                     cartItem.isScheduled === undefined)
               );
+
+              const dateScehduled =
+                formatDate(selectedDay.toDate(), false) +
+                ' ' +
+                selectedSlot!.startTime.toString();
+
               if (
                 filteredCart.length >= selectedTreatments.length ||
                 treatmentPacks.length > 0
@@ -314,15 +320,25 @@ export default function Agenda({
                   );
 
                   if (selectedProduct != null) {
-                    updateIsScheduled(true, selectedProduct!.uniqueId);
+                    updateIsScheduled(
+                      true,
+                      selectedProduct!.uniqueId,
+                      dateScehduled
+                    );
                   } else {
                     treatmentPacks.length > 0
-                      ? updateTreatmentPackScheduled(selectedTreatments)
+                      ? updateTreatmentPackScheduled(
+                          selectedTreatments,
+                          dateScehduled
+                        )
                       : null;
                   }
                 } else {
                   treatmentPacks.length > 0
-                    ? updateTreatmentPackScheduled(selectedTreatments)
+                    ? updateTreatmentPackScheduled(
+                        selectedTreatments,
+                        dateScehduled
+                      )
                     : null;
 
                   selectedTreatments.forEach(treatment => {
@@ -333,7 +349,7 @@ export default function Agenda({
                           cartItem.isScheduled === undefined)
                     );
                     selectedProducts.forEach(item => {
-                      updateIsScheduled(true, item.uniqueId);
+                      updateIsScheduled(true, item.uniqueId, dateScehduled);
                     });
                   });
                 }
@@ -359,10 +375,14 @@ export default function Agenda({
     }
   }, [selectedSlot]);
 
-  function updateTreatmentPackScheduled(products: Product[]) {
+  function updateTreatmentPackScheduled(
+    products: Product[],
+    scheduledDate: string
+  ) {
     const matchingTreatments: PackUnitiesScheduled[] = [];
     products.forEach(prod => {
-      const productInCart = cart.filter(x => x.id == prod.id).length > 0;
+      const productInCart =
+        cart.filter(x => x.id == prod.id && x.isScheduled == false).length > 0;
       if (productInCart) return;
 
       const matchingTreatment = treatmentPacks.find(
@@ -380,6 +400,7 @@ export default function Agenda({
     const updatedPacks = matchingTreatments.map(pack => ({
       ...pack,
       isScheduled: true,
+      scheduledDate: scheduledDate,
     }));
     setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
   }
