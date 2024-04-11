@@ -63,6 +63,7 @@ export default function NextMultistepButton({
 
   return (
     <Button
+      size="lg"
       onClick={() => {
         if (!isDisabled) handleNextMultistep();
       }}
