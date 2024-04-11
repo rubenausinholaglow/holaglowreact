@@ -43,9 +43,16 @@ export function isDisableAddQuantity(selectedTreatments: Product[], product: Pro
       treatmentPacks
     );
 
-    if (getTreatmentPerType(selectedTreatments, ProductType.Esthetic)) {
+    const haveTreatmentsEsthetics = getTreatmentPerType(selectedTreatments, ProductType.Esthetic)
+    const haveTreatmentsMedics = getTreatmentPerType(selectedTreatments, ProductType.Medical)
+    if (haveTreatmentsEsthetics) {
         return true;
     }
+
+    if(haveTreatmentsMedics && product.type == ProductType.Esthetic) {
+        return true;
+    }
+
     if ((getTreatmentPerUnityType(selectedTreatments, UnityType.Hilos) && product.unityType == UnityType.Radiesse) ||
         (getTreatmentPerUnityType(selectedTreatments, UnityType.Radiesse) && product.unityType == UnityType.Hilos))
     {

@@ -171,10 +171,7 @@ export default function TreatmentAccordionSelector({
                         className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                         key={index}
                       >
-                        <div className="mr-4">
-                          <Text className="font-semibold">{product.title}</Text>
-                          <Text className="text-xs">{product.description}</Text>
-                        </div>
+                        {renderTextProduct(product)}
                         {renderSelectorQuantity(product, index)}
                       </li>
                     );
@@ -189,10 +186,7 @@ export default function TreatmentAccordionSelector({
                       className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
                       key={product.title}
                     >
-                      <div className="mr-4">
-                        <Text className="font-semibold">{product.title}</Text>
-                        <Text className="text-xs">{product.description}</Text>
-                      </div>
+                      {renderTextProduct(product)}
                       {renderSelectorQuantity(product, index)}
                     </li>
                   ))}
@@ -209,10 +203,7 @@ export default function TreatmentAccordionSelector({
                   router.push(ROUTES.checkout.clinics);
                 }}
               >
-                <div className="mr-4">
-                  <Text className="font-semibold">{product.title}</Text>
-                  <Text className="text-xs">{product.description}</Text>
-                </div>
+                {renderTextProduct(product)}
                 {isDashboard
                   ? renderSelectorQuantity(product, index) || null
                   : renderCheck(product, index) || null}
@@ -224,6 +215,14 @@ export default function TreatmentAccordionSelector({
     );
   };
 
+  const renderTextProduct = (product: Product) => {
+    return (
+      <div className="mr-4">
+        <Text className="font-semibold">{product.title}</Text>
+        <Text className="text-xs">{product.description}</Text>
+      </div>
+    );
+  };
   const renderCheck = (product: Product, index: number) => {
     const commonElement = (
       <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
