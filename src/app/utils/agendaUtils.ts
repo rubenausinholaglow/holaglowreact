@@ -124,6 +124,11 @@ function isIncompatibleWithSelectedTreatmentsByUnityType(product: Product, selec
         {
             return true
         }
+    } else{
+        if(selectedTreatments.some(x => x.unityType == UnityType.Botox || x.unityType == UnityType.BabyBotox) && product.flowwwId == 854)
+        {
+            return true
+        }
     }
 
     return false;
