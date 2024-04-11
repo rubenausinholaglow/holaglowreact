@@ -61,8 +61,6 @@ export default function Agenda({
     setSelectedDay,
     treatmentPacks,
     setTreatmentPacks,
-    setSelectedTreatmentsDashboard,
-    selectedTreatmentsDashboard,
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
@@ -316,11 +314,6 @@ export default function Agenda({
                 );
 
                 if (selectedProduct != null) {
-                  setSelectedTreatmentsDashboard(
-                    selectedTreatmentsDashboard.filter(
-                      x => x.id !== selectedProduct.id
-                    )
-                  );
                   updateIsScheduled(true, selectedProduct!.uniqueId);
                 } else {
                   treatmentPacks.length > 0

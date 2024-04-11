@@ -43,8 +43,6 @@ export default function Page() {
     selectedClinic,
     setSelectedClinic,
     selectedTreatments,
-    selectedTreatmentsDashboard,
-    setSelectedTreatmentsDashboard,
     setTreatmentPacks,
     treatmentPacks,
   } = useSessionStore(state => state);
@@ -126,10 +124,6 @@ export default function Page() {
           }
         });
       });
-
-      if (foundProducts.length > 0) {
-        setSelectedTreatmentsDashboard(foundProducts);
-      }
 
       if (packsToAdd.length > 0) {
         setTreatmentPacks(packsToAdd);
@@ -242,10 +236,7 @@ export default function Page() {
                         );
                       }
                     }}
-                    disabled={
-                      selectedTreatments.length == 0 ||
-                      selectedTreatmentsDashboard.length == 0
-                    }
+                    disabled={selectedTreatments.length == 0}
                   >
                     Continuar
                   </Button>

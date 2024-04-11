@@ -44,7 +44,6 @@ interface SessionStore {
   appointmentUrl: string;
   dermaPhone: string;
   treatmentPacks: PackUnitiesScheduled[];
-  selectedTreatmentsDashboard: Product[];
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -64,7 +63,6 @@ interface SessionActions {
   setAppointmentUrl: (url: string) => void;
   setDermaPhone: (phone: string) => void;
   setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
-  setSelectedTreatmentsDashboard: (value: Product[]) => void;
 }
 
 interface GlobalPersistStore {
@@ -149,7 +147,6 @@ export const useSessionStore = create(
       appointmentUrl: '',
       dermaPhone: '',
       treatmentPacks: [],
-      selectedTreatmentsDashboard: [],
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -200,9 +197,6 @@ export const useSessionStore = create(
       },
       setTreatmentPacks: value => {
         set({ treatmentPacks: value });
-      },
-      setSelectedTreatmentsDashboard: value => {
-        set({ selectedTreatmentsDashboard: value });
       },
     }),
     {

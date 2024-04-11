@@ -212,9 +212,7 @@ export default function TreatmentAccordionSelector({
                   if (isDashboard) return;
 
                   setSelectedTreatments([product]);
-                  if (!isDashboard) {
-                    router.push(ROUTES.checkout.clinics);
-                  }
+                  router.push(ROUTES.checkout.clinics);
                 }}
               >
                 <div className="mr-4">
