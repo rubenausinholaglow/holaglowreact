@@ -62,7 +62,6 @@ export default function ProfessionalCard({
           </Text>
           <Text>{professional.title}</Text>
           <Text>Núm. Col. {professional.collegiateNumber}</Text>
-          <Text>La encontrarás en nuestra clínica de {professional.city}</Text>
         </Flex>
       </Flex>
     </div>
