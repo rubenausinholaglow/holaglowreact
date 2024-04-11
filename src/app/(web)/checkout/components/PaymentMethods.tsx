@@ -73,9 +73,7 @@ export const PaymentMethods = ({
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
-  const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
-    state => state
-  );
+  const { cart } = useCartStore(state => state);
 
   useEffect(() => {
     setActivePaymentMethod('');

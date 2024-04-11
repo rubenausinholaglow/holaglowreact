@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { HOLAGLOW_COLORS } from '@utils/colors';
 import { SvgCheck, SvgCircle } from 'app/icons/Icons';

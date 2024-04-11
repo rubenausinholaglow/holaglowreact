@@ -15,7 +15,7 @@ import useRoutes from 'app/utils/useRoutes';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 
 import AppointmentResume from './AppointmentResume';
 
@@ -135,7 +135,7 @@ export default function Confirmation({
   }, []);
 
   return (
-    <Container className="mt-12 mb-4 md:mt-16">
+    <Container className="px-0 md:px-4 mt-12 mb-4 md:mt-16">
       <div className="md:w-1/2 md:pr-8">
         <SvgCheck
           height={88}
@@ -149,7 +149,7 @@ export default function Confirmation({
       </div>
       <div className="md:grid grid-cols-2 gap-16">
         <div className="w-full">
-          <Flex layout="col-left" className="w-full items-center">
+          <Flex layout="col-left" className="w-full items-center px-4 md:px-0">
             {appointment ? (
               <>
                 <Text
@@ -170,18 +170,16 @@ export default function Confirmation({
               </>
             ) : (
               <>
-                <Text
+                <Title
+                  size="xldr"
                   className={`${
-                    isDerma
-                      ? 'text-derma-primary font-gtUltraThin'
-                      : 'text-hg-secondary font-semibold'
-                  } text-center mb-4`}
-                  size="xl"
+                    isDerma ? 'text-derma-primary' : ''
+                  } text-center mb-4 font-light`}
                 >
                   ¡Gracias!
                   <br />
                   Tu cita ha sido realizada con éxito
-                </Text>
+                </Title>
                 {!isDerma && (
                   <Text className="text-center text-hg-black500 hidden md:block">
                     Nos alegramos de que confíes en nosotros para acompañarte,
@@ -203,7 +201,7 @@ export default function Confirmation({
             )}
           </Flex>
         </div>
-        <div className="row-span-2 w-full">
+        <div className="row-span-2 w-full px-4 md:px-0">
           <div className="mb-8">
             {isDerma ? (
               <AppointmentResume isDerma />
@@ -212,7 +210,8 @@ export default function Confirmation({
                 appointment={appointment}
                 isProbadorVirtual={isProbadorVirtual}
                 isDashboard={isDashboard}
-                bgColor="bg-hg-secondary100"
+                bgColor="bg-hg-black100"
+                isConfirmation
               />
             )}
           </div>
@@ -272,26 +271,28 @@ export default function Confirmation({
         </div>
 
         {!appointment && (
-          <div className="w-full pb-4">
-            <div className="w-full mb-6">
-              <Text className="font-semibold text-left" size="xl">
-                A partir de ahora...
-              </Text>
-            </div>
+          <>
             <Flex
               layout="col-left"
-              className="bg-hg-cream500 p-4 rounded-xl gap-4"
+              className="bg-derma-secondary300 py-6 px-4 md:rounded-xl gap-4 md:mb-8"
             >
+              <Title className="font-light text-left mb-4" size="xldr">
+                A partir de ahora...
+              </Title>
               {tips.map((item, index) => (
                 <Flex
-                  className="border-b border-hg-secondary300 pb-4 items-start"
+                  className={`pb-4 items-start ${
+                    index + 1 !== tips.length
+                      ? 'border-b border-hg-secondary300 pb-4'
+                      : ''
+                  }`}
                   key={item.title}
                 >
                   <Text
                     className={`${
                       isDerma
                         ? 'bg-derma-secondary500 text-derma-primary500'
-                        : 'bg-hg-black text-hg-primary'
+                        : 'bg-derma-secondary500 text-hg-secondary'
                     } w-6 h-6 font-semibold items-center  shrink-0 rounded-full text-center mr-2`}
                   >
                     {index + 1}
@@ -304,26 +305,18 @@ export default function Confirmation({
                   </div>
                 </Flex>
               ))}
-            </Flex>
-
-            <div className="pt-6 md:hidden">
               {!isDashboard && (
-                <a href="/tratamientos">
-                  <Button
-                    type="white"
-                    size="md"
-                    className="hidden md:inline"
-                    href={ROUTES.treatments}
-                  >
+                <a href="/tratamientos" className="md:hidden">
+                  <Button type="secondary" size="md" href={ROUTES.treatments}>
                     <Flex layout="row-center">
-                      <span className="font-semibold">Ver tratamientos</span>
+                      Ver tratamientos
                       <SvgArrow height={18} width={18} className="ml-2" />
                     </Flex>
                   </Button>
                 </a>
               )}
-            </div>
-          </div>
+            </Flex>
+          </>
         )}
       </div>
     </Container>

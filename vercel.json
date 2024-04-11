@@ -4,6 +4,7 @@
     { "source": "/blog", "destination": "/api/server" },
     { "source": "/landing/visita-medica-mgm", "destination": "/api/server" },
     { "source": "/landing/visita-medica", "destination": "/api/server" },
+    { "source": "/landing/bodas", "destination": "/api/server" },
     { "source": "/landing/holaglow", "destination": "/api/server" },
     { "source": "/landing/armonizacion-facial", "destination": "/api/server" },
     { "source": "/landing/test", "destination": "/api/server" },

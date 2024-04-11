@@ -41,7 +41,7 @@ export default async function ProductExplanation({
 
         <Text
           isAnimated
-          className="mb-4 text-hg-secondary font-gtUltra text-drxl"
+          className="mb-4 text-hg-secondary font-gtUltra text-xldr"
         >
           {product.extraInformation?.benefitsInformation?.title}
         </Text>
@@ -66,7 +66,7 @@ export default async function ProductExplanation({
         <Container className="md:px-0">
           <Text
             isAnimated
-            className="mb-4 text-hg-secondary font-gtUltra text-drxl"
+            className="mb-4 text-hg-secondary font-gtUltra text-xldr"
           >
             Cuáles son las zonas de aplicación
           </Text>

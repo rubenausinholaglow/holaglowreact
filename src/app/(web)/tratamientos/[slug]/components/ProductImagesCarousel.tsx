@@ -37,7 +37,7 @@ export default function ProductImagesCarousel({
                   <div itemScope itemType="https://schema.org/ImageObject">
                     <Image
                       src={item.urlBefore || ''}
-                      alt={'antes y despues' + product.title}
+                      alt={'antes y despues ' + product.title}
                       fill
                       className="object-cover rounded-3xl"
                     />

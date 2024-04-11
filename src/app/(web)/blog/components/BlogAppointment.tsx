@@ -15,8 +15,9 @@ import { useRouter } from 'next/navigation';
 export default function BlogAppointment() {
   const router = useRouter();
 
-  const { deviceSize, setSelectedTreatments, setSelectedPack } =
-    useSessionStore(state => state);
+  const { setSelectedTreatments, setSelectedPack } = useSessionStore(
+    state => state
+  );
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
