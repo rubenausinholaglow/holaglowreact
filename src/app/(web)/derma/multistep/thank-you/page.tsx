@@ -51,7 +51,7 @@ export default function ThankYouMultiStep() {
                 <Title size="xldr" className="text-derma-primary font-light">
                   Estás un paso más cerca, [name]
                 </Title>
-                <Text className="text-sm text-center">
+                <Text className="text-sm text-center md:text-left">
                   Elige el tipo de tratamiento que quieres para empezar a cuidar
                   tu piel con lo que de verdad necesita.
                 </Text>

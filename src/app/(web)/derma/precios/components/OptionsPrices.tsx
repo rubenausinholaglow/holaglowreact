@@ -7,76 +7,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-const SUBSCRIPTIONS = [
-  {
-    title: 'Suscripción trimestral',
-    imgSrc: '/images/derma/landingPrecios/rutinaDoctorHolaglow.png',
-    bgColor: 'bg-white',
-    tag: {
-      text: 'El más popular',
-      styles:
-        'bg-hg-primary rounded-full px-3 py-2 inline-block ml-auto text-xs text-derma-primary font-semibold mb-4',
-    },
-    price: {
-      value: '75€',
-      subtitle: 'Pago cada 3 meses',
-    },
-    bullets: [
-      {
-        icon: 'SvgCream',
-        text: 'Rutina personalizada cada 3 meses',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Garantía de resultados',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgCalendarSearch',
-        text: 'Seguimiento mensual con tu médico',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgRefreshSquare',
-        text: 'Ajuste del tratamiento según evolución',
-        isEnabled: true,
-      },
-    ],
-  },
-  {
-    title: 'Compra única',
-    imgSrc: '/images/derma/landingPrecios/rutinaHolaglow.png',
-    bgColor: 'bg-white',
-    tag: {},
-    price: {
-      value: '99€',
-      subtitle: 'En un solo pago',
-    },
-    bullets: [
-      {
-        icon: 'SvgCream',
-        text: 'Rutina personalizada de 3 meses',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Garantía de resultados',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgCross',
-        text: 'Seguimiento mensual con tu médico',
-        isEnabled: false,
-      },
-      {
-        icon: 'SvgCross',
-        text: 'Ajuste del tratamiento según evolución',
-        isEnabled: false,
-      },
-    ],
-  },
-];
+import { SUBSCRIPTIONS } from '../../planes/mockedData';
 
 export default function OptionsPrices() {
   return (
