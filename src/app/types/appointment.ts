@@ -55,6 +55,7 @@ export interface User {
   country?: string;
   lastName?: string;
   secondLastName?: string;
+  [key: string]: any;
 }
 
 export interface RescheduleAppointmentRequest {
