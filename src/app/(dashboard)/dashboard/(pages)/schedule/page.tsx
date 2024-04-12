@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { PackUnitiesScheduled, Product, UnityType } from '@interface/product';
+import {
+  CartItem,
+  PackUnitiesScheduled,
+  Product,
+  UnityType,
+} from '@interface/product';
+import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import { getValidTypes } from '@utils/agendaUtils';
 import { fetchClinics } from '@utils/fetch';
@@ -17,10 +23,15 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty, set } from 'lodash';
+import { isEmpty, set, xor, zip } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { v4 as createUniqueId } from 'uuid';
 
@@ -143,6 +154,117 @@ export default function Page() {
     return packsToAdd;
   }
 
+  const renderProductsDashboard = (
+    cart: CartItem[],
+    findScheduledProducts = false
+  ) => {
+    return (
+      <Accordion type="single" collapsible className="w-full" defaultValue="1">
+        <AccordionItem
+          className={`transition-all w-full rounded-lg overflow-hidden mb-4 
+                  bg-hg-secondary100 min-w-[80%]`}
+          value="1"
+        >
+          <AccordionTrigger>
+            <Flex className="p-4">
+              <Text className="font-semibold">
+                {findScheduledProducts
+                  ? 'Productos Agendados'
+                  : 'Productos Seleccionados'}
+              </Text>
+            </Flex>
+          </AccordionTrigger>
+          {renderAcordionContent(
+            cart.filter(
+              item =>
+                item.isScheduled == findScheduledProducts ||
+                (item.isPack &&
+                  item.packUnities?.some(unit =>
+                    treatmentPacks.some(
+                      pack =>
+                        pack.id === unit.id &&
+                        pack.isScheduled == findScheduledProducts
+                    )
+                  ))
+            ),
+            findScheduledProducts
+          )}
+        </AccordionItem>
+      </Accordion>
+    );
+  };
+
+  const renderAcordionContent = (
+    cartItem: CartItem[],
+    findScheduledProducts = false
+  ) => {
+    return (
+      <AccordionContent>
+        <div className="border-t border-hg-secondary300">
+          <ul className="flex flex-col w-full">
+            {cartItem.map(item => {
+              return (
+                <li
+                  className={` ${
+                    findScheduledProducts
+                      ? ' bg-hg-green '
+                      : ' bg-hg-primary500 '
+                  } transition-all flex items-center hover:bg-hg-secondary300 p-4 cursor-pointer`}
+                  key={item.title}
+                >
+                  <Text className="font-semibold w-1/4 shrink-0 ">
+                    {item.title}
+                  </Text>
+
+                  {item.isScheduled || item.isPack ? (
+                    <>
+                      <Text className="w-1/4 mr-auto shrink-0">
+                        {item.isPack ? (
+                          <>
+                            {treatmentPacks
+                              .filter(
+                                pack =>
+                                  item.packUnities?.some(
+                                    unit =>
+                                      unit.id === pack.id &&
+                                      pack.isScheduled == findScheduledProducts
+                                  )
+                              )
+                              .map(pack => (
+                                <>
+                                  {pack.isScheduled ? (
+                                    <Text
+                                      className="mr-auto shrink-0"
+                                      key={pack.id}
+                                    >
+                                      {UnityType[pack.type]} -
+                                      {pack.scheduledDate}
+                                    </Text>
+                                  ) : (
+                                    <Text className="mr-auto shrink-0">
+                                      {UnityType[pack.type]} - Pendiente
+                                    </Text>
+                                  )}
+                                </>
+                              ))}
+                          </>
+                        ) : (
+                          <>{item.scheduledDate}</>
+                        )}
+                      </Text>
+                    </>
+                  ) : (
+                    <Text className="w-1/4 mr-auto shrink-0">Pendiente</Text>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </AccordionContent>
+    );
+  };
+
   return (
     <App>
       <MainLayout isDashboard>
@@ -169,75 +291,8 @@ export default function Page() {
                   <Flex layout="col-left" className="w-full">
                     {!isEmpty(dashboardProducts) && !isLoading ? (
                       <>
-                        <ul className="flex flex-col gap-4 w-full mb-4">
-                          {cart.length > 0 &&
-                            cart
-                              .filter(x => validTypes.includes(x.type))
-                              .sort((a, b) => (a.price > b.price ? 1 : -1))
-                              .map((product, index) => {
-                                if (!product.isPack)
-                                  return (
-                                    <li
-                                      className="flex w-full justify-between"
-                                      key={product.title}
-                                    >
-                                      <Text className="font-semibold w-1/4 shrink-0 ">
-                                        {product.title}
-                                      </Text>
-
-                                      {product.isScheduled ? (
-                                        <>
-                                          <Text className="w-1/4 mr-auto shrink-0">
-                                            Agendado {product.scheduledDate}
-                                          </Text>
-                                        </>
-                                      ) : (
-                                        <Text className="w-1/4 mr-auto shrink-0">
-                                          Pendiente
-                                        </Text>
-                                      )}
-                                    </li>
-                                  );
-                                else
-                                  return (
-                                    <>
-                                      <Text className="font-semibold">
-                                        {product.title}
-                                      </Text>
-
-                                      {product.packUnities?.map(
-                                        (pack, index) => {
-                                          const x = treatmentPacks.find(
-                                            x => x.id == pack.id
-                                          );
-                                          return (
-                                            <li
-                                              className="flex w-full justify-between"
-                                              key={product.title}
-                                            >
-                                              <Text className="font-semibold w-1/4 shrink-0">
-                                                {UnityType[x!.type]}
-                                              </Text>
-
-                                              {x?.isScheduled ? (
-                                                <>
-                                                  <Text className="w-1/4 mr-auto shrink-0">
-                                                    Agendado {x.scheduledDate}
-                                                  </Text>
-                                                </>
-                                              ) : (
-                                                <Text className="w-1/4 mr-auto shrink-0">
-                                                  Pendiente
-                                                </Text>
-                                              )}
-                                            </li>
-                                          );
-                                        }
-                                      )}
-                                    </>
-                                  );
-                              })}
-                        </ul>
+                        {renderProductsDashboard(cart, true)}
+                        {renderProductsDashboard(cart)}
                         <TreatmentAccordionSelector
                           isDashboard
                           packInProductCart={packInProductCart}
