@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
-import { CartItem } from '@interface/product';
-import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+
+import { fetchProduct } from '@utils/fetch';
+import { CartItem } from '@interface/product';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function OptionsPricesSelectButton({
   index,
@@ -39,9 +40,8 @@ export default function OptionsPricesSelectButton({
   }, []);
 
   return (
-    <Flex className="justify-center mt-6">
+    <Flex className="justify-center">
       <Button
-        className="w-full"
         type="derma"
         size="xl"
         customStyles="px-16"

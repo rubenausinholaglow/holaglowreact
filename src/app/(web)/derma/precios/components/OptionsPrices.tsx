@@ -1,4 +1,3 @@
-import { multiValueCSS } from 'react-select/dist/declarations/src/components/MultiValue';
 import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
@@ -36,11 +35,13 @@ export default function OptionsPrices({
                 className={`relative flex flex-col p-4 pt-8 md:p-6 md:pt-16 justify-center rounded-2xl md:w-1/2 ${subscription.bgColor}`}
                 key={subscription.title}
               >
-                {subscription.tag?.text && (
+                {subscription.tag?.text && subscription.tag?.styles && (
                   <p
                     className={`absolute top-4 right-4 md:top-6 md_right-6 ${subscription.tag.styles}`}
                   >
-                    {subscription.tag.text}
+                    {isMobileSSR()
+                      ? subscription.tag.text.isMobile
+                      : subscription.tag.text.isDesktop}
                   </p>
                 )}
                 <Image
