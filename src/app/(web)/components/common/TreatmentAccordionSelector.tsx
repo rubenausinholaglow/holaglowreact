@@ -332,7 +332,11 @@ export default function TreatmentAccordionSelector({
   if (isDashboard && cart.length > 0) {
     return (
       <div className="w-full">
-        <div>{renderAccordionDashboard(true)}</div>
+        <div>
+          {cart.length > 0 &&
+            cart.some(x => !x.isPack) &&
+            renderAccordionDashboard(true)}
+        </div>
         <div className="mt-4">
           {treatmentPacks.length > 0 ? renderAccordionDashboard(false) : null}
         </div>
