@@ -20,13 +20,13 @@ export default function HeroDermaPrices() {
     <div style={{ marginTop: `-${HEADER_HEIGHT_CLASS}` }}>
       <div className="bg-gradient-30deg from-derma-primary500/20 to-white">
         <Container>
-          <Flex className="md:gap-12">
+          <Flex className="md:gap-12 pt-20 md:pt-28">
             {!isMobileSSR() && (
               <Flex layout="col-left" className="hidden md:flex md:w-1/2">
                 <Title size="3xl" className="text-derma-primary mb-4">
                   Precios de las rutinas
                 </Title>
-                <Text className="text-hg-black500 mb-24">
+                <Text className="text-hg-black500 mb-16 text-balance">
                   Una piel sana requiere compromiso y constancia, por eso hemos
                   diseñado dos tipos de tratamiento para que elijas el que se
                   adapta a ti.
@@ -39,7 +39,7 @@ export default function HeroDermaPrices() {
               height={1288}
               width={1088}
               src="/images/derma/landingPrecios/header.png"
-              className="pt-20 px-4 md:w-1/2 md:ml-auto"
+              className="px-4 w-4/5 mx-auto md:w-[45%] md:ml-auto"
             />
           </Flex>
         </Container>

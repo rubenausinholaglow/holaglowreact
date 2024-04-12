@@ -9,12 +9,12 @@ export default function ReviewScore({
   className?: string;
 }) {
   return (
-    <Flex layout="row-left" className={`gap-4 py-4 ${className}`}>
+    <Flex layout="row-left" className={`gap-4 py-3 md:py-4 ${className}`}>
       <Flex layout="col-center" className="gap-1">
         <SvgHolaglowHand className="h-10 w-10 p-1.5 bg-derma-tertiary text-derma-primary rounded-full" />
-        <Text className="font-semibold text-lg">4.8</Text>
+        <Text className="font-semibold text-lg h-6">4.8</Text>
       </Flex>
-      <Flex layout="col-left" className="gap-1 mr-auto">
+      <Flex layout="col-left" className="mr-auto">
         <Text className="font-semibold">Holaglow clinics</Text>
         <Text className="text-hg-black500 text-xs mb-1">
           + de 1.000 pecientes atendidos
