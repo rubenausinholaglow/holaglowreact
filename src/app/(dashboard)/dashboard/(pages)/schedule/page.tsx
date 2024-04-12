@@ -166,60 +166,78 @@ export default function Page() {
                       ? 'Selecciona tratamiento'
                       : 'Tratamientos'}
                   </Title>
-                  <Flex layout="col-left" className="gap-3 w-full">
+                  <Flex layout="col-left" className="w-full">
                     {!isEmpty(dashboardProducts) && !isLoading ? (
                       <>
-                        <div>
+                        <ul className="flex flex-col gap-4 w-full mb-4">
                           {cart.length > 0 &&
                             cart
                               .filter(x => validTypes.includes(x.type))
+                              .sort((a, b) => (a.price > b.price ? 1 : -1))
                               .map((product, index) => {
                                 if (!product.isPack)
                                   return (
-                                    <div key={index} className="flex gap-4">
-                                      <Text className="font-semibold">
+                                    <li
+                                      className="flex w-full justify-between"
+                                      key={product.title}
+                                    >
+                                      <Text className="font-semibold w-1/4 shrink-0 ">
                                         {product.title}
                                       </Text>
-                                      <Text>
-                                        {product.isScheduled
-                                          ? 'Agendado ' + product.scheduledDate
-                                          : 'Pendiente'}
-                                      </Text>
-                                    </div>
+
+                                      {product.isScheduled ? (
+                                        <>
+                                          <Text className="w-1/4 mr-auto shrink-0">
+                                            Agendado {product.scheduledDate}
+                                          </Text>
+                                        </>
+                                      ) : (
+                                        <Text className="w-1/4 mr-auto shrink-0">
+                                          Pendiente
+                                        </Text>
+                                      )}
+                                    </li>
                                   );
                                 else
                                   return (
-                                    <div>
+                                    <>
                                       <Text className="font-semibold">
                                         {product.title}
                                       </Text>
+
                                       {product.packUnities?.map(
                                         (pack, index) => {
                                           const x = treatmentPacks.find(
                                             x => x.id == pack.id
                                           );
                                           return (
-                                            <div
-                                              key={index}
-                                              className="flex gap-4"
+                                            <li
+                                              className="flex w-full justify-between"
+                                              key={product.title}
                                             >
-                                              <Text className="font-semibold ml-4">
+                                              <Text className="font-semibold w-1/4 shrink-0">
                                                 {UnityType[x!.type]}
                                               </Text>
-                                              <Text>
-                                                {x?.isScheduled
-                                                  ? 'Agendado ' +
-                                                    x.scheduledDate
-                                                  : 'Pendiente'}
-                                              </Text>
-                                            </div>
+
+                                              {x?.isScheduled ? (
+                                                <>
+                                                  <Text className="w-1/4 mr-auto shrink-0">
+                                                    Agendado {x.scheduledDate}
+                                                  </Text>
+                                                </>
+                                              ) : (
+                                                <Text className="w-1/4 mr-auto shrink-0">
+                                                  Pendiente
+                                                </Text>
+                                              )}
+                                            </li>
                                           );
                                         }
                                       )}
-                                    </div>
+                                    </>
                                   );
                               })}
-                        </div>
+                        </ul>
                         <TreatmentAccordionSelector
                           isDashboard
                           packInProductCart={packInProductCart}

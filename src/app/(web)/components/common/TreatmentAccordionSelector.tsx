@@ -229,9 +229,6 @@ export default function TreatmentAccordionSelector({
       <div className="mr-4">
         <Text className="font-semibold">{product.title}</Text>
         <Text className="text-xs">{product.description}</Text>
-        <Text className="text-xs">{product.flowwwId}</Text>
-        <Text className="text-xs">{UnityType[product.unityType]}</Text>
-        <Text className="text-xs">{ProductType[product.type]}</Text>
       </div>
     );
   };
