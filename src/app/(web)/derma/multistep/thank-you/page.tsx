@@ -1,6 +1,9 @@
+'use client';
 import { DERMA_COLORS } from '@utils/colors';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgCheck, SvgInfoCircle } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -33,6 +36,8 @@ const ITEMS = [
 ];
 
 export default function ThankYouMultiStep() {
+  const { user } = useGlobalPersistedStore(state => state);
+  const { picturesUrls } = useDermaStore(state => state);
   return (
     <div className="bg-derma-secondary300 min-h-screen relative">
       <div className="absolute top-0 bottom-0 right-0 w-1/2 bg-white hidden md:block" />
@@ -49,7 +54,7 @@ export default function ThankYouMultiStep() {
                   className="mx-auto w-24 mb-4 md:ml-0"
                 />
                 <Title size="xldr" className="text-derma-primary font-light">
-                  Estás un paso más cerca, [name]
+                  Estás un paso más cerca, {user?.firstName}
                 </Title>
                 <Text className="text-sm text-center md:text-left">
                   Elige el tipo de tratamiento que quieres para empezar a cuidar
@@ -110,7 +115,7 @@ export default function ThankYouMultiStep() {
                                   <Flex layout="row-left" className="gap-4">
                                     <div className="relative aspect-square h-16 w-16">
                                       <Image
-                                        src="/images/derma/home/sonsoles.png"
+                                        src={picturesUrls[0]}
                                         alt="imagen frontal"
                                         fill
                                         objectFit="cover"
@@ -129,7 +134,7 @@ export default function ThankYouMultiStep() {
                                   <Flex layout="row-left" className="gap-4">
                                     <div className="relative aspect-square h-16 w-16">
                                       <Image
-                                        src="/images/derma/home/sonsoles.png"
+                                        src={picturesUrls[1]}
                                         alt="imagen frontal"
                                         fill
                                         objectFit="cover"
@@ -138,7 +143,7 @@ export default function ThankYouMultiStep() {
                                     </div>
                                     <div>
                                       <Text className="font-semibold">
-                                        Foto 1.
+                                        Foto 2.
                                       </Text>
                                       <Text>Perfil derecho</Text>
                                     </div>
@@ -148,7 +153,7 @@ export default function ThankYouMultiStep() {
                                   <Flex layout="row-left" className="gap-4">
                                     <div className="relative aspect-square h-16 w-16">
                                       <Image
-                                        src="/images/derma/home/sonsoles.png"
+                                        src={picturesUrls[2]}
                                         alt="imagen frontal"
                                         fill
                                         objectFit="cover"
@@ -157,7 +162,7 @@ export default function ThankYouMultiStep() {
                                     </div>
                                     <div>
                                       <Text className="font-semibold">
-                                        Foto 1.
+                                        Foto 3.
                                       </Text>
                                       <Text>Perfil izquierdo</Text>
                                     </div>
