@@ -61,7 +61,7 @@ export default function ImageUploader({
       );
       picturesUrls.push(url);
       setPicturesUrls(picturesUrls);
-      setIsLoading(false);
+      //setIsLoading(false);
     }
   };
 
@@ -123,74 +123,76 @@ export default function ImageUploader({
                   layout="row-left"
                   className="border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full relative min-h-[98px]"
                 >
-                  {isLoading ? (
-                    <FullScreenLoading isDerma />
-                  ) : (
-                    <>
-                      <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4 shrink-0">
-                        {isEmpty(images[pictureIndex]) &&
-                          isEmpty(picturesUrls[pictureIndex]) && (
-                            <Image
-                              src="/images/derma/multistep/faceIcon.png"
-                              fill
-                              objectFit="cover"
-                              alt={subtitle}
-                            />
-                          )}
-                        {!isEmpty(images[pictureIndex]) &&
-                          !isEmpty(images[pictureIndex]['data_url']) && (
-                            <Image
-                              src={images[pictureIndex]['data_url']}
-                              alt={subtitle}
-                              fill
-                              objectFit="cover"
-                            />
-                          )}
-                        {!isEmpty(picturesUrls[pictureIndex]) && (
-                          <Image
-                            src={picturesUrls[pictureIndex]}
-                            alt={subtitle}
-                            fill
-                            objectFit="cover"
-                          />
-                        )}
-                      </div>
-                      <div className="mr-auto overflow-hidden">
-                        <Text className="text-sm">
-                          <span className="font-semibold">{title}.</span>{' '}
-                          {subtitle}
-                        </Text>
+                  <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4 shrink-0">
+                    {isLoading ? (
+                      <FullScreenLoading isDerma />
+                    ) : (
+                      isEmpty(images[pictureIndex]) &&
+                      isEmpty(picturesUrls[pictureIndex]) && (
+                        <Image
+                          src="/images/derma/multistep/faceIcon.png"
+                          fill
+                          objectFit="cover"
+                          alt={subtitle}
+                          onLoad={() => setIsLoading(false)}
+                        />
+                      )
+                    )}
 
-                        {!isEmpty(images[pictureIndex]) && (
-                          <Text className="text-hg-black400 text-xs">
-                            {imageSize === "0'00" ? (
-                              ''
-                            ) : (
-                              <>
-                                <span>{`${imageSize} kb`}</span>
-                                <span className="font-bold">{' · '}</span>
-                              </>
-                            )}
-                            <span className="inline-block">
-                              {images[pictureIndex]?.file?.name}
-                            </span>
-                          </Text>
-                        )}
-                        {isEmpty(images[pictureIndex]) &&
-                          isEmpty(picturesUrls[pictureIndex]) && (
-                            <Text className="text-hg-black500 text-xs">
-                              Haz una foto o selecciona de la galería
-                            </Text>
-                          )}
-                      </div>
-                      {(!isEmpty(images[pictureIndex]) ||
-                        !isEmpty(picturesUrls[pictureIndex])) && (
-                        <SvgCross
-                          className="h-4 w-4 ml-4 shrink-0 self-start"
-                          onClick={() => removePicture(pictureIndex)}
+                    {!isEmpty(images[pictureIndex]) &&
+                      !isEmpty(images[pictureIndex]['data_url']) && (
+                        <Image
+                          src={images[pictureIndex]['data_url']}
+                          alt={subtitle}
+                          fill
+                          objectFit="cover"
+                          onLoad={() => setIsLoading(false)}
                         />
                       )}
-                    </>
+
+                    {!isEmpty(picturesUrls[pictureIndex]) && (
+                      <Image
+                        src={picturesUrls[pictureIndex]}
+                        alt={subtitle}
+                        fill
+                        objectFit="cover"
+                        onLoad={() => setIsLoading(false)}
+                      />
+                    )}
+                  </div>
+                  <div className="mr-auto overflow-hidden">
+                    <Text className="text-sm">
+                      <span className="font-semibold">{title}.</span> {subtitle}
+                    </Text>
+
+                    {!isEmpty(images[pictureIndex]) && (
+                      <Text className="text-hg-black400 text-xs">
+                        {imageSize === "0'00" ? (
+                          ''
+                        ) : (
+                          <>
+                            <span>{`${imageSize} kb`}</span>
+                            <span className="font-bold">{' · '}</span>
+                          </>
+                        )}
+                        <span className="inline-block">
+                          {images[pictureIndex]?.file?.name}
+                        </span>
+                      </Text>
+                    )}
+                    {isEmpty(images[pictureIndex]) &&
+                      isEmpty(picturesUrls[pictureIndex]) && (
+                        <Text className="text-hg-black500 text-xs">
+                          Haz una foto o selecciona de la galería
+                        </Text>
+                      )}
+                  </div>
+                  {(!isEmpty(images[pictureIndex]) ||
+                    !isEmpty(picturesUrls[pictureIndex])) && (
+                    <SvgCross
+                      className="h-4 w-4 ml-4 shrink-0 self-start"
+                      onClick={() => removePicture(pictureIndex)}
+                    />
                   )}
                 </Flex>
               </button>

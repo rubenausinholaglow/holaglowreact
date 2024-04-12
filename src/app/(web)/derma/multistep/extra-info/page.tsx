@@ -47,7 +47,7 @@ export default function ExtraInfo() {
               </Text>
               <textarea
                 className="w-full h-56 md:h-64 p-4 text-sm rounded-2xl border border-derma-secondary500 mb-8 pt-10 resize-none"
-                placeholder="FALTA PLACEHOLDER EXTRA INFO"
+                placeholder="Cualquier información adicional que nos des, nos ayudará a diseñar la mejor rutina para ti."
                 onChange={event => {
                   setExtraInfo(event.target.value);
                   setTextAreaValue(event.target.value);
