@@ -26,6 +26,7 @@ export default function WaitComponent() {
     selectedDay,
     selectedClinic,
     selectedPacksTreatments,
+    selectedPack,
     analyticsMetrics,
     payment,
     setAppointmentUrl,
@@ -51,7 +52,8 @@ export default function WaitComponent() {
               user!,
               selectedPacksTreatments!,
               analyticsMetrics,
-              id
+              id,
+              selectedPack
             ).then(y => {
               if (y && y.length > 0) {
                 setAppointmentUrl(y[0].url);
@@ -151,7 +153,7 @@ export default function WaitComponent() {
   if (isDerma) {
     return (
       <CheckHydration>
-        <div className="bg-derma-secondary100 min-h-screen">
+        <div className="bg-derma-secondary300 min-h-screen">
           <DermaLayout hideButton hideFooter>
             <Container>
               <Flex

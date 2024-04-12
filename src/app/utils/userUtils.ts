@@ -62,6 +62,7 @@ export const useRegistration = (
     selectedClinic,
     selectedPacksTreatments,
     analyticsMetrics,
+    selectedPack,
   } = useSessionStore(state => state);
 
   const router = useRouter();
@@ -99,7 +100,8 @@ export const useRegistration = (
             user,
             selectedPacksTreatments!,
             analyticsMetrics,
-            ''
+            '',
+            selectedPack
           ).then(x => {
             if (isEmbed) {
               window.parent.postMessage(URL, routes.checkout.clinics);

@@ -22,6 +22,13 @@ server.use(
   })
 );
 server.use(
+  '/landing/bodas',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
   '/blog',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',

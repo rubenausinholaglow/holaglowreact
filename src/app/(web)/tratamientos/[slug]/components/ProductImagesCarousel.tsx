@@ -1,5 +1,5 @@
 import { Product } from '@interface/product';
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -37,7 +37,7 @@ export default function ProductImagesCarousel({
                   <div itemScope itemType="https://schema.org/ImageObject">
                     <Image
                       src={item.urlBefore || ''}
-                      alt={'antes y despues' + product.title}
+                      alt={'antes y despues ' + product.title}
                       fill
                       className="object-cover rounded-3xl"
                     />

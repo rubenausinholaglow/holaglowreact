@@ -1,6 +1,7 @@
 'use client';
 
 import { isMobile } from 'react-device-detect';
+import CheckHydration from '@utils/CheckHydration';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -8,41 +9,40 @@ import Image from 'next/image';
 
 const FAQS = [
   {
-    title: '¿Qué precio tiene una consulta online?',
+    title: '¿Qué incluye la rutina facial personalizada?',
     description:
-      'El precio de la rutina facial personalizada es de 99€ ( sale a 33€mes ya que dura 3 meses el tratamiento). Incluye la consulta con el médico para evaluar las necesidades de tu piel, los 3 productos que te enviamos a casa y la receta para una crema facial personalizada. La crema personalizada podrás encargarla en una farmacia y tiene un coste adicional de 25-40€.',
+      'La rutina facial personalizada está compuesta por la receta de una crema facial personalizada y 3 cremas que complementan y potencian el efecto de la crema personalizada. Después del diagnóstico recibirás la receta de tu crema personalizada, una espuma limpiadora, protector solar y una crema de día específica para tus objetivos.',
   },
   {
-    title: '¿Qué es el cuidado facial de grado médico o farmacéutico?',
+    title: '¿Qué precio tiene la rutina facial personalizada?',
     description:
-      'El cuidado facial de grado médico o farmacéutico es aquél que se adapta a las necesidades de cada paciente y que combina productos cosméticos con fármacos que únicamente pueden ser obtenidos mediante una receta, como es el caso de la formulación magistral.',
+      'Las rutinas las elabora el médico con la información que proporciones en el formulario y las fotos que adjuntes. Está pensada para 3 meses, que es el tiempo mínimo para empezar a ver resultados y tiene un coste de 75€ más el coste de la elaboración de tu crema facial personalizada en la farmacia, que suele ser entre 25-40€ dependiendo de la composición.',
   },
   {
-    title: '¿En qué tipo de afecciones pueden ayudarme?',
+    title: '¿Cómo analizamos tu piel para personalizar tu rutina?',
     description:
-      'Contamos con una amplia red de dermatólogos estéticos para ofrecer un cuidado facial integral y atender cualquier necesidad estética de tu piel como: acné, poros obstruidos, puntos negros, líneas finas, pérdida de firmeza, manchas o rosácea, entre muchas más.',
+      'Para darte un diagnóstico acertado de tu piel y diseñar tu rutina facial personalizada, te asignaremos uno de nuestros médicos que analizará tu caso teniendo en cuenta la información que proporciones en el formulario y las fotografías de tu rostro que te pediremos durante el proceso. Es importante responder con la mayor exactitud posible y que te asegures de que en las fotos se aprecian los detalles de tu piel que quieres tratar.',
   },
   {
-    title: '¿Qué significa un cuidado facial personalizado?',
+    title: '¿Cuánto dura el tratamiento?',
     description:
-      'El cuidado facial personalizado consiste, en primer lugar, de una consulta médica para analizar las necesidades específicas de tu piel y, en segundo lugar, de la prescripción de una crema formulada exclusivamente para ti con tal de asegurar su eficacia y lograr resultados más notables y duraderos.',
+      'La rutina facial está pensada para que dure 3 meses, que es el tiempo suficiente definido por nuestros médicos para que los resultados sean visibles. No obstante, cada piel es única y evoluciona de forma distinta. Si quieres que uno de nuestros médicos haga seguimiento de tu evolución para ir adaptando la composición y la duración de la rutina, te recomendamos elegir el modelo de suscripción una vez completado el formulario de diagnóstico de tu piel.',
   },
   {
-    title:
-      'Una vez tengo la receta, ¿cómo consigo mi crema facial personalizada?',
+    title: '¿Qué tipos de tratamiento hay?',
     description:
-      'Las cremas faciales personalizadas son una combinación de fármacos exclusiva para un paciente específico, por tanto, se deben preparar de manera individual en un laboratorio. Así pues, deberás llevar tu receta a una farmacia para que encarguen su elaboración. Según los plazos establecidos, podrás recogerla en la farmacia por un precio de entre 25 y 40 €. Este precio lo establece cada laboratorio, no depende de nosotros, y puede variar dependiendo de las cantidades de cada ingrediente de la formulación magistral.',
+      'Ofrecemos 2 tipos de tratamiento para que puedas ver progreso en tu piel. Por un lado una rutina facial para 3 meses (tiempo recomendado para ver resultados) y por otro lado una rutina facial por suscripción que incluye los mismos productos además de seguimiento mensual por parte de tu médico para poder evaluar la evolución de tu piel y ajustar tu rutina cuando sea necesario.',
   },
   {
-    title: '¿Qué productos incluye la rutina facial complementaria?',
+    title: '¿Dónde consigo mi crema personalizada?',
     description:
-      'Todas las rutinas faciales complementarias contienen una espuma limpiadora y una crema de protección solar de alto espectro e hidratante indicada para todo tipo de pieles. Además, cada una de las rutinas incluye una crema para tratar el objetivo facial específico de cada paciente, desde las arrugas y el acné hasta las manchas o la rosácea.',
+      'Tu crema personalizada estará formulada específicamente para ti por tu médico y contendrá principios activos (ingredientes) catalogados como medicamento. Por eso necesita ser recetada por un médico y se elabora bajo demanda. Para conseguir la tuya, deberás pedirla en tu farmacia más cercana presentando la receta y documento de identificación. Tiene un coste a abonar en la farmacia de entre 25-40€.',
   },
 ];
 
-export default function FaqsDerma() {
+export default function FaqsDerma({ className = '' }: { className?: string }) {
   return (
-    <Container>
+    <Container className={className}>
       <Flex layout="row-between" className="w-full gap-2 mb-12">
         <Title
           isAnimated
@@ -64,65 +64,67 @@ export default function FaqsDerma() {
         layout="col-left"
         className="w-full gap-8 md:grid md:grid-cols-2 md:gap-16"
       >
-        {isMobile &&
-          FAQS.map((faq, index) => {
-            return (
-              <SimpleAccordion
-                key={faq.title}
-                className="pb-4 md:mb-0 border-b border-derma-tertiary"
-                trigger={faq.title}
-                triggerStyles="text-left items-start font-semibold"
-              >
-                <Text size="sm" className="text-hg-black500 pt-4">
-                  {faq.description}
-                </Text>
-              </SimpleAccordion>
-            );
-          })}
-
-        {!isMobile && (
-          <Flex layout="col-left" className="w-full gap-10">
-            {FAQS.map((faq, index) => {
-              if (index % 2 === 0) {
-                return (
-                  <SimpleAccordion
-                    key={faq.title}
-                    className="pb-4 md:mb-0 border-b border-derma-tertiary"
-                    trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
-                  >
-                    <Text size="sm" className="text-hg-black500 pt-4">
-                      {faq.description}
-                    </Text>
-                  </SimpleAccordion>
-                );
-              }
-              return null;
+        <CheckHydration>
+          {isMobile &&
+            FAQS.map(faq => {
+              return (
+                <SimpleAccordion
+                  key={faq.title}
+                  className="pb-4 md:mb-0 border-b border-derma-tertiary"
+                  trigger={faq.title}
+                  triggerStyles="text-left items-start font-semibold"
+                >
+                  <Text size="sm" className="text-hg-black500 pt-4">
+                    {faq.description}
+                  </Text>
+                </SimpleAccordion>
+              );
             })}
-          </Flex>
-        )}
 
-        {!isMobile && (
-          <Flex layout="col-left" className="w-full gap-10">
-            {FAQS.map((faq, index) => {
-              if (index % 2 !== 0) {
-                return (
-                  <SimpleAccordion
-                    key={faq.title}
-                    className="pb-4 md:mb-0 border-b border-derma-tertiary"
-                    trigger={faq.title}
-                    triggerStyles="text-left items-start font-semibold text-lg pb-2"
-                  >
-                    <Text size="sm" className="text-hg-black500 pt-4">
-                      {faq.description}
-                    </Text>
-                  </SimpleAccordion>
-                );
-              }
-              return null;
-            })}
-          </Flex>
-        )}
+          {!isMobile && (
+            <Flex layout="col-left" className="w-full gap-10">
+              {FAQS.map((faq, index) => {
+                if (index % 2 === 0) {
+                  return (
+                    <SimpleAccordion
+                      key={faq.title}
+                      className="pb-4 md:mb-0 border-b border-derma-tertiary"
+                      trigger={faq.title}
+                      triggerStyles="text-left items-start font-semibold text-lg pb-2"
+                    >
+                      <Text size="sm" className="text-hg-black500 pt-4">
+                        {faq.description}
+                      </Text>
+                    </SimpleAccordion>
+                  );
+                }
+                return null;
+              })}
+            </Flex>
+          )}
+
+          {!isMobile && (
+            <Flex layout="col-left" className="w-full gap-10">
+              {FAQS.map((faq, index) => {
+                if (index % 2 !== 0) {
+                  return (
+                    <SimpleAccordion
+                      key={faq.title}
+                      className="pb-4 md:mb-0 border-b border-derma-tertiary"
+                      trigger={faq.title}
+                      triggerStyles="text-left items-start font-semibold text-lg pb-2"
+                    >
+                      <Text size="sm" className="text-hg-black500 pt-4">
+                        {faq.description}
+                      </Text>
+                    </SimpleAccordion>
+                  );
+                }
+                return null;
+              })}
+            </Flex>
+          )}
+        </CheckHydration>
       </Flex>
     </Container>
   );

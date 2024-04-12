@@ -74,7 +74,7 @@ function ClinicSlide({ clinic }: { clinic: any }) {
         ))}
       </Carousel>
       <div className="bg-white md:bg-transparent p-4 md:p-0 rounded-b-2xl overflow-hidden shadow-centered-black-sm flex-grow md:shadow-none">
-        <Title className="font-light text-derma-tertiary text-drxl mb-4">
+        <Title className="font-light text-derma-tertiary text-xldr mb-4">
           Clínica {clinic.name}
         </Title>
         <Flex className="gap-2 w-full items-start mb-6 md:mb-16">

@@ -1,5 +1,5 @@
 import { Clinic } from '@interface/clinic';
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Flex } from 'designSystem/Layouts/Layouts';

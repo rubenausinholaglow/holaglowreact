@@ -1,4 +1,3 @@
-import ROUTES from '@utils/routes';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { Professional } from 'app/types/clinic';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -20,7 +19,14 @@ export default function ProfessionalCard({
         layout="col-center"
         className="flex-grow text-center shadow-centered-secondary rounded-3xl md:flex-row"
       >
-        <div className="w-full bg-gradient from-white from-0% via-hg-secondary300/30 via-80% to-white rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none md:rounded-bl-3xl overflow-hidden pt-2 md:relative md:h-full">
+        <div
+          className={`w-full bg-gradient 
+        ${
+          isDerma
+            ? 'from-white from-0% via-derma-primary500/20 via-80% to-white '
+            : 'from-white from-0% via-hg-secondary300/30 via-80% to-white '
+        } rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none md:rounded-bl-3xl overflow-hidden pt-2 md:relative md:h-full`}
+        >
           <Image
             alt={professional.name}
             height={250}
@@ -44,19 +50,18 @@ export default function ProfessionalCard({
         >
           <SvgHolaglowHand
             className={`hidden md:block h-14 w-14 ${
-              isDerma ? 'text-derma-primary500' : 'text-hg-secondary500'
+              isDerma ? 'text-derma-primary500/20' : 'text-hg-secondary500'
             }`}
           />
           <Text
             className={`font-gtUltra font-light ${
               isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-            } text-drxl md:text-2xl`}
+            } text-xldr md:text-2xl`}
           >
             {professional.tittleAbbreviation}. {professional.name}
           </Text>
           <Text>{professional.title}</Text>
           <Text>Núm. Col. {professional.collegiateNumber}</Text>
-          <Text>La encontrarás en nuestra clínica de {professional.city}</Text>
         </Flex>
       </Flex>
     </div>

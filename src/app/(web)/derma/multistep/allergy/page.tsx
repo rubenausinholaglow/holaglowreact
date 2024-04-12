@@ -28,7 +28,7 @@ export default function Allergies() {
   const [textAreaValue, setTextAreaValue] = useState(allergyInfo);
 
   return (
-    <div className="bg-derma-secondary100 min-h-screen">
+    <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>

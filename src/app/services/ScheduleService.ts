@@ -8,7 +8,10 @@ import {
 } from 'app/types/appointment';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
-import { DayAvailability, MonthAvailabilityResponse } from 'app/types/dayAvailability';
+import {
+  DayAvailability,
+  MonthAvailabilityResponse,
+} from 'app/types/dayAvailability';
 import { Product } from 'app/types/product';
 import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
@@ -55,7 +58,8 @@ export default class ScheduleService {
     user: User,
     selectedPacksTreatments: Product[],
     analyticsMetrics: AnalyticsMetrics,
-    paymentId: string
+    paymentId: string,
+    selectedPack: Product | undefined
   ) => {
     const appointments: Appointment[] = [];
     let treatments = selectedTreatments!.map(x => x.title).join(',');
@@ -66,6 +70,7 @@ export default class ScheduleService {
     ) {
       treatments = selectedPacksTreatments!.map(x => x.title).join(',');
     }
+    if (selectedPack) treatments = selectedPack.title;
     const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
     const format = 'YYYY-MM-DD';
     const comment = 'Tratamiento visto en web: ' + treatments;

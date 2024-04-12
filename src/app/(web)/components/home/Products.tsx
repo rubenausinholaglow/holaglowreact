@@ -2,14 +2,12 @@
 
 import { useEffect } from 'react';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Title, Underlined } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import AnimateOnViewport from '../common/AnimateOnViewport';

@@ -1,6 +1,7 @@
 import { Product } from '@interface/product';
 import { fetchProduct, fetchProducts } from '@utils/fetch';
 import App from 'app/(web)/components/layout/App';
+import { Metadata, ResolvingMetadata } from 'next';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 
@@ -13,6 +14,26 @@ async function getProducts() {
   return products;
 }
 
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const slug = params.slug;
+  const product = await getProduct(slug, false, false);
+
+  if (product) {
+    return {
+      title: product.extraInformation.seoTitle,
+      description: product.extraInformation.seoMetaDescription,
+      robots: {
+        index: true,
+        follow: true,
+      },
+    };
+  } else {
+    return {};
+  }
+}
 async function getProduct(
   productID: string,
   isDashboard: boolean,
