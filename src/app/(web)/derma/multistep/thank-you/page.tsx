@@ -42,7 +42,7 @@ export default function ThankYouMultiStep() {
             <Container className="md:w-1/2 mb-8">
               <Flex layout="col-center" className="w-full gap-4 md:items-start">
                 <Image
-                  alt="Dr. Basart"
+                  alt="Dra. Sonsoles"
                   src="/images/derma/multistep/Sonsoles.png"
                   height={192}
                   width={192}

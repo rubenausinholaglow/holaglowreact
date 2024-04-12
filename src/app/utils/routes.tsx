@@ -52,6 +52,7 @@ const ROUTES = {
       pictures: '/derma/multistep/pictures',
       extraInfo: '/derma/multistep/extra-info',
       form: '/derma/multistep/form',
+      payment: '/derma/multistep/payment',
       ns: {
         extraInfo: '/derma/multistep/ns/extra-info',
         skinType: '/derma/multistep/ns/skin-type',

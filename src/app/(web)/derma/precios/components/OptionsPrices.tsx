@@ -4,16 +4,32 @@ import ROUTES from '@utils/routes';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import { SUBSCRIPTIONS } from '../../planes/mockedData';
+import OptionsPricesSelectButton from './OptionsPricesSelectButton';
 
-export default function OptionsPrices() {
+export default function OptionsPrices({
+  isMultistep,
+}: {
+  isMultistep: boolean;
+}) {
   return (
     <div className="bg-derma-secondary300 py-4">
       <Container className="px-0 md:px-4 ">
         <div className="px-4 bg-derma-primary300/20 py-4 rounded-3xl -mt-4 md:p-6">
+          {isMultistep && (
+            <>
+              <Title size="xldr" className="text-derma-primary font-light">
+                Elige tu plan
+              </Title>
+              <Text className="">
+                Selecciona el nivel de seguimiento médico y la frecuencia de
+                entrega de tus cremas
+              </Text>
+            </>
+          )}
           <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
             {SUBSCRIPTIONS.map((subscription, index) => (
               <li
@@ -69,19 +85,22 @@ export default function OptionsPrices() {
                     </li>
                   ))}
                 </ul>
+                {isMultistep && <OptionsPricesSelectButton index={index} />}
               </li>
             ))}
           </ul>
-          <Flex className="justify-center">
-            <Button
-              type="derma"
-              size="xl"
-              customStyles="px-16"
-              href={ROUTES.derma.multistep.start}
-            >
-              Empezar análisis de piel
-            </Button>
-          </Flex>
+          {!isMultistep && (
+            <Flex className="justify-center">
+              <Button
+                type="derma"
+                size="xl"
+                customStyles="px-16"
+                href={ROUTES.derma.multistep.start}
+              >
+                Empezar análisis de piel
+              </Button>
+            </Flex>
+          )}
         </div>
       </Container>
     </div>
