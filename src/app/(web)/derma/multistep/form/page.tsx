@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { dermaService } from '@services/DermaService';
+import ROUTES from '@utils/routes';
+import useRoutes from '@utils/useRoutes';
 import { useRegistration } from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
@@ -52,7 +54,6 @@ const CLIENT_INITIAL_VALUES = {
 
 export default function Form() {
   const router = useRouter();
-
   const {
     id,
     pain,
@@ -104,8 +105,8 @@ export default function Form() {
         extraInfo,
       };
       dermaService.update(dermaQuestions as DermaQuestions);
+      router.push(ROUTES.derma.multistep.thankyou);
     });
-    //REDIRECT TO NEXT PAGE
   }
 
   return (
