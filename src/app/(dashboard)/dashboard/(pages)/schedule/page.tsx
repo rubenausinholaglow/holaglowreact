@@ -291,8 +291,12 @@ export default function Page() {
                   <Flex layout="col-left" className="w-full">
                     {!isEmpty(dashboardProducts) && !isLoading ? (
                       <>
-                        {renderProductsDashboard(cart, true)}
-                        {renderProductsDashboard(cart)}
+                        {cart.length > 0 && (
+                          <>
+                            {renderProductsDashboard(cart, true)}
+                            {renderProductsDashboard(cart)}
+                          </>
+                        )}
                         <TreatmentAccordionSelector
                           isDashboard
                           packInProductCart={packInProductCart}
