@@ -208,7 +208,7 @@ export default function Page() {
                   className={` ${
                     findScheduledProducts
                       ? ' bg-hg-green '
-                      : ' bg-hg-primary500 '
+                      : ' bg-hg-primary300 '
                   } transition-all flex items-center hover:bg-hg-secondary300 p-4 cursor-pointer`}
                   key={item.title}
                 >
