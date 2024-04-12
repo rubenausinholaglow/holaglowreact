@@ -12,7 +12,7 @@ import OptionsPricesSelectButton from './OptionsPricesSelectButton';
 export default function OptionsPrices({
   isMultistep,
 }: {
-  isMultistep: boolean;
+  isMultistep?: boolean;
 }) {
   return (
     <div className="bg-derma-secondary300 py-4">
