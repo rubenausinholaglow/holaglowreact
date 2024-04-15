@@ -24,15 +24,17 @@ export default function ProfessionalCard({
         ${
           isDerma
             ? 'from-white from-0% via-derma-primary500/20 via-80% to-white '
-            : 'from-white from-0% via-hg-secondary300/30 via-80% to-white '
-        } rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none md:rounded-bl-3xl overflow-hidden pt-2 md:relative md:h-full`}
+            : 'from-white from-0% via-hg-secondary300/30 via-80% to-white pt-2'
+        } rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none md:rounded-bl-3xl overflow-hidden md:relative md:min-h-[350px]`}
         >
           <Image
             alt={professional.name}
-            height={250}
-            width={250}
+            height={600}
+            width={600}
             src={professional.urlPhoto}
-            className="w-full scale-110 translate-y-[10%] md:hidden"
+            className={`w-full ${
+              !isDerma ? 'scale-110 translate-y-[10%]' : ''
+            } md:hidden`}
           />
 
           <Image
@@ -54,9 +56,9 @@ export default function ProfessionalCard({
             }`}
           />
           <Text
-            className={`font-gtUltra font-light ${
+            className={`font-gtUltra font-light truncate overflow-hidden ${
               isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-            } text-xldr md:text-2xl`}
+            } text-xldr md:text-2xl w-full md:text-wrap`}
           >
             {professional.tittleAbbreviation}. {professional.name}
           </Text>

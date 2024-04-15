@@ -10,6 +10,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import { isMobile } from '../layout/Breakpoint';
+
 export default function HeroDerma() {
   const HEADER_HEIGHT = isMobileSSR()
     ? DERMA_HEADER_HEIGHT_MOBILE
@@ -39,34 +41,48 @@ export default function HeroDerma() {
               Analizamos tu piel y te enviamos a casa una rutina facial diseñada
               para ti por un médico
             </Text>
-            <Button size="xl" type="derma" href={ROUTES.derma.multistep.start}>
+            <Button
+              size="xl"
+              type="derma"
+              href={ROUTES.derma.multistep.start}
+              className="lg:mb-16"
+            >
               Empezar análisis
             </Button>
           </Flex>
         </Container>
-
-        <Image
-          src="/images/derma/home/dermaHome.png"
-          alt="analizamos tu piel"
-          height={500}
-          width={420}
-          className="w-full -mt-20 md:hidden"
-        />
-        <Container>
+        {isMobileSSR() && (
           <Image
-            src="/images/derma/home/dermaHomeLeft.png"
+            src="/images/derma/home/dermaHome.png"
             alt="analizamos tu piel"
-            height={306}
-            width={538}
-            className="absolute bottom-12 left-0 h-[62%] w-auto hidden md:block"
+            height={500}
+            width={420}
+            className="w-full -mt-20 md:hidden"
+            priority
           />
-          <Image
-            src="/images/derma/home/dermaHomeRight.png"
-            alt="cuidado facial personalizado"
-            height={840}
-            width={542}
-            className="absolute bottom-5 right-0 h-[80%] w-auto hidden md:block"
-          />
+        )}
+
+        <Container>
+          {!isMobileSSR() && (
+            <>
+              <Image
+                src="/images/derma/home/dermaHomeLeft.png"
+                alt="analizamos tu piel"
+                height={306}
+                width={538}
+                className="absolute bottom-12 left-0 h-[500px] w-auto hidden md:block"
+                priority
+              />
+              <Image
+                src="/images/derma/home/dermaHomeRight.png"
+                alt="cuidado facial personalizado"
+                height={840}
+                width={542}
+                className="absolute bottom-5 right-0 h-[60%] w-auto hidden md:block"
+                priority
+              />
+            </>
+          )}
           <ReviewScore className="bg-hg-black50/90 p-4 w-full rounded-xl hidden md:flex md:w-1/2 relative" />
         </Container>
       </div>

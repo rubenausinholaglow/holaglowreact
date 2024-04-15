@@ -35,7 +35,7 @@ export default function ProfessionalsDerma({
         professionalType: ProfessionalType.Medical,
         title: 'Médico estético especialista en dermocosmética',
         tittleAbbreviation: 'Dra',
-        urlPhoto: '/images/derma/home/sonsoles.png',
+        urlPhoto: '/images/derma/home/professionals/Sonsoles.png',
       },
       {
         authorDescription: '',
@@ -47,8 +47,7 @@ export default function ProfessionalsDerma({
         professionalType: ProfessionalType.Medical,
         title: 'Médico estético especialista en dermocosmética',
         tittleAbbreviation: 'Dra',
-        urlPhoto:
-          'https://budgetimages.blob.core.windows.net/derma/medicos/Ana.jpg',
+        urlPhoto: '/images/derma/home/professionals/Ana.jpg',
       },
       {
         authorDescription: '',
@@ -61,8 +60,7 @@ export default function ProfessionalsDerma({
         title:
           'Médico especialista en dermatología con Master en medicina estética',
         tittleAbbreviation: 'Dra',
-        urlPhoto:
-          'https://budgetimages.blob.core.windows.net/derma/medicos/Shirley.jpg',
+        urlPhoto: '/images/derma/home/professionals/Shirley.jpg',
       },
     ];
 
