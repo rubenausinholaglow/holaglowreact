@@ -65,7 +65,6 @@ export default function WaitComponent() {
           } else {
             let treatments = selectedTreatments!.map(x => x.title).join(', ');
             if (!treatments) treatments = cart!.map(x => x.title).join(',');
-            debugger;
             const createTicketResponse = await FinanceService.createTicket({
               flowwwToken: user!.flowwwToken,
               paymentId: id,
