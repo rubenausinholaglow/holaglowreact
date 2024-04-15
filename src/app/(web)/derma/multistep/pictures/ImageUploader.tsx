@@ -14,7 +14,6 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { SetState } from 'zustand';
 
 export default function ImageUploader({
   title,
@@ -31,7 +30,6 @@ export default function ImageUploader({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
-  const [imageSize, setImageSize] = useState('');
   const { picturesUrls, setPicturesUrls, id } = useDermaStore(state => state);
 
   const onChange = (imageList: ImageListType) => {
@@ -41,10 +39,6 @@ export default function ImageUploader({
       setImageIsLoading(true);
       const picture = imageList[0];
 
-      if (picture?.file) {
-        const fileSize = picture.file.size / 1024; // size in KB
-        setImageSize(`${fileSize.toFixed(2).replace('.', "'")} kb`);
-      }
       if (imageList[0]) {
         setImages(images);
         uploadImage(imageList);
@@ -80,14 +74,6 @@ export default function ImageUploader({
     picturesUrls[index] = '';
     setPicturesUrls(picturesUrls);
   };
-
-  useEffect(() => {
-    const pictureSize = ((images[pictureIndex]?.file?.size ?? 0) / 1024)
-      ?.toFixed(2)
-      .replace('.', "'");
-
-    setImageSize(pictureSize);
-  }, [images]);
 
   const isDisabled = () => {
     if (pictureIndex === 1) {
@@ -177,14 +163,6 @@ export default function ImageUploader({
 
                     {!isEmpty(images[pictureIndex]) && (
                       <Text className="text-hg-black400 text-xs">
-                        {imageSize === "0'00" ? (
-                          ''
-                        ) : (
-                          <>
-                            <span>{`${imageSize} kb`}</span>
-                            <span className="font-bold">{' · '}</span>
-                          </>
-                        )}
                         <span className="inline-block">
                           {images[pictureIndex]?.file?.name}
                         </span>
