@@ -44,7 +44,10 @@ export default function FrakmentaWidget({
   return (
     <div className={`w-full ${className ? className : ''}`}>
       <Flex layout="col-left" className="w-full gap-2 text-sm ">
-        <div id="fk-widget-installments" data-product_price="6500"></div>
+        <div
+          id="fk-widget-installments"
+          data-product_price={`${totalPrice}`}
+        ></div>
       </Flex>
       <Text size="xs" className="mt-2">
         * Cálculos aproximados
