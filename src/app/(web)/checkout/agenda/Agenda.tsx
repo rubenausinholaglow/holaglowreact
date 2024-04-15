@@ -306,7 +306,6 @@ export default function Agenda({
                 formatDate(selectedDay.toDate(), false) +
                 ' ' +
                 selectedSlot!.startTime.toString();
-
               if (
                 filteredCart.length >= selectedTreatments.length ||
                 treatmentPacks.length > 0
@@ -390,12 +389,12 @@ export default function Agenda({
       const productInCart =
         cart.filter(x => x.id == prod.id && x.isScheduled == false).length > 0;
       if (productInCart) return;
-
       const matchingTreatment = treatmentPacks.find(
         treat =>
           treat.type === prod.unityType && !matchingTreatments.includes(treat)
       );
       if (matchingTreatment) {
+        matchingTreatment.treatmentName = prod.title;
         matchingTreatments.push(matchingTreatment);
       }
     });

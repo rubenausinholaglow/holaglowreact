@@ -10,6 +10,8 @@ import { CartItem, PackUnitiesScheduled, Product, ProductType, UnityType } from 
       [UnityType.AcidoHialuronico]: 0,
       [UnityType.BabyBotox]: 0,
       [UnityType.Botox]: 0,
+      [UnityType.Piel]: 0,
+      [UnityType.PielProfunda]: 0,
       [UnityType.Peeling]: 0,
       [UnityType.Radiesse]: 0,
       [UnityType.Belkyra]: 0,
@@ -42,6 +44,7 @@ export function isDisableAddQuantity(selectedTreatments: Product[], product: Pro
       cart,
       treatmentPacks
     );
+    
 
     const haveTreatmentsEsthetics = getTreatmentPerType(selectedTreatments, ProductType.Esthetic)
     const haveTreatmentsMedics = getTreatmentPerType(selectedTreatments, ProductType.Medical)

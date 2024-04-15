@@ -217,42 +217,49 @@ export default function Page() {
                   </Text>
 
                   {item.isScheduled || item.isPack ? (
-                    <>
-                      <Text className="w-1/4 mr-auto shrink-0">
-                        {item.isPack ? (
-                          <>
-                            {treatmentPacks
-                              .filter(
-                                pack =>
-                                  item.packUnities?.some(
-                                    unit =>
-                                      unit.id === pack.id &&
-                                      pack.isScheduled == findScheduledProducts
-                                  )
-                              )
-                              .map(pack => (
-                                <>
-                                  {pack.isScheduled ? (
-                                    <Text
-                                      className="mr-auto shrink-0"
-                                      key={pack.id}
-                                    >
-                                      {pack.treatmentName} -{' '}
+                    <div className="w-full mr-2">
+                      {item.isPack ? (
+                        <>
+                          {treatmentPacks
+                            .filter(
+                              pack =>
+                                item.packUnities?.some(
+                                  unit =>
+                                    unit.id === pack.id &&
+                                    pack.isScheduled == findScheduledProducts
+                                )
+                            )
+                            .map(pack => (
+                              <>
+                                {pack.isScheduled ? (
+                                  <div className="flex gap-4 ">
+                                    <Text className="flex-grow " key={pack.id}>
+                                      {pack.treatmentName}
+                                    </Text>
+                                    <Text className="mr-auto">
                                       {pack.scheduledDate}
                                     </Text>
-                                  ) : (
-                                    <Text className="mr-auto shrink-0">
-                                      {UnityType[pack.type]} - Pendiente
+                                  </div>
+                                ) : (
+                                  <div className="flex gap-4 w-full">
+                                    <Text
+                                      className="flex-grow w-1/4"
+                                      key={pack.id}
+                                    >
+                                      {UnityType[pack.type]}
                                     </Text>
-                                  )}
-                                </>
-                              ))}
-                          </>
-                        ) : (
-                          <>{item.scheduledDate}</>
-                        )}
-                      </Text>
-                    </>
+                                    <Text className="mr-auto items-end">
+                                      Pendiente
+                                    </Text>
+                                  </div>
+                                )}
+                              </>
+                            ))}
+                        </>
+                      ) : (
+                        <>{item.scheduledDate}</>
+                      )}
+                    </div>
                   ) : (
                     <Text className="w-1/4 mr-auto shrink-0">Pendiente</Text>
                   )}
