@@ -62,10 +62,12 @@ export default function PlanesMultiStep() {
               <Text className="text-hg-black500 text-sm mb-4">
                 {DERMA_PRODUCTS[modalProduct].text}
               </Text>
-              <Text className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500 mb-8">
-                <span className="font-semibold">Activos principales: </span>
-                {DERMA_PRODUCTS[modalProduct].info}
-              </Text>
+              {DERMA_PRODUCTS[modalProduct].info.length > 0 && (
+                <Text className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500 mb-8">
+                  <span className="font-semibold">Activos principales: </span>
+                  {DERMA_PRODUCTS[modalProduct].info}
+                </Text>
+              )}
 
               <Button
                 size="lg"
@@ -101,34 +103,6 @@ export default function PlanesMultiStep() {
                 <br className="md:hidden" /> Tu rutina facial también
               </Title>
             </Flex>
-
-            <ul className="flex flex-col gap-4 w-full md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-4">
-              {DERMA_PRODUCTS.sort((a, b) => a.order - b.order).map(
-                (item, index) => (
-                  <li
-                    className="flex items-center gap-4 border border-derma-secondary400 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
-                    key={item.title}
-                    onClick={() => {
-                      setModalProduct(index);
-                      setShowModal(true);
-                    }}
-                  >
-                    <Image
-                      src={item.img}
-                      alt={item.title}
-                      height={192}
-                      width={164}
-                      className="w-[82px]"
-                    />
-                    <div className="mr-auto">
-                      <Text className="font-semibold">{item.title}</Text>
-                      <Text>{item.toggle}</Text>
-                    </div>
-                    <SvgArrow className=" h-5 w-5 shrink-0" />
-                  </li>
-                )
-              )}
-            </ul>
           </Container>
           <Container className="px-0 md:px-4">
             <div className="px-4 bg-[#e5f2ed] py-4 rounded-3xl relative">
@@ -162,11 +136,42 @@ export default function PlanesMultiStep() {
               </Flex>
             </div>
           </Container>
-          <div className="bg-derma-secondary300 mb-12 md:mb-0">
+
+          <div className="bg-derma-secondary300">
             <GuaranteedResults />
           </div>
 
-          <PlanesBottomBar selectedOption={selectedOption} />
+          <Container>
+            <ul className="flex flex-col gap-4 w-full md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-4 mb-24">
+              {DERMA_PRODUCTS.sort((a, b) => a.order - b.order).map(
+                (item, index) => (
+                  <li
+                    className="flex items-center gap-4 border border-derma-secondary400 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
+                    key={item.title}
+                    onClick={() => {
+                      setModalProduct(index);
+                      setShowModal(true);
+                    }}
+                  >
+                    <Image
+                      src={item.img}
+                      alt={item.title}
+                      height={192}
+                      width={164}
+                      className="w-[82px]"
+                    />
+                    <div className="mr-auto">
+                      <Text className="font-semibold">{item.title}</Text>
+                      <Text>{item.toggle}</Text>
+                    </div>
+                    <SvgArrow className=" h-5 w-5 shrink-0" />
+                  </li>
+                )
+              )}
+            </ul>
+          </Container>
+
+          {isMobile && <PlanesBottomBar selectedOption={selectedOption} />}
         </DermaLayout>
       </div>
     </>

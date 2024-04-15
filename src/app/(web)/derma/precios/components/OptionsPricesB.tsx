@@ -102,7 +102,7 @@ export default function OptionsPricesB({
                     alt={subscription.title}
                     height={200}
                     width={200}
-                    className="mx-auto mt-8 md:mb-4 md:mt-12"
+                    className="mx-auto mt-8 md:mb-4 md:mt-12 hidden md:block"
                     priority
                   />
                   <Text className="text-lg font-semibold hidden md:block">
@@ -114,7 +114,7 @@ export default function OptionsPricesB({
                   <Text className="text-xs text-derma-primary500 hidden md:block">
                     {subscription.price.subtitle}
                   </Text>
-                  <ul className="border-t md:border-derma-secondary500 mt-6 pt-6 flex flex-col gap-4">
+                  <ul className="md:border-t md:border-derma-secondary500 md:mt-6 pt-6 flex flex-col gap-4">
                     {subscription.bullets.map(bullet => (
                       <li
                         key={bullet.text}

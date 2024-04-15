@@ -121,6 +121,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgVerify',
+        text: 'Mejor piel en 90 días*',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgCalendarSearch',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: true,
@@ -128,11 +133,6 @@ export const SUBSCRIPTIONS = [
       {
         icon: 'SvgRefreshSquare',
         text: 'Ajuste del tratamiento según evolución',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Mejor piel en 90 días*',
         isEnabled: true,
       },
     ],
@@ -155,6 +155,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgVerify',
+        text: 'Mejor piel en 90 días*',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgCross',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: false,
@@ -163,11 +168,6 @@ export const SUBSCRIPTIONS = [
         icon: 'SvgCross',
         text: 'Ajuste del tratamiento según evolución',
         isEnabled: false,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Mejor piel en 90 días*',
-        isEnabled: true,
       },
     ],
   },
@@ -189,6 +189,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgVerify',
+        text: 'Mejor piel en 90 días*',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgCross',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: false,
@@ -197,11 +202,6 @@ export const SUBSCRIPTIONS = [
         icon: 'SvgCross',
         text: 'Ajuste del tratamiento según evolución',
         isEnabled: false,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'GMejor piel en 90 días*',
-        isEnabled: true,
       },
     ],
   },

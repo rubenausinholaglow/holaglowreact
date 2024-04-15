@@ -19,7 +19,9 @@ export default function DermaHome() {
         <HowItWorksDerma />
         <TimeLineDerma />
         <StoriesDerma />
-        <ProfessionalsDerma className="py-12" />
+        <div className="bg-derma-secondary500">
+          <ProfessionalsDerma className="py-12" />
+        </div>
         <ClinicsDerma />
         <BenefitsApplicationResultsDerma className="mt-12 md:mt-0" />
         <FaqsDerma className="py-12" />
