@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ImageUploading, {
   ImageListType,
   ImageType,
@@ -14,15 +14,20 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { SetState } from 'zustand';
 
 export default function ImageUploader({
   title,
   subtitle,
   pictureIndex,
+  imageIsLoading,
+  setImageIsLoading,
 }: {
   title: string;
   subtitle: string;
   pictureIndex: number;
+  imageIsLoading: boolean;
+  setImageIsLoading: Dispatch<SetStateAction<boolean>>;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
@@ -33,6 +38,7 @@ export default function ImageUploader({
     images.push(imageList);
     try {
       setIsLoading(true);
+      setImageIsLoading(true);
       const picture = imageList[0];
 
       if (picture?.file) {
@@ -59,7 +65,8 @@ export default function ImageUploader({
         'ImagePosition' + pictureIndex,
         id
       );
-      picturesUrls.push(url);
+      if (picturesUrls.length > pictureIndex) picturesUrls[pictureIndex] = url;
+      else picturesUrls.push(url);
       setPicturesUrls(picturesUrls);
       //setIsLoading(false);
     }
@@ -70,7 +77,7 @@ export default function ImageUploader({
     updatedPictures[pictureIndex] = [];
 
     setImages(updatedPictures);
-    picturesUrls.splice(index, 1);
+    picturesUrls[index] = '';
     setPicturesUrls(picturesUrls);
   };
 
@@ -84,11 +91,13 @@ export default function ImageUploader({
 
   const isDisabled = () => {
     if (pictureIndex === 1) {
-      return isEmpty(picturesUrls[0]);
+      return isEmpty(picturesUrls[0]) || imageIsLoading;
     }
 
     if (pictureIndex === 2) {
-      return isEmpty(picturesUrls[0]) || isEmpty(picturesUrls[1]);
+      return (
+        isEmpty(picturesUrls[0]) || isEmpty(picturesUrls[1]) || imageIsLoading
+      );
     }
 
     return false;
@@ -134,7 +143,6 @@ export default function ImageUploader({
                           fill
                           objectFit="cover"
                           alt={subtitle}
-                          onLoad={() => setIsLoading(false)}
                         />
                       )
                     )}
@@ -146,7 +154,6 @@ export default function ImageUploader({
                           alt={subtitle}
                           fill
                           objectFit="cover"
-                          onLoad={() => setIsLoading(false)}
                         />
                       )}
 
@@ -156,7 +163,10 @@ export default function ImageUploader({
                         alt={subtitle}
                         fill
                         objectFit="cover"
-                        onLoad={() => setIsLoading(false)}
+                        onLoad={() => {
+                          setIsLoading(false);
+                          setImageIsLoading(false);
+                        }}
                       />
                     )}
                   </div>
