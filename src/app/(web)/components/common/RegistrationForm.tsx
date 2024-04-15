@@ -35,6 +35,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showPostalCode = false,
   showCity = false,
   showAddress = false,
+  showDni = false,
   className = '',
 }: {
   redirect?: boolean;
@@ -48,6 +49,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showPostalCode?: boolean;
   showCity?: boolean;
   showAddress?: boolean;
+  showDni?: boolean;
   className?: string;
 }) => {
   const routes = useRoutes();
@@ -92,6 +94,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     origin: '',
     city: '',
     address: '',
+    dni: '',
   });
 
   useEffect(() => {
@@ -120,6 +123,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       ((!isEmpty(formData.postalCode) && showPostalCode) || !showPostalCode) &&
       ((!isEmpty(formData.city) && showCity) || !showCity) &&
       ((!isEmpty(formData.address) && showAddress) || !showAddress) &&
+      ((!isEmpty(formData.dni) && showDni) || !showDni) &&
       !showPhoneError &&
       !showEmailError &&
       !showPostalCodeError
@@ -306,6 +310,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </p>
         )}
       </div>
+      {showDni && (
+        <>
+          <TextInputField
+            placeholder="DNI/NIE"
+            value={formData.dni!}
+            onChange={event => {
+              handleFieldChange(event, 'dni');
+            }}
+          />
+        </>
+      )}
       {showPostalCode && (
         <>
           <TextInputField

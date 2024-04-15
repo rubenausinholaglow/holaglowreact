@@ -160,8 +160,7 @@ export const PaymentMethods = ({
           }}
         >
           {checkoutPaymentItems.map(method =>
-            (method.key === 'alma' || method.key === 'almadeferred') &&
-            !isDerma ? null : (
+            method.key === 'alma' || method.key === 'almadeferred' ? null : (
               <AccordionItem
                 key={method.key}
                 value={method.key}
