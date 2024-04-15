@@ -14,6 +14,12 @@ export const paymentItems = [
     paymentMethod: PaymentMethod.Financing,
   },
   {
+    key: 'frakmenta',
+    label: 'Financiación Frakmenta',
+    paymentBank: PaymentBank.Frakmenta,
+    paymentMethod: PaymentMethod.Financing,
+  },
+  {
     key: 'cash',
     label: 'Efectivo',
     paymentBank: PaymentBank.Cash,
