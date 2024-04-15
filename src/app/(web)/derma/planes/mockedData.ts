@@ -132,7 +132,7 @@ export const SUBSCRIPTIONS = [
       },
       {
         icon: 'SvgVerify',
-        text: 'Garantía de resultados',
+        text: 'Mejor piel en 90 días*',
         isEnabled: true,
       },
     ],
@@ -166,7 +166,7 @@ export const SUBSCRIPTIONS = [
       },
       {
         icon: 'SvgVerify',
-        text: 'Garantía de resultados',
+        text: 'Mejor piel en 90 días*',
         isEnabled: true,
       },
     ],
@@ -200,7 +200,7 @@ export const SUBSCRIPTIONS = [
       },
       {
         icon: 'SvgVerify',
-        text: 'Garantía de resultados',
+        text: 'GMejor piel en 90 días*',
         isEnabled: true,
       },
     ],

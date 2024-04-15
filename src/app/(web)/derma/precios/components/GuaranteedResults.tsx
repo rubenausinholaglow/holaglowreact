@@ -15,7 +15,7 @@ export default function GuaranteedResults() {
           className="shrink-0"
         />
         <div>
-          <Text className="font-semibold mb-1">Garantía de resultados</Text>
+          <Text className="font-semibold mb-1">Mejor piel en 90 días*</Text>
           <Text className="text-sm md:text-md">
             Prueba tu rutina siguiendo las indicaciones del médico y si en 3
             meses no ves una mejora, te devolvemos el dinero. Consulta{' '}
