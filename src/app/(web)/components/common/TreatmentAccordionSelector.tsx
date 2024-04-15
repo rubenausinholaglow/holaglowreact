@@ -5,6 +5,7 @@ import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import {
   getInvalidProducts,
+  getValidProductsToAdd,
   getValidTypes,
   getValidUnityTypes,
   isDisableAddQuantity,
@@ -50,6 +51,7 @@ export default function TreatmentAccordionSelector({
   const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
 
   const notValidProducts = getInvalidProducts(cart);
+  const validProductsToAdd = getValidProductsToAdd(cart);
 
   useEffect(() => {
     if (isDashboard && !isEmpty(dashboardProducts)) {
@@ -147,13 +149,21 @@ export default function TreatmentAccordionSelector({
   const validTypes = getValidTypes();
 
   function getProductsByTypePack(): Product[] {
-    return dashboardProducts.filter(
+    const products = dashboardProducts.filter(
       product =>
         !notValidProducts.includes(product.flowwwId.toString()) &&
         validUnityTypes.includes(product.unityType) &&
         validTypes.includes(product.type) &&
         !product.isPack
     );
+
+    if (validProductsToAdd.length > 0) {
+      const prods: Product[] = dashboardProducts.filter(x =>
+        validProductsToAdd.includes(x.flowwwId.toString())
+      );
+      products.push(...prods);
+    }
+    return products;
   }
 
   const renderAcordionContent = (

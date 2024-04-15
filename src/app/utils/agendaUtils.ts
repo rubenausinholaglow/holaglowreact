@@ -39,6 +39,9 @@ import { CartItem, PackUnitiesScheduled, Product, ProductType, UnityType } from 
   }
 
 export function isDisableAddQuantity(selectedTreatments: Product[], product: Product, cart: CartItem[], treatmentPacks: PackUnitiesScheduled[]): boolean {
+    
+    if(selectedTreatments.length == 0) return false;
+   
     const sumPerTypeInCart = getCountTreatmentsToSchedule(
       product,
       cart,
@@ -121,14 +124,26 @@ export function getValidUnityTypes(treatmentPacks : PackUnitiesScheduled[]) {
 export function getInvalidProducts(cart: CartItem[]): string[] {
 
   const invalidProducts = ['4107', '866'];
-  const exceptionalProducts = ['855', '854', ''];
+  const specialProductsPacks = ['855', '854'];
   const specialPacks= ['5492', '5497', '974', '5465'];
   
   if(cart.find(x => !specialPacks.includes(x.flowwwId.toString())))
   {
-    invalidProducts.push(...exceptionalProducts); 
-  }
-  
-  
+    invalidProducts.push(...specialProductsPacks); 
+  }  
   return invalidProducts;
+}
+
+export function getValidProductsToAdd(cart: CartItem[]): string[] {
+
+  const specialProductSkin = ['2109', '5519', '2147'];
+  const specialPackSkin = ['5492', '5497']
+  
+  if(cart.find(x => specialPackSkin.includes(x.flowwwId.toString())))
+  {
+    return specialProductSkin;
+  }  
+
+  return [];
+ 
 }

@@ -19,6 +19,7 @@ import { Budget, StatusBudget } from 'app/types/budget';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { useRouter } from 'next/navigation';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';
@@ -44,6 +45,7 @@ const Page = () => {
     setBudgetId,
     storedClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
+  const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
 
   useEffect(() => {
@@ -180,11 +182,11 @@ const Page = () => {
               <Button
                 className="w-full"
                 size="md"
-                href={`${ROUTES.dashboard.schedule}`}
                 type="white"
                 onClick={e => {
-                  setIsLoadingAgenda(true);
                   setTreatmentPacks([]);
+                  setIsLoadingAgenda(true);
+                  router.push(ROUTES.dashboard.schedule);
                 }}
               >
                 <span className="font-semibold">Agendar Cita</span>

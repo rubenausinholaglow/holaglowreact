@@ -60,11 +60,10 @@ export default function Page() {
   const router = useRouter();
   const ROUTES = useRoutes();
 
-  const validTypes = getValidTypes();
   useEffect(() => {
-    setStateProducts([]);
-    setDashboardProducts([]);
     const fetchProducts = async () => {
+      setStateProducts([]);
+      setDashboardProducts([]);
       try {
         const products = await ProductService.getDashboardProducts(
           storedClinicId,
@@ -76,7 +75,7 @@ export default function Page() {
       }
     };
 
-    fetchProducts();
+    if (isEmpty(cart)) fetchProducts();
   }, []);
 
   useEffect(() => {
@@ -95,7 +94,10 @@ export default function Page() {
   }, [clinics]);
 
   useEffect(() => {
-    if (treatmentPacks.length == 0) {
+    if (
+      treatmentPacks.length == 0 ||
+      !treatmentPacks.find(x => x.isScheduled == true)
+    ) {
       setTreatments();
     } else {
       setPackInProductCart(true);
@@ -229,6 +231,7 @@ export default function Page() {
                                     pack.isScheduled == findScheduledProducts
                                 )
                             )
+                            .sort((a, b) => (a.type > b.type ? 1 : -1))
                             .map(pack => (
                               <>
                                 {pack.isScheduled ? (
