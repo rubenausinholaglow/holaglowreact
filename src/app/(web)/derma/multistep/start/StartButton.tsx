@@ -5,6 +5,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 export default function StartButton() {
   return (
     <Button
+      size="lg"
       type="dermaDark"
       href={ROUTES.derma.multistep.pains}
       id="tmevent_derma_start"

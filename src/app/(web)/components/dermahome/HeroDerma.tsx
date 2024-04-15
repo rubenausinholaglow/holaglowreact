@@ -18,50 +18,56 @@ export default function HeroDerma() {
 
   return (
     <div style={{ marginTop: `-${HEADER_HEIGHT_CLASS}` }}>
-      <div className="bg-gradient-30deg from-derma-primary500/20 to-white">
+      <div className="bg-white pb-8 relative">
         <Container>
-          <Flex className="pt-24 md:pt-36 pb-12">
-            {!isMobileSSR() && (
-              <Flex
-                layout="col-left"
-                className="hidden md:flex md:w-1/2 shrink-0"
-              >
-                <Title size="3xl" className="text-derma-primary">
-                  Tu rutina facial para{' '}
-                  <span className="inline-block md:h-[50px] md:relative md:top-1 lg:h-20 lg:top-0 overflow-hidden text-derma-tertiary">
-                    <span className="block animate-pains">
-                      <span className="block">acné</span>
-                      <span className="block">melasma</span>
-                      <span className="block">rosácea</span>
-                      <span className="block">calidad de piel</span>
-                    </span>
-                  </span>
-                </Title>
-                <Text className="text-hg-black500 mb-8">
-                  Analizamos tu piel y te enviamos a casa una rutina facial
-                  diseñada para ti por un médico
-                </Text>
-                <Button
-                  size="xl"
-                  type="derma"
-                  className="mb-16"
-                  href={ROUTES.derma.multistep.start}
-                >
-                  Empezar análisis
-                </Button>
-                <ReviewScore className="bg-[rgba(255,255,255,.5)] p-4 w-full rounded-xl" />
-              </Flex>
-            )}
-            <div className="px-4 md:px-0 md:w-1/2 md:ml-auto md:pl-16">
-              <Image
-                alt="Precios de las rutinas"
-                height={1288}
-                width={1088}
-                src="/images/derma/landingPrecios/header.png"
-                className="w-full "
-              />
-            </div>
+          <Flex layout="col-center" className="pt-24 md:pt-36 relative z-10">
+            <Title size="2xl" className="text-derma-primary text-center">
+              Tu rutina facial para
+            </Title>
+            <Title
+              size="2xl"
+              className="text-derma-primary500 text-center relative h-10 lg:h-16 overflow-hidden mb-6"
+            >
+              <span className="block animate-pains">
+                <span className="block">acné</span>
+                <span className="block">melasma</span>
+                <span className="block">rosácea</span>
+                <span className="block">calidad de piel</span>
+              </span>
+            </Title>
+            <Text className="text-hg-black500 mb-8 md:text-lg max-w-[600px] text-center">
+              Analizamos tu piel y te enviamos a casa una rutina facial diseñada
+              para ti por un médico
+            </Text>
+            <Button size="xl" type="derma" href={ROUTES.derma.multistep.start}>
+              Empezar análisis
+            </Button>
           </Flex>
+        </Container>
+
+        <Image
+          src="/images/derma/home/dermaHome.png"
+          alt="analizamos tu piel"
+          height={500}
+          width={420}
+          className="w-full -mt-20 md:hidden"
+        />
+        <Container>
+          <Image
+            src="/images/derma/home/dermaHomeLeft.png"
+            alt="analizamos tu piel"
+            height={306}
+            width={538}
+            className="absolute bottom-12 left-0 h-[62%] w-auto hidden md:block"
+          />
+          <Image
+            src="/images/derma/home/dermaHomeRight.png"
+            alt="cuidado facial personalizado"
+            height={840}
+            width={542}
+            className="absolute bottom-5 right-0 h-[80%] w-auto hidden md:block"
+          />
+          <ReviewScore className="bg-hg-black50/90 p-4 w-full rounded-xl hidden md:flex md:w-1/2 relative" />
         </Container>
       </div>
       {isMobileSSR() && (
@@ -70,7 +76,7 @@ export default function HeroDerma() {
             <Container>
               <ReviewScore />
             </Container>
-            <div className="bg-derma-secondary300 py-4">
+            {/* <div className="bg-derma-secondary300 py-4">
               <Container>
                 <Title size="2xl" className="text-derma-primary mb-4">
                   Tu rutina facial para{' '}
@@ -98,7 +104,7 @@ export default function HeroDerma() {
                   </Button>
                 </Flex>
               </Container>
-            </div>
+            </div> */}
           </div>
         </div>
       )}

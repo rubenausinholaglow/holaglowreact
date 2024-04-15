@@ -30,35 +30,29 @@ export default function StartMultistep() {
                 alt="Holaglow"
                 width={780}
                 height={752}
-                className="rounded-t-2xl w-full md:w-1/2"
+                className="rounded-t-2xl md:rounded-2xl w-full md:w-1/2 md:mt-12"
               />
               <Container id="tm_derma_step0" className="md:w-1/2 md:px-0">
                 <Flex
                   layout="col-left"
                   className="items-center relative md:justify-center md:flex-row md:mt-12"
                 >
-                  <Flex
-                    layout="col-left"
-                    className="relative z-10 py-4 text-hg-black500"
-                  >
-                    <Title
-                      size="xldr"
-                      className="text-derma-primary font-light"
-                    >
+                  <Flex layout="col-left" className="relative z-10 py-4">
+                    <Text className="text-xl md:text-3xl text-derma-primary font-light font-gtUltra">
                       Dra. Sonsoles Espí
-                    </Title>
-                    <Text className="text-sm">
+                    </Text>
+                    <Text className="text-sm text-hg-black500">
                       Directora médica en Holaglow
                     </Text>
-                    <Text className="text-sm mb-4">
+                    <Text className="text-sm mb-4 text-hg-black500">
                       Médico estético y especialista en dermocosmética
                     </Text>
 
-                    <Text className="md:text-lg mb-2">
+                    <Text className="mb-2">
                       ¡Hola! Vamos a encontrar la mejor rutina para tu piel.
                     </Text>
 
-                    <Text className="md:text-lg mb-8">
+                    <Text className="mb-8">
                       Ahora te haremos algunas preguntas para que tu médico
                       pueda diseñar una rutina específica para ti.
                     </Text>
