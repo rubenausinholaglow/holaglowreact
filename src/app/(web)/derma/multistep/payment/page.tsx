@@ -85,8 +85,8 @@ export default function DermaPayment() {
         activePayment,
         createdUser!,
         false,
-        undefined,
-        undefined,
+        cart[0].price,
+        true,
         undefined,
         false
       );
