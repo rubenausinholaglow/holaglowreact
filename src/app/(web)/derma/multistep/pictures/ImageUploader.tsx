@@ -77,12 +77,17 @@ export default function ImageUploader({
 
   const isDisabled = () => {
     if (pictureIndex === 1) {
-      return isEmpty(picturesUrls[0]) || imageIsLoading;
+      return (
+        isEmpty(picturesUrls[0]) ||
+        (imageIsLoading && !isLoading && isEmpty(picturesUrls[1]))
+      );
     }
 
     if (pictureIndex === 2) {
       return (
-        isEmpty(picturesUrls[0]) || isEmpty(picturesUrls[1]) || imageIsLoading
+        isEmpty(picturesUrls[0]) ||
+        isEmpty(picturesUrls[1]) ||
+        (imageIsLoading && !isLoading)
       );
     }
 
