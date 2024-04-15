@@ -4,6 +4,7 @@ import { Product, ProductType, UnityType } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import {
+  getInvalidProducts,
   getValidTypes,
   getValidUnityTypes,
   isDisableAddQuantity,
@@ -48,7 +49,7 @@ export default function TreatmentAccordionSelector({
   const ROUTES = useRoutes();
   const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
 
-  const notValidProducts = [4107, 0];
+  const notValidProducts = getInvalidProducts(cart);
 
   useEffect(() => {
     if (isDashboard && !isEmpty(dashboardProducts)) {
@@ -132,7 +133,7 @@ export default function TreatmentAccordionSelector({
           return (
             x.category.some(y => y.name === category) &&
             !x.isPack &&
-            x.flowwwId != 4107
+            !notValidProducts.includes(x.flowwwId.toString())
           );
         })
         .sort((a, b) => (a.title > b.title ? 1 : -1));
@@ -148,10 +149,10 @@ export default function TreatmentAccordionSelector({
   function getProductsByTypePack(): Product[] {
     return dashboardProducts.filter(
       product =>
+        !notValidProducts.includes(product.flowwwId.toString()) &&
         validUnityTypes.includes(product.unityType) &&
         validTypes.includes(product.type) &&
-        !product.isPack &&
-        product.flowwwId != 4107
+        !product.isPack
     );
   }
 
@@ -193,7 +194,7 @@ export default function TreatmentAccordionSelector({
                   {getProductsByTypePack().map((product, index) => (
                     <li
                       className="transition-all flex items-center bg-hg-secondary100 hover:bg-hg-secondary300 p-4 cursor-pointer"
-                      key={product.title}
+                      key={index}
                     >
                       {renderTextProduct(product)}
                       {renderSelectorQuantity(product, index)}

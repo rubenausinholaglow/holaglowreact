@@ -32,6 +32,7 @@ const Page = () => {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingAgenda, setIsLoadingAgenda] = useState(false);
   const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
@@ -182,10 +183,12 @@ const Page = () => {
                 href={`${ROUTES.dashboard.schedule}`}
                 type="white"
                 onClick={e => {
+                  setIsLoadingAgenda(true);
                   setTreatmentPacks([]);
                 }}
               >
                 <span className="font-semibold">Agendar Cita</span>
+                {isLoadingAgenda && <SvgSpinner height={24} width={24} />}
               </Button>
               <Button
                 className="w-full"

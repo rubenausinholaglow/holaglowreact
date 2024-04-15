@@ -53,32 +53,9 @@ export function isDisableAddQuantity(selectedTreatments: Product[], product: Pro
         return true;
     }
 
-    if ((getTreatmentPerUnityType(selectedTreatments, UnityType.Hilos) && product.unityType == UnityType.Radiesse) ||
-        (getTreatmentPerUnityType(selectedTreatments, UnityType.Radiesse) && product.unityType == UnityType.Hilos))
-    {
-        return true;
-    }
-
-    if ((getTreatmentPerUnityType(selectedTreatments, UnityType.Hilos) && product.unityType == UnityType.Belkyra) ||
-        (getTreatmentPerUnityType(selectedTreatments, UnityType.Belkyra) && product.unityType == UnityType.Hilos))
-    {
-        return true;
-    }
-
-    if ((getTreatmentPerUnityType(selectedTreatments, UnityType.AcidoHialuronico) && product.unityType == UnityType.Vitaminas) ||
-        (getTreatmentPerUnityType(selectedTreatments, UnityType.Vitaminas) && product.unityType == UnityType.AcidoHialuronico)) 
-    {
-        return true;
-    }
-
     if (isIncompatibleWithSelectedTreatments(product.flowwwId, selectedTreatments)) {
         return true;
     }
-
-    /*if (isIncompatibleWithSelectedTreatmentsByUnityType(product, selectedTreatments)) {
-        return true;
-    }*/
-
 
     if (cart.length > 0 && selectedTreatments.filter(x => x.unityType == product.unityType)
             .length >= sumPerTypeInCart[product.unityType]) {
@@ -107,12 +84,17 @@ const incompatibleProductsMap: Record<number, number[]> = {
     851 : [854],
     850 : [854],
     856 : [854],
+    858 : [2015],
+    2015 : [858],
+    859: [4129],
+    4129: [859]
 };
 
 function isIncompatibleWithSelectedTreatments(flowwwId: number, selectedTreatments: Product[]): boolean {
 
     if(incompatibleProductsMap[flowwwId])
     {
+
         if(selectedTreatments.some(x => x.flowwwId) && incompatibleProductsMap[flowwwId].some(x => selectedTreatments.some(y => y.flowwwId == x)))
         {
             return true
@@ -132,3 +114,18 @@ export function getValidUnityTypes(treatmentPacks : PackUnitiesScheduled[]) {
     return packTypes;
   }
 
+
+export function getInvalidProducts(cart: CartItem[]): string[] {
+
+  const invalidProducts = ['4107', '866'];
+  const exceptionalProducts = ['855', '854', ''];
+  const specialPacks= ['5492', '5487', '5497', '974', '5465'];
+  
+  if(cart.find(x => !specialPacks.includes(x.flowwwId.toString())))
+  {
+    invalidProducts.push(...exceptionalProducts); 
+  }
+  
+  
+  return invalidProducts;
+}
