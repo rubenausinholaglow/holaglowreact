@@ -24,6 +24,7 @@ const useRoutes = () => {
       crisalix: '/dashboard/crisalix',
       schedule: `/dashboard/schedule?flowwwToken=${user?.flowwwToken}`,
       menu: '/dashboard/menu',
+      budgets: '/dashboard/budgets',
       home: isCallCenter
         ? `/dashboard?isCallCenter=true&ignoreMessages=true`
         : `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,

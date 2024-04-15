@@ -4,11 +4,13 @@ import Bugsnag from '@bugsnag/js';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { Elements } from '@stripe/react-stripe-js';
 import {
-  EmbeddedCheckout,
-  EmbeddedCheckoutProvider,
-} from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+  Appearance,
+  loadStripe,
+  StripePaymentElementOptions,
+} from '@stripe/stripe-js';
+import { HOLAGLOW_COLORS } from '@utils/colors';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
@@ -17,6 +19,7 @@ import {
   financialTimes,
 } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
+import { gtUltra, poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
 import {
@@ -34,6 +37,8 @@ import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
+import { StripeForm } from './StripeForm';
+
 const PAYMENT_ICONS = {
   alma: ['alma.svg'],
   almadeferred: ['alma.svg'],
@@ -41,6 +46,9 @@ const PAYMENT_ICONS = {
   Efectivo: [],
   creditCard: ['visa.svg', 'mastercard.svg', 'googlepay.svg', 'applepay.svg'],
   direct: [],
+};
+const paymentElementOptions: StripePaymentElementOptions = {
+  layout: 'tabs',
 };
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -58,6 +66,7 @@ export const PaymentMethods = ({
   const [showAlmaButtons, setShowAlmaButtons] = useState(false);
 
   const [clientSecret, setClientSecret] = useState('');
+  const [isLoadingStripe, setIsLoadingStripe] = useState<boolean>(false);
   const [isLoadingKey, setIsLoadingKey] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -143,6 +152,34 @@ export const PaymentMethods = ({
       [key]: false,
     });
   }
+  const appearance: Appearance = {
+    theme: 'stripe',
+    labels: 'floating',
+    variables: {
+      colorPrimary: '#0570de',
+      colorBackground: '#ffffff',
+      colorText: HOLAGLOW_COLORS.black,
+      colorDanger: HOLAGLOW_COLORS.error,
+      fontFamily: 'poppins',
+      spacingUnit: '3px',
+      borderRadius: '12px',
+      // See all possible variables below
+    },
+    rules: {
+      '.Input': {
+        border: `1px solid ${HOLAGLOW_COLORS.black}`,
+        paddingLeft: '16px',
+        paddingRight: '16px',
+        width: '100%',
+      },
+    },
+  };
+
+  const fonts = [
+    {
+      cssSrc: 'https://fonts.googleapis.com/css2?family=Poppins&display=swap',
+    },
+  ];
 
   function isLoadingPayment() {
     return Object.values(isLoadingKey).some(value => value) ? true : false;
@@ -168,7 +205,7 @@ export const PaymentMethods = ({
               >
                 <AccordionTrigger className="text-left">
                   <Flex
-                    className="gap-3  mb-4"
+                    className="gap-4"
                     onClick={() => {
                       scrollDown();
                       if (method.key == 'creditCard') {
@@ -186,24 +223,27 @@ export const PaymentMethods = ({
                       className="shrink-0 hidden group-data-[state=open]:block"
                     />
                     <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-                    <Text>
-                      {method.label.replace('{0}', isDerma ? '99' : '49')}
-                    </Text>
-                  </Flex>
-                  <Flex className="ml-auto gap-2">
-                    {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
-                      PAYMENT_ICONS[
+                    {method.label.length > 0 && (
+                      <Text>
+                        {method.label.replace('{0}', isDerma ? '99' : '49')}
+                      </Text>
+                    )}
+                    <Flex className="gap-2">
+                      {PAYMENT_ICONS[
                         method.key as keyof typeof PAYMENT_ICONS
-                      ].map((icon: string) => (
-                        <Image
-                          src={`/images/dashboard/payment/${icon}`}
-                          height={32}
-                          width={56}
-                          key={icon}
-                          alt={method.label}
-                          className="ml-auto"
-                        />
-                      ))}
+                      ] &&
+                        PAYMENT_ICONS[
+                          method.key as keyof typeof PAYMENT_ICONS
+                        ].map((icon: string) => (
+                          <Image
+                            src={`/images/dashboard/payment/${icon}`}
+                            height={32}
+                            width={56}
+                            key={icon}
+                            alt={method.label}
+                          />
+                        ))}
+                    </Flex>
                   </Flex>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -283,18 +323,19 @@ export const PaymentMethods = ({
                     ) : (
                       <></>
                     )}
-                    {isLoadingButton && method.key === 'creditCard' && (
-                      <Flex className="w-full justify-center">
-                        <SvgSpinner height={24} width={24} />
-                      </Flex>
-                    )}
                     {clientSecret && method.key == 'creditCard' && (
-                      <EmbeddedCheckoutProvider
+                      <Elements
                         stripe={stripePromise}
-                        options={{ clientSecret }}
+                        options={{
+                          clientSecret,
+                          appearance,
+                          fonts,
+                          locale: 'es',
+                          loader: 'always',
+                        }}
                       >
-                        <EmbeddedCheckout className="w-full" />
-                      </EmbeddedCheckoutProvider>
+                        <StripeForm />
+                      </Elements>
                     )}
                     {errorMessage && (
                       <p className="text-red-600"> {errorMessage} </p>
