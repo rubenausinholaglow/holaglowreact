@@ -54,13 +54,7 @@ const ROUTES = {
       form: '/derma/multistep/form',
       payment: '/derma/multistep/payment',
       thankyou: '/derma/multistep/thank-you',
-      ns: {
-        extraInfo: '/derma/multistep/ns/extra-info',
-        skinType: '/derma/multistep/ns/skin-type',
-        skinSensibility: '/derma/multistep/ns/skin-sensitivity',
-        lactating: '/derma/multistep/ns/lactancy',
-        form: '/derma/multistep/ns/form',
-      },
+      planes: '/derma/multistep/planes',
     },
   },
 };

@@ -8,11 +8,9 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 export default function DermaBottomBar({
   threshold,
   isVisible = true,
-  showButton = true,
 }: {
   threshold?: number;
   isVisible?: boolean;
-  showButton?: boolean;
 }) {
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);

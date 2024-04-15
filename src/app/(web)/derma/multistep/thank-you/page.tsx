@@ -1,6 +1,8 @@
 'use client';
+
 import CheckHydration from '@utils/CheckHydration';
 import { DERMA_COLORS } from '@utils/colors';
+import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgCheck, SvgInfoCircle } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
@@ -39,6 +41,7 @@ const ITEMS = [
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
   const { picturesUrls } = useDermaStore(state => state);
+
   return (
     <CheckHydration>
       <div className="bg-derma-secondary300 min-h-screen relative">
@@ -52,7 +55,7 @@ export default function ThankYouMultiStep() {
                   className="w-full gap-4 md:items-start"
                 >
                   <Image
-                    alt="Dr. Basart"
+                    alt="Dra. Sonsoles Espi"
                     src="/images/derma/multistep/Sonsoles.png"
                     height={192}
                     width={192}
@@ -187,6 +190,7 @@ export default function ThankYouMultiStep() {
                     type="derma"
                     size="xl"
                     className="w-full mb-8 md:mb-16"
+                    href={ROUTES.derma.multistep.planes}
                   >
                     Elegir plan de tratamiento
                   </Button>

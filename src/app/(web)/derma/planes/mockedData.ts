@@ -98,15 +98,19 @@ export const DERMA_APPOINTMENT_IMAGE = [
 export const SUBSCRIPTIONS = [
   {
     title: 'Suscripción trimestral',
+    subtitle: 'Tu rutina personalizada con seguimiento médico mensual',
     imgSrc: '/images/derma/landingPrecios/rutinaDoctorHolaglow.png',
     bgColor: 'bg-white',
     tag: {
-      text: 'El más popular',
+      text: {
+        isMobile: '+ popular',
+        isDesktop: 'El más popular',
+      },
       styles:
-        'bg-hg-primary rounded-full px-3 py-2 inline-block ml-auto text-xs text-derma-primary font-semibold mb-4',
+        'bg-hg-primary rounded-full px-3 py-1.5 md:py-2 inline-block ml-auto text-xs md:text-sm text-derma-primary font-semibold',
     },
     price: {
-      value: '75€',
+      value: '75 €',
       subtitle: 'Pago cada 3 meses',
     },
     bullets: [
@@ -134,11 +138,12 @@ export const SUBSCRIPTIONS = [
   },
   {
     title: 'Compra única',
+    subtitle: 'Tu rutina personalizada para 3 meses de tratamiento',
     imgSrc: '/images/derma/landingPrecios/rutinaHolaglow.png',
     bgColor: 'bg-white',
     tag: {},
     price: {
-      value: '99€',
+      value: '99 €',
       subtitle: 'En un solo pago',
     },
     bullets: [
@@ -166,16 +171,17 @@ export const SUBSCRIPTIONS = [
   },
   {
     title: 'Sólo receta',
-    imgSrc: '/images/derma/landingPrecios/rutinaHolaglow.png',
+    subtitle: 'Receta de tu crema personalizada para pedirla en tu farmacia',
+    imgSrc: '/images/derma/landingPrecios/receta.svg',
     bgColor: 'bg-white',
     tag: {},
     price: {
-      value: '49€',
+      value: '49 €',
       subtitle: 'En un solo pago',
     },
     bullets: [
       {
-        icon: 'SvgReceipt',
+        icon: 'SvgReceipt2',
         text: 'Receta de tu crema personalizada',
         isEnabled: true,
       },
