@@ -323,7 +323,8 @@ export default function Agenda({
                     updateIsScheduled(
                       true,
                       selectedProduct!.uniqueId,
-                      dateScehduled
+                      dateScehduled,
+                      selectedProduct.title
                     );
                   } else {
                     treatmentPacks.length > 0
@@ -349,7 +350,12 @@ export default function Agenda({
                           cartItem.isScheduled === undefined)
                     );
                     selectedProducts.forEach(item => {
-                      updateIsScheduled(true, item.uniqueId, dateScehduled);
+                      updateIsScheduled(
+                        true,
+                        item.uniqueId,
+                        dateScehduled,
+                        item.title
+                      );
                     });
                   });
                 }
@@ -401,6 +407,7 @@ export default function Agenda({
       ...pack,
       isScheduled: true,
       scheduledDate: scheduledDate,
+      treatmentName: pack.treatmentName,
     }));
     setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
   }

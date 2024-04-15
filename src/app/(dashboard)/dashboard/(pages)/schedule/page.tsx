@@ -237,7 +237,7 @@ export default function Page() {
                                       className="mr-auto shrink-0"
                                       key={pack.id}
                                     >
-                                      {UnityType[pack.type]} -
+                                      {pack.treatmentName} -{' '}
                                       {pack.scheduledDate}
                                     </Text>
                                   ) : (

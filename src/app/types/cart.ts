@@ -27,5 +27,5 @@ export interface Actions {
   removeSingleProduct: (product: CartItem) => void;
   removeItemDiscount: (cartUniqueId: string, discountType: '%' | '€') => void;
   resetCart: () => void;
-  updateIsScheduled: (isScheduled: boolean, uniqueIdCartItem : string, scheduleDate: string) => void;
+  updateIsScheduled: (isScheduled: boolean, uniqueIdCartItem : string, scheduleDate: string, treamentName : string) => void;
 }

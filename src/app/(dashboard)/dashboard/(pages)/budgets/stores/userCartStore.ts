@@ -159,11 +159,11 @@ export const useCartStore = create(
           }));
         }
       },
-      updateIsScheduled: (isScheduled : boolean, uniqueIdCartItem : string, scheduledDate: string) => {
+      updateIsScheduled: (isScheduled : boolean, uniqueIdCartItem : string, scheduledDate: string, treatmentName : string) => {
         set(state => {
           const updatedCart = state.cart.map(item => {
           if (item.uniqueId === uniqueIdCartItem) {
-            return { ...item, isScheduled, scheduledDate };
+            return { ...item, isScheduled, scheduledDate, treatmentName };
           }
             return item;
           });

@@ -119,7 +119,7 @@ export function getInvalidProducts(cart: CartItem[]): string[] {
 
   const invalidProducts = ['4107', '866'];
   const exceptionalProducts = ['855', '854', ''];
-  const specialPacks= ['5492', '5487', '5497', '974', '5465'];
+  const specialPacks= ['5492', '5497', '974', '5465'];
   
   if(cart.find(x => !specialPacks.includes(x.flowwwId.toString())))
   {

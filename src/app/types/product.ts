@@ -94,6 +94,7 @@ export interface PackUnitiesScheduled {
   type : UnityType;
   isScheduled? : boolean;
   scheduledDate? : string;
+  treatmentName? : string; 
 }
 
 export interface ApplicationZoneDetail {
