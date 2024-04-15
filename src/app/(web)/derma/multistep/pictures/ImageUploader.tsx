@@ -121,7 +121,12 @@ export default function ImageUploader({
               >
                 <Flex
                   layout="row-left"
-                  className="border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full relative min-h-[98px]"
+                  className={`border border-derma-primary500 bg-white rounded-xl py-4 px-3 w-full relative min-h-[98px]
+                  ${
+                    !isEmpty(picturesUrls[pictureIndex]) && !isLoading
+                      ? 'bg-derma-primary300 bg-opacity-20'
+                      : ''
+                  }`}
                 >
                   <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4 shrink-0">
                     {isLoading ? (
