@@ -8,7 +8,7 @@ import {
 import { loadStripe, StripePaymentElementOptions } from '@stripe/stripe-js';
 import { Button } from 'designSystem/Buttons/Buttons';
 
-export const StripeForm = () => {
+export const StripeForm = ({ isDerma = false }: { isDerma: boolean }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -29,7 +29,7 @@ export const StripeForm = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: 'http://localhost:3000/checkout/wait',
+        return_url: process.env.NEXT_PUBLIC_STRIPE_RETURN_URL!,
       },
     });
 
@@ -45,7 +45,13 @@ export const StripeForm = () => {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <Button id="submit" type="primary" size="lg" className="mt-4">
+      <Button
+        id="submit"
+        type={isDerma ? 'derma' : 'primary'}
+        size="lg"
+        className="mt-4"
+        onClick={handleSubmit}
+      >
         Pago con tarjeta débito/crédito
       </Button>
       {/* Show any error or success messages */}

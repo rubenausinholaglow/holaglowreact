@@ -161,7 +161,7 @@ export const PaymentMethods = ({
       colorText: HOLAGLOW_COLORS.black,
       colorDanger: HOLAGLOW_COLORS.error,
       fontFamily: 'poppins',
-      spacingUnit: '3px',
+      spacingUnit: '4px',
       borderRadius: '12px',
       // See all possible variables below
     },
@@ -169,6 +169,17 @@ export const PaymentMethods = ({
       '.Input': {
         border: `1px solid ${HOLAGLOW_COLORS.black}`,
         paddingLeft: '16px',
+        marginLeft: '3px',
+        marginBottom: '5px',
+        marginRight: '3px',
+        paddingRight: '16px',
+        width: '100%',
+      },
+      '.Tab': {
+        border: `1px solid ${HOLAGLOW_COLORS.black}`,
+        paddingLeft: '16px',
+        marginLeft: '3px !important',
+        marginRight: '3px',
         paddingRight: '16px',
         width: '100%',
       },
@@ -334,7 +345,7 @@ export const PaymentMethods = ({
                           loader: 'always',
                         }}
                       >
-                        <StripeForm />
+                        <StripeForm isDerma={isDerma} />
                       </Elements>
                     )}
                     {errorMessage && (

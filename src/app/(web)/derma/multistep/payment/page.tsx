@@ -32,7 +32,7 @@ export default function DermaPayment() {
     state => state
   );
   const { cart } = useCartStore(state => state);
-  const [hideLayout, setHideLayout] = useState(false);
+  const [hideLayout] = useState(false);
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
 
@@ -85,7 +85,7 @@ export default function DermaPayment() {
         activePayment,
         createdUser!,
         false,
-        cart[0].price,
+        cart[0].price * 100,
         true,
         undefined,
         false
