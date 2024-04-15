@@ -5,10 +5,10 @@ import { Client } from '@interface/client';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { dermaService } from '@services/DermaService';
 import ROUTES from '@utils/routes';
-import useRoutes from '@utils/useRoutes';
 import { useRegistration } from '@utils/userUtils';
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
+import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -70,11 +70,14 @@ export default function Form() {
     extraInfo,
   } = useDermaStore(state => state);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [client, setClient] = useState<Client>(CLIENT_INITIAL_VALUES);
   const registerUser = useRegistration(client, false, false, false);
 
   function handleFinishDermaFlow() {
+    setIsLoading(true);
+
     const formattedPain =
       symptoms.length > 0
         ? symptoms.map(symptom => ({
@@ -142,10 +145,12 @@ export default function Form() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
+                  size="lg"
                   onClick={() => handleFinishDermaFlow()}
                   type={isDisabled ? 'disabled' : 'dermaDark'}
+                  className={isLoading ? 'pointer-events-none' : ''}
                 >
-                  Siguiente
+                  {!isLoading ? 'Siguiente' : <SvgSpinner className="w-20" />}
                 </Button>
               </Flex>
             </div>

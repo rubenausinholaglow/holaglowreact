@@ -120,6 +120,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgVerify',
+        text: 'Garantía de resultados',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgCalendarSearch',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: true,
@@ -127,11 +132,6 @@ export const SUBSCRIPTIONS = [
       {
         icon: 'SvgRefreshSquare',
         text: 'Ajuste del tratamiento según evolución',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Garantía de resultados',
         isEnabled: true,
       },
     ],
@@ -153,6 +153,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgVerify',
+        text: 'Garantía de resultados',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgCross',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: false,
@@ -161,11 +166,6 @@ export const SUBSCRIPTIONS = [
         icon: 'SvgCross',
         text: 'Ajuste del tratamiento según evolución',
         isEnabled: false,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Garantía de resultados',
-        isEnabled: true,
       },
     ],
   },
@@ -186,6 +186,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgVerify',
+        text: 'Garantía de resultados',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgCross',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: false,
@@ -194,11 +199,6 @@ export const SUBSCRIPTIONS = [
         icon: 'SvgCross',
         text: 'Ajuste del tratamiento según evolución',
         isEnabled: false,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Garantía de resultados',
-        isEnabled: true,
       },
     ],
   },
