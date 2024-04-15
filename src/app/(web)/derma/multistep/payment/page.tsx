@@ -108,9 +108,6 @@ export default function DermaPayment() {
             className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
           >
             <div className="w-full md:w-1/2 p-4 md:order-2">
-              <Text className="font-semibold text-lg hidden md:block">
-                Detalle de tu tratamiento
-              </Text>
               <AppointmentResume
                 isProbadorVirtual={isProbadorVirtual}
                 isDerma={true}

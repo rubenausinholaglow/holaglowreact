@@ -91,16 +91,16 @@ export default function Confirmation({
   if (isDerma) {
     tips = [
       {
-        title: 'Detalles de videollamada',
-        text: 'Antes de tu consulta, te enviaremos un whatsapp y un correo electrónico para recordarte el enlace de acceso a la videollamada.',
+        title: 'Análisis médico',
+        text: 'Tu médico revisará la información del formulario y tus fotos. Nos pondremos en contacto contigo si hiciera falta más información.',
       },
       {
-        title: 'Consejos para tu consulta',
-        text: 'Te damos tres tips para que aproveches al máximo tu cita online con el médico: Buena conexión, buena luz y cara lavada.',
+        title: 'Resultados en 48h',
+        text: 'Te enviaremos por WhatsApp el acceso a tu área de usuario con tu diagnóstico y la rutina personalizada diseñada por tu médico.',
       },
       {
-        title: 'Solución personalizada',
-        text: 'Después, recibirás el plan de cuidado facial que el dermatólogo haya diseñado para ti y la receta de la crema formulada, si corresponde.',
+        title: 'Pide tu crema en la farmacia',
+        text: 'Descarga la receta de tu área de usuario y pide la crema en tu farmacia más cercana. Si has elegido tu rutina completa o trimestral, el resto de cremas te llegarán a casa en los siguientes 3-5 días hábiles.',
       },
     ];
   }
@@ -176,9 +176,7 @@ export default function Confirmation({
                     isDerma ? 'text-derma-primary' : ''
                   } text-center mb-4 font-light`}
                 >
-                  ¡Gracias!
-                  <br />
-                  Tu cita ha sido realizada con éxito
+                  Pago recibido.
                 </Title>
                 {!isDerma && (
                   <Text className="text-center text-hg-black500 hidden md:block">
@@ -190,11 +188,8 @@ export default function Confirmation({
                 )}
                 {isDerma && (
                   <Text className="text-center text-hg-black500 hidden md:block">
-                    Nos alegramos de que confíes en nosotros para asesorarte y
-                    acompañarte en este camino hacia una piel más sana. Nuestro
-                    propósito es atender tus necesidades de manera personalizada
-                    para garantizarte unos resultados efectivos y duraderos.
-                    ¡Qué ganas de verte!
+                    Tu médico analizará tu caso y te haremos llegar la rutina
+                    personalizada
                   </Text>
                 )}
               </>
@@ -215,7 +210,7 @@ export default function Confirmation({
               />
             )}
           </div>
-          {!isDashboard && (
+          {!isDashboard && !isDerma && (
             <Flex
               layout="col-left"
               className={`${

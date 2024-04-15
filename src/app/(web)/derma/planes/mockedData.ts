@@ -98,6 +98,7 @@ export const DERMA_APPOINTMENT_IMAGE = [
 export const SUBSCRIPTIONS = [
   {
     title: 'Suscripción trimestral',
+    id: '17c3b810-d810-45e0-b732-3283ea632d77',
     subtitle: 'Tu rutina personalizada con seguimiento médico mensual',
     imgSrc: '/images/derma/landingPrecios/rutinaDoctorHolaglow.png',
     bgColor: 'bg-white',
@@ -138,6 +139,7 @@ export const SUBSCRIPTIONS = [
   },
   {
     title: 'Compra única',
+    id: '2ee9da6f-4fad-42fc-b717-0b67d49ef0cf',
     subtitle: 'Tu rutina personalizada para 3 meses de tratamiento',
     imgSrc: '/images/derma/landingPrecios/rutinaHolaglow.png',
     bgColor: 'bg-white',
@@ -171,6 +173,7 @@ export const SUBSCRIPTIONS = [
   },
   {
     title: 'Sólo receta',
+    id: '7f01ff68-eb9c-4b9b-83b8-efaec37e49e7',
     subtitle: 'Receta de tu crema personalizada para pedirla en tu farmacia',
     imgSrc: '/images/derma/landingPrecios/receta.svg',
     bgColor: 'bg-white',
