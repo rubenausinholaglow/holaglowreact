@@ -37,7 +37,13 @@ export default function Pictures() {
 
   useEffect(() => {
     checkIsDisabled();
-  }, [picturesUrls.length, picturesUrls[0], picturesUrls[1], picturesUrls[2]]);
+  }, [
+    picturesUrls.length,
+    picturesUrls[0],
+    picturesUrls[1],
+    picturesUrls[2],
+    imageIsLoading,
+  ]);
 
   return (
     <div className="bg-derma-secondary300 min-h-screen">
