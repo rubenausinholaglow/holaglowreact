@@ -22,6 +22,20 @@ server.use(
   })
 );
 server.use(
+  '/landing/holaglow-bcn',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
+  '/checkout-bcn',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
   '/landing/bodas',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',

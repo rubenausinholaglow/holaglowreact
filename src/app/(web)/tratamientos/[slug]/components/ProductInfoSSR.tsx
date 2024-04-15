@@ -142,7 +142,7 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
           </ul>
 
           <ProductSelectorButton product={product} />
-          <PepperWidget price={product.price} />
+          {product.price < 2000 && <PepperWidget price={product.price} />}
         </Container>
       </div>
     </Container>
