@@ -38,9 +38,9 @@ export default function ClinicsCheckout() {
     router.push(ROUTES.checkout.schedule);
   };
 
-  const availableClinicsByPRoduct = selectedTreatments[0].clinicDetail.map(
-    item => item.clinic.city
-  );
+  const availableClinicsByPRoduct = selectedTreatments[0].clinicDetail
+    ? selectedTreatments[0].clinicDetail.map(item => item.clinic.city)
+    : [];
 
   return (
     <App>

@@ -171,7 +171,7 @@ export default function PlanesMultiStep() {
             </ul>
           </Container>
 
-          <PlanesBottomBar selectedOption={selectedOption} />
+          {isMobile && <PlanesBottomBar selectedOption={selectedOption} />}
         </DermaLayout>
       </div>
     </>

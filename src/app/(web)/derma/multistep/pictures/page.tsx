@@ -19,13 +19,15 @@ export default function Pictures() {
   const router = useRouter();
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const [imageIsLoading, setImageIsLoading] = useState(true);
   const { picturesUrls } = useDermaStore(state => state);
 
   function checkIsDisabled() {
     setIsDisabled(
       isEmpty(picturesUrls[0]) ||
         isEmpty(picturesUrls[1]) ||
-        isEmpty(picturesUrls[2])
+        isEmpty(picturesUrls[2]) ||
+        imageIsLoading
     );
   }
 
@@ -35,7 +37,7 @@ export default function Pictures() {
 
   useEffect(() => {
     checkIsDisabled();
-  }, [picturesUrls.length]);
+  }, [picturesUrls.length, picturesUrls[0], picturesUrls[1], picturesUrls[2]]);
 
   return (
     <div className="bg-derma-secondary300 min-h-screen">
@@ -64,18 +66,24 @@ export default function Pictures() {
                   title="Foto 1"
                   subtitle="Frontal"
                   pictureIndex={0}
+                  imageIsLoading={imageIsLoading}
+                  setImageIsLoading={setImageIsLoading}
                 />
 
                 <ImageUploader
                   title="Foto 2"
                   subtitle="Perfil derecho"
                   pictureIndex={1}
+                  imageIsLoading={imageIsLoading}
+                  setImageIsLoading={setImageIsLoading}
                 />
 
                 <ImageUploader
                   title="Foto 3"
                   subtitle="Perfil izquierdo"
                   pictureIndex={2}
+                  imageIsLoading={imageIsLoading}
+                  setImageIsLoading={setImageIsLoading}
                 />
               </Flex>
 

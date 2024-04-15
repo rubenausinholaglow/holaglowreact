@@ -4,6 +4,8 @@ import { gtUltra } from 'app/fonts';
 import DermaFooter from './DermaFooter';
 import DermaHeader from './DermaHeader';
 
+console.log(gtUltra);
+
 export default function DermaLayout({
   children,
   hideButton = false,

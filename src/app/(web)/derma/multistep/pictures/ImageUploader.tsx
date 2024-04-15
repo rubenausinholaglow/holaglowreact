@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ImageUploading, {
   ImageListType,
   ImageType,
@@ -19,26 +19,26 @@ export default function ImageUploader({
   title,
   subtitle,
   pictureIndex,
+  imageIsLoading,
+  setImageIsLoading,
 }: {
   title: string;
   subtitle: string;
   pictureIndex: number;
+  imageIsLoading: boolean;
+  setImageIsLoading: Dispatch<SetStateAction<boolean>>;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
-  const [imageSize, setImageSize] = useState('');
   const { picturesUrls, setPicturesUrls, id } = useDermaStore(state => state);
 
   const onChange = (imageList: ImageListType) => {
     images.push(imageList);
     try {
       setIsLoading(true);
+      setImageIsLoading(true);
       const picture = imageList[0];
 
-      if (picture?.file) {
-        const fileSize = picture.file.size / 1024; // size in KB
-        setImageSize(`${fileSize.toFixed(2).replace('.', "'")} kb`);
-      }
       if (imageList[0]) {
         setImages(images);
         uploadImage(imageList);
@@ -59,7 +59,8 @@ export default function ImageUploader({
         'ImagePosition' + pictureIndex,
         id
       );
-      picturesUrls.push(url);
+      if (picturesUrls.length > pictureIndex) picturesUrls[pictureIndex] = url;
+      else picturesUrls.push(url);
       setPicturesUrls(picturesUrls);
       //setIsLoading(false);
     }
@@ -70,25 +71,19 @@ export default function ImageUploader({
     updatedPictures[pictureIndex] = [];
 
     setImages(updatedPictures);
-    picturesUrls.splice(index, 1);
+    picturesUrls[index] = '';
     setPicturesUrls(picturesUrls);
   };
 
-  useEffect(() => {
-    const pictureSize = ((images[pictureIndex]?.file?.size ?? 0) / 1024)
-      ?.toFixed(2)
-      .replace('.', "'");
-
-    setImageSize(pictureSize);
-  }, [images]);
-
   const isDisabled = () => {
     if (pictureIndex === 1) {
-      return isEmpty(picturesUrls[0]);
+      return isEmpty(picturesUrls[0]) || imageIsLoading;
     }
 
     if (pictureIndex === 2) {
-      return isEmpty(picturesUrls[0]) || isEmpty(picturesUrls[1]);
+      return (
+        isEmpty(picturesUrls[0]) || isEmpty(picturesUrls[1]) || imageIsLoading
+      );
     }
 
     return false;
@@ -134,7 +129,6 @@ export default function ImageUploader({
                           fill
                           objectFit="cover"
                           alt={subtitle}
-                          onLoad={() => setIsLoading(false)}
                         />
                       )
                     )}
@@ -146,7 +140,6 @@ export default function ImageUploader({
                           alt={subtitle}
                           fill
                           objectFit="cover"
-                          onLoad={() => setIsLoading(false)}
                         />
                       )}
 
@@ -156,7 +149,10 @@ export default function ImageUploader({
                         alt={subtitle}
                         fill
                         objectFit="cover"
-                        onLoad={() => setIsLoading(false)}
+                        onLoad={() => {
+                          setIsLoading(false);
+                          setImageIsLoading(false);
+                        }}
                       />
                     )}
                   </div>
@@ -167,14 +163,6 @@ export default function ImageUploader({
 
                     {!isEmpty(images[pictureIndex]) && (
                       <Text className="text-hg-black400 text-xs">
-                        {imageSize === "0'00" ? (
-                          ''
-                        ) : (
-                          <>
-                            <span>{`${imageSize} kb`}</span>
-                            <span className="font-bold">{' · '}</span>
-                          </>
-                        )}
                         <span className="inline-block">
                           {images[pictureIndex]?.file?.name}
                         </span>

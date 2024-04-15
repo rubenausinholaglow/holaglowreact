@@ -48,6 +48,7 @@ export interface RegistrationFormProps {
   setContinueDisabled?: Dispatch<SetStateAction<boolean>>;
   showPostalCode?: boolean;
   showCity?: boolean;
+  showDni?: boolean;
   showAddress?: boolean;
   className?: string;
 }
