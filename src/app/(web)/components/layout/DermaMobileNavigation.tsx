@@ -66,115 +66,23 @@ export default function DermaMobileNavigation({
         >
           <Flex
             layout="col-left"
-            className="gap-6 w-full text-lg font-semibold px-4 pb-8 border-b border-hg-black700"
-          >
-            <p className="font-gtUltra text-hg-secondary font-thin text-xldr">
-              Nuestros tratamientos
-            </p>
-
-            <SimpleAccordion trigger="Más populares" isOpen={!isMobile}>
-              <ul className="text-sm pt-4 font-normal flex flex-col">
-                <li>
-                  <a
-                    className="py-2 block"
-                    href={`${ROUTES.treatments}/arrugas-expresion-frente-entrecejo-patas-gallo`}
-                    id={'tmevent_nav_menu_click'}
-                  >
-                    Arrugas de expresión
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="py-2 block"
-                    href={`${ROUTES.treatments}/aumento-labios`}
-                    id={'tmevent_nav_menu_click'}
-                  >
-                    Aumento de Labios
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="py-2 block"
-                    href={`${ROUTES.treatments}/armonizacion-facial`}
-                    id={'tmevent_nav_menu_click'}
-                  >
-                    Armonización facial
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="py-2 block"
-                    href={`${ROUTES.treatments}/relleno-ojeras`}
-                    id={'tmevent_nav_menu_click'}
-                  >
-                    Relleno de ojeras
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="py-2 block"
-                    href={`${ROUTES.treatments}/proyeccion-pomulos`}
-                    id={'tmevent_nav_menu_click'}
-                  >
-                    Proyección de pómulos
-                  </a>
-                </li>
-              </ul>
-            </SimpleAccordion>
-
-            <a href={ROUTES.treatments} id={'tmevent_nav_menu_click'}>
-              <p className="font-semibold">Ver todos</p>
-            </a>
-
-            <Button
-              size="lg"
-              id="tmevent_nav_menu_click_pv_button"
-              type="secondary"
-              href={ROUTES.landings.pv}
-            >
-              Cita de asesoramiento gratis
-              <SvgArrow height={16} width={16} className="ml-2" />
-            </Button>
-          </Flex>
-          <Flex
-            layout="col-left"
             className="gap-6 w-full text-lg font-semibold px-4 py-8"
           >
-            <a href={ROUTES.aboutUs} id={'tmevent_nav_menu_click'}>
+            <a href={ROUTES.derma.precios} id={'tmevent_nav_menu_click'}>
+              <p className="font-semibold">Planes y precios</p>
+            </a>
+            <a href={ROUTES.derma.clinics} id={'tmevent_nav_menu_click'}>
+              <p className="font-semibold">Clínicas</p>
+            </a>
+            <a href={ROUTES.derma.aboutUs} id={'tmevent_nav_menu_click'}>
               <p className="font-semibold">Sobre nosotros</p>
             </a>
-
-            {!isEmpty(clinics) && (
-              <SimpleAccordion trigger="Clínicas" isOpen={!isMobile}>
-                <ul className="text-sm pt-4 font-normal flex flex-col">
-                  {clinics.map(clinic => (
-                    <li key={clinic.city}>
-                      <a
-                        className="py-2 block"
-                        href={ROUTES.clinics}
-                        id={'tmevent_nav_menu_click'}
-                      >
-                        {clinic.city}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </SimpleAccordion>
-            )}
-            <a href={ROUTES.blog} id={'tmevent_nav_menu_click'}>
-              <p className="font-semibold">Blog</p>
-            </a>
-
             <SimpleAccordion trigger="Privacidad" isOpen={!isMobile}>
               <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
                 <li>
                   <a
                     className="py-2 block"
-                    href={ROUTES.statics.privacyPolicy}
+                    href={ROUTES.derma.privacyPolicy}
                     id={'tmevent_nav_menu_click'}
                   >
                     Política de privacidad
@@ -183,7 +91,7 @@ export default function DermaMobileNavigation({
                 <li>
                   <a
                     className="py-2 block"
-                    href={ROUTES.statics.termsAndConditions}
+                    href={ROUTES.derma.termsAndConditions}
                     id={'tmevent_nav_menu_click'}
                   >
                     Términos y condiciones
@@ -196,7 +104,7 @@ export default function DermaMobileNavigation({
             layout="col-left"
             className="p-4 text-xs gap-4 bg-derma-secondary300 w-full flex-grow"
           >
-            <p className="font-gtUltra text-hg-secondary font-thin text-xldr">
+            <p className="font-gtUltra text-derma-secondary font-thin text-xldr">
               Contacto
             </p>
             <p>
@@ -207,7 +115,7 @@ export default function DermaMobileNavigation({
 
             <Button
               href="tel: +34682417208"
-              type="secondary"
+              type="derma"
               size="md"
               customStyles="font-semibold"
               id="tmevent_nav_menu_click_call_button"
