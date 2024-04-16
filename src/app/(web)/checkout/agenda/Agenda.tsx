@@ -135,7 +135,8 @@ export default function Agenda({
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
-          selectedClinic?.flowwwId || ''
+          selectedClinic?.flowwwId || '',
+          isDashboard
         ).then(data => {
           setTotalTimeAppointment(data?.totalTime);
           callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
