@@ -41,6 +41,8 @@ const ROUTES = {
     precios: '/derma/precios',
     clinics: '/derma/clinicas',
     aboutUs: '/derma/quienes-somos',
+    privacyPolicy: '/derma/politica-de-privacidad',
+    termsAndConditions: '/derma/aviso-legal',
     multistep: {
       start: '/derma/multistep/start',
       pains: '/derma/multistep/pains',
