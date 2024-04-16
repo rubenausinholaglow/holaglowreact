@@ -38,7 +38,7 @@ export default function DermaPayment() {
 
   const [client, setClient] = useState<Client>({
     email: user?.email ?? '',
-    phone: '+34' + user?.phone ?? '',
+    phone: user?.phone ?? '',
     phonePrefix: '',
     name: user?.name ?? '',
     surname: user?.surname ?? '',
