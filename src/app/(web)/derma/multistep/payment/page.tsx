@@ -21,6 +21,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
+import { User } from '@interface/appointment';
 
 dayjs.locale(spanishConf);
 
@@ -76,7 +77,19 @@ export default function DermaPayment() {
 
     setHasError(!isEmpty(searchParams.get('error')));
 
-    setActivePayment(PaymentBank.None);
+    setActivePayment(PaymentBank.Stripe);
+    async function checkout() {
+      await initializePayment(
+        PaymentBank.Stripe,
+        user!,
+        false,
+        cart[0].price * 100,
+        true,
+        undefined,
+        false
+      );
+    }
+    if (cart.length > 0 && client.email != '') checkout();
   }, []);
 
   useEffect(() => {
