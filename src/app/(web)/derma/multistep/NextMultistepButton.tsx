@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
-import { DermaQuestions, painObject } from '@interface/derma/dermaquestions';
+import { useState } from 'react';
+import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { dermaService } from '@services/DermaService';
+import { SvgSpinner } from 'app/icons/Icons';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { useRouter } from 'next/navigation';
@@ -13,6 +14,8 @@ export default function NextMultistepButton({
   nextUrl: string;
 }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     id,
     setId,
@@ -65,11 +68,13 @@ export default function NextMultistepButton({
     <Button
       size="lg"
       onClick={() => {
+        setIsLoading(true);
         if (!isDisabled) handleNextMultistep();
       }}
       type={isDisabled ? 'disabled' : 'dermaDark'}
+      className={isLoading ? 'pointer-events-none' : ''}
     >
-      Siguiente
+      {isLoading ? <SvgSpinner className="min-w-16" /> : 'Siguiente'}
     </Button>
   );
 }

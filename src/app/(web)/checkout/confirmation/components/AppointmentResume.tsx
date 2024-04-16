@@ -40,7 +40,6 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
 
 dayjs.locale(spanishConf);
 
@@ -131,7 +130,7 @@ export default function AppointmentResume({
     const imgSrc2 = '/images/derma/landingPrecios/rutinaDoctorHolaglow.png';
 
     return (
-      <Flex className="bg-derma-secondary300 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:w-2/5 shrink-0 md:rounded-t-none md:rounded-l-2xl">
+      <Flex className="bg-white border-b md:border-r border-derma-secondary400 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:w-2/5 shrink-0 md:rounded-t-none md:rounded-l-2xl">
         <Image
           src={imgSrc2}
           height={100}
@@ -159,21 +158,19 @@ export default function AppointmentResume({
       </Text>
     );
   };
+
   const TreatmentDerma = () => {
     return (
       <Flex
         layout="col-left"
         className={`p-4 w-full gap-2 text-xs md:text-sm ${
-          !isConfirmation ? 'md:px-0' : ''
+          !isConfirmation ? '' : ''
         }`}
       >
-        <Flex
-          layout="col-left"
-          className="w-full gap-2 mt-2 pt-6 border-t border-hg-black300"
-        >
-          <Text className="font-semibold text-md">{cart[0].title}</Text>
+        <Flex layout="col-left" className="w-full gap-2 mt-2">
+          <Text className="font-semibold text-md mb-4">{cart[0].title}</Text>
           {SUBSCRIPTIONS.find(x => x.id == cart[0].id)!.bullets.map(item => (
-            <div className="w-full flex items-start" key={item.text}>
+            <div className="w-full flex items-center gap-2" key={item.text}>
               <div
                 className={`flex justify-center items-center rounded-full h-8 w-8 -mt-1 ${
                   item.isEnabled
@@ -247,7 +244,7 @@ export default function AppointmentResume({
         {isDerma && !isUpselling && (
           <Flex
             layout="col-left"
-            className="w-full gap-2 mt-2 pt-6 border-t border-hg-black300"
+            className="w-full gap-2 mt-2 pt-6 border-t border-derma-secondary400"
           >
             <Text className="font-semibold text-md">Rutina facial</Text>
             {[
@@ -299,7 +296,7 @@ export default function AppointmentResume({
                 </Text>
               </Flex>
               {typeOfPayment == TypeOfPayment.Reservation && (
-                <div className="border-t border-hg-black300 mt-4 pt-4">
+                <div className="border-t border-derma-secondary400 mt-4 pt-4">
                   <Flex className="justify-between w-full">
                     <Text>Pendiente de pago en clínica</Text>
                     <Text className="font-semibold">
@@ -338,7 +335,7 @@ export default function AppointmentResume({
                 </Flex>
               </AccordionTrigger>
 
-              <AccordionContent className="md:border-t border-hg-black300 md:pt-2 ">
+              <AccordionContent className="md:border-t border-derma-secondary400 md:pt-2 ">
                 <Flex
                   layout="col-left"
                   className={`w-full text-sm px-4 ${
@@ -408,12 +405,10 @@ export default function AppointmentResume({
                 </Flex>
               </AccordionTrigger>
 
-              <AccordionContent className="md:border-t border-hg-black300 md:pt-2 ">
+              <AccordionContent className="md:border-t border-derma-secondary400 md:pt-2 ">
                 <Flex
                   layout="col-left"
-                  className={`w-full text-sm px-4 ${
-                    !isConfirmation ? 'md:px-0' : ''
-                  }`}
+                  className={`w-full text-sm px-4 ${!isConfirmation ? '' : ''}`}
                 >
                   {isDashboard ? (
                     <TreatmentsDashboard />
@@ -465,7 +460,7 @@ export default function AppointmentResume({
               <Flex
                 className={`w-full justify-between px-4 py-3 rounded-b-lg md:border-none mt-0.5 ${
                   isDerma
-                    ? 'bg-derma-primary500/20 text-derma-primary'
+                    ? 'bg-derma-primary500/20 text-derma-primary rounded-br-lg rounded-bl-none'
                     : isConfirmation
                     ? 'text-hg-secondary bg-hg-secondary300'
                     : 'bg-hg-secondary100 text-hg-secondary md:rounded-lg'
