@@ -18,7 +18,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ILLNESSES } from '../multistepConfig';
 import NextMultistepButton, {
-  handleNextMultistep,
+  HandleNextMultistep,
 } from '../NextMultistepButton';
 
 export default function Illnesses() {
@@ -29,7 +29,7 @@ export default function Illnesses() {
 
   const [textAreaValue, setTextAreaValue] = useState(illnessInfo);
 
-  const nextStep = handleNextMultistep(ROUTES.derma.multistep.medication);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.medication);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />

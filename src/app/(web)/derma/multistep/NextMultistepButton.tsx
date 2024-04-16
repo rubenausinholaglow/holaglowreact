@@ -5,7 +5,7 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { useRouter } from 'next/navigation';
 
-export const handleNextMultistep = (nextUrl: string) => {
+export const HandleNextMultistep = (nextUrl: string) => {
   const {
     id,
     setId,
@@ -62,7 +62,7 @@ export default function NextMultistepButton({
   isDisabled: boolean;
   nextUrl: string;
 }) {
-  const nextStep = handleNextMultistep(nextUrl);
+  const nextStep = HandleNextMultistep(nextUrl);
   return (
     <Button
       size="lg"

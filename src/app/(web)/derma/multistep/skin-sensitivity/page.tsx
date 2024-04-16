@@ -17,7 +17,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
 import NextMultistepButton, {
-  handleNextMultistep,
+  HandleNextMultistep,
 } from '../NextMultistepButton';
 
 export default function SkinSensitivity() {
@@ -25,7 +25,7 @@ export default function SkinSensitivity() {
 
   const { skinSensibility, setSkinSensibility } = useDermaStore(state => state);
 
-  const nextStep = handleNextMultistep(ROUTES.derma.multistep.allergy);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.allergy);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />

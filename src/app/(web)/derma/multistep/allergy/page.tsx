@@ -18,7 +18,7 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ALLERGIES } from '../multistepConfig';
 import NextMultistepButton, {
-  handleNextMultistep,
+  HandleNextMultistep,
 } from '../NextMultistepButton';
 
 export default function Allergies() {
@@ -29,7 +29,7 @@ export default function Allergies() {
 
   const [textAreaValue, setTextAreaValue] = useState(allergyInfo);
 
-  const nextStep = handleNextMultistep(ROUTES.derma.multistep.illness);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.illness);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />

@@ -19,14 +19,14 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
 import NextMultistepButton, {
-  handleNextMultistep,
+  HandleNextMultistep,
 } from '../NextMultistepButton';
 
 export default function Pains() {
   const router = useRouter();
   const { pain, setPain } = useDermaStore(state => state);
 
-  const nextStep = handleNextMultistep(ROUTES.derma.multistep.symptoms);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.symptoms);
   return (
     <div className="bg-derma-secondary300 min-h-screen relative">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />

@@ -18,14 +18,14 @@ import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_TYPES } from '../multistepConfig';
 import NextMultistepButton, {
-  handleNextMultistep,
+  HandleNextMultistep,
 } from '../NextMultistepButton';
 
 export default function SkinType() {
   const router = useRouter();
   const { skinType, setSkinType } = useDermaStore(state => state);
 
-  const nextStep = handleNextMultistep(ROUTES.derma.multistep.skinSensibility);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.skinSensibility);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
