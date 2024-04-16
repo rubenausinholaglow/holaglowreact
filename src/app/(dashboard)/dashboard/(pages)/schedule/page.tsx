@@ -10,7 +10,6 @@ import {
 } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
-import { getValidTypes } from '@utils/agendaUtils';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import { validTypesFilterCart } from '@utils/utils';
@@ -31,7 +30,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty, set, xor, zip } from 'lodash';
+import { find, isEmpty, set, xor, zip } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { v4 as createUniqueId } from 'uuid';
 
@@ -123,7 +122,7 @@ export default function Page() {
             title.toUpperCase() === product.title.toUpperCase() &&
             validTypesFilterCart.includes(product.type)
           ) {
-            if (product.isPack) {
+            if (product.isPack || product.sessions > 1) {
               setPackInProductCart(true);
               const packs = addProductUnitiesPack(product);
               packsToAdd.push(...packs);
@@ -131,6 +130,15 @@ export default function Page() {
           }
         });
       });
+
+      if (packsToAdd.length == 0 || cart.find(x => x.sessions > 1)) {
+        cart.map(cartItem => {
+          if (cartItem.sessions > 1) {
+            const packs = addProductUnitiesPack(cartItem);
+            packsToAdd.push(...packs);
+          }
+        });
+      }
 
       if (packsToAdd.length > 0) {
         setTreatmentPacks(packsToAdd);
@@ -144,12 +152,24 @@ export default function Page() {
 
   function addProductUnitiesPack(product: Product): PackUnitiesScheduled[] {
     const packsToAdd: PackUnitiesScheduled[] = [];
+    if (product.sessions > 1) {
+      for (let i = 0; i < product.sessions; i++) {
+        packsToAdd.push({
+          uniqueId: createUniqueId(),
+          id: createUniqueId(),
+          type: product.unityType,
+          isScheduled: false,
+          productId: product.id,
+        });
+      }
+    }
     product.packUnities?.forEach(x => {
       const pack: PackUnitiesScheduled = {
         uniqueId: createUniqueId(),
         id: x.id,
         type: x.type,
         isScheduled: false,
+        productId: product.id,
       };
       packsToAdd.push(pack);
     });
@@ -187,6 +207,12 @@ export default function Page() {
                         pack.id === unit.id &&
                         pack.isScheduled == findScheduledProducts
                     )
+                  )) ||
+                (item.sessions > 1 &&
+                  treatmentPacks.some(
+                    pack =>
+                      pack.productId == item.id &&
+                      pack.isScheduled == findScheduledProducts
                   ))
             ),
             findScheduledProducts
@@ -211,25 +237,28 @@ export default function Page() {
                     findScheduledProducts
                       ? ' bg-hg-green '
                       : ' bg-hg-primary300 '
-                  } transition-all flex items-center hover:bg-hg-secondary300 p-4 cursor-pointer`}
+                  } transition-all flex items-center p-4 cursor-pointer`}
                   key={item.title}
                 >
                   <Text className="font-semibold w-1/4 shrink-0 ">
                     {item.title}
                   </Text>
 
-                  {item.isScheduled || item.isPack ? (
+                  {item.isScheduled || item.isPack || item.sessions > 1 ? (
                     <div className="w-full mr-2">
-                      {item.isPack ? (
+                      {item.isPack || item.sessions > 1 ? (
                         <>
                           {treatmentPacks
                             .filter(
                               pack =>
                                 item.packUnities?.some(
                                   unit =>
-                                    unit.id === pack.id &&
-                                    pack.isScheduled == findScheduledProducts
-                                )
+                                    pack.isScheduled == findScheduledProducts &&
+                                    unit.id === pack.id
+                                ) ||
+                                (item.sessions > 1 &&
+                                  pack.isScheduled == findScheduledProducts &&
+                                  pack.productId == item.id)
                             )
                             .sort((a, b) => (a.type > b.type ? 1 : -1))
                             .map(pack => (
@@ -249,7 +278,9 @@ export default function Page() {
                                       className="flex-grow w-1/4"
                                       key={pack.id}
                                     >
-                                      {UnityType[pack.type]}
+                                      {item.sessions > 1
+                                        ? ''
+                                        : UnityType[pack.type]}
                                     </Text>
                                     <Text className="mr-auto items-end">
                                       Pendiente
@@ -260,11 +291,15 @@ export default function Page() {
                             ))}
                         </>
                       ) : (
-                        <>{item.scheduledDate}</>
+                        <div className="text-right mr-2 items-end w-full">
+                          {item.scheduledDate}
+                        </div>
                       )}
                     </div>
                   ) : (
-                    <Text className="w-1/4 mr-auto shrink-0">Pendiente</Text>
+                    <Text className="text-right mr-2 items-end w-full">
+                      Pendiente
+                    </Text>
                   )}
                 </li>
               );

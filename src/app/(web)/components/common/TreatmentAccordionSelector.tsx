@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Product, ProductType, UnityType } from '@interface/product';
+import { Product } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import {
@@ -349,7 +349,10 @@ export default function TreatmentAccordionSelector({
             renderAccordionDashboard(true)}
         </div>
         <div className="mt-4">
-          {treatmentPacks.length > 0 ? renderAccordionDashboard(false) : null}
+          {(treatmentPacks.length > 0 && cart.some(x => x.isPack)) ||
+          cart.some(x => !x.isPack && x.sessions < 1)
+            ? renderAccordionDashboard(false)
+            : null}
         </div>
       </div>
     );
