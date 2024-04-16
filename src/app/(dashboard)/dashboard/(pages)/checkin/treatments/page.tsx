@@ -30,7 +30,7 @@ export default function treatmentsSection() {
             <Title className="align-center font-bold mb-8">
               No tienes ninguna cita prevista
             </Title>
-            <TreatmentAccordionSelector isDashboard isCheckin />
+            <TreatmentAccordionSelector isDashboard />
           </Flex>
         </Container>
       </MainLayout>

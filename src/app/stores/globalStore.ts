@@ -6,7 +6,7 @@ import { Post } from 'app/types/blog';
 import { AnalyticsMetrics } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
-import { PackUnities, Product } from 'app/types/product';
+import {  PackUnitiesScheduled, Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
 import { Dayjs } from 'dayjs';
@@ -43,7 +43,7 @@ interface SessionStore {
   typeOfPayment: TypeOfPayment;
   appointmentUrl: string;
   dermaPhone: string;
-  treatmentPacks: PackUnities[];
+  treatmentPacks: PackUnitiesScheduled[];
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -52,7 +52,6 @@ interface SessionActions {
   setSelectedTreatments: (value: Product[]) => void;
   setSelectedPack: (value: Product | undefined) => void;
   setPreviousSelectedTreatments: (value: Product[]) => void;
-  setSelectedPackTreatments: (value: Product[]) => void;
   setSelectedClinic: (value?: Clinic) => void;
   setSelectedSlot: (slot?: Slot) => void;
   setSelectedDay: (day?: Dayjs) => void;
@@ -62,7 +61,7 @@ interface SessionActions {
   setTypeOfPayment: (typeOfPayment: TypeOfPayment) => void;
   setAppointmentUrl: (url: string) => void;
   setDermaPhone: (phone: string) => void;
-  setTreatmentPacks: (treatment: PackUnities[]) => void;
+  setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
 }
 
 interface GlobalPersistStore {
@@ -167,9 +166,6 @@ export const useSessionStore = create(
       },
       setPreviousSelectedTreatments: value => {
         set({ previousSelectedTreatments: value });
-      },
-      setSelectedPackTreatments: value => {
-        set({ selectedPacksTreatments: value });
       },
       setSelectedClinic: value => {
         set({ selectedClinic: value });

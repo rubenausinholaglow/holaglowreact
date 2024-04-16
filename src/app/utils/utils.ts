@@ -235,3 +235,4 @@ export function getUniqueIds(products : Product[]) : string[] {
       new Set(products.map(x => x.id))
     );
 }
+

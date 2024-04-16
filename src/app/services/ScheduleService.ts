@@ -253,16 +253,18 @@ export default class ScheduleService {
   static async getMonthAvailability(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    isDashboard = false
   ): Promise<MonthAvailabilityResponse> {
     try {
-      const url =
+      let url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailability?date=` +
         date +
         `&treatment=` +
         treatment +
         `&clinicId=` +
         clinicId;
+      isDashboard ? url += '&isDashboard=true' : '';
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();

@@ -43,7 +43,7 @@ export default class ProductService {
       return [];
     }
   }
-  static async getDashboardProducts(clinicId: string, getUpgrades = false) {
+  static async getDashboardProducts(clinicId: string, getUpgrades = false) : Promise<Product[]> {
     try {
       let url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}DashboardProducts`;
       url = getUpgrades ? url + '?getUpgrades=true' : url;
@@ -66,10 +66,10 @@ export default class ProductService {
 
         return products;
       } else {
-        return '';
+        return [];
       }
     } catch (err) {
-      return err;
+      return []
     }
   }
 
