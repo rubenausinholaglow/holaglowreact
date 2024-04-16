@@ -265,25 +265,29 @@ export default function Page() {
                               <>
                                 {pack.isScheduled ? (
                                   <div className="flex gap-4 ">
-                                    <Text className="flex-grow " key={pack.id}>
+                                    <Text
+                                      className="flex-grow text-center"
+                                      key={pack.id}
+                                    >
                                       {pack.treatmentName}
                                     </Text>
-                                    <Text className="mr-auto">
-                                      {pack.scheduledDate}
+
+                                    <Text className="">
+                                      {pack.scheduledDate?.split(' ')[0]}
+                                    </Text>
+                                    <Text className="">
+                                      {pack.scheduledDate?.split(' ')[1]}
                                     </Text>
                                   </div>
                                 ) : (
-                                  <div className="flex gap-4 w-full">
+                                  <div className="gap-4 w-full">
                                     <Text
-                                      className="flex-grow w-1/4"
+                                      className="text-center mr-44"
                                       key={pack.id}
                                     >
                                       {item.sessions > 1
                                         ? ''
                                         : UnityType[pack.type]}
-                                    </Text>
-                                    <Text className="mr-auto items-end">
-                                      Pendiente
                                     </Text>
                                   </div>
                                 )}
@@ -297,9 +301,7 @@ export default function Page() {
                       )}
                     </div>
                   ) : (
-                    <Text className="text-right mr-2 items-end w-full">
-                      Pendiente
-                    </Text>
+                    <></>
                   )}
                 </li>
               );
