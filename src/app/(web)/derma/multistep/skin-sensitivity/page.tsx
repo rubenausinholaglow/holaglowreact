@@ -68,7 +68,7 @@ export default function SkinSensitivity() {
                       setSkinSensibility(
                         skinSensibility === skin.value ? 0 : skin.value
                       );
-                      await nextStep();
+                      if (skinSensibility !== skin.value) await nextStep();
                     }}
                   >
                     <span className="font-semibold pl-1">{skin.title}</span>

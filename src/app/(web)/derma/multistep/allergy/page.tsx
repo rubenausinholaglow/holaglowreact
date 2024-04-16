@@ -58,7 +58,11 @@ export default function Allergies() {
                     key={item.title}
                     onClick={async () => {
                       setAllergy(allergy === item.value ? 0 : item.value);
-                      if (item.value === 1 || item.value === 2)
+
+                      if (
+                        (item.value === 2 || item.value === 3) &&
+                        allergy !== item.value
+                      )
                         await nextStep();
                     }}
                   >

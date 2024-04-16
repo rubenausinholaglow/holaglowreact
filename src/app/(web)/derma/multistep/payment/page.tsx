@@ -11,7 +11,6 @@ import AppointmentResume from 'app/(web)/checkout/confirmation/components/Appoin
 import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import App from 'app/(web)/components/layout/App';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -100,56 +99,54 @@ export default function DermaPayment() {
   }, [activePayment]);
 
   return (
-    <App>
-      <DermaLayout hideButton={true}>
-        <Container className="px-0 md:mt-8 md:pb-8">
-          <Flex
-            layout="col-left"
-            className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
-          >
-            <div className="w-full md:w-1/2 p-4 md:order-2">
-              <AppointmentResume
-                isProbadorVirtual={isProbadorVirtual}
-                isDerma={true}
-              />
-            </div>
-            <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
-              <Title
-                size="xldr"
-                className="font-light text-derma-primary mb-4 md:mb-6"
-              >
-                Formulario
-              </Title>
-              <Text className="text-sm md:text-md text-center md:text-left mb-4">
-                Rellena tus datos de contacto para completar tu plan de cuidado
-                facial
-              </Text>
-              <RegistrationForm
-                redirect={hideLayout}
-                hasContinueButton={isProbadorVirtual}
-                initialValues={client}
-                setClientData={setClient}
-                showDni={true}
-                showPostalCode={true}
-                showAddress={true}
-              />
+    <DermaLayout hideButton={true}>
+      <Container className="px-0 md:mt-8 md:pb-8">
+        <Flex
+          layout="col-left"
+          className="gap-4 md:gap-16 md:flex-row bg-hg-cream500 md:bg-transparent rounded-t-2xl pt-4 md:pt-0"
+        >
+          <div className="w-full md:w-1/2 px-4 md:order-2">
+            <AppointmentResume
+              isProbadorVirtual={isProbadorVirtual}
+              isDerma={true}
+            />
+          </div>
+          <div className="w-full md:w-1/2 p-4 md:p-8 rounded-3xl">
+            <Title
+              size="xldr"
+              className="font-light text-derma-primary mb-4 md:mb-6"
+            >
+              Formulario
+            </Title>
+            <Text className="text-sm md:text-md mb-4">
+              Rellena tus datos de contacto para completar tu plan de cuidado
+              facial
+            </Text>
+            <RegistrationForm
+              redirect={hideLayout}
+              hasContinueButton={isProbadorVirtual}
+              initialValues={client}
+              setClientData={setClient}
+              showDni={true}
+              showPostalCode={true}
+              showAddress={true}
+            />
 
-              {!isProbadorVirtual && (
-                <CheckoutPayment
-                  isDerma={true}
-                  hasError={hasError}
-                  className="mt-8"
-                  formData={client}
-                  checkAddress={true}
-                />
-              )}
-            </div>
-          </Flex>
-        </Container>
-        <div className="hidden md:block absolute left-0 right-0 -z-50 top-0 bottom-0">
-          <div className="bg-hg-cream500 w-1/2 h-full"></div>
-        </div>
-      </DermaLayout>
-    </App>
+            {!isProbadorVirtual && (
+              <CheckoutPayment
+                isDerma={true}
+                hasError={hasError}
+                className="mt-8"
+                formData={client}
+                checkAddress={true}
+              />
+            )}
+          </div>
+        </Flex>
+      </Container>
+      <div className="hidden md:block absolute left-0 right-0 -z-50 top-0 bottom-0">
+        <div className="bg-derma-secondary300  w-1/2 h-full relative left-1/2"></div>
+      </div>
+    </DermaLayout>
   );
 }

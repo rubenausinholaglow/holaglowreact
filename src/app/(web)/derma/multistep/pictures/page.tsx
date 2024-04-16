@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
+import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -18,6 +19,7 @@ import ImageUploader from './ImageUploader';
 export default function Pictures() {
   const router = useRouter();
 
+  const [loadingButton, setLoadingButton] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const { picturesUrls } = useDermaStore(state => state);
@@ -105,10 +107,17 @@ export default function Pictures() {
                 <Button
                   size="lg"
                   className={isDisabled ? 'pointer-events-none' : ''}
-                  href={ROUTES.derma.multistep.extraInfo}
                   type={!isDisabled ? 'dermaDark' : 'disabled'}
+                  onClick={() => {
+                    setLoadingButton(true);
+                    router.push(ROUTES.derma.multistep.extraInfo);
+                  }}
                 >
-                  Siguiente
+                  {!loadingButton ? (
+                    'Siguiente'
+                  ) : (
+                    <SvgSpinner className="w-20" />
+                  )}
                 </Button>
               </Flex>
             </div>

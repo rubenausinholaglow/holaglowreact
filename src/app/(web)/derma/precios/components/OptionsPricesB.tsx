@@ -1,7 +1,6 @@
 'use client';
 
 import { isMobile } from 'react-device-detect';
-import { multiValueCSS } from 'react-select/dist/declarations/src/components/MultiValue';
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';

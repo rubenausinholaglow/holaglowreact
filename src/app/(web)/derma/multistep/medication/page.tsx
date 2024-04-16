@@ -59,7 +59,9 @@ export default function Medicines() {
                       setMedication(
                         medication === medicine.value ? 0 : medicine.value
                       );
-                      if (medicine.value == 2) await nextStep();
+
+                      if (medicine.value === 2 && medicine.value !== medication)
+                        await nextStep();
                     }}
                   >
                     {medicine.title}

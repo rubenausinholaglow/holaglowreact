@@ -269,9 +269,12 @@ export default function Confirmation({
           <>
             <Flex
               layout="col-left"
-              className="bg-derma-secondary300 py-6 px-4 md:rounded-xl gap-4 md:mb-8"
+              className="bg-derma-secondary500 py-6 px-4 md:rounded-xl gap-4 md:mb-8"
             >
-              <Title className="font-light text-left mb-4" size="xldr">
+              <Title
+                className="font-light text-left mb-4 text-derma-primary"
+                size="xldr"
+              >
                 A partir de ahora...
               </Title>
               {tips.map((item, index) => (
@@ -286,7 +289,7 @@ export default function Confirmation({
                   <Text
                     className={`${
                       isDerma
-                        ? 'bg-derma-secondary500 text-derma-primary500'
+                        ? 'bg-derma-secondary300 text-derma-primary500'
                         : 'bg-derma-secondary500 text-hg-secondary'
                     } w-6 h-6 font-semibold items-center  shrink-0 rounded-full text-center mr-2`}
                   >
@@ -302,7 +305,7 @@ export default function Confirmation({
               ))}
               {!isDashboard && (
                 <a href="/tratamientos" className="md:hidden">
-                  <Button type="secondary" size="md" href={ROUTES.treatments}>
+                  <Button type="white" size="md" href={ROUTES.treatments}>
                     <Flex layout="row-center">
                       Ver tratamientos
                       <SvgArrow height={18} width={18} className="ml-2" />

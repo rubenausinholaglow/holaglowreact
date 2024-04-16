@@ -1,39 +1,24 @@
 'use client';
 
-import { useEffect } from 'react';
-import { CartItem } from '@interface/product';
-import { fetchProduct } from '@utils/fetch';
-import ROUTES from '@utils/routes';
+import { useEffect, useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { SvgSpinner } from 'app/icons/Icons';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
+
+import { selectDermaProduct } from '../../multistep/planes/selectDermaPlanes';
 
 export default function OptionsPricesSelectButton({
   index,
 }: {
   index: number;
 }) {
-  const { resetCart, addItemToCart } = useCartStore(state => state);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function selectProduct(index: number) {
-    let productId = '';
-    switch (index) {
-      case 0:
-        productId = process.env.NEXT_PUBLIC_DERMA_SUSCRIPTION_ID!;
-        break;
-      case 1:
-        productId = process.env.NEXT_PUBLIC_DERMA_ONE_PURCHASE_ID!;
-        break;
-      case 2:
-        productId = process.env.NEXT_PUBLIC_DERMA_ONLY_RECEIPT_ID!;
-        break;
-    }
-    const productDetails = await fetchProduct(productId, false, true);
-    addItemToCart(productDetails as CartItem);
-    router.push(ROUTES.derma.multistep.payment);
-  }
+  const { resetCart, addItemToCart } = useCartStore(state => state);
+
   useEffect(() => {
     resetCart();
   }, []);
@@ -45,9 +30,12 @@ export default function OptionsPricesSelectButton({
         type="derma"
         size="xl"
         customStyles="px-16"
-        onClick={async () => await selectProduct(index)}
+        onClick={async () => {
+          setIsLoading(true);
+          await selectDermaProduct({ index, addItemToCart, router });
+        }}
       >
-        Seleccionar
+        {isLoading ? <SvgSpinner className="w-full" /> : 'Seleccionar'}
       </Button>
     </Flex>
   );

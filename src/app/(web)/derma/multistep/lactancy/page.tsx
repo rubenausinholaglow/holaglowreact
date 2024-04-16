@@ -52,7 +52,8 @@ export default function Lactancy() {
                     key={item.title}
                     onClick={async () => {
                       setLactating(lactating === item.value ? 0 : item.value);
-                      if (item.value == 2) await nextStep();
+                      if (item.value == 2 && lactating !== item.value)
+                        await nextStep();
                     }}
                   >
                     {item.title}
