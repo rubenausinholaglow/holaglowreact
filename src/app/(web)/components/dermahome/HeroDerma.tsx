@@ -1,7 +1,6 @@
-'use client';
-
-import { useState } from 'react';
-import { isMobile } from 'react-device-detect';
+import { isMobileSSR } from '@utils/isMobileSSR';
+import ROUTES from '@utils/routes';
+import ReviewScore from 'app/(web)/derma/precios/components/ReviewScore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -11,101 +10,120 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import { isMobile } from '../layout/Breakpoint';
+
 export default function HeroDerma() {
-  const routinesArray = ['acné', 'melasma', 'rosácea', 'antiaging'];
-  const [routineIndex, setRoutineIndex] = useState(0);
-
-  const startTimer = () => {
-    setTimeout(() => {
-      setRoutineIndex(routineIndex < 3 ? routineIndex + 1 : 0);
-    }, 2000);
-  };
-
-  startTimer();
-  const HEADER_HEIGHT = isMobile
+  const HEADER_HEIGHT = isMobileSSR()
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
-  const HEADER_HEIGHT_CLASS = `-${HEADER_HEIGHT}px`;
+  const HEADER_HEIGHT_CLASS = `${HEADER_HEIGHT}px`;
 
   return (
-    <div
-      className="bg-derma-secondary100 pt-[72px] md:pt-0 overflow-hidden relative"
-      style={{ marginTop: HEADER_HEIGHT_CLASS }}
-    >
-      <Flex layout="col-left" className="md:flex-row md:items-end mx-auto">
-        <div className="w-full md:order-2 aspect-square relative md:w-1/2 xl:w-2/5">
+    <div style={{ marginTop: `-${HEADER_HEIGHT_CLASS}` }}>
+      <div className="bg-white pb-8 relative">
+        <Container>
+          <Flex layout="col-center" className="pt-24 md:pt-36 relative z-10">
+            <Title size="2xl" className="text-derma-primary text-center">
+              Tu rutina facial para
+            </Title>
+            <Title
+              size="2xl"
+              className="text-derma-primary500 text-center relative h-10 lg:h-16 overflow-hidden mb-6"
+            >
+              <span className="block animate-pains">
+                <span className="block">acné</span>
+                <span className="block">melasma</span>
+                <span className="block">rosácea</span>
+                <span className="block">calidad de piel</span>
+              </span>
+            </Title>
+            <Text className="text-hg-black500 mb-8 md:text-lg max-w-[600px] text-center">
+              Analizamos tu piel y te enviamos a casa una rutina facial diseñada
+              para ti por un médico
+            </Text>
+            <Button
+              size="xl"
+              type="derma"
+              href={ROUTES.derma.multistep.start}
+              className="lg:mb-16"
+            >
+              Empezar análisis
+            </Button>
+          </Flex>
+        </Container>
+        {isMobileSSR() && (
           <Image
-            src="/images/derma/home/homeDerma.jpg"
-            alt="Holaglow"
-            className="object-cover"
+            src="/images/derma/home/dermaHome.png"
+            alt="analizamos tu piel"
+            height={500}
+            width={420}
+            className="w-full -mt-20 md:hidden"
             priority
-            fill
           />
-        </div>
-        <Flex
-          layout="col-center"
-          className="bg-derma-secondary100 md:bg-transparent relative w-full self-stretch md:justify-end md:w-1/2 xl:w-3/5"
-        >
-          <Container className="pb-12 md:p-0 overflow-hidden md:pr-8 lg:pr-12">
-            <Flex layout="col-left" className="md:ml-8 md:mr-4 2xl:pl-16">
-              <Flex
-                layout="row-left"
-                className="mb-4 md:order-2 w-full md:justify-start gap-4 py-3"
-              >
-                <Image
-                  src="/images/derma/home/GoogleReviews.png"
-                  alt="Holaglow reviews"
-                  height={200}
-                  width={isMobile ? 150 : 175}
-                  className="mr-auto"
-                />
-                <Text className="text-hg-black400 text-xs">
-                  Impulsado por Holaglow
-                </Text>
-              </Flex>
-              <Flex
-                layout="col-left"
-                className="gap-4 items-center relative md:justify-center md:flex-row"
-              >
-                <Flex layout="col-left" className="relative z-10">
-                  <Title
-                    size="2xl"
-                    className="text-derma-primary text-left mb-4 text-wrap"
-                  >
-                    Tu rutina facial de 3 meses para{' '}
-                    <span className="text-derma-tertiary text-left mb-4">
-                      {routinesArray[routineIndex]}
-                    </span>
-                  </Title>
-                  <Text
-                    isAnimated
-                    className="text-hg-black500 md:w-full xl:text-lg mb-8 lg:mb-12"
-                  >
-                    Te enviamos a casa{' '}
-                    <span className="font-semibold">
-                      tu rutina facial personalizada
-                    </span>{' '}
-                    por 99€ y te devolvemos el dinero si no ves una mejora al
-                    finalizar el tratamiento
-                  </Text>
+        )}
 
-                  <Flex layout="row-center" className="w-full md:justify-start">
-                    <Button
-                      type="derma"
-                      size="xl"
-                      className="md:mb-8 lg:mb-12"
-                      href="/multistep/start"
-                      id="tmevent_derma_multistep_start"
-                    >
-                      Descubre tu rutina
-                    </Button>
-                  </Flex>
+        <Container>
+          {!isMobileSSR() && (
+            <>
+              <Image
+                src="/images/derma/home/dermaHomeLeft.png"
+                alt="analizamos tu piel"
+                height={306}
+                width={538}
+                className="absolute bottom-12 left-0 h-[500px] w-auto hidden md:block"
+                priority
+              />
+              <Image
+                src="/images/derma/home/dermaHomeRight.png"
+                alt="cuidado facial personalizado"
+                height={840}
+                width={542}
+                className="absolute bottom-5 right-0 h-[60%] w-auto hidden md:block"
+                priority
+              />
+            </>
+          )}
+          <ReviewScore className="bg-hg-black50/90 p-4 w-full rounded-xl hidden md:flex md:w-1/2 relative" />
+        </Container>
+      </div>
+      {isMobileSSR() && (
+        <div className="bg-derma-secondary300">
+          <div className="bg-[rgba(255,255,255,.5)]">
+            <Container>
+              <ReviewScore />
+            </Container>
+            {/* <div className="bg-derma-secondary300 py-4">
+              <Container>
+                <Title size="2xl" className="text-derma-primary mb-4">
+                  Tu rutina facial para{' '}
+                  <span className="inline-block h-10 relative top-2 overflow-hidden text-derma-tertiary">
+                    <span className="block animate-pains">
+                      <span className="block">acné</span>
+                      <span className="block">melasma</span>
+                      <span className="block">rosácea</span>
+                      <span className="block">calidad de piel</span>
+                    </span>
+                  </span>
+                </Title>
+                <Text className="text-hg-black500 mb-8">
+                  Analizamos tu piel y te enviamos a casa una rutina facial
+                  diseñada para ti por un médico
+                </Text>
+                <Flex className="w-full justify-center">
+                  <Button
+                    size="xl"
+                    type="derma"
+                    className="mb-4"
+                    href={ROUTES.derma.multistep.start}
+                  >
+                    Empezar análisis
+                  </Button>
                 </Flex>
-              </Flex>
-            </Flex>
-          </Container>
-        </Flex>
-      </Flex>
+              </Container>
+            </div> */}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

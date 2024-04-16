@@ -1,4 +1,4 @@
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 

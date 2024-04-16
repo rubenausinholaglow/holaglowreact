@@ -105,7 +105,7 @@ export default function ClinicsDerma({
   className?: string;
 }) {
   return (
-    <div className="md:bg-white md:py-16">
+    <div className="md:bg-white py-12 md:py-16">
       <Container>
         <Title
           isAnimated

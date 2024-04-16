@@ -40,8 +40,12 @@ a:hover {
   color: theme('colors.hg.secondary');
 }
 
-.derma a:hover {
+.derma a {
   color: theme('colors.derma.primary');
+}
+
+.derma a:hover {
+  color: theme('colors.derma.primary500');
 }
 
 input,

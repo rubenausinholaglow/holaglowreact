@@ -7,6 +7,7 @@ import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+import { isValidNie, isValidNif } from 'nif-dni-nie-cif-validation';
 
 import { PaymentMethods } from './PaymentMethods';
 
@@ -31,7 +32,7 @@ export default function CheckoutPayment({
       const elementToScroll = document.getElementById('checkoutPaymentForm');
 
       if (elementToScroll) {
-        elementToScroll.scrollIntoView({ behavior: 'smooth' });
+        //elementToScroll.scrollIntoView({ behavior: 'smooth' });
       }
     }
   }, [hasError]);
@@ -50,6 +51,7 @@ export default function CheckoutPayment({
       termsAndConditionsAccepted,
       address,
       city,
+      dni,
     } = formData;
 
     const cleanedPhoneNumber =
@@ -66,7 +68,7 @@ export default function CheckoutPayment({
           (phonePrefix !== '+34' && !isEmpty(phone)),
         termsAndConditionsAccepted: termsAndConditionsAccepted,
         address: !isEmpty(address),
-        city: !isEmpty(city),
+        dni: !isEmpty(dni) && (isValidNif(dni) || isValidNie(dni)),
       };
     } else {
       dataToCheck = {

@@ -16,6 +16,12 @@ const nextConfig = {
         port: '',
         pathname: '/derma/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'budgetimages.blob.core.windows.net',
+        port: '',
+        pathname: '/dermauploadimages/**',
+      },
     ],
     domains: ['www.holaglow.com'],
   },

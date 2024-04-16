@@ -14,12 +14,9 @@ const ROUTES = {
   blog: '/blog',
   dashboard: {
     crisalix: '/dashboard/crisalix',
-    //schedule: `/dashboard/schedule?flowwwToken=${user?.flowwwToken}`,
     menu: '/dashboard/menu',
-    //home: `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=false`,
     checkOut: '/dashboard/checkout',
     checkIn: {
-      //root: `/dashboard/checkin?clinicId=${storedClinicId}`,
       treatments: '/dashboard/checkin/treatments',
       agenda: '/dashboard/checkin/agenda',
       thankYou: '/dashboard/checkin/welcome',
@@ -38,6 +35,32 @@ const ROUTES = {
   },
   landings: {
     pv: '/start-landing',
+  },
+  derma: {
+    home: 'https://derma.holaglow.com',
+    precios: '/derma/precios',
+    clinics: '/derma/clinicas',
+    aboutUs: '/derma/quienes-somos',
+    privacyPolicy: '/derma/politica-de-privacidad',
+    termsAndConditions: '/derma/aviso-legal',
+    multistep: {
+      start: '/derma/multistep/start',
+      pains: '/derma/multistep/pains',
+      symptoms: '/derma/multistep/symptoms',
+      skinType: '/derma/multistep/skin-type',
+      skinSensibility: '/derma/multistep/skin-sensitivity',
+      allergy: '/derma/multistep/allergy',
+      illness: '/derma/multistep/illness',
+      medication: '/derma/multistep/medication',
+      lactating: '/derma/multistep/lactancy',
+      gender: '/derma/multistep/gender',
+      pictures: '/derma/multistep/pictures',
+      extraInfo: '/derma/multistep/extra-info',
+      form: '/derma/multistep/form',
+      payment: '/derma/multistep/payment',
+      thankyou: '/derma/multistep/thank-you',
+      planes: '/derma/multistep/planes',
+    },
   },
 };
 

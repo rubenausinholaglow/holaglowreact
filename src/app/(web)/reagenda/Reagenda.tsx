@@ -80,7 +80,7 @@ export default function Reagenda({
 
   if (isDerma) {
     return (
-      <div className="bg-derma-secondary100 min-h-screen">
+      <div className="bg-derma-secondary300 min-h-screen">
         <meta name="robots" content="noindex,nofollow" />
         <header className="py-4 relative">
           <Container>

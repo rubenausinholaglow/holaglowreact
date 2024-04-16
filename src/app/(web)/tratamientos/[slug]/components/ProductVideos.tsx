@@ -1,6 +1,6 @@
 import { Product } from '@interface/product';
 import CheckHydration from '@utils/CheckHydration';
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
