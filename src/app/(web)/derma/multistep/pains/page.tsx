@@ -18,12 +18,15 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import NextMultistepButton, {
+  handleNextMultistep,
+} from '../NextMultistepButton';
 
 export default function Pains() {
   const router = useRouter();
   const { pain, setPain } = useDermaStore(state => state);
 
+  const nextStep = handleNextMultistep(ROUTES.derma.multistep.symptoms);
   return (
     <div className="bg-derma-secondary300 min-h-screen relative">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
@@ -55,9 +58,10 @@ export default function Pains() {
                           : 'bg-derma-secondary400'
                       }`}
                       key={painItem.name}
-                      onClick={() =>
-                        setPain(pain === painItem.value ? 6 : painItem.value)
-                      }
+                      onClick={async () => {
+                        setPain(pain === painItem.value ? 6 : painItem.value);
+                        await nextStep();
+                      }}
                     >
                       <Image
                         src={painItem.img}

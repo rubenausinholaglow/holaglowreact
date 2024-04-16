@@ -17,7 +17,9 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ALLERGIES } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import NextMultistepButton, {
+  handleNextMultistep,
+} from '../NextMultistepButton';
 
 export default function Allergies() {
   const router = useRouter();
@@ -27,6 +29,7 @@ export default function Allergies() {
 
   const [textAreaValue, setTextAreaValue] = useState(allergyInfo);
 
+  const nextStep = handleNextMultistep(ROUTES.derma.multistep.illness);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
@@ -53,9 +56,11 @@ export default function Allergies() {
                         : 'bg-derma-secondary400'
                     }`}
                     key={item.title}
-                    onClick={() =>
-                      setAllergy(allergy === item.value ? 0 : item.value)
-                    }
+                    onClick={async () => {
+                      setAllergy(allergy === item.value ? 0 : item.value);
+                      if (item.value === 1 || item.value === 2)
+                        await nextStep();
+                    }}
                   >
                     {item.title}
                     {allergy === item.value ? (

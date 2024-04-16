@@ -17,7 +17,9 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import NextMultistepButton, {
+  handleNextMultistep,
+} from '../NextMultistepButton';
 
 export default function Symptoms() {
   const router = useRouter();
