@@ -25,11 +25,12 @@ export const StripeForm = ({ isDerma = false }: { isDerma: boolean }) => {
     }
 
     setIsLoadingStripe(true);
-
+    let url = process.env.NEXT_PUBLIC_STRIPE_RETURN_URL!;
+    if (!isDerma) url = url.replace('/derma', '');
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: process.env.NEXT_PUBLIC_STRIPE_RETURN_URL!,
+        return_url: url,
       },
     });
 

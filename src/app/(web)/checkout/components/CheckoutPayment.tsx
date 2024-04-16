@@ -32,7 +32,7 @@ export default function CheckoutPayment({
       const elementToScroll = document.getElementById('checkoutPaymentForm');
 
       if (elementToScroll) {
-        elementToScroll.scrollIntoView({ behavior: 'smooth' });
+        //elementToScroll.scrollIntoView({ behavior: 'smooth' });
       }
     }
   }, [hasError]);
