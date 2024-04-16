@@ -44,8 +44,8 @@ a:hover {
   color: theme('colors.derma.primary');
 }
 
-.derma &:hover {
-  color: theme('colors.derma.primary');
+.derma a:hover {
+  color: theme('colors.derma.primary500');
 }
 
 input,

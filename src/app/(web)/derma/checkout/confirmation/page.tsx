@@ -7,7 +7,7 @@ export default function ConfirmationCheckout() {
     <CheckHydration>
       <meta name="robots" content="noindex,follow" />
       <div className="bg-derma-secondary300 min-h-screen" id="tm_derma_step9">
-        <DermaLayout hideButton hideFooter>
+        <DermaLayout hideButton hideFooter showNavigation>
           <Confirmation isDerma />
         </DermaLayout>
       </div>

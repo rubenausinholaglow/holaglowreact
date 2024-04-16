@@ -10,7 +10,7 @@ import TreatmentsPrices from './components/TreatmentsPrices';
 
 export default function LandingPrecios() {
   return (
-    <DermaLayout>
+    <DermaLayout showNavigation>
       <HeroDermaPrices />
       <TreatmentsPrices />
       <OptionsPrices />

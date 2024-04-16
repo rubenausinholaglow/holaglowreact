@@ -1,8 +1,6 @@
-import CheckHydration from '@utils/CheckHydration';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgCheckCircle } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Text } from 'designSystem/Texts/Texts';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
@@ -32,6 +30,7 @@ export default function StartMultistep() {
                 height={752}
                 className="rounded-t-2xl md:rounded-2xl w-full md:w-1/2 md:mt-12"
               />
+
               <Container id="tm_derma_step0" className="md:w-1/2 md:px-0">
                 <Flex
                   layout="col-left"

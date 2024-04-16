@@ -1,6 +1,5 @@
+import AboutUs from 'app/(web)/(statics)/quienes-somos/AboutUs';
 import { Metadata } from 'next';
-
-import AboutUs from './AboutUs';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://holaglow.com'),
@@ -15,8 +14,12 @@ export const metadata: Metadata = {
       'Queremos cambiar el significado de la medicina estética como una opción más de autocuidado y de la expresión personal.',
     images: ['/images/home/OGimagen_Holaglow.jpg'],
   },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function StaticAboutUs() {
-  return <AboutUs />;
+  return <AboutUs isDerma />;
 }

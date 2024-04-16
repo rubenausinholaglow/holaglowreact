@@ -12,7 +12,7 @@ import TreatmentsDerma from './TreatmentsDerma';
 
 export default function DermaHome() {
   return (
-    <DermaLayout>
+    <DermaLayout showNavigation>
       <HeroDerma />
       <div className="bg-derma-secondary300">
         <TreatmentsDerma />
