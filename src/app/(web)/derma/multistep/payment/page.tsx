@@ -27,7 +27,7 @@ dayjs.locale(spanishConf);
 export default function DermaPayment() {
   const searchParams = useSearchParams();
   const { selectedTreatments } = useSessionStore(state => state);
-  const { activePayment, setActivePayment } = useGlobalPersistedStore(
+  const { activePayment, setActivePayment, user } = useGlobalPersistedStore(
     state => state
   );
   const { cart } = useCartStore(state => state);
@@ -36,13 +36,13 @@ export default function DermaPayment() {
   const [hasError, setHasError] = useState<boolean>(false);
 
   const [client, setClient] = useState<Client>({
-    email: '',
-    phone: '',
+    email: user?.email ?? '',
+    phone: '+34' + user?.phone ?? '',
     phonePrefix: '',
-    name: '',
-    surname: '',
-    secondSurname: '',
-    termsAndConditionsAccepted: false,
+    name: user?.firstName ?? '',
+    surname: user?.lastName ?? '',
+    secondSurname: user?.secondLastName ?? '',
+    termsAndConditionsAccepted: true,
     receiveCommunications: false,
     page: '',
     externalReference: '',
@@ -63,8 +63,9 @@ export default function DermaPayment() {
     interestedTreatment: '',
     treatmentPrice: 0,
     origin: '',
-    city: '',
-    address: '',
+    city: user?.city ?? '',
+    address: user?.address ?? '',
+    postalCode: user?.postalCode ?? '',
   });
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
