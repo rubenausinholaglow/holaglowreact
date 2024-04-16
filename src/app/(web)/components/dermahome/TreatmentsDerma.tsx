@@ -1,3 +1,4 @@
+import GuaranteedResults from 'app/(web)/derma/precios/components/GuaranteedResults';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
@@ -47,6 +48,8 @@ export default function TreatmentsDerma() {
           ))}
         </ul>
       </Container>
+
+      <GuaranteedResults className="pb-0" />
     </div>
   );
 }
