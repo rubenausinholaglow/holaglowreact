@@ -13,7 +13,7 @@ import Image from 'next/image';
 export default function AboutUs({ isDerma = false }: { isDerma?: boolean }) {
   const Wrapper = ({ children }: { children: ReactNode }) => {
     if (isDerma) {
-      return <DermaLayout>{children}</DermaLayout>;
+      return <DermaLayout showNavigation>{children}</DermaLayout>;
     } else {
       return (
         <App>
