@@ -37,7 +37,7 @@ export default function OptionsPricesB({
       {SUBSCRIPTIONS.map((subscription, index) => (
         <CheckHydration key={subscription.title}>
           <li
-            className={`relative flex flex-col p-4 justify-start rounded-2xl md:w-1/2 ${subscription.bgColor}`}
+            className={`relative flex flex-col flew-grow p-4 justify-between rounded-2xl md:w-1/2 ${subscription.bgColor}`}
           >
             <Flex
               className="gap-2 w-full mb-1"
@@ -71,8 +71,14 @@ export default function OptionsPricesB({
               {subscription.subtitle}
             </Text>
 
-            <Accordion value={isMobile ? accordionValue : 'isOpen'}>
-              <AccordionItem value={isMobile ? index.toString() : 'isOpen'}>
+            <Accordion
+              value={isMobile ? accordionValue : 'isOpen'}
+              className="h-full"
+            >
+              <AccordionItem
+                value={isMobile ? index.toString() : 'isOpen'}
+                className="h-full"
+              >
                 <div
                   className="flex justify-between items-center md:hidden"
                   onClick={() =>
@@ -92,7 +98,7 @@ export default function OptionsPricesB({
                     }`}
                   />
                 </div>
-                <AccordionContent>
+                <AccordionContent className="flex flex-col justify-start h-full">
                   <Text className="text-xs text-derma-primary500 md:hidden">
                     {subscription.price.subtitle}
                   </Text>
@@ -113,7 +119,7 @@ export default function OptionsPricesB({
                   <Text className="text-xs text-derma-primary500 hidden md:block">
                     {subscription.price.subtitle}
                   </Text>
-                  <ul className="md:border-t md:border-derma-secondary500 md:mt-6 pt-6 flex flex-col gap-4">
+                  <ul className="md:border-t md:border-derma-secondary500 md:mt-6 pt-6 flex flex-col gap-4 mb-8">
                     {subscription.bullets.map(bullet => (
                       <li
                         key={bullet.text}
