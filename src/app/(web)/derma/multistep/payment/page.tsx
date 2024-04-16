@@ -140,6 +140,7 @@ export default function DermaPayment() {
                   hasError={hasError}
                   className="mt-8"
                   formData={client}
+                  checkAddress={true}
                 />
               )}
             </div>

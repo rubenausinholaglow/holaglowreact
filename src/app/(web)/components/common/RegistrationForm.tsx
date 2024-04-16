@@ -19,6 +19,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { isValidNie, isValidNif } from 'nif-dni-nie-cif-validation';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../../utils/props';
@@ -62,6 +63,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const [showPostalCodeError, setShowPostalCodeError] = useState<
     null | boolean
   >(null);
+  const [showDniError, setShowDniError] = useState<null | boolean>(null);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -126,7 +128,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       ((!isEmpty(formData.dni) && showDni) || !showDni) &&
       !showPhoneError &&
       !showEmailError &&
-      !showPostalCodeError
+      !showPostalCodeError &&
+      !showDniError
     ) {
       setIsDisabled(false);
       if (setContinueDisabled) setContinueDisabled(false);
@@ -134,7 +137,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       setIsDisabled(true);
       if (setContinueDisabled) setContinueDisabled(true);
     }
-  }, [formData, showPhoneError, showEmailError]);
+  }, [
+    formData,
+    showPhoneError,
+    showEmailError,
+    showDniError,
+    showPostalCodeError,
+  ]);
 
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -169,7 +178,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
 
-    if (validFormData(formData, errors)) {
+    const isValidDni =
+      !showDni || isValidNif(formData.dni) || isValidNie(formData.dni);
+    if (validFormData(formData, errors) && isValidDni) {
       setErrors([]);
       await handleRegistration();
     } else {
@@ -317,8 +328,18 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             value={formData.dni!}
             onChange={event => {
               handleFieldChange(event, 'dni');
+              const isValidDni =
+                !showDni ||
+                isValidNif(event.target.value) ||
+                isValidNie(event.target.value);
+              setShowDniError(!isValidDni);
             }}
           />
+          {showDniError && (
+            <p className="text-hg-error text-sm p-2">
+              {errorsConfig.ERROR_DNI_NOT_VALID}
+            </p>
+          )}
         </>
       )}
       {showPostalCode && (
