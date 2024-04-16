@@ -17,7 +17,9 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { MEDICINES } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import NextMultistepButton, {
+  HandleNextMultistep,
+} from '../NextMultistepButton';
 
 export default function Medicines() {
   const router = useRouter();
@@ -26,6 +28,7 @@ export default function Medicines() {
 
   const [textAreaValue, setTextAreaValue] = useState(medicationInfo);
 
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.lactating);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
@@ -52,11 +55,12 @@ export default function Medicines() {
                         : 'bg-derma-secondary400'
                     }`}
                     key={medicine.title}
-                    onClick={() =>
+                    onClick={async () => {
                       setMedication(
                         medication === medicine.value ? 0 : medicine.value
-                      )
-                    }
+                      );
+                      if (medicine.value == 2) await nextStep();
+                    }}
                   >
                     {medicine.title}
                     {medication === medicine.value ? (

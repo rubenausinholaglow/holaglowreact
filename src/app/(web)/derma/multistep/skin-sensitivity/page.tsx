@@ -16,13 +16,16 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import NextMultistepButton, {
+  HandleNextMultistep,
+} from '../NextMultistepButton';
 
 export default function SkinSensitivity() {
   const router = useRouter();
 
   const { skinSensibility, setSkinSensibility } = useDermaStore(state => state);
 
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.allergy);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
@@ -61,11 +64,12 @@ export default function SkinSensitivity() {
                         : 'bg-derma-secondary400'
                     }`}
                     key={skin.value}
-                    onClick={() =>
+                    onClick={async () => {
                       setSkinSensibility(
                         skinSensibility === skin.value ? 0 : skin.value
-                      )
-                    }
+                      );
+                      await nextStep();
+                    }}
                   >
                     <span className="font-semibold pl-1">{skin.title}</span>
                     {skinSensibility === skin.value ? (

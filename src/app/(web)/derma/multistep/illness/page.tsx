@@ -17,7 +17,9 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ILLNESSES } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import NextMultistepButton, {
+  HandleNextMultistep,
+} from '../NextMultistepButton';
 
 export default function Illnesses() {
   const router = useRouter();
@@ -27,6 +29,7 @@ export default function Illnesses() {
 
   const [textAreaValue, setTextAreaValue] = useState(illnessInfo);
 
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.medication);
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
@@ -53,9 +56,10 @@ export default function Illnesses() {
                         : 'bg-derma-secondary400'
                     }`}
                     key={item.title}
-                    onClick={() =>
-                      setIllness(illness === item.value ? 0 : item.value)
-                    }
+                    onClick={async () => {
+                      setIllness(illness === item.value ? 0 : item.value);
+                      if (item.value == 2 || item.value == 3) await nextStep();
+                    }}
                   >
                     {item.title}
                     {illness === item.value ? (

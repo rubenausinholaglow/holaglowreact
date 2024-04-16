@@ -6,16 +6,7 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { useRouter } from 'next/navigation';
 
-export default function NextMultistepButton({
-  isDisabled,
-  nextUrl,
-}: {
-  isDisabled: boolean;
-  nextUrl: string;
-}) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
+export const HandleNextMultistep = (nextUrl: string) => {
   const {
     id,
     setId,
@@ -32,7 +23,8 @@ export default function NextMultistepButton({
     lactating,
   } = useDermaStore(state => state);
 
-  function handleNextMultistep() {
+  const router = useRouter();
+  const next = () => {
     const formattedPain =
       symptoms.length > 0
         ? symptoms.map(symptom => ({
@@ -60,16 +52,29 @@ export default function NextMultistepButton({
         setId(response.toString());
       }
     });
-
     router.push(nextUrl);
-  }
+  };
+  return next;
+};
+
+export default function NextMultistepButton({
+  isDisabled,
+  nextUrl,
+}: {
+  isDisabled: boolean;
+  nextUrl: string;
+}) {
+  const nextStep = HandleNextMultistep(nextUrl);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Button
       size="lg"
-      onClick={() => {
-        setIsLoading(true);
-        if (!isDisabled) handleNextMultistep();
+      onClick={async () => {
+        if (!isDisabled) {
+          setIsLoading(true);
+          await nextStep();
+        }
       }}
       type={isDisabled ? 'disabled' : 'dermaDark'}
       className={isLoading ? 'pointer-events-none' : ''}
