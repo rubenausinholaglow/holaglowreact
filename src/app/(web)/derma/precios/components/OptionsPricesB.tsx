@@ -37,7 +37,7 @@ export default function OptionsPricesB({
       {SUBSCRIPTIONS.map((subscription, index) => (
         <CheckHydration key={subscription.title}>
           <li
-            className={`relative flex flex-col p-4 justify-center rounded-2xl md:w-1/2 ${subscription.bgColor}`}
+            className={`relative flex flex-col p-4 justify-start rounded-2xl md:w-1/2 ${subscription.bgColor}`}
           >
             <Flex
               className="gap-2 w-full mb-1"

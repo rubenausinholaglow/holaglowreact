@@ -32,7 +32,7 @@ export default function OptionsPrices({
           <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
             {SUBSCRIPTIONS.map((subscription, index) => (
               <li
-                className={`relative flex flex-col p-4 pt-8 md:p-6 md:pt-16 justify-start rounded-2xl md:w-1/2 ${subscription.bgColor}`}
+                className={`relative flex flex-col p-4 pt-8 md:p-6 md:pt-16 justify-center rounded-2xl md:w-1/2 ${subscription.bgColor}`}
                 key={subscription.title}
               >
                 {subscription.tag?.text && subscription.tag?.styles && (
