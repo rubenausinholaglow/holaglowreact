@@ -99,8 +99,7 @@ export default function PlanesMultiStep() {
                 size="xldr"
                 className="text-derma-primary font-light md:text-left"
               >
-                Cada piel es única.
-                <br className="md:hidden" /> Tu rutina facial también
+                Cada piel es única
               </Title>
             </Flex>
           </Container>
@@ -142,6 +141,12 @@ export default function PlanesMultiStep() {
           </div>
 
           <Container>
+            <Title
+              size="xldr"
+              className="text-derma-primary font-light text-center md:text-left mb-4"
+            >
+              Tu rutina facial
+            </Title>
             <ul className="flex flex-col gap-4 w-full md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-4 mb-24">
               {DERMA_PRODUCTS.sort((a, b) => a.order - b.order).map(
                 (item, index) => (

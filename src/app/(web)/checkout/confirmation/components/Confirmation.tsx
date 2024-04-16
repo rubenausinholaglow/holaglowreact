@@ -305,7 +305,7 @@ export default function Confirmation({
               ))}
               {!isDashboard && (
                 <a href="/tratamientos" className="md:hidden">
-                  <Button type="secondary" size="md" href={ROUTES.treatments}>
+                  <Button type="white" size="md" href={ROUTES.treatments}>
                     <Flex layout="row-center">
                       Ver tratamientos
                       <SvgArrow height={18} width={18} className="ml-2" />

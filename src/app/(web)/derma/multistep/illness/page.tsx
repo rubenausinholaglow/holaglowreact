@@ -58,7 +58,12 @@ export default function Illnesses() {
                     key={item.title}
                     onClick={async () => {
                       setIllness(illness === item.value ? 0 : item.value);
-                      if (item.value == 2 || item.value == 3) await nextStep();
+
+                      if (
+                        (item.value === 2 || item.value === 3) &&
+                        illness !== item.value
+                      )
+                        await nextStep();
                     }}
                   >
                     {item.title}

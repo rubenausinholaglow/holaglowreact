@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
@@ -27,6 +28,7 @@ export default function Pains() {
   const { pain, setPain } = useDermaStore(state => state);
 
   const nextStep = HandleNextMultistep(ROUTES.derma.multistep.symptoms);
+
   return (
     <div className="bg-derma-secondary300 min-h-screen relative">
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
@@ -60,7 +62,7 @@ export default function Pains() {
                       key={painItem.name}
                       onClick={async () => {
                         setPain(pain === painItem.value ? 6 : painItem.value);
-                        await nextStep();
+                        if (pain !== painItem.value) await nextStep();
                       }}
                     >
                       <Image

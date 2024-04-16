@@ -52,7 +52,10 @@ export const HandleNextMultistep = (nextUrl: string) => {
         setId(response.toString());
       }
     });
-    router.push(nextUrl);
+
+    setTimeout(() => {
+      router.push(nextUrl);
+    }, 250);
   };
   return next;
 };
