@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
@@ -37,7 +38,7 @@ export default function DermaPayment() {
 
   const [client, setClient] = useState<Client>({
     email: user?.email ?? '',
-    phone: '+34' + user?.phone ?? '',
+    phone: user?.phone ?? '',
     phonePrefix: '',
     name: user?.name ?? '',
     surname: user?.surname ?? '',
@@ -76,7 +77,19 @@ export default function DermaPayment() {
 
     setHasError(!isEmpty(searchParams.get('error')));
 
-    setActivePayment(PaymentBank.None);
+    setActivePayment(PaymentBank.Stripe);
+    async function checkout() {
+      await initializePayment(
+        PaymentBank.Stripe,
+        user!,
+        false,
+        cart[0].price * 100,
+        true,
+        undefined,
+        false
+      );
+    }
+    if (cart.length > 0 && client.email != '') checkout();
   }, []);
 
   useEffect(() => {

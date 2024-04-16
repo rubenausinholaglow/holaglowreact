@@ -62,7 +62,9 @@ export const PaymentMethods = ({
   client?: Client;
 }) => {
   const [showLoader, setShowLoader] = useState(true);
-  const [activePaymentMethod, setActivePaymentMethod] = useState('');
+  const [activePaymentMethod, setActivePaymentMethod] = useState(
+    isDerma ? 'creditCard' : ''
+  );
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoadingAlmaDeferred, setIsLoadingAlmaDeferred] = useState(false);
   const [showAlmaButtons, setShowAlmaButtons] = useState(false);
@@ -84,7 +86,7 @@ export const PaymentMethods = ({
   const { cart } = useCartStore(state => state);
 
   useEffect(() => {
-    setActivePaymentMethod('');
+    setActivePaymentMethod(isDerma ? 'creditCard' : '');
   }, [paymentList]);
 
   useEffect(() => {
