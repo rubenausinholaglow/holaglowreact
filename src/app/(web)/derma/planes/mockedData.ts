@@ -121,6 +121,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgReceipt2',
+        text: 'Receta de tu crema personalizada',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgVerify',
         text: 'Mejor piel en 90 días*',
         isEnabled: true,
@@ -155,6 +160,11 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
+        icon: 'SvgReceipt2',
+        text: 'Receta de tu crema personalizada',
+        isEnabled: true,
+      },
+      {
         icon: 'SvgVerify',
         text: 'Mejor piel en 90 días*',
         isEnabled: true,
@@ -186,11 +196,6 @@ export const SUBSCRIPTIONS = [
       {
         icon: 'SvgReceipt2',
         text: 'Receta de tu crema personalizada',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Mejor piel en 90 días*',
         isEnabled: true,
       },
       {
