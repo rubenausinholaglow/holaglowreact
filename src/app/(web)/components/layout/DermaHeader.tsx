@@ -109,7 +109,10 @@ export default function DermaHeader({
               className="w-full relative py-4 lg:py-5 lg:justify-center"
               style={{ height: HEADER_HEIGHT_CLASS }}
             >
-              <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
+              <Link
+                href={ROUTES.derma.home}
+                className="lg:absolute left-0 2xl:ml-20"
+              >
                 <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
               </Link>
 
