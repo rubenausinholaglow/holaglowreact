@@ -5,10 +5,16 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import { loadStripe, StripePaymentElementOptions } from '@stripe/stripe-js';
+import { StripePaymentElementOptions } from '@stripe/stripe-js';
 import { Button } from 'designSystem/Buttons/Buttons';
 
-export const StripeForm = ({ isDerma = false }: { isDerma: boolean }) => {
+export const StripeForm = ({
+  isDerma = false,
+  setShowLoader,
+}: {
+  isDerma: boolean;
+  setShowLoader: (value: boolean) => void;
+}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -42,9 +48,18 @@ export const StripeForm = ({ isDerma = false }: { isDerma: boolean }) => {
     setIsLoadingStripe(false);
   };
 
+  const handlePaymentElementReady = () => {
+    console.log('Payment element is ready!');
+    // You can perform additional actions here once the payment element is ready
+  };
+
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <PaymentElement
+        id="payment-element"
+        options={paymentElementOptions}
+        onReady={() => setShowLoader(false)}
+      />
       <Button
         id="submit"
         type={isDerma ? 'derma' : 'primary'}

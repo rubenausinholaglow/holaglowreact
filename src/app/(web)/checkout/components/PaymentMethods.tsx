@@ -19,6 +19,7 @@ import {
   financialTimes,
 } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/paymentMethods/PaymentItems';
 import { usePaymentList } from 'app/(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList';
+import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import { gtUltra, poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
@@ -60,6 +61,7 @@ export const PaymentMethods = ({
   isDerma: boolean;
   client?: Client;
 }) => {
+  const [showLoader, setShowLoader] = useState(true);
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoadingAlmaDeferred, setIsLoadingAlmaDeferred] = useState(false);
@@ -212,7 +214,7 @@ export const PaymentMethods = ({
               <AccordionItem
                 key={method.key}
                 value={method.key}
-                className="bg-white py-6 px-8 rounded-xl w-full"
+                className="bg-derma-secondary400/50 py-6 px-8 rounded-xl w-full"
               >
                 <AccordionTrigger className="text-left">
                   <Flex
@@ -260,8 +262,14 @@ export const PaymentMethods = ({
                 <AccordionContent>
                   <Flex
                     layout="col-left"
-                    className="mt-4 pt-5 border-t border-hg-black w-full"
+                    className="mt-4 pt-5 border-t border-hg-black w-full min-h-48 relative"
                   >
+                    {showLoader &&
+                      clientSecret &&
+                      method.key == 'creditCard' && (
+                        <FullScreenLoading isDerma />
+                      )}
+
                     {showAlmaButtons && (
                       <>
                         <Flex className="w-full" layout="col-center">
@@ -345,7 +353,10 @@ export const PaymentMethods = ({
                           loader: 'always',
                         }}
                       >
-                        <StripeForm isDerma={isDerma} />
+                        <StripeForm
+                          isDerma={isDerma}
+                          setShowLoader={setShowLoader}
+                        />
                       </Elements>
                     )}
                     {errorMessage && (
