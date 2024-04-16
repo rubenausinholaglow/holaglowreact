@@ -303,7 +303,7 @@ export default function Confirmation({
                   </div>
                 </Flex>
               ))}
-              {!isDashboard && (
+              {!isDashboard && !isDerma && (
                 <a href="/tratamientos" className="md:hidden">
                   <Button type="white" size="md" href={ROUTES.treatments}>
                     <Flex layout="row-center">
