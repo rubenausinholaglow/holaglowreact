@@ -5,7 +5,12 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { EmlaType, PackUnitiesScheduled, Product } from '@interface/product';
+import {
+  CartItem,
+  EmlaType,
+  PackUnitiesScheduled,
+  Product,
+} from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
@@ -319,12 +324,16 @@ export default function Agenda({
                   );
 
                   if (selectedProduct != null) {
-                    updateIsScheduled(
-                      true,
-                      selectedProduct!.uniqueId,
-                      dateScehduled,
-                      selectedProduct.title
-                    );
+                    if (selectedProduct.sessions > 1) {
+                      updateSessionScheduled(selectedProduct, dateScehduled);
+                    } else {
+                      updateIsScheduled(
+                        true,
+                        selectedProduct!.uniqueId,
+                        dateScehduled,
+                        selectedProduct.title
+                      );
+                    }
                   } else {
                     treatmentPacks.length > 0
                       ? updateTreatmentPackScheduled(
@@ -379,6 +388,37 @@ export default function Agenda({
       schedule();
     }
   }, [selectedSlot]);
+
+  function updateSessionScheduled(product: CartItem, scheduledDate: string) {
+    let isUpdated = false;
+
+    const updatedPacks = treatmentPacks.map(pack => {
+      if (
+        !isUpdated &&
+        pack.productId === product.id &&
+        pack.isScheduled == false
+      ) {
+        isUpdated = true;
+
+        return {
+          ...pack,
+          isScheduled: true,
+          scheduledDate: scheduledDate,
+        };
+      }
+      return pack;
+    });
+
+    if (
+      updatedPacks.some(
+        x => x.isScheduled == false && x.productId == product.id
+      )
+    ) {
+      updateIsScheduled(true, product!.uniqueId, scheduledDate, product.title);
+    }
+
+    setTreatmentPacks(updatedPacks);
+  }
 
   function updateTreatmentPackScheduled(
     products: Product[],

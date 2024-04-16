@@ -95,6 +95,7 @@ export interface PackUnitiesScheduled {
   isScheduled? : boolean;
   scheduledDate? : string;
   treatmentName? : string; 
+  productId : string
 }
 
 export interface ApplicationZoneDetail {
