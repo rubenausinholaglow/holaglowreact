@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { User } from '@interface/appointment';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
@@ -21,7 +22,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
-import { User } from '@interface/appointment';
 
 dayjs.locale(spanishConf);
 
