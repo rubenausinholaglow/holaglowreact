@@ -31,8 +31,11 @@ export const StripeForm = ({
 
   const { client } = useSessionStore(state => state);
   const registerUser = useRegistration(client, false, false, false);
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const handleSubmit = async (
+    e: { preventDefault: () => void } | undefined
+  ) => {
+    setMessage('');
+    if (e) e.preventDefault();
     setIsButtonDisabled(true);
     if (!stripe || !elements) {
       setIsButtonDisabled(false);
@@ -75,7 +78,7 @@ export const StripeForm = ({
         }`}
         onClick={() => {
           if (!isButtonDisabled) {
-            handleSubmit;
+            handleSubmit(undefined);
           }
         }}
       >
