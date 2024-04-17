@@ -4,7 +4,7 @@ import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
 import App from 'app/(web)/components/layout/App';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { DERMA_COLORS, HOLAGLOW_COLORS } from 'app/utils/colors';
+import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
@@ -12,7 +12,7 @@ import Image from 'next/image';
 export default function Clinicas({ isDerma = false }: { isDerma?: boolean }) {
   const Wrapper = ({ children }: { children: ReactNode }) => {
     if (isDerma) {
-      return <DermaLayout>{children}</DermaLayout>;
+      return <DermaLayout showNavigation>{children}</DermaLayout>;
     } else {
       return (
         <App>

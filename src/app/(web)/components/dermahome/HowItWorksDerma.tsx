@@ -33,7 +33,7 @@ const ITEMS = [
 
 export default function HowItWorksDerma() {
   return (
-    <div className="bg-derma-primary500/10 rounded-2xl md:rounded-none py-12">
+    <div className="bg-white rounded-2xl md:rounded-none py-12">
       <Container>
         <Title
           isAnimated

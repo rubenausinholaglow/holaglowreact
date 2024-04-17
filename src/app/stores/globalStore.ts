@@ -3,7 +3,7 @@ import { PaymentBank, PaymentInitResponse } from '@interface/payment';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
 import { Post } from 'app/types/blog';
-import { AnalyticsMetrics } from 'app/types/client';
+import { AnalyticsMetrics, Client } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
 import {  PackUnitiesScheduled, Product } from 'app/types/product';
@@ -28,6 +28,7 @@ export enum TypeOfPayment {
 
 interface SessionStore {
   analyticsMetrics: AnalyticsMetrics;
+  client: Client | undefined;
   isMobile: boolean;
   deviceSize: DeviceSize;
   selectedTreatments: Product[];
@@ -47,6 +48,7 @@ interface SessionStore {
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
+  setClient: (client: Client) => void;
   setIsMobile: (value: boolean) => void;
   setDeviceSize: (value: DeviceSize) => void;
   setSelectedTreatments: (value: Product[]) => void;
@@ -131,6 +133,7 @@ export const useSessionStore = create(
         isDesktop: false,
         isWideScreen: false,
       },
+      client: undefined,
       selectedTreatments: [],
       selectedPack: undefined,
       previousSelectedTreatments: [],
@@ -148,6 +151,9 @@ export const useSessionStore = create(
       treatmentPacks: [],
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
+      },
+      setClient: value => {
+        set({ client: value });
       },
       setAnalyticsMetrics: value => {
         set({ analyticsMetrics: value });

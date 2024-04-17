@@ -3,9 +3,13 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-export default function GuaranteedResults() {
+export default function GuaranteedResults({
+  className = '',
+}: {
+  className?: string;
+}) {
   return (
-    <Container className="pb-12">
+    <Container className={`pb-12 ${className}`}>
       <Flex className="w-full gap-4 p-4 bg-derma-secondary400 rounded-2xl">
         <Image
           src="/images/derma/landingPrecios/guaranteedResults.svg"

@@ -10,8 +10,6 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-import { isMobile } from '../layout/Breakpoint';
-
 export default function HeroDerma() {
   const HEADER_HEIGHT = isMobileSSR()
     ? DERMA_HEADER_HEIGHT_MOBILE
@@ -83,7 +81,7 @@ export default function HeroDerma() {
               />
             </>
           )}
-          <ReviewScore className="bg-hg-black50/90 p-4 w-full rounded-xl hidden md:flex md:w-1/2 relative" />
+          <ReviewScore className="bg-hg-black50/70 p-4 w-full rounded-xl hidden md:flex md:w-1/2 relative" />
         </Container>
       </div>
       {isMobileSSR() && (
@@ -92,35 +90,6 @@ export default function HeroDerma() {
             <Container>
               <ReviewScore />
             </Container>
-            {/* <div className="bg-derma-secondary300 py-4">
-              <Container>
-                <Title size="2xl" className="text-derma-primary mb-4">
-                  Tu rutina facial para{' '}
-                  <span className="inline-block h-10 relative top-2 overflow-hidden text-derma-tertiary">
-                    <span className="block animate-pains">
-                      <span className="block">acné</span>
-                      <span className="block">melasma</span>
-                      <span className="block">rosácea</span>
-                      <span className="block">calidad de piel</span>
-                    </span>
-                  </span>
-                </Title>
-                <Text className="text-hg-black500 mb-8">
-                  Analizamos tu piel y te enviamos a casa una rutina facial
-                  diseñada para ti por un médico
-                </Text>
-                <Flex className="w-full justify-center">
-                  <Button
-                    size="xl"
-                    type="derma"
-                    className="mb-4"
-                    href={ROUTES.derma.multistep.start}
-                  >
-                    Empezar análisis
-                  </Button>
-                </Flex>
-              </Container>
-            </div> */}
           </div>
         </div>
       )}
