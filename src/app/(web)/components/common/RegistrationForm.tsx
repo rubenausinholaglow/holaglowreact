@@ -179,7 +179,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     const isEmailValid = utils.validateEmail(formData.email);
 
     const isValidDni =
-      !showDni || isValidNif(formData.dni) || isValidNie(formData.dni);
+      !showDni ||
+      isValidNif(formData.dni.toUpperCase()) ||
+      isValidNie(formData.dni.toUpperCase());
     if (validFormData(formData, errors) && isValidDni) {
       setErrors([]);
       await handleRegistration();
@@ -330,8 +332,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               handleFieldChange(event, 'dni');
               const isValidDni =
                 !showDni ||
-                isValidNif(event.target.value) ||
-                isValidNie(event.target.value);
+                isValidNif(event.target.value.toUpperCase()) ||
+                isValidNie(event.target.value.toUpperCase());
               setShowDniError(!isValidDni);
             }}
           />
