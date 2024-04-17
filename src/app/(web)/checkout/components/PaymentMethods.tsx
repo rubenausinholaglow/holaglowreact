@@ -120,6 +120,7 @@ export const PaymentMethods = ({
       [installments]: true,
     });
     if (deferredDays) setIsLoadingAlmaDeferred(true);
+    setIsLoadingStripe(true);
     if (
       activePayment != PaymentBank.None &&
       cart.length > 0 &&
@@ -343,6 +344,11 @@ export const PaymentMethods = ({
                       </Flex>
                     ) : (
                       <></>
+                    )}
+                    {isLoadingButton && !clientSecret && (
+                      <Flex className="w-full justify-center">
+                        <SvgSpinner height={24} width={24} />
+                      </Flex>
                     )}
                     {clientSecret && method.key == 'creditCard' && (
                       <Elements
