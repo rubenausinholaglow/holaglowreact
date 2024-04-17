@@ -68,7 +68,9 @@ export default function CheckoutPayment({
           (phonePrefix !== '+34' && !isEmpty(phone)),
         termsAndConditionsAccepted: termsAndConditionsAccepted,
         address: !isEmpty(address),
-        dni: !isEmpty(dni) && (isValidNif(dni) || isValidNie(dni)),
+        dni:
+          !isEmpty(dni) &&
+          (isValidNif(dni.toUpperCase()) || isValidNie(dni.toUpperCase())),
       };
     } else {
       dataToCheck = {

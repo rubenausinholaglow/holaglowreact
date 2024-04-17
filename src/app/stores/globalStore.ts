@@ -6,7 +6,7 @@ import { Post } from 'app/types/blog';
 import { AnalyticsMetrics, Client } from 'app/types/client';
 import { Clinic } from 'app/types/clinic';
 import { ProductFilters } from 'app/types/filters';
-import {  PackUnitiesScheduled, Product } from 'app/types/product';
+import { PackUnitiesScheduled, Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 import { Slot } from 'app/types/slot';
 import { Dayjs } from 'dayjs';
@@ -203,7 +203,7 @@ export const useSessionStore = create(
     }),
     {
       name: 'session-storage',
-      version: 23,
+      version: 24,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -291,7 +291,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 57,
+      version: 58,
     }
   )
 );
