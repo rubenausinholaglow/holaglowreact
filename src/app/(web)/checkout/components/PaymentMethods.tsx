@@ -208,8 +208,8 @@ export const PaymentMethods = ({
           value={activePaymentMethod}
           type="single"
           onValueChange={(activePaymentMethod: string) => {
-            setActivePaymentMethod(activePaymentMethod);
             setShowLoader(true);
+            setActivePaymentMethod(activePaymentMethod);
           }}
         >
           {checkoutPaymentItems.map(method =>
@@ -267,11 +267,9 @@ export const PaymentMethods = ({
                     layout="col-left"
                     className="mt-4 pt-5 border-t border-hg-black w-full min-h-48 relative"
                   >
-                    {showLoader &&
-                      clientSecret &&
-                      method.key == 'creditCard' && (
-                        <FullScreenLoading isDerma={isDerma} />
-                      )}
+                    {showLoader && method.key == 'creditCard' && (
+                      <FullScreenLoading isDerma={isDerma} />
+                    )}
 
                     {showAlmaButtons && (
                       <>

@@ -33,8 +33,9 @@ export const StripeForm = ({
   const registerUser = useRegistration(client, false, false, false);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
+    setIsButtonDisabled(true);
     if (!stripe || !elements) {
+      setIsButtonDisabled(false);
       return;
     }
     if (client) {
@@ -75,7 +76,6 @@ export const StripeForm = ({
         onClick={() => {
           if (!isButtonDisabled) {
             handleSubmit;
-            setIsButtonDisabled(true);
           }
         }}
       >
