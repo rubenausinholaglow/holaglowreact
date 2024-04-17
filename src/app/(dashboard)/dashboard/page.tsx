@@ -265,22 +265,20 @@ export default function Page({
               id = data.userId;
             }
 
-            await ScheduleService.updatePatientStatusAppointment(
+            UserService.createCrisalixUser(id, data.clinicId).then(async x => {
+              const crisalixUser: CrisalixUser = {
+                id: x.id,
+                playerId: x.player_id,
+                playerToken: x.playerToken,
+                name: x.name,
+              };
+              userCrisalix.addCrisalixUser(crisalixUser);
+            });
+
+            ScheduleService.updatePatientStatusAppointment(
               data.id,
               data.userId || '',
               Status.InProgress
-            );
-
-            await UserService.createCrisalixUser(id, data.clinicId).then(
-              async x => {
-                const crisalixUser: CrisalixUser = {
-                  id: x.id,
-                  playerId: x.player_id,
-                  playerToken: x.playerToken,
-                  name: x.name,
-                };
-                userCrisalix.addCrisalixUser(crisalixUser);
-              }
             );
 
             if (remoteControl) {
