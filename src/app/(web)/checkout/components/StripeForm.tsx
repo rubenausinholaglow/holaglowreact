@@ -9,6 +9,7 @@ import { StripePaymentElementOptions } from '@stripe/stripe-js';
 import { useRegistration } from '@utils/userUtils';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { SvgSpinner } from 'app/icons/Icons';
 
 export const StripeForm = ({
   isDerma = false,
@@ -75,7 +76,11 @@ export const StripeForm = ({
         className="mt-4"
         onClick={handleSubmit}
       >
-        Pago con tarjeta débito/crédito
+        {isLoadingStripe ? (
+          <SvgSpinner className="min-w-16" />
+        ) : (
+          'Pago con tarjeta débito/crédito'
+        )}
       </Button>
       {errorMessage && (
         <p className="text-hg-error text-sm p-2">{errorMessage}</p>
