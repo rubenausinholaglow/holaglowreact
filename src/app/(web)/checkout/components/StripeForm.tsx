@@ -7,9 +7,9 @@ import {
 } from '@stripe/react-stripe-js';
 import { StripePaymentElementOptions } from '@stripe/stripe-js';
 import { useRegistration } from '@utils/userUtils';
+import { SvgSpinner } from 'app/icons/Icons';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { SvgSpinner } from 'app/icons/Icons';
 
 export const StripeForm = ({
   isDerma = false,
