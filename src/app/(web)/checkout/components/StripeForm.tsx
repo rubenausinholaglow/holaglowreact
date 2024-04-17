@@ -26,6 +26,7 @@ export const StripeForm = ({
   const [isLoadingStripe, setIsLoadingStripe] = useState<boolean>(false);
 
   const { client } = useSessionStore(state => state);
+  const registerUser = useRegistration(client, false, false, false);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -33,7 +34,6 @@ export const StripeForm = ({
       return;
     }
     if (client) {
-      const registerUser = useRegistration(client, false, false, false);
       await registerUser(client, false, false, false);
     }
     setIsLoadingStripe(true);

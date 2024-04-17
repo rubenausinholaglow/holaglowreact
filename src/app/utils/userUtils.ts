@@ -49,7 +49,7 @@ export const getTreatmentId = (
 };
 
 export const useRegistration = (
-  formData: Client,
+  formData: Client | undefined,
   isDashboard: boolean,
   redirect: boolean,
   isEmbed: boolean,
