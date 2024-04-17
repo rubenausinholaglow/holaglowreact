@@ -104,9 +104,9 @@ export const PaymentMethods = ({
   }, [payment]);
 
   function scrollDown() {
-    setTimeout(() => {
+    /*setTimeout(() => {
       window.scrollTo(0, document.body.scrollHeight);
-    }, 250);
+    }, 250);*/
   }
 
   const handlePaymentClick = async (
