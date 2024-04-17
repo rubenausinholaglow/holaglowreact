@@ -6,6 +6,8 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import { StripePaymentElementOptions } from '@stripe/stripe-js';
+import { useRegistration } from '@utils/userUtils';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 
 export const StripeForm = ({
@@ -23,13 +25,15 @@ export const StripeForm = ({
   };
   const [isLoadingStripe, setIsLoadingStripe] = useState<boolean>(false);
 
+  const { client } = useSessionStore(state => state);
+  const registerUser = useRegistration(client!, false, false, false);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
       return;
     }
-
+    await registerUser(client!, false, false, false);
     setIsLoadingStripe(true);
     let url = process.env.NEXT_PUBLIC_STRIPE_RETURN_URL!;
     if (!isDerma) url = url.replace('/derma', '');

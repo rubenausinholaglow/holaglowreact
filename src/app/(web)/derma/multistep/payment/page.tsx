@@ -6,6 +6,7 @@ import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
+import { validateEmail, validatePhone } from '@utils/validators';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import CheckoutPayment from 'app/(web)/checkout/components/CheckoutPayment';
 import AppointmentResume from 'app/(web)/checkout/confirmation/components/AppointmentResume';
@@ -22,12 +23,13 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useSearchParams } from 'next/navigation';
+import { isValidNie, isValidNif } from 'nif-dni-nie-cif-validation';
 
 dayjs.locale(spanishConf);
 
 export default function DermaPayment() {
   const searchParams = useSearchParams();
-  const { selectedTreatments } = useSessionStore(state => state);
+  const { selectedTreatments, setClient } = useSessionStore(state => state);
   const { activePayment, setActivePayment, user } = useGlobalPersistedStore(
     state => state
   );
@@ -36,15 +38,17 @@ export default function DermaPayment() {
   const [isProbadorVirtual, setisProbadorVirtual] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
 
-  const [client, setClient] = useState<Client>({
+  const [client, setLocalClient] = useState<Client>({
     email: user?.email ?? '',
-    phone: user?.phone ?? '',
+    phone:
+      (user?.phone?.indexOf('+34')! < 0 ? '+34' + user?.phone : user?.phone) ??
+      '',
     phonePrefix: '',
     name: user?.name ?? '',
     surname: user?.surname ?? '',
     lastName: user?.surname ?? '',
     secondSurname: user?.secondSurname ?? '',
-    termsAndConditionsAccepted: true,
+    termsAndConditionsAccepted: false,
     receiveCommunications: false,
     page: '',
     externalReference: '',
@@ -70,7 +74,6 @@ export default function DermaPayment() {
     postalCode: user?.postalCode ?? '',
   });
   const initializePayment = usePayments();
-  const registerUser = useRegistration(client, false, false, false);
 
   useEffect(() => {
     setisProbadorVirtual(false);
@@ -93,26 +96,48 @@ export default function DermaPayment() {
   }, []);
 
   useEffect(() => {
-    async function checkout() {
-      const createdUser = await registerUser(client, false, false, false);
-      await initializePayment(
-        activePayment,
-        createdUser!,
-        false,
-        cart[0].price * 100,
-        true,
-        undefined,
-        false
-      );
-    }
-    if (
-      activePayment != PaymentBank.None &&
-      cart.length > 0 &&
-      client.email != ''
-    )
-      checkout();
-  }, [activePayment]);
+    setClient(client);
+  }, [client]);
 
+  function checkFormData(formData: Client) {
+    const {
+      name,
+      surname,
+      email,
+      phonePrefix,
+      phone,
+      termsAndConditionsAccepted,
+      address,
+      city,
+      dni,
+    } = formData;
+
+    const cleanedPhoneNumber =
+      phonePrefix === '+34' ? phone.slice(3).replace(/ /g, '') : phone;
+
+    const dataToCheck = {
+      name: !isEmpty(name),
+      surname: !isEmpty(surname),
+      email: validateEmail(email),
+      phone:
+        (phonePrefix === '+34' && validatePhone(cleanedPhoneNumber)) ||
+        (phonePrefix !== '+34' && !isEmpty(phone)),
+      termsAndConditionsAccepted: termsAndConditionsAccepted,
+      address: !isEmpty(address),
+      dni: !isEmpty(dni) && (isValidNif(dni) || isValidNie(dni)),
+    };
+
+    for (const key in dataToCheck) {
+      if (
+        Object.prototype.hasOwnProperty.call(dataToCheck, key) &&
+        (dataToCheck as any)[key] !== true
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  }
   return (
     <DermaLayout hideButton={true}>
       <Container className="px-0 md:mt-8 md:pb-8">
@@ -141,7 +166,7 @@ export default function DermaPayment() {
               redirect={hideLayout}
               hasContinueButton={isProbadorVirtual}
               initialValues={client}
-              setClientData={setClient}
+              setClientData={setLocalClient}
               showDni={true}
               showPostalCode={true}
               showAddress={true}
