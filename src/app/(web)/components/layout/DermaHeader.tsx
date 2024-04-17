@@ -6,6 +6,7 @@ import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
 import { SvgArrow, SvgMenu } from 'app/icons/IconsDs';
+import { useGlobalStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
@@ -54,6 +55,8 @@ export default function DermaHeader({
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
 
+  const { showModalBackground } = useGlobalStore(state => state);
+
   const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
     : DERMA_HEADER_HEIGHT_DESKTOP;
@@ -88,6 +91,10 @@ export default function DermaHeader({
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    setIsMobileNavVisible(showModalBackground);
+  }, [showModalBackground]);
 
   return (
     <CheckHydration>
