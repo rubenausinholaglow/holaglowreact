@@ -40,9 +40,11 @@ export default function DermaPayment() {
 
   const [client, setLocalClient] = useState<Client>({
     email: user?.email ?? '',
-    phone:
-      (user?.phone?.indexOf('+34')! < 0 ? '+34' + user?.phone : user?.phone) ??
-      '',
+    phone: user?.phone
+      ? user?.phone?.indexOf('+34') < 0
+        ? '+34' + user?.phone
+        : user?.phone
+      : '',
     phonePrefix: '',
     name: user?.name ?? '',
     surname: user?.surname ?? '',
