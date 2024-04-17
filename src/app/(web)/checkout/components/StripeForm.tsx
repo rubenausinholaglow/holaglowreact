@@ -24,6 +24,7 @@ export const StripeForm = ({
     layout: 'tabs',
   };
   const [isLoadingStripe, setIsLoadingStripe] = useState<boolean>(false);
+  const [errorMessage, setMessage] = useState<string>('');
 
   const { client } = useSessionStore(state => state);
   const registerUser = useRegistration(client, false, false, false);
@@ -47,9 +48,9 @@ export const StripeForm = ({
     });
 
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      //setMessage(error.message);
+      setMessage('Datos de tarjeta incorrectos, por favor revisa los datos');
     } else {
-      //setMessage('An unexpected error occurred.');
+      setMessage('Error inesperado, por favor intentalo de nuevo.');
     }
 
     setIsLoadingStripe(false);
@@ -76,7 +77,9 @@ export const StripeForm = ({
       >
         Pago con tarjeta débito/crédito
       </Button>
-      {/* Show any error or success messages */}
+      {errorMessage && (
+        <p className="text-hg-error text-sm p-2">{errorMessage}</p>
+      )}
     </form>
   );
 };
