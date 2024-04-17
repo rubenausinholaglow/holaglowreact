@@ -209,6 +209,7 @@ export const PaymentMethods = ({
           type="single"
           onValueChange={(activePaymentMethod: string) => {
             setActivePaymentMethod(activePaymentMethod);
+            setShowLoader(true);
           }}
         >
           {checkoutPaymentItems.map(method =>
@@ -269,7 +270,7 @@ export const PaymentMethods = ({
                     {showLoader &&
                       clientSecret &&
                       method.key == 'creditCard' && (
-                        <FullScreenLoading isDerma />
+                        <FullScreenLoading isDerma={isDerma} />
                       )}
 
                     {showAlmaButtons && (

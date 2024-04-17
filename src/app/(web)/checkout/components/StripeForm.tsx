@@ -55,6 +55,7 @@ export const StripeForm = ({
     } else {
       setMessage('Error inesperado, por favor intentalo de nuevo.');
     }
+    setIsButtonDisabled(false);
   };
 
   return (
