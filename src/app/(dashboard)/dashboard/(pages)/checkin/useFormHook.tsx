@@ -110,11 +110,11 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
         const props: Props = {
           name: firstName,
           hour: appointmentInfo.startTime,
-          professional: appointmentInfo.clinicProfessional.name,
-          professionalId: appointmentInfo.clinicProfessional.id,
+          professional: appointmentInfo.clinicProfessionalName,
+          professionalId: appointmentInfo.clinicProfessionalId,
           userId: id,
           boxId: appointmentInfo.boxId,
-          clinicId: appointmentInfo.clinic.id,
+          clinicId: appointmentInfo.clinicId,
         };
         onScanSuccess(props);
       } catch (error: any) {

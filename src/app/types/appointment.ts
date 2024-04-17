@@ -76,6 +76,9 @@ export interface AppointmentNextResponse {
   clinicflowwwId: string;
   clinicId: string;
   clinicProfessionalId : string;
+  clinicProfessionalName : string;
   userId : string;
   firstName : string;
+  boxId: string;  
+  startTime: string;
 }
