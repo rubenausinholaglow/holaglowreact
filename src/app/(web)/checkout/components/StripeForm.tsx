@@ -26,14 +26,16 @@ export const StripeForm = ({
   const [isLoadingStripe, setIsLoadingStripe] = useState<boolean>(false);
 
   const { client } = useSessionStore(state => state);
-  const registerUser = useRegistration(client!, false, false, false);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
       return;
     }
-    await registerUser(client!, false, false, false);
+    if (client) {
+      const registerUser = useRegistration(client, false, false, false);
+      await registerUser(client, false, false, false);
+    }
     setIsLoadingStripe(true);
     let url = process.env.NEXT_PUBLIC_STRIPE_RETURN_URL!;
     if (!isDerma) url = url.replace('/derma', '');
