@@ -73,8 +73,10 @@ export const StripeForm = ({
           isButtonDisabled ? 'pointer-events-none' : ''
         }`}
         onClick={() => {
-          handleSubmit;
-          setIsButtonDisabled(true);
+          if (!isButtonDisabled) {
+            handleSubmit;
+            setIsButtonDisabled(true);
+          }
         }}
       >
         {isButtonDisabled ? <SvgSpinner /> : 'Pago con tarjeta débito/crédito'}
