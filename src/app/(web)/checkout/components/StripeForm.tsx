@@ -37,8 +37,8 @@ export const StripeForm = ({
       await registerUser(client, false, false, false);
     }
     setIsLoadingStripe(true);
-    let url = process.env.NEXT_PUBLIC_STRIPE_RETURN_URL!;
-    if (!isDerma) url = url.replace('/derma', '');
+    let url = process.env.NEXT_PUBLIC_STRIPE_CLINICS_RETURN_URL!;
+    if (isDerma) url = process.env.NEXT_PUBLIC_STRIPE_DERMA_RETURN_URL!;
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
