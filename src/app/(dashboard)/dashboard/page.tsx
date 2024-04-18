@@ -256,31 +256,29 @@ export default function Page({
         async data => {
           if (data != null) {
             setAppointmentId(data.id);
-            setClinicId(data.clinic.id);
-            setClinicFlowwwId(data.clinic.flowwwId);
-            setClinicProfessionalId(data.clinicProfessional.id);
+            setClinicId(data.clinicId);
+            setClinicFlowwwId(data.clinicflowwwId);
+            setClinicProfessionalId(data.clinicProfessionalId);
 
             if (name == '') {
-              name = data.lead.user.firstName;
-              id = data.lead.user.id;
+              name = data.firstName;
+              id = data.userId;
             }
 
-            await ScheduleService.updatePatientStatusAppointment(
-              data.id,
-              data.lead.user.id || '',
-              Status.InProgress
-            );
+            UserService.createCrisalixUser(id, data.clinicId).then(async x => {
+              const crisalixUser: CrisalixUser = {
+                id: x.id,
+                playerId: x.player_id,
+                playerToken: x.playerToken,
+                name: x.name,
+              };
+              userCrisalix.addCrisalixUser(crisalixUser);
+            });
 
-            await UserService.createCrisalixUser(id, data.clinic.id).then(
-              async x => {
-                const crisalixUser: CrisalixUser = {
-                  id: x.id,
-                  playerId: x.player_id,
-                  playerToken: x.playerToken,
-                  name: x.name,
-                };
-                userCrisalix.addCrisalixUser(crisalixUser);
-              }
+            ScheduleService.updatePatientStatusAppointment(
+              data.id,
+              data.userId || '',
+              Status.InProgress
             );
 
             if (remoteControl) {
