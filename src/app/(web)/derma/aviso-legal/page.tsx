@@ -5,7 +5,7 @@ export default function LegalAdvice() {
   return (
     <DermaLayout>
       <meta name="robots" content="noindex,follow" />
-      <LegalAdviceContent></LegalAdviceContent>
+      <LegalAdviceContent isDerma={true}></LegalAdviceContent>
     </DermaLayout>
   );
 }
