@@ -1,29 +1,28 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ProductFilters } from '@interface/filters';
 import { Product } from '@interface/product';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
+
+import PackTypeFilter from '../filters/PackTypeFilter';
 
 export default function CategorySelectorSSR({
   className,
   products,
   isStacked,
   isDashboard,
-  productFilters,
-  setProductFilters,
 }: {
   className?: string;
   products: Product[];
   isStacked?: boolean;
   isDashboard?: boolean;
-  productFilters: ProductFilters;
-  setProductFilters: (filters: ProductFilters) => void;
 }) {
+  const { productFilters, setProductFilters } = useGlobalStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -55,12 +54,15 @@ export default function CategorySelectorSSR({
   return (
     <ul
       id="categorySelector"
-      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto ${
+      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto${
         className ? className : ''
       }
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
+      <li className="shrink-0 mr-3">
+        <PackTypeFilter isDashboard={isDashboard} />
+      </li>
       {productCategories.map((category, i) => {
         return (
           <li

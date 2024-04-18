@@ -84,6 +84,7 @@ export default function CategorySelector({
       <li className="shrink-0">
         <PackTypeFilter isDashboard={isDashboard} />
       </li>
+
       {productCategories.map((category, i) => {
         return (
           <li
