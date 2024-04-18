@@ -1,7 +1,8 @@
-import { Diagnosis } from '@interface/derma/diagnosis';
+import { UpsellingData } from '@interface/upselling';
 import { SvgReceiptEdit } from 'app/icons/Icons';
 import { SvgArrow, SvgReceipt2, SvgUserSquare } from 'app/icons/IconsDs';
 import dayjs from 'dayjs';
+import spanishConf from 'dayjs/locale/es';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -9,7 +10,33 @@ import Image from 'next/image';
 
 import DiagnosisImages from './DiagnosisImages';
 
-export default function FirstDiagnosis({ data }: { data: Diagnosis }) {
+dayjs.locale(spanishConf);
+
+const mockedData = {
+  images: [
+    '/images/derma/multistep/Basart.png',
+    '/images/derma/multistep/Basart.png',
+    '/images/derma/multistep/Basart.png',
+  ],
+  professional: {
+    name: 'Dr. Sonsoles Espí',
+    imgSrc: '/images/derma/home/professionals/Sonsoles.png',
+  },
+  date: new Date('2024-04-17'),
+  user: {
+    name: 'Perico',
+    surname: 'de los',
+    secondSurname: 'palotes',
+  },
+  receipt: {
+    expeditionDate: new Date('2024-04-27'),
+    link: 'https://www.derma.holaglow.com',
+  },
+};
+
+export default function FirstDiagnosis({ data }: { data: UpsellingData }) {
+  const isReceiptDisabled = dayjs() > dayjs(data?.creationDate).add(10, 'day');
+
   return (
     <div className="overflow-hidden">
       <Flex
@@ -18,31 +45,33 @@ export default function FirstDiagnosis({ data }: { data: Diagnosis }) {
       >
         <Flex layout="row-left" className="w-full mb-6">
           <Image
-            alt={data.professional.name}
+            alt={mockedData.professional.name}
             height={48}
             width={48}
-            src={data.professional.imgSrc}
+            src={mockedData.professional.imgSrc}
             className="rounded-full overflow-hidden mr-2"
           />
           <Text className="text-xs">
-            <span className="font-semibold">{data.professional.name}</span>
+            <span className="font-semibold">
+              {mockedData.professional.name}
+            </span>
             {' · '}
-            <span className="text-hg-black400">Publicado hace X días</span>
+            <span className="text-hg-black400">
+              Publicado hace {dayjs().diff(dayjs(data.creationDate), 'day')}{' '}
+              días
+            </span>
           </Text>
         </Flex>
-        <DiagnosisImages images={data.images} className="mb-4" />
+        <DiagnosisImages
+          images={[data.photos[0], data.photos[1], data.photos[2]]}
+          className="mb-4"
+        />
 
         <div className="text-sm">
           <Text className="text-derma-primary mb-4 font-semibold">
-            Hola {data.user.name}
+            Hola {data.user.firstName}
           </Text>
-          <Text className="mb-4">
-            ¡Me alegra encargarme de tu tratamiento! Por lo que he podido ver en
-            las fotos junto con la información que me proporcionaste en el
-            cuestionario, tu tipo de piel es el típico de Dermatitis. Por tanto,
-            te he preparado la rutina imprescindible para tratar tu piel. Se
-            compone ...
-          </Text>
+          <Text className="mb-4">{data.diagnostic}</Text>
           <Button
             size="lg"
             type="tertiary"
@@ -55,8 +84,8 @@ export default function FirstDiagnosis({ data }: { data: Diagnosis }) {
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Paciente</Text>
               <Text className="text-derma-primary font-medium">
-                {data?.user?.name} {data?.user?.surname}{' '}
-                {data?.user?.secondSurname}
+                {data?.user?.firstName} {data?.user?.lastName}{' '}
+                {data?.user?.secondLastName}
               </Text>
             </Flex>
           </Button>
@@ -73,17 +102,21 @@ export default function FirstDiagnosis({ data }: { data: Diagnosis }) {
             <Flex layout="col-left" className="w-full text-xs">
               <Text className="text-hg-black500">Fecha expedición receta</Text>
               <Text className="text-derma-primary font-medium">
-                {dayjs(data?.date).format('DD/MM/YYYY')}
+                {dayjs(data?.creationDate).format('DD/MM/YYYY')}
               </Text>
             </Flex>
           </Button>
 
           <Button
             size="xl"
-            type="derma"
-            className="w-full mb-4"
-            customStyles="group font-normal justify-start pl-2 pr-4"
-            href={data.receipt.link}
+            type={isReceiptDisabled ? 'disabled' : 'derma'}
+            className={`w-full mb-4 ${
+              isReceiptDisabled ? 'pointer-events-none' : ''
+            }`}
+            customStyles={`group font-normal justify-start pl-2 pr-4 ${
+              isReceiptDisabled ? 'bg-hg-black100' : ''
+            }`}
+            href={data.receiptUrl}
             target="_blank"
           >
             <Flex

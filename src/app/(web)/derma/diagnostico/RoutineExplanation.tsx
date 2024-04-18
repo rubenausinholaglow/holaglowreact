@@ -45,50 +45,53 @@ export default function RoutineExplanation() {
   const [activeSlider, setActiveSlider] = useState<'day' | 'night'>('day');
 
   return (
-    <Flex layout="col-center" className="w-full">
+    <>
       <div className="md:hidden">
-        <ul className="inline-flex bg-white/50 p-1 rounded-full mb-4 w-full">
-          <li
-            className={`transition-all text-xs  py-2 px-4 rounded-full grow-0 cursor-pointer ${
-              activeSlider === 'day'
-                ? 'bg-derma-primary500 text-hg-secondary100'
-                : 'text-derma-primary'
-            }`}
-            onClick={() => setActiveSlider('day')}
-          >
-            Rutina día
-          </li>
-          <li
-            className={`transition-all text-xs py-2 px-4 rounded-full grow-0 cursor-pointer ${
-              activeSlider === 'night'
-                ? 'bg-derma-primary500 text-hg-secondary100'
-                : 'text-derma-primary'
-            }`}
-            onClick={() => setActiveSlider('night')}
-          >
-            Rutina noche
-          </li>
-        </ul>
-
-        <ul className="flex flex-col gap-4 mb-8 w-full">
-          {ROUTINES[activeSlider].map(routine => (
-            <li
-              key={routine.text}
-              className="flex items-start justify-start gap-4"
-            >
-              <div className="bg-derma-primary500/30 p-2 rounded-full">
-                <DynamicIcon
-                  name={routine.icon}
-                  className="text-derma-primary"
+        <div className="w-full">
+          <Flex layout="col-center">
+            <ul className="inline-flex bg-white/50 p-1 rounded-full mb-4">
+              <li
+                className={`transition-all text-xs  py-2 px-4 rounded-full grow-0 cursor-pointer ${
+                  activeSlider === 'day'
+                    ? 'bg-derma-primary500 text-hg-secondary100'
+                    : 'text-derma-primary'
+                }`}
+                onClick={() => setActiveSlider('day')}
+              >
+                Rutina día
+              </li>
+              <li
+                className={`transition-all text-xs py-2 px-4 rounded-full grow-0 cursor-pointer ${
+                  activeSlider === 'night'
+                    ? 'bg-derma-primary500 text-hg-secondary100'
+                    : 'text-derma-primary'
+                }`}
+                onClick={() => setActiveSlider('night')}
+              >
+                Rutina noche
+              </li>
+            </ul>
+          </Flex>
+          <ul className="flex flex-col gap-4 mb-8 w-full">
+            {ROUTINES[activeSlider].map(routine => (
+              <li
+                key={routine.text}
+                className="flex items-start justify-start gap-4"
+              >
+                <div className="bg-derma-primary500/30 p-2 rounded-full">
+                  <DynamicIcon
+                    name={routine.icon}
+                    className="text-derma-primary"
+                  />
+                </div>
+                <p
+                  dangerouslySetInnerHTML={{ __html: routine.text }}
+                  className="text-xs text-left"
                 />
-              </div>
-              <p
-                dangerouslySetInnerHTML={{ __html: routine.text }}
-                className="text-xs text-left"
-              />
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className="hidden md:block">
@@ -140,6 +143,6 @@ export default function RoutineExplanation() {
         <Text className="font-semibold mb-2">¡No olvides ser constante!</Text>
         <Text>Sigue la rutina cada día para ver unos resultados óptimos.</Text>
       </div>
-    </Flex>
+    </>
   );
 }
