@@ -84,7 +84,7 @@ export default async function Testimonials() {
       <FullWidthCarousel
         hasDots={isMobileSSR()}
         hasControls={!isMobileSSR()}
-        className="pb-8"
+        className="pb-12"
         visibleSlides={isMobileSSR() ? 1.2 : 3.5}
       >
         {TESTIMONIALS.map((testimonial: Testimonial | any) => {
