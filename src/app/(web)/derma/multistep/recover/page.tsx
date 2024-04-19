@@ -17,6 +17,7 @@ import {
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Container } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
 export default function SupportPage() {
@@ -115,36 +116,40 @@ export default function SupportPage() {
   }
 
   return (
-    <DermaLayout>
-      <div className="flex items-center justify-center h-screen bg-[#F3EDE9]">
-        <div className="py-12 md:py-20 text-center">
-          {!AuthSuccesfully && (
-            <div className="relative">
-              <p className="mt-6 text-gray-700 mb-6">
-                Introduce el código que has recibido para continuar
-              </p>
-              <TextInputField
-                placeholder="Código"
-                value={token}
-                onChange={(e: any) => setToken(e.target.value)}
-                hasNoValidation
-              />
-              <Button
-                type="derma"
-                className="mt-6"
-                onClick={handleValidateToken}
-              >
-                {isLoading ? (
-                  <SvgSpinner height={24} width={24} />
-                ) : (
-                  <>Validar</>
-                )}
-              </Button>
-            </div>
-          )}
-          {errorMessage && <p className="text-red-500 mt-6">{errorMessage}</p>}
-        </div>
-      </div>
-    </DermaLayout>
+    <div className="bg-derma-secondary300 min-h-screen relative">
+      <DermaLayout>
+        <Container>
+          <div className="py-24 md:pt-36 md:pb-40 text-center max-w-md mx-auto">
+            {!AuthSuccesfully && (
+              <div className="relative">
+                <p className="mt-6 text-gray-700 mb-6">
+                  Introduce el código que has recibido para continuar
+                </p>
+                <TextInputField
+                  placeholder="Código"
+                  value={token}
+                  onChange={(e: any) => setToken(e.target.value)}
+                  hasNoValidation
+                />
+                <Button
+                  type="derma"
+                  className="mt-6"
+                  onClick={handleValidateToken}
+                >
+                  {isLoading ? (
+                    <SvgSpinner height={24} width={24} />
+                  ) : (
+                    <>Validar</>
+                  )}
+                </Button>
+              </div>
+            )}
+            {errorMessage && (
+              <p className="text-red-500 mt-6">{errorMessage}</p>
+            )}
+          </div>
+        </Container>
+      </DermaLayout>
+    </div>
   );
 }
