@@ -539,25 +539,24 @@ export default function PaymentInput(props: Props) {
             onUrlPayment={handleUrlPayment}
           ></AlmaWidget>
         )}
-        {showPepper ||
-          (showFrakmenta && (
-            <Flex layout="col-left" className="w-full">
-              {showPepper && (
-                <PepperWidget totalPrice={Number(inputValue)}></PepperWidget>
-              )}
+        {(showPepper || showFrakmenta) && (
+          <Flex layout="col-left" className="w-full">
+            {showPepper && (
+              <PepperWidget totalPrice={Number(inputValue)}></PepperWidget>
+            )}
 
-              <Flex className="mt-4">
-                <Button
-                  type="tertiary"
-                  isSubmit
-                  className="ml-2"
-                  onClick={() => openModal()}
-                >
-                  Abrir Formulario
-                </Button>
-              </Flex>
+            <Flex className="mt-4">
+              <Button
+                type="tertiary"
+                isSubmit
+                className="ml-2"
+                onClick={() => openModal()}
+              >
+                Abrir Formulario
+              </Button>
             </Flex>
-          ))}
+          </Flex>
+        )}
       </>
     );
   };
