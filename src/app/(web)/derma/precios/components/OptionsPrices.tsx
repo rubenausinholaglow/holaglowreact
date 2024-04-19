@@ -39,8 +39,8 @@ export default function OptionsPrices({
                   <Image
                     src={subscription.imgSrc}
                     alt={subscription.title}
-                    height={200}
-                    width={200}
+                    height={125}
+                    width={125}
                     className={`mb-4 mx-auto ${
                       index === 0 && isMobileSSR() ? 'mt-8' : ''
                     }`}
@@ -58,7 +58,7 @@ export default function OptionsPrices({
                   </Text>
                   {subscription.price?.oldValue && (
                     <Text className="text-sm text-hg-error line-through">
-                      {subscription.price.value}
+                      {subscription.price.oldValue}
                     </Text>
                   )}
                   <Text className="text-sm text-derma-primary500">

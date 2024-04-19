@@ -98,8 +98,8 @@ export default function OptionsPricesB({
                     <Image
                       src={subscription.imgSrc}
                       alt={subscription.title}
-                      height={200}
-                      width={200}
+                      height={125}
+                      width={125}
                       className="mx-auto md:mb-4 hidden md:block"
                       priority
                     />
@@ -117,14 +117,14 @@ export default function OptionsPricesB({
                       </Text>
                       {subscription.price?.oldValue && (
                         <Text className="text-sm text-hg-error line-through">
-                          {subscription.price.value}
+                          {subscription.price.oldValue}
                         </Text>
                       )}
                       <Text className="text-xs text-derma-primary500 hidden md:block">
                         {subscription.price.subtitle}
                       </Text>
                     </div>
-                    <ul className="md:border-t md:border-derma-secondary500 md:mt-6 pt-6 flex flex-col gap-4 mb-8 md:min-h-[260px]">
+                    <ul className="md:border-t md:border-derma-secondary500 md:mt-6 pt-6 flex flex-col gap-4 mb-8 md:min-h-[200px]">
                       {subscription.bullets.map(bullet => (
                         <li
                           key={bullet.text}
