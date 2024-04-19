@@ -102,32 +102,17 @@ export const SUBSCRIPTIONS = [
     subtitle: 'Tu rutina personalizada con seguimiento médico mensual',
     imgSrc: '/images/derma/landingPrecios/rutinaDoctorHolaglow.png',
     bgColor: 'bg-white',
-    tag: {
-      text: {
-        isMobile: '+ popular',
-        isDesktop: 'El más popular',
-      },
-      styles:
-        'bg-hg-primary rounded-full px-3 py-1.5 md:py-2 inline-block ml-auto text-xs md:text-sm text-derma-primary font-semibold',
-    },
+    tag: {},
     price: {
       value: '75 €',
+      discount: '-25%',
+      oldValue: '99 €',
       subtitle: 'Pago cada 3 meses',
     },
     bullets: [
       {
         icon: 'SvgCream',
         text: 'Rutina personalizada cada 3 meses',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgReceipt2',
-        text: 'Receta de tu crema personalizada',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Mejor piel en 90 días*',
         isEnabled: true,
       },
       {
@@ -140,7 +125,18 @@ export const SUBSCRIPTIONS = [
         text: 'Ajuste del tratamiento según evolución',
         isEnabled: true,
       },
+      {
+        icon: 'SvgBoxRemove',
+        text: 'Cancela en cualquier momento',
+        isEnabled: true,
+      },
+      {
+        icon: 'SvgVerify',
+        text: 'Mejor piel en 90 días*',
+        isEnabled: true,
+      },
     ],
+    bottomBar: '<b>Envío gratis</b>. Recíbelo en casa de 3 a 5 días',
   },
   {
     title: 'Compra única',
@@ -160,16 +156,6 @@ export const SUBSCRIPTIONS = [
         isEnabled: true,
       },
       {
-        icon: 'SvgReceipt2',
-        text: 'Receta de tu crema personalizada',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Mejor piel en 90 días*',
-        isEnabled: true,
-      },
-      {
         icon: 'SvgCross',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: false,
@@ -178,6 +164,16 @@ export const SUBSCRIPTIONS = [
         icon: 'SvgCross',
         text: 'Ajuste del tratamiento según evolución',
         isEnabled: false,
+      },
+      {
+        icon: 'SvgBox',
+        text: 'Envío gratis, de 3 a 5 días en tu casa',
+        isEnabled: true,
+      },
+      {
+        icon: 'SvgVerify',
+        text: 'Mejor piel en 90 días*',
+        isEnabled: true,
       },
     ],
   },
