@@ -85,7 +85,13 @@ export default function CancelModal({
           >
             Si, cancelar cita
           </Button>
-          <Button type="white">Volver</Button>
+          <p
+            className={`${
+              isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+            } text-sm`}
+          >
+            Volver
+          </p>
         </Flex>
       </Flex>
     </Modal>
