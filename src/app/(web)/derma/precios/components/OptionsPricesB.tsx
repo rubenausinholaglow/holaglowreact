@@ -40,28 +40,30 @@ export default function OptionsPricesB({
             className={`relative flex-grow md:w-1/2 rounded-2xl ${subscription.bgColor}`}
             key={subscription.title}
           >
-            <Flex
-              className="gap-2 w-full mb-1"
-              onClick={() =>
-                setSelectedOption
-                  ? index.toString() === selectedOption
-                    ? setSelectedOption('99')
-                    : setSelectedOption(index.toString())
-                  : null
-              }
-            >
-              {index.toString() === selectedOption ? (
-                <SvgCheckSquareActive className="h-6 w-6 shrink-0 md:hidden" />
-              ) : (
-                <SvgCheckSquare className="h-6 w-6 shrink-0 md:hidden" />
-              )}
-              <Text className="font-semibold md:hidden">
-                {subscription.title}
+            <div className="p-4 pb-0 md:p-0">
+              <Flex
+                className="gap-2 w-full mb-1"
+                onClick={() =>
+                  setSelectedOption
+                    ? index.toString() === selectedOption
+                      ? setSelectedOption('99')
+                      : setSelectedOption(index.toString())
+                    : null
+                }
+              >
+                {index.toString() === selectedOption ? (
+                  <SvgCheckSquareActive className="h-6 w-6 shrink-0 md:hidden" />
+                ) : (
+                  <SvgCheckSquare className="h-6 w-6 shrink-0 md:hidden" />
+                )}
+                <Text className="font-semibold md:hidden">
+                  {subscription.title}
+                </Text>
+              </Flex>
+              <Text className="text-sm mb-4 md:hidden">
+                {subscription.subtitle}
               </Text>
-            </Flex>
-            <Text className="text-sm mb-4 md:hidden">
-              {subscription.subtitle}
-            </Text>
+            </div>
 
             <Accordion
               value={isMobile ? accordionValue : 'isOpen'}
@@ -72,7 +74,7 @@ export default function OptionsPricesB({
                 className="h-full"
               >
                 <div
-                  className="flex justify-between items-center md:hidden"
+                  className="flex flex-col p-4 pt-0 md:hidden"
                   onClick={() =>
                     setAccordionValue
                       ? index.toString() === accordionValue
@@ -81,46 +83,64 @@ export default function OptionsPricesB({
                       : null
                   }
                 >
-                  <Text className="text-xl font-semibold text-derma-primary500">
-                    {subscription.price.value}
+                  <div className="flex justify-left items-center gap-2">
+                    <Text className="text-xl font-semibold text-derma-primary500">
+                      {subscription.price.value}
+                    </Text>
+                    {subscription.price?.oldValue && (
+                      <Text className="text-sm text-hg-error line-through">
+                        {subscription.price.oldValue}
+                      </Text>
+                    )}
+                    <Flex className="ml-auto gap-2">
+                      {subscription.price?.discount && (
+                        <span className="bg-derma-primary500 text-md py-1 px-2 rounded-full text-white inline-block font-semibold">
+                          {subscription.price.discount}
+                        </span>
+                      )}
+                      <SvgAngleDown
+                        className={`transition-transform bg-derma-secondary300 p-1 h-8 w-8 rounded-full ${
+                          index.toString() === accordionValue
+                            ? 'rotate-180'
+                            : ''
+                        }`}
+                      />
+                    </Flex>
+                  </div>
+                  <Text className="text-xs text-derma-primary500">
+                    {subscription.price.subtitle}
                   </Text>
-                  <SvgAngleDown
-                    className={`transition-transform bg-derma-secondary300 p-1 h-8 w-8 rounded-full ${
-                      index.toString() === accordionValue ? 'rotate-180' : ''
-                    }`}
-                  />
                 </div>
                 <AccordionContent className="flex flex-col justify-start h-full">
                   <div className="p-4 md:p-6">
-                    <Text className="text-xs text-derma-primary500 md:hidden">
-                      {subscription.price.subtitle}
-                    </Text>
                     <Image
                       src={subscription.imgSrc}
                       alt={subscription.title}
                       height={125}
                       width={125}
-                      className="mx-auto md:mb-4 hidden md:block"
+                      className="mx-auto md:mb-4"
                       priority
                     />
                     <div className="md:min-h-[112px]">
-                      <Text className="text-lg font-semibold hidden md:block">
-                        {subscription.title}
-                      </Text>
-                      <Text className="text-3xl font-bold text-derma-primary500">
-                        <span>{subscription.price.value}</span>
-                        {subscription.price?.discount && (
-                          <span className="bg-derma-primary500 text-md py-1 px-3 rounded-full text-white inline-block relative bottom-1.5 ml-4">
-                            {subscription.price.discount}
-                          </span>
-                        )}
-                      </Text>
-                      {subscription.price?.oldValue && (
-                        <Text className="text-sm text-hg-error line-through">
-                          {subscription.price.oldValue}
+                      <div className="hidden md:block">
+                        <Text className="text-lg font-semibold hidden md:block">
+                          {subscription.title}
                         </Text>
-                      )}
-                      <Text className="text-xs text-derma-primary500 hidden md:block">
+                        <Text className="text-3xl font-bold text-derma-primary500">
+                          <span>{subscription.price.value}</span>
+                          {subscription.price?.discount && (
+                            <span className="bg-derma-primary500 text-md py-1 px-3 rounded-full text-white inline-block relative bottom-1.5 ml-4">
+                              {subscription.price.discount}
+                            </span>
+                          )}
+                        </Text>
+                        {subscription.price?.oldValue && (
+                          <Text className="text-sm text-hg-error line-through mt-1">
+                            {subscription.price.oldValue}
+                          </Text>
+                        )}
+                      </div>
+                      <Text className="text-xs text-derma-primary500">
                         {subscription.price.subtitle}
                       </Text>
                     </div>

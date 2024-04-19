@@ -106,7 +106,7 @@ export const SUBSCRIPTIONS = [
     price: {
       value: '75 €',
       discount: '-25%',
-      oldValue: '99 €',
+      oldValue: 'PVP: 99 €',
       subtitle: 'Pago cada 3 meses',
     },
     bullets: [
