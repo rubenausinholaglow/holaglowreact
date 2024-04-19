@@ -41,9 +41,7 @@ export default function OptionsPrices({
                     alt={subscription.title}
                     height={125}
                     width={125}
-                    className={`mb-4 mx-auto ${
-                      index === 0 && isMobileSSR() ? 'mt-8' : ''
-                    }`}
+                    className="mb-4 mx-auto mt-2"
                   />
                   <Text className="text-lg md:text-xl font-semibold mb-2">
                     {subscription.title}

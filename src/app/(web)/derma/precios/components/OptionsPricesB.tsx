@@ -33,7 +33,7 @@ export default function OptionsPricesB({
   setAccordionValue?: (value: string) => void;
 }) {
   return (
-    <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
+    <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
       {SUBSCRIPTIONS.map((subscription, index) => (
         <CheckHydration key={subscription.title}>
           <li
