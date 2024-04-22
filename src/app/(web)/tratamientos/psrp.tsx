@@ -222,7 +222,7 @@ export default function PsrpPage({
             <div className="xl:flex xl:flex-row xl:justify-between items-center">
               <ProductSearchBar
                 products={stateProducts}
-                className="hidden md:block mr-6"
+                className="hidden md:block mr-4"
               />
               <AnimateOnViewport
                 origin={isMobile ? 'right' : 'bottom'}
