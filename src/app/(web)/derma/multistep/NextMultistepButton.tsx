@@ -22,16 +22,15 @@ export const HandleNextMultistep = (nextUrl: string) => {
     medicationInfo,
     lactating,
   } = useDermaStore(state => state);
-
   const router = useRouter();
   const next = () => {
-    const formattedPain =
-      symptoms.length > 0
-        ? symptoms.map(symptom => ({
-            skinPain: pain,
-            option: symptom,
-          }))
-        : [];
+    debugger;
+    const formattedPain = [
+      {
+        skinPain: pain,
+        option: '',
+      },
+    ];
 
     const dermaQuestions = {
       id,

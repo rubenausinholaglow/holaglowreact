@@ -61,8 +61,8 @@ export default function Pains() {
                       }`}
                       key={painItem.name}
                       onClick={async () => {
-                        setPain(pain === painItem.value ? 6 : painItem.value);
-                        if (pain !== painItem.value) await nextStep();
+                        setPain(painItem.value);
+                        await nextStep();
                       }}
                     >
                       <Image
