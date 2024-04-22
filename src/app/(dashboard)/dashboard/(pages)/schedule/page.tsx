@@ -30,7 +30,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { find, isEmpty, set, xor, zip } from 'lodash';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { v4 as createUniqueId } from 'uuid';
 
@@ -87,9 +87,13 @@ export default function Page() {
     if (isEmpty(clinics)) {
       initClinics();
     }
-    const clinic = clinics.filter(clinic => clinic.id === storedClinicId);
-
-    setSelectedClinic(clinic[0]);
+    if (isEmpty(selectedClinic)) {
+      const clinic = clinics.filter(
+        clinic =>
+          clinic.id.toLocaleUpperCase() === storedClinicId.toLocaleUpperCase()
+      );
+      setSelectedClinic(clinic[0]);
+    }
   }, [clinics]);
 
   useEffect(() => {

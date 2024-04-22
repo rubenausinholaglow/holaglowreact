@@ -59,6 +59,7 @@ export default function Page({
     setClinicFlowwwId,
     setClinicProfessionalId,
     setIsCallCenter,
+    clinics,
   } = useGlobalPersistedStore(state => state);
   const userCrisalix = useCrisalix(state => state);
 
@@ -133,7 +134,6 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
-    setSelectedClinic(undefined);
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');
@@ -259,6 +259,12 @@ export default function Page({
             setClinicId(data.clinicId);
             setClinicFlowwwId(data.clinicflowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
+            const clinic = clinics.filter(
+              clinic =>
+                clinic.id.toLocaleUpperCase() ===
+                data.clinicId.toLocaleUpperCase()
+            );
+            setSelectedClinic(clinic[0]);
 
             if (name == '') {
               name = data.firstName;
