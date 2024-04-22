@@ -7,7 +7,7 @@ import { SvgArrow, SvgCross } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Modal } from 'designSystem/Modals/Modal';
+import { Modal, Modal2 } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
@@ -27,7 +27,7 @@ export default function BenefitsApplicationResultsDerma({
 
   return (
     <>
-      <Modal
+      <Modal2
         isVisible={showModalProduct && modalProduct < 5}
         width={isMobile ? 'w-full' : 'max-w-[500px]'}
         className="shadow-none"
@@ -84,7 +84,7 @@ export default function BenefitsApplicationResultsDerma({
             </Button>
           </Container>
         </div>
-      </Modal>
+      </Modal2>
 
       <div className={`py-12 bg-derma-primary100 ${className}`}>
         <Container>

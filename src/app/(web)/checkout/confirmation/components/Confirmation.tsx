@@ -272,7 +272,9 @@ export default function Confirmation({
               className="bg-derma-secondary500 py-6 px-4 md:rounded-xl gap-4 md:mb-8"
             >
               <Title
-                className="font-light text-left mb-4 text-derma-primary"
+                className={`font-light text-left mb-4 ${
+                  isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                }`}
                 size="xldr"
               >
                 A partir de ahora...

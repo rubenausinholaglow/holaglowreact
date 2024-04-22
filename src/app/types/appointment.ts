@@ -68,3 +68,17 @@ export interface UserCheckin {
   hour: string;
   professional: string;
 }
+
+
+export interface AppointmentNextResponse {
+  id : string;
+  flowwwId: string;
+  clinicflowwwId: string;
+  clinicId: string;
+  clinicProfessionalId : string;
+  clinicProfessionalName : string;
+  userId : string;
+  firstName : string;
+  boxId: string;  
+  startTime: string;
+}

@@ -1,7 +1,11 @@
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 
-export default function LegalAdviceContent() {
+export default function LegalAdviceContent({
+  isDerma = false,
+}: {
+  isDerma?: boolean;
+}) {
   return (
     <Container className="py-8 md:py-12">
       <Title className="mb-8">Aviso Legal</Title>
@@ -399,6 +403,21 @@ export default function LegalAdviceContent() {
           médica para realizarse dicho tratamiento. La no asistencia a la cita
           acordada implicará la pérdida del importe de la reserva
         </p>
+        {isDerma && (
+          <>
+            <p className="font-semibold pt-6 mt-6 border-t border-hg-black300 w-full">
+              Garantía de devolución de Holaglow Derma
+            </p>
+
+            <p>
+              Devolución en caso de no apreciarse mejora tras 90 días de
+              tratamiento siguiendo las indicaciones del médico. La devolución
+              se efectuará por el importe correspondiente a las cremas
+              complementarias y no aplica en caso de contratar únicamente la
+              receta de la crema personalizada.
+            </p>
+          </>
+        )}
       </Flex>
     </Container>
   );

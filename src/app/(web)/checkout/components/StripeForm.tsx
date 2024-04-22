@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+
+import { useState } from 'react';
 import {
   PaymentElement,
   useElements,
@@ -7,6 +8,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { StripePaymentElementOptions } from '@stripe/stripe-js';
 import { useRegistration } from '@utils/userUtils';
+import { SvgSpinner } from 'app/icons/Icons';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 
@@ -20,23 +22,29 @@ export const StripeForm = ({
   const stripe = useStripe();
   const elements = useElements();
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: 'tabs',
   };
-  const [isLoadingStripe, setIsLoadingStripe] = useState<boolean>(false);
+  const [errorMessage, setMessage] = useState<string>('');
 
   const { client } = useSessionStore(state => state);
   const registerUser = useRegistration(client, false, false, false);
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
+  const handleSubmit = async (
+    e: { preventDefault: () => void } | undefined
+  ) => {
+    setMessage('');
+    if (e) e.preventDefault();
+    setIsButtonDisabled(true);
     if (!stripe || !elements) {
+      setIsButtonDisabled(false);
       return;
     }
     if (client) {
       await registerUser(client, false, false, false);
     }
-    setIsLoadingStripe(true);
+
     let url = process.env.NEXT_PUBLIC_STRIPE_CLINICS_RETURN_URL!;
     if (isDerma) url = process.env.NEXT_PUBLIC_STRIPE_DERMA_RETURN_URL!;
     const { error } = await stripe.confirmPayment({
@@ -47,17 +55,11 @@ export const StripeForm = ({
     });
 
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      //setMessage(error.message);
+      setMessage('Datos de tarjeta incorrectos, por favor revisa los datos');
     } else {
-      //setMessage('An unexpected error occurred.');
+      setMessage('Error inesperado, por favor intentalo de nuevo.');
     }
-
-    setIsLoadingStripe(false);
-  };
-
-  const handlePaymentElementReady = () => {
-    console.log('Payment element is ready!');
-    // You can perform additional actions here once the payment element is ready
+    setIsButtonDisabled(false);
   };
 
   return (
@@ -71,12 +73,20 @@ export const StripeForm = ({
         id="submit"
         type={isDerma ? 'derma' : 'primary'}
         size="lg"
-        className="mt-4"
-        onClick={handleSubmit}
+        className={`mt-4 w-full ${
+          isButtonDisabled ? 'pointer-events-none' : ''
+        }`}
+        onClick={() => {
+          if (!isButtonDisabled) {
+            handleSubmit(undefined);
+          }
+        }}
       >
-        Pago con tarjeta débito/crédito
+        {isButtonDisabled ? <SvgSpinner /> : 'Pago con tarjeta débito/crédito'}
       </Button>
-      {/* Show any error or success messages */}
+      {errorMessage && (
+        <p className="text-hg-error text-sm p-2">{errorMessage}</p>
+      )}
     </form>
   );
 };
