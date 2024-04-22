@@ -9,6 +9,7 @@ import {
   INVALID_PHONE_FORMAT,
   PHONE_REQUIRED,
 } from '@utils/textConstants';
+import { getClinicToSet } from '@utils/utils';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -120,12 +121,8 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
           boxId: appointmentInfo.boxId,
           clinicId: appointmentInfo.clinicId,
         };
-        const clinic = clinics.filter(
-          clinic =>
-            clinic.id.toLocaleUpperCase() ===
-            appointmentInfo.clinicId.toLocaleUpperCase()
-        );
-        setSelectedClinic(clinic[0]);
+
+        setSelectedClinic(getClinicToSet(clinics, appointmentInfo.clinicId));
         onScanSuccess(props);
       } catch (error: any) {
         Bugsnag.notify(error);

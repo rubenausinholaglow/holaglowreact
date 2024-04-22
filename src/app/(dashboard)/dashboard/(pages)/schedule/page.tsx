@@ -12,7 +12,7 @@ import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
-import { validTypesFilterCart } from '@utils/utils';
+import { getClinicToSet, validTypesFilterCart } from '@utils/utils';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
 import TreatmentAccordionSelector from 'app/(web)/components/common/TreatmentAccordionSelector';
 import App from 'app/(web)/components/layout/App';
@@ -88,11 +88,7 @@ export default function Page() {
       initClinics();
     }
     if (isEmpty(selectedClinic)) {
-      const clinic = clinics.filter(
-        clinic =>
-          clinic.id.toLocaleUpperCase() === storedClinicId.toLocaleUpperCase()
-      );
-      setSelectedClinic(clinic[0]);
+      setSelectedClinic(getClinicToSet(clinics, storedClinicId));
     }
   }, [clinics]);
 

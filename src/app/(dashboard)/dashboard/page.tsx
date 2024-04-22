@@ -19,9 +19,9 @@ import { Status } from 'app/types/appointment';
 import { Client } from 'app/types/client';
 import { CrisalixUser } from 'app/types/crisalix';
 import { MessageType } from 'app/types/messageSocket';
-import { clearLocalStorage } from 'app/utils/utils';
+import { clearLocalStorage, getClinicToSet } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { isEmpty } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../../(web)/components/common/RegistrationForm';
@@ -259,12 +259,7 @@ export default function Page({
             setClinicId(data.clinicId);
             setClinicFlowwwId(data.clinicflowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
-            const clinic = clinics.filter(
-              clinic =>
-                clinic.id.toLocaleUpperCase() ===
-                data.clinicId.toLocaleUpperCase()
-            );
-            setSelectedClinic(clinic[0]);
+            setSelectedClinic(getClinicToSet(clinics, data.clinicId));
 
             if (name == '') {
               name = data.firstName;
