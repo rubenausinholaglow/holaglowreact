@@ -184,7 +184,7 @@ export default function Carousel({
 
         {hasDots && !isDashboard && (
           <Flex layout="row-center" className="relative mt-8">
-            <ul className="p-2 spacing flex gap-2 text-xs absolute items-center">
+            <ul className="p-2 spacing flex gap-1.5 text-xs absolute items-center">
               {childrens.map((dot, index) => {
                 const isActive = currentSlideIndex === index;
 

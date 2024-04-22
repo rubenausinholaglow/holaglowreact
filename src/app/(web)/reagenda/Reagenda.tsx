@@ -104,6 +104,7 @@ export default function Reagenda({
       </div>
     );
   }
+
   if (isDashboard) {
     return (
       <>
