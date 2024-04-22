@@ -24,7 +24,6 @@ export const HandleNextMultistep = (nextUrl: string) => {
   } = useDermaStore(state => state);
   const router = useRouter();
   const next = () => {
-    debugger;
     const formattedPain = [
       {
         skinPain: pain,
