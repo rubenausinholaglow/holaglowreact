@@ -13,24 +13,9 @@ import DiagnosisImages from './DiagnosisImages';
 dayjs.locale(spanishConf);
 
 const mockedData = {
-  images: [
-    '/images/derma/multistep/Basart.png',
-    '/images/derma/multistep/Basart.png',
-    '/images/derma/multistep/Basart.png',
-  ],
   professional: {
     name: 'Dr. Sonsoles Espí',
     imgSrc: '/images/derma/home/professionals/Sonsoles.png',
-  },
-  date: new Date('2024-04-17'),
-  user: {
-    name: 'Perico',
-    surname: 'de los',
-    secondSurname: 'palotes',
-  },
-  receipt: {
-    expeditionDate: new Date('2024-04-27'),
-    link: 'https://www.derma.holaglow.com',
   },
 };
 
