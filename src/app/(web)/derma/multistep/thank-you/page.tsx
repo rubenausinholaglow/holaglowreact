@@ -1,17 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
-import UserService from '@services/UserService';
 import CheckHydration from '@utils/CheckHydration';
 import { DERMA_COLORS } from '@utils/colors';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgCheck, SvgInfoCircle } from 'app/icons/IconsDs';
-import { useDermaStore } from 'app/stores/dermaStore';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -44,60 +38,7 @@ const ITEMS = [
 ];
 
 export default function ThankYouMultiStep() {
-  const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
-  const { setClient, client } = useSessionStore(state => state);
-  const {
-    picturesUrls,
-    setPicturesUrls,
-    setId,
-    setPain,
-    setSymptoms,
-    setSkinType,
-    setSkinSensibility,
-    setAllergy,
-    setAllergyInfo,
-    setIllness,
-    setIllnessInfo,
-    setMedication,
-    setMedicationInfo,
-    setLactating,
-    setExtraInfo,
-  } = useDermaStore(state => state);
-
-  useEffect(() => {
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString.toLowerCase());
-    const userId = params.get('userid') || '';
-    UserService.getDermaQuestions(userId).then(x => {
-      if (x) {
-        setPicturesUrls(x.photos);
-        setId(x.id!);
-        setPain(x.pain[0].skinPain);
-        setSkinType(x.skinType);
-        setSkinSensibility(x.skinSensibility);
-        setAllergy(x.allergy);
-        setAllergyInfo(x.allergyInfo);
-        setIllness(x.illness);
-        setIllnessInfo(x.illnessInfo);
-        setMedication(x.medication);
-        setMedicationInfo(x.medicationInfo);
-        setLactating(x.lactating);
-        setExtraInfo(x.extraInfo);
-        setClient(x.user);
-        setCurrentUser({
-          email: x.user.email,
-          firstName: x.user.firstName,
-          clinicToken: '',
-          flowwwToken: '',
-          id: x.user.id,
-          name: x.user.firstName,
-          surname: x.user.lastName,
-          secondSurname: x.user.secondLastName,
-          phone: x.user.phone,
-        });
-      }
-    });
-  }, []);
+  const { user } = useGlobalPersistedStore(state => state);
 
   return (
     <CheckHydration>
