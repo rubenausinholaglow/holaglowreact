@@ -104,7 +104,7 @@ export default function PlanesMultiStep() {
             </Flex>
           </Container>
           <Container className="px-0 md:px-4">
-            <div className="px-4 bg-[#e5f2ed] py-4 rounded-3xl relative">
+            <div className="p-4 md:p-6 bg-[#e5f2ed] rounded-3xl relative">
               <Title
                 size="xldr"
                 className="text-derma-primary font-light text-center md:text-left mb-4"
