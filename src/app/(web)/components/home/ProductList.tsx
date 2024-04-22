@@ -1,22 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ProductFilters } from '@interface/filters';
 import { Product } from '@interface/product';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelectorSSR from 'app/(web)/components/common/CategorySelectorSSR';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import {
-  applyFilters,
-  INITIAL_FILTERS,
-} from 'app/(web)/tratamientos/utils/filters';
+import { applyFilters } from 'app/(web)/tratamientos/utils/filters';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 
-import CategorySelector from '../filters/CategorySelector';
-
 export default function ProductList({ products }: { products: Product[] }) {
-  const { productFilters, setProductFilters } = useGlobalStore(state => state);
+  const { productFilters } = useGlobalStore(state => state);
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(
     applyFilters({ products: products, filters: productFilters })

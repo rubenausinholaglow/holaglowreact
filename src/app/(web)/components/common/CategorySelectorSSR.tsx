@@ -9,8 +9,6 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
-import PackTypeFilter from '../filters/PackTypeFilter';
-
 export default function CategorySelectorSSR({
   className,
   products,
@@ -46,6 +44,13 @@ export default function CategorySelectorSSR({
       filteredCategoryNames = allCategoryNames;
     }
 
+    const packsIndex = filteredCategoryNames.indexOf('Packs');
+
+    if (packsIndex !== -1) {
+      const packsItem = filteredCategoryNames.splice(packsIndex, 1)[0];
+      filteredCategoryNames.unshift(packsItem);
+    }
+
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
@@ -60,9 +65,6 @@ export default function CategorySelectorSSR({
       ${isStacked ? 'flex-wrap' : ''}
       `}
     >
-      <li className="shrink-0 mr-3">
-        <PackTypeFilter isDashboard={isDashboard} />
-      </li>
       {productCategories.map((category, i) => {
         return (
           <li

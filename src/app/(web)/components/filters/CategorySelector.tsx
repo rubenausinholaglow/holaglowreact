@@ -13,7 +13,6 @@ import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
 import CategoryIcon from '../common/CategoryIcon';
-import PackTypeFilter from './PackTypeFilter';
 
 export default function CategorySelector({
   className,
@@ -52,9 +51,14 @@ export default function CategorySelector({
           categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
       );
     } else {
-      filteredCategoryNames = allCategoryNames.filter(
-        categoryName => categoryName !== 'Packs'
-      );
+      filteredCategoryNames = allCategoryNames;
+    }
+
+    const packsIndex = filteredCategoryNames.indexOf('Packs');
+
+    if (packsIndex !== -1) {
+      const packsItem = filteredCategoryNames.splice(packsIndex, 1)[0];
+      filteredCategoryNames.unshift(packsItem);
     }
 
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
@@ -81,10 +85,6 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : 'pl-4'}
       `}
     >
-      <li className="shrink-0">
-        <PackTypeFilter isDashboard={isDashboard} />
-      </li>
-
       {productCategories.map((category, i) => {
         return (
           <li
