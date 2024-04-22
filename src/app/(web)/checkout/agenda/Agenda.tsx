@@ -79,7 +79,7 @@ export default function Agenda({
   );
   const [selectedTreatmentsIds, setSelectedTreatmentsIds] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [currentMonth, setcurrentMonth] = useState(dayjs().add(12, 'day'));
+  const [currentMonth, setcurrentMonth] = useState(dayjs());
   const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
   const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
   const format = 'YYYY-MM-DD';
@@ -122,7 +122,7 @@ export default function Agenda({
 
   const productIds = getUniqueIds(selectedTreatments);
 
-  const maxDay = dayjs().add(12, 'day').add(maxDays, 'day');
+  const maxDay = dayjs().add(maxDays, 'day');
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -193,7 +193,7 @@ export default function Agenda({
   ) {
     const endOfMonth = dateToCheck.endOf('month');
     const availability = availableDates ?? [];
-    const today = dayjs().add(12, 'day');
+    const today = dayjs();
     const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
     let datesAvailableInCurrentMonth = loadedCurrentMonth ? 0 : -1;
     data.forEach((x: any) => {
@@ -229,7 +229,7 @@ export default function Agenda({
     setLoadingMonth(true);
     setSelectedDay(undefined);
     setEnableScheduler(true);
-    setDateToCheck(dayjs().add(12, 'day'));
+    setDateToCheck(dayjs());
   }
   useEffect(() => {
     initialize();
