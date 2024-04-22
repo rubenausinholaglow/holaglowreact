@@ -7,7 +7,7 @@ import { SvgArrow, SvgCross, SvgPharmacy } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Modal } from 'designSystem/Modals/Modal';
+import { Modal, Modal2 } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
@@ -30,7 +30,7 @@ export default function PlanesMultiStep() {
 
   return (
     <>
-      <Modal
+      <Modal2
         isVisible={showModal}
         width={isMobile ? 'w-full' : 'max-w-[500px]'}
         className="shadow-none"
@@ -79,7 +79,7 @@ export default function PlanesMultiStep() {
             </Container>
           </div>
         )}
-      </Modal>
+      </Modal2>
 
       <div className="bg-derma-secondary300 min-h-screen relative w-full">
         <DermaLayout hideButton hideFooter>
