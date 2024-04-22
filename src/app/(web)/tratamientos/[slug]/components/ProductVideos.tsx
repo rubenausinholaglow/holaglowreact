@@ -47,7 +47,16 @@ export default function ProductVideos({ product }: { product: Product }) {
             videos.length <= 1 && !isMobileSSR() ? 'w-1/2 aspect-square' : ''
           }
         >
-          <CheckHydration>
+          <iframe
+            width="315"
+            height="560"
+            src="https://www.youtube.com/embed/pK-5OEl94Fc"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="rounded-3xl overflow-hidden"
+          ></iframe>
+          {/* <CheckHydration>
             <Carousel
               hasDots={videos.length > 1}
               dragEnabled={videos.length > 1}
@@ -76,7 +85,7 @@ export default function ProductVideos({ product }: { product: Product }) {
             <div key={'/videos/pdp.mp4'} className="rounded-2xl ">
               <ProductVideo src={'/videos/pdp.mp4'} />
             </div>
-          )}
+          )} */}
         </div>
       </Flex>
     </Container>
