@@ -5,6 +5,7 @@ import { DERMA_COLORS } from '@utils/colors';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgCheck, SvgInfoCircle } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -39,7 +40,7 @@ const ITEMS = [
 
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
-
+  const { picturesUrls } = useDermaStore(state => state);
   return (
     <CheckHydration>
       <div className="bg-derma-secondary300 min-h-screen relative">
