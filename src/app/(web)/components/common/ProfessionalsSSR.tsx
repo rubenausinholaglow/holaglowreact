@@ -1,6 +1,6 @@
 import { Professional } from '@interface/clinic';
 import { fetchClinics } from '@utils/fetch';
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import ProfessionalCard from 'app/(web)/components/common/ProfessionalCard';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container } from 'designSystem/Layouts/Layouts';

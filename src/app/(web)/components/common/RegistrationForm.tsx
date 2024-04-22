@@ -19,6 +19,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { isValidNie, isValidNif } from 'nif-dni-nie-cif-validation';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../../utils/props';
@@ -35,6 +36,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showPostalCode = false,
   showCity = false,
   showAddress = false,
+  showDni = false,
+  className = '',
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -47,6 +50,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showPostalCode?: boolean;
   showCity?: boolean;
   showAddress?: boolean;
+  showDni?: boolean;
+  className?: string;
 }) => {
   const routes = useRoutes();
 
@@ -58,6 +63,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const [showPostalCodeError, setShowPostalCodeError] = useState<
     null | boolean
   >(null);
+  const [showDniError, setShowDniError] = useState<null | boolean>(null);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -90,6 +96,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     origin: '',
     city: '',
     address: '',
+    dni: '',
   });
 
   useEffect(() => {
@@ -118,9 +125,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       ((!isEmpty(formData.postalCode) && showPostalCode) || !showPostalCode) &&
       ((!isEmpty(formData.city) && showCity) || !showCity) &&
       ((!isEmpty(formData.address) && showAddress) || !showAddress) &&
+      ((!isEmpty(formData.dni) && showDni) || !showDni) &&
       !showPhoneError &&
       !showEmailError &&
-      !showPostalCodeError
+      !showPostalCodeError &&
+      !showDniError
     ) {
       setIsDisabled(false);
       if (setContinueDisabled) setContinueDisabled(false);
@@ -128,7 +137,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       setIsDisabled(true);
       if (setContinueDisabled) setContinueDisabled(true);
     }
-  }, [formData, showPhoneError, showEmailError]);
+  }, [
+    formData,
+    showPhoneError,
+    showEmailError,
+    showDniError,
+    showPostalCodeError,
+  ]);
 
   const handleFieldChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -163,7 +178,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     const requiredFields = ['email', 'phone', 'name', 'surname'];
     const isEmailValid = utils.validateEmail(formData.email);
 
-    if (validFormData(formData, errors)) {
+    const isValidDni =
+      !showDni ||
+      isValidNif(formData.dni.toUpperCase()) ||
+      isValidNie(formData.dni.toUpperCase());
+    if (validFormData(formData, errors) && isValidDni) {
       setErrors([]);
       await handleRegistration();
     } else {
@@ -215,7 +234,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 w-full">
+    <div
+      className={`grid grid-cols-1 gap-4 w-full ${className ? className : ''}`}
+    >
       <TextInputField
         placeholder="Nombre"
         value={formData.name}
@@ -302,6 +323,27 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           </p>
         )}
       </div>
+      {showDni && (
+        <>
+          <TextInputField
+            placeholder="DNI/NIE"
+            value={formData.dni!}
+            onChange={event => {
+              handleFieldChange(event, 'dni');
+              const isValidDni =
+                !showDni ||
+                isValidNif(event.target.value.toUpperCase()) ||
+                isValidNie(event.target.value.toUpperCase());
+              setShowDniError(!isValidDni);
+            }}
+          />
+          {showDniError && (
+            <p className="text-hg-error text-sm p-2">
+              {errorsConfig.ERROR_DNI_NOT_VALID}
+            </p>
+          )}
+        </>
+      )}
       {showPostalCode && (
         <>
           <TextInputField

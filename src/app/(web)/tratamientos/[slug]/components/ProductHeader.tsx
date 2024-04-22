@@ -134,7 +134,11 @@ export default function ProductHeader({
                     : product.productCardImagePosition !== 'middle'
                     ? 'rounded-3xl'
                     : ''
-                } w-[66%]`}
+                } ${
+                  product.productCardImagePosition !== 'full'
+                    ? 'w-[66%]'
+                    : 'h-[250px]'
+                } `}
               />
             )}
 
@@ -156,7 +160,7 @@ export default function ProductHeader({
           </div>
         </div>
       </Container>
-      {product.type == 3 && (
+      {(product.type === 3 || product.flowwwId.toString() == '5519') && (
         <Container>
           <Text isAnimated className="text-hg-black500 mb-4 mt-8">
             <p

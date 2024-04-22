@@ -1,10 +1,10 @@
 import {
-  SvgCream,
   SvgCreams,
   SvgDehydration,
   SvgHairCare,
   SvgSkinCare,
 } from 'app/icons/Icons';
+import { SvgCream } from 'app/icons/IconsDs';
 
 export const MULTISTEP_QUESTIONS: any = [
   {

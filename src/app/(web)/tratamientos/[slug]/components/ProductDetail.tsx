@@ -51,7 +51,7 @@ export default function ProductDetailPage({
 
   useEffect(() => {
     async function initProduct(productId: string, isDashboard: boolean) {
-      const productDetails = await fetchProduct(productId, false, false);
+      const productDetails = await fetchProduct(productId, isDashboard, false);
       setProduct(productDetails);
       setSeoMetaData(
         productDetails.extraInformation.seoTitle,
@@ -76,7 +76,7 @@ export default function ProductDetailPage({
     setProductId(productId);
 
     if (productId !== '' && productsAreLoaded) {
-      initProduct(productId, false);
+      initProduct(productId, isDashboard);
       setProduct(isEmpty(product) ? null : product);
     }
   }, [productsAreLoaded, slug]);

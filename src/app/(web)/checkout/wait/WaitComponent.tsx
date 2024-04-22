@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import App from 'app/(web)/components/layout/App';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -33,6 +34,7 @@ export default function WaitComponent() {
   } = useSessionStore(state => state);
 
   const router = useRouter();
+  const { cart } = useCartStore(state => state);
   const [isDerma, setIsDerma] = useState(false);
 
   const { user } = useGlobalPersistedStore(state => state);
@@ -61,7 +63,8 @@ export default function WaitComponent() {
               router.push('/checkout/confirmation');
             });
           } else {
-            const treatments = selectedTreatments!.map(x => x.title).join(', ');
+            let treatments = selectedTreatments!.map(x => x.title).join(', ');
+            if (!treatments) treatments = cart!.map(x => x.title).join(',');
             const createTicketResponse = await FinanceService.createTicket({
               flowwwToken: user!.flowwwToken,
               paymentId: id,
@@ -153,7 +156,7 @@ export default function WaitComponent() {
   if (isDerma) {
     return (
       <CheckHydration>
-        <div className="bg-derma-secondary100 min-h-screen">
+        <div className="bg-derma-secondary300 min-h-screen">
           <DermaLayout hideButton hideFooter>
             <Container>
               <Flex

@@ -3,32 +3,59 @@
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
+import ROUTES from '@utils/routes';
 import { SvgHolaglowDerma } from 'app/icons/iconsDerma';
-import { SvgArrow } from 'app/icons/IconsDs';
+import { SvgArrow, SvgMenu } from 'app/icons/IconsDs';
+import { useGlobalStore } from 'app/stores/globalStore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
-import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Link from 'next/link';
 
 import AnimateOnViewport from '../common/AnimateOnViewport';
+import DermaMobileNavigation from './DermaMobileNavigation';
 
 let isTicking = false;
 let scrollPos = 0;
 
+function Navigation({ className }: { className: string }) {
+  const NAV_ITEMS = [
+    { name: 'Planes y precios', link: ROUTES.derma.precios },
+    { name: 'Clínicas', link: ROUTES.derma.clinics },
+    { name: 'Sobre nosotros', link: ROUTES.derma.aboutUs },
+  ];
+
+  return (
+    <nav className={className}>
+      <ul className="flex flex-row gap-16">
+        {NAV_ITEMS.map(navItem => (
+          <li className="font-medium" key={navItem.name}>
+            <Link href={navItem.link} id={'tmevent_nav_menu_click'}>
+              {navItem.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
 export default function DermaHeader({
   hideButton = false,
+  showNavigation,
 }: {
-  hideButton: boolean;
+  hideButton?: boolean;
+  showNavigation: boolean;
 }) {
-  const ROUTES = useRoutes();
-
+  const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrollOnTop, setIsScrollOnTop] = useState(true);
+
+  const { showModalBackground } = useGlobalStore(state => state);
 
   const HEADER_HEIGHT = isMobile
     ? DERMA_HEADER_HEIGHT_MOBILE
@@ -65,8 +92,17 @@ export default function DermaHeader({
     };
   }, []);
 
+  useEffect(() => {
+    setIsMobileNavVisible(showModalBackground);
+  }, [showModalBackground]);
+
   return (
     <CheckHydration>
+      <DermaMobileNavigation
+        isVisible={isMobileNavVisible}
+        setIsMobileNavVisible={setIsMobileNavVisible}
+      />
+
       <header
         id="header"
         className={`z-30 w-full top-0 sticky transition-all ${
@@ -77,25 +113,46 @@ export default function DermaHeader({
           <Container isHeader>
             <Flex
               layout="row-between"
-              className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center`}
+              className="w-full relative py-4 lg:py-5 lg:justify-center"
               style={{ height: HEADER_HEIGHT_CLASS }}
             >
-              <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
+              <Link
+                href={ROUTES.derma.home}
+                className="lg:absolute left-0 2xl:ml-20"
+              >
                 <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
               </Link>
 
-              {!hideButton && (
-                <Button
-                  id="tmevent_derma_multistep_start_top"
-                  className="lg:absolute right-0 2xl:mr-20"
-                  type="tertiary"
-                  href="/multistep/start"
-                  customStyles="bg-transparent text-derma-primary border-derma-primary md:text-derma-tertiary md:border-derma-tertiary hover:border-derma-primary500 hover:text-derma-primary500"
-                >
-                  <Text className="font-semibold mr-2">Pide cita</Text>
-                  <SvgArrow className="h-5 w-5" />
-                </Button>
-              )}
+              <Flex className="gap-2">
+                {!hideButton && (
+                  <Button
+                    size={isMobile ? 'sm' : 'md'}
+                    id="tmevent_derma_multistep_start_top"
+                    className="lg:absolute right-0 2xl:mr-20"
+                    type="tertiary"
+                    href={ROUTES.derma.multistep.start}
+                    customStyles="bg-transparent text-derma-tertiary border-derma-tertiary md:text-derma-tertiary md:border-derma-tertiary"
+                  >
+                    <Text className="md:font-semibold">Analizar mi piel</Text>
+                    <SvgArrow className="h-5 w-5 hidden ml-2 md:block" />
+                  </Button>
+                )}
+
+                {showNavigation && (
+                  <>
+                    <Navigation className="hidden lg:block" />
+                    <SvgMenu
+                      height={24}
+                      width={24}
+                      className="ml-2 lg:hidden"
+                      onClick={() => {
+                        setIsMobileNavVisible(true);
+                      }}
+                      id="tmevent_nav_menu_open"
+                    />
+                  </>
+                )}
+              </Flex>
             </Flex>
           </Container>
         </AnimateOnViewport>

@@ -34,7 +34,7 @@ export const Title = ({
     '3xl': 'text-4xl lg:text-6xl',
     '2xl': 'text-3xl lg:text-5xl',
     xl: 'text-xl lg:text-2xl',
-    xldr: 'text-[28px]',
+    xldr: 'text-[28px] leading-[36px]',
   };
 
   const styles = twMerge(

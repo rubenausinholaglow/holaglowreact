@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { Analytics } from '@vercel/analytics/react';
 import CheckoutHeader from 'app/(web)/checkout/components/CheckoutHeader';
 import { useGlobalStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
@@ -112,7 +111,6 @@ export default function MainLayout({
             hideBackButton={hideBackButton}
           />
           {children}
-          <Analytics />
         </>
       </ErrorBoundary>
     );
@@ -125,7 +123,6 @@ export default function MainLayout({
           {!hideHeader && <Header />}
           {children}
           {!hideFooter && <Footer />}
-          <Analytics />
         </main>
       </>
     </ErrorBoundary>

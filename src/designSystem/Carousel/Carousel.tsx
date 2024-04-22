@@ -4,6 +4,7 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import './customCss.css';
 
 import { Children, ReactNode, useEffect, useState } from 'react';
+import CheckHydration from '@utils/CheckHydration';
 import { SvgAngle, SvgArrow, SvgHolaGlowStar2 } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -134,102 +135,104 @@ export default function Carousel({
   );
 
   return (
-    <CarouselProvider
-      className={twMerge(`relative w-full ${className}`)}
-      isIntrinsicHeight={isIntrinsicHeight}
-      totalSlides={childrens.length}
-      currentSlide={isFullWidth || hasDots ? currentSlideIndex : currentSlide}
-      lockOnWindowScroll={true}
-      dragEnabled={dragEnabled}
-      touchEnabled={touchEnabled}
-      naturalSlideHeight={naturalSlideHeight}
-      naturalSlideWidth={naturalSlideWidth}
-      visibleSlides={visibleSlides}
-      orientation="horizontal"
-      isPlaying={isPlaying}
-      interval={2000}
-      {...rest}
-    >
-      <div style={sliderWidth} className="relative">
-        <Slider
-          classNameTray={sliderStyles}
-          verticalPixelThreshold={1000}
-          preventVerticalScrollOnTouch={true}
-        >
-          {childrens.map((children, i) => (
-            <Slide index={i} key={i}>
-              {children}
-            </Slide>
-          ))}
-        </Slider>
-        {hasControls && isDashboard && (
-          <div className="absolute inset-0 flex items-center justify-between ">
-            {buttonBack({ isTopControl: hasTopControls })}
-            {buttonNext({ isTopControl: hasTopControls })}
-          </div>
-        )}
-      </div>
-
-      {hasCounter && !isDashboard && (
-        <Flex layout="row-center" className="mt-8 relative">
-          <ul className="p-2 spacing flex gap-2 text-xs absolute">
-            <li>{currentSlideIndex + 1}</li>
-            <li>/</li>
-            <li>{childrens.length}</li>
-          </ul>
-        </Flex>
-      )}
-
-      {hasDots && !isDashboard && (
-        <Flex layout="row-center" className="relative mt-8">
-          <ul className="p-2 spacing flex gap-2 text-xs absolute items-center">
-            {childrens.map((dot, index) => {
-              const isActive = currentSlideIndex === index;
-
-              return (
-                <li key={index}>
-                  <SvgHolaGlowStar2
-                    onClick={() => setCurrentSlideIndex(index)}
-                    className={
-                      isActive
-                        ? `h-6 w-6 pointer-events-none ${
-                            isDerma
-                              ? 'text-derma-primary500'
-                              : 'text-hg-secondary'
-                          }`
-                        : `h-4 w-4 ${
-                            isDerma
-                              ? 'text-derma-primary300'
-                              : 'text-hg-secondary300'
-                          }`
-                    }
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </Flex>
-      )}
-
-      {hasControls && !isDashboard && (
-        <Container
-          className={`${isFullWidth ? '' : 'px-0'} ${
-            hasTopControls
-              ? 'absolute top-[50%] -translate-y-[50%] px-4'
-              : hasCounter
-              ? '-mt-4 '
-              : 'mt-8'
-          } ${rest.controlStyles ? rest.controlStyles : ''}`}
-        >
-          <Flex
-            layout={hasTopControls ? 'row-between' : 'row-right'}
-            className="gap-6"
+    <CheckHydration>
+      <CarouselProvider
+        className={twMerge(`relative w-full ${className}`)}
+        isIntrinsicHeight={isIntrinsicHeight}
+        totalSlides={childrens.length}
+        currentSlide={isFullWidth || hasDots ? currentSlideIndex : currentSlide}
+        lockOnWindowScroll={true}
+        dragEnabled={dragEnabled}
+        touchEnabled={touchEnabled}
+        naturalSlideHeight={naturalSlideHeight}
+        naturalSlideWidth={naturalSlideWidth}
+        visibleSlides={visibleSlides}
+        orientation="horizontal"
+        isPlaying={isPlaying}
+        interval={2000}
+        {...rest}
+      >
+        <div style={sliderWidth} className="relative">
+          <Slider
+            classNameTray={sliderStyles}
+            verticalPixelThreshold={1000}
+            preventVerticalScrollOnTouch={true}
           >
-            {buttonBack({ isTopControl: hasTopControls })}
-            {buttonNext({ isTopControl: hasTopControls })}
+            {childrens.map((children, i) => (
+              <Slide index={i} key={i}>
+                {children}
+              </Slide>
+            ))}
+          </Slider>
+          {hasControls && isDashboard && (
+            <div className="absolute inset-0 flex items-center justify-between ">
+              {buttonBack({ isTopControl: hasTopControls })}
+              {buttonNext({ isTopControl: hasTopControls })}
+            </div>
+          )}
+        </div>
+
+        {hasCounter && !isDashboard && (
+          <Flex layout="row-center" className="mt-8 relative">
+            <ul className="p-2 spacing flex gap-2 text-xs absolute">
+              <li>{currentSlideIndex + 1}</li>
+              <li>/</li>
+              <li>{childrens.length}</li>
+            </ul>
           </Flex>
-        </Container>
-      )}
-    </CarouselProvider>
+        )}
+
+        {hasDots && !isDashboard && (
+          <Flex layout="row-center" className="relative mt-8">
+            <ul className="p-2 spacing flex gap-2 text-xs absolute items-center">
+              {childrens.map((dot, index) => {
+                const isActive = currentSlideIndex === index;
+
+                return (
+                  <li key={index}>
+                    <SvgHolaGlowStar2
+                      onClick={() => setCurrentSlideIndex(index)}
+                      className={
+                        isActive
+                          ? `h-6 w-6 pointer-events-none ${
+                              isDerma
+                                ? 'text-derma-primary500'
+                                : 'text-hg-secondary'
+                            }`
+                          : `h-4 w-4 ${
+                              isDerma
+                                ? 'text-derma-primary300'
+                                : 'text-hg-secondary300'
+                            }`
+                      }
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </Flex>
+        )}
+
+        {hasControls && !isDashboard && (
+          <Container
+            className={`${isFullWidth ? '' : 'px-0'} ${
+              hasTopControls
+                ? 'absolute top-[50%] -translate-y-[50%] px-4'
+                : hasCounter
+                ? '-mt-4 '
+                : 'mt-8'
+            } ${rest.controlStyles ? rest.controlStyles : ''}`}
+          >
+            <Flex
+              layout={hasTopControls ? 'row-between' : 'row-right'}
+              className="gap-6"
+            >
+              {buttonBack({ isTopControl: hasTopControls })}
+              {buttonNext({ isTopControl: hasTopControls })}
+            </Flex>
+          </Container>
+        )}
+      </CarouselProvider>
+    </CheckHydration>
   );
 }
