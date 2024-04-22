@@ -1,15 +1,16 @@
 'use client';
 
 import { isMobile } from 'react-device-detect';
+import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgAngleDown } from 'app/icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import {
-  Accordion,
   AccordionContent,
   AccordionItem,
+  AccordionTrigger,
 } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -33,85 +34,76 @@ export default function OptionsPricesB({
   setAccordionValue?: (value: string) => void;
 }) {
   return (
-    <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
-      {SUBSCRIPTIONS.map((subscription, index) => (
-        <CheckHydration key={subscription.title}>
-          <li
-            className={`relative flex-grow md:w-1/2 rounded-2xl ${subscription.bgColor}`}
-            key={subscription.title}
-          >
-            <div className="p-4 pb-0 md:p-0">
-              <Flex
-                className="gap-2 w-full mb-1"
-                onClick={() =>
-                  setSelectedOption
-                    ? index.toString() === selectedOption
-                      ? setSelectedOption('99')
-                      : setSelectedOption(index.toString())
-                    : null
-                }
-              >
-                {index.toString() === selectedOption ? (
-                  <SvgCheckSquareActive className="h-6 w-6 shrink-0 md:hidden" />
-                ) : (
-                  <SvgCheckSquare className="h-6 w-6 shrink-0 md:hidden" />
-                )}
-                <Text className="font-semibold md:hidden">
-                  {subscription.title}
-                </Text>
-              </Flex>
-              <Text className="text-sm mb-4 md:hidden">
-                {subscription.subtitle}
-              </Text>
-            </div>
-
-            <Accordion
-              value={isMobile ? accordionValue : 'isOpen'}
-              className="h-full"
+    <CheckHydration>
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue={isMobile ? '99' : 'isOpen'}
+      >
+        <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
+          {SUBSCRIPTIONS.map((subscription, index) => (
+            <li
+              className={`relative flex-grow md:w-1/2 rounded-2xl ${subscription.bgColor}`}
+              key={subscription.title}
             >
+              <div className="p-4 pb-0 md:p-0">
+                <Flex
+                  className="gap-2 w-full mb-1"
+                  onClick={() =>
+                    setSelectedOption
+                      ? index.toString() === selectedOption
+                        ? setSelectedOption('99')
+                        : setSelectedOption(index.toString())
+                      : null
+                  }
+                >
+                  {index.toString() === selectedOption ? (
+                    <SvgCheckSquareActive className="h-6 w-6 shrink-0 md:hidden" />
+                  ) : (
+                    <SvgCheckSquare className="h-6 w-6 shrink-0 md:hidden" />
+                  )}
+                  <Text className="font-semibold md:hidden">
+                    {subscription.title}
+                  </Text>
+                </Flex>
+                <Text className="text-sm mb-4 md:hidden">
+                  {subscription.subtitle}
+                </Text>
+              </div>
               <AccordionItem
                 value={isMobile ? index.toString() : 'isOpen'}
                 className="h-full"
               >
-                <div
-                  className="flex flex-col p-4 pt-0 md:hidden"
-                  onClick={() =>
-                    setAccordionValue
-                      ? index.toString() === accordionValue
-                        ? setAccordionValue('99')
-                        : setAccordionValue(index.toString())
-                      : null
-                  }
+                <AccordionTrigger
+                  className={!isMobile ? 'pointer-events-none hidden' : ''}
                 >
-                  <div className="flex justify-left items-center gap-2">
-                    <Text className="text-xl font-semibold text-derma-primary500">
-                      {subscription.price.value}
-                    </Text>
-                    {subscription.price?.oldValue && (
-                      <Text className="text-sm text-hg-error line-through">
-                        {subscription.price.oldValue}
+                  <div className="flex flex-col p-4 pt-0 md:hidden">
+                    <div className="flex justify-left items-center gap-2">
+                      <Text className="text-xl font-semibold text-derma-primary500">
+                        {subscription.price.value}
                       </Text>
-                    )}
-                    <Flex className="ml-auto gap-2">
-                      {subscription.price?.discount && (
-                        <span className="bg-derma-primary500 text-md py-1 px-2 rounded-full text-white inline-block font-semibold">
-                          {subscription.price.discount}
-                        </span>
+                      {subscription.price?.oldValue && (
+                        <Text className="text-sm text-hg-error line-through">
+                          {subscription.price.oldValue}
+                        </Text>
                       )}
-                      <SvgAngleDown
-                        className={`transition-transform bg-derma-secondary300 p-1 h-8 w-8 rounded-full ${
-                          index.toString() === accordionValue
-                            ? 'rotate-180'
-                            : ''
-                        }`}
-                      />
-                    </Flex>
+                      <Flex className="ml-auto gap-2">
+                        {subscription.price?.discount && (
+                          <span className="bg-derma-primary500 text-md py-1 px-2 rounded-full text-white inline-block font-semibold">
+                            {subscription.price.discount}
+                          </span>
+                        )}
+                        <SvgAngleDown
+                          className={`transition-transform bg-derma-secondary300 p-1 h-8 w-8 rounded-full group-data-[state=open]:rotate-180`}
+                        />
+                      </Flex>
+                    </div>
+                    <Text className="text-xs text-derma-primary500 md:hidden">
+                      {subscription.price.subtitle}
+                    </Text>
                   </div>
-                  <Text className="text-xs text-derma-primary500">
-                    {subscription.price.subtitle}
-                  </Text>
-                </div>
-                <AccordionContent className="flex flex-col justify-start h-full">
+                </AccordionTrigger>
+                <AccordionContent>
                   <div className="p-4 md:p-6">
                     <Image
                       src={subscription.imgSrc}
@@ -140,11 +132,11 @@ export default function OptionsPricesB({
                           </Text>
                         )}
                       </div>
-                      <Text className="text-xs text-derma-primary500">
+                      <Text className="text-sm text-derma-primary500 hidden md:block">
                         {subscription.price.subtitle}
                       </Text>
                     </div>
-                    <ul className="md:border-t md:border-derma-secondary500 md:mt-6 pt-6 flex flex-col gap-4 mb-8 md:min-h-[200px]">
+                    <ul className="md:border-t md:border-derma-secondary500 md:mt-6 pt-6 flex flex-col gap-4 md:min-h-[200px]">
                       {subscription.bullets.map(bullet => (
                         <li
                           key={bullet.text}
@@ -188,7 +180,7 @@ export default function OptionsPricesB({
 
                   {subscription.bottomBar && (
                     <div
-                      className="bg-derma-primary300 p-4 py-3 rounded-b-2xl text-center text-sm"
+                      className="bg-derma-primary300 p-4 py-3 rounded-b-2xl text-center text-sm mt-2"
                       dangerouslySetInnerHTML={{
                         __html: subscription.bottomBar,
                       }}
@@ -196,10 +188,10 @@ export default function OptionsPricesB({
                   )}
                 </AccordionContent>
               </AccordionItem>
-            </Accordion>
-          </li>
-        </CheckHydration>
-      ))}
-    </ul>
+            </li>
+          ))}
+        </ul>
+      </Accordion>
+    </CheckHydration>
   );
 }
