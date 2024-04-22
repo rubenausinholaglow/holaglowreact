@@ -19,9 +19,9 @@ import { Status } from 'app/types/appointment';
 import { Client } from 'app/types/client';
 import { CrisalixUser } from 'app/types/crisalix';
 import { MessageType } from 'app/types/messageSocket';
-import { clearLocalStorage } from 'app/utils/utils';
+import { clearLocalStorage, getClinicToSet } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { isEmpty } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../../(web)/components/common/RegistrationForm';
@@ -59,6 +59,7 @@ export default function Page({
     setClinicFlowwwId,
     setClinicProfessionalId,
     setIsCallCenter,
+    clinics,
   } = useGlobalPersistedStore(state => state);
   const userCrisalix = useCrisalix(state => state);
 
@@ -133,7 +134,6 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
-    setSelectedClinic(undefined);
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');
@@ -259,6 +259,7 @@ export default function Page({
             setClinicId(data.clinicId);
             setClinicFlowwwId(data.clinicflowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
+            setSelectedClinic(getClinicToSet(clinics, data.clinicId));
 
             if (name == '') {
               name = data.firstName;

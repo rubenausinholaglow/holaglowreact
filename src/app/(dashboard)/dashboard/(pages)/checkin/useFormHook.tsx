@@ -9,7 +9,11 @@ import {
   INVALID_PHONE_FORMAT,
   PHONE_REQUIRED,
 } from '@utils/textConstants';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import { getClinicToSet } from '@utils/utils';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Status } from 'app/types/appointment';
 
 interface FormData {
@@ -43,7 +47,8 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
   const [checkIn, setCheckIn] = useState<string | null>(null);
   const [isChecked, setIsChecked] = useState<boolean | undefined>(undefined);
   const [showAgenda, setShowAgenda] = useState<boolean | undefined>(undefined);
-  const { setCurrentUser } = useGlobalPersistedStore(state => state);
+  const { setCurrentUser, clinics } = useGlobalPersistedStore(state => state);
+  const { setSelectedClinic } = useSessionStore(state => state);
 
   const validateForm = () => {
     const newErrors: ValidationErrors = {};
@@ -116,6 +121,8 @@ const useFormHook = (onScanSuccess: (props: Props) => void) => {
           boxId: appointmentInfo.boxId,
           clinicId: appointmentInfo.clinicId,
         };
+
+        setSelectedClinic(getClinicToSet(clinics, appointmentInfo.clinicId));
         onScanSuccess(props);
       } catch (error: any) {
         Bugsnag.notify(error);

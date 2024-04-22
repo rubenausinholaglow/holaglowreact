@@ -59,7 +59,7 @@ export default class ProductService {
             (product: Product) =>
               product.clinicDetail.some(
                 (clinicDetail: ProductClinics) =>
-                  clinicDetail.clinic.id === clinicId
+                  clinicDetail.clinic.id.toUpperCase() === clinicId.toUpperCase()
               ) || product.clinicDetail.length == 0
           )
           .sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
