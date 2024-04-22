@@ -11,9 +11,11 @@ import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
 export default function PackTypeFilter({
+  className,
   isDashboard = false,
   customStyles,
 }: {
+  className?: string;
   isDashboard?: boolean;
   customStyles?: string;
 }) {
@@ -21,12 +23,21 @@ export default function PackTypeFilter({
   const { productFilters, setProductFilters } = useGlobalStore(state => state);
 
   return (
-    <div
+    <Button
       id="tmevent_treatments_type_packs"
+      className={className}
+      type="white"
       onClick={() => setProductFilters(toggleIsPack(productFilters))}
-      className={`shrink-0 transition-all cursor-pointer rounded-full p-1 pr-4 ${
-        productFilters.isPack ? 'bg-hg-primary500' : 'bg-white'
-      }`}
+      customStyles={twMerge(`
+        p-1 pr-4 border-none ${customStyles ? customStyles : ''} 
+        ${
+          promo && promo?.title === 'Black Friday'
+            ? `bg-hg-black group-hover:bg- hg-black`
+            : ''
+        }
+        ${isDashboard ? 'pl-4 bg-hg-black100' : ''}
+        ${productFilters.isPack ? 'bg-hg-primary500' : ''}
+      `)}
     >
       <div className="flex items-center pointer-events-none">
         {!isDashboard && (
@@ -51,6 +62,6 @@ export default function PackTypeFilter({
           <Text className="text-xs whitespace-nowrap">Packs</Text>
         )}
       </div>
-    </div>
+    </Button>
   );
 }

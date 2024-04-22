@@ -13,6 +13,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
 
 import CategoryIcon from '../common/CategoryIcon';
+import PackTypeFilter from './PackTypeFilter';
 
 export default function CategorySelector({
   className,
@@ -45,6 +46,7 @@ export default function CategorySelector({
       []
     );
     let filteredCategoryNames;
+
     if (isDashboard) {
       filteredCategoryNames = allCategoryNames.filter(
         categoryName =>
@@ -85,6 +87,11 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : 'pl-4'}
       `}
     >
+      {isDashboard && (
+        <li className="shrink-0">
+          <PackTypeFilter isDashboard={isDashboard} />
+        </li>
+      )}
       {productCategories.map((category, i) => {
         return (
           <li
