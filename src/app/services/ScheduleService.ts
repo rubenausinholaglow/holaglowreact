@@ -2,6 +2,7 @@ import Bugsnag from '@bugsnag/js';
 import { getTreatmentId } from '@utils/userUtils';
 import {
   Appointment,
+  AppointmentNextResponse,
   RescheduleAppointmentRequest,
   Status,
   User,
@@ -104,7 +105,7 @@ export default class ScheduleService {
 
   static async getClinicScheduleByToken(
     flowwwToken: string
-  ): Promise<any | undefined> {
+  ): Promise<AppointmentNextResponse | undefined> {
     try {
       const url = `${ScheduleService.getScheduleUrl()}Appointment/v2/Next?token=${flowwwToken}`;
       const res = await fetch(url);
@@ -116,7 +117,7 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return '';
+        return {} as AppointmentNextResponse;
       }
     } catch (err: any) {
       Bugsnag.notify('Error getAppointmentsPerClinic', err);

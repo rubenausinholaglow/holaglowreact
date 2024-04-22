@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ProductFilters } from '@interface/filters';
 import { Product } from '@interface/product';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
+import { useGlobalStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { twMerge } from 'tailwind-merge';
@@ -14,16 +14,13 @@ export default function CategorySelectorSSR({
   products,
   isStacked,
   isDashboard,
-  productFilters,
-  setProductFilters,
 }: {
   className?: string;
   products: Product[];
   isStacked?: boolean;
   isDashboard?: boolean;
-  productFilters: ProductFilters;
-  setProductFilters: (filters: ProductFilters) => void;
 }) {
+  const { productFilters, setProductFilters } = useGlobalStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -47,6 +44,13 @@ export default function CategorySelectorSSR({
       filteredCategoryNames = allCategoryNames;
     }
 
+    const packsIndex = filteredCategoryNames.indexOf('Packs');
+
+    if (packsIndex !== -1) {
+      const packsItem = filteredCategoryNames.splice(packsIndex, 1)[0];
+      filteredCategoryNames.unshift(packsItem);
+    }
+
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
 
     setProductCategories(uniqueCategoryNames);
@@ -55,7 +59,7 @@ export default function CategorySelectorSSR({
   return (
     <ul
       id="categorySelector"
-      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto ${
+      className={`flex overflow-x-scroll overflow-y-hidden md:overflow-auto${
         className ? className : ''
       }
       ${isStacked ? 'flex-wrap' : ''}

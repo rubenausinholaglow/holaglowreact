@@ -29,9 +29,9 @@ const FAQS = [
       'La rutina facial está pensada para que dure 3 meses, que es el tiempo suficiente definido por nuestros médicos para que los resultados sean visibles. No obstante, cada piel es única y evoluciona de forma distinta. Si quieres que uno de nuestros médicos haga seguimiento de tu evolución para ir adaptando la composición y la duración de la rutina, te recomendamos elegir el modelo de suscripción una vez completado el formulario de diagnóstico de tu piel.',
   },
   {
-    title: '¿Qué tipos de tratamiento hay?',
+    title: '¿Qué planes de tratamiento hay?',
     description:
-      'Ofrecemos 2 tipos de tratamiento para que puedas ver progreso en tu piel. Por un lado una rutina facial para 3 meses (tiempo recomendado para ver resultados) y por otro lado una rutina facial por suscripción que incluye los mismos productos además de seguimiento mensual por parte de tu médico para poder evaluar la evolución de tu piel y ajustar tu rutina cuando sea necesario.',
+      'Ofrecemos 2 planes de tratamiento para que puedas ver progreso en tu piel. Por un lado una rutina facial para 3 meses (tiempo recomendado para ver resultados) y por otro lado una rutina facial por suscripción que incluye los mismos productos además de seguimiento mensual por parte de tu médico para poder evaluar la evolución de tu piel y ajustar tu rutina cuando sea necesario.',
   },
   {
     title: '¿Dónde consigo mi crema personalizada?',

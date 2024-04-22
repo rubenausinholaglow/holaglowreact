@@ -114,9 +114,7 @@ export default function AppointmentList({
               <Flex
                 layout="col-left"
                 key={appointment.id}
-                className={`${
-                  isDerma ? 'bg-derma-secondary300' : 'bg-hg-secondary100'
-                } gap-2 p-4 md:p-6 rounded-2xl w-full justify-between items-start`}
+                className="bg-derma-secondary100 gap-2 p-4 md:p-6 rounded-2xl w-full justify-between items-start"
               >
                 <Flex layout="row-left" className="gap-2 items-center mb-2">
                   <Text className="font-semibold">
@@ -161,8 +159,7 @@ export default function AppointmentList({
                     <Button
                       size={isMobile ? 'sm' : 'md'}
                       id="button-addon2"
-                      type={isDerma ? 'derma' : 'tertiary'}
-                      customStyles={!isDerma ? 'bg-hg-primary' : ''}
+                      type={isDerma ? 'derma' : 'primary'}
                       onClick={() => {
                         rescheduleAppointment(appointment);
                       }}

@@ -35,7 +35,20 @@ export interface DermaQuestionsResponse {
   user: Client;
   name: string | undefined;
   birthDate: string | undefined;
-  scenario: string | undefined;
-  extraInfo: string | undefined;
+  phone: string | undefined;
+  phonePrefix: string | undefined;
+  extraInfo: string;
+  pain: painObject[] | [];
+  skinType: number;
+  skinSensibility: number;
+  allergy: number;
+  allergyInfo: string;
+  illness: number;
+  illnessInfo: string;
+  medication: number;
+  medicationInfo: string;
+  lactating: number;
   skinConcerns: SkinConcern[];
+  scenario: string | undefined;
+  photos: string[];
 }

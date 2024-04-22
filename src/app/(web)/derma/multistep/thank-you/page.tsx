@@ -41,7 +41,6 @@ const ITEMS = [
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
   const { picturesUrls } = useDermaStore(state => state);
-
   return (
     <CheckHydration>
       <div className="bg-derma-secondary300 min-h-screen relative">

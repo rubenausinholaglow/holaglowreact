@@ -252,6 +252,7 @@ export default function PsrpPage({
                       type="white"
                       size="sm"
                       className="mr-2"
+                      customStyles="bg-transparent"
                       onClick={() => {
                         isMobile
                           ? setIsMobileFiltersVisible(true)
