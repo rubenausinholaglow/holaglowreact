@@ -7,6 +7,7 @@ import { Status } from 'app/types/appointment';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { Html5Qrcode } from 'html5-qrcode';
+import { set } from 'lodash';
 
 interface props {
   name: string;
@@ -32,34 +33,41 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
     const html5QrCode = new Html5Qrcode('qr-reader');
 
     const qrCodeSuccessCallback = async (UserId: any, decodedResult: any) => {
-      html5QrCode.stop();
-      setScanResult(decodedResult);
-      setIsLoading(true);
-      const user = await UserService.getUserById(UserId);
+      try {
+        html5QrCode.stop();
+        setScanResult(decodedResult);
+        setIsLoading(true);
+        const user = await UserService.getUserById(UserId);
+        if (user.firstName !== null) {
+          const appointmentInfo =
+            await ScheduleService.getClinicScheduleByToken(user.flowwwToken);
+          if (appointmentInfo !== undefined) {
+            await ScheduleService.updatePatientStatusAppointment(
+              appointmentInfo.id,
+              UserId,
+              Status.CheckIn
+            );
 
-      if (user.firstName != null) {
-        const appointmentInfo = await ScheduleService.getClinicSchedule(
-          user.flowwwToken
-        );
-        await ScheduleService.updatePatientStatusAppointment(
-          appointmentInfo.id,
-          UserId,
-          Status.CheckIn
-        );
-
-        const props = {
-          name: user.firstName,
-          hour: appointmentInfo.startTime,
-          professional: appointmentInfo.clinicProfessional.name,
-          professionalId: appointmentInfo.clinicProfessional.id,
-          userId: user.id,
-          boxId: appointmentInfo.boxId,
-          clinicId: appointmentInfo.clinic.id,
-        };
-        onScanSuccess(props);
-      } else {
-        setError('Usuario no encontrado');
-        onErrorScan(5000);
+            const props = {
+              name: user.firstName,
+              hour: appointmentInfo.startTime,
+              professional: appointmentInfo.clinicProfessionalName,
+              professionalId: appointmentInfo.clinicProfessionalId,
+              userId: user.id,
+              boxId: appointmentInfo.boxId,
+              clinicId: appointmentInfo.clinicId,
+            };
+            onScanSuccess(props);
+          } else {
+            setError('Cita no encontrada');
+          }
+        } else {
+          setError('Usuario no encontrado');
+          onErrorScan(5000);
+        }
+      } catch (err: any) {
+        setError('Usuario no encontrado ' + err);
+        Bugsnag.notify(err);
       }
       setIsLoading(false);
     };
