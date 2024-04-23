@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
 import App from 'app/(web)/components/layout/App';
@@ -43,12 +43,13 @@ export default function Page() {
 
   const onScanSuccess = (props: any) => {
     if (props) {
-      const user: UserCheckin = {
+      const userCheckin: UserCheckin = {
         name: props.name,
         hour: props.hour,
         professional: props.professional,
       };
-      setUserCheckIn(user);
+
+      setUserCheckIn(userCheckin);
       messageService.patientArrived(props);
       router.push(ROUTES.dashboard.checkIn.thankYou);
     } else {

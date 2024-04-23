@@ -7,7 +7,6 @@ import { Status } from 'app/types/appointment';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Text } from 'designSystem/Texts/Texts';
 import { Html5Qrcode } from 'html5-qrcode';
-import { set } from 'lodash';
 
 interface props {
   name: string;
@@ -60,6 +59,7 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
             onScanSuccess(props);
           } else {
             setError('Cita no encontrada');
+            onErrorScan(5000);
           }
         } else {
           setError('Usuario no encontrado');
@@ -67,24 +67,25 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
         }
       } catch (err: any) {
         setError('Usuario no encontrado ' + err);
+        onErrorScan(5000);
         Bugsnag.notify(err);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
-    function error(err: any) {
-      Bugsnag.notify(err);
-    }
-
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    const config = {
+      fps: 10,
+      qrbox: { width: 250, height: 250 },
+    };
 
     html5QrCode.start(
       { facingMode: 'user' },
       config,
       qrCodeSuccessCallback,
-      error
+      undefined
     );
-  }, [onScanSuccess]);
+  }, []);
 
   function stopScan() {
     onErrorScan(5);
@@ -93,13 +94,7 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
   return (
     <div>
       {scanResult ? (
-        isLoading ? (
-          <SvgSpinner height={24} width={24} />
-        ) : (
-          <div>
-            <Text> {error ? error : 'Código escaneado correctamente'} </Text>
-          </div>
-        )
+        isLoading && <SvgSpinner height={24} width={24} />
       ) : (
         <div>
           <div id="qr-reader" style={{ width: '600px' }}></div>
