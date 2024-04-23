@@ -1,20 +1,18 @@
 'use client';
 
-import 'react-phone-input-2/lib/style.css';
+import 'react-international-phone/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
+import { PhoneInput } from 'react-international-phone';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
 import { postalCodeValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
-import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
 import { Client } from 'app/types/client';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { isEmpty } from 'lodash';
@@ -145,23 +143,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     showPostalCodeError,
   ]);
 
-  const handleFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
-    let value: string | boolean | number | undefined =
-      event.target.type === 'checkbox'
-        ? event.target.checked
-        : event.target.value;
-
-    if (field === 'phonePrefix' && typeof value === 'number') {
-      value = `+${value as number}`;
-    }
-
-    if (field === 'phone' && typeof value === 'number' && value === 0) {
-      value = undefined;
-    }
-
+  const handleFieldChange = (value: string | boolean, field: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       [field]: value,
@@ -204,26 +186,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     setIsLoading(false);
   };
 
-  function handlePhoneChange(event: any, country: any, value: string) {
-    if (
-      event &&
-      event.nativeEvent &&
-      (event.nativeEvent.inputType || event.nativeEvent.type == 'click')
-    ) {
-      handleFieldChange(event, 'phone');
-      event.target.value = '+' + country.dialCode;
-      handleFieldChange(event, 'phonePrefix');
-    } else {
-      if (value.startsWith('34')) value = value.substring(2, value.length);
-      event.target.value = '+34' + value;
-      handleFieldChange(event, 'phone');
-      event.target.value = '+34';
-      handleFieldChange(event, 'phonePrefix');
-    }
-
-    setShowPhoneError(utils.validatePhoneInput(`+${value}`));
-  }
-
   const handleRegistration = async () => {
     await registerUser(formData, isDashboard, redirect, true);
   };
@@ -240,18 +202,18 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       <TextInputField
         placeholder="Nombre"
         value={formData.name}
-        onChange={event => handleFieldChange(event, 'name')}
+        onChange={event => handleFieldChange(event.target.value, 'name')}
       />
       <TextInputField
         placeholder="Apellidos"
         value={formData.surname}
-        onChange={event => handleFieldChange(event, 'surname')}
+        onChange={event => handleFieldChange(event.target.value, 'surname')}
       />
       <TextInputField
         placeholder="Correo electrónico"
         value={formData.email}
         onChange={event => {
-          handleFieldChange(event, 'email');
+          handleFieldChange(event.target.value, 'email');
 
           if (formData.email.length === 0) {
             setShowEmailError(false);
@@ -272,40 +234,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       />
       <div className="relative">
         <PhoneInput
-          disableSearchIcon={true}
-          countryCodeEditable={true}
-          inputClass={`${poppins.className}`}
-          inputStyle={{
-            borderColor: 'white',
-            width: '100%',
-            height: '44px',
-            paddingLeft: '65px',
-            fontSize: '16px',
-            lineHeight: '16px',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            touchAction: 'manipulation',
-          }}
-          containerStyle={{
-            background: 'white',
-            border: '1px solid',
-            borderColor:
-              showPhoneError !== null && !showPhoneError
-                ? HOLAGLOW_COLORS['black']
-                : HOLAGLOW_COLORS['black300'],
-            borderRadius: '1rem',
-            paddingLeft: '16px',
-            paddingRight: '12px',
-            paddingBottom: '8px',
-            paddingTop: '8px',
-            height: '60px',
-          }}
-          placeholder="Número de teléfono"
-          country={'es'}
+          defaultCountry="es"
           preferredCountries={['es']}
           value={formData.phone}
-          onChange={(value, data, event) => {
-            handlePhoneChange(event, data, value);
+          forceDialCode
+          inputClassName={
+            showPhoneError !== null && !showPhoneError ? 'isComplete' : ''
+          }
+          onChange={(phone, country) => {
+            handleFieldChange(phone, 'phone');
+            handleFieldChange(`+${country.country.dialCode}`, 'phonePrefix');
+            if (phone.length > 0 && phone !== '+34') {
+              setShowPhoneError(utils.validatePhoneInput(phone));
+            }
           }}
         />
         {showPhoneError !== null && (
@@ -329,7 +270,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             placeholder="DNI/NIE"
             value={formData.dni!}
             onChange={event => {
-              handleFieldChange(event, 'dni');
+              handleFieldChange(event.target.value, 'dni');
               const isValidDni =
                 !showDni ||
                 isValidNif(event.target.value.toUpperCase()) ||
@@ -350,7 +291,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             placeholder="Código Postal"
             value={formData.postalCode!}
             onChange={event => {
-              handleFieldChange(event, 'postalCode');
+              handleFieldChange(event.target.value, 'postalCode');
               setShowPostalCodeError(
                 !postalCodeValidationRegex.test(event.target.value)
               );
@@ -369,7 +310,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             placeholder="Ciudad"
             value={formData.city!}
             onChange={event => {
-              handleFieldChange(event, 'city');
+              handleFieldChange(event.target.value, 'city');
             }}
           />
         </>
@@ -380,7 +321,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             placeholder="Dirección de entrega"
             value={formData.address!}
             onChange={event => {
-              handleFieldChange(event, 'address');
+              handleFieldChange(event.target.value, 'address');
             }}
           />
         </>
@@ -401,7 +342,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               id="termsAndConditionsAccepted"
               checked={formData.termsAndConditionsAccepted}
               onChange={event =>
-                handleFieldChange(event, 'termsAndConditionsAccepted')
+                handleFieldChange(
+                  event.target.checked,
+                  'termsAndConditionsAccepted'
+                )
               }
               className="hidden"
             />
@@ -425,7 +369,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               id="receiveCommunications"
               checked={formData.receiveCommunications}
               onChange={event =>
-                handleFieldChange(event, 'receiveCommunications')
+                handleFieldChange(event.target.checked, 'receiveCommunications')
               }
               className="hidden"
             />
