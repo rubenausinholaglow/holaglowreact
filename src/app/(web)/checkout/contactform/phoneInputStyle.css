@@ -1,4 +1,6 @@
 .react-international-phone-input-container {
+  position: relative !important;
+
   .react-international-phone-country-selector {
     position: absolute !important;
 
