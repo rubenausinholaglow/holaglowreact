@@ -48,7 +48,6 @@ export default function Page() {
         hour: props.hour,
         professional: props.professional,
       };
-
       setUserCheckIn(userCheckin);
       messageService.patientArrived(props);
       router.push(ROUTES.dashboard.checkIn.thankYou);
