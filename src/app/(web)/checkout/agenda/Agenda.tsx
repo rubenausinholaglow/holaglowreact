@@ -164,10 +164,26 @@ export default function Agenda({
     data.forEach(x => {
       const hour = x.startTime.split(':')[0];
       const minutes = x.startTime.split(':')[1];
-      const block10and45minutes =
+      let block15and45minutes =
         (!isDashboard && minutes == '15') || (!isDashboard && minutes == '45');
+      if (minutes == '15') {
+        block15and45minutes =
+          hours.find(
+            x =>
+              x.startTime.split(':')[0] == hour &&
+              x.startTime.split(':')[1] == '00'
+          ) != undefined;
+      }
+      if (minutes == '45') {
+        block15and45minutes =
+          hours.find(
+            x =>
+              x.startTime.split(':')[0] == hour &&
+              x.startTime.split(':')[1] == '30'
+          ) != undefined;
+      }
       if (
-        !block10and45minutes &&
+        !block15and45minutes &&
         (!(hour == '10' && minutes == '00') || selectedTreatmentsIds != '902')
       ) {
         if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
@@ -195,7 +211,6 @@ export default function Agenda({
     const availability = availableDates ?? [];
     const today = dayjs();
     const loadedCurrentMonth = endOfMonth.month() == currentMonth.month();
-
     data.forEach((x: any) => {
       const date = dayjs(x.date);
       if (
