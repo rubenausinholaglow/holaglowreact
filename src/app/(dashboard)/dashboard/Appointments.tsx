@@ -218,12 +218,12 @@ const AppointmentsListComponent: React.FC<{
       bg: 'hg-green300',
     },
     6: {
-      text: 'Esperando',
+      text: 'En visita',
       color: 'hg-secondary',
       bg: 'hg-secondary300',
     },
     7: {
-      text: 'En Visita',
+      text: 'Esperando',
       color: 'hg-primary',
       bg: 'hg-primary100',
     },
