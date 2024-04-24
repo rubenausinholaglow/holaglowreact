@@ -38,7 +38,7 @@ export const paymentItems = [
     paymentMethod: PaymentMethod.CreditCard,
   },
     {
-    key: 'frakmenta',
+    key: 'frakmentaOnline',
     label: 'Frakmenta (Offline)',
     paymentBank: PaymentBank.Frakmenta,
     paymentMethod: PaymentMethod.CreditCard,

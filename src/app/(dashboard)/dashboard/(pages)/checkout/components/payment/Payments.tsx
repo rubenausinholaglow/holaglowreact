@@ -290,6 +290,7 @@ export const PaymentModule = () => {
     creditCard: ['visa.svg', 'mastercard.svg'],
     stripe: ['visa.svg', 'mastercard.svg'],
     frakmenta: ['frakmenta.svg'],
+    frakmentaOnline: ['frakmenta.svg'],
   };
 
   return (

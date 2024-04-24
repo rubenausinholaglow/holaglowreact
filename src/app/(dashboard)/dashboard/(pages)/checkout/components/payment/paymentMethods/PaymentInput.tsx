@@ -624,16 +624,17 @@ export default function PaymentInput(props: Props) {
                     <SvgArrow height={16} width={16} className="ml-2" />
                   </Button>
                 )}
-                {props.paymentBank === PaymentBank.Frakmenta && (
-                  <Button
-                    type="tertiary"
-                    isSubmit
-                    onClick={() => activateFrakmenta()}
-                  >
-                    Continuar
-                    <SvgArrow height={16} width={16} className="ml-2" />
-                  </Button>
-                )}
+                {props.paymentBank === PaymentBank.Frakmenta &&
+                  props.paymentMethod === PaymentMethod.Financing && (
+                    <Button
+                      type="tertiary"
+                      isSubmit
+                      onClick={() => activateFrakmenta()}
+                    >
+                      Continuar
+                      <SvgArrow height={16} width={16} className="ml-2" />
+                    </Button>
+                  )}
                 <div className="bg-hg-"></div>
                 {props.paymentBank === PaymentBank.Stripe && (
                   <Button
@@ -651,9 +652,7 @@ export default function PaymentInput(props: Props) {
                     )}
                   </Button>
                 )}
-                {props.paymentBank != PaymentBank.Alma &&
-                  props.paymentBank != PaymentBank.Frakmenta &&
-                  props.paymentBank != PaymentBank.Pepper &&
+                {props.paymentMethod != PaymentMethod.Financing &&
                   props.paymentBank != PaymentBank.Stripe && (
                     <Button
                       type="tertiary"

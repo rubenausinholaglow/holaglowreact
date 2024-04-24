@@ -145,6 +145,8 @@ export function getPaymentBankText(bank: PaymentBank): string {
       return 'Alma';
     case PaymentBank.Pepper:
       return 'Pepper';
+    case PaymentBank.Frakmenta:
+      return 'Frakmenta';
     case PaymentBank.Cash:
       return '';
     case PaymentBank.CreditCard:
