@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
+import { PatientArrivedData } from '@interface/FrontEndMessages';
 import { messageService } from '@services/MessageService';
+import ScheduleService from '@services/ScheduleService';
+import UserService from '@services/UserService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
@@ -11,13 +15,14 @@ import {
   useGlobalPersistedStore,
   useSessionStore,
 } from 'app/stores/globalStore';
-import { UserCheckin } from 'app/types/appointment';
+import { Status, UserCheckin } from 'app/types/appointment';
 import CheckHydration from 'app/utils/CheckHydration';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import ReadQr from './ReadQr';
@@ -35,8 +40,17 @@ export default function Page() {
     setSelectedTreatments,
     setSelectedPack,
   } = useSessionStore(state => state);
-  const { clinics, user, setUserCheckIn, setCurrentUser, setClinicId } =
-    useGlobalPersistedStore(state => state);
+  const {
+    clinics,
+    user,
+    setUserCheckIn,
+    setCurrentUser,
+    setClinicId,
+    storedClinicId,
+    setBoxId,
+  } = useGlobalPersistedStore(state => state);
+  const [userId, setUserId] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -48,9 +62,7 @@ export default function Page() {
         hour: props.hour,
         professional: props.professional,
       };
-      setUserCheckIn(userCheckin);
-      messageService.patientArrived(props);
-      router.push(ROUTES.dashboard.checkIn.thankYou);
+      handleUserCheckin(userCheckin);
     } else {
       router.push(ROUTES.dashboard.checkIn.treatments);
     }
@@ -106,6 +118,47 @@ export default function Page() {
     }
   }, [clinics]);
 
+  const handleCheckUser = async (userId: string) => {
+    await UserService.checkUser(userId)
+      .then(async data => {
+        if (data && !isEmpty(data)) {
+          const appointmentInfo =
+            await ScheduleService.getClinicScheduleByToken(data.flowwwToken);
+          if (appointmentInfo !== undefined) {
+            setBoxId(appointmentInfo.boxId);
+            await ScheduleService.updatePatientStatusAppointment(
+              appointmentInfo.id,
+              data.id,
+              Status.CheckIn
+            );
+            const user: UserCheckin = {
+              id: data.id,
+              name: data.name,
+              hour: appointmentInfo.startTime,
+              professional: appointmentInfo.clinicProfessionalName,
+            };
+            handleUserCheckin(user);
+            router.push(ROUTES.dashboard.checkIn.thankYou);
+          }
+        }
+      })
+      .catch(error => {
+        setErrorMessage('Error durante la autenticación por id: ' + error);
+        Bugsnag.notify('Error getUserById:', error);
+      });
+  };
+
+  const handleUserCheckin = async (userCheckin: UserCheckin) => {
+    setUserCheckIn(userCheckin);
+    const props: PatientArrivedData = {
+      userId: userCheckin.id,
+      boxId: '',
+      clinicId: storedClinicId,
+    };
+    messageService.patientArrived(props);
+    router.push(ROUTES.dashboard.checkIn.thankYou);
+  };
+
   return (
     <App>
       <MainLayout
@@ -144,14 +197,47 @@ export default function Page() {
             </Flex>
 
             {!isScanning && (
-              <FormSection
-                formData={formData}
-                errors={errors}
-                handleInputChange={handleInputChange}
-                handleSubmit={handleSubmit}
-                isLoading={isLoading}
-                checkIn={checkIn}
-              />
+              <>
+                <FormSection
+                  formData={formData}
+                  errors={errors}
+                  handleInputChange={handleInputChange}
+                  handleSubmit={handleSubmit}
+                  isLoading={isLoading}
+                  checkIn={checkIn}
+                />
+                <div className="w-1/2">
+                  <Flex
+                    layout="col-left"
+                    className={`gap-4 px-12 py-8 bg-hg-secondary100 relative z-10 w-full ${
+                      checkIn ? 'rounded-t-xl' : 'rounded-xl'
+                    }`}
+                  >
+                    <div className="flex flex-col w-full gap-4">
+                      <TextInputField
+                        placeholder="Introduce ID"
+                        value={userId}
+                        onChange={e => setUserId(e.target.value)}
+                      />
+                      <Button
+                        type="tertiary"
+                        isSubmit
+                        className="ml-auto"
+                        customStyles="bg-hg-primary"
+                        onClick={() => handleCheckUser(userId)}
+                      >
+                        Buscar por ID
+                        <SvgArrow className="ml-2 h-5 w-5" />
+                      </Button>
+                      {errorMessage && (
+                        <p className="text-red-500 text-left text-sm mt-2">
+                          {errorMessage}
+                        </p>
+                      )}
+                    </div>
+                  </Flex>
+                </div>
+              </>
             )}
           </Flex>
         </CheckHydration>
