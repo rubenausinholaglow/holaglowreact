@@ -6,19 +6,19 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+        hostname: 'budgetimages.blob.core.windows.net',
         port: '',
         pathname: '/images/**',
       },
       {
         protocol: 'https',
-        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+        hostname: 'budgetimages.blob.core.windows.net',
         port: '',
         pathname: '/derma/**',
       },
       {
         protocol: 'https',
-        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+        hostname: 'budgetimages.blob.core.windows.net',
         port: '',
         pathname: '/dermauploadimages/**',
       },
