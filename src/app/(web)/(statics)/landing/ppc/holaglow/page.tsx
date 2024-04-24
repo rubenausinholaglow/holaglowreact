@@ -1,4 +1,4 @@
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import Clinics from 'app/(web)/components/common/Clinics';

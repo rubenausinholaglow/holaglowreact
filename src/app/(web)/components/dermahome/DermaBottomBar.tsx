@@ -8,11 +8,9 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 export default function DermaBottomBar({
   threshold,
   isVisible = true,
-  showButton = true,
 }: {
   threshold?: number;
   isVisible?: boolean;
-  showButton?: boolean;
 }) {
   const scrollPos = useRef(0);
   const [showBottomBar, setShowBottomBar] = useState(false);
@@ -41,54 +39,36 @@ export default function DermaBottomBar({
         showBottomBar && isVisible ? 'translate-y-[0%]' : 'translate-y-[105%]'
       }`}
     >
-      {showButton && (
-        <div className="p-4 mx-w-xl bg-derma-secondary400 rounded-t-[40px]">
-          <Flex className="justify-between h-16">
-            <div className="w-full mr-4 h-16">
-              <Button
-                size="xl"
-                type="derma"
-                href="/multistep/start"
-                className="mr-4 pointer-events-auto w-full"
-                customStyles="px-2"
-                id="tmevent_derma_multistep_start_bottom"
-              >
-                Reserva tu videollamada
-              </Button>
-            </div>
+      <div className="p-4 mx-w-xl bg-white rounded-t-[40px]">
+        <Flex className="justify-between h-16">
+          <div className="w-full mr-4 h-16">
             <Button
-              type="derma"
               size="xl"
-              className="pointer-events-auto"
-              customStyles="shrink-0"
+              type="derma"
+              href="/multistep/start"
+              className="pointer-events-auto w-full"
+              customStyles="px-2"
+              id="tmevent_derma_multistep_start_bottom"
             >
-              <a
-                href={url}
-                target="_blank"
-                id="tmevent_click_floating_button_whatsapp"
-              >
-                <SvgWhatsapp className="text-derma-secondary" />
-              </a>
+              Empezar análisis
             </Button>
-          </Flex>
-        </div>
-      )}
-      {!showButton && (
-        <Button
-          type="derma"
-          size="xl"
-          className="pointer-events-auto right-1 bottom-1 fixed bottom-0 z-40"
-          customStyles="shrink-0"
-        >
-          <a
-            href={url}
-            target="_blank"
-            id="tmevent_click_floating_button_whatsapp"
+          </div>
+          <Button
+            type="derma"
+            size="xl"
+            className="pointer-events-auto"
+            customStyles="h-[60px] p-0 w-[60px] shrink-0"
           >
-            <SvgWhatsapp className="text-derma-secondary" />
-          </a>
-        </Button>
-      )}
+            <a
+              href={url}
+              target="_blank"
+              id={'tmevent_click_floating_button_whatsapp'}
+            >
+              <SvgWhatsapp className="text-white" />
+            </a>
+          </Button>
+        </Flex>
+      </div>
     </div>
   );
 }

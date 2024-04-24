@@ -76,8 +76,7 @@ export default function CancelModal({
         <Flex layout="row-between" className="w-full">
           <Button
             className="cursor-pointer"
-            type={isDerma ? 'derma' : 'tertiary'}
-            customStyles={!isDerma ? 'bg-hg-primary' : ''}
+            type={isDerma ? 'derma' : 'primary'}
             onClick={() => {
               if (appointmentToCancel) {
                 cancelAppointment(appointmentToCancel);
@@ -86,7 +85,13 @@ export default function CancelModal({
           >
             Si, cancelar cita
           </Button>
-          <Button type="tertiary">Volver</Button>
+          <p
+            className={`${
+              isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+            } text-sm`}
+          >
+            Volver
+          </p>
         </Flex>
       </Flex>
     </Modal>

@@ -279,7 +279,7 @@ export default function PaymentInput(props: Props) {
             Bugsnag.notify('Error initializePayment:', error);
           });
 
-        await UserService.checkUser(user?.email)
+        UserService.checkUser(user?.email)
           .then(async data => {
             if (data && !isEmpty(data)) {
               setCurrentUser(data);

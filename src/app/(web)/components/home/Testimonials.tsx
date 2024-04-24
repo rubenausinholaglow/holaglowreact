@@ -1,5 +1,5 @@
 import { Testimonial } from '@interface/testimonial';
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgByGoogle, SvgStar } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -84,7 +84,7 @@ export default async function Testimonials() {
       <FullWidthCarousel
         hasDots={isMobileSSR()}
         hasControls={!isMobileSSR()}
-        className="pb-8"
+        className="pb-12"
         visibleSlides={isMobileSSR() ? 1.2 : 3.5}
       >
         {TESTIMONIALS.map((testimonial: Testimonial | any) => {

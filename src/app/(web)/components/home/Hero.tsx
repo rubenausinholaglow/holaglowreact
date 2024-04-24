@@ -1,4 +1,4 @@
-import isMobileSSR from '@utils/isMobileSSR';
+import { isMobileSSR } from '@utils/isMobileSSR';
 import { SvgGoogle, SvgStar } from 'app/icons/IconsDs';
 import ROUTES from 'app/utils/routes';
 import { Button } from 'designSystem/Buttons/Buttons';

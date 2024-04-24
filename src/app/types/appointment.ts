@@ -55,6 +55,7 @@ export interface User {
   country?: string;
   lastName?: string;
   secondLastName?: string;
+  [key: string]: any;
 }
 
 export interface RescheduleAppointmentRequest {
@@ -66,4 +67,18 @@ export interface UserCheckin {
   name: string;
   hour: string;
   professional: string;
+}
+
+
+export interface AppointmentNextResponse {
+  id : string;
+  flowwwId: string;
+  clinicflowwwId: string;
+  clinicId: string;
+  clinicProfessionalId : string;
+  clinicProfessionalName : string;
+  userId : string;
+  firstName : string;
+  boxId: string;  
+  startTime: string;
 }

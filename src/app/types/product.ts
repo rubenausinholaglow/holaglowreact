@@ -1,3 +1,4 @@
+
 import { ProductClinics } from './clinic';
 
 export interface Product {
@@ -85,7 +86,16 @@ export interface AppliedProduct {
 export interface PackUnities {
   id : string;
   type : UnityType;
+}
+
+export interface PackUnitiesScheduled {
+  uniqueId : string;
+  id : string;
+  type : UnityType;
   isScheduled? : boolean;
+  scheduledDate? : string;
+  treatmentName? : string; 
+  productId : string
 }
 
 export interface ApplicationZoneDetail {
@@ -152,6 +162,7 @@ export interface CartItem extends Product {
   uniqueId: string;
   priceWithDiscount: number;
   isScheduled?: boolean;
+  scheduledDate?: string;
 }
 
 export interface Category {

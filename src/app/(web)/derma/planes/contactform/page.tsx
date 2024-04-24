@@ -126,8 +126,10 @@ export default function ConctactForm() {
     )
       checkout();
   }, [activePayment]);
+
   const showExtraFields =
     cart.findIndex(x => x.title.indexOf('Rutina facial') > -1) > -1;
+
   return (
     <DermaLayout
       className="bg-derma-secondary100"

@@ -43,12 +43,12 @@ export default function Page() {
 
   const onScanSuccess = (props: any) => {
     if (props) {
-      const user: UserCheckin = {
+      const userCheckin: UserCheckin = {
         name: props.name,
         hour: props.hour,
         professional: props.professional,
       };
-      setUserCheckIn(user);
+      setUserCheckIn(userCheckin);
       messageService.patientArrived(props);
       router.push(ROUTES.dashboard.checkIn.thankYou);
     } else {

@@ -19,6 +19,7 @@ import { Budget, StatusBudget } from 'app/types/budget';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { useRouter } from 'next/navigation';
 
 import { useCartStore } from '../budgets/stores/userCartStore';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';
@@ -32,6 +33,7 @@ const Page = () => {
   const percentageDiscount = useCartStore(state => state.percentageDiscount);
   const manualPrice = useCartStore(state => state.manualPrice);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingAgenda, setIsLoadingAgenda] = useState(false);
   const [showPaymentButtons, setShowPaymentButtons] = useState(true);
   const [totalPriceToShow, setTotalPriceToShow] = useState<number>(0);
   const [isBudgetModified, setBudgetModified] = useState<boolean>(false);
@@ -43,6 +45,7 @@ const Page = () => {
     setBudgetId,
     storedClinicProfessionalId,
   } = useGlobalPersistedStore(state => state);
+  const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
 
   useEffect(() => {
@@ -179,13 +182,15 @@ const Page = () => {
               <Button
                 className="w-full"
                 size="md"
-                href={`${ROUTES.dashboard.schedule}`}
                 type="white"
                 onClick={e => {
                   setTreatmentPacks([]);
+                  setIsLoadingAgenda(true);
+                  router.push(ROUTES.dashboard.schedule);
                 }}
               >
                 <span className="font-semibold">Agendar Cita</span>
+                {isLoadingAgenda && <SvgSpinner height={24} width={24} />}
               </Button>
               <Button
                 className="w-full"
