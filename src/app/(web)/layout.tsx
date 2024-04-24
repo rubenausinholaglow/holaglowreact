@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { headers } from 'next/headers';
 import Script from 'next/script';
 
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </head>
 
         {children}
+        <SpeedInsights />
       </html>
     </>
   );
