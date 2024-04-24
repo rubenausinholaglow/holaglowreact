@@ -7,6 +7,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'budgetimages.blob.core.windows.net',
+        
         port: '',
         pathname: '/images/**',
       },
@@ -19,6 +20,25 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'budgetimages.blob.core.windows.net',
+        port: '',
+        pathname: '/dermauploadimages/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+        
+        port: '',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+        port: '',
+        pathname: '/derma/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
         port: '',
         pathname: '/dermauploadimages/**',
       },
