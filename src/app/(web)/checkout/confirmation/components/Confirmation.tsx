@@ -19,6 +19,52 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 
 import AppointmentResume from './AppointmentResume';
 
+const TIPS = {
+  derma: [
+    {
+      title: 'Análisis médico',
+      text: 'Tu médico revisará la información del formulario y tus fotos. Nos pondremos en contacto contigo si hiciera falta más información.',
+    },
+    {
+      title: 'Resultados en 48h',
+      text: 'Te enviaremos por WhatsApp el acceso a tu área de usuario con tu diagnóstico y la rutina personalizada diseñada por tu médico.',
+    },
+    {
+      title: 'Pide tu crema en la farmacia',
+      text: 'Descarga la receta de tu área de usuario y pide la crema en tu farmacia más cercana. Si has elegido tu rutina completa o trimestral, el resto de cremas te llegarán a casa en los siguientes 3-5 días hábiles.',
+    },
+  ],
+  pv: [
+    {
+      title: 'Confirmación de tu cita',
+      text: 'Nos pondremos en contacto contigo para confirmar la cita y resolver cualquier duda al respecto',
+    },
+    {
+      title: 'Conoce a tu Beauty Advisor',
+      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
+    },
+    {
+      title:
+        'Te asesorará en clínica o a través de videollamada según la opción que hayas elegido',
+      text: 'Diseñaremos contigo el mejor tratamiento para conseguir los objetivos que tienes',
+    },
+  ],
+  default: [
+    {
+      title: 'Confirmación de tu cita',
+      text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
+    },
+    {
+      title: 'Recomendaciones pretratamiento',
+      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
+    },
+    {
+      title: 'Distintos métodos de pago',
+      text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
+    },
+  ],
+};
+
 export default function Confirmation({
   appointment,
   isDashboard,
@@ -72,39 +118,6 @@ export default function Confirmation({
   };
 
   const addToCalendarRef = useRef(null);
-
-  let tips = [
-    {
-      title: 'Confirmación de tu cita',
-      text: 'Nos pondremos en contacto contigo para confirmar la cita y resolver cualquier duda al respecto',
-    },
-    {
-      title: 'Conoce a tu Beauty Advisor',
-      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
-    },
-    {
-      title:
-        'Te asesorará en clínica o a través de videollamada según la opción que hayas elegido',
-      text: 'Diseñaremos contigo el mejor tratamiento para conseguir los objetivos que tienes',
-    },
-  ];
-
-  if (isDerma) {
-    tips = [
-      {
-        title: 'Análisis médico',
-        text: 'Tu médico revisará la información del formulario y tus fotos. Nos pondremos en contacto contigo si hiciera falta más información.',
-      },
-      {
-        title: 'Resultados en 48h',
-        text: 'Te enviaremos por WhatsApp el acceso a tu área de usuario con tu diagnóstico y la rutina personalizada diseñada por tu médico.',
-      },
-      {
-        title: 'Pide tu crema en la farmacia',
-        text: 'Descarga la receta de tu área de usuario y pide la crema en tu farmacia más cercana. Si has elegido tu rutina completa o trimestral, el resto de cremas te llegarán a casa en los siguientes 3-5 días hábiles.',
-      },
-    ];
-  }
 
   useEffect(() => {
     if (!isDashboard) {
@@ -177,7 +190,7 @@ export default function Confirmation({
                     isDerma ? 'text-derma-primary' : ''
                   } text-center mb-4 font-light`}
                 >
-                  ¡Recibido!
+                  {isProbadorVirtual ? '¡Recibido!' : 'Pago recibido.'}
                 </Title>
                 {!isDerma && (
                   <Text className="text-center text-hg-black500 hidden md:block">
@@ -280,10 +293,15 @@ export default function Confirmation({
               >
                 A partir de ahora...
               </Title>
-              {tips.map((item, index) => (
+              {TIPS[
+                isDerma ? 'derma' : isProbadorVirtual ? 'pv' : 'default'
+              ].map((item, index) => (
                 <Flex
                   className={`pb-4 items-start ${
-                    index + 1 !== tips.length
+                    index + 1 !==
+                    TIPS[
+                      isDerma ? 'derma' : isProbadorVirtual ? 'pv' : 'default'
+                    ].length
                       ? 'border-b border-hg-secondary300 pb-4'
                       : ''
                   }`}
