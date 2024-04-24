@@ -228,6 +228,7 @@ export default function IngredientsPrices() {
             size="xl"
             customStyles="px-16"
             href={ROUTES.derma.multistep.start}
+            id="tmevent_derma_prices_cosmetics_button"
           >
             Empezar análisis de piel
           </Button>
