@@ -37,6 +37,12 @@ export const paymentItems = [
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
+    {
+    key: 'frakmenta',
+    label: 'Frakmenta (Offline)',
+    paymentBank: PaymentBank.Frakmenta,
+    paymentMethod: PaymentMethod.CreditCard,
+  },
 ];
 
 export const checkoutPaymentItems = [
