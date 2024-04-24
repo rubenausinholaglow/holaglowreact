@@ -143,6 +143,8 @@ export default function AppointmentResume({
   };
 
   const TreatmentsDashboard = () => {
+    const { selectedTreatments } = useSessionStore(state => state);
+    console.log(selectedTreatments);
     return getProductsMapped().map(item => (
       <div key={item.id}>
         <Text className="font-semibold">{item.title}</Text>
