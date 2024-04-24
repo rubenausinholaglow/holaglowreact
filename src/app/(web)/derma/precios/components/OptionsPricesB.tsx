@@ -72,9 +72,11 @@ export default function OptionsPricesB({
               >
                 <AccordionTrigger
                   className={!isMobile ? 'pointer-events-none hidden' : ''}
-                  id="tmevent_derma_plans_expand_button"
                 >
-                  <div className="flex flex-col p-4 pt-0 md:hidden">
+                  <div
+                    className="flex flex-col p-4 pt-0 md:hidden"
+                    id="tmevent_derma_plans_expand_button"
+                  >
                     <div className="flex justify-left items-center gap-2">
                       <Text className="text-xl font-semibold text-derma-primary500">
                         {subscription.price.value}
