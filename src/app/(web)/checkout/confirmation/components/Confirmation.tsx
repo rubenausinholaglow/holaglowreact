@@ -265,59 +265,62 @@ export default function Confirmation({
           )}
         </div>
 
-        {!appointment && !isDashboard && (
-          <>
-            <Flex
-              layout="col-left"
-              className="bg-derma-secondary500 py-6 px-4 md:rounded-xl gap-4 md:mb-8"
-            >
-              <Title
-                className={`font-light text-left mb-4 ${
-                  isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-                }`}
-                size="xldr"
+        {!appointment ||
+          (!isDashboard && (
+            <>
+              <Flex
+                layout="col-left"
+                className="bg-derma-secondary500 py-6 px-4 md:rounded-xl gap-4 md:mb-8"
               >
-                A partir de ahora...
-              </Title>
-              {tips.map((item, index) => (
-                <Flex
-                  className={`pb-4 items-start ${
-                    index + 1 !== tips.length
-                      ? 'border-b border-hg-secondary300 pb-4'
-                      : ''
+                <Title
+                  className={`font-light text-left mb-4 ${
+                    isDerma ? 'text-derma-primary' : 'text-hg-secondary'
                   }`}
-                  key={item.title}
+                  size="xldr"
                 >
-                  <Text
-                    className={`${
-                      isDerma
-                        ? 'bg-derma-secondary300 text-derma-primary500'
-                        : 'bg-derma-secondary500 text-hg-secondary'
-                    } w-6 h-6 font-semibold items-center  shrink-0 rounded-full text-center mr-2`}
+                  A partir de ahora...
+                </Title>
+                {tips.map((item, index) => (
+                  <Flex
+                    className={`pb-4 items-start ${
+                      index + 1 !== tips.length
+                        ? 'border-b border-hg-secondary300 pb-4'
+                        : ''
+                    }`}
+                    key={item.title}
                   >
-                    {index + 1}
-                  </Text>
-                  <div className="flex flex-col">
-                    <Text className="font-semibold text-sm">{item.title}</Text>
-                    <Text className="text-sm text-hg-black500">
-                      {item.text}
+                    <Text
+                      className={`${
+                        isDerma
+                          ? 'bg-derma-secondary300 text-derma-primary500'
+                          : 'bg-derma-secondary500 text-hg-secondary'
+                      } w-6 h-6 font-semibold items-center  shrink-0 rounded-full text-center mr-2`}
+                    >
+                      {index + 1}
                     </Text>
-                  </div>
-                </Flex>
-              ))}
-              {!isDashboard && !isDerma && (
-                <a href="/tratamientos" className="md:hidden">
-                  <Button type="white" size="md" href={ROUTES.treatments}>
-                    <Flex layout="row-center">
-                      Ver tratamientos
-                      <SvgArrow height={18} width={18} className="ml-2" />
-                    </Flex>
-                  </Button>
-                </a>
-              )}
-            </Flex>
-          </>
-        )}
+                    <div className="flex flex-col">
+                      <Text className="font-semibold text-sm">
+                        {item.title}
+                      </Text>
+                      <Text className="text-sm text-hg-black500">
+                        {item.text}
+                      </Text>
+                    </div>
+                  </Flex>
+                ))}
+                {!isDashboard && !isDerma && (
+                  <a href="/tratamientos" className="md:hidden">
+                    <Button type="white" size="md" href={ROUTES.treatments}>
+                      <Flex layout="row-center">
+                        Ver tratamientos
+                        <SvgArrow height={18} width={18} className="ml-2" />
+                      </Flex>
+                    </Button>
+                  </a>
+                )}
+              </Flex>
+            </>
+          ))}
       </div>
     </Container>
   );
