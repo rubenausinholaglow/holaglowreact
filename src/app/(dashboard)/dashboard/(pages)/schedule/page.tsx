@@ -131,7 +131,10 @@ export default function Page() {
         });
       });
 
-      if (packsToAdd.length == 0 || cart.find(x => x.sessions > 1)) {
+      if (
+        packsToAdd.length == 0 ||
+        cart.find(x => x.sessions > 1 && !x.isPack)
+      ) {
         cart.map(cartItem => {
           if (cartItem.sessions > 1) {
             const packs = addProductUnitiesPack(cartItem);
@@ -139,7 +142,6 @@ export default function Page() {
           }
         });
       }
-
       if (packsToAdd.length > 0) {
         setTreatmentPacks(packsToAdd);
       }
@@ -152,7 +154,7 @@ export default function Page() {
 
   function addProductUnitiesPack(product: Product): PackUnitiesScheduled[] {
     const packsToAdd: PackUnitiesScheduled[] = [];
-    if (product.sessions > 1) {
+    if (product.sessions > 1 && !product.isPack) {
       for (let i = 0; i < product.sessions; i++) {
         packsToAdd.push({
           uniqueId: createUniqueId(),
@@ -204,15 +206,10 @@ export default function Page() {
                   item.packUnities?.some(unit =>
                     treatmentPacks.some(
                       pack =>
-                        pack.id === unit.id &&
+                        pack.id.toLocaleUpperCase() ===
+                          unit.id.toLocaleUpperCase() &&
                         pack.isScheduled == findScheduledProducts
                     )
-                  )) ||
-                (item.sessions > 1 &&
-                  treatmentPacks.some(
-                    pack =>
-                      pack.productId == item.id &&
-                      pack.isScheduled == findScheduledProducts
                   ))
             ),
             findScheduledProducts
@@ -244,21 +241,13 @@ export default function Page() {
                     {item.title}
                   </Text>
 
-                  {item.isScheduled || item.isPack || item.sessions > 1 ? (
+                  {item.isPack ? (
                     <div className="w-full mr-2">
-                      {item.isPack || item.sessions > 1 ? (
+                      {item.isPack ? (
                         <>
                           {treatmentPacks
                             .filter(
-                              pack =>
-                                item.packUnities?.some(
-                                  unit =>
-                                    pack.isScheduled == findScheduledProducts &&
-                                    unit.id === pack.id
-                                ) ||
-                                (item.sessions > 1 &&
-                                  pack.isScheduled == findScheduledProducts &&
-                                  pack.productId == item.id)
+                              pack => pack.isScheduled == findScheduledProducts
                             )
                             .sort((a, b) => (a.type > b.type ? 1 : -1))
                             .map(pack => (
@@ -285,9 +274,7 @@ export default function Page() {
                                       className="text-center mr-44"
                                       key={pack.id}
                                     >
-                                      {item.sessions > 1
-                                        ? ''
-                                        : UnityType[pack.type]}
+                                      {UnityType[pack.type]}
                                     </Text>
                                   </div>
                                 )}
@@ -301,7 +288,7 @@ export default function Page() {
                       )}
                     </div>
                   ) : (
-                    <></>
+                    <>ero</>
                   )}
                 </li>
               );
