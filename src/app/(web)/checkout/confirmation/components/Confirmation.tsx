@@ -76,15 +76,16 @@ export default function Confirmation({
   let tips = [
     {
       title: 'Confirmación de tu cita',
-      text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
+      text: 'Nos pondremos en contacto contigo para confirmar la cita y resolver cualquier duda al respecto',
     },
     {
-      title: 'Recomendaciones pretratamiento',
+      title: 'Conoce a tu Beauty Advisor',
       text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
     },
     {
-      title: 'Distintos métodos de pago',
-      text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
+      title:
+        'Te asesorará en clínica o a través de videollamada según la opción que hayas elegido',
+      text: 'Diseñaremos contigo el mejor tratamiento para conseguir los objetivos que tienes',
     },
   ];
 
@@ -176,7 +177,7 @@ export default function Confirmation({
                     isDerma ? 'text-derma-primary' : ''
                   } text-center mb-4 font-light`}
                 >
-                  Pago recibido.
+                  ¡Recibido!
                 </Title>
                 {!isDerma && (
                   <Text className="text-center text-hg-black500 hidden md:block">
