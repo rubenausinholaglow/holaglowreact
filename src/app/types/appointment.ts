@@ -73,7 +73,7 @@ export interface UserCheckin {
 export interface AppointmentNextResponse {
   id : string;
   flowwwId: string;
-  clinicflowwwId: string;
+  clinicFlowwwId: string;
   clinicId: string;
   clinicProfessionalId : string;
   clinicProfessionalName : string;
