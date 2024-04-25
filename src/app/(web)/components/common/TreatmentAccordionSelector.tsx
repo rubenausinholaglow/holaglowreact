@@ -148,23 +148,21 @@ export default function TreatmentAccordionSelector({
   const validTypes = getValidTypes();
 
   function getProductsByTypePack(): Product[] {
-    const packIds = cart.filter(x => x.isPack).map(x => x.flowwwId.toString());
+    const packIds = new Set<string>(
+      cart.filter(x => x.isPack).map(x => x.flowwwId.toString())
+    );
 
-    let filteredProducts: Product[] = [];
+    const uniqueProductIds = new Set<string>();
 
-    packIds.forEach(packId => {
-      const productPack = PacksConfigured.find(pack => pack.packId === packId);
-
-      if (productPack) {
-        const productIds = productPack.productId;
-
-        const productsForPack = dashboardProducts.filter(product =>
-          productIds.includes(product.flowwwId.toString())
-        );
-
-        filteredProducts = filteredProducts.concat(productsForPack);
+    PacksConfigured.forEach(pack => {
+      if (packIds.has(pack.packId)) {
+        pack.productId.forEach(productId => uniqueProductIds.add(productId));
       }
     });
+
+    const filteredProducts = dashboardProducts.filter(product =>
+      uniqueProductIds.has(product.flowwwId.toString())
+    );
 
     filteredProducts.sort((a, b) => {
       if (a.unityType < b.unityType) return 1;
@@ -175,6 +173,7 @@ export default function TreatmentAccordionSelector({
 
       return 0;
     });
+
     return filteredProducts;
   }
 

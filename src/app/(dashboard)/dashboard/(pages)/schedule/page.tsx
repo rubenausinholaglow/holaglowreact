@@ -108,7 +108,6 @@ export default function Page() {
   async function setTreatments() {
     try {
       const packsToAdd: PackUnitiesScheduled[] = [];
-      const productsWithUpgrades = productsAndSessions.map(x => x.productName);
       const productTitles: string[] = cart
         .filter(
           cartItem =>
@@ -325,7 +324,7 @@ export default function Page() {
                       <>{renderSesssions(item, findScheduledProducts)}</>
                     )}
 
-                    {!item.isPack && item.sessions < 1 && (
+                    {!item.isPack && item.sessions <= 1 && (
                       <div className="text-right mr-2 items-end w-full">
                         {item.scheduledDate}
                       </div>
