@@ -49,6 +49,7 @@ export default function PVCard() {
       </Flex>
       <Button
         type="primary"
+        id="tmevent_click_book_pv_button_prices"
         className="self-start mt-auto"
         onClick={() => {
           setSelectedTreatments([product]);
