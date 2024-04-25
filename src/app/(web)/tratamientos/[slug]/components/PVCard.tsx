@@ -50,7 +50,7 @@ export default function PVCard() {
       </Flex>
       <Button
         type="primary"
-        className="self-start mt-4"
+        className="self-start mt-auto"
         onClick={() => {
           setSelectedTreatments([product]);
           router.push(ROUTES.checkout.clinics);
