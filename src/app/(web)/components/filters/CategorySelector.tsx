@@ -98,7 +98,7 @@ export default function CategorySelector({
             id={`tmevent_treatments_type_${category}`}
             key={category}
             className={`shrink-0 ${
-              i === productCategories.length - 1 ? 'mr-4' : ''
+              i === productCategories.length - 1 ? 'mr-4 md:mr-0' : ''
             }`}
             onClick={() => {
               setProductFilters(
