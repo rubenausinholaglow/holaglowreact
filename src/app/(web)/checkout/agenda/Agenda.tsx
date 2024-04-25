@@ -326,10 +326,11 @@ export default function Agenda({
             }
 
             if (treatmentsToSchedule.filter(x => x.sessions > 1).length > 0) {
-              updateTreatmentInSession(
+              const x = updateTreatmentInSession(
                 scheduledDate,
                 treatmentsToSchedule.filter(x => x.sessions > 1)
               );
+              treatmentsUpdateds.push(...(x as CartItem[]));
             }
 
             if (treatmentsUpdateds.length < selectedTreatments.length) {
@@ -391,18 +392,35 @@ export default function Agenda({
   function updateTreatmentInSession(
     scheduledDate: string,
     treatmentsToSchedule: Product[]
-  ) {
+  ): Product[] {
     if (treatmentsToSchedule.length > 0) {
-      treatmentsToSchedule.forEach(treatment => {
-        const packsTopUpdate = treatmentPacks.filter(
-          x => x.isScheduled == false && x.productId == treatment.id
+      const treatmentsList = treatmentsToSchedule;
+      const treatmentIds: string[] = [];
+      const packIds: string[] = [];
+      const packsTopUpdate = treatmentPacks;
+      treatmentsList.forEach(tr => {
+        const packIndex = packsTopUpdate.findIndex(
+          pack =>
+            pack.productId === tr.id &&
+            pack.isScheduled == false &&
+            !packIds.includes(pack.id)
         );
-        const pack = packsTopUpdate[0];
-        pack.isScheduled = true;
-        pack.scheduledDate = scheduledDate;
-        pack.treatmentName = treatment.title;
+        if (packIndex !== -1) {
+          const updatedPack = { ...packsTopUpdate[packIndex] };
+          updatedPack.isScheduled = true;
+          updatedPack.scheduledDate = scheduledDate;
+          updatedPack.treatmentName = tr.title;
+          packsTopUpdate[packIndex] = updatedPack;
+
+          treatmentIds.push(tr.id);
+          packIds.push(updatedPack.id);
+        } else {
+          console.log('no se ha encontrado el pack');
+        }
       });
+      setTreatmentPacks(packsTopUpdate);
     }
+    return treatmentsToSchedule;
   }
 
   function updateTreatmentInPack(
