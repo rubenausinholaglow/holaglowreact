@@ -167,6 +167,7 @@ export default function Page({
       await ScheduleService.getClinicSchedule(appointmentId).then(
         async data => {
           if (data != null) {
+            debugger;
             setCurrentUser(data.lead.user);
             setAppointmentId(appointmentId);
             setClinicId(data.clinic.id);
@@ -257,7 +258,7 @@ export default function Page({
           if (data != null) {
             setAppointmentId(data.id);
             setClinicId(data.clinicId);
-            setClinicFlowwwId(data.clinicflowwwId);
+            setClinicFlowwwId(data.clinicFlowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
             setSelectedClinic(getClinicToSet(clinics, data.clinicId));
 
