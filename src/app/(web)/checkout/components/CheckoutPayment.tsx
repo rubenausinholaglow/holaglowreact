@@ -4,6 +4,7 @@ import { Client } from '@interface/client';
 import { validateEmail, validatePhone } from '@utils/validators';
 import { SvgWarning } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
+import dayjs from 'dayjs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -52,12 +53,14 @@ export default function CheckoutPayment({
       address,
       city,
       dni,
+      birthDate,
     } = formData;
 
     const cleanedPhoneNumber =
       phonePrefix === '+34' ? phone.slice(3).replace(/ /g, '') : phone;
 
     let dataToCheck: any;
+    debugger;
     if (checkAddress) {
       dataToCheck = {
         name: !isEmpty(name),
@@ -71,6 +74,7 @@ export default function CheckoutPayment({
         dni:
           !isEmpty(dni) &&
           (isValidNif(dni.toUpperCase()) || isValidNie(dni.toUpperCase())),
+        birthday: !isEmpty(birthDate) && dayjs(birthDate) < dayjs(),
       };
     } else {
       dataToCheck = {
