@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
   if (
     subdomain &&
     (url.href === 'http://localhost:3000/' ||
-      (url.href.startsWith('https://holaglowreact-git-dev') &&
+      (url.href.startsWith('https://holaglowreact-git-') &&
         url.pathname === '/'))
   ) {
     // redirect to dermaHome
