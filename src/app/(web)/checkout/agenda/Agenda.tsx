@@ -30,7 +30,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { isEmpty, remove, update } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import NeedHelp from './NeedHelp';
@@ -301,74 +301,41 @@ export default function Agenda({
             selectedPack
           ).then(x => {*/
           if (isDashboard) {
-            const filteredCart = cart.filter(
-              cartItem =>
-                validTypesFilterCart.includes(cartItem.type) &&
-                (cartItem.isScheduled === false ||
-                  cartItem.isScheduled === undefined)
+            let treatmentsToSchedule: Product[] = selectedTreatments.filter(
+              x => !x.isPack
             );
+            const scheduledDate = getScheduledDate();
+            const treatmentsCartPendingToUpdate = filterCartPendingToUpdate();
 
-            const dateScehduled =
-              formatDate(selectedDay.toDate(), false) +
-              ' ' +
-              selectedSlot!.startTime.toString();
-            if (
-              filteredCart.length >= selectedTreatments.length ||
-              treatmentPacks.length > 0
-            ) {
-              if (
-                selectedTreatments.length == 1 &&
-                !selectedTreatments[0].isPack
-              ) {
-                const selectedProduct = filteredCart.find(
-                  x => x.title == selectedTreatments[0].title
+            const treatmentsUpdateds: CartItem[] = [];
+            let treatmentsToUpdate: CartItem[] = [];
+
+            if (treatmentsCartPendingToUpdate.length > 0) {
+              treatmentsToUpdate = treatmentsCartPendingToUpdate.filter(x =>
+                selectedTreatments.some(y => y.title == x.title)
+              );
+
+              treatmentsToUpdate.forEach(x => {
+                treatmentsUpdateds.push(x);
+                treatmentsToSchedule = removeTreatmentFromList(
+                  x.id,
+                  treatmentsToSchedule
                 );
-
-                if (selectedProduct != null) {
-                  if (selectedProduct.sessions > 1) {
-                    updateSessionScheduled(selectedProduct, dateScehduled);
-                  } else {
-                    updateIsScheduled(
-                      true,
-                      selectedProduct!.uniqueId,
-                      dateScehduled,
-                      selectedProduct.title
-                    );
-                  }
-                } else {
-                  treatmentPacks.length > 0
-                    ? updateTreatmentPackScheduled(
-                        selectedTreatments,
-                        dateScehduled
-                      )
-                    : null;
-                }
-              } else {
-                treatmentPacks.length > 0
-                  ? updateTreatmentPackScheduled(
-                      selectedTreatments,
-                      dateScehduled
-                    )
-                  : null;
-
-                selectedTreatments.forEach(treatment => {
-                  const selectedProducts = filteredCart.filter(
-                    cartItem =>
-                      cartItem.id === treatment.id &&
-                      (cartItem.isScheduled === false ||
-                        cartItem.isScheduled === undefined)
-                  );
-                  selectedProducts.forEach(item => {
-                    updateIsScheduled(
-                      true,
-                      item.uniqueId,
-                      dateScehduled,
-                      item.title
-                    );
-                  });
-                });
-              }
+                updateIsScheduled(true, x.uniqueId, scheduledDate, x.title);
+              });
             }
+
+            if (treatmentsToSchedule.filter(x => x.sessions > 1).length > 0) {
+              updateTreatmentInSession(
+                scheduledDate,
+                treatmentsToSchedule.filter(x => x.sessions > 1)
+              );
+            }
+
+            if (treatmentsUpdateds.length < selectedTreatments.length) {
+              updateTreatmentInPack(scheduledDate, treatmentsToSchedule);
+            }
+
             router.push(
               `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
             );
@@ -389,6 +356,113 @@ export default function Agenda({
       schedule();
     }
   }, [selectedSlot]);
+
+  function getScheduledDate(): string {
+    return (
+      formatDate(selectedDay!.toDate(), false) +
+      ' ' +
+      selectedSlot!.startTime.toString()
+    );
+  }
+
+  function filterCartPendingToUpdate(): CartItem[] {
+    return cart.filter(
+      x =>
+        x.isScheduled === false &&
+        !x.isPack &&
+        x.sessions <= 1 &&
+        validTypesFilterCart.includes(x.type)
+    );
+  }
+
+  function removeTreatmentFromList(
+    idToRemove: string,
+    treatments: Product[]
+  ): Product[] {
+    const indexToRemove = treatments.findIndex(
+      treatment => treatment.id === idToRemove
+    );
+    if (indexToRemove !== -1) {
+      treatments.splice(indexToRemove, 1);
+    }
+    return treatments;
+  }
+
+  function updateTreatmentInSession(
+    scheduledDate: string,
+    treatmentsToSchedule: Product[]
+  ) {
+    if (treatmentsToSchedule.length > 0) {
+      treatmentsToSchedule.forEach(treatment => {
+        const packsTopUpdate = treatmentPacks.filter(
+          x => x.isScheduled == false && x.productId == treatment.id
+        );
+        const pack = packsTopUpdate[0];
+        pack.isScheduled = true;
+        pack.scheduledDate = scheduledDate;
+        pack.treatmentName = treatment.title;
+      });
+    }
+  }
+
+  function updateTreatmentInPack(
+    scheduledDate: string,
+    treatmentsToSchedule: Product[]
+  ) {
+    const treatmentsList = treatmentsToSchedule;
+    const treatmentIds: string[] = [];
+    const packIds: string[] = [];
+    const packsTopUpdate = treatmentPacks;
+
+    treatmentsList.forEach(tr => {
+      const packIndex = packsTopUpdate.findIndex(
+        pack =>
+          pack.type === tr.unityType &&
+          pack.isScheduled == false &&
+          !packIds.includes(pack.id)
+      );
+      if (packIndex !== -1) {
+        const updatedPack = { ...packsTopUpdate[packIndex] };
+        updatedPack.isScheduled = true;
+        updatedPack.scheduledDate = scheduledDate;
+        updatedPack.treatmentName = tr.title;
+        packsTopUpdate[packIndex] = updatedPack;
+
+        treatmentIds.push(tr.id);
+        packIds.push(updatedPack.id);
+      } else {
+        console.log('no se ha encontrado el pack');
+      }
+    });
+    setTreatmentPacks(packsTopUpdate);
+    treatmentIds.forEach(id => {
+      treatmentsToSchedule = removeTreatmentFromList(id, treatmentsToSchedule);
+    });
+  }
+
+  function updateTreatmentsFromCart(
+    filteredCart: CartItem[],
+    dateScehduled: string
+  ): CartItem[] {
+    const treatments: CartItem[] = [];
+
+    selectedTreatments.forEach(treatment => {
+      const selectedProducts = filteredCart.filter(
+        cartItem =>
+          cartItem.id === treatment.id &&
+          (cartItem.isScheduled === false || cartItem.isScheduled === undefined)
+      );
+
+      selectedProducts.forEach(item => {
+        if (!treatments.includes(item)) {
+          treatments.push(item);
+          updateIsScheduled(true, item.uniqueId, dateScehduled, item.title);
+        }
+      });
+    });
+
+    return treatments;
+  }
 
   function updateSessionScheduled(product: CartItem, scheduledDate: string) {
     let isUpdated = false;
@@ -419,37 +493,6 @@ export default function Agenda({
     }
 
     setTreatmentPacks(updatedPacks);
-  }
-
-  function updateTreatmentPackScheduled(
-    products: Product[],
-    scheduledDate: string
-  ) {
-    const matchingTreatments: PackUnitiesScheduled[] = [];
-    products.forEach(prod => {
-      const productInCart =
-        cart.filter(x => x.id == prod.id && x.isScheduled == false).length > 0;
-      if (productInCart) return;
-      const matchingTreatment = treatmentPacks.find(
-        treat =>
-          treat.type === prod.unityType && !matchingTreatments.includes(treat)
-      );
-      if (matchingTreatment) {
-        matchingTreatment.treatmentName = prod.title;
-        matchingTreatments.push(matchingTreatment);
-      }
-    });
-    const remainingTreatments = treatmentPacks.filter(
-      treat => !matchingTreatments.some(mt => mt.uniqueId === treat.uniqueId)
-    );
-
-    const updatedPacks = matchingTreatments.map(pack => ({
-      ...pack,
-      isScheduled: true,
-      scheduledDate: scheduledDate,
-      treatmentName: pack.treatmentName,
-    }));
-    setTreatmentPacks([...remainingTreatments, ...updatedPacks]);
   }
 
   useEffect(() => {
