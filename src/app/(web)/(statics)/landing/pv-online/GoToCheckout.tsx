@@ -14,6 +14,7 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+import UserService from '@services/UserService';
 
 export default function GoToCheckout() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function GoToCheckout() {
 
   const { clinics } = useGlobalPersistedStore(state => state);
   const [product, setProduct] = useState<Product | null>(null);
+  const { setCurrentUser } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     async function initPVOnlineProduct(productId: string) {
@@ -33,6 +35,15 @@ export default function GoToCheckout() {
     initPVOnlineProduct(
       process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ONLINE_ID || ''
     );
+    const queryString = window?.location?.search;
+    const params = new URLSearchParams(queryString.toLowerCase());
+    const userId = params.get('userid') || '';
+
+    async function login() {
+      const user = await UserService.getUserById(userId);
+      setCurrentUser(user);
+    }
+    if (userId) login();
   }, []);
 
   if (isEmpty(product)) {
@@ -49,20 +60,34 @@ export default function GoToCheckout() {
   }
 
   return (
-    <Button
-      id="tmevent_landingPV_start"
-      size={isMobile ? 'lg' : 'xl'}
-      type="primary"
-      className="mb-8"
-      onClick={() => {
-        setSelectedTreatments([product]);
-        const clinic = clinics.find(x => x.city == 'Valencia')!;
-        setSelectedClinic(clinic);
-        router.push(ROUTES.checkout.schedule);
-      }}
-    >
-      Pedir cita gratis
-      <SvgArrow className="h-4 w-4 ml-2" />
-    </Button>
+    <>
+      {isEmpty(product) && (
+        <Button
+          size={isMobile ? 'lg' : 'xl'}
+          type="tertiary"
+          customStyles="bg-hg-secondary border-none text-white gap-2 px-16 hover:bg-hg-secondary700"
+          className="mb-8"
+        >
+          <SvgSpinner className="text-white" />
+        </Button>
+      )}
+      {!isEmpty(product) && (
+        <Button
+          id="tmevent_landingPV_start"
+          size={isMobile ? 'lg' : 'xl'}
+          type="primary"
+          className="mb-8"
+          onClick={() => {
+            setSelectedTreatments([product]);
+            const clinic = clinics.find(x => x.city == 'Valencia')!;
+            setSelectedClinic(clinic);
+            router.push(ROUTES.checkout.schedule);
+          }}
+        >
+          Pedir cita gratis
+          <SvgArrow className="h-4 w-4 ml-2" />
+        </Button>
+      )}
+    </>
   );
 }
