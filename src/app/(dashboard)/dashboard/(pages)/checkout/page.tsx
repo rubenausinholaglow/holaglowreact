@@ -183,6 +183,7 @@ const Page = () => {
                 className="w-full"
                 size="md"
                 type="white"
+                href=""
                 onClick={e => {
                   setTreatmentPacks([]);
                   setIsLoadingAgenda(true);

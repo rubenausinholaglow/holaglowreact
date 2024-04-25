@@ -289,7 +289,7 @@ export default function Agenda({
           if (isDashboard || isCheckin)
             analyticsMetrics.externalReference = '14';
 
-          await ScheduleService.createAppointment(
+          /*await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
             selectedDay,
@@ -299,49 +299,41 @@ export default function Agenda({
             analyticsMetrics,
             '',
             selectedPack
-          ).then(x => {
-            if (isDashboard) {
-              const filteredCart = cart.filter(
-                cartItem =>
-                  validTypesFilterCart.includes(cartItem.type) &&
-                  (cartItem.isScheduled === false ||
-                    cartItem.isScheduled === undefined)
-              );
+          ).then(x => {*/
+          if (isDashboard) {
+            const filteredCart = cart.filter(
+              cartItem =>
+                validTypesFilterCart.includes(cartItem.type) &&
+                (cartItem.isScheduled === false ||
+                  cartItem.isScheduled === undefined)
+            );
 
-              const dateScehduled =
-                formatDate(selectedDay.toDate(), false) +
-                ' ' +
-                selectedSlot!.startTime.toString();
+            const dateScehduled =
+              formatDate(selectedDay.toDate(), false) +
+              ' ' +
+              selectedSlot!.startTime.toString();
+            if (
+              filteredCart.length >= selectedTreatments.length ||
+              treatmentPacks.length > 0
+            ) {
               if (
-                filteredCart.length >= selectedTreatments.length ||
-                treatmentPacks.length > 0
+                selectedTreatments.length == 1 &&
+                !selectedTreatments[0].isPack
               ) {
-                if (
-                  selectedTreatments.length == 1 &&
-                  !selectedTreatments[0].isPack
-                ) {
-                  const selectedProduct = filteredCart.find(
-                    x => x.title == selectedTreatments[0].title
-                  );
+                const selectedProduct = filteredCart.find(
+                  x => x.title == selectedTreatments[0].title
+                );
 
-                  if (selectedProduct != null) {
-                    if (selectedProduct.sessions > 1) {
-                      updateSessionScheduled(selectedProduct, dateScehduled);
-                    } else {
-                      updateIsScheduled(
-                        true,
-                        selectedProduct!.uniqueId,
-                        dateScehduled,
-                        selectedProduct.title
-                      );
-                    }
+                if (selectedProduct != null) {
+                  if (selectedProduct.sessions > 1) {
+                    updateSessionScheduled(selectedProduct, dateScehduled);
                   } else {
-                    treatmentPacks.length > 0
-                      ? updateTreatmentPackScheduled(
-                          selectedTreatments,
-                          dateScehduled
-                        )
-                      : null;
+                    updateIsScheduled(
+                      true,
+                      selectedProduct!.uniqueId,
+                      dateScehduled,
+                      selectedProduct.title
+                    );
                   }
                 } else {
                   treatmentPacks.length > 0
@@ -350,32 +342,40 @@ export default function Agenda({
                         dateScehduled
                       )
                     : null;
-
-                  selectedTreatments.forEach(treatment => {
-                    const selectedProducts = filteredCart.filter(
-                      cartItem =>
-                        cartItem.id === treatment.id &&
-                        (cartItem.isScheduled === false ||
-                          cartItem.isScheduled === undefined)
-                    );
-                    selectedProducts.forEach(item => {
-                      updateIsScheduled(
-                        true,
-                        item.uniqueId,
-                        dateScehduled,
-                        item.title
-                      );
-                    });
-                  });
                 }
+              } else {
+                treatmentPacks.length > 0
+                  ? updateTreatmentPackScheduled(
+                      selectedTreatments,
+                      dateScehduled
+                    )
+                  : null;
+
+                selectedTreatments.forEach(treatment => {
+                  const selectedProducts = filteredCart.filter(
+                    cartItem =>
+                      cartItem.id === treatment.id &&
+                      (cartItem.isScheduled === false ||
+                        cartItem.isScheduled === undefined)
+                  );
+                  selectedProducts.forEach(item => {
+                    updateIsScheduled(
+                      true,
+                      item.uniqueId,
+                      dateScehduled,
+                      item.title
+                    );
+                  });
+                });
               }
-              router.push(
-                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
-              );
-            } else if (!isDashboard && !isDerma) {
-              router.push(ROUTES.checkout.thankYou);
             }
-          });
+            router.push(
+              `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
+            );
+          } else if (!isDashboard && !isDerma) {
+            router.push(ROUTES.checkout.thankYou);
+          }
+          //});
         } else if (!isDerma) {
           router.push('/checkout/contactform');
         } else if (isDerma && isCheckout) {
@@ -411,7 +411,7 @@ export default function Agenda({
     });
 
     if (
-      updatedPacks.some(
+      !updatedPacks.some(
         x => x.isScheduled == false && x.productId == product.id
       )
     ) {

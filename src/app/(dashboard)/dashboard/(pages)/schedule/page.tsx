@@ -10,6 +10,7 @@ import {
 } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
+import { productsAndSessions } from '@utils/agendaUtils';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import { getClinicToSet, validTypesFilterCart } from '@utils/utils';
@@ -107,6 +108,7 @@ export default function Page() {
   async function setTreatments() {
     try {
       const packsToAdd: PackUnitiesScheduled[] = [];
+      const productsWithUpgrades = productsAndSessions.map(x => x.productName);
       const productTitles: string[] = cart
         .filter(
           cartItem =>
@@ -130,13 +132,12 @@ export default function Page() {
           }
         });
       });
-
       if (
         packsToAdd.length == 0 ||
         cart.find(x => x.sessions > 1 && !x.isPack)
       ) {
         cart.map(cartItem => {
-          if (cartItem.sessions > 1) {
+          if (cartItem.sessions > 1 && !cartItem.isPack) {
             const packs = addProductUnitiesPack(cartItem);
             packsToAdd.push(...packs);
           }
@@ -208,14 +209,89 @@ export default function Page() {
                       pack =>
                         pack.id.toLocaleUpperCase() ===
                           unit.id.toLocaleUpperCase() &&
+                        pack.productId == item.id &&
                         pack.isScheduled == findScheduledProducts
                     )
+                  )) ||
+                (item.sessions > 1 &&
+                  treatmentPacks.some(
+                    pack =>
+                      pack.productId == item.id &&
+                      pack.isScheduled == findScheduledProducts
                   ))
             ),
             findScheduledProducts
           )}
         </AccordionItem>
       </Accordion>
+    );
+  };
+
+  const renderPack = (item: CartItem, findScheduledProducts = false) => {
+    return (
+      <>
+        {treatmentPacks
+          .filter(
+            pack =>
+              pack.isScheduled == findScheduledProducts &&
+              pack.productId == item.id
+          )
+          .sort((a, b) => (a.type > b.type ? 1 : -1))
+          .map(pack => (
+            <>
+              {pack.isScheduled ? (
+                <div className="flex gap-4 ">
+                  <Text className="flex-grow text-center" key={pack.id}>
+                    {pack.treatmentName}
+                  </Text>
+
+                  <Text className="">{pack.scheduledDate?.split(' ')[0]}</Text>
+                  <Text className="">{pack.scheduledDate?.split(' ')[1]}</Text>
+                </div>
+              ) : (
+                <div className="gap-4 w-full">
+                  <Text className="text-center mr-44" key={pack.id}>
+                    {UnityType[pack.type]}
+                  </Text>
+                </div>
+              )}
+            </>
+          ))}
+      </>
+    );
+  };
+
+  const renderSesssions = (item: CartItem, findScheduledProducts = false) => {
+    return (
+      <>
+        {treatmentPacks
+          .filter(
+            pack =>
+              pack.isScheduled == findScheduledProducts &&
+              pack.productId == item.id
+          )
+          .sort((a, b) => (a.type > b.type ? 1 : -1))
+          .map(pack => (
+            <>
+              {pack.isScheduled ? (
+                <div className="flex gap-4 ">
+                  <Text className="flex-grow text-center" key={pack.id}>
+                    {pack.treatmentName}
+                  </Text>
+
+                  <Text className="">{pack.scheduledDate?.split(' ')[0]}</Text>
+                  <Text className="">{pack.scheduledDate?.split(' ')[1]}</Text>
+                </div>
+              ) : (
+                <div className="gap-4 w-full">
+                  <Text className="text-center mr-44" key={pack.id}>
+                    {item.title}
+                  </Text>
+                </div>
+              )}
+            </>
+          ))}
+      </>
     );
   };
 
@@ -241,55 +317,20 @@ export default function Page() {
                     {item.title}
                   </Text>
 
-                  {item.isPack ? (
-                    <div className="w-full mr-2">
-                      {item.isPack ? (
-                        <>
-                          {treatmentPacks
-                            .filter(
-                              pack => pack.isScheduled == findScheduledProducts
-                            )
-                            .sort((a, b) => (a.type > b.type ? 1 : -1))
-                            .map(pack => (
-                              <>
-                                {pack.isScheduled ? (
-                                  <div className="flex gap-4 ">
-                                    <Text
-                                      className="flex-grow text-center"
-                                      key={pack.id}
-                                    >
-                                      {pack.treatmentName}
-                                    </Text>
+                  <div className="w-full mr-2">
+                    {item.isPack && (
+                      <>{renderPack(item, findScheduledProducts)}</>
+                    )}
+                    {!item.isPack && item.sessions > 1 && (
+                      <>{renderSesssions(item, findScheduledProducts)}</>
+                    )}
 
-                                    <Text className="">
-                                      {pack.scheduledDate?.split(' ')[0]}
-                                    </Text>
-                                    <Text className="">
-                                      {pack.scheduledDate?.split(' ')[1]}
-                                    </Text>
-                                  </div>
-                                ) : (
-                                  <div className="gap-4 w-full">
-                                    <Text
-                                      className="text-center mr-44"
-                                      key={pack.id}
-                                    >
-                                      {UnityType[pack.type]}
-                                    </Text>
-                                  </div>
-                                )}
-                              </>
-                            ))}
-                        </>
-                      ) : (
-                        <div className="text-right mr-2 items-end w-full">
-                          {item.scheduledDate}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <>ero</>
-                  )}
+                    {!item.isPack && item.sessions < 1 && (
+                      <div className="text-right mr-2 items-end w-full">
+                        {item.scheduledDate}
+                      </div>
+                    )}
+                  </div>
                 </li>
               );
             })}

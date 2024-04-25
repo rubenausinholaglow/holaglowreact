@@ -5,11 +5,11 @@ import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
 import {
   getInvalidProducts,
-  getValidProductsToAdd,
   getValidTypes,
   getValidUnityTypes,
   isDisableAddQuantity,
 } from '@utils/agendaUtils';
+import { PacksConfigured } from '@utils/packUtils';
 import useRoutes from '@utils/useRoutes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
@@ -51,7 +51,6 @@ export default function TreatmentAccordionSelector({
   const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
 
   const notValidProducts = getInvalidProducts(cart);
-  const validProductsToAdd = getValidProductsToAdd(cart);
 
   useEffect(() => {
     if (isDashboard && !isEmpty(dashboardProducts)) {
@@ -149,21 +148,34 @@ export default function TreatmentAccordionSelector({
   const validTypes = getValidTypes();
 
   function getProductsByTypePack(): Product[] {
-    const products = dashboardProducts.filter(
-      product =>
-        !notValidProducts.includes(product.flowwwId.toString()) &&
-        validUnityTypes.includes(product.unityType) &&
-        validTypes.includes(product.type) &&
-        !product.isPack
-    );
+    const packIds = cart.filter(x => x.isPack).map(x => x.flowwwId.toString());
 
-    if (validProductsToAdd.length > 0) {
-      const prods: Product[] = dashboardProducts.filter(x =>
-        validProductsToAdd.includes(x.flowwwId.toString())
-      );
-      products.push(...prods);
-    }
-    return products;
+    let filteredProducts: Product[] = [];
+
+    packIds.forEach(packId => {
+      const productPack = PacksConfigured.find(pack => pack.packId === packId);
+
+      if (productPack) {
+        const productIds = productPack.productId;
+
+        const productsForPack = dashboardProducts.filter(product =>
+          productIds.includes(product.flowwwId.toString())
+        );
+
+        filteredProducts = filteredProducts.concat(productsForPack);
+      }
+    });
+
+    filteredProducts.sort((a, b) => {
+      if (a.unityType < b.unityType) return 1;
+      if (a.unityType > b.unityType) return -1;
+
+      if (a.title < b.title) return -1;
+      if (a.title > b.title) return 1;
+
+      return 0;
+    });
+    return filteredProducts;
   }
 
   const renderAcordionContent = (
