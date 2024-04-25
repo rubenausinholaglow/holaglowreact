@@ -22,7 +22,7 @@ const INGREDIENTS = [
     name: 'Vitamina A',
     imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaA.jpg',
     concentration: '0,006-0,1%',
-    tags: ['Melasma', 'Acné', 'Calidad de la piel'],
+    tags: ['Melasma', 'Acné', 'Antiaging'],
     description:
       'La vitamina A es conocida por sus propiedades integrales para el cuidado de la piel. Pertenece al grupo de los retinoides y es especialmente eficaz para combatir las imperfecciones de la piel gracias a sus propiedades antiinflamatorias, comedolíticas y anticomedógenas.',
   },
@@ -54,7 +54,7 @@ const INGREDIENTS = [
     name: 'Eritromicina',
     imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg',
     concentration: '2%',
-    tags: ['Acné', 'Rosácea', 'Calidad de la piel'],
+    tags: ['Acné', 'Rosácea', 'Antiaging'],
     description:
       'Es un antibiótico que inhibe el crecimiento de bacterias en la piel y ayuda a reducir la inflamación. La eritromicina es particularmente útil para pacientes sensibles a otros tratamientos.',
   },
