@@ -53,7 +53,7 @@ export default function CheckoutPayment({
       address,
       city,
       dni,
-      birthDate,
+      birthday,
     } = formData;
 
     const cleanedPhoneNumber =
@@ -73,7 +73,7 @@ export default function CheckoutPayment({
         dni:
           !isEmpty(dni) &&
           (isValidNif(dni.toUpperCase()) || isValidNie(dni.toUpperCase())),
-        birthday: !isEmpty(birthDate) && dayjs(birthDate) < dayjs(),
+        birthday: !isEmpty(birthday) && dayjs(birthday) < dayjs(),
       };
     } else {
       dataToCheck = {

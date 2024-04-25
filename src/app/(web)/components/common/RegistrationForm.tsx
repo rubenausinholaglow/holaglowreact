@@ -378,8 +378,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full bg-white shadow-none"
           placeholder="Escribe aquí"
           type="date"
-          value={formData?.birthDate || ''}
-          onChange={event => handleFieldChange(event, 'birthDate')}
+          value={formData?.birthday || ''}
+          onChange={event => handleFieldChange(event, 'birthday')}
           disableBgIcons
         />
       )}

@@ -144,7 +144,6 @@ export default function DermaPayment() {
                 className="mt-8"
                 formData={client}
                 checkAddress={true}
-                checkBirthday={true}
               />
             )}
           </div>
