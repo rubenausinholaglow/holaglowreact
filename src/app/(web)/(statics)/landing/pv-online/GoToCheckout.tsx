@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Product } from '@interface/product';
+import UserService from '@services/UserService';
 import { fetchProduct } from '@utils/fetch';
 import ROUTES from '@utils/routes';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -14,7 +15,6 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
-import UserService from '@services/UserService';
 
 export default function GoToCheckout() {
   const router = useRouter();
