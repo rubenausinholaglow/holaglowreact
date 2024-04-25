@@ -257,7 +257,7 @@ export default function Page({
           if (data != null) {
             setAppointmentId(data.id);
             setClinicId(data.clinicId);
-            setClinicFlowwwId(data.clinicflowwwId);
+            setClinicFlowwwId(data.clinicFlowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
             setSelectedClinic(getClinicToSet(clinics, data.clinicId));
 
