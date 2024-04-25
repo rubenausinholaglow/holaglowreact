@@ -201,7 +201,7 @@ export default function Page() {
           {renderAcordionContent(
             cart.filter(
               item =>
-                item.isScheduled == findScheduledProducts ||
+                (item.isScheduled == findScheduledProducts && !item.isPack) ||
                 (item.isPack &&
                   item.packUnities?.some(unit =>
                     treatmentPacks.some(

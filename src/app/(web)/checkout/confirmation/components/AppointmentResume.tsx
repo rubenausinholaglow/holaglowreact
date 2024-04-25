@@ -334,7 +334,6 @@ export default function AppointmentResume({
                   <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
                 </Flex>
               </AccordionTrigger>
-
               <AccordionContent className="md:border-t border-derma-secondary400 md:pt-2 ">
                 <Flex
                   layout="col-left"
@@ -489,6 +488,38 @@ export default function AppointmentResume({
     );
   };
 
+  const AppointmentResumeDashboard = () => {
+    return (
+      <Accordion
+        collapsible={true}
+        defaultValue="1"
+        type="single"
+        className="w-full mt-auto pb-[2px] pl-[2px] pr-[2px]"
+      >
+        <AccordionItem {...accordionItemProps}>
+          <AccordionTrigger className="">
+            <Flex className="w-full justify-between p-4">
+              <Flex className="gap-2 text-sm">
+                <SvgBag height={16} width={16} /> Resumen del pedido
+              </Flex>
+            </Flex>
+          </AccordionTrigger>
+
+          <div className="md:border-t border-derma-secondary400 md:pt-2 py-4 ">
+            <Flex
+              layout="col-left"
+              className={`w-full text-sm px-4 ${
+                !isConfirmation ? 'md:px-0' : ''
+              }`}
+            >
+              <TreatmentsDashboard />
+            </Flex>
+          </div>
+        </AccordionItem>
+      </Accordion>
+    );
+  };
+
   const appointmentComponent = useMemo(() => {
     return (
       <Flex
@@ -500,6 +531,7 @@ export default function AppointmentResume({
           {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
           {isDerma && <TreatmentDerma />}
           {!appointment && <AppointmentDataResume />}
+          {isDashboard && <AppointmentResumeDashboard />}
         </Flex>
       </Flex>
     );
