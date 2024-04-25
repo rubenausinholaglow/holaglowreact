@@ -84,13 +84,10 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
               layout="col-left"
               className="md:flex-row gap-8 md:items-stretch"
             >
-              {productItems.map((item: Product, index: number) => (
-                <ProductPriceCard
-                  key={item.title}
-                  product={item}
-                  parentProduct={product}
-                />
-              ))}
+              <ProductPriceCard
+                product={productItems[0]}
+                parentProduct={product}
+              />
 
               <PVCard />
             </Flex>

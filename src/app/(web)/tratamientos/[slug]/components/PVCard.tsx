@@ -44,7 +44,7 @@ export default function PVCard() {
         </Flex>
         <Text className="font-semibold md:text-lg">Primera cita</Text>
       </Flex>
-      <Flex layout="row-left" className="w-full pt-2 items-center gap-2">
+      <Flex layout="row-left" className="w-full pt-2 items-center gap-2 mb-6">
         <SvgUserScan className="w-6 h-6 text-hg-secondary" />
         <Text className="text-sm">Te asesoramos con nuestro escáner 3D</Text>
       </Flex>
