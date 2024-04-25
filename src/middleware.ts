@@ -13,15 +13,13 @@ export async function middleware(req: NextRequest) {
 
   const host = req.headers.get('host');
   const subdomain = getValidSubdomain(host);
-  if (subdomain && url.href === 'http://localhost:3000/') {
-    console.log('url in middleware if has subdomain', url);
-
+  if (
+    subdomain &&
+    (url.href === 'http://localhost:3000/' ||
+      (url.href.startsWith('https://holaglowreact-git-dev') &&
+        url.pathname === '/'))
+  ) {
     // redirect to dermaHome
-
-    /* console.log(
-      `>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`
-    );
-    */
     url.pathname = `/${subdomain}${url.pathname}`;
   }
 

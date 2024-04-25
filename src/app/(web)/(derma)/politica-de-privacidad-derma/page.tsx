@@ -7,7 +7,9 @@ export default function PrivacyPolicy() {
     <DermaLayout>
       <meta name="robots" content="noindex,follow" />
       <Container className="py-8 md:py-12">
-        <Title className="mb-8">Política de privacidad</Title>
+        <Title className="mb-8 text-derma-primary">
+          Política de privacidad
+        </Title>
         <Flex layout="col-left" className="gap-4">
           <p className="font-semibold">Responsable del tratamiento</p>
           <p>Identidad: GLOW LAB, S.L.</p>

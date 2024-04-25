@@ -39,10 +39,10 @@ const ROUTES = {
   derma: {
     home: 'https://derma.holaglow.com',
     precios: '/precios',
-    clinics: '/clinicas',
-    aboutUs: '/quienes-somos',
-    privacyPolicy: '/politica-de-privacidad',
-    termsAndConditions: '/aviso-legal',
+    clinics: '/nuestras-clinicas',
+    aboutUs: '/quienes-somos-derma',
+    privacyPolicy: '/politica-de-privacidad-derma',
+    termsAndConditions: '/aviso-legal-derma',
     multistep: {
       start: '/multistep/start',
       pains: '/multistep/pains',

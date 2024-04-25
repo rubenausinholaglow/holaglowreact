@@ -2,6 +2,7 @@
 
 import { SvgHolaglowDermaUnicolor } from 'app/icons/iconsDerma';
 import { SvgInstagram, SvgTikTok } from 'app/icons/socialIcons';
+import ROUTES from 'app/utils/routes';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -96,10 +97,10 @@ export default function DermaFooter({
               Privacidad
             </Text>
             <ul className="text-xs font-normal flex flex-col gap-2">
-              <a href="/politica-de-privacidad" id={'tmevent_footer'}>
+              <a href={ROUTES.derma.privacyPolicy} id={'tmevent_footer'}>
                 <li>Política de privacidad</li>
               </a>
-              <a href="/aviso-legal" id={'tmevent_footer'}>
+              <a href={ROUTES.derma.termsAndConditions} id={'tmevent_footer'}>
                 <li>Términos y condiciones</li>
               </a>
             </ul>
