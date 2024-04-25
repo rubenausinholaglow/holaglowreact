@@ -9,7 +9,7 @@ import UserService from '@services/UserService';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgScanQR } from 'app/icons/Icons';
+import { SvgScanQR, SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -22,7 +22,7 @@ import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { isEmpty, set } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import ReadQr from './ReadQr';
@@ -51,6 +51,7 @@ export default function Page() {
   } = useGlobalPersistedStore(state => state);
   const [userId, setUserId] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
 
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -119,6 +120,7 @@ export default function Page() {
   }, [clinics]);
 
   const handleCheckUser = async (userId: string) => {
+    setIsLoadingUser(true);
     await UserService.checkUser(userId)
       .then(async data => {
         if (data && !isEmpty(data)) {
@@ -146,6 +148,7 @@ export default function Page() {
         setErrorMessage('Error durante la autenticación por id: ' + error);
         Bugsnag.notify('Error getUserById:', error);
       });
+    setIsLoadingUser(false);
   };
 
   const handleUserCheckin = async (userCheckin: UserCheckin) => {
@@ -227,7 +230,11 @@ export default function Page() {
                         onClick={() => handleCheckUser(userId)}
                       >
                         Buscar por ID
-                        <SvgArrow className="ml-2 h-5 w-5" />
+                        {isLoadingUser ? (
+                          <SvgSpinner className="ml-2 h-5 w-5" />
+                        ) : (
+                          <SvgArrow className="ml-2 h-5 w-5" />
+                        )}
                       </Button>
                       {errorMessage && (
                         <p className="text-red-500 text-left text-sm mt-2">
