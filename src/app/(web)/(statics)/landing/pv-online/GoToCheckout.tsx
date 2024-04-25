@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Product } from '@interface/product';
 import UserService from '@services/UserService';
@@ -45,19 +45,6 @@ export default function GoToCheckout() {
     }
     if (userId) login();
   }, []);
-
-  if (isEmpty(product)) {
-    return (
-      <Button
-        size={isMobile ? 'lg' : 'xl'}
-        type="tertiary"
-        customStyles="bg-hg-secondary border-none text-white gap-2 px-16 hover:bg-hg-secondary700"
-        className="mb-8"
-      >
-        <SvgSpinner className="text-white" />
-      </Button>
-    );
-  }
 
   return (
     <>
