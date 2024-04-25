@@ -60,7 +60,6 @@ export default function CheckoutPayment({
       phonePrefix === '+34' ? phone.slice(3).replace(/ /g, '') : phone;
 
     let dataToCheck: any;
-    debugger;
     if (checkAddress) {
       dataToCheck = {
         name: !isEmpty(name),
