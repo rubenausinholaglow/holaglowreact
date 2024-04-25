@@ -1,6 +1,6 @@
 import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface';
 
-import DermaHome from '../components/dermahome/DermaHome';
+import DermaHome from '../../components/dermahome/DermaHome';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://holaglow.com'),
