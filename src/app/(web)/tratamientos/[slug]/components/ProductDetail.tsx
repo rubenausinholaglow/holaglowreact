@@ -13,6 +13,7 @@ import { isEmpty } from 'lodash';
 
 import PsrpPage from '../../psrp';
 import ProductHeader from './ProductHeader';
+import ProductImagesCarouselDashboard from './ProductImagesCarouselDashboard';
 import ProductInfo from './ProductInfo';
 import ProductPrices from './ProductPrices';
 import ProductResults from './ProductResults';
@@ -117,6 +118,11 @@ export default function ProductDetailPage({
           }`}
         >
           <ProductHeader product={product} isDashboard={isDashboard} />
+          {product.beforeAndAfterImages.length > 0 && (
+            <div className="mb-6 md:mb-0 md:row-start-2 md:col-start-1 md:col-end-3">
+              <ProductImagesCarouselDashboard product={product} />
+            </div>
+          )}
           <ProductInfo
             product={product}
             isDashboard={isDashboard}
