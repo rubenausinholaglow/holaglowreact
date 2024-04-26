@@ -326,15 +326,16 @@ export default function Agenda({
             }
 
             if (treatmentsToSchedule.filter(x => x.sessions > 1).length > 0) {
-              const x = updateTreatmentInSession(
+              const x = updateTreatments(
                 scheduledDate,
-                treatmentsToSchedule.filter(x => x.sessions > 1)
+                treatmentsToSchedule.filter(x => x.sessions > 1),
+                true
               );
               treatmentsUpdateds.push(...(x as CartItem[]));
             }
 
             if (treatmentsUpdateds.length < selectedTreatments.length) {
-              updateTreatmentInPack(scheduledDate, treatmentsToSchedule);
+              updateTreatments(scheduledDate, treatmentsToSchedule, false);
             }
 
             router.push(
@@ -389,44 +390,11 @@ export default function Agenda({
     return treatments;
   }
 
-  function updateTreatmentInSession(
+  function updateTreatments(
     scheduledDate: string,
-    treatmentsToSchedule: Product[]
+    treatmentsToSchedule: Product[],
+    isSession: boolean
   ): Product[] {
-    if (treatmentsToSchedule.length > 0) {
-      const treatmentsList = treatmentsToSchedule;
-      const treatmentIds: string[] = [];
-      const packIds: string[] = [];
-      const packsTopUpdate = treatmentPacks;
-      treatmentsList.forEach(tr => {
-        const packIndex = packsTopUpdate.findIndex(
-          pack =>
-            pack.productId === tr.id &&
-            pack.isScheduled == false &&
-            !packIds.includes(pack.id)
-        );
-        if (packIndex !== -1) {
-          const updatedPack = { ...packsTopUpdate[packIndex] };
-          updatedPack.isScheduled = true;
-          updatedPack.scheduledDate = scheduledDate;
-          updatedPack.treatmentName = tr.title;
-          packsTopUpdate[packIndex] = updatedPack;
-
-          treatmentIds.push(tr.id);
-          packIds.push(updatedPack.id);
-        } else {
-          console.log('no se ha encontrado el pack');
-        }
-      });
-      setTreatmentPacks(packsTopUpdate);
-    }
-    return treatmentsToSchedule;
-  }
-
-  function updateTreatmentInPack(
-    scheduledDate: string,
-    treatmentsToSchedule: Product[]
-  ) {
     const treatmentsList = treatmentsToSchedule;
     const treatmentIds: string[] = [];
     const packIds: string[] = [];
@@ -435,7 +403,8 @@ export default function Agenda({
     treatmentsList.forEach(tr => {
       const packIndex = packsTopUpdate.findIndex(
         pack =>
-          pack.type === tr.unityType &&
+          ((!isSession && pack.type === tr.unityType) ||
+            (isSession && pack.productId === tr.id)) &&
           pack.isScheduled == false &&
           !packIds.includes(pack.id)
       );
@@ -453,64 +422,15 @@ export default function Agenda({
       }
     });
     setTreatmentPacks(packsTopUpdate);
-    treatmentIds.forEach(id => {
-      treatmentsToSchedule = removeTreatmentFromList(id, treatmentsToSchedule);
-    });
-  }
-
-  function updateTreatmentsFromCart(
-    filteredCart: CartItem[],
-    dateScehduled: string
-  ): CartItem[] {
-    const treatments: CartItem[] = [];
-
-    selectedTreatments.forEach(treatment => {
-      const selectedProducts = filteredCart.filter(
-        cartItem =>
-          cartItem.id === treatment.id &&
-          (cartItem.isScheduled === false || cartItem.isScheduled === undefined)
-      );
-
-      selectedProducts.forEach(item => {
-        if (!treatments.includes(item)) {
-          treatments.push(item);
-          updateIsScheduled(true, item.uniqueId, dateScehduled, item.title);
-        }
+    if (!isSession) {
+      treatmentIds.forEach(id => {
+        treatmentsToSchedule = removeTreatmentFromList(
+          id,
+          treatmentsToSchedule
+        );
       });
-    });
-
-    return treatments;
-  }
-
-  function updateSessionScheduled(product: CartItem, scheduledDate: string) {
-    let isUpdated = false;
-
-    const updatedPacks = treatmentPacks.map(pack => {
-      if (
-        !isUpdated &&
-        pack.productId === product.id &&
-        pack.isScheduled == false
-      ) {
-        isUpdated = true;
-
-        return {
-          ...pack,
-          isScheduled: true,
-          scheduledDate: scheduledDate,
-        };
-      }
-      return pack;
-    });
-
-    if (
-      !updatedPacks.some(
-        x => x.isScheduled == false && x.productId == product.id
-      )
-    ) {
-      updateIsScheduled(true, product!.uniqueId, scheduledDate, product.title);
     }
-
-    setTreatmentPacks(updatedPacks);
+    return treatmentsToSchedule;
   }
 
   useEffect(() => {

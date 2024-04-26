@@ -302,37 +302,39 @@ export default function Page() {
       <AccordionContent>
         <div className="border-t border-hg-secondary300">
           <ul className="flex flex-col w-full">
-            {cartItem.map(item => {
-              return (
-                <li
-                  className={` ${
-                    findScheduledProducts
-                      ? ' bg-hg-green '
-                      : ' bg-hg-primary300 '
-                  } transition-all flex items-center p-4 cursor-pointer`}
-                  key={item.title}
-                >
-                  <Text className="font-semibold w-1/4 shrink-0 ">
-                    {item.title}
-                  </Text>
+            {cartItem
+              .filter(item => validTypesFilterCart.includes(item.type))
+              .map(item => {
+                return (
+                  <li
+                    className={` ${
+                      findScheduledProducts
+                        ? ' bg-hg-green '
+                        : ' bg-hg-primary300 '
+                    } transition-all flex items-center p-4 cursor-pointer`}
+                    key={item.title}
+                  >
+                    <Text className="font-semibold w-1/4 shrink-0 ">
+                      {item.title}
+                    </Text>
 
-                  <div className="w-full mr-2">
-                    {item.isPack && (
-                      <>{renderPack(item, findScheduledProducts)}</>
-                    )}
-                    {!item.isPack && item.sessions > 1 && (
-                      <>{renderSesssions(item, findScheduledProducts)}</>
-                    )}
+                    <div className="w-full mr-2">
+                      {item.isPack && (
+                        <>{renderPack(item, findScheduledProducts)}</>
+                      )}
+                      {!item.isPack && item.sessions > 1 && (
+                        <>{renderSesssions(item, findScheduledProducts)}</>
+                      )}
 
-                    {!item.isPack && item.sessions <= 1 && (
-                      <div className="text-right mr-2 items-end w-full">
-                        {item.scheduledDate}
-                      </div>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
+                      {!item.isPack && item.sessions <= 1 && (
+                        <div className="text-right mr-2 items-end w-full">
+                          {item.scheduledDate}
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
           </ul>
         </div>
       </AccordionContent>
