@@ -119,8 +119,6 @@ export default function Confirmation({
 
   const addToCalendarRef = useRef(null);
 
-  console.log(selectedTreatments[0].price);
-
   useEffect(() => {
     if (!isDashboard) {
       setCurrentUser(undefined);
