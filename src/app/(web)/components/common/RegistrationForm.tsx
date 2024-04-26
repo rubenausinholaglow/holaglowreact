@@ -245,9 +245,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           onChange={(phone, country) => {
             handleFieldChange(phone, 'phone');
             handleFieldChange(`+${country.country.dialCode}`, 'phonePrefix');
-            if (phone.length > 0 && phone !== '+34') {
-              setShowPhoneError(utils.validatePhoneInput(phone));
-            }
+
+            phone.length === country.country.dialCode.length + 1
+              ? setShowPhoneError(null)
+              : setShowPhoneError(!utils.validatePhoneInput(phone));
           }}
         />
         {showPhoneError !== null && (
