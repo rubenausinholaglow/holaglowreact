@@ -10,8 +10,8 @@ import {
 } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
-import { productsAndSessions } from '@utils/agendaUtils';
 import { fetchClinics } from '@utils/fetch';
+import { PacksProductsUnityTypes } from '@utils/packUtils';
 import useRoutes from '@utils/useRoutes';
 import { getClinicToSet, validTypesFilterCart } from '@utils/utils';
 import CheckoutClinicSelector from 'app/(web)/checkout/components/CheckoutClinicSelector';
@@ -56,6 +56,8 @@ export default function Page() {
   const cart = useCartStore(state => state.cart);
   const [isLoading, setIsLoading] = useState(true);
   const [packInProductCart, setPackInProductCart] = useState(false);
+
+  const packsSpecials = PacksProductsUnityTypes.map(x => x.packId);
 
   const router = useRouter();
   const ROUTES = useRoutes();
@@ -176,6 +178,13 @@ export default function Page() {
       packsToAdd.push(pack);
     });
     return packsToAdd;
+  }
+
+  function getTreatmentNameById(
+    unityType: UnityType,
+    id: string
+  ): string | undefined {
+    return dashboardProducts.find(x => x.id === id)?.title;
   }
 
   const renderProductsDashboard = (

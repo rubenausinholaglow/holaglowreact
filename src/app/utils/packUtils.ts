@@ -1,3 +1,4 @@
+import { UnityType } from "@interface/product";
 
 const AHProducts: string[] = [
     '2112',
@@ -104,7 +105,6 @@ export const PacksConfigured: ProductPackSchedule[] = [
             ...AHProducts,
             ...Botox,
             ...Hydrafacial,
-
         ]
     },
     {
@@ -131,4 +131,21 @@ export const PacksConfigured: ProductPackSchedule[] = [
             '2109',
         ]
     },
+]
+
+
+interface PackProductsUnityTypes {
+    packId: string;
+    productId: string[];
+    unityType: UnityType[];
+}
+
+export const PacksProductsUnityTypes : PackProductsUnityTypes[] = [
+    {
+        packId: '5487',
+        productId: [
+            ...Hydrafacial,
+        ],
+        unityType: [UnityType.AcidoHialuronico, UnityType.Botox]
+    }
 ]
