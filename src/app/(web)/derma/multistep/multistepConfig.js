@@ -36,7 +36,7 @@ export const PAINS_AND_SYMPTOMS = [
     ],
   },
   {
-    name: 'Calidad de la piel',
+    name: 'Antiaging',
     value: 4,
     img: '/images/derma/multistep/pains/calidadPiel.jpg',
     symptoms: [

@@ -4,6 +4,7 @@ import { Client } from '@interface/client';
 import { validateEmail, validatePhone } from '@utils/validators';
 import { SvgWarning } from 'app/icons/IconsDs';
 import { TypeOfPayment, useSessionStore } from 'app/stores/globalStore';
+import dayjs from 'dayjs';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
@@ -52,6 +53,7 @@ export default function CheckoutPayment({
       address,
       city,
       dni,
+      birthday,
     } = formData;
 
     const cleanedPhoneNumber =
@@ -71,6 +73,7 @@ export default function CheckoutPayment({
         dni:
           !isEmpty(dni) &&
           (isValidNif(dni.toUpperCase()) || isValidNie(dni.toUpperCase())),
+        birthday: !isEmpty(birthday) && dayjs(birthday) < dayjs(),
       };
     } else {
       dataToCheck = {
