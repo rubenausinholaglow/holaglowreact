@@ -150,7 +150,7 @@ export default function Confirmation({
       <div className="md:grid grid-cols-2 gap-16">
         <div className="w-full">
           <Flex layout="col-left" className="w-full items-center px-4 md:px-0">
-            {appointment ? (
+            {appointment || isDashboard ? (
               <>
                 <Text
                   className={`${
@@ -265,14 +265,16 @@ export default function Confirmation({
           )}
         </div>
 
-        {!appointment && (
+        {!appointment && !isDashboard && (
           <>
             <Flex
               layout="col-left"
               className="bg-derma-secondary500 py-6 px-4 md:rounded-xl gap-4 md:mb-8"
             >
               <Title
-                className="font-light text-left mb-4 text-derma-primary"
+                className={`font-light text-left mb-4 ${
+                  isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+                }`}
                 size="xldr"
               >
                 A partir de ahora...

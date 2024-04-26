@@ -24,7 +24,7 @@ export default function OptionsPricesSelectButton({
   }, []);
 
   return (
-    <Flex className="mt-auto">
+    <Flex className="mt-6">
       <Button
         className="w-full"
         type="derma"

@@ -46,15 +46,21 @@ export default function CategorySelector({
       []
     );
     let filteredCategoryNames;
+
     if (isDashboard) {
       filteredCategoryNames = allCategoryNames.filter(
         categoryName =>
           categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
       );
     } else {
-      filteredCategoryNames = allCategoryNames.filter(
-        categoryName => categoryName !== 'Packs'
-      );
+      filteredCategoryNames = allCategoryNames;
+    }
+
+    const packsIndex = filteredCategoryNames.indexOf('Packs');
+
+    if (packsIndex !== -1) {
+      const packsItem = filteredCategoryNames.splice(packsIndex, 1)[0];
+      filteredCategoryNames.unshift(packsItem);
     }
 
     const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
@@ -81,16 +87,18 @@ export default function CategorySelector({
       ${isStacked ? 'flex-wrap' : 'pl-4'}
       `}
     >
-      <li className="shrink-0">
-        <PackTypeFilter isDashboard={isDashboard} />
-      </li>
+      {isDashboard && (
+        <li className="shrink-0">
+          <PackTypeFilter isDashboard={isDashboard} />
+        </li>
+      )}
       {productCategories.map((category, i) => {
         return (
           <li
             id={`tmevent_treatments_type_${category}`}
             key={category}
             className={`shrink-0 ${
-              i === productCategories.length - 1 ? 'mr-4' : ''
+              i === productCategories.length - 1 ? 'mr-4 md:mr-0' : ''
             }`}
             onClick={() => {
               setProductFilters(

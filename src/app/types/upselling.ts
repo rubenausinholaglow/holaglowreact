@@ -5,4 +5,6 @@ export interface UpsellingData {
   creationDate: Date;
   routine: number;
   receiptUrl: string;
+  photos: string[];
+  diagnostic: string;
 }

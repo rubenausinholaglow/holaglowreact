@@ -104,9 +104,9 @@ export const PaymentMethods = ({
   }, [payment]);
 
   function scrollDown() {
-    setTimeout(() => {
+    /*setTimeout(() => {
       window.scrollTo(0, document.body.scrollHeight);
-    }, 250);
+    }, 250);*/
   }
 
   const handlePaymentClick = async (
@@ -208,6 +208,7 @@ export const PaymentMethods = ({
           value={activePaymentMethod}
           type="single"
           onValueChange={(activePaymentMethod: string) => {
+            setShowLoader(true);
             setActivePaymentMethod(activePaymentMethod);
           }}
         >
@@ -266,11 +267,9 @@ export const PaymentMethods = ({
                     layout="col-left"
                     className="mt-4 pt-5 border-t border-hg-black w-full min-h-48 relative"
                   >
-                    {showLoader &&
-                      clientSecret &&
-                      method.key == 'creditCard' && (
-                        <FullScreenLoading isDerma />
-                      )}
+                    {showLoader && method.key == 'creditCard' && (
+                      <FullScreenLoading isDerma={isDerma} />
+                    )}
 
                     {showAlmaButtons && (
                       <>

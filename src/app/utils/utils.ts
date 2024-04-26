@@ -1,3 +1,5 @@
+import { Clinic } from '@interface/clinic';
+import clinicService from '@services/ClinicService';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { entityStatusConfig } from 'app/crm/components/table/EntityStatusConfig';
 import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/types/crisalix';
@@ -236,3 +238,7 @@ export function getUniqueIds(products : Product[]) : string[] {
     );
 }
 
+export function getClinicToSet(clinics : Clinic[], storedClinicId : string) : Clinic
+{
+  return clinics.filter(x => x.id.toLocaleUpperCase() === storedClinicId.toLocaleUpperCase())[0];
+}

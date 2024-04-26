@@ -222,9 +222,12 @@ export default function PsrpPage({
             <div className="xl:flex xl:flex-row xl:justify-between items-center">
               <ProductSearchBar
                 products={stateProducts}
-                className="hidden md:block mr-8 xl:max-w-[220px]"
+                className="hidden md:block mr-4"
               />
-              <AnimateOnViewport origin={isMobile ? 'right' : 'bottom'}>
+              <AnimateOnViewport
+                origin={isMobile ? 'right' : 'bottom'}
+                className="shrink-0"
+              >
                 <CategorySelector />
               </AnimateOnViewport>
             </div>
@@ -252,6 +255,7 @@ export default function PsrpPage({
                       type="white"
                       size="sm"
                       className="mr-2"
+                      customStyles="bg-transparent"
                       onClick={() => {
                         isMobile
                           ? setIsMobileFiltersVisible(true)

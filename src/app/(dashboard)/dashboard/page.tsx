@@ -19,9 +19,9 @@ import { Status } from 'app/types/appointment';
 import { Client } from 'app/types/client';
 import { CrisalixUser } from 'app/types/crisalix';
 import { MessageType } from 'app/types/messageSocket';
-import { clearLocalStorage } from 'app/utils/utils';
+import { clearLocalStorage, getClinicToSet } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { isEmpty } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../../(web)/components/common/RegistrationForm';
@@ -59,6 +59,7 @@ export default function Page({
     setClinicFlowwwId,
     setClinicProfessionalId,
     setIsCallCenter,
+    clinics,
   } = useGlobalPersistedStore(state => state);
   const userCrisalix = useCrisalix(state => state);
 
@@ -133,7 +134,6 @@ export default function Page({
 
   useEffect(() => {
     clearLocalStorage(false);
-    setSelectedClinic(undefined);
     setBudgetId('');
     setAppointmentId('');
     setClinicProfessionalId('');
@@ -256,31 +256,30 @@ export default function Page({
         async data => {
           if (data != null) {
             setAppointmentId(data.id);
-            setClinicId(data.clinic.id);
-            setClinicFlowwwId(data.clinic.flowwwId);
-            setClinicProfessionalId(data.clinicProfessional.id);
+            setClinicId(data.clinicId);
+            setClinicFlowwwId(data.clinicFlowwwId);
+            setClinicProfessionalId(data.clinicProfessionalId);
+            setSelectedClinic(getClinicToSet(clinics, data.clinicId));
 
             if (name == '') {
-              name = data.lead.user.firstName;
-              id = data.lead.user.id;
+              name = data.firstName;
+              id = data.userId;
             }
 
-            await ScheduleService.updatePatientStatusAppointment(
-              data.id,
-              data.lead.user.id || '',
-              Status.InProgress
-            );
+            UserService.createCrisalixUser(id, data.clinicId).then(async x => {
+              const crisalixUser: CrisalixUser = {
+                id: x.id,
+                playerId: x.player_id,
+                playerToken: x.playerToken,
+                name: x.name,
+              };
+              userCrisalix.addCrisalixUser(crisalixUser);
+            });
 
-            await UserService.createCrisalixUser(id, data.clinic.id).then(
-              async x => {
-                const crisalixUser: CrisalixUser = {
-                  id: x.id,
-                  playerId: x.player_id,
-                  playerToken: x.playerToken,
-                  name: x.name,
-                };
-                userCrisalix.addCrisalixUser(crisalixUser);
-              }
+            ScheduleService.updatePatientStatusAppointment(
+              data.id,
+              data.userId || '',
+              Status.InProgress
             );
 
             if (remoteControl) {

@@ -78,14 +78,6 @@ export default function Form() {
   function handleFinishDermaFlow() {
     setIsLoading(true);
 
-    const formattedPain =
-      symptoms.length > 0
-        ? symptoms.map(symptom => ({
-            skinPain: pain,
-            option: symptom,
-          }))
-        : [];
-
     client.origin = 'Derma';
     registerUser(client, false, false, false).then(user => {
       const dermaQuestions = {
@@ -95,7 +87,7 @@ export default function Form() {
         birthDate: undefined,
         phone: client.phone.replaceAll(' ', '').replace(client.phonePrefix, ''),
         phonePrefix: client.phonePrefix,
-        pain: formattedPain,
+        skinPain: pain,
         skinType,
         skinSensibility,
         allergy,
@@ -106,6 +98,9 @@ export default function Form() {
         medicationInfo,
         lactating,
         extraInfo,
+        skinConcerns: symptoms.map(x => ({
+          concern: x,
+        })),
       };
       dermaService.update(dermaQuestions as DermaQuestions);
       router.push(ROUTES.derma.multistep.thankyou);

@@ -21,21 +21,13 @@ export const HandleNextMultistep = (nextUrl: string) => {
     medication,
     medicationInfo,
     lactating,
+    extraInfo,
   } = useDermaStore(state => state);
-
   const router = useRouter();
   const next = () => {
-    const formattedPain =
-      symptoms.length > 0
-        ? symptoms.map(symptom => ({
-            skinPain: pain,
-            option: symptom,
-          }))
-        : [];
-
     const dermaQuestions = {
       id,
-      pain: formattedPain,
+      skinPain: pain,
       skinType,
       skinSensibility,
       allergy,
@@ -45,17 +37,24 @@ export const HandleNextMultistep = (nextUrl: string) => {
       medication,
       medicationInfo,
       lactating,
+      skinConcerns: symptoms.map(x => ({
+        concern: x,
+      })),
+      extraInfo,
     };
 
     dermaService.update(dermaQuestions as DermaQuestions).then(response => {
-      if (response) {
+      if (response && !id) {
         setId(response.toString());
+        router.push(nextUrl);
       }
     });
 
-    setTimeout(() => {
-      router.push(nextUrl);
-    }, 250);
+    if (id) {
+      setTimeout(() => {
+        router.push(nextUrl);
+      }, 250);
+    }
   };
   return next;
 };
