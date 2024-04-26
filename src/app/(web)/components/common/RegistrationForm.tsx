@@ -234,6 +234,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       />
       <div className="relative">
         <PhoneInput
+          disableDialCodeAndPrefix
           defaultCountry="es"
           preferredCountries={['es']}
           value={formData.phone}
