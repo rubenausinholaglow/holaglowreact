@@ -13,7 +13,7 @@ import Image from 'next/image';
 export default function Clinicas({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const domain = headers().get('host') || '';
   const isDerma = domain.startsWith('derma') || searchParams['isDerma'];
