@@ -223,7 +223,7 @@ module.exports = {
         horizontalScroll: 'horizontalScroll 50s linear infinite',
         animateBG: 'animateBG 180s ease infinite',
         shake: 'shake 3s ease infinite',
-        pains: 'pains 12s ease infinite',
+        pains: 'pains 6s ease infinite',
       },
     },
   },

@@ -35,7 +35,7 @@ export const PaymentModule = () => {
   const router = useRouter();
 
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
-  const [_, setOnLoad] = useState(false);
+  const [, setOnLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
@@ -289,6 +289,8 @@ export const PaymentModule = () => {
     Efectivo: [],
     creditCard: ['visa.svg', 'mastercard.svg'],
     stripe: ['visa.svg', 'mastercard.svg'],
+    frakmenta: ['frakmenta.svg'],
+    frakmentaOnline: ['frakmenta.svg'],
   };
 
   return (

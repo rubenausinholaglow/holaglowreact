@@ -13,6 +13,12 @@ export const paymentItems = [
     paymentBank: PaymentBank.Pepper,
     paymentMethod: PaymentMethod.Financing,
   },
+  /*{
+    key: 'frakmenta',
+    label: 'Financiación Frakmenta',
+    paymentBank: PaymentBank.Frakmenta,
+    paymentMethod: PaymentMethod.Financing,
+  },*/
   {
     key: 'cash',
     label: 'Efectivo',
@@ -29,6 +35,12 @@ export const paymentItems = [
     key: 'stripe',
     label: 'Tarjeta (Online)',
     paymentBank: PaymentBank.Stripe,
+    paymentMethod: PaymentMethod.CreditCard,
+  },
+    {
+    key: 'frakmentaOnline',
+    label: 'Frakmenta (Offline)',
+    paymentBank: PaymentBank.Frakmenta,
     paymentMethod: PaymentMethod.CreditCard,
   },
 ];

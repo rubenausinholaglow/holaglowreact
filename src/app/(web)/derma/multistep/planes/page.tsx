@@ -20,7 +20,6 @@ export default function PlanesMultiStep() {
   const [showModal, setShowModal] = useState(false);
   const [modalProduct, setModalProduct] = useState(0);
   const [selectedOption, setSelectedOption] = useState('99');
-  const [accordionValue, setAccordionValue] = useState('99');
 
   const { showModalBackground } = useGlobalStore(state => state);
 
@@ -44,6 +43,7 @@ export default function PlanesMultiStep() {
               width={20}
               className="absolute top-4 right-4 cursor-pointer"
               onClick={() => setShowModal(false)}
+              id="tmevent_derma_plans_cosmetic_modal_close"
             />
             <Container className="pt-12 md:p-6">
               <Image
@@ -73,6 +73,7 @@ export default function PlanesMultiStep() {
                 size="lg"
                 type="dermaDark"
                 onClick={() => setShowModal(false)}
+                id="tmevent_derma_plans_cosmetic_modal_close"
               >
                 Cerrar
               </Button>
@@ -89,7 +90,7 @@ export default function PlanesMultiStep() {
               className="w-full gap-4 md:items-start mb-8"
             >
               <Image
-                alt="Dr. Basart"
+                alt="Dra. Sonsoles Espí"
                 src="/images/derma/multistep/Sonsoles.png"
                 height={192}
                 width={192}
@@ -120,8 +121,6 @@ export default function PlanesMultiStep() {
                 isMultistep={true}
                 selectedOption={selectedOption}
                 setSelectedOption={setSelectedOption}
-                accordionValue={accordionValue}
-                setAccordionValue={setAccordionValue}
               />
             </div>
             <div className="bg-white rounded-b-3xl p-4 md:p-6 -mt-8 mb-8">
@@ -153,6 +152,7 @@ export default function PlanesMultiStep() {
                   <li
                     className="flex items-center gap-4 border border-derma-secondary400 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
                     key={item.title}
+                    id="tmevent_derma_plans_cosmetic_modal_open"
                     onClick={() => {
                       setModalProduct(index);
                       setShowModal(true);

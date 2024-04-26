@@ -150,7 +150,7 @@ export default function Confirmation({
       <div className="md:grid grid-cols-2 gap-16">
         <div className="w-full">
           <Flex layout="col-left" className="w-full items-center px-4 md:px-0">
-            {appointment ? (
+            {appointment || isDashboard ? (
               <>
                 <Text
                   className={`${
@@ -265,7 +265,7 @@ export default function Confirmation({
           )}
         </div>
 
-        {!appointment && (
+        {!appointment && !isDashboard && (
           <>
             <Flex
               layout="col-left"
