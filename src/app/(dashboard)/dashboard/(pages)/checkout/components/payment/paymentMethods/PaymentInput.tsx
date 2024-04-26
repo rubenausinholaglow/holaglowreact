@@ -54,12 +54,13 @@ export default function PaymentInput(props: Props) {
   const { addPaymentToList } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
   const [showPepper, setshowPepper] = useState(false);
+  const [showFrakmenta, setShowFrakmenta] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-  const [showPepperModal, setShowPepperModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
   const [paymentStripe, setPaymentStripe] = useState(false);
   const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
@@ -198,8 +199,12 @@ export default function PaymentInput(props: Props) {
     if (validateFinancePrice()) setshowPepper(true);
   };
 
-  const openPepper = () => {
-    setShowPepperModal(true);
+  const activateFrakmenta = async () => {
+    if (validateFinancePrice()) setShowFrakmenta(true);
+  };
+
+  const openModal = () => {
+    setShowContactModal(true);
   };
   async function addPayment(number: any) {
     setIsLoading(true);
@@ -218,7 +223,13 @@ export default function PaymentInput(props: Props) {
   }
   const handleSubmitForm = async (data: any) => {
     if (isLoading) return;
-    if (showAlma || messageNotification || showPepper || paymentStripe) {
+    if (
+      showAlma ||
+      messageNotification ||
+      showPepper ||
+      paymentStripe ||
+      showFrakmenta
+    ) {
       return;
     }
     await addPayment(data.number);
@@ -251,12 +262,11 @@ export default function PaymentInput(props: Props) {
           setMessageNotification('Error actualizando usuario');
           return;
         }
-        const initializePayment = constructInitializePayment(
-          PaymentBank.Pepper
-        );
+        const payment = showPepper ? PaymentBank.Pepper : PaymentBank.Frakmenta;
+        const initializePayment = constructInitializePayment(payment);
         await FinanceService.initializePayment(initializePayment)
           .then(x => {
-            setShowPepperModal(false);
+            setShowContactModal(false);
             if (x.url != '') {
               openWindow(x.url);
               handleUrlPayment(x.id, '', x.referenceId);
@@ -282,7 +292,7 @@ export default function PaymentInput(props: Props) {
           });
       })
       .catch(error => {
-        setShowPepperModal(false);
+        setShowContactModal(false);
         setMessageNotification('Error actualizando el usuario');
         Bugsnag.notify('Error updateUser:', error);
       });
@@ -320,7 +330,7 @@ export default function PaymentInput(props: Props) {
 
   useEffect(() => {
     if (!isModalOpen) {
-      setShowPepperModal(false);
+      setShowContactModal(false);
     }
   }, [isModalOpen]);
 
@@ -377,10 +387,10 @@ export default function PaymentInput(props: Props) {
   const renderFinance = () => {
     return (
       <>
-        <Modal isVisible={showPepperModal} width="w-3/4">
+        <Modal isVisible={showContactModal} width="w-3/4">
           <Flex layout="col-left" className="p-4 relative gap-4">
             <SvgClose
-              onClick={() => setShowPepperModal(false)}
+              onClick={() => setShowContactModal(false)}
               className="mb-4"
             />
             <Title>
@@ -529,17 +539,20 @@ export default function PaymentInput(props: Props) {
             onUrlPayment={handleUrlPayment}
           ></AlmaWidget>
         )}
-        {showPepper && (
+        {(showPepper || showFrakmenta) && (
           <Flex layout="col-left" className="w-full">
-            <PepperWidget totalPrice={Number(inputValue)}></PepperWidget>
+            {showPepper && (
+              <PepperWidget totalPrice={Number(inputValue)}></PepperWidget>
+            )}
+
             <Flex className="mt-4">
               <Button
                 type="tertiary"
                 isSubmit
                 className="ml-2"
-                onClick={() => openPepper()}
+                onClick={() => openModal()}
               >
-                Abrir Pepper
+                Abrir Formulario
               </Button>
             </Flex>
           </Flex>
@@ -611,6 +624,17 @@ export default function PaymentInput(props: Props) {
                     <SvgArrow height={16} width={16} className="ml-2" />
                   </Button>
                 )}
+                {props.paymentBank === PaymentBank.Frakmenta &&
+                  props.paymentMethod === PaymentMethod.Financing && (
+                    <Button
+                      type="tertiary"
+                      isSubmit
+                      onClick={() => activateFrakmenta()}
+                    >
+                      Continuar
+                      <SvgArrow height={16} width={16} className="ml-2" />
+                    </Button>
+                  )}
                 <div className="bg-hg-"></div>
                 {props.paymentBank === PaymentBank.Stripe && (
                   <Button
@@ -628,8 +652,7 @@ export default function PaymentInput(props: Props) {
                     )}
                   </Button>
                 )}
-                {props.paymentBank != PaymentBank.Alma &&
-                  props.paymentBank != PaymentBank.Pepper &&
+                {props.paymentMethod != PaymentMethod.Financing &&
                   props.paymentBank != PaymentBank.Stripe && (
                     <Button
                       type="tertiary"

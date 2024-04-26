@@ -23,6 +23,10 @@ export enum PaymentBank {
   Cash,
   Stripe,
   CreditCard,
+  GooglePay,
+  ApplePay,
+  Paypal,
+  Frakmenta
 }
 
 export interface PaymentInitResponse {
