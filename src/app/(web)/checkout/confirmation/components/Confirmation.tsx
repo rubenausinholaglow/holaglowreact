@@ -119,6 +119,8 @@ export default function Confirmation({
 
   const addToCalendarRef = useRef(null);
 
+  console.log(selectedTreatments[0].price);
+
   useEffect(() => {
     if (!isDashboard) {
       setCurrentUser(undefined);
@@ -190,7 +192,9 @@ export default function Confirmation({
                     isDerma ? 'text-derma-primary' : ''
                   } text-center mb-4 font-light`}
                 >
-                  {isProbadorVirtual ? '¡Recibido!' : 'Pago recibido.'}
+                  {selectedTreatments[0].price === 0
+                    ? '¡Recibido!'
+                    : 'Pago recibido.'}
                 </Title>
                 {!isDerma && (
                   <Text className="text-center text-hg-black500 hidden md:block">
