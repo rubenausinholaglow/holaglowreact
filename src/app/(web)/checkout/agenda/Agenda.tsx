@@ -214,7 +214,8 @@ export default function Agenda({
       setDateToCheck(dateToCheck.add(1, 'month'));
       if (
         datesAvailableInCurrentMonth < 3 &&
-        datesAvailableInCurrentMonth > -1
+        datesAvailableInCurrentMonth > -1 &&
+        selectedTreatmentsIds != '902'
       ) {
         const element = document.getElementsByClassName(
           'react-datepicker__navigation--next'
