@@ -132,20 +132,3 @@ export const PacksConfigured: ProductPackSchedule[] = [
         ]
     },
 ]
-
-
-interface PackProductsUnityTypes {
-    packId: string;
-    productId: string[];
-    unityType: UnityType[];
-}
-
-export const PacksProductsUnityTypes : PackProductsUnityTypes[] = [
-    {
-        packId: '5487',
-        productId: [
-            ...Hydrafacial,
-        ],
-        unityType: [UnityType.AcidoHialuronico, UnityType.Botox]
-    }
-]

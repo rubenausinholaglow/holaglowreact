@@ -289,7 +289,7 @@ export default function Agenda({
           if (isDashboard || isCheckin)
             analyticsMetrics.externalReference = '14';
 
-          /*await ScheduleService.createAppointment(
+          await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
             selectedDay,
@@ -299,52 +299,52 @@ export default function Agenda({
             analyticsMetrics,
             '',
             selectedPack
-          ).then(x => {*/
-          if (isDashboard) {
-            let treatmentsToSchedule: Product[] = selectedTreatments.filter(
-              x => !x.isPack
-            );
-            const scheduledDate = getScheduledDate();
-            const treatmentsCartPendingToUpdate = filterCartPendingToUpdate();
-
-            const treatmentsUpdateds: CartItem[] = [];
-            let treatmentsToUpdate: CartItem[] = [];
-
-            if (treatmentsCartPendingToUpdate.length > 0) {
-              treatmentsToUpdate = treatmentsCartPendingToUpdate.filter(x =>
-                selectedTreatments.some(y => y.title == x.title)
+          ).then(x => {
+            if (isDashboard) {
+              let treatmentsToSchedule: Product[] = selectedTreatments.filter(
+                x => !x.isPack
               );
+              const scheduledDate = getScheduledDate();
+              const treatmentsCartPendingToUpdate = filterCartPendingToUpdate();
 
-              treatmentsToUpdate.forEach(x => {
-                treatmentsUpdateds.push(x);
-                treatmentsToSchedule = removeTreatmentFromList(
-                  x.id,
-                  treatmentsToSchedule
+              const treatmentsUpdateds: CartItem[] = [];
+              let treatmentsToUpdate: CartItem[] = [];
+
+              if (treatmentsCartPendingToUpdate.length > 0) {
+                treatmentsToUpdate = treatmentsCartPendingToUpdate.filter(x =>
+                  selectedTreatments.some(y => y.title == x.title)
                 );
-                updateIsScheduled(true, x.uniqueId, scheduledDate, x.title);
-              });
-            }
 
-            if (treatmentsToSchedule.filter(x => x.sessions > 1).length > 0) {
-              const x = updateTreatments(
-                scheduledDate,
-                treatmentsToSchedule.filter(x => x.sessions > 1),
-                true
+                treatmentsToUpdate.forEach(x => {
+                  treatmentsUpdateds.push(x);
+                  treatmentsToSchedule = removeTreatmentFromList(
+                    x.id,
+                    treatmentsToSchedule
+                  );
+                  updateIsScheduled(true, x.uniqueId, scheduledDate, x.title);
+                });
+              }
+
+              if (treatmentsToSchedule.filter(x => x.sessions > 1).length > 0) {
+                const x = updateTreatments(
+                  scheduledDate,
+                  treatmentsToSchedule.filter(x => x.sessions > 1),
+                  true
+                );
+                treatmentsUpdateds.push(...(x as CartItem[]));
+              }
+
+              if (treatmentsUpdateds.length < selectedTreatments.length) {
+                updateTreatments(scheduledDate, treatmentsToSchedule, false);
+              }
+
+              router.push(
+                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
-              treatmentsUpdateds.push(...(x as CartItem[]));
+            } else if (!isDashboard && !isDerma) {
+              router.push(ROUTES.checkout.thankYou);
             }
-
-            if (treatmentsUpdateds.length < selectedTreatments.length) {
-              updateTreatments(scheduledDate, treatmentsToSchedule, false);
-            }
-
-            router.push(
-              `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
-            );
-          } else if (!isDashboard && !isDerma) {
-            router.push(ROUTES.checkout.thankYou);
-          }
-          //});
+          });
         } else if (!isDerma) {
           router.push('/checkout/contactform');
         } else if (isDerma && isCheckout) {
