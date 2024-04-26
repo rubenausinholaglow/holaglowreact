@@ -217,7 +217,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <TextInputField
           placeholder="Apellidos"
           value={formData.surname}
-          onChange={event => handleFieldChange(event, 'surname')}
+          onChange={event => handleFieldChange(event.target.value, 'surname')}
         />
       )}
 
@@ -226,12 +226,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           <TextInputField
             placeholder="Primer apellido"
             value={formData.surname}
-            onChange={event => handleFieldChange(event, 'surname')}
+            onChange={event => handleFieldChange(event.target.value, 'surname')}
           />
           <TextInputField
             placeholder="Segundo apellido"
             value={formData.secondSurname}
-            onChange={event => handleFieldChange(event, 'secondSurname')}
+            onChange={event =>
+              handleFieldChange(event.target.value, 'secondSurname')
+            }
           />
         </>
       )}
@@ -321,7 +323,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           placeholder="Escribe aquí"
           type="date"
           value={formData?.birthday || ''}
-          onChange={event => handleFieldChange(event, 'birthday')}
+          onChange={event => handleFieldChange(event.target.value, 'birthday')}
           disableBgIcons
         />
       )}
