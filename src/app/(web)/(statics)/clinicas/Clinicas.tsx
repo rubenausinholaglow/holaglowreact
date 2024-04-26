@@ -10,12 +10,13 @@ import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import { headers } from 'next/headers';
 import Image from 'next/image';
 
-export default function Clinicas() {
+export default function Clinicas({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const domain = headers().get('host') || '';
-
-  const isDerma = domain.startsWith('derma');
-
-  console.log(isDerma);
+  const isDerma = domain.startsWith('derma') || searchParams['isDerma'];
 
   const Wrapper = ({ children }: { children: ReactNode }) => {
     if (isDerma) {
