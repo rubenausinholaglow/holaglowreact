@@ -105,6 +105,7 @@ export default function OptionsPrices({
                 size="xl"
                 customStyles="px-16"
                 href={ROUTES.derma.multistep.start}
+                id="tmevent_derma_prices_plans_button"
               >
                 Empezar análisis de piel
               </Button>
