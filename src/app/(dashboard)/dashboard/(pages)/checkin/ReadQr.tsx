@@ -26,7 +26,7 @@ interface QRScannerProps {
 function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
   const [scanResult, setScanResult] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const html5QrCode = new Html5Qrcode('qr-reader');

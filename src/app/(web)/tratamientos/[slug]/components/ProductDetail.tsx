@@ -28,14 +28,14 @@ export default function ProductDetailPage({
   );
   const { productHighlighted } = useCartStore(state => state);
 
-  const [bottomBarThreshold, setBottomBarThreshold] = useState(1200);
+  const [, setBottomBarThreshold] = useState(1200);
   const [isHydrated, setIsHydrated] = useState(false);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [productId, setProductId] = useState('0');
   const { slug, isDashboard } = params;
 
-  const [productPriceRef, isProductPriceVisible] = useElementOnScreen({
+  const [productPriceRef] = useElementOnScreen({
     root: null,
     rootMargin: '0px',
     threshold: 0,

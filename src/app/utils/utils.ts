@@ -1,5 +1,4 @@
 import { Clinic } from '@interface/clinic';
-import clinicService from '@services/ClinicService';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { entityStatusConfig } from 'app/crm/components/table/EntityStatusConfig';
 import { INITIAL_STATE_CRISALIXUSERLIST } from 'app/types/crisalix';
@@ -204,7 +203,6 @@ export const formatDate = (date: Date, includeHours = true) => {
   return `${formattedDate.replace(',', '')}`;
 };
 
-
 export const validTypesFilterCart: ProductType[] = [
   ProductType.Esthetic,
   ProductType.Medical,
@@ -216,31 +214,40 @@ export function isClient() {
   return typeof window !== 'undefined';
 }
 
-export function getUniqueProducts(uniqueProductIds: string[], selectedProducts : Product[]): Product[] {
+export function getUniqueProducts(
+  uniqueProductIds: string[],
+  selectedProducts: Product[]
+): Product[] {
   const finalSelectedProducts: Product[] = [];
-  
+
   uniqueProductIds.forEach(productId => {
     const duplicatedAHProducts = selectedProducts.filter(
-      product => product.id === productId && product.unityType == UnityType.AcidoHialuronico
+      product =>
+        product.id === productId &&
+        product.unityType == UnityType.AcidoHialuronico
     );
     if (duplicatedAHProducts.length > 1) {
       duplicatedAHProducts[0].description = `x${duplicatedAHProducts.length} viales de ácido híaluronico`;
       finalSelectedProducts.push(duplicatedAHProducts[0]);
     } else {
-      const productsWithSameId = selectedProducts.filter(product => product.id === productId);
+      const productsWithSameId = selectedProducts.filter(
+        product => product.id === productId
+      );
       finalSelectedProducts.push(...productsWithSameId);
     }
   });
   return finalSelectedProducts;
 }
 
-export function getUniqueIds(products : Product[]) : string[] {
-  return Array.from(
-      new Set(products.map(x => x.id))
-    );
+export function getUniqueIds(products: Product[]): string[] {
+  return Array.from(new Set(products.map(x => x.id)));
 }
 
-export function getClinicToSet(clinics : Clinic[], storedClinicId : string) : Clinic
-{
-  return clinics.filter(x => x.id.toLocaleUpperCase() === storedClinicId.toLocaleUpperCase())[0];
+export function getClinicToSet(
+  clinics: Clinic[],
+  storedClinicId: string
+): Clinic {
+  return clinics.filter(
+    x => x.id.toLocaleUpperCase() === storedClinicId.toLocaleUpperCase()
+  )[0];
 }
