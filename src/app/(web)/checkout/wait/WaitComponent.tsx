@@ -8,7 +8,7 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import App from 'app/(web)/components/layout/App';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import { SvgCheck, SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
+import { SvgCheck, SvgEllipsis, SvgTimer, SvgWarning } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -16,6 +16,7 @@ import {
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import { useRouter } from 'next/navigation';
 
 dayjs.locale(spanishConf);
@@ -161,11 +162,19 @@ export default function WaitComponent() {
             <Container>
               <Flex
                 layout="col-center"
-                className="absolute flex inset-0 justify-center items-center gap-4"
+                className="absolute flex inset-0 justify-center items-center gap-4 p-4"
               >
                 {payment !== null && payment !== undefined
                   ? renderWeb(isDerma)
                   : renderDash(isDerma)}
+
+                <Flex className="bg-hg-black100 rounded-2xl p-4 gap-3 items-start">
+                  <SvgWarning className="shrink-0 w-4 h-4 mt-1" />
+                  <Text className="text-sm">
+                    No cierres esta ventana hasta que recibas la confirmación de
+                    que el pago se ha realizado
+                  </Text>
+                </Flex>
               </Flex>
             </Container>
           </DermaLayout>
@@ -185,11 +194,18 @@ export default function WaitComponent() {
         <Container>
           <Flex
             layout="col-center"
-            className="absolute flex inset-0 justify-center items-center gap-4"
+            className="absolute flex inset-0 justify-center items-center gap-4 p-4"
           >
             {payment !== null && payment !== undefined
               ? renderWeb(isDerma)
               : renderDash(isDerma)}
+            <Flex className="bg-hg-black100 rounded-2xl p-4 gap-3 items-start">
+              <SvgWarning className="shrink-0 w-4 h-4 mt-1" />
+              <Text className="text-sm">
+                No cierres esta ventana hasta que recibas la confirmación de que
+                el pago se ha realizado
+              </Text>
+            </Flex>
           </Flex>
         </Container>
       </MainLayout>
