@@ -36,31 +36,30 @@ const TIPS = {
   ],
   pv: [
     {
-      title: 'Confirmación de tu cita',
+      title: 'Confirmación de cita',
       text: 'Nos pondremos en contacto contigo para confirmar la cita y resolver cualquier duda al respecto',
     },
     {
       title: 'Conoce a tu Beauty Advisor',
-      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
+      text: 'Te asesorará en clínica o a través de videollamada según la opción que hayas elegido',
     },
     {
-      title:
-        'Te asesorará en clínica o a través de videollamada según la opción que hayas elegido',
+      title: 'Descubre tu tratamiento ideal',
       text: 'Diseñaremos contigo el mejor tratamiento para conseguir los objetivos que tienes',
     },
   ],
   default: [
     {
-      title: 'Confirmación de tu cita',
-      text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita.',
+      title: 'Confirmación de cita',
+      text: 'Desde este momento, estaremos en contacto contigo por teléfono para resolver todas tus dudas y confirmar la cita',
     },
     {
       title: 'Recomendaciones pretratamiento',
-      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita.',
+      text: 'En la página web podrás consultar algunos consejos del equipo médico para tener en cuenta antes de tu cita',
     },
     {
       title: 'Distintos métodos de pago',
-      text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses.',
+      text: 'El día de tu visita a la clínica, podrás elegir el método de pago que mejor se adapte a ti, incluso financiación sin intereses',
     },
   ],
 };
