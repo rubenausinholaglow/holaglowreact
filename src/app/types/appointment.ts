@@ -64,6 +64,7 @@ export interface RescheduleAppointmentRequest {
 }
 
 export interface UserCheckin {
+  id? : string;
   name: string;
   hour: string;
   professional: string;

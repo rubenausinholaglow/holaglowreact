@@ -1,14 +1,11 @@
 'use client';
 
-import { ImgComparisonSlider } from '@img-comparison-slider/react';
 import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import Image from 'next/image';
-import Script from 'next/script';
 
 const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
   ssr: false,

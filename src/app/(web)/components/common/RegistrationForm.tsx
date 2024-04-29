@@ -64,9 +64,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
-  const [showBirthdayError, setShowBirthdayError] = useState<null | boolean>(
-    null
-  );
+  const [showBirthdayError] = useState<null | boolean>(null);
   const [showPostalCodeError, setShowPostalCodeError] = useState<
     null | boolean
   >(null);
