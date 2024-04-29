@@ -49,7 +49,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: 'AIzaSyC3tU4hztyQ9kO3Ul5W0Buh8NCUwq3CyLA', // Replace with your actual API key
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY, // Replace with your actual API key
       version: 'weekly',
     });
 
