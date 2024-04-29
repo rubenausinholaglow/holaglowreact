@@ -248,10 +248,13 @@ export default function TreatmentAccordionSelector({
 
   const renderTextProduct = (product: Product) => {
     return (
-      <div className="mr-4">
-        <Text className="font-semibold">{product.title}</Text>
-        <Text className="text-xs">{product.description}</Text>
-      </div>
+      <Flex layout="row-left" className="w-full">
+        <div className="mr-auto">
+          <Text className="font-semibold">{product.title}</Text>
+          <Text className="text-xs">{product.description}</Text>
+        </div>
+        <Text className="shrink-0 px-4 font-semibold">{product.price} €</Text>
+      </Flex>
     );
   };
   const renderCheck = (product: Product, index: number) => {
