@@ -334,7 +334,6 @@ export default function AppointmentResume({
                   <SvgAngleDown className="transition-all group-radix-state-open:rotate-180" />
                 </Flex>
               </AccordionTrigger>
-
               <AccordionContent className="md:border-t border-derma-secondary400 md:pt-2 ">
                 <Flex
                   layout="col-left"
@@ -342,43 +341,37 @@ export default function AppointmentResume({
                     !isConfirmation ? 'md:px-0' : ''
                   }`}
                 >
-                  {isDashboard ? (
-                    <TreatmentsDashboard />
-                  ) : (
-                    <Flex layout="col-left" className="w-full py-3">
-                      <TreatmentName className="p-0" />
-                      {selectedTreatments &&
-                      selectedTreatments[0] &&
-                      selectedTreatments[0].isPack ? (
-                        <ul className="p-1">
-                          {selectedPacksTreatments &&
-                            selectedPacksTreatments.map(item => {
-                              return <li key={item.title}>- {item.title}</li>;
-                            })}
-                        </ul>
-                      ) : selectedTreatments[0] &&
-                        !isEmpty(selectedTreatments[0].appliedProducts) ? (
-                        selectedTreatments[0].appliedProducts.map(item => {
-                          return (
-                            <Flex
-                              key={item.titlte}
-                              className="items-start mb-1"
-                            >
-                              <Text className="text-hg-black400 text-xs md:text-sm">
-                                {item.titlte}
-                              </Text>
-                            </Flex>
-                          );
-                        })
-                      ) : (
-                        selectedTreatments[0].description && (
-                          <Flex className="items-start mb-2">
-                            <Text>{selectedTreatments[0].description}</Text>
+                  <Flex layout="col-left" className="w-full py-3">
+                    <TreatmentName className="p-0" />
+                    {selectedTreatments &&
+                    selectedTreatments[0] &&
+                    selectedTreatments[0].isPack ? (
+                      <ul className="p-1">
+                        {selectedPacksTreatments &&
+                          selectedPacksTreatments.map(item => {
+                            return <li key={item.title}>- {item.title}</li>;
+                          })}
+                      </ul>
+                    ) : selectedTreatments[0] &&
+                      !isEmpty(selectedTreatments[0].appliedProducts) ? (
+                      selectedTreatments[0].appliedProducts.map(item => {
+                        return (
+                          <Flex key={item.titlte} className="items-start mb-1">
+                            <Text className="text-hg-black400 text-xs md:text-sm">
+                              {item.titlte}
+                            </Text>
                           </Flex>
-                        )
-                      )}
-                    </Flex>
-                  )}
+                        );
+                      })
+                    ) : (
+                      selectedTreatments[0].description && (
+                        <Flex className="items-start mb-2">
+                          <Text>{selectedTreatments[0].description}</Text>
+                        </Flex>
+                      )
+                    )}
+                  </Flex>
+
                   {selectedTreatments[0] &&
                     selectedTreatments[0].price > 0 &&
                     !isDashboard && (
@@ -410,40 +403,34 @@ export default function AppointmentResume({
                   layout="col-left"
                   className={`w-full text-sm px-4 ${!isConfirmation ? '' : ''}`}
                 >
-                  {isDashboard ? (
-                    <TreatmentsDashboard />
-                  ) : (
-                    <Flex layout="col-left" className="w-full py-3">
-                      <TreatmentName className="p-0" />
-                      {cart && cart[0] && cart[0].isPack ? (
-                        <ul className="p-1">
-                          {selectedPacksTreatments &&
-                            selectedPacksTreatments.map(item => {
-                              return <li key={item.title}>- {item.title}</li>;
-                            })}
-                        </ul>
-                      ) : cart[0] && !isEmpty(cart[0].appliedProducts) ? (
-                        cart[0].appliedProducts.map(item => {
-                          return (
-                            <Flex
-                              key={item.titlte}
-                              className="items-start mb-1"
-                            >
-                              <Text className="text-hg-black400 text-xs md:text-sm">
-                                {item.titlte}
-                              </Text>
-                            </Flex>
-                          );
-                        })
-                      ) : (
-                        cart[0].description && (
-                          <Flex className="items-start mb-2">
-                            <Text>{cart[0].description}</Text>
+                  <Flex layout="col-left" className="w-full py-3">
+                    <TreatmentName className="p-0" />
+                    {cart && cart[0] && cart[0].isPack ? (
+                      <ul className="p-1">
+                        {selectedPacksTreatments &&
+                          selectedPacksTreatments.map(item => {
+                            return <li key={item.title}>- {item.title}</li>;
+                          })}
+                      </ul>
+                    ) : cart[0] && !isEmpty(cart[0].appliedProducts) ? (
+                      cart[0].appliedProducts.map(item => {
+                        return (
+                          <Flex key={item.titlte} className="items-start mb-1">
+                            <Text className="text-hg-black400 text-xs md:text-sm">
+                              {item.titlte}
+                            </Text>
                           </Flex>
-                        )
-                      )}
-                    </Flex>
-                  )}
+                        );
+                      })
+                    ) : (
+                      cart[0].description && (
+                        <Flex className="items-start mb-2">
+                          <Text>{cart[0].description}</Text>
+                        </Flex>
+                      )
+                    )}
+                  </Flex>
+
                   {cart[0] && cart[0].price > 0 && !isDashboard && (
                     <TreatmentPriceBreakdown product={cart[0]} />
                   )}
@@ -489,6 +476,38 @@ export default function AppointmentResume({
     );
   };
 
+  const AppointmentResumeDashboard = () => {
+    return (
+      <Accordion
+        collapsible={true}
+        defaultValue="1"
+        type="single"
+        className="w-full mt-auto pb-[2px] pl-[2px] pr-[2px]"
+      >
+        <AccordionItem {...accordionItemProps}>
+          <AccordionTrigger className="">
+            <Flex className="w-full justify-between p-4">
+              <Flex className="gap-2 text-sm">
+                <SvgBag height={16} width={16} /> Resumen del pedido
+              </Flex>
+            </Flex>
+          </AccordionTrigger>
+
+          <div className="md:border-t border-derma-secondary400 md:pt-2 py-4 ">
+            <Flex
+              layout="col-left"
+              className={`w-full text-sm px-4 ${
+                !isConfirmation ? 'md:px-0' : ''
+              }`}
+            >
+              <TreatmentsDashboard />
+            </Flex>
+          </div>
+        </AccordionItem>
+      </Accordion>
+    );
+  };
+
   const appointmentComponent = useMemo(() => {
     return (
       <Flex
@@ -500,6 +519,7 @@ export default function AppointmentResume({
           {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
           {isDerma && <TreatmentDerma />}
           {!appointment && <AppointmentDataResume />}
+          {isDashboard && <AppointmentResumeDashboard />}
         </Flex>
       </Flex>
     );
