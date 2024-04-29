@@ -9,8 +9,11 @@ import {
 import { StripePaymentElementOptions } from '@stripe/stripe-js';
 import { useRegistration } from '@utils/userUtils';
 import { SvgSpinner } from 'app/icons/Icons';
+import { SvgWarning } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 
 export const StripeForm = ({
   isDerma = false,
@@ -64,7 +67,15 @@ export const StripeForm = ({
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <Flex className="bg-white/50 rounded-2xl p-4 gap-3 items-start mb-4">
+        <SvgWarning className="shrink-0 w-4 h-4 mt-1" />
+        <Text className="text-sm">
+          No cierres esta ventana hasta que recibas la confirmación de que el
+          pago se ha realizado
+        </Text>
+      </Flex>
       <PaymentElement
+        className="w-full"
         id="payment-element"
         options={paymentElementOptions}
         onReady={() => setShowLoader(false)}

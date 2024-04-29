@@ -167,14 +167,6 @@ export default function WaitComponent() {
                 {payment !== null && payment !== undefined
                   ? renderWeb(isDerma)
                   : renderDash(isDerma)}
-
-                <Flex className="bg-hg-black100 rounded-2xl p-4 gap-3 items-start">
-                  <SvgWarning className="shrink-0 w-4 h-4 mt-1" />
-                  <Text className="text-sm">
-                    No cierres esta ventana hasta que recibas la confirmación de
-                    que el pago se ha realizado
-                  </Text>
-                </Flex>
               </Flex>
             </Container>
           </DermaLayout>
@@ -199,13 +191,6 @@ export default function WaitComponent() {
             {payment !== null && payment !== undefined
               ? renderWeb(isDerma)
               : renderDash(isDerma)}
-            <Flex className="bg-hg-black100 rounded-2xl p-4 gap-3 items-start">
-              <SvgWarning className="shrink-0 w-4 h-4 mt-1" />
-              <Text className="text-sm">
-                No cierres esta ventana hasta que recibas la confirmación de que
-                el pago se ha realizado
-              </Text>
-            </Flex>
           </Flex>
         </Container>
       </MainLayout>
