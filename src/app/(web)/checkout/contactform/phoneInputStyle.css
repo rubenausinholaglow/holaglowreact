@@ -1,27 +1,21 @@
-.react-international-phone-input-container {
-  position: relative !important;
+.react-tel-input .flag-dropdown {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 12px !important;
+  background-color: #ffffff !important;
+  border: 0px !important;
+  border-right: 1px solid #d0d5dd !important;
+}
 
-  .react-international-phone-country-selector {
-    position: absolute !important;
+.react-tel-input {
+  padding-left: 12px !important;
+}
 
-    button {
-      border: none !important;
-      border-right: 1px solid #e5e5e5 !important;
-      background-color: transparent !important;
-      padding: 8px 8px 8px 16px !important;
-      height: 64px !important;
-    }
-  }
+.react-tel-input .invalid-number-message {
+  display: none;
+}
 
-  .react-international-phone-input {
-    padding: 8px 16px 8px 78px !important;
-    font-size: 16px !important;
-    height: 64px !important;
-    border-radius: 16px !important;
-    width: 100% !important;
-
-    &.isComplete {
-      border: 1px solid theme('colors.hg.black') !important;
-    }
-  }
+.react-tel-input .form-control.invalid-number {
+  border: none !important;
+  background-color: transparent !important;
 }
