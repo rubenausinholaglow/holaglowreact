@@ -45,7 +45,7 @@ export const useImageProps = (product: Product, photoNumber = 1) => {
     false
   );
 
-  const [_, setImgSrc] = useState(
+  const [, setImgSrc] = useState(
     `${process.env.NEXT_PUBLIC_PRODUCT_IMG_PATH}${product.flowwwId}/productCard-${product.productCardImagePosition}.png`
   );
 

@@ -10,6 +10,9 @@ import { headers } from 'next/headers';
 const ProductPriceCard = dynamic(() => import('./ProductPriceCard'), {
   ssr: false,
 });
+
+const PVCard = dynamic(() => import('./PVCard'), { ssr: false });
+
 const ProductSessionGroupedPriceCard = dynamic(
   () => import('./ProductSessionGroupedPriceCard'),
   { ssr: false }
@@ -75,20 +78,18 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
         <Title size="2xl" className="font-bold mb-6 md:mb-12">
           Pide cita o más información
         </Title>
-
         <CheckHydration>
           {!isSessionProduct && (
             <Flex
               layout="col-left"
               className="md:flex-row gap-8 md:items-stretch"
             >
-              {productItems.map((item: Product, index: number) => (
-                <ProductPriceCard
-                  key={item.title}
-                  product={item}
-                  parentProduct={product}
-                />
-              ))}
+              <ProductPriceCard
+                product={productItems[0]}
+                parentProduct={product}
+              />
+
+              <PVCard />
             </Flex>
           )}
         </CheckHydration>
@@ -122,7 +123,6 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
             </Flex>
           </Flex>
         )}
-
         {isSessionProduct && !isEmpty(groupedSessionProducts) && (
           <Flex
             layout="col-left"

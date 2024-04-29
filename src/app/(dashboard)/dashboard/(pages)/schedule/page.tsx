@@ -130,16 +130,17 @@ export default function Page() {
           }
         });
       });
-
-      if (packsToAdd.length == 0 || cart.find(x => x.sessions > 1)) {
+      if (
+        packsToAdd.length == 0 ||
+        cart.find(x => x.sessions > 1 && !x.isPack)
+      ) {
         cart.map(cartItem => {
-          if (cartItem.sessions > 1) {
+          if (cartItem.sessions > 1 && !cartItem.isPack) {
             const packs = addProductUnitiesPack(cartItem);
             packsToAdd.push(...packs);
           }
         });
       }
-
       if (packsToAdd.length > 0) {
         setTreatmentPacks(packsToAdd);
       }
@@ -152,7 +153,7 @@ export default function Page() {
 
   function addProductUnitiesPack(product: Product): PackUnitiesScheduled[] {
     const packsToAdd: PackUnitiesScheduled[] = [];
-    if (product.sessions > 1) {
+    if (product.sessions > 1 && !product.isPack) {
       for (let i = 0; i < product.sessions; i++) {
         packsToAdd.push({
           uniqueId: createUniqueId(),
@@ -199,12 +200,14 @@ export default function Page() {
           {renderAcordionContent(
             cart.filter(
               item =>
-                item.isScheduled == findScheduledProducts ||
+                (item.isScheduled == findScheduledProducts && !item.isPack) ||
                 (item.isPack &&
                   item.packUnities?.some(unit =>
                     treatmentPacks.some(
                       pack =>
-                        pack.id === unit.id &&
+                        pack.id.toLocaleUpperCase() ===
+                          unit.id.toLocaleUpperCase() &&
+                        pack.productId == item.id &&
                         pack.isScheduled == findScheduledProducts
                     )
                   )) ||
@@ -222,6 +225,74 @@ export default function Page() {
     );
   };
 
+  const renderPack = (item: CartItem, findScheduledProducts = false) => {
+    return (
+      <>
+        {treatmentPacks
+          .filter(
+            pack =>
+              pack.isScheduled == findScheduledProducts &&
+              pack.productId == item.id
+          )
+          .sort((a, b) => (a.type > b.type ? 1 : -1))
+          .map(pack => (
+            <>
+              {pack.isScheduled ? (
+                <div className="flex gap-4 ">
+                  <Text className="flex-grow text-center" key={pack.id}>
+                    {pack.treatmentName}
+                  </Text>
+
+                  <Text className="">{pack.scheduledDate?.split(' ')[0]}</Text>
+                  <Text className="">{pack.scheduledDate?.split(' ')[1]}</Text>
+                </div>
+              ) : (
+                <div className="gap-4 w-full">
+                  <Text className="text-center mr-44" key={pack.id}>
+                    {UnityType[pack.type]}
+                  </Text>
+                </div>
+              )}
+            </>
+          ))}
+      </>
+    );
+  };
+
+  const renderSesssions = (item: CartItem, findScheduledProducts = false) => {
+    return (
+      <>
+        {treatmentPacks
+          .filter(
+            pack =>
+              pack.isScheduled == findScheduledProducts &&
+              pack.productId == item.id
+          )
+          .sort((a, b) => (a.type > b.type ? 1 : -1))
+          .map(pack => (
+            <>
+              {pack.isScheduled ? (
+                <div className="flex gap-4 ">
+                  <Text className="flex-grow text-center" key={pack.id}>
+                    {pack.treatmentName}
+                  </Text>
+
+                  <Text className="">{pack.scheduledDate?.split(' ')[0]}</Text>
+                  <Text className="">{pack.scheduledDate?.split(' ')[1]}</Text>
+                </div>
+              ) : (
+                <div className="gap-4 w-full">
+                  <Text className="text-center mr-44" key={pack.id}>
+                    {item.title}
+                  </Text>
+                </div>
+              )}
+            </>
+          ))}
+      </>
+    );
+  };
+
   const renderAcordionContent = (
     cartItem: CartItem[],
     findScheduledProducts = false
@@ -230,82 +301,39 @@ export default function Page() {
       <AccordionContent>
         <div className="border-t border-hg-secondary300">
           <ul className="flex flex-col w-full">
-            {cartItem.map(item => {
-              return (
-                <li
-                  className={` ${
-                    findScheduledProducts
-                      ? ' bg-hg-green '
-                      : ' bg-hg-primary300 '
-                  } transition-all flex items-center p-4 cursor-pointer`}
-                  key={item.title}
-                >
-                  <Text className="font-semibold w-1/4 shrink-0 ">
-                    {item.title}
-                  </Text>
+            {cartItem
+              .filter(item => validTypesFilterCart.includes(item.type))
+              .map(item => {
+                return (
+                  <li
+                    className={` ${
+                      findScheduledProducts
+                        ? ' bg-hg-green '
+                        : ' bg-hg-primary300 '
+                    } transition-all flex items-center p-4 cursor-pointer`}
+                    key={item.title}
+                  >
+                    <Text className="font-semibold w-1/4 shrink-0 ">
+                      {item.title}
+                    </Text>
 
-                  {item.isScheduled || item.isPack || item.sessions > 1 ? (
                     <div className="w-full mr-2">
-                      {item.isPack || item.sessions > 1 ? (
-                        <>
-                          {treatmentPacks
-                            .filter(
-                              pack =>
-                                item.packUnities?.some(
-                                  unit =>
-                                    pack.isScheduled == findScheduledProducts &&
-                                    unit.id === pack.id
-                                ) ||
-                                (item.sessions > 1 &&
-                                  pack.isScheduled == findScheduledProducts &&
-                                  pack.productId == item.id)
-                            )
-                            .sort((a, b) => (a.type > b.type ? 1 : -1))
-                            .map(pack => (
-                              <>
-                                {pack.isScheduled ? (
-                                  <div className="flex gap-4 ">
-                                    <Text
-                                      className="flex-grow text-center"
-                                      key={pack.id}
-                                    >
-                                      {pack.treatmentName}
-                                    </Text>
+                      {item.isPack && (
+                        <>{renderPack(item, findScheduledProducts)}</>
+                      )}
+                      {!item.isPack && item.sessions > 1 && (
+                        <>{renderSesssions(item, findScheduledProducts)}</>
+                      )}
 
-                                    <Text className="">
-                                      {pack.scheduledDate?.split(' ')[0]}
-                                    </Text>
-                                    <Text className="">
-                                      {pack.scheduledDate?.split(' ')[1]}
-                                    </Text>
-                                  </div>
-                                ) : (
-                                  <div className="gap-4 w-full">
-                                    <Text
-                                      className="text-center mr-44"
-                                      key={pack.id}
-                                    >
-                                      {item.sessions > 1
-                                        ? ''
-                                        : UnityType[pack.type]}
-                                    </Text>
-                                  </div>
-                                )}
-                              </>
-                            ))}
-                        </>
-                      ) : (
+                      {!item.isPack && item.sessions <= 1 && (
                         <div className="text-right mr-2 items-end w-full">
                           {item.scheduledDate}
                         </div>
                       )}
                     </div>
-                  ) : (
-                    <></>
-                  )}
-                </li>
-              );
-            })}
+                  </li>
+                );
+              })}
           </ul>
         </div>
       </AccordionContent>

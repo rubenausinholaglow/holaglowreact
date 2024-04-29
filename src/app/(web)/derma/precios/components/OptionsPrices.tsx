@@ -1,4 +1,3 @@
-import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -7,7 +6,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 import { SUBSCRIPTIONS } from '../../planes/mockedData';
-import OptionsPricesSelectButton from './OptionsPricesSelectButton';
 
 export default function OptionsPrices({
   isMultistep,
@@ -105,6 +103,7 @@ export default function OptionsPrices({
                 size="xl"
                 customStyles="px-16"
                 href={ROUTES.derma.multistep.start}
+                id="tmevent_derma_prices_plans_button"
               >
                 Empezar análisis de piel
               </Button>

@@ -58,12 +58,6 @@ export default function Treatments({
                   </p>
                   <p>{treatment.product.title}</p>
                 </li>
-                <li className="border-b border-hg-secondary/10 p-4">
-                  <p className="text-hg-tertiary500 text-xs mb-1">
-                    Producto utilizado
-                  </p>
-                  <p>{treatment.product.description}</p>
-                </li>
                 <li className="p-4">
                   <ul className="flex flex-col gap-4">
                     <li className="flex content-center">
