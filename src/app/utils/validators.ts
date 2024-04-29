@@ -1,6 +1,4 @@
-import { PhoneNumberUtil } from 'google-libphonenumber';
-
-const phoneUtil = PhoneNumberUtil.getInstance();
+import { isEmpty } from "lodash";
 
 export const phoneValidationRegex = /^[679]{1}[0-9]{8}$/;
 export const postalCodeValidationRegex = /^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/;
@@ -47,10 +45,26 @@ export const normalizeString = (str: string) => {
     .replace(/[\u0300-\u036f]/g, '');
 };
 
-export function validatePhoneInput(phoneNumber: string): boolean {
-  try {
-    return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phoneNumber));
-  } catch (error) {
+export function validatePhoneInput(phoneNumber: string) : boolean {
+    if (
+      phoneNumber.length > 3 &&
+      phoneNumber.startsWith('+34') &&
+      phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
+    ) {
+      return false;
+    }
+
+    if (
+      phoneNumber.length > 3 &&
+      phoneNumber.startsWith('+34') &&
+      !phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
+    ) {
+      return true;
+    }
+
+    if (isEmpty(phoneNumber) || phoneNumber === '+' || phoneNumber === '+34') {
+      return true;
+    }
+
     return false;
   }
-}
