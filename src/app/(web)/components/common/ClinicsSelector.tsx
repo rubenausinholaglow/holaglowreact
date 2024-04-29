@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import { Loader } from '@googlemaps/js-api-loader';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
@@ -19,6 +20,8 @@ import { isEmpty } from 'lodash';
 import FullScreenLoading from './FullScreenLayout';
 
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
+  const mapContainerRef = useRef(null);
+
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
@@ -43,6 +46,22 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
       setGoogleMapAddress(`${formattedAddress},${formattedCity}`);
     }
   }, [selectedClinic]);
+
+  useEffect(() => {
+    const loader = new Loader({
+      apiKey: 'AIzaSyC3tU4hztyQ9kO3Ul5W0Buh8NCUwq3CyLA', // Replace with your actual API key
+      version: 'weekly',
+    });
+
+    loader.importLibrary('maps').then(google => {
+      const map = new google.maps.Map(mapContainerRef.current, {
+        center: { lat: 40.7128, lng: -74.006 },
+        zoom: 10,
+      });
+
+      // You can add markers, polygons, etc. to the map here
+    });
+  }, []);
 
   return (
     <CheckHydration>
@@ -154,10 +173,15 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               style={{ height: `${mapHeight}px` }}
             >
               <div id="g-mapdisplay" className="h-full w-full max-w-full">
-                <iframe
+                {/* <iframe
                   className="h-full w-full border-none"
                   src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
-                ></iframe>
+                ></iframe> */}
+
+                <div
+                  ref={mapContainerRef}
+                  style={{ width: '100%', height: '400px' }}
+                />
               </div>
             </div>
           </div>
