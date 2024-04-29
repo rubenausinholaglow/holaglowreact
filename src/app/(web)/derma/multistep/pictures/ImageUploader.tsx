@@ -137,7 +137,7 @@ export default function ImageUploader({
                         <Image
                           src="/images/derma/multistep/faceIcon.png"
                           fill
-                          objectFit="cover"
+                          className="object-cover"
                           alt={subtitle}
                         />
                       )
@@ -149,7 +149,7 @@ export default function ImageUploader({
                           src={images[pictureIndex]['data_url']}
                           alt={subtitle}
                           fill
-                          objectFit="cover"
+                          className="object-cover"
                         />
                       )}
 
@@ -158,7 +158,7 @@ export default function ImageUploader({
                         src={picturesUrls[pictureIndex]}
                         alt={subtitle}
                         fill
-                        objectFit="cover"
+                        className="object-cover"
                         onLoad={() => {
                           setIsLoading(false);
                           setImageIsLoading(false);
