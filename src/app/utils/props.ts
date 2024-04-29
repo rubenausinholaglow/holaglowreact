@@ -51,6 +51,8 @@ export interface RegistrationFormProps {
   showDni?: boolean;
   showAddress?: boolean;
   className?: string;
+  splitSurnames?: boolean;
+  showBirthday?: boolean;
 }
 
 export interface CheckboxProps {

@@ -101,47 +101,6 @@ export default function DermaPayment() {
     setClient(client);
   }, [client]);
 
-  function checkFormData(formData: Client) {
-    const {
-      name,
-      surname,
-      email,
-      phonePrefix,
-      phone,
-      termsAndConditionsAccepted,
-      address,
-      city,
-      dni,
-    } = formData;
-
-    const cleanedPhoneNumber =
-      phonePrefix === '+34' ? phone.slice(3).replace(/ /g, '') : phone;
-
-    const dataToCheck = {
-      name: !isEmpty(name),
-      surname: !isEmpty(surname),
-      email: validateEmail(email),
-      phone:
-        (phonePrefix === '+34' && validatePhone(cleanedPhoneNumber)) ||
-        (phonePrefix !== '+34' && !isEmpty(phone)),
-      termsAndConditionsAccepted: termsAndConditionsAccepted,
-      address: !isEmpty(address),
-      dni:
-        !isEmpty(dni) &&
-        (isValidNif(dni.toUpperCase()) || isValidNie(dni.toUpperCase())),
-    };
-
-    for (const key in dataToCheck) {
-      if (
-        Object.prototype.hasOwnProperty.call(dataToCheck, key) &&
-        (dataToCheck as any)[key] !== true
-      ) {
-        return false;
-      }
-    }
-
-    return true;
-  }
   return (
     <DermaLayout hideButton={true}>
       <Container className="px-0 md:mt-8 md:pb-8">
@@ -174,6 +133,8 @@ export default function DermaPayment() {
               showDni={true}
               showPostalCode={true}
               showAddress={true}
+              showBirthday={true}
+              splitSurnames={true}
             />
 
             {!isProbadorVirtual && (

@@ -79,7 +79,7 @@ export default function ProductSessionPriceCard({
                 onClick={() => {
                   setSelectedTreatments([product]);
                 }}
-                href={ROUTES.checkout.clinics}
+                href={ROUTES.checkout.type}
               >
                 Reservar cita
                 <SvgArrow height={16} width={16} className="ml-2" />

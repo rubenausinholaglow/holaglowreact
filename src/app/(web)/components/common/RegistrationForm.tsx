@@ -38,6 +38,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showAddress = false,
   showDni = false,
   className = '',
+  splitSurnames = false,
+  showBirthday = false,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -52,6 +54,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showAddress?: boolean;
   showDni?: boolean;
   className?: string;
+  splitSurnames?: boolean;
+  showBirthday?: boolean;
 }) => {
   const routes = useRoutes();
 
@@ -60,6 +64,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
+  const [showBirthdayError, setShowBirthdayError] = useState<null | boolean>(
+    null
+  );
   const [showPostalCodeError, setShowPostalCodeError] = useState<
     null | boolean
   >(null);
@@ -126,10 +133,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       ((!isEmpty(formData.city) && showCity) || !showCity) &&
       ((!isEmpty(formData.address) && showAddress) || !showAddress) &&
       ((!isEmpty(formData.dni) && showDni) || !showDni) &&
+      ((!isEmpty(formData.birthday) && showBirthday) || !showBirthday) &&
       !showPhoneError &&
       !showEmailError &&
       !showPostalCodeError &&
-      !showDniError
+      !showDniError &&
+      !showBirthdayError
     ) {
       setIsDisabled(false);
       if (setContinueDisabled) setContinueDisabled(false);
@@ -143,6 +152,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     showEmailError,
     showDniError,
     showPostalCodeError,
+    showBirthdayError,
   ]);
 
   const handleFieldChange = (
@@ -242,11 +252,28 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         value={formData.name}
         onChange={event => handleFieldChange(event, 'name')}
       />
-      <TextInputField
-        placeholder="Apellidos"
-        value={formData.surname}
-        onChange={event => handleFieldChange(event, 'surname')}
-      />
+      {!splitSurnames && (
+        <TextInputField
+          placeholder="Apellidos"
+          value={formData.surname}
+          onChange={event => handleFieldChange(event, 'surname')}
+        />
+      )}
+
+      {splitSurnames && (
+        <>
+          <TextInputField
+            placeholder="Primer apellido"
+            value={formData.surname}
+            onChange={event => handleFieldChange(event, 'surname')}
+          />
+          <TextInputField
+            placeholder="Segundo apellido"
+            value={formData.secondSurname}
+            onChange={event => handleFieldChange(event, 'secondSurname')}
+          />
+        </>
+      )}
       <TextInputField
         placeholder="Correo electrónico"
         value={formData.email}
@@ -343,6 +370,18 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             </p>
           )}
         </>
+      )}
+      {showBirthday && (
+        <TextInputField
+          label="¿Cuándo naciste?"
+          labelClassName="absolute top-3 left-4 text-xs text-hg-black500"
+          inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full bg-white shadow-none"
+          placeholder="Escribe aquí"
+          type="date"
+          value={formData?.birthday || ''}
+          onChange={event => handleFieldChange(event, 'birthday')}
+          disableBgIcons
+        />
       )}
       {showPostalCode && (
         <>

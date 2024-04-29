@@ -6,6 +6,7 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@dashboardComponents/TextInputField';
+import { SkinConcern } from '@interface/derma/dermaquestions';
 import AuthenticationService from '@services/AuthtenticationService';
 import UserService from '@services/UserService';
 import ROUTES from '@utils/routes';
@@ -26,6 +27,7 @@ export default function SupportPage() {
   const [token, setToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const [userId, setUserId] = useState('');
   const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
   const { setClient, client } = useSessionStore(state => state);
   const {
@@ -46,12 +48,12 @@ export default function SupportPage() {
     setExtraInfo,
   } = useDermaStore(state => state);
 
-  const queryString = window.location.search;
-  const params = new URLSearchParams(queryString.toLowerCase());
-  const userId = params.get('userid') || '';
-
   const router = useRouter();
   useEffect(() => {
+    const queryString = window?.location?.search;
+    const params = new URLSearchParams(queryString.toLowerCase());
+    const userId = params.get('userid') || '';
+    setUserId(userId);
     async function login() {
       setIsLoading(true);
       await AuthenticationService.isValidLoginDerma(userId)
@@ -79,7 +81,10 @@ export default function SupportPage() {
             if (x) {
               setPicturesUrls(x.photos);
               setId(x.id!);
-              setPain(x.pain[0].skinPain);
+              setPain(x.skinPain);
+              const symptons: string[] = [];
+              x.skinConcerns.forEach(x => symptons.push(x.concern));
+              setSymptoms(symptons);
               setSkinType(x.skinType);
               setSkinSensibility(x.skinSensibility);
               setAllergy(x.allergy);

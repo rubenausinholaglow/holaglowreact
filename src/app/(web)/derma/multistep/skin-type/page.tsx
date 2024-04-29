@@ -58,8 +58,8 @@ export default function SkinType() {
                     }`}
                     key={item.title}
                     onClick={async () => {
-                      setSkinType(skinType === item.value ? 0 : item.value);
-                      if (skinType !== item.value) await nextStep();
+                      setSkinType(item.value);
+                      await nextStep();
                     }}
                   >
                     <Image
