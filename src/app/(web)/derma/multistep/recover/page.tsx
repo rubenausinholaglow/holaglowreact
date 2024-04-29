@@ -6,7 +6,6 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@dashboardComponents/TextInputField';
-import { SkinConcern } from '@interface/derma/dermaquestions';
 import AuthenticationService from '@services/AuthtenticationService';
 import UserService from '@services/UserService';
 import ROUTES from '@utils/routes';
