@@ -194,6 +194,10 @@ export const PaymentMethods = ({
         color: '#ffffff',
         backgroundColor: '#112959',
       },
+      '.Tab--selected': {
+        color: '#ffffff',
+        backgroundColor: '#112959',
+      },
     },
   };
 
