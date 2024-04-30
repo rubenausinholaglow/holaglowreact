@@ -151,7 +151,10 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               className="overflow-hidden max-w-full w-full relative z-10"
               style={{ height: `${mapHeight}px` }}
             >
-              <CustomMap address={googleMapAddress} />
+              <CustomMap
+                address={googleMapAddress}
+                selectedClinic={selectedClinic}
+              />
             </div>
           </div>
         </>
