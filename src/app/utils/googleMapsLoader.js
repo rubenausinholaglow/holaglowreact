@@ -1,9 +1,13 @@
 import { Loader } from '@googlemaps/js-api-loader';
 
-const loader = new Loader({
-  apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
-  version: 'weekly',
-  libraries: ['places'],
-});
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
+
+const loader = apiKey
+  ? new Loader({
+      apiKey,
+      version: 'weekly',
+      libraries: ['places'],
+    })
+  : null;
 
 export default loader;

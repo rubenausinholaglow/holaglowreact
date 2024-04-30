@@ -93,38 +93,45 @@ const styles = {
 };
 
 export default function CustomMap({ address }: { address: string }) {
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
 
   useEffect(() => {
-    loader.load().then(() => {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address }, (results, status) => {
-        if (status === 'OK' && results && results.length > 0) {
-          const mapOptions = {
-            center: results[0].geometry.location,
-            zoom: 17,
-          };
+    if (loader) {
+      loader.load().then(() => {
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ address }, (results, status) => {
+          if (status === 'OK' && results && results.length > 0) {
+            const mapOptions = {
+              center: results[0].geometry.location,
+              zoom: 17,
+            };
 
-          const newMap = new window.google.maps.Map(
-            document.getElementById('map'),
-            mapOptions
-          );
+            const mapElement = document.getElementById('map');
 
-          const customIconUrl = '/images/customMarker.svg';
+            if (mapElement) {
+              const newMap = new window.google.maps.Map(mapElement, mapOptions);
 
-          const marker = new window.google.maps.Marker({
-            position: results[0].geometry.location,
-            map: newMap,
-            icon: customIconUrl,
-          });
+              newMap.setOptions({ styles: styles['silver'] });
 
-          newMap.setOptions({ styles: styles['silver'] });
+              const customIconUrl = '/images/customMarker.svg';
 
-          setMap(newMap);
-        }
+              const marker = new window.google.maps.Marker({
+                position: results[0].geometry.location,
+                map: newMap,
+                icon: customIconUrl,
+              });
+
+              setMap(newMap);
+            } else {
+              console.error('Failed to find map element');
+            }
+          }
+        });
       });
-    });
+    } else {
+      console.error('Loader is null');
+    }
   }, [address]);
 
-  return <div id="map" style={{ height: '100%' }} />;
+  return <div id="map" className="h-full" />;
 }
