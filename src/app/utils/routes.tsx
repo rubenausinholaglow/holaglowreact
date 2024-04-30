@@ -7,7 +7,7 @@ const ROUTES = {
     treatments: '/checkout/treatments',
     schedule: '/checkout/agenda',
     contactForm: '/checkout/contactform',
-    thankYou: '/checkout/confirmation',
+    confirmation: '/checkout/confirmation',
   },
   clinics: '/clinicas',
   aboutUs: '/quienes-somos',

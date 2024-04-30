@@ -290,7 +290,7 @@ export default function Agenda({
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
             } else if (!isDashboard && !isDerma) {
-              router.push(ROUTES.checkout.thankYou);
+              router.push(`${ROUTES.checkout.confirmation}?isReagenda=true`);
             }
           });
         } else if (
@@ -357,7 +357,7 @@ export default function Agenda({
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
             } else if (!isDashboard && !isDerma) {
-              router.push(ROUTES.checkout.thankYou);
+              router.push(`${ROUTES.checkout.confirmation}?isReagenda=true`);
             }
           });
         } else if (!isDerma) {
