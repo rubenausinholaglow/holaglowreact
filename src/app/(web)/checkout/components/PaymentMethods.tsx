@@ -179,12 +179,13 @@ export const PaymentMethods = ({
         paddingRight: '16px',
       },
       '.Tab': {
-        border: `5px solid ${HOLAGLOW_COLORS.black}`,
+        border: `1px solid ${HOLAGLOW_COLORS.black}`,
         paddingLeft: '16px',
         marginLeft: '3px !important',
         marginRight: '3px',
         paddingRight: '16px',
         backgroundColor: '#F5F0ED',
+        borderRadius: '30px',
       },
       '.TabIcon--selected': {
         fill: '#ffffff',
