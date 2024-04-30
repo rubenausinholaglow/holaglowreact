@@ -190,8 +190,9 @@ export const PaymentMethods = ({
       '.TabIcon--selected': {
         fill: '#ffffff',
       },
-      '.Tab--selected': {
+      '.Tab--selected:hover': {
         color: '#ffffff',
+        backgroundColor: '#112959',
       },
     },
   };
