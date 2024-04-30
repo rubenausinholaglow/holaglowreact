@@ -357,7 +357,7 @@ export default function Agenda({
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
               );
             } else if (!isDashboard && !isDerma) {
-              router.push(`${ROUTES.checkout.confirmation}?isReagenda=true`);
+              router.push(ROUTES.checkout.confirmation);
             }
           });
         } else if (!isDerma) {
