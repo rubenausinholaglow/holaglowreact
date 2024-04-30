@@ -192,10 +192,12 @@ export const PaymentMethods = ({
       '.Tab--selected:hover': {
         color: '#ffffff',
         backgroundColor: '#112959',
+        boxShadow: 'none',
       },
       '.Tab--selected': {
         color: '#ffffff',
         backgroundColor: '#112959',
+        boxShadow: 'none',
       },
     },
   };
