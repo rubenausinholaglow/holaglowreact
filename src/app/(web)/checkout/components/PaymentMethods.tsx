@@ -184,8 +184,7 @@ export const PaymentMethods = ({
         marginLeft: '3px !important',
         marginRight: '3px',
         paddingRight: '16px',
-        backgroundColor: 'rgb(31 166 166)',
-        color: '#ffffff',
+        backgroundColor: '#F5F0ED',
       },
       '.TabIcon--selected': {
         fill: '#ffffff',
