@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function StaticClinics() {
-  return <Clinicas />;
+export default function StaticClinics({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  return <Clinicas searchParams={searchParams || {}} />;
 }

@@ -1,6 +1,8 @@
 import Home from 'app/(web)/components/home/Home';
 import type { Metadata } from 'next';
 
+import DermaHome from './components/dermahome/DermaHome';
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://holaglow.com'),
   title: 'Holaglow - La nueva cara de la medicina estética',
@@ -16,6 +18,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default function HomePage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const isDerma = searchParams['isDerma'];
+
+  if (isDerma) {
+    return <DermaHome />;
+  }
+
   return <Home />;
 }

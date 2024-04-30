@@ -13,12 +13,9 @@ export async function middleware(req: NextRequest) {
 
   const host = req.headers.get('host');
   const subdomain = getValidSubdomain(host);
-  if (subdomain) {
-    // Subdomain available, rewriting
-    console.log(
-      `>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`
-    );
-    url.pathname = `/${subdomain}${url.pathname}`;
+  if (subdomain && url.pathname === '/') {
+    // redirect to dermaHome
+    url.pathname = `/derma`;
   }
 
   return NextResponse.rewrite(url);
