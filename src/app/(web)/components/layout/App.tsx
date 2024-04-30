@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { gtUltra, poppins } from 'app/fonts';
 import {
   useGlobalPersistedStore,
@@ -161,6 +162,7 @@ export default function Html({ children }: { children: ReactNode }) {
       />
       <Breakpoint />
       {children}
+      <SpeedInsights />
     </body>
   );
 }

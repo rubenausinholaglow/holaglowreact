@@ -40,14 +40,21 @@ import { CartItem, PackUnitiesScheduled, Product, ProductType, UnityType } from 
 
 export function isDisableAddQuantity(selectedTreatments: Product[], product: Product, cart: CartItem[], treatmentPacks: PackUnitiesScheduled[]): boolean {
     
-    if(selectedTreatments.length == 0) return false;
-   
+    
     const sumPerTypeInCart = getCountTreatmentsToSchedule(
       product,
       cart,
       treatmentPacks
     );
     
+    if(sumPerTypeInCart[product.unityType] == 0) return true;
+
+    if(selectedTreatments.length == 0) return false;
+    
+    if (cart.length > 0 && selectedTreatments.filter(x => x.unityType == product.unityType)
+            .length >= sumPerTypeInCart[product.unityType]) {
+        return true;
+    }
 
     const haveTreatmentsEsthetics = getTreatmentPerType(selectedTreatments, ProductType.Esthetic)
     const haveTreatmentsMedics = getTreatmentPerType(selectedTreatments, ProductType.Medical)
@@ -63,20 +70,13 @@ export function isDisableAddQuantity(selectedTreatments: Product[], product: Pro
         return true;
     }
 
-    if (cart.length > 0 && selectedTreatments.filter(x => x.unityType == product.unityType)
-            .length >= sumPerTypeInCart[product.unityType]) {
-        return true;
-    }
+ 
 
     return false;
 }
 
 function getTreatmentPerType(selectedTreatments: Product[], proyctType : ProductType): boolean {
     return selectedTreatments.some(treatment => treatment.type === proyctType);
-}
-
-function getTreatmentPerUnityType(selectedTreatments: Product[], unityType : UnityType): boolean {
-    return selectedTreatments.some(treatment => treatment.unityType === unityType); 
 }
 
 const incompatibleProductsMap: Record<number, number[]> = {
@@ -126,7 +126,7 @@ export function getInvalidProducts(cart: CartItem[]): string[] {
   const invalidProducts = ['4107', '866'];
   const specialProductsPacks = ['855', '854'];
   const specialPacks= ['5492', '5497', '974', '5465'];
-  
+
   if(cart.find(x => !specialPacks.includes(x.flowwwId.toString())))
   {
     invalidProducts.push(...specialProductsPacks); 
@@ -134,16 +134,21 @@ export function getInvalidProducts(cart: CartItem[]): string[] {
   return invalidProducts;
 }
 
-export function getValidProductsToAdd(cart: CartItem[]): string[] {
+interface ProductsWithUpgrades  {
+    productName : string;
+} 
 
-  const specialProductSkin = ['2109', '5519', '2147'];
-  const specialPackSkin = ['5492', '5497']
-  
-  if(cart.find(x => specialPackSkin.includes(x.flowwwId.toString())))
-  {
-    return specialProductSkin;
-  }  
-
-  return [];
- 
-}
+export const productsAndSessions : ProductsWithUpgrades[] = [
+    {
+      productName: 'Microneedling',
+    },
+    {
+      productName: 'Rafiofrecuencia',
+    },
+    {
+      productName: 'Peeling Químico',
+    },
+    {
+      productName: 'Hydrafacial',
+    },
+]

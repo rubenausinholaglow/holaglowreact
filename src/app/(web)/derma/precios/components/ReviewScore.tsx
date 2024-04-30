@@ -17,7 +17,7 @@ export default function ReviewScore({
       <Flex layout="col-left" className="gap-1 mr-auto">
         <Text className="font-semibold">Holaglow clinics</Text>
         <Text className="text-hg-black500 text-xs mb-1">
-          + de 1.000 pecientes atendidos
+          + de 1.000 pacientes atendidos
         </Text>
         <ul className="flex gap-2">
           <li>

@@ -34,6 +34,7 @@ export default function OptionsPricesSelectButton({
           setIsLoading(true);
           await selectDermaProduct({ index, addItemToCart, router });
         }}
+        id="tmevent_derma_plans_selection_button"
       >
         {isLoading ? <SvgSpinner className="w-full" /> : 'Seleccionar'}
       </Button>

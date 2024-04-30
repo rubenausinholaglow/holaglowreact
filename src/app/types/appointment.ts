@@ -64,6 +64,7 @@ export interface RescheduleAppointmentRequest {
 }
 
 export interface UserCheckin {
+  id? : string;
   name: string;
   hour: string;
   professional: string;
@@ -73,7 +74,7 @@ export interface UserCheckin {
 export interface AppointmentNextResponse {
   id : string;
   flowwwId: string;
-  clinicflowwwId: string;
+  clinicFlowwwId: string;
   clinicId: string;
   clinicProfessionalId : string;
   clinicProfessionalName : string;

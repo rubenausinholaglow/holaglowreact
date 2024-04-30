@@ -45,6 +45,7 @@ export default function PlanesBottomBar({
             className="pointer-events-auto w-full"
             customStyles="px-2"
             onClick={() => handleContinue()}
+            id="tmevent_derma_plans_continue_button"
           >
             {!OPTIONS_VALUES.includes(selectedOption)
               ? 'Elige tu plan'

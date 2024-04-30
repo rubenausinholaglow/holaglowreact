@@ -46,7 +46,6 @@ export default function ConfirmationCheckIn() {
               x.isScheduled === false && validTypesFilterCart.includes(x.type)
           )
         );
-    setSelectedTreatments([]);
   }, []);
 
   return (
@@ -77,6 +76,9 @@ export default function ConfirmationCheckIn() {
               customStyles="bg-hg-primary"
               className="mb-8"
               href={ROUTES.dashboard.schedule}
+              onClick={() => {
+                setSelectedTreatments([]);
+              }}
             >
               Crear otra cita
               <SvgArrow height={18} width={18} className="ml-2" />

@@ -21,6 +21,7 @@ export const HandleNextMultistep = (nextUrl: string) => {
     medication,
     medicationInfo,
     lactating,
+    extraInfo,
   } = useDermaStore(state => state);
   const router = useRouter();
   const next = () => {
@@ -39,6 +40,7 @@ export const HandleNextMultistep = (nextUrl: string) => {
       skinConcerns: symptoms.map(x => ({
         concern: x,
       })),
+      extraInfo,
     };
 
     dermaService.update(dermaQuestions as DermaQuestions).then(response => {
