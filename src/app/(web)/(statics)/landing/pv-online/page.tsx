@@ -32,10 +32,10 @@ export default function LandingPV() {
           />
           <Flex layout="col-left" className="grow md:w-1/2">
             <Title className="text-hg-secondary mb-2 tracking-tight">
-              Asesórate gratis con nuestro probador virtual online
+              Te asesoramos gratis por videollamada
             </Title>
             <Text className="mb-4 text-hg-black500">
-              Pide tu primera cita médica y te informamos sobre los mejores
+              Pide tu primera cita online y te informamos sobre los mejores
               tratamientos para ti
             </Text>
             <GoToCheckout />
