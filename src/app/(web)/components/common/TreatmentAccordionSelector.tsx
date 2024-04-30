@@ -253,7 +253,9 @@ export default function TreatmentAccordionSelector({
           <Text className="font-semibold">{product.title}</Text>
           <Text className="text-xs">{product.description}</Text>
         </div>
-        <Text className="shrink-0 px-4 font-semibold">{product.price} €</Text>
+        <Text className="shrink-0 px-4 font-semibold text-hg-secondary">
+          {product.price} €
+        </Text>
       </Flex>
     );
   };
