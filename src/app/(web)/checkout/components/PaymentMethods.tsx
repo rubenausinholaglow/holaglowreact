@@ -177,7 +177,6 @@ export const PaymentMethods = ({
         marginBottom: '5px',
         marginRight: '3px',
         paddingRight: '16px',
-        width: '100%',
       },
       '.Tab': {
         border: `1px solid ${HOLAGLOW_COLORS.black}`,
@@ -185,7 +184,7 @@ export const PaymentMethods = ({
         marginLeft: '3px !important',
         marginRight: '3px',
         paddingRight: '16px',
-        width: '100%',
+        backgroundColor: 'rgb(31 166 166)',
       },
     },
   };
@@ -344,21 +343,23 @@ export const PaymentMethods = ({
                       <></>
                     )}
                     {clientSecret && method.key == 'creditCard' && (
-                      <Elements
-                        stripe={stripePromise}
-                        options={{
-                          clientSecret,
-                          appearance,
-                          fonts,
-                          locale: 'es',
-                          loader: 'always',
-                        }}
-                      >
-                        <StripeForm
-                          isDerma={isDerma}
-                          setShowLoader={setShowLoader}
-                        />
-                      </Elements>
+                      <Flex className="w-[99%]">
+                        <Elements
+                          stripe={stripePromise}
+                          options={{
+                            clientSecret,
+                            appearance,
+                            fonts,
+                            locale: 'es',
+                            loader: 'always',
+                          }}
+                        >
+                          <StripeForm
+                            isDerma={isDerma}
+                            setShowLoader={setShowLoader}
+                          />
+                        </Elements>
+                      </Flex>
                     )}
                     {errorMessage && (
                       <p className="text-red-600"> {errorMessage} </p>
