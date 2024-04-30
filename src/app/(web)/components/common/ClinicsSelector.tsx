@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Loader } from '@googlemaps/js-api-loader';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
@@ -17,6 +16,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import CustomMap from './CustomMap';
 import FullScreenLoading from './FullScreenLayout';
 
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
@@ -47,22 +47,6 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
     }
   }, [selectedClinic]);
 
-  useEffect(() => {
-    const loader = new Loader({
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY, // Replace with your actual API key
-      version: 'weekly',
-    });
-
-    loader.importLibrary('maps').then(google => {
-      const map = new google.maps.Map(mapContainerRef.current, {
-        center: { lat: 40.7128, lng: -74.006 },
-        zoom: 10,
-      });
-
-      // You can add markers, polygons, etc. to the map here
-    });
-  }, []);
-
   return (
     <CheckHydration>
       <Accordion
@@ -76,11 +60,11 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               key={index}
               value={index.toString()}
               className={`w-full rounded-2xl overflow-hidden
-                      ${
-                        selectedAccordion === index.toString()
-                          ? 'bg-hg-secondary100 border border-hg-secondary300'
-                          : 'bg-derma-secondary300 border border-transparent'
-                      }`}
+                ${
+                  selectedAccordion === index.toString()
+                    ? 'bg-hg-secondary100 border border-hg-secondary300'
+                    : 'bg-derma-secondary300 border border-transparent'
+                }`}
             >
               <AccordionTrigger className="w-full">
                 <AnimateOnViewport>
@@ -122,12 +106,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp relative">
                 <FullScreenLoading />
                 <div className="overflow-hidden max-w-full w-full h-[300px] relative z-10">
-                  <div id="g-mapdisplay" className="h-full w-full max-w-full">
-                    <iframe
-                      className="h-full w-full border-none"
-                      src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
-                    ></iframe>
-                  </div>
+                  <CustomMap address={googleMapAddress} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -172,17 +151,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               className="overflow-hidden max-w-full w-full relative z-10"
               style={{ height: `${mapHeight}px` }}
             >
-              <div id="g-mapdisplay" className="h-full w-full max-w-full">
-                {/* <iframe
-                  className="h-full w-full border-none"
-                  src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
-                ></iframe> */}
-
-                <div
-                  ref={mapContainerRef}
-                  style={{ width: '100%', height: '400px' }}
-                />
-              </div>
+              <CustomMap address={googleMapAddress} />
             </div>
           </div>
         </>
