@@ -2,7 +2,7 @@ import Clinicas from 'app/(web)/(statics)/clinicas/Clinicas';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://holaglow.com'),
+  metadataBase: new URL('https://derma.holaglow.com'),
   title: 'Las ciudades donde te subimos el glow',
   description:
     'Ven a visitar las clínicas Holaglow, un espacio de confianza, profesionalidad e innovación donde podrás expresar tu belleza libremente.',
