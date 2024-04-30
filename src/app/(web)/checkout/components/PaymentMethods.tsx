@@ -187,6 +187,12 @@ export const PaymentMethods = ({
         backgroundColor: 'rgb(31 166 166)',
         color: '#ffffff',
       },
+      '.TabIcon--selected': {
+        fill: '#ffffff',
+      },
+      '.Tab--selected': {
+        color: '#ffffff',
+      },
     },
   };
 
