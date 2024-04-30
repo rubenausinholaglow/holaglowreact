@@ -106,7 +106,12 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp relative">
                 <FullScreenLoading />
                 <div className="overflow-hidden max-w-full w-full h-[300px] relative z-10">
-                  <CustomMap address={googleMapAddress} />
+                  {selectedClinic && (
+                    <CustomMap
+                      address={googleMapAddress}
+                      selectedClinic={selectedClinic}
+                    />
+                  )}
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -151,10 +156,12 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               className="overflow-hidden max-w-full w-full relative z-10"
               style={{ height: `${mapHeight}px` }}
             >
-              <CustomMap
-                address={googleMapAddress}
-                selectedClinic={selectedClinic}
-              />
+              {selectedClinic && (
+                <CustomMap
+                  address={googleMapAddress}
+                  selectedClinic={selectedClinic}
+                />
+              )}
             </div>
           </div>
         </>
