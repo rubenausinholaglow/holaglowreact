@@ -185,6 +185,7 @@ export const PaymentMethods = ({
         marginRight: '3px',
         paddingRight: '16px',
         backgroundColor: 'rgb(31 166 166)',
+        color: '#ffffff',
       },
     },
   };
