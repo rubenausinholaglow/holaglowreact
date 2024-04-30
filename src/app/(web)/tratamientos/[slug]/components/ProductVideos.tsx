@@ -78,7 +78,7 @@ export default function ProductVideos({ product }: { product: Product }) {
                   return (
                     <div key={video.url} className="px-4 w-full">
                       <iframe
-                        width="100%"
+                        width="315"
                         height="560"
                         src={`https://www.youtube.com/embed/${videoId}`}
                         title="YouTube video player"
