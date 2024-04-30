@@ -1,6 +1,7 @@
 import { Product } from '@interface/product';
 import CheckHydration from '@utils/CheckHydration';
 import { isMobileSSR } from '@utils/isMobileSSR';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
@@ -25,15 +26,21 @@ export default function ProductVideos({ product }: { product: Product }) {
     return <></>;
   }
 
+  console.log(videos);
+
   return (
-    <Container className="py-12 md:pt-16 md:pb-20">
+    <Container className="px-0 md:px-4 py-12 md:py-16">
       <Flex
         layout="col-left"
         className={`w-full ${
           videos.length <= 1 && !isMobileSSR() ? 'flex-row gap-16' : ''
         }`}
       >
-        <div className={videos.length <= 1 && !isMobileSSR() ? 'w-1/2' : ''}>
+        <div
+          className={
+            videos.length <= 1 && !isMobileSSR() ? 'w-1/2 px-4' : 'px-4'
+          }
+        >
           <Title size="2xl" className="font-bold mb-6">
             Holaglow lovers
           </Title>
@@ -43,15 +50,22 @@ export default function ProductVideos({ product }: { product: Product }) {
           </Text>
         </div>
         <div
-          className={
-            videos.length <= 1 && !isMobileSSR() ? 'w-1/2 aspect-square' : ''
-          }
+          className={videos.length <= 1 && !isMobileSSR() ? 'w-1/3' : 'w-full'}
         >
           <CheckHydration>
             <Carousel
-              hasDots={videos.length > 1}
-              dragEnabled={videos.length > 1}
-              touchEnabled={videos.length > 1}
+              hasDots={
+                (isMobileSSR() && videos.length > 1) ||
+                (!isMobileSSR() && videos.length > 3)
+              }
+              dragEnabled={
+                (isMobileSSR() && videos.length > 1) ||
+                (!isMobileSSR() && videos.length > 3)
+              }
+              touchEnabled={
+                (isMobileSSR() && videos.length > 1) ||
+                (!isMobileSSR() && videos.length > 3)
+              }
               visibleSlides={videos.length > 1 ? (isMobileSSR() ? 1 : 3) : 1}
               isIntrinsicHeight
               infinite={false}
@@ -59,12 +73,19 @@ export default function ProductVideos({ product }: { product: Product }) {
             >
               {videos.map(video => {
                 if (video.active) {
+                  const videoId = video.url.split('/').pop();
+
                   return (
-                    <div
-                      key={video.url}
-                      className="rounded-2xl overflow-hidden"
-                    >
-                      <ProductVideo src={video.url} />
+                    <div key={video.url} className="px-4 w-full">
+                      <iframe
+                        width="100%"
+                        height="560"
+                        src={`https://www.youtube.com/embed/${videoId}`}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="rounded-3xl overflow-hidden"
+                      />
                     </div>
                   );
                 }
@@ -81,7 +102,7 @@ export default function ProductVideos({ product }: { product: Product }) {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               className="rounded-3xl overflow-hidden"
-            ></iframe>
+            />
           )}
         </div>
       </Flex>
