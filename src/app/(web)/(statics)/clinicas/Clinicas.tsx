@@ -7,17 +7,9 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
-import { headers } from 'next/headers';
 import Image from 'next/image';
 
-export default function Clinicas({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const domain = headers().get('host') || '';
-  const isDerma = domain.startsWith('derma') || searchParams['isDerma'];
-
+export default function Clinicas({ isDerma = false }: { isDerma?: boolean }) {
   const Wrapper = ({ children }: { children: ReactNode }) => {
     if (isDerma) {
       return <DermaLayout showNavigation>{children}</DermaLayout>;
