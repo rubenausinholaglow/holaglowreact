@@ -190,6 +190,7 @@ export default function Confirmation({
                   } text-center mb-4 font-light`}
                 >
                   {selectedTreatments.length > 0 &&
+                  selectedTreatments[0] &&
                   selectedTreatments[0].price === 0 &&
                   !isDerma
                     ? '¡Recibido!'
