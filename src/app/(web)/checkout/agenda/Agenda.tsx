@@ -92,7 +92,7 @@ export default function Agenda({
     },
     '4': {
       //Barcelona
-      '0': 15,
+      '0': 10,
     },
     '5': {
       //Valencia
