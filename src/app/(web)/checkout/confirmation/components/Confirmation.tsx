@@ -189,7 +189,9 @@ export default function Confirmation({
                     isDerma ? 'text-derma-primary' : ''
                   } text-center mb-4 font-light`}
                 >
-                  {selectedTreatments[0].price === 0
+                  {selectedTreatments.length > 0 &&
+                  selectedTreatments[0].price === 0 &&
+                  !isDerma
                     ? '¡Recibido!'
                     : 'Pago recibido.'}
                 </Title>
