@@ -26,8 +26,6 @@ export default function ProductVideos({ product }: { product: Product }) {
     return <></>;
   }
 
-  console.log(videos);
-
   return (
     <Container className="px-0 md:px-4 py-12 md:py-16">
       <Flex
