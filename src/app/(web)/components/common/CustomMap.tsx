@@ -114,6 +114,7 @@ export default function CustomMap({
               const mapOptions = {
                 center: results[0].geometry.location,
                 zoom: 17,
+                disableDefaultUI: true,
               };
 
               const mapElement = document.getElementById('map');
