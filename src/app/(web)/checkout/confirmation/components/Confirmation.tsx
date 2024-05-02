@@ -68,10 +68,12 @@ export default function Confirmation({
   appointment,
   isDashboard,
   isDerma,
+  isReagenda,
 }: {
   appointment?: Appointment;
   isDashboard?: boolean;
   isDerma?: boolean;
+  isReagenda?: boolean;
 }) {
   const ROUTES = useRoutes();
   const { setCurrentUser } = useGlobalPersistedStore(state => state);
@@ -189,9 +191,9 @@ export default function Confirmation({
                     isDerma ? 'text-derma-primary' : ''
                   } text-center mb-4 font-light`}
                 >
-                  {selectedTreatments[0].price === 0
-                    ? '¡Recibido!'
-                    : 'Pago recibido.'}
+                  {selectedTreatments[0].price > 0 && !isReagenda
+                    ? 'Pago recibido.'
+                    : '¡Recibido!'}
                 </Title>
                 {!isDerma && (
                   <Text className="text-center text-hg-black500 hidden md:block">
