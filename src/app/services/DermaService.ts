@@ -2,6 +2,7 @@ import Bugsnag from '@bugsnag/js';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
 import { UpsellingData } from '@interface/upselling';
 import {
+  ERROR_GET_DERMADIAGNOSIS,
   ERROR_GET_DERMAROUTINES,
   ERROR_UPDATE_DERMAQUESTIONS,
 } from '@utils/textConstants';
@@ -51,6 +52,29 @@ export const dermaService = {
     } catch (error) {
       Bugsnag.notify(error + ERROR_GET_DERMAROUTINES);
       throw new Error(ERROR_GET_DERMAROUTINES);
+    }
+  },
+  getDiagnosis: async (phone: string): Promise<UpsellingData> => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_DERMAPATIENTS_API}dermahistorial?phone=` +
+          phone,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (!response.ok) {
+        Bugsnag.notify(ERROR_GET_DERMADIAGNOSIS);
+        throw new Error(ERROR_GET_DERMADIAGNOSIS);
+      }
+
+      return await response.json();
+    } catch (error) {
+      Bugsnag.notify(error + ERROR_GET_DERMADIAGNOSIS);
+      throw new Error(ERROR_GET_DERMADIAGNOSIS);
     }
   },
   uploadImage: async (

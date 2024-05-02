@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react';
 import { UpsellingData } from '@interface/upselling';
 import { dermaService } from '@services/DermaService';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
+import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
 import Login from '../planes/components/Login';
-import Diagnosis from './Diagnosis';
-import FirstDiagnosis from './FirstDiagnosis';
+import DiagnosisBlock from './Diagnosis';
+import EmptyDiagnosis from './EmptyDiagnosis';
+import ProfessionalHeader from './ProfessionalHeader';
 import RoutineExplanation from './RoutineExplanation';
 
 export default function Diagnostico() {
@@ -23,12 +26,21 @@ export default function Diagnostico() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await dermaService.getRoutine(dermaPhone);
+      const response = await dermaService.getDiagnosis(dermaPhone);
       setDiagnosisData(response);
       if (!isLogged) setIsLogged(true);
     };
     if (dermaPhone) fetchData();
   }, [dermaPhone]);
+
+  if (!isLogged) {
+    return <Login setIsLogged={setIsLogged} />;
+  }
+
+  const initialDate = dayjs(diagnosisData?.creationDate);
+  const post30Days = dayjs(diagnosisData?.creationDate).add(30, 'day');
+  const post60Days = dayjs(diagnosisData?.creationDate).add(60, 'day');
+  const post90Days = dayjs(diagnosisData?.creationDate).add(90, 'day');
 
   return (
     <div className="bg-derma-secondary300 min-h-screen">
@@ -38,8 +50,7 @@ export default function Diagnostico() {
 
       <DermaLayout hideButton hideFooter>
         <Container className="px-0 md:px-4">
-          {!isLogged && <Login setIsLogged={setIsLogged} />}
-          {isLogged && (
+          {isLogged && diagnosisData && (
             <Flex
               layout="col-left"
               className="w-full md:flex-row gap-6 md:gap-16 pt-4"
@@ -56,7 +67,13 @@ export default function Diagnostico() {
                     Después de 24-48 horas de tu solicitud
                   </Text>
 
-                  {diagnosisData && <FirstDiagnosis data={diagnosisData} />}
+                  {diagnosisData?.diagnostic[0] && (
+                    <DiagnosisBlock
+                      isFirstDiagnosis
+                      user={diagnosisData.user}
+                      diagnosis={diagnosisData.diagnostic[0]}
+                    />
+                  )}
                 </li>
 
                 <li>
@@ -67,12 +84,41 @@ export default function Diagnostico() {
                     Diagnóstico a 30 días
                   </Title>
                   <Text className="text-sm mb-6">
-                    Disponible a partir del
-                    {dayjs(diagnosisData?.creationDate)
-                      .add(30, 'day')
-                      .format('dddd, D [de] MMMM')}
+                    Disponible a partir del{' '}
+                    {post30Days.format('dddd, D [de] MMMM')}
                   </Text>
-                  <Diagnosis data={{}} />
+
+                  {/* {diagnosisData?.diagnostic.length > 1 && (
+                    <DiagnosisBlock
+                      user={diagnosisData.user}
+                      diagnosis={diagnosisData.diagnostic[1]}
+                    />
+                  )} */}
+
+                  {!dayjs().isAfter(post30Days) ? (
+                    <Flex className="flex flex-col items-start p-4 bg-white md:border border-derma-secondary400 rounded-3xl">
+                      <ProfessionalHeader
+                        diagnosis={diagnosisData.diagnostic[0]}
+                      />
+                      <div className="text-sm">
+                        <Text className="text-derma-primary mb-4 font-semibold">
+                          Hola {diagnosisData.user.firstName},
+                        </Text>
+
+                        <Text className="mb-4">
+                          Ya puedes subir las 3 fotos de la evolución de tu
+                          rostro en detalle frontal y perfil de ambos lados.
+                        </Text>
+
+                        <Button className="w-full" type="derma" size="xl">
+                          Empezar ahora
+                          <SvgArrow className="ml-4" />
+                        </Button>
+                      </div>
+                    </Flex>
+                  ) : (
+                    <EmptyDiagnosis />
+                  )}
                 </li>
 
                 <li>
@@ -84,11 +130,9 @@ export default function Diagnostico() {
                   </Title>
                   <Text className="text-sm mb-6">
                     Disponible a partir del{' '}
-                    {dayjs(diagnosisData?.creationDate)
-                      .add(60, 'day')
-                      .format('dddd, D [de] MMMM')}
+                    {post60Days.format('dddd, D [de] MMMM')}
                   </Text>
-                  <Diagnosis data={{}} />
+                  <EmptyDiagnosis />
                 </li>
 
                 <li>
@@ -99,12 +143,11 @@ export default function Diagnostico() {
                     Diagnóstico a 90 días
                   </Title>
                   <Text className="text-sm mb-6">
-                    Disponible a partir del
-                    {dayjs(diagnosisData?.creationDate)
-                      .add(90, 'day')
-                      .format('dddd, D [de] MMMM')}
+                    Disponible a partir del{' '}
+                    {post90Days.format('dddd, D [de] MMMM')}
                   </Text>
-                  <Diagnosis data={{}} />
+
+                  <EmptyDiagnosis />
                 </li>
               </ul>
 
