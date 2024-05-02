@@ -156,6 +156,7 @@ export const PaymentMethods = ({
       [key]: false,
     });
   }
+  const backgroundColor = isDerma ? '#112959' : '#A96FE7';
   const appearance: Appearance = {
     theme: 'stripe',
     labels: 'floating',
@@ -192,12 +193,12 @@ export const PaymentMethods = ({
       },
       '.Tab--selected:hover': {
         color: '#ffffff',
-        backgroundColor: '#112959',
+        backgroundColor: backgroundColor,
         boxShadow: 'none',
       },
       '.Tab--selected': {
         color: '#ffffff',
-        backgroundColor: '#112959',
+        backgroundColor: backgroundColor,
         boxShadow: 'none',
       },
     },
