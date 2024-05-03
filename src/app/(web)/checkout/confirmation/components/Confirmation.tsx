@@ -193,7 +193,10 @@ export default function Confirmation({
                 >
                   {isReagenda
                     ? 'Cita reagendada correctamente'
-                    : selectedTreatments[0].price > 0
+                    : selectedTreatments.length > 0 &&
+                      selectedTreatments[0] &&
+                      selectedTreatments[0].price > 0 &&
+                      !isDerma
                     ? 'Pago recibido.'
                     : '¡Recibido!'}
                 </Title>
