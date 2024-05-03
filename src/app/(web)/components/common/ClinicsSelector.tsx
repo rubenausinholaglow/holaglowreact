@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
@@ -16,9 +16,12 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import CustomMap from './CustomMap';
 import FullScreenLoading from './FullScreenLayout';
 
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
+  const mapContainerRef = useRef(null);
+
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
@@ -57,11 +60,11 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               key={index}
               value={index.toString()}
               className={`w-full rounded-2xl overflow-hidden
-                      ${
-                        selectedAccordion === index.toString()
-                          ? 'bg-hg-secondary100 border border-hg-secondary300'
-                          : 'bg-derma-secondary300 border border-transparent'
-                      }`}
+                ${
+                  selectedAccordion === index.toString()
+                    ? 'bg-hg-secondary100 border border-hg-secondary300'
+                    : 'bg-derma-secondary300 border border-transparent'
+                }`}
             >
               <AccordionTrigger className="w-full">
                 <AnimateOnViewport>
@@ -103,12 +106,12 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               <AccordionContent className="bg-hg-secondary100 overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp relative">
                 <FullScreenLoading />
                 <div className="overflow-hidden max-w-full w-full h-[300px] relative z-10">
-                  <div id="g-mapdisplay" className="h-full w-full max-w-full">
-                    <iframe
-                      className="h-full w-full border-none"
-                      src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
-                    ></iframe>
-                  </div>
+                  {selectedClinic && (
+                    <CustomMap
+                      address={googleMapAddress}
+                      selectedClinic={selectedClinic}
+                    />
+                  )}
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -153,12 +156,12 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
               className="overflow-hidden max-w-full w-full relative z-10"
               style={{ height: `${mapHeight}px` }}
             >
-              <div id="g-mapdisplay" className="h-full w-full max-w-full">
-                <iframe
-                  className="h-full w-full border-none"
-                  src={`https://www.google.com/maps/embed/v1/place?q=Holaglow,+${googleMapAddress},+España&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
-                ></iframe>
-              </div>
+              {selectedClinic && (
+                <CustomMap
+                  address={googleMapAddress}
+                  selectedClinic={selectedClinic}
+                />
+              )}
             </div>
           </div>
         </>
