@@ -60,8 +60,10 @@ const ROUTES = {
       payment: '/multistep/payment',
       thankyou: '/multistep/thank-you',
       planes: '/multistep/planes',
-      diagnostico: '/multistep/diagnostico',
-      check30: '/multistep/check-30',
+    },
+    diagnostico: {
+      home: '/diagnostico',
+      check30: '/diagnostico/check-30',
     },
   },
 };

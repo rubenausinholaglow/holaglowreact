@@ -38,6 +38,8 @@ export default function Diagnostico() {
     return <Login setIsLogged={setIsLogged} />;
   }
 
+  console.log(diagnosisData);
+
   const initialDate = dayjs(diagnosisData?.creationDate);
   const post30Days = dayjs(diagnosisData?.creationDate).add(30, 'day');
   const post60Days = dayjs(diagnosisData?.creationDate).add(60, 'day');
@@ -115,7 +117,7 @@ export default function Diagnostico() {
                           className="w-full"
                           type="derma"
                           size="xl"
-                          href={ROUTES.derma.multistep.check30}
+                          href={`${ROUTES.derma.diagnostico.check30}?diagnosisId=${diagnosisData.diagnostic[1].id}`}
                         >
                           Empezar ahora
                           <SvgArrow className="ml-4" />

@@ -21,12 +21,14 @@ export default function ImageUploader({
   pictureIndex,
   imageIsLoading,
   setImageIsLoading,
+  diagnosticId,
 }: {
   title: string;
   subtitle: string;
   pictureIndex: number;
   imageIsLoading: boolean;
   setImageIsLoading: Dispatch<SetStateAction<boolean>>;
+  diagnosticId?: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
@@ -57,7 +59,8 @@ export default function ImageUploader({
         undefined,
         updatedPictures[0].file!,
         'ImagePosition' + pictureIndex,
-        id
+        id,
+        diagnosticId ? diagnosticId : ''
       );
       if (picturesUrls.length > pictureIndex) picturesUrls[pictureIndex] = url;
       else picturesUrls.push(url);
