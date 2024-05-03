@@ -9,6 +9,7 @@ import {
   getValidUnityTypes,
   isDisableAddQuantity,
 } from '@utils/agendaUtils';
+import { fetchProduct } from '@utils/fetch';
 import { PacksConfigured } from '@utils/packUtils';
 import useRoutes from '@utils/useRoutes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
@@ -49,6 +50,7 @@ export default function TreatmentAccordionSelector({
   const router = useRouter();
   const ROUTES = useRoutes();
   const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
+  const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
 
   const notValidProducts = getInvalidProducts(cart);
 
@@ -115,6 +117,20 @@ export default function TreatmentAccordionSelector({
     if (!isDashboard) {
       getAgendaProducts();
     }
+  }, []);
+
+  useEffect(() => {
+    async function initMedicalVisitProduct() {
+      const medicalVisitProduct = await fetchProduct(
+        process.env.NEXT_PUBLIC_MEDICAL_VISIT || '',
+        false,
+        false
+      );
+
+      setMedicalVisitProduct(medicalVisitProduct);
+    }
+
+    if (!isDashboard) initMedicalVisitProduct();
   }, []);
 
   function getProductsByCategory(category: string): Product[] {
@@ -230,7 +246,9 @@ export default function TreatmentAccordionSelector({
                 onClick={() => {
                   if (isDashboard) return;
 
-                  setSelectedTreatments([product]);
+                  if (medicalVisitProduct && product.isPack) {
+                    setSelectedTreatments([medicalVisitProduct]);
+                  } else setSelectedTreatments([product]);
                   router.push(ROUTES.checkout.clinics);
                 }}
               >
