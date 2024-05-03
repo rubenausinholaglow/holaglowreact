@@ -156,6 +156,7 @@ export const PaymentMethods = ({
       [key]: false,
     });
   }
+  const backgroundColor = isDerma ? '#112959' : '#A96FE7';
   const appearance: Appearance = {
     theme: 'stripe',
     labels: 'floating',
@@ -174,13 +175,26 @@ export const PaymentMethods = ({
         paddingLeft: '16px',
         marginBottom: '5px',
         paddingRight: '16px',
-        width: '100%',
       },
       '.Tab': {
         border: `1px solid ${HOLAGLOW_COLORS.black}`,
         paddingLeft: '16px',
         paddingRight: '16px',
-        width: '100%',
+        backgroundColor: '#F5F0ED',
+        borderRadius: '30px',
+      },
+      '.TabIcon--selected': {
+        fill: '#ffffff',
+      },
+      '.Tab--selected:hover': {
+        color: '#ffffff',
+        backgroundColor: backgroundColor,
+        boxShadow: 'none',
+      },
+      '.Tab--selected': {
+        color: '#ffffff',
+        backgroundColor: backgroundColor,
+        boxShadow: 'none',
       },
     },
   };
@@ -339,21 +353,23 @@ export const PaymentMethods = ({
                       <></>
                     )}
                     {clientSecret && method.key == 'creditCard' && (
-                      <Elements
-                        stripe={stripePromise}
-                        options={{
-                          clientSecret,
-                          appearance,
-                          fonts,
-                          locale: 'es',
-                          loader: 'always',
-                        }}
-                      >
-                        <StripeForm
-                          isDerma={isDerma}
-                          setShowLoader={setShowLoader}
-                        />
-                      </Elements>
+                      <Flex className="w-[99%]">
+                        <Elements
+                          stripe={stripePromise}
+                          options={{
+                            clientSecret,
+                            appearance,
+                            fonts,
+                            locale: 'es',
+                            loader: 'always',
+                          }}
+                        >
+                          <StripeForm
+                            isDerma={isDerma}
+                            setShowLoader={setShowLoader}
+                          />
+                        </Elements>
+                      </Flex>
                     )}
                     {errorMessage && (
                       <p className="text-red-600"> {errorMessage} </p>

@@ -93,7 +93,7 @@ export const StripeForm = ({
           }
         }}
       >
-        {isButtonDisabled ? <SvgSpinner /> : 'Pago con tarjeta débito/crédito'}
+        {isButtonDisabled ? <SvgSpinner /> : 'Pagar de forma segura'}
       </Button>
       {errorMessage && (
         <p className="text-hg-error text-sm p-2">{errorMessage}</p>
