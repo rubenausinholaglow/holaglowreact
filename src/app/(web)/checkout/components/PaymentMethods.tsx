@@ -167,23 +167,18 @@ export const PaymentMethods = ({
       fontFamily: 'poppins',
       spacingUnit: '4px',
       borderRadius: '12px',
-      // See all possible variables below
     },
     rules: {
       '.Input': {
         border: `1px solid ${HOLAGLOW_COLORS.black}`,
         paddingLeft: '16px',
-        marginLeft: '3px',
         marginBottom: '5px',
-        marginRight: '3px',
         paddingRight: '16px',
         width: '100%',
       },
       '.Tab': {
         border: `1px solid ${HOLAGLOW_COLORS.black}`,
         paddingLeft: '16px',
-        marginLeft: '3px !important',
-        marginRight: '3px',
         paddingRight: '16px',
         width: '100%',
       },
