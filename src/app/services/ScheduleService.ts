@@ -265,9 +265,8 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId +
-        `&professionalName=` +
-        professionalName;
+        clinicId;
+      if (professionalName) url + `&professionalName=` + professionalName;
       isDashboard ? (url += '&isDashboard=true') : '';
       const res = await fetch(url);
       if (res.ok) {
@@ -294,9 +293,8 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId +
-        `&professionalName=` +
-        professionalName;
+        clinicId;
+      if (professionalName) url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -323,9 +321,8 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId +
-        `&professionalName=` +
-        professionalName;
+        clinicId;
+      if (professionalName) url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -352,9 +349,8 @@ export default class ScheduleService {
         `&treatment=` +
         treatment +
         `&clinicId=` +
-        clinicId +
-        `&professionalName=` +
-        professionalName;
+        clinicId;
+      if (professionalName) url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
