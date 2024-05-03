@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { UpsellingData } from '@interface/upselling';
 import { dermaService } from '@services/DermaService';
+import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
@@ -110,7 +111,12 @@ export default function Diagnostico() {
                           rostro en detalle frontal y perfil de ambos lados.
                         </Text>
 
-                        <Button className="w-full" type="derma" size="xl">
+                        <Button
+                          className="w-full"
+                          type="derma"
+                          size="xl"
+                          href={ROUTES.derma.multistep.check30}
+                        >
                           Empezar ahora
                           <SvgArrow className="ml-4" />
                         </Button>

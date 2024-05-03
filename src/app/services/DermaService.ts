@@ -5,6 +5,7 @@ import {
   ERROR_GET_DERMADIAGNOSIS,
   ERROR_GET_DERMAROUTINES,
   ERROR_UPDATE_DERMAQUESTIONS,
+  ERROR_UPLOAD_IMAGE,
 } from '@utils/textConstants';
 
 export const dermaService = {
@@ -81,13 +82,16 @@ export const dermaService = {
     userId: string | undefined,
     file: Blob,
     fileName: string,
-    referenceId: string
+    referenceId: string,
+    diagnosticId: string
   ): Promise<string> => {
     const formdata = new FormData();
     if (userId) formdata.append('UserId', userId);
     formdata.append('ReferenceId', referenceId);
     formdata.append('files', file);
     formdata.append('FileName', fileName);
+    formdata.append('DiagnosticId', diagnosticId);
+
     const requestOptions: RequestInit = {
       method: 'POST',
       body: formdata,
@@ -103,8 +107,8 @@ export const dermaService = {
         return result;
       })
       .catch(error => {
-        Bugsnag.notify(error + ERROR_GET_DERMAROUTINES);
-        throw new Error(ERROR_GET_DERMAROUTINES);
+        Bugsnag.notify(error + ERROR_UPLOAD_IMAGE);
+        throw new Error(ERROR_UPLOAD_IMAGE);
       });
   },
 };

@@ -26,3 +26,4 @@ export const CHECK_IN_INCORRECT = 'Check-in Incorrecto.';
 export const ERROR_UPDATE_DERMAQUESTIONS = 'Error updating derma questions.';
 export const ERROR_GET_DERMAROUTINES = 'Error getting derma routines.';
 export const ERROR_GET_DERMADIAGNOSIS = 'Error getting derma diagnosis.';
+export const ERROR_UPLOAD_IMAGE = 'Error uploading image.';
