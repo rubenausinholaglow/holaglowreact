@@ -21,9 +21,7 @@ import RoutineExplanation from './RoutineExplanation';
 export default function Diagnostico() {
   const { dermaPhone } = useSessionStore(state => state);
   const [isLogged, setIsLogged] = useState(dermaPhone != '');
-  const [diagnosisData, setDiagnosisData] = useState<UpsellingData | null>(
-    null
-  );
+  const [diagnosisData, setDiagnosisData] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,13 +89,6 @@ export default function Diagnostico() {
                     {post30Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {/* {diagnosisData?.diagnostic.length > 1 && (
-                    <DiagnosisBlock
-                      user={diagnosisData.user}
-                      diagnosis={diagnosisData.diagnostic[1]}
-                    />
-                  )} */}
-
                   {!dayjs().isAfter(post30Days) ? (
                     <Flex className="flex flex-col items-start p-4 bg-white md:border border-derma-secondary400 rounded-3xl">
                       <ProfessionalHeader
@@ -117,7 +108,7 @@ export default function Diagnostico() {
                           className="w-full"
                           type="derma"
                           size="xl"
-                          href={`${ROUTES.derma.diagnostico.check30}?diagnosisId=${diagnosisData.diagnostic[1].id}`}
+                          href={`${ROUTES.derma.diagnostico.check30}?diagnosticId=${diagnosisData.diagnostic[1].id}`}
                         >
                           Empezar ahora
                           <SvgArrow className="ml-4" />

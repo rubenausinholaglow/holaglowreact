@@ -4,6 +4,7 @@ import { UpsellingData } from '@interface/upselling';
 import {
   ERROR_GET_DERMADIAGNOSIS,
   ERROR_GET_DERMAROUTINES,
+  ERROR_SET_DIAGNOSTIC_COMMENT,
   ERROR_UPDATE_DERMAQUESTIONS,
   ERROR_UPLOAD_IMAGE,
 } from '@utils/textConstants';
@@ -110,5 +111,32 @@ export const dermaService = {
         Bugsnag.notify(error + ERROR_UPLOAD_IMAGE);
         throw new Error(ERROR_UPLOAD_IMAGE);
       });
+  },
+
+  addDiagnosticComment: async (diagnosticId: string, comment: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_DERMAPATIENTS_API}dermahistorial`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            diagnosticid: diagnosticId,
+            comment: comment,
+          }),
+        }
+      );
+      if (!response.ok) {
+        Bugsnag.notify(ERROR_SET_DIAGNOSTIC_COMMENT);
+        throw new Error(ERROR_SET_DIAGNOSTIC_COMMENT);
+      }
+
+      return await response.text();
+    } catch (error) {
+      Bugsnag.notify(error + ERROR_SET_DIAGNOSTIC_COMMENT);
+      throw new Error(ERROR_SET_DIAGNOSTIC_COMMENT);
+    }
   },
 };

@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Bugsnag from '@bugsnag/js';
+import { dermaService } from '@services/DermaService';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -31,21 +33,24 @@ export default function Check30({ diagnosticId }: { diagnosticId: string }) {
         isEmpty(picturesUrls[2]) ||
         imageIsLoading
     );
+
+    setIsDisabled(false);
   }
 
   useEffect(() => {
     checkIsDisabled();
   }, []);
 
-  useEffect(() => {
-    checkIsDisabled();
-  }, [
-    picturesUrls.length,
-    picturesUrls[0],
-    picturesUrls[1],
-    picturesUrls[2],
-    imageIsLoading,
-  ]);
+  console.log(diagnosticId);
+
+  async function handleDiagnosticComment() {
+    const result = await dermaService.addDiagnosticComment(
+      diagnosticId,
+      textAreaValue
+    );
+
+    console.log(result);
+  }
 
   return (
     <div className="bg-derma-secondary300 min-h-screen">
@@ -80,6 +85,7 @@ export default function Check30({ diagnosticId }: { diagnosticId: string }) {
                   pictureIndex={1}
                   imageIsLoading={imageIsLoading}
                   setImageIsLoading={setImageIsLoading}
+                  diagnosticId={diagnosticId}
                 />
 
                 <ImageUploader
@@ -88,6 +94,7 @@ export default function Check30({ diagnosticId }: { diagnosticId: string }) {
                   pictureIndex={2}
                   imageIsLoading={imageIsLoading}
                   setImageIsLoading={setImageIsLoading}
+                  diagnosticId={diagnosticId}
                 />
               </Flex>
 
@@ -124,14 +131,10 @@ export default function Check30({ diagnosticId }: { diagnosticId: string }) {
                   type={!isDisabled ? 'dermaDark' : 'disabled'}
                   onClick={() => {
                     setLoadingButton(true);
-                    router.push(ROUTES.derma.multistep.extraInfo);
+                    handleDiagnosticComment();
                   }}
                 >
-                  {!loadingButton ? (
-                    'Siguiente'
-                  ) : (
-                    <SvgSpinner className="w-20" />
-                  )}
+                  {!loadingButton ? 'Enviar' : <SvgSpinner className="w-20" />}
                 </Button>
               </Flex>
             </div>

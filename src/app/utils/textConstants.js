@@ -27,3 +27,4 @@ export const ERROR_UPDATE_DERMAQUESTIONS = 'Error updating derma questions.';
 export const ERROR_GET_DERMAROUTINES = 'Error getting derma routines.';
 export const ERROR_GET_DERMADIAGNOSIS = 'Error getting derma diagnosis.';
 export const ERROR_UPLOAD_IMAGE = 'Error uploading image.';
+export const ERROR_SET_DIAGNOSTIC_COMMENT = 'Error setting diagnostic comment.';
