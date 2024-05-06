@@ -49,7 +49,7 @@ export default function ProductVideos({ product }: { product: Product }) {
         >
           <CheckHydration>
             <Carousel
-              hasDots={
+              hasControls={
                 (isMobileSSR() && videos.length > 1) ||
                 (!isMobileSSR() && videos.length > 3)
               }
@@ -65,6 +65,7 @@ export default function ProductVideos({ product }: { product: Product }) {
               isIntrinsicHeight
               infinite={false}
               sliderStyles="md:gap-8"
+              controlStyles="px-4"
             >
               {videos.map(video => {
                 if (video.active) {
