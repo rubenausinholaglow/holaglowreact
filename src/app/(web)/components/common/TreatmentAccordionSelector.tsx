@@ -255,7 +255,7 @@ export default function TreatmentAccordionSelector({
         </div>
         {!isDashboard && (
           <Text className="shrink-0 px-4 font-semibold text-hg-secondary">
-            {product.price} € ola
+            {product.price} €
           </Text>
         )}
       </Flex>
