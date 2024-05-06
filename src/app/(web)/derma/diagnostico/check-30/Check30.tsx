@@ -17,7 +17,13 @@ import { useRouter } from 'next/navigation';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import ImageUploader from '../../multistep/pictures/ImageUploader';
 
-export default function Check30({ diagnosticId }: { diagnosticId: string }) {
+export default function Check30({
+  diagnosticId,
+  userId,
+}: {
+  diagnosticId: string;
+  userId: string;
+}) {
   const router = useRouter();
 
   const [textAreaValue, setTextAreaValue] = useState('');
@@ -77,6 +83,7 @@ export default function Check30({ diagnosticId }: { diagnosticId: string }) {
                   imageIsLoading={imageIsLoading}
                   setImageIsLoading={setImageIsLoading}
                   diagnosticId={diagnosticId}
+                  userId={userId}
                 />
 
                 <ImageUploader
@@ -86,6 +93,7 @@ export default function Check30({ diagnosticId }: { diagnosticId: string }) {
                   imageIsLoading={imageIsLoading}
                   setImageIsLoading={setImageIsLoading}
                   diagnosticId={diagnosticId}
+                  userId={userId}
                 />
 
                 <ImageUploader
@@ -95,6 +103,7 @@ export default function Check30({ diagnosticId }: { diagnosticId: string }) {
                   imageIsLoading={imageIsLoading}
                   setImageIsLoading={setImageIsLoading}
                   diagnosticId={diagnosticId}
+                  userId={userId}
                 />
               </Flex>
 

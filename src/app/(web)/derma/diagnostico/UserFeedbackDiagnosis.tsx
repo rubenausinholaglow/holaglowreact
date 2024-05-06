@@ -11,8 +11,6 @@ export default function UserFeedbackDiagnosis({
 }: {
   diagnosisData: any;
 }) {
-  console.log(diagnosisData);
-
   return (
     <Flex className="flex flex-col items-start p-4 bg-white md:border border-derma-secondary400 rounded-3xl">
       <ProfessionalHeader diagnosis={diagnosisData.diagnostic[0]} />
@@ -30,7 +28,7 @@ export default function UserFeedbackDiagnosis({
           className="w-full"
           type="derma"
           size="xl"
-          href={`${ROUTES.derma.diagnostico.check30}?diagnosticId=${diagnosisData.diagnostic[1].id}`}
+          href={`${ROUTES.derma.diagnostico.check30}?diagnosticId=${diagnosisData.diagnostic[1].id}&userId=${diagnosisData.user.id}`}
         >
           Empezar ahora
           <SvgArrow className="ml-4" />

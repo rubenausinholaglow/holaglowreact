@@ -23,6 +23,8 @@ export default function Diagnosis({
   const isReceiptDisabled =
     dayjs() > dayjs(diagnosis?.creationDate).add(10, 'day');
 
+  console.log(diagnosis);
+
   return (
     <div className="overflow-hidden">
       <Flex
@@ -35,14 +37,11 @@ export default function Diagnosis({
           className="mb-4"
         />
 
-        {/* {diagnosis.userComment !== '' && (
-        )} */}
-        <Text className="bg-hg-black100 mb-8 p-4 text-xs text-hg-black500 rounded-xl border-l-4 border-hg-black300">
-          {diagnosis.userComment} dnfgkl jedflgh dñuh lsdungfhudnñh bndohndgd
-          fghdnfgkl jedflgh dñuh lsdungfhudnñh bndohndgd fghdnfgkl jedflgh dñuh
-          lsdungfhudnñh bndohndgd fghdnfgkl jedflgh dñuh lsdungfhudnñh bndohndgd
-          fgh
-        </Text>
+        {diagnosis.userComment !== '' && (
+          <Text className="bg-hg-black100 mb-8 p-4 text-xs text-hg-black500 rounded-xl border-l-4 border-hg-black300">
+            {diagnosis.userComment}
+          </Text>
+        )}
 
         <Text className="text-derma-primary mb-2 font-semibold">
           Hola {user.firstName},

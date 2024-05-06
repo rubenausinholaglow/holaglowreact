@@ -1,21 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { UpsellingData } from '@interface/upselling';
 import { dermaService } from '@services/DermaService';
-import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
 import Login from '../planes/components/Login';
 import DiagnosisBlock from './Diagnosis';
 import EmptyDiagnosis from './EmptyDiagnosis';
-import ProfessionalHeader from './ProfessionalHeader';
 import RoutineExplanation from './RoutineExplanation';
 import UserFeedbackDiagnosis from './UserFeedbackDiagnosis';
 
@@ -94,20 +89,20 @@ export default function Diagnostico() {
                     {post30Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {!dayjs().isAfter(post30Days) && <EmptyDiagnosis />}
-
-                  {dayjs().isAfter(post30Days) &&
-                    !hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
-                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
-                    )}
-
-                  {dayjs().isAfter(post30Days) &&
-                    hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
-                      <DiagnosisBlock
-                        user={diagnosisData.user}
-                        diagnosis={diagnosisData.diagnostic[1]}
-                      />
-                    )}
+                  {!dayjs().isAfter(post30Days) ? (
+                    <>
+                      {hasDiagnosticImages(diagnosisData.diagnostic[1]) ? (
+                        <DiagnosisBlock
+                          user={diagnosisData.user}
+                          diagnosis={diagnosisData.diagnostic[1]}
+                        />
+                      ) : (
+                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                      )}
+                    </>
+                  ) : (
+                    <EmptyDiagnosis />
+                  )}
                 </li>
 
                 <li>
@@ -122,20 +117,20 @@ export default function Diagnostico() {
                     {post60Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {!dayjs().isAfter(post60Days) && <EmptyDiagnosis />}
-
-                  {dayjs().isAfter(post60Days) &&
-                    !hasDiagnosticImages(diagnosisData.diagnostic[2]) && (
-                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
-                    )}
-
-                  {dayjs().isAfter(post60Days) &&
-                    hasDiagnosticImages(diagnosisData.diagnostic[2]) && (
-                      <DiagnosisBlock
-                        user={diagnosisData.user}
-                        diagnosis={diagnosisData.diagnostic[2]}
-                      />
-                    )}
+                  {dayjs().isAfter(post60Days) ? (
+                    <>
+                      {hasDiagnosticImages(diagnosisData.diagnostic[2]) ? (
+                        <DiagnosisBlock
+                          user={diagnosisData.user}
+                          diagnosis={diagnosisData.diagnostic[2]}
+                        />
+                      ) : (
+                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                      )}
+                    </>
+                  ) : (
+                    <EmptyDiagnosis />
+                  )}
                 </li>
 
                 <li>
@@ -150,20 +145,20 @@ export default function Diagnostico() {
                     {post90Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {!dayjs().isAfter(post90Days) && <EmptyDiagnosis />}
-
-                  {dayjs().isAfter(post90Days) &&
-                    !hasDiagnosticImages(diagnosisData.diagnostic[2]) && (
-                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
-                    )}
-
-                  {dayjs().isAfter(post90Days) &&
-                    hasDiagnosticImages(diagnosisData.diagnostic[3]) && (
-                      <DiagnosisBlock
-                        user={diagnosisData.user}
-                        diagnosis={diagnosisData.diagnostic[3]}
-                      />
-                    )}
+                  {dayjs().isAfter(post90Days) ? (
+                    <>
+                      {hasDiagnosticImages(diagnosisData.diagnostic[3]) ? (
+                        <DiagnosisBlock
+                          user={diagnosisData.user}
+                          diagnosis={diagnosisData.diagnostic[3]}
+                        />
+                      ) : (
+                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                      )}
+                    </>
+                  ) : (
+                    <EmptyDiagnosis />
+                  )}
                 </li>
               </ul>
 

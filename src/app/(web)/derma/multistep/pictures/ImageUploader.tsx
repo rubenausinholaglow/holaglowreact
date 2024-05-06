@@ -1,5 +1,5 @@
 'use client';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, use, useEffect, useState } from 'react';
 import ImageUploading, {
   ImageListType,
   ImageType,
@@ -22,6 +22,7 @@ export default function ImageUploader({
   imageIsLoading,
   setImageIsLoading,
   diagnosticId,
+  userId,
 }: {
   title: string;
   subtitle: string;
@@ -29,6 +30,7 @@ export default function ImageUploader({
   imageIsLoading: boolean;
   setImageIsLoading: Dispatch<SetStateAction<boolean>>;
   diagnosticId?: string;
+  userId?: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
@@ -56,7 +58,7 @@ export default function ImageUploader({
       updatedPictures: ImageType[] | { file: Blob }[]
     ) {
       const url = await dermaService.uploadImage(
-        undefined,
+        userId ? userId : undefined,
         updatedPictures[0].file!,
         'ImagePosition' + pictureIndex,
         'id',
