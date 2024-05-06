@@ -67,6 +67,7 @@ export default function ImageUploader({
 
       if (picturesUrls.length > pictureIndex) picturesUrls[pictureIndex] = url;
       else picturesUrls.push(url);
+
       setPicturesUrls(picturesUrls);
       //setIsLoading(false);
     }

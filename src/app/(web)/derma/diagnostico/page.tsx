@@ -41,8 +41,6 @@ export default function Diagnostico() {
     return diagnosis.front || diagnosis.left || diagnosis.right;
   };
 
-  console.log(diagnosisData);
-
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       {isLogged && (
@@ -73,6 +71,7 @@ export default function Diagnostico() {
                       isFirstDiagnosis
                       user={diagnosisData.user}
                       diagnosis={diagnosisData.diagnostic[0]}
+                      isVisible={diagnosisData.diagnostic.length === 1}
                     />
                   )}
                 </li>
@@ -95,6 +94,7 @@ export default function Diagnostico() {
                         <DiagnosisBlock
                           user={diagnosisData.user}
                           diagnosis={diagnosisData.diagnostic[1]}
+                          isVisible={diagnosisData.diagnostic.length === 2}
                         />
                       ) : (
                         <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
@@ -123,6 +123,7 @@ export default function Diagnostico() {
                         <DiagnosisBlock
                           user={diagnosisData.user}
                           diagnosis={diagnosisData.diagnostic[2]}
+                          isVisible={diagnosisData.diagnostic.length === 3}
                         />
                       ) : (
                         <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
@@ -151,6 +152,7 @@ export default function Diagnostico() {
                         <DiagnosisBlock
                           user={diagnosisData.user}
                           diagnosis={diagnosisData.diagnostic[3]}
+                          isVisible={diagnosisData.diagnostic.length === 4}
                         />
                       ) : (
                         <UserFeedbackDiagnosis diagnosisData={diagnosisData} />

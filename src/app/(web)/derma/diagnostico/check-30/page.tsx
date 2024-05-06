@@ -6,10 +6,9 @@ export default function page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const diagnosticId = searchParams.diagnosticId as string;
-
-  console.log(diagnosticId);
+  const userId = searchParams.userId as string;
 
   if (!diagnosticId) return <p>No se ha encontrado el diagnostico</p>;
 
-  return <Check30 diagnosticId={diagnosticId} />;
+  return <Check30 diagnosticId={diagnosticId} userId={userId} />;
 }

@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function ProfessionalHeader({ diagnosis }: { diagnosis: any }) {
   return (
-    <Flex layout="row-left" className="w-full mb-6">
+    <Flex layout="row-left" className="w-full">
       {diagnosis.professional?.urlPhoto && (
         <Image
           alt={diagnosis.professional?.name}
