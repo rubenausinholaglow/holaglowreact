@@ -6,7 +6,13 @@ import { Text } from 'designSystem/Texts/Texts';
 
 import ProfessionalHeader from './ProfessionalHeader';
 
-export default function EmptyDiagnosis(diagnosisData: any) {
+export default function UserFeedbackDiagnosis({
+  diagnosisData,
+}: {
+  diagnosisData: any;
+}) {
+  console.log(diagnosisData);
+
   return (
     <Flex className="flex flex-col items-start p-4 bg-white md:border border-derma-secondary400 rounded-3xl">
       <ProfessionalHeader diagnosis={diagnosisData.diagnostic[0]} />

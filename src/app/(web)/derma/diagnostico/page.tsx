@@ -17,6 +17,7 @@ import DiagnosisBlock from './Diagnosis';
 import EmptyDiagnosis from './EmptyDiagnosis';
 import ProfessionalHeader from './ProfessionalHeader';
 import RoutineExplanation from './RoutineExplanation';
+import UserFeedbackDiagnosis from './UserFeedbackDiagnosis';
 
 export default function Diagnostico() {
   const { dermaPhone } = useSessionStore(state => state);
@@ -36,12 +37,10 @@ export default function Diagnostico() {
     return <Login setIsLogged={setIsLogged} />;
   }
 
-  console.log(diagnosisData);
-
   const initialDate = dayjs(diagnosisData?.creationDate);
-  const post30Days = dayjs(diagnosisData?.creationDate).add(30, 'day');
-  const post60Days = dayjs(diagnosisData?.creationDate).add(60, 'day');
-  const post90Days = dayjs(diagnosisData?.creationDate).add(90, 'day');
+  const post30Days = initialDate.add(30, 'day');
+  const post60Days = initialDate.add(60, 'day');
+  const post90Days = initialDate.add(90, 'day');
 
   const hasDiagnosticImages = (diagnosis: any) => {
     return diagnosis.front || diagnosis.left || diagnosis.right;
@@ -95,10 +94,13 @@ export default function Diagnostico() {
 
                   {!dayjs().isAfter(post30Days) && <EmptyDiagnosis />}
 
-                  {dayjs().isAfter(post30Days) &&
-                    !hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
-                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
-                    )}
+                  {
+                    // negar 1a 1ª condición para ver este bloque
+                    !dayjs().isAfter(post30Days) &&
+                      !hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
+                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                      )
+                  }
                 </li>
 
                 <li>
