@@ -1,12 +1,9 @@
 import { Product } from '@interface/product';
 import CheckHydration from '@utils/CheckHydration';
 import { isMobileSSR } from '@utils/isMobileSSR';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import dynamic from 'next/dynamic';
-
-import ProductVideo from './ProductVideo';
 
 const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
   ssr: false,
@@ -64,7 +61,7 @@ export default function ProductVideos({ product }: { product: Product }) {
                 (isMobileSSR() && videos.length > 1) ||
                 (!isMobileSSR() && videos.length > 3)
               }
-              visibleSlides={videos.length > 1 ? (isMobileSSR() ? 1 : 3) : 1}
+              visibleSlides={videos.length > 1 ? (isMobileSSR() ? 1.2 : 3) : 1}
               isIntrinsicHeight
               infinite={false}
               sliderStyles="md:gap-8"
@@ -76,7 +73,9 @@ export default function ProductVideos({ product }: { product: Product }) {
                   return (
                     <div key={video.url} className="px-4 w-full">
                       <iframe
-                        width="315"
+                        width={
+                          isMobileSSR() && videos.length > 1 ? '100%' : '315'
+                        }
                         height="560"
                         src={`https://www.youtube.com/embed/${videoId}`}
                         title="YouTube video player"
