@@ -56,7 +56,7 @@ export default function ImageUploader({
       updatedPictures: ImageType[] | { file: Blob }[]
     ) {
       const url = await dermaService.uploadImage(
-        'undefined',
+        undefined,
         updatedPictures[0].file!,
         'ImagePosition' + pictureIndex,
         'id',
