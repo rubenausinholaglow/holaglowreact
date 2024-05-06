@@ -43,6 +43,10 @@ export default function Diagnostico() {
   const post60Days = dayjs(diagnosisData?.creationDate).add(60, 'day');
   const post90Days = dayjs(diagnosisData?.creationDate).add(90, 'day');
 
+  const hasDiagnosticImages = (diagnosis: any) => {
+    return diagnosis.front || diagnosis.left || diagnosis.right;
+  };
+
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       {isLogged && (
@@ -89,35 +93,12 @@ export default function Diagnostico() {
                     {post30Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {!dayjs().isAfter(post30Days) ? (
-                    <Flex className="flex flex-col items-start p-4 bg-white md:border border-derma-secondary400 rounded-3xl">
-                      <ProfessionalHeader
-                        diagnosis={diagnosisData.diagnostic[0]}
-                      />
-                      <div className="text-sm">
-                        <Text className="text-derma-primary mb-4 font-semibold">
-                          Hola {diagnosisData.user.firstName},
-                        </Text>
+                  {!dayjs().isAfter(post30Days) && <EmptyDiagnosis />}
 
-                        <Text className="mb-4">
-                          Ya puedes subir las 3 fotos de la evolución de tu
-                          rostro en detalle frontal y perfil de ambos lados.
-                        </Text>
-
-                        <Button
-                          className="w-full"
-                          type="derma"
-                          size="xl"
-                          href={`${ROUTES.derma.diagnostico.check30}?diagnosticId=${diagnosisData.diagnostic[1].id}`}
-                        >
-                          Empezar ahora
-                          <SvgArrow className="ml-4" />
-                        </Button>
-                      </div>
-                    </Flex>
-                  ) : (
-                    <EmptyDiagnosis />
-                  )}
+                  {dayjs().isAfter(post30Days) &&
+                    !hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
+                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                    )}
                 </li>
 
                 <li>
