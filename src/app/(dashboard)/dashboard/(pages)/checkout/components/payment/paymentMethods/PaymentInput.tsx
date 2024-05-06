@@ -28,7 +28,7 @@ import {
   ProductPaymentRequest,
 } from 'app/types/initializePayment';
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
-import { applyDiscountToCart } from 'app/utils/utils';
+import { applyDiscountToCart, getPaymentBankText } from 'app/utils/utils';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -64,8 +64,12 @@ export default function PaymentInput(props: Props) {
   const [paymentStripe, setPaymentStripe] = useState(false);
   const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
-  const { remoteControl, storedBudgetId, setCurrentUser } =
-    useGlobalPersistedStore(state => state);
+  const {
+    remoteControl,
+    storedBudgetId,
+    setCurrentUser,
+    storedClinicFlowwwId,
+  } = useGlobalPersistedStore(state => state);
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -267,11 +271,22 @@ export default function PaymentInput(props: Props) {
         await FinanceService.initializePayment(initializePayment)
           .then(x => {
             setShowContactModal(false);
-            if (x.url != '') {
-              openWindow(x.url);
+            if (x.id != '') {
               handleUrlPayment(x.id, '', x.referenceId);
+              if (showFrakmenta) setMessageNotification('Pago realizado');
+            }
+
+            if (x.url != '' && showPepper) {
+              openWindow(x.url);
             } else {
-              setMessageNotification('Error pagando con Pepper');
+              if (showPepper) {
+                const paymentMethod = showPepper
+                  ? PaymentBank.Pepper
+                  : PaymentBank.Frakmenta;
+                setMessageNotification(
+                  'Error pagando con ' + getPaymentBankText(paymentMethod)
+                );
+              }
             }
           })
           .catch(error => {
@@ -366,6 +381,7 @@ export default function PaymentInput(props: Props) {
       productPaymentRequest: [],
       originPayment: OriginPayment.dashboard,
       deferred_Days: undefined,
+      clinicId: Number(storedClinicFlowwwId),
     };
 
     cart.forEach(product => {
