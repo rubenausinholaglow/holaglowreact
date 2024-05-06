@@ -25,6 +25,26 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+
+        port: '',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+        port: '',
+        pathname: '/derma/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+        port: '',
+        pathname: '/dermauploadimages/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
+
         port: '',
         pathname: '/images/**',
       },
