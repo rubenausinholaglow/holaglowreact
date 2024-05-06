@@ -41,7 +41,7 @@ export default function Diagnosis({
         <Accordion
           type="single"
           defaultValue="isOpen"
-          collapsible
+          collapsible={!isVisible}
           className="w-full"
         >
           <AccordionItem
@@ -49,11 +49,13 @@ export default function Diagnosis({
             className="w-full"
           >
             <AccordionTrigger className="w-full flex items-center justify-center">
-              <Flex layut="row-between" className="w-full">
+              <Flex layut="row-between" className="w-full ">
                 <ProfesionalHeader diagnosis={diagnosis} />
-                <Button type="white" size="sm" className="shrink-0">
-                  Ver diagnóstico
-                </Button>
+                {!isVisible && (
+                  <Button type="white" size="sm" className="shrink-0">
+                    Ver diagnóstico
+                  </Button>
+                )}
               </Flex>
             </AccordionTrigger>
             <AccordionContent className="pt-4">
