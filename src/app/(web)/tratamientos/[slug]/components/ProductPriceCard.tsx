@@ -204,36 +204,32 @@ export default function ProductPriceCard({
               {discountedPrice ? discountedPrice : product.price} €
             </span>
             {discountedPrice && (
-              <span className="text-2xl inline-block line-through font-normal text-hg-black500">
+              <span className="text-l inline-block line-through font-normal text-hg-black500">
                 {product.price} €
               </span>
             )}
           </Flex>
           <Flex layout="row-right">
-            {product.isPack &&
-              !parentProduct.isPack &&
-              (!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' ? (
-                <Flex
-                  layout="row-center"
-                  className="bg-hg-black rounded-full p-1 px-2"
-                >
-                  <SvgGlow
-                    height={12}
-                    width={12}
-                    className="text-hg-primary mr-1"
-                  />
-                  <Text className="text-hg-secondary" size="xs">
-                    B.<span className="text-hg-primary">Friday</span>
-                  </Text>
-                </Flex>
-              ) : (
-                <Text
-                  size="xs"
-                  className="py-1 px-2 bg-hg-primary text-hg-secondary rounded-md font-semibold"
-                >
-                  Oferta especial
+            {!isEmpty(product.tags) && (
+              <Flex
+                layout="row-center"
+                className="bg-hg-black rounded-full p-1 px-2"
+              >
+                <SvgGlow
+                  height={12}
+                  width={12}
+                  className="text-hg-primary mr-1"
+                />
+                <Text className="text-hg-secondary" size="xs">
+                  {product.tags[0].tag.split(' ')[0]}
+                  {product.tags[0].tag.split(' ').length > 0 && (
+                    <span className="text-hg-primary">
+                      {' ' + product.tags[0].tag.split(' ')[1]}
+                    </span>
+                  )}
                 </Text>
-              ))}
+              </Flex>
+            )}
           </Flex>
         </Flex>
         <Text className="font-semibold md:text-lg">{product.title}</Text>
