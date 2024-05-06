@@ -46,6 +46,8 @@ export default function Diagnostico() {
     return diagnosis.front || diagnosis.left || diagnosis.right;
   };
 
+  console.log(diagnosisData);
+
   return (
     <div className="bg-derma-secondary300 min-h-screen">
       {isLogged && (
@@ -94,13 +96,18 @@ export default function Diagnostico() {
 
                   {!dayjs().isAfter(post30Days) && <EmptyDiagnosis />}
 
-                  {
-                    // negar 1a 1ª condición para ver este bloque
-                    !dayjs().isAfter(post30Days) &&
-                      !hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
-                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
-                      )
-                  }
+                  {dayjs().isAfter(post30Days) &&
+                    !hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
+                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                    )}
+
+                  {dayjs().isAfter(post30Days) &&
+                    hasDiagnosticImages(diagnosisData.diagnostic[1]) && (
+                      <DiagnosisBlock
+                        user={diagnosisData.user}
+                        diagnosis={diagnosisData.diagnostic[1]}
+                      />
+                    )}
                 </li>
 
                 <li>
@@ -114,7 +121,21 @@ export default function Diagnostico() {
                     Disponible a partir del{' '}
                     {post60Days.format('dddd, D [de] MMMM')}
                   </Text>
-                  <EmptyDiagnosis />
+
+                  {!dayjs().isAfter(post60Days) && <EmptyDiagnosis />}
+
+                  {dayjs().isAfter(post60Days) &&
+                    !hasDiagnosticImages(diagnosisData.diagnostic[2]) && (
+                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                    )}
+
+                  {dayjs().isAfter(post60Days) &&
+                    hasDiagnosticImages(diagnosisData.diagnostic[2]) && (
+                      <DiagnosisBlock
+                        user={diagnosisData.user}
+                        diagnosis={diagnosisData.diagnostic[2]}
+                      />
+                    )}
                 </li>
 
                 <li>
@@ -129,7 +150,20 @@ export default function Diagnostico() {
                     {post90Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  <EmptyDiagnosis />
+                  {!dayjs().isAfter(post90Days) && <EmptyDiagnosis />}
+
+                  {dayjs().isAfter(post90Days) &&
+                    !hasDiagnosticImages(diagnosisData.diagnostic[2]) && (
+                      <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                    )}
+
+                  {dayjs().isAfter(post90Days) &&
+                    hasDiagnosticImages(diagnosisData.diagnostic[3]) && (
+                      <DiagnosisBlock
+                        user={diagnosisData.user}
+                        diagnosis={diagnosisData.diagnostic[3]}
+                      />
+                    )}
                 </li>
               </ul>
 
