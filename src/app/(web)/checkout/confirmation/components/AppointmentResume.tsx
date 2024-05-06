@@ -518,7 +518,7 @@ export default function AppointmentResume({
         <Flex layout="col-left" className={`w-full ${bgColor}`}>
           {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
           {isDerma && <TreatmentDerma />}
-          {!appointment && <AppointmentDataResume />}
+          {!appointment && !isDashboard && <AppointmentDataResume />}
           {isDashboard && <AppointmentResumeDashboard />}
         </Flex>
       </Flex>
