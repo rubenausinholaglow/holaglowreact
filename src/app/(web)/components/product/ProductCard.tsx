@@ -98,10 +98,10 @@ export default function ProductCard({
             } w-auto`}
           />
 
-          {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
+          {!isEmpty(product.tags) && (
             <Flex
               layout="row-center"
-              className="bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
+              className="bg-hg-black rounded-full p-1 px-2 absolute bottom-[4px] left-0 m-2"
             >
               <SvgGlow
                 height={12}
@@ -109,7 +109,12 @@ export default function ProductCard({
                 className="text-hg-primary mr-1"
               />
               <Text className="text-hg-secondary" size="xs">
-                B.<span className="text-hg-primary">Friday</span>
+                {product.tags[0].tag.split(' ')[0]}
+                {product.tags[0].tag.split(' ').length > 0 && (
+                  <span className="text-hg-primary">
+                    {' ' + product.tags[0].tag.split(' ')[1]}
+                  </span>
+                )}
               </Text>
             </Flex>
           )}
