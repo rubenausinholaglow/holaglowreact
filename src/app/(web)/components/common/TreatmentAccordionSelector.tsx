@@ -42,8 +42,12 @@ export default function TreatmentAccordionSelector({
   packInProductCart?: boolean;
 }) {
   const { dashboardProducts } = useGlobalPersistedStore(state => state);
-  const { selectedTreatments, setSelectedTreatments, treatmentPacks } =
-    useSessionStore(state => state);
+  const {
+    selectedTreatments,
+    setSelectedTreatments,
+    treatmentPacks,
+    setSelectedPack,
+  } = useSessionStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const cart = useCartStore(state => state.cart);
@@ -249,6 +253,8 @@ export default function TreatmentAccordionSelector({
                   if (medicalVisitProduct && product.isPack) {
                     setSelectedTreatments([medicalVisitProduct]);
                   } else setSelectedTreatments([product]);
+                  if (product && product.isPack) setSelectedPack(product);
+                  else setSelectedPack(undefined);
                   router.push(ROUTES.checkout.clinics);
                 }}
               >
