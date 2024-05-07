@@ -27,10 +27,13 @@ export default function SkinSensitivity() {
 
   const nextStep = HandleNextMultistep(ROUTES.derma.multistep.allergy);
   return (
-    <div className="bg-derma-secondary300 min-h-screen">
-      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
-
-      <DermaLayout hideButton hideFooter>
+    <DermaLayout
+      hideButton
+      hideFooter
+      className="bg-derma-secondary300 min-h-screen relative"
+    >
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
+      <div className="relative">
         <DermaStepBar steps={11} step={4} />
 
         <Container>
@@ -97,7 +100,7 @@ export default function SkinSensitivity() {
             </div>
           </Flex>
         </Container>
-      </DermaLayout>
-    </div>
+      </div>
+    </DermaLayout>
   );
 }
