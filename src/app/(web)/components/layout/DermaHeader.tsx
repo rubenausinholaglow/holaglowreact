@@ -46,10 +46,10 @@ function Navigation({ className }: { className: string }) {
 
 export default function DermaHeader({
   hideButton = false,
-  showNavigation,
+  showNavigation = true,
 }: {
   hideButton?: boolean;
-  showNavigation: boolean;
+  showNavigation?: boolean;
 }) {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);

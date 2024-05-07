@@ -14,8 +14,8 @@ import {
   getUniqueProducts,
 } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { SUBSCRIPTIONS } from 'app/(web)/(derma)/planes/mockedData';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { SUBSCRIPTIONS } from 'app/(web)/derma/planes/mockedData';
 import {
   SvgAngleDown,
   SvgCalendar,
