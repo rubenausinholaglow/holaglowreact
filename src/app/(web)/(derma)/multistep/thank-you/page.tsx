@@ -42,10 +42,14 @@ export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
   const { picturesUrls } = useDermaStore(state => state);
   return (
-    <CheckHydration>
-      <div className="bg-derma-secondary300 min-h-screen relative">
-        <div className="absolute top-0 bottom-0 right-0 w-1/2 bg-white hidden md:block" />
-        <DermaLayout hideButton hideFooter>
+    <DermaLayout
+      hideButton
+      hideFooter
+      className="bg-derma-secondary300 min-h-screen relative"
+    >
+      <div className="absolute top-0 bottom-0 right-0 w-1/2 bg-white hidden md:block " />
+      <div className="relative">
+        <CheckHydration>
           <Container className="px-0">
             <div className="md:flex gap-12 pt-8">
               <Container className="md:w-1/2 mb-8">
@@ -197,8 +201,8 @@ export default function ThankYouMultiStep() {
               </Container>
             </div>
           </Container>
-        </DermaLayout>
+        </CheckHydration>
       </div>
-    </CheckHydration>
+    </DermaLayout>
   );
 }

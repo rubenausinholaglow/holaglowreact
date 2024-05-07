@@ -23,6 +23,7 @@ export const poppins = localFont({
       style: 'normal',
     },
   ],
+  variable: '--font-poppins',
 });
 
 export const gtUltra = localFont({

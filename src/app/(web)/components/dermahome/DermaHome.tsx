@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function DermaHome() {
   return (
-    <DermaLayout showNavigation>
+    <DermaLayout>
       <HeroDerma />
       <div className="bg-derma-secondary300">
         <TreatmentsDerma />

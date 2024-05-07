@@ -28,7 +28,11 @@ export default function PlanesMultiStep() {
   }, [showModalBackground]);
 
   return (
-    <>
+    <DermaLayout
+      hideButton
+      hideFooter
+      className="bg-derma-secondary300 min-h-screen relative w-full"
+    >
       <Modal2
         isVisible={showModal}
         width={isMobile ? 'w-full' : 'max-w-[500px]'}
@@ -82,103 +86,96 @@ export default function PlanesMultiStep() {
         )}
       </Modal2>
 
-      <div className="bg-derma-secondary300 min-h-screen relative w-full">
-        <DermaLayout hideButton hideFooter>
-          <Container className="mb-8">
-            <Flex
-              layout="col-center"
-              className="w-full gap-4 md:items-start mb-8"
-            >
-              <Image
-                alt="Dra. Sonsoles Espí"
-                src="/images/derma/multistep/Sonsoles.png"
-                height={192}
-                width={192}
-                className="mx-auto w-24 mb-4 md:ml-0"
-              />
-              <Title
-                size="xldr"
-                className="text-derma-primary font-light md:text-left"
-              >
-                Cada piel es única
-              </Title>
-            </Flex>
-          </Container>
-          <Container className="px-0 md:px-4">
-            <div className="p-4 md:p-6 bg-[#e5f2ed] rounded-3xl relative">
-              <Title
-                size="xldr"
-                className="text-derma-primary font-light text-center md:text-left mb-4"
-              >
-                Elige tu plan
-              </Title>
-              <Text className="text-sm md:text-md text-center md:text-left mb-4">
-                Selecciona el nivel de seguimiento médico y la frecuencia de
-                entrega de tus cremas
-              </Text>
+      <Container className="mb-8">
+        <Flex layout="col-center" className="w-full gap-4 md:items-start mb-8">
+          <Image
+            alt="Dra. Sonsoles Espí"
+            src="/images/derma/multistep/Sonsoles.png"
+            height={192}
+            width={192}
+            className="mx-auto w-24 mb-4 md:ml-0"
+          />
+          <Title
+            size="xldr"
+            className="text-derma-primary font-light md:text-left"
+          >
+            Cada piel es única
+          </Title>
+        </Flex>
+      </Container>
 
-              <OptionsPricesB
-                isMultistep={true}
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption}
-              />
-            </div>
-            <div className="bg-white rounded-b-3xl p-4 md:p-6 -mt-8 mb-8">
-              <Flex className="gap-4 w-full pt-8 text-hg-black500">
-                <SvgPharmacy className="shrink-0" />
-                <Text className="text-xs">
-                  Pide la crema personalizada en tu farmacia más cercana
-                  presentando la receta y abonando 25-40€ dependiendo de la
-                  composición.
-                </Text>
-              </Flex>
-            </div>
-          </Container>
+      <Container className="px-0 md:px-4">
+        <div className="p-4 md:p-6 bg-[#e5f2ed] rounded-3xl relative">
+          <Title
+            size="xldr"
+            className="text-derma-primary font-light text-center md:text-left mb-4"
+          >
+            Elige tu plan
+          </Title>
+          <Text className="text-sm md:text-md text-center md:text-left mb-4">
+            Selecciona el nivel de seguimiento médico y la frecuencia de entrega
+            de tus cremas
+          </Text>
 
-          <div className="bg-derma-secondary300">
-            <GuaranteedResults />
-          </div>
+          <OptionsPricesB
+            isMultistep={true}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+          />
+        </div>
+        <div className="bg-white rounded-b-3xl p-4 md:p-6 -mt-8 mb-8">
+          <Flex className="gap-4 w-full pt-8 text-hg-black500">
+            <SvgPharmacy className="shrink-0" />
+            <Text className="text-xs">
+              Pide la crema personalizada en tu farmacia más cercana presentando
+              la receta y abonando 25-40€ dependiendo de la composición.
+            </Text>
+          </Flex>
+        </div>
+      </Container>
 
-          <Container>
-            <Title
-              size="xldr"
-              className="text-derma-primary font-light text-center md:text-left mb-4"
-            >
-              Tu rutina facial
-            </Title>
-            <ul className="flex flex-col gap-4 w-full md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-4 mb-24">
-              {DERMA_PRODUCTS.sort((a, b) => a.order - b.order).map(
-                (item, index) => (
-                  <li
-                    className="flex items-center gap-4 border border-derma-secondary400 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
-                    key={item.title}
-                    id="tmevent_derma_plans_cosmetic_modal_open"
-                    onClick={() => {
-                      setModalProduct(index);
-                      setShowModal(true);
-                    }}
-                  >
-                    <Image
-                      src={item.img}
-                      alt={item.title}
-                      height={192}
-                      width={164}
-                      className="w-[82px]"
-                    />
-                    <div className="mr-auto">
-                      <Text className="font-semibold">{item.title}</Text>
-                      <Text>{item.toggle}</Text>
-                    </div>
-                    <SvgArrow className=" h-5 w-5 shrink-0" />
-                  </li>
-                )
-              )}
-            </ul>
-          </Container>
-
-          {isMobile && <PlanesBottomBar selectedOption={selectedOption} />}
-        </DermaLayout>
+      <div className="bg-derma-secondary300">
+        <GuaranteedResults />
       </div>
-    </>
+
+      <Container>
+        <Title
+          size="xldr"
+          className="text-derma-primary font-light text-center md:text-left mb-4"
+        >
+          Tu rutina facial
+        </Title>
+        <ul className="flex flex-col gap-4 w-full md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-4 mb-24">
+          {DERMA_PRODUCTS.sort((a, b) => a.order - b.order).map(
+            (item, index) => (
+              <li
+                className="flex items-center gap-4 border border-derma-secondary400 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
+                key={item.title}
+                id="tmevent_derma_plans_cosmetic_modal_open"
+                onClick={() => {
+                  setModalProduct(index);
+                  setShowModal(true);
+                }}
+              >
+                <Image
+                  src={item.img}
+                  alt={item.title}
+                  height={192}
+                  width={164}
+                  className="w-[82px]"
+                />
+                <div className="mr-auto">
+                  <Text className="font-semibold">{item.title}</Text>
+                  <Text>{item.toggle}</Text>
+                </div>
+                <SvgArrow className=" h-5 w-5 shrink-0" />
+              </li>
+            )
+          )}
+        </ul>
+      </Container>
+
+      {isMobile && <PlanesBottomBar selectedOption={selectedOption} />}
+    </DermaLayout>
   );
 }

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { gtUltra } from 'app/fonts';
+import { gtUltra, poppins } from 'app/fonts';
 
 import DermaFooter from './DermaFooter';
 import DermaHeader from './DermaHeader';
@@ -20,7 +20,7 @@ export default function DermaLayout({
   return (
     <body>
       <main
-        className={`${className} ${gtUltra.variable} text-derma-tertiary min-h-screen overflow-hidden derma relative`}
+        className={`${className} ${gtUltra.variable} ${poppins.className} text-derma-tertiary min-h-screen overflow-hidden derma relative`}
       >
         <DermaHeader hideButton={hideButton} showNavigation={showNavigation} />
         {children}
