@@ -10,14 +10,13 @@ const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
 });
 
 export default function ProductVideos({ product }: { product: Product }) {
-  const defaultVideos = [
-    {
-      url: '/videos/pdp.mp4',
-      active: true,
-    },
-  ];
+  const genericVideo = { url: 'yoFtEyG3Lgc', active: true };
 
-  const videos = product?.videos ? product.videos : defaultVideos;
+  const videos = product?.videos;
+
+  if (!videos.find(video => video.url === genericVideo.url)) {
+    videos.push(genericVideo as any);
+  }
 
   if (videos.length < 0) {
     return <></>;
@@ -91,17 +90,6 @@ export default function ProductVideos({ product }: { product: Product }) {
               })}
             </Carousel>
           </CheckHydration>
-          {videos.length == 0 && (
-            <iframe
-              width="315"
-              height="560"
-              src="https://www.youtube.com/embed/yoFtEyG3Lgc"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="rounded-3xl overflow-hidden"
-            />
-          )}
         </div>
       </Flex>
     </Container>
