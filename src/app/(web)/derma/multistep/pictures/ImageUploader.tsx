@@ -57,7 +57,7 @@ export default function ImageUploader({
     async function uploadImage(
       updatedPictures: ImageType[] | { file: Blob }[]
     ) {
-      var position = 'front';
+      let position = 'front';
       if (pictureIndex == 1) position = 'right';
       if (pictureIndex == 2) position = 'left';
       const url = await dermaService.uploadImage(
