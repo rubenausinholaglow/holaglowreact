@@ -4,10 +4,16 @@ import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
+import { getHoursFromDate } from '@utils/utils';
 import { SvgSpinner } from 'app/icons/Icons';
-import { SvgArrow, SvgUserSquare } from 'app/icons/IconsDs';
+import { SvgArrow, SvgCheck, SvgCross, SvgUserSquare } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
-import { Appointment, Status, User } from 'app/types/appointment';
+import {
+  Appointment,
+  AppointmentEventType,
+  Status,
+  User,
+} from 'app/types/appointment';
 import {
   CrisalixActions,
   CrisalixUser,
@@ -26,17 +32,24 @@ import { useRouter } from 'next/navigation';
 
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 
+interface LoadingState {
+  [key: string]: boolean;
+}
+
 const AppointmentsListComponent: React.FC<{
   clinicId: string;
   boxId: string;
-}> = ({ clinicId, boxId }) => {
+  extraInfo: boolean;
+}> = ({ clinicId, boxId, extraInfo }) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loadingAppointments, setLoadingAppointments] = useState<{
     [id: string]: boolean;
   }>({});
   const router = useRouter();
   const userCrisalix = useCrisalix(state => state);
-
+  const [messageNotification, setMessageNotification] = useState<string | null>(
+    null
+  );
   const {
     user,
     setCurrentUser,
@@ -49,25 +62,26 @@ const AppointmentsListComponent: React.FC<{
 
   const [isLoadingPage, setIsLoadingPage] = useState(true);
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const data = await ScheduleService.getAppointmentsPerClinic(
-          clinicId,
-          boxId
-        );
+  const [loadingState, setLoadingState] = useState<LoadingState>({});
 
-        if (Array.isArray(data)) {
-          setAppointments(data);
-          setIsLoadingPage(false);
-        } else {
-          Bugsnag.notify('Received non-array data:', data);
-        }
-      } catch (error: any) {
-        Bugsnag.notify('Error fetching appointments:', error);
+  const fetchAppointments = async () => {
+    try {
+      const data = await ScheduleService.getAppointmentsPerClinic(
+        clinicId,
+        boxId
+      );
+
+      if (Array.isArray(data)) {
+        setAppointments(data);
+        setIsLoadingPage(false);
+      } else {
+        Bugsnag.notify('Received non-array data:', data);
       }
-    };
-
+    } catch (error: any) {
+      Bugsnag.notify('Error fetching appointments:', error);
+    }
+  };
+  useEffect(() => {
     fetchAppointments();
     const intervalId = setInterval(fetchAppointments, 5 * 60 * 1000);
     return () => clearInterval(intervalId);
@@ -189,8 +203,8 @@ const AppointmentsListComponent: React.FC<{
   const APPOINTMENT_STATUS = {
     0: {
       text: 'Pendiente',
-      color: 'hg-black500',
-      bg: 'hg-black100',
+      color: 'white',
+      bg: 'hg-secondary700',
     },
     1: {
       text: 'Cancelada',
@@ -199,8 +213,8 @@ const AppointmentsListComponent: React.FC<{
     },
     2: {
       text: 'No show',
-      color: 'hg-red',
-      bg: 'hg-red300',
+      color: 'white',
+      bg: 'hg-error',
     },
     3: {
       text: 'Movida',
@@ -209,28 +223,80 @@ const AppointmentsListComponent: React.FC<{
     },
     4: {
       text: 'Confirmada',
-      color: 'hg-secondary',
-      bg: 'hg-secondary300',
+      color: 'white',
+      bg: 'hg-secondary700',
     },
     5: {
       text: 'Finalizada',
-      color: 'hg-green',
-      bg: 'hg-green300',
+      color: 'white',
+      bg: 'black',
     },
     6: {
       text: 'En visita',
-      color: 'hg-secondary',
-      bg: 'hg-secondary300',
+      color: 'white',
+      bg: 'hg-green',
     },
     7: {
       text: 'Esperando',
-      color: 'hg-primary',
-      bg: 'hg-primary100',
+      color: 'white',
+      bg: 'orange-600',
     },
   };
 
+  const handleUpdateStatusAppointment = async (
+    appointmentId: string,
+    status: Status
+  ) => {
+    toggleLoading(appointmentId, status, true);
+    await ScheduleService.updatePatientStatusAppointment(
+      appointmentId,
+      user?.id || '',
+      status
+    )
+      .then(response => {
+        fetchAppointments();
+      })
+      .catch(error => {
+        setMessageNotification('Error al actualizar el estado de la cita');
+      });
+    toggleLoading(appointmentId, status, false);
+  };
+
+  const toggleLoading = (id: string, status: Status, isLoading: boolean) => {
+    const loadingKey = `${id}_${status}`;
+    setLoadingState(prevLoadingState => ({
+      ...prevLoadingState,
+      [loadingKey]: isLoading,
+    }));
+  };
+
+  const getEventTypeDate = (
+    appointment: Appointment,
+    appointmentEventType: AppointmentEventType
+  ): JSX.Element | null => {
+    const filteredEvents = appointment.appointmentEvents?.filter(
+      event => event.appointmentEventType === appointmentEventType
+    );
+
+    if (filteredEvents && filteredEvents.length > 0) {
+      const maxDate = filteredEvents.reduce(
+        (maxDate: Date | null, event: any) => {
+          const eventDate = new Date(event.date);
+          return !maxDate || eventDate > maxDate ? eventDate : maxDate;
+        },
+        null
+      );
+
+      if (maxDate) {
+        return <p className="text-sm">{getHoursFromDate(maxDate)}</p>;
+      }
+    }
+
+    return null;
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {isLoadingPage ? (
         <SvgSpinner className="w-full justify-center" />
       ) : (
@@ -240,17 +306,24 @@ const AppointmentsListComponent: React.FC<{
           </Title>
           <Flex layout="col-left" className="w-full gap-2">
             <Flex className="w-full font-normal text-hg-secondary text-xs p-2">
-              <Text className="w-[60%]">Nombre del paciente</Text>
-              <Text className="w-[15%]">Hora cita</Text>
-              <Text className="w-[20%]">Estado</Text>
-              <Text className="w-[10%]"> </Text>
+              <Text className="w-[30%] shrink-0">Nombre del paciente</Text>
+              <Text className="w-[10%] shrink-0">Hora cita</Text>
+              <Text className="w-[15%] shrink-0">Estado</Text>
+              {extraInfo && (
+                <>
+                  <Text className="w-[10%] shrink-0">Checkin</Text>
+                  <Text className="w-[10%] shrink-0">Hora llegada</Text>
+                  <Text className="w-[10%] shrink-0">Hora Entrada</Text>
+                  <Text className="w-[10%] shrink-0">Hora Finalizada</Text>
+                </>
+              )}
             </Flex>
             {appointments.map(appointment => (
               <Flex
                 key={appointment.id}
                 className="text-left bg-white/75 rounded-xl w-full py-2 px-3"
               >
-                <Flex className="w-[60%]">
+                <Flex className="w-[30%] shrink-0">
                   <SvgUserSquare className="mr-2" />
                   <div>
                     <Text className="font-semibold">
@@ -259,14 +332,16 @@ const AppointmentsListComponent: React.FC<{
                     </Text>
                     <Text className="text-hg-black500 text-xs">
                       {appointment.lead?.user?.flowwwToken.slice(0, -32)} -{' '}
-                      {appointment.lead?.user?.phone}
+                      {appointment.lead?.user?.phone} - {appointment.status}
                     </Text>
                   </div>
                 </Flex>
-                <Text className="w-[15%]">{appointment.startTime}</Text>
-                <Flex className="w-[20%]">
+                <Text className="w-[10%] shrink-0">
+                  {appointment.startTime}
+                </Text>
+                <Flex className="w-[10%] shrink-0">
                   <Flex
-                    className={`py-1 px-2 rounded-lg bg-${
+                    className={`py-1 px-2 rounded-lg w-full bg-${
                       APPOINTMENT_STATUS[appointment.status ?? Status.Open].bg
                     }`}
                   >
@@ -291,20 +366,121 @@ const AppointmentsListComponent: React.FC<{
                     </Text>
                   </Flex>
                 </Flex>
+                {extraInfo && (
+                  <>
+                    <Flex className="w-[5%] gap-2 shrink-0">{''}</Flex>
+                    <Flex className="w-[10%] gap-2 shrink-0 mr-2">
+                      {(appointment.status === Status.Confirmed ||
+                        appointment.status === Status.Open) && (
+                        <>
+                          <Button
+                            size="sm"
+                            className="w-1/2"
+                            onClick={() => {
+                              handleUpdateStatusAppointment(
+                                appointment.id,
+                                Status.CheckIn
+                              );
+                            }}
+                          >
+                            {loadingState[
+                              `${appointment.id}_${Status.CheckIn}`
+                            ] ? (
+                              <SvgSpinner height={16} width={16} />
+                            ) : (
+                              <SvgCheck
+                                width={16}
+                                height={16}
+                                className="text-hg-primary bg-hg-secondary rounded-md"
+                              />
+                            )}
+                          </Button>
+
+                          <Button
+                            size="sm"
+                            className="w-1/2"
+                            onClick={() => {
+                              handleUpdateStatusAppointment(
+                                appointment.id,
+                                Status.NoShow
+                              );
+                            }}
+                          >
+                            {loadingState[
+                              `${appointment.id}_${Status.NoShow}`
+                            ] ? (
+                              <SvgSpinner height={16} width={16} />
+                            ) : (
+                              <SvgCross
+                                width={16}
+                                height={16}
+                                className="text-hg-primary bg-hg-secondary rounded-md"
+                              />
+                            )}
+                          </Button>
+                        </>
+                      )}
+                    </Flex>
+                    <Flex className="w-[10%] shrink-0 pl-4">
+                      <p>
+                        {getEventTypeDate(
+                          appointment,
+                          AppointmentEventType.Checkin
+                        )}
+                      </p>
+                    </Flex>
+                    <Flex className="w-[10%] shrink-0 pl-4">
+                      <p>
+                        {getEventTypeDate(
+                          appointment,
+                          AppointmentEventType.Start
+                        )}
+                      </p>
+                    </Flex>
+                    <Flex className="w-[10%] shrink-0 pl-4">
+                      <p>
+                        {getEventTypeDate(
+                          appointment,
+                          AppointmentEventType.Finished
+                        )}
+                      </p>
+                    </Flex>
+                  </>
+                )}
                 <Flex className="w-[10%] justify-end">
-                  <Button
-                    size="sm"
-                    isSubmit
-                    onClick={() => handleCheckUser(appointment)}
-                    type="tertiary"
-                    customStyles="bg-hg-primary px-3"
-                  >
-                    {loadingAppointments[appointment.id] ? (
-                      <SvgSpinner height={24} width={24} />
-                    ) : (
-                      <SvgArrow height={16} width={16} />
-                    )}
-                  </Button>
+                  {extraInfo ? (
+                    <>
+                      {appointment.status == Status.CheckIn && (
+                        <Button
+                          size="sm"
+                          isSubmit
+                          onClick={() => handleCheckUser(appointment)}
+                          type="tertiary"
+                          customStyles="bg-hg-primary px-3"
+                        >
+                          {loadingAppointments[appointment.id] ? (
+                            <SvgSpinner height={24} width={24} />
+                          ) : (
+                            <SvgArrow height={16} width={16} />
+                          )}
+                        </Button>
+                      )}
+                    </>
+                  ) : (
+                    <Button
+                      size="sm"
+                      isSubmit
+                      onClick={() => handleCheckUser(appointment)}
+                      type="tertiary"
+                      customStyles="bg-hg-primary px-3"
+                    >
+                      {loadingAppointments[appointment.id] ? (
+                        <SvgSpinner height={24} width={24} />
+                      ) : (
+                        <SvgArrow height={16} width={16} />
+                      )}
+                    </Button>
+                  )}
                 </Flex>
               </Flex>
             ))}
@@ -320,6 +496,11 @@ const AppointmentsListComponent: React.FC<{
             </Text>
           </Flex>
         </div>
+      )}
+      {messageNotification ? (
+        <p className="text-red-500 py-4">{messageNotification}</p>
+      ) : (
+        <></>
       )}
     </div>
   );

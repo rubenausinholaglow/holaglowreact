@@ -22,6 +22,20 @@ export interface Appointment {
   externalReference: string;
   paymentId: string;
   paid: boolean;
+  appointmentEvents? : AppointmentEvents[];
+}
+
+
+export enum AppointmentEventType {
+  NoShow,
+  Checkin,
+  Start,
+  Finished,
+}
+export interface AppointmentEvents {
+  id :string;
+  date : Date;
+  appointmentEventType : AppointmentEventType;
 }
 
 export enum Status {

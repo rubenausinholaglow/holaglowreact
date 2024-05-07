@@ -190,8 +190,8 @@ export const formatDate = (date: Date, includeHours = true) => {
   }
 
   const options: Intl.DateTimeFormatOptions = {
-    day: '2-digit',
-    month: '2-digit',
+    day: '2-digit' ,
+    month: '2-digit' ,
     year: 'numeric',
     hour: includeHours ? '2-digit' : undefined,
     minute: includeHours ? '2-digit' : undefined,
@@ -201,6 +201,14 @@ export const formatDate = (date: Date, includeHours = true) => {
 
   const formattedDate = finalDate.toLocaleDateString('es-ES', options);
   return `${formattedDate.replace(',', '')}`;
+};
+
+export const getHoursFromDate = (date: Date) => {
+  const hours = date.getHours();
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
+
+  return hours+':'+minutes+':'+seconds;
 };
 
 export const validTypesFilterCart: ProductType[] = [

@@ -176,10 +176,10 @@ export default class ScheduleService {
       }
     } catch (err: any) {
       Bugsnag.notify('Error updatePatientStatusAppointment', err);
-      return '';
+      throw err;
     }
   }
-  static async getAppointmentsPerClinic(clinicId: string, boxId: string) {
+  static async getAppointmentsPerClinic(clinicId: string, boxId: string) : Promise<Appointment[]> {
     try {
       let url = `${ScheduleService.getScheduleUrl()}Appointment/PerClinic?clinicId=${clinicId}`;
       if (boxId) {
@@ -190,7 +190,7 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return '';
+        return new Array<Appointment>();
       }
     } catch (err: any) {
       Bugsnag.notify('Error getAppointmentsPerClinic', err);
