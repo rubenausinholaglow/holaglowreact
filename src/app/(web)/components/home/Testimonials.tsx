@@ -7,50 +7,11 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 
 import TestimonialCard from '../common/TestimonialCard';
 import FullWidthCarousel from '../product/fullWidthCarousel';
+import clinicService from '@services/ClinicService';
+import { ClinicReview } from '@interface/clinic';
 
-const TESTIMONIALS: Testimonial[] = [
-  {
-    city: 'Barcelona',
-    name: 'Belen Hevia',
-    imgUrl: '/images/testimonials/belenHevia.png',
-    value: 4.7,
-    testimonial:
-      'Encantada de la experiencia, el doctor va explicando a cada momento lo que va haciendo y el personal súper amable . 100% recomendable 👌',
-  },
-  {
-    city: 'Toledo',
-    name: 'Maria José Zamora',
-    imgUrl: '/images/testimonials/mariaJoseZamora.png',
-    value: 4.7,
-    testimonial:
-      'Perfecta experiencia en Holaglow! Equipo de súper profesionales, que te asesoran y acompañan durante el tratamiento',
-  },
-  {
-    city: 'Alicante',
-    name: 'Maria Quilez',
-    imgUrl: '/images/testimonials/mariaQuilez.png',
-    value: 4.7,
-    testimonial:
-      'Estoy super contenta con el resultado. El equipo médico me ha asesorado muy bien y me he sentido muy cómoda en todo momento. El escáner es una pasada!!!!',
-  },
-  {
-    city: 'Tarragona',
-    name: 'Luna Santiago',
-    imgUrl: '/images/testimonials/lunaSantiago.png',
-    value: 4.7,
-    testimonial:
-      'Me he hecho los labios y ha sido increíble!!! Sin duda el mejor lugar en el que poder confiarse. Un trato maravilloso hacia los clientes, os lo recomiendo!!',
-  },
-  {
-    city: 'Madrid',
-    name: 'Anna Asián',
-    imgUrl: '/images/testimonials/annaAsian.png',
-    value: 4.7,
-    testimonial:
-      'He visitado la clínica y son súper amables y profesionales, antes del tratamiento puedes ver el resultado de forma virtual en un simulador. Decidí hacerme un tratamiento antiarrugas en la frente, entrecejo y patas de gallo. Encantada con mi nueva imagen,mejorada y muy natural.',
-  },
-];
 export default async function Testimonials() {
+  const reviews = await clinicService.getReviews();
   return (
     <>
       <Container className="py-12">
@@ -87,11 +48,11 @@ export default async function Testimonials() {
         className="pb-12"
         visibleSlides={isMobileSSR() ? 1.2 : 3.5}
       >
-        {TESTIMONIALS.map((testimonial: Testimonial | any) => {
+        {reviews.map((review: ClinicReview | any) => {
           return (
             <TestimonialCard
-              key={testimonial.name}
-              testimonial={testimonial}
+              key={review.name}
+              review={review}
               className="h-full flex flex-col mr-8 bg-derma-secondary300"
             />
           );
