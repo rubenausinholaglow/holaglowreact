@@ -29,7 +29,7 @@ import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { get, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
@@ -301,7 +301,7 @@ const AppointmentsListComponent: React.FC<{
       );
 
       if (maxDate) {
-        return <p className="text-sm">{getHoursFromDate(maxDate)}</p>;
+        return <p className="text-sm">{dayjs(maxDate).format('HH:mm:ss')}</p>;
       }
     }
 
