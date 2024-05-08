@@ -80,8 +80,7 @@ export default async function ProductExplanation({
                 src={imgSrc}
                 alt={`Antes y después del tratamiento: ${product.title}`}
                 fill
-                objectFit="cover"
-                className="rounded-2xl"
+                className="rounded-2xl object-cover"
               />
             </div>
           )}

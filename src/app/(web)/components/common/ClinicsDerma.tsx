@@ -67,7 +67,7 @@ function ClinicSlide({ clinic }: { clinic: any }) {
             <Image
               src={`/images/derma/clinics/${image}`}
               alt={`Descubre nuestra clínica Holaglow en ${clinic.name}`}
-              objectFit="cover"
+              className="object-cover"
               fill
             />
           </div>

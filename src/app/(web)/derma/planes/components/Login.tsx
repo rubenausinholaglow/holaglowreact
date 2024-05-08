@@ -1,17 +1,15 @@
 'use client';
 
-import 'react-phone-input-2/lib/style.css';
+import 'react-international-phone/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
+import { PhoneInput } from 'react-international-phone';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@dashboardComponents/TextInputField';
 import AuthenticationService from '@services/AuthenticationService';
-import { HOLAGLOW_COLORS } from '@utils/colors';
 import * as errorsConfig from '@utils/textConstants';
-import { phoneValidationRegex } from '@utils/validators';
-import { poppins } from 'app/fonts';
+import * as utils from '@utils/validators';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -41,11 +39,7 @@ export default function Login({
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showResendPINMessage, setShowResendPINMessage] = useState(false);
 
-  const handleFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
-    const value = event.target.value;
+  const handleFieldChange = (value: string | boolean, field: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       [field]: value,
@@ -55,26 +49,6 @@ export default function Login({
       setErrorMessage('');
     }
   };
-
-  function handlePhoneChange(event: any, country: any, value: string) {
-    if (
-      event &&
-      event.nativeEvent &&
-      (event.nativeEvent.inputType || event.nativeEvent.type == 'click')
-    ) {
-      handleFieldChange(event, 'phone');
-      event.target.value = '+' + country.dialCode;
-      handleFieldChange(event, 'phonePrefix');
-    } else {
-      if (value.startsWith('34')) value = value.substring(2, value.length);
-      event.target.value = '+34' + value;
-      handleFieldChange(event, 'phone');
-      event.target.value = '+34';
-      handleFieldChange(event, 'phonePrefix');
-    }
-
-    validatePhoneInput(`+${value}`);
-  }
 
   async function resendPIN() {
     let phone = formData.phone.replace(formData.phonePrefix, '');
@@ -137,28 +111,6 @@ export default function Login({
     setIsLoadingPIN(false);
   }
 
-  function validatePhoneInput(phoneNumber: string) {
-    if (
-      phoneNumber.length > 3 &&
-      phoneNumber.startsWith('+34') &&
-      phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
-    ) {
-      setShowPhoneError(false);
-    }
-
-    if (
-      phoneNumber.length > 3 &&
-      phoneNumber.startsWith('+34') &&
-      !phoneValidationRegex.test(phoneNumber.replace(/\D/g, '').slice(-9))
-    ) {
-      setShowPhoneError(true);
-    }
-
-    if (isEmpty(phoneNumber) || phoneNumber === '+' || phoneNumber === '+34') {
-      setShowPhoneError(true);
-    }
-  }
-
   return (
     <Carousel
       className="mt-12"
@@ -181,44 +133,24 @@ export default function Login({
           <label className="absolute left-20 top-[10px] z-10 pointer-events-none text-xs text-hg-black500">
             Número de teléfono
           </label>
+
           <PhoneInput
-            disableSearchIcon={true}
-            countryCodeEditable={true}
-            inputClass={`${poppins.className}`}
-            inputStyle={{
-              borderColor: 'white',
-              width: '100%',
-              height: '44px',
-              paddingLeft: '65px',
-              paddingTop: '12px',
-              fontSize: '16px',
-              lineHeight: '16px',
-              fontStyle: 'normal',
-              fontWeight: '400',
-              touchAction: 'manipulation',
-            }}
-            containerStyle={{
-              background: 'white',
-              border: '1px solid',
-              borderColor:
-                showPhoneError !== null && !showPhoneError
-                  ? HOLAGLOW_COLORS['black']
-                  : HOLAGLOW_COLORS['black300'],
-              borderRadius: '1rem',
-              paddingLeft: '16px',
-              paddingRight: '12px',
-              paddingBottom: '8px',
-              paddingTop: '8px',
-              height: '60px',
-            }}
-            placeholder="Número de teléfono"
-            country={'es'}
+            defaultCountry="es"
             preferredCountries={['es']}
             value={formData.phone}
-            onChange={(value, data, event) => {
-              handlePhoneChange(event, data, value);
+            forceDialCode
+            inputClassName={
+              showPhoneError !== null && !showPhoneError ? 'isComplete' : ''
+            }
+            onChange={(phone, country) => {
+              handleFieldChange(phone, 'phone');
+              handleFieldChange(`+${country.country.dialCode}`, 'phonePrefix');
+              if (phone.length > 0 && phone !== '+34') {
+                setShowPhoneError(utils.validatePhoneInput(phone));
+              }
             }}
           />
+
           {(showPhoneError !== null || errorMessage !== '') && (
             <Image
               src={`/images/forms/${
@@ -281,7 +213,7 @@ export default function Login({
             placeholder="______"
             disableBgIcons
             value={formData.pin}
-            onChange={event => handleFieldChange(event, 'pin')}
+            onChange={event => handleFieldChange(event.target.value, 'pin')}
             customValidation={() => formData.pin.length === 6}
           />
           {errorMessage !== '' && (

@@ -3,11 +3,15 @@ import MainLayout from 'app/(web)/components/layout/MainLayout';
 
 import Confirmation from './components/Confirmation';
 
-export default function ConfirmationCheckout() {
+export default function ConfirmationCheckout({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   return (
     <App>
       <MainLayout hideFooter>
-        <Confirmation />
+        <Confirmation isReagenda={searchParams.isReagenda === 'true'} />
       </MainLayout>
     </App>
   );

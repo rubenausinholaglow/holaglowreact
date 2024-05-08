@@ -251,3 +251,33 @@ export function getClinicToSet(
     x => x.id.toLocaleUpperCase() === storedClinicId.toLocaleUpperCase()
   )[0];
 }
+
+
+export function getUnityTypePassport(id: number) : string {
+  console.log(id);
+  switch (id) {
+    case 1:
+      return 'Ácido hialurónico';  
+    case 2:
+      return 'Toxina botulínica';
+    case 3:
+      return 'Toxina botulínica';
+    case 4:
+      return 'Piel';
+    case 5:
+      return 'Piel Profunda';
+    case 6:
+      return 'Vitaminas';
+    case 7:
+      return 'Hilos absorbibles de PDO';
+    case 8:
+      return 'Lifting';
+    case 9: 
+      return 'Solución química con ácidos';
+    case 10:
+      return 'Hidroxiapatita cálcica';
+    case 11:
+      return 'Ácido desoxicólico';
+    default: return '';
+  }
+}
