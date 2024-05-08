@@ -24,7 +24,7 @@ const useRoutes = () => {
       crisalix: '/dashboard/crisalix',
       schedule: `/dashboard/schedule?flowwwToken=${
         user?.flowwwToken != undefined ? user?.flowwwToken : ''
-      } `,
+      }`,
       menu: '/dashboard/menu',
       budgets: '/dashboard/budgets',
       home: isCallCenter

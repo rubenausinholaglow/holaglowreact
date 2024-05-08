@@ -3,6 +3,7 @@ import { getTreatmentId } from '@utils/userUtils';
 import {
   Appointment,
   AppointmentNextResponse,
+  AppointmentsPerClinicResponse,
   RescheduleAppointmentRequest,
   Status,
   User,
@@ -179,7 +180,7 @@ export default class ScheduleService {
       throw err;
     }
   }
-  static async getAppointmentsPerClinic(clinicId: string, boxId: string) : Promise<Appointment[]> {
+  static async getAppointmentsPerClinic(clinicId: string, boxId: string) : Promise<AppointmentsPerClinicResponse[]> {
     try {
       let url = `${ScheduleService.getScheduleUrl()}Appointment/PerClinic?clinicId=${clinicId}`;
       if (boxId) {
@@ -190,7 +191,7 @@ export default class ScheduleService {
         const data = await res.json();
         return data;
       } else {
-        return new Array<Appointment>();
+        return new Array<AppointmentsPerClinicResponse>();
       }
     } catch (err: any) {
       Bugsnag.notify('Error getAppointmentsPerClinic', err);

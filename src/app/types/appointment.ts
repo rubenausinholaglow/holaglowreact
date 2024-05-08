@@ -97,3 +97,17 @@ export interface AppointmentNextResponse {
   boxId: string;  
   startTime: string;
 }
+
+export interface AppointmentsPerClinicResponse
+{
+    id: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    flowwwToken: string;
+    appointmentStatus: Status;
+    appointmentEvents: AppointmentEvents[];
+    startTime: string;
+    email: string;
+
+}

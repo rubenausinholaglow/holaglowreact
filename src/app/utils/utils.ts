@@ -156,7 +156,6 @@ export function getPaymentBankText(bank: PaymentBank): string {
 }
 
 export function clearLocalStorage(allLocalStorage: boolean) {
-  localStorage.clear();
   useCrisalix.setState(INITIAL_STATE_CRISALIXUSERLIST);
   useMessageSocket.setState(INITIAL_STATE_MESSAGESOCKETLIST);
   usePaymentList.setState(INITIAL_STATE_PAYMENT);
