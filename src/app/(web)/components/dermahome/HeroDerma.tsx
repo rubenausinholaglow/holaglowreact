@@ -26,13 +26,13 @@ export default function HeroDerma() {
             </Title>
             <Title
               size="2xl"
-              className="text-derma-primary500 text-center relative h-10 lg:h-16 overflow-hidden mb-6"
+              className="text-derma-primary500 text-center relative h-12 lg:h-20 overflow-hidden mb-6"
             >
               <span className="block animate-pains">
                 <span className="block">acné</span>
                 <span className="block">melasma</span>
                 <span className="block">rosácea</span>
-                <span className="block">calidad de piel</span>
+                <span className="block">antiaging</span>
               </span>
             </Title>
             <Text className="text-hg-black500 mb-8 md:text-lg max-w-[600px] text-center">

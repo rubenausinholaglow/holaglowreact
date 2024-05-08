@@ -1,3 +1,4 @@
+import { getUnityTypePassport } from '@utils/utils';
 import { SvgMapMarker, SvgStethoscope } from 'app/icons/Icons';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -62,7 +63,16 @@ export default function Treatments({
                   <p className="text-hg-tertiary500 text-xs mb-1">
                     Producto utilizado
                   </p>
-                  <p>{treatment.product.description}</p>
+                  {treatment.product.isPack &&
+                  treatment.product.packUnities?.length > 0 ? (
+                    <>
+                      {treatment.product.packUnities.map(x => (
+                        <p key={x.type}>{getUnityTypePassport(x.type)}</p>
+                      ))}
+                    </>
+                  ) : (
+                    <p>{getUnityTypePassport(treatment.product.unityType)}</p>
+                  )}
                 </li>
                 <li className="p-4">
                   <ul className="flex flex-col gap-4">

@@ -17,7 +17,7 @@ const TREATMENTS = [
     imgUrl: '/images/derma/home/pains/rosacea.jpg',
   },
   {
-    name: 'Calidad de piel',
+    name: 'Antiaging',
     imgUrl: '/images/derma/home/pains/calidadPiel.jpg',
   },
 ];
