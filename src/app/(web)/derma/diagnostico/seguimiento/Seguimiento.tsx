@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Diagnostic } from '@interface/derma/diagnosis';
 import { dermaService } from '@services/DermaService';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
@@ -10,7 +11,7 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { isEmpty, update } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import DermaStepHeader from '../../components/DermaStepHeader';
@@ -20,7 +21,7 @@ export default function Seguimiento({
   diagnostic,
   userId,
 }: {
-  diagnostic: any;
+  diagnostic: Diagnostic;
   userId: string;
 }) {
   const router = useRouter();
@@ -29,7 +30,11 @@ export default function Seguimiento({
   const [loadingButton, setLoadingButton] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [imageIsLoading, setImageIsLoading] = useState(true);
-  const { picturesUrls } = useDermaStore(state => state);
+  const { picturesUrls, setPicturesUrls } = useDermaStore(state => state);
+
+  function updatePictures() {
+    setPicturesUrls([diagnostic.front, diagnostic.right, diagnostic.left]);
+  }
 
   function checkIsDisabled() {
     setIsDisabled(
@@ -43,6 +48,8 @@ export default function Seguimiento({
   useEffect(() => {
     checkIsDisabled();
     setTextAreaValue(diagnostic.userComment);
+
+    updatePictures();
   }, []);
 
   useEffect(() => {
