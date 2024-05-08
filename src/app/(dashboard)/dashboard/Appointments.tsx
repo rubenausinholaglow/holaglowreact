@@ -4,6 +4,7 @@ import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
+import useRoutes from '@utils/useRoutes';
 import { getHoursFromDate } from '@utils/utils';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgCheck, SvgCross, SvgUserSquare } from 'app/icons/IconsDs';
@@ -39,13 +40,13 @@ interface LoadingState {
 const AppointmentsListComponent: React.FC<{
   clinicId: string;
   boxId: string;
-  extraInfo: boolean;
-}> = ({ clinicId, boxId, extraInfo }) => {
+}> = ({ clinicId, boxId }) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loadingAppointments, setLoadingAppointments] = useState<{
     [id: string]: boolean;
   }>({});
   const router = useRouter();
+  const ROUTES = useRoutes();
   const userCrisalix = useCrisalix(state => state);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
@@ -58,6 +59,7 @@ const AppointmentsListComponent: React.FC<{
     setAppointmentId,
     setClinicFlowwwId,
     setClinicProfessionalId,
+    extraInfo,
   } = useGlobalPersistedStore(state => state);
 
   const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -305,182 +307,198 @@ const AppointmentsListComponent: React.FC<{
             Tus citas del día
           </Title>
           <Flex layout="col-left" className="w-full gap-2">
-            <Flex className="w-full font-normal text-hg-secondary text-xs p-2">
-              <Text className="w-[30%] shrink-0">Nombre del paciente</Text>
-              <Text className="w-[10%] shrink-0">Hora cita</Text>
-              <Text className="w-[15%] shrink-0">Estado</Text>
+            <Flex className="w-full font-normal text-hg-secondary text-xs py-2 px-3 gap-4">
+              <Text className="w-[20%] shrink-0 ">Nombre del paciente</Text>
+              <Text className="w-[10%] shrink-0 ">Hora cita</Text>
+              <Text className="w-[10%] shrink-0 ">Estado</Text>
               {extraInfo && (
                 <>
-                  <Text className="w-[10%] shrink-0">Checkin</Text>
-                  <Text className="w-[10%] shrink-0">Hora llegada</Text>
-                  <Text className="w-[10%] shrink-0">Hora Entrada</Text>
-                  <Text className="w-[10%] shrink-0">Hora Finalizada</Text>
+                  <Text className="w-[10%] shrink-0 p-2">Checkin</Text>
+
+                  <Text className="w-[10%] shrink-0 p-2">Hora llegada</Text>
+                  <Text className="w-[10%] shrink-0">Hora Visita</Text>
+                  <Text className="w-[10%] shrink-0">Agendar Cita</Text>
+                  <Text className="w-[10%] shrink-0">Hora Salida</Text>
                 </>
               )}
             </Flex>
             {appointments.map(appointment => (
               <Flex
                 key={appointment.id}
+                layout="col-left"
                 className="text-left bg-white/75 rounded-xl w-full py-2 px-3"
               >
-                <Flex className="w-[30%] shrink-0">
-                  <SvgUserSquare className="mr-2" />
-                  <div>
-                    <Text className="font-semibold">
-                      {appointment.lead?.user?.firstName}{' '}
-                      {appointment.lead?.user?.lastName}
-                    </Text>
-                    <Text className="text-hg-black500 text-xs">
-                      {appointment.lead?.user?.flowwwToken.slice(0, -32)} -{' '}
-                      {appointment.lead?.user?.phone} - {appointment.status}
-                    </Text>
-                  </div>
-                </Flex>
-                <Text className="w-[10%] shrink-0">
-                  {appointment.startTime}
-                </Text>
-                <Flex className="w-[10%] shrink-0">
-                  <Flex
-                    className={`py-1 px-2 rounded-lg w-full bg-${
-                      APPOINTMENT_STATUS[appointment.status ?? Status.Open].bg
-                    }`}
-                  >
-                    <div
-                      className={`h-1 w-1 bg-${
-                        APPOINTMENT_STATUS[appointment.status ?? Status.Open]
-                          .color
-                      } rounded-full mr-2`}
-                    ></div>
-
-                    <Text
-                      size="xs"
-                      className={`text-${
-                        APPOINTMENT_STATUS[appointment.status ?? Status.Open]
-                          .color
+                <Flex className="text-left bg-white/75 rounded-xl w-full py-2 px-3">
+                  <Flex className="w-[20%] shrink-0">
+                    <SvgUserSquare className="mr-2" />
+                    <div>
+                      <Text className="font-semibold">
+                        {appointment.lead?.user?.firstName}{' '}
+                        {appointment.lead?.user?.lastName}
+                      </Text>
+                      <Text className="text-hg-black500 text-xs">
+                        {appointment.lead?.user?.flowwwToken.slice(0, -32)} -{' '}
+                        {appointment.lead?.user?.phone} - {appointment.status}
+                      </Text>
+                    </div>
+                  </Flex>
+                  <Text className="w-[10%] shrink-0 p-2">
+                    {appointment.startTime}
+                  </Text>
+                  <Flex className="w-[10%] shrink-0 p-2">
+                    <Flex
+                      className={`py-1 px-2 rounded-lg w-full  bg-${
+                        APPOINTMENT_STATUS[appointment.status ?? Status.Open].bg
                       }`}
                     >
-                      {
-                        APPOINTMENT_STATUS[appointment.status ?? Status.Open]
-                          .text
-                      }
-                    </Text>
-                  </Flex>
-                </Flex>
-                {extraInfo && (
-                  <>
-                    <Flex className="w-[5%] gap-2 shrink-0">{''}</Flex>
-                    <Flex className="w-[10%] gap-2 shrink-0 mr-2">
-                      {(appointment.status === Status.Confirmed ||
-                        appointment.status === Status.Open) && (
-                        <>
-                          <Button
-                            size="sm"
-                            className="w-1/2"
-                            onClick={() => {
-                              handleUpdateStatusAppointment(
-                                appointment.id,
-                                Status.CheckIn
-                              );
-                            }}
-                          >
-                            {loadingState[
-                              `${appointment.id}_${Status.CheckIn}`
-                            ] ? (
-                              <SvgSpinner height={16} width={16} />
-                            ) : (
-                              <SvgCheck
-                                width={16}
-                                height={16}
-                                className="text-hg-primary bg-hg-secondary rounded-md"
-                              />
-                            )}
-                          </Button>
+                      <div
+                        className={`h-1 w-1 bg-${
+                          APPOINTMENT_STATUS[appointment.status ?? Status.Open]
+                            .color
+                        } rounded-full mr-2`}
+                      ></div>
 
-                          <Button
-                            size="sm"
-                            className="w-1/2"
-                            onClick={() => {
-                              handleUpdateStatusAppointment(
-                                appointment.id,
-                                Status.NoShow
-                              );
-                            }}
-                          >
-                            {loadingState[
-                              `${appointment.id}_${Status.NoShow}`
-                            ] ? (
-                              <SvgSpinner height={16} width={16} />
-                            ) : (
-                              <SvgCross
-                                width={16}
-                                height={16}
-                                className="text-hg-primary bg-hg-secondary rounded-md"
-                              />
-                            )}
-                          </Button>
-                        </>
-                      )}
+                      <Text
+                        size="xs"
+                        className={`text-${
+                          APPOINTMENT_STATUS[appointment.status ?? Status.Open]
+                            .color
+                        }`}
+                      >
+                        {
+                          APPOINTMENT_STATUS[appointment.status ?? Status.Open]
+                            .text
+                        }
+                      </Text>
                     </Flex>
-                    <Flex className="w-[10%] shrink-0 pl-4">
-                      <p>
+                  </Flex>
+                  {extraInfo && (
+                    <>
+                      <Flex className="w-[10%] gap-2 shrink-0 p-2">
+                        {(appointment.status === Status.Confirmed ||
+                          appointment.status === Status.Open) && (
+                          <>
+                            <Button
+                              size="sm"
+                              onClick={() => {
+                                handleUpdateStatusAppointment(
+                                  appointment.id,
+                                  Status.CheckIn
+                                );
+                              }}
+                            >
+                              {loadingState[
+                                `${appointment.id}_${Status.CheckIn}`
+                              ] ? (
+                                <SvgSpinner height={16} width={16} />
+                              ) : (
+                                <SvgCheck
+                                  width={16}
+                                  height={16}
+                                  className="text-hg-primary bg-hg-secondary rounded-md "
+                                />
+                              )}
+                            </Button>
+
+                            <Button
+                              size="sm"
+                              onClick={() => {
+                                handleUpdateStatusAppointment(
+                                  appointment.id,
+                                  Status.NoShow
+                                );
+                              }}
+                            >
+                              {loadingState[
+                                `${appointment.id}_${Status.NoShow}`
+                              ] ? (
+                                <SvgSpinner height={16} width={16} />
+                              ) : (
+                                <SvgCross
+                                  width={16}
+                                  height={16}
+                                  className="text-hg-primary bg-hg-secondary rounded-md"
+                                />
+                              )}
+                            </Button>
+                          </>
+                        )}
+                      </Flex>
+                      <Flex className="w-[10%] shrink-0 p-2">
                         {getEventTypeDate(
                           appointment,
                           AppointmentEventType.Checkin
                         )}
-                      </p>
-                    </Flex>
-                    <Flex className="w-[10%] shrink-0 pl-4">
-                      <p>
-                        {getEventTypeDate(
-                          appointment,
-                          AppointmentEventType.Start
-                        )}
-                      </p>
-                    </Flex>
-                    <Flex className="w-[10%] shrink-0 pl-4">
-                      <p>
-                        {getEventTypeDate(
-                          appointment,
-                          AppointmentEventType.Finished
-                        )}
-                      </p>
-                    </Flex>
-                  </>
-                )}
-                <Flex className="w-[10%] justify-end">
-                  {extraInfo ? (
-                    <>
-                      {appointment.status == Status.CheckIn && (
-                        <Button
-                          size="sm"
-                          isSubmit
-                          onClick={() => handleCheckUser(appointment)}
-                          type="tertiary"
-                          customStyles="bg-hg-primary px-3"
-                        >
-                          {loadingAppointments[appointment.id] ? (
-                            <SvgSpinner height={24} width={24} />
-                          ) : (
-                            <SvgArrow height={16} width={16} />
+                      </Flex>
+                      <Flex className="w-[10%] shrink-0 p-2">
+                        <p>
+                          {getEventTypeDate(
+                            appointment,
+                            AppointmentEventType.Start
                           )}
+                        </p>
+                      </Flex>
+                      <Text className="w-[10%] shrink-0 text-sm">
+                        <Button
+                          size="md"
+                          type="white"
+                          href=""
+                          onClick={e => {
+                            router.push(
+                              ROUTES.dashboard.schedule +
+                                appointment.lead?.user?.flowwwToken
+                            );
+                          }}
+                        >
+                          <span className="font-semibold">Agendar Cita</span>
                         </Button>
-                      )}
+                      </Text>
+
+                      <Flex className="w-[9%] shrink-0 pl-8">
+                        <p>
+                          {getEventTypeDate(
+                            appointment,
+                            AppointmentEventType.Finished
+                          )}
+                        </p>
+                      </Flex>
                     </>
-                  ) : (
-                    <Button
-                      size="sm"
-                      isSubmit
-                      onClick={() => handleCheckUser(appointment)}
-                      type="tertiary"
-                      customStyles="bg-hg-primary px-3"
-                    >
-                      {loadingAppointments[appointment.id] ? (
-                        <SvgSpinner height={24} width={24} />
-                      ) : (
-                        <SvgArrow height={16} width={16} />
-                      )}
-                    </Button>
                   )}
+                  <Flex className="w-[10%] justify-end">
+                    {extraInfo ? (
+                      <>
+                        {appointment.status == Status.CheckIn && (
+                          <Button
+                            size="sm"
+                            isSubmit
+                            onClick={() => handleCheckUser(appointment)}
+                            type="tertiary"
+                            customStyles="bg-hg-primary px-3"
+                          >
+                            {loadingAppointments[appointment.id] ? (
+                              <SvgSpinner height={24} width={24} />
+                            ) : (
+                              <SvgArrow height={16} width={16} />
+                            )}
+                          </Button>
+                        )}
+                      </>
+                    ) : (
+                      <Button
+                        size="sm"
+                        isSubmit
+                        onClick={() => handleCheckUser(appointment)}
+                        type="tertiary"
+                        customStyles="bg-hg-primary px-3"
+                      >
+                        {loadingAppointments[appointment.id] ? (
+                          <SvgSpinner height={24} width={24} />
+                        ) : (
+                          <SvgArrow height={16} width={16} />
+                        )}
+                      </Button>
+                    )}
+                  </Flex>
                 </Flex>
               </Flex>
             ))}

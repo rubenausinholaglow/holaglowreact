@@ -40,7 +40,6 @@ export default function Page({
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showRegistration, setShowRegistration] = useState(false);
-  const [showExtraInfo, setShowExtraInfo] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const messageSocket = useMessageSocket(state => state);
@@ -53,6 +52,8 @@ export default function Page({
     storedBoxId,
     storedClinicId,
     isCallCenter,
+    extraInfo,
+    setExtraInfo,
     setBoxId,
     setClinicId,
     setRemoteControl,
@@ -148,7 +149,7 @@ export default function Page({
     setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
     setIsCallCenter(params.get('isCallCenter') == 'true');
-    setShowExtraInfo(params.get('extraInfo') == 'true');
+    setExtraInfo(params.get('extraInfo') == 'true');
     const phone = params.get('phoneNumber') || '';
     setPhoneNumber(phone.length > 9 ? phone.slice(3, phone.length) : phone);
   }, []);
@@ -369,7 +370,6 @@ export default function Page({
             <AppointmentsListComponent
               clinicId={storedClinicId}
               boxId={storedBoxId}
-              extraInfo={showExtraInfo}
             />
           </div>
           <div className="mt-8">
