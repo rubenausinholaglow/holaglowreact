@@ -1,4 +1,6 @@
+import { ClinicReview } from '@interface/clinic';
 import { Testimonial } from '@interface/testimonial';
+import clinicService from '@services/ClinicService';
 import { isMobileSSR } from '@utils/isMobileSSR';
 import { SvgHolaglowHand } from 'app/icons/Icons';
 import { SvgByGoogle, SvgStar } from 'app/icons/IconsDs';
@@ -7,8 +9,6 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 
 import TestimonialCard from '../common/TestimonialCard';
 import FullWidthCarousel from '../product/fullWidthCarousel';
-import clinicService from '@services/ClinicService';
-import { ClinicReview } from '@interface/clinic';
 
 export default async function Testimonials() {
   const reviews = await clinicService.getReviews();
