@@ -213,20 +213,15 @@ export default function ProductPriceCard({
             {!isEmpty(product.tags) && product.tags[0].tag && (
               <Flex
                 layout="row-center"
-                className="bg-hg-black rounded-full p-1 px-2"
+                className="bg-hg-primary rounded-full p-1 px-2"
               >
                 <SvgGlow
                   height={12}
                   width={12}
-                  className="text-hg-primary mr-1"
+                  className="text-hg-black mr-1"
                 />
-                <Text className="text-hg-secondary" size="xs">
-                  {product.tags[0].tag.split(' ')[0]}
-                  {product.tags[0].tag.split(' ').length > 0 && (
-                    <span className="text-hg-primary">
-                      {' ' + product.tags[0].tag.split(' ')[1]}
-                    </span>
-                  )}
+                <Text className="text-hg-black" size="xs">
+                  {product.tags[0].tag}
                 </Text>
               </Flex>
             )}
