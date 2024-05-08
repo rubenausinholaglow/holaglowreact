@@ -5,6 +5,7 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
+import TextArea from '@dashboardComponents/ui/TextArea';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -390,16 +391,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         />
       )}
       {showAddress && (
-        <>
-          <textarea
-            className="w-full h-24 p-4 rounded-2xl border border-hg-black300 resize-none"
-            placeholder="Dirección de entrega"
-            onChange={event => {
-              handleFieldChange(event, 'address');
-            }}
-            value={formData.address}
-          />
-        </>
+        <TextArea
+          onChange={event => {
+            handleFieldChange(event, 'address');
+          }}
+          value={formData.address}
+        />
       )}
       {showPostalCode && (
         <div>
