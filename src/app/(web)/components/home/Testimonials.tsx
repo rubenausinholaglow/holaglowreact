@@ -7,7 +7,7 @@ import { SvgByGoogle, SvgStar } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
-import TestimonialCard from '../common/TestimonialCard';
+import ReviewCard from '../common/ReviewCard';
 import FullWidthCarousel from '../product/fullWidthCarousel';
 
 export default async function Testimonials() {
@@ -50,7 +50,7 @@ export default async function Testimonials() {
       >
         {reviews.map((review: ClinicReview | any) => {
           return (
-            <TestimonialCard
+            <ReviewCard
               key={review.name}
               review={review}
               className="h-full flex flex-col mr-8 bg-derma-secondary300"

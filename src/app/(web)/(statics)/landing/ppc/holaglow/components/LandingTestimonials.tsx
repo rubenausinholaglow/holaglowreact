@@ -3,7 +3,7 @@
 import { ClinicReview } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
-import TestimonialCard from 'app/(web)/components/common/TestimonialCard';
+import ReviewCard from 'app/(web)/components/common/ReviewCard';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
 import { Testimonial } from 'app/types/testimonial';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
@@ -24,7 +24,7 @@ export default async function LandingTestimonials() {
         <FullWidthCarousel className="pb-8">
           {reviews.map((review: ClinicReview | any) => {
             return (
-              <TestimonialCard
+              <ReviewCard
                 key={review.name}
                 review={review}
                 className="h-full flex flex-col mr-4"
