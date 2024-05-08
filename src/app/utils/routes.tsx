@@ -63,7 +63,7 @@ const ROUTES = {
     },
     diagnostico: {
       home: '/diagnostico',
-      check30: '/diagnostico/check-30',
+      seguimiento: '/diagnostico/seguimiento',
     },
   },
 };

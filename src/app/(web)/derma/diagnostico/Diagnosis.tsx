@@ -1,12 +1,20 @@
+'use client';
+
+import { useEffect } from 'react';
 import { Accordion, AccordionItem } from '@radix-ui/react-accordion';
-import { SvgReceiptEdit } from 'app/icons/Icons';
-import { SvgArrow, SvgReceipt2, SvgUserSquare } from 'app/icons/IconsDs';
+import ROUTES from '@utils/routes';
+import { SvgAngleDown, SvgReceiptEdit } from 'app/icons/Icons';
+import {
+  SvgArrow,
+  SvgCheckCircle,
+  SvgReceipt2,
+  SvgUserSquare,
+} from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 import {
-  //Accordion,
   AccordionContent,
-  //AccordionItem,
   AccordionTrigger,
 } from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -21,16 +29,25 @@ dayjs.locale(spanishConf);
 export default function Diagnosis({
   user,
   diagnosis,
+  index,
   isFirstDiagnosis = false,
   isVisible = true,
 }: {
   user: any;
   diagnosis: any;
+  index: number;
   isFirstDiagnosis?: boolean;
   isVisible?: boolean;
 }) {
   const isReceiptDisabled =
     dayjs() > dayjs(diagnosis?.creationDate).add(10, 'day');
+
+  const { setUserId, setDiagnosticId } = useDermaStore(state => state);
+
+  useEffect(() => {
+    setUserId(user.id);
+    setDiagnosticId(diagnosis.id);
+  }, []);
 
   return (
     <div className="overflow-hidden">
@@ -52,13 +69,13 @@ export default function Diagnosis({
               <Flex layut="row-between" className="w-full ">
                 <ProfesionalHeader diagnosis={diagnosis} />
                 {!isVisible && (
-                  <Button type="white" size="sm" className="shrink-0">
-                    Ver diagnóstico
-                  </Button>
+                  <SvgAngleDown className="transition-transform group-data-[state=open]:rotate-180" />
                 )}
               </Flex>
             </AccordionTrigger>
-            <AccordionContent className="pt-4">
+            <AccordionContent
+              className={diagnosis.professional !== null ? 'mt-4' : ''}
+            >
               <DiagnosisImages
                 images={[diagnosis?.front, diagnosis?.left, diagnosis?.right]}
                 className="mb-4"
@@ -70,12 +87,35 @@ export default function Diagnosis({
                 </Text>
               )}
 
-              <Text className="text-derma-primary mb-2 font-semibold">
-                Hola {user.firstName},
-              </Text>
-              <Text className="mb-4 text-sm">
-                {diagnosis?.professionalComment}
-              </Text>
+              {diagnosis?.professionalComment ? (
+                <>
+                  <Text className="text-derma-primary mb-2 font-semibold">
+                    Hola {user.firstName},
+                  </Text>
+                  <Text className="mb-4 text-sm">
+                    {diagnosis?.professionalComment}
+                  </Text>
+                </>
+              ) : (
+                <Flex className="p-4 text-sm rounded-2xl bg-derma-primary300/20  items-start">
+                  <SvgCheckCircle className="w-4 h-4 shrink-0 mr-3 text-derma-primary mt-1" />
+                  <div>
+                    <Text>
+                      Hemos recibido correctamente tu información. El médico la
+                      revisará y actualizará tu seguimiento en un plazo de 3
+                      días.
+                    </Text>
+                    <Button
+                      size="sm"
+                      type="white"
+                      className="mt-4"
+                      href={`${ROUTES.derma.diagnostico.seguimiento}?index=${index}`}
+                    >
+                      Editar información <SvgArrow className="h-4 w-4 ml-3" />
+                    </Button>
+                  </div>
+                </Flex>
+              )}
 
               {isFirstDiagnosis && (
                 <>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { DiagnosticData } from '@interface/derma/diagnosis';
 import { dermaService } from '@services/DermaService';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { useSessionStore } from 'app/stores/globalStore';
@@ -21,7 +22,8 @@ export default function Diagnostico() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await dermaService.getDiagnosis(dermaPhone);
+      const response: DiagnosticData =
+        await dermaService.getDiagnosis(dermaPhone);
       setDiagnosisData(response);
       if (!isLogged) setIsLogged(true);
     };
@@ -70,6 +72,7 @@ export default function Diagnostico() {
                     <DiagnosisBlock
                       isFirstDiagnosis
                       user={diagnosisData.user}
+                      index={0}
                       diagnosis={diagnosisData.diagnostic[0]}
                       isVisible={diagnosisData.diagnostic.length === 1}
                     />
@@ -93,11 +96,15 @@ export default function Diagnostico() {
                       {hasDiagnosticImages(diagnosisData.diagnostic[1]) ? (
                         <DiagnosisBlock
                           user={diagnosisData.user}
+                          index={1}
                           diagnosis={diagnosisData.diagnostic[1]}
                           isVisible={diagnosisData.diagnostic.length === 2}
                         />
                       ) : (
-                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                        <UserFeedbackDiagnosis
+                          diagnosisData={diagnosisData}
+                          index={1}
+                        />
                       )}
                     </>
                   ) : (
@@ -122,11 +129,15 @@ export default function Diagnostico() {
                       {hasDiagnosticImages(diagnosisData.diagnostic[2]) ? (
                         <DiagnosisBlock
                           user={diagnosisData.user}
+                          index={2}
                           diagnosis={diagnosisData.diagnostic[2]}
                           isVisible={diagnosisData.diagnostic.length === 3}
                         />
                       ) : (
-                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                        <UserFeedbackDiagnosis
+                          diagnosisData={diagnosisData}
+                          index={2}
+                        />
                       )}
                     </>
                   ) : (
@@ -151,11 +162,15 @@ export default function Diagnostico() {
                       {hasDiagnosticImages(diagnosisData.diagnostic[3]) ? (
                         <DiagnosisBlock
                           user={diagnosisData.user}
+                          index={3}
                           diagnosis={diagnosisData.diagnostic[3]}
                           isVisible={diagnosisData.diagnostic.length === 4}
                         />
                       ) : (
-                        <UserFeedbackDiagnosis diagnosisData={diagnosisData} />
+                        <UserFeedbackDiagnosis
+                          diagnosisData={diagnosisData}
+                          index={3}
+                        />
                       )}
                     </>
                   ) : (

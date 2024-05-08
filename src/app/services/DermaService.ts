@@ -1,6 +1,6 @@
 import Bugsnag from '@bugsnag/js';
 import { DermaQuestions } from '@interface/derma/dermaquestions';
-import { UpsellingData } from '@interface/upselling';
+import { DiagnosticData } from '@interface/derma/diagnosis';
 import {
   ERROR_GET_DERMADIAGNOSIS,
   ERROR_GET_DERMAROUTINES,
@@ -33,7 +33,7 @@ export const dermaService = {
       throw new Error(ERROR_UPDATE_DERMAQUESTIONS);
     }
   },
-  getRoutine: async (phone: string): Promise<UpsellingData> => {
+  getRoutine: async (phone: string): Promise<DiagnosticData> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DERMAPATIENTS_API}DermaRoutines?phone=` +
@@ -56,7 +56,7 @@ export const dermaService = {
       throw new Error(ERROR_GET_DERMAROUTINES);
     }
   },
-  getDiagnosis: async (phone: string): Promise<UpsellingData> => {
+  getDiagnosis: async (phone: string): Promise<DiagnosticData> => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DERMAPATIENTS_API}dermahistorial?phone=` +

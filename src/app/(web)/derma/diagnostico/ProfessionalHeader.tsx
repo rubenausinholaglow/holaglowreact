@@ -3,9 +3,17 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-export default function ProfessionalHeader({ diagnosis }: { diagnosis: any }) {
+export default function ProfessionalHeader({
+  diagnosis,
+  className = '',
+}: {
+  diagnosis: any;
+  className?: string;
+}) {
+  if (!diagnosis.professional) return <></>;
+
   return (
-    <Flex layout="row-left" className="w-full">
+    <Flex layout="row-left" className={`w-full ${className}`}>
       {diagnosis.professional?.urlPhoto && (
         <Image
           alt={diagnosis.professional?.name}
