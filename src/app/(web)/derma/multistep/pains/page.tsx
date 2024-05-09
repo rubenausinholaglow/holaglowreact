@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
