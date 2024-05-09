@@ -6,6 +6,8 @@ interface DermaStore {
   pain: number;
   otherPain: string;
   symptoms: string[];
+  gender: number;
+  age: number;
   skinType: number;
   skinSensibility: number;
   allergy: number;
@@ -24,6 +26,8 @@ interface DermaActions {
   setPain: (value: number) => void;
   setOtherPain: (value: string) => void;
   setSymptoms: (value: string[]) => void;
+  setGender: (value: number) => void;
+  setAge: (value: number) => void;
   setSkinType: (value: number) => void;
   setSkinSensibility: (value: number) => void;
   setAllergy: (value: number) => void;
@@ -55,6 +59,14 @@ export const useDermaStore = create(
       symptoms: [],
       setSymptoms: (value: string[]) => {
         set({ symptoms: value });
+      },
+      gender: 0,
+      setGender: (value: number) => {
+        set({ gender: value });
+      },
+      age: 0,
+      setAge: (value: number) => {
+        set({ age: value });
       },
       skinType: 0,
       setSkinType: (value: number) => {

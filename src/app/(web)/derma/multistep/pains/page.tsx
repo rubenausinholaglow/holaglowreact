@@ -92,10 +92,6 @@ export default function Pains() {
                     <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                     <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
-                  <NextMultistepButton
-                    isDisabled={pain === 6}
-                    nextUrl={ROUTES.derma.multistep.symptoms}
-                  />
                 </Flex>
               </CheckHydration>
             </div>

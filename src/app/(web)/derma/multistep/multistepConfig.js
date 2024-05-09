@@ -4,10 +4,10 @@ export const PAINS_AND_SYMPTOMS = [
     value: 2,
     img: '/images/derma/multistep/pains/melasma.jpg',
     symptoms: [
-      'Hiperpigmentación',
-      'Zonas decoloradas',
-      'Poros dilatados',
-      'Piel pálida y cansada',
+      'Manchas extensas de forma irregular',
+      'Manchas en las mejillas',
+      'Manchas en nariz',
+      'Manchas sobre el labio',
     ],
   },
   {
@@ -15,13 +15,14 @@ export const PAINS_AND_SYMPTOMS = [
     value: 0,
     img: '/images/derma/multistep/pains/acne.jpg',
     symptoms: [
-      'Imperfecciones',
-      'Puntos negros',
-      'Granos o espinillas',
-      'Enrojecimiento o inflamación',
-      'Poros obstruidos',
-      'Cicatrices o marcas de acné',
-      'Poros dilatados',
+      'Formación de costras de erupciones en la piel',
+      'Quistes',
+      'Pápulas (protuberancias rojas)',
+      'Pústulas (protuberancias rojas con pus)',
+      'Enrojecimiento alrededor de las erupciones',
+      'Cicatrización de la piel',
+      'Espinillas negras',
+      'Milia (pequeños quistes blancos o amarillentos)',
     ],
   },
   {
@@ -29,10 +30,13 @@ export const PAINS_AND_SYMPTOMS = [
     value: 1,
     img: '/images/derma/multistep/pains/rosacea.jpg',
     symptoms: [
-      'Enrojecimiento o inflamación',
-      'Sensación de ardor',
-      'Poros dilatados',
-      'Poros obstruidos',
+      'Enrojecimiento',
+      'Granitos rojos',
+      'Hinchazón',
+      'Ardor',
+      'Vasos sanguíneos visibles',
+      'Piel gruesa',
+      'Nariz agrandada',
     ],
   },
   {
@@ -40,12 +44,12 @@ export const PAINS_AND_SYMPTOMS = [
     value: 4,
     img: '/images/derma/multistep/pains/calidadPiel.jpg',
     symptoms: [
-      'Líneas de expresión',
-      'Pliegues',
-      'Manchas de la edad',
-      'Textura desigual de la piel',
-      'Poros dilatados',
-      'Piel pálida y cansada',
+      'Manchas',
+      'Falta de luminosidad',
+      'Flacidez',
+      'Líneas finas de expresión',
+      'Arrugas profundas',
+      'Pérdida de densidad      ',
     ],
   },
 ];
@@ -81,6 +85,21 @@ export const SKIN_TYPES = [
     img: '/images/derma/multistep/skinType/dontKnow.svg',
     text: '',
   },
+];
+
+export const GENDER = [
+  { title: 'Femenino', value: 1 },
+  { title: 'Masculino', value: 2 },
+  { title: 'No binario', value: 3 },
+];
+
+export const AGES = [
+  { title: '18-24', value: 1 },
+  { title: '25-34', value: 2 },
+  { title: '35-44', value: 3 },
+  { title: '45-54', value: 4 },
+  { title: '55-64', value: 5 },
+  { title: '65 o más', value: 6 },
 ];
 
 export const SKIN_SENSITIVITIES = [

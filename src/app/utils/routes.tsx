@@ -54,6 +54,8 @@ const ROUTES = {
       medication: '/multistep/medication',
       lactating: '/multistep/lactancy',
       gender: '/multistep/gender',
+      age: '/multistep/age',
+      feedback: '/multistep/feedback',
       pictures: '/multistep/pictures',
       extraInfo: '/multistep/extra-info',
       form: '/multistep/form',
