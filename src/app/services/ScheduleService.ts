@@ -14,7 +14,7 @@ import {
   DayAvailability,
   MonthAvailabilityResponse,
 } from 'app/types/dayAvailability';
-import { Product } from 'app/types/product';
+import { Product, ProductType } from 'app/types/product';
 import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -180,12 +180,13 @@ export default class ScheduleService {
       throw err;
     }
   }
-  static async getAppointmentsPerClinic(clinicId: string, boxId: string) : Promise<AppointmentsPerClinicResponse[]> {
+  static async getAppointmentsPerClinic(clinicId: string, boxId: string, productType: ProductType) : Promise<AppointmentsPerClinicResponse[]> {
     try {
       let url = `${ScheduleService.getScheduleUrl()}Appointment/PerClinic?clinicId=${clinicId}`;
       if (boxId) {
         url = `${url}&boxId=${boxId}`;
       }
+      url = `${url}&productType=${productType}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();

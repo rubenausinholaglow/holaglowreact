@@ -1,5 +1,7 @@
 import { ClinicProfessional } from 'app/(web)/user/types';
 
+import { ProductType } from './product';
+
 export interface Appointment {
   id: string;
   startTime?: string;
@@ -109,5 +111,7 @@ export interface AppointmentsPerClinicResponse
     appointmentEvents: AppointmentEvents[];
     startTime: string;
     email: string;
-
+    boxId: string; 
+    clinicFlowwwId: string
+    productType : ProductType;
 }
