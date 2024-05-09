@@ -102,7 +102,7 @@ export default function DermaPayment() {
   }, [client]);
 
   return (
-    <DermaLayout hideButton={true}>
+    <DermaLayout hideButton hideNavigation>
       <Container className="px-0 md:mt-8 md:pb-8">
         <Flex
           layout="col-left"

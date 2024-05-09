@@ -31,6 +31,7 @@ export default function PlanesMultiStep() {
     <DermaLayout
       hideButton
       hideFooter
+      hideNavigation
       className="bg-derma-secondary300 min-h-screen relative w-full"
     >
       <Modal2

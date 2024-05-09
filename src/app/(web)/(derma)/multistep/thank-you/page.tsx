@@ -45,6 +45,7 @@ export default function ThankYouMultiStep() {
     <DermaLayout
       hideButton
       hideFooter
+      hideNavigation
       className="bg-derma-secondary300 min-h-screen relative"
     >
       <div className="absolute top-0 bottom-0 right-0 w-1/2 bg-white hidden md:block " />

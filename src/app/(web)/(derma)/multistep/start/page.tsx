@@ -19,6 +19,7 @@ export default function StartMultistep() {
     <DermaLayout
       hideButton
       hideFooter
+      hideNavigation
       className="bg-derma-secondary300 min-h-screen"
     >
       <Container className="px-0 md:px-4">
