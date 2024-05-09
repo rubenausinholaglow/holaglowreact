@@ -20,7 +20,7 @@ export default function ReviewCard({
   const classNameStar = isDerma
     ? 'h-5 w-5 text-derma-primary'
     : 'h-5 w-5 text-hg-secondary';
-  const maxLength = 700;
+  const maxLength = 500;
   return (
     <div
       className={twMerge(
