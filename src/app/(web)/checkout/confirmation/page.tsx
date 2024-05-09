@@ -3,7 +3,7 @@ import { headers } from 'next/headers';
 
 import Confirmation from './components/Confirmation';
 
-export default function LegalAdvice({
+export default function ConfirmationCheckout({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };

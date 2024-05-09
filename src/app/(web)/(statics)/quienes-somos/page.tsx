@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LegalAdvice({
+export default function StaticAboutUs({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
