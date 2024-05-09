@@ -114,4 +114,5 @@ export interface AppointmentsPerClinicResponse
     boxId: string; 
     clinicFlowwwId: string
     productType : ProductType;
+    product : string;
 }

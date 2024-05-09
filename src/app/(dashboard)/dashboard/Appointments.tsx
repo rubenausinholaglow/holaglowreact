@@ -74,10 +74,11 @@ const AppointmentsListComponent: React.FC<{
   }>({});
 
   const [isLoadingPage, setIsLoadingPage] = useState(true);
-
+  const [isLoadingAppointments, setIsLoadingAppointments] = useState(false);
   const [loadingState, setLoadingState] = useState<LoadingState>({});
 
   const fetchAppointments = async (productType: ProductType) => {
+    setIsLoadingAppointments(true);
     try {
       const data = await ScheduleService.getAppointmentsPerClinic(
         clinicId,
@@ -92,15 +93,25 @@ const AppointmentsListComponent: React.FC<{
         Bugsnag.notify('Received non-array data:', data);
       }
     } catch (error: any) {
+      setIsLoadingAppointments(false);
       Bugsnag.notify('Error fetching appointments:', error);
     }
+    setIsLoadingAppointments(false);
   };
 
   useEffect(() => {
     fetchAppointments(ProductType.Others);
     setSelectedType({ [ProductType.Others]: true });
 
-    const intervalId = setInterval(fetchAppointments, 5 * 60 * 1000);
+    const intervalId = setInterval(() => {
+      for (const typeId in selectedType) {
+        if (selectedType[typeId]) {
+          const productType = parseInt(typeId, 10) as ProductType;
+          fetchAppointments(productType);
+          break;
+        }
+      }
+    });
     return () => clearInterval(intervalId);
   }, [clinicId, boxId]);
 
@@ -374,11 +385,20 @@ const AppointmentsListComponent: React.FC<{
           </Text>
           {extraInfo && (
             <>
-              <Text className="w-[5%] shrink-0 p-2">
-                {isHeader
-                  ? 'Box'
-                  : getBoxName(appointment.clinicFlowwwId, appointment.boxId)}
+              {appointment.productType == ProductType.Medical && (
+                <Text className="w-[5%] shrink-0 p-2">
+                  {isHeader
+                    ? 'Box'
+                    : getBoxName(appointment.clinicFlowwwId, appointment.boxId)}
+                </Text>
+              )}
+
+              <Text
+                className={`w-[9%] shrink-0 p-2 ${!isHeader ? 'text-sm' : ''}`}
+              >
+                {isHeader ? 'Tipo de Cita' : appointment.product}
               </Text>
+
               <Text className={`w-[10%] shrink-0 p-2`}>
                 {isHeader ? (
                   'Checkin'
@@ -466,7 +486,7 @@ const AppointmentsListComponent: React.FC<{
                   </Button>
                 )}
               </Text>
-              {appointment.productType == ProductType.Medical && (
+              {appointment.productType != ProductType.Others && (
                 <Text className={`w-[8%] shrink-0 p-2`}>
                   {isHeader ? (
                     'Finalizar Cita'
@@ -592,54 +612,64 @@ const AppointmentsListComponent: React.FC<{
         <SvgSpinner className="w-full justify-center" />
       ) : (
         <div className="w-full bg-white/60 p-6 rounded-2xl">
-          <div className="flex gap-1 py-2">
-            <Text
-              className={`${
-                selectedType[ProductType.Others]
-                  ? 'bg-hg-secondary text-white font-semibold'
-                  : 'bg-white'
-              } rounded-xl p-2 w-[20%] text-center border-hg-secondary border-4 hover:cursor-pointer`}
-              onClick={e => {
-                handleSelectType(ProductType.Others);
-              }}
-            >
-              Probador Virtual
-            </Text>
-            <Text
-              className={`${
-                selectedType[ProductType.Medical]
-                  ? 'bg-hg-secondary text-white font-semibold'
-                  : 'bg-white'
-              } rounded-xl p-2 w-[20%] text-center border-hg-secondary border-4 hover:cursor-pointer`}
-              onClick={e => {
-                handleSelectType(ProductType.Medical);
-              }}
-            >
-              Médico
-            </Text>
-            <Text
-              className={`${
-                selectedType[ProductType.Esthetic]
-                  ? 'bg-hg-secondary text-white font-semibold'
-                  : 'bg-white'
-              } rounded-xl p-2 w-[20%] text-center border-hg-secondary border-4 hover:cursor-pointer`}
-              onClick={e => {
-                handleSelectType(ProductType.Esthetic);
-              }}
-            >
-              Estético
-            </Text>
+          <div className="sticky top-0 z-10 bg-white w-full rounded-2xl  p-4">
+            <div className="flex gap-1 py-2">
+              <Text
+                className={`${
+                  selectedType[ProductType.Others]
+                    ? 'bg-hg-secondary text-white font-semibold'
+                    : 'bg-white'
+                } rounded-xl p-2 w-[20%] text-center border-hg-secondary border-4 hover:cursor-pointer`}
+                onClick={e => {
+                  handleSelectType(ProductType.Others);
+                }}
+              >
+                Probador Virtual
+              </Text>
+              <Text
+                className={`${
+                  selectedType[ProductType.Medical]
+                    ? 'bg-hg-secondary text-white font-semibold'
+                    : 'bg-white'
+                } rounded-xl p-2 w-[20%] text-center border-hg-secondary border-4 hover:cursor-pointer`}
+                onClick={e => {
+                  handleSelectType(ProductType.Medical);
+                }}
+              >
+                Médico
+              </Text>
+              <Text
+                className={`${
+                  selectedType[ProductType.Esthetic]
+                    ? 'bg-hg-secondary text-white font-semibold'
+                    : 'bg-white'
+                } rounded-xl p-2 w-[20%] text-center border-hg-secondary border-4 hover:cursor-pointer`}
+                onClick={e => {
+                  handleSelectType(ProductType.Esthetic);
+                }}
+              >
+                Estético
+              </Text>
+            </div>
           </div>
           <Flex layout="col-left" className="w-full gap-2">
-            {appointments.length > 0 ? (
-              <>
-                {AppointmentRow(appointments[0], true)}
-                {appointments.map(appointment => (
-                  <>{AppointmentRow(appointment, false)}</>
-                ))}
-              </>
+            {isLoadingAppointments ? (
+              <div className="w-full p-4">
+                <SvgSpinner className="w-full justify-center" />
+              </div>
             ) : (
-              <></>
+              <>
+                {appointments.length > 0 ? (
+                  <>
+                    {AppointmentRow(appointments[0], true)}
+                    {appointments.map(appointment => (
+                      <>{AppointmentRow(appointment, false)}</>
+                    ))}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
             )}
 
             <Text className="text-right w-full p-2 text-xs">
