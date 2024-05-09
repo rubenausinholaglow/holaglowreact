@@ -20,6 +20,7 @@ export default function ReviewCard({
   const classNameStar = isDerma
     ? 'h-5 w-5 text-derma-primary'
     : 'h-5 w-5 text-hg-secondary';
+  const maxLength = 700;
   return (
     <div
       className={twMerge(
@@ -46,7 +47,13 @@ export default function ReviewCard({
           </Flex>
         </Flex>
       </Flex>
-      <Text className="text-sm text-hg-black500">{review.comment}</Text>
+      <Text className="text-sm text-hg-black500">
+        {review.comment.substring(
+          0,
+          Math.min(maxLength, review.comment.length)
+        )}
+        {review.comment.length > maxLength && <>...</>}
+      </Text>
     </div>
   );
 }
