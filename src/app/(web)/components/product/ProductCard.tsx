@@ -98,7 +98,7 @@ export default function ProductCard({
             } w-auto`}
           />
 
-          {!isEmpty(product.tags) && (
+          {!isEmpty(product.tags) && product.tags[0].tag && (
             <Flex
               layout="row-center"
               className="bg-hg-black rounded-full p-1 px-2 absolute bottom-[4px] left-0 m-2"
