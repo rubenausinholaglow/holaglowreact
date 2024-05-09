@@ -7,7 +7,7 @@ export default function SharedWrapper({
   children,
   isDerma,
   hideButton = false,
-  showNavigation = true,
+  hideNavigation = false,
   hideFooter = false,
   hideBackButton = false,
   isCheckout = false,
@@ -16,7 +16,7 @@ export default function SharedWrapper({
   children: ReactNode;
   isDerma: boolean;
   hideButton?: boolean;
-  showNavigation?: boolean;
+  hideNavigation?: boolean;
   hideFooter?: boolean;
   hideBackButton?: boolean;
   isCheckout?: boolean;
@@ -26,7 +26,7 @@ export default function SharedWrapper({
     return (
       <DermaLayout
         hideButton={hideButton}
-        showNavigation={showNavigation}
+        hideNavigation={hideNavigation}
         hideFooter={hideFooter}
       >
         {children}

@@ -12,7 +12,8 @@ export default function LegalAdvice({
   const isDerma =
     (host && host.startsWith('derma')) || searchParams.isDerma === 'true';
 
-  console.log(searchParams.test);
+  console.log(isDerma);
+
   return (
     <SharedWrapper isDerma={isDerma}>
       {isDerma && <meta name="robots" content="noindex,follow" />}

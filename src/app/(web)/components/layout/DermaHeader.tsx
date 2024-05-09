@@ -45,11 +45,11 @@ function Navigation({ className }: { className: string }) {
 }
 
 export default function DermaHeader({
-  hideButton = false,
-  showNavigation = true,
+  hideButton,
+  hideNavigation,
 }: {
-  hideButton?: boolean;
-  showNavigation?: boolean;
+  hideButton: boolean;
+  hideNavigation: boolean;
 }) {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -138,7 +138,7 @@ export default function DermaHeader({
                   </Button>
                 )}
 
-                {showNavigation && (
+                {!hideNavigation && (
                   <>
                     <Navigation className="hidden lg:block" />
                     <SvgMenu

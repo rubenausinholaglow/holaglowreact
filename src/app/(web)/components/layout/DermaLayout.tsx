@@ -8,13 +8,13 @@ export default function DermaLayout({
   children,
   hideButton = false,
   hideFooter = false,
-  showNavigation = true,
+  hideNavigation = false,
   className = '',
 }: {
   children: ReactNode;
   hideButton?: boolean;
   hideFooter?: boolean;
-  showNavigation?: boolean;
+  hideNavigation?: boolean;
   className?: string;
 }) {
   return (
@@ -22,7 +22,7 @@ export default function DermaLayout({
       <main
         className={`${className} ${gtUltra.variable} ${poppins.className} text-derma-tertiary min-h-screen overflow-hidden derma relative`}
       >
-        <DermaHeader hideButton={hideButton} showNavigation={showNavigation} />
+        <DermaHeader hideButton={hideButton} hideNavigation={hideNavigation} />
         {children}
         <DermaFooter className="pb-24 md:pb-0" hideFooter={hideFooter} />
       </main>
