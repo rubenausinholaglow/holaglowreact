@@ -396,7 +396,7 @@ const AppointmentsListComponent: React.FC<{
               <Text
                 className={`w-[9%] shrink-0 p-2 ${!isHeader ? 'text-sm' : ''}`}
               >
-                {isHeader ? 'Tipo de Cita' : appointment.product}
+                {isHeader ? 'Tipo de Cita' : appointment.productsTitle}
               </Text>
 
               <Text className={`w-[10%] shrink-0 p-2`}>
