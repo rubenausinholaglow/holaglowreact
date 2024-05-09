@@ -23,7 +23,7 @@ export default function TextArea({
 
   return (
     <textarea
-      className={`w-full h-24 p-4 pr-12dgfsfg rounded-2xl border resize-none ${
+      className={`w-full h-24 p-4 pr-12 rounded-2xl border resize-none ${
         value?.length > 0 ? 'border-hg-black' : 'border-hg-black300'
       }`}
       placeholder="Dirección de entrega"
