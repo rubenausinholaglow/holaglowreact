@@ -40,27 +40,27 @@ export default function Upselling() {
   }, [isLogged]);
 
   return (
-    <CheckHydration>
-      <div
-        className={`h-auto transition-all overflow-hidden duration-1000 ${
-          isTopMessageVisible ? 'max-h-screen' : 'max-h-0'
-        }`}
-      >
-        <Flex className="bg-derma-primary/20 p-4 items-start gap-2">
-          <SvgCheckCircle className="text-derma-primary mt-2" />
-          <div>
-            <Text className="font-semibold">¡Acceso validado!</Text>
-            <Text className="text-sm">
-              Autenticación procesada correctamente
-            </Text>
-          </div>
-        </Flex>
-      </div>
-      <DermaLayout
-        className="bg-derma-secondary100"
-        hideButton
-        hideFooter={!isLogged}
-      >
+    <DermaLayout
+      className="bg-derma-secondary100"
+      hideButton
+      hideFooter={!isLogged}
+    >
+      <CheckHydration>
+        <div
+          className={`h-auto transition-all overflow-hidden duration-1000 ${
+            isTopMessageVisible ? 'max-h-screen' : 'max-h-0'
+          }`}
+        >
+          <Flex className="bg-derma-primary/20 p-4 items-start gap-2">
+            <SvgCheckCircle className="text-derma-primary mt-2" />
+            <div>
+              <Text className="font-semibold">¡Acceso validado!</Text>
+              <Text className="text-sm">
+                Autenticación procesada correctamente
+              </Text>
+            </div>
+          </Flex>
+        </div>
         {!isLogged && <Login setIsLogged={setIsLogged} />}
         {isLogged && (
           <>
@@ -69,7 +69,7 @@ export default function Upselling() {
             <UpsellingPharmacies data={apiResponse} />
           </>
         )}
-      </DermaLayout>
-    </CheckHydration>
+      </CheckHydration>
+    </DermaLayout>
   );
 }
