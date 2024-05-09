@@ -117,8 +117,14 @@ export default function SupportPage() {
   }
 
   return (
-    <div className="bg-derma-secondary300 min-h-screen relative">
-      <DermaLayout>
+    <DermaLayout
+      hideButton
+      hideFooter
+      hideNavigation
+      className="bg-derma-secondary300 min-h-screen relative"
+    >
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
+      <div className="relative">
         <Container>
           <div className="py-24 md:pt-36 md:pb-40 text-center max-w-md mx-auto">
             {!AuthSuccesfully && (
@@ -150,7 +156,7 @@ export default function SupportPage() {
             )}
           </div>
         </Container>
-      </DermaLayout>
-    </div>
+      </div>
+    </DermaLayout>
   );
 }

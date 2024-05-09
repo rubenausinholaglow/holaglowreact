@@ -14,7 +14,7 @@ export default function ConfirmationCheckout({
   const isReagenda = searchParams.isReagenda === 'true';
 
   return (
-    <SharedWrapper isDerma={isDerma} hideFooter>
+    <SharedWrapper isDerma={isDerma} hideFooter hideNavigation>
       <Confirmation isDerma={isDerma} isReagenda={isReagenda} />
     </SharedWrapper>
   );

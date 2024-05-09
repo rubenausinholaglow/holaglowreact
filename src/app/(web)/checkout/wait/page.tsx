@@ -19,6 +19,7 @@ export default function Wait({
       hideFooter
       hideBackButton
       isCheckout
+      hideNavigation
     >
       <WaitComponent isDerma={isDerma} />
     </SharedWrapper>
