@@ -131,8 +131,7 @@ export default function ThankYouMultiStep() {
                                           src={picturesUrls[0]}
                                           alt="imagen frontal"
                                           fill
-                                          objectFit="cover"
-                                          className="rounded-2xl"
+                                          className="rounded-2xl object-cover"
                                         />
                                       </div>
                                       <div>
@@ -150,8 +149,7 @@ export default function ThankYouMultiStep() {
                                           src={picturesUrls[1]}
                                           alt="imagen frontal"
                                           fill
-                                          objectFit="cover"
-                                          className="rounded-2xl"
+                                          className="rounded-2xl object-cover"
                                         />
                                       </div>
                                       <div>
@@ -169,8 +167,7 @@ export default function ThankYouMultiStep() {
                                           src={picturesUrls[2]}
                                           alt="imagen frontal"
                                           fill
-                                          objectFit="cover"
-                                          className="rounded-2xl"
+                                          className="rounded-2xl object-cover"
                                         />
                                       </div>
                                       <div>

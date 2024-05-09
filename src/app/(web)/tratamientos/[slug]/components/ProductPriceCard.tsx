@@ -210,7 +210,7 @@ export default function ProductPriceCard({
             )}
           </Flex>
           <Flex layout="row-right">
-            {!isEmpty(product.tags) && (
+            {!isEmpty(product.tags) && product.tags[0].tag && (
               <Flex
                 layout="row-center"
                 className="bg-hg-black rounded-full p-1 px-2"

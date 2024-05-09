@@ -134,8 +134,7 @@ export default function IngredientsPrices() {
                 alt={ingredient.name}
                 src={ingredient.imgSrc}
                 fill
-                objectFit="contain"
-                className="scale-110"
+                className="scale-110 object-contain"
               />
             </Flex>
 
