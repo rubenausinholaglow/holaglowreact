@@ -8,7 +8,7 @@ export default function DermaLayout({
   children,
   hideButton = false,
   hideFooter = false,
-  showNavigation = false,
+  showNavigation = true,
   className = '',
 }: {
   children: ReactNode;
