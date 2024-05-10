@@ -152,7 +152,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     showBirthdayError,
   ]);
 
-
   const handleFieldChange = (value: string | boolean, field: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
@@ -332,7 +331,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       {showAddress && (
         <TextArea
           onChange={event => {
-            handleFieldChange(event, 'address');
+            handleFieldChange(event.target.value, 'address');
           }}
           value={formData.address}
         />
