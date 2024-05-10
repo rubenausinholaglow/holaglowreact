@@ -553,7 +553,10 @@ const AppointmentsListComponent: React.FC<{
         </Flex>
         {!isHeader && (
           <Flex layout="col-left" className="w-full p-2">
-            <p className="text-hg-secondary text-sm">{appointment.comment}</p>
+            <p className="text-hg-secondary text-sm">
+              fdsaklnglksa go sksj jgso iufwao n oih giush guisrhguishgriu gie
+              geighuishgi iu ghseu giushguisrsrguh
+            </p>
           </Flex>
         )}
       </div>
