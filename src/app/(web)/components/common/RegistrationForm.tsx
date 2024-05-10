@@ -399,7 +399,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         />
       )}
       {showPostalCode && (
-        <div>
+        <>
           <TextInputField
             placeholder="Código Postal"
             value={formData.postalCode!}
@@ -415,7 +415,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               {errorsConfig.ERROR_POSTALCODE_NOT_VALID}
             </p>
           )}
-        </div>
+        </>
       )}
       {showCity && (
         <TextInputField
