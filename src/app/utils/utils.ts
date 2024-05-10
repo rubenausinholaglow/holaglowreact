@@ -156,7 +156,6 @@ export function getPaymentBankText(bank: PaymentBank): string {
 }
 
 export function clearLocalStorage(allLocalStorage: boolean) {
-  localStorage.clear();
   useCrisalix.setState(INITIAL_STATE_CRISALIXUSERLIST);
   useMessageSocket.setState(INITIAL_STATE_MESSAGESOCKETLIST);
   usePaymentList.setState(INITIAL_STATE_PAYMENT);
@@ -190,8 +189,8 @@ export const formatDate = (date: Date, includeHours = true) => {
   }
 
   const options: Intl.DateTimeFormatOptions = {
-    day: '2-digit',
-    month: '2-digit',
+    day: '2-digit' ,
+    month: '2-digit' ,
     year: 'numeric',
     hour: includeHours ? '2-digit' : undefined,
     minute: includeHours ? '2-digit' : undefined,

@@ -52,6 +52,8 @@ export default function Page({
     storedBoxId,
     storedClinicId,
     isCallCenter,
+    extraInfo,
+    setExtraInfo,
     setBoxId,
     setClinicId,
     setRemoteControl,
@@ -147,6 +149,7 @@ export default function Page({
     setIgnoreMessages(params.get('ignoreMessages') == 'true');
     setClinicId(params.get('clinicId') || '');
     setIsCallCenter(params.get('isCallCenter') == 'true');
+    setExtraInfo(params.get('extraInfo') == 'true');
     const phone = params.get('phoneNumber') || '';
     setPhoneNumber(phone.length > 9 ? phone.slice(3, phone.length) : phone);
   }, []);
