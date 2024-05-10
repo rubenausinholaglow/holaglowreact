@@ -6,7 +6,10 @@ import { Client, ClientUpdate } from 'app/types/client';
 export default class UserService {
   static getContactsUrl(): string {
     let url = process.env.NEXT_PUBLIC_CONTACTS_API;
-    if (window.location.href.includes('derma'))
+    if (
+      window.location.href.includes('derma.') ||
+      window.location.href.includes('isDerma')
+    )
       url = process.env.NEXT_PUBLIC_DERMACONTACTS_API;
     return url!;
   }
@@ -95,14 +98,14 @@ export default class UserService {
         },
         body: JSON.stringify(formData),
       });
-      
+
       if (res.ok) {
         const data = await res.json();
         return data;
       } else {
         return undefined;
       }
-    } catch (err : any) {
+    } catch (err: any) {
       Bugsnag.notify(err);
     }
   }
@@ -139,25 +142,23 @@ export default class UserService {
     }
   }
 
-
   static async getAccessToken(token: string): Promise<string> {
-      try {
-          const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Mediquo/UserAccessToken?userToken=${token}`;
-          const res = await fetch(url);
-          if (res.ok) {
-              
-              const data = await res.text();
-              return data;
-          } else {
-              Bugsnag.notify('Error getAccessToken' + res);
-          return "";
-          }
-      } catch (err) {
-          Bugsnag.notify('Error getAccessToken' + err);
-          return "";
+    try {
+      const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Mediquo/UserAccessToken?userToken=${token}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.text();
+        return data;
+      } else {
+        Bugsnag.notify('Error getAccessToken' + res);
+        return '';
       }
+    } catch (err) {
+      Bugsnag.notify('Error getAccessToken' + err);
+      return '';
+    }
   }
-  
+
   static async getAllUsers(token: string): Promise<User[] | undefined> {
     try {
       const url = `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/All`;

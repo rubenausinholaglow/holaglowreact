@@ -6,7 +6,10 @@ import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 export default class FinanceService {
   static getFinanceUrl(): string {
     let url = process.env.NEXT_PUBLIC_FINANCE_API;
-    if (window.location.href.includes('derma'))
+    if (
+      window.location.href.includes('derma.') ||
+      window.location.href.includes('isDerma')
+    )
       url = process.env.NEXT_PUBLIC_DERMAFINANCE_API;
     return url!;
   }
