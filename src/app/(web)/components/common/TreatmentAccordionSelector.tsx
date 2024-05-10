@@ -9,6 +9,7 @@ import {
   getValidUnityTypes,
   isDisableAddQuantity,
 } from '@utils/agendaUtils';
+import { fetchProduct } from '@utils/fetch';
 import { PacksConfigured } from '@utils/packUtils';
 import useRoutes from '@utils/useRoutes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
@@ -41,14 +42,19 @@ export default function TreatmentAccordionSelector({
   packInProductCart?: boolean;
 }) {
   const { dashboardProducts } = useGlobalPersistedStore(state => state);
-  const { selectedTreatments, setSelectedTreatments, treatmentPacks } =
-    useSessionStore(state => state);
+  const {
+    selectedTreatments,
+    setSelectedTreatments,
+    treatmentPacks,
+    setSelectedPack,
+  } = useSessionStore(state => state);
   const [productCategories, setProductCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const cart = useCartStore(state => state.cart);
   const router = useRouter();
   const ROUTES = useRoutes();
   const [productsAgenda, setProductsAgenda] = useState<Product[]>([]);
+  const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
 
   const notValidProducts = getInvalidProducts(cart);
 
@@ -115,6 +121,20 @@ export default function TreatmentAccordionSelector({
     if (!isDashboard) {
       getAgendaProducts();
     }
+  }, []);
+
+  useEffect(() => {
+    async function initMedicalVisitProduct() {
+      const medicalVisitProduct = await fetchProduct(
+        process.env.NEXT_PUBLIC_MEDICAL_VISIT || '',
+        false,
+        false
+      );
+
+      setMedicalVisitProduct(medicalVisitProduct);
+    }
+
+    if (!isDashboard) initMedicalVisitProduct();
   }, []);
 
   function getProductsByCategory(category: string): Product[] {
@@ -230,7 +250,11 @@ export default function TreatmentAccordionSelector({
                 onClick={() => {
                   if (isDashboard) return;
 
-                  setSelectedTreatments([product]);
+                  if (medicalVisitProduct && product.isPack) {
+                    setSelectedTreatments([medicalVisitProduct]);
+                  } else setSelectedTreatments([product]);
+                  if (product && product.isPack) setSelectedPack(product);
+                  else setSelectedPack(undefined);
                   router.push(ROUTES.checkout.clinics);
                 }}
               >
@@ -253,9 +277,11 @@ export default function TreatmentAccordionSelector({
           <Text className="font-semibold">{product.title}</Text>
           <Text className="text-xs">{product.description}</Text>
         </div>
-        <Text className="shrink-0 px-4 font-semibold text-hg-secondary">
-          {product.price} €
-        </Text>
+        {!isDashboard && (
+          <Text className="shrink-0 px-4 font-semibold text-hg-secondary">
+            {product.price} €
+          </Text>
+        )}
       </Flex>
     );
   };

@@ -3,6 +3,7 @@ import { getTreatmentId } from '@utils/userUtils';
 import {
   Appointment,
   AppointmentNextResponse,
+  AppointmentsPerClinicResponse,
   RescheduleAppointmentRequest,
   Status,
   User,
@@ -13,7 +14,7 @@ import {
   DayAvailability,
   MonthAvailabilityResponse,
 } from 'app/types/dayAvailability';
-import { Product } from 'app/types/product';
+import { Product, ProductType } from 'app/types/product';
 import { Slot } from 'app/types/slot';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -176,21 +177,22 @@ export default class ScheduleService {
       }
     } catch (err: any) {
       Bugsnag.notify('Error updatePatientStatusAppointment', err);
-      return '';
+      throw err;
     }
   }
-  static async getAppointmentsPerClinic(clinicId: string, boxId: string) {
+  static async getAppointmentsPerClinic(clinicId: string, boxId: string, productType: ProductType) : Promise<AppointmentsPerClinicResponse[]> {
     try {
       let url = `${ScheduleService.getScheduleUrl()}Appointment/PerClinic?clinicId=${clinicId}`;
       if (boxId) {
         url = `${url}&boxId=${boxId}`;
       }
+      url = `${url}&productType=${productType}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         return data;
       } else {
-        return '';
+        return new Array<AppointmentsPerClinicResponse>();
       }
     } catch (err: any) {
       Bugsnag.notify('Error getAppointmentsPerClinic', err);

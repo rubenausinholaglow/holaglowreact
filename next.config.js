@@ -25,7 +25,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
-        
         port: '',
         pathname: '/images/**',
       },
@@ -40,7 +39,7 @@ const nextConfig = {
         hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
         port: '',
         pathname: '/dermauploadimages/**',
-         },
+      },
       {
         protocol: 'https',
         hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
@@ -59,6 +58,12 @@ const nextConfig = {
         hostname: 'holaglowcdn-g8cwc3amdvgsebe9.z02.azurefd.net',
         port: '',
         pathname: '/dermauploadimages/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
       },
     ],
     domains: ['www.holaglow.com'],

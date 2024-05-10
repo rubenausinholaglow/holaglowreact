@@ -4,6 +4,8 @@ import 'react-international-phone/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+
+import TextArea from '@dashboardComponents/ui/TextArea';
 import { PhoneInput } from 'react-international-phone';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
@@ -150,6 +152,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     showPostalCodeError,
     showBirthdayError,
   ]);
+
 
   const handleFieldChange = (value: string | boolean, field: string) => {
     setFormData(prevFormData => ({
@@ -327,6 +330,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           disableBgIcons
         />
       )}
+      {showAddress && (
+        <TextArea
+          onChange={event => {
+            handleFieldChange(event, 'address');
+          }}
+          value={formData.address}
+        />
+      )}
       {showPostalCode && (
         <>
           <TextInputField
@@ -347,26 +358,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         </>
       )}
       {showCity && (
-        <>
-          <TextInputField
-            placeholder="Ciudad"
-            value={formData.city!}
-            onChange={event => {
-              handleFieldChange(event.target.value, 'city');
-            }}
-          />
-        </>
-      )}
-      {showAddress && (
-        <>
-          <TextInputField
-            placeholder="Dirección de entrega"
-            value={formData.address!}
-            onChange={event => {
-              handleFieldChange(event.target.value, 'address');
-            }}
-          />
-        </>
+        <TextInputField
+          placeholder="Ciudad"
+          value={formData.city!}
+          onChange={event => {
+            handleFieldChange(event.target.value, 'city');
+          }}
+        />
       )}
       <Flex layout="col-left" className="my-2 mb-4">
         <Flex
