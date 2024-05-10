@@ -1,16 +1,9 @@
 'use client';
 
 import React from 'react';
-import { isMobile } from 'react-device-detect';
-import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgArrow, SvgStethoscope, SvgVerify } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
-import router from 'next/router';
 
 import PainFeedback from './components/PainFeedback';
 import SkinTypeFeedback from './components/SkinTypeFeedback';
