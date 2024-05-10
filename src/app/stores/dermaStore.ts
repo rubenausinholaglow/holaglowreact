@@ -19,6 +19,7 @@ interface DermaStore {
   lactating: number;
   picturesUrls: Array<string>;
   extraInfo: string;
+  feedbackStep: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 interface DermaActions {
@@ -39,6 +40,7 @@ interface DermaActions {
   setLactating: (value: number) => void;
   setPicturesUrls: (value: Array<string>) => void;
   setExtraInfo: (value: string) => void;
+  setFeedbackStep: (value: 1 | 2 | 3 | 4 | 5 | 6) => void;
 }
 
 export const useDermaStore = create(
@@ -111,6 +113,10 @@ export const useDermaStore = create(
       extraInfo: '',
       setExtraInfo: (value: string) => {
         set({ extraInfo: value });
+      },
+      feedbackStep: 1,
+      setFeedbackStep: (value: 1 | 2 | 3 | 4 | 5 | 6) => {
+        set({ feedbackStep: value });
       },
     }),
     {
