@@ -15,18 +15,18 @@ export default function UserFeedbackDiagnosis({
     <Flex className="flex flex-col items-start p-4 bg-white md:border border-derma-secondary400 rounded-3xl">
       <div className="text-sm">
         <Text className="text-derma-primary mb-4 font-semibold">
-          Hola {diagnosisData.user.firstName},
+          Seguimiento de los 30 días
         </Text>
 
         <Text className="mb-4">
-          Ya puedes subir las 3 fotos de la evolución de tu rostro en detalle
-          frontal y perfil de ambos lados.
+          Sube 3 fotos de tu rostro y te enviaré mis comentarios y una
+          valoración de tu evolución.
         </Text>
 
         <Button
           className="w-full"
           type="derma"
-          size="xl"
+          size="lg"
           href={`${ROUTES.derma.diagnostico.seguimiento}?index=${index}`}
         >
           Empezar ahora

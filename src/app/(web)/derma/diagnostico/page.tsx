@@ -8,6 +8,7 @@ import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import { useSearchParams } from 'next/navigation';
 
 import Login from '../planes/components/Login';
 import DiagnosisBlock from './Diagnosis';
@@ -16,17 +17,27 @@ import RoutineExplanation from './RoutineExplanation';
 import UserFeedbackDiagnosis from './UserFeedbackDiagnosis';
 
 export default function Diagnostico() {
-  const { dermaPhone } = useSessionStore(state => state);
+  const { dermaPhone, setDermaPhone } = useSessionStore(state => state);
   const [isLogged, setIsLogged] = useState(dermaPhone != '');
   const [diagnosisData, setDiagnosisData] = useState<any | null>(null);
+  const searchParams = useSearchParams();
+
+  const fetchData = async () => {
+    const response: DiagnosticData =
+      await dermaService.getDiagnosis(dermaPhone);
+    setDiagnosisData(response);
+    if (!isLogged) setIsLogged(true);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response: DiagnosticData =
-        await dermaService.getDiagnosis(dermaPhone);
-      setDiagnosisData(response);
-      if (!isLogged) setIsLogged(true);
-    };
+    const phone = searchParams.get('phone');
+
+    if (phone) {
+      setDermaPhone(phone);
+    }
+  }, []);
+
+  useEffect(() => {
     if (dermaPhone) fetchData();
   }, [dermaPhone]);
 
