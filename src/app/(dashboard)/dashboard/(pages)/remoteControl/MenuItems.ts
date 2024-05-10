@@ -27,4 +27,11 @@ export const menuItems = [
     link: '/dashboard/remoteControl/Payment',
     target: '',
   },
+  {
+    iconSrc: '/images/dashboard/menu-icons/agenda.svg',
+    altText: 'Reagenda',
+    title: 'Reagenda',
+    link: '/dashboard/reagenda?token=flowwwToken',
+    target: '',
+  }
 ];
