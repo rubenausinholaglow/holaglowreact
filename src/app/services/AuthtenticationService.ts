@@ -4,7 +4,7 @@ export default class AuthenticationService {
   static getAuthenticationUrl(): string {
     let url = process.env.NEXT_PUBLIC_AUTHENTICATION_API;
     if (
-      window.location.href.includes('derma') ||
+      window.location.href.includes('derma.') ||
       window.location.href.includes('isDerma')
     )
       url = process.env.NEXT_PUBLIC_DERMA_AUTH_API;

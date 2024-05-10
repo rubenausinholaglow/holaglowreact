@@ -7,7 +7,7 @@ export default class UserService {
   static getContactsUrl(): string {
     let url = process.env.NEXT_PUBLIC_CONTACTS_API;
     if (
-      window.location.href.includes('derma') ||
+      window.location.href.includes('derma.') ||
       window.location.href.includes('isDerma')
     )
       url = process.env.NEXT_PUBLIC_DERMACONTACTS_API;
