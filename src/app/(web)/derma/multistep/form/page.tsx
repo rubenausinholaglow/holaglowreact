@@ -127,6 +127,9 @@ export default function Form() {
               <RegistrationForm
                 setClientData={setClient}
                 hasContinueButton={false}
+                showCity
+                showAddress
+                showPostalCode
                 className="mb-8"
                 setContinueDisabled={setIsDisabled}
               />
