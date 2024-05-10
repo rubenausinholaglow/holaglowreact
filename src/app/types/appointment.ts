@@ -115,4 +115,5 @@ export interface AppointmentsPerClinicResponse
     clinicFlowwwId: string
     productType : ProductType;
     productsTitle : string;
+    comment: string;
 }
