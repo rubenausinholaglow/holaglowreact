@@ -180,7 +180,11 @@ export default class ScheduleService {
       throw err;
     }
   }
-  static async getAppointmentsPerClinic(clinicId: string, boxId: string, productType: ProductType) : Promise<AppointmentsPerClinicResponse[]> {
+  static async getAppointmentsPerClinic(
+    clinicId: string,
+    boxId: string,
+    productType: ProductType
+  ): Promise<AppointmentsPerClinicResponse[]> {
     try {
       let url = `${ScheduleService.getScheduleUrl()}Appointment/PerClinic?clinicId=${clinicId}`;
       if (boxId) {
@@ -268,7 +272,7 @@ export default class ScheduleService {
         treatment +
         `&clinicId=` +
         clinicId;
-      if (professionalName) url + `&professionalName=` + professionalName;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       isDashboard ? (url += '&isDashboard=true') : '';
       const res = await fetch(url);
       if (res.ok) {
@@ -289,14 +293,14 @@ export default class ScheduleService {
     professionalName = ''
   ): Promise<MonthAvailabilityResponse> {
     try {
-      const url =
+      let url =
         `${ScheduleService.getScheduleUrl()}Appointment/MonthAvailabilityv2?date=` +
         date +
         `&treatment=` +
         treatment +
         `&clinicId=` +
         clinicId;
-      if (professionalName) url + `&professionalName=` + professionalName;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -317,14 +321,14 @@ export default class ScheduleService {
     professionalName = ''
   ): Promise<Array<Slot>> {
     try {
-      const url =
+      let url =
         `${ScheduleService.getScheduleUrl()}Appointment/Slots?date=` +
         date +
         `&treatment=` +
         treatment +
         `&clinicId=` +
         clinicId;
-      if (professionalName) url + `&professionalName=` + professionalName;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -345,14 +349,14 @@ export default class ScheduleService {
     professionalName = ''
   ): Promise<Array<Slot>> {
     try {
-      const url =
+      let url =
         `${ScheduleService.getScheduleUrl()}Appointment/Slotsv2?date=` +
         date +
         `&treatment=` +
         treatment +
         `&clinicId=` +
         clinicId;
-      if (professionalName) url + `&professionalName=` + professionalName;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
