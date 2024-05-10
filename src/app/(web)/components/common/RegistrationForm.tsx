@@ -4,9 +4,8 @@ import 'react-international-phone/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-
-import TextArea from '@dashboardComponents/ui/TextArea';
 import { PhoneInput } from 'react-international-phone';
+import TextArea from '@dashboardComponents/ui/TextArea';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -152,7 +151,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     showPostalCodeError,
     showBirthdayError,
   ]);
-
 
   const handleFieldChange = (value: string | boolean, field: string) => {
     setFormData(prevFormData => ({
@@ -333,7 +331,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       {showAddress && (
         <TextArea
           onChange={event => {
-            handleFieldChange(event, 'address');
+            handleFieldChange(event.target.value, 'address');
           }}
           value={formData.address}
         />
