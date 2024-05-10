@@ -90,27 +90,16 @@ export default function Html({ children }: { children: ReactNode }) {
     getAnalyticsMetrics();
   }, []);
 
-  const isDerma =
-    typeof window !== 'undefined' &&
-    window.location &&
-    window.location.href &&
-    window.location.href.includes('derma');
-
   useEffect(() => {
     async function initProducts() {
       if (storedBoxId && storedClinicId) return true;
       const products = await fetchProducts({
-        isDerma: isDerma ? isDerma : false,
+        isDerma: false,
       });
-      if (!isDerma) setStateProducts(products);
-      else setDermaProducts(products);
+      setStateProducts(products);
       setFilteredProducts(products);
     }
-    if (
-      ((isEmpty(stateProducts) && !isDerma) ||
-        (isEmpty(dermaProducts) && isDerma)) &&
-      !productsLoaded
-    ) {
+    if (isEmpty(stateProducts) && !productsLoaded) {
       initProducts();
       setProductsLoaded(true);
     }
