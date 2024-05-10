@@ -4,9 +4,8 @@ import 'react-international-phone/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-
-import TextArea from '@dashboardComponents/ui/TextArea';
 import { PhoneInput } from 'react-international-phone';
+import TextArea from '@dashboardComponents/ui/TextArea';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
