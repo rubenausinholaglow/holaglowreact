@@ -102,7 +102,7 @@ export default function Diagnostico() {
                     {post30Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {!dayjs().isAfter(post30Days) ? (
+                  {diagnosisData.diagnostic[1] ? (
                     <>
                       {hasDiagnosticImages(diagnosisData.diagnostic[1]) ? (
                         <DiagnosisBlock
@@ -135,7 +135,7 @@ export default function Diagnostico() {
                     {post60Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {dayjs().isAfter(post60Days) ? (
+                  {diagnosisData.diagnostic[2] ? (
                     <>
                       {hasDiagnosticImages(diagnosisData.diagnostic[2]) ? (
                         <DiagnosisBlock
@@ -168,7 +168,7 @@ export default function Diagnostico() {
                     {post90Days.format('dddd, D [de] MMMM')}
                   </Text>
 
-                  {dayjs().isAfter(post90Days) ? (
+                  {diagnosisData.diagnostic[3] ? (
                     <>
                       {hasDiagnosticImages(diagnosisData.diagnostic[3]) ? (
                         <DiagnosisBlock
