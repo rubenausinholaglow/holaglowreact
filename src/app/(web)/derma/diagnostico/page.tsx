@@ -95,7 +95,7 @@ export default function Diagnostico() {
                     size="xldr"
                     className="text-derma-primary font-light mb-4"
                   >
-                    Diagnóstico a 30 días
+                    Seguimiento a 30 días
                   </Title>
                   <Text className="text-sm mb-6">
                     Disponible a partir del{' '}
@@ -128,7 +128,7 @@ export default function Diagnostico() {
                     size="xldr"
                     className="text-derma-primary font-light mb-4"
                   >
-                    Diagnóstico a 60 días
+                    Seguimiento a 60 días
                   </Title>
                   <Text className="text-sm mb-6">
                     Disponible a partir del{' '}
@@ -161,7 +161,7 @@ export default function Diagnostico() {
                     size="xldr"
                     className="text-derma-primary font-light mb-4"
                   >
-                    Diagnóstico a 90 días
+                    Seguimiento a 90 días
                   </Title>
                   <Text className="text-sm mb-6">
                     Disponible a partir del{' '}
