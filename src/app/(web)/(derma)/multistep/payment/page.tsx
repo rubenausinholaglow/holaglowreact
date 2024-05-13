@@ -130,11 +130,12 @@ export default function DermaPayment() {
               hasContinueButton={isProbadorVirtual}
               initialValues={client}
               setClientData={setLocalClient}
-              showDni={true}
-              showPostalCode={true}
-              showAddress={true}
-              showBirthday={true}
-              splitSurnames={true}
+              showDni
+              showBirthday
+              splitSurnames
+              showCity
+              showAddress
+              showPostalCode
             />
 
             {!isProbadorVirtual && (
