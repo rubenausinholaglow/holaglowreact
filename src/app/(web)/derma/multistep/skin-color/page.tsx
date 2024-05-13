@@ -11,17 +11,17 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { SKIN_TYPES } from '../multistepConfig';
+import { SKIN_COLORS } from '../multistepConfig';
 import { HandleNextMultistep } from '../NextMultistepButton';
 
-export default function SkinType() {
+export default function SkinColor() {
   const router = useRouter();
-  const { skinType, setSkinType, setFeedbackStep } = useDermaStore(
+
+  const { skinColor, setSkinColor, setFeedbackStep } = useDermaStore(
     state => state
   );
 
@@ -32,54 +32,49 @@ export default function SkinType() {
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
 
       <DermaLayout hideButton hideFooter>
-        <DermaStepBar steps={11} step={3} />
+        <DermaStepBar steps={11} step={4} />
+
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 3. Tipo de piel"
-              title="¿Cómo describirías la piel de tu rostro?"
-            >
-              <Text className="text-hg-black500 mt-2">
-                Selecciona todos los que apliquen
-              </Text>
-            </DermaStepHeader>
+              intro="Fototipo"
+              title="¿Que tono de color tiene tu piel?"
+            />
 
             <div className="w-full md:w-1/2">
-              <ul className="flex flex-col gap-4 w-full mb-8">
-                {SKIN_TYPES.map(item => (
+              <ul className="flex flex-col gap-2 w-full mb-8">
+                {SKIN_COLORS.map(color => (
                   <li
-                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-start gap-4 cursor-pointer ${
-                      skinType === item.value
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
+                      skinColor === color.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={item.title}
+                    key={color.value}
                     onClick={async () => {
-                      setSkinType(skinType === item.value ? 0 : item.value);
-                      if (skinType !== item.value) {
-                        setFeedbackStep(2);
+                      setSkinColor(skinColor === color.value ? 0 : color.value);
+                      if (skinColor !== color.value) {
+                        setFeedbackStep(3);
                         await nextStep();
                       }
                     }}
                   >
-                    <Image
-                      src={item.img}
-                      height={32}
-                      width={32}
-                      alt={item.title}
-                      className="shrink-0"
+                    <div
+                      className="rounded-xl h-10 w-10 shrink-0 self-start mt-1"
+                      style={{ backgroundColor: color.color }}
                     />
+
                     <div className="mr-auto">
-                      {item.title}
-                      <Text className="text-xs text-hg-black500">
-                        {item.text}
+                      {color.title}
+                      <Text className="text-xs md:text-sm">
+                        {color.description}
                       </Text>
                     </div>
 
-                    {skinType === item.value ? (
+                    {skinColor === color.value ? (
                       <SvgCheckSquareActive className="h-6 w-6 shrink-0" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6 shrink-0" />

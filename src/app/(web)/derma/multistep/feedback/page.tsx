@@ -6,6 +6,7 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
 import PainFeedback from './components/PainFeedback';
+import SkinColorFeedback from './components/SkinColorFeedback';
 import SkinTypeFeedback from './components/SkinTypeFeedback';
 
 export default function Feedback() {
@@ -23,6 +24,7 @@ export default function Feedback() {
           >
             {feedbackStep === 1 && <PainFeedback />}
             {feedbackStep === 2 && <SkinTypeFeedback />}
+            {feedbackStep === 3 && <SkinColorFeedback />}
           </Flex>
         </Container>
       </DermaLayout>

@@ -16,16 +16,11 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { GENDER } from '../multistepConfig';
-import { HandleNextMultistep } from '../NextMultistepButton';
 
 export default function Gender() {
   const router = useRouter();
 
   const { gender, setGender } = useDermaStore(state => state);
-
-  const nextStep = HandleNextMultistep(
-    gender === 1 ? ROUTES.derma.multistep.age : ROUTES.derma.multistep.lactating
-  );
 
   return (
     <div className="bg-derma-secondary300 min-h-screen">
@@ -54,9 +49,15 @@ export default function Gender() {
                         : 'bg-derma-secondary400'
                     }`}
                     key={item.value}
-                    onClick={async () => {
+                    onClick={() => {
                       setGender(gender === item.value ? 0 : item.value);
-                      if (gender !== item.value) await nextStep();
+
+                      if (gender !== item.value)
+                        router.push(
+                          item.value === 2
+                            ? ROUTES.derma.multistep.age
+                            : ROUTES.derma.multistep.lactating
+                        );
                     }}
                   >
                     {item.title}
@@ -77,10 +78,6 @@ export default function Gender() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                {/* <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.allergy}
-                  isDisabled={gender === 0}
-                /> */}
               </Flex>
             </div>
           </Flex>

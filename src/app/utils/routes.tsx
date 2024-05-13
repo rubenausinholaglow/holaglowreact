@@ -49,6 +49,8 @@ const ROUTES = {
       symptoms: '/multistep/symptoms',
       skinType: '/multistep/skin-type',
       skinSensibility: '/multistep/skin-sensitivity',
+      skinColor: '/multistep/skin-color',
+      somethingElse: '/multistep/something-else',
       allergy: '/multistep/allergy',
       illness: '/multistep/illness',
       medication: '/multistep/medication',

@@ -9,6 +9,23 @@ export const PAINS_AND_SYMPTOMS = [
       'Manchas en nariz',
       'Manchas sobre el labio',
     ],
+    feedback: {
+      ingredients: [
+        {
+          name: 'Ácido retinoico',
+          subtitle: '0,015% - 0,05% Despigmentante y regenerador',
+          extraInfo: '',
+          imgUrl: '/images/derma/multistep/ingredients/acidoRetinoico.png',
+        },
+        {
+          name: 'Hidroquinona',
+          subtitle: '4% Despigmentante',
+          extraInfo:
+            '*En verano sustituimos la Hidroquinona por una combinación de Ácido kójico (4%) y Ácido glicólico (8%)',
+          imgUrl: '/images/derma/multistep/ingredients/hidroquinona.png',
+        },
+      ],
+    },
   },
   {
     name: 'Acné',
@@ -103,11 +120,59 @@ export const AGES = [
 ];
 
 export const SKIN_SENSITIVITIES = [
-  { title: '1', value: 1 },
-  { title: '2', value: 2 },
-  { title: '3', value: 3 },
-  { title: '4', value: 4 },
-  { title: '5', value: 5 },
+  { title: 'Muy sensible', value: 1 },
+  { title: 'Algo sensible', value: 2 },
+  { title: 'Poco sensible', value: 3 },
+];
+
+export const SKIN_COLORS = [
+  {
+    title: 'Muy clara',
+    description: 'Pieles que no se broncean y se queman con excesiva facilidad',
+    value: 1,
+    color: '#FFE6E0',
+  },
+  {
+    title: 'Clara',
+    description: 'Pieles que se broncean muy poco y se queman con facilidad',
+    value: 2,
+    color: '#EBD2C3',
+  },
+  {
+    title: 'Morena Clara',
+    description: 'Pieles que llegan a broncearse y se queman moderadamente',
+    value: 3,
+    color: '#D8BDB1',
+  },
+  {
+    title: 'Morena',
+    description: 'Se broncean con facilidad y sufren pocas quemaduras',
+    value: 4,
+    color: '#B87E69',
+  },
+  {
+    title: 'Morena oscura',
+    description:
+      'Se broncean rápidamente y con gran intensidad. Quemaduras poco frecuentes',
+    value: 5,
+    color: '#653121',
+  },
+  {
+    title: 'Oscura',
+    description: 'Se broncean intensamente y no se queman',
+    value: 6,
+    color: '#3C201C',
+  },
+];
+
+export const SOMETHING_ELSE = [
+  { title: 'Mejorar la textura de la piel', value: 1 },
+  { title: 'Luminosidad', value: 2 },
+  { title: 'Poros dilatados', value: 3 },
+  { title: 'Líneas finas de expresión', value: 4 },
+  { title: 'Patas de gallo', value: 5 },
+  { title: 'Tendencia acnéica', value: 7 },
+  { title: 'No quiero tratar nada más', value: 8 },
 ];
 
 export const ALLERGIES = [

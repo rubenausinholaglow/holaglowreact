@@ -16,12 +16,12 @@ import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { SKIN_TYPES } from '../multistepConfig';
+import { SOMETHING_ELSE } from '../multistepConfig';
 import { HandleNextMultistep } from '../NextMultistepButton';
 
-export default function SkinType() {
+export default function SomethingElse() {
   const router = useRouter();
-  const { skinType, setSkinType, setFeedbackStep } = useDermaStore(
+  const { anotherConcern, setAnotherConcern, setFeedbackStep } = useDermaStore(
     state => state
   );
 
@@ -40,49 +40,39 @@ export default function SkinType() {
           >
             <DermaStepHeader
               intro="Paso 3. Tipo de piel"
-              title="¿Cómo describirías la piel de tu rostro?"
+              title="¿Te gustaría tratar algo más?"
             >
               <Text className="text-hg-black500 mt-2">
-                Selecciona todos los que apliquen
+                En ocasiones podemos tratar más de un síntoma con una misma
+                crema añadiendo más ingredientes
               </Text>
             </DermaStepHeader>
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {SKIN_TYPES.map(item => (
+                {SOMETHING_ELSE.map(item => (
                   <li
-                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-start gap-4 cursor-pointer ${
-                      skinType === item.value
+                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
+                      anotherConcern === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={item.title}
                     onClick={async () => {
-                      setSkinType(skinType === item.value ? 0 : item.value);
-                      if (skinType !== item.value) {
-                        setFeedbackStep(2);
+                      setAnotherConcern(
+                        anotherConcern === item.value ? 0 : item.value
+                      );
+                      if (anotherConcern !== item.value) {
+                        setFeedbackStep(4);
                         await nextStep();
                       }
                     }}
                   >
-                    <Image
-                      src={item.img}
-                      height={32}
-                      width={32}
-                      alt={item.title}
-                      className="shrink-0"
-                    />
-                    <div className="mr-auto">
-                      {item.title}
-                      <Text className="text-xs text-hg-black500">
-                        {item.text}
-                      </Text>
-                    </div>
-
-                    {skinType === item.value ? (
-                      <SvgCheckSquareActive className="h-6 w-6 shrink-0" />
+                    {item.title}
+                    {anotherConcern === item.value ? (
+                      <SvgCheckSquareActive className="h-6 w-6 " />
                     ) : (
-                      <SvgCheckSquare className="h-6 w-6 shrink-0" />
+                      <SvgCheckSquare className="h-6 w-6" />
                     )}
                   </li>
                 ))}

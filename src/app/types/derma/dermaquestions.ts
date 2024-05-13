@@ -9,6 +9,7 @@ export interface DermaQuestions {
   phonePrefix: string | undefined;
   extraInfo: string;
   skinPain: number;
+  gender: number;
   skinType: number;
   skinSensibility: number;
   allergy: number;
@@ -34,6 +35,7 @@ export interface DermaQuestionsResponse {
   phonePrefix: string | undefined;
   extraInfo: string;
   skinPain: number;
+  gender: number;
   skinType: number;
   skinSensibility: number;
   allergy: number;
