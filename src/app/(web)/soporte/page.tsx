@@ -108,7 +108,7 @@ export default function SupportPage() {
   async function handleValidateToken() {
     setIsLoading(true);
     setErrorMessage('');
-    await AuthenticationService.isValidToken(token)
+    await AuthenticationService.isValidToken(token, false)
       .then(async response => {
         if (response) {
           if (!isDaytime) {

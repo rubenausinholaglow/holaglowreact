@@ -5,6 +5,7 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PhoneInput } from 'react-international-phone';
+import TextArea from '@dashboardComponents/ui/TextArea';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -38,6 +39,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className = '',
   splitSurnames = false,
   showBirthday = false,
+  isDerma,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -54,6 +56,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className?: string;
   splitSurnames?: boolean;
   showBirthday?: boolean;
+  isDerma: boolean;
 }) => {
   const routes = useRoutes();
 
@@ -195,7 +198,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   const handleRegistration = async () => {
-    await registerUser(formData, isDashboard, redirect, true);
+    await registerUser(formData, isDashboard, redirect, true, isDerma);
   };
 
   const handleRequestError = (errors: Array<string>) => {
@@ -327,6 +330,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
           disableBgIcons
         />
       )}
+      {showAddress && (
+        <TextArea
+          onChange={event => {
+            handleFieldChange(event.target.value, 'address');
+          }}
+          value={formData.address}
+        />
+      )}
       {showPostalCode && (
         <>
           <TextInputField
@@ -347,26 +358,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         </>
       )}
       {showCity && (
-        <>
-          <TextInputField
-            placeholder="Ciudad"
-            value={formData.city!}
-            onChange={event => {
-              handleFieldChange(event.target.value, 'city');
-            }}
-          />
-        </>
-      )}
-      {showAddress && (
-        <>
-          <TextInputField
-            placeholder="Dirección de entrega"
-            value={formData.address!}
-            onChange={event => {
-              handleFieldChange(event.target.value, 'address');
-            }}
-          />
-        </>
+        <TextInputField
+          placeholder="Ciudad"
+          value={formData.city!}
+          onChange={event => {
+            handleFieldChange(event.target.value, 'city');
+          }}
+        />
       )}
       <Flex layout="col-left" className="my-2 mb-4">
         <Flex

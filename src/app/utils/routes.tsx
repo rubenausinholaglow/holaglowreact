@@ -37,7 +37,7 @@ const ROUTES = {
     pv: '/start-landing',
   },
   derma: {
-    home: 'https://derma.holaglow.com',
+    home: '/',
     precios: '/precios',
     clinics: '/clinicas',
     aboutUs: '/quienes-somos',

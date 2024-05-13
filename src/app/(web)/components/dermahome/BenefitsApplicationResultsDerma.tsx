@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { DERMA_PRODUCTS } from 'app/(web)/derma/planes/mockedData';
+import { DERMA_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
 import { SvgArrow, SvgCross } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container } from 'designSystem/Layouts/Layouts';
-import { Modal, Modal2 } from 'designSystem/Modals/Modal';
+import { Modal2 } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 

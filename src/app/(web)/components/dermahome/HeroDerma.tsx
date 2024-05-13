@@ -1,6 +1,6 @@
 import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
-import ReviewScore from 'app/(web)/derma/precios/components/ReviewScore';
+import ReviewScore from 'app/(web)/(derma)/precios/components/ReviewScore';
 import {
   DERMA_HEADER_HEIGHT_DESKTOP,
   DERMA_HEADER_HEIGHT_MOBILE,

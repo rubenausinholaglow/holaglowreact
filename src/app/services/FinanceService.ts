@@ -4,18 +4,23 @@ import { PaymentInitResponse } from '@interface/payment';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
-  static getFinanceUrl(): string {
+  static getFinanceUrl(isDerma: boolean): string {
     let url = process.env.NEXT_PUBLIC_FINANCE_API;
-    if (window.location.href.includes('derma'))
+    if (
+      window.location.href.includes('derma.') ||
+      window.location.href.includes('isDerma') ||
+      isDerma
+    )
       url = process.env.NEXT_PUBLIC_DERMAFINANCE_API;
     return url!;
   }
 
   static async initializePayment(
-    initializePayment: InitializePayment
+    initializePayment: InitializePayment,
+    isDerma: boolean
   ): Promise<PaymentInitResponse> {
     try {
-      const url = `${FinanceService.getFinanceUrl()}External`;
+      const url = `${FinanceService.getFinanceUrl(isDerma)}External`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -38,10 +43,11 @@ export default class FinanceService {
   }
 
   static async createTicket(
-    createTicket: CreateTicketRequest
+    createTicket: CreateTicketRequest,
+    isDerma: boolean
   ): Promise<boolean> {
     try {
-      const url = `${FinanceService.getFinanceUrl()}Ticket`;
+      const url = `${FinanceService.getFinanceUrl(isDerma)}Ticket`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -62,9 +68,13 @@ export default class FinanceService {
     }
   }
 
-  static async checkPaymentStatus(id: string): Promise<boolean> {
+  static async checkPaymentStatus(
+    id: string,
+    isDerma: boolean
+  ): Promise<boolean> {
     try {
-      const url = `${FinanceService.getFinanceUrl()}External/Status?id=` + id;
+      const url =
+        `${FinanceService.getFinanceUrl(isDerma)}External/Status?id=` + id;
       const res = await fetch(url, {
         method: 'GET',
         headers: {
@@ -85,7 +95,7 @@ export default class FinanceService {
     }
   }
 
-  static async createPayment(createPayment: CreatePayment) {
+  static async createPayment(createPayment: CreatePayment, isDerma: boolean) {
     const updatedCreatePayment: CreatePayment = {
       userId: createPayment.userId,
       paymentMethod: createPayment.paymentMethod,
@@ -95,7 +105,7 @@ export default class FinanceService {
       paymentBank: createPayment.paymentBank,
     };
     try {
-      const url = `${FinanceService.getFinanceUrl()}Payment`;
+      const url = `${FinanceService.getFinanceUrl(isDerma)}Payment`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -115,9 +125,9 @@ export default class FinanceService {
     }
   }
 
-  static async deletePayment(id: string) {
+  static async deletePayment(id: string, isDerma: boolean) {
     try {
-      const url = `${FinanceService.getFinanceUrl()}Payment?id=${id}`;
+      const url = `${FinanceService.getFinanceUrl(isDerma)}Payment?id=${id}`;
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

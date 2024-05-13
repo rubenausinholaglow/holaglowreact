@@ -53,6 +53,7 @@ export interface RegistrationFormProps {
   className?: string;
   splitSurnames?: boolean;
   showBirthday?: boolean;
+  isDerma: boolean;
 }
 
 export interface CheckboxProps {

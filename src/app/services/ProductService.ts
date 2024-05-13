@@ -2,21 +2,6 @@ import { ProductClinics } from '@interface/clinic';
 import { Product } from '@interface/product';
 
 export default class ProductService {
-  static getProductsUrl(): string {
-    let url = process.env.NEXT_PUBLIC_PRODUCTS_API;
-
-    if (
-      window &&
-      window.location &&
-      window.location.href &&
-      window.location.href.includes('derma')
-    ) {
-      url = process.env.NEXT_PUBLIC_DERMAPRODUCTS_API;
-    }
-
-    return url || '';
-  }
-
   static async getAllProducts({
     isDerma = false,
     getAgendaProducts = false,
@@ -43,7 +28,10 @@ export default class ProductService {
       return [];
     }
   }
-  static async getDashboardProducts(clinicId: string, getUpgrades = false) : Promise<Product[]> {
+  static async getDashboardProducts(
+    clinicId: string,
+    getUpgrades = false
+  ): Promise<Product[]> {
     try {
       let url = `${process.env.NEXT_PUBLIC_PRODUCTS_API}DashboardProducts`;
       url = getUpgrades ? url + '?getUpgrades=true' : url;
@@ -59,7 +47,8 @@ export default class ProductService {
             (product: Product) =>
               product.clinicDetail.some(
                 (clinicDetail: ProductClinics) =>
-                  clinicDetail.clinic.id.toUpperCase() === clinicId.toUpperCase()
+                  clinicDetail.clinic.id.toUpperCase() ===
+                  clinicId.toUpperCase()
               ) || product.clinicDetail.length == 0
           )
           .sort((a: any, b: any) => (a.price > b.price ? 1 : -1));
@@ -69,7 +58,7 @@ export default class ProductService {
         return [];
       }
     } catch (err) {
-      return []
+      return [];
     }
   }
 

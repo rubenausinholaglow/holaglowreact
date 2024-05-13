@@ -1,15 +1,20 @@
 import Bugsnag from '@bugsnag/js';
 
 export default class AuthenticationService {
-  static getAuthenticationUrl(): string {
+  static getAuthenticationUrl(isDerma: boolean): string {
     let url = process.env.NEXT_PUBLIC_AUTHENTICATION_API;
-    if (window.location.href.includes('derma'))
+    if (
+      window.location.href.includes('derma.') ||
+      window.location.href.includes('isDerma') ||
+      isDerma
+    )
       url = process.env.NEXT_PUBLIC_DERMA_AUTH_API;
     return url!;
   }
+
   static async isValidLoginDerma(userId: string): Promise<boolean> {
     try {
-      const url = `${AuthenticationService.getAuthenticationUrl()}Authenticator/Derma/Multistep?userId=${userId}`;
+      const url = `${process.env.NEXT_PUBLIC_DERMA_AUTH_API}Authenticator/Derma/Multistep?userId=${userId}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -27,7 +32,7 @@ export default class AuthenticationService {
     phoneNumber: string
   ): Promise<boolean> {
     try {
-      const url = `${AuthenticationService.getAuthenticationUrl()}Authenticator?phoneNumber=${phoneNumber}`;
+      const url = `${process.env.NEXT_PUBLIC_AUTHENTICATION_API}Authenticator?phoneNumber=${phoneNumber}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -42,9 +47,11 @@ export default class AuthenticationService {
     }
   }
 
-  static async isValidToken(token: string): Promise<boolean> {
+  static async isValidToken(token: string, isDerma: boolean): Promise<boolean> {
     try {
-      const url = `${AuthenticationService.getAuthenticationUrl()}IsValidToken?token=${token}`;
+      const url = `${AuthenticationService.getAuthenticationUrl(
+        isDerma
+      )}IsValidToken?token=${token}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();

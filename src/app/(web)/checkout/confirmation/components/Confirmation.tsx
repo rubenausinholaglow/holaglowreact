@@ -93,9 +93,9 @@ export default function Confirmation({
   let selectedTreatmentsDescription = '';
 
   if (selectedTreatments) {
-    selectedTreatmentsNames = selectedTreatments.map(x => x.title).join(' + ');
+    selectedTreatmentsNames = selectedTreatments.map(x => x?.title).join(' + ');
     selectedTreatmentsDescription = selectedTreatments
-      .map(x => x.description)
+      .map(x => x?.description)
       .join(' + ');
   }
 
