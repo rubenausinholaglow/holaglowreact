@@ -90,20 +90,23 @@ export default function ConctactForm() {
 
   useEffect(() => {
     async function checkout() {
-      await UserService.updateUser({
-        address: client.address,
-        birthday: '1990-01-01',
-        city: client.city,
-        country: '',
-        dni: '',
-        email: client.email,
-        firstName: client.name,
-        id: user!.id,
-        lastName: client.surname,
-        phone: client.phone,
-        postalCode: client.postalCode!,
-        province: '',
-      });
+      await UserService.updateUser(
+        {
+          address: client.address,
+          birthday: '1990-01-01',
+          city: client.city,
+          country: '',
+          dni: '',
+          email: client.email,
+          firstName: client.name,
+          id: user!.id,
+          lastName: client.surname,
+          phone: client.phone,
+          postalCode: client.postalCode!,
+          province: '',
+        },
+        true
+      );
       let price = getTotalFromCart(
         cart,
         percentageDiscount,
@@ -172,6 +175,7 @@ export default function ConctactForm() {
               showPostalCode={true}
               showCity={showExtraFields}
               showAddress={showExtraFields}
+              isDerma={true}
             />
 
             {!isProbadorVirtual && (

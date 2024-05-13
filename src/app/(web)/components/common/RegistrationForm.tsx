@@ -39,6 +39,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className = '',
   splitSurnames = false,
   showBirthday = false,
+  isDerma,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -55,6 +56,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className?: string;
   splitSurnames?: boolean;
   showBirthday?: boolean;
+  isDerma: boolean;
 }) => {
   const routes = useRoutes();
 
@@ -196,7 +198,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   const handleRegistration = async () => {
-    await registerUser(formData, isDashboard, redirect, true);
+    await registerUser(formData, isDashboard, redirect, true, isDerma);
   };
 
   const handleRequestError = (errors: Array<string>) => {

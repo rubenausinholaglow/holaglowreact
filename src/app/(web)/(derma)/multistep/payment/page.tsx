@@ -136,6 +136,7 @@ export default function DermaPayment() {
               showCity
               showAddress
               showPostalCode
+              isDerma={true}
             />
 
             {!isProbadorVirtual && (

@@ -70,7 +70,7 @@ export default function SupportPage() {
   async function handleValidateToken() {
     setIsLoading(true);
     setErrorMessage('');
-    await AuthenticationService.isValidToken(token)
+    await AuthenticationService.isValidToken(token, true)
       .then(async response => {
         if (response) {
           UserService.getDermaQuestions(userId).then(x => {

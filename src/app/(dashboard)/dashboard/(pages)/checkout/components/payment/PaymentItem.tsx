@@ -70,7 +70,7 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
   const handleRemoveAndDelete = async (paymentRequest: any) => {
     setIsLoading(true);
     const id = paymentRequest.id;
-    await FinanceService.deletePayment(id)
+    await FinanceService.deletePayment(id, false)
       .then(async data => {
         if (data && !isEmpty(data)) {
           removePayment(paymentRequest);
