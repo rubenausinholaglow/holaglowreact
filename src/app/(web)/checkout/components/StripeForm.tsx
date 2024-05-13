@@ -45,7 +45,7 @@ export const StripeForm = ({
       return;
     }
     if (client) {
-      await registerUser(client, false, false, false);
+      await registerUser(client, false, false, false, isDerma);
     }
 
     let url = process.env.NEXT_PUBLIC_STRIPE_CLINICS_RETURN_URL!;

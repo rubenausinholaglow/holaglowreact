@@ -256,7 +256,7 @@ export default function PaymentInput(props: Props) {
       ['id']: user?.id,
     }));
 
-    await UserService.updateUser(formData)
+    await UserService.updateUser(formData, false)
       .then(async x => {
         if (!x) {
           setMessageNotification('Error actualizando usuario');

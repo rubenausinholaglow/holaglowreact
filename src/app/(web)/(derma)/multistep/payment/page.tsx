@@ -135,6 +135,7 @@ export default function DermaPayment() {
               showAddress={true}
               showBirthday={true}
               splitSurnames={true}
+              isDerma={true}
             />
 
             {!isProbadorVirtual && (

@@ -79,7 +79,7 @@ export default function Form() {
     setIsLoading(true);
 
     client.origin = 'Derma';
-    registerUser(client, false, false, false).then(user => {
+    registerUser(client, false, false, false, true).then(user => {
       const dermaQuestions = {
         id,
         userId: undefined,
@@ -136,6 +136,7 @@ export default function Form() {
                 showPostalCode
                 className="mb-8"
                 setContinueDisabled={setIsDisabled}
+                isDerma={true}
               />
               <Flex className="justify-between">
                 <Button

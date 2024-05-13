@@ -229,7 +229,7 @@ export default function Page({
 
   const registerUser = async (formData: Client) => {
     setIsLoading(true);
-    const user = await UserService.registerUser(formData);
+    const user = await UserService.registerUser(formData, false);
 
     if (user) {
       setCurrentUser(user);
@@ -380,6 +380,7 @@ export default function Page({
                 handleContinue={handleContinue}
                 errors={errors}
                 isLoading={isLoading}
+                isDerma={false}
               />
             ) : (
               <SearchUser
@@ -426,6 +427,7 @@ export default function Page({
                   handleContinue={handleContinue}
                   errors={errors}
                   isLoading={isLoading}
+                  isDerma={false}
                 />
               ) : (
                 <SearchUser
