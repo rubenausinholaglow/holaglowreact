@@ -1,5 +1,7 @@
 import { ClinicProfessional } from 'app/(web)/user/types';
 
+import { ProductType } from './product';
+
 export interface Appointment {
   id: string;
   startTime?: string;
@@ -22,6 +24,20 @@ export interface Appointment {
   externalReference: string;
   paymentId: string;
   paid: boolean;
+  appointmentEvents? : AppointmentEvents[];
+}
+
+
+export enum AppointmentEventType {
+  NoShow,
+  Checkin,
+  Start,
+  Finished,
+}
+export interface AppointmentEvents {
+  id :string;
+  date : Date;
+  appointmentEventType : AppointmentEventType;
 }
 
 export enum Status {
@@ -82,4 +98,22 @@ export interface AppointmentNextResponse {
   firstName : string;
   boxId: string;  
   startTime: string;
+}
+
+export interface AppointmentsPerClinicResponse
+{
+    id: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    flowwwToken: string;
+    appointmentStatus: Status;
+    appointmentEvents: AppointmentEvents[];
+    startTime: string;
+    email: string;
+    boxId: string; 
+    clinicFlowwwId: string
+    productType : ProductType;
+    productsTitle : string;
+    comment : string;
 }

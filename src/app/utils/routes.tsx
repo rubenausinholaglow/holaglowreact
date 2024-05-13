@@ -7,7 +7,7 @@ const ROUTES = {
     treatments: '/checkout/treatments',
     schedule: '/checkout/agenda',
     contactForm: '/checkout/contactform',
-    thankYou: '/checkout/confirmation',
+    confirmation: '/checkout/confirmation',
   },
   clinics: '/clinicas',
   aboutUs: '/quienes-somos',
@@ -37,7 +37,7 @@ const ROUTES = {
     pv: '/start-landing',
   },
   derma: {
-    home: 'https://derma.holaglow.com',
+    home: '/',
     precios: '/precios',
     clinics: '/clinicas',
     aboutUs: '/quienes-somos',

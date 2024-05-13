@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { Status } from '@interface/appointment';
 import { messageService } from '@services/MessageService';
 import ScheduleService from '@services/ScheduleService';
 import { SvgMessage } from 'app/icons/IconsDs';
@@ -20,7 +21,7 @@ export default function ValidateComment() {
   const [comment, setComment] = useState('');
 
   const { showModalBackground } = useGlobalStore(state => state);
-  const { user, storedAppointmentId, storedClinicId, storedBoxId } =
+  const { user, storedAppointmentId, storedClinicId, storedBoxId, extraInfo } =
     useGlobalPersistedStore(state => state);
   const router = useRouter();
 
@@ -31,15 +32,20 @@ export default function ValidateComment() {
       comment ?? '',
       user?.id || ''
     );
+    await ScheduleService.updatePatientStatusAppointment(
+      storedAppointmentId ?? '',
+      user?.id || '',
+      Status.Finished
+    );
     const gotoPage: GoToPageData = {
       userId: user?.id || '',
       page: 'Home',
     };
     messageService.goToPage(gotoPage);
     clearLocalStorage(false);
-    router.push(
-      `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=true`
-    );
+    let url = `/dashboard?clinicId=${storedClinicId}&boxId=${storedBoxId}&remoteControl=true`;
+    if (extraInfo) url += '&extraInfo=true';
+    router.push(url);
   };
 
   useEffect(() => {
