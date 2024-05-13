@@ -115,7 +115,7 @@ export default function PaymentInput(props: Props) {
     parseFloat(totalAmount.toFixed(2));
 
   const createPayment = async (paymentRequestApi: CreatePayment) => {
-    await FinanceService.createPayment(paymentRequestApi)
+    await FinanceService.createPayment(paymentRequestApi, false)
       .then(async data => {
         if (data && !isEmpty(data)) {
           const id: string = data as string;
@@ -264,7 +264,7 @@ export default function PaymentInput(props: Props) {
         }
         const payment = showPepper ? PaymentBank.Pepper : PaymentBank.Frakmenta;
         const initializePayment = constructInitializePayment(payment);
-        await FinanceService.initializePayment(initializePayment)
+        await FinanceService.initializePayment(initializePayment, false)
           .then(x => {
             setShowContactModal(false);
             if (x.url != '') {
@@ -339,7 +339,7 @@ export default function PaymentInput(props: Props) {
     setIsLoading(true);
     setPaymentStripe(true);
     const initializePayment = constructInitializePayment(PaymentBank.Stripe);
-    await FinanceService.initializePayment(initializePayment).then(x => {
+    await FinanceService.initializePayment(initializePayment, false).then(x => {
       if (x) {
         handleUrlPayment(x.id, '', x.referenceId);
       } else {
