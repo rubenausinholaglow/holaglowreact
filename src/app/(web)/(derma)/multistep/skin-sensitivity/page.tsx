@@ -16,16 +16,14 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_SENSITIVITIES } from '../multistepConfig';
-import NextMultistepButton, {
-  HandleNextMultistep,
-} from '../NextMultistepButton';
+import { HandleNextMultistep } from '../NextMultistepButton';
 
 export default function SkinSensitivity() {
   const router = useRouter();
 
   const { skinSensibility, setSkinSensibility } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.allergy);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.skinColor);
   return (
     <DermaLayout
       hideButton
@@ -44,17 +42,11 @@ export default function SkinSensitivity() {
           >
             <DermaStepHeader
               intro="Paso 4. Sensibilidad"
-              title="¿Qué tan sensible es tu piel?"
+              title="¿Cómo de sensible es tu piel?"
             >
               <Text className="text-hg-black500 mt-2">
-                Con esto nos referimos a enrojecimiento/sarpullido, picazón
-                frecuente, sensación de tensión o ardor
-              </Text>
-              <Text className="text-hg-black500 mt-3">
-                Adaptaremos tu rutina a la sensibilidad de tu piel
-              </Text>
-              <Text className="text-xs mt-1">
-                1 = Poco sensible / 5 = Muy sensible
+                Con qué frecuencia se irrita tu piel y aparecen señales como
+                enrojecimiento, ardor, sequedad, o tirantez
               </Text>
             </DermaStepHeader>
 
@@ -75,7 +67,7 @@ export default function SkinSensitivity() {
                       if (skinSensibility !== skin.value) await nextStep();
                     }}
                   >
-                    <span className="font-semibold pl-1">{skin.title}</span>
+                    {skin.title}
                     {skinSensibility === skin.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
@@ -93,10 +85,6 @@ export default function SkinSensitivity() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.allergy}
-                  isDisabled={skinSensibility === 0}
-                />
               </Flex>
             </div>
           </Flex>

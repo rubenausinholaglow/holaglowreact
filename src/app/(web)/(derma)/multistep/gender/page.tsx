@@ -15,12 +15,12 @@ import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import { GENDER } from '../multistepConfig';
 
-export default function Symptoms() {
+export default function Gender() {
   const router = useRouter();
-  const { pain, symptoms, setSymptoms } = useDermaStore(state => state);
+
+  const { gender, setGender } = useDermaStore(state => state);
 
   return (
     <DermaLayout
@@ -29,45 +29,43 @@ export default function Symptoms() {
       hideNavigation
       className="bg-derma-secondary300 min-h-screen relative"
     >
-      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       <div className="relative">
-        <DermaStepBar steps={11} step={2} />
+        <DermaStepBar steps={11} step={1} />
+
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 2. Síntomas"
-              title="¿Qué síntomas ves en tu piel?"
-            >
-              <Text className="text-hg-black500 mt-2">
-                Selecciona todos los que apliquen
-              </Text>
-            </DermaStepHeader>
+              intro="Paso 3. Género"
+              title="¿Cuál es tu género?"
+            />
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {PAINS_AND_SYMPTOMS.filter(
-                  painItem => painItem.value === pain
-                )[0].symptoms.map(symptom => (
+                {GENDER.map(item => (
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
-                      symptoms.includes(symptom)
+                      gender === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={symptom}
+                    key={item.value}
                     onClick={() => {
-                      if (symptoms.includes(symptom)) {
-                        setSymptoms(symptoms.filter(item => item !== symptom));
-                      } else {
-                        setSymptoms([...symptoms, symptom]);
-                      }
+                      setGender(gender === item.value ? 0 : item.value);
+
+                      if (gender !== item.value)
+                        router.push(
+                          item.value === 2
+                            ? ROUTES.derma.multistep.age
+                            : ROUTES.derma.multistep.lactating
+                        );
                     }}
                   >
-                    {symptom}
-                    {symptoms.includes(symptom) ? (
+                    {item.title}
+                    {gender === item.value ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -75,7 +73,6 @@ export default function Symptoms() {
                   </li>
                 ))}
               </ul>
-
               <Flex className="justify-between">
                 <Button
                   type="white"
@@ -85,10 +82,6 @@ export default function Symptoms() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.gender}
-                  isDisabled={symptoms.length === 0}
-                />
               </Flex>
             </div>
           </Flex>

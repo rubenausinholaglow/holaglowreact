@@ -17,15 +17,15 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SKIN_TYPES } from '../multistepConfig';
-import NextMultistepButton, {
-  HandleNextMultistep,
-} from '../NextMultistepButton';
+import { HandleNextMultistep } from '../NextMultistepButton';
 
 export default function SkinType() {
   const router = useRouter();
-  const { skinType, setSkinType } = useDermaStore(state => state);
+  const { skinType, setSkinType, setFeedbackStep } = useDermaStore(
+    state => state
+  );
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.skinSensibility);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
 
   return (
     <DermaLayout
@@ -62,8 +62,11 @@ export default function SkinType() {
                     }`}
                     key={item.title}
                     onClick={async () => {
-                      setSkinType(item.value);
-                      await nextStep();
+                      setSkinType(skinType === item.value ? 0 : item.value);
+                      if (skinType !== item.value) {
+                        setFeedbackStep(2);
+                        await nextStep();
+                      }
                     }}
                   >
                     <Image
@@ -97,10 +100,6 @@ export default function SkinType() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.skinSensibility}
-                  isDisabled={skinType === 0}
-                />
               </Flex>
             </div>
           </Flex>

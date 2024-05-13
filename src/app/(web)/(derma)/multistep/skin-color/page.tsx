@@ -15,12 +15,17 @@ import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
-import NextMultistepButton from '../NextMultistepButton';
+import { SKIN_COLORS } from '../multistepConfig';
+import { HandleNextMultistep } from '../NextMultistepButton';
 
-export default function Symptoms() {
+export default function SkinColor() {
   const router = useRouter();
-  const { pain, symptoms, setSymptoms } = useDermaStore(state => state);
+
+  const { skinColor, setSkinColor, setFeedbackStep } = useDermaStore(
+    state => state
+  );
+
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
 
   return (
     <DermaLayout
@@ -29,53 +34,58 @@ export default function Symptoms() {
       hideNavigation
       className="bg-derma-secondary300 min-h-screen relative"
     >
-      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
+      <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       <div className="relative">
-        <DermaStepBar steps={11} step={2} />
+        <DermaStepBar steps={11} step={4} />
+
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 2. Síntomas"
-              title="¿Qué síntomas ves en tu piel?"
-            >
-              <Text className="text-hg-black500 mt-2">
-                Selecciona todos los que apliquen
-              </Text>
-            </DermaStepHeader>
+              intro="Fototipo"
+              title="¿Que tono de color tiene tu piel?"
+            />
 
             <div className="w-full md:w-1/2">
-              <ul className="flex flex-col gap-4 w-full mb-8">
-                {PAINS_AND_SYMPTOMS.filter(
-                  painItem => painItem.value === pain
-                )[0].symptoms.map(symptom => (
+              <ul className="flex flex-col gap-2 w-full mb-8">
+                {SKIN_COLORS.map(color => (
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
-                      symptoms.includes(symptom)
+                      skinColor === color.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={symptom}
-                    onClick={() => {
-                      if (symptoms.includes(symptom)) {
-                        setSymptoms(symptoms.filter(item => item !== symptom));
-                      } else {
-                        setSymptoms([...symptoms, symptom]);
+                    key={color.value}
+                    onClick={async () => {
+                      setSkinColor(skinColor === color.value ? 0 : color.value);
+                      if (skinColor !== color.value) {
+                        setFeedbackStep(3);
+                        await nextStep();
                       }
                     }}
                   >
-                    {symptom}
-                    {symptoms.includes(symptom) ? (
-                      <SvgCheckSquareActive className="h-6 w-6" />
+                    <div
+                      className="rounded-xl h-10 w-10 shrink-0 self-start mt-1"
+                      style={{ backgroundColor: color.color }}
+                    />
+
+                    <div className="mr-auto">
+                      {color.title}
+                      <Text className="text-xs md:text-sm">
+                        {color.description}
+                      </Text>
+                    </div>
+
+                    {skinColor === color.value ? (
+                      <SvgCheckSquareActive className="h-6 w-6 shrink-0" />
                     ) : (
-                      <SvgCheckSquare className="h-6 w-6" />
+                      <SvgCheckSquare className="h-6 w-6 shrink-0" />
                     )}
                   </li>
                 ))}
               </ul>
-
               <Flex className="justify-between">
                 <Button
                   type="white"
@@ -85,10 +95,6 @@ export default function Symptoms() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.gender}
-                  isDisabled={symptoms.length === 0}
-                />
               </Flex>
             </div>
           </Flex>

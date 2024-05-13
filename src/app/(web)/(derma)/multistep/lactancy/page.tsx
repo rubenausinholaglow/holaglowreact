@@ -24,7 +24,7 @@ export default function Lactancy() {
   const router = useRouter();
   const { lactating, setLactating } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.pictures);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.age);
   return (
     <DermaLayout
       hideButton
@@ -80,10 +80,6 @@ export default function Lactancy() {
                     <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                     <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
-                  <NextMultistepButton
-                    nextUrl={ROUTES.derma.multistep.pictures}
-                    isDisabled={lactating !== 2}
-                  />
                 </Flex>
               ) : (
                 <div className="bg-white p-4 rounded-2xl text-hg-black500 text-sm">
