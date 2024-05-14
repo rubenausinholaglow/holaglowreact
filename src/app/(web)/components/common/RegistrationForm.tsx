@@ -20,15 +20,15 @@ import {
 import { Client } from 'app/types/client';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Modal } from 'designSystem/Modals/Modal';
+import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { isValidNie, isValidNif } from 'nif-dni-nie-cif-validation';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
 import { RegistrationFormProps } from '../../../utils/props';
-import { Modal } from 'designSystem/Modals/Modal';
-import { Title } from 'designSystem/Texts/Texts';
-import { useRouter } from 'next/navigation';
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({
   redirect = false,
@@ -207,7 +207,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   const handleRegistration = async () => {
-    var user = await registerUser(
+    const user = await registerUser(
       formData,
       isDashboard,
       redirect,
