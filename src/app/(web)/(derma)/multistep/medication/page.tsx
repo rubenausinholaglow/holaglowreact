@@ -28,7 +28,8 @@ export default function Medicines() {
 
   const [textAreaValue, setTextAreaValue] = useState(medicationInfo);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.lactating);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.illness);
+
   return (
     <DermaLayout
       hideButton
@@ -116,7 +117,7 @@ export default function Medicines() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.lactating}
+                  nextUrl={ROUTES.derma.multistep.illness}
                   isDisabled={
                     medication === 0 ||
                     (medication === 1 && medicationInfo.length === 0)

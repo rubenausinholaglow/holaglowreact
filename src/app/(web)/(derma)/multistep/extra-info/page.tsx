@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -16,9 +16,15 @@ import NextMultistepButton from '../NextMultistepButton';
 
 export default function ExtraInfo() {
   const router = useRouter();
-  const { extraInfo, setExtraInfo } = useDermaStore(state => state);
+  const { extraInfo, setExtraInfo, setFeedbackStep } = useDermaStore(
+    state => state
+  );
 
   const [textAreaValue, setTextAreaValue] = useState(extraInfo);
+
+  useEffect(() => {
+    setFeedbackStep(6);
+  }, []);
 
   return (
     <DermaLayout
@@ -72,7 +78,7 @@ export default function ExtraInfo() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.form}
+                  nextUrl={ROUTES.derma.multistep.feedback}
                   isDisabled={false}
                 />
               </Flex>

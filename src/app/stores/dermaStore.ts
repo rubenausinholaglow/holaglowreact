@@ -11,7 +11,11 @@ interface DermaStore {
   skinType: number;
   skinSensibility: number;
   skinColor: number;
-  anotherConcern: number;
+  secondaryConcerns: string[];
+  routine: number;
+  routineProduct: number;
+  routineTime: number;
+  sunscreen: number;
   allergy: number;
   allergyInfo: string;
   illness: number;
@@ -21,7 +25,7 @@ interface DermaStore {
   lactating: number;
   picturesUrls: Array<string>;
   extraInfo: string;
-  feedbackStep: 1 | 2 | 3 | 4 | 5 | 6;
+  feedbackStep: number;
 }
 
 interface DermaActions {
@@ -34,7 +38,11 @@ interface DermaActions {
   setSkinType: (value: number) => void;
   setSkinSensibility: (value: number) => void;
   setSkinColor: (value: number) => void;
-  setAnotherConcern: (value: number) => void;
+  setSecondaryConcerns: (value: string[]) => void;
+  setRoutine: (value: number) => void;
+  setRoutineProduct: (value: number) => void;
+  setRoutineTime: (value: number) => void;
+  setSunscreen: (value: number) => void;
   setAllergy: (value: number) => void;
   setAllergyInfo: (value: string) => void;
   setIllness: (value: number) => void;
@@ -44,7 +52,7 @@ interface DermaActions {
   setLactating: (value: number) => void;
   setPicturesUrls: (value: Array<string>) => void;
   setExtraInfo: (value: string) => void;
-  setFeedbackStep: (value: 1 | 2 | 3 | 4 | 5 | 6) => void;
+  setFeedbackStep: (value: number) => void;
 }
 
 export const useDermaStore = create(
@@ -86,9 +94,25 @@ export const useDermaStore = create(
       setSkinColor: (value: number) => {
         set({ skinColor: value });
       },
-      anotherConcern: 0,
-      setAnotherConcern: (value: number) => {
-        set({ anotherConcern: value });
+      secondaryConcerns: [],
+      setSecondaryConcerns: (value: string[]) => {
+        set({ secondaryConcerns: value });
+      },
+      routine: 0,
+      setRoutine: (value: number) => {
+        set({ routine: value });
+      },
+      routineProduct: 0,
+      setRoutineProduct: (value: number) => {
+        set({ routineProduct: value });
+      },
+      routineTime: 0,
+      setRoutineTime: (value: number) => {
+        set({ routineTime: value });
+      },
+      sunscreen: 0,
+      setSunscreen: (value: number) => {
+        set({ sunscreen: value });
       },
       allergy: 0,
       setAllergy: (value: number) => {
@@ -127,7 +151,7 @@ export const useDermaStore = create(
         set({ extraInfo: value });
       },
       feedbackStep: 1,
-      setFeedbackStep: (value: 1 | 2 | 3 | 4 | 5 | 6) => {
+      setFeedbackStep: (value: number) => {
         set({ feedbackStep: value });
       },
     }),

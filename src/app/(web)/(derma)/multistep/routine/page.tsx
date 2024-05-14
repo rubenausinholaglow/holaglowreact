@@ -11,21 +11,16 @@ import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { SOMETHING_ELSE } from '../multistepConfig';
-import { HandleNextMultistep } from '../NextMultistepButton';
+import { ROUTINES } from '../multistepConfig';
 
-export default function SomethingElse() {
+export default function Routine() {
   const router = useRouter();
-  const { anotherConcern, setAnotherConcern, setFeedbackStep } = useDermaStore(
-    state => state
-  );
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const { routine, setRoutine } = useDermaStore(state => state);
 
   return (
     <DermaLayout
@@ -36,45 +31,36 @@ export default function SomethingElse() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       <div className="relative">
-        <DermaStepBar steps={11} step={3} />
+        <DermaStepBar steps={11} step={4} />
+
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 3. Tipo de piel"
-              title="¿Te gustaría tratar algo más?"
-            >
-              <Text className="text-hg-black500 mt-2">
-                En ocasiones podemos tratar más de un síntoma con una misma
-                crema añadiendo más ingredientes
-              </Text>
-            </DermaStepHeader>
+              intro="Tienes rutina"
+              title="¿Sigues alguna rutina diaria actualmente?"
+            />
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {SOMETHING_ELSE.map(item => (
+                {ROUTINES.map(item => (
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
-                      anotherConcern === item.value
+                      routine === item.value
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={item.title}
-                    onClick={async () => {
-                      setAnotherConcern(
-                        anotherConcern === item.value ? 0 : item.value
-                      );
-                      if (anotherConcern !== item.value) {
-                        setFeedbackStep(4);
-                        await nextStep();
-                      }
+                    key={item.value}
+                    onClick={() => {
+                      setRoutine(routine === item.value ? 0 : item.value);
+                      router.push(ROUTES.derma.multistep.routineProducts);
                     }}
                   >
                     {item.title}
-                    {anotherConcern === item.value ? (
-                      <SvgCheckSquareActive className="h-6 w-6 " />
+                    {routine === item.value ? (
+                      <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
                     )}

@@ -114,7 +114,7 @@ export default function Pictures() {
                   type={!isDisabled ? 'dermaDark' : 'disabled'}
                   onClick={() => {
                     setLoadingButton(true);
-                    router.push(ROUTES.derma.multistep.extraInfo);
+                    router.push(ROUTES.derma.multistep.form);
                   }}
                 >
                   {!loadingButton ? (

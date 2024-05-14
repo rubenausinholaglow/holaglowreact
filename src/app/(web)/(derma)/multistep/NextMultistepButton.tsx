@@ -24,6 +24,7 @@ export const HandleNextMultistep = (nextUrl: string) => {
     lactating,
     extraInfo,
   } = useDermaStore(state => state);
+
   const router = useRouter();
   const next = () => {
     const dermaQuestions = {
@@ -64,12 +65,20 @@ export const HandleNextMultistep = (nextUrl: string) => {
 export default function NextMultistepButton({
   isDisabled,
   nextUrl,
+  feedbackStep,
 }: {
   isDisabled: boolean;
   nextUrl: string;
+  feedbackStep?: number;
 }) {
   const nextStep = HandleNextMultistep(nextUrl);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setFeedbackStep } = useDermaStore(state => state);
+
+  if (feedbackStep) {
+    setFeedbackStep(feedbackStep);
+  }
 
   return (
     <Button

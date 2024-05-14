@@ -29,7 +29,7 @@ export default function Allergies() {
 
   const [textAreaValue, setTextAreaValue] = useState(allergyInfo);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.illness);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.medication);
   return (
     <DermaLayout
       hideButton
@@ -118,7 +118,7 @@ export default function Allergies() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.illness}
+                  nextUrl={ROUTES.derma.multistep.medication}
                   isDisabled={
                     allergy === 0 || (allergy === 1 && allergyInfo.length === 0)
                   }
