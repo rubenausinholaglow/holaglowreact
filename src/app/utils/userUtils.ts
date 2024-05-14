@@ -93,7 +93,7 @@ export const useRegistration = (
       setCurrentUser(user);
       if (selectedSlot && selectedClinic) {
         if (createAppointment) {
-          await ScheduleService.createAppointment(
+          return await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
             selectedDay!,
