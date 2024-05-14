@@ -64,7 +64,7 @@ export default function Seguimiento({
 
   async function handleDiagnosticComment() {
     if (textAreaValue.length > 0) {
-      dermaService.addDiagnosticComment(diagnostic.id, textAreaValue);
+      await dermaService.addDiagnosticComment(diagnostic.id, textAreaValue);
     }
 
     router.push(ROUTES.derma.diagnostico.home);
