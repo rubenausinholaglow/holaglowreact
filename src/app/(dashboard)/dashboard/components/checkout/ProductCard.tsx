@@ -95,18 +95,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
         >
           {product.price.toFixed(2)}€
         </Text>
-        {isCheckout && (
-          <SvgArrow
-            height={28}
-            width={28}
-            className={`ml-auto transition-transform border border-hg-black rounded-full cursor-pointer p-1.5 ${
-              showDiscountForm
-                ? 'rotate-90 bg-hg-secondary100 border-none'
-                : 'rotate-0'
-            }`}
-            onClick={() => setShowDiscountBlock(!showDiscountForm)}
-          />
-        )}
       </Flex>
 
       {showDiscountForm && (
