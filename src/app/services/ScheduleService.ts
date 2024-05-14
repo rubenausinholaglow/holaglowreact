@@ -399,7 +399,7 @@ export default class ScheduleService {
   }
   static async temporal(appointment: Appointment) {
     try {
-      const url = `${ScheduleService.getScheduleUrl()}Appointment/temporal`;
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/temporal`;
 
       const res = await fetch(url, {
         method: 'POST',
