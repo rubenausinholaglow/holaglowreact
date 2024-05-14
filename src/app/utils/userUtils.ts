@@ -104,14 +104,17 @@ export const useRegistration = (
             '',
             selectedPack
           ).then(x => {
-            if (isEmbed) {
-              window.parent.postMessage(URL, routes.checkout.clinics);
-            }
-
-            if (isDashboard) {
-              router.push(routes.dashboard.checkIn.treatments);
+            if (x) {
+              if (isEmbed) {
+                window.parent.postMessage(URL, routes.checkout.clinics);
+              }
+              if (isDashboard) {
+                router.push(routes.dashboard.checkIn.treatments);
+              } else {
+                router.push('/checkout/confirmation');
+              }
             } else {
-              router.push('/checkout/confirmation');
+              return undefined;
             }
           });
         }
