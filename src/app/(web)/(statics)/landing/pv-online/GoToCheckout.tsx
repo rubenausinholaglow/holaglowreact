@@ -40,7 +40,7 @@ export default function GoToCheckout() {
     const userId = params.get('userid') || '';
 
     async function login() {
-      const user = await UserService.getUserById(userId);
+      const user = await UserService.getUserById(userId, false);
       setCurrentUser(user);
     }
     if (userId) login();
