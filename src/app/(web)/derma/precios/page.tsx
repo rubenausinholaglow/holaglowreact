@@ -4,7 +4,7 @@ import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 
 import GuaranteedResults from './components/GuaranteedResults';
 import HeroDermaPrices from './components/HeroDermaPrices';
-import IngredientsPrices from './components/IngredientsPrices';
+import { IngredientsPrices } from './components/IngredientsPrices';
 import OptionsPrices from './components/OptionsPrices';
 import TreatmentsPrices from './components/TreatmentsPrices';
 
