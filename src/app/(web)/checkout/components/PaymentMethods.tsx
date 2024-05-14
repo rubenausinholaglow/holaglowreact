@@ -126,7 +126,13 @@ export const PaymentMethods = ({
       client!.email != ''
     ) {
       const finalPrice = (selectedTreatments[0].price * 100).toFixed(0);
-      const createdUser = await registerUser(client!, false, false, false);
+      const createdUser = await registerUser(
+        client!,
+        false,
+        false,
+        false,
+        isDerma
+      );
       await initializePayment(
         activePayment,
         createdUser!,

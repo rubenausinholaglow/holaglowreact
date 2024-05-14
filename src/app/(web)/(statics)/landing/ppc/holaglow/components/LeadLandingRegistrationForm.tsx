@@ -36,5 +36,5 @@ export default function LeadLandingRegistrationForm() {
     setAnalyticsMetrics(analyticsMetrics);
   }, []);
 
-  return <RegistrationForm page="902" />;
+  return <RegistrationForm page="902" isDerma={false} />;
 }

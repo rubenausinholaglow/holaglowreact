@@ -14,7 +14,6 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import Link from 'next/link';
 
 import AnimateOnViewport from '../common/AnimateOnViewport';
 import DermaMobileNavigation from './DermaMobileNavigation';
@@ -34,9 +33,9 @@ function Navigation({ className }: { className: string }) {
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
           <li className="font-medium" key={navItem.name}>
-            <Link href={navItem.link} id="tmevent_derma_nav_menu_click_button">
+            <a href={navItem.link} id="tmevent_derma_nav_menu_click_button">
               {navItem.name}
-            </Link>
+            </a>
           </li>
         ))}
       </ul>
@@ -45,11 +44,11 @@ function Navigation({ className }: { className: string }) {
 }
 
 export default function DermaHeader({
-  hideButton = false,
-  showNavigation,
+  hideButton,
+  hideNavigation,
 }: {
-  hideButton?: boolean;
-  showNavigation: boolean;
+  hideButton: boolean;
+  hideNavigation: boolean;
 }) {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -116,12 +115,12 @@ export default function DermaHeader({
               className="w-full relative py-4 lg:py-5 lg:justify-center"
               style={{ height: HEADER_HEIGHT_CLASS }}
             >
-              <Link
+              <a
                 href={ROUTES.derma.home}
                 className="lg:absolute left-0 2xl:ml-20"
               >
                 <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
-              </Link>
+              </a>
 
               <Flex className="gap-2">
                 {!hideButton && (
@@ -138,7 +137,7 @@ export default function DermaHeader({
                   </Button>
                 )}
 
-                {showNavigation && (
+                {!hideNavigation && (
                   <>
                     <Navigation className="hidden lg:block" />
                     <SvgMenu

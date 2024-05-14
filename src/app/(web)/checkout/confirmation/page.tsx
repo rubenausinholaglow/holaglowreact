@@ -1,5 +1,5 @@
-import App from 'app/(web)/components/layout/App';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
+import SharedWrapper from 'app/(web)/components/layout/SharedWrapper';
+import { headers } from 'next/headers';
 
 import Confirmation from './components/Confirmation';
 
@@ -8,11 +8,14 @@ export default function ConfirmationCheckout({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const host = headers().get('host');
+  const isDerma =
+    (host && host.startsWith('derma')) || searchParams.isDerma === 'true';
+  const isReagenda = searchParams.isReagenda === 'true';
+
   return (
-    <App>
-      <MainLayout hideFooter>
-        <Confirmation isReagenda={searchParams.isReagenda === 'true'} />
-      </MainLayout>
-    </App>
+    <SharedWrapper isDerma={isDerma} hideFooter hideNavigation>
+      <Confirmation isDerma={isDerma} isReagenda={isReagenda} />
+    </SharedWrapper>
   );
 }

@@ -5,12 +5,7 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import {
-  CartItem,
-  EmlaType,
-  PackUnitiesScheduled,
-  Product,
-} from '@interface/product';
+import { CartItem, EmlaType, Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
@@ -30,7 +25,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { isEmpty, remove, update } from 'lodash';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import NeedHelp from './NeedHelp';
