@@ -40,9 +40,8 @@ export default function ProfessionalCard({
           <Image
             alt={professional.name}
             fill
-            objectFit="cover"
             src={professional.urlPhoto}
-            className={`hidden md:block ${!isDerma && 'pt-6'}`}
+            className={`hidden md:block ${!isDerma && 'pt-6'} object-cover`}
           />
         </div>
 

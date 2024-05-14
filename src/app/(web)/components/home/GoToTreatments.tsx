@@ -47,8 +47,7 @@ export default function GoToTreatments() {
             <Image
               src="/images/home/descubre.jpg"
               alt="descubre"
-              objectFit="cover"
-              objectPosition="bottom-right"
+              className="object-cover object-right-bottom"
               fill
             />
           </div>

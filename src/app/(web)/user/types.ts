@@ -1,3 +1,5 @@
+import { PackUnities, UnityType } from "@interface/product";
+
 export interface Clinic {
   address: string;
   phone: string;
@@ -52,6 +54,9 @@ export interface Treatment {
         possibleComplications: Array<Issue>;
       };
       zone: number;
+      unityType : UnityType;
+      packUnities : PackUnities[];
+      isPack: boolean;
     };
     quantity: number;
     lotReference: string;

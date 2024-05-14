@@ -1,29 +1,14 @@
-import { ReactNode } from 'react';
 import ClinicsDerma from 'app/(web)/components/common/ClinicsDerma';
 import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
-import App from 'app/(web)/components/layout/App';
-import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
+import SharedWrapper from 'app/(web)/components/layout/SharedWrapper';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-export default function Clinicas({ isDerma = false }: { isDerma?: boolean }) {
-  const Wrapper = ({ children }: { children: ReactNode }) => {
-    if (isDerma) {
-      return <DermaLayout showNavigation>{children}</DermaLayout>;
-    } else {
-      return (
-        <App>
-          <MainLayout>{children}</MainLayout>
-        </App>
-      );
-    }
-  };
-
+export default function Clinicas({ isDerma = false }: { isDerma: boolean }) {
   return (
-    <Wrapper>
+    <SharedWrapper isDerma={isDerma}>
       <div className="bg-hg-cream py-12 md:py-20" id="clinics">
         <Container className={'max-w-[1300px]'}>
           <div className="md:flex md:flex-row gap-12 items-center">
@@ -60,6 +45,6 @@ export default function Clinicas({ isDerma = false }: { isDerma?: boolean }) {
         </Container>
       </div>
       {isDerma ? <ClinicsDerma /> : <ClinicsSSR className="mb-12" />}
-    </Wrapper>
+    </SharedWrapper>
   );
 }

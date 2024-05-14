@@ -98,7 +98,13 @@ export default function ConctactForm() {
 
   useEffect(() => {
     async function checkout() {
-      const createdUser = await registerUser(client, false, false, false);
+      const createdUser = await registerUser(
+        client,
+        false,
+        false,
+        false,
+        false
+      );
       await initializePayment(
         activePayment,
         createdUser!,
@@ -156,6 +162,7 @@ export default function ConctactForm() {
                 hasContinueButton={isProbadorVirtual}
                 initialValues={client}
                 setClientData={setClient}
+                isDerma={false}
               />
 
               {!isProbadorVirtual && (

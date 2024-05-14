@@ -86,6 +86,7 @@ interface GlobalPersistStore {
   storedBudgetId: string | '';
   activePayment: PaymentBank;
   isCallCenter: boolean;
+  extraInfo: boolean;
 }
 
 interface GlobalPersistActions {
@@ -108,6 +109,7 @@ interface GlobalPersistActions {
   setBudgetId: (value?: string) => void;
   setActivePayment: (value?: PaymentBank) => void;
   setIsCallCenter: (value?: boolean) => void;
+  setExtraInfo: (value?: boolean) => void;
 }
 
 export const useSessionStore = create(
@@ -287,6 +289,10 @@ export const useGlobalPersistedStore = create(
       isCallCenter: false,
       setIsCallCenter: value => {
         set({ isCallCenter: value });
+      },
+      extraInfo: false,
+      setExtraInfo: value => {
+        set({ extraInfo: value });
       },
     }),
     {
