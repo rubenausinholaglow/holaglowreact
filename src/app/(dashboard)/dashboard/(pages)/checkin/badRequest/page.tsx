@@ -35,7 +35,11 @@ export default function BadRequestSection() {
           <Title className="align-center font-bold mb-8">
             No te hemos encontrado
           </Title>
-          <RegistrationForm isDashboard={true} redirect={false} />
+          <RegistrationForm
+            isDashboard={true}
+            redirect={false}
+            isDerma={false}
+          />
           <Button
             type="tertiary"
             isSubmit

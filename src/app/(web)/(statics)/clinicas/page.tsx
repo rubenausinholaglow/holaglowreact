@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 
 import Clinicas from './Clinicas';
 
@@ -17,6 +18,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function StaticClinics() {
-  return <Clinicas />;
+export default function StaticClinics({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const host = headers().get('host');
+  const isDerma =
+    (host && host.startsWith('derma')) || searchParams.isDerma === 'true';
+
+  return <Clinicas isDerma={isDerma} />;
 }

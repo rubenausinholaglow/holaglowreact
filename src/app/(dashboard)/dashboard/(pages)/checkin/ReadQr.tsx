@@ -36,7 +36,7 @@ function ReadQR({ onScanSuccess, onErrorScan }: QRScannerProps) {
         html5QrCode.stop();
         setScanResult(decodedResult);
         setIsLoading(true);
-        const user = await UserService.getUserById(UserId);
+        const user = await UserService.getUserById(UserId, false);
         if (user.firstName !== null) {
           const appointmentInfo =
             await ScheduleService.getClinicScheduleByToken(user.flowwwToken);

@@ -78,12 +78,7 @@ export default function ProductCard({
     >
       <Flex layout="col-left" className="">
         <div className={`relative ${imgHeight} w-full rounded-t-2xl`}>
-          <div
-            className="absolute inset-0 top-[10%] rounded-t-2xl bg-gradient from-hg-pink to-hg-pink/5"
-            /* style={{
-              background: getProductCardColor(product.cardBackgroundColor),
-            }} */
-          />
+          <div className="absolute inset-0 top-[10%] rounded-t-2xl bg-gradient from-hg-pink to-hg-pink/5" />
 
           <Image
             alt={product.title}
@@ -98,19 +93,13 @@ export default function ProductCard({
             } w-auto`}
           />
 
-          {!isEmpty(product.tags) && product.tags[0].tag === 'B.Friday' && (
+          {!isEmpty(product.tags) && product.tags[0].tag && (
             <Flex
               layout="row-center"
-              className="bg-hg-black rounded-full p-1 px-2 absolute top-[24px] left-0 m-2"
+              className="bg-hg-primary text-hg-black rounded-full p-1 px-2 absolute bottom-[4px] left-0 m-2"
             >
-              <SvgGlow
-                height={12}
-                width={12}
-                className="text-hg-primary mr-1"
-              />
-              <Text className="text-hg-secondary" size="xs">
-                B.<span className="text-hg-primary">Friday</span>
-              </Text>
+              <SvgGlow height={12} width={12} className="mr-1" />
+              <Text size="xs">{product.tags[0].tag}</Text>
             </Flex>
           )}
         </div>
