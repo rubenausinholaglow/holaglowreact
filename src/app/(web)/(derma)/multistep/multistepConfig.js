@@ -58,7 +58,7 @@ export const PAINS_AND_SYMPTOMS = [
   },
   {
     name: 'Antiaging',
-    value: 4,
+    value: 3,
     img: '/images/derma/multistep/pains/calidadPiel.jpg',
     symptoms: [
       'Manchas',
@@ -69,6 +69,26 @@ export const PAINS_AND_SYMPTOMS = [
       'Pérdida de densidad      ',
     ],
   },
+];
+
+export const GENDER = [
+  { title: 'Femenino', value: 0 },
+  { title: 'Masculino', value: 1 },
+  { title: 'No binario', value: 2 },
+];
+
+export const LACTANCY = [
+  { title: 'Sí', value: 1 },
+  { title: 'No', value: 3 },
+];
+
+export const AGES = [
+  { title: '18-24', value: 0 },
+  { title: '25-34', value: 1 },
+  { title: '35-44', value: 2 },
+  { title: '45-54', value: 3 },
+  { title: '55-64', value: 4 },
+  { title: '65 o más', value: 5 },
 ];
 
 export const SKIN_TYPES = [
@@ -104,63 +124,48 @@ export const SKIN_TYPES = [
   },
 ];
 
-export const GENDER = [
-  { title: 'Femenino', value: 1 },
-  { title: 'Masculino', value: 2 },
-  { title: 'No binario', value: 3 },
-];
-
-export const AGES = [
-  { title: '18-24', value: 1 },
-  { title: '25-34', value: 2 },
-  { title: '35-44', value: 3 },
-  { title: '45-54', value: 4 },
-  { title: '55-64', value: 5 },
-  { title: '65 o más', value: 6 },
-];
-
 export const SKIN_SENSITIVITIES = [
-  { title: 'Muy sensible', value: 1 },
+  { title: 'Muy sensible', value: 3 },
   { title: 'Algo sensible', value: 2 },
-  { title: 'Poco sensible', value: 3 },
+  { title: 'Poco sensible', value: 1 },
 ];
 
 export const SKIN_COLORS = [
   {
     title: 'Muy clara',
     description: 'Pieles que no se broncean y se queman con excesiva facilidad',
-    value: 1,
+    value: 0,
     color: '#FFE6E0',
   },
   {
     title: 'Clara',
     description: 'Pieles que se broncean muy poco y se queman con facilidad',
-    value: 2,
+    value: 1,
     color: '#EBD2C3',
   },
   {
     title: 'Morena Clara',
     description: 'Pieles que llegan a broncearse y se queman moderadamente',
-    value: 3,
+    value: 2,
     color: '#D8BDB1',
   },
   {
     title: 'Morena',
     description: 'Se broncean con facilidad y sufren pocas quemaduras',
-    value: 4,
+    value: 3,
     color: '#B87E69',
   },
   {
     title: 'Morena oscura',
     description:
       'Se broncean rápidamente y con gran intensidad. Quemaduras poco frecuentes',
-    value: 5,
+    value: 4,
     color: '#653121',
   },
   {
     title: 'Oscura',
     description: 'Se broncean intensamente y no se queman',
-    value: 6,
+    value: 5,
     color: '#3C201C',
   },
 ];
@@ -224,11 +229,6 @@ export const ILLNESSES = [
 ];
 
 export const MEDICINES = [
-  { title: 'Sí', value: 1 },
-  { title: 'No', value: 2 },
-];
-
-export const LACTANCY = [
   { title: 'Sí', value: 1 },
   { title: 'No', value: 2 },
 ];

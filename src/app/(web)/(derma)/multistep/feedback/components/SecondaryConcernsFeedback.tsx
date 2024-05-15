@@ -7,7 +7,7 @@ import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { DERMA_INGREDIENTS } from '../../multistepConfig';
 import MedicAdvice from './MedicAdvice';

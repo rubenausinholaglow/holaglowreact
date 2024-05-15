@@ -3,14 +3,14 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface DermaStore {
   id: string;
-  pain: number;
+  pain: undefined | number;
   otherPain: string;
   symptoms: string[];
-  gender: number;
-  age: number;
+  gender: undefined | number;
+  age: undefined | number;
   skinType: number;
   skinSensibility: number;
-  skinColor: number;
+  skinColor: undefined | number;
   secondaryConcerns: string[];
   routine: number;
   routineProducts: string[];
@@ -30,14 +30,14 @@ interface DermaStore {
 
 interface DermaActions {
   setId: (value: string) => void;
-  setPain: (value: number) => void;
+  setPain: (value: undefined | number) => void;
   setOtherPain: (value: string) => void;
   setSymptoms: (value: string[]) => void;
-  setGender: (value: number) => void;
-  setAge: (value: number) => void;
+  setGender: (value: undefined | number) => void;
+  setAge: (value: undefined | number) => void;
   setSkinType: (value: number) => void;
   setSkinSensibility: (value: number) => void;
-  setSkinColor: (value: number) => void;
+  setSkinColor: (value: undefined | number) => void;
   setSecondaryConcerns: (value: string[]) => void;
   setRoutine: (value: number) => void;
   setRoutineProducts: (value: string[]) => void;
@@ -62,8 +62,8 @@ export const useDermaStore = create(
       setId: (value: string) => {
         set({ id: value });
       },
-      pain: 6, // values from 0 to 5 are real values,
-      setPain: (value: number) => {
+      pain: undefined,
+      setPain: (value: undefined | number) => {
         set({ pain: value });
       },
       otherPain: '',
@@ -74,12 +74,12 @@ export const useDermaStore = create(
       setSymptoms: (value: string[]) => {
         set({ symptoms: value });
       },
-      gender: 0,
-      setGender: (value: number) => {
+      gender: undefined,
+      setGender: (value: undefined | number) => {
         set({ gender: value });
       },
-      age: 0,
-      setAge: (value: number) => {
+      age: undefined,
+      setAge: (value: undefined | number) => {
         set({ age: value });
       },
       skinType: 0,
@@ -90,8 +90,8 @@ export const useDermaStore = create(
       setSkinSensibility: (value: number) => {
         set({ skinSensibility: value });
       },
-      skinColor: 0,
-      setSkinColor: (value: number) => {
+      skinColor: undefined,
+      setSkinColor: (value: undefined | number) => {
         set({ skinColor: value });
       },
       secondaryConcerns: [],

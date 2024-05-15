@@ -54,11 +54,11 @@ export default function Gender() {
                     }`}
                     key={item.value}
                     onClick={() => {
-                      setGender(gender === item.value ? 0 : item.value);
+                      setGender(gender === item.value ? undefined : item.value);
 
                       if (gender !== item.value)
                         router.push(
-                          item.value === 2
+                          item.value === 1
                             ? ROUTES.derma.multistep.age
                             : ROUTES.derma.multistep.lactating
                         );
