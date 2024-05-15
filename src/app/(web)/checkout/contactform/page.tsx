@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
+import ScheduleService from '@services/ScheduleService';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
@@ -67,6 +68,14 @@ export default function ConctactForm() {
     city: '',
     address: '',
   });
+  const {
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    selectedPacksTreatments,
+    analyticsMetrics,
+    selectedPack,
+  } = useSessionStore(state => state);
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
 
@@ -104,7 +113,19 @@ export default function ConctactForm() {
         undefined,
         undefined,
         false
-      );
+      ).then(x => {
+        ScheduleService.createTemporalAppointment(
+          selectedTreatments,
+          selectedSlot!,
+          selectedDay!,
+          selectedClinic!,
+          createdUser!,
+          selectedPacksTreatments!,
+          analyticsMetrics,
+          x!,
+          selectedPack
+        ).then(x => {});
+      });
     }
     if (
       activePayment != PaymentBank.None &&
