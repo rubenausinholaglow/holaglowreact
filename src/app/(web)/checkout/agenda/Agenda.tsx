@@ -46,7 +46,7 @@ export default function Agenda({
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
-  const { user } = useGlobalPersistedStore(state => state);
+  const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
 
   const {
     setSelectedSlot,
@@ -62,6 +62,10 @@ export default function Agenda({
     treatmentPacks,
     setTreatmentPacks,
   } = useSessionStore(state => state);
+
+  const [showReviewAlreadyCreated, setShowReviewAlreadyCreated] =
+    useState(false);
+  const [showTooLateToSchedule, setShowTooLateToSchedule] = useState(false);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
   const [dateToCheck, setDateToCheck] = useState<Dayjs | undefined>(undefined);
@@ -117,14 +121,15 @@ export default function Agenda({
 
   const productIds = getUniqueIds(selectedTreatments);
 
-  const maxDay = dayjs().add(maxDays, 'day');
+  let maxDay = dayjs().add(maxDays, 'day');
 
   function loadMonth() {
     setLoadingMonth(true);
     if (
       selectedTreatmentsIds &&
       availableDates.length < maxDays &&
-      dateToCheck
+      dateToCheck &&
+      selectedClinic
     ) {
       if (selectedTreatmentsIds != '902') {
         ScheduleService.getMonthAvailability(
@@ -513,6 +518,86 @@ export default function Agenda({
       false
     );
   };
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const token = params.get('token') ?? '';
+    const treatment = params.get('treatment') ?? '';
+
+    setCurrentUser({
+      flowwwToken: token,
+      firstName: '',
+      email: '',
+      id: '',
+      phone: '',
+      clinicToken: token,
+    });
+    const getAppointments = async () => {
+      if (token && treatment) {
+        const res = await ScheduleService.next(token);
+        var minDay = dayjs('2000-01-01');
+        res.forEach(x => {
+          if (x.treatmentText == 'Revisión Tratamiento') {
+            setShowReviewAlreadyCreated(true);
+          }
+          if (x.isPast && !x.isCancelled) {
+            minDay = dayjs(x.startTime);
+          }
+        });
+        if (!showReviewAlreadyCreated) {
+          maxDay = minDay.add(42, 'day');
+        }
+        if (maxDay < dayjs()) {
+          setShowTooLateToSchedule(true);
+        }
+      }
+    };
+
+    getAppointments();
+  }, []);
+
+  if (showReviewAlreadyCreated) {
+    return (
+      <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+        <SvgSadIcon
+          className={`mb-5 ${
+            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+          }`}
+        />
+        <Title size="xl" className="font-semibold">
+          ¡Lo sentimos!
+        </Title>
+        <Text size="sm" className="font-semibold mb-4 text-center">
+          No hay citas para el dia seleccionado
+        </Text>
+        <Text size="xs" className="text-center">
+          Selecciona otro día para ver la disponibilidad
+        </Text>
+      </Flex>
+    );
+  }
+
+  if (showTooLateToSchedule) {
+    return (
+      <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+        <SvgSadIcon
+          className={`mb-5 ${
+            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+          }`}
+        />
+        <Title size="xl" className="font-semibold">
+          ¡Lo sentimos!
+        </Title>
+        <Text size="sm" className="font-semibold mb-4 text-center">
+          Demasiado tarde para agendar
+        </Text>
+        <Text size="xs" className="text-center">
+          LLAMANOS!
+        </Text>
+      </Flex>
+    );
+  }
 
   return (
     <>
