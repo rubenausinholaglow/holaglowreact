@@ -11,6 +11,7 @@ import {
 } from '@utils/appointmentUtils';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
+import { convertUTCDateToLocalDate } from '@utils/utils';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgCheck, SvgCross, SvgUserSquare } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -276,7 +277,11 @@ const AppointmentsListComponent: React.FC<{
       );
 
       if (maxDate) {
-        return <p className="text-sm">{dayjs(maxDate).format('HH:mm:ss')}</p>;
+        return (
+          <p className="text-sm">
+            {dayjs(convertUTCDateToLocalDate(maxDate)).format('HH:mm:ss')}
+          </p>
+        );
       }
     }
 
