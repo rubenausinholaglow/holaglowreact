@@ -9,10 +9,20 @@ import { CartItem, EmlaType, Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
-import { formatDate, getUniqueIds, validTypesFilterCart } from '@utils/utils';
+import {
+  formatDate,
+  getClinicToSet,
+  getUniqueIds,
+  validTypesFilterCart,
+} from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgEllipsis, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
+import {
+  SvgCalling,
+  SvgEllipsis,
+  SvgSadIcon,
+  SvgWarning,
+} from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -30,6 +40,9 @@ import { useRouter } from 'next/navigation';
 
 import NeedHelp from './NeedHelp';
 import SlotList from './SlotList';
+import { Appointment } from '@interface/appointment';
+import AppointmentElement from 'app/(web)/reagenda/components/AppointmentElement';
+import { fetchProduct } from '@utils/fetch';
 
 registerLocale('es', es);
 
@@ -46,7 +59,9 @@ export default function Agenda({
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
-  const { user, setCurrentUser } = useGlobalPersistedStore(state => state);
+  const { user, setCurrentUser, clinics } = useGlobalPersistedStore(
+    state => state
+  );
 
   const {
     setSelectedSlot,
@@ -61,11 +76,16 @@ export default function Agenda({
     setSelectedDay,
     treatmentPacks,
     setTreatmentPacks,
+    setSelectedTreatments,
+    setSelectedClinic,
   } = useSessionStore(state => state);
 
   const [showReviewAlreadyCreated, setShowReviewAlreadyCreated] =
     useState(false);
   const [showTooLateToSchedule, setShowTooLateToSchedule] = useState(false);
+  const [appointmentToShow, setAppointmentToShow] = useState<
+    Appointment | undefined
+  >(undefined);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
   const [dateToCheck, setDateToCheck] = useState<Dayjs | undefined>(undefined);
@@ -121,7 +141,7 @@ export default function Agenda({
 
   const productIds = getUniqueIds(selectedTreatments);
 
-  let maxDay = dayjs().add(maxDays, 'day');
+  const [maxDay, setMaxDay] = useState(dayjs().add(maxDays, 'day'));
 
   function loadMonth() {
     setLoadingMonth(true);
@@ -216,7 +236,8 @@ export default function Agenda({
       if (
         availability.length < maxDays &&
         (date.isAfter(today) || (date.isSame(today, 'day') && !isDerma)) &&
-        x.availability
+        x.availability &&
+        date.isBefore(maxDay)
       ) {
         availability.push(x);
       }
@@ -524,7 +545,8 @@ export default function Agenda({
     const params = new URLSearchParams(queryString);
     const token = params.get('token') ?? '';
     const treatment = params.get('treatment') ?? '';
-
+    const clinicId = params.get('clinicId') ?? '';
+    setSelectedClinic(getClinicToSet(clinics, clinicId));
     setCurrentUser({
       flowwwToken: token,
       firstName: '',
@@ -538,18 +560,24 @@ export default function Agenda({
         const res = await ScheduleService.next(token);
         let minDay = dayjs('2000-01-01');
         res.forEach(x => {
-          if (x.treatmentText == 'Revisión Tratamiento') {
+          if (x.treatmentText == 'Revisión Tratamiento' && !x.isPast) {
             setShowReviewAlreadyCreated(true);
+            setAppointmentToShow(x);
           }
-          if (x.isPast && !x.isCancelled) {
+          if (x.isPast && !x.isCancelled && dayjs(x.startTime) < dayjs()) {
             minDay = dayjs(x.startTime);
           }
         });
         if (!showReviewAlreadyCreated) {
-          maxDay = minDay.add(42, 'day');
+          setMaxDay(minDay.add(42, 'day'));
         }
         if (maxDay < dayjs()) {
           setShowTooLateToSchedule(true);
+        }
+        if (!showTooLateToSchedule && !showReviewAlreadyCreated) {
+          const productDetails = await fetchProduct(treatment, false, false);
+          setSelectedTreatments([productDetails]);
+          initialize();
         }
       }
     };
@@ -557,23 +585,22 @@ export default function Agenda({
     getAppointments();
   }, []);
 
-  if (showReviewAlreadyCreated) {
+  if (showReviewAlreadyCreated && appointmentToShow) {
     return (
       <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
-        <SvgSadIcon
-          className={`mb-5 ${
-            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
-          }`}
-        />
         <Title size="xl" className="font-semibold">
           Ya tienes una cita con nosotros.
         </Title>
         <Text size="sm" className="font-semibold mb-4 text-center">
-          No hay citas para el dia seleccionado
+          Puedes cambiar la hora si quieres.
         </Text>
-        <Text size="xs" className="text-center">
-          Selecciona otro día para ver la disponibilidad
-        </Text>
+        <AppointmentElement
+          appointment={appointmentToShow}
+          cancelling={false}
+          isDashboard={false}
+          setAppointmentToCancel={function (appointment: Appointment): void {}}
+          setShowCancelModal={function (value: boolean): void {}}
+        ></AppointmentElement>
       </Flex>
     );
   }
@@ -590,11 +617,33 @@ export default function Agenda({
           ¡Lo sentimos!
         </Title>
         <Text size="sm" className="font-semibold mb-4 text-center">
-          Demasiado tarde para agendar
+          No es posible agendar tu cita
         </Text>
-        <Text size="xs" className="text-center">
-          LLAMANOS!
-        </Text>
+
+        <Flex
+          layout="col-left"
+          className={`bg-derma-secondary300 p-3 gap-3 md:relative md:rounded-2xl`}
+        >
+          <Text className="font-semibold">
+            Puedes ponerte en contacto con nosotros
+          </Text>
+          <Flex layout="row-left" className="gap-4 items-center w-full">
+            <a href="tel:+34 682 417 208" id="tmevent_agenda_call">
+              <Button size="xl" type="secondary">
+                <SvgCalling className="mr-2" />
+                {selectedClinic && (
+                  <div>
+                    <Text size="xs" className="whitespace-nowrap font-light">
+                      Llámanos al
+                    </Text>
+                    <Text className="whitespace-nowrap">682 417 208</Text>
+                  </div>
+                )}
+              </Button>
+            </a>
+            <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+          </Flex>
+        </Flex>
       </Flex>
     );
   }
