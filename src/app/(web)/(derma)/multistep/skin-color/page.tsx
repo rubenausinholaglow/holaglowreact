@@ -59,7 +59,9 @@ export default function SkinColor() {
                     }`}
                     key={color.value}
                     onClick={async () => {
-                      setSkinColor(skinColor === color.value ? 0 : color.value);
+                      setSkinColor(
+                        skinColor === color.value ? undefined : color.value
+                      );
                       if (skinColor !== color.value) {
                         setFeedbackStep(3);
                         await nextStep();

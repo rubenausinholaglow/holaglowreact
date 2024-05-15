@@ -20,7 +20,9 @@ import NextMultistepButton from '../NextMultistepButton';
 
 export default function Symptoms() {
   const router = useRouter();
-  const { pain, symptoms, setSymptoms } = useDermaStore(state => state);
+  const { pain, setPain, symptoms, setSymptoms } = useDermaStore(
+    state => state
+  );
 
   return (
     <DermaLayout

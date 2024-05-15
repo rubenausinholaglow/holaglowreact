@@ -19,24 +19,19 @@ export default function SkinColorFeedback() {
 
   const DisplayPositions = {
     skinSensibility: [
-      { value: 1, position: '-5%' },
-      { value: 2, position: '45%' },
-      { value: 3, position: '95%' },
+      { value: 3, position: 'calc(0% - 18px)' },
+      { value: 2, position: 'calc(50% - 18px)' },
+      { value: 1, position: 'calc(100% - 18px)' },
     ],
     skinColor: [
-      { value: 1, position: '-5%', color: SKIN_COLORS[0].color },
-      { value: 2, position: '15%', color: SKIN_COLORS[1].color },
-      { value: 3, position: '35%', color: SKIN_COLORS[2].color },
-      { value: 4, position: '55%', color: SKIN_COLORS[3].color },
-      { value: 5, position: '75%', color: SKIN_COLORS[4].color },
-      { value: 6, position: '95%', color: SKIN_COLORS[5].color },
+      { value: 0, position: 'calc(0% - 18px)', color: SKIN_COLORS[0].color },
+      { value: 1, position: 'calc(20% - 18px)', color: SKIN_COLORS[1].color },
+      { value: 2, position: 'calc(40% - 18px)', color: SKIN_COLORS[2].color },
+      { value: 3, position: 'calc(60% - 18px)', color: SKIN_COLORS[3].color },
+      { value: 4, position: 'calc(80% - 18px)', color: SKIN_COLORS[4].color },
+      { value: 5, position: 'calc(0% - 18px)', color: SKIN_COLORS[5].color },
     ],
   };
-
-  console.log(DisplayPositions.skinColor[0].color);
-  console.log(
-    DisplayPositions.skinColor.filter(item => item.value === skinColor)[0].color
-  );
 
   return (
     <DermaLayout
@@ -68,7 +63,7 @@ export default function SkinColorFeedback() {
                   <CheckHydration>
                     <div className="relative w-full h-32">
                       <div
-                        className="bg-white rounded-full h-10 w-10 absolute bg-gradient-radial from-derma-primary100 to-derma-primary500 to-50%"
+                        className="bg-white rounded-full h-10 w-10 absolute bg-gradient-radial from-derma-primary100 to-derma-primary500 to-50% border border-hg-black/20"
                         style={{
                           left: DisplayPositions['skinSensibility'].filter(
                             item => item.value === skinSensibility
@@ -86,10 +81,10 @@ export default function SkinColorFeedback() {
                       >
                         <Text
                           className={
-                            skinSensibility === 1 ? '' : 'text-hg-black400'
+                            skinSensibility === 3 ? '' : 'text-hg-black400'
                           }
                         >
-                          Poco sensible
+                          Muy sensible
                         </Text>
                         <Text
                           className={
@@ -100,10 +95,10 @@ export default function SkinColorFeedback() {
                         </Text>
                         <Text
                           className={
-                            skinSensibility === 3 ? '' : 'text-hg-black400'
+                            skinSensibility === 1 ? '' : 'text-hg-black400'
                           }
                         >
-                          Muy sensible
+                          Poco sensible
                         </Text>
                       </Flex>
                     </div>
@@ -111,7 +106,7 @@ export default function SkinColorFeedback() {
 
                   <div className="relative w-full h-32">
                     <div
-                      className="bg-white rounded-full h-10 w-10 absolute"
+                      className="bg-white rounded-full h-10 w-10 absolute border border-hg-black/10"
                       style={{
                         left: DisplayPositions['skinColor'].filter(
                           item => item.value === skinColor
@@ -163,7 +158,7 @@ export default function SkinColorFeedback() {
                       : ROUTES.derma.multistep.routine
                   }
                 >
-                  continuar
+                  Continuar
                 </Button>
               </Flex>
             </div>

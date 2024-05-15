@@ -60,9 +60,9 @@ export default function PainFeedback() {
                           key={item.name}
                           src={item.imgUrl}
                           alt={item.name}
-                          width={144}
-                          height={144}
-                          className="-mr-16"
+                          width={392}
+                          height={392}
+                          className="w-[150px] md:w-[200px] -mr-16"
                         />
                       ))}
                   </Flex>
@@ -107,7 +107,7 @@ export default function PainFeedback() {
                       size={isMobile ? 'md' : 'lg'}
                       href={ROUTES.derma.multistep.skinType}
                     >
-                      continuar
+                      Continuar
                     </Button>
                   </Flex>
                 </Flex>

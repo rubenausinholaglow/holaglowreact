@@ -22,7 +22,7 @@ import NextMultistepButton, {
 
 export default function Lactancy() {
   const router = useRouter();
-  const { lactating, setLactating } = useDermaStore(state => state);
+  const { lactating, setLactating, setGender } = useDermaStore(state => state);
 
   const nextStep = HandleNextMultistep(ROUTES.derma.multistep.age);
   return (
@@ -56,7 +56,7 @@ export default function Lactancy() {
                     key={item.title}
                     onClick={async () => {
                       setLactating(lactating === item.value ? 0 : item.value);
-                      if (item.value == 2 && lactating !== item.value)
+                      if (item.value === 3 && lactating !== item.value)
                         await nextStep();
                     }}
                   >
@@ -70,7 +70,7 @@ export default function Lactancy() {
                 ))}
               </ul>
 
-              {lactating === 0 || lactating === 2 ? (
+              {lactating === 3 || lactating === 0 ? (
                 <Flex className="justify-between pb-12">
                   <Button
                     type="white"
@@ -99,16 +99,16 @@ export default function Lactancy() {
                     ¡Estaremos encantados de atenderte más adelante si sigues
                     interesada!
                   </Text>
-
                   <Button
                     type="white"
                     customStyles="bg-transparent border-none"
-                    href={ROUTES.derma.home}
+                    onClick={() => {
+                      setGender(undefined);
+                      router.back();
+                    }}
                   >
                     <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
-                    <Text className="text-derma-tertiary">
-                      Volver al inicio
-                    </Text>
+                    <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
                 </div>
               )}

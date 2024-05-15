@@ -84,7 +84,7 @@ export default function LastStepFeedback() {
                   size={isMobile ? 'md' : 'lg'}
                   href={ROUTES.derma.multistep.pictures}
                 >
-                  continuar
+                  Continuar
                 </Button>
               </Flex>
             </div>

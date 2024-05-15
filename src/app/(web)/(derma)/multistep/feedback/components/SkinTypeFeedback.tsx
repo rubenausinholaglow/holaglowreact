@@ -82,7 +82,7 @@ export default function SkinTypeFeedback() {
                       size={isMobile ? 'md' : 'lg'}
                       href={ROUTES.derma.multistep.skinSensibility}
                     >
-                      continuar
+                      Continuar
                     </Button>
                   </Flex>
                 </Flex>

@@ -107,7 +107,7 @@ export default function RoutineFeedback() {
                   size={isMobile ? 'md' : 'lg'}
                   href={ROUTES.derma.multistep.allergy}
                 >
-                  continuar
+                  Continuar
                 </Button>
               </Flex>
             </div>

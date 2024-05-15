@@ -1,3 +1,4 @@
+import { isMobileSSR } from '@utils/isMobileSSR';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgLock } from 'app/icons/IconsDs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -28,19 +29,23 @@ export default function StartMultistep() {
           layout="col-left"
           className="md:flex-row w-full md:gap-12 xl:gap-16"
         >
-          <div className="relative rounded-3xl md:rounded-2xl w-full md:w-1/2 md:mt-12">
+          <div className="relative rounded-3xl md:rounded-2xl w-full md:w-1/2 md:mt-12 mb-4">
             <Image
-              src="/images/derma/home/sonsolesStart.png"
+              src={
+                isMobileSSR()
+                  ? '/images/derma/multistep/sonsolesStart.png'
+                  : '/images/derma/multistep/sonsolesStart.jpg'
+              }
               alt="Holaglow"
               width={528}
               height={716}
               className="rounded-2xl overflow-hidden"
             />
-            <div className="absolute bottom-4 left-4 right-4 bg-white/50 rounded-xl p-4 backdrop-blur-sm">
-              <Text className="font-semibold text-center text-sm">
+            <div className="absolute bottom-4 left-4 right-4 md:left-10 md:right-10 lg:left-24 lg:right-24 bg-derma-secondary400/40 rounded-xl py-2 px-4 backdrop-blur-sm">
+              <Text className="font-semibold text-center text-sm mb-1 md:text-lg">
                 Dra. Sonsoles Espí
               </Text>
-              <Text className="text-center text-xs">
+              <Text className="text-center text-xs md:text-md">
                 Directora médica en Holaglow
               </Text>
             </div>
@@ -51,16 +56,16 @@ export default function StartMultistep() {
               layout="col-left"
               className="items-center relative md:justify-center md:flex-row md:mt-12"
             >
-              <Flex layout="col-left" className="relative z-10 py-4">
-                <Text className="text-xl md:text-4xl text-derma-primary font-light font-gtUltra mb-4">
+              <Flex layout="col-left" className="relative z-10 py-2">
+                <Text className="text-xl md:text-4xl text-derma-primary font-light font-gtUltra mb-4 md:mb-8">
                   <span className="font-semibold">¡Hola!</span> Vamos a
                   encontrar la mejor rutina para ti
                 </Text>
-                <Text className="mb-4">
+                <Text className="mb-4 md:text-lg md:mb-6">
                   Analizar tu piel es el primer paso para:
                 </Text>
 
-                <ul className="flex flex-col gap-4 w-full mb-8">
+                <ul className="flex flex-col gap-4 w-full mb-8 md:text-lg md:mb-12">
                   <li className="flex bg-derma-secondary400 rounded-2xl overflow-hidden items-center">
                     <Image
                       src="/images/derma/home/cremaFormuladaStart.png"
