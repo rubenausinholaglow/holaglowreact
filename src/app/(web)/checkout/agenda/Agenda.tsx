@@ -114,6 +114,7 @@ export default function Agenda({
   const [loadingMonth, setLoadingMonth] = useState(false);
   const [loadingDays, setLoadingDays] = useState(false);
   const { cart, updateIsScheduled } = useCartStore(state => state);
+  const [isOnline, setIsOnline] = useState(false);
 
   const productIds = getUniqueIds(selectedTreatments);
 
@@ -126,7 +127,7 @@ export default function Agenda({
       availableDates.length < maxDays &&
       dateToCheck
     ) {
-      if (selectedTreatmentsIds != '902') {
+      if (selectedTreatmentsIds != '902' && !isOnline) {
         ScheduleService.getMonthAvailability(
           dateToCheck.format(format),
           selectedTreatmentsIds,
@@ -183,7 +184,11 @@ export default function Agenda({
         !block15and45minutes &&
         (!(hour == '10' && minutes == '00') || selectedTreatmentsIds != '902')
       ) {
-        if (x.box != '7' || (x.box == '7' && !isDashboard && !user)) {
+        if (
+          x.box != '7' ||
+          (x.box == '7' && !isDashboard && !user) ||
+          isOnline
+        ) {
           hours.push(x);
           if (parseInt(hour) < 15) {
             morning.push(x);
@@ -230,6 +235,8 @@ export default function Agenda({
     setSelectedDay(undefined);
     setEnableScheduler(true);
     setDateToCheck(dayjs());
+    const isOnline = selectedTreatments[0].title == 'Probador Virtual Online';
+    setIsOnline(isOnline);
   }
   useEffect(() => {
     initialize();
@@ -294,7 +301,7 @@ export default function Agenda({
           user &&
           selectedDay &&
           !isDerma &&
-          (isDashboard || isCheckin)
+          (isDashboard || isCheckin || isOnline)
         ) {
           setLoadingDays(true);
           setLoadingMonth(true);
@@ -481,7 +488,7 @@ export default function Agenda({
     const day = dayjs(x);
     const formattedDate = day.format('dddd, D [de] MMMM');
     setDateFormatted(formattedDate);
-    if (selectedTreatmentsIds != '902') {
+    if (selectedTreatmentsIds != '902' && !isOnline) {
       ScheduleService.getSlots(
         day.format(format),
         selectedTreatmentsIds,
@@ -579,11 +586,11 @@ export default function Agenda({
                               </span>
                             );
                           })}
-                        {!isDerma && <> en tu clínica preferida</>}
+                        {!isDerma && !isOnline && <> en tu clínica preferida</>}
                         {isDerma && <> online</>}
                       </Text>
 
-                      {selectedClinic && !isDerma && (
+                      {selectedClinic && !isOnline && !isDerma && (
                         <Flex className="mb-4">
                           <SvgLocation
                             height={16}
