@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { isEdgeChromium, isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
+import { Product } from '@interface/product';
+import ProductService from '@services/ProductService';
 import { SvgCalendar, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
@@ -12,8 +14,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { useRouter } from 'next/navigation';
-import { Product } from '@interface/product';
-import ProductService from '@services/ProductService';
 
 export default function AppointmentElement({
   appointment,
@@ -41,8 +41,8 @@ export default function AppointmentElement({
   const { setSelectedTreatments, setPreviousAppointment, setSelectedClinic } =
     useSessionStore(state => state);
 
-  let showPast = false;
-  let token = '';
+  const showPast = false;
+  const token = '';
   const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
       flowwwToken: currentToken,

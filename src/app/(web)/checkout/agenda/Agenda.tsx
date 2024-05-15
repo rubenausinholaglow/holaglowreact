@@ -5,9 +5,11 @@ import './datePickerStyle.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import { Appointment } from '@interface/appointment';
 import { CartItem, EmlaType, Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
+import { fetchProduct } from '@utils/fetch';
 import { getTreatmentId } from '@utils/userUtils';
 import {
   formatDate,
@@ -16,6 +18,7 @@ import {
   validTypesFilterCart,
 } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import AppointmentElement from 'app/(web)/reagenda/components/AppointmentElement';
 import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
   SvgCalling,
@@ -40,9 +43,6 @@ import { useRouter } from 'next/navigation';
 
 import NeedHelp from './NeedHelp';
 import SlotList from './SlotList';
-import { Appointment } from '@interface/appointment';
-import AppointmentElement from 'app/(web)/reagenda/components/AppointmentElement';
-import { fetchProduct } from '@utils/fetch';
 
 registerLocale('es', es);
 
