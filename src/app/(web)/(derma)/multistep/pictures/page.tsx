@@ -76,7 +76,7 @@ export default function Pictures() {
               <Flex layout="col-left" className="w-full gap-4 mb-8">
                 <ImageUploader
                   title="Foto 1"
-                  subtitle="Frontal"
+                  subtitle="Rostro frontal"
                   pictureIndex={0}
                   imageIsLoading={imageIsLoading}
                   setImageIsLoading={setImageIsLoading}
