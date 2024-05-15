@@ -122,6 +122,27 @@ const AppointmentsListComponent: React.FC<{
       ...prevLoadingAppointments,
       [appointment.id]: true,
     }));
+    if (
+      selectedType !== undefined &&
+      (selectedType[ProductType.Medical] || selectedType[ProductType.Esthetic])
+    ) {
+      await ScheduleService.updatePatientStatusAppointment(
+        appointment.id,
+        user?.id || '',
+        Status.InProgress
+      );
+      fetchAppointments(
+        selectedType[ProductType.Medical]
+          ? ProductType.Medical
+          : ProductType.Esthetic
+      );
+      setLoadingAppointments(prevLoadingAppointments => ({
+        ...prevLoadingAppointments,
+        [appointment.id]: false,
+      }));
+      return;
+    }
+
     await UserService.checkUser(appointment.email)
       .then(async data => {
         if (data && !isEmpty(data)) {
@@ -250,7 +271,7 @@ const AppointmentsListComponent: React.FC<{
     toggleLoading(appointmentId, status, false);
   };
 
-  const toggleLoading = (id: string, status: Status, isLoading: boolean) => {
+  const toggleLoading = (id: string, status: any, isLoading: boolean) => {
     const loadingKey = `${id}_${status}`;
     setLoadingState(prevLoadingState => ({
       ...prevLoadingState,
@@ -334,16 +355,19 @@ const AppointmentsListComponent: React.FC<{
   };
 
   const handleFinalizeAppointment = async (appointmentId: string) => {
-    /*await ScheduleService.finish(
-      storedAppointmentId ?? '',
-      comment ?? '',
-      user?.id || ''
-    );*/
+    toggleLoading(appointmentId, 'FinishAppointment', true);
+    await ScheduleService.finish(appointmentId ?? '', '', user?.id || '');
     await ScheduleService.updatePatientStatusAppointment(
       appointmentId ?? '',
       user?.id || '',
       Status.Finished
     );
+    fetchAppointments(
+      selectedType[ProductType.Medical]
+        ? ProductType.Medical
+        : ProductType.Esthetic
+    );
+    toggleLoading(appointmentId, 'FinishAppointment', false);
   };
 
   const getBoxName = (clinicId: string, boxId: string): string => {
@@ -372,13 +396,13 @@ const AppointmentsListComponent: React.FC<{
       >
         <Flex>
           <div></div>
-          <Text className={`${extraInfo ? 'w-[20%]' : 'w-[60%]'} shrink-0 p-2`}>
+          <Text className={`${extraInfo ? 'w-[15%]' : 'w-[60%]'} shrink-0 p-2`}>
             {isHeader ? 'Nombre del paciente' : getPatientInfo(appointment)}
           </Text>
-          <Text className="w-[8%] shrink-0 p-2">
+          <Text className="w-[7%] shrink-0 p-2">
             {isHeader ? 'Hora cita' : appointment.startTime}
           </Text>
-          <Text className="w-[8%] shrink-0 p-2">
+          <Text className="w-[7%] shrink-0 p-2">
             {isHeader
               ? 'Estado'
               : getAppointmentStatus(appointment.appointmentStatus)}
@@ -386,7 +410,7 @@ const AppointmentsListComponent: React.FC<{
           {extraInfo && (
             <>
               {appointment.productType == ProductType.Medical && (
-                <Text className="w-[5%] shrink-0 p-2">
+                <Text className="w-[4%] shrink-0 p-2">
                   {isHeader
                     ? 'Box'
                     : getBoxName(appointment.clinicFlowwwId, appointment.boxId)}
@@ -498,7 +522,11 @@ const AppointmentsListComponent: React.FC<{
                         handleFinalizeAppointment(appointment.id);
                       }}
                     >
-                      <span className="font-semibold">Finalizar Cita</span>
+                      {loadingState[`${appointment.id}_FinishAppointment`] ? (
+                        <SvgSpinner height={16} width={16} />
+                      ) : (
+                        <span className="font-semibold">Finalizar Cita</span>
+                      )}
                     </Button>
                   )}
                 </Text>
