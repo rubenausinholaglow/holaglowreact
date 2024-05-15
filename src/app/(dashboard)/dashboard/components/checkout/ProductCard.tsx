@@ -25,6 +25,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
 
   const [showDiscountForm, setShowDiscountBlock] = useState(false);
+  const [showCartDiscount, setShowCartDiscount] = useState(false);
 
   const productCartItem = cart.filter(
     item =>
@@ -36,6 +37,8 @@ export default function ProductCard({ product, isCheckout }: Props) {
   const productHasPromoDiscount = !isEmpty(product.discounts);
   const [pendingDiscount, setPendingDiscount] = useState(false);
 
+  const validProducts = ['5519', '2151'];
+
   useEffect(() => {
     if (pendingDiscount) {
       const discountedPrice = getDiscountedPrice(product);
@@ -46,6 +49,12 @@ export default function ProductCard({ product, isCheckout }: Props) {
       }
     }
   }, [pendingDiscount]);
+
+  useEffect(() => {
+    if (isCheckout) {
+      setShowDiscountBlock(true);
+    }
+  }, []);
 
   return (
     <Flex layout="col-left" className="border-b border-hg-black">
@@ -98,42 +107,65 @@ export default function ProductCard({ product, isCheckout }: Props) {
       </Flex>
 
       {showDiscountForm && (
-        <div className="bg-hg-black100 p-4 w-full">
-          <Text className="text-hg-black500 text-sm mb-2">Descuentos</Text>
-
-          <ProductDiscountForm
-            cartUniqueId={product.uniqueId}
-            productPrice={product.price}
-            isCheckout={false}
-          />
-          {productHasDiscount && (
-            <Flex layout="row-left" className="mt-2">
-              {productCartItem.priceDiscount < productCartItem.price &&
-                productCartItem.priceDiscount !== 0 && (
-                  <Flex
-                    layout="row-left"
-                    className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                    onClick={() => removeItemDiscount(product.uniqueId, '€')}
-                  >
-                    <Text size="xs">
-                      total: {productCartItem.priceDiscount}€
-                    </Text>
-                    <SvgClose height={12} width={12} className="ml-1" />
-                  </Flex>
-                )}
-              {productCartItem.percentageDiscount > 0 && (
-                <Flex
-                  layout="row-left"
-                  className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                  onClick={() => removeItemDiscount(product.uniqueId, '%')}
-                >
-                  <Text size="xs">-{productCartItem.percentageDiscount}%</Text>
-                  <SvgClose height={12} width={12} className="ml-1" />
-                </Flex>
+        <>
+          {validProducts.includes(product.flowwwId.toString()) && (
+            <div className="bg-hg-black100 p-4 w-full justify-end">
+              <SvgArrow
+                height={24}
+                width={24}
+                className={`ml-auto transition-transform border border-hg-black rounded-full cursor-pointer p-1 ${
+                  showCartDiscount
+                    ? 'rotate-90 bg-hg-secondary100 border-none'
+                    : 'rotate-0'
+                }`}
+                onClick={() => setShowCartDiscount(!showCartDiscount)}
+              />
+              {showCartDiscount && (
+                <>
+                  <ProductDiscountForm
+                    cartUniqueId={product.uniqueId}
+                    productPrice={product.price}
+                    isCheckout={false}
+                    showPercentage={true}
+                  />
+                  {productHasDiscount && (
+                    <Flex layout="row-left" className="mt-2">
+                      {productCartItem.priceDiscount < productCartItem.price &&
+                        productCartItem.priceDiscount !== 0 && (
+                          <Flex
+                            layout="row-left"
+                            className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
+                            onClick={() =>
+                              removeItemDiscount(product.uniqueId, '€')
+                            }
+                          >
+                            <Text size="xs">
+                              total: {productCartItem.priceDiscount}€
+                            </Text>
+                            <SvgClose height={12} width={12} className="ml-1" />
+                          </Flex>
+                        )}
+                      {productCartItem.percentageDiscount > 0 && (
+                        <Flex
+                          layout="row-left"
+                          className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
+                          onClick={() =>
+                            removeItemDiscount(product.uniqueId, '%')
+                          }
+                        >
+                          <Text size="xs">
+                            -{productCartItem.percentageDiscount}%
+                          </Text>
+                          <SvgClose height={12} width={12} className="ml-1" />
+                        </Flex>
+                      )}
+                    </Flex>
+                  )}
+                </>
               )}
-            </Flex>
+            </div>
           )}
-        </div>
+        </>
       )}
     </Flex>
   );
