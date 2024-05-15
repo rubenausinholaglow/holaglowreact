@@ -78,6 +78,7 @@ export default function AppointmentList({
 
             return (
               <AppointmentElement
+                key={appointment.id}
                 appointment={appointment}
                 isDashboard={isDashboard}
                 setAppointmentToCancel={setAppointmentToCancel}

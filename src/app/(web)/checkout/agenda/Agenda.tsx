@@ -305,7 +305,7 @@ export default function Agenda({
               paid: false,
             },
             previous: previousAppointment,
-          }).then(x => {
+          }).then(_x => {
             if (isDashboard && !isDerma) {
               router.push(
                 `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
@@ -335,7 +335,7 @@ export default function Agenda({
             analyticsMetrics,
             '',
             selectedPack
-          ).then(x => {
+          ).then(_x => {
             if (isDashboard) {
               let treatmentsToSchedule: Product[] = selectedTreatments.filter(
                 x => !x.isPack
@@ -598,8 +598,10 @@ export default function Agenda({
           appointment={appointmentToShow}
           cancelling={false}
           isDashboard={false}
-          setAppointmentToCancel={function (appointment: Appointment): void {}}
-          setShowCancelModal={function (value: boolean): void {}}
+          setAppointmentToCancel={function x(
+            _appointment: Appointment
+          ): void {}}
+          setShowCancelModal={function x(_value: boolean): void {}}
         ></AppointmentElement>
       </Flex>
     );
