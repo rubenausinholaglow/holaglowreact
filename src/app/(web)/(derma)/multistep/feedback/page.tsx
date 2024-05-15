@@ -16,8 +16,6 @@ export default function Feedback() {
   const router = useRouter();
   const { pain, feedbackStep } = useDermaStore(state => state);
 
-  console.log(pain);
-
   useEffect(() => {
     if (feedbackStep === 1 && pain !== 2) {
       router.push(ROUTES.derma.multistep.skinType);

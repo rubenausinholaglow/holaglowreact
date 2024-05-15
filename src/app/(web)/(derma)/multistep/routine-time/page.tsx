@@ -42,8 +42,8 @@ export default function RoutineTime() {
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Productos de tu rutina actual"
-              title="¿Qué productos usas en tu rutina?"
+              intro="Dedicación a la rutina diaria"
+              title="¿Cuánto tiempo dedicas a tu rutina diaria?"
             />
 
             <div className="w-full md:w-1/2">

@@ -15,7 +15,7 @@ import MedicAdvice from './MedicAdvice';
 
 export default function SkinColorFeedback() {
   const router = useRouter();
-  const { skinSensibility, skinColor } = useDermaStore(state => state);
+  const { pain, skinSensibility, skinColor } = useDermaStore(state => state);
 
   const DisplayPositions = {
     skinSensibility: [
@@ -24,14 +24,19 @@ export default function SkinColorFeedback() {
       { value: 3, position: '95%' },
     ],
     skinColor: [
-      { value: 1, position: '-5%', color: '#FFE6E0' },
-      { value: 2, position: '15%', color: '#EBD2C3' },
-      { value: 3, position: '35%', color: '#D8BDB1' },
-      { value: 4, position: '55%', color: '#B87E69' },
-      { value: 5, position: '75%', color: '#653121' },
-      { value: 6, position: '95%', color: '#3C201C' },
+      { value: 1, position: '-5%', color: SKIN_COLORS[0].color },
+      { value: 2, position: '15%', color: SKIN_COLORS[1].color },
+      { value: 3, position: '35%', color: SKIN_COLORS[2].color },
+      { value: 4, position: '55%', color: SKIN_COLORS[3].color },
+      { value: 5, position: '75%', color: SKIN_COLORS[4].color },
+      { value: 6, position: '95%', color: SKIN_COLORS[5].color },
     ],
   };
+
+  console.log(DisplayPositions.skinColor[0].color);
+  console.log(
+    DisplayPositions.skinColor.filter(item => item.value === skinColor)[0].color
+  );
 
   return (
     <DermaLayout
@@ -112,7 +117,7 @@ export default function SkinColorFeedback() {
                           item => item.value === skinColor
                         )[0].position,
                         background: `radial-gradient(circle, rgba(255,255,255,.2) 0%, ${
-                          DisplayPositions['skinColor'].filter(
+                          DisplayPositions.skinColor.filter(
                             item => item.value === skinColor
                           )[0].color
                         } 50%)`,
@@ -152,7 +157,11 @@ export default function SkinColorFeedback() {
                 <Button
                   type="derma"
                   size={isMobile ? 'md' : 'lg'}
-                  href={ROUTES.derma.multistep.secondaryConcern}
+                  href={
+                    pain === 2
+                      ? ROUTES.derma.multistep.secondaryConcern
+                      : ROUTES.derma.multistep.routine
+                  }
                 >
                   continuar
                 </Button>

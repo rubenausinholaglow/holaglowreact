@@ -13,7 +13,7 @@ interface DermaStore {
   skinColor: number;
   secondaryConcerns: string[];
   routine: number;
-  routineProduct: number;
+  routineProducts: string[];
   routineTime: number;
   sunscreen: number;
   allergy: number;
@@ -40,7 +40,7 @@ interface DermaActions {
   setSkinColor: (value: number) => void;
   setSecondaryConcerns: (value: string[]) => void;
   setRoutine: (value: number) => void;
-  setRoutineProduct: (value: number) => void;
+  setRoutineProducts: (value: string[]) => void;
   setRoutineTime: (value: number) => void;
   setSunscreen: (value: number) => void;
   setAllergy: (value: number) => void;
@@ -102,9 +102,9 @@ export const useDermaStore = create(
       setRoutine: (value: number) => {
         set({ routine: value });
       },
-      routineProduct: 0,
-      setRoutineProduct: (value: number) => {
-        set({ routineProduct: value });
+      routineProducts: [],
+      setRoutineProducts: (value: string[]) => {
+        set({ routineProducts: value });
       },
       routineTime: 0,
       setRoutineTime: (value: number) => {

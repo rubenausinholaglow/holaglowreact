@@ -117,12 +117,12 @@ export default function Allergies() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.medication}
-                  isDisabled={
-                    allergy === 0 || (allergy === 1 && allergyInfo.length === 0)
-                  }
-                />
+                {allergy === 1 && (
+                  <NextMultistepButton
+                    nextUrl={ROUTES.derma.multistep.medication}
+                    isDisabled={allergyInfo.length === 0}
+                  />
+                )}
               </Flex>
             </div>
           </Flex>

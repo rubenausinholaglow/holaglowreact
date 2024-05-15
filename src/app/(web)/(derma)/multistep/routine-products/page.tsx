@@ -1,7 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
+import { SvgSpinner } from 'app/icons/Icons';
 import {
   SvgArrow,
   SvgCheckSquare,
@@ -20,10 +22,9 @@ import { HandleNextMultistep } from '../NextMultistepButton';
 
 export default function RoutineProducts() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { routineProduct, setRoutineProduct } = useDermaStore(state => state);
-
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const { routineProducts, setRoutineProducts } = useDermaStore(state => state);
 
   return (
     <DermaLayout
@@ -48,23 +49,26 @@ export default function RoutineProducts() {
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {ROUTINE_PRODUCTS.map(item => (
+                {ROUTINE_PRODUCTS.map(routine => (
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
-                      routineProduct === item.value
+                      routineProducts.includes(routine.title)
                         ? 'bg-derma-primary/20'
                         : 'bg-derma-secondary400'
                     }`}
-                    key={item.value}
-                    onClick={async () => {
-                      setRoutineProduct(
-                        routineProduct === item.value ? 0 : item.value
-                      );
-                      router.push(ROUTES.derma.multistep.routineTime);
+                    key={routine.value}
+                    onClick={() => {
+                      if (routineProducts.includes(routine.title)) {
+                        setRoutineProducts(
+                          routineProducts.filter(item => item !== routine.title)
+                        );
+                      } else {
+                        setRoutineProducts([...routineProducts, routine.title]);
+                      }
                     }}
                   >
-                    {item.title}
-                    {routineProduct === item.value ? (
+                    {routine.title}
+                    {routineProducts.includes(routine.title) ? (
                       <SvgCheckSquareActive className="h-6 w-6" />
                     ) : (
                       <SvgCheckSquare className="h-6 w-6" />
@@ -80,6 +84,21 @@ export default function RoutineProducts() {
                 >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
+                </Button>
+                <Button
+                  size="lg"
+                  onClick={() => {
+                    setIsLoading(true);
+                  }}
+                  href={ROUTES.derma.multistep.routineTime}
+                  type={routineProducts.length === 0 ? 'disabled' : 'dermaDark'}
+                  className={isLoading ? 'pointer-events-none' : ''}
+                >
+                  {isLoading ? (
+                    <SvgSpinner className="min-w-16" />
+                  ) : (
+                    'Siguiente'
+                  )}
                 </Button>
               </Flex>
             </div>

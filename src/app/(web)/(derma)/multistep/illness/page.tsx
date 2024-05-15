@@ -117,12 +117,12 @@ export default function Illnesses() {
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
-                <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.extraInfo}
-                  isDisabled={
-                    illness === 0 || (illness === 1 && illnessInfo.length === 0)
-                  }
-                />
+                {illness === 1 && (
+                  <NextMultistepButton
+                    nextUrl={ROUTES.derma.multistep.extraInfo}
+                    isDisabled={illnessInfo.length === 0}
+                  />
+                )}
               </Flex>
             </div>
           </Flex>
