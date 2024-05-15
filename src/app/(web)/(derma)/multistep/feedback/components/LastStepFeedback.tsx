@@ -1,5 +1,6 @@
 import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
+import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow, SvgShieldTick } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -28,6 +29,8 @@ export default function LastStepFeedback() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       <div className="relative">
+        <DermaStepBar steps={22} step={20} />
+
         <Container>
           <Flex layout="col-left" className="md:flex-row w-full md:gap-16">
             <div className="relative rounded-3xl md:rounded-2xl w-full md:w-1/2 md:mt-12">
@@ -74,14 +77,14 @@ export default function LastStepFeedback() {
                   type="white"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
-                  size={isMobile ? 'md' : 'lg'}
+                  size="lg"
                 >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
                   type="derma"
-                  size={isMobile ? 'md' : 'lg'}
+                  size="lg"
                   href={ROUTES.derma.multistep.pictures}
                 >
                   Continuar

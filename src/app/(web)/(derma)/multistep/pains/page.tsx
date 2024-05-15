@@ -35,14 +35,14 @@ export default function Pains() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={1} />
+        <DermaStepBar steps={22} step={1} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 1. Necesidades de tu piel"
+              intro="Necesidades de tu piel"
               title="¿Cómo te podemos ayudar?"
             >
               <Text className="text-hg-black500 mt-2">

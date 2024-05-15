@@ -34,14 +34,14 @@ export default function Age() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       <div className="relative">
-        <DermaStepBar steps={11} step={4} />
+        <DermaStepBar steps={22} step={4} />
 
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
-            <DermaStepHeader intro="Paso 4. Edad" title="¿Qué edad tienes?" />
+            <DermaStepHeader intro="Edad" title="¿Qué edad tienes?" />
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">

@@ -39,14 +39,14 @@ export default function Medicines() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={7} />
+        <DermaStepBar steps={22} step={17} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 7. Fármacos"
+              intro="Fármacos"
               title="¿Estás tomando algún fármaco actualmente?"
             />
 

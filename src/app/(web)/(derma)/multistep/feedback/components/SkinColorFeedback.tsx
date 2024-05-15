@@ -144,14 +144,14 @@ export default function SkinColorFeedback() {
                   type="white"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
-                  size={isMobile ? 'md' : 'lg'}
+                  size="lg"
                 >
                   <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <Button
                   type="derma"
-                  size={isMobile ? 'md' : 'lg'}
+                  size="lg"
                   href={
                     pain === 2
                       ? ROUTES.derma.multistep.secondaryConcern

@@ -36,7 +36,7 @@ export default function SkinColor() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       <div className="relative">
-        <DermaStepBar steps={11} step={4} />
+        <DermaStepBar steps={22} step={9} />
 
         <Container>
           <Flex

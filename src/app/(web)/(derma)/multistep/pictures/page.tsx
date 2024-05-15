@@ -56,14 +56,14 @@ export default function Pictures() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={9} />
+        <DermaStepBar steps={22} step={21} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 9. Fotos"
+              intro="Hazte unas fotos"
               title="Sube las fotos de tu rostro"
             >
               <Text className="mt-2 text-hg-black500 text-sm">

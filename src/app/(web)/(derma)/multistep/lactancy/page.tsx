@@ -34,14 +34,14 @@ export default function Lactancy() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={8} />
+        <DermaStepBar steps={22} step={3.5} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 8. Lactancia"
+              intro="Embarazo"
               title="¿Actualmente estás en periodo de lactancia y/o embarazo?"
             />
             <div className="w-full md:w-1/2">

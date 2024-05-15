@@ -39,14 +39,14 @@ export default function Allergies() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={5} />
+        <DermaStepBar steps={22} step={16} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 5. Alergias"
+              intro="Alergias"
               title="¿Tienes alguna alergia conocida?"
             />
 

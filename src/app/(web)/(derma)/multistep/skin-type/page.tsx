@@ -36,14 +36,14 @@ export default function SkinType() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={3} />
+        <DermaStepBar steps={22} step={6} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 3. Tipo de piel"
+              intro="Tipo de piel"
               title="¿Cómo describirías la piel de tu rostro?"
             >
               <Text className="text-hg-black500 mt-2">

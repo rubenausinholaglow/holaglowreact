@@ -33,14 +33,14 @@ export default function Symptoms() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={2} />
+        <DermaStepBar steps={22} step={2} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 2. Síntomas"
+              intro="Síntomas"
               title="¿Qué síntomas ves en tu piel?"
             >
               <Text className="text-hg-black500 mt-2">
