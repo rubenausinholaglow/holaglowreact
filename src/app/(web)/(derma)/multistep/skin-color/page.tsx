@@ -54,7 +54,7 @@ export default function SkinColor() {
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       skinColor === color.value
-                        ? 'bg-derma-primary/20'
+                        ? 'bg-derma-primary500/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={color.value}
@@ -90,7 +90,8 @@ export default function SkinColor() {
               </ul>
               <Flex className="justify-between">
                 <Button
-                  type="white"
+                  type="whiteDerma"
+                  size="lg"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                 >

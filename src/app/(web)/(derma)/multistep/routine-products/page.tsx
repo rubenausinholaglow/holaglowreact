@@ -18,7 +18,6 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { ROUTINE_PRODUCTS } from '../multistepConfig';
-import { HandleNextMultistep } from '../NextMultistepButton';
 
 export default function RoutineProducts() {
   const router = useRouter();
@@ -45,7 +44,11 @@ export default function RoutineProducts() {
             <DermaStepHeader
               intro="Productos de tu rutina actual"
               title="¿Qué productos usas en tu rutina?"
-            />
+            >
+              <Text className="text-hg-black500 mt-2">
+                Selecciona todos los que apliquen
+              </Text>
+            </DermaStepHeader>
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
@@ -53,7 +56,7 @@ export default function RoutineProducts() {
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       routineProducts.includes(routine.title)
-                        ? 'bg-derma-primary/20'
+                        ? 'bg-derma-primary500/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={routine.value}
@@ -78,7 +81,8 @@ export default function RoutineProducts() {
               </ul>
               <Flex className="justify-between">
                 <Button
-                  type="white"
+                  type="whiteDerma"
+                  size="lg"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                 >

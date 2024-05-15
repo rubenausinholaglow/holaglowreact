@@ -16,8 +16,8 @@ export default function LastStepFeedback() {
     url: isMobile
       ? '/images/derma/multistep/feedback/foto.jpg'
       : '/images/derma/multistep/feedback/foto-desk.jpg',
-    width: isMobile ? 358 : 544,
-    height: isMobile ? 264 : 412,
+    width: isMobile ? 716 : 1088,
+    height: isMobile ? 528 : 824,
   };
 
   return (
@@ -74,7 +74,7 @@ export default function LastStepFeedback() {
 
               <Flex className="justify-between w-full mb-8">
                 <Button
-                  type="white"
+                  type="whiteDerma"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                   size="lg"

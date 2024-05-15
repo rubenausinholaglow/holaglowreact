@@ -57,7 +57,7 @@ export default function Pains() {
                     <li
                       className={`flex flex-col justify-start transition-all rounded-xl p-3 items-center gap-4 cursor-pointer relative ${
                         pain === painItem.value
-                          ? 'bg-derma-primary/20'
+                          ? 'bg-derma-primary500/20'
                           : 'bg-derma-secondary400'
                       }`}
                       key={painItem.name}
@@ -87,7 +87,8 @@ export default function Pains() {
 
                 <Flex className="justify-between">
                   <Button
-                    type="white"
+                    size="lg"
+                    type="whiteDerma"
                     customStyles="bg-transparent border-none"
                     onClick={() => router.back()}
                   >

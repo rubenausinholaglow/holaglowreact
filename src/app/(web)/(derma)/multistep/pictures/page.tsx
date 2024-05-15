@@ -101,7 +101,8 @@ export default function Pictures() {
 
               <Flex className="justify-between">
                 <Button
-                  type="white"
+                  type="whiteDerma"
+                  size="lg"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                 >

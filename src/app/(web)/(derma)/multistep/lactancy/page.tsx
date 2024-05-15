@@ -50,7 +50,7 @@ export default function Lactancy() {
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       lactating === item.value
-                        ? 'bg-derma-primary/20'
+                        ? 'bg-derma-primary500/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={item.title}
@@ -73,7 +73,7 @@ export default function Lactancy() {
               {lactating === 3 || lactating === 0 ? (
                 <Flex className="justify-between pb-12">
                   <Button
-                    type="white"
+                    type="whiteDerma"
                     customStyles="bg-transparent border-none"
                     onClick={() => router.back()}
                   >
@@ -100,7 +100,7 @@ export default function Lactancy() {
                     interesada!
                   </Text>
                   <Button
-                    type="white"
+                    type="whiteDerma"
                     customStyles="bg-transparent border-none"
                     onClick={() => {
                       setGender(undefined);

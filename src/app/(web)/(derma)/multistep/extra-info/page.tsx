@@ -70,7 +70,8 @@ export default function ExtraInfo() {
               />
               <Flex className="justify-between">
                 <Button
-                  type="white"
+                  type="whiteDerma"
+                  size="lg"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                 >

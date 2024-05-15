@@ -43,16 +43,13 @@ export default function RoutineFeedback() {
                 className="mx-auto w-24 mb-4 md:ml-0"
               />
               <Text className="text-xl md:text-3xl text-derma-primary font-light font-gtUltra mb-4">
-                Tu crema personalizada para{' '}
-                <span className="font-semibold">
-                  {filteredFeedback.name.toLocaleLowerCase()}
-                </span>{' '}
-                necesitará cremas complementarias para sacarle el máximo partido
+                Estas cremas serán el complemento perfecto para tu crema
+                personalizada
               </Text>
             </div>
             <div className="w-full md:w-1/2">
               <Flex layout="col-left" className="w-full gap-4 mb-12">
-                {DERMA_COMPLEMENTS.map(complement => {
+                {DERMA_COMPLEMENTS.map((complement, index) => {
                   return (
                     <Flex
                       key={complement.name}
@@ -61,14 +58,16 @@ export default function RoutineFeedback() {
                     >
                       <Image
                         src={complement.imgSrc}
-                        height={392}
-                        width={328}
+                        height={248}
+                        width={184}
                         alt={complement.name}
                         className="w-1/4 md:w-1/5 mx-auto mb-4 shrink-0"
                       />
                       <Flex layout="col-left" className="w-full gap-2">
                         <Flex layout="row-between" className="w-full text-xs">
-                          <Text className="text-hg-black500">Paso 1</Text>
+                          <Text className="text-hg-black500">
+                            Paso {index + 1}
+                          </Text>
                           <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary">
                             <SvgSun className="w-4 h-4" />
                             <span>Día</span>
@@ -95,7 +94,7 @@ export default function RoutineFeedback() {
 
               <Flex className="justify-between w-full mb-8">
                 <Button
-                  type="white"
+                  type="whiteDerma"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                   size="lg"

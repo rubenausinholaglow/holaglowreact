@@ -38,7 +38,7 @@ export default function SkinTypeFeedback() {
 
         <Container>
           <Flex layout="col-left" className="md:flex-row w-full md:gap-16">
-            <div className="relative rounded-3xl md:rounded-2xl w-full md:w-1/2 md:mt-12">
+            <div className="relative rounded-3xl md:rounded-2xl w-full md:w-1/2 md:mt-4">
               <Image
                 alt="Dra. Sonsoles Espí"
                 src="/images/derma/multistep/Sonsoles.png"
@@ -53,7 +53,7 @@ export default function SkinTypeFeedback() {
             <div className="md:w-1/2">
               <Flex
                 layout="col-left"
-                className="items-center relative md:justify-center md:flex-row md:mt-12"
+                className="items-center relative md:justify-center md:flex-row md:mt-4"
               >
                 <Flex layout="col-left" className="relative z-10 py-4">
                   <Flex className="justify-center w-full mb-8">
@@ -72,7 +72,7 @@ export default function SkinTypeFeedback() {
 
                   <Flex className="justify-between w-full mb-8">
                     <Button
-                      type="white"
+                      type="whiteDerma"
                       customStyles="bg-transparent border-none"
                       onClick={() => router.back()}
                       size="lg"

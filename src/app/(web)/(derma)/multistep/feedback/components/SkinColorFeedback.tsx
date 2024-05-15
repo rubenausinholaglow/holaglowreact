@@ -1,6 +1,6 @@
-import { isMobile } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
+import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
@@ -19,17 +19,17 @@ export default function SkinColorFeedback() {
 
   const DisplayPositions = {
     skinSensibility: [
-      { value: 3, position: 'calc(0% - 18px)' },
-      { value: 2, position: 'calc(50% - 18px)' },
-      { value: 1, position: 'calc(100% - 18px)' },
+      { value: 3, position: '0%' },
+      { value: 2, position: '50%' },
+      { value: 1, position: '100%' },
     ],
     skinColor: [
-      { value: 0, position: 'calc(0% - 18px)', color: SKIN_COLORS[0].color },
-      { value: 1, position: 'calc(20% - 18px)', color: SKIN_COLORS[1].color },
-      { value: 2, position: 'calc(40% - 18px)', color: SKIN_COLORS[2].color },
-      { value: 3, position: 'calc(60% - 18px)', color: SKIN_COLORS[3].color },
-      { value: 4, position: 'calc(80% - 18px)', color: SKIN_COLORS[4].color },
-      { value: 5, position: 'calc(0% - 18px)', color: SKIN_COLORS[5].color },
+      { value: 0, position: '0%', color: SKIN_COLORS[0].color },
+      { value: 1, position: '20%', color: SKIN_COLORS[1].color },
+      { value: 2, position: '40%', color: SKIN_COLORS[2].color },
+      { value: 3, position: '60%', color: SKIN_COLORS[3].color },
+      { value: 4, position: '80%', color: SKIN_COLORS[4].color },
+      { value: 5, position: '0%', color: SKIN_COLORS[5].color },
     ],
   };
 
@@ -42,9 +42,11 @@ export default function SkinColorFeedback() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       <div className="relative">
+        <DermaStepBar steps={22} step={10} />
+
         <Container>
           <Flex layout="col-left" className="md:flex-row w-full md:gap-16">
-            <div className="relative rounded-3xl md:rounded-2xl w-full md:w-1/2 md:mt-12">
+            <div className="relative rounded-3xl md:rounded-2xl w-full md:w-1/2 md:mt-4">
               <Image
                 alt="Dra. Sonsoles Espí"
                 src="/images/derma/multistep/Sonsoles.png"
@@ -58,12 +60,12 @@ export default function SkinColorFeedback() {
               </Text>
             </div>
             <div className="w-full md:w-1/2">
-              <Flex className="flex-col items-center justify-center py-12 gap-12">
-                <div className="px-4 w-full">
+              <Flex className="flex-col items-center justify-center gap-12 md:mt-4">
+                <div className="px-8 md:px-4 w-full">
                   <CheckHydration>
                     <div className="relative w-full h-32">
                       <div
-                        className="bg-white rounded-full h-10 w-10 absolute bg-gradient-radial from-derma-primary100 to-derma-primary500 to-50% border border-hg-black/20"
+                        className="bg-white rounded-full h-10 w-10 absolute bg-gradient-radial from-derma-primary100 to-derma-primary500 to-50% border border-white -translate-x-1/2"
                         style={{
                           left: DisplayPositions['skinSensibility'].filter(
                             item => item.value === skinSensibility
@@ -106,7 +108,7 @@ export default function SkinColorFeedback() {
 
                   <div className="relative w-full h-32">
                     <div
-                      className="bg-white rounded-full h-10 w-10 absolute border border-hg-black/10"
+                      className="bg-white rounded-full h-10 w-10 absolute border border-white -translate-x-1/2"
                       style={{
                         left: DisplayPositions['skinColor'].filter(
                           item => item.value === skinColor
@@ -118,21 +120,25 @@ export default function SkinColorFeedback() {
                         } 50%)`,
                       }}
                     />
+
                     <Image
                       alt="color de piel"
                       src="/images/derma/multistep/feedback/lineasTonoPiel.svg"
                       fill
                     />
-                    <Flex
-                      layout="row-between"
-                      className="w-full absolute bottom-8 left-0 right-0 text-xs"
+                    <div
+                      className="w-24 absolute bottom-8 text-xs text-center -translate-x-1/2"
+                      style={{
+                        left: DisplayPositions['skinColor'].filter(
+                          item => item.value === skinColor
+                        )[0].position,
+                      }}
                     >
-                      <Text className="text-hg-black400">Piel clara</Text>
-                      <Text className="text-hg-black400 absolute left-1/2 -translate-x-1/2">
-                        Piel media
-                      </Text>
-                      <Text className="text-hg-black400">Piel oscura</Text>
-                    </Flex>
+                      {
+                        SKIN_COLORS.filter(item => item.value === skinColor)[0]
+                          .title
+                      }
+                    </div>
                   </div>
                 </div>
               </Flex>
@@ -141,7 +147,7 @@ export default function SkinColorFeedback() {
 
               <Flex className="justify-between w-full mb-8">
                 <Button
-                  type="white"
+                  type="whiteDerma"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                   size="lg"

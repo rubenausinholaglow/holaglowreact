@@ -22,7 +22,7 @@ export default function StartMultistep() {
       hideButton
       hideFooter
       hideNavigation
-      className="bg-derma-secondary300 min-h-screen"
+      className="bg-derma-secondary300 min-h-screen md:pb-20"
     >
       <Container>
         <Flex

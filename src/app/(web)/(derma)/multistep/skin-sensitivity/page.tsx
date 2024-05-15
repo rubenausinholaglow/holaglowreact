@@ -45,8 +45,8 @@ export default function SkinSensitivity() {
               title="¿Cómo de sensible es tu piel?"
             >
               <Text className="text-hg-black500 mt-2">
-                Con qué frecuencia se irrita tu piel y aparecen señales como
-                enrojecimiento, ardor, sequedad, o tirantez
+                Depende de con qué frecuencia se irrita tu piel y aparecen
+                señales como enrojecimiento, ardor, sequedad, o tirantez
               </Text>
             </DermaStepHeader>
 
@@ -56,7 +56,7 @@ export default function SkinSensitivity() {
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       skinSensibility === skin.value
-                        ? 'bg-derma-primary/20'
+                        ? 'bg-derma-primary500/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={skin.value}
@@ -78,7 +78,8 @@ export default function SkinSensitivity() {
               </ul>
               <Flex className="justify-between">
                 <Button
-                  type="white"
+                  type="whiteDerma"
+                  size="lg"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                 >

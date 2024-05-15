@@ -3,6 +3,7 @@ import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -10,11 +11,19 @@ import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { DERMA_INGREDIENTS } from '../../multistepConfig';
+import { ACTIVE_PRINCIPLES } from '../../multistepConfig';
 import MedicAdvice from './MedicAdvice';
 
 export default function SkinTypeFeedback() {
   const router = useRouter();
+
+  const { secondaryConcerns } = useDermaStore(store => store);
+
+  console.log(secondaryConcerns);
+
+  const filteredActives = ACTIVE_PRINCIPLES.filter(active => {
+    return active.concerns.some(concern => secondaryConcerns.includes(concern));
+  });
 
   return (
     <DermaLayout
@@ -48,14 +57,14 @@ export default function SkinTypeFeedback() {
               <Container className="px-0 md:pl-4">
                 <Carousel
                   isIntrinsicHeight
-                  hasControls={!isMobile && DERMA_INGREDIENTS.length > 2}
+                  hasControls={!isMobile && filteredActives.length > 2}
                   visibleSlides={isMobile ? 1.5 : 2}
                   infinite={false}
                   isDerma
                   controlStyles="pr-4"
                   className="mb-12"
                 >
-                  {DERMA_INGREDIENTS.map(ingredient => (
+                  {filteredActives.map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"
@@ -71,7 +80,7 @@ export default function SkinTypeFeedback() {
                       </Flex>
                       <Text className="font-semibold">{ingredient.name}</Text>
                       <ul className="flex gap-2 flex-wrap">
-                        {ingredient.tags.map(tag => (
+                        {ingredient.concerns.map(tag => (
                           <li
                             key={tag}
                             className="p-2 px-3 rounded-full bg-derma-secondary100/50 text-derma-primary text-xs"
@@ -89,7 +98,7 @@ export default function SkinTypeFeedback() {
 
                 <Flex className="justify-between w-full mb-8">
                   <Button
-                    type="white"
+                    type="whiteDerma"
                     customStyles="bg-transparent border-none"
                     onClick={() => router.back()}
                     size="lg"

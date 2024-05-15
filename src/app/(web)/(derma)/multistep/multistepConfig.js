@@ -144,7 +144,7 @@ export const SKIN_COLORS = [
     color: '#EBD2C3',
   },
   {
-    title: 'Morena Clara',
+    title: 'Morena clara',
     description: 'Pieles que llegan a broncearse y se queman moderadamente',
     value: 2,
     color: '#D8BDB1',
