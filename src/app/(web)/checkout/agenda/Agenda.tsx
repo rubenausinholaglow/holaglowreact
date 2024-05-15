@@ -536,7 +536,7 @@ export default function Agenda({
     const getAppointments = async () => {
       if (token && treatment) {
         const res = await ScheduleService.next(token);
-        var minDay = dayjs('2000-01-01');
+        let minDay = dayjs('2000-01-01');
         res.forEach(x => {
           if (x.treatmentText == 'Revisión Tratamiento') {
             setShowReviewAlreadyCreated(true);
@@ -566,7 +566,7 @@ export default function Agenda({
           }`}
         />
         <Title size="xl" className="font-semibold">
-          ¡Lo sentimos!
+          Ya tienes una cita con nosotros.
         </Title>
         <Text size="sm" className="font-semibold mb-4 text-center">
           No hay citas para el dia seleccionado
