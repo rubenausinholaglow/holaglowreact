@@ -31,6 +31,8 @@ import {
   StartAppointmentData,
 } from 'app/types/FrontEndMessages';
 import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -38,6 +40,9 @@ import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface LoadingState {
   [key: string]: boolean;
@@ -263,25 +268,26 @@ const AppointmentsListComponent: React.FC<{
     appointment: AppointmentsPerClinicResponse,
     appointmentEventType: AppointmentEventType
   ): JSX.Element => {
-    const filteredEvents = appointment.appointmentEvents?.filter(
-      event => event.appointmentEventType === appointmentEventType
-    );
-
-    if (filteredEvents && filteredEvents.length > 0) {
-      const maxDate = filteredEvents.reduce(
-        (maxDate: Date | null, event: any) => {
-          const eventDate = new Date(event.date);
-          return !maxDate || eventDate > maxDate ? eventDate : maxDate;
-        },
-        null
+    if (
+      appointment.appointmentEvents &&
+      appointment.appointmentEvents.length > 0
+    ) {
+      const filteredEvents = appointment.appointmentEvents?.filter(
+        event => event.appointmentEventType === appointmentEventType
       );
-
-      if (maxDate) {
-        return (
-          <p className="text-sm">
-            {dayjs(convertUTCDateToLocalDate(maxDate)).format('HH:mm:ss')}
-          </p>
+      if (filteredEvents && filteredEvents.length > 0) {
+        filteredEvents.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
         );
+
+        const maxDate = filteredEvents[filteredEvents.length - 1].date;
+        if (maxDate) {
+          return (
+            <p className="text-sm">
+              {dayjs.utc(maxDate).local().format('HH:mm:ss')}
+            </p>
+          );
+        }
       }
     }
 
