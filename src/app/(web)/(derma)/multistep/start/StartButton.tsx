@@ -1,3 +1,4 @@
+import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -5,7 +6,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 export default function StartButton() {
   return (
     <Button
-      size="lg"
+      size={isMobileSSR() ? 'lg' : 'xl'}
       type="dermaDark"
       href={ROUTES.derma.multistep.pains}
       id="tmevent_derma_start"
