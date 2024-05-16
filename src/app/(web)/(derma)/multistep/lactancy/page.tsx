@@ -2,11 +2,8 @@
 
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import {
-  SvgArrow,
-  SvgCheckSquare,
-  SvgCheckSquareActive,
-} from 'app/icons/IconsDs';
+import { SvgCircle } from 'app/icons/Icons';
+import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -22,9 +19,9 @@ import NextMultistepButton, {
 
 export default function Lactancy() {
   const router = useRouter();
-  const { lactating, setLactating } = useDermaStore(state => state);
+  const { lactating, setLactating, setGender } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.pictures);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.age);
   return (
     <DermaLayout
       hideButton
@@ -34,14 +31,14 @@ export default function Lactancy() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={8} />
+        <DermaStepBar steps={22} step={3.5} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 8. Lactancia"
+              intro="Embarazo"
               title="¿Actualmente estás en periodo de lactancia y/o embarazo?"
             />
             <div className="w-full md:w-1/2">
@@ -50,40 +47,36 @@ export default function Lactancy() {
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       lactating === item.value
-                        ? 'bg-derma-primary/20'
+                        ? 'bg-derma-primary500/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={item.title}
                     onClick={async () => {
                       setLactating(lactating === item.value ? 0 : item.value);
-                      if (item.value == 2 && lactating !== item.value)
+                      if (item.value === 3 && lactating !== item.value)
                         await nextStep();
                     }}
                   >
                     {item.title}
                     {lactating === item.value ? (
-                      <SvgCheckSquareActive className="h-6 w-6" />
+                      <SvgRadioChecked className="h-7 w-7" />
                     ) : (
-                      <SvgCheckSquare className="h-6 w-6" />
+                      <SvgCircle className="h-7 w-7" />
                     )}
                   </li>
                 ))}
               </ul>
 
-              {lactating === 0 || lactating === 2 ? (
+              {lactating === 3 || lactating === 0 ? (
                 <Flex className="justify-between pb-12">
                   <Button
-                    type="white"
+                    type="whiteDerma"
                     customStyles="bg-transparent border-none"
                     onClick={() => router.back()}
                   >
                     <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
                     <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
-                  <NextMultistepButton
-                    nextUrl={ROUTES.derma.multistep.pictures}
-                    isDisabled={lactating !== 2}
-                  />
                 </Flex>
               ) : (
                 <div className="bg-white p-4 rounded-2xl text-hg-black500 text-sm">
@@ -103,16 +96,16 @@ export default function Lactancy() {
                     ¡Estaremos encantados de atenderte más adelante si sigues
                     interesada!
                   </Text>
-
                   <Button
-                    type="white"
+                    type="whiteDerma"
                     customStyles="bg-transparent border-none"
-                    href={ROUTES.derma.home}
+                    onClick={() => {
+                      setGender(undefined);
+                      router.back();
+                    }}
                   >
                     <SvgArrow className="h-4 w-4 rotate-180 mr-2" />
-                    <Text className="text-derma-tertiary">
-                      Volver al inicio
-                    </Text>
+                    <Text className="text-derma-tertiary">Atrás</Text>
                   </Button>
                 </div>
               )}

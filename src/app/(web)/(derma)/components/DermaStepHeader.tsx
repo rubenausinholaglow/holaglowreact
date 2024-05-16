@@ -12,14 +12,7 @@ export default function DermaStepHeader({
   children?: ReactNode;
 }) {
   return (
-    <div className="md:w-1/2">
-      <Image
-        alt="Dr. Basart"
-        src="/images/derma/multistep/Sonsoles.png"
-        height={192}
-        width={192}
-        className="mx-auto w-24 mb-4 md:ml-0"
-      />
+    <div className="w-full md:w-1/2">
       <Text className="text-xs text-derma-primary500 mb-1">{intro}</Text>
       <Title className="text-derma-primary font-light mb-1">{title}</Title>
       {children}

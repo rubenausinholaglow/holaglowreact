@@ -12,34 +12,41 @@ export const HandleNextMultistep = (nextUrl: string) => {
     setId,
     pain,
     symptoms,
+    gender,
+    lactating,
+    age,
     skinType,
     skinSensibility,
+    skinColor,
     allergy,
     allergyInfo,
     illness,
     illnessInfo,
     medication,
     medicationInfo,
-    lactating,
     extraInfo,
+    secondaryConcerns,
   } = useDermaStore(state => state);
+
   const router = useRouter();
   const next = () => {
     const dermaQuestions = {
       id,
       skinPain: pain,
       skinType,
+      gender,
+      lactating,
+      ageRange: age,
       skinSensibility,
+      skinColor,
       allergy,
       allergyInfo,
       illness,
       illnessInfo,
       medication,
       medicationInfo,
-      lactating,
-      skinConcerns: symptoms.map(x => ({
-        concern: x,
-      })),
+      skinConcerns: symptoms.map(x => ({ concern: x })),
+      objectives: secondaryConcerns.map(x => ({ objective: x })),
       extraInfo,
     };
 
@@ -62,12 +69,20 @@ export const HandleNextMultistep = (nextUrl: string) => {
 export default function NextMultistepButton({
   isDisabled,
   nextUrl,
+  feedbackStep,
 }: {
   isDisabled: boolean;
   nextUrl: string;
+  feedbackStep?: number;
 }) {
   const nextStep = HandleNextMultistep(nextUrl);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setFeedbackStep } = useDermaStore(state => state);
+
+  if (feedbackStep) {
+    setFeedbackStep(feedbackStep);
+  }
 
   return (
     <Button

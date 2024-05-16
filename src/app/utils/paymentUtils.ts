@@ -81,7 +81,7 @@ export const usePayments = () => {
         isDerma
       );
       setPayment(paymentResponse);
-      if (paymentResponse.id != '') return true;
+      return paymentResponse.id;
     } catch (error) {
       console.error('Error initializing payment:', error);
     }
