@@ -11,7 +11,6 @@ import {
 } from '@utils/appointmentUtils';
 import { ERROR_GETTING_DATA } from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
-import { convertUTCDateToLocalDate } from '@utils/utils';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow, SvgCheck, SvgCross, SvgUserSquare } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
