@@ -70,7 +70,7 @@ export default function Pains() {
                         alt={painItem.name}
                         className="rounded-xl w-full"
                       />
-                      <div className="absolute top-6 right-6 bg-white rounded-xl">
+                      <div className="absolute top-6 right-6 bg-white rounded-full">
                         {pain === painItem.value ? (
                           <SvgRadioChecked className="h-7 w-7" />
                         ) : (
