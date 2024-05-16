@@ -18,45 +18,63 @@ export default function ProductDiscountForm({
   className?: string;
   showPercentage?: boolean;
 }) {
-  const { register, handleSubmit } = useForm();
   const { priceDiscount } = useCartStore(state => state);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
+
   const cartItemDiscount = (data: any) => {
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
-  const cartDiscount = (data: any) => {
-    if (priceDiscount > 0) return;
-    if (showPercentage) {
-      data.cartUniqueId = cartUniqueId;
-      data.Value = 100;
-      data.DiscountType = '%';
-      cartItemDiscount(data);
-    } else {
-      data.Value = 50;
-      data.DiscountType = 'total';
-      applyCartDiscount(data.Value, data.DiscountType);
+  const DiscountTypes = [
+    { name: 'MGM', type: 'total', price: 50 },
+    { name: 'WEB', type: 'total', price: 49 },
+  ];
+
+  function handleAddDiscount(data: any) {
+    if (priceDiscount > 0 && data.type === 'total') return;
+    if (data.type === 'total') {
+      applyCartDiscount(data.price, data.type);
     }
-  };
+    if (data.type === '%') {
+      const discount = {
+        cartUniqueId: cartUniqueId,
+        Value: data.price,
+        DiscountType: '%',
+      };
+      cartItemDiscount(discount);
+    }
+  }
 
   return (
-    <form
-      onSubmit={handleSubmit(cartDiscount)}
-      className={twMerge(`text-left ${className}`)}
-    >
-      <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
-        {showPercentage ? (
-          <Button size="sm" isSubmit type="tertiary" {...register('Value')}>
-            <Flex className="gap-2 p-2 rounded-xl ">100%</Flex>
-          </Button>
-        ) : (
-          <Button size="sm" isSubmit type="tertiary" {...register('Value')}>
-            <Flex className="gap-2 p-2 rounded-xl ">MGM</Flex>
-          </Button>
-        )}
-      </Flex>
-    </form>
+    <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
+      {showPercentage ? (
+        <Button
+          size="sm"
+          isSubmit
+          type="tertiary"
+          onClick={() =>
+            handleAddDiscount({ name: 'Product', type: '%', price: 100 })
+          }
+        >
+          <Flex className="gap-2 p-2 rounded-xl">100%</Flex>
+        </Button>
+      ) : (
+        <div className="flex gap-2">
+          {DiscountTypes.map(({ name, type, price }, index) => (
+            <Button
+              key={index}
+              size="sm"
+              isSubmit
+              type="tertiary"
+              onClick={() => handleAddDiscount({ name, type, price })}
+            >
+              <Flex className="gap-2 p-2 rounded-xl">{name}</Flex>
+            </Button>
+          ))}
+        </div>
+      )}
+    </Flex>
   );
 }
