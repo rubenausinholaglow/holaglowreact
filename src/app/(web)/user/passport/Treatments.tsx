@@ -161,9 +161,11 @@ export default function Treatments({
                     <td className="py-3 pr-6">{parsedDate}</td>
                     <td className="py-3 pr-6">{appointmentTitle}</td>
                     <td className="py-3 pr-6">
-                      {appointment.clinicProfessional.name}
+                      {prevAppointment.clinicProfessional.name}
                     </td>
-                    <td className="py-3 pr-6">{appointment.clinic.address}</td>
+                    <td className="py-3 pr-6">
+                      {prevAppointment.clinic.address}
+                    </td>
                   </tr>
                 );
               })}
