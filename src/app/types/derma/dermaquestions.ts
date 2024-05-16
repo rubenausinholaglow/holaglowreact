@@ -12,6 +12,7 @@ export interface DermaQuestions {
   gender: number;
   skinType: number;
   skinSensibility: number;
+  skinColor: number;
   allergy: number;
   allergyInfo: string;
   illness: number;
@@ -20,10 +21,16 @@ export interface DermaQuestions {
   medicationInfo: string;
   lactating: number;
   skinConcerns: SkinConcern[];
+  objectives: Objective[];
   scenario: string | undefined;
+  ageRange: number;
 }
 export interface SkinConcern {
   concern: string;
+}
+
+export interface Objective {
+  objective: string;
 }
 
 export interface DermaQuestionsResponse {
@@ -38,6 +45,7 @@ export interface DermaQuestionsResponse {
   gender: number;
   skinType: number;
   skinSensibility: number;
+  skinColor: number;
   allergy: number;
   allergyInfo: string;
   illness: number;
@@ -46,6 +54,8 @@ export interface DermaQuestionsResponse {
   medicationInfo: string;
   lactating: number;
   skinConcerns: SkinConcern[];
+  objectives: Objective[];
   scenario: string | undefined;
   photos: string[];
+  ageRange: number;
 }

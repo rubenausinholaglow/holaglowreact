@@ -13,16 +13,19 @@ export const HandleNextMultistep = (nextUrl: string) => {
     pain,
     symptoms,
     gender,
+    lactating,
+    age,
     skinType,
     skinSensibility,
+    skinColor,
     allergy,
     allergyInfo,
     illness,
     illnessInfo,
     medication,
     medicationInfo,
-    lactating,
     extraInfo,
+    secondaryConcerns,
   } = useDermaStore(state => state);
 
   const router = useRouter();
@@ -32,17 +35,18 @@ export const HandleNextMultistep = (nextUrl: string) => {
       skinPain: pain,
       skinType,
       gender,
+      lactating,
+      ageRange: age,
       skinSensibility,
+      skinColor,
       allergy,
       allergyInfo,
       illness,
       illnessInfo,
       medication,
       medicationInfo,
-      lactating,
-      skinConcerns: symptoms.map(x => ({
-        concern: x,
-      })),
+      skinConcerns: symptoms.map(x => ({ concern: x })),
+      objectives: secondaryConcerns.map(x => ({ objective: x })),
       extraInfo,
     };
 
