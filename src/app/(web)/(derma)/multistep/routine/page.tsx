@@ -2,11 +2,8 @@
 
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import {
-  SvgArrow,
-  SvgCheckSquare,
-  SvgCheckSquareActive,
-} from 'app/icons/IconsDs';
+import { SvgCircle } from 'app/icons/Icons';
+import { SvgArrow, SvgRadioChecked } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -60,9 +57,9 @@ export default function Routine() {
                   >
                     {item.title}
                     {routine === item.value ? (
-                      <SvgCheckSquareActive className="h-6 w-6" />
+                      <SvgRadioChecked className="h-7 w-7" />
                     ) : (
-                      <SvgCheckSquare className="h-6 w-6" />
+                      <SvgCircle className="h-7 w-7" />
                     )}
                   </li>
                 ))}

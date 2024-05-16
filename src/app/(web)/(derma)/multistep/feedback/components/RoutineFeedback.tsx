@@ -17,9 +17,8 @@ export default function RoutineFeedback() {
   const { pain } = useDermaStore(state => state);
   const router = useRouter();
 
-  const filteredFeedback = PAINS_AND_SYMPTOMS.filter(
-    item => item.value === pain
-  )[0];
+  const painName = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0]
+    .name;
 
   return (
     <DermaLayout
@@ -82,6 +81,7 @@ export default function RoutineFeedback() {
                         </Flex>
                         <Text className="font-semibold text-sm md:text-md">
                           {complement.name}
+                          {index === 1 && painName.toLowerCase()}
                         </Text>
                         <Text className="text-sm md:text-md">
                           {complement.smallDescription}

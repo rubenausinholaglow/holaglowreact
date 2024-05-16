@@ -315,7 +315,7 @@ export const DERMA_COMPLEMENTS = [
   },
   {
     imgSrc: '/images/derma/landingPrecios/ingredients/crema.png',
-    name: 'Crema de día específica',
+    name: 'Crema de día específica para ',
     smallDescription: 'Crema de día preparada por tu médico',
     isNightRoutine: false,
     volume: '50ml',
