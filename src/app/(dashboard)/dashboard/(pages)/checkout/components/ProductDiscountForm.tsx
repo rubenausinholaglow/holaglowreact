@@ -28,19 +28,20 @@ export default function ProductDiscountForm({
   };
 
   const DiscountTypes = [
-    { name: 'MGM', type: 'total', price: 50 },
-    { name: 'WEB', type: 'total', price: 49 },
+    { name: 'MGM', type: 'total', value: 50, show: !showPercentage },
+    { name: 'WEB', type: 'total', value: 49, show: !showPercentage },
+    { name: '100%', type: '%', value: 100, show: showPercentage },
   ];
 
   function handleAddDiscount(data: any) {
     if (priceDiscount > 0 && data.type === 'total') return;
     if (data.type === 'total') {
-      applyCartDiscount(data.price, data.type);
+      applyCartDiscount(data.value, data.type);
     }
     if (data.type === '%') {
       const discount = {
         cartUniqueId: cartUniqueId,
-        Value: data.price,
+        Value: data.value,
         DiscountType: '%',
       };
       cartItemDiscount(discount);
@@ -49,32 +50,23 @@ export default function ProductDiscountForm({
 
   return (
     <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
-      {showPercentage ? (
-        <Button
-          size="sm"
-          isSubmit
-          type="tertiary"
-          onClick={() =>
-            handleAddDiscount({ name: 'Product', type: '%', price: 100 })
-          }
-        >
-          <Flex className="gap-2 p-2 rounded-xl">100%</Flex>
-        </Button>
-      ) : (
-        <div className="flex gap-2">
-          {DiscountTypes.map(({ name, type, price }, index) => (
-            <Button
-              key={index}
-              size="sm"
-              isSubmit
-              type="tertiary"
-              onClick={() => handleAddDiscount({ name, type, price })}
-            >
-              <Flex className="gap-2 p-2 rounded-xl">{name}</Flex>
-            </Button>
-          ))}
-        </div>
-      )}
+      <div className="flex gap-2">
+        {DiscountTypes.map(({ name, type, value, show }, index) => (
+          <>
+            {show && (
+              <Button
+                key={index}
+                size="sm"
+                isSubmit
+                type="tertiary"
+                onClick={() => handleAddDiscount({ name, type, value })}
+              >
+                <Flex className="gap-2 p-2 rounded-xl">{name}</Flex>
+              </Button>
+            )}
+          </>
+        ))}
+      </div>
     </Flex>
   );
 }
