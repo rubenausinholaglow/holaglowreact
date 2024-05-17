@@ -3,11 +3,19 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface DermaStore {
   id: string;
-  pain: number;
+  pain: undefined | number;
   otherPain: string;
   symptoms: string[];
+  gender: undefined | number;
+  age: undefined | number;
   skinType: number;
   skinSensibility: number;
+  skinColor: undefined | number;
+  secondaryConcerns: string[];
+  routine: number;
+  routineProducts: string[];
+  routineTime: number;
+  sunscreen: number;
   allergy: number;
   allergyInfo: string;
   illness: number;
@@ -19,15 +27,24 @@ interface DermaStore {
   extraInfo: string;
   userId: string;
   diagnosticId: string;
+  feedbackStep: number;
 }
 
 interface DermaActions {
   setId: (value: string) => void;
-  setPain: (value: number) => void;
+  setPain: (value: undefined | number) => void;
   setOtherPain: (value: string) => void;
   setSymptoms: (value: string[]) => void;
+  setGender: (value: undefined | number) => void;
+  setAge: (value: undefined | number) => void;
   setSkinType: (value: number) => void;
   setSkinSensibility: (value: number) => void;
+  setSkinColor: (value: undefined | number) => void;
+  setSecondaryConcerns: (value: string[]) => void;
+  setRoutine: (value: number) => void;
+  setRoutineProducts: (value: string[]) => void;
+  setRoutineTime: (value: number) => void;
+  setSunscreen: (value: number) => void;
   setAllergy: (value: number) => void;
   setAllergyInfo: (value: string) => void;
   setIllness: (value: number) => void;
@@ -39,6 +56,7 @@ interface DermaActions {
   setExtraInfo: (value: string) => void;
   setUserId: (value: string) => void;
   setDiagnosticId: (value: string) => void;
+  setFeedbackStep: (value: number) => void;
 }
 
 export const useDermaStore = create(
@@ -48,8 +66,8 @@ export const useDermaStore = create(
       setId: (value: string) => {
         set({ id: value });
       },
-      pain: 6, // values from 0 to 5 are real values,
-      setPain: (value: number) => {
+      pain: undefined,
+      setPain: (value: undefined | number) => {
         set({ pain: value });
       },
       otherPain: '',
@@ -60,6 +78,14 @@ export const useDermaStore = create(
       setSymptoms: (value: string[]) => {
         set({ symptoms: value });
       },
+      gender: undefined,
+      setGender: (value: undefined | number) => {
+        set({ gender: value });
+      },
+      age: undefined,
+      setAge: (value: undefined | number) => {
+        set({ age: value });
+      },
       skinType: 0,
       setSkinType: (value: number) => {
         set({ skinType: value });
@@ -67,6 +93,30 @@ export const useDermaStore = create(
       skinSensibility: 0,
       setSkinSensibility: (value: number) => {
         set({ skinSensibility: value });
+      },
+      skinColor: undefined,
+      setSkinColor: (value: undefined | number) => {
+        set({ skinColor: value });
+      },
+      secondaryConcerns: [],
+      setSecondaryConcerns: (value: string[]) => {
+        set({ secondaryConcerns: value });
+      },
+      routine: 0,
+      setRoutine: (value: number) => {
+        set({ routine: value });
+      },
+      routineProducts: [],
+      setRoutineProducts: (value: string[]) => {
+        set({ routineProducts: value });
+      },
+      routineTime: 0,
+      setRoutineTime: (value: number) => {
+        set({ routineTime: value });
+      },
+      sunscreen: 0,
+      setSunscreen: (value: number) => {
+        set({ sunscreen: value });
       },
       allergy: 0,
       setAllergy: (value: number) => {
@@ -111,6 +161,10 @@ export const useDermaStore = create(
       diagnosticId: '',
       setDiagnosticId: (value: string) => {
         set({ diagnosticId: value });
+      },
+      feedbackStep: 1,
+      setFeedbackStep: (value: number) => {
+        set({ feedbackStep: value });
       },
     }),
     {

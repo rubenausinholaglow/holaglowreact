@@ -61,7 +61,6 @@ export default function Diagnostico() {
       hideNavigation
       className="bg-derma-secondary300 min-h-screen relative"
     >
-      {/* <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " /> */}
       {isLogged && (
         <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       )}

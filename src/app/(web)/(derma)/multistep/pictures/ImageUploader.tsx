@@ -36,6 +36,30 @@ export default function ImageUploader({
   const [images, setImages] = useState<ImageListType>([]);
   const { picturesUrls, setPicturesUrls, id } = useDermaStore(state => state);
 
+  function uploaderDefaultImage({
+    index,
+    isDisabled,
+  }: {
+    index: number;
+    isDisabled: () => boolean;
+  }) {
+    if (pictureIndex === 1) {
+      if (isDisabled())
+        return '/images/derma/multistep/rightDisabledFaceIcon.png';
+
+      return '/images/derma/multistep/rightFaceIcon.png';
+    }
+
+    if (pictureIndex === 2) {
+      if (isDisabled())
+        return '/images/derma/multistep/leftDisabledFaceIcon.png';
+
+      return '/images/derma/multistep/leftFaceIcon.png';
+    }
+
+    return '/images/derma/multistep/faceIcon.png';
+  }
+
   const onChange = (imageList: ImageListType) => {
     images.push(imageList);
     try {
@@ -115,8 +139,8 @@ export default function ImageUploader({
         {({ onImageUpload }) => (
           <Flex
             layout="col-left"
-            className={`transition-opacity gap-4 w-full ${
-              isDisabled() ? 'opacity-30 pointer-events-none' : ''
+            className={`gap-4 w-full ${
+              isDisabled() ? 'pointer-events-none' : ''
             } `}
           >
             <div className="w-full relative">
@@ -138,14 +162,17 @@ export default function ImageUploader({
                       : ''
                   }`}
                 >
-                  <div className="relative h-16 w-16 aspect-square rounded-xl overflow-hidden mr-4 shrink-0">
+                  <div className="relative h-16 md:h-24 w-16 md:w-24 aspect-square rounded-xl overflow-hidden mr-4 shrink-0">
                     {isLoading ? (
                       <FullScreenLoading isDerma />
                     ) : (
                       isEmpty(images[pictureIndex]) &&
                       isEmpty(picturesUrls[pictureIndex]) && (
                         <Image
-                          src="/images/derma/multistep/faceIcon.png"
+                          src={uploaderDefaultImage({
+                            index: pictureIndex,
+                            isDisabled,
+                          })}
                           fill
                           className="object-cover"
                           alt={subtitle}
@@ -176,8 +203,12 @@ export default function ImageUploader({
                       />
                     )}
                   </div>
-                  <div className="mr-auto overflow-hidden">
-                    <Text className="text-sm">
+                  <div
+                    className={`transition-opacity mr-auto overflow-hidden ${
+                      isDisabled() ? 'opacity-30' : ''
+                    }`}
+                  >
+                    <Text className="text-sm md:text-lg">
                       <span className="font-semibold">{title}.</span> {subtitle}
                     </Text>
 
@@ -190,7 +221,7 @@ export default function ImageUploader({
                     )}
                     {isEmpty(images[pictureIndex]) &&
                       isEmpty(picturesUrls[pictureIndex]) && (
-                        <Text className="text-hg-black500 text-xs">
+                        <Text className="text-hg-black500 text-xs md:text-sm">
                           Haz una foto o selecciona de la galería
                         </Text>
                       )}
