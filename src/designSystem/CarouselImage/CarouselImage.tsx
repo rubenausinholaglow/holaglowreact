@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Image from 'next/image';
@@ -16,30 +16,44 @@ export default function CarouselImage({
 
   const startXRef = useRef(0);
   const isMouseDownRef = useRef(false);
-  const dragThreshold = 20;
+  const dragThreshold = 5;
+
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      if (isMouseDownRef.current) {
+        isMouseDownRef.current = false;
+        setIsMouseDown(false);
+      }
+    };
+
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+
+    return () => {
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, []);
 
   const handleMouseDown = event => {
     setIsDragging(false);
     startXRef.current = event.clientX;
     isMouseDownRef.current = true;
+    setIsMouseDown(true);
   };
 
   const handleMouseMove = event => {
-    setTimeout(() => {
-      if (isMouseDownRef.current && !isDragging) {
-        if (Math.abs(event.clientX - startXRef.current) > dragThreshold) {
-          setIsDragging(true);
-        }
+    if (isMouseDownRef.current && !isDragging) {
+      if (Math.abs(event.clientX - startXRef.current) > dragThreshold) {
+        setIsDragging(true);
       }
-    }, 50);
+    }
   };
 
   const handleMouseUp = index => {
-    setTimeout(() => {
-      if (!isDragging) {
-        setVisibleImg(index);
-      }
-    }, 50);
+    if (!isDragging) {
+      setVisibleImg(index);
+    }
+    isMouseDownRef.current = false;
+    setIsMouseDown(false);
   };
 
   return (
@@ -52,8 +66,6 @@ export default function CarouselImage({
           className="object-cover"
         />
       </div>
-      <p>isDragging: {isDragging.toString()}</p>
-      <p>isMouseDown: {isMouseDown.toString()}</p>
       <Carousel visibleSlides={5.5} step={1} className="border-t border-white">
         {images.map((image, index) => (
           <li
@@ -62,7 +74,10 @@ export default function CarouselImage({
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={() => handleMouseUp(index)}
-            onMouseLeave={() => (isMouseDownRef.current = false)}
+            onMouseLeave={() => {
+              isMouseDownRef.current = false;
+              setIsMouseDown(false);
+            }}
           >
             <Image src={image} alt="image" fill className="object-cover" />
           </li>
