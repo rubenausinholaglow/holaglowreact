@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { DERMA_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
-import { SvgArrow, SvgCross } from 'app/icons/IconsDs';
+import { SvgCross, SvgMoon, SvgSun } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container } from 'designSystem/Layouts/Layouts';
+import CarouselImage from 'designSystem/CarouselImage/CarouselImage';
+import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Modal2 } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
@@ -44,9 +45,13 @@ export default function BenefitsApplicationResultsDerma({
               setModalProduct(99);
             }}
           />
-          <Container className="pt-12 md:p-6">
-            {modalProduct < 5 && (
-              <>
+          {modalProduct < 5 && (
+            <div className="pt-12">
+              <CarouselImage
+                images={DERMA_PRODUCTS[modalProduct].carouselImg}
+                format="aspect-[3/2]"
+              />
+              <Container className="md:p-6">
                 <Image
                   src={DERMA_PRODUCTS[modalProduct].img}
                   alt={DERMA_PRODUCTS[modalProduct].title}
@@ -54,6 +59,7 @@ export default function BenefitsApplicationResultsDerma({
                   height={396}
                   className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
                 />
+
                 <Text className="font-semibold mb-2">
                   {DERMA_PRODUCTS[modalProduct].title}
                 </Text>
@@ -69,20 +75,20 @@ export default function BenefitsApplicationResultsDerma({
                     {DERMA_PRODUCTS[modalProduct].info}
                   </Text>
                 )}
-              </>
-            )}
 
-            <Button
-              size="lg"
-              type="dermaDark"
-              onClick={() => {
-                setShowModalProduct(false);
-                setModalProduct(99);
-              }}
-            >
-              Cerrar
-            </Button>
-          </Container>
+                <Button
+                  size="lg"
+                  type="dermaDark"
+                  onClick={() => {
+                    setShowModalProduct(false);
+                    setModalProduct(99);
+                  }}
+                >
+                  Cerrar
+                </Button>
+              </Container>
+            </div>
+          )}
         </div>
       </Modal2>
 
@@ -100,31 +106,113 @@ export default function BenefitsApplicationResultsDerma({
           </Text>
 
           <ul className="flex flex-col gap-4 md:gap-8 w-full md:grid md:grid-cols-2">
-            {DERMA_PRODUCTS.sort((a, b) => a.order - b.order).map(
-              (item, index) => (
-                <li
-                  className="flex items-center gap-4 border border-hg-black200 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
-                  key={item.title}
-                  onClick={() => {
-                    setModalProduct(index);
-                    setShowModalProduct(true);
-                  }}
-                >
-                  <Image
-                    src={item.img}
-                    alt={item.title}
-                    height={192}
-                    width={164}
-                    className="w-[82px]"
-                  />
-                  <div className="mr-auto">
-                    <Text className="font-semibold">{item.title}</Text>
-                    <Text>{item.toggle}</Text>
-                  </div>
-                  <SvgArrow className=" h-5 w-5 shrink-0" />
-                </li>
-              )
-            )}
+            {DERMA_PRODUCTS.map((item, index) => {
+              if (index < 3) {
+                return (
+                  <Flex
+                    key={item.title}
+                    layout="row-left"
+                    className="bg-white p-4 rounded-2xl gap-4 items-start w-full"
+                  >
+                    <Image
+                      src={item.img}
+                      height={248}
+                      width={184}
+                      alt={item.title}
+                      className="w-1/4 md:w-1/5 mx-auto mb-4 shrink-0"
+                    />
+                    <Flex layout="col-left" className="w-full gap-2">
+                      <Flex layout="row-between" className="w-full text-xs">
+                        <Text className="text-hg-black500">
+                          Paso {index + 1}
+                        </Text>
+                        <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary">
+                          <SvgSun className="w-4 h-4" />
+                          <span>Día</span>
+                          {item.isNightRoutine && (
+                            <>
+                              <span>/</span>
+                              <span>Noche</span>
+                              <SvgMoon className="w-4 h-4" />
+                            </>
+                          )}
+                        </Flex>
+                      </Flex>
+                      <Text className="font-semibold text-sm md:text-md">
+                        {item.title}
+                      </Text>
+                      <Text className="text-sm md:text-md mb-2">
+                        {item.toggle}
+                      </Text>
+                      <Button
+                        type="whiteDerma"
+                        size="sm"
+                        customStyles="border-derma-primary text-derma-primary"
+                        onClick={() => {
+                          setModalProduct(index);
+                          setShowModalProduct(true);
+                        }}
+                      >
+                        Saber más
+                      </Button>
+                    </Flex>
+                  </Flex>
+                );
+              }
+
+              if (index === 3) {
+                return (
+                  <Flex
+                    key={item.title}
+                    layout="row-left"
+                    className="bg-white p-4 rounded-2xl gap-4 items-start w-full"
+                  >
+                    <Flex layout="col-center" className="w-full gap-2">
+                      <Flex layout="row-between" className="w-full text-xs">
+                        <Text className="text-hg-black500">
+                          Paso {index + 1}
+                        </Text>
+                        <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary">
+                          <SvgSun className="w-4 h-4" />
+                          <span>Día</span>
+                          {item.isNightRoutine && (
+                            <>
+                              <span>/</span>
+                              <span>Noche</span>
+                              <SvgMoon className="w-4 h-4" />
+                            </>
+                          )}
+                        </Flex>
+                      </Flex>
+                      <Image
+                        src={item.img}
+                        height={248}
+                        width={184}
+                        alt={item.title}
+                        className="w-3/5  mb-4 shrink-0"
+                      />
+                      <Text className="font-semibold text-sm md:text-md">
+                        {item.title}
+                      </Text>
+                      <Text className="text-sm md:text-md mb-2">
+                        {item.toggle}
+                      </Text>
+                      <Button
+                        type="whiteDerma"
+                        size="sm"
+                        customStyles="border-derma-primary text-derma-primary"
+                        onClick={() => {
+                          setModalProduct(index);
+                          setShowModalProduct(true);
+                        }}
+                      >
+                        Saber más
+                      </Button>
+                    </Flex>
+                  </Flex>
+                );
+              }
+            })}
           </ul>
         </Container>
       </div>
