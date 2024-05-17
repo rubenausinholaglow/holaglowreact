@@ -6,9 +6,11 @@ import Image from 'next/image';
 export default function CarouselImage({
   images,
   format,
+  className = '',
 }: {
   images: string[];
   format: string;
+  className?: string;
 }) {
   const [visibleImg, setVisibleImg] = useState(0);
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -57,7 +59,7 @@ export default function CarouselImage({
   };
 
   return (
-    <Flex layout="col-left" className="w-full">
+    <Flex layout="col-left" className={`w-full ${className}`}>
       <div className={`relative w-full ${format}`}>
         <Image
           src={images[visibleImg]}
@@ -69,7 +71,7 @@ export default function CarouselImage({
       <Carousel visibleSlides={5.5} step={1} className="border-t border-white">
         {images.map((image, index) => (
           <li
-            className="shrink-0 relative aspect-square border-2 border-white"
+            className="shrink-0 relative aspect-square border-2 border-transparent"
             key={image}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}

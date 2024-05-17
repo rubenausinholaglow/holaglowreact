@@ -2,9 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import { Accordion, AccordionItem } from '@radix-ui/react-accordion';
 import { DERMA_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
-import { SvgCross, SvgMoon, SvgSun } from 'app/icons/IconsDs';
+import { SvgCheckCircle, SvgCross, SvgMoon, SvgSun } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
+import {
+  AccordionContent,
+  AccordionTrigger,
+} from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import CarouselImage from 'designSystem/CarouselImage/CarouselImage';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
@@ -31,11 +36,11 @@ export default function BenefitsApplicationResultsDerma({
       <Modal2
         isVisible={showModalProduct && modalProduct < 5}
         width={isMobile ? 'w-full' : 'max-w-[500px]'}
-        className="shadow-none"
+        className="shadow-none "
         type="right"
         hideModalBackground
       >
-        <div className="bg-white relative min-h-screen">
+        <div className="bg-derma-secondary300 relative min-h-screen">
           <SvgCross
             height={20}
             width={20}
@@ -51,41 +56,74 @@ export default function BenefitsApplicationResultsDerma({
                 images={DERMA_PRODUCTS[modalProduct].carouselImg}
                 format="aspect-[3/2]"
               />
-              <Container className="md:p-6">
-                <Image
-                  src={DERMA_PRODUCTS[modalProduct].img}
-                  alt={DERMA_PRODUCTS[modalProduct].title}
-                  width={324}
-                  height={396}
-                  className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
-                />
+              <Container className="py-4 md:p-6">
+                <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary inline-flex text-sm mb-4">
+                  <SvgSun className="w-4 h-4" />
+                  <span>Día</span>
+                  {DERMA_PRODUCTS[modalProduct].isNightRoutine && (
+                    <>
+                      <span>/</span>
+                      <SvgMoon className="w-4 h-4" />
+                      <span>Noche</span>
+                    </>
+                  )}
+                </Flex>
 
-                <Text className="font-semibold mb-2">
+                <Text className="font-gtUltra mb-2 text-xl">
                   {DERMA_PRODUCTS[modalProduct].title}
                 </Text>
                 <Text className="text-sm mb-4">
                   {DERMA_PRODUCTS[modalProduct].subTitle}
                 </Text>
-                <Text className="text-hg-black500 text-sm mb-4">
+                <Text className="text-hg-black500 mb-6 pb-6 border-b border-hg-black500">
                   {DERMA_PRODUCTS[modalProduct].text}
                 </Text>
-                {DERMA_PRODUCTS[modalProduct].info.length > 0 && (
-                  <Text className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500 mb-8">
-                    <span className="font-semibold">Activos principales: </span>
-                    {DERMA_PRODUCTS[modalProduct].info}
-                  </Text>
-                )}
 
-                <Button
-                  size="lg"
-                  type="dermaDark"
-                  onClick={() => {
-                    setShowModalProduct(false);
-                    setModalProduct(99);
-                  }}
-                >
-                  Cerrar
-                </Button>
+                <Text className="text-lg font-semibold mb-4">Beneficios</Text>
+                <ul className="flex flex-col gap-4 w-full mb-8">
+                  {DERMA_PRODUCTS[modalProduct].benefits.map(
+                    (benefit, index) => {
+                      return (
+                        <li
+                          className="flex gap-3 items-start justify-start w-full"
+                          key={index}
+                        >
+                          <SvgCheckCircle className="shrink-0 w-6 h-6 text-derma-primary500 mt-1" />
+                          <Text className="text-hg-black500">{benefit}</Text>
+                        </li>
+                      );
+                    }
+                  )}
+                </ul>
+
+                <Accordion className="mt-8" type="single" defaultValue="1">
+                  <AccordionItem value="1">
+                    <AccordionTrigger className="flex items-center justify-between w-full">
+                      <Text className="text-hg-black500">
+                        Activos principales
+                      </Text>
+                    </AccordionTrigger>
+                    <AccordionContent className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500">
+                      <span className="font-semibold">
+                        Activos principales:{' '}
+                      </span>
+                      {DERMA_PRODUCTS[modalProduct].info}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="2">
+                    <AccordionTrigger className="flex items-center justify-between w-full">
+                      <Text className="text-hg-black500">
+                        Activos secundarios
+                      </Text>
+                    </AccordionTrigger>
+                    <AccordionContent className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500">
+                      <span className="font-semibold">
+                        Activos secundarios:{' '}
+                      </span>
+                      {DERMA_PRODUCTS[modalProduct].info}
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </Container>
             </div>
           )}
