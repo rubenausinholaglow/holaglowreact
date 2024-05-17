@@ -1,5 +1,5 @@
 'use client';
-import { Dispatch, SetStateAction, use, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import ImageUploading, {
   ImageListType,
   ImageType,
@@ -34,7 +34,7 @@ export default function ImageUploader({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
-  const { picturesUrls, setPicturesUrls, id } = useDermaStore(state => state);
+  const { picturesUrls, setPicturesUrls } = useDermaStore(state => state);
 
   function uploaderDefaultImage({
     index,
@@ -96,7 +96,6 @@ export default function ImageUploader({
       else picturesUrls.push(url);
 
       setPicturesUrls(picturesUrls);
-      //setIsLoading(false);
     }
   };
 
