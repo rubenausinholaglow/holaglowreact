@@ -61,6 +61,7 @@ export default function Agenda({
     setSelectedDay,
     treatmentPacks,
     setTreatmentPacks,
+    setPayment,
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
@@ -237,6 +238,7 @@ export default function Agenda({
     setDateToCheck(dayjs());
     const isOnline = selectedTreatments[0].title == 'Probador Virtual Online';
     setIsOnline(isOnline);
+    setPayment(undefined);
   }
   useEffect(() => {
     initialize();

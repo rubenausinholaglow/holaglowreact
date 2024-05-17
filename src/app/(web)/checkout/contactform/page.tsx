@@ -75,6 +75,7 @@ export default function ConctactForm() {
     selectedPacksTreatments,
     analyticsMetrics,
     selectedPack,
+    payment,
   } = useSessionStore(state => state);
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
@@ -105,27 +106,29 @@ export default function ConctactForm() {
         false,
         false
       );
-      await initializePayment(
-        activePayment,
-        createdUser!,
-        false,
-        undefined,
-        undefined,
-        undefined,
-        false
-      ).then(x => {
-        ScheduleService.createTemporalAppointment(
-          selectedTreatments,
-          selectedSlot!,
-          selectedDay!,
-          selectedClinic!,
+      if (!payment) {
+        await initializePayment(
+          activePayment,
           createdUser!,
-          selectedPacksTreatments!,
-          analyticsMetrics,
-          x!,
-          selectedPack
-        ).then(x => {});
-      });
+          false,
+          undefined,
+          undefined,
+          undefined,
+          false
+        ).then(x => {
+          ScheduleService.createTemporalAppointment(
+            selectedTreatments,
+            selectedSlot!,
+            selectedDay!,
+            selectedClinic!,
+            createdUser!,
+            selectedPacksTreatments!,
+            analyticsMetrics,
+            x!,
+            selectedPack
+          ).then(x => {});
+        });
+      }
     }
     if (
       activePayment != PaymentBank.None &&
