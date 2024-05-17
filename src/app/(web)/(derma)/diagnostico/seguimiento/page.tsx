@@ -28,8 +28,6 @@ export default function SeguimientoPage({
     if (dermaPhone) fetchData();
   }, [dermaPhone]);
 
-  console.log(diagnosisData);
-
   if (!diagnosisData || index == null) {
     return <></>;
   }

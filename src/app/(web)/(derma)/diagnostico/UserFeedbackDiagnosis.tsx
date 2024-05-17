@@ -4,18 +4,12 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
-export default function UserFeedbackDiagnosis({
-  diagnosisData,
-  index,
-}: {
-  diagnosisData: any;
-  index: number;
-}) {
+export default function UserFeedbackDiagnosis({ index }: { index: number }) {
   return (
     <Flex className="flex flex-col items-start p-4 bg-white md:border border-derma-secondary400 rounded-3xl">
       <div className="text-sm">
         <Text className="text-derma-primary mb-4 font-semibold">
-          Seguimiento de los 30 días
+          Seguimiento a los {index * 30} días
         </Text>
 
         <Text className="mb-4">

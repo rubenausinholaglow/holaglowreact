@@ -116,10 +116,7 @@ export default function Diagnostico() {
                           isVisible={diagnosisData.diagnostic.length === 2}
                         />
                       ) : (
-                        <UserFeedbackDiagnosis
-                          diagnosisData={diagnosisData}
-                          index={1}
-                        />
+                        <UserFeedbackDiagnosis index={1} />
                       )}
                     </>
                   ) : (
@@ -149,10 +146,7 @@ export default function Diagnostico() {
                           isVisible={diagnosisData.diagnostic.length === 3}
                         />
                       ) : (
-                        <UserFeedbackDiagnosis
-                          diagnosisData={diagnosisData}
-                          index={2}
-                        />
+                        <UserFeedbackDiagnosis index={2} />
                       )}
                     </>
                   ) : (
@@ -182,10 +176,7 @@ export default function Diagnostico() {
                           isVisible={diagnosisData.diagnostic.length === 4}
                         />
                       ) : (
-                        <UserFeedbackDiagnosis
-                          diagnosisData={diagnosisData}
-                          index={3}
-                        />
+                        <UserFeedbackDiagnosis index={3} />
                       )}
                     </>
                   ) : (
