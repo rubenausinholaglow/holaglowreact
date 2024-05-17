@@ -9,6 +9,7 @@ type ButtonTypes =
   | 'secondary'
   | 'tertiary'
   | 'white'
+  | 'whiteDerma'
   | 'derma'
   | 'dermaDark'
   | 'disabled';
@@ -183,6 +184,8 @@ const ButtonBody = ({
     }`,
     white:
       'bg-white text-hg-black border border-hg-black hover:bg-hg-secondary100 active:bg-hg-secondary100',
+    whiteDerma:
+      'bg-white text-hg-black border border-hg-black hover:bg-derma-primary100/50 active:bg-derma-primary100/50',
     disabled:
       'bg-white text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default pointer-events-none',
     sm: 'text-xs font-medium h-[32px] px-4',

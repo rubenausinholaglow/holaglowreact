@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgArrow } from 'app/icons/IconsDs';
@@ -16,9 +16,15 @@ import NextMultistepButton from '../NextMultistepButton';
 
 export default function ExtraInfo() {
   const router = useRouter();
-  const { extraInfo, setExtraInfo } = useDermaStore(state => state);
+  const { extraInfo, setExtraInfo, setFeedbackStep } = useDermaStore(
+    state => state
+  );
 
   const [textAreaValue, setTextAreaValue] = useState(extraInfo);
+
+  useEffect(() => {
+    setFeedbackStep(6);
+  }, []);
 
   return (
     <DermaLayout
@@ -29,14 +35,14 @@ export default function ExtraInfo() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={10} />
+        <DermaStepBar steps={22} step={19} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 10. Información adicional"
+              intro="Información adicional"
               title="¿Te gustaría contarnos algo más?"
             >
               <Text className="mt-2 text-hg-black500 text-sm">
@@ -64,7 +70,8 @@ export default function ExtraInfo() {
               />
               <Flex className="justify-between">
                 <Button
-                  type="white"
+                  type="whiteDerma"
+                  size="lg"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                 >
@@ -72,7 +79,7 @@ export default function ExtraInfo() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.form}
+                  nextUrl={ROUTES.derma.multistep.feedback}
                   isDisabled={false}
                 />
               </Flex>

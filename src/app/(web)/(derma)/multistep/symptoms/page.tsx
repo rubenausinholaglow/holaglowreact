@@ -1,6 +1,5 @@
 'use client';
 
-import { ChangeEvent, useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import {
@@ -17,37 +16,13 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
-import NextMultistepButton, {
-  HandleNextMultistep,
-} from '../NextMultistepButton';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function Symptoms() {
   const router = useRouter();
-  const { pain, symptoms, setSymptoms } = useDermaStore(state => state);
-
-  const [textAreaValue, setTextAreaValue] = useState('');
-
-  useEffect(() => {
-    const hasExtraSymptom = symptoms.filter(category =>
-      category.startsWith('Otros:')
-    );
-
-    if (hasExtraSymptom.length > 0) {
-      setTextAreaValue(hasExtraSymptom[0].substring(6));
-    }
-  }, [symptoms]);
-
-  function handleTextArea(event: ChangeEvent<HTMLTextAreaElement>) {
-    const symptomsWithoutExtra = symptoms.filter(
-      category => !category.startsWith('Otros:')
-    );
-
-    setSymptoms(symptomsWithoutExtra);
-
-    if (event.target.value.length > 0) {
-      setSymptoms([...symptomsWithoutExtra, `Otros: ${event.target.value}`]);
-    }
-  }
+  const { pain, setPain, symptoms, setSymptoms } = useDermaStore(
+    state => state
+  );
 
   return (
     <DermaLayout
@@ -58,14 +33,14 @@ export default function Symptoms() {
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <DermaStepBar steps={11} step={2} />
+        <DermaStepBar steps={22} step={2} />
         <Container>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
           >
             <DermaStepHeader
-              intro="Paso 2. Síntomas"
+              intro="Síntomas"
               title="¿Qué síntomas ves en tu piel?"
             >
               <Text className="text-hg-black500 mt-2">
@@ -81,7 +56,7 @@ export default function Symptoms() {
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       symptoms.includes(symptom)
-                        ? 'bg-derma-primary/20'
+                        ? 'bg-derma-primary500/20'
                         : 'bg-derma-secondary400'
                     }`}
                     key={symptom}
@@ -105,7 +80,8 @@ export default function Symptoms() {
 
               <Flex className="justify-between">
                 <Button
-                  type="white"
+                  size="lg"
+                  type="whiteDerma"
                   customStyles="bg-transparent border-none"
                   onClick={() => router.back()}
                 >
@@ -113,7 +89,7 @@ export default function Symptoms() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.skinType}
+                  nextUrl={ROUTES.derma.multistep.gender}
                   isDisabled={symptoms.length === 0}
                 />
               </Flex>
