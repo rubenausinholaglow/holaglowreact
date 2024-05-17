@@ -128,9 +128,10 @@ export default function ProductCard({
                 {product.price} €
               </Text>
             )}
-            {!discountedPrice && !product.isPack && (
-              <Text className="text-xs text-hg-black500">Desde</Text>
-            )}
+            {(!discountedPrice && !product.isPack) ||
+              (product.hasUpgrades && (
+                <Text className="text-xs text-hg-black500">Desde</Text>
+              ))}
             <Text
               className={`text-hg-secondary font-semibold ${
                 isDashboard ? 'text-xl' : 'text-lg'
