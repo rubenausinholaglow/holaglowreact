@@ -144,6 +144,10 @@ export default function Agenda({
   const [maxDay, setMaxDay] = useState(dayjs().add(maxDays, 'day'));
 
   function loadMonth() {
+    if (previousAppointment?.treatmentText == 'Revisión Tratamiento') {
+      var day = dayjs(previousAppointment.startTime).add(7, 'day');
+      setMaxDay(day);
+    }
     setLoadingMonth(true);
     if (
       selectedTreatmentsIds &&
@@ -546,43 +550,45 @@ export default function Agenda({
     const token = params.get('token') ?? '';
     const treatment = params.get('treatment') ?? '';
     const clinicId = params.get('clinicId') ?? '';
-    setSelectedClinic(getClinicToSet(clinics, clinicId));
-    setCurrentUser({
-      flowwwToken: token,
-      firstName: '',
-      email: '',
-      id: '',
-      phone: '',
-      clinicToken: token,
-    });
-    const getAppointments = async () => {
-      if (token && treatment) {
-        const res = await ScheduleService.next(token);
-        let minDay = dayjs('2000-01-01');
-        res.forEach(x => {
-          if (x.treatmentText == 'Revisión Tratamiento' && !x.isPast) {
-            setShowReviewAlreadyCreated(true);
-            setAppointmentToShow(x);
+    if (token) {
+      setSelectedClinic(getClinicToSet(clinics, clinicId));
+      setCurrentUser({
+        flowwwToken: token,
+        firstName: '',
+        email: '',
+        id: '',
+        phone: '',
+        clinicToken: token,
+      });
+      const getAppointments = async () => {
+        if (token && treatment) {
+          const res = await ScheduleService.next(token);
+          let minDay = dayjs('2000-01-01');
+          res.forEach(x => {
+            if (x.treatmentText == 'Revisión Tratamiento' && !x.isPast) {
+              setShowReviewAlreadyCreated(true);
+              setAppointmentToShow(x);
+            }
+            if (x.isPast && !x.isCancelled && dayjs(x.startTime) < dayjs()) {
+              minDay = dayjs(x.startTime);
+            }
+          });
+          if (!showReviewAlreadyCreated) {
+            setMaxDay(minDay.add(42, 'day'));
           }
-          if (x.isPast && !x.isCancelled && dayjs(x.startTime) < dayjs()) {
-            minDay = dayjs(x.startTime);
+          if (maxDay < dayjs()) {
+            setShowTooLateToSchedule(true);
           }
-        });
-        if (!showReviewAlreadyCreated) {
-          setMaxDay(minDay.add(42, 'day'));
+          if (!showTooLateToSchedule && !showReviewAlreadyCreated) {
+            const productDetails = await fetchProduct(treatment, false, false);
+            setSelectedTreatments([productDetails]);
+            initialize();
+          }
         }
-        if (maxDay < dayjs()) {
-          setShowTooLateToSchedule(true);
-        }
-        if (!showTooLateToSchedule && !showReviewAlreadyCreated) {
-          const productDetails = await fetchProduct(treatment, false, false);
-          setSelectedTreatments([productDetails]);
-          initialize();
-        }
-      }
-    };
+      };
 
-    getAppointments();
+      getAppointments();
+    }
   }, []);
 
   if (showReviewAlreadyCreated && appointmentToShow) {
