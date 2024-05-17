@@ -12,7 +12,7 @@ const ROUTINES = {
       icon: 'SvgFoam',
     },
     {
-      text: 'Aplica tu <b>crema hidratante de día</b> para Dermatitis',
+      text: 'Aplica tu crema específica de día',
       icon: 'SvgCream',
     },
     {
