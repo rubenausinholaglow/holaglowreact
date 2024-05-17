@@ -145,7 +145,7 @@ export default function Agenda({
 
   function loadMonth() {
     if (previousAppointment?.treatmentText == 'Revisión Tratamiento') {
-      var day = dayjs(previousAppointment.startTime).add(7, 'day');
+      const day = dayjs(previousAppointment.startTime).add(7, 'day');
       setMaxDay(day);
     }
     setLoadingMonth(true);
