@@ -271,6 +271,18 @@ export default function TreatmentAccordionSelector({
   };
 
   const renderTextProduct = (product: Product) => {
+    function priceWithDiscounts() {
+      let finalPrice = product.price;
+
+      product.discounts.forEach(discount => {
+        if (discount.active) {
+          finalPrice -= discount.totalDiscount;
+        }
+      });
+
+      return finalPrice;
+    }
+
     return (
       <Flex layout="row-left" className="w-full">
         <div className="mr-auto">
@@ -279,7 +291,12 @@ export default function TreatmentAccordionSelector({
         </div>
         {!isDashboard && (
           <Text className="shrink-0 px-4 font-semibold text-hg-secondary">
-            {product.price} €
+            {priceWithDiscounts()} €
+            {product.price > priceWithDiscounts() && (
+              <Text className="text-xs line-through text-hg-black400 font-light">
+                {product.price} €
+              </Text>
+            )}
           </Text>
         )}
       </Flex>
