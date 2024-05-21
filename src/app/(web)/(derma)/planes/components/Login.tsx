@@ -146,7 +146,7 @@ export default function Login({
               handleFieldChange(phone, 'phone');
               handleFieldChange(`+${country.country.dialCode}`, 'phonePrefix');
               if (phone.length > 0 && phone !== '+34') {
-                setShowPhoneError(utils.validatePhoneInput(phone));
+                setShowPhoneError(!utils.validatePhoneInput(phone));
               }
             }}
           />
