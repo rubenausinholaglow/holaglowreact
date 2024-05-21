@@ -131,4 +131,20 @@ export const PacksConfigured: ProductPackSchedule[] = [
             '2109',
         ]
     },
+    {
+        name: 'Pack Mirada',
+        packId: '5546',
+        productId: [
+            ...AHProducts,
+            ...Botox,
+            '854'
+        ]
+    },
+        {
+        name: 'Armonización Facial Basic',
+        packId: '5551',
+        productId: [
+            ...AHProducts,
+        ]
+    },
 ]
