@@ -273,6 +273,18 @@ export default function AppointmentResume({
     hideTotal?: boolean;
     product: Product;
   }) => {
+    function priceWithDiscounts() {
+      let finalPrice = product.price;
+
+      product.discounts.forEach(discount => {
+        if (discount.active) {
+          finalPrice -= discount.totalDiscount;
+        }
+      });
+
+      return finalPrice;
+    }
+
     return (
       <div className="w-full">
         <Flex
@@ -281,18 +293,21 @@ export default function AppointmentResume({
         >
           <Flex className="justify-between w-full">
             <Text>Importe sin IVA</Text>
-            <Text>{(product.price * 0.79).toFixed(2)} €</Text>
+            <Text>{(priceWithDiscounts() * 0.79).toFixed(2)} €</Text>
           </Flex>
           <Flex className="justify-between w-full ">
             <Text>Impuestos</Text>
-            <Text>{(product.price - product.price * 0.79).toFixed(2)} €</Text>
+            <Text>
+              {(priceWithDiscounts() - priceWithDiscounts() * 0.79).toFixed(2)}{' '}
+              €
+            </Text>
           </Flex>
           {!isProbadorVirtual && product && !hideTotal && (
             <Flex layout="col-left" className="w-full">
               <Flex className="justify-between w-full">
                 <Text>Total</Text>
                 <Text className="font-semibold">
-                  {product.price.toFixed(2)}€
+                  {priceWithDiscounts().toFixed(2)}€
                 </Text>
               </Flex>
               {typeOfPayment == TypeOfPayment.Reservation && (
@@ -300,7 +315,7 @@ export default function AppointmentResume({
                   <Flex className="justify-between w-full">
                     <Text>Pendiente de pago en clínica</Text>
                     <Text className="font-semibold">
-                      {(product.price - 49).toFixed(2)}€
+                      {(priceWithDiscounts() - 49).toFixed(2)}€
                     </Text>
                   </Flex>
 

@@ -69,6 +69,10 @@ const ROUTES = {
       thankyou: '/multistep/thank-you',
       planes: '/multistep/planes',
     },
+    diagnostico: {
+      home: '/diagnostico',
+      seguimiento: '/diagnostico/seguimiento',
+    },
   },
 };
 
