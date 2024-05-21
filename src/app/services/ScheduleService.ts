@@ -38,6 +38,56 @@ export default class ScheduleService {
     }
   }
 
+  static createTemporalAppointment = async (
+    selectedTreatments: Product[],
+    selectedSlot: Slot,
+    selectedDay: Dayjs,
+    selectedClinic: Clinic,
+    user: User,
+    selectedPacksTreatments: Product[],
+    analyticsMetrics: AnalyticsMetrics,
+    paymentId: string,
+    selectedPack: Product | undefined
+  ) => {
+    let treatments = selectedTreatments!.map(x => x.title).join(',');
+    if (
+      selectedPacksTreatments &&
+      selectedPacksTreatments.length &&
+      treatments.indexOf('Probador') < 0
+    ) {
+      treatments = selectedPacksTreatments!.map(x => x.title).join(',');
+    }
+    if (selectedPack) treatments = selectedPack.title;
+    const ids = getTreatmentId(selectedTreatments, selectedPacksTreatments!);
+    const format = 'YYYY-MM-DD';
+    const comment = 'Tratamiento visto en web: ' + treatments;
+
+    const appointment = {
+      box: selectedSlot!.box,
+      endTime:
+        dayjs(selectedDay)!.format(format) +
+        ' ' +
+        selectedSlot!.endTime +
+        ':00',
+      id: '0',
+      startTime:
+        dayjs(selectedDay)!.format(format) +
+        ' ' +
+        selectedSlot!.startTime +
+        ':00',
+      treatment: ids,
+      clientId: user?.flowwwToken,
+      comment: comment,
+      treatmentText: treatments,
+      referralId: '',
+      externalReference: ScheduleService.getExternalReference(analyticsMetrics),
+      isPast: false,
+      clinicId: selectedClinic?.flowwwId,
+      isCancelled: false,
+      paymentId: paymentId,
+    } as Appointment;
+    return await ScheduleService.temporal(appointment);
+  };
   static createAppointment = async (
     selectedTreatments: Product[],
     selectedSlot: Slot,
@@ -247,7 +297,8 @@ export default class ScheduleService {
     date: string,
     treatment: string,
     clinicId: string,
-    isDashboard = false
+    isDashboard = false,
+    professionalName = ''
   ): Promise<MonthAvailabilityResponse> {
     try {
       let url =
@@ -257,6 +308,7 @@ export default class ScheduleService {
         treatment +
         `&clinicId=` +
         clinicId;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       isDashboard ? (url += '&isDashboard=true') : '';
       const res = await fetch(url);
       if (res.ok) {
@@ -273,16 +325,18 @@ export default class ScheduleService {
   static async getMonthAvailabilityv2(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    professionalName = ''
   ): Promise<MonthAvailabilityResponse> {
     try {
-      const url =
+      let url =
         `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/MonthAvailabilityv2?date=` +
         date +
         `&treatment=` +
         treatment +
         `&clinicId=` +
         clinicId;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -299,16 +353,18 @@ export default class ScheduleService {
   static async getSlots(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    professionalName = ''
   ): Promise<Array<Slot>> {
     try {
-      const url =
+      let url =
         `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Slots?date=` +
         date +
         `&treatment=` +
         treatment +
         `&clinicId=` +
         clinicId;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -325,16 +381,18 @@ export default class ScheduleService {
   static async getSlotsv2(
     date: string,
     treatment: string,
-    clinicId: string
+    clinicId: string,
+    professionalName = ''
   ): Promise<Array<Slot>> {
     try {
-      const url =
+      let url =
         `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/Slotsv2?date=` +
         date +
         `&treatment=` +
         treatment +
         `&clinicId=` +
         clinicId;
+      if (professionalName) url = url + `&professionalName=` + professionalName;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -345,6 +403,28 @@ export default class ScheduleService {
     } catch (err: any) {
       Bugsnag.notify('Error getting slots', err);
       return [];
+    }
+  }
+  static async temporal(appointment: Appointment) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/temporal`;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(appointment),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return '';
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error temporal', err);
+      return err;
     }
   }
 

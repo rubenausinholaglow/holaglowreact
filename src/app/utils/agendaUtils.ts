@@ -39,24 +39,26 @@ import { CartItem, PackUnitiesScheduled, Product, ProductType, UnityType } from 
   }
 
 export function isDisableAddQuantity(selectedTreatments: Product[], product: Product, cart: CartItem[], treatmentPacks: PackUnitiesScheduled[]): boolean {
-    
-    
-    const sumPerTypeInCart = getCountTreatmentsToSchedule(
-      product,
-      cart,
-      treatmentPacks
-    );
-    
-    if(sumPerTypeInCart[product.unityType] == 0) return true;
 
-    if(selectedTreatments.length == 0) return false;
-    
-    if (cart.length > 0 && selectedTreatments.filter(x => x.unityType == product.unityType)
-            .length >= sumPerTypeInCart[product.unityType]) {
-        return true;
+    if(cart.length >0)
+    {
+      const sumPerTypeInCart = getCountTreatmentsToSchedule(
+        product,
+        cart,
+        treatmentPacks
+      );
+
+      if(sumPerTypeInCart[product.unityType] == 0) return false;
+
+      if (cart.length > 0 && selectedTreatments.filter(x => x.unityType == product.unityType)
+              .length >= sumPerTypeInCart[product.unityType]) {
+          return true;
+      }
     }
+    
 
     const haveTreatmentsEsthetics = getTreatmentPerType(selectedTreatments, ProductType.Esthetic)
+  
     const haveTreatmentsMedics = getTreatmentPerType(selectedTreatments, ProductType.Medical)
     if (haveTreatmentsEsthetics) {
         return true;

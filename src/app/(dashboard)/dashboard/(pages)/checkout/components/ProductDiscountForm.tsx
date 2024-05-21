@@ -1,12 +1,5 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { SvgAngleDown } from 'app/icons/Icons';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { isEmpty } from 'lodash';
-import { twMerge } from 'tailwind-merge';
 
 import { useCartStore } from '../../budgets/stores/userCartStore';
 
@@ -15,20 +8,15 @@ export default function ProductDiscountForm({
   productPrice,
   isCheckout,
   className,
+  showPercentage = false,
 }: {
   cartUniqueId?: string;
   productPrice: number;
   isCheckout: boolean;
   className?: string;
+  showPercentage?: boolean;
 }) {
-  const { register, handleSubmit, watch } = useForm();
-
-  const discountValue = watch('Value');
-  const discountType = watch('DiscountType');
-
-  const [discountIcon, setDiscountIcon] = useState<'euro' | 'percentage'>(
-    'percentage'
-  );
+  const { priceDiscount } = useCartStore(state => state);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
@@ -37,71 +25,46 @@ export default function ProductDiscountForm({
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
 
-  const cartDiscount = (data: any) => {
-    applyCartDiscount(data.Value, data.DiscountType);
-  };
+  const DiscountTypes = [
+    { name: 'MGM', type: 'total', value: 50, show: !showPercentage },
+    { name: 'WEB', type: 'total', value: 49, show: !showPercentage },
+    { name: '100%', type: '%', value: 100, show: showPercentage },
+  ];
 
-  useEffect(() => {
-    setDiscountIcon(discountType === '%' ? 'percentage' : 'euro');
-  }, [discountType]);
+  function handleAddDiscount(data: any) {
+    if (priceDiscount > 0 && data.type === 'total') return;
+    if (data.type === 'total') {
+      applyCartDiscount(data.value, data.type);
+    }
+    if (data.type === '%') {
+      const discount = {
+        cartUniqueId: cartUniqueId,
+        Value: data.value,
+        DiscountType: '%',
+      };
+      cartItemDiscount(discount);
+    }
+  }
 
   return (
-    <form
-      onSubmit={handleSubmit(cartUniqueId ? cartItemDiscount : cartDiscount)}
-      className={twMerge(`text-left ${className}`)}
-    >
-      <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
-        <Flex layout="row-left" className="gap-2">
-          {cartUniqueId && (
-            <input
-              type="hidden"
-              value={cartUniqueId}
-              {...register('cartUniqueId')}
-            />
-          )}
-          <input
-            className="border rounded-lg px-4 py-2  w-1/3 text-hg-black"
-            type="decimal"
-            placeholder="Valor"
-            style={{
-              background: `url('/images/forms/${discountIcon}.svg') #ffffff no-repeat center right 12px`,
-            }}
-            {...register('Value', { required: true, maxLength: 5 })}
-          />{' '}
-          <div className="relative w-1/3">
-            <select
-              {...register('DiscountType', { required: true })}
-              className="border appearance-none bg-white rounded-lg px-4 py-2 text-hg-black w-full"
-            >
-              <option value="%">%</option>
-              {!cartUniqueId && <option value="total">€</option>}
-              <option value="€">total €</option>
-            </select>
-            <SvgAngleDown
-              height={20}
-              width={20}
-              className="absolute top-[9px] right-2 pointer-events-none"
-            />
-          </div>
-          <Button
-            size="sm"
-            isSubmit
-            type="tertiary"
-            className={`w-1/3 ${
-              isEmpty(discountValue) || discountValue === '0'
-                ? 'cursor-auto pointer-events-none'
-                : ''
-            }`}
-            customStyles={`bg-hg-primary ${
-              isEmpty(discountValue) || discountValue === '0'
-                ? 'bg-hg-black50 border-none cursor-auto pointer-events-none'
-                : ''
-            }`}
-          >
-            <Flex className="gap-2">Aplicar</Flex>
-          </Button>
-        </Flex>
-      </Flex>
-    </form>
+    <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
+      <div className="flex gap-2">
+        {DiscountTypes.map(({ name, type, value, show }, index) => (
+          <>
+            {show && (
+              <Button
+                key={index}
+                size="sm"
+                isSubmit
+                type="tertiary"
+                onClick={() => handleAddDiscount({ name, type, value })}
+              >
+                <Flex className="gap-2 p-2 rounded-xl">{name}</Flex>
+              </Button>
+            )}
+          </>
+        ))}
+      </div>
+    </Flex>
   );
 }

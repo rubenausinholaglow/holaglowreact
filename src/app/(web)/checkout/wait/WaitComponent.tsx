@@ -42,22 +42,7 @@ export default function WaitComponent({ isDerma }: { isDerma: boolean }) {
         tries++;
         if (x) {
           if (selectedSlot) {
-            await ScheduleService.createAppointment(
-              selectedTreatments,
-              selectedSlot!,
-              selectedDay!,
-              selectedClinic!,
-              user!,
-              selectedPacksTreatments!,
-              analyticsMetrics,
-              id,
-              selectedPack
-            ).then(y => {
-              if (y && y.length > 0) {
-                setAppointmentUrl(y[0].url);
-              }
-              router.push('/checkout/confirmation');
-            });
+            router.push('/checkout/confirmation');
           } else {
             let treatments = selectedTreatments!.map(x => x.title).join(', ');
             if (!treatments) treatments = cart!.map(x => x.title).join(',');
