@@ -265,7 +265,9 @@ export default function Agenda({
     setSelectedDay(undefined);
     setEnableScheduler(true);
     setDateToCheck(dayjs());
-    const isOnline = selectedTreatments[0].title == 'Probador Virtual Online';
+    const isOnline =
+      selectedTreatments.length > 0 &&
+      selectedTreatments[0].title == 'Probador Virtual Online';
     setIsOnline(isOnline);
   }
   useEffect(() => {
@@ -604,7 +606,7 @@ export default function Agenda({
 
   if (showReviewAlreadyCreated && appointmentToShow) {
     return (
-      <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+      <Flex className="flex-col mb-16 md:mb-7 px-4 md:px-0">
         <Title size="xl" className="font-semibold">
           Ya tienes una cita con nosotros.
         </Title>

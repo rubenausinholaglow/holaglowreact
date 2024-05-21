@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { isEdgeChromium, isMobile } from 'react-device-detect';
+import { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
 import { Product } from '@interface/product';
 import ProductService from '@services/ProductService';
@@ -11,7 +11,7 @@ import {
 } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { useRouter } from 'next/navigation';
 
@@ -21,18 +21,18 @@ export default function AppointmentElement({
   setAppointmentToCancel,
   setShowCancelModal,
   cancelling,
+  className = '',
 }: {
   appointment: Appointment;
   isDashboard: boolean;
   setAppointmentToCancel: (appointment: Appointment) => void;
   setShowCancelModal: (value: boolean) => void;
   cancelling: boolean;
+  className?: string;
 }) {
   const router = useRouter();
 
-  const [isHydrated, setIsHydrated] = useState(false);
-  const [appointments, setAppointments] = useState([] as Appointment[]);
-  const [currentToken, setCurrentToken] = useState('');
+  const [currentToken] = useState('');
 
   const { clinics, setCurrentUser, stateProducts } = useGlobalPersistedStore(
     state => state
@@ -74,7 +74,10 @@ export default function AppointmentElement({
     <Flex
       layout="col-left"
       key={appointment.id}
-      className="bg-derma-secondary100 gap-2 p-4 md:p-6 rounded-2xl w-full justify-between items-start"
+      className={
+        'bg-derma-secondary100 gap-2 p-4 md:p-6 rounded-2xl justify-between items-start ' +
+        className
+      }
     >
       <Flex layout="row-left" className="gap-2 items-center mb-2">
         <Text className="font-semibold">{appointment.treatmentText}</Text>

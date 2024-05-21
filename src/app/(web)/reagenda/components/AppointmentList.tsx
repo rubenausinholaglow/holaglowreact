@@ -1,22 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
-import { Product } from '@interface/product';
-import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
-import { SvgCalendar, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import {
-  useGlobalPersistedStore,
-  useSessionStore,
-} from 'app/stores/globalStore';
-import dayjs from 'dayjs';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { useRouter } from 'next/navigation';
 
 import AppointmentElement from './AppointmentElement';
 
@@ -84,6 +73,7 @@ export default function AppointmentList({
                 setAppointmentToCancel={setAppointmentToCancel}
                 setShowCancelModal={setShowCancelModal}
                 cancelling={cancelling}
+                className="w-full"
               ></AppointmentElement>
             );
           }
