@@ -1,18 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Diagnosis } from '@interface/derma/diagnosis';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { SvgReceiptEdit } from 'app/icons/Icons';
-import { SvgArrow, SvgReceipt2, SvgUserSquare } from 'app/icons/IconsDs';
-import dayjs from 'dayjs';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
-import Image from 'next/image';
-
-import DiagnosisImages from './DiagnosisImages';
 
 const ROUTINES = {
   day: [
@@ -21,7 +12,7 @@ const ROUTINES = {
       icon: 'SvgFoam',
     },
     {
-      text: 'Aplica tu <b>crema hidratante de día</b> para Dermatitis',
+      text: 'Aplica tu crema específica de día',
       icon: 'SvgCream',
     },
     {
