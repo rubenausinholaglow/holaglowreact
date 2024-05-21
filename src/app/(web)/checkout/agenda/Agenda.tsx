@@ -11,8 +11,13 @@ import CheckHydration from '@utils/CheckHydration';
 import { getTreatmentId } from '@utils/userUtils';
 import { formatDate, getUniqueIds, validTypesFilterCart } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
-import { SvgEllipsis, SvgSadIcon, SvgWarning } from 'app/icons/IconsDs';
+import { SvgCalendar, SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
+import {
+  SvgCross,
+  SvgEllipsis,
+  SvgSadIcon,
+  SvgWarning,
+} from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -24,6 +29,7 @@ import es from 'date-fns/locale/es';
 import dayjs, { Dayjs } from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
+import { Modal } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -61,6 +67,7 @@ export default function Agenda({
     setSelectedDay,
     treatmentPacks,
     setTreatmentPacks,
+    setPayment,
   } = useSessionStore(state => state);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
@@ -77,6 +84,8 @@ export default function Agenda({
   const [currentMonth, setcurrentMonth] = useState(dayjs());
   const [totalTimeAppointment, setTotalTimeAppointment] = useState(0);
   const [loadingMonthFirstTime, setLoadingMonthFirstTime] = useState(true);
+  const [showRescheduleError, setShowRescheduleError] = useState(false);
+
   const format = 'YYYY-MM-DD';
   let maxDays = 60;
   if (isDashboard) maxDays = 9999;
@@ -237,6 +246,7 @@ export default function Agenda({
     setDateToCheck(dayjs());
     const isOnline = selectedTreatments[0].title == 'Probador Virtual Online';
     setIsOnline(isOnline);
+    setPayment(undefined);
   }
   useEffect(() => {
     initialize();
@@ -289,12 +299,15 @@ export default function Agenda({
             },
             previous: previousAppointment,
           }).then(x => {
-            if (isDashboard && !isDerma) {
-              router.push(
-                `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
-              );
-            } else if (!isDashboard && !isDerma) {
-              router.push(`${ROUTES.checkout.confirmation}?isReagenda=true`);
+            if (!x || x.length == 0) setShowRescheduleError(true);
+            else {
+              if (isDashboard && !isDerma) {
+                router.push(
+                  `${ROUTES.dashboard.checkIn.confirmation}?isCheckin=${isCheckin}`
+                );
+              } else if (!isDashboard && !isDerma) {
+                router.push(`${ROUTES.checkout.confirmation}?isReagenda=true`);
+              }
             }
           });
         } else if (
@@ -524,6 +537,52 @@ export default function Agenda({
       false
     );
   };
+
+  if (showRescheduleError) {
+    return (
+      <Modal
+        type="center"
+        height="h-auto"
+        width="w-full"
+        className="max-w-sm mx-auto"
+        isVisible={showRescheduleError}
+        avoidClosing={true}
+      >
+        <Flex layout="col-center" className="p-4">
+          <SvgCross className="self-end mb-12" />
+          <Title className="mb-6">Lo sentimos</Title>
+
+          <Flex layout="col-left" className="gap-4 w-full mb-8">
+            <Flex
+              layout="col-center"
+              className="bg-derma-secondary300 w-full rounded-xl p-4 gap-4"
+            >
+              <SvgCalendar
+                height={32}
+                width={32}
+                className={isDerma ? 'text-derma-primary' : 'text-hg-secondary'}
+              />
+              <p className="font-semibold">
+                El horario seleccionado ya no está disponible. Haz click en otro
+                horario para reagendar tu cita
+              </p>
+            </Flex>
+          </Flex>
+          <Flex layout="col-right" className="w-full">
+            <Button
+              className="cursor-pointer"
+              type={isDerma ? 'derma' : 'primary'}
+              onClick={() => {
+                router.push('/reagenda?token=' + user?.clinicToken);
+              }}
+            >
+              Seleccionar otra hora
+            </Button>
+          </Flex>
+        </Flex>
+      </Modal>
+    );
+  }
 
   return (
     <>

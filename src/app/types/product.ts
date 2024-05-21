@@ -1,4 +1,3 @@
-
 import { ProductClinics } from './clinic';
 
 export interface Product {
@@ -10,6 +9,7 @@ export interface Product {
   isPack: boolean;
   zone: number;
   order: number;
+  hasUpgrades: boolean;
   upgrades: Upgrade[];
   category: Category[];
   appliedProducts: AppliedProduct[];
@@ -84,18 +84,18 @@ export interface AppliedProduct {
 }
 
 export interface PackUnities {
-  id : string;
-  type : UnityType;
+  id: string;
+  type: UnityType;
 }
 
 export interface PackUnitiesScheduled {
-  uniqueId : string;
-  id : string;
-  type : UnityType;
-  isScheduled? : boolean;
-  scheduledDate? : string;
-  treatmentName? : string; 
-  productId : string
+  uniqueId: string;
+  id: string;
+  type: UnityType;
+  isScheduled?: boolean;
+  scheduledDate?: string;
+  treatmentName?: string;
+  productId: string;
 }
 
 export interface ApplicationZoneDetail {

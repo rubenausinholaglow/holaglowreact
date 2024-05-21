@@ -25,6 +25,7 @@ export default function Upselling() {
     const fetchData = async () => {
       const response = await dermaService.getRoutine(dermaPhone);
       setApiResponse(response);
+
       if (!isLogged) setIsLogged(true);
     };
     if (dermaPhone) fetchData();
