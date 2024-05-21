@@ -58,9 +58,9 @@ export default function CheckoutTotal() {
               {(hasProductsDiscount || hasCartDiscount) && (
                 <Text className="text-hg-black">
                   {hasCartDiscount ? (
-                    <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
+                    <>{Number(cartTotalWithDiscount).toFixed(2)}€</>
                   ) : (
-                    <>{Number(productsPriceTotalWithDiscounts).toFixed(2)}€</>
+                    <>{Number(cartTotalWithDiscount).toFixed(2)}€</>
                   )}
                 </Text>
               )}
@@ -90,7 +90,6 @@ export default function CheckoutTotal() {
           </Flex>
         </Flex>
       </Flex>
-
       {showCartDiscount && (
         <Flex layout="col-left" className="bg-hg-black100 p-4 gap-2">
           <ProductDiscountForm isCheckout={true} productPrice={totalPrice} />
@@ -130,7 +129,6 @@ export default function CheckoutTotal() {
           )}
         </Flex>
       )}
-
       <Flex className="justify-end w-full p-4 border-t border-hg-black items-baseline gap-2">
         {(hasProductsDiscount || hasCartDiscount) && (
           <Text className="text-hg-secondary text-xl font-semibold">
