@@ -4,7 +4,14 @@ import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Accordion, AccordionItem } from '@radix-ui/react-accordion';
 import { DERMA_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
-import { SvgCheckCircle, SvgCross, SvgMoon, SvgSun } from 'app/icons/IconsDs';
+import {
+  SvgAdd,
+  SvgCheckCircle,
+  SvgCross,
+  SvgMinus,
+  SvgMoon,
+  SvgSun,
+} from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import {
   AccordionContent,
@@ -97,29 +104,51 @@ export default function BenefitsApplicationResultsDerma({
                 </ul>
 
                 <Accordion className="mt-8" type="single" defaultValue="1">
-                  <AccordionItem value="1">
-                    <AccordionTrigger className="flex items-center justify-between w-full">
-                      <Text className="text-hg-black500">
-                        Activos principales
+                  <AccordionItem
+                    value="1"
+                    className="rounded-2xl overflow-hidden bg-derma-secondary300 mb-4"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-derma-secondary500 relative">
+                      <Text className="text-lg font-semibold">
+                        Modo de empleo
                       </Text>
+                      <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
+                      <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500">
-                      <span className="font-semibold">
-                        Activos principales:{' '}
-                      </span>
-                      {DERMA_PRODUCTS[modalProduct].info}
+                    <AccordionContent className="p-4 bg-derma-secondary400 text-sm text-hg-black500">
+                      <ul className="flex flex-col gap-6 w-full">
+                        {DERMA_PRODUCTS[modalProduct].useMethod.map(
+                          (benefit, index) => {
+                            return (
+                              <li
+                                className="flex gap-3 items-start justify-start w-full"
+                                key={index}
+                              >
+                                <Flex className="justify-center items-center rounded-full shrink-0 w-7 h-7 bg-white text-derma-primary500 -mt-1 font-bold">
+                                  {index + 1}
+                                </Flex>
+                                <Text className="text-hg-black500">
+                                  {benefit}
+                                </Text>
+                              </li>
+                            );
+                          }
+                        )}
+                      </ul>
                     </AccordionContent>
                   </AccordionItem>
-                  <AccordionItem value="2">
-                    <AccordionTrigger className="flex items-center justify-between w-full">
-                      <Text className="text-hg-black500">
-                        Activos secundarios
+                  <AccordionItem
+                    value="2"
+                    className="rounded-2xl overflow-hidden bg-derma-secondary300"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-derma-secondary500 relative">
+                      <Text className="text-lg font-semibold">
+                        Ingredientes activos
                       </Text>
+                      <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
+                      <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
                     </AccordionTrigger>
-                    <AccordionContent className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500">
-                      <span className="font-semibold">
-                        Activos secundarios:{' '}
-                      </span>
+                    <AccordionContent className="p-4 bg-derma-secondary400 text-sm text-hg-black500">
                       {DERMA_PRODUCTS[modalProduct].info}
                     </AccordionContent>
                   </AccordionItem>

@@ -68,7 +68,11 @@ export default function CarouselImage({
           className="object-cover"
         />
       </div>
-      <Carousel visibleSlides={5.5} step={1} className="border-t border-white">
+      <Carousel
+        visibleSlides={4.75}
+        step={1}
+        className="border-t border-l border-r border-white"
+      >
         {images.map((image, index) => (
           <li
             className="shrink-0 relative aspect-square border-2 border-transparent"
