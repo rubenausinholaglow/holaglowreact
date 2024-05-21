@@ -29,16 +29,6 @@ export default function CheckoutPayment({
   const { typeOfPayment } = useSessionStore(state => state);
 
   useEffect(() => {
-    if (!hasError && isPaymentActive) {
-      const elementToScroll = document.getElementById('checkoutPaymentForm');
-
-      if (elementToScroll) {
-        //elementToScroll.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [hasError]);
-
-  useEffect(() => {
     setIsPaymentActive(checkFormData(formData));
   }, [formData]);
 

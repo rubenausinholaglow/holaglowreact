@@ -103,12 +103,6 @@ export const PaymentMethods = ({
     }
   }, [payment]);
 
-  function scrollDown() {
-    /*setTimeout(() => {
-      window.scrollTo(0, document.body.scrollHeight);
-    }, 250);*/
-  }
-
   const handlePaymentClick = async (
     activePayment: PaymentBank,
     installments: number,
@@ -238,7 +232,6 @@ export const PaymentMethods = ({
                   <Flex
                     className="gap-4"
                     onClick={() => {
-                      scrollDown();
                       if (method.key == 'creditCard') {
                         setIsLoadingButton(!isLoadingButton);
                         setActivePayment(PaymentBank.Stripe);
