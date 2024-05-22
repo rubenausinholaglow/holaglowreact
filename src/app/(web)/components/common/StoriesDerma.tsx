@@ -23,15 +23,14 @@ export default function StoriesDerma() {
             size="2xl"
             className="font-gtUltra text-derma-primary font-bold mb-4"
           >
-            Historias inspiradoras
+            Casos reales
           </Title>
           <Text
             isAnimated
             className="text-hg-black500 mb-8 md:w-full md:text-lg"
           >
-            No hay dos pieles iguales. Por eso, todas las experiencias son
-            diferentes, solo coinciden en la satisfacción de los objetivos
-            conseguidos.
+            No hay dos pieles iguales, pero todas coinciden en la satisfacción
+            con los resultados conseguidos.
           </Text>
         </Flex>
         <Flex layout="col-left" className="md:w-1/2 w-full relative">
