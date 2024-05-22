@@ -35,14 +35,14 @@ export default function CarouselImage({
     };
   }, []);
 
-  const handleMouseDown = event => {
+  const handleMouseDown = (event: any) => {
     setIsDragging(false);
     startXRef.current = event.clientX;
     isMouseDownRef.current = true;
     setIsMouseDown(true);
   };
 
-  const handleMouseMove = event => {
+  const handleMouseMove = (event: any) => {
     if (isMouseDownRef.current && !isDragging) {
       if (Math.abs(event.clientX - startXRef.current) > dragThreshold) {
         setIsDragging(true);
@@ -50,7 +50,7 @@ export default function CarouselImage({
     }
   };
 
-  const handleMouseUp = index => {
+  const handleMouseUp = (index: number) => {
     if (!isDragging) {
       setVisibleImg(index);
     }
@@ -68,27 +68,33 @@ export default function CarouselImage({
           className="object-cover"
         />
       </div>
-      <Carousel
-        visibleSlides={4.75}
-        step={1}
-        className="border-t border-derma-secondary100"
-      >
-        {images.map((image, index) => (
-          <li
-            className="shrink-0 relative aspect-square border-2 border-transparent cursor-pointer"
-            key={image}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={() => handleMouseUp(index)}
-            onMouseLeave={() => {
-              isMouseDownRef.current = false;
-              setIsMouseDown(false);
-            }}
-          >
-            <Image src={image} alt="image" fill className="object-cover" />
-          </li>
-        ))}
-      </Carousel>
+      {images.length > 1 && (
+        <Carousel
+          visibleSlides={4.75}
+          step={1}
+          className="border-t border-derma-secondary100"
+        >
+          {images.map((image, index) => (
+            <li
+              className={`shrink-0 relative aspect-square border-2 cursor-pointer ${
+                visibleImg === index
+                  ? 'border-derma-primary500'
+                  : 'border-transparent'
+              }`}
+              key={image}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={() => handleMouseUp(index)}
+              onMouseLeave={() => {
+                isMouseDownRef.current = false;
+                setIsMouseDown(false);
+              }}
+            >
+              <Image src={image} alt="image" fill className="object-cover" />
+            </li>
+          ))}
+        </Carousel>
+      )}
     </Flex>
   );
 }

@@ -26,7 +26,7 @@ export function DialogContent({
     <DialogModal.Portal>
       <DialogModal.Overlay className="bg-white/50 backdrop-blur-sm data-[state=open]:animate-overlayShow fixed inset-0 z-40" />
       <DialogModal.Content
-        className={`${poppins.className} ${gtUltra.variable} data-[state=open]:animate-contentShow fixed right-0 bottom-0 bg-derma-secondary100 z-50 shadow-centered-black overflow-y-auto top-0 max-w-[500 px] border-l border-derma-secondary100 ${className}`}
+        className={`${poppins.className} ${gtUltra.variable} data-[state=open]:animate-contentShow fixed right-0 bottom-0 bg-derma-secondary100 z-50 shadow-centered-black overflow-y-auto top-0 border-l border-derma-secondary100 ${className}`}
       >
         {children}
         <DialogModal.Close asChild>

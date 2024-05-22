@@ -147,32 +147,30 @@ export default function PlanesMultiStep() {
           Tu rutina facial
         </Title>
         <ul className="flex flex-col gap-4 w-full md:grid md:grid-cols-2 md:gap-x-16 md:gap-y-4 mb-24">
-          {DERMA_PRODUCTS.sort((a, b) => a.order - b.order).map(
-            (item, index) => (
-              <li
-                className="flex items-center gap-4 border border-derma-secondary400 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
-                key={item.title}
-                id="tmevent_derma_plans_cosmetic_modal_open"
-                onClick={() => {
-                  setModalProduct(index);
-                  setShowModal(true);
-                }}
-              >
-                <Image
-                  src={item.img}
-                  alt={item.title}
-                  height={192}
-                  width={164}
-                  className="w-[82px]"
-                />
-                <div className="mr-auto">
-                  <Text className="font-semibold">{item.title}</Text>
-                  <Text>{item.toggle}</Text>
-                </div>
-                <SvgArrow className=" h-5 w-5 shrink-0" />
-              </li>
-            )
-          )}
+          {DERMA_PRODUCTS.map((item, index) => (
+            <li
+              className="flex items-center gap-4 border border-derma-secondary400 bg-white/70 p-3 w-full rounded-xl text-sm cursor-pointer"
+              key={item.title}
+              id="tmevent_derma_plans_cosmetic_modal_open"
+              onClick={() => {
+                setModalProduct(index);
+                setShowModal(true);
+              }}
+            >
+              <Image
+                src={item.img}
+                alt={item.title}
+                height={192}
+                width={164}
+                className="w-[82px]"
+              />
+              <div className="mr-auto">
+                <Text className="font-semibold">{item.title}</Text>
+                <Text>{item.toggle}</Text>
+              </div>
+              <SvgArrow className=" h-5 w-5 shrink-0" />
+            </li>
+          ))}
         </ul>
       </Container>
 
