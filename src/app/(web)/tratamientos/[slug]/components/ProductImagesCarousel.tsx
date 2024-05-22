@@ -29,7 +29,7 @@ export default function ProductImagesCarousel({
         `}
       >
         {product.beforeAndAfterImages
-          ?.sort(function (a, b) {
+          ?.sort(function x(a, b) {
             return a.urlBefore!.localeCompare(b.urlBefore!, undefined, {
               numeric: true,
               sensitivity: 'base',
