@@ -71,11 +71,11 @@ export default function CarouselImage({
       <Carousel
         visibleSlides={4.75}
         step={1}
-        className="border-t border-l border-r border-white"
+        className="border-t border-derma-secondary100"
       >
         {images.map((image, index) => (
           <li
-            className="shrink-0 relative aspect-square border-2 border-transparent"
+            className="shrink-0 relative aspect-square border-2 border-transparent cursor-pointer"
             key={image}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
