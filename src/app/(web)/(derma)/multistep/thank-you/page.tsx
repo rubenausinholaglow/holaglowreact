@@ -2,8 +2,6 @@
 import { isMobile } from 'react-device-detect';
 import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
-import { DERMA_COLORS } from '@utils/colors';
-import ROUTES from '@utils/routes';
 import StoriesDerma from 'app/(web)/components/common/StoriesDerma';
 import RoutineItems from 'app/(web)/components/dermahome/RoutineItems';
 import TestimonialsDerma from 'app/(web)/components/dermahome/TestimonialsDerma';
@@ -96,18 +94,18 @@ export default function ThankYouMultiStep() {
       </div>
       <div className="bg-derma-secondary400 py-8">
         <Container className="px-0 md:px-4">
-          <Title size="xl" className="text-derma-primary font-light mb-8 px-4">
+          <Title size="xl" className="text-derma-primary font-light mb-4 px-4">
             Crema con los ingredientes que necesita tu piel
           </Title>
           <CheckHydration>
             <Flex layout="col-left" className="md:flex-row w-full mb-8">
-              <div className="w-full md:w-1/2 shrink-0 mb-8 md:mr-4 px-4">
+              <div className="w-full md:w-1/2 shrink-0 mb-8 md:mb-0 md:mr-4 px-4">
                 <RoutineItems hideDefaultItems />
               </div>
               <div className="w-full md:w-1/2 shrink-0 md:ml-4">
                 <Carousel
                   isIntrinsicHeight
-                  visibleSlides={1.75}
+                  visibleSlides={isMobile ? 1.75 : 2}
                   infinite={false}
                   isDerma
                   hasControls={!isMobile}
@@ -145,31 +143,73 @@ export default function ThankYouMultiStep() {
               </div>
             </Flex>
           </CheckHydration>
-          <Flex className="justify-center">
-            <Button type="derma" size="xl" customStyles="px-16">
+          <Flex className="justify-center w-full px-4">
+            <Button
+              type="derma"
+              size="xl"
+              customStyles="px-16"
+              className="w-full md:w-auto"
+            >
               Comprar rutina
             </Button>
           </Flex>
         </Container>
       </div>
       <Container className="py-8 md:py-12">
-        <Accordion className="mb-8" type="single" defaultValue="1" collapsible>
-          {FAQS.map((faq, index) => (
-            <AccordionItem
-              key={faq.question}
-              value={(index + 1).toString()}
-              className="rounded-2xl overflow-hidden bg-derma-secondary300 mb-4"
-            >
-              <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-derma-secondary500 relative">
-                <Text className="text-lg font-semibold">{faq.question}</Text>
-                <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
-                <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
-              </AccordionTrigger>
-              <AccordionContent className="bg-derma-secondary400 text-sm text-hg-black500">
-                <Text className="p-4">{faq.answer}</Text>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+        <Accordion
+          className="mb-8 md:grid md:grid-cols-2 gap-4"
+          type="single"
+          collapsible
+        >
+          <div>
+            {FAQS.map((faq, index) => {
+              if (index % 2 === 0) {
+                return (
+                  <AccordionItem
+                    key={faq.question}
+                    value={(index + 1).toString()}
+                    className="rounded-2xl overflow-hidden bg-derma-secondary300 mb-4 break-inside-avoid"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-derma-secondary500 relative">
+                      <Text className="text-lg font-semibold">
+                        {faq.question}
+                      </Text>
+                      <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
+                      <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-derma-secondary400 text-sm text-hg-black500">
+                      <Text className="p-4">{faq.answer}</Text>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              }
+            })}
+          </div>
+
+          <div>
+            {FAQS.map((faq, index) => {
+              if (index % 2 !== 0) {
+                return (
+                  <AccordionItem
+                    key={faq.question}
+                    value={(index + 1).toString()}
+                    className="rounded-2xl overflow-hidden bg-derma-secondary300 mb-4 break-inside-avoid"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-derma-secondary500 relative">
+                      <Text className="text-lg font-semibold">
+                        {faq.question}
+                      </Text>
+                      <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
+                      <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-derma-secondary400 text-sm text-hg-black500">
+                      <Text className="p-4">{faq.answer}</Text>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              }
+            })}
+          </div>
         </Accordion>
 
         <Title size="2xl" className="font-semibold text-derma-primary500">
@@ -178,6 +218,18 @@ export default function ThankYouMultiStep() {
       </Container>
       <StoriesDerma />
       <TestimonialsDerma />
+      <Container className="pb-8 md:pb-12">
+        <Flex className="justify-center w-full px-4">
+          <Button
+            type="derma"
+            size="xl"
+            customStyles="px-16"
+            className="w-full md:w-auto"
+          >
+            Comprar rutina
+          </Button>
+        </Flex>
+      </Container>
     </DermaLayout>
   );
 }

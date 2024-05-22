@@ -55,7 +55,7 @@ export default function RoutineItems({
                   <Flex
                     key={item.title}
                     layout="row-left"
-                    className="bg-white p-4 rounded-2xl gap-4 items-start w-full"
+                    className="bg-white border border-derma-secondary500 p-4 rounded-2xl gap-4 items-start w-full"
                   >
                     <Image
                       src={item.img}
@@ -112,7 +112,7 @@ export default function RoutineItems({
                 <Flex
                   key={item.title}
                   layout="row-left"
-                  className={`bg-white p-4 rounded-2xl gap-4 items-start ${
+                  className={`bg-white border-derma-secondary500 p-4 rounded-2xl gap-4 items-start ${
                     hideDefaultItems ? 'w-full' : 'md:w-1/2'
                   }`}
                 >
@@ -169,7 +169,7 @@ export default function RoutineItems({
           })}
         </div>
 
-        <DialogContent className="max-w-[500px]">
+        <DialogContent className="w-full max-w-[500px] bg-derma-secondary300">
           {modalProduct < 5 && (
             <div className="pt-12">
               <CarouselImage
@@ -214,7 +214,7 @@ export default function RoutineItems({
                   )}
                 </ul>
                 {modalProduct === 3 && (
-                  <Text className="text-lg font-semibold mb-4">
+                  <Text className="text-lg font-semibold">
                     Los ingredientes activos necesarios
                   </Text>
                 )}
@@ -246,7 +246,7 @@ export default function RoutineItems({
                         {ingredient.concerns.map(tag => (
                           <li
                             key={tag}
-                            className="p-2 px-3 rounded-full bg-derma-secondary100/50 text-derma-primary text-xs"
+                            className="p-2 px-3 rounded-full bg-white text-derma-primary text-xs"
                           >
                             {tag}
                           </li>
