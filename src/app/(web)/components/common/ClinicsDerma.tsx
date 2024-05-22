@@ -122,7 +122,7 @@ export default function ClinicsDerma({
       </Container>
       <Container className="px-0 md:px-4">
         <Carousel
-          controlStyles={
+          controlstyles={
             isMobile
               ? 'px-4 md:px-0 mt-4'
               : 'absolute left-[-100%] bottom-5 ml-24'

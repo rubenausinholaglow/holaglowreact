@@ -87,7 +87,7 @@ export default function IngredientsPrices() {
             hasControls={
               !isMobileSSR() && DERMA_COMPLEMENTS.length > visibleComplements
             }
-            controlStyles="px-4"
+            controlstyles="px-4"
             className="relative pb-12"
             isIntrinsicHeight
             visibleSlides={visibleComplements}

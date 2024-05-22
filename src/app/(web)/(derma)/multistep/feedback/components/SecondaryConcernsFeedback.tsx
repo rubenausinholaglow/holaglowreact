@@ -61,7 +61,7 @@ export default function SkinTypeFeedback() {
                   visibleSlides={isMobile ? 1.5 : 2}
                   infinite={false}
                   isDerma
-                  controlStyles="pr-4"
+                  controlstyles="pr-4"
                   className="mb-12"
                 >
                   {filteredActives.map(ingredient => (
