@@ -13,16 +13,8 @@ export default function HomePage({
     (host && host.startsWith('derma')) || searchParams.isDerma === 'true';
 
   if (isDerma) {
-    return (
-      <>
-        <DermaHome />
-      </>
-    );
+    return <DermaHome />;
   }
 
-  return (
-    <>
-      <Home />
-    </>
-  );
+  return <Home />;
 }
