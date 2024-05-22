@@ -42,10 +42,10 @@ export default function ProductDetailPage({
   });
 
   useEffect(() => {
-    if (!isEmpty(stateProducts)) {
+    if (!isEmpty(stateProducts) && !isDashboard) {
       setProductsAreLoaded(true);
     }
-    if (!isEmpty(dashboardProducts)) {
+    if (!isEmpty(dashboardProducts) && isDashboard) {
       setProductsAreLoaded(true);
     }
   }, [stateProducts, dashboardProducts]);
@@ -54,6 +54,8 @@ export default function ProductDetailPage({
     async function initProduct(productId: string, isDashboard: boolean) {
       const productDetails = await fetchProduct(productId, isDashboard, false);
       setProduct(productDetails);
+      setProductId(productDetails.id);
+      setIsHydrated(true);
       setSeoMetaData(
         productDetails.extraInformation.seoTitle,
         productDetails.extraInformation.seoMetaDescription
@@ -81,29 +83,6 @@ export default function ProductDetailPage({
       setProduct(isEmpty(product) ? null : product);
     }
   }, [productsAreLoaded, slug]);
-
-  useEffect(() => {
-    setProduct(null);
-
-    const fetchProduct = async () => {
-      try {
-        if (productHighlighted?.id) {
-          const data = await ProductService.getProduct(
-            productHighlighted.id,
-            false,
-            false
-          );
-          setProductId(productHighlighted.id);
-          setProduct(data);
-          setIsHydrated(true);
-        }
-      } catch (error: any) {
-        Bugsnag.notify(error);
-      }
-    };
-
-    fetchProduct();
-  }, [productHighlighted]);
 
   if (!productsAreLoaded || !isHydrated) {
     return <></>;
