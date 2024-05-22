@@ -22,11 +22,11 @@ export default function ProductPage({ product }: { product: Product }) {
         <ProductHeaderSSR product={product} />
       </div>
       <ProductVideos product={product} />
+      <ProductPricesSSR product={product} />
+      <ProductPaymentOptions totalPrice={product.price} />
       <div className="bg-hg-secondary100 py-12">
         <ProfessionalsSSR />
       </div>
-      <ProductPricesSSR product={product} />
-      <ProductPaymentOptions totalPrice={product.price} />
       <ProductFreeAppointment />
       <div className="bg-hg-black50">
         <Testimonials />
