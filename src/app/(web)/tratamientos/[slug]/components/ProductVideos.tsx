@@ -64,7 +64,7 @@ export default function ProductVideos({ product }: { product: Product }) {
               isIntrinsicHeight
               infinite={false}
               sliderStyles="md:gap-8"
-              controlStyles="px-4"
+              controlstyles="px-4"
             >
               {videos.map(video => {
                 if (video.active) {

@@ -13,7 +13,7 @@ export default function ProductImagesCarousel({
   return (
     <Flex className="w-full md:gap-16 items-start">
       <Carousel
-        controlStyles="px-4"
+        controlstyles="px-4"
         hasControls={product.beforeAndAfterImages?.length > 1}
         dragEnabled={product.beforeAndAfterImages?.length > 1}
         touchEnabled={product.beforeAndAfterImages?.length > 1}
