@@ -29,7 +29,12 @@ export default function ProductImagesCarousel({
         `}
       >
         {product.beforeAndAfterImages
-          ?.sort((a, b) => (a.urlBefore! < b.urlBefore! ? -1 : 0))
+          ?.sort(function (a, b) {
+            return a.urlBefore!.localeCompare(b.urlBefore!, undefined, {
+              numeric: true,
+              sensitivity: 'base',
+            });
+          })
           .map(item => (
             <div className="px-4" key={item.id}>
               <div className="overflow-hidden relative aspect-square">
