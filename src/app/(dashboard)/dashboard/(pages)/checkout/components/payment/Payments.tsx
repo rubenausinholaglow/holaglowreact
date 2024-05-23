@@ -207,12 +207,15 @@ export const PaymentModule = () => {
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: storedClinicProfessionalId,
+      clinicFlowwwId: storedClinicFlowwwId,
+      userFlowwwId: user!.id.substring(0, user!.flowwwToken.length - 32),
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: CartItem.price,
         percentageDiscount: CartItem.percentageDiscount,
         priceDiscount: CartItem.priceDiscount,
         name: CartItem.description,
+        productFlowwwId: CartItem.flowwwId,
       })),
     };
 
