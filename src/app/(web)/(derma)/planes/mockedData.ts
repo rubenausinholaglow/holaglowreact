@@ -196,6 +196,7 @@ export const DERMA_GENERIC_PRODUCTS = [
         pain: 0, //acné
         text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel y en su justa medida para lograr la mayor efectividad. Al ser personalizada, no la encontrarás en ningún otro sitio.',
         ingredients: [],
+        info: '',
         benefits: [
           'Formulada por el médico para con los principios activos que necesita tu piel',
           'Ingredientes de alta calidad en la concentración justa para tus objetivos',
@@ -212,6 +213,7 @@ export const DERMA_GENERIC_PRODUCTS = [
         pain: 1, //Rosácea
         text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel para reducir la rosácea. Al ser personalizada, no la encontrarás en ningún otro sitio.',
         ingredients: ['Niacinamida', 'Ácido azelaico'],
+        info: '',
         benefits: [
           'Mayor efectividad que las cremas genéricas al ser personalizada y contener principios activos médicos',
           'Tiene efectos antiinflamatorios, antibacterianos y previene la formación de puntos negros',
@@ -234,6 +236,7 @@ export const DERMA_GENERIC_PRODUCTS = [
           'Ácido glicólico',
           'Ácido kójico',
         ],
+        info: '',
         benefits: [
           'Mayor efectividad que las cremas genéricas al ser personalizada y contener principios activos médicos',
           'Efecto despigmentante para unificar el tono',
@@ -255,6 +258,7 @@ export const DERMA_GENERIC_PRODUCTS = [
           'Vitamina E',
           'Ácido glicólico',
         ],
+        info: '',
         benefits: [
           'Mayor efectividad que las cremas genéricas al ser personalizada y contener principios activos médicos',
           'Produce una rápida renovación de las células',

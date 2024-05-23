@@ -63,6 +63,12 @@ export default function ThankYouMultiStep() {
     item => item.value === pain
   )[0];
 
+  /*   const filteredIngredients = DERMA_INGREDIENTS.filter(
+    (ingredient: any) =>
+      ingredient.tags.includes(filteredPain.name || '') ||
+      ingredient.concerns.includes(filteredPain.name || '')
+  ); */
+
   return (
     <DermaLayout
       hideButton
@@ -115,11 +121,7 @@ export default function ThankYouMultiStep() {
                   className="mb-12"
                   controlStyles="pr-4"
                 >
-                  {DERMA_INGREDIENTS.filter(
-                    ingredient =>
-                      ingredient.tags.includes(filteredPain.name) ||
-                      ingredient.concerns.includes(filteredPain.name)
-                  ).map(ingredient => (
+                  {DERMA_INGREDIENTS.map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"

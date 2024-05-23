@@ -202,17 +202,18 @@ export default function RoutineItems({
                 <Text className="text-hg-black500 mb-6 pb-6 border-b border-hg-black500">
                   {pain !== undefined &&
                   (modalProduct === 1 || modalProduct === 3)
-                    ? DERMA_GENERIC_PRODUCTS[modalProduct].customizedProps[pain]
-                        .text
+                    ? DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps?.[
+                        pain
+                      ]?.text
                     : DERMA_GENERIC_PRODUCTS[modalProduct].text}
                 </Text>
                 <Text className="text-lg font-semibold mb-4">Beneficios</Text>
                 <ul className="flex flex-col gap-4 w-full mb-8">
                   {pain !== undefined &&
                   (modalProduct === 1 || modalProduct === 3)
-                    ? DERMA_GENERIC_PRODUCTS[modalProduct].customizedProps[
+                    ? DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps?.[
                         pain
-                      ].benefits.map((benefit, index) => {
+                      ]?.benefits?.map((benefit: any, index: number) => {
                         return (
                           <li
                             className="flex gap-3 items-start justify-start w-full"
@@ -223,8 +224,8 @@ export default function RoutineItems({
                           </li>
                         );
                       })
-                    : DERMA_GENERIC_PRODUCTS[modalProduct].benefits.map(
-                        (benefit, index) => {
+                    : DERMA_GENERIC_PRODUCTS[modalProduct]?.benefits?.map(
+                        (benefit: any, index: number) => {
                           return (
                             <li
                               className="flex gap-3 items-start justify-start w-full"
@@ -284,12 +285,17 @@ export default function RoutineItems({
                     ))}
 
                   {pain !== undefined &&
-                    DERMA_INGREDIENTS.filter(
-                      ingredient =>
-                        DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps[
+                    DERMA_INGREDIENTS.filter((ingredient: any) => {
+                      const customizedProps =
+                        DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps?.[
                           pain
-                        ]?.ingredients.includes(ingredient.name)
-                    ).map(ingredient => (
+                        ];
+                      return (
+                        customizedProps &&
+                        'ingredients' in customizedProps &&
+                        customizedProps.ingredients.includes(ingredient.name)
+                      );
+                    }).map((ingredient: any) => (
                       <Flex
                         layout="col-left"
                         className="w-full pr-6 gap-2 px-4"
@@ -305,7 +311,7 @@ export default function RoutineItems({
                         </Flex>
                         <Text className="font-semibold">{ingredient.name}</Text>
                         <ul className="flex gap-2 flex-wrap">
-                          {ingredient.concerns.map(tag => (
+                          {ingredient.concerns.map((tag: string) => (
                             <li
                               key={tag}
                               className="p-2 px-3 rounded-full bg-white text-derma-primary text-xs"
@@ -343,7 +349,7 @@ export default function RoutineItems({
                         (modalProduct === 1 || modalProduct === 3)
                           ? DERMA_GENERIC_PRODUCTS[
                               modalProduct
-                            ].customizedProps[pain].useMethod.map(
+                            ].customizedProps?.[pain].useMethod.map(
                               (benefit, index) => {
                                 return (
                                   <li
@@ -381,9 +387,11 @@ export default function RoutineItems({
                     </AccordionContent>
                   </AccordionItem>
 
-                  {DERMA_GENERIC_PRODUCTS[modalProduct].info ||
-                  DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps[pain]
-                    ?.info ? (
+                  {DERMA_GENERIC_PRODUCTS[modalProduct]?.info ||
+                  (pain !== undefined &&
+                    DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps?.[
+                      pain
+                    ]?.info) ? (
                     <AccordionItem
                       value="2"
                       className="rounded-2xl overflow-hidden bg-derma-secondary300"
@@ -395,13 +403,13 @@ export default function RoutineItems({
                         <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
                         <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
                       </AccordionTrigger>
-                      <AccordionContent className=" bg-derma-secondary400 text-sm text-hg-black500">
+                      <AccordionContent className="bg-derma-secondary400 text-sm text-hg-black500">
                         <Text className="p-4">
                           {pain !== undefined &&
                           (modalProduct === 1 || modalProduct === 3)
                             ? DERMA_GENERIC_PRODUCTS[modalProduct]
-                                .customizedProps[pain].info
-                            : DERMA_GENERIC_PRODUCTS[modalProduct].info}
+                                ?.customizedProps?.[pain]?.info
+                            : DERMA_GENERIC_PRODUCTS[modalProduct]?.info}
                         </Text>
                       </AccordionContent>
                     </AccordionItem>
