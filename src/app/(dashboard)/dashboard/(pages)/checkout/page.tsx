@@ -44,6 +44,7 @@ const Page = () => {
     storedBudgetId,
     setBudgetId,
     storedClinicProfessionalId,
+    storedClinicFlowwwId,
   } = useGlobalPersistedStore(state => state);
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
@@ -81,11 +82,17 @@ const Page = () => {
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: storedClinicProfessionalId,
+      clinicFlowwwId: storedClinicFlowwwId,
+      userFlowwwId: user!.flowwwToken.substring(
+        0,
+        user!.flowwwToken.length - 32
+      ),
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: Number(CartItem.price.toFixed(2)),
         percentageDiscount: CartItem.percentageDiscount / 100,
         priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
+        productFlowwwId: CartItem.flowwwId,
       })),
     };
     try {

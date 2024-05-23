@@ -16,6 +16,9 @@ export interface Budget {
   professionalId: string;
   manualPrice: number;
   products: BudgetProduct[];
+  clinicFlowwwId: string;
+  userFlowwwId: string;
+
 }
 
 export interface BudgetProduct {
@@ -25,6 +28,7 @@ export interface BudgetProduct {
   priceDiscount: number;
   percentageDiscount: number;
   product?: Product;
+  productFlowwwId: number;
 }
 
 export interface TicketBudget extends Budget {
