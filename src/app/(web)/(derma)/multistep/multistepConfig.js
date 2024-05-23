@@ -380,7 +380,7 @@ export const ACTIVE_PRINCIPLES = [
       'Luminosidad',
       'Patas de gallo',
     ],
-    imgSrc: '/images/derma/landingPrecios/ingredients/acidoAzelaico.jpg',
+    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaC.jpg',
   },
   {
     name: 'Vitamina E',
@@ -395,12 +395,12 @@ export const ACTIVE_PRINCIPLES = [
       'Líneas finas de expresión',
       'Patas de gallo',
     ],
-    imgSrc: '/images/derma/landingPrecios/ingredients/peroxidoDeBenzoilo.jpg',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoRetinoico.jpg',
   },
   {
     name: 'Ácido glicólico',
     concerns: ['Luminosidad', 'Poros dilatados', 'Tendencia acnéica'],
-    imgSrc: '/images/derma/landingPrecios/ingredients/clindamicina.jpg',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoGlicolico.jpg',
   },
   {
     name: 'Niacinamida',
@@ -410,7 +410,7 @@ export const ACTIVE_PRINCIPLES = [
   {
     name: 'Ácido salicílico',
     concerns: ['Tendencia acnéica'],
-    imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoSalicilico.jpg',
   },
   {
     name: 'Nicotinamida',
@@ -420,21 +420,21 @@ export const ACTIVE_PRINCIPLES = [
   {
     name: 'Ácido kójico',
     concerns: ['Melasma'],
-    imgSrc: '',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoKojico.jpg',
   },
   {
     name: 'Ivermectina',
     concerns: ['Rosácea'],
-    imgSrc: '',
+    imgSrc: '/images/derma/landingPrecios/ingredients/ivermectina.jpg',
   },
   {
     name: 'Metronidazol',
     concerns: ['Rosácea'],
-    imgSrc: '',
+    imgSrc: '/images/derma/landingPrecios/ingredients/metronidazol.jpg',
   },
   {
     name: 'Hidroquinona',
     concerns: ['Melasma'],
-    imgSrc: '',
+    imgSrc: '/images/derma/landingPrecios/ingredients/hidroquinona.jpg',
   },
 ];
