@@ -1,12 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
-import {
-  DERMA_INGREDIENTS,
-  PAINS_AND_SYMPTOMS,
-} from 'app/(web)/(derma)/multistep/multistepConfig';
+import { DERMA_INGREDIENTS } from 'app/(web)/(derma)/multistep/multistepConfig';
 import { DERMA_GENERIC_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
 import {
   SvgAdd,
@@ -43,9 +40,7 @@ export default function RoutineItems({
 }) {
   const [modalProduct, setModalProduct] = useState(99);
 
-  const filteredPain = PAINS_AND_SYMPTOMS.filter(
-    item => item.value === pain
-  )[0];
+  console.log(pain);
 
   return (
     <CheckHydration>
@@ -117,7 +112,7 @@ export default function RoutineItems({
           </div>
 
           {DERMA_GENERIC_PRODUCTS.map((item, index) => {
-            if (index === 3 && !hideCremaFormulada && !pain) {
+            if (index === 3 && !hideCremaFormulada) {
               return (
                 <Flex
                   key={item.title}
@@ -178,7 +173,6 @@ export default function RoutineItems({
             }
           })}
         </div>
-
         <DialogContent className="w-full max-w-[500px] bg-derma-secondary300">
           {modalProduct < 5 && (
             <div className="pt-12">
@@ -251,6 +245,7 @@ export default function RoutineItems({
                   </Text>
                 )}
               </Container>
+
               {modalProduct === 3 && (
                 <Carousel
                   isIntrinsicHeight
@@ -259,33 +254,68 @@ export default function RoutineItems({
                   isDerma
                   className="mb-12"
                 >
-                  {DERMA_INGREDIENTS.map(ingredient => (
-                    <Flex
-                      layout="col-left"
-                      className="w-full pr-6 gap-2 px-4"
-                      key={ingredient.name}
-                    >
-                      <Flex className="relative aspect-[3/2] w-full rounded-2xl bg-derma-secondary500 border border-derma-secondary100 mb-2 py-4 overflow-hidden">
-                        <Image
-                          alt={ingredient.name}
-                          src={ingredient.imgSrc}
-                          fill
-                          className="scale-110 object-contain"
-                        />
+                  {pain === undefined &&
+                    DERMA_INGREDIENTS.map(ingredient => (
+                      <Flex
+                        layout="col-left"
+                        className="w-full pr-6 gap-2 px-4"
+                        key={ingredient.name}
+                      >
+                        <Flex className="relative aspect-[3/2] w-full rounded-2xl bg-derma-secondary500 border border-derma-secondary100 mb-2 py-4 overflow-hidden">
+                          <Image
+                            alt={ingredient.name}
+                            src={ingredient.imgSrc}
+                            fill
+                            className="scale-110 object-contain"
+                          />
+                        </Flex>
+                        <Text className="font-semibold">{ingredient.name}</Text>
+                        <ul className="flex gap-2 flex-wrap">
+                          {ingredient.concerns.map(tag => (
+                            <li
+                              key={tag}
+                              className="p-2 px-3 rounded-full bg-white text-derma-primary text-xs"
+                            >
+                              {tag}
+                            </li>
+                          ))}
+                        </ul>
                       </Flex>
-                      <Text className="font-semibold">{ingredient.name}</Text>
-                      <ul className="flex gap-2 flex-wrap">
-                        {ingredient.concerns.map(tag => (
-                          <li
-                            key={tag}
-                            className="p-2 px-3 rounded-full bg-white text-derma-primary text-xs"
-                          >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul>
-                    </Flex>
-                  ))}
+                    ))}
+
+                  {pain !== undefined &&
+                    DERMA_INGREDIENTS.filter(
+                      ingredient =>
+                        DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps[
+                          pain
+                        ]?.ingredients.includes(ingredient.name)
+                    ).map(ingredient => (
+                      <Flex
+                        layout="col-left"
+                        className="w-full pr-6 gap-2 px-4"
+                        key={ingredient.name}
+                      >
+                        <Flex className="relative aspect-[3/2] w-full rounded-2xl bg-derma-secondary500 border border-derma-secondary100 mb-2 py-4 overflow-hidden">
+                          <Image
+                            alt={ingredient.name}
+                            src={ingredient.imgSrc}
+                            fill
+                            className="scale-110 object-contain"
+                          />
+                        </Flex>
+                        <Text className="font-semibold">{ingredient.name}</Text>
+                        <ul className="flex gap-2 flex-wrap">
+                          {ingredient.concerns.map(tag => (
+                            <li
+                              key={tag}
+                              className="p-2 px-3 rounded-full bg-white text-derma-primary text-xs"
+                            >
+                              {tag}
+                            </li>
+                          ))}
+                        </ul>
+                      </Flex>
+                    ))}
                 </Carousel>
               )}
 

@@ -2,6 +2,7 @@
 import { isMobile } from 'react-device-detect';
 import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
+import ROUTES from '@utils/routes';
 import StoriesDerma from 'app/(web)/components/common/StoriesDerma';
 import RoutineItems from 'app/(web)/components/dermahome/RoutineItems';
 import TestimonialsDerma from 'app/(web)/components/dermahome/TestimonialsDerma';
@@ -102,7 +103,7 @@ export default function ThankYouMultiStep() {
           <CheckHydration>
             <Flex layout="col-left" className="md:flex-row w-full mb-8">
               <div className="w-full md:w-1/2 shrink-0 mb-8 md:mb-0 md:mr-4 px-4">
-                <RoutineItems hideDefaultItems />
+                <RoutineItems hideDefaultItems pain={pain} />
               </div>
               <div className="w-full md:w-1/2 shrink-0 md:ml-4">
                 <Carousel
@@ -155,6 +156,7 @@ export default function ThankYouMultiStep() {
               size="xl"
               customStyles="px-16"
               className="w-full md:w-auto"
+              href={ROUTES.derma.multistep.planes}
             >
               Comprar rutina
             </Button>
@@ -231,6 +233,7 @@ export default function ThankYouMultiStep() {
             size="xl"
             customStyles="px-16"
             className="w-full md:w-auto"
+            href={ROUTES.derma.multistep.planes}
           >
             Comprar rutina
           </Button>

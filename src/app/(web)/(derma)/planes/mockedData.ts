@@ -96,18 +96,18 @@ export const DERMA_GENERIC_PRODUCTS = [
         ],
       },
       {
-        pain: 1, //Antiaging
-        text: 'Esta crema de día actúa sobre los principales signos visibles del envejecimiento en el rostro reduciendo la profundidad de las arrugas y las líneas de expresión.',
-        info: 'Activos principales: Coenzima Q10, Matrixyl 3000, Isoflavonas liposomadas, Superóxido dismutasa, Bisabolol, Hamamelis, Aloe vera, Vitamina E, Amonio Glicirrinato.',
+        pain: 1, //Rosácea
+        text: 'Esta crema de día actúa sobre el enrojecimiento e irritaciones leves en el rostro gracias a su efecto sobre la microbiota y el refuerzo de la barrera cutánea.',
+        info: 'Activos principales: Aceite de árbol del té, Microsilver BG, Rhamnosoft, Aceite de germen de trigo, almendras y aguacate, Lípidos de moringa, Arnica, Ruscus, Ginkgo, Biloba, Consuelda, Caléndula, Aloe vera, Mirtilo, Regaliz, Alfa-Bisabolol.',
         benefits: [
-          'Con los últimos y más eficaces activos antiedad',
-          'Reduce arrugas, líneas de expresión, pequeñas manchas e imperfecciones',
-          'Se observa su efecto regenerador del sustrato dérmico en la 1ª semana de uso',
+          'Alivia calma y protege pieles sensibles',
+          'Aporta activos necesarios para controlar la microbiota y mejora la barrera cutánea',
+          'Hidrata, nutre y aporta bienestar a las pieles alteradas',
         ],
         useMethod: [
-          'Usar como crema de día',
-          'Aplicar en la cara con un suave masaje',
-          'Evitar el contacto con mucosas',
+          'Aplicar por la mañana en todo el rostro',
+          'Debido al empleo de una base natural, es posible que el producto presente distintas tonalidades',
+          'Uso externo',
         ],
       },
       {
@@ -127,18 +127,18 @@ export const DERMA_GENERIC_PRODUCTS = [
         ],
       },
       {
-        pain: 3, //Rosácea
-        text: 'Esta crema de día actúa sobre el enrojecimiento e irritaciones leves en el rostro gracias a su efecto sobre la microbiota y el refuerzo de la barrera cutánea.',
-        info: 'Activos principales: Aceite de árbol del té, Microsilver BG, Rhamnosoft, Aceite de germen de trigo, almendras y aguacate, Lípidos de moringa, Arnica, Ruscus, Ginkgo, Biloba, Consuelda, Caléndula, Aloe vera, Mirtilo, Regaliz, Alfa-Bisabolol.',
+        pain: 3, //Antiaging
+        text: 'Esta crema de día actúa sobre los principales signos visibles del envejecimiento en el rostro reduciendo la profundidad de las arrugas y las líneas de expresión.',
+        info: 'Activos principales: Coenzima Q10, Matrixyl 3000, Isoflavonas liposomadas, Superóxido dismutasa, Bisabolol, Hamamelis, Aloe vera, Vitamina E, Amonio Glicirrinato.',
         benefits: [
-          'Alivia calma y protege pieles sensibles',
-          'Aporta activos necesarios para controlar la microbiota y mejora la barrera cutánea',
-          'Hidrata, nutre y aporta bienestar a las pieles alteradas',
+          'Con los últimos y más eficaces activos antiedad',
+          'Reduce arrugas, líneas de expresión, pequeñas manchas e imperfecciones',
+          'Se observa su efecto regenerador del sustrato dérmico en la 1ª semana de uso',
         ],
         useMethod: [
-          'Aplicar por la mañana en todo el rostro',
-          'Debido al empleo de una base natural, es posible que el producto presente distintas tonalidades',
-          'Uso externo',
+          'Usar como crema de día',
+          'Aplicar en la cara con un suave masaje',
+          'Evitar el contacto con mucosas',
         ],
       },
     ],
@@ -207,20 +207,15 @@ export const DERMA_GENERIC_PRODUCTS = [
           'Evitar el contacto con mucosas',
         ],
       },
+
       {
-        pain: 1, //Antiaging
-        text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel para reducir los signos visibles del envejecimiento en el rostro. Al ser personalizada, no la encontrarás en ningún otro sitio.',
-        ingredients: [
-          'Ácido retinoico',
-          'Nicotinamida',
-          'Vitamina C',
-          'Vitamina E',
-          'Ácido glicólico',
-        ],
+        pain: 1, //Rosácea
+        text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel para reducir la rosácea. Al ser personalizada, no la encontrarás en ningún otro sitio.',
+        ingredients: ['Niacinamida', 'Ácido azelaico'],
         benefits: [
           'Mayor efectividad que las cremas genéricas al ser personalizada y contener principios activos médicos',
-          'Produce una rápida renovación de las células',
-          'Deja un tono uniforme en la piel y una textura lisa',
+          'Tiene efectos antiinflamatorios, antibacterianos y previene la formación de puntos negros',
+          'También ayuda a igualar el tono desigual de la piel y ayuda a reducir las líneas finas y las arrugas.',
         ],
         useMethod: [
           'Aplicar por la noche sobre la piel limpia con un suave masaje para facilitar la completa absorción',
@@ -251,13 +246,19 @@ export const DERMA_GENERIC_PRODUCTS = [
         ],
       },
       {
-        pain: 3, //Rosácea
-        text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel para reducir la rosácea. Al ser personalizada, no la encontrarás en ningún otro sitio.',
-        ingredients: ['Niacinamida', 'Ácido azelaico'],
+        pain: 3, //Antiaging
+        text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel para reducir los signos visibles del envejecimiento en el rostro. Al ser personalizada, no la encontrarás en ningún otro sitio.',
+        ingredients: [
+          'Ácido retinoico',
+          'Nicotinamida',
+          'Vitamina C',
+          'Vitamina E',
+          'Ácido glicólico',
+        ],
         benefits: [
           'Mayor efectividad que las cremas genéricas al ser personalizada y contener principios activos médicos',
-          'Tiene efectos antiinflamatorios, antibacterianos y previene la formación de puntos negros',
-          'También ayuda a igualar el tono desigual de la piel y ayuda a reducir las líneas finas y las arrugas.',
+          'Produce una rápida renovación de las células',
+          'Deja un tono uniforme en la piel y una textura lisa',
         ],
         useMethod: [
           'Aplicar por la noche sobre la piel limpia con un suave masaje para facilitar la completa absorción',
