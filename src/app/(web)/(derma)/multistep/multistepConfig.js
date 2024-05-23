@@ -331,7 +331,7 @@ export const DERMA_INGREDIENTS = [
   },
   {
     name: 'Ácido retinoico',
-    imgSrc: '/images/derma/landingPrecios/ingredients/peroxidoDeBenzoilo.jpg', // fake img
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoRetinoico.jpg',
     concentration: '2,5%',
     tags: ['Melasma, Antiaging', 'Acné'],
     concerns: [
@@ -346,7 +346,7 @@ export const DERMA_INGREDIENTS = [
   },
   {
     name: 'Hidroquinona',
-    imgSrc: '/images/derma/landingPrecios/ingredients/ivermectina.jpg', // fake img
+    imgSrc: '/images/derma/landingPrecios/ingredients/hidroquinona.jpg',
     concentration: '2,5%',
     tags: ['Melasma'],
     concerns: [
@@ -362,7 +362,7 @@ export const DERMA_INGREDIENTS = [
   },
   {
     name: 'Vitamina C',
-    imgSrc: '/images/derma/landingPrecios/ingredients/acidoAzelaico.jpg', // fake img
+    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaC.jpg',
     tags: [],
     concerns: [
       'Mejorar la textura de la piel',
@@ -373,28 +373,28 @@ export const DERMA_INGREDIENTS = [
   },
   {
     name: 'Vitamina E',
-    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaA.jpg', // fake img
+    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaE.jpg',
     tags: [],
     concerns: ['Luminosidad', 'Patas de gallo'],
     description: '',
   },
   {
     name: 'Ácido glicólico',
-    imgSrc: '/images/derma/landingPrecios/ingredients/clindamicina.jpg', // fake img
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoGlicolico.jpg',
     tags: ['Acné'],
     concerns: ['Luminosidad', 'Poros dilatados', 'Tendencia acnéica'],
     description: '',
   },
   {
     name: 'Ácido salicílico',
-    imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg', // fake img
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoSalicilico.jpg',
     tags: ['Acné'],
     concerns: ['Tendencia acnéica'],
     description: '',
   },
   {
     name: 'Ácido kójico',
-    imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg', // fake img
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoKojico.jpg',
     tags: ['Acné'],
     concerns: ['Melasma'],
     description: '',
