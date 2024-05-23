@@ -38,7 +38,7 @@ export default function Diagnostico() {
   }, []);
 
   useEffect(() => {
-    //if (dermaPhone) fetchData();
+    if (dermaPhone) fetchData();
   }, [dermaPhone]);
 
   if (!isLogged) {
