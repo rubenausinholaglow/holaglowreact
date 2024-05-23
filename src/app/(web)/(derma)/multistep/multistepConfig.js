@@ -41,6 +41,28 @@ export const PAINS_AND_SYMPTOMS = [
       'Espinillas negras',
       'Milia (pequeños quistes blancos o amarillentos)',
     ],
+    feedback: {
+      ingredients: [
+        {
+          name: 'Ácido retinoico',
+          subtitle: '0,015% - 0,05% Despigmentante y regenerador',
+          extraInfo: '',
+          imgUrl: '/images/derma/multistep/ingredients/acidoRetinoico.png',
+        },
+        {
+          name: 'Ácido salicílico',
+          subtitle: '',
+          extraInfo: '',
+          imgUrl: '',
+        },
+        {
+          name: 'Ácido glicólico',
+          subtitle: '',
+          extraInfo: '',
+          imgUrl: '',
+        },
+      ],
+    },
   },
   {
     name: 'Rosácea',
