@@ -57,7 +57,8 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
       .every(
         (item: string) =>
           item.includes(product.title) &&
-          product.title.indexOf('Pack Wellaging') < 0
+          product.title.indexOf('Pack Wellaging') < 0 &&
+          product.title.indexOf('Armonización facial') < 0
       );
   }
 
