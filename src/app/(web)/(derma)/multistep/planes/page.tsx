@@ -11,7 +11,7 @@ import { Modal, Modal2 } from 'designSystem/Modals/Modal';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-import { DERMA_PRODUCTS } from '../../planes/mockedData';
+import { DERMA_GENERIC_PRODUCTS } from '../../planes/mockedData';
 import GuaranteedResults from '../../precios/components/GuaranteedResults';
 import OptionsPricesB from '../../precios/components/OptionsPricesB';
 import PlanesBottomBar from './PlanesBottomBar';
@@ -52,25 +52,25 @@ export default function PlanesMultiStep() {
             />
             <Container className="pt-12 md:p-6">
               <Image
-                src={DERMA_PRODUCTS[modalProduct].img}
-                alt={DERMA_PRODUCTS[modalProduct].title}
+                src={DERMA_GENERIC_PRODUCTS[modalProduct].img}
+                alt={DERMA_GENERIC_PRODUCTS[modalProduct].title}
                 width={324}
                 height={396}
                 className="w-2/3 md:w-1/2 shrink-0 mx-auto mb-8"
               />
               <Text className="font-semibold mb-2">
-                {DERMA_PRODUCTS[modalProduct].title}
+                {DERMA_GENERIC_PRODUCTS[modalProduct].title}
               </Text>
               <Text className="text-sm mb-4">
-                {DERMA_PRODUCTS[modalProduct].subTitle}
+                {DERMA_GENERIC_PRODUCTS[modalProduct].subTitle}
               </Text>
               <Text className="text-hg-black500 text-sm mb-4">
-                {DERMA_PRODUCTS[modalProduct].text}
+                {DERMA_GENERIC_PRODUCTS[modalProduct].text}
               </Text>
-              {DERMA_PRODUCTS[modalProduct].info.length > 0 && (
+              {DERMA_GENERIC_PRODUCTS[modalProduct].info.length > 0 && (
                 <Text className="p-4 bg-derma-primary300/20 rounded-xl text-sm text-hg-black500 mb-8">
                   <span className="font-semibold">Activos principales: </span>
-                  {DERMA_PRODUCTS[modalProduct].info}
+                  {DERMA_GENERIC_PRODUCTS[modalProduct].info}
                 </Text>
               )}
 

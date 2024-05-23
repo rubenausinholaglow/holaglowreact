@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
 import { DERMA_INGREDIENTS } from 'app/(web)/(derma)/multistep/multistepConfig';
-import { DERMA_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
+import {
+  CUSTOM_CREAMS,
+  DERMA_GENERIC_PRODUCTS,
+  FORMULATED_CREAMS,
+} from 'app/(web)/(derma)/planes/mockedData';
 import {
   SvgAdd,
   SvgCheckCircle,
@@ -51,7 +55,7 @@ export default function RoutineItems({
             ${hideDefaultItems ? 'hidden' : ''}
             `}
           >
-            {DERMA_PRODUCTS.map((item, index) => {
+            {DERMA_GENERIC_PRODUCTS.map((item, index) => {
               if (index < 3 && !hideDefaultItems) {
                 return (
                   <Flex
@@ -84,7 +88,8 @@ export default function RoutineItems({
                         </Flex>
                       </Flex>
                       <Text className="font-semibold text-sm md:text-md">
-                        {item.title}
+                        {item.title}{' '}
+                        {pain !== undefined && index === 1 && 'específica'}
                       </Text>
                       <Text className="text-sm md:text-md mb-2">
                         {item.toggle}
@@ -108,7 +113,7 @@ export default function RoutineItems({
             })}
           </div>
 
-          {DERMA_PRODUCTS.map((item, index) => {
+          {DERMA_GENERIC_PRODUCTS.map((item, index) => {
             if (index === 3 && !hideCremaFormulada && !pain) {
               return (
                 <Flex
@@ -158,7 +163,7 @@ export default function RoutineItems({
                         size="sm"
                         customStyles="border-derma-primary text-derma-primary"
                         onClick={() => {
-                          setModalProduct(index);
+                          setModalProduct(3);
                         }}
                       >
                         Saber más
@@ -175,14 +180,14 @@ export default function RoutineItems({
           {modalProduct < 5 && (
             <div className="pt-12">
               <CarouselImage
-                images={DERMA_PRODUCTS[modalProduct].carouselImg}
+                images={DERMA_GENERIC_PRODUCTS[modalProduct].carouselImg}
                 format="aspect-[3/2]"
               />
               <Container className="py-4 md:p-6">
                 <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary inline-flex text-sm mb-4">
                   <SvgSun className="w-4 h-4" />
                   <span>Día</span>
-                  {DERMA_PRODUCTS[modalProduct].isNightRoutine && (
+                  {DERMA_GENERIC_PRODUCTS[modalProduct].isNightRoutine && (
                     <>
                       <span>/</span>
                       <SvgMoon className="w-4 h-4" />
@@ -191,29 +196,51 @@ export default function RoutineItems({
                   )}
                 </Flex>
                 <Text className="font-gtUltra mb-2 text-xl">
-                  {DERMA_PRODUCTS[modalProduct].title}
+                  {DERMA_GENERIC_PRODUCTS[modalProduct].title}{' '}
+                  {modalProduct === 1 && pain !== undefined && ' específica'}
                 </Text>
                 <Text className="text-sm mb-4">
-                  {DERMA_PRODUCTS[modalProduct].subTitle}
+                  {DERMA_GENERIC_PRODUCTS[modalProduct].subTitle}
                 </Text>
                 <Text className="text-hg-black500 mb-6 pb-6 border-b border-hg-black500">
-                  {DERMA_PRODUCTS[modalProduct].text}
+                  {pain !== undefined &&
+                  (modalProduct === 1 || modalProduct === 3)
+                    ? DERMA_GENERIC_PRODUCTS[modalProduct].customizedProps[pain]
+                        .text
+                    : DERMA_GENERIC_PRODUCTS[modalProduct].text}
                 </Text>
                 <Text className="text-lg font-semibold mb-4">Beneficios</Text>
                 <ul className="flex flex-col gap-4 w-full mb-8">
-                  {DERMA_PRODUCTS[modalProduct].benefits.map(
-                    (benefit, index) => {
-                      return (
-                        <li
-                          className="flex gap-3 items-start justify-start w-full"
-                          key={index}
-                        >
-                          <SvgCheckCircle className="shrink-0 w-6 h-6 text-derma-primary500 mt-1" />
-                          <Text className="text-hg-black500">{benefit}</Text>
-                        </li>
-                      );
-                    }
-                  )}
+                  {pain !== undefined &&
+                  (modalProduct === 1 || modalProduct === 3)
+                    ? DERMA_GENERIC_PRODUCTS[modalProduct].customizedProps[
+                        pain
+                      ].benefits.map((benefit, index) => {
+                        return (
+                          <li
+                            className="flex gap-3 items-start justify-start w-full"
+                            key={index}
+                          >
+                            <SvgCheckCircle className="shrink-0 w-6 h-6 text-derma-primary500 mt-1" />
+                            <Text className="text-hg-black500">{benefit}</Text>
+                          </li>
+                        );
+                      })
+                    : DERMA_GENERIC_PRODUCTS[modalProduct].benefits.map(
+                        (benefit, index) => {
+                          return (
+                            <li
+                              className="flex gap-3 items-start justify-start w-full"
+                              key={index}
+                            >
+                              <SvgCheckCircle className="shrink-0 w-6 h-6 text-derma-primary500 mt-1" />
+                              <Text className="text-hg-black500">
+                                {benefit}
+                              </Text>
+                            </li>
+                          );
+                        }
+                      )}
                 </ul>
                 {modalProduct === 3 && (
                   <Text className="text-lg font-semibold">
@@ -279,27 +306,51 @@ export default function RoutineItems({
                     </AccordionTrigger>
                     <AccordionContent className=" bg-derma-secondary400 text-sm text-hg-black500">
                       <ul className="flex flex-col gap-6 w-full p-4">
-                        {DERMA_PRODUCTS[modalProduct].useMethod.map(
-                          (benefit, index) => {
-                            return (
-                              <li
-                                className="flex gap-3 items-start justify-start w-full"
-                                key={index}
-                              >
-                                <Flex className="justify-center items-center rounded-full shrink-0 w-7 h-7 bg-white text-derma-primary500 -mt-1 font-bold">
-                                  {index + 1}
-                                </Flex>
-                                <Text className="text-hg-black500">
-                                  {benefit}
-                                </Text>
-                              </li>
-                            );
-                          }
-                        )}
+                        {pain !== undefined &&
+                        (modalProduct === 1 || modalProduct === 3)
+                          ? DERMA_GENERIC_PRODUCTS[
+                              modalProduct
+                            ].customizedProps[pain].useMethod.map(
+                              (benefit, index) => {
+                                return (
+                                  <li
+                                    className="flex gap-3 items-start justify-start w-full"
+                                    key={index}
+                                  >
+                                    <Flex className="justify-center items-center rounded-full shrink-0 w-7 h-7 bg-white text-derma-primary500 -mt-1 font-bold">
+                                      {index + 1}
+                                    </Flex>
+                                    <Text className="text-hg-black500">
+                                      {benefit}
+                                    </Text>
+                                  </li>
+                                );
+                              }
+                            )
+                          : DERMA_GENERIC_PRODUCTS[modalProduct].useMethod.map(
+                              (benefit, index) => {
+                                return (
+                                  <li
+                                    className="flex gap-3 items-start justify-start w-full"
+                                    key={index}
+                                  >
+                                    <Flex className="justify-center items-center rounded-full shrink-0 w-7 h-7 bg-white text-derma-primary500 -mt-1 font-bold">
+                                      {index + 1}
+                                    </Flex>
+                                    <Text className="text-hg-black500">
+                                      {benefit}
+                                    </Text>
+                                  </li>
+                                );
+                              }
+                            )}
                       </ul>
                     </AccordionContent>
                   </AccordionItem>
-                  {DERMA_PRODUCTS[modalProduct].info && (
+
+                  {(DERMA_GENERIC_PRODUCTS[modalProduct].info ||
+                    DERMA_GENERIC_PRODUCTS[modalProduct].customizedProps[pain]
+                      .info) && (
                     <AccordionItem
                       value="2"
                       className="rounded-2xl overflow-hidden bg-derma-secondary300"
@@ -313,7 +364,11 @@ export default function RoutineItems({
                       </AccordionTrigger>
                       <AccordionContent className=" bg-derma-secondary400 text-sm text-hg-black500">
                         <Text className="p-4">
-                          {DERMA_PRODUCTS[modalProduct].info}
+                          {pain !== undefined &&
+                          (modalProduct === 1 || modalProduct === 3)
+                            ? DERMA_GENERIC_PRODUCTS[modalProduct]
+                                .customizedProps[pain].info
+                            : DERMA_GENERIC_PRODUCTS[modalProduct].info}
                         </Text>
                       </AccordionContent>
                     </AccordionItem>

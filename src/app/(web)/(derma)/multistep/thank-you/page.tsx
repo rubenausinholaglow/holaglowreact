@@ -56,9 +56,11 @@ const FAQS = [
 
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
-  const { pain } = useDermaStore(state => state);
+  //const { pain } = useDermaStore(state => state);
 
-  const filteredFeedback = PAINS_AND_SYMPTOMS.filter(
+  const pain = 1; //fake pain
+
+  const filteredPain = PAINS_AND_SYMPTOMS.filter(
     item => item.value === pain
   )[0];
 
@@ -85,7 +87,7 @@ export default function ThankYouMultiStep() {
             <Text className="text-center md:text-left">
               Esta es la rutina completa que hemos diseñado para tu{' '}
               <span className="font-semibold">
-                {filteredFeedback?.name.toLocaleLowerCase()}
+                {filteredPain?.name.toLocaleLowerCase()}
               </span>
             </Text>
             <RoutineItems hideCremaFormulada pain={pain} />
@@ -112,7 +114,11 @@ export default function ThankYouMultiStep() {
                   className="mb-12"
                   controlStyles="pr-4"
                 >
-                  {DERMA_INGREDIENTS.map(ingredient => (
+                  {DERMA_INGREDIENTS.filter(
+                    ingredient =>
+                      ingredient.tags.includes(filteredPain.name) ||
+                      ingredient.concerns.includes(filteredPain.name)
+                  ).map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"
