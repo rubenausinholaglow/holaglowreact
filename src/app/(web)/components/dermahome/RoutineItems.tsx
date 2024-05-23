@@ -3,12 +3,11 @@
 import { useEffect, useState } from 'react';
 import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
-import { DERMA_INGREDIENTS } from 'app/(web)/(derma)/multistep/multistepConfig';
 import {
-  CUSTOM_CREAMS,
-  DERMA_GENERIC_PRODUCTS,
-  FORMULATED_CREAMS,
-} from 'app/(web)/(derma)/planes/mockedData';
+  DERMA_INGREDIENTS,
+  PAINS_AND_SYMPTOMS,
+} from 'app/(web)/(derma)/multistep/multistepConfig';
+import { DERMA_GENERIC_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
 import {
   SvgAdd,
   SvgCheckCircle,
@@ -43,6 +42,10 @@ export default function RoutineItems({
   pain?: number;
 }) {
   const [modalProduct, setModalProduct] = useState(99);
+
+  const filteredPain = PAINS_AND_SYMPTOMS.filter(
+    item => item.value === pain
+  )[0];
 
   return (
     <CheckHydration>
@@ -348,9 +351,9 @@ export default function RoutineItems({
                     </AccordionContent>
                   </AccordionItem>
 
-                  {(DERMA_GENERIC_PRODUCTS[modalProduct].info ||
-                    DERMA_GENERIC_PRODUCTS[modalProduct].customizedProps[pain]
-                      .info) && (
+                  {DERMA_GENERIC_PRODUCTS[modalProduct].info ||
+                  DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps[pain]
+                    ?.info ? (
                     <AccordionItem
                       value="2"
                       className="rounded-2xl overflow-hidden bg-derma-secondary300"
@@ -372,7 +375,7 @@ export default function RoutineItems({
                         </Text>
                       </AccordionContent>
                     </AccordionItem>
-                  )}
+                  ) : null}
                 </Accordion>
               </Container>
             </div>

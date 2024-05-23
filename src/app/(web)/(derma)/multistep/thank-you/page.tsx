@@ -56,9 +56,7 @@ const FAQS = [
 
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
-  //const { pain } = useDermaStore(state => state);
-
-  const pain = 1; //fake pain
+  const { pain } = useDermaStore(state => state);
 
   const filteredPain = PAINS_AND_SYMPTOMS.filter(
     item => item.value === pain
@@ -90,7 +88,9 @@ export default function ThankYouMultiStep() {
                 {filteredPain?.name.toLocaleLowerCase()}
               </span>
             </Text>
-            <RoutineItems hideCremaFormulada pain={pain} />
+            <CheckHydration>
+              <RoutineItems hideCremaFormulada pain={pain} />
+            </CheckHydration>
           </Flex>
         </Container>
       </div>
