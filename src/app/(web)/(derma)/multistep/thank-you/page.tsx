@@ -20,7 +20,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-import { ACTIVE_PRINCIPLES, PAINS_AND_SYMPTOMS } from '../multistepConfig';
+import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../multistepConfig';
 
 const FAQS = [
   {
@@ -112,7 +112,7 @@ export default function ThankYouMultiStep() {
                   className="mb-12"
                   controlStyles="pr-4"
                 >
-                  {ACTIVE_PRINCIPLES.map(ingredient => (
+                  {DERMA_INGREDIENTS.map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"

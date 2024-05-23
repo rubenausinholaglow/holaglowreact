@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
-import { ACTIVE_PRINCIPLES } from 'app/(web)/(derma)/multistep/multistepConfig';
+import { DERMA_INGREDIENTS } from 'app/(web)/(derma)/multistep/multistepConfig';
 import { DERMA_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
 import {
   SvgAdd,
@@ -229,7 +229,7 @@ export default function RoutineItems({
                   isDerma
                   className="mb-12"
                 >
-                  {ACTIVE_PRINCIPLES.map(ingredient => (
+                  {DERMA_INGREDIENTS.map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"

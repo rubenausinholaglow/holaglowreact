@@ -72,9 +72,9 @@ export default function Pains() {
                       />
                       <div className="absolute top-6 right-6 bg-white rounded-full">
                         {pain === painItem.value ? (
-                          <SvgRadioChecked className="h-7 w-7" />
+                          <SvgRadioChecked className="h-7 w-7 shrink-0" />
                         ) : (
-                          <SvgCircle className="h-7 w-7" />
+                          <SvgCircle className="h-7 w-7 shrink-0" />
                         )}
                       </div>
                       {painItem.name}
