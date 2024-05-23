@@ -90,6 +90,16 @@ export const PAINS_AND_SYMPTOMS = [
       'Arrugas profundas',
       'Pérdida de densidad      ',
     ],
+    feedback: {
+      ingredients: [
+        {
+          name: 'Ácido retinoico',
+          subtitle: '0,015% - 0,05% Despigmentante y regenerador',
+          extraInfo: '',
+          imgUrl: '/images/derma/multistep/ingredients/acidoRetinoico.png',
+        },
+      ],
+    },
   },
 ];
 
@@ -200,6 +210,9 @@ export const SECONDARY_CONCERNS = [
   'Patas de gallo',
   'Tendencia acnéica',
   'No quiero tratar nada más',
+  'Lentigo solar',
+  'Rosácea',
+  'Melasma',
 ];
 
 export const ROUTINES = [
@@ -391,12 +404,37 @@ export const ACTIVE_PRINCIPLES = [
   },
   {
     name: 'Niacinamida',
-    concerns: ['Tendencia acnéica'],
+    concerns: ['Tendencia acnéica', 'Rosácea'],
     imgSrc: '/images/derma/landingPrecios/ingredients/niacinamida.jpg',
   },
   {
     name: 'Ácido salicílico',
     concerns: ['Tendencia acnéica'],
     imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg',
+  },
+  {
+    name: 'Nicotinamida',
+    concerns: ['Lentigo solar'],
+    imgSrc: '',
+  },
+  {
+    name: 'Ácido kójico',
+    concerns: ['Melasma'],
+    imgSrc: '',
+  },
+  {
+    name: 'Ivermectina',
+    concerns: ['Rosácea'],
+    imgSrc: '',
+  },
+  {
+    name: 'Metronidazol',
+    concerns: ['Rosácea'],
+    imgSrc: '',
+  },
+  {
+    name: 'Hidroquinona',
+    concerns: ['Melasma'],
+    imgSrc: '',
   },
 ];
