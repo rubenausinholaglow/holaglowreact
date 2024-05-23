@@ -32,9 +32,11 @@ import Image from 'next/image';
 export default function RoutineItems({
   hideDefaultItems = false,
   hideCremaFormulada = false,
+  pain,
 }: {
   hideDefaultItems?: boolean;
   hideCremaFormulada?: boolean;
+  pain?: number;
 }) {
   const [modalProduct, setModalProduct] = useState(99);
 
@@ -107,7 +109,7 @@ export default function RoutineItems({
           </div>
 
           {DERMA_PRODUCTS.map((item, index) => {
-            if (index === 3 && !hideCremaFormulada) {
+            if (index === 3 && !hideCremaFormulada && !pain) {
               return (
                 <Flex
                   key={item.title}

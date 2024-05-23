@@ -88,7 +88,7 @@ export default function ThankYouMultiStep() {
                 {filteredFeedback?.name.toLocaleLowerCase()}
               </span>
             </Text>
-            <RoutineItems hideCremaFormulada />
+            <RoutineItems hideCremaFormulada pain={pain} />
           </Flex>
         </Container>
       </div>

@@ -133,6 +133,38 @@ export const DERMA_PRODUCTS = [
   },
 ];
 
+export const FORMULATED_CREAMS = [
+  {
+    pain: 0, //acné
+    text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel y en su justa medida para lograr la mayor efectividad. Al ser personalizada, no la encontrarás en ningún otro sitio',
+    ingredients: [],
+    benefits: [
+      'Formulada por el médico para con los principios activos que necesita tu piel',
+      'Ingredientes de alta calidad en la concentración justa para tus objetivos',
+      'Mayor eficacia que las cremas genéricas',
+    ],
+    useMethod: [
+      'Aplicar por la noche sobre la piel limpia con un suave masaje para facilitar la completa absorción',
+      'Empezar aplicando una pequeña cantidad y aumentar progresivamente según las indicaciones del médico',
+      'Evitar el contacto con mucosas',
+    ],
+  },
+  {
+    pain: 0, //acné
+    text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel y en su justa medida para lograr la mayor efectividad. Al ser personalizada, no la encontrarás en ningún otro sitio',
+    benefits: [
+      'Formulada por el médico para con los principios activos que necesita tu piel',
+      'Ingredientes de alta calidad en la concentración justa para tus objetivos',
+      'Mayor eficacia que las cremas genéricas',
+    ],
+    useMethod: [
+      'Aplicar por la noche sobre la piel limpia con un suave masaje para facilitar la completa absorción',
+      'Empezar aplicando una pequeña cantidad y aumentar progresivamente según las indicaciones del médico',
+      'Evitar el contacto con mucosas',
+    ],
+  },
+];
+
 export const DERMA_APPOINTMENT_IMAGE = [
   {
     // consulta online
@@ -158,10 +190,11 @@ export const DERMA_APPOINTMENT_IMAGE = [
 
 export const SUBSCRIPTIONS = [
   {
-    title: 'Suscripción trimestral',
+    title: 'Envío trimestral',
     id: '17c3b810-d810-45e0-b732-3283ea632d77',
-    subtitle: 'Tu rutina personalizada con seguimiento médico mensual',
-    imgSrc: '/images/derma/landingPrecios/rutinaDoctorHolaglow.png',
+    subtitle:
+      'Tu rutina personalizada para 3 meses con seguimiento médico mensual',
+    imgSrc: '/images/derma/landingPrecios/rutinaSeguimiento.png',
     bgColor: 'bg-white',
     tag: {},
     price: {
@@ -173,42 +206,12 @@ export const SUBSCRIPTIONS = [
     bullets: [
       {
         icon: 'SvgCream',
-        text: 'Rutina personalizada cada 3 meses',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgBoxRemove',
-        text: 'Cancela en cualquier momento',
-        isEnabled: true,
-      },
-      {
-        icon: 'SvgVerify',
-        text: 'Mejor piel en 90 días*',
+        text: 'Rutina de 4 pasos para',
         isEnabled: true,
       },
       {
         icon: 'SvgCalendarSearch',
         text: 'Seguimiento mensual con tu médico',
-        isEnabled: true,
-      },
-    ],
-    bottomBar: '<b>Envío gratis</b>. Recíbelo en casa de 3 a 5 días',
-  },
-  {
-    title: 'Compra única',
-    id: '2ee9da6f-4fad-42fc-b717-0b67d49ef0cf',
-    subtitle: 'Tu rutina personalizada para 3 meses de tratamiento',
-    imgSrc: '/images/derma/landingPrecios/rutinaHolaglow.png',
-    bgColor: 'bg-white',
-    tag: {},
-    price: {
-      value: '99 €',
-      subtitle: 'En un solo pago',
-    },
-    bullets: [
-      {
-        icon: 'SvgCream',
-        text: 'Rutina personalizada de 3 meses',
         isEnabled: true,
       },
       {
@@ -221,14 +224,44 @@ export const SUBSCRIPTIONS = [
         text: 'Mejor piel en 90 días*',
         isEnabled: true,
       },
+    ],
+    bottomBar: 'Cancela en cualquier momento',
+  },
+  {
+    title: 'Compra única',
+    id: '2ee9da6f-4fad-42fc-b717-0b67d49ef0cf',
+    subtitle: 'Tu rutina personalizada para 3 meses de tratamiento',
+    imgSrc: '/images/derma/landingPrecios/rutina.png',
+    bgColor: 'bg-white',
+    tag: {},
+    price: {
+      value: '99 €',
+      subtitle: 'En un solo pago',
+    },
+    bullets: [
       {
-        icon: 'SvgCross',
+        icon: 'SvgCream',
+        text: 'Rutina de 4 pasos para',
+        isEnabled: true,
+      },
+      {
+        icon: 'SvgCalendarSearch',
         text: 'Seguimiento mensual con tu médico',
         isEnabled: false,
       },
+      {
+        icon: 'SvgBox',
+        text: 'Envío gratis, de 3 a 5 días en tu casa',
+        isEnabled: true,
+      },
+      {
+        icon: 'SvgVerify',
+        text: 'Mejor piel en 90 días*',
+        isEnabled: true,
+      },
     ],
   },
-  {
+  /* {
     title: 'Sólo receta',
     id: '7f01ff68-eb9c-4b9b-83b8-efaec37e49e7',
     subtitle: 'Receta de tu crema personalizada para pedirla en tu farmacia',
@@ -251,5 +284,5 @@ export const SUBSCRIPTIONS = [
         isEnabled: false,
       },
     ],
-  },
+  }, */
 ];
