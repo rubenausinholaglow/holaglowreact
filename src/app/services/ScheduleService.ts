@@ -447,7 +447,7 @@ export default class ScheduleService {
       }
     } catch (err: any) {
       Bugsnag.notify('Error scheduleBulk', err);
-      return err;
+      return '';
     }
   }
   static async next(token: string): Promise<Appointment[]> {

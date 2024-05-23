@@ -1,45 +1,72 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { UpsellingData } from '@interface/upselling';
+import { DiagnosticData } from '@interface/derma/diagnosis';
 import { dermaService } from '@services/DermaService';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import { useSearchParams } from 'next/navigation';
 
 import Login from '../planes/components/Login';
-import Diagnosis from './Diagnosis';
-import FirstDiagnosis from './FirstDiagnosis';
+import DiagnosisBlock from './Diagnosis';
+import EmptyDiagnosis from './EmptyDiagnosis';
 import RoutineExplanation from './RoutineExplanation';
+import UserFeedbackDiagnosis from './UserFeedbackDiagnosis';
 
 export default function Diagnostico() {
-  const { dermaPhone } = useSessionStore(state => state);
+  const { dermaPhone, setDermaPhone } = useSessionStore(state => state);
   const [isLogged, setIsLogged] = useState(dermaPhone != '');
-  const [diagnosisData, setDiagnosisData] = useState<UpsellingData | null>(
-    null
-  );
+  const [diagnosisData, setDiagnosisData] = useState<any | null>(null);
+  const searchParams = useSearchParams();
+
+  const fetchData = async () => {
+    const response: DiagnosticData =
+      await dermaService.getDiagnosis(dermaPhone);
+    setDiagnosisData(response);
+    if (!isLogged) setIsLogged(true);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await dermaService.getRoutine(dermaPhone);
-      setDiagnosisData(response);
-      if (!isLogged) setIsLogged(true);
-    };
+    const phone = searchParams.get('phone');
+
+    if (phone) {
+      setDermaPhone(phone);
+    }
+  }, []);
+
+  useEffect(() => {
     if (dermaPhone) fetchData();
   }, [dermaPhone]);
 
+  if (!isLogged) {
+    return <Login setIsLogged={setIsLogged} />;
+  }
+
+  const initialDate = dayjs(diagnosisData?.creationDate);
+  const post30Days = initialDate.add(30, 'day');
+  const post60Days = initialDate.add(60, 'day');
+  const post90Days = initialDate.add(90, 'day');
+
+  const hasDiagnosticImages = (diagnosis: any) => {
+    return diagnosis.front || diagnosis.left || diagnosis.right;
+  };
+
   return (
-    <div className="bg-derma-secondary300 min-h-screen">
+    <DermaLayout
+      hideButton
+      hideFooter
+      hideNavigation
+      className="bg-derma-secondary300 min-h-screen relative"
+    >
       {isLogged && (
         <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block" />
       )}
-
-      <DermaLayout hideButton hideFooter>
+      <div className="relative">
         <Container className="px-0 md:px-4">
-          {!isLogged && <Login setIsLogged={setIsLogged} />}
-          {isLogged && (
+          {isLogged && diagnosisData && (
             <Flex
               layout="col-left"
               className="w-full md:flex-row gap-6 md:gap-16 pt-4"
@@ -56,7 +83,15 @@ export default function Diagnostico() {
                     Después de 24-48 horas de tu solicitud
                   </Text>
 
-                  {diagnosisData && <FirstDiagnosis data={diagnosisData} />}
+                  {diagnosisData?.diagnostic[0] && (
+                    <DiagnosisBlock
+                      isFirstDiagnosis
+                      user={diagnosisData.user}
+                      index={0}
+                      diagnosis={diagnosisData.diagnostic[0]}
+                      isVisible={diagnosisData.diagnostic.length === 1}
+                    />
+                  )}
                 </li>
 
                 <li>
@@ -64,31 +99,29 @@ export default function Diagnostico() {
                     size="xldr"
                     className="text-derma-primary font-light mb-4"
                   >
-                    Diagnóstico a 30 días
-                  </Title>
-                  <Text className="text-sm mb-6">
-                    Disponible a partir del
-                    {dayjs(diagnosisData?.creationDate)
-                      .add(30, 'day')
-                      .format('dddd, D [de] MMMM')}
-                  </Text>
-                  <Diagnosis data={{}} />
-                </li>
-
-                <li>
-                  <Title
-                    size="xldr"
-                    className="text-derma-primary font-light mb-4"
-                  >
-                    Diagnóstico a 60 días
+                    Seguimiento a 30 días
                   </Title>
                   <Text className="text-sm mb-6">
                     Disponible a partir del{' '}
-                    {dayjs(diagnosisData?.creationDate)
-                      .add(60, 'day')
-                      .format('dddd, D [de] MMMM')}
+                    {post30Days.format('dddd, D [de] MMMM')}
                   </Text>
-                  <Diagnosis data={{}} />
+
+                  {diagnosisData.diagnostic[1] ? (
+                    <>
+                      {hasDiagnosticImages(diagnosisData.diagnostic[1]) ? (
+                        <DiagnosisBlock
+                          user={diagnosisData.user}
+                          index={1}
+                          diagnosis={diagnosisData.diagnostic[1]}
+                          isVisible={diagnosisData.diagnostic.length === 2}
+                        />
+                      ) : (
+                        <UserFeedbackDiagnosis index={1} />
+                      )}
+                    </>
+                  ) : (
+                    <EmptyDiagnosis />
+                  )}
                 </li>
 
                 <li>
@@ -96,15 +129,59 @@ export default function Diagnostico() {
                     size="xldr"
                     className="text-derma-primary font-light mb-4"
                   >
-                    Diagnóstico a 90 días
+                    Seguimiento a 60 días
                   </Title>
                   <Text className="text-sm mb-6">
-                    Disponible a partir del
-                    {dayjs(diagnosisData?.creationDate)
-                      .add(90, 'day')
-                      .format('dddd, D [de] MMMM')}
+                    Disponible a partir del{' '}
+                    {post60Days.format('dddd, D [de] MMMM')}
                   </Text>
-                  <Diagnosis data={{}} />
+
+                  {diagnosisData.diagnostic[2] ? (
+                    <>
+                      {hasDiagnosticImages(diagnosisData.diagnostic[2]) ? (
+                        <DiagnosisBlock
+                          user={diagnosisData.user}
+                          index={2}
+                          diagnosis={diagnosisData.diagnostic[2]}
+                          isVisible={diagnosisData.diagnostic.length === 3}
+                        />
+                      ) : (
+                        <UserFeedbackDiagnosis index={2} />
+                      )}
+                    </>
+                  ) : (
+                    <EmptyDiagnosis />
+                  )}
+                </li>
+
+                <li>
+                  <Title
+                    size="xldr"
+                    className="text-derma-primary font-light mb-4"
+                  >
+                    Seguimiento a 90 días
+                  </Title>
+                  <Text className="text-sm mb-6">
+                    Disponible a partir del{' '}
+                    {post90Days.format('dddd, D [de] MMMM')}
+                  </Text>
+
+                  {diagnosisData.diagnostic[3] ? (
+                    <>
+                      {hasDiagnosticImages(diagnosisData.diagnostic[3]) ? (
+                        <DiagnosisBlock
+                          user={diagnosisData.user}
+                          index={3}
+                          diagnosis={diagnosisData.diagnostic[3]}
+                          isVisible={diagnosisData.diagnostic.length === 4}
+                        />
+                      ) : (
+                        <UserFeedbackDiagnosis index={3} />
+                      )}
+                    </>
+                  ) : (
+                    <EmptyDiagnosis />
+                  )}
                 </li>
               </ul>
 
@@ -121,7 +198,7 @@ export default function Diagnostico() {
             </Flex>
           )}
         </Container>
-      </DermaLayout>
-    </div>
+      </div>
+    </DermaLayout>
   );
 }

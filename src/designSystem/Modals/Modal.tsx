@@ -113,6 +113,7 @@ export const Modal = ({
   type = 'right',
   hideModalBackground = false,
   children,
+  avoidClosing = false,
   ...rest
 }: {
   isVisible: boolean;
@@ -122,6 +123,7 @@ export const Modal = ({
   className?: string;
   type?: 'right' | 'bottom' | 'center';
   children: ReactNode;
+  avoidClosing?: boolean;
   [key: string]: any;
 }) => {
   const { isModalOpen, setIsModalOpen, setShowModalBackground } =
@@ -153,7 +155,9 @@ export const Modal = ({
     return (
       <div
         className={`transition-all fixed inset-0 z-50 ${animationStyles}`}
-        onClick={() => setIsModalOpen(false)}
+        onClick={() => {
+          if (!avoidClosing) setIsModalOpen(false);
+        }}
       >
         <Container className="h-full relative">
           <div
