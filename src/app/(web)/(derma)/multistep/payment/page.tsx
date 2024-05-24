@@ -119,11 +119,10 @@ export default function DermaPayment() {
               size="xldr"
               className="font-light text-derma-primary mb-4 md:mb-6"
             >
-              Formulario
+              Dirección de entrega
             </Title>
             <Text className="text-sm md:text-md mb-4">
-              Rellena tus datos de contacto para completar tu plan de cuidado
-              facial
+              Rellena tus datos de contacto y dirección para recibir tu rutina
             </Text>
             <RegistrationForm
               redirect={hideLayout}
