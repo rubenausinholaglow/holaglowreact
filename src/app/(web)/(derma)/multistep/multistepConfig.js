@@ -430,7 +430,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Ácido kójico',
     imgSrc: '/images/derma/landingPrecios/ingredients/acidoKojico.jpg',
-    tags: ['Acné'],
+    tags: [''],
     concerns: ['Melasma'],
     description: '',
   },
@@ -438,5 +438,7 @@ export const DERMA_INGREDIENTS = [
     name: 'Nicotinamida',
     concerns: ['Lentigo solar'],
     imgSrc: '/images/derma/landingPrecios/ingredients/nicotinamida.jpg',
+    tags: [''],
+    description: '',
   },
 ];
