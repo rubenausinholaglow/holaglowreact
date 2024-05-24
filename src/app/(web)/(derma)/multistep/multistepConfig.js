@@ -12,6 +12,12 @@ export const PAINS_AND_SYMPTOMS = [
     feedback: {
       ingredients: ['Ácido retinoico', 'Hidroquinona'],
     },
+    thankyouImages: [
+      '/images/derma/beforeAfter/melasma/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/melasma/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/melasma/beforeAfter3.jpg',
+      '/images/derma/beforeAfter/melasma/beforeAfter4.jpg',
+    ],
   },
   {
     name: 'Acné',
@@ -49,6 +55,12 @@ export const PAINS_AND_SYMPTOMS = [
         },
       ],
     },
+    thankyouImages: [
+      '/images/derma/beforeAfter/acne/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/acne/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/acne/beforeAfter3.jpg',
+      '/images/derma/beforeAfter/acne/beforeAfter4.jpg',
+    ],
   },
   {
     name: 'Rosácea',
@@ -62,6 +74,11 @@ export const PAINS_AND_SYMPTOMS = [
       'Vasos sanguíneos visibles',
       'Piel gruesa',
       'Nariz agrandada',
+    ],
+    thankyouImages: [
+      '/images/derma/beforeAfter/rosacea/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/rosacea/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/rosacea/beforeAfter3.jpg',
     ],
   },
   {
@@ -86,6 +103,11 @@ export const PAINS_AND_SYMPTOMS = [
         },
       ],
     },
+    thankyouImages: [
+      '/images/derma/beforeAfter/antiaging/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/antiaging/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/antiaging/beforeAfter3.jpg',
+    ],
   },
 ];
 

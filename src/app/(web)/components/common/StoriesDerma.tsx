@@ -1,16 +1,15 @@
+import { PAINS_AND_SYMPTOMS } from 'app/(web)/(derma)/multistep/multistepConfig';
+import { useDermaStore } from 'app/stores/dermaStore';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function StoriesDerma() {
-  const dermaImages: any[] = [
-    '/images/derma/beforeAfter/beforeAfter1.jpg',
-    '/images/derma/beforeAfter/beforeAfter2.jpg',
-    '/images/derma/beforeAfter/beforeAfter3.jpg',
-    '/images/derma/beforeAfter/beforeAfter4.jpg',
-  ];
+  const { pain } = useDermaStore(state => state);
 
+  const dermaImages = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0]
+    .thankyouImages;
   return (
     <Container className="py-12 overflow-hidden">
       <Flex
@@ -42,10 +41,7 @@ export default function StoriesDerma() {
             isDerma
           >
             {dermaImages?.map(item => (
-              <div
-                key={item.id}
-                className="overflow-hidden relative rounded-2xl"
-              >
+              <div key={item} className="overflow-hidden relative rounded-2xl">
                 <Image
                   height={400}
                   width={600}
