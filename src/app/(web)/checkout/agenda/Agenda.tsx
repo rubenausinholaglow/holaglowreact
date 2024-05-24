@@ -21,8 +21,8 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import AppointmentElement from 'app/(web)/reagenda/components/AppointmentElement';
 import { SvgCalendar, SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
-  SvgCross,
   SvgCalling,
+  SvgCross,
   SvgEllipsis,
   SvgSadIcon,
   SvgWarning,
