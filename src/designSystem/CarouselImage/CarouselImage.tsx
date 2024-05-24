@@ -70,7 +70,7 @@ export default function CarouselImage({
       </div>
       {images.length > 1 && (
         <Carousel
-          visibleSlides={4.75}
+          visibleSlides={4}
           step={1}
           className="border-t border-derma-secondary100"
         >

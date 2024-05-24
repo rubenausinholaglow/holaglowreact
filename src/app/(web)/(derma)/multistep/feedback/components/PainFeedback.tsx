@@ -18,8 +18,10 @@ export default function PainFeedback() {
 
   const painItem = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0];
 
+  const ingredients = painItem?.feedback?.ingredients as string[] | undefined;
+
   const painIngredients = DERMA_INGREDIENTS.filter(
-    item => painItem.feedback?.ingredients.includes(item.name)
+    item => ingredients?.includes(item.name)
   );
 
   return (

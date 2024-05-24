@@ -57,17 +57,33 @@ const FAQS = [
 
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
-  const { pain } = useDermaStore(state => state);
+  const { pain, secondaryConcerns } = useDermaStore(state => state);
 
   const filteredPain = PAINS_AND_SYMPTOMS.filter(
     item => item.value === pain
   )[0];
 
-  /*   const filteredIngredients = DERMA_INGREDIENTS.filter(
-    (ingredient: any) =>
-      ingredient.tags.includes(filteredPain.name || '') ||
-      ingredient.concerns.includes(filteredPain.name || '')
-  ); */
+  const ingredients = filteredPain?.feedback?.ingredients as
+    | string[]
+    | undefined;
+
+  const painIngredients = DERMA_INGREDIENTS.filter(
+    item => ingredients?.includes(item.name)
+  );
+
+  const secondaryIngredients = DERMA_INGREDIENTS.filter(ingredient => {
+    return ingredient.concerns.some(concern =>
+      secondaryConcerns.includes(concern)
+    );
+  });
+
+  const uniqueIngredients = [
+    ...painIngredients,
+    ...secondaryIngredients,
+  ].filter(
+    (ingredient, index, self) =>
+      index === self.findIndex(t => t.name === ingredient.name)
+  );
 
   return (
     <DermaLayout
@@ -89,12 +105,14 @@ export default function ThankYouMultiStep() {
             <Title size="xl" className="text-derma-primary font-light">
               ¡Aquí tienes, {user?.name}!
             </Title>
-            <Text className="text-center md:text-left">
-              Esta es la rutina completa que hemos diseñado para tu{' '}
-              <span className="font-semibold">
-                {filteredPain?.name.toLocaleLowerCase()}
-              </span>
-            </Text>
+            <CheckHydration>
+              <Text className="text-center md:text-left">
+                Esta es la rutina completa que hemos diseñado para tu{' '}
+                <span className="font-semibold">
+                  {filteredPain?.name.toLocaleLowerCase()}
+                </span>
+              </Text>
+            </CheckHydration>
             <CheckHydration>
               <RoutineItems hideCremaFormulada pain={pain} />
             </CheckHydration>
@@ -121,7 +139,7 @@ export default function ThankYouMultiStep() {
                   className="mb-12"
                   controlStyles="pr-4"
                 >
-                  {DERMA_INGREDIENTS.map(ingredient => (
+                  {uniqueIngredients.map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"

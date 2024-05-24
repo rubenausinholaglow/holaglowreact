@@ -3,7 +3,10 @@
 import { useState } from 'react';
 import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
-import { DERMA_INGREDIENTS } from 'app/(web)/(derma)/multistep/multistepConfig';
+import {
+  DERMA_INGREDIENTS,
+  PAINS_AND_SYMPTOMS,
+} from 'app/(web)/(derma)/multistep/multistepConfig';
 import { DERMA_GENERIC_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
 import {
   SvgAdd,
@@ -12,6 +15,7 @@ import {
   SvgMoon,
   SvgSun,
 } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import {
   AccordionContent,
   AccordionItem,
@@ -40,7 +44,29 @@ export default function RoutineItems({
 }) {
   const [modalProduct, setModalProduct] = useState(99);
 
-  console.log(pain);
+  const { secondaryConcerns } = useDermaStore(state => state);
+
+  const painItem = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0];
+
+  const ingredients = painItem?.feedback?.ingredients as string[] | undefined;
+
+  const painIngredients = DERMA_INGREDIENTS.filter(
+    item => ingredients?.includes(item.name)
+  );
+
+  const secondaryIngredients = DERMA_INGREDIENTS.filter(ingredient => {
+    return ingredient.concerns.some(concern =>
+      secondaryConcerns.includes(concern)
+    );
+  });
+
+  const uniqueIngredients = [
+    ...painIngredients,
+    ...secondaryIngredients,
+  ].filter(
+    (ingredient, index, self) =>
+      index === self.findIndex(t => t.name === ingredient.name)
+  );
 
   return (
     <CheckHydration>
@@ -175,7 +201,7 @@ export default function RoutineItems({
         </div>
         <DialogContent className="w-full max-w-[500px] bg-derma-secondary300">
           {modalProduct < 5 && (
-            <div className="pt-12">
+            <div className="">
               <CarouselImage
                 images={DERMA_GENERIC_PRODUCTS[modalProduct].carouselImg}
                 format="aspect-[3/2]"
@@ -285,17 +311,7 @@ export default function RoutineItems({
                     ))}
 
                   {pain !== undefined &&
-                    DERMA_INGREDIENTS.filter((ingredient: any) => {
-                      const customizedProps =
-                        DERMA_GENERIC_PRODUCTS[modalProduct]?.customizedProps?.[
-                          pain
-                        ];
-                      return (
-                        customizedProps &&
-                        'ingredients' in customizedProps &&
-                        customizedProps.ingredients.includes(ingredient.name)
-                      );
-                    }).map((ingredient: any) => (
+                    uniqueIngredients.map(ingredient => (
                       <Flex
                         layout="col-left"
                         className="w-full pr-6 gap-2 px-4"
@@ -311,7 +327,7 @@ export default function RoutineItems({
                         </Flex>
                         <Text className="font-semibold">{ingredient.name}</Text>
                         <ul className="flex gap-2 flex-wrap">
-                          {ingredient.concerns.map((tag: string) => (
+                          {ingredient.concerns.map(tag => (
                             <li
                               key={tag}
                               className="p-2 px-3 rounded-full bg-white text-derma-primary text-xs"
@@ -325,13 +341,8 @@ export default function RoutineItems({
                 </Carousel>
               )}
 
-              <Container className="py-4 md:p-6">
-                <Accordion
-                  className="mt-8"
-                  type="single"
-                  defaultValue="1"
-                  collapsible
-                >
+              <Container className="px-4 md:px-6">
+                <Accordion type="single" defaultValue="1" collapsible>
                   <AccordionItem
                     value="1"
                     className="rounded-2xl overflow-hidden bg-derma-secondary300 mb-4"
