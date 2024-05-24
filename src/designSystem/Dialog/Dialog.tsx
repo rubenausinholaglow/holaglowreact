@@ -31,7 +31,7 @@ export function DialogContent({
         {children}
         <DialogModal.Close asChild>
           <SvgCross
-            className="absolute cursor-pointer top-4 right-4 inline-flex h-6 w-6 appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
+            className="fixed cursor-pointer top-4 right-4 inline-flex h-6 w-6 appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
             aria-label="Close"
           />
         </DialogModal.Close>

@@ -57,17 +57,29 @@ const FAQS = [
 
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
-  const { pain } = useDermaStore(state => state);
+  const { pain, secondaryConcerns } = useDermaStore(state => state);
 
   const filteredPain = PAINS_AND_SYMPTOMS.filter(
     item => item.value === pain
   )[0];
 
-  /*   const filteredIngredients = DERMA_INGREDIENTS.filter(
-    (ingredient: any) =>
-      ingredient.tags.includes(filteredPain.name || '') ||
-      ingredient.concerns.includes(filteredPain.name || '')
-  ); */
+  const painIngredients = DERMA_INGREDIENTS.filter(
+    item => filteredPain.feedback?.ingredients.includes(item.name)
+  );
+
+  const secondaryIngredients = DERMA_INGREDIENTS.filter(ingredient => {
+    return ingredient.concerns.some(concern =>
+      secondaryConcerns.includes(concern)
+    );
+  });
+
+  const uniqueIngredients = [
+    ...painIngredients,
+    ...secondaryIngredients,
+  ].filter(
+    (ingredient, index, self) =>
+      index === self.findIndex(t => t.name === ingredient.name)
+  );
 
   return (
     <DermaLayout
@@ -121,7 +133,7 @@ export default function ThankYouMultiStep() {
                   className="mb-12"
                   controlStyles="pr-4"
                 >
-                  {DERMA_INGREDIENTS.map(ingredient => (
+                  {uniqueIngredients.map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"

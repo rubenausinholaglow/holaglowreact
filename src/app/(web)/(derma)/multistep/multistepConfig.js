@@ -258,6 +258,37 @@ export const DERMA_COMPLEMENTS = [
 
 export const DERMA_INGREDIENTS = [
   {
+    name: 'Ácido retinoico',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoRetinoico.jpg',
+    concentration: '2,5%',
+    tags: ['Melasma, Antiaging', 'Acné'],
+    concerns: [
+      'Mejorar la textura de la piel',
+      'Poros dilatados',
+      'Líneas finas de expresión',
+      'Patas de gallo',
+    ],
+    feedbackSubtitle: '0,015% - 0,05% Despigmentante y regenerador',
+    feedbackExtraInfo: '',
+    description: '',
+  },
+  {
+    name: 'Hidroquinona',
+    imgSrc: '/images/derma/landingPrecios/ingredients/hidroquinona.jpg',
+    concentration: '2,5%',
+    tags: ['Melasma'],
+    concerns: [
+      'Mejorar la textura de la piel',
+      'Poros dilatados',
+      'Líneas finas de expresión',
+      'Patas de gallo',
+    ],
+    feedbackSubtitle: '4% Despigmentante',
+    feedbackExtraInfo:
+      '*En verano sustituimos la Hidroquinona por una combinación de Ácido kójico (4%) y Ácido glicólico (8%)',
+    description: '',
+  },
+  {
     name: 'Ácido azelaico',
     imgSrc: '/images/derma/landingPrecios/ingredients/acidoAzelaico.jpg',
     concentration: '15-20%',
@@ -329,37 +360,7 @@ export const DERMA_INGREDIENTS = [
     description:
       'Es eficaz principalmente gracias a sus efectos antiinflamatorios y antiparasitarios. Actúa sobre la superpoblación de ácaros Demodex que vive naturalmente en la piel y que puede provocar reacciones inflamatorias en algunos pacientes con rosácea.',
   },
-  {
-    name: 'Ácido retinoico',
-    imgSrc: '/images/derma/landingPrecios/ingredients/acidoRetinoico.jpg',
-    concentration: '2,5%',
-    tags: ['Melasma, Antiaging', 'Acné'],
-    concerns: [
-      'Mejorar la textura de la piel',
-      'Poros dilatados',
-      'Líneas finas de expresión',
-      'Patas de gallo',
-    ],
-    feedbackSubtitle: '0,015% - 0,05% Despigmentante y regenerador',
-    feedbackExtraInfo: '',
-    description: '',
-  },
-  {
-    name: 'Hidroquinona',
-    imgSrc: '/images/derma/landingPrecios/ingredients/hidroquinona.jpg',
-    concentration: '2,5%',
-    tags: ['Melasma'],
-    concerns: [
-      'Mejorar la textura de la piel',
-      'Poros dilatados',
-      'Líneas finas de expresión',
-      'Patas de gallo',
-    ],
-    feedbackSubtitle: '4% Despigmentante',
-    feedbackExtraInfo:
-      '*En verano sustituimos la Hidroquinona por una combinación de Ácido kójico (4%) y Ácido glicólico (8%)',
-    description: '',
-  },
+
   {
     name: 'Vitamina C',
     imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaC.jpg',
