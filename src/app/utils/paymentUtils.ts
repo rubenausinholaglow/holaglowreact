@@ -76,9 +76,12 @@ export const usePayments = () => {
     });
 
     try {
-      const paymentResponse = await FinanceService.initializePayment(data);
+      const paymentResponse = await FinanceService.initializePayment(
+        data,
+        isDerma
+      );
       setPayment(paymentResponse);
-      if (paymentResponse.id != '') return true;
+      return paymentResponse.id;
     } catch (error) {
       console.error('Error initializing payment:', error);
     }

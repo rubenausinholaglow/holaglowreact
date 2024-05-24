@@ -15,14 +15,16 @@ const useRoutes = () => {
       treatments: '/checkout/treatments',
       schedule: '/checkout/agenda',
       contactForm: '/checkout/contactform',
-      thankYou: '/checkout/confirmation',
+      confirmation: '/checkout/confirmation',
     },
     clinics: '/clinicas',
     aboutUs: '/quienes-somos',
     blog: '/blog',
     dashboard: {
       crisalix: '/dashboard/crisalix',
-      schedule: `/dashboard/schedule?flowwwToken=${user?.flowwwToken}`,
+      schedule: `/dashboard/schedule?flowwwToken=${
+        user?.flowwwToken != undefined ? user?.flowwwToken : ''
+      }`,
       menu: '/dashboard/menu',
       budgets: '/dashboard/budgets',
       home: isCallCenter

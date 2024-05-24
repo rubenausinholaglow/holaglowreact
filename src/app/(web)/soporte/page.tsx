@@ -1,19 +1,17 @@
 'use client';
 
-import 'react-phone-input-2/lib/style.css';
+import 'react-international-phone/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { useEffect, useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
+import { PhoneInput } from 'react-international-phone';
 import Bugsnag from '@bugsnag/js';
 import TextInputField from '@dashboardComponents/TextInputField';
 import AuthenticationService from '@services/AuthtenticationService';
 import UserService from '@services/UserService';
 import * as errorsConfig from '@utils/textConstants';
 import { validatePhoneInput } from '@utils/validators';
-import { poppins } from 'app/fonts';
 import { SvgSpinner } from 'app/icons/Icons';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import Image from 'next/image';
 
@@ -36,7 +34,7 @@ export default function SupportPage() {
     setIsDaytime(isBetween10and19);
   }, []);
 
-  function handlePhoneChange(event: any, country: any, value: string) {
+  /*   function handlePhoneChange(event: any, country: any, value: string) {
     setErrorMessage('');
     if (
       event &&
@@ -56,7 +54,7 @@ export default function SupportPage() {
     if (phoneError) {
       setErrorMessage(errorsConfig.ERROR_PHONE_NOT_VALID);
     }
-  }
+  } */
 
   async function handleContinue() {
     setErrorMessage('');
@@ -110,7 +108,7 @@ export default function SupportPage() {
   async function handleValidateToken() {
     setIsLoading(true);
     setErrorMessage('');
-    await AuthenticationService.isValidToken(token)
+    await AuthenticationService.isValidToken(token, false)
       .then(async response => {
         if (response) {
           if (!isDaytime) {
@@ -132,8 +130,8 @@ export default function SupportPage() {
 
   return (
     <MainLayout>
-      <div className="flex items-center justify-center h-screen bg-[#F3EDE9]">
-        <div className="py-12 md:py-20 text-center">
+      <div className="flex items-center justify-center bg-[#F3EDE9]">
+        <div className="py-20 md:py-32 text-center">
           <p className="mt-4 text-gray-700">Soporte disponible las 24 horas.</p>
           {!AuthSuccesfully && !isTokenSended && (
             <>
@@ -146,6 +144,26 @@ export default function SupportPage() {
               </label>
               <div className="relative">
                 <PhoneInput
+                  defaultCountry="es"
+                  preferredCountries={['es']}
+                  value={phoneNumber}
+                  forceDialCode
+                  inputClassName={
+                    showPhoneError !== null && !showPhoneError
+                      ? 'isComplete'
+                      : ''
+                  }
+                  onChange={phone => {
+                    setPhoneNumber(phone);
+                    const phoneError = validatePhoneInput(`+${phone}`);
+                    setShowPhoneError(phoneError);
+                    if (phoneError) {
+                      setErrorMessage(errorsConfig.ERROR_PHONE_NOT_VALID);
+                    }
+                  }}
+                />
+
+                {/* <PhoneInput
                   disableSearchIcon={true}
                   countryCodeEditable={true}
                   inputClass={`${poppins.className}`}
@@ -181,7 +199,7 @@ export default function SupportPage() {
                   onChange={(value, data, event) => {
                     handlePhoneChange(event, data, value);
                   }}
-                />
+                /> */}
                 {showPhoneError !== null && (
                   <Image
                     src={`/images/forms/${

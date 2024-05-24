@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { DERMA_PRODUCTS } from 'app/(web)/derma/planes/mockedData';
+import { DERMA_GENERIC_PRODUCTS } from 'app/(web)/(derma)/planes/mockedData';
 import { SvgArrow, SvgCheckCircle, SvgCross } from 'app/icons/IconsDs';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -84,7 +84,7 @@ export default function WhatsIncludedDerma() {
                   })}
                 </Flex>
                 <Flex layout="col-left" className="w-full">
-                  {DERMA_PRODUCTS.map((item, index) => {
+                  {DERMA_GENERIC_PRODUCTS.map((item, index) => {
                     return (
                       <Flex
                         layout="col-left"

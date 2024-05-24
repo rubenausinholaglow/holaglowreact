@@ -74,7 +74,8 @@ export const useRegistration = (
     formData: Client,
     isDashboard: boolean,
     redirect: boolean,
-    createAppointment: boolean
+    createAppointment: boolean,
+    isDerma: boolean
   ): Promise<User | undefined> => {
     const formDatacopy = { ...formData };
     formDatacopy.analyticsMetrics = analyticsMetrics;
@@ -84,7 +85,7 @@ export const useRegistration = (
     formDatacopy.interestedTreatment = analyticsMetrics.treatmentText;
     if (analyticsMetrics.externalReference)
       formDatacopy.externalReference = analyticsMetrics.externalReference;
-    const user = await UserService.registerUser(formDatacopy);
+    const user = await UserService.registerUser(formDatacopy, isDerma);
     if (user) {
       user.flowwwToken = user.clinicToken;
     }
@@ -92,7 +93,7 @@ export const useRegistration = (
       setCurrentUser(user);
       if (selectedSlot && selectedClinic) {
         if (createAppointment) {
-          await ScheduleService.createAppointment(
+          return await ScheduleService.createAppointment(
             selectedTreatments,
             selectedSlot!,
             selectedDay!,
@@ -103,14 +104,17 @@ export const useRegistration = (
             '',
             selectedPack
           ).then(x => {
-            if (isEmbed) {
-              window.parent.postMessage(URL, routes.checkout.clinics);
-            }
-
-            if (isDashboard) {
-              router.push(routes.dashboard.checkIn.treatments);
+            if (x) {
+              if (isEmbed) {
+                window.parent.postMessage(URL, routes.checkout.clinics);
+              }
+              if (isDashboard) {
+                router.push(routes.dashboard.checkIn.treatments);
+              } else {
+                router.push('/checkout/confirmation');
+              }
             } else {
-              router.push('/checkout/confirmation');
+              return undefined;
             }
           });
         }

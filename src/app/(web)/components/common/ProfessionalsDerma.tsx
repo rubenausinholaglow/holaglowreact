@@ -103,7 +103,7 @@ export default function ProfessionalsDerma({
           visibleSlides={1}
           infinite={false}
           isDerma
-          controlStyles="px-4 mt-4"
+          controlstyles="px-4 mt-4"
         >
           {professionals?.map(professional => (
             <ProfessionalCard

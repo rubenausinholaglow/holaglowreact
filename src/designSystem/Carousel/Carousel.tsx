@@ -221,7 +221,7 @@ export default function Carousel({
                 : hasCounter
                 ? '-mt-4 '
                 : 'mt-8'
-            } ${rest.controlStyles ? rest.controlStyles : ''}`}
+            } ${rest.controlstyles ? rest.controlstyles : ''}`}
           >
             <Flex
               layout={hasTopControls ? 'row-between' : 'row-right'}

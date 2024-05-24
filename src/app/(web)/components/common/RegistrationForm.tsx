@@ -1,24 +1,30 @@
 'use client';
 
-import 'react-phone-input-2/lib/style.css';
+import 'react-international-phone/style.css';
 import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
+import { PhoneInput } from 'react-international-phone';
+import TextArea from '@dashboardComponents/ui/TextArea';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
 import { postalCodeValidationRegex, validateEmail } from '@utils/validators';
 import * as utils from '@utils/validators';
-import { poppins } from 'app/fonts';
-import { SvgSpinner } from 'app/icons/Icons';
-import { SvgCheckSquare, SvgCheckSquareActive } from 'app/icons/IconsDs';
+import { SvgCalendar, SvgSpinner } from 'app/icons/Icons';
+import {
+  SvgCheckSquare,
+  SvgCheckSquareActive,
+  SvgCross,
+} from 'app/icons/IconsDs';
 import { Client } from 'app/types/client';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Modal } from 'designSystem/Modals/Modal';
+import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { isValidNie, isValidNif } from 'nif-dni-nie-cif-validation';
 
 import TextInputField from '../../../(dashboard)/dashboard/components/TextInputField';
@@ -40,6 +46,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className = '',
   splitSurnames = false,
   showBirthday = false,
+  isDerma,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -56,8 +63,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className?: string;
   splitSurnames?: boolean;
   showBirthday?: boolean;
+  isDerma: boolean;
 }) => {
   const routes = useRoutes();
+  const router = useRouter();
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -69,6 +78,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     null | boolean
   >(null);
   const [showDniError, setShowDniError] = useState<null | boolean>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<Client>({
     email: '',
@@ -153,23 +163,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     showBirthdayError,
   ]);
 
-  const handleFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
-    let value: string | boolean | number | undefined =
-      event.target.type === 'checkbox'
-        ? event.target.checked
-        : event.target.value;
-
-    if (field === 'phonePrefix' && typeof value === 'number') {
-      value = `+${value as number}`;
-    }
-
-    if (field === 'phone' && typeof value === 'number' && value === 0) {
-      value = undefined;
-    }
-
+  const handleFieldChange = (value: string | boolean, field: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
       [field]: value,
@@ -212,28 +206,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     setIsLoading(false);
   };
 
-  function handlePhoneChange(event: any, country: any, value: string) {
-    if (
-      event &&
-      event.nativeEvent &&
-      (event.nativeEvent.inputType || event.nativeEvent.type == 'click')
-    ) {
-      handleFieldChange(event, 'phone');
-      event.target.value = '+' + country.dialCode;
-      handleFieldChange(event, 'phonePrefix');
-    } else {
-      if (value.startsWith('34')) value = value.substring(2, value.length);
-      event.target.value = '+34' + value;
-      handleFieldChange(event, 'phone');
-      event.target.value = '+34';
-      handleFieldChange(event, 'phonePrefix');
-    }
-
-    setShowPhoneError(utils.validatePhoneInput(`+${value}`));
-  }
-
   const handleRegistration = async () => {
-    await registerUser(formData, isDashboard, redirect, true);
+    const user = await registerUser(
+      formData,
+      isDashboard,
+      redirect,
+      true,
+      isDerma
+    );
+    if (!user) {
+      setShowModal(true);
+    }
   };
 
   const handleRequestError = (errors: Array<string>) => {
@@ -242,281 +225,317 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   return (
-    <div
-      className={`grid grid-cols-1 gap-4 w-full ${className ? className : ''}`}
-    >
-      <TextInputField
-        placeholder="Nombre"
-        value={formData.name}
-        onChange={event => handleFieldChange(event, 'name')}
-      />
-      {!splitSurnames && (
-        <TextInputField
-          placeholder="Apellidos"
-          value={formData.surname}
-          onChange={event => handleFieldChange(event, 'surname')}
-        />
-      )}
+    <>
+      <Modal
+        type="center"
+        height="h-auto"
+        width="w-full"
+        className="max-w-sm mx-auto"
+        isVisible={showModal}
+        avoidClosing={true}
+      >
+        <Flex layout="col-center" className="p-4">
+          <SvgCross className="self-end mb-12" />
+          <Title className="mb-6">Lo sentimos</Title>
 
-      {splitSurnames && (
-        <>
+          <Flex layout="col-left" className="gap-4 w-full mb-8">
+            <Flex
+              layout="col-center"
+              className="bg-derma-secondary300 w-full rounded-xl p-4 gap-4"
+            >
+              <SvgCalendar
+                height={32}
+                width={32}
+                className={isDerma ? 'text-derma-primary' : 'text-hg-secondary'}
+              />
+              <p className="font-semibold">
+                El horario seleccionado ya no está disponible. Haz click en otro
+                horario para agendar tu cita
+              </p>
+            </Flex>
+          </Flex>
+          <Flex layout="col-right" className="w-full">
+            <Button
+              className="cursor-pointer"
+              type={isDerma ? 'derma' : 'primary'}
+              onClick={() => {
+                router.push('/checkout/agenda');
+              }}
+            >
+              Seleccionar otra hora
+            </Button>
+          </Flex>
+        </Flex>
+      </Modal>
+      <div
+        className={`grid grid-cols-1 gap-4 w-full ${
+          className ? className : ''
+        }`}
+      >
+        <TextInputField
+          placeholder="Nombre"
+          value={formData.name}
+          onChange={event => handleFieldChange(event.target.value, 'name')}
+        />
+
+        {!splitSurnames && (
           <TextInputField
-            placeholder="Primer apellido"
+            placeholder="Apellidos"
             value={formData.surname}
-            onChange={event => handleFieldChange(event, 'surname')}
+            onChange={event => handleFieldChange(event.target.value, 'surname')}
           />
-          <TextInputField
-            placeholder="Segundo apellido"
-            value={formData.secondSurname}
-            onChange={event => handleFieldChange(event, 'secondSurname')}
-          />
-        </>
-      )}
-      <TextInputField
-        placeholder="Correo electrónico"
-        value={formData.email}
-        onChange={event => {
-          handleFieldChange(event, 'email');
+        )}
 
-          if (formData.email.length === 0) {
-            setShowEmailError(false);
-          }
-        }}
-        error={
-          (errors.includes(errorsConfig.ERROR_EMAIL_NOT_VALID) &&
-            showEmailError) ||
-          showEmailError
-            ? errorsConfig.ERROR_EMAIL_NOT_VALID
-            : ''
-        }
-        onBlur={() =>
-          setShowEmailError(
-            formData.email.length > 0 && !validateEmail(formData.email)
-          )
-        }
-      />
-      <div className="relative">
-        <PhoneInput
-          disableSearchIcon={true}
-          countryCodeEditable={true}
-          inputClass={`${poppins.className}`}
-          inputStyle={{
-            borderColor: 'white',
-            width: '100%',
-            height: '44px',
-            paddingLeft: '65px',
-            fontSize: '16px',
-            lineHeight: '16px',
-            fontStyle: 'normal',
-            fontWeight: '400',
-            touchAction: 'manipulation',
-          }}
-          containerStyle={{
-            background: 'white',
-            border: '1px solid',
-            borderColor:
-              showPhoneError !== null && !showPhoneError
-                ? HOLAGLOW_COLORS['black']
-                : HOLAGLOW_COLORS['black300'],
-            borderRadius: '1rem',
-            paddingLeft: '16px',
-            paddingRight: '12px',
-            paddingBottom: '8px',
-            paddingTop: '8px',
-            height: '60px',
-          }}
-          placeholder="Número de teléfono"
-          country={'es'}
-          preferredCountries={['es']}
-          value={formData.phone}
-          onChange={(value, data, event) => {
-            handlePhoneChange(event, data, value);
-          }}
-        />
-        {showPhoneError !== null && (
-          <Image
-            src={`/images/forms/${showPhoneError ? 'error' : 'formCheck'}.svg`}
-            alt="error"
-            height={26}
-            width={24}
-            className="absolute top-4 right-3"
-          />
+        {splitSurnames && (
+          <>
+            <TextInputField
+              placeholder="Primer apellido"
+              value={formData.surname}
+              onChange={event =>
+                handleFieldChange(event.target.value, 'surname')
+              }
+            />
+            <TextInputField
+              placeholder="Segundo apellido"
+              value={formData.secondSurname}
+              onChange={event =>
+                handleFieldChange(event.target.value, 'secondSurname')
+              }
+            />
+          </>
         )}
-        {showPhoneError && (
-          <p className="text-hg-error text-sm p-2">
-            {errorsConfig.ERROR_PHONE_NOT_VALID}
-          </p>
-        )}
-      </div>
-      {showDni && (
-        <>
-          <TextInputField
-            placeholder="DNI/NIE"
-            value={formData.dni!}
-            onChange={event => {
-              handleFieldChange(event, 'dni');
-              const isValidDni =
-                !showDni ||
-                isValidNif(event.target.value.toUpperCase()) ||
-                isValidNie(event.target.value.toUpperCase());
-              setShowDniError(!isValidDni);
-            }}
-          />
-          {showDniError && (
-            <p className="text-hg-error text-sm p-2">
-              {errorsConfig.ERROR_DNI_NOT_VALID}
-            </p>
-          )}
-        </>
-      )}
-      {showBirthday && (
         <TextInputField
-          label="¿Cuándo naciste?"
-          labelClassName="absolute top-3 left-4 text-xs text-hg-black500"
-          inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full bg-white shadow-none"
-          placeholder="Escribe aquí"
-          type="date"
-          value={formData?.birthday || ''}
-          onChange={event => handleFieldChange(event, 'birthday')}
-          disableBgIcons
+          placeholder="Correo electrónico"
+          value={formData.email}
+          onChange={event => {
+            handleFieldChange(event.target.value, 'email');
+
+            if (formData.email.length === 0) {
+              setShowEmailError(false);
+            }
+          }}
+          error={
+            (errors.includes(errorsConfig.ERROR_EMAIL_NOT_VALID) &&
+              showEmailError) ||
+            showEmailError
+              ? errorsConfig.ERROR_EMAIL_NOT_VALID
+              : ''
+          }
+          onBlur={() =>
+            setShowEmailError(
+              formData.email.length > 0 && !validateEmail(formData.email)
+            )
+          }
         />
-      )}
-      {showPostalCode && (
-        <>
-          <TextInputField
-            placeholder="Código Postal"
-            value={formData.postalCode!}
-            onChange={event => {
-              handleFieldChange(event, 'postalCode');
-              setShowPostalCodeError(
-                !postalCodeValidationRegex.test(event.target.value)
-              );
+        <div className="relative">
+          <PhoneInput
+            disableDialCodeAndPrefix
+            defaultCountry="es"
+            preferredCountries={['es']}
+            value={formData.phone}
+            forceDialCode
+            inputClassName={
+              showPhoneError !== null && !showPhoneError ? 'isComplete' : ''
+            }
+            onChange={(phone, country) => {
+              handleFieldChange(phone, 'phone');
+              handleFieldChange(`+${country.country.dialCode}`, 'phonePrefix');
+
+              phone.length === country.country.dialCode.length + 1
+                ? setShowPhoneError(null)
+                : setShowPhoneError(!utils.validatePhoneInput(phone));
             }}
           />
-          {showPostalCodeError && (
+          {showPhoneError !== null && (
+            <Image
+              src={`/images/forms/${
+                showPhoneError ? 'error' : 'formCheck'
+              }.svg`}
+              alt="error"
+              height={26}
+              width={24}
+              className="absolute top-4 right-3"
+            />
+          )}
+          {showPhoneError && (
             <p className="text-hg-error text-sm p-2">
-              {errorsConfig.ERROR_POSTALCODE_NOT_VALID}
+              {errorsConfig.ERROR_PHONE_NOT_VALID}
             </p>
           )}
-        </>
-      )}
-      {showCity && (
-        <>
+        </div>
+        {showDni && (
+          <>
+            <TextInputField
+              placeholder="DNI/NIE"
+              value={formData.dni!}
+              onChange={event => {
+                handleFieldChange(event.target.value, 'dni');
+                const isValidDni =
+                  !showDni ||
+                  isValidNif(event.target.value.toUpperCase()) ||
+                  isValidNie(event.target.value.toUpperCase());
+                setShowDniError(!isValidDni);
+              }}
+            />
+            {showDniError && (
+              <p className="text-hg-error text-sm p-2">
+                {errorsConfig.ERROR_DNI_NOT_VALID}
+              </p>
+            )}
+          </>
+        )}
+        {showBirthday && (
+          <TextInputField
+            label="¿Cuándo naciste?"
+            labelClassName="absolute top-3 left-4 text-xs text-hg-black500"
+            inputClassName="pt-[22px] text-derma-tertiary placeholder-hg-black300 w-full bg-white shadow-none"
+            placeholder="Escribe aquí"
+            type="date"
+            value={formData?.birthday || ''}
+            onChange={event =>
+              handleFieldChange(event.target.value, 'birthday')
+            }
+            disableBgIcons
+          />
+        )}
+        {showAddress && (
+          <TextArea
+            onChange={event => {
+              handleFieldChange(event.target.value, 'address');
+            }}
+            value={formData.address}
+          />
+        )}
+        {showPostalCode && (
+          <>
+            <TextInputField
+              placeholder="Código Postal"
+              value={formData.postalCode!}
+              onChange={event => {
+                handleFieldChange(event.target.value, 'postalCode');
+                setShowPostalCodeError(
+                  !postalCodeValidationRegex.test(event.target.value)
+                );
+              }}
+            />
+            {showPostalCodeError && (
+              <p className="text-hg-error text-sm p-2">
+                {errorsConfig.ERROR_POSTALCODE_NOT_VALID}
+              </p>
+            )}
+          </>
+        )}
+        {showCity && (
           <TextInputField
             placeholder="Ciudad"
             value={formData.city!}
             onChange={event => {
-              handleFieldChange(event, 'city');
+              handleFieldChange(event.target.value, 'city');
             }}
           />
-        </>
-      )}
-      {showAddress && (
-        <>
-          <TextInputField
-            placeholder="Dirección de entrega"
-            value={formData.address!}
-            onChange={event => {
-              handleFieldChange(event, 'address');
-            }}
-          />
-        </>
-      )}
-      <Flex layout="col-left" className="my-2 mb-4">
-        <Flex
-          layout="row-left"
-          className={
-            !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
-          }
-        >
-          <label
-            htmlFor="termsAndConditionsAccepted"
-            className="flex items-center cursor-pointer"
-          >
-            <input
-              type="checkbox"
-              id="termsAndConditionsAccepted"
-              checked={formData.termsAndConditionsAccepted}
-              onChange={event =>
-                handleFieldChange(event, 'termsAndConditionsAccepted')
-              }
-              className="hidden"
-            />
-            {formData.termsAndConditionsAccepted ? (
-              <SvgCheckSquareActive className="mr-2" />
-            ) : (
-              <SvgCheckSquare className="mr-2" />
-            )}
-            <span className="text-sm text-gray-700">
-              Acepto términos y condiciones
-            </span>
-          </label>
-        </Flex>
-        <Flex layout="row-left" className="mt-2">
-          <label
-            htmlFor="receiveCommunications"
-            className="flex items-center cursor-pointer"
-          >
-            <input
-              type="checkbox"
-              id="receiveCommunications"
-              checked={formData.receiveCommunications}
-              onChange={event =>
-                handleFieldChange(event, 'receiveCommunications')
-              }
-              className="hidden"
-            />
-            {formData.receiveCommunications ? (
-              <SvgCheckSquareActive className="mr-2" />
-            ) : (
-              <SvgCheckSquare className="mr-2" />
-            )}
-            <span className="text-sm text-gray-700">
-              Quiero que me informéis de vuestras ofertas
-            </span>
-          </label>
-        </Flex>
-        {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) &&
-          !formData.termsAndConditionsAccepted && (
-            <Flex className="text-hg-error text-left text-sm py-2 px-3 bg-hg-error100 mt-2 w-full rounded-md">
-              <Image
-                src="/images/forms/error.svg"
-                alt="error"
-                height={16}
-                width={16}
-                className="mr-2"
-              />
-              {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
-            </Flex>
-          )}
-      </Flex>
-      {hasContinueButton && (
-        <Button
-          disabled={isDisabled}
-          onClick={() => {
-            if (!isLoading && !isDisabled) {
-              handleContinue();
-              if (isEmbed) {
-                window.parent.postMessage(
-                  routes.checkout.clinics,
-                  'https://www.holaglow.com'
-                );
-              }
+        )}
+        <Flex layout="col-left" className="my-2 mb-4">
+          <Flex
+            layout="row-left"
+            className={
+              !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
             }
-          }}
-          type="primary"
-          size="xl"
-          className="w-full"
-        >
-          {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
-        </Button>
-      )}
-      {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
-        <p className="text-red-500 text-left text-sm mt-2">
-          {errorsConfig.ERROR_MISSING_FIELDS}
-        </p>
-      )}
-    </div>
+          >
+            <label
+              htmlFor="termsAndConditionsAccepted"
+              className="flex items-center cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                id="termsAndConditionsAccepted"
+                checked={formData.termsAndConditionsAccepted}
+                onChange={event =>
+                  handleFieldChange(
+                    event.target.checked,
+                    'termsAndConditionsAccepted'
+                  )
+                }
+                className="hidden"
+              />
+              {formData.termsAndConditionsAccepted ? (
+                <SvgCheckSquareActive className="mr-2" />
+              ) : (
+                <SvgCheckSquare className="mr-2" />
+              )}
+              <span className="text-sm text-gray-700">
+                Acepto términos y condiciones
+              </span>
+            </label>
+          </Flex>
+          <Flex layout="row-left" className="mt-2">
+            <label
+              htmlFor="receiveCommunications"
+              className="flex items-center cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                id="receiveCommunications"
+                checked={formData.receiveCommunications}
+                onChange={event =>
+                  handleFieldChange(
+                    event.target.checked,
+                    'receiveCommunications'
+                  )
+                }
+                className="hidden"
+              />
+              {formData.receiveCommunications ? (
+                <SvgCheckSquareActive className="mr-2" />
+              ) : (
+                <SvgCheckSquare className="mr-2" />
+              )}
+              <span className="text-sm text-gray-700">
+                Quiero que me informéis de vuestras ofertas
+              </span>
+            </label>
+          </Flex>
+          {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) &&
+            !formData.termsAndConditionsAccepted && (
+              <Flex className="text-hg-error text-left text-sm py-2 px-3 bg-hg-error100 mt-2 w-full rounded-md">
+                <Image
+                  src="/images/forms/error.svg"
+                  alt="error"
+                  height={16}
+                  width={16}
+                  className="mr-2"
+                />
+                {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
+              </Flex>
+            )}
+        </Flex>
+        {hasContinueButton && (
+          <Button
+            disabled={isDisabled}
+            onClick={() => {
+              if (!isLoading && !isDisabled) {
+                handleContinue();
+                if (isEmbed) {
+                  window.parent.postMessage(
+                    routes.checkout.clinics,
+                    'https://www.holaglow.com'
+                  );
+                }
+              }
+            }}
+            type="primary"
+            size="xl"
+            className="w-full"
+          >
+            {isLoading ? <SvgSpinner height={24} width={24} /> : 'Continuar'}
+          </Button>
+        )}
+        {errors.includes(errorsConfig.ERROR_MISSING_FIELDS) && (
+          <p className="text-red-500 text-left text-sm mt-2">
+            {errorsConfig.ERROR_MISSING_FIELDS}
+          </p>
+        )}
+      </div>
+    </>
   );
 };
 export default RegistrationForm;

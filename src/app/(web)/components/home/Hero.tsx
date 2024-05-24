@@ -17,8 +17,7 @@ export default function HomeHero() {
         src={heroImgSrc}
         fill
         priority
-        objectFit="cover"
-        objectPosition="bottom"
+        className="object-cover object-right-bottom"
         alt="Medicina estética para cuidar tu piel"
       />
       <Container isHeader className="relative overflow-hidden">

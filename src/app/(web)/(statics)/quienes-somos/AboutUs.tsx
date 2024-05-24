@@ -1,30 +1,14 @@
-import { ReactNode } from 'react';
 import { isMobile } from 'react-device-detect';
 import ProfessionalsDerma from 'app/(web)/components/common/ProfessionalsDerma';
 import ProfessionalsSSR from 'app/(web)/components/common/ProfessionalsSSR';
-import App from 'app/(web)/components/layout/App';
-import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function AboutUs({ isDerma = false }: { isDerma?: boolean }) {
-  const Wrapper = ({ children }: { children: ReactNode }) => {
-    if (isDerma) {
-      return <DermaLayout showNavigation>{children}</DermaLayout>;
-    } else {
-      return (
-        <App>
-          <MainLayout>{children}</MainLayout>
-        </App>
-      );
-    }
-  };
-
   return (
-    <Wrapper>
+    <>
       <div className="bg-derma-secondary300 py-12 md:py-20" id="aboutus">
         <Container>
           <div className="md:flex md:flex-row gap-12 items-center">
@@ -193,6 +177,6 @@ export default function AboutUs({ isDerma = false }: { isDerma?: boolean }) {
           </div>
         </>
       )}
-    </Wrapper>
+    </>
   );
 }

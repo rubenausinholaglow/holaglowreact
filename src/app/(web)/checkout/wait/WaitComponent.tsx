@@ -1,13 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import FinanceService from '@services/FinanceService';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import App from 'app/(web)/components/layout/App';
-import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
 import { SvgCheck, SvgEllipsis, SvgTimer } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -20,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 dayjs.locale(spanishConf);
 
-export default function WaitComponent() {
+export default function WaitComponent({ isDerma }: { isDerma: boolean }) {
   const {
     selectedTreatments,
     selectedSlot,
@@ -35,41 +32,28 @@ export default function WaitComponent() {
 
   const router = useRouter();
   const { cart } = useCartStore(state => state);
-  const [isDerma, setIsDerma] = useState(false);
 
   const { user } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
     let tries = 0;
     async function checkPaymentStatus(id: string) {
-      await FinanceService.checkPaymentStatus(id).then(async x => {
+      await FinanceService.checkPaymentStatus(id, isDerma).then(async x => {
         tries++;
         if (x) {
           if (selectedSlot) {
-            await ScheduleService.createAppointment(
-              selectedTreatments,
-              selectedSlot!,
-              selectedDay!,
-              selectedClinic!,
-              user!,
-              selectedPacksTreatments!,
-              analyticsMetrics,
-              id,
-              selectedPack
-            ).then(y => {
-              if (y && y.length > 0) {
-                setAppointmentUrl(y[0].url);
-              }
-              router.push('/checkout/confirmation');
-            });
+            router.push('/checkout/confirmation');
           } else {
             let treatments = selectedTreatments!.map(x => x.title).join(', ');
             if (!treatments) treatments = cart!.map(x => x.title).join(',');
-            const createTicketResponse = await FinanceService.createTicket({
-              flowwwToken: user!.flowwwToken,
-              paymentId: id,
-              treatmentTitle: treatments,
-            });
+            const createTicketResponse = await FinanceService.createTicket(
+              {
+                flowwwToken: user!.flowwwToken,
+                paymentId: id,
+                treatmentTitle: treatments,
+              },
+              isDerma
+            );
             if (createTicketResponse) {
               router.push('/checkout/confirmation');
             } else {
@@ -92,8 +76,6 @@ export default function WaitComponent() {
         router.push('https://www.holaglow.com');
       }, 5000);
     }
-
-    setIsDerma(window.location.href.includes('derma'));
   }, []);
 
   const renderWeb = (isDerma: boolean) => (
@@ -157,42 +139,31 @@ export default function WaitComponent() {
     return (
       <CheckHydration>
         <div className="bg-derma-secondary300 min-h-screen">
-          <DermaLayout hideButton hideFooter>
-            <Container>
-              <Flex
-                layout="col-center"
-                className="absolute flex inset-0 justify-center items-center gap-4"
-              >
-                {payment !== null && payment !== undefined
-                  ? renderWeb(isDerma)
-                  : renderDash(isDerma)}
-              </Flex>
-            </Container>
-          </DermaLayout>
+          <Container>
+            <Flex
+              layout="col-center"
+              className="absolute flex inset-0 justify-center items-center gap-4"
+            >
+              {payment !== null && payment !== undefined
+                ? renderWeb(isDerma)
+                : renderDash(isDerma)}
+            </Flex>
+          </Container>
         </div>
       </CheckHydration>
     );
   }
 
   return (
-    <App>
-      <MainLayout
-        isCheckout={!false}
-        hideHeader={false}
-        hideFooter={false}
-        hideBackButton
+    <Container>
+      <Flex
+        layout="col-center"
+        className="absolute flex inset-0 justify-center items-center gap-4"
       >
-        <Container>
-          <Flex
-            layout="col-center"
-            className="absolute flex inset-0 justify-center items-center gap-4"
-          >
-            {payment !== null && payment !== undefined
-              ? renderWeb(isDerma)
-              : renderDash(isDerma)}
-          </Flex>
-        </Container>
-      </MainLayout>
-    </App>
+        {payment !== null && payment !== undefined
+          ? renderWeb(isDerma)
+          : renderDash(isDerma)}
+      </Flex>
+    </Container>
   );
 }

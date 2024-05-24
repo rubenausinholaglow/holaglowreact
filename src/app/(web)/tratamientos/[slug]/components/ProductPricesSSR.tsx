@@ -57,7 +57,8 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
       .every(
         (item: string) =>
           item.includes(product.title) &&
-          product.title.indexOf('Pack Wellaging') < 0
+          product.title.indexOf('Pack Wellaging') < 0 &&
+          product.title.indexOf('Armonización facial') < 0
       );
   }
 
@@ -75,21 +76,39 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
       id="prices"
     >
       <Container className="py-12">
-        <Title size="2xl" className="font-bold mb-6 md:mb-12">
-          Pide cita o más información
-        </Title>
+        {product.isPack && productItems.length > 1 && (
+          <Title size="2xl" className="font-bold mb-6 md:mb-12">
+            Elige tu pack
+          </Title>
+        )}
+        {!(product.isPack && productItems.length > 1) && (
+          <Title size="2xl" className="font-bold mb-6 md:mb-12">
+            Elige tu experiencia
+          </Title>
+        )}
         <CheckHydration>
           {!isSessionProduct && (
             <Flex
               layout="col-left"
               className="md:flex-row gap-8 md:items-stretch"
             >
-              <ProductPriceCard
-                product={productItems[0]}
-                parentProduct={product}
-              />
-
-              <PVCard />
+              {product.isPack && productItems.length > 1 ? (
+                productItems.map((item: Product, index: number) => (
+                  <ProductPriceCard
+                    key={item.title}
+                    product={item}
+                    parentProduct={product}
+                  />
+                ))
+              ) : (
+                <>
+                  <ProductPriceCard
+                    product={productItems[0]}
+                    parentProduct={product}
+                  />
+                  <PVCard />
+                </>
+              )}
             </Flex>
           )}
         </CheckHydration>

@@ -12,9 +12,13 @@ import {
   DERMA_HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from 'designSystem/Dialog/Dialog';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import Link from 'next/link';
 
 import AnimateOnViewport from '../common/AnimateOnViewport';
 import DermaMobileNavigation from './DermaMobileNavigation';
@@ -34,9 +38,9 @@ function Navigation({ className }: { className: string }) {
       <ul className="flex flex-row gap-16">
         {NAV_ITEMS.map(navItem => (
           <li className="font-medium" key={navItem.name}>
-            <Link href={navItem.link} id="tmevent_derma_nav_menu_click_button">
+            <a href={navItem.link} id="tmevent_derma_nav_menu_click_button">
               {navItem.name}
-            </Link>
+            </a>
           </li>
         ))}
       </ul>
@@ -45,11 +49,11 @@ function Navigation({ className }: { className: string }) {
 }
 
 export default function DermaHeader({
-  hideButton = false,
-  showNavigation,
+  hideButton,
+  hideNavigation,
 }: {
-  hideButton?: boolean;
-  showNavigation: boolean;
+  hideButton: boolean;
+  hideNavigation: boolean;
 }) {
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -98,11 +102,6 @@ export default function DermaHeader({
 
   return (
     <CheckHydration>
-      <DermaMobileNavigation
-        isVisible={isMobileNavVisible}
-        setIsMobileNavVisible={setIsMobileNavVisible}
-      />
-
       <header
         id="header"
         className={`z-30 w-full top-0 sticky transition-all ${
@@ -116,12 +115,12 @@ export default function DermaHeader({
               className="w-full relative py-4 lg:py-5 lg:justify-center"
               style={{ height: HEADER_HEIGHT_CLASS }}
             >
-              <Link
+              <a
                 href={ROUTES.derma.home}
                 className="lg:absolute left-0 2xl:ml-20"
               >
                 <SvgHolaglowDerma className="w-[92px] h-[32px] md:w-[144px] md:h-[50px]" />
-              </Link>
+              </a>
 
               <Flex className="gap-2">
                 {!hideButton && (
@@ -138,18 +137,25 @@ export default function DermaHeader({
                   </Button>
                 )}
 
-                {showNavigation && (
+                {!hideNavigation && (
                   <>
                     <Navigation className="hidden lg:block" />
-                    <SvgMenu
-                      height={24}
-                      width={24}
-                      className="ml-2 lg:hidden"
-                      onClick={() => {
-                        setIsMobileNavVisible(true);
-                      }}
-                      id="tmevent_nav_menu_open"
-                    />
+                    <Dialog>
+                      <DialogTrigger>
+                        <SvgMenu
+                          height={24}
+                          width={24}
+                          className="ml-2 lg:hidden cursor-pointer"
+                          id="tmevent_nav_menu_open"
+                        />
+                      </DialogTrigger>
+                      <DialogContent className="left-0 right-0">
+                        <DermaMobileNavigation
+                          isVisible={isMobileNavVisible}
+                          setIsMobileNavVisible={setIsMobileNavVisible}
+                        />
+                      </DialogContent>
+                    </Dialog>
                   </>
                 )}
               </Flex>

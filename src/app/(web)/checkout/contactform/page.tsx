@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Client } from '@interface/client';
 import { PaymentBank } from '@interface/payment';
+import ScheduleService from '@services/ScheduleService';
 import { usePayments } from '@utils/paymentUtils';
 import { useRegistration } from '@utils/userUtils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
@@ -67,6 +68,15 @@ export default function ConctactForm() {
     city: '',
     address: '',
   });
+  const {
+    selectedSlot,
+    selectedDay,
+    selectedClinic,
+    selectedPacksTreatments,
+    analyticsMetrics,
+    selectedPack,
+    payment,
+  } = useSessionStore(state => state);
   const initializePayment = usePayments();
   const registerUser = useRegistration(client, false, false, false);
 
@@ -89,16 +99,36 @@ export default function ConctactForm() {
 
   useEffect(() => {
     async function checkout() {
-      const createdUser = await registerUser(client, false, false, false);
-      await initializePayment(
-        activePayment,
-        createdUser!,
+      const createdUser = await registerUser(
+        client,
         false,
-        undefined,
-        undefined,
-        undefined,
+        false,
+        false,
         false
       );
+      if (!payment) {
+        await initializePayment(
+          activePayment,
+          createdUser!,
+          false,
+          undefined,
+          undefined,
+          undefined,
+          false
+        ).then(x => {
+          ScheduleService.createTemporalAppointment(
+            selectedTreatments,
+            selectedSlot!,
+            selectedDay!,
+            selectedClinic!,
+            createdUser!,
+            selectedPacksTreatments!,
+            analyticsMetrics,
+            x!,
+            selectedPack
+          ).then(x => {});
+        });
+      }
     }
     if (
       activePayment != PaymentBank.None &&
@@ -135,6 +165,7 @@ export default function ConctactForm() {
                 hasContinueButton={isProbadorVirtual}
                 initialValues={client}
                 setClientData={setClient}
+                isDerma={false}
               />
 
               {!isProbadorVirtual && (

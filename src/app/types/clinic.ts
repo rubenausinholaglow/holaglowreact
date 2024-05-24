@@ -11,6 +11,13 @@ export interface Clinic {
   flowwwId: string;
   phone: string;
 }
+export interface ClinicReview {
+  rating: number;
+  comment: string;
+  authorName: string;
+  authorPicture: string;
+  clinic: Clinic;
+}
 
 export interface Professional {
   description: string;
