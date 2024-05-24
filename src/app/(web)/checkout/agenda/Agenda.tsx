@@ -1,7 +1,7 @@
 'use client';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import './datePickerStyle.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -26,7 +26,6 @@ import {
   SvgEllipsis,
   SvgSadIcon,
   SvgWarning,
-} from 'app/icons/IconsDs';
 } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
@@ -327,7 +326,7 @@ export default function Agenda({
               paid: false,
             },
             previous: previousAppointment,
-          }).then(_x => {
+          }).then(x => {
             if (!x || x.length == 0) setShowRescheduleError(true);
             else {
               if (isDashboard && !isDerma) {
@@ -566,52 +565,6 @@ export default function Agenda({
       false
     );
   };
-
-  if (showRescheduleError) {
-    return (
-      <Modal
-        type="center"
-        height="h-auto"
-        width="w-full"
-        className="max-w-sm mx-auto"
-        isVisible={showRescheduleError}
-        avoidClosing={true}
-      >
-        <Flex layout="col-center" className="p-4">
-          <SvgCross className="self-end mb-12" />
-          <Title className="mb-6">Lo sentimos</Title>
-
-          <Flex layout="col-left" className="gap-4 w-full mb-8">
-            <Flex
-              layout="col-center"
-              className="bg-derma-secondary300 w-full rounded-xl p-4 gap-4"
-            >
-              <SvgCalendar
-                height={32}
-                width={32}
-                className={isDerma ? 'text-derma-primary' : 'text-hg-secondary'}
-              />
-              <p className="font-semibold">
-                El horario seleccionado ya no está disponible. Haz click en otro
-                horario para reagendar tu cita
-              </p>
-            </Flex>
-          </Flex>
-          <Flex layout="col-right" className="w-full">
-            <Button
-              className="cursor-pointer"
-              type={isDerma ? 'derma' : 'primary'}
-              onClick={() => {
-                router.push('/reagenda?token=' + user?.clinicToken);
-              }}
-            >
-              Seleccionar otra hora
-            </Button>
-          </Flex>
-        </Flex>
-      </Modal>
-    );
-  }
   useEffect(() => {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
@@ -658,6 +611,52 @@ export default function Agenda({
       getAppointments();
     }
   }, []);
+
+  if (showRescheduleError) {
+    return (
+      <Modal
+        type="center"
+        height="h-auto"
+        width="w-full"
+        className="max-w-sm mx-auto"
+        isVisible={showRescheduleError}
+        avoidClosing={true}
+      >
+        <Flex layout="col-center" className="p-4">
+          <SvgCross className="self-end mb-12" />
+          <Title className="mb-6">Lo sentimos</Title>
+
+          <Flex layout="col-left" className="gap-4 w-full mb-8">
+            <Flex
+              layout="col-center"
+              className="bg-derma-secondary300 w-full rounded-xl p-4 gap-4"
+            >
+              <SvgCalendar
+                height={32}
+                width={32}
+                className={isDerma ? 'text-derma-primary' : 'text-hg-secondary'}
+              />
+              <p className="font-semibold">
+                El horario seleccionado ya no está disponible. Haz click en otro
+                horario para reagendar tu cita
+              </p>
+            </Flex>
+          </Flex>
+          <Flex layout="col-right" className="w-full">
+            <Button
+              className="cursor-pointer"
+              type={isDerma ? 'derma' : 'primary'}
+              onClick={() => {
+                router.push('/reagenda?token=' + user?.clinicToken);
+              }}
+            >
+              Seleccionar otra hora
+            </Button>
+          </Flex>
+        </Flex>
+      </Modal>
+    );
+  }
 
   if (showReviewAlreadyCreated && appointmentToShow) {
     return (
