@@ -34,26 +34,7 @@ export const PAINS_AND_SYMPTOMS = [
       'Milia (pequeños quistes blancos o amarillentos)',
     ],
     feedback: {
-      ingredients: [
-        {
-          name: 'Ácido retinoico',
-          subtitle: '0,015% - 0,05% Despigmentante y regenerador',
-          extraInfo: '',
-          imgUrl: '/images/derma/multistep/ingredients/acidoRetinoico.png',
-        },
-        {
-          name: 'Ácido salicílico',
-          subtitle: '',
-          extraInfo: '',
-          imgUrl: '',
-        },
-        {
-          name: 'Ácido glicólico',
-          subtitle: '',
-          extraInfo: '',
-          imgUrl: '',
-        },
-      ],
+      ingredients: ['Ácido retinoico', 'Ácido salicílico', 'Ácido glicólico'],
     },
     thankyouImages: [
       '/images/derma/beforeAfter/acne/beforeAfter1.jpg',
@@ -97,14 +78,7 @@ export const PAINS_AND_SYMPTOMS = [
       'Pérdida de densidad',
     ],
     feedback: {
-      ingredients: [
-        {
-          name: 'Ácido retinoico',
-          subtitle: '0,015% - 0,05% Despigmentante y regenerador',
-          extraInfo: '',
-          imgUrl: '/images/derma/multistep/ingredients/acidoRetinoico.png',
-        },
-      ],
+      ingredients: ['Ácido retinoico'],
     },
     thankyouImages: [
       '/images/derma/beforeAfter/antiaging/beforeAfter1.jpg',
