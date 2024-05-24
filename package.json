@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.0-rc.1",
-    "@apollo/experimental-nextjs-app-support": "^0.10.1",
+    "@apollo/experimental-nextjs-app-support": "^0.6.0",
     "@bugsnag/js": "^7.20.2",
     "@bugsnag/plugin-react": "^7.19.0",
     "@emotion/react": "^11.11.0",
@@ -39,7 +39,7 @@
     "html5-qrcode": "^2.3.8",
     "http-proxy-middleware": "^2.0.6",
     "lodash": "^4.17.21",
-    "next": "^14.2.3",
+    "next": "^13.5.2",
     "nif-dni-nie-cif-validation": "^1.0.10",
     "postcss": "8.4.23",
     "pure-react-carousel": "^1.30.1",
