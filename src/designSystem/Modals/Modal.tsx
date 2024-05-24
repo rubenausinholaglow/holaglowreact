@@ -20,7 +20,7 @@ export const ModalBackground = ({
           : 'opacity-0 pointer-events-none'
       } transition-all fixed top-0 right-0 bottom-0 w-full bg-hg-black/50 z-40 `}
       onClick={onClick}
-    ></div>
+    />
   );
 };
 
@@ -45,7 +45,13 @@ export const Modal2 = ({
   [key: string]: any;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { setShowModalBackground } = useGlobalStore(state => state);
+
   useEffect(() => {
+    if (!hideModalBackground) {
+      setShowModalBackground(isVisible);
+    }
+
     setIsModalOpen(isVisible);
   }, [isVisible]);
 
@@ -89,7 +95,7 @@ export const Modal2 = ({
   return (
     <div
       className={twMerge(
-        `text-hg-black transition-all fixed right-0 bottom-0 bg-white z-50 shadow-centered-black overflow-y-auto
+        `transition-all fixed right-0 bottom-0 bg-white z-50 shadow-centered-black overflow-y-auto
           ${type === 'right' ? 'top-0' : ''}
           ${type === 'bottom' ? '' : ''}
           ${width ? width : 'w-full'}

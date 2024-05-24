@@ -10,22 +10,14 @@ export const PAINS_AND_SYMPTOMS = [
       'Manchas sobre el labio',
     ],
     feedback: {
-      ingredients: [
-        {
-          name: 'Ácido retinoico',
-          subtitle: '0,015% - 0,05% Despigmentante y regenerador',
-          extraInfo: '',
-          imgUrl: '/images/derma/multistep/ingredients/acidoRetinoico.png',
-        },
-        {
-          name: 'Hidroquinona',
-          subtitle: '4% Despigmentante',
-          extraInfo:
-            '*En verano sustituimos la Hidroquinona por una combinación de Ácido kójico (4%) y Ácido glicólico (8%)',
-          imgUrl: '/images/derma/multistep/ingredients/hidroquinona.png',
-        },
-      ],
+      ingredients: ['Ácido retinoico', 'Hidroquinona'],
     },
+    thankyouImages: [
+      '/images/derma/beforeAfter/melasma/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/melasma/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/melasma/beforeAfter3.jpg',
+      '/images/derma/beforeAfter/melasma/beforeAfter4.jpg',
+    ],
   },
   {
     name: 'Acné',
@@ -41,6 +33,15 @@ export const PAINS_AND_SYMPTOMS = [
       'Espinillas negras',
       'Milia (pequeños quistes blancos o amarillentos)',
     ],
+    feedback: {
+      ingredients: ['Ácido retinoico', 'Ácido salicílico', 'Ácido glicólico'],
+    },
+    thankyouImages: [
+      '/images/derma/beforeAfter/acne/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/acne/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/acne/beforeAfter3.jpg',
+      '/images/derma/beforeAfter/acne/beforeAfter4.jpg',
+    ],
   },
   {
     name: 'Rosácea',
@@ -55,6 +56,14 @@ export const PAINS_AND_SYMPTOMS = [
       'Piel gruesa',
       'Nariz agrandada',
     ],
+    feedback: {
+      ingredients: [],
+    },
+    thankyouImages: [
+      '/images/derma/beforeAfter/rosacea/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/rosacea/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/rosacea/beforeAfter3.jpg',
+    ],
   },
   {
     name: 'Antiaging',
@@ -66,7 +75,15 @@ export const PAINS_AND_SYMPTOMS = [
       'Flacidez',
       'Líneas finas de expresión',
       'Arrugas profundas',
-      'Pérdida de densidad      ',
+      'Pérdida de densidad',
+    ],
+    feedback: {
+      ingredients: ['Ácido retinoico'],
+    },
+    thankyouImages: [
+      '/images/derma/beforeAfter/antiaging/beforeAfter1.jpg',
+      '/images/derma/beforeAfter/antiaging/beforeAfter2.jpg',
+      '/images/derma/beforeAfter/antiaging/beforeAfter3.jpg',
     ],
   },
 ];
@@ -178,6 +195,9 @@ export const SECONDARY_CONCERNS = [
   'Patas de gallo',
   'Tendencia acnéica',
   'No quiero tratar nada más',
+  'Lentigo solar',
+  'Rosácea',
+  'Melasma',
 ];
 
 export const ROUTINES = [
@@ -233,73 +253,6 @@ export const MEDICINES = [
   { title: 'No', value: 2 },
 ];
 
-export const DERMA_INGREDIENTS = [
-  {
-    name: 'Ácido azelaico',
-    imgSrc: '/images/derma/landingPrecios/ingredients/acidoAzelaico.jpg',
-    concentration: '15-20%',
-    tags: ['Melasma', 'Acné', 'Rosácea'],
-    description:
-      'El ácido azelaico es un principio activo con diversas propiedades. Tiene efectos antiinflamatorios, antibacterianos y previene la formación de puntos negros. Se utiliza con éxito desde hace años en el tratamiento del acné y la rosácea.',
-  },
-  {
-    name: 'Vitamina A',
-    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaA.jpg',
-    concentration: '0,006-0,1%',
-    tags: ['Melasma', 'Acné', 'Antiaging'],
-    description:
-      'La vitamina A es conocida por sus propiedades integrales para el cuidado de la piel. Pertenece al grupo de los retinoides y es especialmente eficaz para combatir las imperfecciones de la piel gracias a sus propiedades antiinflamatorias, comedolíticas y anticomedógenas.',
-  },
-  {
-    name: 'Peróxido de benzoilo',
-    imgSrc: '/images/derma/landingPrecios/ingredients/peroxidoDeBenzoilo.jpg',
-    concentration: '2,5%',
-    tags: ['Acné'],
-    description:
-      'El peróxido de benzoilo es un ingrediente activo utilizado en el tratamiento del acné. Después de aplicarse aumenta el oxígeno en las capas superiores de la piel y conduce a una reducción del número de bacterias responsables del acné.',
-  },
-  {
-    name: 'Niacinamida',
-    imgSrc: '/images/derma/landingPrecios/ingredients/niacinamida.jpg',
-    concentration: '4%',
-    tags: ['Melasma', 'Acné', 'Rosácea'],
-    description:
-      'También es conocida como vitamina B3 y tiene numerosos efectos positivos sobre la piel. Puede conducir a una mejora significativa en la apariencia de la piel, reduciendo los poros dilatados, igualando el tono desigual de la piel y reduciendo las líneas finas y las arrugas.',
-  },
-  {
-    name: 'Clindamicina',
-    imgSrc: '/images/derma/landingPrecios/ingredients/clindamicina.jpg',
-    concentration: '1%',
-    tags: ['Acné'],
-    description:
-      'La clindamicina es un antibiótico eficaz que se utiliza específicamente para tratar afecciones de la piel como el acné. Actúa suprimiendo el crecimiento de la bacteria Propionibacterium.',
-  },
-  {
-    name: 'Eritromicina',
-    imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg',
-    concentration: '2%',
-    tags: ['Acné', 'Rosácea', 'Antiaging'],
-    description:
-      'Es un antibiótico que inhibe el crecimiento de bacterias en la piel y ayuda a reducir la inflamación. La eritromicina es particularmente útil para pacientes sensibles a otros tratamientos.',
-  },
-  {
-    name: 'Metronidazol',
-    imgSrc: '/images/derma/landingPrecios/ingredients/metronidazol.jpg',
-    concentration: '0,75%',
-    tags: ['Rosácea'],
-    description:
-      'Es un antibiótico con propiedades antibacterianas, antiinflamatorias y de vasoconstricción particularmente útiles para reducir el enrojecimiento y los vasos sanguíneos visibles.',
-  },
-  {
-    name: 'Ivermectina',
-    imgSrc: '/images/derma/landingPrecios/ingredients/ivermectina.jpg',
-    concentration: '1%',
-    tags: ['Rosácea'],
-    description:
-      'Es eficaz principalmente gracias a sus efectos antiinflamatorios y antiparasitarios. Actúa sobre la superpoblación de ácaros Demodex que vive naturalmente en la piel y que puede provocar reacciones inflamatorias en algunos pacientes con rosácea.',
-  },
-];
-
 export const DERMA_COMPLEMENTS = [
   {
     imgSrc: '/images/derma/landingPrecios/ingredients/espumaLimpiadora.png',
@@ -337,44 +290,155 @@ export const DERMA_COMPLEMENTS = [
   },
 ];
 
-export const ACTIVE_PRINCIPLES = [
-  {
-    name: 'Vitamina C',
-    concerns: [
-      'Mejorar la textura de la piel',
-      'Luminosidad',
-      'Patas de gallo',
-    ],
-    imgSrc: '/images/derma/landingPrecios/ingredients/acidoAzelaico.jpg',
-  },
-  {
-    name: 'Vitamina E',
-    concerns: ['Luminosidad', 'Patas de gallo'],
-    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaA.jpg',
-  },
+export const DERMA_INGREDIENTS = [
   {
     name: 'Ácido retinoico',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoRetinoico.jpg',
+    concentration: '2,5%',
+    tags: ['Melasma, Antiaging', 'Acné'],
     concerns: [
       'Mejorar la textura de la piel',
       'Poros dilatados',
       'Líneas finas de expresión',
       'Patas de gallo',
     ],
-    imgSrc: '/images/derma/landingPrecios/ingredients/peroxidoDeBenzoilo.jpg',
+    feedbackSubtitle: '0,015% - 0,05% Despigmentante y regenerador',
+    feedbackExtraInfo: '',
+    description: '',
   },
   {
-    name: 'Ácido glicólico',
-    concerns: ['Luminosidad', 'Poros dilatados', 'Tendencia acnéica'],
-    imgSrc: '/images/derma/landingPrecios/ingredients/clindamicina.jpg',
+    name: 'Hidroquinona',
+    imgSrc: '/images/derma/landingPrecios/ingredients/hidroquinona.jpg',
+    concentration: '2,5%',
+    tags: ['Melasma'],
+    concerns: [
+      'Mejorar la textura de la piel',
+      'Poros dilatados',
+      'Líneas finas de expresión',
+      'Patas de gallo',
+    ],
+    feedbackSubtitle: '4% Despigmentante',
+    feedbackExtraInfo:
+      '*En verano sustituimos la Hidroquinona por una combinación de Ácido kójico (4%) y Ácido glicólico (8%)',
+    description: '',
+  },
+  {
+    name: 'Ácido azelaico',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoAzelaico.jpg',
+    concentration: '15-20%',
+    tags: ['Melasma', 'Acné', 'Rosácea'],
+    concerns: [],
+    description:
+      'El ácido azelaico es un principio activo con diversas propiedades. Tiene efectos antiinflamatorios, antibacterianos y previene la formación de puntos negros. Se utiliza con éxito desde hace años en el tratamiento del acné y la rosácea.',
+  },
+  {
+    name: 'Vitamina A',
+    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaA.jpg',
+    concentration: '0,006-0,1%',
+    tags: ['Melasma', 'Acné', 'Antiaging'],
+    concerns: [],
+    description:
+      'La vitamina A es conocida por sus propiedades integrales para el cuidado de la piel. Pertenece al grupo de los retinoides y es especialmente eficaz para combatir las imperfecciones de la piel gracias a sus propiedades antiinflamatorias, comedolíticas y anticomedógenas.',
+  },
+  {
+    name: 'Peróxido de benzoilo',
+    imgSrc: '/images/derma/landingPrecios/ingredients/peroxidoDeBenzoilo.jpg',
+    concentration: '2,5%',
+    tags: ['Acné'],
+    concerns: [],
+    description:
+      'El peróxido de benzoilo es un ingrediente activo utilizado en el tratamiento del acné. Después de aplicarse aumenta el oxígeno en las capas superiores de la piel y conduce a una reducción del número de bacterias responsables del acné.',
   },
   {
     name: 'Niacinamida',
-    concerns: ['Tendencia acnéica'],
     imgSrc: '/images/derma/landingPrecios/ingredients/niacinamida.jpg',
+    concentration: '4%',
+    tags: [],
+    concerns: ['Tendencia acnéica', 'Rosácea'],
+    description:
+      'También es conocida como vitamina B3 y tiene numerosos efectos positivos sobre la piel. Puede conducir a una mejora significativa en la apariencia de la piel, reduciendo los poros dilatados, igualando el tono desigual de la piel y reduciendo las líneas finas y las arrugas.',
+  },
+  {
+    name: 'Clindamicina',
+    imgSrc: '/images/derma/landingPrecios/ingredients/clindamicina.jpg',
+    concentration: '1%',
+    tags: ['Acné'],
+    concerns: [],
+    description:
+      'La clindamicina es un antibiótico eficaz que se utiliza específicamente para tratar afecciones de la piel como el acné. Actúa suprimiendo el crecimiento de la bacteria Propionibacterium.',
+  },
+  {
+    name: 'Eritromicina',
+    imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg',
+    concentration: '2%',
+    tags: ['Acné', 'Rosácea', 'Antiaging'],
+    concerns: [],
+    description:
+      'Es un antibiótico que inhibe el crecimiento de bacterias en la piel y ayuda a reducir la inflamación. La eritromicina es particularmente útil para pacientes sensibles a otros tratamientos.',
+  },
+  {
+    name: 'Metronidazol',
+    imgSrc: '/images/derma/landingPrecios/ingredients/metronidazol.jpg',
+    concentration: '0,75%',
+    tags: [],
+    concerns: ['Rosácea'],
+    description:
+      'Es un antibiótico con propiedades antibacterianas, antiinflamatorias y de vasoconstricción particularmente útiles para reducir el enrojecimiento y los vasos sanguíneos visibles.',
+  },
+  {
+    name: 'Ivermectina',
+    imgSrc: '/images/derma/landingPrecios/ingredients/ivermectina.jpg',
+    concentration: '1%',
+    tags: [],
+    concerns: ['Rosácea'],
+    description:
+      'Es eficaz principalmente gracias a sus efectos antiinflamatorios y antiparasitarios. Actúa sobre la superpoblación de ácaros Demodex que vive naturalmente en la piel y que puede provocar reacciones inflamatorias en algunos pacientes con rosácea.',
+  },
+
+  {
+    name: 'Vitamina C',
+    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaC.jpg',
+    tags: [],
+    concerns: [
+      'Mejorar la textura de la piel',
+      'Luminosidad',
+      'Patas de gallo',
+    ],
+    description: '',
+  },
+  {
+    name: 'Vitamina E',
+    imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaE.jpg',
+    tags: [],
+    concerns: ['Luminosidad', 'Patas de gallo'],
+    description: '',
+  },
+  {
+    name: 'Ácido glicólico',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoGlicolico.jpg',
+    tags: ['Acné'],
+    concerns: ['Luminosidad', 'Poros dilatados', 'Tendencia acnéica'],
+    description: '',
   },
   {
     name: 'Ácido salicílico',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoSalicilico.jpg',
+    tags: ['Acné'],
     concerns: ['Tendencia acnéica'],
-    imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg',
+    description: '',
+  },
+  {
+    name: 'Ácido kójico',
+    imgSrc: '/images/derma/landingPrecios/ingredients/acidoKojico.jpg',
+    tags: [''],
+    concerns: ['Melasma'],
+    description: '',
+  },
+  {
+    name: 'Nicotinamida',
+    concerns: ['Lentigo solar'],
+    imgSrc: '/images/derma/landingPrecios/ingredients/nicotinamida.jpg',
+    tags: [''],
+    description: '',
   },
 ];

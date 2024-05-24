@@ -18,14 +18,12 @@ export default function DermaLayout({
   className?: string;
 }) {
   return (
-    <body>
-      <main
-        className={`${className} ${gtUltra.variable} ${poppins.className} text-derma-tertiary min-h-screen overflow-hidden derma relative`}
-      >
-        <DermaHeader hideButton={hideButton} hideNavigation={hideNavigation} />
-        {children}
-        <DermaFooter className="pb-24 md:pb-0" hideFooter={hideFooter} />
-      </main>
-    </body>
+    <main
+      className={`${className} ${gtUltra.variable} ${poppins.className} text-derma-tertiary min-h-screen overflow-hidden derma relative`}
+    >
+      <DermaHeader hideButton={hideButton} hideNavigation={hideNavigation} />
+      {children}
+      <DermaFooter className="pb-24 md:pb-0" hideFooter={hideFooter} />
+    </main>
   );
 }

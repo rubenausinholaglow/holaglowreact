@@ -34,7 +34,7 @@ export default function ImageUploader({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageListType>([]);
-  const { picturesUrls, setPicturesUrls } = useDermaStore(state => state);
+  const { picturesUrls, setPicturesUrls, id } = useDermaStore(state => state);
 
   function uploaderDefaultImage({
     index,
@@ -88,7 +88,7 @@ export default function ImageUploader({
         userId ? userId : undefined,
         updatedPictures[0].file!,
         position,
-        'id',
+        id ?? diagnosticId,
         diagnosticId ? diagnosticId : ''
       );
 

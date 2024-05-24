@@ -25,7 +25,7 @@ export default function DermaHome() {
       <HeroDerma />
       <div className="bg-derma-secondary300">
         <TreatmentsDerma />
-        <BenefitsApplicationResultsDerma className="mt-12 md:mt-0" />
+        <BenefitsApplicationResultsDerma />
         <HowItWorksDerma />
         <TimeLineDerma />
         <StoriesDerma />

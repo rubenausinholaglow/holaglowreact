@@ -12,6 +12,11 @@ import {
   DERMA_HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from 'designSystem/Dialog/Dialog';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
@@ -97,11 +102,6 @@ export default function DermaHeader({
 
   return (
     <CheckHydration>
-      <DermaMobileNavigation
-        isVisible={isMobileNavVisible}
-        setIsMobileNavVisible={setIsMobileNavVisible}
-      />
-
       <header
         id="header"
         className={`z-30 w-full top-0 sticky transition-all ${
@@ -140,15 +140,22 @@ export default function DermaHeader({
                 {!hideNavigation && (
                   <>
                     <Navigation className="hidden lg:block" />
-                    <SvgMenu
-                      height={24}
-                      width={24}
-                      className="ml-2 lg:hidden"
-                      onClick={() => {
-                        setIsMobileNavVisible(true);
-                      }}
-                      id="tmevent_nav_menu_open"
-                    />
+                    <Dialog>
+                      <DialogTrigger>
+                        <SvgMenu
+                          height={24}
+                          width={24}
+                          className="ml-2 lg:hidden cursor-pointer"
+                          id="tmevent_nav_menu_open"
+                        />
+                      </DialogTrigger>
+                      <DialogContent className="left-0 right-0">
+                        <DermaMobileNavigation
+                          isVisible={isMobileNavVisible}
+                          setIsMobileNavVisible={setIsMobileNavVisible}
+                        />
+                      </DialogContent>
+                    </Dialog>
                   </>
                 )}
               </Flex>

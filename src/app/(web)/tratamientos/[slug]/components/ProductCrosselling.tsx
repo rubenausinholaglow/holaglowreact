@@ -1,3 +1,4 @@
+import { fetchProducts } from '@utils/fetch';
 import { Product } from 'app/types/product';
 import { Container } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
@@ -7,16 +8,18 @@ const FullWidthCarousel = dynamic(
   () => import('app/(web)/components/product/fullWidthCarousel')
 );
 
-export default function ProductCrosselling({ product }: { product: Product }) {
-  const relatedProducts = product?.relatedProducts?.map(obj => ({
-    ...obj.product,
-    visibility: true,
-  }));
+export default async function ProductCrosselling({
+  product,
+}: {
+  product: Product;
+}) {
+  async function getProducts() {
+    const products = await fetchProducts({ isDerma: false });
 
-  if (product.relatedProducts?.length === 0) {
-    return <></>;
+    return products;
   }
-
+  let relatedProducts = await getProducts();
+  relatedProducts = relatedProducts.filter(x => x.id != product.id);
   return (
     <>
       <Container>
