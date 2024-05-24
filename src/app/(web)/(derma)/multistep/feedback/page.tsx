@@ -17,19 +17,19 @@ export default function Feedback() {
   const { pain, feedbackStep } = useDermaStore(state => state);
 
   useEffect(() => {
-    if (feedbackStep === 1 && pain !== 2) {
+    if (feedbackStep === 1 && pain !== 2 && pain != 0 && pain != 3) {
       router.push(ROUTES.derma.multistep.skinType);
     }
 
-    if (feedbackStep === 4 && pain !== 2) {
+    if (feedbackStep === 4 && pain !== 2 && pain != 0 && pain != 3) {
       router.push(ROUTES.derma.multistep.routine);
     }
   }, []);
 
-  if (feedbackStep === 1 && pain === 2) return <PainFeedback />;
+  if (feedbackStep === 1 && pain !== 1) return <PainFeedback />;
   if (feedbackStep === 2) return <SkinTypeFeedback />;
   if (feedbackStep === 3) return <SkinColorFeedback />;
-  if (feedbackStep === 4 && pain === 2) return <SecondaryConcernsFeedback />;
+  if (feedbackStep === 4 && pain !== 1) return <SecondaryConcernsFeedback />;
   if (feedbackStep === 5) return <RoutineFeedback />;
   if (feedbackStep === 6) return <LastStepFeedback />;
 

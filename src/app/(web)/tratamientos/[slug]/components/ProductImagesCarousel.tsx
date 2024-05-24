@@ -13,7 +13,7 @@ export default function ProductImagesCarousel({
   return (
     <Flex className="w-full md:gap-16 items-start">
       <Carousel
-        controlStyles="px-4"
+        controlstyles="px-4"
         hasControls={product.beforeAndAfterImages?.length > 1}
         dragEnabled={product.beforeAndAfterImages?.length > 1}
         touchEnabled={product.beforeAndAfterImages?.length > 1}
@@ -29,7 +29,12 @@ export default function ProductImagesCarousel({
         `}
       >
         {product.beforeAndAfterImages
-          ?.sort((a, b) => (a.urlBefore! < b.urlBefore! ? -1 : 0))
+          ?.sort(function x(a, b) {
+            return a.urlBefore!.localeCompare(b.urlBefore!, undefined, {
+              numeric: true,
+              sensitivity: 'base',
+            });
+          })
           .map(item => (
             <div className="px-4" key={item.id}>
               <div className="overflow-hidden relative aspect-square">

@@ -22,12 +22,8 @@ export default function Page() {
   const { setHighlightProduct, productHighlighted } = useCartStore(
     state => state
   );
-  const {
-    setStateProducts,
-    dashboardProducts,
-    setDashboardProducts,
-    storedClinicId,
-  } = useGlobalPersistedStore(state => state);
+  const { dashboardProducts, setDashboardProducts, storedClinicId } =
+    useGlobalPersistedStore(state => state);
   const {
     setFilteredProducts,
     setProductFilters,
@@ -38,7 +34,6 @@ export default function Page() {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    setStateProducts([]);
     setFilteredProducts([]);
     setDashboardProducts([]);
     const fetchProducts = async () => {
@@ -55,7 +50,7 @@ export default function Page() {
       }
     };
 
-    fetchProducts();
+    if (!dashboardProducts || dashboardProducts.length == 0) fetchProducts();
     setHighlightProduct(null);
     productFilters.isPack = true;
     setProductFilters(productFilters);

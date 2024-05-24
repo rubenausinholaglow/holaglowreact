@@ -96,8 +96,12 @@ export default function StartMultistep() {
           </div>
         </Flex>
       </Container>
-
-      <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl">
+      <div
+        className={
+          (isMobileSSR() ? '' : 'absolute') +
+          ' bottom-0 left-0 right-0 bg-white rounded-t-2xl'
+        }
+      >
         <Container>
           <Flex className="text-hg-black500 text-xs py-4 w-full justify-start md:justify-center">
             <div className="bg-hg-black100 rounded-full p-2 mr-2">
