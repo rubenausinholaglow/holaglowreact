@@ -1,3 +1,5 @@
+'use client';
+
 import { PAINS_AND_SYMPTOMS } from 'app/(web)/(derma)/multistep/multistepConfig';
 import { useDermaStore } from 'app/stores/dermaStore';
 import Carousel from 'designSystem/Carousel/Carousel';
@@ -9,7 +11,8 @@ export default function StoriesDerma() {
   const { pain } = useDermaStore(state => state);
 
   const dermaImages = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0]
-    .thankyouImages;
+    ?.thankyouImages;
+
   return (
     <Container className="py-12 overflow-hidden">
       <Flex
@@ -40,7 +43,7 @@ export default function StoriesDerma() {
             className="rounded-xl"
             isDerma
           >
-            {dermaImages?.map(item => (
+            {dermaImages?.map((item: any) => (
               <div key={item} className="overflow-hidden relative rounded-2xl">
                 <Image
                   height={400}
