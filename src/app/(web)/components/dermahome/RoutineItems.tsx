@@ -46,12 +46,12 @@ export default function RoutineItems({
 
   const { secondaryConcerns } = useDermaStore(state => state);
 
-  const filteredPain = PAINS_AND_SYMPTOMS.filter(
-    item => item.value === pain
-  )[0];
+  const painItem = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0];
+
+  const ingredients = painItem?.feedback?.ingredients as string[] | undefined;
 
   const painIngredients = DERMA_INGREDIENTS.filter(
-    item => filteredPain?.feedback?.ingredients.includes(item.name)
+    item => ingredients?.includes(item.name)
   );
 
   const secondaryIngredients = DERMA_INGREDIENTS.filter(ingredient => {

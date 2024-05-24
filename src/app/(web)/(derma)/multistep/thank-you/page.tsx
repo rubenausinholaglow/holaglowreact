@@ -63,8 +63,12 @@ export default function ThankYouMultiStep() {
     item => item.value === pain
   )[0];
 
+  const ingredients = filteredPain?.feedback?.ingredients as
+    | string[]
+    | undefined;
+
   const painIngredients = DERMA_INGREDIENTS.filter(
-    item => filteredPain.feedback?.ingredients.includes(item.name)
+    item => ingredients?.includes(item.name)
   );
 
   const secondaryIngredients = DERMA_INGREDIENTS.filter(ingredient => {
@@ -101,12 +105,14 @@ export default function ThankYouMultiStep() {
             <Title size="xl" className="text-derma-primary font-light">
               ¡Aquí tienes, {user?.name}!
             </Title>
-            <Text className="text-center md:text-left">
-              Esta es la rutina completa que hemos diseñado para tu{' '}
-              <span className="font-semibold">
-                {filteredPain?.name.toLocaleLowerCase()}
-              </span>
-            </Text>
+            <CheckHydration>
+              <Text className="text-center md:text-left">
+                Esta es la rutina completa que hemos diseñado para tu{' '}
+                <span className="font-semibold">
+                  {filteredPain?.name.toLocaleLowerCase()}
+                </span>
+              </Text>
+            </CheckHydration>
             <CheckHydration>
               <RoutineItems hideCremaFormulada pain={pain} />
             </CheckHydration>

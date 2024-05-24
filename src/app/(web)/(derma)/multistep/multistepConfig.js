@@ -63,6 +63,9 @@ export const PAINS_AND_SYMPTOMS = [
       'Piel gruesa',
       'Nariz agrandada',
     ],
+    feedback: {
+      ingredients: [],
+    },
   },
   {
     name: 'Antiaging',
