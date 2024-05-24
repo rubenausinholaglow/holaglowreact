@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react';
 import { DiagnosticData } from '@interface/derma/diagnosis';
 import { dermaService } from '@services/DermaService';
+import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { useSessionStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import { useSearchParams } from 'next/navigation';
@@ -20,6 +22,9 @@ export default function Diagnostico() {
   const { dermaPhone, setDermaPhone } = useSessionStore(state => state);
   const [isLogged, setIsLogged] = useState(dermaPhone != '');
   const [diagnosisData, setDiagnosisData] = useState<any | null>(null);
+
+  console.log(diagnosisData?.user?.id);
+
   const searchParams = useSearchParams();
 
   const fetchData = async () => {
@@ -66,6 +71,19 @@ export default function Diagnostico() {
       )}
       <div className="relative">
         <Container className="px-0 md:px-4">
+          <Flex
+            layout="row-right"
+            className="w-full -translate-y-14 relative z-50"
+          >
+            <Button
+              size="sm"
+              type="derma"
+              className="font-semibold text-hg-primary"
+              href={`${ROUTES.derma.diagnostico.subscription}?userId=${diagnosisData?.user?.id}`}
+            >
+              Gestionar suscripción
+            </Button>
+          </Flex>
           {isLogged && diagnosisData && (
             <Flex
               layout="col-left"
@@ -79,6 +97,7 @@ export default function Diagnostico() {
                   >
                     Primer diagnóstico
                   </Title>
+
                   <Text className="text-sm mb-6">
                     Después de 24-48 horas de tu solicitud
                   </Text>

@@ -1,14 +1,23 @@
+import FinanceService from '@services/FinanceService';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
 import { SvgCross } from 'app/icons/IconsDs';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 
-export default function Subscription() {
+export default async function Subscription({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const subscriptionData = await FinanceService.getSubscription(
+    searchParams.userId as string
+  );
+
   return (
     <div className="bg-derma-secondary300 min-h-screen">
-      <DermaLayout hideButton hideFooter>
-        <Container className="pb-12">
+      <DermaLayout hideButton hideFooter hideNavigation>
+        <Container className="py-4 md:py-10">
           <Title className="text-derma-primary font-thin mb-4">
             Gestiona tu suscripción
           </Title>
