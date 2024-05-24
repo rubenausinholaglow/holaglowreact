@@ -22,7 +22,7 @@ export default function SkinType() {
     state => state
   );
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.output.skinType);
 
   return (
     <DermaLayout

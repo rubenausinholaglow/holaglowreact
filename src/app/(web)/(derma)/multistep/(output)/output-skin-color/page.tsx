@@ -1,3 +1,5 @@
+'use client';
+
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
@@ -11,7 +13,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { SKIN_COLORS } from '../../multistepConfig';
-import MedicAdvice from './MedicAdvice';
+import MedicAdvice from '../components/MedicAdvice';
 
 export default function SkinColorFeedback() {
   const router = useRouter();

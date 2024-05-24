@@ -20,7 +20,7 @@ export default function Age() {
 
   const { age, setAge, setFeedbackStep } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.output.pain);
 
   return (
     <DermaLayout

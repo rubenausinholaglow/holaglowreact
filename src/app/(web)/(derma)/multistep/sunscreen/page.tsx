@@ -24,7 +24,7 @@ export default function Sunscreen() {
     state => state
   );
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.output.skinCare);
 
   return (
     <DermaLayout

@@ -17,16 +17,12 @@ import { useRouter } from 'next/navigation';
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
 import { SECONDARY_CONCERNS } from '../multistepConfig';
-import NextMultistepButton, {
-  HandleNextMultistep,
-} from '../NextMultistepButton';
+import NextMultistepButton from '../NextMultistepButton';
 
 export default function SecondaryConcern() {
   const router = useRouter();
   const { secondaryConcerns, setSecondaryConcerns, setFeedbackStep } =
     useDermaStore(state => state);
-
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
 
   useEffect(() => {
     setFeedbackStep(4);
@@ -97,7 +93,7 @@ export default function SecondaryConcern() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.feedback}
+                  nextUrl={ROUTES.derma.multistep.output.secondaryConcern}
                   isDisabled={secondaryConcerns.length === 0}
                 />
               </Flex>
