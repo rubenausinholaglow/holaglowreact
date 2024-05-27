@@ -18,7 +18,6 @@ import {
 } from 'designSystem/Dialog/Dialog';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
-import { useRouter } from 'next/navigation';
 
 const ROUTINES = ['Antiaging', 'Acné', 'Rosácea', 'Melasma'];
 
@@ -38,8 +37,6 @@ export default function SubscriptionCard({
   subscriptionData: any;
   pain: number;
 }) {
-  const router = useRouter();
-
   const [reasons, setReasons] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,13 +63,13 @@ export default function SubscriptionCard({
           </Text>
         </div>
         {subscriptionData.status === 1 && subscriptionData.active && (
-          <Text className="bg-hg-green text-white px-2 py-1 rounded-md text-sm font-thin ml-4 shrink-0">
+          <Text className="bg-hg-green text-white px-2 py-1 rounded-full text-xs font-thin ml-4 shrink-0">
             activa
           </Text>
         )}
 
         {subscriptionData.status === 2 && subscriptionData.active && (
-          <Text className="bg-hg-error text-white px-2 py-1 rounded-md text-sm font-thin ml-4 shrink-0">
+          <Text className="bg-hg-error text-white px-2 py-1 rounded-full text-xs font-thin ml-4 shrink-0">
             cancelada
           </Text>
         )}
@@ -97,7 +94,7 @@ export default function SubscriptionCard({
           <Dialog>
             <DialogTrigger>
               <Flex layout="row-center" className="w-full">
-                <Button type="white" className="mt-8 ml-auto">
+                <Button type="derma" className="mt-8 ml-auto">
                   Cancelar suscripción
                   <SvgCross className="h-3 w-3 ml-2" />
                 </Button>
@@ -139,7 +136,7 @@ export default function SubscriptionCard({
 
                 <Button
                   size="xl"
-                  type="whiteDerma"
+                  type="derma"
                   onClick={() => handleCancelSubscription()}
                 >
                   {isLoading ? (

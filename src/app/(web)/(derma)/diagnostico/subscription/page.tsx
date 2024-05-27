@@ -38,7 +38,7 @@ export default async function Subscription({
             <div className="w-full md:w-1/2">
               <SubscriptionCard
                 subscriptionData={subscriptionData}
-                pain={searchParams.routine}
+                pain={Number(searchParams.routine)}
               />
             </div>
           </Flex>
