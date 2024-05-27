@@ -28,6 +28,7 @@ interface DermaStore {
   userId: string;
   diagnosticId: string;
   feedbackStep: number;
+  userIdRecover: string;
 }
 
 interface DermaActions {
@@ -57,6 +58,7 @@ interface DermaActions {
   setUserId: (value: string) => void;
   setDiagnosticId: (value: string) => void;
   setFeedbackStep: (value: number) => void;
+  setUserIdRecover: (value: string) => void;
 }
 
 export const useDermaStore = create(
@@ -165,6 +167,10 @@ export const useDermaStore = create(
       feedbackStep: 1,
       setFeedbackStep: (value: number) => {
         set({ feedbackStep: value });
+      },
+      userIdRecover: '',
+      setUserIdRecover: (value: string) => {
+        set({ userIdRecover: value });
       },
     }),
     {
