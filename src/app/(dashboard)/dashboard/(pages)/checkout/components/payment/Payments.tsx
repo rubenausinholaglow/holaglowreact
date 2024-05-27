@@ -203,7 +203,7 @@ export const PaymentModule = () => {
       totalPrice: totalPrice,
       totalPriceWithIva: totalPrice,
       clinicInfoId: storedClinicId,
-      FlowwwId: '',
+      flowwwId: '',
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: storedClinicProfessionalId,
