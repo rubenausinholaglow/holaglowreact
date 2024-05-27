@@ -71,16 +71,14 @@ export default function Diagnostico() {
         <Container className="px-0 md:px-4">
           <Flex
             layout="row-right"
-            className="w-full -translate-y-14 relative z-50"
+            className="w-full -translate-y-14 relative z-50 pr-4 md:pr-0"
           >
-            <Button
-              size="sm"
-              type="derma"
-              className="font-semibold text-hg-primary"
+            <a
+              className="text-hg-primary text-sm"
               href={`${ROUTES.derma.diagnostico.subscription}?userId=${diagnosisData?.user?.id}&routine=${diagnosisData?.diagnostic[0].routine}`}
             >
               Gestionar suscripción
-            </Button>
+            </a>
           </Flex>
           {isLogged && diagnosisData && (
             <Flex
