@@ -84,6 +84,7 @@ interface GlobalPersistStore {
   storedClinicFlowwwId: string | '';
   storedClinicProfessionalId: string | '';
   storedBudgetId: string | '';
+  storedBudgetFlowwwId: string | '';
   activePayment: PaymentBank;
   isCallCenter: boolean;
   extraInfo: boolean;
@@ -110,6 +111,7 @@ interface GlobalPersistActions {
   setActivePayment: (value?: PaymentBank) => void;
   setIsCallCenter: (value?: boolean) => void;
   setExtraInfo: (value?: boolean) => void;
+  setBudgetFlowwwId: (value? :string) => void;
 }
 
 export const useSessionStore = create(
@@ -281,6 +283,10 @@ export const useGlobalPersistedStore = create(
       storedBudgetId: '',
       setBudgetId: value => {
         set({ storedBudgetId: value });
+      },
+      storedBudgetFlowwwId: '',
+      setBudgetFlowwwId: value => {
+        set({ storedBudgetFlowwwId : value });
       },
       activePayment: PaymentBank.None,
       setActivePayment: value => {

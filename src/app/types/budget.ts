@@ -6,7 +6,7 @@ export interface Budget {
   statusBudget: StatusBudget;
   discountCode: string;
   discountAmount: string;
-  FlowwwId: string;
+  flowwwId: string;
   priceDiscount: number;
   percentageDiscount: number;
   totalPrice: number;
@@ -40,4 +40,10 @@ export enum StatusBudget {
   Finish = 2,
   Rejected = 3,
   Paid = 4,
+}
+
+
+export interface ResponseBudget {
+  id : string,
+  flowwwId : string,
 }

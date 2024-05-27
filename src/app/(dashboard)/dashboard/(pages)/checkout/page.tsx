@@ -45,6 +45,8 @@ const Page = () => {
     setBudgetId,
     storedClinicProfessionalId,
     storedClinicFlowwwId,
+    setBudgetFlowwwId,
+    storedBudgetFlowwwId,
   } = useGlobalPersistedStore(state => state);
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
@@ -72,7 +74,7 @@ const Page = () => {
       discountCode:
         user?.flowwwToken.substring(0, user?.flowwwToken.length - 32) || '',
       discountAmount: '',
-      FlowwwId: '',
+      flowwwId: '',
       priceDiscount: Number(priceDiscount.toFixed(2)),
       percentageDiscount: percentageDiscount / 100,
       manualPrice: Number(manualPrice.toFixed(2)),
@@ -99,10 +101,12 @@ const Page = () => {
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         budget.id = storedBudgetId;
-        await budgetService.updateBudget(budget);
+        budget.flowwwId = storedBudgetFlowwwId;
+        budget.id = await budgetService.updateBudget(budget);
       } else {
         const data = await budgetService.createBudget(budget);
         setBudgetId(data.id);
+        setBudgetFlowwwId(data.flowwwId);
       }
     } catch (error) {
       Bugsnag.notify(ERROR_POST + error);
