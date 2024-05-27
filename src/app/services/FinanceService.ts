@@ -149,11 +149,13 @@ export default class FinanceService {
   static async getSubscription(userId: string): Promise<boolean> {
     try {
       const url = `${process.env.NEXT_PUBLIC_DERMAFINANCE_API}Subscription?userId=${userId}`;
+
       const res = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
+        cache: 'no-store',
       });
 
       if (res.ok) {

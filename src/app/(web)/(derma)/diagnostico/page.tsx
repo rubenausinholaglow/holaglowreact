@@ -23,8 +23,6 @@ export default function Diagnostico() {
   const [isLogged, setIsLogged] = useState(dermaPhone != '');
   const [diagnosisData, setDiagnosisData] = useState<any | null>(null);
 
-  console.log(diagnosisData?.user?.id);
-
   const searchParams = useSearchParams();
 
   const fetchData = async () => {
@@ -79,7 +77,7 @@ export default function Diagnostico() {
               size="sm"
               type="derma"
               className="font-semibold text-hg-primary"
-              href={`${ROUTES.derma.diagnostico.subscription}?userId=${diagnosisData?.user?.id}`}
+              href={`${ROUTES.derma.diagnostico.subscription}?userId=${diagnosisData?.user?.id}&routine=${diagnosisData?.diagnostic[0].routine}`}
             >
               Gestionar suscripción
             </Button>
