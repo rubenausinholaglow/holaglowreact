@@ -211,7 +211,7 @@ export default function PsrpPage({
         />
         <div className="bg-hg-cream rounded-t-3xl">
           <Container className="relative pt-6 pb-4">
-            <Title isAnimated size="3xl" className="mt-4">
+            <Title as="h1" isAnimated size="3xl" className="mt-4">
               Nuestros tratamientos
             </Title>
           </Container>
