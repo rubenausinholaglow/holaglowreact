@@ -67,6 +67,7 @@ const AppointmentsListComponent: React.FC<{
     user,
     setCurrentUser,
     storedClinicId,
+    storedClinicFlowwwId,
     ignoreMessages,
     setAppointmentId,
     setClinicFlowwwId,
@@ -82,13 +83,12 @@ const AppointmentsListComponent: React.FC<{
   const [isLoadingAppointments, setIsLoadingAppointments] = useState(false);
   const [loadingState, setLoadingState] = useState<LoadingState>({});
 
-  const fetchAppointments = async (productType: ProductType) => {
+  const fetchAppointments = async (boxIds: string) => {
     setIsLoadingAppointments(true);
     try {
       const data = await ScheduleService.getAppointmentsPerClinic(
         clinicId,
-        boxId,
-        productType
+        boxIds
       );
 
       if (Array.isArray(data)) {
@@ -105,14 +105,14 @@ const AppointmentsListComponent: React.FC<{
   };
 
   useEffect(() => {
-    fetchAppointments(ProductType.Others);
+    fetchAppointments(getBoxsByType(storedClinicFlowwwId, ProductType.Others));
     setSelectedType({ [ProductType.Others]: true });
 
     const intervalId = setInterval(() => {
       for (const typeId in selectedType) {
         if (selectedType[typeId]) {
           const productType = parseInt(typeId, 10) as ProductType;
-          fetchAppointments(productType);
+          fetchAppointments(getBoxsByType(storedClinicFlowwwId, productType));
           break;
         }
       }
@@ -137,9 +137,12 @@ const AppointmentsListComponent: React.FC<{
         Status.InProgress
       );
       fetchAppointments(
-        selectedType[ProductType.Medical]
-          ? ProductType.Medical
-          : ProductType.Esthetic
+        getBoxsByType(
+          storedClinicFlowwwId,
+          selectedType[ProductType.Medical]
+            ? ProductType.Medical
+            : ProductType.Esthetic
+        )
       );
       setLoadingAppointments(prevLoadingAppointments => ({
         ...prevLoadingAppointments,
@@ -268,7 +271,7 @@ const AppointmentsListComponent: React.FC<{
       status
     )
       .then(response => {
-        fetchAppointments(productType);
+        fetchAppointments(getBoxsByType(storedClinicFlowwwId, productType));
       })
       .catch(error => {
         setMessageNotification('Error al actualizar el estado de la cita');
@@ -373,9 +376,12 @@ const AppointmentsListComponent: React.FC<{
       Status.Finished
     );
     fetchAppointments(
-      selectedType[ProductType.Medical]
-        ? ProductType.Medical
-        : ProductType.Esthetic
+      getBoxsByType(
+        storedClinicFlowwwId,
+        selectedType[ProductType.Medical]
+          ? ProductType.Medical
+          : ProductType.Esthetic
+      )
     );
     toggleLoading(appointmentId, 'FinishAppointment', false);
   };
@@ -386,6 +392,15 @@ const AppointmentsListComponent: React.FC<{
       return clinicBoxes[boxId].name;
     }
     return '';
+  };
+
+  const getBoxsByType = (clinicId: string, type: number): string => {
+    const clinicBoxes = CLINIC_BOXS[clinicId];
+    const filteredBoxIds = Object.entries(clinicBoxes)
+      .filter(([_, box]) => box.type === type)
+      .map(([boxId, _]) => boxId)
+      .join(',');
+    return filteredBoxIds;
   };
 
   const AppointmentRow = (
@@ -419,7 +434,7 @@ const AppointmentsListComponent: React.FC<{
           </Text>
           {extraInfo && (
             <>
-              {appointment.productType == ProductType.Medical && (
+              {selectedType[ProductType.Medical] == true && (
                 <Text className="w-[4%] shrink-0 p-2">
                   {isHeader
                     ? 'Box'
@@ -520,7 +535,7 @@ const AppointmentsListComponent: React.FC<{
                   </Button>
                 )}
               </Text>
-              {appointment.productType != ProductType.Others && (
+              {selectedType[ProductType.Others] != true && (
                 <Text className={`w-[8%] shrink-0 p-2`}>
                   {isHeader ? (
                     'Finalizar Cita'
@@ -630,13 +645,19 @@ const AppointmentsListComponent: React.FC<{
     });
     switch (id) {
       case ProductType.Others:
-        fetchAppointments(ProductType.Others);
+        fetchAppointments(
+          getBoxsByType(storedClinicFlowwwId, ProductType.Others)
+        );
         break;
       case ProductType.Medical:
-        fetchAppointments(ProductType.Medical);
+        fetchAppointments(
+          getBoxsByType(storedClinicFlowwwId, ProductType.Medical)
+        );
         break;
       case ProductType.Esthetic:
-        fetchAppointments(ProductType.Esthetic);
+        fetchAppointments(
+          getBoxsByType(storedClinicFlowwwId, ProductType.Esthetic)
+        );
         break;
     }
   }
