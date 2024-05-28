@@ -422,6 +422,19 @@ export default function LegalAdviceContent({
               complementarias y no aplica en caso de contratar únicamente la
               receta de la crema personalizada.
             </p>
+            <p className="font-semibold pt-6 mt-6 border-t border-hg-black300 w-full">
+              Política de envíos
+            </p>
+            <p>
+              Los pedidos de Holaglow Derma serán entregados entre 3 y 5 días
+              laborables desde el diagnóstico del médico. Ofrecemos envío
+              gratuito exclusivamente en la península Ibérica, excluyendo
+              Canarias y Baleares. Todos los envíos se realizan de manera
+              certificada y cuentan con un plazo máximo de recogida de 15 días.
+              En caso de devolución o no recogida del paquete por motivos
+              atribuibles al cliente, no se procederá al reenvío de la mercancía
+              ni al reembolso del importe correspondiente.
+            </p>
           </>
         )}
       </Flex>
