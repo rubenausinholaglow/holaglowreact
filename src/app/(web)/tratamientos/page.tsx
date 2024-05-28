@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <App>
-      <PsrpPage slug="" isDashboard={false} />
+      <PsrpPage />
     </App>
   );
 }

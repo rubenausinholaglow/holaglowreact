@@ -16,6 +16,7 @@ import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
+import PsrpDashboard from './PsrpDashboard';
 import { useCartStore } from './stores/userCartStore';
 
 export default function Page() {
@@ -72,7 +73,7 @@ export default function Page() {
         {dashboardProducts.length > 0 ? (
           <>
             {productHighlighted != null && <HightLightedProduct />}
-            <PsrpPage isDashboard />
+            <PsrpDashboard />
           </>
         ) : (
           <MainLayout isDashboard>

@@ -28,16 +28,8 @@ import MobileFilters from './components/MobileFilters';
 import PVBanner from './components/PVBanner';
 import { applyFilters, filterCount } from './utils/filters';
 
-export default function PsrpPage({
-  slug = '',
-  isDashboard = false,
-}: {
-  slug?: string;
-  isDashboard?: boolean;
-}) {
-  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
-    state => state
-  );
+export default function PsrpPage({ slug = '' }: { slug?: string }) {
+  const { stateProducts } = useGlobalPersistedStore(state => state);
   const {
     filteredProducts,
     setFilteredProducts,
@@ -49,7 +41,6 @@ export default function PsrpPage({
   const [isHydrated, setIsHydrated] = useState(false);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
-  const [showDashboardFilters, setShowDashboardFilters] = useState(true);
 
   const metadataPacks = {
     title: 'Packs de tratamientos de medicina estética - Holaglow',
@@ -111,268 +102,163 @@ export default function PsrpPage({
     return <></>;
   }
 
-  if (isDashboard)
-    return (
-      <MainLayout
-        isDashboard
-        hideContactButtons
-        hideProfessionalSelector
-        showCart
-      >
-        {!isEmpty(filteredProducts) && (
-          <>
-            <Flex className="justify-start px-4 py-1 w-full">
-              <Flex className="mr-auto gap-2">
-                <Button
-                  type="white"
-                  size="sm"
-                  onClick={() => {
-                    setShowDashboardFilters(!showDashboardFilters);
-                  }}
-                >
-                  <SvgFilters className="mr-2" />
-                  Filtrar
-                </Button>
-                <Text
-                  size="xs"
-                  className={`text-hg-secondary transition-opacity underline cursor-pointer ${
-                    filterCount(productFilters) === 0
-                      ? 'opacity-0'
-                      : 'opacity-100'
-                  }`}
-                  onClick={() => {
-                    setProductFilters({
-                      isPack: false,
-                      category: [],
-                      zone: [],
-                      clinic: [],
-                      text: '',
-                      price: [],
-                      type: [],
-                    });
-                  }}
-                >
-                  Borrar filtros ({filterCount(productFilters)})
-                </Text>
-              </Flex>
-              <Text size="xs">
-                {filteredProducts.filter(product => product.visibility).length}{' '}
-                productos
-              </Text>
-            </Flex>
-            <div className="w-full mt-9">
-              <div
-                className={`transition-all bg-white rounded-r-xl left-0 top-0 z-10 w-2/5 ${
-                  showDashboardFilters
-                    ? 'translate-0 sticky'
-                    : '-translate-x-full absolute'
-                }`}
-              >
-                <DesktopFilters
-                  showDesktopFilters={showDashboardFilters}
-                  setShowDesktopFilters={setShowDashboardFilters}
-                  isDashboard={isDashboard}
-                />
-              </div>
-
-              <ul
-                className={`transition-all -mt-9 px-4 grid gap-4 ${
-                  showDashboardFilters
-                    ? 'grid-cols-2 w-3/5 ml-[40%]'
-                    : 'grid-cols-3 w-full'
-                } pb-6`}
-              >
-                {filteredProducts?.map(product => {
-                  if (product.visibility) {
-                    return (
-                      <li key={product.id}>
-                        <ProductCard
-                          product={product}
-                          className="h-full flex flex-col"
-                          isDashboard={isDashboard}
-                        />
-                      </li>
-                    );
-                  }
-                })}
-              </ul>
-            </div>
-          </>
-        )}
-      </MainLayout>
-    );
-  else
-    return (
-      <MainLayout>
-        <link rel="canonical" href="https://holaglow.com/tratamientos/" />
-        <MobileFilters
-          isVisible={isMobileFiltersVisible}
-          setModalVisibility={setIsMobileFiltersVisible}
-        />
-        <div className="bg-hg-cream rounded-t-3xl">
-          <Container className="relative pt-6 pb-4">
-            <Title isAnimated size="3xl" className="mt-4">
-              Nuestros tratamientos
-            </Title>
-          </Container>
-          <Container className="md:hidden">
-            <ProductSearchBar products={stateProducts} className="mb-4" />
-          </Container>
-          <Container className="px-0 md:px-4 pb-4 md:pb-8 relative">
-            <div className="xl:flex xl:flex-row xl:justify-between items-center">
-              <ProductSearchBar
-                products={stateProducts}
-                className="hidden md:block mr-4"
-              />
-              <AnimateOnViewport
-                origin={isMobile ? 'right' : 'bottom'}
-                className="shrink-0"
-              >
-                <CategorySelector />
-              </AnimateOnViewport>
-            </div>
-          </Container>
-        </div>
-        {isEmpty(filteredProducts) && (
-          <Flex layout="row-left" className="justify-center">
-            <SvgSpinner
-              fill={HOLAGLOW_COLORS['secondary']}
-              height={50}
-              width={50}
+  return (
+    <MainLayout>
+      <link rel="canonical" href="https://holaglow.com/tratamientos/" />
+      <MobileFilters
+        isVisible={isMobileFiltersVisible}
+        setModalVisibility={setIsMobileFiltersVisible}
+      />
+      <div className="bg-hg-cream rounded-t-3xl">
+        <Container className="relative pt-6 pb-4">
+          <Title isAnimated size="3xl" className="mt-4">
+            Nuestros tratamientos
+          </Title>
+        </Container>
+        <Container className="md:hidden">
+          <ProductSearchBar products={stateProducts} className="mb-4" />
+        </Container>
+        <Container className="px-0 md:px-4 pb-4 md:pb-8 relative">
+          <div className="xl:flex xl:flex-row xl:justify-between items-center">
+            <ProductSearchBar
+              products={stateProducts}
+              className="hidden md:block mr-4"
             />
-          </Flex>
-        )}
-        {!isEmpty(filteredProducts) && (
-          <div className="bg-hg-cream500 pb-32 relative">
-            <Flex
-              layout="row-left"
-              className="justify-between pt-6 pb-4 md:py-0 md:mt-8 md:absolute w-full"
+            <AnimateOnViewport
+              origin={isMobile ? 'right' : 'bottom'}
+              className="shrink-0"
             >
-              <Container>
-                <AnimateOnViewport>
-                  <Flex layout="row-left" className="w-full justify-between">
-                    <Button
-                      type="white"
-                      size="sm"
-                      className="mr-2"
-                      customStyles="bg-transparent"
+              <CategorySelector />
+            </AnimateOnViewport>
+          </div>
+        </Container>
+      </div>
+      {isEmpty(filteredProducts) && (
+        <Flex layout="row-left" className="justify-center">
+          <SvgSpinner
+            fill={HOLAGLOW_COLORS['secondary']}
+            height={50}
+            width={50}
+          />
+        </Flex>
+      )}
+      {!isEmpty(filteredProducts) && (
+        <div className="bg-hg-cream500 pb-32 relative">
+          <Flex
+            layout="row-left"
+            className="justify-between pt-6 pb-4 md:py-0 md:mt-8 md:absolute w-full"
+          >
+            <Container>
+              <AnimateOnViewport>
+                <Flex layout="row-left" className="w-full justify-between">
+                  <Button
+                    type="white"
+                    size="sm"
+                    className="mr-2"
+                    customStyles="bg-transparent"
+                    onClick={() => {
+                      isMobile
+                        ? setIsMobileFiltersVisible(true)
+                        : setShowDesktopFilters(!showDesktopFilters);
+                    }}
+                  >
+                    <SvgFilters className="mr-2" />
+                    Filtrar
+                  </Button>
+
+                  <div className="mr-auto">
+                    <Text
+                      size="xs"
+                      className={`text-hg-secondary transition-opacity underline cursor-pointer ${
+                        filterCount(productFilters) === 0
+                          ? 'opacity-0'
+                          : 'opacity-100'
+                      }`}
                       onClick={() => {
-                        isMobile
-                          ? setIsMobileFiltersVisible(true)
-                          : setShowDesktopFilters(!showDesktopFilters);
+                        setProductFilters({
+                          isPack: false,
+                          category: [],
+                          zone: [],
+                          clinic: [],
+                          text: '',
+                          price: [],
+                          type: [],
+                        });
                       }}
                     >
-                      <SvgFilters className="mr-2" />
-                      Filtrar
-                    </Button>
-
-                    <div className="mr-auto">
-                      <Text
-                        size="xs"
-                        className={`text-hg-secondary transition-opacity underline cursor-pointer ${
-                          filterCount(productFilters) === 0
-                            ? 'opacity-0'
-                            : 'opacity-100'
-                        }`}
-                        onClick={() => {
-                          setProductFilters({
-                            isPack: false,
-                            category: [],
-                            zone: [],
-                            clinic: [],
-                            text: '',
-                            price: [],
-                            type: [],
-                          });
-                        }}
-                      >
-                        Borrar filtros ({filterCount(productFilters)})
-                      </Text>
-                    </div>
-                    <Text size="xs">
-                      {
-                        filteredProducts.filter(product => product.visibility)
-                          .length
-                      }{' '}
-                      productos
+                      Borrar filtros ({filterCount(productFilters)})
                     </Text>
-                  </Flex>
-                </AnimateOnViewport>
-              </Container>
-            </Flex>
-
-            <AccordionPrimitive.Root
-              type="single"
-              className="w-full bg-white"
-              collapsible
-              value={showDesktopFilters.toString()}
-            >
-              <AccordionPrimitive.Item value="true" className="w-full">
-                <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-                  <Container className="pt-24 px-8 pb-12">
-                    <DesktopFilters
-                      showDesktopFilters={showDesktopFilters}
-                      setShowDesktopFilters={setShowDesktopFilters}
-                      isDashboard={isDashboard}
-                    />
-                  </Container>
-                </AccordionPrimitive.Content>
-              </AccordionPrimitive.Item>
-            </AccordionPrimitive.Root>
-
-            <Container>
-              <ul
-                className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-2 md:gap-6 ${
-                  showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
-                }   pb-6`}
-              >
-                <li className="-mb-2 md:mb-0 md:pt-10">
-                  <PVBanner />
-                </li>
-                {filteredProducts.map(product => {
-                  if (product.visibility) {
-                    return (
-                      <li key={product.id}>
-                        <ProductCard
-                          product={product}
-                          isDashboard={isDashboard}
-                          className="h-full flex flex-col"
-                        />
-                      </li>
-                    );
-                  }
-                })}
-              </ul>
+                  </div>
+                  <Text size="xs">
+                    {
+                      filteredProducts.filter(product => product.visibility)
+                        .length
+                    }{' '}
+                    productos
+                  </Text>
+                </Flex>
+              </AnimateOnViewport>
             </Container>
-          </div>
-        )}
-        <LookingFor />
-      </MainLayout>
-    );
+          </Flex>
+
+          <AccordionPrimitive.Root
+            type="single"
+            className="w-full bg-white"
+            collapsible
+            value={showDesktopFilters.toString()}
+          >
+            <AccordionPrimitive.Item value="true" className="w-full">
+              <AccordionPrimitive.Content className="overflow-hidden w-full transition-all data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                <Container className="pt-24 px-8 pb-12">
+                  <DesktopFilters
+                    isDashboard={false}
+                    showDesktopFilters={showDesktopFilters}
+                    setShowDesktopFilters={setShowDesktopFilters}
+                  />
+                </Container>
+              </AccordionPrimitive.Content>
+            </AccordionPrimitive.Item>
+          </AccordionPrimitive.Root>
+
+          <Container>
+            <ul
+              className={`transition-all grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-2 md:gap-6 ${
+                showDesktopFilters ? 'md:pt-12' : 'md:pt-24'
+              }   pb-6`}
+            >
+              <li className="-mb-2 md:mb-0 md:pt-10">
+                <PVBanner />
+              </li>
+              {filteredProducts.map(product => {
+                if (product.visibility) {
+                  return (
+                    <li key={product.id}>
+                      <ProductCard
+                        product={product}
+                        className="h-full flex flex-col"
+                      />
+                    </li>
+                  );
+                }
+              })}
+            </ul>
+          </Container>
+        </div>
+      )}
+      <LookingFor />
+    </MainLayout>
+  );
 
   function processFilters() {
-    if (isDashboard) {
-      if (isEmpty(filteredProducts)) {
-        setFilteredProducts(dashboardProducts);
-        setFilteredProducts(
-          applyFilters({ products: dashboardProducts, filters: productFilters })
-        );
-      } else {
-        setFilteredProducts(
-          applyFilters({ products: filteredProducts, filters: productFilters })
-        );
-      }
+    if (isEmpty(filteredProducts)) {
+      setFilteredProducts(stateProducts);
+      setFilteredProducts(
+        applyFilters({ products: stateProducts, filters: productFilters })
+      );
     } else {
-      if (isEmpty(filteredProducts)) {
-        setFilteredProducts(stateProducts);
-        setFilteredProducts(
-          applyFilters({ products: stateProducts, filters: productFilters })
-        );
-      } else {
-        setFilteredProducts(
-          applyFilters({ products: filteredProducts, filters: productFilters })
-        );
-      }
+      setFilteredProducts(
+        applyFilters({ products: filteredProducts, filters: productFilters })
+      );
     }
   }
 }
