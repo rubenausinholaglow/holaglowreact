@@ -27,7 +27,6 @@ interface DermaStore {
   extraInfo: string;
   userId: string;
   diagnosticId: string;
-  feedbackStep: number;
 }
 
 interface DermaActions {
@@ -56,7 +55,6 @@ interface DermaActions {
   setExtraInfo: (value: string) => void;
   setUserId: (value: string) => void;
   setDiagnosticId: (value: string) => void;
-  setFeedbackStep: (value: number) => void;
 }
 
 export const useDermaStore = create(
@@ -161,10 +159,6 @@ export const useDermaStore = create(
       diagnosticId: '',
       setDiagnosticId: (value: string) => {
         set({ diagnosticId: value });
-      },
-      feedbackStep: 1,
-      setFeedbackStep: (value: number) => {
-        set({ feedbackStep: value });
       },
     }),
     {

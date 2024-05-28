@@ -16,17 +16,18 @@ import { useRouter } from 'next/navigation';
 
 import DermaStepBar from '../../components/DermaStepBar';
 import DermaStepHeader from '../../components/DermaStepHeader';
-import { SECONDARY_CONCERNS } from '../multistepConfig';
+import { PAINS_AND_SYMPTOMS } from '../multistepConfig';
 import NextMultistepButton from '../NextMultistepButton';
 
 export default function SecondaryConcern() {
   const router = useRouter();
-  const { secondaryConcerns, setSecondaryConcerns, setFeedbackStep } =
-    useDermaStore(state => state);
+  const { pain, secondaryConcerns, setSecondaryConcerns } = useDermaStore(
+    state => state
+  );
 
-  useEffect(() => {
-    setFeedbackStep(4);
-  }, []);
+  const painItem = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0];
+
+  console.log(painItem.secondaryConcerns);
 
   return (
     <DermaLayout
@@ -55,7 +56,7 @@ export default function SecondaryConcern() {
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {SECONDARY_CONCERNS.map(concern => (
+                {painItem.secondaryConcerns.map(concern => (
                   <li
                     className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
                       secondaryConcerns.includes(concern)

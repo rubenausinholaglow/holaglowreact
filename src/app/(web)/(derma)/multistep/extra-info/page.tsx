@@ -16,15 +16,9 @@ import NextMultistepButton from '../NextMultistepButton';
 
 export default function ExtraInfo() {
   const router = useRouter();
-  const { extraInfo, setExtraInfo, setFeedbackStep } = useDermaStore(
-    state => state
-  );
+  const { extraInfo, setExtraInfo } = useDermaStore(state => state);
 
   const [textAreaValue, setTextAreaValue] = useState(extraInfo);
-
-  useEffect(() => {
-    setFeedbackStep(6);
-  }, []);
 
   return (
     <DermaLayout
