@@ -26,7 +26,7 @@ export const PAINS_AND_SYMPTOMS = [
       'Patas de gallo',
       'Tendencia acnéica',
       'No quiero tratar nada más',
-      'Lentigo solar',
+      'Léntigo solar',
       'Rosácea',
       'Melasma',
     ],
@@ -109,7 +109,7 @@ export const PAINS_AND_SYMPTOMS = [
       'Luminosidad',
       'Poros dilatados',
       'Tendencia acnéica',
-      'Léntigos solares',
+      'Léntigo solar',
     ],
   },
 ];
@@ -449,7 +449,7 @@ export const DERMA_INGREDIENTS = [
   },
   {
     name: 'Nicotinamida',
-    concerns: ['Lentigo solar'],
+    concerns: ['Léntigo solar'],
     imgSrc: '/images/derma/landingPrecios/ingredients/nicotinamida.jpg',
     tags: [''],
     description: '',
