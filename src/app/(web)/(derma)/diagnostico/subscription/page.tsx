@@ -36,7 +36,7 @@ export default async function Subscription({
     >
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
-        <Container className="py-4 md:py-10">
+        <Container className="py-4 md:py-10 relative">
           <Button
             type="whiteDerma"
             size="sm"
