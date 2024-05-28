@@ -107,13 +107,14 @@ export default function ThankYouMultiStep() {
             <Title size="xl" className="text-derma-primary font-light">
               ¡Aquí tienes, {user?.name}!
             </Title>
-            <CheckHydration>
-              <Text className="text-center md:text-left">
-                Tenemos un pack preparado para ti
-              </Text>
-            </CheckHydration>
+            <Text className="text-center md:text-left">
+              Tenemos un pack preparado para ti
+            </Text>
 
             <OptionsPricesB isMultistep={true} />
+            <Title size="xl" className="text-derma-primary font-light">
+              Este es el detalle de tu pack
+            </Title>
             <CheckHydration>
               <RoutineItems hideCremaFormulada pain={pain} />
             </CheckHydration>
