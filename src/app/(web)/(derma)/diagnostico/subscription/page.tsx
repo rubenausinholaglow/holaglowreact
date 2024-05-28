@@ -37,6 +37,18 @@ export default async function Subscription({
       <div className="absolute top-0 bottom-0 left-0 w-1/2 bg-white hidden md:block " />
       <div className="relative">
         <Container className="py-4 md:py-10">
+          <Button
+            type="whiteDerma"
+            size="sm"
+            className="absolute right-4 -top-14 z-50"
+            customStyles="bg-transparent"
+            href={`${ROUTES.derma.diagnostico.home}?phone=${
+              (subscriptionData as any).user.phone
+            }`}
+          >
+            <SvgArrow className="mr-4 rotate-180 h-4 w-4" />
+            Atrás
+          </Button>
           <Flex
             layout="col-left"
             className="w-full md:flex-row gap-6 md:gap-16 mb-8"
@@ -44,21 +56,11 @@ export default async function Subscription({
             <Title className="text-derma-primary font-thin mb-4 w-full md:w-1/2">
               Gestiona tu suscripción
             </Title>
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 relative">
               <SubscriptionCard
                 subscriptionData={subscriptionData}
                 pain={Number(searchParams.routine)}
               />
-              <Button
-                type="whiteDerma"
-                className="mt-8"
-                href={`${ROUTES.derma.diagnostico.home}?phone=${
-                  (subscriptionData as any).user.phone
-                }`}
-              >
-                <SvgArrow className="mr-4 rotate-180 h-4 w-4" />
-                Atrás
-              </Button>
             </div>
           </Flex>
         </Container>
