@@ -44,6 +44,8 @@ export const PaymentModule = () => {
     Record<string, StatusPayment>
   >({});
 
+  const { promoCode } = useGlobalPersistedStore(state => state);
+
   const { cart, totalPrice, priceDiscount, percentageDiscount, manualPrice } =
     useCartStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
@@ -217,7 +219,7 @@ export const PaymentModule = () => {
     };
 
     const ticket: Ticket = {
-      promoCode: '',
+      promoCode: promoCode,
       reference: '',
       userId: user?.id || '',
       clientFlowwwToken: user?.flowwwToken || '',
@@ -254,6 +256,8 @@ export const PaymentModule = () => {
   };
 
   const createTicket = async () => {
+    console.log(totalAmount);
+    console.log(cartTotalWithDiscount);
     if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
       alert('Hay cantidad pendiente de pagar');
       return;

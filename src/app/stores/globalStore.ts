@@ -87,6 +87,7 @@ interface GlobalPersistStore {
   activePayment: PaymentBank;
   isCallCenter: boolean;
   extraInfo: boolean;
+  promoCode : string;
 }
 
 interface GlobalPersistActions {
@@ -110,6 +111,7 @@ interface GlobalPersistActions {
   setActivePayment: (value?: PaymentBank) => void;
   setIsCallCenter: (value?: boolean) => void;
   setExtraInfo: (value?: boolean) => void;
+  setPromoCode: (value?: string) => void;
 }
 
 export const useSessionStore = create(
@@ -294,6 +296,10 @@ export const useGlobalPersistedStore = create(
       setExtraInfo: value => {
         set({ extraInfo: value });
       },
+      promoCode : "",
+      setPromoCode : value => {
+        set({promoCode : value})
+      }
     }),
     {
       name: 'global-storage',

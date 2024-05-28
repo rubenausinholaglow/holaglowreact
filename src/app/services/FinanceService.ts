@@ -145,4 +145,28 @@ export default class FinanceService {
       Bugsnag.notify(error);
     }
   }
+
+static async validatePromoCode(promoCode: string): Promise<boolean> {
+    try {
+      const url = `${FinanceService.getFinanceUrl(false)}Validate?code=${promoCode}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (res.ok) {
+        return true;
+      } else {
+        const errorText = await res.text();
+        throw new Error(`Error: ${errorText}`);
+      }
+    } catch (error: any) {
+      Bugsnag.notify(error);
+      return false;
+    }
+  }
+
+
 }
