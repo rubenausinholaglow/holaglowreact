@@ -1,16 +1,25 @@
 import FinanceService from '@services/FinanceService';
+import ROUTES from '@utils/routes';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
+import { SvgArrow } from 'app/icons/IconsDs';
+import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
 
 import SubscriptionCard from './SubscriptionCard';
+
+async function getSubscriptionData(userId: string) {
+  const data = await FinanceService.getSubscription(userId);
+
+  return data;
+}
 
 export default async function Subscription({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const subscriptionData: any = await FinanceService.getSubscription(
+  const subscriptionData = await getSubscriptionData(
     searchParams.userId as string
   );
 
@@ -40,6 +49,16 @@ export default async function Subscription({
                 subscriptionData={subscriptionData}
                 pain={Number(searchParams.routine)}
               />
+              <Button
+                type="whiteDerma"
+                className="mt-8"
+                href={`${ROUTES.derma.diagnostico.home}?phone=${
+                  (subscriptionData as any).user.phone
+                }`}
+              >
+                <SvgArrow className="mr-4 rotate-180 h-4 w-4" />
+                Atrás
+              </Button>
             </div>
           </Flex>
         </Container>

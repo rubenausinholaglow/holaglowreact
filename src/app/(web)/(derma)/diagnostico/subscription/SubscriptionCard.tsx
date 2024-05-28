@@ -80,14 +80,16 @@ export default function SubscriptionCard({
           <Text className="text-hg-black400">Precio</Text>
           <Text className="text-hg-black500 font-semibold">75€</Text>
         </li>
-        <li className="w-full flex justify-between items-center">
-          <Text className="text-hg-black400">Fecha de renovación</Text>
-          <Text className="text-derma-primary font-semibold">
-            {dayjs(subscriptionData.creationDate)
-              .add(3, 'month')
-              .format('DD/MM/YYYY')}
-          </Text>
-        </li>
+        {subscriptionData.status === 1 && subscriptionData.active && (
+          <li className="w-full flex justify-between items-center">
+            <Text className="text-hg-black400">Fecha de renovación</Text>
+            <Text className="text-derma-primary font-semibold">
+              {dayjs(subscriptionData.creationDate)
+                .add(3, 'month')
+                .format('DD/MM/YYYY')}
+            </Text>
+          </li>
+        )}
       </ul>
       {subscriptionData.status === 1 && subscriptionData.active && (
         <div className="self-end">
