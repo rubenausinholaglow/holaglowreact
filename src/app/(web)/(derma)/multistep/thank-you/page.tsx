@@ -39,8 +39,9 @@ const FAQS = [
   },
 
   {
-    question: 'XXX',
-    answer: 'XX',
+    question: 'Seguimiento médico incluido',
+    answer:
+      'Queremos asegurar que consigues los objetivos que tienes para tu piel. Por eso al finalizar los 3 meses de rutina, te pediremos fotos para un nuevo diagnóstico de tu médico y que puedas decidir si renuevas tu rutina 3 meses más o si quieres adaptarla y tratar otros aspectos de tu piel.',
   },
   {
     question: 'Detalles del envío',
