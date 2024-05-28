@@ -299,7 +299,7 @@ export const DERMA_APPOINTMENT_IMAGE = [
 ];
 
 export const SUBSCRIPTIONS = [
-  {
+  /*{
     title: 'Envío trimestral',
     id: '17c3b810-d810-45e0-b732-3283ea632d77',
     subtitle:
@@ -336,11 +336,11 @@ export const SUBSCRIPTIONS = [
       },
     ],
     bottomBar: 'Cancela en cualquier momento',
-  },
+  },*/
   {
     title: 'Compra única',
     id: '2ee9da6f-4fad-42fc-b717-0b67d49ef0cf',
-    subtitle: 'Tu rutina personalizada para 3 meses de tratamiento',
+    subtitle: 'Este pack te servirá para los próximos 3 meses',
     imgSrc: '/images/derma/landingPrecios/rutina.png',
     bgColor: 'bg-white',
     tag: {},
@@ -356,8 +356,8 @@ export const SUBSCRIPTIONS = [
       },
       {
         icon: 'SvgCalendarSearch',
-        text: 'Seguimiento mensual con tu médico',
-        isEnabled: false,
+        text: 'Revisión de tu piel a los 90 días con el médico',
+        isEnabled: true,
       },
       {
         icon: 'SvgBox',

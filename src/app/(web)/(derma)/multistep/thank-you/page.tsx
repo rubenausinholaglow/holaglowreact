@@ -21,6 +21,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import OptionsPricesB from '../../precios/components/OptionsPricesB';
+import OptionsPricesSelectButton from '../../precios/components/OptionsPricesSelectButton';
 import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../multistepConfig';
 
 const FAQS = [
@@ -107,12 +109,11 @@ export default function ThankYouMultiStep() {
             </Title>
             <CheckHydration>
               <Text className="text-center md:text-left">
-                Esta es la rutina completa que hemos diseñado para tu{' '}
-                <span className="font-semibold">
-                  {filteredPain?.name.toLocaleLowerCase()}
-                </span>
+                Tenemos un pack preparado para ti
               </Text>
             </CheckHydration>
+
+            <OptionsPricesB isMultistep={true} />
             <CheckHydration>
               <RoutineItems hideCremaFormulada pain={pain} />
             </CheckHydration>
@@ -171,15 +172,7 @@ export default function ThankYouMultiStep() {
             </Flex>
           </CheckHydration>
           <Flex className="justify-center w-full px-4">
-            <Button
-              type="derma"
-              size="xl"
-              customStyles="px-16"
-              className="w-full md:w-auto"
-              href={ROUTES.derma.multistep.planes}
-            >
-              Comprar rutina
-            </Button>
+            <OptionsPricesSelectButton index={0} />
           </Flex>
         </Container>
       </div>

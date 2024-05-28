@@ -27,12 +27,10 @@ export default function OptionsPricesSelectButton({
   }, []);
 
   return (
-    <Flex className="mt-6">
+    <Flex className="mt-6 mb-6" layout="col-center">
       <Button
-        className="w-full"
         type="derma"
         size="xl"
-        customStyles="px-16"
         onClick={async () => {
           setIsLoading(true);
           setPayment(undefined);
@@ -40,7 +38,11 @@ export default function OptionsPricesSelectButton({
         }}
         id="tmevent_derma_plans_selection_button"
       >
-        {isLoading ? <SvgSpinner className="w-full" /> : 'Seleccionar'}
+        {isLoading ? (
+          <SvgSpinner className="w-full" />
+        ) : (
+          'Comprar rutina personalizada'
+        )}
       </Button>
     </Flex>
   );
