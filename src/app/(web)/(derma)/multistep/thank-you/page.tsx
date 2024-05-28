@@ -39,21 +39,13 @@ const FAQS = [
   },
 
   {
-    question: 'Beneficios de la suscripción',
-    answer:
-      'Cada piel evoluciona y reacciona de forma diferente a los tratamientos. Suscribiéndote a tu rutina, contarás con seguimiento mensual de tu médico para comprobar la evolución de tu piel y adaptar la rutina y la composición de tu crema formulada cuando sea necesario. Además ahorras un 25% respecto a la compra única sin suscripción.',
+    question: 'XXX',
+    answer: 'XX',
   },
-
   {
     question: 'Detalles del envío',
     answer:
       'El envío de las cremas es totalmente gratuito. Las recibirás en casa entre 3-5 días laborables después de haber recibido el diagnóstico de tu médico. La receta para tu crema personalizada la recibirás a la vez que el diagnóstico.',
-  },
-
-  {
-    question: '¿Cómo cancelo mi suscripción?',
-    answer:
-      'Puedes cancelar tu suscripción desde tu área de diagnóstico al menos X días antes de que venza el periodo de 3 meses.',
   },
 ];
 

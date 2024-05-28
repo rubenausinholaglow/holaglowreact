@@ -109,7 +109,12 @@ export default function OptionsPricesB({
                           width={bullet.isEnabled ? 20 : 14}
                         />
                       </div>
-                      <Text className="text-sm">{bullet.text}</Text>
+                      <Text className="text-sm">
+                        {bullet.text.replace(
+                          '{PAIN}',
+                          filteredPain?.name.toLocaleLowerCase()
+                        )}
+                      </Text>
                     </li>
                   ))}
                 </ul>

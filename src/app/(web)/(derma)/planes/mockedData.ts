@@ -346,12 +346,12 @@ export const SUBSCRIPTIONS = [
     tag: {},
     price: {
       value: '99 €',
-      subtitle: 'En un solo pago',
+      subtitle: '(Equivalente a 25€/mes)',
     },
     bullets: [
       {
         icon: 'SvgCream',
-        text: 'Rutina de 4 pasos para',
+        text: 'Rutina de 4 pasos para {PAIN}',
         isEnabled: true,
       },
       {
