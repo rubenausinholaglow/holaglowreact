@@ -113,10 +113,6 @@ export default function OptionsPricesB({
                     </li>
                   ))}
                 </ul>
-                {isMultistep && !isMobile && (
-                  <OptionsPricesSelectButton index={index} />
-                )}
-
                 {!isMultistep && (
                   <Flex className="justify-center">
                     <Button
