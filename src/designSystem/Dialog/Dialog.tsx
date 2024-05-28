@@ -28,13 +28,13 @@ export function DialogContent({
       <DialogModal.Content
         className={`${poppins.className} ${gtUltra.variable} outline-none data-[state=open]:animate-contentShow fixed right-0 bottom-0 bg-derma-secondary100 z-50 shadow-centered-black overflow-y-auto top-0 border-l border-derma-secondary100 ${className}`}
       >
-        {children}
         <DialogModal.Close asChild>
           <SvgCross
-            className="fixed cursor-pointer top-4 right-4 inline-flex h-6 w-6 appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
+            className="fixed cursor-pointer top-4 right-4 mr-4 inline-flex h-6 w-6 appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
             aria-label="Close"
           />
         </DialogModal.Close>
+        {children}
       </DialogModal.Content>
     </DialogModal.Portal>
   );

@@ -16,14 +16,11 @@ import {
   useGlobalStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from 'designSystem/Dialog/Dialog';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
+
+import ProfessionalsModal from './ProfessionalsModal';
 
 export default function PsrpDashboard({ slug = '' }: { slug?: string }) {
   const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
@@ -39,23 +36,11 @@ export default function PsrpDashboard({ slug = '' }: { slug?: string }) {
   const [isHydrated, setIsHydrated] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
 
-  const professionalsModalRef = useRef<HTMLButtonElement>(null);
-
   const metadataPacks = {
     title: 'Packs de tratamientos de medicina estética - Holaglow',
     description:
       'Elige uno de los packs para tratar de manera global tus objetivos estéticos y conseguir el resultado que deseas',
   };
-
-  useEffect(() => {
-    if (isHydrated) {
-      setTimeout(() => {
-        if (professionalsModalRef.current) {
-          professionalsModalRef.current.click();
-        }
-      }, 1);
-    }
-  }, [isHydrated]);
 
   useEffect(() => {
     if (slug !== '') {
@@ -112,14 +97,8 @@ export default function PsrpDashboard({ slug = '' }: { slug?: string }) {
       hideProfessionalSelector
       showCart
     >
-      <Dialog>
-        <DialogTrigger>
-          <button ref={professionalsModalRef} id="test" className="hidden">
-            Modal médicos
-          </button>
-        </DialogTrigger>
-        <DialogContent className="w-4/5">Listado médicos</DialogContent>
-      </Dialog>
+      <ProfessionalsModal />
+
       {!isEmpty(filteredProducts) && (
         <>
           <Flex className="justify-start px-4 py-1 w-full">
