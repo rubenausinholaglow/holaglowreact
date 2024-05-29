@@ -123,6 +123,6 @@ export default function ProductDetailPage({
       </>
     );
   } else if (productId == '') {
-    return <PsrpPage slug={params.slug} isDashboard={false} />;
+    return <PsrpPage slug={params.slug} />;
   }
 }
