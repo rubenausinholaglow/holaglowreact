@@ -72,6 +72,7 @@ const ROUTES = {
     diagnostico: {
       home: '/diagnostico',
       seguimiento: '/diagnostico/seguimiento',
+      subscription: '/diagnostico/subscription',
     },
   },
 };
