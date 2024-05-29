@@ -14,7 +14,7 @@ export default function ProductHeaderSSR({ product }: { product: Product }) {
     <div className="md:pt-4 md:pb-12">
       <Container className="p-0 md:px-4 md:gap-16 justify-between grid md:grid-cols-2">
         <Container className="pb-6 md:pb-0 md:px-0 md:row-start-1 md:row-end-2 md:col-start-1 md:col-end-2">
-          <Title size="2xl" className="text-left font-bold mb-4">
+          <Title as="h1" size="2xl" className="text-left font-bold mb-4">
             {product.title}
           </Title>
 

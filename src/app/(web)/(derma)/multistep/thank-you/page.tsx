@@ -21,6 +21,8 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import OptionsPricesB from '../../precios/components/OptionsPricesB';
+import OptionsPricesSelectButton from '../../precios/components/OptionsPricesSelectButton';
 import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../multistepConfig';
 
 const FAQS = [
@@ -37,21 +39,14 @@ const FAQS = [
   },
 
   {
-    question: 'Beneficios de la suscripción',
+    question: 'Seguimiento médico incluido',
     answer:
-      'Cada piel evoluciona y reacciona de forma diferente a los tratamientos. Suscribiéndote a tu rutina, contarás con seguimiento mensual de tu médico para comprobar la evolución de tu piel y adaptar la rutina y la composición de tu crema formulada cuando sea necesario. Además ahorras un 25% respecto a la compra única sin suscripción.',
+      'Queremos asegurar que consigues los objetivos que tienes para tu piel. Por eso al finalizar los 3 meses de rutina, te pediremos fotos para un nuevo diagnóstico de tu médico y que puedas decidir si renuevas tu rutina 3 meses más o si quieres adaptarla y tratar otros aspectos de tu piel.',
   },
-
   {
     question: 'Detalles del envío',
     answer:
       'El envío de las cremas es totalmente gratuito. Las recibirás en casa entre 3-5 días laborables después de haber recibido el diagnóstico de tu médico. La receta para tu crema personalizada la recibirás a la vez que el diagnóstico.',
-  },
-
-  {
-    question: '¿Cómo cancelo mi suscripción?',
-    answer:
-      'Puedes cancelar tu suscripción desde tu área de diagnóstico al menos X días antes de que venza el periodo de 3 meses.',
   },
 ];
 
@@ -105,14 +100,19 @@ export default function ThankYouMultiStep() {
             <Title size="xl" className="text-derma-primary font-light">
               ¡Aquí tienes, {user?.name}!
             </Title>
-            <CheckHydration>
-              <Text className="text-center md:text-left">
-                Esta es la rutina completa que hemos diseñado para tu{' '}
-                <span className="font-semibold">
-                  {filteredPain?.name.toLocaleLowerCase()}
-                </span>
-              </Text>
-            </CheckHydration>
+            <Text className="text-center md:text-left">
+              Tenemos un pack preparado para ti
+            </Text>
+
+            <OptionsPricesB isMultistep={true} />
+          </Flex>
+          <Flex layout="col-left" className="mt-6 w-full gap-4 md:items-start">
+            <Title
+              size="xl"
+              className="text-derma-primary font-light text-left"
+            >
+              Este es el detalle de tu pack
+            </Title>
             <CheckHydration>
               <RoutineItems hideCremaFormulada pain={pain} />
             </CheckHydration>
@@ -122,7 +122,8 @@ export default function ThankYouMultiStep() {
       <div className="bg-derma-secondary400 py-8">
         <Container className="px-0 md:px-4">
           <Title size="xl" className="text-derma-primary font-light mb-4 px-4">
-            Crema con los ingredientes que necesita tu piel
+            ... y esta será tu crema formulada para{' '}
+            {filteredPain.name.toLowerCase()}
           </Title>
           <CheckHydration>
             <Flex layout="col-left" className="md:flex-row w-full mb-8">
@@ -171,15 +172,7 @@ export default function ThankYouMultiStep() {
             </Flex>
           </CheckHydration>
           <Flex className="justify-center w-full px-4">
-            <Button
-              type="derma"
-              size="xl"
-              customStyles="px-16"
-              className="w-full md:w-auto"
-              href={ROUTES.derma.multistep.planes}
-            >
-              Comprar rutina
-            </Button>
+            <OptionsPricesSelectButton index={0} />
           </Flex>
         </Container>
       </div>
@@ -248,15 +241,7 @@ export default function ThankYouMultiStep() {
       <TestimonialsDerma />
       <Container className="pb-8 md:pb-12">
         <Flex className="justify-center w-full px-4">
-          <Button
-            type="derma"
-            size="xl"
-            customStyles="px-16"
-            className="w-full md:w-auto"
-            href={ROUTES.derma.multistep.planes}
-          >
-            Comprar rutina
-          </Button>
+          <OptionsPricesSelectButton index={0} />
         </Flex>
       </Container>
     </DermaLayout>
