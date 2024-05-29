@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgAdd, SvgArrow } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import Carousel from 'designSystem/Carousel/Carousel';
 import {
   Dialog,
@@ -25,6 +28,8 @@ export default function ProfessionalsModal() {
   const [professionalsByCity, setProfessionalsByCity] = useState<object[]>([]);
 
   const { storedClinicId } = useGlobalPersistedStore(state => state);
+  const { hasSeenDashboardProfessionals, setHasSeenDashboardProfessionals } =
+    useSessionStore(state => state);
 
   useEffect(() => {
     setIsHydrated(true);
@@ -40,8 +45,9 @@ export default function ProfessionalsModal() {
           : PROFESSIONALS_BY_CITY[0].professionals
       );
 
-      if (professionalsModalRef.current) {
+      if (professionalsModalRef.current && !hasSeenDashboardProfessionals) {
         professionalsModalRef.current.click();
+        setHasSeenDashboardProfessionals(true);
       }
     }
   }, [isHydrated]);
