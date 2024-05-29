@@ -122,7 +122,7 @@ export default function ThankYouMultiStep() {
       <div className="bg-derma-secondary400 py-8">
         <Container className="px-0 md:px-4">
           <Title size="xl" className="text-derma-primary font-light mb-4 px-4">
-            ... y esta será tu crema formulada para tu{' '}
+            ... y esta será tu crema formulada para{' '}
             {filteredPain.name.toLowerCase()}
           </Title>
           <CheckHydration>
@@ -241,15 +241,7 @@ export default function ThankYouMultiStep() {
       <TestimonialsDerma />
       <Container className="pb-8 md:pb-12">
         <Flex className="justify-center w-full px-4">
-          <Button
-            type="derma"
-            size="xl"
-            customStyles="px-16"
-            className="w-full md:w-auto"
-            href={ROUTES.derma.multistep.planes}
-          >
-            Comprar rutina
-          </Button>
+          <OptionsPricesSelectButton index={0} />
         </Flex>
       </Container>
     </DermaLayout>

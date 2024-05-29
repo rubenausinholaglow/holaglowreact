@@ -345,7 +345,7 @@ export const SUBSCRIPTIONS = [
     bgColor: 'bg-white',
     tag: {},
     price: {
-      value: '99 €',
+      value: '75 €',
       subtitle: '(Equivalente a 25€/mes)',
     },
     bullets: [
