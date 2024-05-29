@@ -11,21 +11,21 @@ type ClinicBoxMapping = {
 };
 
 const CLINIC_BOXS: ClinicBoxMapping = {
-    "4": {
+    "A1C0941E-5DC2-4433-9B03-2E5A9857F2C5": {
         "6": { name: "MED2", type: ProductType.Medical },
         "5": { name: "HYDR", type: ProductType.Esthetic }, 
         "3": { name: "MED", type: ProductType.Medical },
         "2": { name: "ZG2", type: ProductType.Others }, 
         "1": { name: "ZG", type: ProductType.Others }, 
     },
-    "1": {
+    "B745EC86-2E32-4DC9-901F-59C274156B37": {
         "12": { name: "MED2", type: ProductType.Medical },
         "11": { name: "HYDR", type: ProductType.Esthetic }, 
         "6": { name: "MED", type: ProductType.Medical },
         "5": { name: "ZG2", type: ProductType.Others }, 
         "10": { name: "ZG", type: ProductType.Others }, 
     },
-    "5": {
+    "B6CCDD94-D44C-43EC-AC83-F3FC77C351C8": {
         "5": { name: "MED2", type: ProductType.Medical },
         "1": { name: "HYDR", type: ProductType.Esthetic }, 
         "4": { name: "MED", type: ProductType.Medical },
