@@ -105,7 +105,12 @@ export default function ThankYouMultiStep() {
             </Text>
 
             <OptionsPricesB isMultistep={true} />
-            <Title size="xl" className="text-derma-primary font-light">
+          </Flex>
+          <Flex layout="col-left" className="mt-6 w-full gap-4 md:items-start">
+            <Title
+              size="xl"
+              className="text-derma-primary font-light text-left"
+            >
               Este es el detalle de tu pack
             </Title>
             <CheckHydration>
@@ -117,7 +122,8 @@ export default function ThankYouMultiStep() {
       <div className="bg-derma-secondary400 py-8">
         <Container className="px-0 md:px-4">
           <Title size="xl" className="text-derma-primary font-light mb-4 px-4">
-            Crema con los ingredientes que necesita tu piel
+            ... y esta será tu crema formulada para tu{' '}
+            {filteredPain.name.toLowerCase()}
           </Title>
           <CheckHydration>
             <Flex layout="col-left" className="md:flex-row w-full mb-8">

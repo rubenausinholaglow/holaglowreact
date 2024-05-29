@@ -27,7 +27,7 @@ export default function OptionsPricesSelectButton({
   }, []);
 
   return (
-    <Flex className="mt-6 mb-6" layout="col-center">
+    <Flex className="mt-0 mb-6" layout="col-center">
       <Button
         type="derma"
         size="xl"
