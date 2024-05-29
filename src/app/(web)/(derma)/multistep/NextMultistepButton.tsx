@@ -78,12 +78,6 @@ export default function NextMultistepButton({
   const nextStep = HandleNextMultistep(nextUrl);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { setFeedbackStep } = useDermaStore(state => state);
-
-  if (feedbackStep) {
-    setFeedbackStep(feedbackStep);
-  }
-
   return (
     <Button
       size="lg"

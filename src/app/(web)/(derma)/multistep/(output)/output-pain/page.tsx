@@ -1,3 +1,5 @@
+'use client';
+
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
@@ -10,7 +12,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../../multistepConfig';
-import MedicAdvice from './MedicAdvice';
+import MedicAdvice from '../components/MedicAdvice';
 
 export default function PainFeedback() {
   const router = useRouter();
