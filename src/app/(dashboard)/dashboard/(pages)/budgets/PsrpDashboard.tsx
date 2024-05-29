@@ -86,6 +86,10 @@ export default function PsrpDashboard({ slug = '' }: { slug?: string }) {
     setIsHydrated(true);
   }, [productFilters]);
 
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
   if (!isHydrated) {
     return <></>;
   }
