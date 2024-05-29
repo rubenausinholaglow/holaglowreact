@@ -14,7 +14,7 @@ export async function selectDermaProduct({
   let productId = '';
   switch (index) {
     case 0:
-      productId = process.env.NEXT_PUBLIC_DERMA_SUSCRIPTION_ID!;
+      productId = process.env.NEXT_PUBLIC_DERMA_ONE_PURCHASE_ID!;
       break;
     case 1:
       productId = process.env.NEXT_PUBLIC_DERMA_ONE_PURCHASE_ID!;
