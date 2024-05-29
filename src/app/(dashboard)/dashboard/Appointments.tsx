@@ -437,7 +437,7 @@ const AppointmentsListComponent: React.FC<{
                 <Text className="w-[4%] shrink-0 p-2">
                   {isHeader
                     ? 'Box'
-                    : getBoxName(appointment.clinicFlowwwId, appointment.boxId)}
+                    : getBoxName(storedClinicId, appointment.boxId)}
                 </Text>
               )}
 
