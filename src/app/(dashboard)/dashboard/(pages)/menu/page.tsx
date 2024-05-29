@@ -25,8 +25,14 @@ import { menuItems } from './MenuItems';
 const Page = () => {
   const messageSocket = useMessageSocket(state => state);
   const userCrisalix = useCrisalix(state => state);
-  const { remoteControl, setCheckSimulator, user, setBudgetId, isCallCenter } =
-    useGlobalPersistedStore(state => state);
+  const {
+    remoteControl,
+    setCheckSimulator,
+    user,
+    setBudgetId,
+    isCallCenter,
+    setPromoCode,
+  } = useGlobalPersistedStore(state => state);
   const {
     setSelectedTreatments,
     selectedClinic,
@@ -42,6 +48,7 @@ const Page = () => {
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
     setTreatmentPacks([]);
+    setPromoCode(undefined);
   }, []);
   useEffect(() => {
     if (!remoteControl) {

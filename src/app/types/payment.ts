@@ -14,6 +14,8 @@ export enum PaymentMethod {
   CreditCard,
   Financing,
   Others,
+  Wallet,
+  Promo
 }
 
 export enum PaymentBank {
@@ -26,7 +28,8 @@ export enum PaymentBank {
   GooglePay,
   ApplePay,
   Paypal,
-  Frakmenta
+  Frakmenta,
+  Points
 }
 
 export interface PaymentInitResponse {

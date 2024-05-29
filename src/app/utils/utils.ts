@@ -131,6 +131,10 @@ export function getPaymentMethodText(method: PaymentMethod): string {
       return 'Financiación';
     case PaymentMethod.Others:
       return 'Otros';
+    case PaymentMethod.Promo:
+      return 'Promo'
+    case PaymentMethod.Wallet:
+      return 'Wallet'
     default:
       return 'Unknown';
   }
@@ -149,6 +153,8 @@ export function getPaymentBankText(bank: PaymentBank): string {
     case PaymentBank.Cash:
       return '';
     case PaymentBank.CreditCard:
+      return '';
+    case PaymentBank.Points:
       return '';
     default:
       return 'Unknown';

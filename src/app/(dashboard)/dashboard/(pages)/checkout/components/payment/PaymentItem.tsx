@@ -44,6 +44,8 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
     status = StatusPayment.Waiting;
   }
 
+  const paymentNeedResponse = [1, 2, 4];
+
   useEffect(() => {
     switch (status) {
       case StatusPayment.Paid:
@@ -110,7 +112,7 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
           {getPaymentBankText(paymentTicketRequest.bank)}
         </span>
       )}
-      {paymentTicketRequest.bank != 3 && (
+      {paymentNeedResponse.includes(paymentTicketRequest.bank) && (
         <Text key={paymentTicketRequest.id}>{textPayment}</Text>
       )}
       <Flex className="ml-auto gap-2">

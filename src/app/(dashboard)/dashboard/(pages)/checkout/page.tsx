@@ -24,6 +24,8 @@ import { useRouter } from 'next/navigation';
 import { useCartStore } from '../budgets/stores/userCartStore';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { PaymentModule } from './components/payment/Payments';
+import { usePaymentHook } from './components/payment/payments/paymentHook';
+import { usePaymentList } from './components/payment/payments/usePaymentList';
 
 const Page = () => {
   const ROUTES = useRoutes();
@@ -44,9 +46,12 @@ const Page = () => {
     storedBudgetId,
     setBudgetId,
     storedClinicProfessionalId,
+    promoCode,
   } = useGlobalPersistedStore(state => state);
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
+  const { paymentPromo } = usePaymentHook();
+  const paymentList = usePaymentList(state => state.paymentRequest);
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -101,6 +106,15 @@ const Page = () => {
       Bugsnag.notify(ERROR_POST + error);
     }
   };
+
+  useEffect(() => {
+    const createAsync = async () => {
+      await paymentPromo(user!.id);
+    };
+    if (promoCode.length > 0 && paymentList.length == 0) {
+      createAsync();
+    }
+  }, [storedBudgetId]);
 
   function cartTotalPrice() {
     let productsPriceTotalWithDiscounts = 0;

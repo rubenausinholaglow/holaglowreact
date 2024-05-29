@@ -37,6 +37,7 @@ import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 
+import { usePaymentHook } from '../payments/paymentHook';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 import PepperWidget from './PepperWidget';
@@ -51,7 +52,7 @@ export default function PaymentInput(props: Props) {
   const { control, handleSubmit } = useForm();
   const cart = useCartStore(state => state.cart);
   const totalAmount = usePaymentList(state => state.totalAmount);
-  const { addPaymentToList } = usePaymentList();
+  const { addPaymentToList, paymentRequest } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
   const [showPepper, setshowPepper] = useState(false);
   const [showFrakmenta, setShowFrakmenta] = useState(false);
@@ -62,10 +63,11 @@ export default function PaymentInput(props: Props) {
   );
   const [showContactModal, setShowContactModal] = useState(false);
   const [paymentStripe, setPaymentStripe] = useState(false);
-  const { user } = useGlobalPersistedStore(state => state);
   const { isModalOpen } = useGlobalStore(state => state);
-  const { remoteControl, storedBudgetId, setCurrentUser } =
+  const { remoteControl, storedBudgetId, setCurrentUser, user, promoCode } =
     useGlobalPersistedStore(state => state);
+
+  const { createPayment } = usePaymentHook();
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -113,35 +115,6 @@ export default function PaymentInput(props: Props) {
   const MaxValue =
     parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
     parseFloat(totalAmount.toFixed(2));
-
-  const createPayment = async (paymentRequestApi: CreatePayment) => {
-    await FinanceService.createPayment(paymentRequestApi, false)
-      .then(async data => {
-        if (data && !isEmpty(data)) {
-          const id: string = data as string;
-          const paymentRequest = {
-            amount: paymentRequestApi.amount,
-            method: props.paymentMethod,
-            bank: props.paymentBank,
-            paymentReference: paymentRequestApi.referenceId,
-            id: id,
-          };
-          addPaymentToList(paymentRequest);
-
-          await sendPaymentCreated(
-            id,
-            paymentRequestApi.amount,
-            paymentRequestApi.referenceId
-          );
-        } else {
-          setMessageNotification('Error creando el pago');
-        }
-      })
-      .catch(error => {
-        Bugsnag.notify('Error FinanceService.createPayment:', error);
-      });
-    props.onButtonClick(false);
-  };
 
   const sendPaymentCreated = async (
     paymentId: string,
@@ -218,7 +191,17 @@ export default function PaymentInput(props: Props) {
       paymentBank: props.paymentBank,
       originOfPayment: OriginPayment.dashboard,
     };
-    await createPayment(paymentRequestApi);
+    await createPayment(paymentRequestApi).then(response => {
+      if (response) {
+        sendPaymentCreated(
+          response.id,
+          paymentRequestApi.amount,
+          paymentRequestApi.referenceId
+        );
+      } else {
+        setMessageNotification('Error creando el pago');
+      }
+    });
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {

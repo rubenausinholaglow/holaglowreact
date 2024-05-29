@@ -43,9 +43,6 @@ export const PaymentModule = () => {
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
-
-  const { promoCode } = useGlobalPersistedStore(state => state);
-
   const { cart, totalPrice, priceDiscount, percentageDiscount, manualPrice } =
     useCartStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
@@ -60,6 +57,7 @@ export const PaymentModule = () => {
     storedClinicProfessionalId,
     storedBudgetId,
     storedAppointmentId,
+    promoCode,
   } = useGlobalPersistedStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
