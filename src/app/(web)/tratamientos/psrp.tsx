@@ -171,7 +171,7 @@ export default function PsrpPage({
                 <DesktopFilters
                   showDesktopFilters={showDashboardFilters}
                   setShowDesktopFilters={setShowDashboardFilters}
-                  isDashboard={true}
+                  isDashboard={isDashboard}
                 />
               </div>
 
@@ -211,7 +211,7 @@ export default function PsrpPage({
         />
         <div className="bg-hg-cream rounded-t-3xl">
           <Container className="relative pt-6 pb-4">
-            <Title isAnimated size="3xl" className="mt-4">
+            <Title as="h1" isAnimated size="3xl" className="mt-4">
               Nuestros tratamientos
             </Title>
           </Container>
@@ -313,7 +313,7 @@ export default function PsrpPage({
                     <DesktopFilters
                       showDesktopFilters={showDesktopFilters}
                       setShowDesktopFilters={setShowDesktopFilters}
-                      isDashboard={false}
+                      isDashboard={isDashboard}
                     />
                   </Container>
                 </AccordionPrimitive.Content>
@@ -335,7 +335,7 @@ export default function PsrpPage({
                       <li key={product.id}>
                         <ProductCard
                           product={product}
-                          isDashboard={false}
+                          isDashboard={isDashboard}
                           className="h-full flex flex-col"
                         />
                       </li>

@@ -76,10 +76,12 @@ export default function Diagnosis({
             <AccordionContent
               className={diagnosis.professional !== null ? 'mt-4' : ''}
             >
-              <DiagnosisImages
-                images={[diagnosis?.front, diagnosis?.left, diagnosis?.right]}
-                className="mb-4"
-              />
+              {diagnosis?.front && diagnosis?.left && diagnosis?.right && (
+                <DiagnosisImages
+                  images={[diagnosis?.front, diagnosis?.left, diagnosis?.right]}
+                  className="mb-4"
+                />
+              )}
 
               {diagnosis.userComment !== '' && (
                 <Text className="bg-hg-black100 mb-8 p-4 text-xs text-hg-black500 rounded-xl border-l-4 border-hg-black300">

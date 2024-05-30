@@ -20,11 +20,9 @@ import { HandleNextMultistep } from '../NextMultistepButton';
 export default function Sunscreen() {
   const router = useRouter();
 
-  const { sunscreen, setSunscreen, setFeedbackStep } = useDermaStore(
-    state => state
-  );
+  const { sunscreen, setSunscreen } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.output.skinCare);
 
   return (
     <DermaLayout
@@ -60,16 +58,15 @@ export default function Sunscreen() {
                     onClick={async () => {
                       setSunscreen(sunscreen === item.value ? 0 : item.value);
                       if (sunscreen !== item.value) {
-                        setFeedbackStep(5);
                         await nextStep();
                       }
                     }}
                   >
                     {item.title}
                     {sunscreen === item.value ? (
-                      <SvgRadioChecked className="h-7 w-7" />
+                      <SvgRadioChecked className="h-7 w-7 shrink-0" />
                     ) : (
-                      <SvgCircle className="h-7 w-7" />
+                      <SvgCircle className="h-7 w-7 shrink-0" />
                     )}
                   </li>
                 ))}

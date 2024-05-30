@@ -1,15 +1,26 @@
+'use client';
+
+import { PAINS_AND_SYMPTOMS } from 'app/(web)/(derma)/multistep/multistepConfig';
+import { useDermaStore } from 'app/stores/dermaStore';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
 export default function StoriesDerma() {
-  const dermaImages: any[] = [
+  const { pain } = useDermaStore(state => state);
+
+  const defaultDermaImages: any[] = [
     '/images/derma/beforeAfter/beforeAfter1.jpg',
     '/images/derma/beforeAfter/beforeAfter2.jpg',
     '/images/derma/beforeAfter/beforeAfter3.jpg',
     '/images/derma/beforeAfter/beforeAfter4.jpg',
   ];
+
+  const dermaImages = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0]
+    ?.thankyouImages;
+
+  const beforeAfterImages = dermaImages || defaultDermaImages;
 
   return (
     <Container className="py-12 overflow-hidden">
@@ -23,15 +34,14 @@ export default function StoriesDerma() {
             size="2xl"
             className="font-gtUltra text-derma-primary font-bold mb-4"
           >
-            Historias inspiradoras
+            Casos reales
           </Title>
           <Text
             isAnimated
             className="text-hg-black500 mb-8 md:w-full md:text-lg"
           >
-            No hay dos pieles iguales. Por eso, todas las experiencias son
-            diferentes, solo coinciden en la satisfacción de los objetivos
-            conseguidos.
+            No hay dos pieles iguales, pero todas coinciden en la satisfacción
+            con los resultados conseguidos.
           </Text>
         </Flex>
         <Flex layout="col-left" className="md:w-1/2 w-full relative">
@@ -42,11 +52,8 @@ export default function StoriesDerma() {
             className="rounded-xl"
             isDerma
           >
-            {dermaImages?.map(item => (
-              <div
-                key={item.id}
-                className="overflow-hidden relative rounded-2xl"
-              >
+            {beforeAfterImages?.map((item: any) => (
+              <div key={item} className="overflow-hidden relative rounded-2xl">
                 <Image
                   height={400}
                   width={600}

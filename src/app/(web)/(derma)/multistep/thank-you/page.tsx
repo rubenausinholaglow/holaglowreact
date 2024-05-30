@@ -1,46 +1,85 @@
 'use client';
-
+import { isMobile } from 'react-device-detect';
+import { Accordion } from '@radix-ui/react-accordion';
 import CheckHydration from '@utils/CheckHydration';
-import { DERMA_COLORS } from '@utils/colors';
 import ROUTES from '@utils/routes';
+import StoriesDerma from 'app/(web)/components/common/StoriesDerma';
+import RoutineItems from 'app/(web)/components/dermahome/RoutineItems';
+import TestimonialsDerma from 'app/(web)/components/dermahome/TestimonialsDerma';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
-import { SvgCheck, SvgInfoCircle } from 'app/icons/IconsDs';
+import { SvgAdd, SvgMinus } from 'app/icons/IconsDs';
 import { useDermaStore } from 'app/stores/dermaStore';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from 'designSystem/Accordion/Accordion';
 import { Button } from 'designSystem/Buttons/Buttons';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
-const ITEMS = [
+import OptionsPricesB from '../../precios/components/OptionsPricesB';
+import OptionsPricesSelectButton from '../../precios/components/OptionsPricesSelectButton';
+import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../multistepConfig';
+
+const FAQS = [
   {
-    title: 'Información y fotos',
+    question: '¿Qué voy a recibir?',
+    answer:
+      'La rutina facial personalizada está compuesta por la receta de una crema facial personalizada y 3 cremas que complementan y potencian el efecto de la crema personalizada. Después del diagnóstico recibirás la receta de tu crema personalizada, una espuma limpiadora, protector solar y una crema de día específica para tus objetivos.',
+  },
+
+  {
+    question: '¿Dónde consigo mi crema personalizada?',
+    answer:
+      'Tu crema personalizada estará formulada específicamente para ti por tu médico y contendrá principios activos (ingredientes) catalogados como medicamento. Por eso necesita ser recetada por un médico y se elabora bajo demanda. Para conseguir la tuya, deberás pedirla en tu farmacia más cercana presentando la receta y documento de identificación. Tiene un coste a abonar en la farmacia de entre 25-40€.',
+  },
+
+  {
+    question: 'Seguimiento médico incluido',
+    answer:
+      'Queremos asegurar que consigues los objetivos que tienes para tu piel. Por eso al finalizar los 3 meses de rutina, te pediremos fotos para un nuevo diagnóstico de tu médico y que puedas decidir si renuevas tu rutina 3 meses más o si quieres adaptarla y tratar otros aspectos de tu piel.',
   },
   {
-    title: 'Elige tu plan de tratamiento',
-    text: 'Pago único para rutina de 3 meses o suscripción trimestral',
-  },
-  {
-    title: 'Análisis y diagnóstico en 48h',
-    text: 'Te asignamos tu médico para diseñar tu rutina de tratamiento',
-  },
-  {
-    title: 'Receta de tu crema personalizada',
-    text: 'Te la enviamos por WhatsaApp / Email tras el análisis de tu médico',
-  },
-  {
-    title: 'Recibe las cremas en casa',
-    text: 'Envío gratis. En 3-5 días recibirás los productos complementarios de tu crema personalizada',
-  },
-  {
-    title: 'Primeros resultados',
-    text: 'Tras 4 semanas de aplicación verás los primeros resultados',
+    question: 'Detalles del envío',
+    answer:
+      'El envío de las cremas es totalmente gratuito. Las recibirás en casa entre 3-5 días laborables después de haber recibido el diagnóstico de tu médico. La receta para tu crema personalizada la recibirás a la vez que el diagnóstico.',
   },
 ];
 
 export default function ThankYouMultiStep() {
   const { user } = useGlobalPersistedStore(state => state);
-  const { picturesUrls } = useDermaStore(state => state);
+  const { pain, secondaryConcerns } = useDermaStore(state => state);
+
+  const filteredPain = PAINS_AND_SYMPTOMS.filter(
+    item => item.value === pain
+  )[0];
+
+  const ingredients = filteredPain?.feedback?.ingredients as
+    | string[]
+    | undefined;
+
+  const painIngredients = DERMA_INGREDIENTS.filter(
+    item => ingredients?.includes(item.name)
+  );
+
+  const secondaryIngredients = DERMA_INGREDIENTS.filter(ingredient => {
+    return ingredient.concerns.some(concern =>
+      secondaryConcerns.includes(concern)
+    );
+  });
+
+  const uniqueIngredients = [
+    ...painIngredients,
+    ...secondaryIngredients,
+  ].filter(
+    (ingredient, index, self) =>
+      index === self.findIndex(t => t.name === ingredient.name)
+  );
+
   return (
     <DermaLayout
       hideButton
@@ -48,159 +87,163 @@ export default function ThankYouMultiStep() {
       hideNavigation
       className="bg-derma-secondary300 min-h-screen relative"
     >
-      <div className="absolute top-0 bottom-0 right-0 w-1/2 bg-white hidden md:block " />
-      <div className="relative">
-        <CheckHydration>
-          <Container className="px-0">
-            <div className="md:flex gap-12 pt-8">
-              <Container className="md:w-1/2 mb-8">
-                <Flex
-                  layout="col-center"
-                  className="w-full gap-4 md:items-start"
-                >
-                  <Image
-                    alt="Dra. Sonsoles Espi"
-                    src="/images/derma/multistep/Sonsoles.png"
-                    height={192}
-                    width={192}
-                    className="mx-auto w-24 mb-4 md:ml-0"
-                  />
-                  <Title size="xldr" className="text-derma-primary font-light">
-                    Estás un paso más cerca, {user?.name}
-                  </Title>
-                  <Text className="text-sm text-center md:text-left">
-                    Elige el tipo de tratamiento que quieres para empezar a
-                    cuidar tu piel con lo que de verdad necesita.
-                  </Text>
-                  <Flex className="p-2 bg-white/50 gap-2 rounded-xl">
-                    <SvgInfoCircle className="text-derma-primary500 h-6 w-6" />
-                    <Text className="text-hg-black500 text-xs">
-                      Nos pondremos en contacto contigo si necesitamos más
-                      información para el diagnóstico.
-                    </Text>
-                  </Flex>
-                </Flex>
-              </Container>
-              <Container className="px-0 md:px-4 md:w-1/2">
-                <div className="px-4 bg-white py-4 rounded-3xl md:p-0">
-                  <Flex className="gap-8 items-start">
-                    <ul className="w-full">
-                      {ITEMS.map((item, index) => (
-                        <li
-                          className={`flex items-start gap-4 ${
-                            index + 1 === ITEMS.length ? '' : 'border-l-[2px]'
-                          } ml-4 pb-8`}
-                          style={{ borderColor: '#d3f7f1' }}
-                          key={item.text}
-                        >
-                          {index === 0 ? (
-                            <SvgCheck
-                              className={`h-8 w-8 p-1 rounded-full shrink-0 -ml-[17px] `}
-                              style={{
-                                backgroundColor: DERMA_COLORS.primary500,
-                                color: 'white',
-                              }}
-                            />
-                          ) : (
-                            <Flex
-                              className={`h-8 w-8 p-1 rounded-full shrink-0 -ml-[17px] justify-center`}
-                              style={{
-                                backgroundColor: '#d3f7f1',
-                                color: DERMA_COLORS.primary500,
-                              }}
-                            >
-                              {index + 1}
-                            </Flex>
-                          )}
-                          <Flex
-                            layout="row-left"
-                            className="md:flex-col w-full pt-1"
-                          >
-                            <Flex layout="col-left" className="gap-2 w-full">
-                              <Text className="font-semibold">
-                                {item.title}
-                              </Text>
-                              {item.title && (
-                                <Text className="text-sm">{item.text}</Text>
-                              )}
-                              {index === 0 && (
-                                <ul className="flex flex-col gap-4 w-full">
-                                  <li className="border border-derma-secondary400 bg-derma-secondary100 p-3 w-full rounded-xl">
-                                    <Flex layout="row-left" className="gap-4">
-                                      <div className="relative aspect-square h-16 w-16">
-                                        <Image
-                                          src={picturesUrls[0]}
-                                          alt="imagen frontal"
-                                          fill
-                                          className="rounded-2xl object-cover"
-                                        />
-                                      </div>
-                                      <div>
-                                        <Text className="font-semibold">
-                                          Foto 1.
-                                        </Text>
-                                        <Text>Rostro frontal</Text>
-                                      </div>
-                                    </Flex>
-                                  </li>
-                                  <li className="border border-derma-secondary400 bg-derma-secondary100 p-3 w-full rounded-xl">
-                                    <Flex layout="row-left" className="gap-4">
-                                      <div className="relative aspect-square h-16 w-16">
-                                        <Image
-                                          src={picturesUrls[1]}
-                                          alt="imagen frontal"
-                                          fill
-                                          className="rounded-2xl object-cover"
-                                        />
-                                      </div>
-                                      <div>
-                                        <Text className="font-semibold">
-                                          Foto 2.
-                                        </Text>
-                                        <Text>Perfil derecho</Text>
-                                      </div>
-                                    </Flex>
-                                  </li>
-                                  <li className="border border-derma-secondary400 bg-derma-secondary100 p-3 w-full rounded-xl">
-                                    <Flex layout="row-left" className="gap-4">
-                                      <div className="relative aspect-square h-16 w-16">
-                                        <Image
-                                          src={picturesUrls[2]}
-                                          alt="imagen frontal"
-                                          fill
-                                          className="rounded-2xl object-cover"
-                                        />
-                                      </div>
-                                      <div>
-                                        <Text className="font-semibold">
-                                          Foto 3.
-                                        </Text>
-                                        <Text>Perfil izquierdo</Text>
-                                      </div>
-                                    </Flex>
-                                  </li>
-                                </ul>
-                              )}
-                            </Flex>
-                          </Flex>
-                        </li>
-                      ))}
-                    </ul>
-                  </Flex>
-                  <Button
-                    type="derma"
-                    size="xl"
-                    className="w-full mb-8 md:mb-16"
-                    href={ROUTES.derma.multistep.planes}
-                  >
-                    Elegir plan de tratamiento
-                  </Button>
-                </div>
-              </Container>
-            </div>
-          </Container>
-        </CheckHydration>
+      <div className="md:flex gap-12 pt-8">
+        <Container className="mb-8">
+          <Flex layout="col-center" className="w-full gap-4 md:items-start">
+            <Image
+              alt="Dra. Sonsoles Espi"
+              src="/images/derma/multistep/Sonsoles.png"
+              height={192}
+              width={192}
+              className="mx-auto w-24 mb-4 md:ml-0"
+            />
+            <Title size="xl" className="text-derma-primary font-light">
+              ¡Aquí tienes, {user?.name}!
+            </Title>
+            <Text className="text-center md:text-left">
+              Tenemos un pack preparado para ti
+            </Text>
+
+            <OptionsPricesB isMultistep={true} />
+          </Flex>
+          <Flex layout="col-left" className="mt-6 w-full gap-4 md:items-start">
+            <Title
+              size="xl"
+              className="text-derma-primary font-light text-left"
+            >
+              Este es el detalle de tu pack
+            </Title>
+            <CheckHydration>
+              <RoutineItems hideCremaFormulada pain={pain} />
+            </CheckHydration>
+          </Flex>
+        </Container>
       </div>
+      <div className="bg-derma-secondary400 py-8">
+        <Container className="px-0 md:px-4">
+          <Title size="xl" className="text-derma-primary font-light mb-4 px-4">
+            ... y esta será tu crema formulada para{' '}
+            {filteredPain.name.toLowerCase()}
+          </Title>
+          <CheckHydration>
+            <Flex layout="col-left" className="md:flex-row w-full mb-8">
+              <div className="w-full md:w-1/2 shrink-0 mb-8 md:mb-0 md:mr-4 px-4">
+                <RoutineItems hideDefaultItems pain={pain} />
+              </div>
+              <div className="w-full md:w-1/2 shrink-0 md:ml-4">
+                <Carousel
+                  isIntrinsicHeight
+                  visibleSlides={isMobile ? 1.75 : 2}
+                  infinite={false}
+                  isDerma
+                  hasControls={!isMobile}
+                  className="mb-12"
+                  controlStyles="pr-4"
+                >
+                  {uniqueIngredients.map(ingredient => (
+                    <Flex
+                      layout="col-left"
+                      className="w-full pr-6 gap-2 px-4"
+                      key={ingredient.name}
+                    >
+                      <Flex className="relative aspect-[3/2] w-full rounded-2xl bg-derma-secondary500 border border-derma-secondary100 mb-2 py-4 overflow-hidden">
+                        <Image
+                          alt={ingredient.name}
+                          src={ingredient.imgSrc}
+                          fill
+                          className="scale-110 object-contain"
+                        />
+                      </Flex>
+                      <Text className="font-semibold">{ingredient.name}</Text>
+                      <ul className="flex gap-2 flex-wrap">
+                        {ingredient.concerns.map(tag => (
+                          <li
+                            key={tag}
+                            className="p-2 px-3 rounded-full bg-derma-secondary100/50 text-derma-primary text-xs"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                    </Flex>
+                  ))}
+                </Carousel>
+              </div>
+            </Flex>
+          </CheckHydration>
+          <Flex className="justify-center w-full px-4">
+            <OptionsPricesSelectButton index={0} />
+          </Flex>
+        </Container>
+      </div>
+      <Container className="py-8 md:py-12">
+        <Accordion
+          className="mb-8 md:grid md:grid-cols-2 gap-4"
+          type="single"
+          collapsible
+        >
+          <div>
+            {FAQS.map((faq, index) => {
+              if (index % 2 === 0) {
+                return (
+                  <AccordionItem
+                    key={faq.question}
+                    value={(index + 1).toString()}
+                    className="rounded-2xl overflow-hidden bg-derma-secondary300 mb-4 break-inside-avoid"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-derma-secondary500 relative">
+                      <Text className="text-lg font-semibold">
+                        {faq.question}
+                      </Text>
+                      <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
+                      <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-derma-secondary400 text-sm text-hg-black500">
+                      <Text className="p-4">{faq.answer}</Text>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              }
+            })}
+          </div>
+
+          <div>
+            {FAQS.map((faq, index) => {
+              if (index % 2 !== 0) {
+                return (
+                  <AccordionItem
+                    key={faq.question}
+                    value={(index + 1).toString()}
+                    className="rounded-2xl overflow-hidden bg-derma-secondary300 mb-4 break-inside-avoid"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-derma-secondary500 relative">
+                      <Text className="text-lg font-semibold">
+                        {faq.question}
+                      </Text>
+                      <SvgMinus className="transition-opacity opacity-1 group-data-[state=closed]:opacity-0 group-data-[state=closed]:duration-200 absolute top-4 right-4" />
+                      <SvgAdd className="transition-opacity opacity-1 group-data-[state=open]:opacity-0 group-data-[state=open]:duration-200 absolute top-4 right-4" />
+                    </AccordionTrigger>
+                    <AccordionContent className="bg-derma-secondary400 text-sm text-hg-black500">
+                      <Text className="p-4">{faq.answer}</Text>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              }
+            })}
+          </div>
+        </Accordion>
+
+        <Title size="2xl" className="font-semibold text-derma-primary500">
+          {user?.name}, hemos tratado a más de 500 personas como tu
+        </Title>
+      </Container>
+      <StoriesDerma />
+      <TestimonialsDerma />
+      <Container className="pb-8 md:pb-12">
+        <Flex className="justify-center w-full px-4">
+          <OptionsPricesSelectButton index={0} />
+        </Flex>
+      </Container>
     </DermaLayout>
   );
 }

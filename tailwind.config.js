@@ -96,6 +96,7 @@ module.exports = {
         'centered-secondary': '0 0 10px 10px rgba(169,111,231,0.05)',
         'centered-black': '0 0 10px 10px rgba(0,0,0,0.05)',
         'centered-black-sm': '0 0 5px 5px rgba(0,0,0,0.05)',
+        'centered-black-md': '0 0 20px 10px rgba(0,0,0,0.05)',
         'centered-black-lg': '0 0 50px 50px rgba(0,0,0,0.05)',
       },
       keyframes: {
@@ -216,6 +217,17 @@ module.exports = {
           '98%': { transform: 'translateY(-75%)', opacity: 0 },
           '100%': { transform: 'translateY(0%)', opacity: 0 },
         },
+        overlayShow: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        contentShow: {
+          from: {
+            opacity: '0',
+            transform: 'translate(105%, 0%) scale(1)',
+          },
+          to: { opacity: '1', transform: 'translate(0%, 0%) scale(1)' },
+        },
       },
       animation: {
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
@@ -224,6 +236,8 @@ module.exports = {
         animateBG: 'animateBG 180s ease infinite',
         shake: 'shake 3s ease infinite',
         pains: 'pains 6s ease infinite',
+        overlayShow: 'overlayShow 250ms cubic-bezier(0.16, 1, 0.3, 1)',
+        contentShow: 'contentShow 250ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },

@@ -64,9 +64,9 @@ export default function RoutineTime() {
                   >
                     {item.title}
                     {routineTime === item.value ? (
-                      <SvgRadioChecked className="h-7 w-7" />
+                      <SvgRadioChecked className="h-7 w-7 shrink-0" />
                     ) : (
-                      <SvgCircle className="h-7 w-7" />
+                      <SvgCircle className="h-7 w-7 shrink-0" />
                     )}
                   </li>
                 ))}

@@ -55,25 +55,23 @@ export default function TestimonialsDerma() {
           Opiniones sobre Derma
         </Title>
       </Container>
-      <AnimateOnViewport>
-        <FullWidthCarousel
-          hasControls={true}
-          className="pb-8"
-          visibleSlides={isMobile ? 1.2 : 3.5}
-          isDerma={true}
-        >
-          {TESTIMONIALS.map((testimonial: Testimonial | any) => {
-            return (
-              <TestimonialCard
-                key={testimonial.name}
-                testimonial={testimonial}
-                isDerma={true}
-                className="h-full flex flex-col mr-4 border border-hg-black300 bg-transparent"
-              />
-            );
-          })}
-        </FullWidthCarousel>
-      </AnimateOnViewport>
+      <FullWidthCarousel
+        hasControls={true}
+        className="pb-8"
+        visibleSlides={isMobile ? 1.2 : 3.5}
+        isDerma={true}
+      >
+        {TESTIMONIALS.map((testimonial: Testimonial | any) => {
+          return (
+            <TestimonialCard
+              key={testimonial.name}
+              testimonial={testimonial}
+              isDerma={true}
+              className="h-full flex flex-col mr-4 border border-hg-black300 bg-transparent"
+            />
+          );
+        })}
+      </FullWidthCarousel>
     </>
   );
 }

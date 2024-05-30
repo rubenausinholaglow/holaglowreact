@@ -42,7 +42,8 @@ export default function ProductPrices({
           productItems
             .map((item: Product) => item.title)
             .every((item: string) => item.includes(product.title)) &&
-          product.title.indexOf('Pack Wellaging') < 0
+          product.title.indexOf('Pack Wellaging') < 0 &&
+          product.title.indexOf('Armonización facial') < 0
       );
     }
   }, [productItems]);

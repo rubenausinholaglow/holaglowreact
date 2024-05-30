@@ -1,3 +1,5 @@
+'use client';
+
 import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
@@ -11,18 +13,18 @@ import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { ACTIVE_PRINCIPLES } from '../../multistepConfig';
-import MedicAdvice from './MedicAdvice';
+import { DERMA_INGREDIENTS } from '../../multistepConfig';
+import MedicAdvice from '../components/MedicAdvice';
 
 export default function SkinTypeFeedback() {
   const router = useRouter();
 
   const { secondaryConcerns } = useDermaStore(store => store);
 
-  console.log(secondaryConcerns);
-
-  const filteredActives = ACTIVE_PRINCIPLES.filter(active => {
-    return active.concerns.some(concern => secondaryConcerns.includes(concern));
+  const filteredIngredients = DERMA_INGREDIENTS.filter(ingredient => {
+    return ingredient.concerns.some(concern =>
+      secondaryConcerns.includes(concern)
+    );
   });
 
   return (
@@ -57,14 +59,14 @@ export default function SkinTypeFeedback() {
               <Container className="px-0 md:pl-4">
                 <Carousel
                   isIntrinsicHeight
-                  hasControls={!isMobile && filteredActives.length > 2}
+                  hasControls={!isMobile && filteredIngredients.length > 2}
                   visibleSlides={isMobile ? 1.5 : 2}
                   infinite={false}
                   isDerma
-                  controlStyles="pr-4"
+                  controlstyles="pr-4"
                   className="mb-12"
                 >
-                  {filteredActives.map(ingredient => (
+                  {filteredIngredients.map(ingredient => (
                     <Flex
                       layout="col-left"
                       className="w-full pr-6 gap-2 px-4"

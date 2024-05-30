@@ -21,7 +21,11 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
-import { DERMA_PRODUCTS, DERMA_ROUTINES, DERMA_TYPES } from '../mockedData';
+import {
+  DERMA_GENERIC_PRODUCTS,
+  DERMA_ROUTINES,
+  DERMA_TYPES,
+} from '../mockedData';
 
 export default function UpsellingRoutines({
   data,
@@ -88,7 +92,9 @@ export default function UpsellingRoutines({
     setShowModal(showModalBackground);
   }, [showModalBackground]);
 
-  const filteredProducts = DERMA_PRODUCTS.filter(product => data != null);
+  const filteredProducts = DERMA_GENERIC_PRODUCTS.filter(
+    product => data != null
+  );
 
   return (
     <>

@@ -16,15 +16,9 @@ import NextMultistepButton from '../NextMultistepButton';
 
 export default function ExtraInfo() {
   const router = useRouter();
-  const { extraInfo, setExtraInfo, setFeedbackStep } = useDermaStore(
-    state => state
-  );
+  const { extraInfo, setExtraInfo } = useDermaStore(state => state);
 
   const [textAreaValue, setTextAreaValue] = useState(extraInfo);
-
-  useEffect(() => {
-    setFeedbackStep(6);
-  }, []);
 
   return (
     <DermaLayout
@@ -79,7 +73,7 @@ export default function ExtraInfo() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.feedback}
+                  nextUrl={ROUTES.derma.multistep.output.pictures}
                   isDisabled={false}
                 />
               </Flex>

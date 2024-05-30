@@ -70,7 +70,7 @@ export default function ProductSuggestions({ product }: { product: Product }) {
           <Carousel
             hasDots={isMobile}
             hasControls={!isMobile}
-            controlStyles="px-4"
+            controlstyles="px-4"
             className="relative"
             isIntrinsicHeight
             visibleSlides={visibleSuggestions}

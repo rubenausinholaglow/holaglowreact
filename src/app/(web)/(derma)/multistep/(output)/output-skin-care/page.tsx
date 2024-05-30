@@ -1,4 +1,5 @@
-import { isMobile } from 'react-device-detect';
+'use client';
+
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
@@ -11,7 +12,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { DERMA_COMPLEMENTS, PAINS_AND_SYMPTOMS } from '../../multistepConfig';
-import MedicAdvice from './MedicAdvice';
 
 export default function RoutineFeedback() {
   const { pain } = useDermaStore(state => state);

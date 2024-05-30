@@ -46,17 +46,7 @@ export default function OptionsPrices({
                   </Text>
                   <Text className="text-3xl font-bold text-derma-primary500">
                     <span>{subscription.price.value}</span>
-                    {subscription.price?.discount && (
-                      <span className="bg-derma-primary500 text-md py-1 px-3 rounded-full text-white inline-block relative bottom-1.5 ml-4">
-                        {subscription.price.discount}
-                      </span>
-                    )}
                   </Text>
-                  {subscription.price?.oldValue && (
-                    <Text className="text-sm text-hg-error line-through">
-                      {subscription.price.oldValue}
-                    </Text>
-                  )}
                   <Text className="text-sm text-derma-primary500">
                     {subscription.price.subtitle}
                   </Text>
@@ -85,14 +75,6 @@ export default function OptionsPrices({
                     ))}
                   </ul>
                 </div>
-                {subscription.bottomBar && (
-                  <div
-                    className="bg-derma-primary300 p-4 py-3 rounded-b-2xl text-center"
-                    dangerouslySetInnerHTML={{
-                      __html: subscription.bottomBar,
-                    }}
-                  />
-                )}
               </li>
             ))}
           </ul>

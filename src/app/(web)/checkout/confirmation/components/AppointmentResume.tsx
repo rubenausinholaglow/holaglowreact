@@ -14,6 +14,7 @@ import {
   getUniqueProducts,
 } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { PAINS_AND_SYMPTOMS } from 'app/(web)/(derma)/multistep/multistepConfig';
 import { SUBSCRIPTIONS } from 'app/(web)/(derma)/planes/mockedData';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import {
@@ -24,6 +25,7 @@ import {
   SvgStethoscope,
 } from 'app/icons/Icons';
 import { SvgBag, SvgCheckCircle } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
@@ -70,6 +72,11 @@ export default function AppointmentResume({
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
+  const { pain } = useDermaStore(state => state);
+
+  const filteredPain = isDerma
+    ? PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0].name
+    : '';
 
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
     state => state
@@ -126,22 +133,6 @@ export default function AppointmentResume({
     value: isMobile ? 'item-2' : 'item-1',
   };
 
-  const TreatmentImage = () => {
-    const imgSrc2 = '/images/derma/landingPrecios/rutinaDoctorHolaglow.png';
-
-    return (
-      <Flex className="bg-white border-b md:border-r border-derma-secondary400 p-4 w-full justify-center overflow-hidden rounded-t-2xl md:w-2/5 shrink-0 md:rounded-t-none md:rounded-l-2xl">
-        <Image
-          src={imgSrc2}
-          height={100}
-          width={165}
-          alt="rutina facial derma by Holaglow"
-          className="md:relative md:z-10 md:w-4/5"
-        />
-      </Flex>
-    );
-  };
-
   const TreatmentsDashboard = () => {
     return getProductsMapped().map(item => (
       <div key={item.id}>
@@ -156,42 +147,6 @@ export default function AppointmentResume({
       <Text className={`font-semibold text-xs md:text-sm ${className}`}>
         {selectedPack ? selectedPack.title : selectedTreatmentsNames}
       </Text>
-    );
-  };
-
-  const TreatmentDerma = () => {
-    return (
-      <Flex
-        layout="col-left"
-        className={`p-4 w-full gap-2 text-xs md:text-sm ${
-          !isConfirmation ? '' : ''
-        }`}
-      >
-        <Flex layout="col-left" className="w-full gap-2 mt-2">
-          <Text className="font-semibold text-md mb-4">{cart[0].title}</Text>
-          {SUBSCRIPTIONS.find(x => x.id == cart[0].id)!.bullets.map(item => (
-            <div className="w-full flex items-center gap-2" key={item.text}>
-              <div
-                className={`flex justify-center items-center rounded-full h-8 w-8 -mt-1 ${
-                  item.isEnabled
-                    ? 'bg-derma-primary/20 text-hg-black'
-                    : 'bg-hg-black100 text-hg-error'
-                }`}
-              >
-                <DynamicIcon
-                  family="default"
-                  name={item.icon}
-                  height={item.isEnabled ? 20 : 14}
-                  width={item.isEnabled ? 20 : 14}
-                />
-              </div>
-              <div className="flex flex-col ">
-                <Text>{item.text}</Text>
-              </div>
-            </div>
-          ))}
-        </Flex>
-      </Flex>
     );
   };
 
@@ -440,7 +395,10 @@ export default function AppointmentResume({
                     ) : (
                       cart[0].description && (
                         <Flex className="items-start mb-2">
-                          <Text>{cart[0].description}</Text>
+                          <Text>
+                            {cart[0].description} para{' '}
+                            {filteredPain.toLowerCase()}
+                          </Text>
                         </Flex>
                       )
                     )}
@@ -529,10 +487,8 @@ export default function AppointmentResume({
         layout="col-left"
         className="w-full rounded-xl overflow-hidden md:flex-row md:items-stretch"
       >
-        {isDerma && <TreatmentImage />}
         <Flex layout="col-left" className={`w-full ${bgColor}`}>
           {selectedSlot && <TreatmentDate selectedSlot={selectedSlot} />}
-          {isDerma && <TreatmentDerma />}
           {!appointment && !isDashboard && <AppointmentDataResume />}
           {isDashboard && <AppointmentResumeDashboard />}
         </Flex>
