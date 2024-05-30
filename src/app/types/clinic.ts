@@ -11,9 +11,9 @@ export interface Clinic {
   flowwwId: string;
   phone: string;
   addressExtraInfo: string;
-  district: string;
-  province: string;
-  zipCode: string;
+  district?: string;
+  province?: string;
+  zipCode?: string;
 }
 export interface ClinicReview {
   rating: number;
