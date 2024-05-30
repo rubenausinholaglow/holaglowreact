@@ -67,7 +67,6 @@ const AppointmentsListComponent: React.FC<{
     user,
     setCurrentUser,
     storedClinicId,
-    storedClinicFlowwwId,
     ignoreMessages,
     setAppointmentId,
     setClinicFlowwwId,
@@ -105,14 +104,14 @@ const AppointmentsListComponent: React.FC<{
   };
 
   useEffect(() => {
-    fetchAppointments(getBoxsByType(storedClinicFlowwwId, ProductType.Others));
+    fetchAppointments(getBoxsByType(storedClinicId, ProductType.Others));
     setSelectedType({ [ProductType.Others]: true });
 
     const intervalId = setInterval(() => {
       for (const typeId in selectedType) {
         if (selectedType[typeId]) {
           const productType = parseInt(typeId, 10) as ProductType;
-          fetchAppointments(getBoxsByType(storedClinicFlowwwId, productType));
+          fetchAppointments(getBoxsByType(storedClinicId, productType));
           break;
         }
       }
@@ -138,7 +137,7 @@ const AppointmentsListComponent: React.FC<{
       );
       fetchAppointments(
         getBoxsByType(
-          storedClinicFlowwwId,
+          storedClinicId,
           selectedType[ProductType.Medical]
             ? ProductType.Medical
             : ProductType.Esthetic
@@ -271,7 +270,7 @@ const AppointmentsListComponent: React.FC<{
       status
     )
       .then(response => {
-        fetchAppointments(getBoxsByType(storedClinicFlowwwId, productType));
+        fetchAppointments(getBoxsByType(storedClinicId, productType));
       })
       .catch(error => {
         setMessageNotification('Error al actualizar el estado de la cita');
@@ -377,7 +376,7 @@ const AppointmentsListComponent: React.FC<{
     );
     fetchAppointments(
       getBoxsByType(
-        storedClinicFlowwwId,
+        storedClinicId,
         selectedType[ProductType.Medical]
           ? ProductType.Medical
           : ProductType.Esthetic
@@ -438,7 +437,7 @@ const AppointmentsListComponent: React.FC<{
                 <Text className="w-[4%] shrink-0 p-2">
                   {isHeader
                     ? 'Box'
-                    : getBoxName(appointment.clinicFlowwwId, appointment.boxId)}
+                    : getBoxName(storedClinicId, appointment.boxId)}
                 </Text>
               )}
 
@@ -645,19 +644,13 @@ const AppointmentsListComponent: React.FC<{
     });
     switch (id) {
       case ProductType.Others:
-        fetchAppointments(
-          getBoxsByType(storedClinicFlowwwId, ProductType.Others)
-        );
+        fetchAppointments(getBoxsByType(storedClinicId, ProductType.Others));
         break;
       case ProductType.Medical:
-        fetchAppointments(
-          getBoxsByType(storedClinicFlowwwId, ProductType.Medical)
-        );
+        fetchAppointments(getBoxsByType(storedClinicId, ProductType.Medical));
         break;
       case ProductType.Esthetic:
-        fetchAppointments(
-          getBoxsByType(storedClinicFlowwwId, ProductType.Esthetic)
-        );
+        fetchAppointments(getBoxsByType(storedClinicId, ProductType.Esthetic));
         break;
     }
   }
