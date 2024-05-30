@@ -351,7 +351,7 @@ export const SUBSCRIPTIONS = [
     bullets: [
       {
         icon: 'SvgCream',
-        text: 'Rutina de 4 pasos para {PAIN}',
+        text: 'Rutina personalizada de 4 pasos',
         isEnabled: true,
       },
       {

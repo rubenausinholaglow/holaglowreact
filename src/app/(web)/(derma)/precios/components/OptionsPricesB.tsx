@@ -28,6 +28,7 @@ export default function OptionsPricesB({
   const filteredPain = PAINS_AND_SYMPTOMS.filter(
     item => item.value === pain
   )[0];
+
   return (
     <CheckHydration>
       <Accordion
@@ -66,7 +67,7 @@ export default function OptionsPricesB({
                 </Text>
               </div>
               <div
-                className="flex flex-col p-4 md:p-6 pt-0"
+                className="flex flex-col p-4 md:p-6 pt-0 md:hidden"
                 id="tmevent_derma_plans_expand_button"
               >
                 <div className="flex justify-left items-center gap-2">
@@ -79,59 +80,80 @@ export default function OptionsPricesB({
                   </Text>
                 </div>
               </div>
-              <div className="p-4 md:p-6">
-                <Image
-                  src={subscription.imgSrc}
-                  alt={subscription.title}
-                  height={538}
-                  width={706}
-                  className="w-3/4 mx-auto md:mb-4"
-                  priority
-                />
+              <div className="p-4 md:p-6 md:flex items-center w-full">
+                <div className="w-full md:w-1/2">
+                  <Image
+                    src={subscription.imgSrc}
+                    alt={subscription.title}
+                    height={538}
+                    width={706}
+                    className="w-3/4 mx-auto md:mb-4"
+                    priority
+                  />
+                </div>
 
-                <ul className=" md:mt-6 pt-6 flex flex-col gap-4 md:min-h-[200px]">
-                  {subscription.bullets.map(bullet => (
-                    <li
-                      key={bullet.text}
-                      className="flex gap-3 items-start w-full"
-                    >
-                      <div
-                        className={`flex justify-center items-center rounded-full h-8 w-8 -mt-1 ${
-                          bullet.isEnabled
-                            ? 'bg-derma-primary/20 text-hg-black'
-                            : 'bg-hg-black100 text-hg-error'
-                        }`}
-                      >
-                        <DynamicIcon
-                          family="default"
-                          name={bullet.isEnabled ? bullet.icon : 'SvgCross'}
-                          height={bullet.isEnabled ? 20 : 14}
-                          width={bullet.isEnabled ? 20 : 14}
-                        />
-                      </div>
-                      <Text className="text-sm">
-                        {bullet.text.replace(
-                          '{PAIN}',
-                          filteredPain?.name.toLocaleLowerCase()
-                        )}
+                <div className="w-full md:w-1/2">
+                  <div
+                    className="hidden md:flex md:flex-col"
+                    id="tmevent_derma_plans_expand_button"
+                  >
+                    <div className="flex justify-left items-center gap-2">
+                      <Text className="text-xl font-semibold text-derma-primary500 md:text-3xl">
+                        {subscription.price.value}
                       </Text>
-                    </li>
-                  ))}
-                </ul>
-                {!isMultistep && (
-                  <Flex className="justify-center">
-                    <Button
-                      type="derma"
-                      size="xl"
-                      customStyles="px-16"
-                      href={ROUTES.derma.multistep.start}
-                    >
-                      Empezar análisis de piel
-                    </Button>
-                  </Flex>
-                )}
+
+                      <Text className="text-xs md:text-md text-derma-primary500 ">
+                        {subscription.price.subtitle}
+                      </Text>
+                    </div>
+                  </div>
+                  <ul className="pt-6 flex flex-col gap-4">
+                    {subscription.bullets.map((bullet, index) => (
+                      <li
+                        key={bullet.text}
+                        className="flex gap-3 items-start w-full"
+                      >
+                        <div
+                          className={`flex justify-center items-center rounded-full h-8 w-8 -mt-1 ${
+                            bullet.isEnabled
+                              ? 'bg-derma-primary/20 text-hg-black'
+                              : 'bg-hg-black100 text-hg-error'
+                          }`}
+                        >
+                          <DynamicIcon
+                            family="default"
+                            name={bullet.isEnabled ? bullet.icon : 'SvgCross'}
+                            height={bullet.isEnabled ? 20 : 14}
+                            width={bullet.isEnabled ? 20 : 14}
+                          />
+                        </div>
+                        <Text className="text-sm md:text-md">
+                          {bullet.text}
+                          {index === 0 && filteredPain?.name
+                            ? ` para ${filteredPain?.name.toLocaleLowerCase()}`
+                            : ''}
+                        </Text>
+                      </li>
+                    ))}
+                  </ul>
+                  {!isMultistep ? (
+                    <Flex className="justify-center">
+                      <Button
+                        type="derma"
+                        size="xl"
+                        customStyles="px-16"
+                        href={ROUTES.derma.multistep.start}
+                      >
+                        Empezar análisis de piel
+                      </Button>
+                    </Flex>
+                  ) : (
+                    <Flex className="mt-8 w-full items-center justify-center md:justify-start">
+                      <OptionsPricesSelectButton index={index} />
+                    </Flex>
+                  )}
+                </div>
               </div>
-              <OptionsPricesSelectButton index={index} />
             </li>
           ))}
         </ul>

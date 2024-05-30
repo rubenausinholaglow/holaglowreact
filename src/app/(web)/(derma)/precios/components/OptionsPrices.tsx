@@ -1,3 +1,4 @@
+import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -30,52 +31,56 @@ export default function OptionsPrices({
           <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
             {[SUBSCRIPTIONS[0]].map((subscription, index) => (
               <li
-                className={`relative flex-grow md:w-1/2 rounded-2xl ${subscription?.bgColor}`}
+                className={`relative  flex-grow md:w-1/2 rounded-2xl ${subscription?.bgColor}`}
                 key={subscription.title}
               >
-                <div className="p-4 md:p-6">
+                <div className="p-4 md:p-6 flex flex-col md:flex-row md:items-center ">
                   {subscription?.imgSrc && (
-                    <Image
-                      src={subscription.imgSrc}
-                      alt={subscription.title}
-                      height={125}
-                      width={125}
-                      className="mb-4 mx-auto mt-2"
-                    />
+                    <div className="w-full md:w-1/2">
+                      <Image
+                        src={subscription.imgSrc}
+                        alt={subscription.title}
+                        height={isMobileSSR() ? 125 : 450}
+                        width={isMobileSSR() ? 125 : 450}
+                        className="mb-4 mx-auto mt-2 md:w-4/5"
+                      />
+                    </div>
                   )}
-                  <Text className="text-lg md:text-xl font-semibold mb-2">
-                    {subscription.title}
-                  </Text>
-                  <Text className="text-3xl font-bold text-derma-primary500">
-                    <span>{subscription.price.value}</span>
-                  </Text>
-                  <Text className="text-sm text-derma-primary500">
-                    {subscription.price.subtitle}
-                  </Text>
-                  <ul className="border-t border-hg-black100 mt-4 py-4 flex flex-col gap-4 ">
-                    {subscription.bullets.map(bullet => (
-                      <li
-                        key={bullet.text}
-                        className="flex gap-3 items-start w-full"
-                      >
-                        <div
-                          className={`flex justify-center items-center rounded-full h-8 w-8 -mt-1 ${
-                            bullet.isEnabled
-                              ? 'bg-derma-primary/20 text-hg-black'
-                              : 'bg-hg-black100 text-hg-error'
-                          }`}
+                  <div className="w-full md:w-1/2">
+                    <Text className="text-lg md:text-xl font-semibold mb-2">
+                      {subscription.title}
+                    </Text>
+                    <Text className="text-3xl font-bold text-derma-primary500">
+                      <span>{subscription.price.value}</span>
+                    </Text>
+                    <Text className="text-sm text-derma-primary500">
+                      {subscription.price.subtitle}
+                    </Text>
+                    <ul className="border-t border-hg-black100 mt-4 py-4 flex flex-col gap-4 ">
+                      {subscription.bullets.map(bullet => (
+                        <li
+                          key={bullet.text}
+                          className="flex gap-3 items-start w-full"
                         >
-                          <DynamicIcon
-                            family="default"
-                            name={bullet.icon}
-                            height={bullet.isEnabled ? 20 : 14}
-                            width={bullet.isEnabled ? 20 : 14}
-                          />
-                        </div>
-                        {bullet.text}
-                      </li>
-                    ))}
-                  </ul>
+                          <div
+                            className={`flex justify-center items-center rounded-full h-8 w-8 -mt-1 ${
+                              bullet.isEnabled
+                                ? 'bg-derma-primary/20 text-hg-black'
+                                : 'bg-hg-black100 text-hg-error'
+                            }`}
+                          >
+                            <DynamicIcon
+                              family="default"
+                              name={bullet.icon}
+                              height={bullet.isEnabled ? 20 : 14}
+                              width={bullet.isEnabled ? 20 : 14}
+                            />
+                          </div>
+                          {bullet.text}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </li>
             ))}

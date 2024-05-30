@@ -89,7 +89,10 @@ export default function ThankYouMultiStep() {
     >
       <div className="md:flex gap-12 pt-8">
         <Container className="mb-8">
-          <Flex layout="col-center" className="w-full gap-4 md:items-start">
+          <Flex
+            layout="col-center"
+            className="w-full gap-4 md:items-start pb-4"
+          >
             <Image
               alt="Dra. Sonsoles Espi"
               src="/images/derma/multistep/Sonsoles.png"
@@ -103,7 +106,6 @@ export default function ThankYouMultiStep() {
             <Text className="text-center md:text-left">
               Tenemos un pack preparado para ti
             </Text>
-
             <OptionsPricesB isMultistep={true} />
           </Flex>
           <Flex layout="col-left" className="mt-6 w-full gap-4 md:items-start">
@@ -123,7 +125,7 @@ export default function ThankYouMultiStep() {
         <Container className="px-0 md:px-4">
           <Title size="xl" className="text-derma-primary font-light mb-4 px-4">
             ... y esta será tu crema formulada para{' '}
-            {filteredPain.name.toLowerCase()}
+            {filteredPain?.name.toLowerCase()}
           </Title>
           <CheckHydration>
             <Flex layout="col-left" className="md:flex-row w-full mb-8">
