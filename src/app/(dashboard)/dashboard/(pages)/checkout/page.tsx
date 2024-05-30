@@ -95,6 +95,7 @@ const Page = () => {
         percentageDiscount: CartItem.percentageDiscount / 100,
         priceDiscount: Number(CartItem.priceDiscount.toFixed(2)),
         productFlowwwId: CartItem.flowwwId,
+        isPack: CartItem.isPack,
       })),
     };
     try {

@@ -216,6 +216,7 @@ export const PaymentModule = () => {
         priceDiscount: CartItem.priceDiscount,
         name: CartItem.description,
         productFlowwwId: CartItem.flowwwId,
+        isPack: CartItem.isPack,
       })),
     };
 
