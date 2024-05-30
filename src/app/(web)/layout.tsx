@@ -20,7 +20,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <head>
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script
           id="cookieyes"
           type="text/javascript"
@@ -35,7 +34,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             style={{ display: 'none', visibility: 'hidden' }}
           ></iframe>
         </noscript>
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script
           id="gtm-script"
           strategy="lazyOnload"
@@ -47,6 +45,35 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         })(window,document,'script','dataLayer','${GOOGLE_ID}');`,
           }}
         ></Script>
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Holaglow',
+              url: 'https://www.holaglow.com/',
+              logo: '',
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+34682417208',
+                contactType: 'customer service',
+                contactOption: 'TollFree',
+                areaServed: 'ES',
+                availableLanguage: ['en', 'es', 'Catalan'],
+              },
+              sameAs: [
+                'https://www.facebook.com/p/Holaglow-100089635050832/?_rdr',
+                'https://www.instagram.com/holaglow.clinics/',
+                'https://www.youtube.com/channel/UClbkeOPUeqXaYyAnrHSencA',
+                'https://es.linkedin.com/company/holaglow',
+                'https://www.holaglow.com/',
+              ],
+            }),
+          }}
+        />
       </head>
 
       {children}
