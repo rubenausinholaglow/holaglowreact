@@ -1,7 +1,9 @@
 'use client';
 
 import { isMobile } from 'react-device-detect';
+import { fetchClinics } from '@utils/fetch';
 import { SvgLocation } from 'app/icons/Icons';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
@@ -10,7 +12,8 @@ import Image from 'next/image';
 const CLINICS = [
   {
     name: 'Barcelona',
-    address: 'Avenida Diagonal, 299 - 08013',
+    address: "Av. Diagonal, 299, L'Eixample, 08013 Barcelona",
+    extraAddress: '(Zona Sagrada Família)',
     images: [
       'barcelona1.jpg',
       'barcelona2.jpg',
@@ -20,12 +23,14 @@ const CLINICS = [
   },
   {
     name: 'Madrid',
-    address: 'C. de Andrés Mellado, 3 - 28015 (frente a Corte Inglés Princesa)',
+    address: 'C. de Andrés Mellado, 3, Chamberí, 28015 Madrid',
+    extraAddress: '(Frente a Corte Inglés Princesa)',
     images: ['madrid1.jpg', 'madrid2.jpg', 'madrid3.jpg'],
   },
   {
     name: 'Valencia',
-    address: 'Plaza de Alfonso el Magnánimo, 6 - 46003 (Metro Colón)',
+    address: "Plaça d'Alfons el Magnànim, 6, Ciutat Vella, 46003 València",
+    extraAddress: '(Metro Colón)',
     images: [
       'valencia1.jpg',
       'valencia2.jpg',
@@ -46,6 +51,10 @@ const TAGS = [
 ];
 
 function ClinicSlide({ clinic }: { clinic: any }) {
+  const { clinics } = useGlobalPersistedStore(state => state);
+
+  console.log(clinics);
+
   return (
     <div className="rounded-t-3xl md:rounded-none p-4 md:p-[1px] h-full flex flex-col md:flex-row md:gap-16">
       <Carousel
