@@ -338,7 +338,7 @@ export const SUBSCRIPTIONS = [
     bottomBar: 'Cancela en cualquier momento',
   },*/
   {
-    title: 'Compra única',
+    title: 'Rutina personalizada',
     id: '2ee9da6f-4fad-42fc-b717-0b67d49ef0cf',
     subtitle: 'Este pack te servirá para los próximos 3 meses',
     imgSrc: '/images/derma/landingPrecios/rutina.png',
