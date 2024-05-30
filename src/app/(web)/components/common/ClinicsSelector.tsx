@@ -89,8 +89,11 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
                         <Text size="lg" className="font-semibold mb-2">
                           {clinic.city}
                         </Text>
-                        <address className="text-xs text-left not-italic mb-2">
-                          {clinic.address}
+                        <address className="text-sm not-italic">
+                          {clinic?.address}, {clinic?.district},{' '}
+                          {clinic?.zipCode} {clinic?.province}
+                          <br />
+                          {clinic?.addressExtraInfo}
                         </address>
                       </Flex>
 
@@ -138,8 +141,11 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
                     <Text size="lg" className="font-semibold mb-2">
                       {clinic.city}
                     </Text>
-                    <address className="text-left not-italic mb-2 text-xs">
-                      {clinic.address}
+                    <address className="text-xs not-italic">
+                      {clinic?.address}, {clinic?.district}, {clinic?.zipCode}{' '}
+                      {clinic?.province}
+                      <br />
+                      {clinic?.addressExtraInfo}
                     </address>
                   </Flex>
                   <SvgAngle height={24} width={24} />
