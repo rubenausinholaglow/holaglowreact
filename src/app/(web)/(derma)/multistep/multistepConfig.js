@@ -115,8 +115,8 @@ export const PAINS_AND_SYMPTOMS = [
 ];
 
 export const GENDER = [
-  { title: 'Femenino', value: 0 },
-  { title: 'Masculino', value: 1 },
+  { title: 'Masculino', value: 0 },
+  { title: 'Femenino', value: 1 },
   { title: 'No binario', value: 2 },
 ];
 
