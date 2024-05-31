@@ -10,6 +10,8 @@ export interface Clinic {
   professionals: Professional[];
   flowwwId: string;
   phone: string;
+  lat: number;
+  long: number;
 }
 export interface ClinicReview {
   rating: number;
