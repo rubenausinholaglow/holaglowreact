@@ -56,18 +56,23 @@ export default function Form() {
   const router = useRouter();
   const {
     id,
+    setId,
     pain,
     symptoms,
+    gender,
+    lactating,
+    age,
     skinType,
     skinSensibility,
+    skinColor,
     allergy,
     allergyInfo,
     illness,
     illnessInfo,
     medication,
     medicationInfo,
-    lactating,
     extraInfo,
+    secondaryConcerns,
   } = useDermaStore(state => state);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -89,18 +94,20 @@ export default function Form() {
         phonePrefix: client.phonePrefix,
         skinPain: pain,
         skinType,
+        gender,
+        lactating,
+        ageRange: age,
         skinSensibility,
+        skinColor,
         allergy,
         allergyInfo,
         illness,
         illnessInfo,
         medication,
         medicationInfo,
-        lactating,
+        skinConcerns: symptoms.map(x => ({ concern: x })),
+        objectives: secondaryConcerns.map(x => ({ objective: x })),
         extraInfo,
-        skinConcerns: symptoms.map(x => ({
-          concern: x,
-        })),
       };
       dermaService.update(dermaQuestions as DermaQuestions);
       router.push(ROUTES.derma.multistep.thankyou);
