@@ -1,14 +1,14 @@
 'use client';
 
 import { RefObject, useEffect, useState } from 'react';
-import Bugsnag from '@bugsnag/js';
-import ProductService from '@services/ProductService';
+import { ProfessionalDashboardCarousel } from 'app/(dashboard)/dashboard/(pages)/budgets/ProfessionalsModal';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import Professionals from 'app/(web)/components/common/Professionals';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import { setSeoMetaData, useElementOnScreen } from 'app/utils/common';
 import { fetchProduct } from 'app/utils/fetch';
+import { Container } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import PsrpPage from '../../psrp';
@@ -117,8 +117,24 @@ export default function ProductDetailPage({
           <ProductResults product={product} />
         )}
 
-        <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
-          <Professionals />
+        <div className="pt-12 pb-20">
+          <Container className="md:px-6">
+            <Title
+              isAnimated
+              size="2xl"
+              className="text-left font-bold mb-6 md:mb-8"
+            >
+              Nuestros
+            </Title>
+            <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
+              En Holaglow defendemos una medicina estética que cuida y, para
+              ello, la profesionalidad y la empatía son fundamentales. Todos
+              nuestros doctores comparten el mismo compromiso: ponerse en tu
+            </Text>
+          </Container>
+
+          <ProfessionalDashboardCarousel />
+          {/* <Professionals /> */}
         </div>
       </>
     );
