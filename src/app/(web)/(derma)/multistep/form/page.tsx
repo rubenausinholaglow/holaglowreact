@@ -56,7 +56,6 @@ export default function Form() {
   const router = useRouter();
   const {
     id,
-    setId,
     pain,
     symptoms,
     gender,
@@ -84,6 +83,7 @@ export default function Form() {
     setIsLoading(true);
 
     client.origin = 'Derma';
+
     registerUser(client, false, false, false, true).then(user => {
       const dermaQuestions = {
         id,
