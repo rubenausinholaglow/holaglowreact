@@ -1,6 +1,7 @@
 import Bugsnag from '@bugsnag/js';
 import { CreateTicketRequest } from '@interface/createTicket';
 import { PaymentInitResponse } from '@interface/payment';
+import { Wallet } from '@interface/wallet';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
@@ -146,7 +147,7 @@ export default class FinanceService {
     }
   }
 
-static async validatePromoCode(promoCode: string): Promise<boolean> {
+  static async validatePromoCode(promoCode: string): Promise<boolean> {
     try {
       const url = `${FinanceService.getFinanceUrl(false)}Validate?code=${promoCode}`;
       const res = await fetch(url, {
@@ -166,6 +167,27 @@ static async validatePromoCode(promoCode: string): Promise<boolean> {
       Bugsnag.notify(error);
       return false;
     }
+  }
+
+  static async getWalletBalance(userId: string): Promise<Wallet> {
+    try {
+      const url = `${FinanceService.getFinanceUrl(false)}BalanceUser?userId=${userId}`;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return {} as Wallet;
+      }
+    } catch (error: any) {
+      Bugsnag.notify(error);
+    }
+    return {} as Wallet;
   }
 
 

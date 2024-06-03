@@ -1,12 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import { PaymentMethod } from '@interface/payment';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import { usePromoUserHook } from 'app/(dashboard)/dashboard/hooks/usePromoUserHook';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -73,6 +75,10 @@ export const PaymentModule = () => {
   useEffect(() => {
     setActivePaymentMethod('');
   }, [paymentList]);
+
+  useEffect(() => {
+    getWalletBalance(user!.id);
+  }, []);
 
   const processPaymentMessages = (paymentMessages: any) => {
     const paymentCreatedMessages = paymentMessages.filter(
@@ -170,6 +176,8 @@ export const PaymentModule = () => {
       messageSocket.removeMessageSocket(message);
     }
   };
+
+  const { wallet, getWalletBalance } = usePromoUserHook();
 
   let productsPriceTotalWithDiscounts = 0;
 
@@ -294,6 +302,12 @@ export const PaymentModule = () => {
     frakmenta: ['frakmenta.svg'],
     frakmentaOnline: ['frakmenta.svg'],
   };
+  const filteredPaymentItems = paymentItems.filter(method => {
+    return !(
+      method.key === 'wallet' &&
+      paymentList.some(payment => payment.method === PaymentMethod.Wallet)
+    );
+  });
 
   return (
     <>
@@ -307,7 +321,7 @@ export const PaymentModule = () => {
             setActivePaymentMethod(activePaymentMethod);
           }}
         >
-          {paymentItems.map(method => (
+          {filteredPaymentItems.map(method => (
             <AccordionItem
               key={method.key}
               value={method.key}
@@ -324,7 +338,10 @@ export const PaymentModule = () => {
                     className="shrink-0 hidden group-data-[state=open]:block"
                   />
                   <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-                  <Text>{method.label}</Text>
+                  <Text>
+                    {method.label}
+                    {method.key == 'wallet' && ': ' + wallet?.amountBalance}
+                  </Text>
                   <Flex className="ml-auto gap-2">
                     {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
                       PAYMENT_ICONS[
@@ -354,6 +371,11 @@ export const PaymentModule = () => {
                           setActivePaymentMethod('');
                           setOnLoad(false);
                         }}
+                        balance={
+                          activePaymentMethod == 'wallet'
+                            ? wallet?.amountBalance
+                            : 0
+                        }
                       ></PaymentClient>
                     ) : null
                   )}

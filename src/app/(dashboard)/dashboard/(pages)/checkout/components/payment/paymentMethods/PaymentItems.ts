@@ -37,11 +37,17 @@ export const paymentItems = [
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
-    {
+  {
     key: 'frakmentaOnline',
     label: 'Frakmenta (Offline)',
     paymentBank: PaymentBank.Frakmenta,
     paymentMethod: PaymentMethod.CreditCard,
+  },
+  {
+    key: 'wallet',
+    label: 'Puntos Usuario',
+    paymentBank: PaymentBank.Points,
+    paymentMethod: PaymentMethod.Wallet,
   },
 ];
 

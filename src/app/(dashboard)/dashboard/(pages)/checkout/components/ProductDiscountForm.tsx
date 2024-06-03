@@ -87,6 +87,7 @@ export default function ProductDiscountForm({
 
   const handleInvalidateCode = () => {
     setIsValid(null);
+    setValue('');
     applyCartDiscount(0, '€');
   };
 
@@ -98,7 +99,7 @@ export default function ProductDiscountForm({
     } else {
       setIsMGM(false);
       setValue('');
-      setIsValid(false);
+      setIsValid(null);
     }
   }, [promoCode]);
 

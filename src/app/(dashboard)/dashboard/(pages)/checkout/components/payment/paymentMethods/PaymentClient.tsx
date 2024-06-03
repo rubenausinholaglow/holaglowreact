@@ -9,12 +9,14 @@ interface PaymentProps {
   paymentBank: PaymentBank;
   paymentMethod: PaymentMethod;
   onPaymentClick: () => void;
+  balance?: number;
 }
 
 export default function PaymentClient({
   paymentBank,
   paymentMethod,
   onPaymentClick,
+  balance = 0,
 }: PaymentProps) {
   return (
     <Flex layout="col-center" className="relative w-full">
@@ -22,6 +24,7 @@ export default function PaymentClient({
         paymentBank={paymentBank}
         paymentMethod={paymentMethod}
         onButtonClick={onPaymentClick}
+        balance={balance}
       ></PaymentInput>
     </Flex>
   );

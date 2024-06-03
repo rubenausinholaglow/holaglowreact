@@ -46,6 +46,7 @@ interface Props {
   paymentMethod: PaymentMethod;
   paymentBank: PaymentBank;
   onButtonClick: (newValue: boolean) => void;
+  balance?: number;
 }
 
 export default function PaymentInput(props: Props) {
@@ -113,8 +114,10 @@ export default function PaymentInput(props: Props) {
     Math.ceil(cartTotalWithDiscount * 100) / 100;
 
   const MaxValue =
-    parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
-    parseFloat(totalAmount.toFixed(2));
+    props.balance != undefined && props.balance > 0
+      ? props.balance
+      : parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
+        parseFloat(totalAmount.toFixed(2));
 
   const sendPaymentCreated = async (
     paymentId: string,
