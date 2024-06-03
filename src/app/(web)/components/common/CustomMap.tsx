@@ -136,7 +136,7 @@ export default function CustomMap({
                 });
 
                 const contentString = `
-                  <div id="content" style="padding: 16px;">
+                  <div id="content" style="padding: 0 16px 16px;">
                     <p class="city">${selectedClinic.city}</p>
                     <p class="address">${selectedClinic.address}</p>
                     <a href="https://wa.me/34682417208" class="link">Más info</a>

@@ -89,7 +89,7 @@ export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
                         <Text size="lg" className="font-semibold mb-2">
                           {clinic.city}
                         </Text>
-                        <address className="text-sm not-italic">
+                        <address className="text-sm not-italic text-left">
                           {clinic?.address}, {clinic?.district},{' '}
                           {clinic?.zipCode} {clinic?.province}
                           <br />
