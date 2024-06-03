@@ -39,6 +39,7 @@
     "html5-qrcode": "^2.3.8",
     "http-proxy-middleware": "^2.0.6",
     "lodash": "^4.17.21",
+    "lottie-web": "^5.12.2",
     "next": "^13.5.2",
     "nif-dni-nie-cif-validation": "^1.0.10",
     "postcss": "8.4.23",
