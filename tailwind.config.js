@@ -228,6 +228,13 @@ module.exports = {
           },
           to: { opacity: '1', transform: 'translate(0%, 0%) scale(1)' },
         },
+        contentShowBottom: {
+          from: {
+            opacity: '0',
+            transform: 'translate(0, 105%) scale(1)',
+          },
+          to: { opacity: '1', transform: 'translate(0%, 0%) scale(1)' },
+        },
       },
       animation: {
         slideDown: 'slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)',
@@ -238,6 +245,8 @@ module.exports = {
         pains: 'pains 6s ease infinite',
         overlayShow: 'overlayShow 250ms cubic-bezier(0.16, 1, 0.3, 1)',
         contentShow: 'contentShow 250ms cubic-bezier(0.16, 1, 0.3, 1)',
+        contentShowBottom:
+          'contentShowBottom 250ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },
