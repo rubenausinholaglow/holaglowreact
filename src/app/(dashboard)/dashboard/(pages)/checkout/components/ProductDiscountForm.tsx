@@ -91,12 +91,16 @@ export default function ProductDiscountForm({
   };
 
   useEffect(() => {
-    if (promoCode.length > 0) {
+    if (promoCode != undefined && promoCode.length > 0) {
       setIsMGM(true);
       setValue(promoCode);
       setIsValid(true);
+    } else {
+      setIsMGM(false);
+      setValue('');
+      setIsValid(false);
     }
-  });
+  }, [promoCode]);
 
   return (
     <Flex layout={isCheckout ? 'col-left' : 'row-left'}>

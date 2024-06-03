@@ -5,6 +5,7 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import ProductDiscountForm from 'app/(dashboard)/dashboard/(pages)/checkout/components/ProductDiscountForm';
 import { SvgClose } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -32,6 +33,8 @@ export default function CheckoutTotal() {
     );
   }
 
+  const { setPromoCode } = useGlobalPersistedStore(state => state);
+
   const hasProductsDiscount =
     productsPriceTotal !== productsPriceTotalWithDiscounts;
 
@@ -48,6 +51,11 @@ export default function CheckoutTotal() {
     Math.ceil(cartTotalWithDiscount * 100) / 100;
   const productsPriceTotalWithDiscountsFixed =
     Math.ceil(productsPriceTotalWithDiscounts * 100) / 100;*/
+
+  const handleApplyDiscount = () => {
+    setPromoCode(undefined);
+    applyCartDiscount(0, '€');
+  };
   return (
     <div>
       <Flex layout="col-left" className="p-4">
@@ -119,7 +127,7 @@ export default function CheckoutTotal() {
                 <Flex
                   layout="row-left"
                   className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                  onClick={() => applyCartDiscount(0, '€')}
+                  onClick={() => handleApplyDiscount()}
                 >
                   <Text size="xs">- {priceDiscount}€</Text>
                   <SvgClose height={12} width={12} className="ml-1" />

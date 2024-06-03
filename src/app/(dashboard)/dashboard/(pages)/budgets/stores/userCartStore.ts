@@ -1,3 +1,4 @@
+import { useGlobalPersistedStore, useGlobalStore } from 'app/stores/globalStore';
 import { Actions, State } from 'app/types/cart';
 import { Professional } from 'app/types/clinic';
 import { CartItem, Product } from 'app/types/product';
@@ -6,6 +7,8 @@ import { applyDiscountToItem, deleteDiscountToItem } from 'app/utils/utils';
 import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
+
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   const updatedCart: CartItem[] = [...cart];
@@ -23,6 +26,10 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   });
   return updatedCart;
 }
+
+
+
+
 
 function recalculateCartItems(
   cart: CartItem[],
@@ -99,6 +106,7 @@ export const useCartStore = create(
         set(() => ({ cart: updatedCart }));
       },
       applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {
+        
         const roundedValue = Number(value.toFixed(2));
         set(state => ({
           
