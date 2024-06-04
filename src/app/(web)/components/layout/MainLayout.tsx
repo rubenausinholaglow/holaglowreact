@@ -7,6 +7,7 @@ import { useGlobalStore } from 'app/stores/globalStore';
 import dayjs from 'dayjs';
 import spanishConf from 'dayjs/locale/es';
 
+import FloatingBottomBar from '../home/FloatingBottomBar';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from './Footer';
 import Header from './Header';
@@ -122,6 +123,7 @@ export default function MainLayout({
         <main>
           {!hideHeader && <Header />}
           {children}
+          <FloatingBottomBar />
           {!hideFooter && <Footer />}
         </main>
       </>

@@ -74,9 +74,7 @@ export default function Html({ children }: { children: ReactNode }) {
 
   const {
     stateProducts,
-    dermaProducts,
     setStateProducts,
-    setDermaProducts,
     clinics,
     setClinics,
     promo,
@@ -151,6 +149,7 @@ export default function Html({ children }: { children: ReactNode }) {
       />
       <Breakpoint />
       {children}
+
       <SpeedInsights />
     </body>
   );
