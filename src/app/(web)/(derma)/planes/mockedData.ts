@@ -33,7 +33,7 @@ export const DERMA_GENERIC_PRODUCTS = [
   {
     title: 'Espuma limpiadora',
     toggle: 'Mantén tu piel limpia para mejorar el efecto de la rutina',
-    isNightRoutine: true,
+    routineType: 'both',
     img: '/images/derma/landingPrecios/ingredients/espumaLimpiadora.png',
     carouselImg: [
       '/images/derma/products/espumaLimpiadora/espumaLimpiadora1.jpg',
@@ -59,7 +59,7 @@ export const DERMA_GENERIC_PRODUCTS = [
   {
     title: 'Crema de día',
     toggle: 'Crema de día preparada por tu médico',
-    isNightRoutine: false,
+    routineType: 'day',
     img: '/images/derma/landingPrecios/ingredients/crema.png',
     carouselImg: [
       '/images/derma/products/cremaDeDia/cremaDeDia1.jpg',
@@ -147,7 +147,7 @@ export const DERMA_GENERIC_PRODUCTS = [
   {
     title: 'Protector solar 50+',
     toggle: 'Protege tu piel de los efectos de la radiación ultravioleta',
-    isNightRoutine: false,
+    routineType: 'day',
     img: '/images/derma/landingPrecios/ingredients/protectorSolar.png',
     carouselImg: [
       '/images/derma/products/protectorSolar/protectorSolar1.jpg',
@@ -177,7 +177,7 @@ export const DERMA_GENERIC_PRODUCTS = [
     img: '/images/derma/landingPrecios/ingredients/cremaFormulada.png',
     carouselImg: ['/images/derma/products/cremaFormulada/cremaFormulada.png'],
     toggle: 'Diseñada y elaborada exclusivamente para ti',
-    isNightRoutine: false,
+    routineType: 'night',
     subTitle: '50ml',
     text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel y en su justa medida para lograr la mayor efectividad. Al ser personalizada, no la encontrarás en ningún otro sitio',
     info: '',

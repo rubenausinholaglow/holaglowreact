@@ -19,7 +19,7 @@ export default function OptionsPricesSelectButton({
   const [isLoading, setIsLoading] = useState(false);
 
   const { resetCart, addItemToCart } = useCartStore(state => state);
-  const { payment, setPayment } = useSessionStore(state => state);
+  const { setPayment } = useSessionStore(state => state);
 
   useEffect(() => {
     resetCart();

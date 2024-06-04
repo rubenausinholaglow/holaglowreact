@@ -23,7 +23,10 @@ export async function selectDermaProduct({
       productId = process.env.NEXT_PUBLIC_DERMA_ONLY_RECEIPT_ID!;
       break;
   }
+
   const productDetails = await fetchProduct(productId, false, true);
+
   addItemToCart(productDetails as CartItem);
+
   router.push(ROUTES.derma.multistep.payment);
 }
