@@ -1,4 +1,5 @@
-import { isMobile } from 'react-device-detect';
+'use client';
+
 import CheckHydration from '@utils/CheckHydration';
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
@@ -11,7 +12,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import MedicAdvice from './MedicAdvice';
+import MedicAdvice from '../components/MedicAdvice';
 
 export default function SkinTypeFeedback() {
   const router = useRouter();

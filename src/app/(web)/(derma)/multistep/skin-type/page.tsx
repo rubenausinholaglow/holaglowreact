@@ -18,11 +18,9 @@ import { HandleNextMultistep } from '../NextMultistepButton';
 
 export default function SkinType() {
   const router = useRouter();
-  const { skinType, setSkinType, setFeedbackStep } = useDermaStore(
-    state => state
-  );
+  const { skinType, setSkinType } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.output.skinType);
 
   return (
     <DermaLayout
@@ -57,7 +55,6 @@ export default function SkinType() {
                     onClick={async () => {
                       setSkinType(skinType === item.value ? 0 : item.value);
                       if (skinType !== item.value) {
-                        setFeedbackStep(2);
                         await nextStep();
                       }
                     }}

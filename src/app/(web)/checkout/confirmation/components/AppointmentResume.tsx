@@ -14,6 +14,7 @@ import {
   getUniqueProducts,
 } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { PAINS_AND_SYMPTOMS } from 'app/(web)/(derma)/multistep/multistepConfig';
 import { SUBSCRIPTIONS } from 'app/(web)/(derma)/planes/mockedData';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import {
@@ -24,6 +25,7 @@ import {
   SvgStethoscope,
 } from 'app/icons/Icons';
 import { SvgBag, SvgCheckCircle } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
@@ -70,6 +72,11 @@ export default function AppointmentResume({
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
+  const { pain } = useDermaStore(state => state);
+
+  const filteredPain = isDerma
+    ? PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0].name
+    : '';
 
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
     state => state
@@ -388,7 +395,10 @@ export default function AppointmentResume({
                     ) : (
                       cart[0].description && (
                         <Flex className="items-start mb-2">
-                          <Text>{cart[0].description}</Text>
+                          <Text>
+                            {cart[0].description} para{' '}
+                            {filteredPain.toLowerCase()}
+                          </Text>
                         </Flex>
                       )
                     )}

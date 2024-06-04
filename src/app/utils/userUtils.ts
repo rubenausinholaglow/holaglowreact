@@ -113,6 +113,7 @@ export const useRegistration = (
               } else {
                 router.push('/checkout/confirmation');
               }
+              return user;
             } else {
               return undefined;
             }

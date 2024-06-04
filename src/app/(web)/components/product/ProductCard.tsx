@@ -108,7 +108,7 @@ export default function ProductCard({
         layout="col-left"
         className="p-3 flex-grow bg-white rounded-b-2xl z-10"
       >
-        <Text className="mb-2 font-semibold">{product.title}</Text>
+        <Text as="h2" className="mb-2 font-semibold">{product.title}</Text>
         {!isDashboard && (
           <Text size="xs" className="text-hg-black500 mb-8">
             {product.longDescription}

@@ -20,7 +20,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <head>
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script
           id="cookieyes"
           type="text/javascript"
@@ -35,7 +34,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             style={{ display: 'none', visibility: 'hidden' }}
           ></iframe>
         </noscript>
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script
           id="gtm-script"
           strategy="lazyOnload"
@@ -46,7 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','${GOOGLE_ID}');`,
           }}
-        ></Script>
+        />
       </head>
 
       {children}

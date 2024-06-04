@@ -28,35 +28,27 @@ export default function OptionsPrices({
             </>
           )}
           <ul className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mb-8">
-            {[SUBSCRIPTIONS[0], SUBSCRIPTIONS[1]].map((subscription, index) => (
+            {[SUBSCRIPTIONS[0]].map((subscription, index) => (
               <li
-                className={`relative flex-grow md:w-1/2 rounded-2xl ${subscription.bgColor}`}
+                className={`relative flex-grow md:w-1/2 rounded-2xl ${subscription?.bgColor}`}
                 key={subscription.title}
               >
                 <div className="p-4 md:p-6">
-                  <Image
-                    src={subscription.imgSrc}
-                    alt={subscription.title}
-                    height={125}
-                    width={125}
-                    className="mb-4 mx-auto mt-2"
-                  />
+                  {subscription?.imgSrc && (
+                    <Image
+                      src={subscription.imgSrc}
+                      alt={subscription.title}
+                      height={125}
+                      width={125}
+                      className="mb-4 mx-auto mt-2"
+                    />
+                  )}
                   <Text className="text-lg md:text-xl font-semibold mb-2">
                     {subscription.title}
                   </Text>
                   <Text className="text-3xl font-bold text-derma-primary500">
                     <span>{subscription.price.value}</span>
-                    {subscription.price?.discount && (
-                      <span className="bg-derma-primary500 text-md py-1 px-3 rounded-full text-white inline-block relative bottom-1.5 ml-4">
-                        {subscription.price.discount}
-                      </span>
-                    )}
                   </Text>
-                  {subscription.price?.oldValue && (
-                    <Text className="text-sm text-hg-error line-through">
-                      {subscription.price.oldValue}
-                    </Text>
-                  )}
                   <Text className="text-sm text-derma-primary500">
                     {subscription.price.subtitle}
                   </Text>
@@ -85,14 +77,6 @@ export default function OptionsPrices({
                     ))}
                   </ul>
                 </div>
-                {subscription.bottomBar && (
-                  <div
-                    className="bg-derma-primary300 p-4 py-3 rounded-b-2xl text-center"
-                    dangerouslySetInnerHTML={{
-                      __html: subscription.bottomBar,
-                    }}
-                  />
-                )}
               </li>
             ))}
           </ul>

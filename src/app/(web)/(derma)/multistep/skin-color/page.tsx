@@ -18,11 +18,9 @@ import { HandleNextMultistep } from '../NextMultistepButton';
 export default function SkinColor() {
   const router = useRouter();
 
-  const { skinColor, setSkinColor, setFeedbackStep } = useDermaStore(
-    state => state
-  );
+  const { skinColor, setSkinColor } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.output.skinColor);
 
   return (
     <DermaLayout
@@ -60,7 +58,6 @@ export default function SkinColor() {
                         skinColor === color.value ? undefined : color.value
                       );
                       if (skinColor !== color.value) {
-                        setFeedbackStep(3);
                         await nextStep();
                       }
                     }}

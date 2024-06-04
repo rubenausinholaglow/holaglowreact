@@ -1,18 +1,27 @@
 'use client';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import './datePickerStyle.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
+import { Appointment } from '@interface/appointment';
 import { CartItem, EmlaType, Product } from '@interface/product';
 import ScheduleService from '@services/ScheduleService';
 import CheckHydration from '@utils/CheckHydration';
+import { fetchProduct } from '@utils/fetch';
 import { getTreatmentId } from '@utils/userUtils';
-import { formatDate, getUniqueIds, validTypesFilterCart } from '@utils/utils';
+import {
+  formatDate,
+  getClinicToSet,
+  getUniqueIds,
+  validTypesFilterCart,
+} from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import AppointmentElement from 'app/(web)/reagenda/components/AppointmentElement';
 import { SvgCalendar, SvgHour, SvgLocation, SvgSpinner } from 'app/icons/Icons';
 import {
+  SvgCalling,
   SvgCross,
   SvgEllipsis,
   SvgSadIcon,
@@ -52,7 +61,9 @@ export default function Agenda({
 }) {
   const router = useRouter();
   const ROUTES = useRoutes();
-  const { user } = useGlobalPersistedStore(state => state);
+  const { user, setCurrentUser, clinics } = useGlobalPersistedStore(
+    state => state
+  );
 
   const {
     setSelectedSlot,
@@ -67,8 +78,17 @@ export default function Agenda({
     setSelectedDay,
     treatmentPacks,
     setTreatmentPacks,
+    setSelectedTreatments,
     setPayment,
+    setSelectedClinic,
   } = useSessionStore(state => state);
+
+  const [showReviewAlreadyCreated, setShowReviewAlreadyCreated] =
+    useState(false);
+  const [showTooLateToSchedule, setShowTooLateToSchedule] = useState(false);
+  const [appointmentToShow, setAppointmentToShow] = useState<
+    Appointment | undefined
+  >(undefined);
 
   const [enableScheduler, setEnableScheduler] = useState(false);
   const [dateToCheck, setDateToCheck] = useState<Dayjs | undefined>(undefined);
@@ -127,14 +147,19 @@ export default function Agenda({
 
   const productIds = getUniqueIds(selectedTreatments);
 
-  const maxDay = dayjs().add(maxDays, 'day');
+  const [maxDay, setMaxDay] = useState(dayjs().add(maxDays, 'day'));
 
   function loadMonth() {
+    if (previousAppointment?.treatmentText == 'Revisión Tratamiento') {
+      const day = dayjs(previousAppointment.startTime).add(7, 'day');
+      setMaxDay(day);
+    }
     setLoadingMonth(true);
     if (
       selectedTreatmentsIds &&
       availableDates.length < maxDays &&
-      dateToCheck
+      dateToCheck &&
+      selectedClinic
     ) {
       if (selectedTreatmentsIds != '902' && !isOnline) {
         ScheduleService.getMonthAvailability(
@@ -227,7 +252,8 @@ export default function Agenda({
       if (
         availability.length < maxDays &&
         (date.isAfter(today) || (date.isSame(today, 'day') && !isDerma)) &&
-        x.availability
+        x.availability &&
+        date.isBefore(maxDay)
       ) {
         availability.push(x);
       }
@@ -244,7 +270,9 @@ export default function Agenda({
     setSelectedDay(undefined);
     setEnableScheduler(true);
     setDateToCheck(dayjs());
-    const isOnline = selectedTreatments[0].title == 'Probador Virtual Online';
+    const isOnline =
+      selectedTreatments.length > 0 &&
+      selectedTreatments[0].title == 'Probador Virtual Online';
     setIsOnline(isOnline);
     setPayment(undefined);
   }
@@ -331,7 +359,7 @@ export default function Agenda({
             analyticsMetrics,
             '',
             selectedPack
-          ).then(x => {
+          ).then(_x => {
             if (isDashboard) {
               let treatmentsToSchedule: Product[] = selectedTreatments.filter(
                 x => !x.isPack
@@ -537,6 +565,52 @@ export default function Agenda({
       false
     );
   };
+  useEffect(() => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const token = params.get('token') ?? '';
+    const treatment = params.get('treatment') ?? '';
+    const clinicId = params.get('clinicId') ?? '';
+    if (token) {
+      setSelectedClinic(getClinicToSet(clinics, clinicId));
+      setCurrentUser({
+        flowwwToken: token,
+        firstName: '',
+        email: '',
+        id: '',
+        phone: '',
+        clinicToken: token,
+      });
+      const getAppointments = async () => {
+        if (token && treatment) {
+          const res = await ScheduleService.next(token);
+          let minDay = dayjs('2000-01-01');
+          res.forEach(x => {
+            if (x.treatmentText == 'Revisión Tratamiento' && !x.isPast) {
+              setShowReviewAlreadyCreated(true);
+              setAppointmentToShow(x);
+            }
+            if (x.isPast && !x.isCancelled && dayjs(x.startTime) < dayjs()) {
+              minDay = dayjs(x.startTime);
+            }
+          });
+          if (!showReviewAlreadyCreated) {
+            setMaxDay(minDay.add(42, 'day'));
+          }
+          if (maxDay < dayjs()) {
+            setShowTooLateToSchedule(true);
+          }
+          if (!showTooLateToSchedule && !showReviewAlreadyCreated) {
+            const productDetails = await fetchProduct(treatment, false, false);
+            setSelectedTreatments([productDetails]);
+            initialize();
+          }
+        }
+      };
+
+      getAppointments();
+    }
+  }, []);
 
   if (showRescheduleError) {
     return (
@@ -581,6 +655,71 @@ export default function Agenda({
           </Flex>
         </Flex>
       </Modal>
+    );
+  }
+
+  if (showReviewAlreadyCreated && appointmentToShow) {
+    return (
+      <Flex className="flex-col mb-16 md:mb-7 px-4 md:px-0">
+        <Title size="xl" className="font-semibold">
+          Ya tienes una cita con nosotros.
+        </Title>
+        <Text size="sm" className="font-semibold mb-4 text-center">
+          Puedes cambiar la hora si quieres.
+        </Text>
+        <AppointmentElement
+          appointment={appointmentToShow}
+          cancelling={false}
+          isDashboard={false}
+          setAppointmentToCancel={function x(
+            _appointment: Appointment
+          ): void {}}
+          setShowCancelModal={function x(_value: boolean): void {}}
+        ></AppointmentElement>
+      </Flex>
+    );
+  }
+
+  if (showTooLateToSchedule) {
+    return (
+      <Flex className="w-full flex-col mb-16 md:mb-7 px-4 md:px-0">
+        <SvgSadIcon
+          className={`mb-5 ${
+            isDerma ? 'text-derma-primary' : 'text-hg-secondary'
+          }`}
+        />
+        <Title size="xl" className="font-semibold">
+          ¡Lo sentimos!
+        </Title>
+        <Text size="sm" className="font-semibold mb-4 text-center">
+          No es posible agendar tu cita
+        </Text>
+
+        <Flex
+          layout="col-left"
+          className={`bg-derma-secondary300 p-3 gap-3 md:relative md:rounded-2xl`}
+        >
+          <Text className="font-semibold">
+            Puedes ponerte en contacto con nosotros
+          </Text>
+          <Flex layout="row-left" className="gap-4 items-center w-full">
+            <a href="tel:+34 682 417 208" id="tmevent_agenda_call">
+              <Button size="xl" type="secondary">
+                <SvgCalling className="mr-2" />
+                {selectedClinic && (
+                  <div>
+                    <Text size="xs" className="whitespace-nowrap font-light">
+                      Llámanos al
+                    </Text>
+                    <Text className="whitespace-nowrap">682 417 208</Text>
+                  </div>
+                )}
+              </Button>
+            </a>
+            <Text size="xs">Te ayudaremos a agendar tu tratamiento</Text>
+          </Flex>
+        </Flex>
+      </Flex>
     );
   }
 
