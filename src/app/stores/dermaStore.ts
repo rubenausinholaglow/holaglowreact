@@ -162,10 +162,10 @@ export const useDermaStore = create(
       setDiagnosticId: (value: string) => {
         set({ diagnosticId: value });
       },
-      },
       userIdRecover: '',
       setUserIdRecover: (value: string) => {
         set({ userIdRecover: value });
+      },
     }),
     {
       name: 'derma-storage',
