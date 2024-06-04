@@ -302,6 +302,7 @@ export default function TreatmentAccordionSelector({
       </Flex>
     );
   };
+
   const renderCheck = (product: Product, index: number) => {
     const commonElement = (
       <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
@@ -416,6 +417,22 @@ export default function TreatmentAccordionSelector({
       </div>
     );
   }
+
+  const predefinedCategories = [
+    'Médico',
+    'Relleno',
+    'Arrugas',
+    'Lifting',
+    'Calidad Piel',
+    'Otros',
+    'Caida del pelo',
+  ];
+
+  const test = predefinedCategories.map(category => {
+    return productCategories.filter(itemCategory => itemCategory === category);
+  });
+
+  console.log(test);
 
   if (
     cart.length == 0 ||
