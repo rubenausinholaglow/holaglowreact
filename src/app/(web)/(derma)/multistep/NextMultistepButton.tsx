@@ -69,11 +69,9 @@ export const HandleNextMultistep = (nextUrl: string) => {
 export default function NextMultistepButton({
   isDisabled,
   nextUrl,
-  feedbackStep,
 }: {
   isDisabled: boolean;
   nextUrl: string;
-  feedbackStep?: number;
 }) {
   const nextStep = HandleNextMultistep(nextUrl);
   const [isLoading, setIsLoading] = useState(false);
