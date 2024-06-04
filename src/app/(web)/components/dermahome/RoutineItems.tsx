@@ -100,11 +100,16 @@ export default function RoutineItems({
                           Paso {index + 1}
                         </Text>
                         <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary">
-                          <SvgSun className="w-4 h-4" />
-                          <span>Día</span>
-                          {item.isNightRoutine && (
+                          {item.routineType !== 'night' && (
                             <>
-                              <span>/</span>
+                              <SvgSun className="w-4 h-4" />
+                              <span>Día</span>
+                            </>
+                          )}
+
+                          {item.routineType !== 'day' && (
+                            <>
+                              {item.routineType !== 'night' && <span>/</span>}
                               <span>Noche</span>
                               <SvgMoon className="w-4 h-4" />
                             </>
@@ -156,11 +161,16 @@ export default function RoutineItems({
                         Paso {index + 1}
                       </Text>
                       <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary">
-                        <SvgSun className="w-4 h-4" />
-                        <span>Día</span>
-                        {item.isNightRoutine && (
+                        {item.routineType !== 'night' && (
                           <>
-                            <span>/</span>
+                            <SvgSun className="w-4 h-4" />
+                            <span>Día</span>
+                          </>
+                        )}
+
+                        {item.routineType !== 'day' && (
+                          <>
+                            {item.routineType !== 'night' && <span>/</span>}
                             <span>Noche</span>
                             <SvgMoon className="w-4 h-4" />
                           </>
@@ -208,13 +218,20 @@ export default function RoutineItems({
               />
               <Container className="py-4 md:p-6">
                 <Flex className="gap-1 py-1 px-2 rounded-full bg-derma-primary300/20 text-derma-primary inline-flex text-sm mb-4">
-                  <SvgSun className="w-4 h-4" />
-                  <span>Día</span>
-                  {DERMA_GENERIC_PRODUCTS[modalProduct].isNightRoutine && (
+                  {DERMA_GENERIC_PRODUCTS[modalProduct].routineType ===
+                    'both' && (
                     <>
-                      <span>/</span>
-                      <SvgMoon className="w-4 h-4" />
+                      <SvgSun className="w-4 h-4" />
+                      <span>Día</span>
+                    </>
+                  )}
+                  {DERMA_GENERIC_PRODUCTS[modalProduct].routineType !==
+                    'day' && (
+                    <>
+                      {DERMA_GENERIC_PRODUCTS[modalProduct].routineType !==
+                        'night' && <span>/</span>}
                       <span>Noche</span>
+                      <SvgMoon className="w-4 h-4" />
                     </>
                   )}
                 </Flex>

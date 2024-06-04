@@ -32,7 +32,10 @@ export default function AppointmentElement({
 }) {
   const router = useRouter();
 
-  const [currentToken] = useState('');
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const token = params.get('token') ?? '';
+  const [currentToken] = useState(token);
 
   const { clinics, setCurrentUser, stateProducts } = useGlobalPersistedStore(
     state => state
@@ -42,7 +45,6 @@ export default function AppointmentElement({
     useSessionStore(state => state);
 
   const showPast = false;
-  const token = '';
   const rescheduleAppointment = async (x: Appointment) => {
     setCurrentUser({
       flowwwToken: currentToken,

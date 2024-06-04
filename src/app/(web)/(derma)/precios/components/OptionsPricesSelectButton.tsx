@@ -19,7 +19,7 @@ export default function OptionsPricesSelectButton({
   const [isLoading, setIsLoading] = useState(false);
 
   const { resetCart, addItemToCart } = useCartStore(state => state);
-  const { payment, setPayment } = useSessionStore(state => state);
+  const { setPayment } = useSessionStore(state => state);
 
   useEffect(() => {
     resetCart();
@@ -27,7 +27,7 @@ export default function OptionsPricesSelectButton({
   }, []);
 
   return (
-    <Flex className="mt-0 mb-6" layout="col-center">
+    <Flex className="" layout="col-center">
       <Button
         type="derma"
         size="xl"

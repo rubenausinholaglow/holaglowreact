@@ -27,8 +27,6 @@ export default function SecondaryConcern() {
 
   const painItem = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0];
 
-  console.log(painItem.secondaryConcerns);
-
   return (
     <DermaLayout
       hideButton
@@ -56,32 +54,33 @@ export default function SecondaryConcern() {
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {painItem.secondaryConcerns.map(concern => (
-                  <li
-                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
-                      secondaryConcerns.includes(concern)
-                        ? 'bg-derma-primary500/20'
-                        : 'bg-derma-secondary400'
-                    }`}
-                    key={concern}
-                    onClick={() => {
-                      if (secondaryConcerns.includes(concern)) {
-                        setSecondaryConcerns(
-                          secondaryConcerns.filter(item => item !== concern)
-                        );
-                      } else {
-                        setSecondaryConcerns([...secondaryConcerns, concern]);
-                      }
-                    }}
-                  >
-                    {concern}
-                    {secondaryConcerns.includes(concern) ? (
-                      <SvgCheckSquareActive className="h-6 w-6 " />
-                    ) : (
-                      <SvgCheckSquare className="h-6 w-6" />
-                    )}
-                  </li>
-                ))}
+                {painItem &&
+                  painItem.secondaryConcerns.map(concern => (
+                    <li
+                      className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
+                        secondaryConcerns.includes(concern)
+                          ? 'bg-derma-primary500/20'
+                          : 'bg-derma-secondary400'
+                      }`}
+                      key={concern}
+                      onClick={() => {
+                        if (secondaryConcerns.includes(concern)) {
+                          setSecondaryConcerns(
+                            secondaryConcerns.filter(item => item !== concern)
+                          );
+                        } else {
+                          setSecondaryConcerns([...secondaryConcerns, concern]);
+                        }
+                      }}
+                    >
+                      {concern}
+                      {secondaryConcerns.includes(concern) ? (
+                        <SvgCheckSquareActive className="h-6 w-6 " />
+                      ) : (
+                        <SvgCheckSquare className="h-6 w-6" />
+                      )}
+                    </li>
+                  ))}
               </ul>
               <Flex className="justify-between">
                 <Button

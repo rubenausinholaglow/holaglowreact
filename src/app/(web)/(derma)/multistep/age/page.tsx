@@ -51,7 +51,7 @@ export default function Age() {
                     }`}
                     key={item.value}
                     onClick={async () => {
-                      setAge(age === item.value ? 0 : item.value);
+                      setAge(age === item.value ? undefined : item.value);
                       if (age !== item.value) {
                         await nextStep();
                       }

@@ -1,16 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
+import { fetchClinics } from '@utils/fetch';
 import { SvgLocation } from 'app/icons/Icons';
+import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
-const CLINICS = [
+const CLINIC_IMAGES = [
   {
-    name: 'Barcelona',
-    address: 'Avenida Diagonal, 299 - 08013',
+    id: 'a1c0941e-5dc2-4433-9b03-2e5a9857f2c5',
     images: [
       'barcelona1.jpg',
       'barcelona2.jpg',
@@ -19,13 +22,11 @@ const CLINICS = [
     ],
   },
   {
-    name: 'Madrid',
-    address: 'C. de Andrés Mellado, 3 - 28015 (frente a Corte Inglés Princesa)',
+    id: 'b745ec86-2e32-4dc9-901f-59c274156b37',
     images: ['madrid1.jpg', 'madrid2.jpg', 'madrid3.jpg'],
   },
   {
-    name: 'Valencia',
-    address: 'Plaza de Alfonso el Magnánimo, 6 - 46003 (Metro Colón)',
+    id: 'b6ccdd94-d44c-43ec-ac83-f3fc77c351c8',
     images: [
       'valencia1.jpg',
       'valencia2.jpg',
@@ -59,19 +60,21 @@ function ClinicSlide({ clinic }: { clinic: any }) {
         isDerma
         className="md:order-2 md:rounded-3xl overflow-hidden"
       >
-        {clinic.images.map((image: string) => (
-          <div
-            key={image}
-            className="aspect-square relative rounded-t-3xl overflow-hidden"
-          >
-            <Image
-              src={`/images/derma/clinics/${image}`}
-              alt={`Descubre nuestra clínica Holaglow en ${clinic.name}`}
-              className="object-cover"
-              fill
-            />
-          </div>
-        ))}
+        {CLINIC_IMAGES.filter(item => item.id === clinic.id)[0].images.map(
+          (image: string) => (
+            <div
+              key={image}
+              className="aspect-square relative rounded-t-3xl overflow-hidden"
+            >
+              <Image
+                src={`/images/derma/clinics/${image}`}
+                alt={`Descubre nuestra clínica Holaglow en ${clinic.name}`}
+                className="object-cover"
+                fill
+              />
+            </div>
+          )
+        )}
       </Carousel>
       <div className="bg-white md:bg-transparent p-4 md:p-0 rounded-b-2xl overflow-hidden shadow-centered-black-sm flex-grow md:shadow-none">
         <Title className="font-light text-derma-tertiary text-xldr mb-4">
@@ -79,7 +82,12 @@ function ClinicSlide({ clinic }: { clinic: any }) {
         </Title>
         <Flex className="gap-2 w-full items-start mb-6 md:mb-16">
           <SvgLocation className="shrink-0 -mt-[2px] h-5 w-5" />
-          <Text size="sm">{clinic.address}</Text>
+          <address className="text-sm not-italic">
+            {clinic?.address}, {clinic?.district}, {clinic?.zipCode}{' '}
+            {clinic?.province}
+            <br />
+            {clinic?.addressExtraInfo}
+          </address>
         </Flex>
         <Text className="font-semibold text-derma-tertiary mb-4 md:text-lg md:mb-8">
           Servicios destacados
@@ -104,8 +112,24 @@ export default function ClinicsDerma({
 }: {
   className?: string;
 }) {
+  const { clinics, setClinics } = useGlobalPersistedStore(state => state);
+
+  useEffect(() => {
+    async function initClinics() {
+      const clinics = await fetchClinics();
+
+      setClinics(clinics);
+    }
+
+    if (isEmpty(clinics)) {
+      initClinics();
+    }
+  }, [clinics]);
+
+  console.log(clinics);
+
   return (
-    <div className="md:bg-white py-12 md:py-16">
+    <div className={`md:bg-white py-12 md:py-16 ${className}`}>
       <Container>
         <Title
           isAnimated
@@ -135,8 +159,8 @@ export default function ClinicsDerma({
           infinite={false}
           isDerma
         >
-          {CLINICS.map(clinic => (
-            <ClinicSlide key={clinic.name} clinic={clinic} />
+          {clinics.map(clinic => (
+            <ClinicSlide key={clinic.id} clinic={clinic} />
           ))}
         </Carousel>
       </Container>
