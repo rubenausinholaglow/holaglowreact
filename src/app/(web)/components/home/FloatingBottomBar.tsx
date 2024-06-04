@@ -152,7 +152,7 @@ export default function FloatingBottomBar({
 
   return (
     <div
-      className={`transition-all fixed bottom-0 left-0 right-0 z-40 pointer-events-none ${
+      className={`transition-all fixed bottom-0 left-0 right-0 z-40 ${
         showBottomBar && isVisible ? 'translate-y-[0%]' : 'translate-y-[105%]'
       }`}
     >
@@ -370,7 +370,7 @@ export default function FloatingBottomBar({
             href={url}
             target="_blank"
             id="tmevent_click_floating_button_whatsapp"
-            className="flex items-center justify-center p-3 bg-hg-green rounded-full"
+            className="flex items-center justify-center p-3 bg-[#25D366] rounded-full cursor-pointer"
           >
             <SvgWhatsapp className="text-white" />
           </a>
