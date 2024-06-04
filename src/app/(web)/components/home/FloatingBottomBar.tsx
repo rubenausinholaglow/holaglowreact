@@ -16,6 +16,8 @@ import {
   SvgCalling,
   SvgCheckSquare,
   SvgCheckSquareActive,
+  SvgPhone,
+  SvgSad,
   SvgWhatsapp,
 } from 'app/icons/IconsDs';
 import { Product } from 'app/types/product';
@@ -205,8 +207,31 @@ export default function FloatingBottomBar({
                   </Flex>
                 ) : (
                   <>
-                    {showCallMeBabyError ? (
-                      <p>Ups! kapassao!</p>
+                    {!showCallMeBabyError ? (
+                      <div className="w-full flex flex-col gap-4 mb-6 justify-center items-center pt-4">
+                        <Flex layout="row-center" className="w-full">
+                          <SvgSad />
+                        </Flex>
+                        <Text className="font-semibold text-lg text-center md:text-left">
+                          ¡Ups!
+                        </Text>
+                        <Text className="text-center md:text-left mb-2">
+                          Parece que estamos teniendo un problema temporal. Por
+                          favor, inténtalo de nuevo más tarde, o llámanos
+                          directamente al
+                        </Text>
+                        <Flex layout="row-center" className="w-full md:">
+                          <Button
+                            type="secondary"
+                            className="w-auto"
+                            size="lg"
+                            href="tel:682417208"
+                          >
+                            <SvgPhone className="mr-2" />
+                            682 417 208
+                          </Button>
+                        </Flex>
+                      </div>
                     ) : (
                       <>
                         <div className="w-4/5 md:w-full flex flex-col gap-4 mb-6">
