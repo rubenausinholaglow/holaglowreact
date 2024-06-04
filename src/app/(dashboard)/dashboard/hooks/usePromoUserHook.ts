@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Wallet } from "@interface/wallet";
+import { PromoCodeResponse, ValidatePromoCodeRequest, Wallet } from "@interface/wallet";
 import FinanceService from "@services/FinanceService";
 
 
@@ -7,9 +7,9 @@ import FinanceService from "@services/FinanceService";
 export const usePromoUserHook = () => {
     const [wallet, setWallet] = useState<Wallet | undefined>(undefined);
 
-    const validatePromoCode = async (code: string) : Promise<boolean> => {
-        const isValid = await FinanceService.validatePromoCode(code);
-        return isValid;
+    const validatePromoCode = async (validatePromoCode: ValidatePromoCodeRequest) : Promise<PromoCodeResponse> => {
+        const promo = await FinanceService.validatePromoCode(validatePromoCode);
+        return promo;
     }
 
     const getWalletBalance = async (id : string) : Promise<Wallet> => {

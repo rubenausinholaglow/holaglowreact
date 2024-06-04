@@ -225,7 +225,7 @@ export const PaymentModule = () => {
     };
 
     const ticket: Ticket = {
-      promoCode: promoCode,
+      promoCode: promoCode!.code,
       reference: '',
       userId: user?.id || '',
       clientFlowwwToken: user?.flowwwToken || '',

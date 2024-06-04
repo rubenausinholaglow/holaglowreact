@@ -30,9 +30,9 @@ export const usePaymentHook = () => {
     }
   };
 
-  const paymentPromo = async (userId : string) : Promise<boolean> => {
+  const paymentPromo = async (userId : string, amountPromo : number) : Promise<boolean> => {
     const paymentPromoRequest: CreatePayment = {
-      amount: 50,
+      amount: amountPromo,
       originOfPayment: OriginPayment.dashboard,
       paymentBank: PaymentBank.Points,
       paymentMethod: PaymentMethod.Promo,

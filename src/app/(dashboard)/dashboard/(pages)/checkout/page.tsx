@@ -109,9 +109,13 @@ const Page = () => {
 
   useEffect(() => {
     const createAsync = async () => {
-      await paymentPromo(user!.id);
+      await paymentPromo(user!.id, promoCode!.amount);
     };
-    if (promoCode.length > 0 && paymentList.length == 0) {
+    if (
+      promoCode != undefined &&
+      promoCode?.code.length > 0 &&
+      paymentList.length == 0
+    ) {
       createAsync();
     }
   }, [storedBudgetId]);

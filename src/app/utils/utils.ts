@@ -134,7 +134,7 @@ export function getPaymentMethodText(method: PaymentMethod): string {
     case PaymentMethod.Promo:
       return 'Promo'
     case PaymentMethod.Wallet:
-      return 'Wallet'
+      return 'Puntos Cliente'
     default:
       return 'Unknown';
   }

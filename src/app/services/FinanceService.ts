@@ -1,7 +1,7 @@
 import Bugsnag from '@bugsnag/js';
 import { CreateTicketRequest } from '@interface/createTicket';
 import { PaymentInitResponse } from '@interface/payment';
-import { Wallet } from '@interface/wallet';
+import { PromoCodeResponse, ValidatePromoCodeRequest, Wallet } from '@interface/wallet';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
@@ -147,25 +147,25 @@ export default class FinanceService {
     }
   }
 
-  static async validatePromoCode(promoCode: string): Promise<boolean> {
+  static async validatePromoCode(validatePromoCode: ValidatePromoCodeRequest): Promise<PromoCodeResponse> {
     try {
-      const url = `${FinanceService.getFinanceUrl(false)}Validate?code=${promoCode}`;
+      const url = `${FinanceService.getFinanceUrl(false)}Validate`;
       const res = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify(validatePromoCode),
       });
 
       if (res.ok) {
-        return true;
+        return res.json();
       } else {
-        const errorText = await res.text();
-        throw new Error(`Error: ${errorText}`);
+        return {} as PromoCodeResponse;
       }
     } catch (error: any) {
       Bugsnag.notify(error);
-      return false;
+      return {} as PromoCodeResponse;
     }
   }
 

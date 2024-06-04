@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { ValidatePromoCodeRequest } from '@interface/wallet';
 import FinanceService from '@services/FinanceService';
+import { usePromoUserHook } from 'app/(dashboard)/dashboard/hooks/usePromoUserHook';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -26,9 +28,8 @@ export default function ProductDiscountForm({
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
   const { priceDiscount } = useCartStore(state => state);
-  const { setPromoCode, storedBudgetId, promoCode } = useGlobalPersistedStore(
-    state => state
-  );
+  const { setPromoCode, storedBudgetId, promoCode, user } =
+    useGlobalPersistedStore(state => state);
 
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
@@ -36,6 +37,7 @@ export default function ProductDiscountForm({
   const cartItemDiscount = (data: any) => {
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
+  const { validatePromoCode } = usePromoUserHook();
 
   const DiscountTypes = [
     { name: 'MGM', type: 'total', value: 50, show: !showPercentage },
@@ -66,14 +68,16 @@ export default function ProductDiscountForm({
 
   const handleValidate = async () => {
     setIsLoading(true);
-    await FinanceService.validatePromoCode(value).then(response => {
-      setIsValid(response);
-      if (response) {
-        applyCartDiscount(50, 'total');
-        setPromoCode(value);
+    const promoRequest: ValidatePromoCodeRequest = {
+      code: value,
+      userId: user?.id || '',
+    };
+    await validatePromoCode(promoRequest).then(response => {
+      if (response.code != undefined) {
+        setPromoCode(response);
+        setIsValid(true);
       } else {
-        applyCartDiscount(0, '€');
-        setPromoCode(undefined);
+        setIsValid(false);
       }
     });
 
@@ -92,9 +96,9 @@ export default function ProductDiscountForm({
   };
 
   useEffect(() => {
-    if (promoCode != undefined && promoCode.length > 0) {
+    if (promoCode != undefined && promoCode.code.length > 0) {
       setIsMGM(true);
-      setValue(promoCode);
+      setValue(promoCode.code);
       setIsValid(true);
     } else {
       setIsMGM(false);
