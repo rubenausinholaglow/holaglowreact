@@ -29,7 +29,7 @@ export default class clinicService {
   static async getClinics() {
     try {
       const url = `${process.env.NEXT_PUBLIC_CLINICS_API}Clinics`;
-      const res = await fetch(url, { cache: 'no-store' });
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         return data;
