@@ -60,7 +60,7 @@ export default function FloatingBottomBar({
   const [isLoading, setIsLoading] = useState(false);
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [showCallMeModal, setShowCallMeModal] = useState(false);
-  const [showCallMeBabyError, setShowCallMeBabyError] = useState(false);
+  const [showCallMeError, setShowCallMeError] = useState(false);
   const [showCallingMessage, setShowCallingMessage] = useState({
     isVisible: false,
     callingAvailabilty: checkCallingAvailability(),
@@ -120,7 +120,7 @@ export default function FloatingBottomBar({
         callingAvailabilty: checkCallingAvailability(),
       });
     } else {
-      setShowCallMeBabyError(true);
+      setShowCallMeError(true);
     }
 
     setTimeout(() => {
@@ -129,7 +129,7 @@ export default function FloatingBottomBar({
         callingAvailabilty: checkCallingAvailability(),
       });
 
-      setShowCallMeBabyError(false);
+      setShowCallMeError(false);
       setIsLoading(false);
       setShowCallMeModal(false);
     }, 5000);
@@ -207,7 +207,7 @@ export default function FloatingBottomBar({
                   </Flex>
                 ) : (
                   <>
-                    {!showCallMeBabyError ? (
+                    {showCallMeError ? (
                       <div className="w-full flex flex-col gap-4 mb-6 justify-center items-center pt-4">
                         <Flex layout="row-center" className="w-full">
                           <SvgSad />
