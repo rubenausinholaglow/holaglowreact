@@ -69,6 +69,8 @@ export default function UpsellingRoutines({
       district: '',
       province: '',
       zipCode: '',
+      lat: 0,
+      long: 0,
     });
     setTypeOfPayment(TypeOfPayment.Full);
     setSelectedSlot(undefined);

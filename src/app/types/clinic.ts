@@ -14,6 +14,8 @@ export interface Clinic {
   district?: string;
   province?: string;
   zipCode?: string;
+  lat: number;
+  long: number;
 }
 export interface ClinicReview {
   rating: number;
