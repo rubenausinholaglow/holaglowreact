@@ -56,6 +56,7 @@ export default function SupportPage() {
             setErrorMessage('Usuario no encontrado');
           }
           setIsLoading(false);
+          setUserIdRecover(userId);
         })
         .catch(error => {
           Bugsnag.notify('Error during authentication: ' + error);
@@ -71,8 +72,7 @@ export default function SupportPage() {
     if (!userIdRecover && userId) {
       login();
     }
-    setUserIdRecover(userId);
-  }, []);
+  }, [userId]);
 
   async function handleValidateToken() {
     setIsLoading(true);
@@ -111,6 +111,7 @@ export default function SupportPage() {
                 phone: x.user.phone,
               });
               router.push(ROUTES.derma.multistep.thankyou);
+              setUserIdRecover('');
             }
           });
         } else {
