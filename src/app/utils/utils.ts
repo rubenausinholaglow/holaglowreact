@@ -172,6 +172,7 @@ export function getStatusText(statusText: string, entity: string): string {
 }
 
 export const getStatusClassName = (status: string, entity: string): string => {
+  if (!status) return '';
   const uppercaseStatus = status.toUpperCase();
   const config = entityStatusConfig[entity];
   if (config && uppercaseStatus in config.colors) {
