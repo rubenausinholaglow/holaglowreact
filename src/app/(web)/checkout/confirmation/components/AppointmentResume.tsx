@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
+import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
 import {
@@ -81,8 +82,7 @@ export default function AppointmentResume({
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
     state => state
   );
-  const [city, setCity] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
+  const [clinic, setClinic] = useState<Clinic>();
 
   const localSelectedDay = dayjs(
     appointment ? appointment.startTime : selectedDay
@@ -114,13 +114,7 @@ export default function AppointmentResume({
       ? clinics.filter(clinic => clinic.flowwwId === appointment?.clinicId)[0]
       : undefined;
 
-    const appointmentCity = appointmentClinic ? appointmentClinic.city : '';
-    const appointmentAddress = appointmentClinic
-      ? appointmentClinic.address
-      : '';
-
-    setCity(appointmentCity || selectedClinic?.city || '');
-    setAddress(appointmentAddress || selectedClinic?.address || '');
+    setClinic(appointmentClinic ? appointmentClinic : selectedClinic);
   }, [clinics]);
 
   const accordionProps: AccordionSingleProps = {
@@ -190,10 +184,12 @@ export default function AppointmentResume({
         {!isDerma && (
           <div className="w-full flex items-start">
             <SvgLocation className="mr-2 mt-1 shrink-0" />
-            <div className="flex flex-col ">
-              <Text className="font-semibold">{city}</Text>
-              <Text>{address}</Text>
-            </div>
+            <address className="text-xs not-italic">
+              {clinic?.address}, {clinic?.district}, {clinic?.zipCode}{' '}
+              {clinic?.province}
+              <br />
+              {clinic?.addressExtraInfo}
+            </address>
           </div>
         )}
         {isDerma && !isUpselling && (
@@ -494,7 +490,7 @@ export default function AppointmentResume({
         </Flex>
       </Flex>
     );
-  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments, address]);
+  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments, clinic]);
 
   return appointmentComponent;
 }

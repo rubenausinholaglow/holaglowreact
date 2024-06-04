@@ -65,6 +65,12 @@ export default function UpsellingRoutines({
       internalName: '',
       phone: '',
       professionals: [],
+      addressExtraInfo: '',
+      district: '',
+      province: '',
+      zipCode: '',
+      lat: 0,
+      long: 0,
     });
     setTypeOfPayment(TypeOfPayment.Full);
     setSelectedSlot(undefined);

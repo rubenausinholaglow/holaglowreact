@@ -76,7 +76,10 @@ export default function ClinicsCheckout() {
                       )}
                     </Text>
                     <address className="not-italic mb-2 text-xs">
-                      {item.address}
+                      {item?.address}, {item?.district}, {item?.zipCode}{' '}
+                      {item?.province}
+                      <br />
+                      {item?.addressExtraInfo}
                     </address>
                   </Flex>
                   {selectedClinic && selectedClinic.city === item.city ? (

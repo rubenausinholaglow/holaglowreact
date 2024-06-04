@@ -42,15 +42,13 @@ export default function SupportPage() {
     setMedicationInfo,
     setLactating,
     setExtraInfo,
+    userIdRecover,
+    setUserIdRecover,
   } = useDermaStore(state => state);
 
   const router = useRouter();
-  useEffect(() => {
-    const queryString = window?.location?.search;
-    const params = new URLSearchParams(queryString.toLowerCase());
-    const userId = params.get('userid') || '';
-    setUserId(userId);
-    async function login() {
+  async function login() {
+    if (userId) {
       setIsLoading(true);
       await AuthenticationService.isValidLoginDerma(userId)
         .then(response => {
@@ -58,14 +56,23 @@ export default function SupportPage() {
             setErrorMessage('Usuario no encontrado');
           }
           setIsLoading(false);
+          setUserIdRecover(userId);
         })
         .catch(error => {
           Bugsnag.notify('Error during authentication: ' + error);
           setErrorMessage('Error durante la autenticación: ' + error);
         });
     }
-    login();
-  }, []);
+  }
+  useEffect(() => {
+    const queryString = window?.location?.search;
+    const params = new URLSearchParams(queryString.toLowerCase());
+    const userId = params.get('userid') || '';
+    setUserId(userId);
+    if (!userIdRecover && userId) {
+      login();
+    }
+  }, [userId]);
 
   async function handleValidateToken() {
     setIsLoading(true);
@@ -104,6 +111,7 @@ export default function SupportPage() {
                 phone: x.user.phone,
               });
               router.push(ROUTES.derma.multistep.thankyou);
+              setUserIdRecover('');
             }
           });
         } else {
@@ -149,6 +157,15 @@ export default function SupportPage() {
                     <>Validar</>
                   )}
                 </Button>
+                {userIdRecover && (
+                  <Button type="derma" className="mt-6 ml-5" onClick={login}>
+                    {isLoading ? (
+                      <SvgSpinner height={24} width={24} />
+                    ) : (
+                      <>Reenviar Código</>
+                    )}
+                  </Button>
+                )}
               </div>
             )}
             {errorMessage && (
