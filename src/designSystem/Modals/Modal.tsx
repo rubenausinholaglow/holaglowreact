@@ -247,7 +247,7 @@ export const SwipeModal = ({
       }
     }
 
-    if (deltaY > 100) {
+    if (deltaY > 200) {
       setIsDragging(false);
       setModalVisibility(false);
     }
@@ -255,7 +255,7 @@ export const SwipeModal = ({
 
   const handleTouchEnd = (e: any) => {
     setIsDragging(false);
-    if (deltaYScroll < 100 && modalRef.current) {
+    if (deltaYScroll < 200 && modalRef.current) {
       (modalRef.current as HTMLDivElement).style.transform = 'translateY(0)';
     }
   };

@@ -45,6 +45,7 @@ interface SessionStore {
   appointmentUrl: string;
   dermaPhone: string;
   treatmentPacks: PackUnitiesScheduled[];
+  isCallMeTriggered: boolean;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -64,6 +65,7 @@ interface SessionActions {
   setAppointmentUrl: (url: string) => void;
   setDermaPhone: (phone: string) => void;
   setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
+  setIsCallMeTriggered: (value: boolean) => void;
 }
 
 interface GlobalPersistStore {
@@ -151,6 +153,7 @@ export const useSessionStore = create(
       appointmentUrl: '',
       dermaPhone: '',
       treatmentPacks: [],
+      isCallMeTriggered: false,
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -201,6 +204,9 @@ export const useSessionStore = create(
       },
       setTreatmentPacks: value => {
         set({ treatmentPacks: value });
+      },
+      setIsCallMeTriggered: value => {
+        set({ isCallMeTriggered: value });
       },
     }),
     {
