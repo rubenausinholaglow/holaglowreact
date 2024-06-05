@@ -20,6 +20,7 @@ import {
   SvgSad,
   SvgWhatsapp,
 } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -30,6 +31,7 @@ import {
 } from 'designSystem/Dialog/Dialog';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
+import { set } from 'lodash';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
@@ -57,6 +59,10 @@ export default function FloatingBottomBar({
   className?: string;
 }) {
   const scrollPos = useRef(0);
+  const { isCallMeTriggered, setIsCallMeTriggered } = useSessionStore(
+    state => state
+  );
+
   const [isLoading, setIsLoading] = useState(false);
   const [showBottomBar, setShowBottomBar] = useState(false);
   const [showCallMeModal, setShowCallMeModal] = useState(false);
@@ -132,6 +138,7 @@ export default function FloatingBottomBar({
       setShowCallMeError(false);
       setIsLoading(false);
       setShowCallMeModal(false);
+      setIsCallMeTriggered(true);
     }, 5000);
   }
 
@@ -158,213 +165,222 @@ export default function FloatingBottomBar({
     >
       <div className={twMerge(`p-4 ${className}`)}>
         <Flex className="justify-end items-center">
-          <Dialog
-            open={showCallMeModal}
-            onOpenChange={showCallMeModal =>
-              setShowCallMeModal(showCallMeModal)
-            }
-            dragToClose
-          >
-            <DialogTrigger>
-              <Button
-                size="lg"
-                type="primary"
-                className="mr-4 pointer-events-auto"
-              >
-                <SvgCalling className="h-5 w-5 mr-4" />
-                Te llamamos
-              </Button>
-            </DialogTrigger>
-            <DialogContent
-              type="bottom"
-              className="rounded-t-2xl w-full bg-white md:right-8 md:w-[390px] md:bottom-8 md:left-auto md:rounded-2xl"
-              dragToClose={isMobile}
-              modalVisibility={showCallMeModal}
-              setModalVisibility={setShowCallMeModal}
+          {!isCallMeTriggered && (
+            <Dialog
+              open={showCallMeModal}
+              onOpenChange={showCallMeModal =>
+                setShowCallMeModal(showCallMeModal)
+              }
+              dragToClose
             >
-              <Flex
-                layout="col-center"
-                className="p-4 w-full bg-white justify-center"
+              <DialogTrigger>
+                <Button
+                  size="lg"
+                  type="primary"
+                  className="mr-4 pointer-events-auto"
+                >
+                  <SvgCalling className="h-5 w-5 mr-4" />
+                  Te llamamos
+                </Button>
+              </DialogTrigger>
+              <DialogContent
+                type="bottom"
+                className="rounded-t-2xl w-full bg-white md:right-8 md:w-[390px] md:bottom-8 md:left-auto md:rounded-2xl"
+                dragToClose={isMobile}
+                modalVisibility={showCallMeModal}
+                setModalVisibility={setShowCallMeModal}
               >
-                {showCallingMessage.isVisible ? (
-                  <Flex layout="col-center" className="px-8 w-full">
-                    <SvgCallIncoming className="h-8 w-8 my-4" />
-                    <Text className="font-semibold text-lg text-center mb-4 md:text-left">
-                      {showCallingMessage.callingAvailabilty
-                        ? 'Ahora te llamamos'
-                        : 'Te llamaremos lo antes posible!'}
-                    </Text>
-                    {!showCallingMessage.callingAvailabilty && (
-                      <Text className="text-center text-xs mb-4  md:text-left">
-                        En horario comercial de Lunes a Viernes de 10 a 14h y de
-                        15 a 19h
+                <Flex
+                  layout="col-center"
+                  className="p-4 w-full bg-white justify-center"
+                >
+                  {showCallingMessage.isVisible ? (
+                    <Flex layout="col-center" className="px-8 w-full">
+                      <SvgCallIncoming className="h-8 w-8 my-4" />
+                      <Text className="font-semibold text-lg text-center mb-4 md:text-left">
+                        {showCallingMessage.callingAvailabilty
+                          ? 'Ahora te llamamos'
+                          : 'Te llamaremos lo antes posible!'}
                       </Text>
-                    )}
-                    <LottieAnimation
-                      animation="/lotties/callIncomingLoader.json"
-                      className="h-10 mb-8"
-                    />
-                  </Flex>
-                ) : (
-                  <>
-                    {showCallMeError ? (
-                      <div className="w-full flex flex-col gap-4 mb-6 justify-center items-center pt-4">
-                        <Flex layout="row-center" className="w-full">
-                          <SvgSad />
-                        </Flex>
-                        <Text className="font-semibold text-lg text-center md:text-left">
-                          ¡Ups!
+                      {!showCallingMessage.callingAvailabilty && (
+                        <Text className="text-center text-xs mb-4  md:text-left">
+                          En horario comercial de Lunes a Viernes de 10 a 14h y
+                          de 15 a 19h
                         </Text>
-                        <Text className="text-center md:text-left mb-2">
-                          Parece que estamos teniendo un problema temporal. Por
-                          favor, inténtalo de nuevo más tarde, o llámanos
-                          directamente al
-                        </Text>
-                        <Flex layout="row-center" className="w-full md:">
-                          <Button
-                            type="secondary"
-                            className="w-auto"
-                            size="lg"
-                            href="tel:682417208"
-                          >
-                            <SvgPhone className="mr-2" />
-                            682 417 208
-                          </Button>
-                        </Flex>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="w-4/5 md:w-full flex flex-col gap-4 mb-6">
+                      )}
+                      <LottieAnimation
+                        animation="/lotties/callIncomingLoader.json"
+                        className="h-10 mb-8"
+                      />
+                    </Flex>
+                  ) : (
+                    <>
+                      {showCallMeError ? (
+                        <div className="w-full flex flex-col gap-4 mb-6 justify-center items-center pt-4">
+                          <Flex layout="row-center" className="w-full">
+                            <SvgSad />
+                          </Flex>
                           <Text className="font-semibold text-lg text-center md:text-left">
-                            ¿Tienes dudas?
+                            ¡Ups!
                           </Text>
-                          <Text className="text-center md:text-left">
-                            Te llamamos en 1 minuto para resolver todas tus
-                            dudas
+                          <Text className="text-center md:text-left mb-2">
+                            Parece que estamos teniendo un problema temporal.
+                            Por favor, inténtalo de nuevo más tarde, o llámanos
+                            directamente al
                           </Text>
-                          <Text className="text-xs text-hg-black500 text-center md:text-left">
-                            En horario comercial de Lunes a Viernes de 10 a 14h
-                            y de 15 a 19h
-                          </Text>
-                        </div>
-
-                        <div className="relative w-full mb-3">
-                          <PhoneInput
-                            disableDialCodeAndPrefix
-                            defaultCountry="es"
-                            preferredCountries={['es']}
-                            value={formData.phone}
-                            forceDialCode
-                            inputClassName={
-                              showPhoneError !== null && !showPhoneError
-                                ? 'isComplete'
-                                : ''
-                            }
-                            onChange={(phone, country) => {
-                              handleFieldChange(phone, 'phone');
-                              handleFieldChange(
-                                `+${country.country.dialCode}`,
-                                'phonePrefix'
-                              );
-
-                              phone.length ===
-                              country.country.dialCode.length + 1
-                                ? setShowPhoneError(null)
-                                : setShowPhoneError(
-                                    !utils.validatePhoneInput(phone)
-                                  );
-                            }}
-                          />
-                          {showPhoneError !== null && (
-                            <Image
-                              src={`/images/forms/${
-                                showPhoneError ? 'error' : 'formCheck'
-                              }.svg`}
-                              alt="error"
-                              height={26}
-                              width={24}
-                              className="absolute top-4 right-3"
-                            />
-                          )}
-                          {showPhoneError && (
-                            <p className="text-hg-error text-sm p-2 text-left">
-                              {errorsConfig.ERROR_PHONE_NOT_VALID}
-                            </p>
-                          )}
-                        </div>
-                        <div className="self-start mb-8">
-                          <Flex layout="row-left">
-                            <label
-                              htmlFor="termsAndConditionsAccepted"
-                              className="flex items-center cursor-pointer"
+                          <Flex layout="row-center" className="w-full md:">
+                            <Button
+                              type="secondary"
+                              className="w-auto"
+                              size="lg"
+                              href="tel:682417208"
                             >
-                              <input
-                                type="checkbox"
-                                id="termsAndConditionsAccepted"
-                                checked={formData.termsAndConditionsAccepted}
-                                onChange={event =>
-                                  handleFieldChange(
-                                    event.target.checked,
-                                    'termsAndConditionsAccepted'
-                                  )
-                                }
-                                className="hidden"
-                              />
-                              {formData.termsAndConditionsAccepted ? (
-                                <SvgCheckSquareActive className="mr-2" />
-                              ) : (
-                                <SvgCheckSquare className="mr-2" />
-                              )}
-                              <span className="text-xs text-left">
-                                Acepto{' '}
-                                <a
-                                  href={ROUTES.statics.termsAndConditions}
-                                  className="underline"
-                                  target="_blank"
-                                >
-                                  Términos y condiciones
-                                </a>{' '}
-                                y{' '}
-                                <a
-                                  href={ROUTES.statics.privacyPolicy}
-                                  className="underline"
-                                  target="_blank"
-                                >
-                                  Política de privacidad
-                                </a>
-                              </span>
-                            </label>
+                              <SvgPhone className="mr-2" />
+                              682 417 208
+                            </Button>
                           </Flex>
                         </div>
-                        <Flex
-                          layout="row-center"
-                          className="w-full md:justify-start"
-                        >
-                          <Button
-                            type={
-                              formData.phone &&
-                              !showPhoneError &&
-                              formData.termsAndConditionsAccepted
-                                ? 'primary'
-                                : 'disabledGrey'
-                            }
-                            size={isMobile ? 'lg' : 'md'}
-                            onClick={() => handleCallMe()}
-                          >
-                            {isLoading ? (
-                              <SvgSpinner height={24} width={24} />
-                            ) : (
-                              '¡Llámame!'
+                      ) : (
+                        <>
+                          <div className="w-4/5 md:w-full flex flex-col gap-4 mb-6">
+                            <Text className="font-semibold text-lg text-center md:text-left">
+                              ¿Tienes dudas?
+                            </Text>
+                            <Text className="text-center md:text-left">
+                              Te llamamos en 1 minuto para resolver todas tus
+                              dudas
+                            </Text>
+                            <Text className="text-xs text-hg-black500 text-center md:text-left">
+                              En horario comercial de Lunes a Viernes de 10 a
+                              14h y de 15 a 19h
+                            </Text>
+                          </div>
+
+                          <div className="relative w-full mb-3">
+                            <PhoneInput
+                              disableDialCodeAndPrefix
+                              defaultCountry="es"
+                              preferredCountries={['es']}
+                              value={formData.phone}
+                              forceDialCode
+                              inputClassName={
+                                showPhoneError !== null && !showPhoneError
+                                  ? 'isComplete'
+                                  : ''
+                              }
+                              onChange={(phone, country) => {
+                                handleFieldChange(phone, 'phone');
+                                handleFieldChange(
+                                  `+${country.country.dialCode}`,
+                                  'phonePrefix'
+                                );
+
+                                phone.length ===
+                                country.country.dialCode.length + 1
+                                  ? setShowPhoneError(null)
+                                  : setShowPhoneError(
+                                      !utils.validatePhoneInput(phone)
+                                    );
+                              }}
+                            />
+                            {showPhoneError !== null && (
+                              <Image
+                                src={`/images/forms/${
+                                  showPhoneError ? 'error' : 'formCheck'
+                                }.svg`}
+                                alt="error"
+                                height={26}
+                                width={24}
+                                className="absolute top-4 right-3"
+                              />
                             )}
-                          </Button>
-                        </Flex>
-                      </>
-                    )}
-                  </>
-                )}
-              </Flex>
-            </DialogContent>
-          </Dialog>
+                            {showPhoneError && (
+                              <p className="text-hg-error text-sm p-2 text-left">
+                                {errorsConfig.ERROR_PHONE_NOT_VALID}
+                              </p>
+                            )}
+                          </div>
+                          <div className="self-start mb-8">
+                            <Flex layout="row-left">
+                              <label
+                                htmlFor="termsAndConditionsAccepted"
+                                className="flex items-center cursor-pointer"
+                              >
+                                <input
+                                  type="checkbox"
+                                  id="termsAndConditionsAccepted"
+                                  checked={formData.termsAndConditionsAccepted}
+                                  onChange={event =>
+                                    handleFieldChange(
+                                      event.target.checked,
+                                      'termsAndConditionsAccepted'
+                                    )
+                                  }
+                                  className="hidden"
+                                />
+                                {formData.termsAndConditionsAccepted ? (
+                                  <SvgCheckSquareActive className="mr-2" />
+                                ) : (
+                                  <SvgCheckSquare className="mr-2" />
+                                )}
+                                <span className="text-xs text-left">
+                                  Acepto{' '}
+                                  <a
+                                    href={ROUTES.statics.termsAndConditions}
+                                    className="underline"
+                                    target="_blank"
+                                  >
+                                    Términos y condiciones
+                                  </a>{' '}
+                                  y{' '}
+                                  <a
+                                    href={ROUTES.statics.privacyPolicy}
+                                    className="underline"
+                                    target="_blank"
+                                  >
+                                    Política de privacidad
+                                  </a>
+                                </span>
+                              </label>
+                            </Flex>
+                          </div>
+                          <Flex
+                            layout="row-center"
+                            className="w-full md:justify-start"
+                          >
+                            <Button
+                              type={
+                                formData.phone &&
+                                !showPhoneError &&
+                                formData.termsAndConditionsAccepted
+                                  ? 'primary'
+                                  : 'disabledGrey'
+                              }
+                              size={isMobile ? 'lg' : 'md'}
+                              onClick={() => handleCallMe()}
+                              className={
+                                formData.phone &&
+                                !showPhoneError &&
+                                formData.termsAndConditionsAccepted
+                                  ? ''
+                                  : 'pointer-events-none'
+                              }
+                            >
+                              {isLoading ? (
+                                <SvgSpinner height={24} width={24} />
+                              ) : (
+                                '¡Llámame!'
+                              )}
+                            </Button>
+                          </Flex>
+                        </>
+                      )}
+                    </>
+                  )}
+                </Flex>
+              </DialogContent>
+            </Dialog>
+          )}
 
           <a
             href={url}
