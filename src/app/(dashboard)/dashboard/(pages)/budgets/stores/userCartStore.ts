@@ -1,4 +1,3 @@
-import { useGlobalPersistedStore, useGlobalStore } from 'app/stores/globalStore';
 import { Actions, State } from 'app/types/cart';
 import { Professional } from 'app/types/clinic';
 import { CartItem, Product } from 'app/types/product';
@@ -12,10 +11,6 @@ import { persist } from 'zustand/middleware';
 
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   const updatedCart: CartItem[] = [...cart];
-
-  /* if (product.id.length == 0) {
-    product.id = createUniqueId();
-  }*/
   updatedCart.push({
     ...product,
     percentageDiscount: 0,
@@ -26,10 +21,6 @@ function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   });
   return updatedCart;
 }
-
-
-
-
 
 function recalculateCartItems(
   cart: CartItem[],
