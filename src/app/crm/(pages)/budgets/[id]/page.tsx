@@ -53,7 +53,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
     );
   }
   async function setBudgetStatus(status: string) {
-    await budgetService.updateStatus(budgetDetail?.id!, status);
+    await budgetService.updateStatus(budgetDetail!.id!, status);
     getBudget();
     setShowStatusModal(false);
   }
@@ -62,7 +62,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
     if (commentId) {
       await budgetService.updateComment(commentId, comment);
     } else {
-      await budgetService.addComment(budgetDetail?.id!, comment);
+      await budgetService.addComment(budgetDetail!.id!, comment);
     }
     getBudget();
     setComment('');
@@ -83,20 +83,20 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
           <div className="p-4">
             <label>Paciente: </label>
             <label>
-              {budgetDetail?.user.firstName +
+              {budgetDetail?.user!.firstName +
                 ' ' +
-                budgetDetail?.user.lastName +
+                budgetDetail?.user!.lastName +
                 ' ' +
-                budgetDetail?.user.secondLastName}
+                budgetDetail?.user!.secondLastName}
             </label>
           </div>
           <div className="p-4">
             <label>Telefono: </label>
-            <label>{budgetDetail?.user.phone}</label>
+            <label>{budgetDetail?.user!.phone}</label>
           </div>
           <div className="p-4">
             <label>Comercial: </label>
-            <label>{budgetDetail?.professional.name}</label>
+            <label>{budgetDetail?.professional!.name}</label>
           </div>
           <div className="p-4">
             <label>Importe: </label>
@@ -121,7 +121,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
             <label>Comentarios: </label>
             <div className="p-4">
               <>
-                {budgetDetail?.budgetComments.map(x => (
+                {budgetDetail?.budgetComments!.map(x => (
                   <div key={x.id}>
                     {x.comment}
 

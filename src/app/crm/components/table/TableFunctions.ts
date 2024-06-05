@@ -48,7 +48,6 @@ export function createQuery(params: TableQuery): DocumentNode {
   );
 
   const queryString = queryBuilder.buildQuery(entity!, stringFilter, sortedBy);
-  debugger;
   return gql(queryString);
 }
 

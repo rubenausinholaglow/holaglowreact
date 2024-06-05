@@ -20,11 +20,11 @@ export interface Budget {
   referenceId: string;
   professionalId: string;
   manualPrice: number;
-  creationDate: Date;
+  creationDate?: Date;
   products: BudgetProduct[];
-  user: BudgetUserReponse;
-  professional: BudgetProfessionalReponse;
-  budgetComments: BudgetCommentsReponse[];
+  user?: BudgetUserReponse;
+  professional?: BudgetProfessionalReponse;
+  budgetComments?: BudgetCommentsReponse[];
 }
 
 export interface BudgetProduct {
