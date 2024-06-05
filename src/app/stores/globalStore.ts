@@ -1,6 +1,6 @@
 import { LoginResponse } from '@interface/Login';
 import { PaymentBank, PaymentInitResponse } from '@interface/payment';
-import { PromoCodeResponse } from '@interface/wallet';
+import { PromoCodeResponse, Wallet } from '@interface/wallet';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
 import { Post } from 'app/types/blog';
@@ -89,6 +89,8 @@ interface GlobalPersistStore {
   isCallCenter: boolean;
   extraInfo: boolean;
   promoCode : PromoCodeResponse | undefined;
+  walletClient: Wallet | undefined;
+
 }
 
 interface GlobalPersistActions {
@@ -113,6 +115,7 @@ interface GlobalPersistActions {
   setIsCallCenter: (value?: boolean) => void;
   setExtraInfo: (value?: boolean) => void;
   setPromoCode: (value?: PromoCodeResponse) => void;
+  setWalletClient: (value?: Wallet) => void;
 }
 
 export const useSessionStore = create(
@@ -300,6 +303,10 @@ export const useGlobalPersistedStore = create(
       promoCode : undefined,
       setPromoCode : value => {
         set({promoCode : value})
+      },
+      walletClient : undefined,
+      setWalletClient : value => {
+        set({walletClient : value})
       }
     }),
     {

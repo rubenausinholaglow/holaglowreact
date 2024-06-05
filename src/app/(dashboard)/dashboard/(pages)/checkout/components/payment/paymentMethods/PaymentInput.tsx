@@ -22,7 +22,6 @@ import {
 import { ClientUpdate } from 'app/types/client';
 import { PaymentCreatedData } from 'app/types/FrontEndMessages';
 import {
-  CreatePayment,
   InitializePayment,
   OriginPayment,
   ProductPaymentRequest,
@@ -37,6 +36,7 @@ import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 
+import ProductDiscountForm from '../../ProductDiscountForm';
 import { usePaymentHook } from '../payments/paymentHook';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
@@ -46,14 +46,13 @@ interface Props {
   paymentMethod: PaymentMethod;
   paymentBank: PaymentBank;
   onButtonClick: (newValue: boolean) => void;
-  balance?: number;
 }
 
 export default function PaymentInput(props: Props) {
   const { control, handleSubmit } = useForm();
   const cart = useCartStore(state => state.cart);
   const totalAmount = usePaymentList(state => state.totalAmount);
-  const { addPaymentToList, paymentRequest } = usePaymentList();
+  const { addPaymentToList } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
   const [showPepper, setshowPepper] = useState(false);
   const [showFrakmenta, setShowFrakmenta] = useState(false);
@@ -65,7 +64,9 @@ export default function PaymentInput(props: Props) {
   const [showContactModal, setShowContactModal] = useState(false);
   const [paymentStripe, setPaymentStripe] = useState(false);
   const { isModalOpen } = useGlobalStore(state => state);
-  const { remoteControl, storedBudgetId, setCurrentUser, user, promoCode } =
+
+  const [maxValue, setMaxValue] = useState(0);
+  const { remoteControl, storedBudgetId, setCurrentUser, user, walletClient } =
     useGlobalPersistedStore(state => state);
 
   const { createPayment } = usePaymentHook();
@@ -113,11 +114,22 @@ export default function PaymentInput(props: Props) {
   const cartTotalWithDiscountFixed =
     Math.ceil(cartTotalWithDiscount * 100) / 100;
 
-  const MaxValue =
-    props.balance != undefined && props.balance > 0
-      ? props.balance
-      : parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
-        parseFloat(totalAmount.toFixed(2));
+  useEffect(() => {
+    const fetchWalletBalance = async () => {
+      if (walletClient && walletClient.amountBalance > 0) {
+        setMaxValue(walletClient.amountBalance);
+      }
+    };
+
+    if (props.paymentBank == PaymentBank.Points) {
+      fetchWalletBalance();
+    } else {
+      setMaxValue(
+        parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
+          parseFloat(totalAmount.toFixed(2))
+      );
+    }
+  }, [walletClient]);
 
   const sendPaymentCreated = async (
     paymentId: string,
@@ -208,7 +220,7 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
-    if (isLoading) return;
+    if (isLoading || data.number == 0) return;
     if (
       showAlma ||
       messageNotification ||
@@ -560,101 +572,115 @@ export default function PaymentInput(props: Props) {
                 layout="row-left"
                 className="mb-2 content-center relative w-full gap-2"
               >
-                <label className="absolute top-2 left-3 text-xs text-hg-black400">
-                  {props.paymentBank === PaymentBank.Alma ||
-                  props.paymentBank === PaymentBank.Pepper
-                    ? 'Importe a financiar'
-                    : 'Cantidad'}
-                </label>
-                <input
-                  className="bg-white border border-hg-black300 rounded-xl px-3 pt-6 pb-2 text-hg-black w-1/2 grow 
+                {props.paymentMethod == PaymentMethod.Wallet &&
+                walletClient &&
+                (walletClient.amountBalance == undefined ||
+                  walletClient.amountBalance == 0) ? (
+                  <div className="w-full">{ValidateMGM()}</div>
+                ) : (
+                  <>
+                    {' '}
+                    <label className="absolute top-2 left-3 text-xs text-hg-black400">
+                      {props.paymentBank === PaymentBank.Alma ||
+                      props.paymentBank === PaymentBank.Pepper
+                        ? 'Importe a financiar'
+                        : 'Cantidad'}
+                    </label>
+                    <input
+                      className="bg-white border border-hg-black300 rounded-xl px-3 pt-6 pb-2 text-hg-black w-1/2 grow 
                   [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  type="number"
-                  {...field}
-                  onChange={e => {
-                    const newValue = Math.min(
-                      parseFloat(e.target.value.replace(',', '.')),
-                      parseFloat(MaxValue.toFixed(2))
-                    );
-                    field.onChange(newValue);
-                    setInputValue(newValue.toString());
-                  }}
-                  style={{
-                    background:
-                      'url("/images/forms/euro.svg") #ffffff no-repeat center right 12px',
-                  }}
-                />
-                {props.paymentBank === PaymentBank.Alma && (
-                  <Button
-                    type="tertiary"
-                    isSubmit
-                    onClick={() => activateAlma()}
-                  >
-                    {isLoading ? (
-                      <SvgSpinner height={24} width={24} />
-                    ) : (
-                      <>
+                      type="number"
+                      {...field}
+                      onChange={e => {
+                        const newValue = Math.min(
+                          parseFloat(e.target.value.replace(',', '.')),
+                          parseFloat(maxValue.toFixed(2))
+                        );
+                        field.onChange(newValue);
+                        setInputValue(newValue.toString());
+                      }}
+                      style={{
+                        background:
+                          'url("/images/forms/euro.svg") #ffffff no-repeat center right 12px',
+                      }}
+                    />
+                    {props.paymentBank === PaymentBank.Alma && (
+                      <Button
+                        type="tertiary"
+                        isSubmit
+                        onClick={() => activateAlma()}
+                      >
+                        {isLoading ? (
+                          <SvgSpinner height={24} width={24} />
+                        ) : (
+                          <>
+                            Continuar
+                            <SvgArrow height={16} width={16} className="ml-2" />
+                          </>
+                        )}
+                      </Button>
+                    )}
+                    {props.paymentBank === PaymentBank.Pepper && (
+                      <Button
+                        type="tertiary"
+                        isSubmit
+                        onClick={() => activatePepper()}
+                      >
                         Continuar
                         <SvgArrow height={16} width={16} className="ml-2" />
-                      </>
+                      </Button>
                     )}
-                  </Button>
-                )}
-                {props.paymentBank === PaymentBank.Pepper && (
-                  <Button
-                    type="tertiary"
-                    isSubmit
-                    onClick={() => activatePepper()}
-                  >
-                    Continuar
-                    <SvgArrow height={16} width={16} className="ml-2" />
-                  </Button>
-                )}
-                {props.paymentBank === PaymentBank.Frakmenta &&
-                  props.paymentMethod === PaymentMethod.Financing && (
-                    <Button
-                      type="tertiary"
-                      isSubmit
-                      onClick={() => activateFrakmenta()}
-                    >
-                      Continuar
-                      <SvgArrow height={16} width={16} className="ml-2" />
-                    </Button>
-                  )}
-                <div className="bg-hg-"></div>
-                {props.paymentBank === PaymentBank.Stripe && (
-                  <Button
-                    type="tertiary"
-                    isSubmit
-                    onClick={() => initializeStripePayment()}
-                  >
-                    {isLoading ? (
-                      <SvgSpinner height={24} width={24} />
-                    ) : (
-                      <>
-                        Continuar
-                        <SvgArrow height={16} width={16} className="ml-2" />
-                      </>
-                    )}
-                  </Button>
-                )}
-                {props.paymentMethod != PaymentMethod.Financing &&
-                  props.paymentBank != PaymentBank.Stripe && (
-                    <Button
-                      type="tertiary"
-                      customStyles="bg-hg-primary"
-                      isSubmit
-                    >
-                      {isLoading ? (
-                        <SvgSpinner height={24} width={24} />
-                      ) : (
-                        <>
-                          Pagar
+                    {props.paymentBank === PaymentBank.Frakmenta &&
+                      props.paymentMethod === PaymentMethod.Financing && (
+                        <Button
+                          type="tertiary"
+                          isSubmit
+                          onClick={() => activateFrakmenta()}
+                        >
+                          Continuar
                           <SvgArrow height={16} width={16} className="ml-2" />
-                        </>
+                        </Button>
                       )}
-                    </Button>
-                  )}
+                    <div className="bg-hg-"></div>
+                    {props.paymentBank === PaymentBank.Stripe && (
+                      <Button
+                        type="tertiary"
+                        isSubmit
+                        onClick={() => initializeStripePayment()}
+                      >
+                        {isLoading ? (
+                          <SvgSpinner height={24} width={24} />
+                        ) : (
+                          <>
+                            Continuar
+                            <SvgArrow height={16} width={16} className="ml-2" />
+                          </>
+                        )}
+                      </Button>
+                    )}
+                    {props.paymentMethod != PaymentMethod.Financing &&
+                      props.paymentBank != PaymentBank.Stripe && (
+                        <Button
+                          type="tertiary"
+                          customStyles="bg-hg-primary"
+                          isSubmit
+                        >
+                          {isLoading ? (
+                            <SvgSpinner height={24} width={24} />
+                          ) : (
+                            <>
+                              Pagar
+                              <SvgArrow
+                                height={16}
+                                width={16}
+                                className="ml-2"
+                              />
+                            </>
+                          )}
+                        </Button>
+                      )}
+                  </>
+                )}
               </Flex>
             )}
           />
@@ -669,3 +695,13 @@ export default function PaymentInput(props: Props) {
     </>
   );
 }
+
+const ValidateMGM = () => {
+  return (
+    <ProductDiscountForm
+      isCheckout={true}
+      showPercentage={false}
+      enableWEB={false}
+    />
+  );
+};

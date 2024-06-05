@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ValidatePromoCodeRequest } from '@interface/wallet';
-import FinanceService from '@services/FinanceService';
+import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { usePromoUserHook } from 'app/(dashboard)/dashboard/hooks/usePromoUserHook';
 import { SvgSpinner } from 'app/icons/Icons';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -11,16 +11,14 @@ import { useCartStore } from '../../budgets/stores/userCartStore';
 
 export default function ProductDiscountForm({
   cartUniqueId,
-  productPrice,
   isCheckout,
-  className,
   showPercentage = false,
+  enableWEB = true,
 }: {
   cartUniqueId?: string;
-  productPrice: number;
   isCheckout: boolean;
-  className?: string;
   showPercentage?: boolean;
+  enableWEB?: boolean;
 }) {
   const [isMGM, setIsMGM] = useState<boolean>(false);
   const [value, setValue] = useState('');
@@ -38,10 +36,23 @@ export default function ProductDiscountForm({
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
   };
   const { validatePromoCode } = usePromoUserHook();
+  const [messageNotification, setMessageNotification] = useState<string | null>(
+    null
+  );
 
   const DiscountTypes = [
-    { name: 'MGM', type: 'total', value: 50, show: !showPercentage },
-    { name: 'WEB', type: 'total', value: 49, show: !showPercentage },
+    {
+      name: 'MGM',
+      type: 'total',
+      value: 50,
+      show: !showPercentage && !enableWEB,
+    },
+    {
+      name: 'WEB',
+      type: 'total',
+      value: 49,
+      show: !showPercentage && enableWEB,
+    },
     { name: '100%', type: '%', value: 100, show: showPercentage },
   ];
 
@@ -72,12 +83,14 @@ export default function ProductDiscountForm({
       code: value,
       userId: user?.id || '',
     };
+
     await validatePromoCode(promoRequest).then(response => {
       if (response.code != undefined) {
         setPromoCode(response);
         setIsValid(true);
       } else {
         setIsValid(false);
+        setMessageNotification(response.errorMessage!);
       }
     });
 
@@ -110,28 +123,29 @@ export default function ProductDiscountForm({
   return (
     <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
       <div className="flex gap-2">
-        {DiscountTypes.map(({ name, type, value, show }, index) => (
-          <>
-            {show && (
-              <Button
-                key={index}
-                size="sm"
-                isSubmit
-                type="tertiary"
-                onClick={() => handleAddDiscount({ name, type, value })}
-              >
-                <Flex className="gap-2 p-2 rounded-xl">{name}</Flex>
-              </Button>
-            )}
-          </>
-        ))}
-        {isMGM && (
+        {enableWEB &&
+          DiscountTypes.map(({ name, type, value, show }, index) => (
+            <>
+              {show && (
+                <Button
+                  key={index}
+                  size="sm"
+                  isSubmit
+                  type="tertiary"
+                  onClick={() => handleAddDiscount({ name, type, value })}
+                >
+                  <Flex className="gap-2 p-2 rounded-xl">{name}</Flex>
+                </Button>
+              )}
+            </>
+          ))}
+        {!enableWEB && (
           <>
             <input
               name="DiscountCode"
               type="text"
               placeholder="Código"
-              className={` m-1 rounded-xl border-2 border-black w-[20%] text-center ${
+              className={` m-1 rounded-xl border-2 border-black w-[30%] text-center ${
                 isValid === null
                   ? ''
                   : isValid
@@ -153,6 +167,11 @@ export default function ProductDiscountForm({
           </>
         )}
       </div>
+      {messageNotification ? (
+        <Notification message={messageNotification} />
+      ) : (
+        <></>
+      )}
     </Flex>
   );
 }

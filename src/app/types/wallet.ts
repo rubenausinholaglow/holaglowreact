@@ -1,8 +1,9 @@
 import { User } from "./appointment";
 
 export interface Wallet {
-    user : User;
+    user? : User | undefined;
     amountBalance: number;
+    promoCode? : string;
 }
 
 export interface ValidatePromoCodeRequest {
@@ -13,4 +14,5 @@ export interface ValidatePromoCodeRequest {
 export interface PromoCodeResponse {
     code: string;
     amount: number;
+    errorMessage?: string;
 }

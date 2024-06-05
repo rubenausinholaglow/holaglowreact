@@ -45,7 +45,7 @@ export const paymentItems = [
   },
   {
     key: 'wallet',
-    label: 'Puntos Cliente',
+    label: 'Saldo Monedero',
     paymentBank: PaymentBank.Points,
     paymentMethod: PaymentMethod.Wallet,
   },

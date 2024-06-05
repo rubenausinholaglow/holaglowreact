@@ -27,6 +27,7 @@ import { useRouter } from 'next/navigation';
 import RegistrationForm from '../../(web)/components/common/RegistrationForm';
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 import AppointmentsListComponent from './Appointments';
+import { usePromoUserHook } from './hooks/usePromoUserHook';
 import SearchUser from './SearchUser';
 
 export default function Page({
@@ -175,7 +176,6 @@ export default function Page({
             setClinicId(data.clinic.id);
             setClinicFlowwwId(data.clinic.flowwwId);
             setClinicProfessionalId(data.clinicProfessional.id);
-
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;
@@ -263,7 +263,6 @@ export default function Page({
             setClinicFlowwwId(data.clinicFlowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
             setSelectedClinic(getClinicToSet(clinics, data.clinicId));
-
             if (name == '') {
               name = data.firstName;
               id = data.userId;

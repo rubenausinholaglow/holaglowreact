@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { SvgSpinner } from 'app/icons/Icons';
@@ -13,6 +12,7 @@ import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
+import { usePaymentHook } from './payments/paymentHook';
 import { usePaymentList } from './payments/usePaymentList';
 
 export enum StatusPayment {
@@ -39,6 +39,8 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
   const { remoteControl, storedBudgetId, user } = useGlobalPersistedStore(
     state => state
   );
+
+  const { deletePayment } = usePaymentHook();
 
   if (status === undefined) {
     status = StatusPayment.Waiting;
@@ -69,12 +71,14 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
     }
   }, [status]);
 
-  const handleRemoveAndDelete = async (paymentRequest: any) => {
+  const handleRemoveAndDelete = async (
+    paymentRequest: PaymentTicketRequest
+  ) => {
     setIsLoading(true);
-    const id = paymentRequest.id;
-    await FinanceService.deletePayment(id, false)
+
+    await deletePayment(paymentRequest)
       .then(async data => {
-        if (data && !isEmpty(data)) {
+        if (data) {
           removePayment(paymentRequest);
           sendPaymentDeleted(paymentRequest.id);
         } else {

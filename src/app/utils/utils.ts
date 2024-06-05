@@ -131,10 +131,8 @@ export function getPaymentMethodText(method: PaymentMethod): string {
       return 'Financiación';
     case PaymentMethod.Others:
       return 'Otros';
-    case PaymentMethod.Promo:
-      return 'Promo'
     case PaymentMethod.Wallet:
-      return 'Puntos Cliente'
+      return 'Saldo Monedero'
     default:
       return 'Unknown';
   }

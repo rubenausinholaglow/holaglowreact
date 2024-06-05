@@ -161,7 +161,7 @@ export default class FinanceService {
       if (res.ok) {
         return res.json();
       } else {
-        return {} as PromoCodeResponse;
+        return res.json();
       }
     } catch (error: any) {
       Bugsnag.notify(error);

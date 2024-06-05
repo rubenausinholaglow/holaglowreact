@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import { PaymentMethod } from '@interface/payment';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
 import { ERROR_POST } from '@utils/textConstants';
@@ -21,11 +22,10 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
+import { usePromoUserHook } from '../../hooks/usePromoUserHook';
 import { useCartStore } from '../budgets/stores/userCartStore';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { PaymentModule } from './components/payment/Payments';
-import { usePaymentHook } from './components/payment/payments/paymentHook';
-import { usePaymentList } from './components/payment/payments/usePaymentList';
 
 const Page = () => {
   const ROUTES = useRoutes();
@@ -46,12 +46,12 @@ const Page = () => {
     storedBudgetId,
     setBudgetId,
     storedClinicProfessionalId,
-    promoCode,
+    setPromoCode,
   } = useGlobalPersistedStore(state => state);
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
-  const { paymentPromo } = usePaymentHook();
-  const paymentList = usePaymentList(state => state.paymentRequest);
+
+  const { getWalletBalance } = usePromoUserHook();
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -94,6 +94,8 @@ const Page = () => {
       })),
     };
     try {
+      getWalletBalance(user!.id);
+      setPromoCode(undefined);
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         budget.id = storedBudgetId;
@@ -106,19 +108,6 @@ const Page = () => {
       Bugsnag.notify(ERROR_POST + error);
     }
   };
-
-  useEffect(() => {
-    const createAsync = async () => {
-      await paymentPromo(user!.id, promoCode!.amount);
-    };
-    if (
-      promoCode != undefined &&
-      promoCode?.code.length > 0 &&
-      paymentList.length == 0
-    ) {
-      createAsync();
-    }
-  }, [storedBudgetId]);
 
   function cartTotalPrice() {
     let productsPriceTotalWithDiscounts = 0;
