@@ -52,7 +52,7 @@ export default function Gender() {
 
                       if (gender !== item.value)
                         router.push(
-                          item.value === 1
+                          item.value === 0
                             ? ROUTES.derma.multistep.age
                             : ROUTES.derma.multistep.lactating
                         );

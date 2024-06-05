@@ -13,7 +13,7 @@ import Image from 'next/image';
 
 import { DERMA_GENERIC_PRODUCTS } from '../../planes/mockedData';
 import GuaranteedResults from '../../precios/components/GuaranteedResults';
-import OptionsPricesB from '../../precios/components/OptionsPricesB';
+import OptionsPrices from '../../precios/components/OptionsPrices';
 import PlanesBottomBar from './PlanesBottomBar';
 
 export default function PlanesMultiStep() {
@@ -110,12 +110,7 @@ export default function PlanesMultiStep() {
           Selecciona el nivel de seguimiento médico y la frecuencia de entrega
           de tus cremas
         </Text>
-
-        <OptionsPricesB
-          isMultistep={true}
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-        />
+        <OptionsPrices />
         <div className="mb-8">
           <Flex className="gap-4 w-full pt-8 text-hg-black500">
             <SvgPharmacy className="shrink-0" />
