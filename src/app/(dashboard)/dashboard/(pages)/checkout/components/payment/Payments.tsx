@@ -119,10 +119,10 @@ export const PaymentModule = () => {
   };
 
   useEffect(() => {
-    if (walletClient && walletClient.amountBalance > 0) {
+    if (walletClient && walletClient.amountBalance >= 0) {
       setWalletAmount(walletClient.amountBalance);
     }
-  }, [walletClient]);
+  }, [walletClient, paymentList]);
 
   const createPaymentRequest = (message: any): any => {
     return {
@@ -338,7 +338,7 @@ export const PaymentModule = () => {
                     {method.key == 'wallet' && (
                       <>
                         <span className="font-semibold text-hg-secondary">
-                          {walletAmount > 0 ? ': ' + walletAmount + '€' : ''}
+                          {walletAmount >= 0 ? ': ' + walletAmount + '€' : ''}
                         </span>
                       </>
                     )}

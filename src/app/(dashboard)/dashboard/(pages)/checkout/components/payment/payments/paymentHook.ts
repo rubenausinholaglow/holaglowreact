@@ -1,6 +1,5 @@
-import Bugsnag from "@bugsnag/js";
-import { CreatePayment, OriginPayment } from "@interface/initializePayment";
-import { PaymentBank, PaymentMethod, PaymentTicketRequest } from "@interface/payment";
+import { CreatePayment } from "@interface/initializePayment";
+import { PaymentMethod, PaymentTicketRequest } from "@interface/payment";
 import FinanceService from "@services/FinanceService";
 import { useGlobalPersistedStore } from "app/stores/globalStore";
 import { isEmpty } from "lodash";
@@ -56,26 +55,7 @@ export const usePaymentHook = () => {
     return true;
   }
 
-  const paymentPromo = async (userId : string, amountPromo : number) : Promise<boolean> => {
-    const paymentPromoRequest: CreatePayment = {
-      amount: amountPromo,
-      originOfPayment: OriginPayment.dashboard,
-      paymentBank: PaymentBank.Points,
-      paymentMethod: PaymentMethod.Wallet,
-      userId: userId || '',
-      referenceId: '',
-    };
 
-    await createPayment(paymentPromoRequest)
-      .then(response => {
-          return true;
-      })
-      .catch(error => {
-        Bugsnag.notify('Error creating payment promo ' + error);
-      });
 
-      return false;
-  };
-
-  return { createPayment, paymentPromo, deletePayment }
+  return { createPayment, deletePayment }
 }

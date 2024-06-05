@@ -100,7 +100,7 @@ export default function CheckoutTotal() {
       </Flex>
       {showCartDiscount && (
         <Flex layout="col-left" className="bg-hg-black100 p-4 gap-2">
-          <ProductDiscountForm isCheckout={true} productPrice={totalPrice} />
+          <ProductDiscountForm isCheckout={true} />
           {hasCartDiscount && (
             <Flex layout="row-left">
               {manualPrice > 0 && (

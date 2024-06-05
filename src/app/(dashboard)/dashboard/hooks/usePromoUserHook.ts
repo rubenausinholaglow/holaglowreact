@@ -31,22 +31,12 @@ export const usePromoUserHook = () => {
         return wallet;
     }
 
-    const addAmountToWallet = async (amount : number) : Promise<Wallet> => {
-        if(!wallet) return {} as Wallet;
-        const newWallet = {
-        ...wallet,
-        amountBalance: wallet?.amountBalance + amount    
-        };
-        setWallet(newWallet);
-
-        return wallet!;
-    }
+ 
 
 
     return {
         wallet,
         validatePromoCode,
-        getWalletBalance,
-        addAmountToWallet
+        getWalletBalance
     }
 }
