@@ -108,7 +108,9 @@ export default function ProductCard({
         layout="col-left"
         className="p-3 flex-grow bg-white rounded-b-2xl z-10"
       >
-        <Text as="h2" className="mb-2 font-semibold">{product.title}</Text>
+        <Text as="h2" className="mb-2 font-semibold">
+          {product.title}
+        </Text>
         {!isDashboard && (
           <Text size="xs" className="text-hg-black500 mb-8">
             {product.longDescription}
@@ -116,7 +118,7 @@ export default function ProductCard({
         )}
         <Flex
           layout={isDashboard ? 'col-left' : 'row-left'}
-          className="mt-auto items-center justify-between w-full"
+          className="mt-auto items-start justify-between w-full"
         >
           <Flex layout={isDashboard ? 'row-left' : 'col-left'}>
             {discountedPrice > 0 && (
