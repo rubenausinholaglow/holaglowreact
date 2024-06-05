@@ -1,6 +1,7 @@
-import { ApolloClient, DocumentNode,gql } from '@apollo/client'; 
+import { ApolloClient, DocumentNode, gql } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
 import GraphQLQueryBuilder from '@interface/queryType';
+import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { createApolloClient } from 'lib/client';
 
 export interface Cursor {
@@ -12,19 +13,28 @@ export interface Cursor {
 
 export interface TableQuery {
   nextPage: boolean;
-  queryToExecute: string[]| string;
+  queryToExecute: string[] | string;
   entity?: string;
   stringFilter?: string;
   numberPerPage?: number;
   sortedBy?: string;
-  lastCursor? : string;
-  nextCursor? : string;
+  lastCursor?: string;
+  nextCursor?: string;
+  columnsToIgnoreSearch?: string[];
 }
 
-export function createQuery(
-  params: TableQuery,
-): DocumentNode {
-  const { nextPage, queryToExecute, entity, stringFilter, numberPerPage, sortedBy, lastCursor, nextCursor } = params;
+export function createQuery(params: TableQuery): DocumentNode {
+  const {
+    nextPage,
+    queryToExecute,
+    entity,
+    stringFilter,
+    numberPerPage,
+    sortedBy,
+    lastCursor,
+    nextCursor,
+    columnsToIgnoreSearch,
+  } = params;
 
   const nextPageFlag = nextPage ? true : false;
 
@@ -33,19 +43,22 @@ export function createQuery(
     queryToExecute,
     nextPage && !stringFilter && !sortedBy && !numberPerPage ? nextCursor : '',
     !nextPage && !stringFilter && !sortedBy && !numberPerPage ? lastCursor : '',
-    numberPerPage ? numberPerPage : 10
+    numberPerPage ? numberPerPage : 10,
+    columnsToIgnoreSearch
   );
 
   const queryString = queryBuilder.buildQuery(entity!, stringFilter, sortedBy);
-
+  debugger;
   return gql(queryString);
 }
 
-
-export async function executeQuery(params: TableQuery){
+export async function executeQuery(params: TableQuery) {
   const query = createQuery(params);
   try {
-    const client = createApolloClient(process.env.NEXT_PUBLIC_CONTACTS_API!, "");
+    const client = createApolloClient(
+      process.env.NEXT_PUBLIC_CONTACTS_API!,
+      ''
+    );
     const response = await fetchData(query, client);
     return response;
   } catch (error) {

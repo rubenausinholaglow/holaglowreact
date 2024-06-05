@@ -33,4 +33,9 @@ export type BudgetUserReponse = {
   firstName: string;
   lastName: string;
   secondLastName: string;
+  phone: string;
+};
+
+export type BudgetProfessionalReponse = {
+  name: string;
 };

@@ -8,13 +8,13 @@ import {
   Cursor,
   TableQuery,
 } from 'app/crm/components/table/TableFunctions';
-import { ColumnDataTable } from 'app/GraphQL/common/types/column';
-import { PageInfo } from 'app/GraphQL/PageInfo';
 import {
   BudgetsQueryResponse,
   BudgetsResponse,
   BudgetsResponseNode,
 } from 'app/GraphQL/BudgetsQueryResponse';
+import { ColumnDataTable } from 'app/GraphQL/common/types/column';
+import { PageInfo } from 'app/GraphQL/PageInfo';
 import { mapBudgetsData } from 'app/GraphQL/utils/utilsMapping';
 import { createApolloClient } from 'lib/client';
 
@@ -35,22 +35,37 @@ export default function TableBudgets() {
     { label: 'Cliente', key: 'fullName', format: 'string' },
     { label: 'Teléfono', key: 'user.phone', format: 'string' },
     { label: 'Comercial', key: 'professional.name', format: 'string' },
-    { label: 'Importe', key: 'totalPrice', format: 'string' },
+    {
+      label: 'Importe',
+      key: 'totalPrice',
+      format: 'string',
+    },
     { label: 'Servicios', key: 'services', format: 'string' },
-    { label: 'Estado', key: 'statusBudget', format: 'status' },
+    {
+      label: 'Estado',
+      key: 'statusBudget',
+      format: 'status',
+    },
+  ];
+
+  const columnsToIgnoreSearch: string[] = [
+    'totalPrice',
+    'statusBudget',
+    'products.product',
+    'products.title',
   ];
   const queryToExecute = [
     `
-      id,
-      creationDate,
-      totalPrice,
-      statusBudget,
+      id
+      creationDate
+      totalPrice
+      statusBudget
       user {
-        firstName,
-        lastName,
-        secondLastName,
+        firstName
+        lastName
+        secondLastName
         phone
-      },
+      }
       professional {
         name
       }
@@ -63,7 +78,7 @@ export default function TableBudgets() {
   ];
 
   const entity = 'budgets';
-  const client = createApolloClient('https://localhost:7055/', '');
+  const client = createApolloClient(process.env.NEXT_PUBLIC_PATIENTS_API!, '');
 
   const fetchBudgets = async (query: DocumentNode, nextPage?: boolean) => {
     try {
@@ -128,6 +143,7 @@ export default function TableBudgets() {
       sortedBy,
       lastCursor,
       nextCursor,
+      columnsToIgnoreSearch,
     };
     const queryBuilders = createQuery(params);
     await fetchBudgets(queryBuilders, nextPage);
