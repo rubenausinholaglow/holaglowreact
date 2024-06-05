@@ -98,13 +98,15 @@ export default function FullWidthCarousel({
           type === 'professionals' &&
           items &&
           items.map((professional: Professional | any, index) => {
-            return (
-              <ProfessionalCard
-                key={professional.name}
-                professional={professional}
-                className="h-full flex flex-col mr-10"
-              />
-            );
+            if (professional.urlPhoto !== '') {
+              return (
+                <ProfessionalCard
+                  key={professional.name}
+                  professional={professional}
+                  className="h-full flex flex-col mr-10"
+                />
+              );
+            }
           })}
 
         {children}
