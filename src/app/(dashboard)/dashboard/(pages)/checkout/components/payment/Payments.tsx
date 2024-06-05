@@ -263,8 +263,6 @@ export const PaymentModule = () => {
   };
 
   const createTicket = async () => {
-    console.log(totalAmount);
-    console.log(cartTotalWithDiscount);
     if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
       alert('Hay cantidad pendiente de pagar');
       return;

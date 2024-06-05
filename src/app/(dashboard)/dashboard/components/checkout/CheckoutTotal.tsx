@@ -32,9 +32,6 @@ export default function CheckoutTotal() {
       0
     );
   }
-
-  const { setPromoCode } = useGlobalPersistedStore(state => state);
-
   const hasProductsDiscount =
     productsPriceTotal !== productsPriceTotalWithDiscounts;
 
@@ -53,7 +50,6 @@ export default function CheckoutTotal() {
     Math.ceil(productsPriceTotalWithDiscounts * 100) / 100;*/
 
   const handleApplyDiscount = () => {
-    setPromoCode(undefined);
     applyCartDiscount(0, '€');
   };
   return (

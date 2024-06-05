@@ -95,7 +95,6 @@ const Page = () => {
     };
     try {
       getWalletBalance(user!.id);
-      setPromoCode(undefined);
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         budget.id = storedBudgetId;

@@ -7,7 +7,7 @@ import { useGlobalPersistedStore } from "app/stores/globalStore";
 
 export const usePromoUserHook = () => {
     const [wallet, setWallet] = useState<Wallet | undefined>(undefined);
-    const { setWalletClient } = useGlobalPersistedStore(state => state);
+    const { setWalletClient, setPromoCode } = useGlobalPersistedStore(state => state);
 
     const validatePromoCode = async (validatePromoCode: ValidatePromoCodeRequest) : Promise<PromoCodeResponse> => {
         const promo = await FinanceService.validatePromoCode(validatePromoCode);
@@ -21,6 +21,7 @@ export const usePromoUserHook = () => {
             promoCode: promo.code
         }
         setWalletClient(newWallet);
+        setPromoCode(promo);
         return promo;
     }
 
@@ -30,10 +31,7 @@ export const usePromoUserHook = () => {
         setWalletClient(wallet);
         return wallet;
     }
-
- 
-
-
+    
     return {
         wallet,
         validatePromoCode,
