@@ -52,7 +52,7 @@ export default function PaymentInput(props: Props) {
   const { control, handleSubmit } = useForm();
   const cart = useCartStore(state => state.cart);
   const totalAmount = usePaymentList(state => state.totalAmount);
-  const { addPaymentToList } = usePaymentList();
+  const { addPaymentToList, paymentRequest } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
   const [showPepper, setshowPepper] = useState(false);
   const [showFrakmenta, setShowFrakmenta] = useState(false);
@@ -129,12 +129,11 @@ export default function PaymentInput(props: Props) {
           parseFloat(totalAmount.toFixed(2))
       );
     }
-
     if (props.paymentBank == PaymentBank.OnlineAdvancePayment) {
       setInputValue('49');
       setMaxValue(49);
     }
-  }, [walletClient]);
+  }, [walletClient, props.paymentBank]);
 
   const sendPaymentCreated = async (
     paymentId: string,
@@ -225,7 +224,17 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
-    if (isLoading || data.number == 0) return;
+    let amount = parseFloat(data.number);
+    if (props.paymentBank == PaymentBank.OnlineAdvancePayment) {
+      if (
+        paymentRequest.filter(x => x.bank == PaymentBank.OnlineAdvancePayment)
+          .length > 0
+      ) {
+        return;
+      }
+      amount = parseFloat(inputValue);
+    }
+    if (isLoading || amount == 0) return;
     if (
       showAlma ||
       messageNotification ||
@@ -235,7 +244,7 @@ export default function PaymentInput(props: Props) {
     ) {
       return;
     }
-    await addPayment(data.number);
+    await addPayment(amount);
   };
 
   function validateFormData(formData: ClientUpdate): boolean {
