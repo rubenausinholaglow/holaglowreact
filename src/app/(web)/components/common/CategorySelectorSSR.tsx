@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import { getAllCategoryNames } from '@utils/utils';
 import CategoryIcon from 'app/(web)/components/common/CategoryIcon';
 import { toggleFilter } from 'app/(web)/tratamientos/utils/filters';
 import { useGlobalStore } from 'app/stores/globalStore';
@@ -24,36 +25,13 @@ export default function CategorySelectorSSR({
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const allCategoryNames: string[] = products.reduce(
-      (categoryNames: string[], product) => {
-        const productCategories = product.category.map(
-          category => category.name
-        );
-        return [...categoryNames, ...productCategories];
-      },
-      []
+    setProductCategories(
+      getAllCategoryNames(products).sort((a, b) => {
+        if (a === 'Packs') return -1;
+        if (b === 'Packs') return 1;
+        return 0;
+      })
     );
-
-    let filteredCategoryNames;
-    if (isDashboard) {
-      filteredCategoryNames = allCategoryNames.filter(
-        categoryName =>
-          categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
-      );
-    } else {
-      filteredCategoryNames = allCategoryNames;
-    }
-
-    const packsIndex = filteredCategoryNames.indexOf('Packs');
-
-    if (packsIndex !== -1) {
-      const packsItem = filteredCategoryNames.splice(packsIndex, 1)[0];
-      filteredCategoryNames.unshift(packsItem);
-    }
-
-    const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
-
-    setProductCategories(uniqueCategoryNames);
   }, [products]);
 
   return (
