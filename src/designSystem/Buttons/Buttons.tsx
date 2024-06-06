@@ -12,6 +12,7 @@ type ButtonTypes =
   | 'whiteDerma'
   | 'derma'
   | 'dermaDark'
+  | 'disabledGrey'
   | 'disabled';
 type ButtonSizes = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -188,6 +189,8 @@ const ButtonBody = ({
       'bg-white text-hg-black border border-hg-black hover:bg-derma-primary100/50 active:bg-derma-primary100/50',
     disabled:
       'bg-white text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default pointer-events-none',
+    disabledGrey:
+      'bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black400 cursor-default pointer-events-none',
     sm: 'text-xs font-medium h-[32px] px-4',
     md: 'text-xs font-medium h-[40px] px-4',
     lg: 'text-md font-semibold h-[48px] px-6',

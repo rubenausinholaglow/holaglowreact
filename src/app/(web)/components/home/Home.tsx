@@ -68,7 +68,6 @@ export default function Home() {
         <Testimonials />
         <Clinics />
         <GoToTreatments />
-        <FloatingBottomBar className="bg-derma-secondary500" />
       </MainLayoutSSR>
     </>
   );

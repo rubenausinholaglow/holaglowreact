@@ -40,20 +40,17 @@ export default function Page() {
       try {
         const products =
           await ProductService.getDashboardProducts(storedClinicId);
+        productFilters.isPack = true;
+        setProductFilters(productFilters);
         setDashboardProducts(products);
         setFilteredProducts(products);
         setIsHydrated(true);
-        productFilters.isPack = true;
-        setProductFilters(productFilters);
       } catch (error: any) {
         setError(error);
       }
     };
-
-    if (!dashboardProducts || dashboardProducts.length == 0) fetchProducts();
+    fetchProducts();
     setHighlightProduct(null);
-    productFilters.isPack = true;
-    setProductFilters(productFilters);
   }, []);
 
   useEffect(() => {
@@ -62,28 +59,17 @@ export default function Page() {
     }
   }, [isModalOpen]);
 
-  if (error || !isHydrated) {
+  if (error) {
     return <>{error}</>;
   }
 
   return (
     <App>
       <Flex layout="col-center" className="w-full gap-1">
-        {dashboardProducts.length > 0 ? (
-          <>
-            {productHighlighted != null && <HightLightedProduct />}
-            <PsrpPage isDashboard />
-          </>
-        ) : (
-          <MainLayout isDashboard>
-            <p className="mb-4">Cargando productos...</p>
-            <SvgSpinner
-              height={30}
-              width={30}
-              fill={HOLAGLOW_COLORS['primary']}
-            />
-          </MainLayout>
-        )}
+        <>
+          {productHighlighted != null && <HightLightedProduct />}
+          <PsrpPage isDashboard={true} />
+        </>
       </Flex>
     </App>
   );

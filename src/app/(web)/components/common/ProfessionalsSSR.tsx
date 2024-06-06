@@ -53,18 +53,23 @@ export default async function ProfessionalsSSR({
       </Container>
       <Carousel
         hasDots
-        hasControls={professionals?.map && professionals?.map.length > 2}
+        hasControls={false}
         className="relative"
         isIntrinsicHeight
         visibleSlides={isMobileSSR() ? 1 : 2}
         infinite={false}
       >
-        {professionals.map(professional => (
-          <ProfessionalCard
-            key={professional.name}
-            professional={professional}
-          />
-        ))}
+        {professionals.map(professional => {
+          if (professional.urlPhoto) {
+            return (
+              <ProfessionalCard
+                key={professional.name}
+                professional={professional}
+                className="h-full flex flex-col"
+              />
+            );
+          }
+        })}
       </Carousel>
     </Container>
   );
