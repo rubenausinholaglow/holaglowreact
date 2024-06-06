@@ -112,7 +112,6 @@ export default function ThankYouMultiStep() {
                 <video
                   autoPlay
                   controls
-                  muted
                   loop
                   playsInline
                   src={filteredPain?.videoUrl}
