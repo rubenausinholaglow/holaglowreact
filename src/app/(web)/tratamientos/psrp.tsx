@@ -46,7 +46,7 @@ export default function PsrpPage({
     isModalOpen,
   } = useGlobalStore(state => state);
 
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(true);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
   const [showDashboardFilters, setShowDashboardFilters] = useState(true);
@@ -56,6 +56,13 @@ export default function PsrpPage({
     description:
       'Elige uno de los packs para tratar de manera global tus objetivos estéticos y conseguir el resultado que deseas',
   };
+
+  useEffect(() => {
+    if (isDashboard) {
+      productFilters.isPack = true;
+      setProductFilters(productFilters);
+    }
+  }, []);
 
   useEffect(() => {
     if (slug !== '') {
@@ -97,9 +104,11 @@ export default function PsrpPage({
   }, [slug, stateProducts]);
 
   useEffect(() => {
-    processFilters();
-    setIsHydrated(true);
-  }, [productFilters]);
+    if (filteredProducts && filteredProducts.length > 0) {
+      processFilters();
+      setIsHydrated(true);
+    }
+  }, [productFilters, dashboardProducts]);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -211,7 +220,7 @@ export default function PsrpPage({
         />
         <div className="bg-hg-cream rounded-t-3xl">
           <Container className="relative pt-6 pb-4">
-            <Title isAnimated size="3xl" className="mt-4">
+            <Title as="h1" isAnimated size="3xl" className="mt-4">
               Nuestros tratamientos
             </Title>
           </Container>

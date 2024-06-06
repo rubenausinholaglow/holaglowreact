@@ -18,6 +18,18 @@ export const PAINS_AND_SYMPTOMS = [
       '/images/derma/beforeAfter/melasma/beforeAfter3.jpg',
       '/images/derma/beforeAfter/melasma/beforeAfter4.jpg',
     ],
+    secondaryConcerns: [
+      'Mejorar la textura de la piel',
+      'Luminosidad',
+      'Poros dilatados',
+      'Líneas finas de expresión',
+      'Patas de gallo',
+      'Tendencia acnéica',
+      'No quiero tratar nada más',
+      'Léntigo solar',
+      'Rosácea',
+      'Melasma',
+    ],
   },
   {
     name: 'Acné',
@@ -42,6 +54,13 @@ export const PAINS_AND_SYMPTOMS = [
       '/images/derma/beforeAfter/acne/beforeAfter3.jpg',
       '/images/derma/beforeAfter/acne/beforeAfter4.jpg',
     ],
+    secondaryConcerns: [
+      'Mejorar la textura de la piel',
+      'Luminosidad',
+      'Poros dilatados',
+      'Melasma',
+      'Rosácea',
+    ],
   },
   {
     name: 'Rosácea',
@@ -64,18 +83,18 @@ export const PAINS_AND_SYMPTOMS = [
       '/images/derma/beforeAfter/rosacea/beforeAfter2.jpg',
       '/images/derma/beforeAfter/rosacea/beforeAfter3.jpg',
     ],
+    secondaryConcerns: [],
   },
   {
     name: 'Antiaging',
     value: 3,
     img: '/images/derma/multistep/pains/calidadPiel.jpg',
     symptoms: [
-      'Manchas',
-      'Falta de luminosidad',
-      'Flacidez',
       'Líneas finas de expresión',
-      'Arrugas profundas',
-      'Pérdida de densidad',
+      'Arrugas',
+      'Piel seca',
+      'Textura rugosa',
+      'Piel fina',
     ],
     feedback: {
       ingredients: ['Ácido retinoico'],
@@ -85,12 +104,19 @@ export const PAINS_AND_SYMPTOMS = [
       '/images/derma/beforeAfter/antiaging/beforeAfter2.jpg',
       '/images/derma/beforeAfter/antiaging/beforeAfter3.jpg',
     ],
+    secondaryConcerns: [
+      'Mejorar la textura de la piel',
+      'Luminosidad',
+      'Poros dilatados',
+      'Tendencia acnéica',
+      'Léntigo solar',
+    ],
   },
 ];
 
 export const GENDER = [
-  { title: 'Femenino', value: 0 },
-  { title: 'Masculino', value: 1 },
+  { title: 'Masculino', value: 0 },
+  { title: 'Femenino', value: 1 },
   { title: 'No binario', value: 2 },
 ];
 
@@ -185,19 +211,6 @@ export const SKIN_COLORS = [
     value: 5,
     color: '#3C201C',
   },
-];
-
-export const SECONDARY_CONCERNS = [
-  'Mejorar la textura de la piel',
-  'Luminosidad',
-  'Poros dilatados',
-  'Líneas finas de expresión',
-  'Patas de gallo',
-  'Tendencia acnéica',
-  'No quiero tratar nada más',
-  'Lentigo solar',
-  'Rosácea',
-  'Melasma',
 ];
 
 export const ROUTINES = [
@@ -436,7 +449,7 @@ export const DERMA_INGREDIENTS = [
   },
   {
     name: 'Nicotinamida',
-    concerns: ['Lentigo solar'],
+    concerns: ['Léntigo solar'],
     imgSrc: '/images/derma/landingPrecios/ingredients/nicotinamida.jpg',
     tags: [''],
     description: '',

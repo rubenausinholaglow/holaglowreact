@@ -88,7 +88,7 @@ export default function ImageUploader({
         userId ? userId : undefined,
         updatedPictures[0].file!,
         position,
-        id ?? diagnosticId,
+        diagnosticId ? diagnosticId : id,
         diagnosticId ? diagnosticId : ''
       );
 

@@ -18,9 +18,9 @@ import { HandleNextMultistep } from '../NextMultistepButton';
 export default function Age() {
   const router = useRouter();
 
-  const { age, setAge, setFeedbackStep } = useDermaStore(state => state);
+  const { age, setAge } = useDermaStore(state => state);
 
-  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.feedback);
+  const nextStep = HandleNextMultistep(ROUTES.derma.multistep.output.pain);
 
   return (
     <DermaLayout
@@ -51,9 +51,8 @@ export default function Age() {
                     }`}
                     key={item.value}
                     onClick={async () => {
-                      setAge(age === item.value ? 0 : item.value);
+                      setAge(age === item.value ? undefined : item.value);
                       if (age !== item.value) {
-                        setFeedbackStep(1);
                         await nextStep();
                       }
                     }}

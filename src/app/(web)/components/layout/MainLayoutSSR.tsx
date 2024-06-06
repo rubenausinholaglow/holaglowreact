@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
 import AppSSR from 'app/(web)/components/layout/AppSSR';
 import Header from 'app/(web)/components/layout/Header';
 
@@ -22,6 +23,7 @@ export default function MainLayoutSSR({
           <Header hideAppointmentButton={hideAppointmentButton} />
         )}
         {children}
+        <FloatingBottomBar />
         {!hideFooter && <Footer />}
       </main>
     </AppSSR>

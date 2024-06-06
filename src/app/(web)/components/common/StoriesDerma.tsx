@@ -10,8 +10,17 @@ import Image from 'next/image';
 export default function StoriesDerma() {
   const { pain } = useDermaStore(state => state);
 
+  const defaultDermaImages: any[] = [
+    '/images/derma/beforeAfter/beforeAfter1.jpg',
+    '/images/derma/beforeAfter/beforeAfter2.jpg',
+    '/images/derma/beforeAfter/beforeAfter3.jpg',
+    '/images/derma/beforeAfter/beforeAfter4.jpg',
+  ];
+
   const dermaImages = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0]
     ?.thankyouImages;
+
+  const beforeAfterImages = dermaImages || defaultDermaImages;
 
   return (
     <Container className="py-12 overflow-hidden">
@@ -43,7 +52,7 @@ export default function StoriesDerma() {
             className="rounded-xl"
             isDerma
           >
-            {dermaImages?.map((item: any) => (
+            {beforeAfterImages?.map((item: any) => (
               <div key={item} className="overflow-hidden relative rounded-2xl">
                 <Image
                   height={400}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Appointment } from '@interface/appointment';
+import { Clinic } from '@interface/clinic';
 import { Product } from '@interface/product';
 import { Slot } from '@interface/slot';
 import {
@@ -14,6 +15,7 @@ import {
   getUniqueProducts,
 } from '@utils/utils';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { PAINS_AND_SYMPTOMS } from 'app/(web)/(derma)/multistep/multistepConfig';
 import { SUBSCRIPTIONS } from 'app/(web)/(derma)/planes/mockedData';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import {
@@ -24,6 +26,7 @@ import {
   SvgStethoscope,
 } from 'app/icons/Icons';
 import { SvgBag, SvgCheckCircle } from 'app/icons/IconsDs';
+import { useDermaStore } from 'app/stores/dermaStore';
 import {
   TypeOfPayment,
   useGlobalPersistedStore,
@@ -70,12 +73,16 @@ export default function AppointmentResume({
     selectedPacksTreatments,
     typeOfPayment,
   } = useSessionStore(state => state);
+  const { pain } = useDermaStore(state => state);
+
+  const filteredPain = isDerma
+    ? PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0].name
+    : '';
 
   const { cart, priceDiscount, percentageDiscount, manualPrice } = useCartStore(
     state => state
   );
-  const [city, setCity] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
+  const [clinic, setClinic] = useState<Clinic>();
 
   const localSelectedDay = dayjs(
     appointment ? appointment.startTime : selectedDay
@@ -107,13 +114,7 @@ export default function AppointmentResume({
       ? clinics.filter(clinic => clinic.flowwwId === appointment?.clinicId)[0]
       : undefined;
 
-    const appointmentCity = appointmentClinic ? appointmentClinic.city : '';
-    const appointmentAddress = appointmentClinic
-      ? appointmentClinic.address
-      : '';
-
-    setCity(appointmentCity || selectedClinic?.city || '');
-    setAddress(appointmentAddress || selectedClinic?.address || '');
+    setClinic(appointmentClinic ? appointmentClinic : selectedClinic);
   }, [clinics]);
 
   const accordionProps: AccordionSingleProps = {
@@ -183,10 +184,12 @@ export default function AppointmentResume({
         {!isDerma && (
           <div className="w-full flex items-start">
             <SvgLocation className="mr-2 mt-1 shrink-0" />
-            <div className="flex flex-col ">
-              <Text className="font-semibold">{city}</Text>
-              <Text>{address}</Text>
-            </div>
+            <address className="text-xs not-italic">
+              {clinic?.address}, {clinic?.district}, {clinic?.zipCode}{' '}
+              {clinic?.province}
+              <br />
+              {clinic?.addressExtraInfo}
+            </address>
           </div>
         )}
         {isDerma && !isUpselling && (
@@ -388,7 +391,10 @@ export default function AppointmentResume({
                     ) : (
                       cart[0].description && (
                         <Flex className="items-start mb-2">
-                          <Text>{cart[0].description}</Text>
+                          <Text>
+                            {cart[0].description} para{' '}
+                            {filteredPain.toLowerCase()}
+                          </Text>
                         </Flex>
                       )
                     )}
@@ -484,7 +490,7 @@ export default function AppointmentResume({
         </Flex>
       </Flex>
     );
-  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments, address]);
+  }, [isProbadorVirtual, isDerma, isUpselling, selectedTreatments, clinic]);
 
   return appointmentComponent;
 }

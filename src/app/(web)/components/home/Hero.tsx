@@ -27,6 +27,7 @@ export default function HomeHero() {
             className="z-10 w-full md:w-1/2 md:pb-64 2xl:pb-96 mb-8 md:mb-0"
           >
             <Title
+              as="h1"
               size="2xl"
               className="text-left font-bold leading-none md:mb-12"
               origin="right"

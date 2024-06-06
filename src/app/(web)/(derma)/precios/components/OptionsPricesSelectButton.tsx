@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgSpinner } from 'app/icons/Icons';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
@@ -18,25 +19,30 @@ export default function OptionsPricesSelectButton({
   const [isLoading, setIsLoading] = useState(false);
 
   const { resetCart, addItemToCart } = useCartStore(state => state);
+  const { setPayment } = useSessionStore(state => state);
 
   useEffect(() => {
     resetCart();
+    setPayment(undefined);
   }, []);
 
   return (
-    <Flex className="mt-6">
+    <Flex className="" layout="col-center">
       <Button
-        className="w-full"
         type="derma"
         size="xl"
-        customStyles="px-16"
         onClick={async () => {
           setIsLoading(true);
+          setPayment(undefined);
           await selectDermaProduct({ index, addItemToCart, router });
         }}
         id="tmevent_derma_plans_selection_button"
       >
-        {isLoading ? <SvgSpinner className="w-full" /> : 'Seleccionar'}
+        {isLoading ? (
+          <SvgSpinner className="w-full" />
+        ) : (
+          'Comprar rutina personalizada'
+        )}
       </Button>
     </Flex>
   );

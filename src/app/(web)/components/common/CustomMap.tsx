@@ -108,59 +108,55 @@ export default function CustomMap({
     setTimeout(() => {
       if (loader) {
         loader.load().then(() => {
-          const geocoder = new window.google.maps.Geocoder();
-          geocoder.geocode({ address }, (results, status) => {
-            if (status === 'OK' && results && results.length > 0) {
-              const mapOptions = {
-                center: results[0].geometry.location,
-                zoom: 17,
-                disableDefaultUI: true,
-              };
+          const latLng = new window.google.maps.LatLng(
+            selectedClinic.lat,
+            selectedClinic.long
+          );
+          const mapOptions = {
+            center: latLng,
+            zoom: 17,
+            disableDefaultUI: true,
+          };
 
-              const mapElement = document.getElementById('map');
+          const mapElement = document.getElementById('map');
 
-              if (mapElement) {
-                const newMap = new window.google.maps.Map(
-                  mapElement,
-                  mapOptions
-                );
+          if (mapElement) {
+            const newMap = new window.google.maps.Map(mapElement, mapOptions);
 
-                newMap.setOptions({ styles: styles['silver'] });
+            newMap.setOptions({ styles: styles['silver'] });
 
-                const customIconUrl = '/images/customMarker.svg';
+            const customIconUrl = '/images/customMarker.svg';
 
-                const marker = new window.google.maps.Marker({
-                  position: results[0].geometry.location,
-                  map: newMap,
-                  icon: customIconUrl,
-                });
+            const marker = new window.google.maps.Marker({
+              position: latLng,
+              map: newMap,
+              icon: customIconUrl,
+            });
 
-                const contentString = `
-                  <div id="content" style="padding: 16px;">
-                    <p class="city">${selectedClinic.city}</p>
-                    <p class="address">${selectedClinic.address}</p>
-                    <a href="https://wa.me/34682417208" class="link">Más info</a>
-                  </div>
-                `;
+            const contentString = `
+              <div id="content" style="padding: 0 16px 16px;">
+                <p class="city">${selectedClinic.city}</p>
+                <p class="address">${selectedClinic.address}</p>
+                <a href="https://wa.me/34682417208" class="link">Más info</a>
+              </div>
+            `;
 
-                const infowindow = new window.google.maps.InfoWindow({
-                  content: contentString,
-                  ariaLabel: 'Test',
-                });
+            const infowindow = new window.google.maps.InfoWindow({
+              content: contentString,
+              ariaLabel: 'Test',
+            });
 
-                marker.addListener('click', () => {
-                  infowindow.open({
-                    anchor: marker,
-                    map,
-                  });
-                });
+            marker.addListener('click', () => {
+              infowindow.open({
+                anchor: marker,
+                map,
+              });
+            });
 
-                setMap(newMap);
-              } else {
-                console.error('Failed to find map element');
-              }
-            }
-          });
+            setMap(newMap);
+          } else {
+            console.error('Failed to find map element');
+          }
         });
       } else {
         console.error('Loader is null');

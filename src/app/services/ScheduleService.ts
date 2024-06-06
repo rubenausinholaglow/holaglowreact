@@ -219,14 +219,12 @@ export default class ScheduleService {
   static async getAppointmentsPerClinic(
     clinicId: string,
     boxId: string,
-    productType: ProductType
   ): Promise<AppointmentsPerClinicResponse[]> {
     try {
       let url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/PerClinic?clinicId=${clinicId}`;
       if (boxId) {
         url = `${url}&boxId=${boxId}`;
       }
-      url = `${url}&productType=${productType}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
