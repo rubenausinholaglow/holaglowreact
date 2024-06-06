@@ -120,11 +120,8 @@ export default function ThankYouMultiStep() {
                 />
               </div>
             </Flex>
-            <Flex
-              layout="col-center"
-              className="w-full gap-4 md:items-start pb-4"
-            >
-              <Title size="xl" className="text-derma-primary font-light">
+            <Flex layout="col-center" className="w-full md:items-start pb-4">
+              <Title size="xl" className="text-derma-primary font-light mb-2">
                 Aquí tienes tu rutina para {filteredPain?.name.toLowerCase()}
               </Title>
               <Text className="text-center md:text-left mb-4">
