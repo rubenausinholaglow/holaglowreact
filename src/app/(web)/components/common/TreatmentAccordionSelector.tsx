@@ -6,12 +6,12 @@ import ProductService from '@services/ProductService';
 import {
   getInvalidProducts,
   getValidTypes,
-  getValidUnityTypes,
   isDisableAddQuantity,
 } from '@utils/agendaUtils';
 import { fetchProduct } from '@utils/fetch';
 import { PacksConfigured } from '@utils/packUtils';
 import useRoutes from '@utils/useRoutes';
+import { getAllCategoryNames } from '@utils/utils';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
   Operation,
@@ -83,25 +83,9 @@ export default function TreatmentAccordionSelector({
 
   useEffect(() => {
     if (isDashboard && !isEmpty(dashboardProducts)) {
-      const allCategoryNames: string[] = dashboardProducts.reduce(
-        (categoryNames: string[], product) => {
-          let productCategories: string[] = [];
-          if (packInProductCart) {
-            if (validUnityTypes.includes(product.unityType)) {
-              productCategories = product.category.map(
-                category => category.name
-              );
-            }
-          } else if (!product.isPack) {
-            productCategories = product.category.map(category => category.name);
-          }
-          return [...categoryNames, ...productCategories];
-        },
-        []
+      const reorderedArray = reorderArray(
+        getAllCategoryNames(dashboardProducts)
       );
-      const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
-
-      const reorderedArray = reorderArray(uniqueCategoryNames as string[]);
 
       setProductCategories(reorderedArray);
     }
@@ -118,25 +102,8 @@ export default function TreatmentAccordionSelector({
         .then(products => {
           if (products.length > 0) {
             setProductsAgenda(products);
-            const allCategoryNames: string[] = products.reduce(
-              (categoryNames: string[], product) => {
-                const productCategories = product.category.map(
-                  category => category.name
-                );
-                return [...categoryNames, ...productCategories];
-              },
-              []
-            );
 
-            const uniqueCategoryNames: string[] = [
-              ...new Set(allCategoryNames),
-            ];
-            const packsIndex = uniqueCategoryNames.indexOf('Packs');
-            if (packsIndex !== -1) {
-              uniqueCategoryNames.splice(packsIndex, 1);
-              uniqueCategoryNames.unshift('Packs');
-            }
-            setProductCategories(uniqueCategoryNames);
+            setProductCategories(getAllCategoryNames(products));
           }
         })
         .catch((err: any) => {
@@ -189,7 +156,6 @@ export default function TreatmentAccordionSelector({
       .sort((a, b) => (a.title > b.title ? 1 : -1));
   }
 
-  const validUnityTypes = getValidUnityTypes(treatmentPacks);
   const validTypes = getValidTypes();
 
   function getProductsByTypePack(): Product[] {
@@ -465,6 +431,9 @@ export default function TreatmentAccordionSelector({
               if (a === 'Packs') return -1;
               if (b === 'Packs') return 1;
               return 0;
+            })
+            .filter(category => {
+              return !isDashboard || (isDashboard && category !== 'Packs');
             })
             .map(category => {
               return (
