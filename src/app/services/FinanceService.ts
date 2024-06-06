@@ -190,5 +190,54 @@ export default class FinanceService {
     return {} as Wallet;
   }
 
+  static async getSubscription(userId: string): Promise<boolean> {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_DERMAFINANCE_API}Subscription?userId=${userId}`;
+
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store',
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        Bugsnag.notify('Error getting subscription ' + res);
+        return false;
+      }
+    } catch (error: any) {
+      Bugsnag.notify('Error getting subscription ' + error);
+      return false;
+    }
+  }
+
+  static async cancelSubscription(referenceId: string, status: number) {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_DERMAFINANCE_API}Subscription`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          referenceId: referenceId,
+          status: status,
+        }),
+      });
+
+      if (!res.ok) {
+        Bugsnag.notify('Error canceling subscription ' + res);
+        throw new Error('Error canceling subscription');
+      }
+      const data = await res.text();
+      return data;
+    } catch (error: any) {
+      Bugsnag.notify('Error canceling subscription ' + error);
+    }
+  }
 
 }
