@@ -443,22 +443,6 @@ export default function TreatmentAccordionSelector({
     );
   }
 
-  const predefinedCategories = [
-    'Médico',
-    'Relleno',
-    'Arrugas',
-    'Lifting',
-    'Calidad Piel',
-    'Otros',
-    'Caida del pelo',
-  ];
-
-  const test = predefinedCategories.map(category => {
-    return productCategories.filter(itemCategory => itemCategory === category);
-  });
-
-  console.log(test);
-
   if (
     cart.length == 0 ||
     (cart.length == 1 &&
@@ -469,7 +453,7 @@ export default function TreatmentAccordionSelector({
       <>
         {isDashboard && dashboardProducts && (
           <ProductSearchBar
-            products={dashboardProducts}
+            products={dashboardProducts.filter(product => product.type !== 4)}
             className="mb-4"
             isDashboard
           />
