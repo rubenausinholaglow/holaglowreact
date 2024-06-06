@@ -121,7 +121,7 @@ export default function PaymentInput(props: Props) {
       }
     };
 
-    if (props.paymentBank == PaymentBank.Points) {
+    if (props.paymentMethod == PaymentMethod.Wallet) {
       fetchWalletBalance();
     } else {
       setMaxValue(
