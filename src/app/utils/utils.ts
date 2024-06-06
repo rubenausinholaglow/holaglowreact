@@ -154,6 +154,8 @@ export function getPaymentBankText(bank: PaymentBank): string {
       return '';
     case PaymentBank.Points:
       return '';
+    case PaymentBank.OnlineAdvancePayment:
+      return ' - Anticipo Web';
     default:
       return 'Unknown';
   }

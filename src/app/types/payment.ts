@@ -29,6 +29,7 @@ export enum PaymentBank {
   Paypal,
   Frakmenta,
   Points,
+  OnlineAdvancePayment,
 }
 
 export interface PaymentInitResponse {

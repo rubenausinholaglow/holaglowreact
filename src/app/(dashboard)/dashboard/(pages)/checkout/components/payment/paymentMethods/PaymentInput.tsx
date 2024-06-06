@@ -33,7 +33,7 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Modal } from 'designSystem/Modals/Modal';
 import { Title } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
+import { isEmpty, set } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 
 import ProductDiscountForm from '../../ProductDiscountForm';
@@ -128,6 +128,11 @@ export default function PaymentInput(props: Props) {
         parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
           parseFloat(totalAmount.toFixed(2))
       );
+    }
+
+    if (props.paymentBank == PaymentBank.OnlineAdvancePayment) {
+      setInputValue('49');
+      setMaxValue(49);
     }
   }, [walletClient]);
 
@@ -603,6 +608,7 @@ export default function PaymentInput(props: Props) {
                         background:
                           'url("/images/forms/euro.svg") #ffffff no-repeat center right 12px',
                       }}
+                      value={inputValue}
                     />
                     {props.paymentBank === PaymentBank.Alma && (
                       <Button

@@ -29,7 +29,7 @@ interface Props {
 
 export default function PaymentItem({ paymentTicketRequest, status }: Props) {
   const { removePayment } = usePaymentList(state => state);
-  const financialBanks = [1, 2, 9];
+  const financialBanks = [1, 2, 9, 11];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
   const [textPayment, setTextPayment] = useState<string>('');
   const [messageNotification, setMessageNotification] = useState<string | null>(

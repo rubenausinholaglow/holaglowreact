@@ -49,6 +49,12 @@ export const paymentItems = [
     paymentBank: PaymentBank.Points,
     paymentMethod: PaymentMethod.Wallet,
   },
+  {  
+    key: 'onlineAdvancePayment',
+    label: 'Anticipo Web 49€',
+    paymentBank: PaymentBank.OnlineAdvancePayment,
+    paymentMethod: PaymentMethod.CreditCard,
+  },
 ];
 
 export const checkoutPaymentItems = [
