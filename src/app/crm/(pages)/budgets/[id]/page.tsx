@@ -147,7 +147,9 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                 <Flex layout="col-left" className="w-full">
                   <Text className="font-semibold">
                     {budgetDetail?.products.map(x => (
-                      <Text className="font-semibold">{x.product?.title}</Text>
+                      <Text key={x.id} className="font-semibold">
+                        {x.product?.title}
+                      </Text>
                     ))}
                   </Text>
                   <Text className="text-sm">
