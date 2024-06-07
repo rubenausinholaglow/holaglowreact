@@ -6,6 +6,7 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PhoneInput } from 'react-international-phone';
 import TextArea from '@dashboardComponents/ui/TextArea';
+import ScheduleService from '@services/ScheduleService';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -17,6 +18,7 @@ import {
   SvgCheckSquareActive,
   SvgCross,
 } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Client } from 'app/types/client';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -69,7 +71,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   const router = useRouter();
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const [redirectToReagenda, setRedirectToReagenda] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
+  const { selectedTreatments } = useSessionStore(state => state);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
@@ -131,6 +136,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   );
 
   useEffect(() => {
+    async function manageHasPreviousPvAppointment() {
+      await ScheduleService.GetPvAppointmentIfExists(formData.phone).then(x => {
+        if (x) {
+          setRedirectToReagenda(x.clientToken!);
+        }
+        setIsDisabled(false);
+        if (setContinueDisabled) setContinueDisabled(false);
+      });
+    }
     if (
       !isEmpty(formData.name) &&
       !isEmpty(formData.surname) &&
@@ -148,8 +162,16 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !showDniError &&
       !showBirthdayError
     ) {
-      setIsDisabled(false);
-      if (setContinueDisabled) setContinueDisabled(false);
+      const isProbadorVirtual =
+        selectedTreatments.length > 0 &&
+        selectedTreatments[0].id ===
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase();
+      if (isProbadorVirtual) {
+        manageHasPreviousPvAppointment();
+      } else {
+        setIsDisabled(false);
+        if (setContinueDisabled) setContinueDisabled(false);
+      }
     } else {
       setIsDisabled(true);
       if (setContinueDisabled) setContinueDisabled(true);
@@ -186,7 +208,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       isValidNie(formData.dni.toUpperCase());
     if (validFormData(formData, errors) && isValidDni) {
       setErrors([]);
-      await handleRegistration();
+      if (redirectToReagenda && redirectToReagenda != '') {
+        router.push('/reagenda?fromAgenda=true&token=' + redirectToReagenda);
+      } else {
+        await handleRegistration();
+      }
     } else {
       const errorMessages = [];
 
