@@ -16,8 +16,8 @@ import {
 import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import { mapBudgetsData } from 'app/GraphQL/utils/utilsMapping';
-import { createApolloClient } from 'lib/client';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { createApolloClient } from 'lib/client';
 
 export default function TableBudgets() {
   const [budgets, setBudgets] = useState<BudgetsResponseNode[] | undefined>(
